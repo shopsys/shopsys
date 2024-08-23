@@ -7,12 +7,32 @@ namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 class FriendlyUrlData
 {
     /**
-     * @var int|null
+     * @var string|null
      */
-    public $id;
+    public $name;
 
     /**
      * @var string|null
      */
-    public $name;
+    public $slug;
+
+    /**
+     * @var int|null
+     */
+    public $entityId;
+
+    /**
+     * @var string|null
+     */
+    public $redirectTo;
+
+    /**
+     * @var int|null
+     */
+    public $redirectCode;
+
+    /**
+     * @var \DateTime|null
+     */
+    public $lastModification;
 }

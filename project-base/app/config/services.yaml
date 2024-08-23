@@ -155,19 +155,6 @@ services:
     Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRepository:
         alias: App\Component\UploadedFile\UploadedFileRepository
 
-    App\Component\Router\FriendlyUrl\NormalizeUrlTrailingSlashListener:
-        public: true
-        tags:
-            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
-
-    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactory:
-        class: App\Component\Router\FriendlyUrl\FriendlyUrlFactory
-
-    App\Component\Router\FriendlyUrl\FriendlyUrlFactory: ~
-
-    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactoryInterface:
-        alias: App\Component\Router\FriendlyUrl\FriendlyUrlFactory
-
     Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface:
         alias: App\Model\Order\PromoCode\PromoCodeDataFactory
 
@@ -402,14 +389,8 @@ services:
     Shopsys\FrameworkBundle\Component\Setting\Setting:
         alias: App\Component\Setting\Setting
 
-    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade:
-        alias: App\Component\Router\FriendlyUrl\FriendlyUrlFacade
-
     Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository:
         alias: App\Component\Router\FriendlyUrl\FriendlyUrlRepository
-
-    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactory:
-        alias: App\Component\Router\FriendlyUrl\FriendlyUrlDataFactory
 
     Shopsys\FrameworkBundle\Model\Mail\Grid\MailTemplateGridFactory:
         alias: App\Model\Mail\Grid\MailTemplateGridFactory

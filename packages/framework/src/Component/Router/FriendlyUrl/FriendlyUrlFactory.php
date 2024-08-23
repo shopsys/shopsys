@@ -58,7 +58,7 @@ class FriendlyUrlFactory implements FriendlyUrlFactoryInterface
         }
 
         $nameForUrl = $entityName . ($indexPostfix === null ? '' : '-' . $indexPostfix);
-        $slug = TransformString::stringToFriendlyUrlSlug($nameForUrl) . '/';
+        $slug = TransformString::stringToFriendlyUrlSlug($nameForUrl);
 
         return $this->create($routeName, $entityId, $domainId, $slug);
     }

@@ -419,6 +419,7 @@ class SideMenuBuilder
         $seoMenu->addChild('seo', ['route' => 'admin_seo_index', 'label' => t('SEO')]);
         $seoMenu->addChild('robots', ['route' => 'admin_seo_robots', 'label' => t('Robots.txt')]);
         $seoMenu->addChild('hreflang', ['route' => 'admin_seo_hreflang', 'label' => t('Alternate language settings')]);
+        $seoMenu->addChild('unusedFriendlyUrlList', ['route' => 'admin_unused_friendly_url_list', 'label' => t('Unused friendly URL list')]);
 
         $seoPageMenu = $seoMenu->addChild('seoPageList', ['route' => 'admin_seopage_list', 'label' => t('SEO pages')]);
         $seoPageMenu->addChild('seoPageNew', ['route' => 'admin_seopage_new', 'label' => t('New SEO page'), 'display' => false]);

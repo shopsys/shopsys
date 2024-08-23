@@ -247,9 +247,6 @@ msgstr ""
 msgid "Provided hash is not valid."
 msgstr ""
 
-msgid "Redirect target must be relative path (with leading slash) or absolute path starting by protocol (http:// or https://)"
-msgstr ""
-
 msgid "Selected payment price has changed"
 msgstr ""
 

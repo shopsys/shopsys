@@ -50,13 +50,35 @@ class FriendlyUrl
     protected $main;
 
     /**
+     * @var string|null
+     * @ORM\Column(type="text", nullable=true)
+     */
+    protected $redirectTo;
+
+    /**
+     * @var int|null
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $redirectCode;
+
+    /**
+     * @var \DateTime|null
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $lastModification;
+
+    /**
      * @param string $routeName
      * @param int $entityId
      * @param int $domainId
      * @param string $slug
      */
-    public function __construct($routeName, $entityId, $domainId, $slug)
-    {
+    public function __construct(
+        $routeName,
+        $entityId,
+        $domainId,
+        $slug,
+    ) {
         $this->routeName = $routeName;
         $this->entityId = $entityId;
         $this->domainId = $domainId;
@@ -110,5 +132,53 @@ class FriendlyUrl
     public function setMain($main)
     {
         $this->main = $main;
+    }
+
+    /**
+     * @param string|null $redirectTo
+     */
+    public function setRedirectTo($redirectTo): void
+    {
+        $this->redirectTo = $redirectTo;
+    }
+
+    /**
+     * @param int|null $redirectCode
+     */
+    public function setRedirectCode($redirectCode): void
+    {
+        $this->redirectCode = $redirectCode;
+    }
+
+    /**
+     * @param \DateTime|null $lastModification
+     */
+    public function setLastModification($lastModification): void
+    {
+        $this->lastModification = $lastModification;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRedirectTo()
+    {
+        return $this->redirectTo;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getRedirectCode()
+    {
+        return $this->redirectCode;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getLastModification()
+    {
+        return $this->lastModification;
     }
 }

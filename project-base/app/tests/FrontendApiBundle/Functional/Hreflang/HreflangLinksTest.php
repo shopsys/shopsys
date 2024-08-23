@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Hreflang;
 
-use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\DataFixtures\Demo\BlogArticleDataFixture;
 use App\DataFixtures\Demo\BrandDataFixture;
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\FlagDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\SeoPageDataFixture;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 

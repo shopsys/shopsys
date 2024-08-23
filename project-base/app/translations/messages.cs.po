@@ -13,12 +13,6 @@ msgstr "-- Vyber roli --"
 msgid "-- Select name of the transfer --"
 msgstr "-- Vyber název převodu --"
 
-msgid "301 (Permanent redirect)"
-msgstr "301 (Trvalé přesměrování)"
-
-msgid "302 (Temporary redirect)"
-msgstr "302 (Dočasné přesměrování)"
-
 msgid "<strong><a href=\"{{ url }}\">Notification bar</a></strong> has been successfuly updated"
 msgstr "<strong><a href=\"{{ url }}\">Notifikační lišta</a></strong> byla úspěšně upravena"
 
@@ -133,9 +127,6 @@ msgstr "Aplikovat na vybrané kategorie"
 msgid "Apply to selected products"
 msgstr "Aplikovat na vybrané produkty"
 
-msgid "Article"
-msgstr "Článek"
-
 msgid "Articles - full"
 msgstr "Články - vše"
 
@@ -190,26 +181,17 @@ msgstr "Nejprodávanější zboží - zobrazení"
 msgid "Billing address - name, last name, company, company number, tax number and billing address"
 msgstr "Faktuřní adresa - jméno, příjmení, společnost, IČ, DIČ a fakturační adresa"
 
-msgid "Blog article"
-msgstr "Článek blogu"
-
 msgid "Blog article - full"
 msgstr "Články blogu - vše"
 
 msgid "Blog article - view"
 msgstr "Články blogu - zobrazní"
 
-msgid "Blog category"
-msgstr "Rubrika blogu"
-
 msgid "Blog category - full"
 msgstr "Kategorie blogu - vše"
 
 msgid "Blog category - view"
 msgstr "Kategorie blogu - zobrazení"
-
-msgid "Brand"
-msgstr "Značka"
 
 msgid "Brand overview"
 msgstr "Přehled značek"
@@ -268,26 +250,17 @@ msgstr "Rozšířené SEO kategorií - zobrazení"
 msgid "Categories transfer"
 msgstr "Přenos kategorií"
 
-msgid "Category"
-msgstr "Kategorie"
-
 msgid "Category description"
 msgstr "Popis kategorie"
 
 msgid "Category name"
 msgstr "Název kategorie"
 
-msgid "Category with prefilled filters"
-msgstr "Kategorie s předvyplněnými filtry"
-
 msgid "Center"
 msgstr "Na střed"
 
 msgid "Choose this category and continue"
 msgstr "Zvolit tuto kategorii a pokračovat"
-
-msgid "Choose type of redirect"
-msgstr "Vyberte typ přesměrování"
 
 msgid "Chosen payment name"
 msgstr "Název vybrané platby"
@@ -478,9 +451,6 @@ msgstr "Opravdu chcete odebrat tohoto zákazníka?"
 msgid "Do you really want to remove this flag?"
 msgstr "Opravdu chcete odstranit tento příznak?"
 
-msgid "Do you really want to remove this friendly URL? Removing friendly URL may have bad impact to SEO performance."
-msgstr "Opravdu si přejete odebrat tuto hezkou URL? Odstranění hezké URL může mít špatný vliv na SEO."
-
 msgid "Do you really want to remove this language constant translation?"
 msgstr "Opravdu chcete odstranit tento překlad jazykové konstanty?"
 
@@ -625,12 +595,6 @@ msgstr "Zadejte datum a čas ve formátu dd.mm.yyyy hh:mm (např. 31.12.2024 23:
 msgid "Entered code is not valid"
 msgstr "Zadaný kód není platný"
 
-msgid "Entity"
-msgstr "Entita"
-
-msgid "Entity ID"
-msgstr "ID entity"
-
 msgid "Error messages"
 msgstr "Chybové hlášky"
 
@@ -727,9 +691,6 @@ msgstr "Doprava a platba zdarma - vše"
 msgid "Free transport and payment - view"
 msgstr "Doprava a platba zdarma - zobrazení"
 
-msgid "Friendly URL \"%slug%\" was removed."
-msgstr "Hezká URL \"%slug%\" byla smazána."
-
 msgid "From"
 msgstr "Od"
 
@@ -825,9 +786,6 @@ msgstr "Jazykové konstanty - vše"
 
 msgid "Language constants - view"
 msgstr "Jazykové konstanty - zobrazení"
-
-msgid "Last modification"
-msgstr "Poslední modifikace"
 
 msgid "Last name"
 msgstr "Příjmení"
@@ -1240,9 +1198,6 @@ msgstr "Nastavení zásad ochrany osobních údajů - vše"
 msgid "Privacy policy article setting - view"
 msgstr "Nastavení zásad ochrany osobních údajů - zobrazení"
 
-msgid "Product"
-msgstr "Produkt"
-
 msgid "Products - full"
 msgstr "Produkty - vše"
 
@@ -1315,12 +1270,6 @@ msgstr "Rychlé hledání"
 msgid "RGB Hex"
 msgstr "RGB Hex"
 
-msgid "Redirect target"
-msgstr "Cíl přesměrování"
-
-msgid "Redirect type"
-msgstr "Typ přesměrování"
-
 msgid "Registration"
 msgstr "Registrace"
 
@@ -1372,9 +1321,6 @@ msgstr "SEO kombinace kategorie s ID {{ ReadyCategorySeoMixId }} byla smazána"
 msgid "SEO combination of category with ID {{ ReadyCategorySeoMixId }} has not been removed, because it was not found"
 msgstr "SEO kombinace kategorie s ID {{ ReadyCategorySeoMixId }} nebyla smazána, protože nebyla nalezena"
 
-msgid "SEO page"
-msgstr "SEO stránka"
-
 msgid "Sale"
 msgstr "Výprodej"
 
@@ -1399,14 +1345,8 @@ msgstr "Vyhledat"
 msgid "Search by code..."
 msgstr "Vyhledat podle kódu..."
 
-msgid "Search by slug..."
-msgstr "Vyhledat podle slugu..."
-
 msgid "Search in transfers"
 msgstr "Hledání v přenosech"
-
-msgid "Searching searches in slugs. It is possible to use wildcards * and ?."
-msgstr "Vyhledávání hledá ve sluzích. Je možné používat operátory * a ?."
 
 msgid "Selected administrator role group doesn't exist."
 msgstr "Vybraná skupina práv pro administrátora neexistuje."
@@ -1450,17 +1390,11 @@ msgstr "Bannery - vše"
 msgid "Slider items - view"
 msgstr "Bannery - zobrazení"
 
-msgid "Slug"
-msgstr "Slug"
-
 msgid "Standard"
 msgstr "Standardní"
 
 msgid "Stocking"
 msgstr "Skladovost"
-
-msgid "Store"
-msgstr "Prodejna"
 
 msgid "Storefront queries cache has been cleaned."
 msgstr "Cache s dotazy na FE byla smazána."
@@ -1645,9 +1579,6 @@ msgstr "Neplatné řazení"
 msgid "Unsupported two factor authentication method"
 msgstr "Nepodporovaná metoda dvoufaktorového ověření"
 
-msgid "Unused friendly URL list"
-msgstr "Seznam nepoužívaných hezkých URL"
-
 msgid "Unused friendly URLs - full"
 msgstr "Seznam nepoužívaných hezkých URL - vše"
 
@@ -1734,9 +1665,6 @@ msgstr "Můžete nahrát následující formáty: PNG, JPG"
 
 msgid "You can upload following formats: PNG, JPG, GIF"
 msgstr "Můžete nahrát následující formáty: PNG, JPG, GIF"
-
-msgid "You have to set redirect code for redirect."
-msgstr "Pro nastavení přesměrování musíte zadat typ přesměrování."
 
 msgid "Youtube ID"
 msgstr ""

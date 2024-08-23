@@ -4,17 +4,21 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\ReachMaxUrlUniqueResolveAttemptException;
+use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
+use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Contracts\Cache\CacheInterface;
 
 class FriendlyUrlFacade
 {
-    protected const MAX_URL_UNIQUE_RESOLVE_ATTEMPT = 100;
+    protected const int MAX_URL_UNIQUE_RESOLVE_ATTEMPT = 100;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
@@ -144,13 +148,14 @@ class FriendlyUrlFacade
      */
     public function getAbsoluteUrlByRouteNameAndEntityId(int $domainId, string $routeName, int $entityId): string
     {
-        $mainFriendlyUrl = $this->findMainFriendlyUrl($domainId, $routeName, $entityId);
+        $mainFriendlyUrlSlug = $this->getMainFriendlyUrlSlug($domainId, $routeName, $entityId);
+        $domainConfig = $this->domain->getDomainConfigById($domainId);
 
-        if ($mainFriendlyUrl === null) {
-            throw new FriendlyUrlNotFoundException();
+        if ($mainFriendlyUrlSlug === SeoPage::SEO_PAGE_HOMEPAGE_SLUG) {
+            return $domainConfig->getUrl();
         }
 
-        return $this->getAbsoluteUrlByFriendlyUrl($mainFriendlyUrl);
+        return $domainConfig->getUrl() . '/' . $mainFriendlyUrlSlug;
     }
 
     /**
@@ -323,5 +328,89 @@ class FriendlyUrlFacade
     public function findByDomainIdAndSlug(int $domainId, string $slug): ?FriendlyUrl
     {
         return $this->friendlyUrlRepository->findByDomainIdAndSlug($domainId, $slug);
+    }
+
+    /**
+     * @param string $routeName
+     * @return string
+     */
+    public function getEntityClassByRouteName(string $routeName): string
+    {
+        $routeNameMapping = $this->friendlyUrlRepository->getRouteNameToEntityMap();
+
+        if (array_key_exists($routeName, $routeNameMapping)) {
+            return $routeNameMapping[$routeName];
+        }
+
+        throw new FriendlyUrlNotFoundException();
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public function getUndefinedRouteNamesInMapping(): array
+    {
+        $routeNameMapping = $this->friendlyUrlRepository->getRouteNameToEntityMap();
+        $allUsedRouteNames = $this->friendlyUrlRepository->getAllRouteNames();
+
+        $undefinedRouteNameMappings = [];
+
+        foreach ($allUsedRouteNames as $usedRouteName) {
+            if (!array_key_exists($usedRouteName, $routeNameMapping)) {
+                $undefinedRouteNameMappings[] = $usedRouteName;
+            }
+        }
+
+        return $undefinedRouteNameMappings;
+    }
+
+    /**
+     * @param int $domainId
+     * @param string $slug
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData $friendlyUrlData
+     */
+    public function setRedirect(int $domainId, string $slug, FriendlyUrlData $friendlyUrlData): void
+    {
+        $friendlyUrl = $this->friendlyUrlRepository->findByDomainIdAndSlug($domainId, $slug);
+
+        if ($friendlyUrl === null) {
+            return;
+        }
+
+        $friendlyUrl->setRedirectCode($friendlyUrlData->redirectCode);
+        $friendlyUrl->setRedirectTo($friendlyUrlData->redirectTo);
+        $friendlyUrl->setLastModification(new DateTime('now'));
+        $this->em->flush();
+    }
+
+    /**
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchFormData
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getNonUsedFriendlyUrlQueryBuilderByDomainIdAndQuickSearch(
+        int $domainId,
+        QuickSearchFormData $quickSearchFormData,
+    ): QueryBuilder {
+        return $this->friendlyUrlRepository->getNonUsedFriendlyUrlQueryBuilderByDomainIdAndQuickSearch(
+            $domainId,
+            $quickSearchFormData,
+        );
+    }
+
+    /**
+     * @param int $domainId
+     * @param string $slug
+     */
+    public function removeFriendlyUrl(int $domainId, string $slug): void
+    {
+        $friendlyUrl = $this->friendlyUrlRepository->findByDomainIdAndSlug($domainId, $slug);
+
+        if ($friendlyUrl === null) {
+            return;
+        }
+
+        $this->em->remove($friendlyUrl);
+        $this->em->flush();
     }
 }

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Blog\Category;
 
-use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\DataFixtures\Demo\BlogArticleDataFixture;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;

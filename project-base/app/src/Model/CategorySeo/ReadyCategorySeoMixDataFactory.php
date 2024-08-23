@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Model\CategorySeo;
 
-use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\Model\Category\CategoryFacade;
 use App\Model\Product\Flag\FlagFacade;
 use App\Model\Product\Parameter\ParameterFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 
 class ReadyCategorySeoMixDataFactory
@@ -17,7 +17,7 @@ class ReadyCategorySeoMixDataFactory
      * @param \App\Model\Product\Flag\FlagFacade $flagFacade
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
     public function __construct(
         private readonly CategoryFacade $categoryFacade,

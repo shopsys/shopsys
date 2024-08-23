@@ -247,9 +247,6 @@ msgstr "Promo kód není dostupný pro vaši cenovou skupinu. Možná jste se za
 msgid "Provided hash is not valid."
 msgstr "Zadaný hash není validní."
 
-msgid "Redirect target must be relative path (with leading slash) or absolute path starting by protocol (http:// or https://)"
-msgstr "Cíl přesměrování musí být relativní cesta (začínající lomítkem) nebo absolutni cesta začínající protokolem (http:// nebo https://)"
-
 msgid "Selected payment price has changed"
 msgstr "Cena vybrané dopravy se změnila"
 

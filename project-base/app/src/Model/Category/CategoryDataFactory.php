@@ -16,14 +16,13 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactory as BaseCategoryDa
 use Shopsys\FrameworkBundle\Model\Category\CategoryParameterRepository;
 
 /**
- * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
  * @method fillNew(\App\Model\Category\CategoryData $categoryData)
  * @method int[] getParametersSortedByPositionFilteredByCategory(\App\Model\Category\Category $category)
  */
 class CategoryDataFactory extends BaseCategoryDataFactory
 {
     /**
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory

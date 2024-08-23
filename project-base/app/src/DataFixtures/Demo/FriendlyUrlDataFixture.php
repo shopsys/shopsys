@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
 class FriendlyUrlDataFixture extends AbstractReferenceFixture
 {
     /**
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
     public function __construct(private FriendlyUrlFacade $friendlyUrlFacade)
     {

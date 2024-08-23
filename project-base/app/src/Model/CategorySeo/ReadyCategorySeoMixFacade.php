@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\CategorySeo;
 
-use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\FrontendApi\Model\Flag\FlagFacade;
 use App\FrontendApi\Model\Parameter\ParameterFacade;
 use App\Model\CategorySeo\Exception\ReadyCategorySeoMixNotFoundException;
@@ -17,6 +16,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\TransactionalMasterRequestListener;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
@@ -28,7 +28,7 @@ class ReadyCategorySeoMixFacade
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixRepository $readyCategorySeoMixRepository
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\FrontendApi\Model\Flag\FlagFacade $flagFacade
      * @param \App\FrontendApi\Model\Parameter\ParameterFacade $parameterFacade
