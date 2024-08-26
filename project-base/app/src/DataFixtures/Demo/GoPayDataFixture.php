@@ -48,6 +48,7 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
             'image_normal_url' => 'payment_card',
             'image_large_url' => 'payment_card@2x',
             'payment_group' => 'card-payment',
+            'available' => true,
         ],
         [
             'reference_name' => self::BANK_ACCOUNT_METHOD,
@@ -56,6 +57,7 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
             'image_normal_url' => 'bank_account',
             'image_large_url' => 'bank_account@2x',
             'payment_group' => 'bank-transfer',
+            'available' => true,
         ],
         [
             'reference_name' => null,
@@ -64,6 +66,7 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
             'image_normal_url' => 'gopay',
             'image_large_url' => 'gopay@2x',
             'payment_group' => 'wallet',
+            'available' => true,
         ],
         [
             'reference_name' => null,
@@ -72,6 +75,7 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
             'image_normal_url' => 'paypal',
             'image_large_url' => 'paypal@2x',
             'payment_group' => 'wallet',
+            'available' => true,
         ],
         [
             'reference_name' => null,
@@ -80,6 +84,7 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
             'image_normal_url' => 'bitcoin',
             'image_large_url' => 'bitcoin@2x',
             'payment_group' => 'wallet',
+            'available' => true,
         ],
         [
             'reference_name' => null,
@@ -88,6 +93,7 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
             'image_normal_url' => 'prsms',
             'image_large_url' => 'prsms@2x',
             'payment_group' => 'others',
+            'available' => true,
         ],
         [
             'reference_name' => null,
@@ -96,6 +102,7 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
             'image_normal_url' => 'mpayment',
             'image_large_url' => 'mpayment@2x',
             'payment_group' => 'others',
+            'available' => true,
         ],
         [
             'reference_name' => null,
@@ -104,6 +111,7 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
             'image_normal_url' => 'paysafecard',
             'image_large_url' => 'paysafecard@2x',
             'payment_group' => 'others',
+            'available' => false,
         ],
     ];
 
@@ -166,7 +174,7 @@ class GoPayDataFixture extends AbstractReferenceFixture implements DependentFixt
         $goPayPaymentMethodData->imageLargeUrl = 'https://gate.gopay.cz/images/checkout/' . $data['image_large_url'] . '.png';
         $goPayPaymentMethodData->paymentGroup = $data['payment_group'];
         $goPayPaymentMethodData->domainId = $domainId;
-        $goPayPaymentMethodData->available = true;
+        $goPayPaymentMethodData->available = $data['available'];
 
         return $goPayPaymentMethodData;
     }
