@@ -3298,8 +3298,14 @@ msgstr "Vyhledávání hledá v číslu objednávky, e-mailu registrovaného zá
 msgid "Searching searches in slugs. It is possible to use wildcards * and ?."
 msgstr "Vyhledávání hledá ve sluzích. Je možné používat operátory * a ?."
 
+msgid "Select all"
+msgstr "Vybrat vše"
+
 msgid "Select new value"
 msgstr "Zvolte novou hodnotu"
+
+msgid "Select none"
+msgstr "Nevybrat nic"
 
 msgid "Selected SEO page cannot be deleted"
 msgstr "Vybraná SEO stránka nemůže být smazána"
