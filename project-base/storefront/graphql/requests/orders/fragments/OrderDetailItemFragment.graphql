@@ -12,4 +12,8 @@ fragment OrderDetailItemFragment on OrderItem {
     quantity
     unit
     type
+    order {
+        number
+        creationDate
+    }
 }

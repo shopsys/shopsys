@@ -1,4 +1,4 @@
-import { TypeProductOrderingModeEnum } from 'graphql/types';
+import { TypeOrderItemTypeEnum, TypeOrderStatusEnum, TypeProductOrderingModeEnum } from 'graphql/types';
 
 export const DEFAULT_PAGE_SIZE = 9;
 export const DEFAULT_SORT = TypeProductOrderingModeEnum.Priority as const;
@@ -28,3 +28,12 @@ export const SEO_SENSITIVE_FILTERS = {
 };
 
 export const BLOG_PREVIEW_VARIABLES = { first: 6, onlyHomepageArticles: true };
+
+export const DEFAULT_ORDERED_ITEMS_FILTER = {
+    orderUuid: null,
+    orderCreatedAfter: null,
+    orderStatus: TypeOrderStatusEnum.Done,
+    catnum: null,
+    productUuid: null,
+    type: TypeOrderItemTypeEnum.Product,
+};

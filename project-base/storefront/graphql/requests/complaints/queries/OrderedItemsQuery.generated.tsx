@@ -2,7 +2,16 @@ import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import { OrderDetailItemFragment } from '../../orders/fragments/OrderDetailItemFragment.generated';
-export type TypeComplaintItemFragment = { __typename?: 'ComplaintItem', quantity: number, description: string, orderItem: { __typename: 'OrderItem', uuid: string, name: string, vatRate: string, quantity: number, unit: string | null, type: Types.TypeOrderItemTypeEnum, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, order: { __typename?: 'Order', number: string, creationDate: any } } };
+import * as Urql from 'urql';
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+export type TypeOrderedItemsQueryVariables = Types.Exact<{
+  first: Types.InputMaybe<Types.Scalars['Int']['input']>;
+  after: Types.InputMaybe<Types.Scalars['String']['input']>;
+  filter: Types.InputMaybe<Types.TypeOrderItemsFilterInput>;
+}>;
+
+
+export type TypeOrderedItemsQuery = { __typename?: 'Query', orderItems: { __typename: 'OrderItemConnection', totalCount: number, edges: Array<{ __typename: 'OrderItemEdge', cursor: string, node: { __typename: 'OrderItem', uuid: string, name: string, vatRate: string, quantity: number, unit: string | null, type: Types.TypeOrderItemTypeEnum, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, order: { __typename?: 'Order', number: string, creationDate: any } } | null } | null> | null } };
 
 
       export interface PossibleTypesResultData {
@@ -81,12 +90,23 @@ export type TypeComplaintItemFragment = { __typename?: 'ComplaintItem', quantity
 };
       export default result;
     
-export const ComplaintItemFragment = gql`
-    fragment ComplaintItemFragment on ComplaintItem {
-  quantity
-  description
-  orderItem {
-    ...OrderDetailItemFragment
+
+export const OrderedItemsQueryDocument = gql`
+    query OrderedItemsQuery($first: Int, $after: String, $filter: OrderItemsFilterInput) {
+  orderItems(first: $first, after: $after, filter: $filter) {
+    __typename
+    totalCount
+    edges {
+      __typename
+      cursor
+      node {
+        ...OrderDetailItemFragment
+      }
+    }
   }
 }
     ${OrderDetailItemFragment}`;
+
+export function useOrderedItemsQuery(options?: Omit<Urql.UseQueryArgs<TypeOrderedItemsQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypeOrderedItemsQuery, TypeOrderedItemsQueryVariables>({ query: OrderedItemsQueryDocument, ...options });
+};
