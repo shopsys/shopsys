@@ -62,6 +62,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 ## [Upgrade from v14.0.0 to v14.0.1-dev](https://github.com/shopsys/shopsys/compare/v14.0.0...14.0.1)
 
+#### fixed image resolving for transport in FrontendAPI ([#3316](https://github.com/shopsys/shopsys/pull/3316))
+
+-   see #project-base-diff to update your project
+
 #### moved CSRFExtension from project-base to framework ([#3318](https://github.com/shopsys/shopsys/pull/3318))
 
 -   see #project-base-diff to update your project
