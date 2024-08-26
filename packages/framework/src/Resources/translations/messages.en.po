@@ -3298,7 +3298,13 @@ msgstr ""
 msgid "Searching searches in slugs. It is possible to use wildcards * and ?."
 msgstr ""
 
+msgid "Select all"
+msgstr ""
+
 msgid "Select new value"
+msgstr ""
+
+msgid "Select none"
 msgstr ""
 
 msgid "Selected SEO page cannot be deleted"
