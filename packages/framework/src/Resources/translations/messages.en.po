@@ -676,10 +676,22 @@ msgstr ""
 msgid "Complaint number"
 msgstr ""
 
+msgid "Complaint statuses - full"
+msgstr ""
+
+msgid "Complaint statuses - view"
+msgstr ""
+
 msgid "Complaint statuses overview"
 msgstr ""
 
 msgid "Complaints"
+msgstr ""
+
+msgid "Complaints - full"
+msgstr ""
+
+msgid "Complaints - view"
 msgstr ""
 
 msgid "Complaints overview"
