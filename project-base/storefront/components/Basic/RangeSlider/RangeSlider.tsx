@@ -187,13 +187,12 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                 onTouchEnd={handleMaxValueThumbCallback}
             />
             <div className="relative w-full">
-                <div className="absolute z-above h-1 w-full rounded bg-inputBorderDisabled" />
-                <div className={twJoin('absolute z-[2] h-1 rounded', rangeBgClass)} ref={range} />
+                <div className="absolute z-above h-[2px] w-full rounded bg-inputBorderDisabled" />
+                <div className={twJoin('absolute z-[2] h-[2px] rounded', rangeBgClass)} ref={range} />
                 <div className="absolute -left-2 mt-5 w-20 text-xs">
                     <TextInput
                         disabled={isDisabled}
                         id="basic-rangeslider-left-value"
-                        inputSize="small"
                         label={t('from')}
                         type="number"
                         value={minValueInput}
@@ -206,7 +205,6 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                     <TextInput
                         disabled={isDisabled}
                         id="basic-rangeslider-right-value"
-                        inputSize="small"
                         label={t('to')}
                         type="number"
                         value={maxValueInput}
@@ -226,17 +224,24 @@ type RangeSliderThumbProps = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElem
 
 const RangeSliderThumb: FC<RangeSliderThumbProps> = ({ isActive, disabled, ...props }) => {
     const webkitTwClass =
-        '[&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:relative [&::-webkit-slider-thumb]:z-[3] [&::-webkit-slider-thumb]:-my-2 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border-none [&::-webkit-slider-thumb]:[-webkit-tap-highlight-color:transparent] [&::-webkit-slider-runnable-track]:pointer-events-none';
+        '[&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:relative [&::-webkit-slider-thumb]:z-[3] [&::-webkit-slider-thumb]:-my-2 [&::-webkit-slider-thumb]:size-4 [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:[-webkit-tap-highlight-color:transparent] [&::-webkit-slider-runnable-track]:pointer-events-none';
     const mozTwClass =
-        '[&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:relative [&::-moz-range-thumb]:z-[3] [&::-moz-range-thumb]:-my-2 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-none [&::-moz-range-track]:pointer-events-none';
+        '[&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:relative [&::-moz-range-thumb]:z-[3] [&::-moz-range-thumb]:-my-2 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:rounded-full [&::-moz-range-track]:pointer-events-none';
     const msTwClass =
-        '[&::-ms-track]:pointer-events-none [&::-ms-fill-lower] [&::-ms-thumb]:z-[3] [&::-ms-thumb]:-my-2 [&::-ms-thumb]:h-4 [&::-ms-thumb]:w-4 [&::-ms-thumb]:cursor-pointer [&::-ms-thumb]:rounded-full [&::-ms-thumb]:border-none [&::-ms-fill-upper]:pointer-events-none';
+        '[&::-ms-track]:pointer-events-none [&::-ms-fill-lower] [&::-ms-thumb]:z-[3] [&::-ms-thumb]:-my-2 [&::-ms-thumb]:h-4 [&::-ms-thumb]:w-4 [&::-ms-thumb]:cursor-pointer [&::-ms-thumb]:rounded-full [&::-ms-fill-upper]:pointer-events-none';
 
-    let bgClass =
-        '[&::-moz-range-thumb]:bg-inputBorder [&::-ms-thumb]:bg-inputBorder [&::-webkit-slider-thumb]:bg-inputBorder';
+    const webkitBgClass =
+        '[&::-webkit-slider-thumb]:bg-inputBackground [&::-webkit-slider-thumb]:hover:bg-inputBorderActive [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-inputBorder [&::-webkit-slider-thumb]:border-solid [&::-webkit-slider-thumb]:hover:border-inputBorderActive';
+    const mozBgClass =
+        '[&::-moz-range-thumb]:bg-inputBackground [&::-moz-range-thumb]:hover:bg-inputBorderActive [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-inputBorder [&::-moz-range-thumb]:border-solid [&::-moz-range-thumb]:hover:border-inputBorderActive';
+    const msBgClass =
+        '[&::-ms-thumb]:bg-inputBackground [&::-ms-thumb]:hover:bg-inputBorderActive [&::-ms-thumb]:border-2 [&::-ms-thumb]:border-inputBorder  [&::-ms-thumb]:border-solid [&::-ms-thumb]:hover:border-inputBorderActive';
+
+    let bgClass = twJoin(mozBgClass, msBgClass, webkitBgClass);
+
     if (isActive) {
         bgClass =
-            '[&::-moz-range-thumb]:bg-inputBorderActive [&::-ms-thumb]:bg-inputBorderActive [&::-webkit-slider-thumb]:bg-inputBorderActive';
+            '[&::-moz-range-thumb]:bg-inputBorderActive [&::-moz-range-thumb]:border-inputBorderActive [&::-ms-thumb]:bg-inputBorderActive [&::-ms-thumb]:border-inputBorderActive [&::-webkit-slider-thumb]:bg-inputBorderActive [&::-webkit-slider-thumb]:border-inputBorderActive';
     } else if (disabled) {
         bgClass =
             '[&::-moz-range-thumb]:bg-inputBorderDisabled [&::-ms-thumb]:bg-inputBorderDisabled [&::-webkit-slider-thumb]:bg-inputBorderDisabled';
@@ -247,7 +252,7 @@ const RangeSliderThumb: FC<RangeSliderThumbProps> = ({ isActive, disabled, ...pr
             disabled={disabled}
             type="range"
             className={twJoin(
-                'pointer-events-none absolute top-6 z-[3] h-0 w-full appearance-none outline-none',
+                'pointer-events-none absolute top-[25px] z-[3] h-0 w-full appearance-none outline-none',
                 webkitTwClass,
                 mozTwClass,
                 msTwClass,
