@@ -1,10 +1,16 @@
     {% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
 
 {% block grid_value_cell_id_name %}
-    {% if not row.showEditBillingAddressLink %}
-        <a href="{{ url('admin_customer_edit', { id: row.id }) }}">{{ value }}</a>
+    {% if not row.isB2bCompany %}
+        <a href="{{ url('admin_customer_edit', { id: row.id }) }}">
+            <i class="svg svg-user" title="{{ 'User'|trans }}"></i>
+            {{ value }}
+        </a>
     {% else %}
-        <a href="{{ url('admin_billing_address_edit', {id: row.billingAddressId}) }}">{{ value }}</a>
+        <a href="{{ url('admin_billing_address_edit', {id: row.billingAddressId}) }}">
+            <i class="svg svg-company" title="{{ 'Company'|trans }}"></i>
+            {{ value }}
+        </a>
     {% endif %}
 {% endblock %}
 
@@ -26,7 +32,7 @@
 {% endblock %}
 
 {% block grid_action_cell_type_edit %}
-    {% if not row.showEditBillingAddressLink %}
+    {% if not row.isB2bCompany %}
         {{ gridView.renderBlock('grid_action_cell', {actionColumn: actionColumn, row: row}) }}
     {% else %}
         <a class="in-icon in-icon--edit svg svg-pencil table-action" href="{{ url('admin_billing_address_edit', {id: row.billingAddressId}) }}" title="{{ 'Edit'|trans }}"></a>
@@ -35,7 +41,7 @@
 
 
 {% block grid_action_cell_type_delete %}
-    {% if not row.showEditBillingAddressLink %}
+    {% if not row.isB2bCompany %}
         {{ gridView.renderBlock('grid_action_cell', {actionColumn: actionColumn, row: row}) }}
     {% else %}
         {% set customerId = row.customerId %}
@@ -54,7 +60,7 @@
 {% endblock %}
 
 {% block grid_action_cell_type_resetPassword %}
-    {% if not row.showEditBillingAddressLink %}
+    {% if not row.isB2bCompany %}
         {{ gridView.renderBlock('grid_action_cell', {actionColumn: actionColumn, row: row}) }}
     {% endif %}
 {% endblock %}
