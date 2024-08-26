@@ -1405,6 +1405,9 @@ msgstr ""
 msgid "Hide advertisement"
 msgstr ""
 
+msgid "Hide on domain"
+msgstr ""
+
 msgid "Hide product"
 msgstr ""
 

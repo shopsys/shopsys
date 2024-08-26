@@ -10,7 +10,6 @@ use App\Model\Product\Product;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
-use Shopsys\FrameworkBundle\Form\Admin\Stock\ProductStockFormType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
 use Shopsys\FrameworkBundle\Form\ProductsType;
@@ -91,7 +90,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
 
         $this->setBasicInformationGroup($builder);
         $this->setSeoGroup($builder);
-        $this->setStocksGroup($builder);
         $this->setDisplayAvailabilityGroup($builder, $product);
         $this->setPricesGroup($builder, $product);
         $this->setRelatedProductsGroup($builder, $product);
@@ -148,12 +146,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
                 'required' => false,
                 'disabled' => true,
                 'label' => t('Use stocks'),
-            ])
-            ->add('domainHidden', MultidomainType::class, [
-                'label' => t('Hide on domain'),
-                'required' => false,
-                'entry_type' => YesNoType::class,
-                'position' => ['after' => 'hidden'],
             ]);
     }
 
@@ -178,24 +170,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         $builderSeoGroup = $builder->get('seoGroup');
 
         $builderSeoGroup->remove('seoH1s');
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     */
-    private function setStocksGroup(FormBuilderInterface $builder): void
-    {
-        $stockGroupBuilder = $builder->create('stocksGroup', GroupType::class, [
-            'label' => t('Warehouses'),
-        ]);
-
-        $stockGroupBuilder->add('productStockData', CollectionType::class, [
-            'required' => false,
-            'entry_type' => ProductStockFormType::class,
-            'render_form_row' => false,
-        ]);
-
-        $builder->add($stockGroupBuilder);
     }
 
     /**
