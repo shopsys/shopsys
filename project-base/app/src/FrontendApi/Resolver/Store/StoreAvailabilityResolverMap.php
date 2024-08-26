@@ -12,8 +12,9 @@ class StoreAvailabilityResolverMap extends ResolverMap
     /**
      * @param \Overblog\DataLoader\DataLoaderInterface $storesBatchLoader
      */
-    public function __construct(private DataLoaderInterface $storesBatchLoader)
-    {
+    public function __construct(
+        private readonly DataLoaderInterface $storesBatchLoader,
+    ) {
     }
 
     /**
