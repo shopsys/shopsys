@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\ProductParameterValueFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Price\ProductPricesWithVatSelectType;
+use Shopsys\FrameworkBundle\Form\Admin\Stock\ProductStockFormType;
 use Shopsys\FrameworkBundle\Form\CategoriesType;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueProductParameters;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
@@ -38,6 +39,7 @@ use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -115,6 +117,7 @@ class ProductFormType extends AbstractType
         $builder->add($this->createBasicInformationGroup($builder, $product, $disabledItemInMainVariantAttr));
         $builder->add($this->createDisplayAvailabilityGroup($builder, $product));
         $builder->add($this->createPricesGroup($builder, $product));
+        $builder->add($this->createStocksGroup($builder));
         $builder->add($this->createDescriptionsGroup($builder, $product));
         $builder->add($this->createShortDescriptionsGroup($builder, $product));
         $builder->add($this->createShortDescriptionsUspGroup($builder));
@@ -363,6 +366,12 @@ class ProductFormType extends AbstractType
                 'label' => t('Hide product'),
             ]);
 
+        $builderDisplayAvailabilityGroup->add('domainHidden', MultidomainType::class, [
+            'label' => t('Hide on domain'),
+            'required' => false,
+            'entry_type' => YesNoType::class,
+        ]);
+
         $builderDisplayAvailabilityGroup
             ->add('sellingFrom', DatePickerType::class, [
                 'required' => false,
@@ -388,7 +397,6 @@ class ProductFormType extends AbstractType
                 'label' => t('Exclude from sale on domains'),
                 'required' => false,
                 'entry_type' => YesNoType::class,
-                'position' => ['after' => 'sellingDenied'],
             ]);
 
         if (
@@ -463,6 +471,25 @@ class ProductFormType extends AbstractType
             ]);
 
         return $builderDisplayAvailabilityGroup;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    private function createStocksGroup(FormBuilderInterface $builder)
+    {
+        $stockGroupBuilder = $builder->create('stocksGroup', GroupType::class, [
+            'label' => t('Warehouses'),
+        ]);
+
+        $stockGroupBuilder->add('productStockData', CollectionType::class, [
+            'required' => false,
+            'entry_type' => ProductStockFormType::class,
+            'render_form_row' => false,
+        ]);
+
+        return $stockGroupBuilder;
     }
 
     /**

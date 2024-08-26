@@ -1813,6 +1813,9 @@ msgstr "Skrýt"
 msgid "Hide advertisement"
 msgstr "Skrýt reklamu"
 
+msgid "Hide on domain"
+msgstr "Skrýt na doméně"
+
 msgid "Hide product"
 msgstr "Skrýt zboží"
 
@@ -3759,6 +3762,9 @@ msgstr "Nastavení %domainName% skladů uloženo."
 
 msgid "Warehouse settings"
 msgstr "Nastavení skladů"
+
+msgid "Warehouses"
+msgstr "Sklady"
 
 msgid "Warehouses - full"
 msgstr "Sklady - vše"

@@ -109,6 +109,8 @@ class ProductDataFactory
             $productData->name[$locale] = null;
             $productData->variantAlias[$locale] = null;
         }
+
+        $this->fillProductStockByStocks($productData);
     }
 
     /**
@@ -181,6 +183,8 @@ class ProductDataFactory
         $productData->pluginData = $this->pluginDataFormExtensionFacade->getAllData('product', $product->getId());
         $productData->weight = $product->getWeight();
         $productData->files = $this->uploadedFileDataFactory->createByEntity($product);
+
+        $this->fillProductStockByProduct($productData, $product);
     }
 
     /**
