@@ -20,6 +20,7 @@ export type ProductsSliderProps = {
     isWithArrows?: boolean;
     wrapperClassName?: string;
     productItemProps?: Partial<ProductItemProps>;
+    isBlogPage?: boolean;
 };
 
 const productTwClass = 'snap-center border-b-0 md:snap-start mx-1.5 first:ml-0 last:mr-0';
@@ -32,9 +33,10 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     wrapperClassName,
     isWithArrows = true,
     productItemProps,
+    isBlogPage = false,
 }) => {
     const { t } = useTranslation();
-    const maxVisibleSlides = 4;
+    const maxVisibleSlides = isBlogPage ? 3 : 4;
     const sliderRef = useRef<HTMLDivElement>(null);
     const [productElementRefs, setProductElementRefs] = useState<Array<RefObject<HTMLLIElement>>>();
     const [activeIndex, setActiveIndex] = useState(0);
@@ -103,7 +105,12 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     return (
         <div className="relative" tid={tid}>
             {isWithControls && (
-                <div className="absolute -top-10 right-0 hidden items-center justify-center vl:flex gap-2">
+                <div
+                    className={twMergeCustom(
+                        'absolute -top-10 right-0 hidden items-center justify-center  gap-2',
+                        isBlogPage ? 'xl:flex' : 'vl:flex',
+                    )}
+                >
                     <SliderButton title={t('Previous products')} type="prev" onClick={handlePrevious} />
                     <SliderButton title={t('Next products')} type="next" onClick={handleNext} />
                 </div>
@@ -117,7 +124,10 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
                     products={products}
                     swipeHandlers={handlers}
                     className={twMergeCustom([
-                        "grid snap-x snap-mandatory auto-cols-[80%] grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] md:auto-cols-[45%] lg:auto-cols-[30%] [&::-webkit-scrollbar]:hidden vl:auto-cols-[25%]",
+                        "grid snap-x snap-mandatory auto-cols-[80%] md:auto-cols-[45%] grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] [&::-webkit-scrollbar]:hidden ",
+                        isBlogPage
+                            ? 'lg:auto-cols-[45%] xl:auto-cols-[33.3%]'
+                            : 'lg:auto-cols-[30%] vl:auto-cols-[25%]',
                         wrapperClassName,
                     ])}
                     productItemProps={{
