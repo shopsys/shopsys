@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Admin;
+namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use App\Component\Router\FriendlyUrl\FriendlyUrlInlineEdit;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlInlineEdit;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
-use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,12 +16,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class UnusedFriendlyUrlController extends AdminBaseController
 {
     /**
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlInlineEdit $friendlyUrlInlineEdit
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlInlineEdit $friendlyUrlInlineEdit
      */
     public function __construct(
-        private FriendlyUrlFacade $friendlyUrlFacade,
-        private FriendlyUrlInlineEdit $friendlyUrlInlineEdit,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly FriendlyUrlInlineEdit $friendlyUrlInlineEdit,
     ) {
     }
 
@@ -39,7 +38,7 @@ class UnusedFriendlyUrlController extends AdminBaseController
         $this->friendlyUrlInlineEdit->setGridQuickSearchFormData($quickSearchForm->getData());
         $unusedFriendlyUrlInlineEditGrid = $this->friendlyUrlInlineEdit->getGrid();
 
-        return $this->render('Admin/Content/UnusedFriendlyUrl/list.html.twig', [
+        return $this->render('@ShopsysFramework/Admin/Content/UnusedFriendlyUrl/list.html.twig', [
             'quickSearchForm' => $quickSearchForm->createView(),
             'gridView' => $unusedFriendlyUrlInlineEditGrid->createView(),
         ]);

@@ -10,12 +10,6 @@ msgstr ""
 msgid "-- Choose group --"
 msgstr ""
 
-msgid "301 (Permanent redirect)"
-msgstr ""
-
-msgid "302 (Temporary redirect)"
-msgstr ""
-
 msgid "<strong><a href=\"{{ url }}\">Notification bar</a></strong> has been successfuly updated"
 msgstr ""
 
@@ -38,9 +32,6 @@ msgid "Administrator"
 msgstr ""
 
 msgid "Advanced SEO categories"
-msgstr ""
-
-msgid "Article"
 msgstr ""
 
 msgid "Back to category selection"
@@ -67,15 +58,6 @@ msgstr ""
 msgid "Basic information"
 msgstr ""
 
-msgid "Blog article"
-msgstr ""
-
-msgid "Blog category"
-msgstr ""
-
-msgid "Brand"
-msgstr ""
-
 msgid "Brand overview"
 msgstr ""
 
@@ -97,25 +79,16 @@ msgstr ""
 msgid "Catalog numbers"
 msgstr ""
 
-msgid "Category"
-msgstr ""
-
 msgid "Category description"
 msgstr ""
 
 msgid "Category name"
 msgstr ""
 
-msgid "Category with prefilled filters"
-msgstr ""
-
 msgid "Center"
 msgstr ""
 
 msgid "Choose this category and continue"
-msgstr ""
-
-msgid "Choose type of redirect"
 msgstr ""
 
 msgid "Clean Storefront Query Cache"
@@ -178,9 +151,6 @@ msgstr ""
 msgid "Do you really want to remove this flag?"
 msgstr ""
 
-msgid "Do you really want to remove this friendly URL? Removing friendly URL may have bad impact to SEO performance."
-msgstr ""
-
 msgid "Do you really want to remove this language constant translation?"
 msgstr ""
 
@@ -235,12 +205,6 @@ msgstr ""
 msgid "Enable two factor authentication by email"
 msgstr ""
 
-msgid "Entity"
-msgstr ""
-
-msgid "Entity ID"
-msgstr ""
-
 msgid "Error messages"
 msgstr ""
 
@@ -293,9 +257,6 @@ msgid "Flag <strong>{{ name }}</strong> deleted"
 msgstr ""
 
 msgid "Forgotten password"
-msgstr ""
-
-msgid "Friendly URL \"%slug%\" was removed."
 msgstr ""
 
 msgid "GTM ID"
@@ -365,9 +326,6 @@ msgid "Language constant translation <strong>{{ name }}</strong> not found"
 msgstr ""
 
 msgid "Language constants"
-msgstr ""
-
-msgid "Last modification"
 msgstr ""
 
 msgid "Left"
@@ -547,9 +505,6 @@ msgstr ""
 msgid "Privacy Policy settings"
 msgstr ""
 
-msgid "Product"
-msgstr ""
-
 msgid "Products parameters of selected category"
 msgstr ""
 
@@ -563,12 +518,6 @@ msgid "Promoted products"
 msgstr ""
 
 msgid "Quick search"
-msgstr ""
-
-msgid "Redirect target"
-msgstr ""
-
-msgid "Redirect type"
 msgstr ""
 
 msgid "Registration"
@@ -586,9 +535,6 @@ msgstr ""
 msgid "SEO combination of category with ID {{ ReadyCategorySeoMixId }} has not been removed, because it was not found"
 msgstr ""
 
-msgid "SEO page"
-msgstr ""
-
 msgid "Sale"
 msgstr ""
 
@@ -603,12 +549,6 @@ msgstr ""
 
 msgid "Search [verb]"
 msgstr "Search"
-
-msgid "Search by slug..."
-msgstr ""
-
-msgid "Searching searches in slugs. It is possible to use wildcards * and ?."
-msgstr ""
 
 msgid "Selected flag doesn't exist."
 msgstr ""
@@ -631,13 +571,7 @@ msgstr ""
 msgid "Show in the category"
 msgstr ""
 
-msgid "Slug"
-msgstr ""
-
 msgid "Stocking"
-msgstr ""
-
-msgid "Store"
 msgstr ""
 
 msgid "Stores"
@@ -703,9 +637,6 @@ msgstr ""
 msgid "Unsupported order"
 msgstr ""
 
-msgid "Unused friendly URL list"
-msgstr ""
-
 msgid "Upload image"
 msgstr ""
 
@@ -758,9 +689,6 @@ msgid "You can upload following formats: PNG, JPG"
 msgstr ""
 
 msgid "You can upload following formats: PNG, JPG, GIF"
-msgstr ""
-
-msgid "You have to set redirect code for redirect."
 msgstr ""
 
 msgid "Youtube ID"

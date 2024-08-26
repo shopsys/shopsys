@@ -2,35 +2,35 @@
 
 declare(strict_types=1);
 
-namespace App\Component\Router\FriendlyUrl;
+namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
-use App\Form\Admin\FriendlyUrlFormType;
 use LogicException;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
+use Shopsys\FrameworkBundle\Form\Admin\FriendlyUrl\FriendlyUrlFormType;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Symfony\Component\Form\FormFactoryInterface;
 
 /**
- * @property \App\Component\Router\FriendlyUrl\FriendlyUrlGridFactory $gridFactory
+ * @property \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlGridFactory $gridFactory
  */
 class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
 {
-    private QuickSearchFormData $gridQuickSearchFormData;
+    protected QuickSearchFormData $gridQuickSearchFormData;
 
     /**
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlGridFactory $gridFactory
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlGridFactory $gridFactory
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlDataFactory $friendlyUrlDataFactory
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactory $friendlyUrlDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
         FriendlyUrlGridFactory $gridFactory,
-        private FormFactoryInterface $formFactory,
-        private FriendlyUrlFacade $friendlyUrlFacade,
-        private FriendlyUrlDataFactory $friendlyUrlDataFactory,
-        private AdminDomainTabsFacade $adminDomainTabsFacade,
+        protected readonly FormFactoryInterface $formFactory,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly FriendlyUrlDataFactory $friendlyUrlDataFactory,
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
         parent::__construct($gridFactory);
 
@@ -71,7 +71,7 @@ class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
 
     /**
      * @param string $rowId
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlData $formData
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData $formData
      */
     protected function editEntity($rowId, $formData)
     {

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Category;
 
-use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
 use ArrayObject;
@@ -13,6 +12,7 @@ use InvalidArgumentException;
 use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Definition\ArgumentInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolverMap as BaseCategoryResolverMap;
@@ -22,7 +22,7 @@ class CategoryResolverMap extends BaseCategoryResolverMap
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Overblog\DataLoader\DataLoaderInterface $readyCategorySeoMixesBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $categoryChildrenBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $linkedCategoriesBatchLoader

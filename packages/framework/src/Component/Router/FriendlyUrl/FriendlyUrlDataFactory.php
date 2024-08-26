@@ -29,9 +29,26 @@ class FriendlyUrlDataFactory implements FriendlyUrlDataFactoryInterface
      */
     public function createFromIdAndName(int $id, string $name): FriendlyUrlData
     {
-        $friendlyUrlData = $this->createInstance();
-        $friendlyUrlData->id = $id;
+        $friendlyUrlData = $this->create();
+        $friendlyUrlData->entityId = $id;
         $friendlyUrlData->name = $name;
+
+        return $friendlyUrlData;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
+     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData
+     */
+    public function createFromFriendlyUrl(FriendlyUrl $friendlyUrl): FriendlyUrlData
+    {
+        $friendlyUrlData = $this->createInstance();
+        $friendlyUrlData->name = $friendlyUrl->getRouteName();
+        $friendlyUrlData->slug = $friendlyUrl->getSlug();
+        $friendlyUrlData->entityId = $friendlyUrl->getEntityId();
+        $friendlyUrlData->redirectTo = $friendlyUrl->getRedirectTo();
+        $friendlyUrlData->redirectCode = $friendlyUrl->getRedirectCode();
+        $friendlyUrlData->lastModification = $friendlyUrl->getLastModification();
 
         return $friendlyUrlData;
     }

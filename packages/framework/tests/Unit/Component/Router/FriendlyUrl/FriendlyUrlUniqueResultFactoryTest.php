@@ -104,6 +104,6 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
         $this->assertSame($friendlyUrl->getRouteName(), $friendlyUrlForPersist->getRouteName());
         $this->assertSame($friendlyUrl->getEntityId(), $friendlyUrlForPersist->getEntityId());
         $this->assertSame($friendlyUrl->getDomainId(), $friendlyUrlForPersist->getDomainId());
-        $this->assertSame('name-4/', $friendlyUrlForPersist->getSlug());
+        $this->assertSame('name-4', $friendlyUrlForPersist->getSlug());
     }
 }

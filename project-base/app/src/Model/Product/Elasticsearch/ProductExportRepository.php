@@ -32,22 +32,21 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 
 /**
+ * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
  * @property \App\Model\Product\ProductFacade $productFacade
+ * @property \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
+ * @property \App\Model\Category\CategoryFacade $categoryFacade
+ * @property \App\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider $productExportFieldProvider
+ * @property \App\Model\Product\ProductRepository $productRepository
+ * @method array extractResult(\App\Model\Product\Product $product, int $domainId, string $locale, string[] $fields)
  * @method int[] extractVariantIds(\App\Model\Product\Product $product)
  * @method string extractDetailUrl(int $domainId, \App\Model\Product\Product $product)
  * @method int[] extractFlags(int $domainId, \App\Model\Product\Product $product)
  * @method int[] extractCategories(int $domainId, \App\Model\Product\Product $product)
- * @method array extractVisibility(int $domainId, \App\Model\Product\Product $product)
- * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
- * @property \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
  * @method array extractParameters(string $locale, \App\Model\Product\Product $product)
- * @property \App\Model\Category\CategoryFacade $categoryFacade
+ * @method array extractVisibility(int $domainId, \App\Model\Product\Product $product)
  * @method string getBrandUrlForDomainByProduct(\App\Model\Product\Product $product, int $domainId)
  * @method array extractAccessoriesIds(\App\Model\Product\Product $product)
- * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
- * @property \App\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider $productExportFieldProvider
- * @method array extractResult(\App\Model\Product\Product $product, int $domainId, string $locale, string[] $fields)
- * @property \App\Model\Product\ProductRepository $productRepository
  * @method \App\Model\Product\Product[] getVariantsForDefaultPricingGroup(\App\Model\Product\Product $mainVariant, int $domainId)
  */
 class ProductExportRepository extends BaseProductExportRepository
@@ -58,7 +57,7 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \App\Model\Product\ProductFacade $productFacade
      * @param \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade $brandCachedFacade
