@@ -15,9 +15,9 @@ export const useUserMenuItems = (): UserMenuItemType[] => {
     const { url } = useDomainConfig();
     const { comparison } = useComparison();
     const { wishlist } = useWishlist();
-    const [customerOrdersUrl, customerEditProfileUrl, productComparisonUrl, wishlistUrl] =
+    const [customerOrdersUrl, customerComplaintsUrl, customerEditProfileUrl, productComparisonUrl, wishlistUrl] =
         getInternationalizedStaticUrls(
-            ['/customer/orders', '/customer/edit-profile', '/product-comparison', '/wishlist'],
+            ['/customer/orders', '/customer/complaints', '/customer/edit-profile', '/product-comparison', '/wishlist'],
             url,
         );
 
@@ -29,6 +29,10 @@ export const useUserMenuItems = (): UserMenuItemType[] => {
         {
             text: t('Orders'),
             link: customerOrdersUrl,
+        },
+        {
+            text: t('Complaints'),
+            link: customerComplaintsUrl,
         },
         {
             text: t('Wishlist'),

@@ -16,6 +16,7 @@ import { useCreateComplaint } from 'graphql/requests/complaints/mutations/Create
 import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import useTranslation from 'next-translate/useTranslation';
+import { useEffect } from 'react';
 import { Controller, FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
 import { useSessionStore } from 'store/useSessionStore';
 import { ComplaintFormType } from 'types/form';
@@ -42,6 +43,12 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid,
     const { setValue } = formProviderMethods;
     const formMeta = useComplaintFormMeta(formProviderMethods);
     const countriesAsSelectOptions = useCountriesAsSelectOptions();
+
+    useEffect(() => {
+        if (countriesAsSelectOptions.length > 0) {
+            setValue(formMeta.fields.country.name, countriesAsSelectOptions[0], { shouldValidate: true });
+        }
+    }, [countriesAsSelectOptions, formMeta.fields.country.name, setValue]);
 
     const [deliveryAddressUuid] = useWatch({
         name: [formMeta.fields.deliveryAddressUuid.name],
@@ -325,9 +332,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid,
                                                         value={countriesAsSelectOptions.find(
                                                             (option) => option.value === field.value.value,
                                                         )}
-                                                        onChange={(...selectOnChangeEventData) => {
-                                                            field.onChange(...selectOnChangeEventData);
-                                                        }}
+                                                        onChange={field.onChange}
                                                     />
                                                     <FormLineError error={error} inputType="select" />
                                                 </>

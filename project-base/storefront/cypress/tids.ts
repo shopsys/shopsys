@@ -53,6 +53,7 @@ export enum TIDs {
     header_edit_profile_link = 'header_edit_profile_link',
     registration_after_order_submit_button = 'registration_after_order_submit_button',
     header_my_orders_link = 'header_my_orders_link',
+    header_my_complaints_link = 'header_my_complaints_link',
     my_orders_link_ = 'my_orders_link_',
     breadcrumbs_tail = 'breadcrumbs_tail',
     header_cart_link = 'header_cart_link',

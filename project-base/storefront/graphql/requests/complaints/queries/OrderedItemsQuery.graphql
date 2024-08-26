@@ -1,0 +1,13 @@
+query OrderedItemsQuery($first: Int, $after: String, $filter: OrderItemsFilterInput) {
+    orderItems(first: $first, after: $after, filter: $filter) {
+        __typename
+        totalCount
+        edges {
+            __typename
+            cursor
+            node {
+                ...OrderDetailItemFragment
+            }
+        }
+    }
+}

@@ -12,10 +12,11 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
     const { t } = useTranslation();
     const logout = useLogout();
     const { url } = useDomainConfig();
-    const [customerUrl, customerOrdersUrl, customerEditProfileUrl] = getInternationalizedStaticUrls(
-        ['/customer', '/customer/orders', '/customer/edit-profile'],
-        url,
-    );
+    const [customerUrl, customerOrdersUrl, customerComplaintsUrl, customerEditProfileUrl] =
+        getInternationalizedStaticUrls(
+            ['/customer', '/customer/orders', '/customer/complaints', '/customer/edit-profile'],
+            url,
+        );
 
     return (
         <>
@@ -38,6 +39,11 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                     <li className="block">
                         <MenuIconicSubItemLink href={customerOrdersUrl} tid={TIDs.header_my_orders_link} type="orders">
                             {t('My orders')}
+                        </MenuIconicSubItemLink>
+                    </li>
+                    <li className="block border-t border-borderAccent">
+                        <MenuIconicSubItemLink href={customerComplaintsUrl} tid={TIDs.header_my_complaints_link}>
+                            {t('My complaints')}
                         </MenuIconicSubItemLink>
                     </li>
                     <li className="block border-t border-borderAccent">
