@@ -1,4 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { EditIcon } from 'components/Basic/Icon/EditIcon';
+import { ExitIcon } from 'components/Basic/Icon/ExitIcon';
+import { SearchListIcon } from 'components/Basic/Icon/SearchListIcon';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
@@ -28,6 +31,7 @@ export const CustomerContent: FC = () => {
                 <ul className="mb-8 flex flex-col flex-wrap gap-4 md:flex-row">
                     <CustomerListItem>
                         <ExtendedNextLink href={customerOrdersUrl} type="orders">
+                            <SearchListIcon className="mr-5 w-6 h-6" />
                             {t('My orders')}
                         </ExtendedNextLink>
                     </CustomerListItem>
@@ -38,10 +42,15 @@ export const CustomerContent: FC = () => {
 
                     <CustomerListItem>
                         <ExtendedNextLink href={customerEditProfileUrl}>{t('Edit profile')}</ExtendedNextLink>
+                        <ExtendedNextLink href={customerEditProfileUrl}>
+                            <EditIcon className="mr-5 w-6 h-6" />
+                            {t('Edit profile')}
+                        </ExtendedNextLink>
                     </CustomerListItem>
 
                     <CustomerListItem>
                         <a tid={TIDs.customer_page_logout} onClick={logout}>
+                            <ExitIcon className="mr-5 w-6 h-6" />
                             {t('Logout')}
                         </a>
                     </CustomerListItem>
@@ -54,9 +63,9 @@ export const CustomerContent: FC = () => {
 const CustomerListItem: FC = ({ children }) => (
     <li
         className={twJoin(
-            'block flex-1 cursor-pointer rounded text-lg transition [&_a]:block [&_a]:h-full [&_a]:w-full [&_a]:p-5 [&_a]:text-text [&_a]:no-underline hover:[&_a]:no-underline',
-            'bg-backgroundMore',
-            'hover:bg-backgroundMost ',
+            'block flex-1 cursor-pointer rounded-xl text-lg transition [&_a]:block [&_a]:h-full [&_a]:w-full [&_a]:p-5 [&_a]:text-text [&_a]:no-underline hover:[&_a]:no-underline',
+            'bg-backgroundAccentLess',
+            'hover:bg-backgroundMost',
         )}
     >
         {children}
