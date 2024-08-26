@@ -36,6 +36,7 @@ use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
  * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
  * @method fillProductStockByProduct(\App\Model\Product\ProductData $productData, \App\Model\Product\Product $product)
  * @method fillProductStockByStocks(\App\Model\Product\ProductData $productData)
+ * @method \App\Model\Product\ProductData create()
  */
 class ProductDataFactory extends BaseProductDataFactory
 {
@@ -110,26 +111,13 @@ class ProductDataFactory extends BaseProductDataFactory
     }
 
     /**
-     * @return \App\Model\Product\ProductData
-     */
-    public function create(): BaseProductData
-    {
-        $productData = $this->createInstance();
-        $this->fillNew($productData);
-        $this->fillProductStockByStocks($productData);
-
-        return $productData;
-    }
-
-    /**
      * @param \App\Model\Product\Product $product
      * @return \App\Model\Product\ProductData
      */
     public function createFromProduct(BaseProduct $product): BaseProductData
     {
-        $productData = $this->createInstance();
-        $this->fillFromProduct($productData, $product);
-        $this->fillProductStockByProduct($productData, $product);
+        /** @var \App\Model\Product\ProductData $productData */
+        $productData = parent::createFromProduct($product);
         $this->fillProductVideosByProductId($productData, $product);
 
         return $productData;
@@ -225,6 +213,7 @@ class ProductDataFactory extends BaseProductDataFactory
         $productData->pluginData = $this->pluginDataFormExtensionFacade->getAllData('product', $product->getId());
         $productData->weight = $product->getWeight();
         $productData->relatedProducts = $product->getRelatedProducts();
+        $this->fillProductStockByProduct($productData, $product);
     }
 
     /**

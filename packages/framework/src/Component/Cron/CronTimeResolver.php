@@ -37,8 +37,8 @@ class CronTimeResolver
             if (
                 $timeValue === '*'
                 || $timeValue === str_pad((string)$value, strlen($timeValue), '0', STR_PAD_LEFT)
-                || preg_match('@^\*/(\d+)$@', $timeValue, $matches)
-                && $value % $matches[1] === 0 // syntax */[int]
+                || (preg_match('@^\*/(\d+)$@', $timeValue, $matches)
+                    && $value % (int)$matches[1] === 0) // syntax */[int]
             ) {
                 return true;
             }
