@@ -133,8 +133,8 @@ export default class Window {
     }
 
     moveToCenter () {
-        let relativeY = $(window).height() / 2 - this.$window.height() / 2;
-        let minRelativeY = $(window).height() * 0.1;
+        let relativeY = window.innerHeight / 2 - this.$window.height() / 2;
+        let minRelativeY = window.innerHeight * 0.1;
 
         if (relativeY < minRelativeY) {
             relativeY = minRelativeY;
