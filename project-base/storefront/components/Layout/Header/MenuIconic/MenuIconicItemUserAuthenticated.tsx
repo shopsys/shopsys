@@ -25,7 +25,10 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                     className="rounded-t p-3 group-hover:bg-background group-hover:text-linkHovered max-lg:hidden group-hover:underline hover:underline transition-all"
                     href={customerUrl}
                 >
-                    <UserIcon className="w-5 lg:w-4" />
+                    <div className="relative">
+                        <UserIcon className="w-5 lg:w-6 max-h-[22px]" isFull={false} />
+                        <div className="w-[10px] h-[10px] absolute -right-1 -top-1 rounded-full bg-actionPrimaryBackground" />
+                    </div>
                     {t('My account')}
                 </MenuIconicItemLink>
 
