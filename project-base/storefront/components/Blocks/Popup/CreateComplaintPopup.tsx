@@ -1,4 +1,5 @@
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
+import DropzoneControlled from 'components/Forms/Dropzone/Dropzone';
 import { Form, FormContentWrapper, FormBlockWrapper, FormHeading, FormButtonWrapper } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
@@ -33,8 +34,8 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid,
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const user = useCurrentCustomerData();
 
-    const defaultDeliveryAddressUuid = user?.defaultDeliveryAddress?.uuid || null;
-    const [formProviderMethods] = useComplaintForm(defaultDeliveryAddressUuid);
+    const defaultDeliveryAddressChecked = user?.defaultDeliveryAddress?.uuid || '';
+    const [formProviderMethods] = useComplaintForm(defaultDeliveryAddressChecked);
     const formMeta = useComplaintFormMeta(formProviderMethods);
     const countriesAsSelectOptions = useCountriesAsSelectOptions();
 
@@ -48,28 +49,45 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid,
     const createComplaintHandler: SubmitHandler<ComplaintFormType> = async (complaintFormData) => {
         blurInput();
 
+        const items = [
+            {
+                orderItemUuid: orderItem.uuid,
+                quantity: Number(complaintFormData.quantity),
+                description: complaintFormData.description,
+                files: complaintFormData.files.filter((image) => image instanceof File),
+            },
+        ];
+
+        const deliveryAddress =
+            user?.defaultDeliveryAddress && !isNewDeliveryAddressSelected
+                ? {
+                      uuid: null,
+                      firstName: user.defaultDeliveryAddress.firstName,
+                      lastName: user.defaultDeliveryAddress.lastName,
+                      companyName: user.defaultDeliveryAddress.companyName,
+                      street: user.defaultDeliveryAddress.street,
+                      city: user.defaultDeliveryAddress.city,
+                      postcode: user.defaultDeliveryAddress.postcode,
+                      telephone: user.defaultDeliveryAddress.telephone,
+                      country: user.defaultDeliveryAddress.country.code,
+                  }
+                : {
+                      uuid: null,
+                      firstName: complaintFormData.firstName,
+                      lastName: complaintFormData.lastName,
+                      companyName: complaintFormData.companyName,
+                      street: complaintFormData.street,
+                      city: complaintFormData.city,
+                      postcode: complaintFormData.postcode,
+                      telephone: complaintFormData.telephone,
+                      country: complaintFormData.country.value,
+                  };
+
         const createComplaintResult = await createComplaint({
             input: {
                 orderUuid,
-                items: [
-                    {
-                        orderItemUuid: orderItem.uuid,
-                        quantity: Number(complaintFormData.quantity),
-                        description: complaintFormData.description,
-                        files: [],
-                    },
-                ],
-                deliveryAddress: {
-                    uuid: complaintFormData.deliveryAddressUuid,
-                    firstName: complaintFormData.firstName,
-                    companyName: complaintFormData.companyName,
-                    lastName: complaintFormData.lastName,
-                    street: complaintFormData.street,
-                    city: complaintFormData.city,
-                    postcode: complaintFormData.postcode,
-                    telephone: complaintFormData.telephone,
-                    country: complaintFormData.country.value,
-                },
+                items,
+                deliveryAddress,
             },
         });
 
@@ -113,6 +131,16 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid,
                                     rows: 3,
                                     required: true,
                                 }}
+                            />
+                        </FormBlockWrapper>
+                        <FormBlockWrapper>
+                            <FormHeading>{t('Attachments')}</FormHeading>
+                            <DropzoneControlled
+                                control={formProviderMethods.control}
+                                formName={formMeta.formName}
+                                label={t('Drag & drop some files here, or click to select files')}
+                                name={formMeta.fields.files.name}
+                                render={(dropzone) => <FormLine>{dropzone}</FormLine>}
                             />
                         </FormBlockWrapper>
                         <FormBlockWrapper>

@@ -1,5 +1,6 @@
 import { VALIDATION_CONSTANTS } from './validationConstants';
 import { Translate } from 'next-translate';
+import { formatBytes } from 'utils/formaters/formatBytes';
 import * as Yup from 'yup';
 import { BaseSchema } from 'yup';
 
@@ -183,4 +184,25 @@ export const validateNewPassword = (t: Translate): BaseSchema => {
 
 export const validateNewPasswordConfirm = (t: Translate): BaseSchema => {
     return passwordConfirmValidationSchema(t, 'newPassword', t('Please enter new password again'));
+};
+
+export const validateImageFile = (t: Translate): BaseSchema => {
+    return Yup.array()
+        .of(
+            Yup.mixed()
+                .required(t('Please attach files'))
+                .test(
+                    'fileSize',
+                    t('Maximum file size is {{ max }}', {
+                        max: formatBytes(VALIDATION_CONSTANTS.fileMaxSize),
+                    }),
+                    (value) => {
+                        if (!value) {
+                            return true;
+                        }
+                        return value.size <= VALIDATION_CONSTANTS.fileMaxSize;
+                    },
+                ),
+        )
+        .min(1, t('Please attach files'));
 };
