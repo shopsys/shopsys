@@ -59,13 +59,15 @@ class EntityLogFacade
      * @param \Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableEntityConfig $loggableEntityConfig
      * @param string $action
      * @param array $changes
+     * @param string $logCollectionNumber
      * @return \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLog
      */
     public function createEntityLog(
         object $entity,
         LoggableEntityConfig $loggableEntityConfig,
         string $action,
-        array $changes = [],
+        array $changes,
+        string $logCollectionNumber,
     ): EntityLog {
         $userIdentifier = $this->detectionFacade->getUserIdentifier();
         $source = $this->detectionFacade->getEntityLogSource();
@@ -82,6 +84,7 @@ class EntityLogFacade
         $entityLogData->source = $source;
         $entityLogData->changeSet = $changes;
         $entityLogData->parentEntityName = $loggableEntityConfig->getParentEntityName();
+        $entityLogData->logCollectionNumber = $logCollectionNumber;
         $entityLogData->parentEntityId = is_object($parentEntity) && $parentEntityIdentityFunctionName !== null
             ?
             call_user_func([$parentEntity, $parentEntityIdentityFunctionName])

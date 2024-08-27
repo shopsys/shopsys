@@ -103,7 +103,6 @@ class EntityLog
     ) {
         $this->setData($entityLogData);
         $this->createdAt = new DateTime();
-        $this->logCollectionNumber = '';
     }
 
     /**
@@ -120,6 +119,7 @@ class EntityLog
         $this->changeSet = $this->getSerializedChangeSet($entityLogData->changeSet);
         $this->parentEntityName = $entityLogData->parentEntityName;
         $this->parentEntityId = $entityLogData->parentEntityId;
+        $this->logCollectionNumber = $entityLogData->logCollectionNumber;
     }
 
     /**
@@ -225,13 +225,5 @@ class EntityLog
     public function getLogCollectionNumber()
     {
         return $this->logCollectionNumber;
-    }
-
-    /**
-     * @param string $logCollectionNumber
-     */
-    public function setLogCollectionNumber($logCollectionNumber): void
-    {
-        $this->logCollectionNumber = $logCollectionNumber;
     }
 }

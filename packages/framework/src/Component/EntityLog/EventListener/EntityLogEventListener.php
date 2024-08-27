@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\EntityLog\EventListener;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\Event\PostPersistEventArgs;
 use Doctrine\ORM\Event\PostUpdateEventArgs;
 use Doctrine\ORM\Event\PreRemoveEventArgs;
@@ -16,14 +15,10 @@ use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\ChangeSetResolver;
 use Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogActionEnum;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade;
 use Symfony\Contracts\Service\ResetInterface;
-use Throwable;
 
 class EntityLogEventListener implements ResetInterface
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLog[]
-     */
-    protected array $logs = [];
+    protected ?string $logCollectionNumber;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
@@ -39,29 +34,9 @@ class EntityLogEventListener implements ResetInterface
         protected readonly ChangeSetResolver $changeSetResolver,
         protected readonly EntityLogFacade $entityLogFacade,
     ) {
+        $this->logCollectionNumber = null;
     }
 
-    /**
-     * @param \Doctrine\ORM\Event\PostFlushEventArgs $args
-     */
-    public function postFlush(PostFlushEventArgs $args): void
-    {
-        if (count($this->logs) <= 0) {
-            return;
-        }
-
-        $logCollectionNumber = uniqid('entityLog', true);
-
-        foreach ($this->logs as $log) {
-            $log->setLogCollectionNumber($logCollectionNumber);
-            $this->em->persist($log);
-        }
-
-        $this->logs = [];
-        $this->em->flush();
-    }
-
-    //create
     /**
      * @param \Doctrine\ORM\Event\PostPersistEventArgs $args
      */
@@ -71,7 +46,6 @@ class EntityLogEventListener implements ResetInterface
         $this->log(EntityLogActionEnum::CREATE, $entity);
     }
 
-    //update
     /**
      * @param \Doctrine\ORM\Event\PostUpdateEventArgs $args
      */
@@ -81,7 +55,6 @@ class EntityLogEventListener implements ResetInterface
         $this->log(EntityLogActionEnum::UPDATE, $entity);
     }
 
-    //delete
     /**
      * @param \Doctrine\ORM\Event\PreRemoveEventArgs $args
      */
@@ -130,7 +103,13 @@ class EntityLogEventListener implements ResetInterface
             }
         }
 
-        $this->logs[] = $this->entityLogFacade->createEntityLog($entity, $loggableSetup, $action, $resolvedChangeSet);
+        if ($this->logCollectionNumber === null) {
+            $this->logCollectionNumber = uniqid('entityLog', true);
+        }
+
+        $entityLog = $this->entityLogFacade->createEntityLog($entity, $loggableSetup, $action, $resolvedChangeSet, $this->logCollectionNumber);
+        $this->em->persist($entityLog);
+        $this->em->flush();
     }
 
     /**
@@ -165,6 +144,6 @@ class EntityLogEventListener implements ResetInterface
 
     public function reset(): void
     {
-        $this->logs = [];
+        $this->logCollectionNumber = null;
     }
 }

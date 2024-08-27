@@ -1049,7 +1049,6 @@ services:
             - { name: doctrine.event_listener, event: postPersist, priority: 1 }
             - { name: doctrine.event_listener, event: postUpdate, priority: 1 }
             - { name: doctrine.event_listener, event: preRemove, priority: 1 }
-            - { name: doctrine.event_listener, event: postFlush, priority: 1 }
 
     Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\ChangeSetResolver:
         arguments: [!tagged shopsys.data_type_resolver]
