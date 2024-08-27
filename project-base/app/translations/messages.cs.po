@@ -325,9 +325,6 @@ msgstr "Heureka"
 msgid "Hide"
 msgstr "Skrýt"
 
-msgid "Hide on domain"
-msgstr "Skrýt na doméně"
-
 msgid "Holiday / internal day detail"
 msgstr "Detail svátku / interního dne"
 
