@@ -46,6 +46,7 @@ class BlogArticleGridFactory
 
         $grid = $this->gridFactory->create('blog_article', $dataSource);
         $grid->setDefaultOrder('createdAt DESC');
+        $grid->enablePaging();
 
         $grid->addColumn('name', 'bat.name', t('Name'));
         $grid->addColumn('createdAt', 'ba.createdAt', t('Date of creation'));
