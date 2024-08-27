@@ -54,10 +54,10 @@ class MoneyConvertingDataSourceDecorator implements DataSourceInterface
     }
 
     /**
-     * @param int $rowId
+     * @param int|string $rowId
      * @return array
      */
-    public function getOneRow(int $rowId): array
+    public function getOneRow(int|string $rowId): array
     {
         $row = $this->innerDataSource->getOneRow($rowId);
 
