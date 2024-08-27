@@ -144,6 +144,10 @@ class ChangeSetResolver
                 ));
             }
 
+            if (count($collectionChanges->deletedItems) === 0 && count($collectionChanges->insertedItems) === 0) {
+                continue;
+            }
+
             $assoc = $scheduledCollection->getMapping();
             $collectionFieldName = $assoc['fieldName'];
             $resolvedChangedCollections[$collectionFieldName] = $collectionChanges;
