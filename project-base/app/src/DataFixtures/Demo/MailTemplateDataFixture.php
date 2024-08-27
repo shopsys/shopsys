@@ -14,6 +14,7 @@ use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Administrator\Mail\TwoFactorAuthenticationMail;
+use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactoryInterface;
 
 class MailTemplateDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
@@ -88,10 +89,27 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
             $this->createMailTemplate($manager, 'order_status_4', $mailTemplateData, $domainId);
 
             $mailTemplateData->sendMail = true;
+            $mailTemplateData->subject = t('Complaint status has changed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $mailTemplateData->body = t('Dear customer, <br /><br />'
+                . 'Your complaint is being processed.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $mailTemplateData->orderStatus = null;
+            $mailTemplateData->complaintStatus = $this->getReference(ComplaintStatusDataFixture::COMPLAINT_STATUS_NEW, ComplaintStatus::class);
+
+            $this->createMailTemplate($manager, 'complaint_status_1', $mailTemplateData, $domainId);
+
+            $mailTemplateData->sendMail = true;
+            $mailTemplateData->subject = t('Complaint status has changed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $mailTemplateData->body = t('Dear customer, <br /><br />'
+                . 'Processing your complaint has been finished.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $mailTemplateData->complaintStatus = $this->getReference(ComplaintStatusDataFixture::COMPLAINT_STATUS_RESOLVED, ComplaintStatus::class);
+
+            $this->createMailTemplate($manager, 'complaint_status_2', $mailTemplateData, $domainId);
+
+            $mailTemplateData->sendMail = true;
             $mailTemplateData->subject = t('Reset password request', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $mailTemplateData->body = t('Dear customer.<br /><br />'
                 . 'You can set a new password following this link: <a href="{new_password_url}">{new_password_url}</a>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $mailTemplateData->orderStatus = null;
+            $mailTemplateData->complaintStatus = null;
 
             $this->createMailTemplate($manager, MailTemplate::RESET_PASSWORD_NAME, $mailTemplateData, $domainId);
 
@@ -185,6 +203,7 @@ team of {domain}
             TransportDataFixture::class,
             PaymentDataFixture::class,
             OrderStatusDataFixture::class,
+            ComplaintStatusDataFixture::class,
         ];
     }
 }

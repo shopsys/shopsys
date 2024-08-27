@@ -42,6 +42,11 @@ class MailTemplateData
     public $orderStatus;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus|null
+     */
+    public $complaintStatus;
+
+    /**
      * It's used only for creating by administrator, not for editing!
      *
      * @var int|null

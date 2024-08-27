@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Complaint\ComplaintData;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintNumberSequenceRepository;
+use Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMailFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -55,6 +56,8 @@ class ComplaintApiFacadeTest extends TestCase
 
     private MockObject $security;
 
+    private MockObject $complaintMailFacade;
+
     private MockObject $complaintRepository;
 
     protected function setUp(): void
@@ -70,6 +73,7 @@ class ComplaintApiFacadeTest extends TestCase
         $this->complaintDataApiFactory = $this->createMock(ComplaintDataApiFactory::class);
         $this->complaintItemDataApiFactory = $this->createMock(ComplaintItemDataApiFactory::class);
         $this->security = $this->createMock(Security::class);
+        $this->complaintMailFacade = $this->createMock(ComplaintMailFacade::class);
         $this->complaintRepository = $this->createMock(ComplaintRepository::class);
 
         $this->complaintApiFacade = new ComplaintApiFacade(
@@ -84,6 +88,7 @@ class ComplaintApiFacadeTest extends TestCase
             $this->complaintDataApiFactory,
             $this->complaintItemDataApiFactory,
             $this->security,
+            $this->complaintMailFacade,
             $this->complaintRepository,
         );
     }

@@ -60,6 +60,7 @@ class MailTemplateDataFactory implements MailTemplateDataFactoryInterface
         $mailTemplateData->body = $mailTemplate->getBody();
         $mailTemplateData->sendMail = $mailTemplate->isSendMail();
         $mailTemplateData->orderStatus = $mailTemplate->getOrderStatus();
+        $mailTemplateData->complaintStatus = $mailTemplate->getComplaintStatus();
         $mailTemplateData->domainId = $mailTemplate->getDomainId();
     }
 

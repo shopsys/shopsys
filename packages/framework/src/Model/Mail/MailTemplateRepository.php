@@ -127,6 +127,9 @@ class MailTemplateRepository
             ->addSelect('ost.name as orderStatusName')
             ->leftJoin('mt.orderStatus', 'os')
             ->leftJoin('os.translations', 'ost', Join::WITH, 'ost.locale = :locale')
+            ->addSelect('cst.name as complaintStatusName')
+            ->leftJoin('mt.complaintStatus', 'cs')
+            ->leftJoin('cs.translations', 'cst', Join::WITH, 'cst.locale = :locale')
             ->setParameter('locale', $this->localization->getAdminLocale());
 
         return $queryBuilder;

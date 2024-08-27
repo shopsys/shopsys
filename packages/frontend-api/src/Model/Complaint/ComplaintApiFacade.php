@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Complaint\ComplaintData;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintNumberSequenceRepository;
+use Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMailFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
@@ -40,6 +41,7 @@ class ComplaintApiFacade
      * @param \Shopsys\FrontendApiBundle\Model\Complaint\ComplaintDataApiFactory $complaintDataApiFactory
      * @param \Shopsys\FrontendApiBundle\Model\Complaint\ComplaintItemDataApiFactory $complaintItemDataApiFactory
      * @param \Symfony\Component\Security\Core\Security $security
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMailFacade $complaintMailFacade
      * @param \Shopsys\FrontendApiBundle\Model\Complaint\ComplaintRepository $complaintRepository
      */
     public function __construct(
@@ -54,6 +56,7 @@ class ComplaintApiFacade
         protected readonly ComplaintDataApiFactory $complaintDataApiFactory,
         protected readonly ComplaintItemDataApiFactory $complaintItemDataApiFactory,
         protected readonly Security $security,
+        protected readonly ComplaintMailFacade $complaintMailFacade,
         protected readonly ComplaintRepository $complaintRepository,
     ) {
     }
@@ -76,6 +79,8 @@ class ComplaintApiFacade
 
         $this->em->persist($complaint);
         $this->em->flush();
+
+        $this->complaintMailFacade->sendEmail($complaint);
 
         foreach ($complaintItems as $key => $item) {
             $this->customerUploadedFileFacade->manageFiles(
