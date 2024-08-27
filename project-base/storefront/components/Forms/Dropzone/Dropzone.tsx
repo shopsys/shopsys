@@ -38,13 +38,6 @@ const DropzoneControlled: React.FC<DropzoneControlledProps> = ({ control, formNa
         onChange(updatedFiles);
     };
 
-    const classNames = twMergeCustom(
-        'border-2 p-10 text-center rounded-md border-dashed cursor-pointer',
-        !isDragActive && 'border-inputBorder bg-inputBackground hover:border-inputBorderHovered',
-        isDragActive && 'border-inputBorderActive bg-inputBackgroundActive',
-        error && 'border-inputError',
-    );
-
     const formatError = (error: FieldError) => {
         if (Array.isArray(error)) {
             return error.map((e, index) => (
@@ -57,6 +50,19 @@ const DropzoneControlled: React.FC<DropzoneControlledProps> = ({ control, formNa
         return <FormLineError error={error} inputType="dropzone" />;
     };
 
+    const wrapperTwClass = twMergeCustom(
+        'border-2 p-10 text-center rounded-md border-dashed cursor-pointer',
+        !isDragActive && 'border-inputBorder bg-inputBackground hover:border-inputBorderHovered',
+        isDragActive && 'border-inputBorderActive bg-inputBackgroundActive',
+        error && 'border-inputError',
+    );
+    const labelTwClass = twMergeCustom(
+        'text-inputPlaceholder hover:text-inputPlaceholderHovered',
+        isDragActive && 'text-inputPlaceholderHovered',
+    );
+    const listItemTwClass = 'flex my-1 justify-between items-center group';
+    const fileNameTwClass = 'flex-1 text-gray-800 group-hover:text-linkHovered transition-colors duration-300';
+
     return (
         <Controller
             control={control}
@@ -64,23 +70,16 @@ const DropzoneControlled: React.FC<DropzoneControlledProps> = ({ control, formNa
             render={() => {
                 return render(
                     <>
-                        <div id={dropzoneId} {...getRootProps({ className: classNames })}>
+                        <div id={dropzoneId} {...getRootProps({ className: wrapperTwClass })}>
                             <input {...getInputProps()} />
-                            <p
-                                className={twMergeCustom(
-                                    'text-inputPlaceholder hover:text-inputPlaceholderHovered',
-                                    isDragActive && 'text-inputPlaceholderHovered',
-                                )}
-                            >
-                                {label}
-                            </p>
+                            <p className={labelTwClass}>{label}</p>
                         </div>
                         {error && formatError(error)}
                         {value && value.length > 0 && (
                             <ul className="mt-2">
                                 {value.map((file: File, index: number) => (
-                                    <li key={index} className="flex my-1 justify-between items-center group">
-                                        <span className="flex-1 text-gray-800 group-hover:text-linkHovered transition-colors duration-300">
+                                    <li key={index} className={listItemTwClass}>
+                                        <span className={fileNameTwClass}>
                                             {file.name} - {formatBytes(file.size)}
                                         </span>
                                         <Button className="p-1" variant="inverted" onClick={() => removeFile(file)}>
