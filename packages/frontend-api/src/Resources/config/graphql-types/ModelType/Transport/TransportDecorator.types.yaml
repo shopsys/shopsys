@@ -30,7 +30,7 @@ TransportDecorator:
             images:
                 type: "[Image!]!"
                 description: "Transport images"
-                resolve: '@=query("imagesByEntityQuery", value, args["type"])'
+                resolve: '@=query("imagesByEntityPromiseQuery", value, args["type"])'
                 args:
                     type:
                         type: "String"
