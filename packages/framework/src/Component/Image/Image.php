@@ -26,7 +26,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
     public const int DEFAULT_IMAGE_POSITION = 0;
 
     /**
-     * @var int
+     * @var int|null
      * @ORM\Column(type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -226,7 +226,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getId()
     {

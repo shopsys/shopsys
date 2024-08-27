@@ -23,7 +23,7 @@ interface EntityFileUploadInterface
     public function setFileKeyAsUploaded(string $key): void;
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getId();
 }
