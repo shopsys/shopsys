@@ -62,6 +62,10 @@
 {% endblock file_upload_row %}
 
 
+{% block customer_file_upload_row %}
+    {{ block('file_upload_row') }}
+{% endblock %}
+
 {% block file_upload_widget %}
     {% embed "@ShopsysFramework/Admin/Form/abstractFileuploadFields.html.twig" %}
         {% block widget_attributes %}

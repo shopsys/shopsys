@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Complaint;
 
-use Shopsys\FrameworkBundle\Form\BasicFileUploadType;
-use Shopsys\FrameworkBundle\Form\FileUploadType;
-use Shopsys\FrameworkBundle\Form\MultiLocaleBasicFileUploadType;
-use Shopsys\FrameworkBundle\Form\MultiLocaleFileUploadType;
+use Shopsys\FrameworkBundle\Form\CustomerFileUploadType;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintItem;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData;
 use Symfony\Component\Form\AbstractType;
@@ -40,7 +37,7 @@ class ComplaintItemFormType extends AbstractType
                 ],
                 'error_bubbling' => true,
             ])
-            ->add('files', FileUploadType::class, [
+            ->add('files', CustomerFileUploadType::class, [
                 'required' => false,
                 'file_entity_class' => ComplaintItem::class,
                 'file_constraints' => [
@@ -52,6 +49,7 @@ class ComplaintItemFormType extends AbstractType
                 ],
                 'entity' => $options['complaintItem'],
                 'label' => t('Files'),
+                'allow_file_picker' => false,
             ]);
     }
 

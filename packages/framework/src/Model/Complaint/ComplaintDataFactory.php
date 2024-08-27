@@ -14,7 +14,6 @@ class ComplaintDataFactory
     ) {
     }
 
-
     /**
      * @return \Shopsys\FrameworkBundle\Model\Complaint\ComplaintData
      */
