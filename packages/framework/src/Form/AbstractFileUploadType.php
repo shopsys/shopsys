@@ -39,12 +39,15 @@ class AbstractFileUploadType extends AbstractType implements DataTransformerInte
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired('info_text')
+            ->setDefined('allow_file_picker')
             ->setAllowedTypes('info_text', ['string', 'null'])
+            ->setAllowedTypes('allow_file_picker', ['bool'])
             ->setDefaults([
                 'error_bubbling' => false,
                 'compound' => true,
                 'file_constraints' => [],
                 'info_text' => null,
+                'allow_file_picker' => true,
             ]);
     }
 
@@ -76,6 +79,7 @@ class AbstractFileUploadType extends AbstractType implements DataTransformerInte
         parent::buildView($view, $form, $options);
 
         $view->vars['info_text'] = $options['info_text'];
+        $view->vars['allow_file_picker'] = $options['allow_file_picker'];
     }
 
     /**

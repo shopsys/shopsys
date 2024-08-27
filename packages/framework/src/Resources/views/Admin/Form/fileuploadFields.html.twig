@@ -47,7 +47,9 @@
             {% do form.orderedFiles.setRendered %}
         {% endif %}
 
-        {% embed "@ShopsysFramework/Admin/Form/filesPicker.html.twig" %}{% endembed %}
+        {% if allow_file_picker %}
+            {% embed "@ShopsysFramework/Admin/Form/filesPicker.html.twig" %}{% endembed %}
+        {% endif %}
 
         <div class="display-none">
             {{ form_widget(form.filesToDelete) }}
