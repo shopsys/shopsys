@@ -54,7 +54,7 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                             title={t('Price')}
                             value={formatPrice(order.totalPrice.priceWithVat)}
                             valueClassName="text-price"
-                            wrapperClassName="min-w-[80px] max-w-[80px]"
+                            wrapperClassName="w-20"
                         />
                         <OrderItemColumnInfo
                             title={t('Status')}

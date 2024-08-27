@@ -1,5 +1,6 @@
 import { VALIDATION_CONSTANTS } from './validationConstants';
 import { Translate } from 'next-translate';
+import { formatBytes } from 'utils/formaters/formatBytes';
 import * as Yup from 'yup';
 import { Schema } from 'yup';
 

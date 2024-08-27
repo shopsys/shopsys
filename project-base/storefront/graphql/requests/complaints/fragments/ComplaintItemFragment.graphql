@@ -4,7 +4,4 @@ fragment ComplaintItemFragment on ComplaintItem {
     orderItem {
         ...OrderDetailItemFragment
     }
-    # files {
-    #     ...FileFragment
-    # }
 }

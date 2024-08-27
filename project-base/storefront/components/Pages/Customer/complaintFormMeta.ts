@@ -4,6 +4,7 @@ import {
     validateCompanyName,
     validateCountry,
     validateFirstName,
+    validateImageFile,
     validateLastName,
     validatePostcode,
     validateStreet,
@@ -17,51 +18,52 @@ import { useShopsysForm } from 'utils/forms/useShopsysForm';
 import * as Yup from 'yup';
 
 export const useComplaintForm = (
-    defaultDeliveryAddressUuid: string | null,
+    defaultDeliveryAddressChecked: string,
 ): [UseFormReturn<ComplaintFormType>, ComplaintFormType | undefined] => {
     const { t } = useTranslation();
 
     const resolver = yupResolver(
         Yup.object().shape<Record<keyof ComplaintFormType, any>>({
             quantity: Yup.string()
-                .matches(/^[0-9]*$/, t('Please enter quantity'))
+                .matches(/^[1-9][0-9]*$/, t('Please enter quantity'))
                 .required(t('Please enter quantity')),
             description: Yup.string().required(t('Please enter description')),
+            files: validateImageFile(t),
             deliveryAddressUuid: Yup.string().nullable(),
             firstName: Yup.string().when('deliveryAddressUuid', {
                 is: (deliveryAddressUuid: string) => deliveryAddressUuid === '',
-                then: validateFirstName(t),
-                otherwise: Yup.string(),
+                then: () => validateFirstName(t),
+                otherwise: (schema) => schema,
             }),
             lastName: Yup.string().when('deliveryAddressUuid', {
                 is: (deliveryAddressUuid: string) => deliveryAddressUuid === '',
-                then: validateLastName(t),
-                otherwise: Yup.string(),
+                then: () => validateLastName(t),
+                otherwise: (schema) => schema,
             }),
             companyName: validateCompanyName(t).optional(),
             telephone: Yup.string().when('deliveryAddressUuid', {
                 is: (deliveryAddressUuid: string) => deliveryAddressUuid === '',
-                then: validateTelephoneRequired(t),
-                otherwise: Yup.string(),
+                then: () => validateTelephoneRequired(t),
+                otherwise: (schema) => schema,
             }),
             street: Yup.string().when('deliveryAddressUuid', {
                 is: (deliveryAddressUuid: string) => deliveryAddressUuid === '',
-                then: validateStreet(t),
-                otherwise: Yup.string(),
+                then: () => validateStreet(t),
+                otherwise: (schema) => schema,
             }),
             city: Yup.string().when('deliveryAddressUuid', {
                 is: (deliveryAddressUuid: string) => deliveryAddressUuid === '',
-                then: validateCity(t),
-                otherwise: Yup.string(),
+                then: () => validateCity(t),
+                otherwise: (schema) => schema,
             }),
             postcode: Yup.string().when('deliveryAddressUuid', {
                 is: (deliveryAddressUuid: string) => deliveryAddressUuid === '',
-                then: validatePostcode(t),
-                otherwise: Yup.string(),
+                then: () => validatePostcode(t),
+                otherwise: (schema) => schema,
             }),
             country: Yup.object().when('deliveryAddressUuid', {
                 is: (deliveryAddressUuid: string) => deliveryAddressUuid === '',
-                then: validateCountry(t),
+                then: () => validateCountry(t),
             }),
         }),
     );
@@ -69,7 +71,8 @@ export const useComplaintForm = (
     const defaultValues = {
         quantity: '1',
         description: '',
-        deliveryAddressUuid: defaultDeliveryAddressUuid,
+        files: [],
+        deliveryAddressUuid: defaultDeliveryAddressChecked,
         firstName: '',
         lastName: '',
         companyName: '',
@@ -83,7 +86,7 @@ export const useComplaintForm = (
         },
     };
 
-    return [useShopsysForm(resolver, defaultValues), defaultValues];
+    return [useShopsysForm<ComplaintFormType>(resolver, defaultValues), defaultValues];
 };
 
 export type ComplaintFormMetaType = {
@@ -121,6 +124,11 @@ export const useComplaintFormMeta = (formProviderMethods: UseFormReturn<Complain
                     name: 'description' as const,
                     label: t('Description'),
                     errorMessage: errors.description?.message,
+                },
+                files: {
+                    name: 'files' as const,
+                    label: t('Files'),
+                    errorMessage: errors.files?.message,
                 },
                 deliveryAddressUuid: {
                     name: 'deliveryAddressUuid' as const,
@@ -172,6 +180,7 @@ export const useComplaintFormMeta = (formProviderMethods: UseFormReturn<Complain
         [
             errors.quantity?.message,
             errors.description?.message,
+            errors.files?.message,
             errors.firstName?.message,
             errors.lastName?.message,
             errors.companyName?.message,

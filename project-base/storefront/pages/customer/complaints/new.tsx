@@ -71,7 +71,9 @@ const NewComplaintPage: FC = () => {
     });
 
     const mappedOrderedItems = mapConnectionEdges<TypeOrderDetailItemFragment>(
-        debouncedSearchQuery ? searchOrderedItemsData?.orderItemsSearch.edges : orderedItemsData?.orderItems.edges,
+        debouncedSearchQuery.length < MINIMAL_SEARCH_QUERY_LENGTH
+            ? orderedItemsData?.orderItems.edges
+            : searchOrderedItemsData?.orderItemsSearch.edges,
     );
 
     const orderedItemsTotalCount = debouncedSearchQuery

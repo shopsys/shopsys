@@ -92,6 +92,7 @@ export type DeliveryAddressFormType = Omit<DeliveryAddressType, 'uuid' | 'countr
 export type ComplaintFormType = {
     quantity: string;
     description: string;
+    files: File[];
     deliveryAddressUuid: string | null;
     firstName: string;
     lastName: string;

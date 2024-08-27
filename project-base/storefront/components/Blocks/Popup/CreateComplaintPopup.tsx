@@ -102,8 +102,6 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid,
             },
         });
 
-        updatePortalContent(null);
-
         if (createComplaintResult.error !== undefined) {
             const { applicationError } = getUserFriendlyErrors(createComplaintResult.error, t);
             if (applicationError !== undefined) {
@@ -114,6 +112,8 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid,
 
             return;
         }
+
+        updatePortalContent(null);
 
         showSuccessMessage(t('Complaint has been created'));
     };
