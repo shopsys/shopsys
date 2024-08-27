@@ -30,7 +30,7 @@ If you need to test CDN locally, you just need to add new port mapping into your
 
 ```diff
     webserver:
-        image: nginx:1.13-alpine
+        image: nginx:1.27-alpine
         container_name: shopsys-framework-webserver
         depends_on:
             - php-fpm
