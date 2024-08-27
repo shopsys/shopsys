@@ -15,14 +15,17 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 const ComplaintsPage: FC = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
-    const [customerComplaintsUrl] = getInternationalizedStaticUrls(['/customer/complaints'], url);
+    const [customerComplaintsUrl, customerComplaintsNewlUrl] = getInternationalizedStaticUrls(
+        ['/customer/complaints', '/customer/complaints/new-complaint'],
+        url,
+    );
     const breadcrumbs: TypeBreadcrumbFragment[] = [
         { __typename: 'Link', name: t('My complaints'), slug: customerComplaintsUrl },
     ];
+
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.other, breadcrumbs);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
-    const [customerComplaintsNewlUrl] = getInternationalizedStaticUrls(['/customer/complaints/new-complaint'], url);
     return (
         <>
             <MetaRobots content="noindex" />
