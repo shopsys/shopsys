@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Config\CustomerUpload
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfigInterface;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
+use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
 /**
@@ -29,6 +30,7 @@ class CustomerUploadedFileFacade extends AbstractUploadedFileFacade
      * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileRepository $customerUploadedFileRepository
      * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileLocator $customerUploadedFileLocator
      * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFactory $customerUploadedFileFactory
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
      */
     public function __construct(
         FilesystemOperator $filesystem,
@@ -37,6 +39,7 @@ class CustomerUploadedFileFacade extends AbstractUploadedFileFacade
         protected readonly CustomerUploadedFileRepository $customerUploadedFileRepository,
         protected readonly CustomerUploadedFileLocator $customerUploadedFileLocator,
         protected readonly CustomerUploadedFileFactory $customerUploadedFileFactory,
+        protected readonly AdministratorFrontSecurityFacade $administratorFrontSecurityFacade,
     ) {
         parent::__construct($filesystem, $em);
     }
@@ -264,7 +267,7 @@ class CustomerUploadedFileFacade extends AbstractUploadedFileFacade
         ?CustomerUser $customerUser = null,
         ?string $hash = null,
     ): CustomerUploadedFile {
-        if (!$hash && !$customerUser) {
+        if (!$hash && !$customerUser && !$this->administratorFrontSecurityFacade->isAdministratorLogged()) {
             throw new InvalidArgumentException('Either hash or customerUser must be set.');
         }
 
