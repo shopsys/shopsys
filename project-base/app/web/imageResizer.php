@@ -12,7 +12,7 @@ if (file_exists(__DIR__ . '/../../../parameters_monorepo.yaml')) {
 }
 
 require $projectRootDirectory . '/vendor/symfony/dotenv/Dotenv.php';
-(new Dotenv())->bootEnv(dirname(__DIR__).'/.env');
+(new Dotenv())->bootEnv(dirname(__DIR__) . '/.env');
 
 $CDN_API_KEY = $_ENV['CDN_API_KEY'] ?? null;
 $CDN_API_SALT = $_ENV['CDN_API_SALT'] ?? null;
@@ -20,9 +20,12 @@ $CDN_DOMAIN = $_ENV['CDN_DOMAIN'] ?? '//';
 
 $IMAGE_URL = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['DOCUMENT_URI'];
 
+$allowedImageSizes = [30, 50, 200, 350, 500, 1000];
+sort($allowedImageSizes);
+
 $resize = $_GET['resize'] ?? 'fit';
-$width = $_GET['width'] ?? 0;
-$height = $_GET['height'] ?? 0;
+$width = findExactOrClosestLargerOrLargestImageSize((int)($_GET['width'] ?? 0), $allowedImageSizes);
+$height = findExactOrClosestLargerOrLargestImageSize((int)($_GET['height'] ?? 0), $allowedImageSizes);
 $gravity = 'no';
 $enlarge = 1;
 
@@ -81,4 +84,16 @@ function getExtension(string $url): string
     }
 
     return 'jpeg';
+}
+
+function findExactOrClosestLargerOrLargestImageSize(int $requestedImageSize, array $allowedImageSizes) {
+    if ($requestedImageSize === 0) {
+        return 0;
+    }
+    foreach ($allowedImageSizes as $size) {
+        if ($requestedImageSize <= $size) {
+            return $size;
+        }
+    }
+    return end($allowedImageSizes);
 }
