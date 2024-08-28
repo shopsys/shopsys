@@ -12,7 +12,7 @@ export type TypeSearchOrderedItemsQueryVariables = Types.Exact<{
 }>;
 
 
-export type TypeSearchOrderedItemsQuery = { __typename?: 'Query', orderItemsSearch: { __typename?: 'OrderItemConnection', totalCount: number, edges: Array<{ __typename?: 'OrderItemEdge', cursor: string, node: { __typename: 'OrderItem', uuid: string, name: string, vatRate: string, quantity: number, unit: string | null, type: Types.TypeOrderItemTypeEnum, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, order: { __typename?: 'Order', number: string, creationDate: any } } | null } | null> | null } };
+export type TypeSearchOrderedItemsQuery = { __typename?: 'Query', orderItemsSearch: { __typename?: 'OrderItemConnection', totalCount: number, edges: Array<{ __typename?: 'OrderItemEdge', cursor: string, node: { __typename: 'OrderItem', uuid: string, name: string, vatRate: string, quantity: number, unit: string | null, type: Types.TypeOrderItemTypeEnum, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, order: { __typename?: 'Order', uuid: string, number: string, creationDate: any } } | null } | null> | null } };
 
 
       export interface PossibleTypesResultData {
