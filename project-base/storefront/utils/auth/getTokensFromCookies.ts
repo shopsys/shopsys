@@ -15,11 +15,11 @@ export const getTokensFromCookies = (context?: GetServerSidePropsContext | NextP
         secure: getIsHttps(getProtocol(context)),
     });
 
-    if (typeof accessToken !== 'string') {
+    if (typeof accessToken !== 'string' || accessToken.length === 0) {
         accessToken = undefined;
     }
 
-    if (typeof refreshToken !== 'string') {
+    if (typeof refreshToken !== 'string' || refreshToken.length === 0) {
         refreshToken = undefined;
     }
 
