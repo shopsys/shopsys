@@ -7,6 +7,14 @@ namespace Shopsys\FrameworkBundle\Model\Complaint;
 class ComplaintDataFactory
 {
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemDataFactory $complaintItemDataFactory
+     */
+    public function __construct(
+        protected readonly ComplaintItemDataFactory $complaintItemDataFactory,
+    ) {
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Complaint\ComplaintData
      */
     public function create(): ComplaintData
@@ -57,5 +65,10 @@ class ComplaintDataFactory
         $complaintData->deliveryCity = $complaint->getDeliveryCity();
         $complaintData->deliveryPostcode = $complaint->getDeliveryPostcode();
         $complaintData->deliveryCountry = $complaint->getDeliveryCountry();
+
+        foreach ($complaint->getItems() as $complaintItem) {
+            $complaintItemData = $this->complaintItemDataFactory->createFromComplaintItem($complaintItem);
+            $complaintData->complaintItems[$complaintItem->getId()] = $complaintItemData;
+        }
     }
 }
