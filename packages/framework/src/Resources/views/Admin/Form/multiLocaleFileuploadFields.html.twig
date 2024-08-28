@@ -56,29 +56,30 @@
             {% do form.orderedFiles.setRendered %}
         {% endif %}
 
-        {% embed "@ShopsysFramework/Admin/Form/filesPicker.html.twig" %}
-            {% block files_picker %}
-                <div
-                        id="{{ form.relations.vars.id }}"
-                        class="js-files-picker"
-                        data-picker-prototype="{{ _self.pickerWidgetItem(null, form.relations.vars.prototype, form.relations.vars.sortable, null, null, null, form.relationsFilenames.vars.prototype, [form.relationsNames.vars.prototype])|e }}"
-                        data-picker-url="{{ form.relations.vars.picker_url }}"
-                >
-                    <div class="list-files__wrap">
-                        <ul class="list-files js-file-upload js-picker-items">
-                            {% for key, formRow in form.relations %}
-                                {{ _self.pickerWidgetItem(form.relations.vars.items[key], formRow, form.relations.vars.sortable, form.relations.vars.item_names[key], form.relations.vars.item_routes[key] ?? null, key, form.relationsFilenames[key], [form.relationsNames[key]]) }}
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
-            {% endblock %}
-        {% endembed %}
-
-        <div class="display-none">
-            {{ form_widget(form.filesToDelete) }}
-        </div>
     {% endif %}
+
+    {% embed "@ShopsysFramework/Admin/Form/filesPicker.html.twig" %}
+        {% block files_picker %}
+            <div
+                    id="{{ form.relations.vars.id }}"
+                    class="js-files-picker"
+                    data-picker-prototype="{{ _self.pickerWidgetItem(null, form.relations.vars.prototype, form.relations.vars.sortable, null, null, null, form.relationsFilenames.vars.prototype, [form.relationsNames.vars.prototype])|e }}"
+                    data-picker-url="{{ form.relations.vars.picker_url }}"
+            >
+                <div class="list-files__wrap">
+                    <ul class="list-files js-file-upload js-picker-items">
+                        {% for key, formRow in form.relations %}
+                            {{ _self.pickerWidgetItem(form.relations.vars.items[key], formRow, form.relations.vars.sortable, form.relations.vars.item_names[key], form.relations.vars.item_routes[key] ?? null, key, form.relationsFilenames[key], [form.relationsNames[key]]) }}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+
+    <div class="display-none">
+        {{ form_widget(form.filesToDelete) }}
+    </div>
 
     <div class="form-line{{ disabledField is defined ? ' form-input-disabled form-line--disabled' }}">
         {{ form_errors(form) }}

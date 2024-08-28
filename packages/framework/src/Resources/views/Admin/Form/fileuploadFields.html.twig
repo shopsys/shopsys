@@ -47,12 +47,14 @@
             {% do form.orderedFiles.setRendered %}
         {% endif %}
 
-        {% embed "@ShopsysFramework/Admin/Form/filesPicker.html.twig" %}{% endembed %}
-
-        <div class="display-none">
-            {{ form_widget(form.filesToDelete) }}
-        </div>
     {% endif %}
+
+    {% embed "@ShopsysFramework/Admin/Form/filesPicker.html.twig" %}{% endembed %}
+
+    <div class="display-none">
+        {{ form_widget(form.filesToDelete) }}
+    </div>
+
     <div class="form-line{{ disabledField is defined ? ' form-input-disabled form-line--disabled' }}">
         {{ form_errors(form) }}
         {{ form_label(form, label) }}
