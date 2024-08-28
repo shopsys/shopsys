@@ -79,7 +79,7 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
                 <div className="flex gap-2 items-center">
                     <Button
                         size="small"
-                        onClick={(e) => openCreateComplaintPopup(e, orderedItem.order.number, orderedItem)}
+                        onClick={(e) => openCreateComplaintPopup(e, orderedItem.order.uuid, orderedItem)}
                     >
                         {t('Create complaint')}
                     </Button>
