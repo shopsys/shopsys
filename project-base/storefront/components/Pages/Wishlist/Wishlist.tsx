@@ -29,7 +29,7 @@ export const Wishlist: FC = () => {
                             }}
                         >
                             <span className="mr-3 text-sm">{t('Delete all from wishlist')}</span>
-                            <RemoveIcon className="w-3 text-actionInvertedText" />
+                            <RemoveIcon className="w-3" />
                         </Button>
                     </div>
 
