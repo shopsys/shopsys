@@ -271,6 +271,9 @@ msgstr ""
 msgid "Please enter default pricing group"
 msgstr ""
 
+msgid "Please enter description"
+msgstr ""
+
 msgid "Please enter discount percentage"
 msgstr ""
 

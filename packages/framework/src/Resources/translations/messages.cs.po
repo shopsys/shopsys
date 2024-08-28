@@ -673,6 +673,9 @@ msgstr "Reklamace č."
 msgid "Complaint Nr. <strong><a href=\"{{ url }}\">{{ number }}</a></strong> modified"
 msgstr "Byla upravena reklamace č. <strong><a href=\"{{ url }}\">{{ number }}</a></strong>"
 
+msgid "Complaint items"
+msgstr "Položky reklamace"
+
 msgid "Complaint number"
 msgstr "Číslo reklamace"
 
@@ -2991,6 +2994,9 @@ msgstr "Slevoé kupóny - vygenerované dávky"
 
 msgid "Promo codes - view"
 msgstr "Slevové kupóny - zobrazení"
+
+msgid "Quantity"
+msgstr "Množství"
 
 msgid "Quick product search"
 msgstr "Rychlé vyhledávání v produktech"

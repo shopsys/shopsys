@@ -673,6 +673,9 @@ msgstr ""
 msgid "Complaint Nr. <strong><a href=\"{{ url }}\">{{ number }}</a></strong> modified"
 msgstr ""
 
+msgid "Complaint items"
+msgstr ""
+
 msgid "Complaint number"
 msgstr ""
 
@@ -2990,6 +2993,9 @@ msgid "Promo codes - generated batches"
 msgstr ""
 
 msgid "Promo codes - view"
+msgstr ""
+
+msgid "Quantity"
 msgstr ""
 
 msgid "Quick product search"

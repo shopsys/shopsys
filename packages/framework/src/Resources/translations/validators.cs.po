@@ -271,6 +271,9 @@ msgstr "Prosím zadejte výchozí měnu"
 msgid "Please enter default pricing group"
 msgstr "Prosím zadejte výchozí cenovou skupinu"
 
+msgid "Please enter description"
+msgstr "Prosím zadejte popis"
+
 msgid "Please enter discount percentage"
 msgstr "Vyplňte prosím procento slevy."
 
