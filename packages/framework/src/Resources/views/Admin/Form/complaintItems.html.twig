@@ -7,13 +7,26 @@
                     <table class="table-main table-main--with-inline-form table-fixed">
                         <thead>
                             <tr>
+                                <th class="table-col-200px">{{ 'Name'|trans }}</th>
                                 <th class="table-col-375px">{{ 'Description'|trans }}</th>
                                 <th>{{ 'Quantity'|trans }}</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for complaintItemId, complaintItemForm in form.children %}
+                                {% set orderItem = complaintItemForm.vars.value.orderItem %}
                                 <tr id="{{ complaintItemForm.vars.id }}" data-index="{{ complaintItemId }}">
+                                    <td>
+                                        {% if orderItem.product %}
+                                            <a href="{{ path('admin_product_edit', { id: orderItem.product.id }) }}" class="in-icon font-size-12" target="_blank">
+                                                {{ orderItem.name }}
+                                                <i class="svg svg-arrow-simple in-icon in-icon--detail"></i>
+                                            </a>
+                                        {% else %}
+                                            <span class="font-size-12">{{ orderItem.name }}</span>
+                                            <i class="in-icon svg svg-question js-tooltip" data-toggle="tooltip" data-placement="top" title="{{ 'Product not in e-shop.'|trans }}"></i>
+                                        {% endif %}
+                                    </td>
                                     <td>
                                         {{ form_widget(complaintItemForm.description) }}
                                         {{ form_errors(complaintItemForm.description, {errors_attr: { inline: false }}) }}
