@@ -172,7 +172,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid,
                                         {
                                             label: (
                                                 <p>
-                                                    <strong>{t('Different delivery address')}</strong>
+                                                    <span className="font-bold">{t('Different delivery address')}</span>
                                                 </p>
                                             ),
                                             value: '',

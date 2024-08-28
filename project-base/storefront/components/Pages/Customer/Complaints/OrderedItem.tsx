@@ -66,7 +66,7 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
                         <OrderedItemColumnInfo
                             title={t('Quantity')}
                             value={`${orderedItem.quantity} ${orderedItem.unit}`}
-                            wrapperClassName="min-w-[80px] max-w-[80px]"
+                            wrapperClassName="w-20"
                         />
                         <OrderedItemColumnInfo
                             title={t('Price')}
