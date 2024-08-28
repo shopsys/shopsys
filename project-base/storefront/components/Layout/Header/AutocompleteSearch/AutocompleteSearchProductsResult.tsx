@@ -46,7 +46,7 @@ export const AutocompleteSearchProductsResult: FC<AutocompleteSearchProductsResu
         <div tid={TIDs.layout_header_search_autocomplete_popup_products}>
             <SearchResultSectionTitle>
                 {t('Products')}
-                {` (${productsSearch.totalCount})`}
+                {productsSearch.totalCount !== -1 && ` (${productsSearch.totalCount})`}
             </SearchResultSectionTitle>
 
             <ProductsSlider
