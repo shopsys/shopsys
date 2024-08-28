@@ -280,12 +280,6 @@ msgstr "Vyplňte také URL pro zvolenou doménu"
 msgid "Fill URL only for selected domain"
 msgstr "Vyplňte pouze URL pro zvolenou doménu"
 
-msgid "Filter parameters"
-msgstr "Parametry filtru"
-
-msgid "Filter parameters closed by default"
-msgstr "Defaultně zavřené parametry ve filtru"
-
 msgid "Flag"
 msgstr "Příznak"
 
@@ -516,9 +510,6 @@ msgstr "Titulek stránky"
 
 msgid "Parameter"
 msgstr "Parametr"
-
-msgid "Parameters order in category"
-msgstr "Pořadí parametrů v kategorii"
 
 msgid "Password"
 msgstr "Heslo"

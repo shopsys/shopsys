@@ -86,7 +86,7 @@ class CategoryFacade extends BaseCategoryFacade
         CategoryFactoryInterface $categoryFactory,
         ProductRecalculationDispatcher $productRecalculationDispatcher,
         EventDispatcherInterface $eventDispatcher,
-        private readonly CategoryParameterFacade $categoryParameterFacade,
+        CategoryParameterFacade $categoryParameterFacade,
         private readonly LinkedCategoryFacade $linkedCategoryFacade,
         private readonly ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade,
     ) {
@@ -103,6 +103,7 @@ class CategoryFacade extends BaseCategoryFacade
             $categoryFactory,
             $productRecalculationDispatcher,
             $eventDispatcher,
+            $categoryParameterFacade,
         );
     }
 
@@ -114,7 +115,6 @@ class CategoryFacade extends BaseCategoryFacade
     {
         /** @var \App\Model\Category\Category $category */
         $category = parent::create($categoryData);
-        $this->categoryParameterFacade->saveRelation($category, $categoryData->parametersPosition, $categoryData->parametersCollapsed);
         $this->linkedCategoryFacade->updateLinkedCategories($category, $categoryData->linkedCategories);
 
         return $category;
@@ -129,7 +129,6 @@ class CategoryFacade extends BaseCategoryFacade
     {
         /** @var \App\Model\Category\Category $category */
         $category = parent::edit($categoryId, $categoryData);
-        $this->categoryParameterFacade->saveRelation($category, $categoryData->parametersPosition, $categoryData->parametersCollapsed);
         $this->linkedCategoryFacade->updateLinkedCategories($category, $categoryData->linkedCategories);
 
         return $category;
@@ -173,19 +172,6 @@ class CategoryFacade extends BaseCategoryFacade
     public function getFullPathsIndexedByIds(string $locale): array
     {
         return $this->categoryRepository->getFullPathsIndexedByIds($locale);
-    }
-
-    /**
-     * @param \App\Model\Category\Category $parentCategory
-     * @param int $domainId
-     * @return \App\Model\Category\Category[]
-     */
-    public function getVisibleCategoriesLookingLikeChildren(Category $parentCategory, int $domainId): array
-    {
-        $children = $this->getAllVisibleChildrenByCategoryAndDomainId($parentCategory, $domainId);
-        $categoriesFromLinkedCategories = $this->categoryRepository->getVisibleCategoriesByLinkedCategories($parentCategory, $domainId, $children);
-
-        return array_merge($children, $categoriesFromLinkedCategories);
     }
 
     /**

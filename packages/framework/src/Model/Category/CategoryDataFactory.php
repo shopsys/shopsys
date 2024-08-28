@@ -16,12 +16,14 @@ class CategoryDataFactory implements CategoryDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterRepository $categoryParameterRepository
      */
     public function __construct(
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly PluginCrudExtensionFacade $pluginCrudExtensionFacade,
         protected readonly Domain $domain,
         protected readonly ImageUploadDataFactory $imageUploadDataFactory,
+        protected readonly CategoryParameterRepository $categoryParameterRepository,
     ) {
     }
 
@@ -101,7 +103,27 @@ class CategoryDataFactory implements CategoryDataFactoryInterface
             $categoryData->urls->mainFriendlyUrlsByDomainId[$domainId] = $mainFriendlyUrl;
         }
 
+        $parameters = $this->categoryParameterRepository->getParametersCollapsedByCategory($category);
+        $categoryData->parametersCollapsed = $parameters;
+        $categoryData->parametersPosition = $this->getParametersSortedByPositionFilteredByCategory($category);
+
         $categoryData->pluginData = $this->pluginCrudExtensionFacade->getAllData('category', $category->getId());
         $categoryData->image = $this->imageUploadDataFactory->createFromEntityAndType($category);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @return int[]
+     */
+    protected function getParametersSortedByPositionFilteredByCategory(Category $category): array
+    {
+        $parameterIdsSortedByPosition = [];
+        $categoryParameters = $this->categoryParameterRepository->getCategoryParametersByCategorySortedByPosition($category);
+
+        foreach ($categoryParameters as $categoryParameter) {
+            $parameterIdsSortedByPosition[] = $categoryParameter->getParameter()->getId();
+        }
+
+        return $parameterIdsSortedByPosition;
     }
 }

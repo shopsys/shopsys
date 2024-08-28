@@ -1663,6 +1663,12 @@ msgstr ""
 msgid "Filter by"
 msgstr ""
 
+msgid "Filter parameters"
+msgstr ""
+
+msgid "Filter parameters closed by default"
+msgstr ""
+
 msgid "Finish the assigning"
 msgstr ""
 
@@ -2594,6 +2600,9 @@ msgid "Parameters - full"
 msgstr ""
 
 msgid "Parameters - view"
+msgstr ""
+
+msgid "Parameters order in category"
 msgstr ""
 
 msgid "Parameters overview"
