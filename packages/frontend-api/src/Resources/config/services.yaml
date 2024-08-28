@@ -111,6 +111,11 @@ services:
             $imagesBatchLoader: '@images_batch_loader'
             $firstImageBatchLoader: '@first_image_batch_loader'
 
+    Shopsys\FrontendApiBundle\Model\Resolver\Image\SalesRepresentativeImagesQuery:
+        arguments:
+            $imagesBatchLoader: '@images_batch_loader'
+            $firstImageBatchLoader: '@first_image_batch_loader'
+
     Shopsys\FrontendApiBundle\Model\Resolver\Image\SeoPageImagesQuery:
         arguments:
             $imagesBatchLoader: '@images_batch_loader'
