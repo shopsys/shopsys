@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Twig;
 
+use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile;
+use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFacade;
+use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileLocator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
@@ -22,12 +25,16 @@ class UploadedFileExtension extends AbstractExtension
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      * @param \Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailExtension $fileThumbnailExtension
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator $uploadedFileLocator
+     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFacade $customerUploadedFileFacade
+     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileLocator $customerUploadedFileLocator
      */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly UploadedFileFacade $uploadedFileFacade,
         protected readonly FileThumbnailExtension $fileThumbnailExtension,
         protected readonly UploadedFileLocator $uploadedFileLocator,
+        protected readonly CustomerUploadedFileFacade $customerUploadedFileFacade,
+        protected readonly CustomerUploadedFileLocator $customerUploadedFileLocator,
     ) {
     }
 
@@ -40,6 +47,8 @@ class UploadedFileExtension extends AbstractExtension
             new TwigFunction('uploadedFileUrl', $this->getUploadedFileUrl(...)),
             new TwigFunction('uploadedFilePreview', $this->getUploadedFilePreviewHtml(...), ['is_safe' => ['html']]),
             new TwigFunction('uploadedFileExists', $this->uploadedFileExists(...)),
+            new TwigFunction('customerUploadedFileUrl', $this->getCustomerUploadedFileUrl(...)),
+            new TwigFunction('customerUploadedFileExists', $this->customerUploadedFileExists(...)),
         ];
     }
 
@@ -50,6 +59,24 @@ class UploadedFileExtension extends AbstractExtension
     public function getUploadedFileUrl(UploadedFile $uploadedFile): string
     {
         return $this->uploadedFileFacade->getUploadedFileUrl($this->domain->getCurrentDomainConfig(), $uploadedFile);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile $customerUploadedFile
+     * @return string
+     */
+    public function getCustomerUploadedFileUrl(CustomerUploadedFile $customerUploadedFile): string
+    {
+        return $this->customerUploadedFileFacade->getCustomerUploadedFileDownloadUrl($this->domain->getCurrentDomainConfig(), $customerUploadedFile);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile $customerUploadedFile
+     * @return bool
+     */
+    public function customerUploadedFileExists(CustomerUploadedFile $customerUploadedFile): bool
+    {
+        return $this->customerUploadedFileLocator->fileExists($customerUploadedFile);
     }
 
     /**

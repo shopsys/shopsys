@@ -10,11 +10,13 @@
                                 <th class="table-col-200px">{{ 'Name'|trans }}</th>
                                 <th class="table-col-375px">{{ 'Description'|trans }}</th>
                                 <th>{{ 'Quantity'|trans }}</th>
+                                <th>{{ 'Files'|trans }}</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for complaintItemId, complaintItemForm in form.children %}
                                 {% set orderItem = complaintItemForm.vars.value.orderItem %}
+                                {% set files = complaintItemForm.vars.value.files %}
                                 <tr id="{{ complaintItemForm.vars.id }}" data-index="{{ complaintItemId }}">
                                     <td>
                                         {% if orderItem.product %}
@@ -34,6 +36,16 @@
                                     <td>
                                         {{ form_widget(complaintItemForm.quantity) }}
                                         {{ form_errors(complaintItemForm.quantity, {errors_attr: { inline: false }}) }}
+                                    </td>
+                                    <td>
+                                        {% for file in files.orderedFiles %}
+                                            {% if customerUploadedFileExists(file) %}
+                                                <a href="{{ customerUploadedFileUrl(file) }}" target="_blank">{{ file.name }}.{{ file.extension }}</a>
+                                            {% else %}
+                                                {{ file.name }}
+                                            {% endif %}
+                                            {% if not loop.last %}, {% endif %}
+                                        {% endfor %}
                                     </td>
                                 </tr>
                             {% endfor %}
