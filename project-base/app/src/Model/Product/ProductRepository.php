@@ -126,28 +126,6 @@ class ProductRepository extends BaseProductRepository
      * @param string|null $searchText
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getListableBySearchTextQueryBuilder(
-        $domainId,
-        PricingGroup $pricingGroup,
-        $locale,
-        $searchText,
-    ) {
-        $queryBuilder = $this->getAllListableQueryBuilder($domainId, $pricingGroup);
-
-        $this->addTranslation($queryBuilder, $locale);
-
-        $this->productElasticsearchRepository->filterBySearchText($queryBuilder, $searchText);
-
-        return $queryBuilder;
-    }
-
-    /**
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param string $locale
-     * @param string|null $searchText
-     * @return \Doctrine\ORM\QueryBuilder
-     */
     public function getSellableBySearchTextQueryBuilder(
         $domainId,
         PricingGroup $pricingGroup,

@@ -226,7 +226,6 @@ class ProductRepository
         $queryBuilder = $this->getAllListableQueryBuilder($domainId, $pricingGroup);
 
         $this->addTranslation($queryBuilder, $locale);
-        $this->addDomain($queryBuilder, $domainId);
 
         $this->productElasticsearchRepository->filterBySearchText($queryBuilder, $searchText);
 
