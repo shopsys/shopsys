@@ -129,7 +129,7 @@ class MethodAnnotationsFactory
         try {
             $reflectionMethod = $reflectionClass->getMethod($methodName);
 
-            return $reflectionMethod->getDeclaringClass()->getName() === $reflectionClass->getName();
+            return $reflectionMethod?->getDeclaringClass()->getName() === $reflectionClass->getName();
         } catch (OutOfBoundsException $ex) {
             return false;
         }
