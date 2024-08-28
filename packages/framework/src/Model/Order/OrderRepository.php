@@ -10,6 +10,7 @@ use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
+use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Listing\OrderListAdminRepository;
@@ -179,6 +180,27 @@ class OrderRepository
             ->andWhere('o.customerUser = :customerUser')
             ->orderBy('o.createdAt', 'DESC')
             ->setParameter('customerUser', $customerUser)
+            ->getQuery()->execute();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @param int $limit
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
+     */
+    public function getLastCustomerOrdersByLimit(Customer $customer, int $limit, string $locale): array
+    {
+        return $this->createOrderQueryBuilder()
+            ->select('o, os, ost, c')
+            ->join('o.status', 'os')
+            ->join('os.translations', 'ost', Join::WITH, 'ost.locale = :locale')
+            ->join('o.currency', 'c')
+            ->andWhere('o.customer = :customer')
+            ->orderBy('o.createdAt', 'DESC')
+            ->setParameter('customer', $customer)
+            ->setParameter('locale', $locale)
+            ->setMaxResults($limit)
             ->getQuery()->execute();
     }
 

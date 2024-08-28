@@ -11,6 +11,7 @@ interface AdvancedSearchFilterInterface
     public const OPERATOR_CONTAINS = 'contains';
     public const OPERATOR_NOT_CONTAINS = 'notContains';
     public const OPERATOR_NOT_SET = 'notSet';
+    public const OPERATOR_NOT_REGISTERED = 'notRegistered';
     public const OPERATOR_IS = 'is';
     public const OPERATOR_IS_NOT = 'isNot';
     public const OPERATOR_BEFORE = 'before';

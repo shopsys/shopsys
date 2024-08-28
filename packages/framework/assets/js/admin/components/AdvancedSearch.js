@@ -70,7 +70,7 @@ export default class AdvancedSearch {
     }
 
     static updateValueByOperator ($rulesContainer, $rule, operator) {
-        $rule.find('.js-advanced-search-rule-value').toggle(operator !== 'notSet');
+        $rule.find('.js-advanced-search-rule-value').toggle(operator !== 'notSet' && operator !== 'notRegistered');
     }
 
     static init ($container) {

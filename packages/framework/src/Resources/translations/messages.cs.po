@@ -874,6 +874,9 @@ msgstr "Byl upraven zákazník <strong><a href=\"{{ url }}\">{{ name }}</a></str
 msgid "Customer <strong>{{ name }}</strong> deleted"
 msgstr "Zákazník <strong>{{ name }}</strong> byl smazán"
 
+msgid "Customer ID"
+msgstr "ID zákazníka"
+
 msgid "Customer activation"
 msgstr "Aktivace zákazníka"
 
@@ -904,9 +907,6 @@ msgstr "Příjmení zákazníka"
 msgid "Customer name"
 msgstr "Jméno zákazníka"
 
-msgid "Customer orders"
-msgstr "Objednávky zákazníka"
-
 msgid "Customer phone number"
 msgstr "Telefonní číslo zákazníka"
 
@@ -933,6 +933,9 @@ msgstr "Skupina práv"
 
 msgid "Customer users"
 msgstr "Uživatelé"
+
+msgid "Customer with ID %customerId% not found."
+msgstr "Zákazník s ID %customerId% nebyl nalezen."
 
 msgid "Customers"
 msgstr "Zákazníci"
@@ -1932,6 +1935,9 @@ msgstr "Jazykové konstanty - vše"
 
 msgid "Language constants - view"
 msgstr "Jazykové konstanty - zobrazení"
+
+msgid "Last %limit% customer orders"
+msgstr "Posledních %limit% objednávek zákazníka"
 
 msgid "Last action time"
 msgstr "Čas poslední akce"
@@ -3942,6 +3948,9 @@ msgstr "není"
 
 msgid "not entered"
 msgstr "není zadáno"
+
+msgid "not registered customer"
+msgstr "neregistrovaný zákazník"
 
 msgid "numbers"
 msgstr "čísla"

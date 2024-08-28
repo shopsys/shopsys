@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
+use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
@@ -189,6 +190,17 @@ class OrderFacade
     public function getCustomerUserOrderList(CustomerUser $customerUser): array
     {
         return $this->orderRepository->getCustomerUserOrderList($customerUser);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @param int $limit
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
+     */
+    public function getLastCustomerOrdersByLimit(Customer $customer, int $limit, string $locale): array
+    {
+        return $this->orderRepository->getLastCustomerOrdersByLimit($customer, $limit, $locale);
     }
 
     /**

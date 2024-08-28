@@ -62,7 +62,7 @@ class CustomerUserUpdateFormType extends AbstractType
             'customerUser' => $options['customerUser'],
         ]);
         $builder->add('orders', OrderListType::class, [
-            'customerUser' => $options['customerUser'],
+            'customer' => $options['customerUser']->getCustomer(),
         ]);
     }
 
