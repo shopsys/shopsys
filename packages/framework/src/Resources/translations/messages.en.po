@@ -1213,10 +1213,10 @@ msgstr ""
 msgid "Do you really want to remove rate \"%name%\" permanently? It is not used anywhere."
 msgstr ""
 
-msgid "Do you really want to remove status of complaint \"%name%\" permanently? It is not used anywhere."
+msgid "Do you really want to remove sales representative \"%label%\" permanently? It is not used anywhere."
 msgstr ""
 
-msgid "Do you really want to remove sales representative \"%label%\" permanently? It is not used anywhere."
+msgid "Do you really want to remove status of complaint \"%name%\" permanently? It is not used anywhere."
 msgstr ""
 
 msgid "Do you really want to remove status of orders \"%name%\" permanently? It is not used anywhere."
@@ -3180,9 +3180,6 @@ msgstr ""
 
 msgid "Sales representative"
 msgstr ""
-
-msgid "Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br> %extraCount% Do you really want to remove sales representative \"%label%\" permanently?"
-msgstr "[0,20]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br>Customers:<br>%customersEnumeration%<br><br>Do you really want to remove sales representative \"%label%\" permanently?|[21,21]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br>Customers:<br>%customersEnumeration%<br>+1 other<br><br>Do you really want to remove sales representative \"%label%\" permanently?|[22,Inf]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br>Customers:<br>%customersEnumeration%<br>+%extraCount% others<br><br>Do you really want to remove sales representative \"%label%\" permanently?"
 
 msgid "Sales representative <strong><a href=\"{{ url }}\">{{ label }}</a></strong> was created"
 msgstr ""
