@@ -75,6 +75,7 @@ export default class FileUpload {
         this.items[id].setLabel(file.name, file.size);
         this.items[id].setName(file.name.split('.').slice(0, -1).join('.'));
         this.$uploadedFiles.append($uploadedFile);
+        (new Register()).registerNewContent($uploadedFile);
     }
 
     createNewUploadedFile () {
