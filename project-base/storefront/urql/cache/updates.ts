@@ -70,10 +70,12 @@ import { MakeMaybe, TypeProductListInput } from 'graphql/types';
 export const cacheUpdates: UpdatesConfig = {
     Mutation: {
         Login(_result: TypeLoginMutation, _args: TypeLoginMutationVariables, cache) {
-            invalidateFields(cache, ['cart']);
+            invalidateFields(cache, ['cart', 'currentCustomerUser']);
+            cache.invalidate('ProductPrice');
         },
         Logout(_result: TypeLogoutMutation, _args: TypeLogoutMutationVariables, cache) {
-            invalidateFields(cache, ['cart']);
+            invalidateFields(cache, ['cart', 'currentCustomerUser']);
+            cache.invalidate('ProductPrice');
         },
         DeleteDeliveryAddress(
             _result: TypeDeleteDeliveryAddressMutation,
