@@ -3,6 +3,8 @@ mutation CreateComplaint($input: ComplaintInput!) {
         number
         items {
             quantity
+            productName
+            catnum
             files {
                 url
             }

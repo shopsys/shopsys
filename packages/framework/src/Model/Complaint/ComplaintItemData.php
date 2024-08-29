@@ -12,6 +12,11 @@ class ComplaintItemData
     public $orderItem;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Product|null
+     */
+    public $product;
+
+    /**
      * @var int|null
      */
     public $quantity;
@@ -25,4 +30,14 @@ class ComplaintItemData
      * @var \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileData
      */
     public $files;
+
+    /**
+     * @var string|null
+     */
+    public $productName;
+
+    /**
+     * @var string|null
+     */
+    public $catnum;
 }
