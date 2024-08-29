@@ -61,10 +61,16 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({
             return <SkeletonPageBlogArticle />;
         case 'blogCategory':
             return <SkeletonPageBlogCategory />;
+        case 'brand':
+            return <SkeletonPageProductsListSimple />;
         case 'cart':
             return <SkeletonPageCart />;
+        case 'category':
+            return <SkeletonPageProductsList />;
         case 'comparison':
             return <SkeletonPageComparison />;
+        case 'contact':
+            return <SkeletonPageContact />;
         case 'contact-information':
             return <SkeletonPageContactInformation />;
         case 'flag':
@@ -73,8 +79,6 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({
             return <SkeletonPageHome />;
         case 'order-confirmation':
             return <SkeletonPageConfirmation />;
-        case 'contact':
-            return <SkeletonPageContact />;
         case 'order':
             return <SkeletonPageOrder />;
         case 'orders':
