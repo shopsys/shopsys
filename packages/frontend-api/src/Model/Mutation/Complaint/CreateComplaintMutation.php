@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintNumberSequenceRepository;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrontendApiBundle\Model\Complaint\ComplaintApiFacade;
@@ -23,6 +24,7 @@ use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
 use Shopsys\FrontendApiBundle\Model\Order\OrderItemApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\InvalidAccessUserError;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\Security;
 
 class CreateComplaintMutation extends BaseTokenMutation
 {
@@ -36,6 +38,7 @@ class CreateComplaintMutation extends BaseTokenMutation
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrontendApiBundle\Model\Complaint\ComplaintDataApiFactory $complaintDataApiFactory
      * @param \Shopsys\FrontendApiBundle\Model\Complaint\ComplaintItemDataApiFactory $complaintItemDataApiFactory
+     * @param \Symfony\Component\Security\Core\Security $security
      */
     public function __construct(
         TokenStorageInterface $tokenStorage,
@@ -47,6 +50,7 @@ class CreateComplaintMutation extends BaseTokenMutation
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly ComplaintDataApiFactory $complaintDataApiFactory,
         protected readonly ComplaintItemDataApiFactory $complaintItemDataApiFactory,
+        protected readonly Security $security,
     ) {
         parent::__construct($tokenStorage);
     }
@@ -66,13 +70,13 @@ class CreateComplaintMutation extends BaseTokenMutation
 
         $order = $this->orderApiFacade->getByUuid($input['orderUuid']);
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+        $orderCustomerUser = $order->getCustomerUser();
 
-        if ($order->getCustomerUser() !== $customerUser) {
+        if ($orderCustomerUser !== $customerUser && !$this->security->isGranted(CustomerUserRole::ROLE_API_ALL)) {
             throw new InvalidAccessUserError('You are not allowed to create complaint for this order');
         }
 
         $complaintItemsData = $this->createComplaintItems($input['items'], $order);
-
 
         $number = $this->complaintNumberSequenceRepository->getNextNumber();
 

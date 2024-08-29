@@ -35,12 +35,19 @@ class ComplaintItemDataApiFactory
     public function createFromComplaintItemInput(OrderItem $orderItem, array $item): ComplaintItemData
     {
         $product = $orderItem->getProduct();
+        $productName = $orderItem->getName();
+        $catnum = $orderItem->getCatnum();
+
+        if ($product) {
+            $productName = $product->getName($this->domain->getLocale());
+            $catnum = $product->getCatnum();
+        }
 
         $complaintItemData = $this->complaintItemDataFactory->create();
         $complaintItemData->orderItem = $orderItem;
         $complaintItemData->product = $product;
-        $complaintItemData->productName = $product->getName($this->domain->getLocale());
-        $complaintItemData->catnum = $product->getCatnum();
+        $complaintItemData->productName = $productName;
+        $complaintItemData->catnum = $catnum;
         $complaintItemData->quantity = $item['quantity'];
         $complaintItemData->description = $item['description'];
 

@@ -1,5 +1,5 @@
-query SearchOrderItemsQuery($first: Int, $searchInput: SearchInput!, $filter: OrderItemsFilterInput){
-    orderItemsSearch(first: $first, searchInput: $searchInput, filter: $filter) {
+query SearchOrderItemsQuery($first: Int, $last: Int, $searchInput: SearchInput!, $filter: OrderItemsFilterInput){
+    orderItemsSearch(first: $first, last: $last, searchInput: $searchInput, filter: $filter) {
         totalCount
         edges {
             cursor

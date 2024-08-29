@@ -1,5 +1,5 @@
-query GetOrderItemsQuery ($first: Int, $filter: OrderItemsFilterInput) {
-    orderItems(first: $first, filter: $filter) {
+query GetOrderItemsQuery ($first: Int, $last: Int, $filter: OrderItemsFilterInput) {
+    orderItems(first: $first, last: $last, filter: $filter) {
         totalCount
         edges {
             cursor

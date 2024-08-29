@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Order;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
+use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 
@@ -57,6 +58,8 @@ class OrderItemApiFacade
         OrderItemsFilter $filter,
     ): array {
         return $this->createCustomerUserOrderItemsLimitedListQueryBuilder($customerUser, $filter)
+            ->orderBy('o.createdAt', 'DESC')
+            ->addOrderBy('oi.id', 'DESC')
             ->setMaxResults($limit)
             ->setFirstResult($offset)
             ->getQuery()
@@ -79,6 +82,45 @@ class OrderItemApiFacade
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @param int $limit
+     * @param int $offset
+     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilter $filter
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[]
+     */
+    public function getCustomerOrderItemsLimitedList(
+        Customer $customer,
+        int $limit,
+        int $offset,
+        OrderItemsFilter $filter,
+    ): array {
+        $queryBuilder = $this->createCustomerOrderItemsLimitedListQueryBuilder($customer, $filter);
+
+        return $queryBuilder
+            ->orderBy('o.createdAt', 'DESC')
+            ->addOrderBy('oi.id', 'DESC')
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilter $filter
+     * @return int
+     */
+    public function getCustomerOrderItemsLimitedListCount(
+        Customer $customer,
+        OrderItemsFilter $filter,
+    ): int {
+        return $this->createCustomerOrderItemsLimitedListQueryBuilder($customer, $filter)
+            ->select('count(oi.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
      * @param string $search
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param int $limit
@@ -94,6 +136,8 @@ class OrderItemApiFacade
         OrderItemsFilter $filter,
     ): array {
         return $this->createCustomerUserOrderItemsLimitedSearchListQueryBuilder($customerUser, $search, $filter)
+            ->orderBy('o.createdAt', 'DESC')
+            ->addOrderBy('oi.id', 'DESC')
             ->setMaxResults($limit)
             ->setFirstResult($offset)
             ->getQuery()
@@ -118,6 +162,47 @@ class OrderItemApiFacade
     }
 
     /**
+     * @param string $search
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @param int $limit
+     * @param int $offset
+     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilter $filter
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[]
+     */
+    public function getCustomerOrderItemsLimitedSearchList(
+        string $search,
+        Customer $customer,
+        int $limit,
+        int $offset,
+        OrderItemsFilter $filter,
+    ): array {
+        return $this->createCustomerOrderItemsLimitedSearchListQueryBuilder($customer, $search, $filter)
+            ->orderBy('o.createdAt', 'DESC')
+            ->addOrderBy('oi.id', 'DESC')
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param string $search
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilter $filter
+     * @return int
+     */
+    public function getCustomerOrderItemsLimitedSearchListCount(
+        string $search,
+        Customer $customer,
+        OrderItemsFilter $filter,
+    ): int {
+        return $this->createCustomerOrderItemsLimitedSearchListQueryBuilder($customer, $search, $filter)
+            ->select('count(oi.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param string $search
      * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilter $filter
@@ -130,15 +215,23 @@ class OrderItemApiFacade
     ): QueryBuilder {
         $queryBuilder = $this->createCustomerUserOrderItemsLimitedListQueryBuilder($customerUser, $filter);
 
-        $queryBuilder->setParameter(':customerUser', $customerUser)
-            ->andWhere(
-                $this->em->getExpressionBuilder()->orX(
-                    'NORMALIZED(oi.name) LIKE NORMALIZED(:search)',
-                    'NORMALIZED(oi.catnum) LIKE NORMALIZED(:search)',
-                    'NORMALIZED(o.number) LIKE NORMALIZED(:search)',
-                ),
-            )
-            ->setParameter(':search', DatabaseSearching::getFullTextLikeSearchString($search));
+        return $this->applySearchToQueryBuilder($queryBuilder, $search);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @param string $search
+     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilter $filter
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function createCustomerOrderItemsLimitedSearchListQueryBuilder(
+        Customer $customer,
+        string $search,
+        OrderItemsFilter $filter,
+    ): QueryBuilder {
+        $queryBuilder = $this->createCustomerOrderItemsLimitedListQueryBuilder($customer, $filter);
+
+        $this->applySearchToQueryBuilder($queryBuilder, $search);
 
         return $queryBuilder;
     }
@@ -206,5 +299,42 @@ class OrderItemApiFacade
         } elseif (count($orX) > 0) {
             $queryBuilder->andWhere(reset($orX));
         }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilter $filter
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function createCustomerOrderItemsLimitedListQueryBuilder(
+        Customer $customer,
+        OrderItemsFilter $filter,
+    ): QueryBuilder {
+        $queryBuilder = $this->createOrderItemQueryBuilder()
+            ->join('oi.order', 'o')
+            ->andWhere('o.customer = :customer')
+            ->setParameter(':customer', $customer);
+
+        $this->applyOrderItemsFilterToQueryBuilder($filter, $queryBuilder);
+
+        return $queryBuilder;
+    }
+
+    /**
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
+     * @param string $search
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function applySearchToQueryBuilder(QueryBuilder $queryBuilder, string $search): QueryBuilder
+    {
+        $queryBuilder->andWhere(
+            $this->em->getExpressionBuilder()->orX(
+                'NORMALIZED(oi.name) LIKE NORMALIZED(:search)',
+                'NORMALIZED(oi.catnum) LIKE NORMALIZED(:search)',
+                'NORMALIZED(o.number) LIKE NORMALIZED(:search)',
+            ),
+        )->setParameter(':search', DatabaseSearching::getFullTextLikeSearchString($search));
+
+        return $queryBuilder;
     }
 }

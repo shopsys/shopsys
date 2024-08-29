@@ -48,10 +48,10 @@ class GetOrderItemsTest extends GraphQlWithLoginTestCase
     public static function getOrderItemsDataProvider(): iterable
     {
         // first 4 order items
-        yield [['first' => 4], [1, 2, 3, 4]];
+        yield [['last' => 4], [26, 25, 24, 23]];
 
         // filter by order item type
-        yield [['first' => 4, 'filter' => ['type' => OrderItemTypeEnum::TYPE_PRODUCT]], [1, 2, 5, 6]];
+        yield [['last' => 4, 'filter' => ['type' => OrderItemTypeEnum::TYPE_PRODUCT]], [26, 25, 24, 23]];
 
         // filter by order uuid
         yield [
@@ -63,14 +63,22 @@ class GetOrderItemsTest extends GraphQlWithLoginTestCase
                     ),
                 ],
             ],
-            [1, 2, 3, 4],
+            [4, 3, 2, 1],
         ];
 
         // filter by order created after
-        yield [['first' => 4, 'filter' => ['orderCreatedAfter' => (new DateTime('-1 year'))->format(DateTimeInterface::ATOM)]], [1, 2, 3, 4]];
+        yield [
+            [
+                'last' => 4,
+                'filter' => [
+                    'orderCreatedAfter' => (new DateTime('-1 year'))->format(DateTimeInterface::ATOM),
+                ],
+            ],
+            [26, 25, 24, 23],
+        ];
 
         // filter by order status
-        yield [['first' => 4, 'filter' => ['orderStatus' => OrderStatusTypeEnum::TYPE_DONE]], [1, 2, 3, 4]];
+        yield [['last' => 4, 'filter' => ['orderStatus' => OrderStatusTypeEnum::TYPE_DONE]], [4, 3, 2, 1]];
 
         // filter by order item catnum
         yield [
