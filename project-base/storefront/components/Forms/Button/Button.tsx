@@ -50,7 +50,7 @@ export const getButtonClassName = (
     isWithDisabledLook: ButtonBaseProps['isWithDisabledLook'],
 ) => {
     return twJoin(
-        'inline-flex w-auto h-fit cursor-pointer items-center justify-center gap-2 rounded text-center font-bold outline-none transition-all hover:no-underline border-2',
+        'inline-flex w-auto h-fit cursor-pointer items-center justify-center gap-2 rounded-lg text-center font-bold outline-none transition-all hover:no-underline border-2',
         size === 'small' && 'py-1 px-4 text-sm',
         size === 'medium' && 'py-3 px-8',
         variant === 'primary' && [

@@ -1,5 +1,5 @@
 import { FlagDetailProductsWrapper } from './FlagDetailProductsWrapper';
-import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
+import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/DeferredFilterAndSortingBar';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeFlagDetailFragment } from 'graphql/requests/flags/fragments/FlagDetailFragment.generated';
 import { useRef } from 'react';
@@ -18,7 +18,10 @@ export const FlagDetailContent: FC<FlagDetailContentProps> = ({ flag }) => {
             </Webline>
             <Webline>
                 <div className="scroll-mt-5" ref={paginationScrollTargetRef}>
-                    <SortingBar sorting={flag.products.orderingMode} totalCount={flag.products.totalCount} />
+                    <DeferredFilterAndSortingBar
+                        sorting={flag.products.orderingMode}
+                        totalCount={flag.products.totalCount}
+                    />
                     <FlagDetailProductsWrapper flag={flag} paginationScrollTargetRef={paginationScrollTargetRef} />
                 </div>
             </Webline>
