@@ -20,34 +20,45 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
     const productSlug = product.__typename === 'Variant' ? product.mainVariant!.slug : product.slug;
 
     return (
-        <li key={uuid} className="flex w-full items-center gap-x-3 border-b border-borderAccent py-3">
-            <div className="flex w-11 items-center justify-center" tid={TIDs.header_cart_list_item_image}>
-                <Image
-                    alt={product.mainImage?.name || product.fullName}
-                    className="max-h-11 w-auto"
-                    height={44}
-                    src={product.mainImage?.url}
-                    width={44}
-                />
+        <li
+            key={uuid}
+            className="flex flex-row flex-wrap w-full items-center gap-x-6 border-b border-borderAccentLess py-3 last:border-b-[3px] h-auto lg:flex-nowrap relative"
+        >
+            <div className="flex flex-row gap-x-6 items-center w-full min-h-20">
+                <ExtendedNextLink
+                    className="flex w-20 items-center justify-center"
+                    href={productSlug}
+                    tid={TIDs.header_cart_list_item_image}
+                    type="product"
+                >
+                    <Image
+                        alt={product.mainImage?.name || product.fullName}
+                        className="max-h-20 w-auto"
+                        height={80}
+                        src={product.mainImage?.url}
+                        width={80}
+                    />
+                </ExtendedNextLink>
+
+                <ExtendedNextLink
+                    className="flex-1 cursor-pointer text-sm font-semibold outline-none no-underline text-tableText hover:text-link hover:underline"
+                    href={productSlug}
+                    type="product"
+                >
+                    {product.fullName}
+                </ExtendedNextLink>
             </div>
+            <div className="flex flex-row lg:w-full lg:w-auto gap-x-6 mt-2 lg:mt-0">
+                <div className="text-sm w-20 text-center">{quantity + ' ' + product.unit.name}</div>
 
-            <ExtendedNextLink
-                className="flex-1 cursor-pointer text-sm font-bold outline-none"
-                href={productSlug}
-                type="product"
-            >
-                {product.fullName}
-            </ExtendedNextLink>
-
-            <div className="text-sm">{quantity + product.unit.name}</div>
-
-            {isPriceVisible(product.price.priceWithVat) && (
-                <div className="w-28 break-words text-right text-sm font-bold text-price">
+                <div className="w-28 break-words lg:text-right font-bold text-price">
                     {formatPrice(mapPriceForCalculations(product.price.priceWithVat) * quantity)}
                 </div>
-            )}
-
-            <RemoveCartItemButton onRemoveFromCart={onRemoveFromCart} />
+            </div>
+            <RemoveCartItemButton
+                className="absolute right-0 top-2 lg:relative lg:right-0 lg:top-0"
+                onRemoveFromCart={onRemoveFromCart}
+            />
         </li>
     );
 };

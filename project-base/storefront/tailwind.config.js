@@ -110,6 +110,9 @@ module.exports = {
             tableBackgroundHeader: '#3967B2',
             tableText: '#25283D',
             tableTextHeader: '#FFFFFF',
+            tableCross: '#A3ACBD',
+            tableCrossHover: '#7892BC',
+            tableCrossHoverBg: '#FAFAFA',
 
             labelLinkText: '#FFFFFF',
             labelLinkTextActive: '#FFFFFF',

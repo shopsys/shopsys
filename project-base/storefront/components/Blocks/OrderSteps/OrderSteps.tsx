@@ -20,10 +20,12 @@ export const OrderSteps: FC<OrderStepsProps> = ({ activeStep, domainUrl }) => {
             <OrderStepsListItem>
                 {activeStep > 1 ? (
                     <OrderStepsListItemLink isClickable href={cartUrl} isActive={false}>
-                        {'1. ' + t('Cart')}
+                        {'1. ' + t('Shopping cart')}
                     </OrderStepsListItemLink>
                 ) : (
-                    <OrderStepsListItemLink isActive={activeStep === 1}>{'1. ' + t('Cart')}</OrderStepsListItemLink>
+                    <OrderStepsListItemLink isActive={activeStep === 1}>
+                        {'1. ' + t('Shopping cart')}
+                    </OrderStepsListItemLink>
                 )}
             </OrderStepsListItem>
             <OrderStepsListItem>
