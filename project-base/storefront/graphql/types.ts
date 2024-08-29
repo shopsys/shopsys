@@ -780,12 +780,16 @@ export type TypeComplaintInput = {
 
 export type TypeComplaintItem = {
   __typename?: 'ComplaintItem';
+  /** Catalog number */
+  catnum: Scalars['String']['output'];
   /** Description of the complaint order item */
   description: Scalars['String']['output'];
   /** Files attached to the complaint order item */
   files: Maybe<Array<TypeFile>>;
   /** Order item */
-  orderItem: TypeOrderItem;
+  orderItem: Maybe<TypeOrderItem>;
+  /** Product name */
+  productName: Scalars['String']['output'];
   /** Quantity of the order item */
   quantity: Scalars['Int']['output'];
 };

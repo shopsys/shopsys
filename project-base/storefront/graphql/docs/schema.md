@@ -4044,6 +4044,15 @@ UUID
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong>catnum</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Catalog number
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>description</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -4068,10 +4077,19 @@ Files attached to the complaint order item
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>orderItem</strong></td>
-<td valign="top"><a href="#orderitem">OrderItem</a>!</td>
+<td valign="top"><a href="#orderitem">OrderItem</a></td>
 <td>
 
 Order item
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>productName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Product name
 
 </td>
 </tr>

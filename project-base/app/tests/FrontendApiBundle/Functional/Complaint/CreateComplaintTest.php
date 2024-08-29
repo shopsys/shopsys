@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Complaint;
 
 use App\DataFixtures\Demo\OrderDataFixture;
+use App\Model\Product\Product;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class CreateComplaintTest extends GraphQlWithLoginTestCase
@@ -14,7 +15,14 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
         /** @var \App\Model\Order\Order $order */
         $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 1);
         $orderItemProduct1 = $order->getProductItems()[0];
+        $product1 = $orderItemProduct1->getProduct();
+        $complaintItemQuantity1 = 1;
+        $complaintItemFilesCount1 = 2;
+
         $orderItemProduct2 = $order->getProductItems()[1];
+        $product2 = $orderItemProduct2->getProduct();
+        $complaintItemQuantity2 = 2;
+        $complaintItemFilesCount2 = 1;
 
         $response = $this->getResponseContentForGql(
             __DIR__ . '/graphql/CreateComplaintMutation.graphql',
@@ -23,13 +31,13 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
                     'orderUuid' => $order->getUuid(),
                     'items' => [
                         [
-                            'quantity' => 1,
+                            'quantity' => $complaintItemQuantity1,
                             'description' => 'Broken!!!',
                             'orderItemUuid' => $orderItemProduct1->getUuid(),
                             'files' => [null, null],
                         ],
                         [
-                            'quantity' => 2,
+                            'quantity' => $complaintItemQuantity2,
                             'description' => 'Broken 2!!!',
                             'orderItemUuid' => $orderItemProduct2->getUuid(),
                             'files' => [null],
@@ -65,18 +73,42 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
         $this->assertArrayHasKey('items', $responseData);
         $this->assertCount(2, $responseData['items']);
 
-        $this->assertArrayHasKey('quantity', $responseData['items'][0]);
-        $this->assertSame(1, $responseData['items'][0]['quantity']);
-        $this->assertArrayHasKey('files', $responseData['items'][0]);
-        $this->assertCount(2, $responseData['items'][0]['files']);
-        $this->assertArrayHasKey('orderItem', $responseData['items'][0]);
-        $this->assertArrayHasKey('name', $responseData['items'][0]['orderItem']);
+        $this->assertComplaintItem(
+            $responseData['items'][0],
+            $complaintItemQuantity1,
+            $complaintItemFilesCount1,
+            $product1,
+        );
 
-        $this->assertArrayHasKey('quantity', $responseData['items'][1]);
-        $this->assertSame(2, $responseData['items'][1]['quantity']);
-        $this->assertArrayHasKey('files', $responseData['items'][1]);
-        $this->assertCount(1, $responseData['items'][1]['files']);
-        $this->assertArrayHasKey('orderItem', $responseData['items'][1]);
-        $this->assertArrayHasKey('name', $responseData['items'][1]['orderItem']);
+        $this->assertComplaintItem(
+            $responseData['items'][1],
+            $complaintItemQuantity2,
+            $complaintItemFilesCount2,
+            $product2,
+        );
+    }
+
+    /**
+     * @param array $expectedComplaintItem
+     * @param int $quantity
+     * @param int $filesCount
+     * @param \App\Model\Product\Product|null $product
+     */
+    private function assertComplaintItem(
+        array $expectedComplaintItem,
+        int $quantity,
+        int $filesCount,
+        ?Product $product = null,
+    ): void {
+        $this->assertArrayHasKey('quantity', $expectedComplaintItem);
+        $this->assertSame($quantity, $expectedComplaintItem['quantity']);
+        $this->assertArrayHasKey('files', $expectedComplaintItem);
+        $this->assertCount($filesCount, $expectedComplaintItem['files']);
+        $this->assertArrayHasKey('orderItem', $expectedComplaintItem);
+        $this->assertArrayHasKey('name', $expectedComplaintItem['orderItem']);
+        $this->assertArrayHasKey('productName', $expectedComplaintItem);
+        $this->assertSame($product?->getName($this->domain->getLocale()), $expectedComplaintItem['productName']);
+        $this->assertArrayHasKey('catnum', $expectedComplaintItem);
+        $this->assertSame($product->getCatnum(), $expectedComplaintItem['catnum']);
     }
 }

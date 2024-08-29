@@ -122,6 +122,9 @@ class ComplaintDataFixture extends AbstractReferenceFixture implements Dependent
         $item = $this->complaintItemDataFactory->create();
 
         $item->orderItem = $orderItem;
+        $item->product = $orderItem->getProduct();
+        $item->productName = $orderItem->getName();
+        $item->catnum = $orderItem->getCatnum();
         $item->description = $description;
         $item->quantity = $quantity;
         $item->files = $this->customerUploadedFileDataFactory->create();

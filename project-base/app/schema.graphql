@@ -642,12 +642,16 @@ input ComplaintInput {
 }
 
 type ComplaintItem {
+  "Catalog number"
+  catnum: String!
   "Description of the complaint order item"
   description: String!
   "Files attached to the complaint order item"
   files(type: String = "default"): [File!]
   "Order item"
-  orderItem: OrderItem!
+  orderItem: OrderItem
+  "Product name"
+  productName: String!
   "Quantity of the order item"
   quantity: Int!
 }

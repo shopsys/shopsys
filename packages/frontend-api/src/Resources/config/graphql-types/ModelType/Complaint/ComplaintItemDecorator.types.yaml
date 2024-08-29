@@ -4,8 +4,14 @@ ComplaintItemDecorator:
     config:
         fields:
             orderItem:
-                type: "OrderItem!"
+                type: "OrderItem"
                 description: "Order item"
+            productName:
+                type: "String!"
+                description: "Product name"
+            catnum:
+                type: "String!"
+                description: "Catalog number"
             quantity:
                 type: "Int!"
                 description: "Quantity of the order item"
