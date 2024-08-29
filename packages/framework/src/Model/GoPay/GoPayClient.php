@@ -167,7 +167,7 @@ class GoPayClient
             );
         }
 
-        return $response->json['enabledPaymentInstruments'];
+        return $response->json['enabledPaymentInstruments'] ?? [];
     }
 
     /**
