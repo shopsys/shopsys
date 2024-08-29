@@ -24,7 +24,7 @@ export const useComplaintForm = (
     const resolver = yupResolver(
         Yup.object().shape<Record<keyof ComplaintFormType, any>>({
             quantity: Yup.string()
-                .matches(/^[1-9]*$/, t('Please enter quantity'))
+                .matches(/^[1-9][0-9]*$/, t('Please enter quantity'))
                 .required(t('Please enter quantity')),
             description: Yup.string().required(t('Please enter description')),
             files: validateImageFile(t),
