@@ -147,7 +147,7 @@ class UploadedFile extends AbstractTranslatableEntity implements EntityFileUploa
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getId()
     {

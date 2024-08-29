@@ -177,7 +177,7 @@ class FileUpload implements ResetInterface
             $entity->setFileAsUploaded($key, $originalFilename);
         }
 
-        if ($entity instanceof Image && $entity->getPosition() === Image::DEFAULT_IMAGE_POSITION) {
+        if ($entity instanceof Image && $entity->getId() === null) {
             $entity->setPosition($this->getPositionForNewEntity($entity));
         }
     }
