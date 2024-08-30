@@ -66,7 +66,7 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
     });
 
     return (
-        <div className="fixed inset-0 flex select-none flex-col bg-backgroundDark p-2 z-[10000]" onClick={onCloseModal}>
+        <div className="fixed inset-0 flex select-none flex-col bg-background p-2 z-[10000]" onClick={onCloseModal}>
             <div className="flex w-full flex-1 flex-col justify-center">
                 <div className="relative my-auto flex max-h-[80dvh] flex-1 items-center justify-center" {...handlers}>
                     <SpinnerIcon className="absolute -z-above w-16 text-textInverted opacity-50" />
