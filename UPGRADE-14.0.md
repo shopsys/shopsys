@@ -74,6 +74,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   see #project-base-diff to update your project
 
+#### moved migration of stock settings from project-base to framework ([#3340](https://github.com/shopsys/shopsys/pull/3340))
+
+-   see #project-base-diff to update your project
+
 #### fixed duplicate addDomain to query builder ([#3338](https://github.com/shopsys/shopsys/pull/3338))
 
 -   see #project-base-diff to update your project
