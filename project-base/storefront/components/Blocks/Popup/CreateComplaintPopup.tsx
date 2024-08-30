@@ -91,12 +91,12 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid,
             },
         });
 
-        updatePortalContent(null);
-
         if (createComplaintResult.error !== undefined) {
             showErrorMessage(t('There was an error while creating your complaint'), GtmMessageOriginType.other);
             return;
         }
+
+        updatePortalContent(null);
 
         showSuccessMessage(t('Complaint has been created'));
     };

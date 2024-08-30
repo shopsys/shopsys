@@ -29,7 +29,10 @@ const DropzoneControlled: React.FC<DropzoneControlledProps> = ({ control, formNa
             setFiles(updatedFiles);
             onChange(updatedFiles);
         },
-        accept: { 'image/*': [] },
+        accept: {
+            'image/jpeg': [],
+            'image/png': [],
+        },
     });
 
     const removeFile = (fileToRemove: File) => {
