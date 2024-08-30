@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Complaint\ComplaintFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintNumberSequenceRepository;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Order;
@@ -24,7 +25,6 @@ use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
 use Shopsys\FrontendApiBundle\Model\Order\OrderItemApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\InvalidAccessUserError;
 use Symfony\Component\Security\Core\Security;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
 class ComplaintApiFacade
 {
