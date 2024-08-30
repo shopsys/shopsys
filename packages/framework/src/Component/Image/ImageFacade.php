@@ -75,14 +75,14 @@ class ImageFacade
 
             if (count($uploadedFiles) === 0) {
                 $this->saveImagesPathnames($imageUploadData);
+                $this->deleteImages($entity, $imageUploadData->imagesToDelete);
             }
         } else {
             $this->saveImageOrdering($orderedImages);
             $this->saveImagesPathnames($imageUploadData);
             $this->uploadImages($entity, $imageUploadData->uploadedFilenames, $uploadedFiles, $type);
+            $this->deleteImages($entity, $imageUploadData->imagesToDelete);
         }
-
-        $this->deleteImages($entity, $imageUploadData->imagesToDelete);
     }
 
     /**
