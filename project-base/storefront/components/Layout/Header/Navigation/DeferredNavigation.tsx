@@ -1,9 +1,8 @@
 import { Navigation } from './Navigation';
+import { DEFAULT_SKELETON_TYPE } from 'config/constants';
 import { useNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
 import dynamic from 'next/dynamic';
 import { useDeferredRender } from 'utils/useDeferredRender';
-
-const DEFAULT_SKELETON_TYPE = 'category';
 
 const NavigationPlaceholder = dynamic(() =>
     import('./NavigationPlaceholder').then((component) => component.NavigationPlaceholder),

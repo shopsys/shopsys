@@ -28,3 +28,5 @@ export const SEO_SENSITIVE_FILTERS = {
 };
 
 export const BLOG_PREVIEW_VARIABLES = { first: 6, onlyHomepageArticles: true };
+
+export const DEFAULT_SKELETON_TYPE = 'category';
