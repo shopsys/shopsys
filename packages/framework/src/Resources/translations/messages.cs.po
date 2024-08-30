@@ -3064,6 +3064,9 @@ msgstr "Vyhledat podle názvu souboru, přípony nebo přeloženého názvu..."
 msgid "Search by name, catalog number, or product part number..."
 msgstr "Vyhledat dle názvu, katalogového čísla nebo partno produktu..."
 
+msgid "Search by name..."
+msgstr "Vyhledat dle názvu..."
+
 msgid "Search in transfers"
 msgstr "Hledání v přenosech"
 
@@ -3078,6 +3081,9 @@ msgstr "Vyhledávání hledá v příjmení, názvu firmy, e-mailu a telefonu. J
 
 msgid "Searching searches in name, catalog number or product part number. It is possible to use wildcards * and ?."
 msgstr "Vyhledávání hledá v názvu, katalogovém číslu nebo partno produktu. Je možné používat operátory * a ?."
+
+msgid "Searching searches in name. It is possible to use wildcards * and ?."
+msgstr "Vyhledávání hledá v názvu. Je možné používat operátory * a ?."
 
 msgid "Searching searches in order number, registered customer email, customer's email in order, customer's last name and company name. It is possible to use wildcards * and ?."
 msgstr "Vyhledávání hledá v číslu objednávky, e-mailu registrovaného zákazníka, e-mailu zákazníka v objednávce, příjmení zákazníka a názvu firmy. Je možné používat operátory * a ?."

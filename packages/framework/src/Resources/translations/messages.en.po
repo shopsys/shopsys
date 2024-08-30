@@ -3064,6 +3064,9 @@ msgstr ""
 msgid "Search by name, catalog number, or product part number..."
 msgstr ""
 
+msgid "Search by name..."
+msgstr ""
+
 msgid "Search in transfers"
 msgstr ""
 
@@ -3077,6 +3080,9 @@ msgid "Searching searches in last name, company name, email, telephone. It is po
 msgstr ""
 
 msgid "Searching searches in name, catalog number or product part number. It is possible to use wildcards * and ?."
+msgstr ""
+
+msgid "Searching searches in name. It is possible to use wildcards * and ?."
 msgstr ""
 
 msgid "Searching searches in order number, registered customer email, customer's email in order, customer's last name and company name. It is possible to use wildcards * and ?."

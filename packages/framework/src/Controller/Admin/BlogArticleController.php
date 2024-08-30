@@ -8,6 +8,8 @@ use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Blog\BlogArticleFormType;
+use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
+use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleDataFactory;
@@ -38,17 +40,28 @@ class BlogArticleController extends AdminBaseController
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/blog/article/list/', name: 'admin_blogarticle_list')]
-    public function listAction(): Response
+    public function listAction(Request $request): Response
     {
         $domainFilterNamespace = 'blog-article';
         $selectedDomainId = $this->adminDomainFilterTabsFacade->getSelectedDomainId($domainFilterNamespace);
 
-        $grid = $this->blogArticleGridFactory->create($selectedDomainId);
+        $quickSearchData = new QuickSearchFormData();
+        $quickSearchForm = $this->createForm(QuickSearchFormType::class, $quickSearchData);
+        $quickSearchForm->handleRequest($request);
+
+        $queryBuilder = $this->blogArticleFacade->getQueryBuilderForQuickSearch(
+            $selectedDomainId,
+            $quickSearchForm->getData(),
+        );
+
+        $grid = $this->blogArticleGridFactory->create($queryBuilder);
 
         return $this->render('@ShopsysFramework/Admin/Content/Blog/Article/list.html.twig', [
+            'quickSearchForm' => $quickSearchForm->createView(),
             'gridView' => $grid->createView(),
             'domainFilterNamespace' => $domainFilterNamespace,
         ]);
