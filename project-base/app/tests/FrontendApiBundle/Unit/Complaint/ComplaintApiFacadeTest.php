@@ -72,7 +72,6 @@ class ComplaintApiFacadeTest extends TestCase
         $this->security = $this->createMock(Security::class);
         $this->complaintRepository = $this->createMock(ComplaintRepository::class);
 
-
         $this->complaintApiFacade = new ComplaintApiFacade(
             $this->em,
             $this->complaintFactory,
