@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Complaint;
 
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileDataFactory;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemDataFactory;
@@ -17,13 +16,11 @@ class ComplaintItemDataApiFactory
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemDataFactory $complaintItemDataFactory
      * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileDataFactory $customerUploadedFileDataFactory
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         protected readonly ComplaintItemDataFactory $complaintItemDataFactory,
         protected readonly CustomerUploadedFileDataFactory $customerUploadedFileDataFactory,
         protected readonly FileUpload $fileUpload,
-        protected readonly Domain $domain,
     ) {
     }
 
@@ -39,8 +36,8 @@ class ComplaintItemDataApiFactory
         $catnum = $orderItem->getCatnum();
 
         if ($product) {
-            $productName = $product->getName($this->domain->getLocale());
-            $catnum = $product->getCatnum();
+            $productName = $productName ?? $product->getName();
+            $catnum = $catnum ?? $product->getCatnum();
         }
 
         $complaintItemData = $this->complaintItemDataFactory->create();

@@ -48,7 +48,7 @@ class SearchOrderItemsTest extends GraphQlWithLoginTestCase
      */
     public static function getOrderItemsDataProvider(): iterable
     {
-        // first 4 order items
+        // last 4 order items
         yield [['last' => 4, ...self::createSearchInput('')], [26, 25, 24, 23]];
 
         // search by name and filter by order item type

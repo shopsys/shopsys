@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Order;
 
-use App\Model\Customer\User\CurrentCustomerUser;
-use App\Model\Customer\User\CustomerUser;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
 use Shopsys\FrontendApiBundle\Model\Order\OrderItemApiFacade;
 use Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilter;
@@ -23,7 +23,7 @@ class OrderItemsQuery extends AbstractQuery
 {
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemApiFacade $orderItemApiFacade
-     * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilterFactory $orderItemsFilterFactory
      * @param \Symfony\Component\Security\Core\Security $security
      */
@@ -59,7 +59,7 @@ class OrderItemsQuery extends AbstractQuery
     }
 
     /**
-     * @param \App\Model\Customer\User\CustomerUser $customerUser
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilter $filter
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @return \GraphQL\Executor\Promise\Promise|\Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface

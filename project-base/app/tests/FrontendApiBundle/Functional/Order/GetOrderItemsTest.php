@@ -47,7 +47,7 @@ class GetOrderItemsTest extends GraphQlWithLoginTestCase
      */
     public static function getOrderItemsDataProvider(): iterable
     {
-        // first 4 order items
+        // last 4 order items
         yield [['last' => 4], [26, 25, 24, 23]];
 
         // filter by order item type

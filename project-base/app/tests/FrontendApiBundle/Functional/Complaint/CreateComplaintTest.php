@@ -107,7 +107,7 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
         $this->assertArrayHasKey('orderItem', $expectedComplaintItem);
         $this->assertArrayHasKey('name', $expectedComplaintItem['orderItem']);
         $this->assertArrayHasKey('productName', $expectedComplaintItem);
-        $this->assertSame($product?->getName($this->domain->getLocale()), $expectedComplaintItem['productName']);
+        $this->assertSame($product?->getName(), $expectedComplaintItem['productName']);
         $this->assertArrayHasKey('catnum', $expectedComplaintItem);
         $this->assertSame($product->getCatnum(), $expectedComplaintItem['catnum']);
     }
