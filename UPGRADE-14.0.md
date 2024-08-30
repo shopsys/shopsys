@@ -78,6 +78,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   see #project-base-diff to update your project
 
+#### fixed duplicate addDomain to query builder ([#3338](https://github.com/shopsys/shopsys/pull/3338))
+
+-   see #project-base-diff to update your project
+
 ## [Upgrade from v13.0.0 to v14.0.0](https://github.com/shopsys/shopsys/compare/v13.0.0...v14.0.0)
 
 #### add rounded price value to order process ([#2835](https://github.com/shopsys/shopsys/pull/2835))
