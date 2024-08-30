@@ -121,6 +121,10 @@ services:
         alias: App\FrontendApi\Resolver\Customer\User\CurrentCustomerUserQuery
         public: true
 
+    Shopsys\FrontendApiBundle\Model\Resolver\Order\OrderItemResolverMap:
+        arguments:
+            $firstImageBatchLoader: '@first_image_batch_loader'
+
     Shopsys\FrontendApiBundle\Model\Resolver\Order\OrderQuery:
         alias: App\FrontendApi\Resolver\Order\OrderQuery
         public: true
@@ -145,7 +149,3 @@ services:
     Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsQuery:
         alias: App\FrontendApi\Resolver\Products\ProductsQuery
         public: true
-
-    Shopsys\FrontendApiBundle\Model\Resolver\Order\OrderItemResolverMap:
-        arguments:
-            $firstImageBatchLoader: '@first_image_batch_loader'
