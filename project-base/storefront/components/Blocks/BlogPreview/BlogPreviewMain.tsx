@@ -35,7 +35,11 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles }) => (
                 <div className="mt-2 flex flex-col items-start gap-2">
                     {article.blogCategories.map((blogCategory) => (
                         <Fragment key={blogCategory.uuid}>
-                            {!!blogCategory.parent && <Flag href={blogCategory.link}>{blogCategory.name}</Flag>}
+                            {!!blogCategory.parent && (
+                                <Flag href={blogCategory.link} type="blog">
+                                    {blogCategory.name}
+                                </Flag>
+                            )}
                         </Fragment>
                     ))}
 

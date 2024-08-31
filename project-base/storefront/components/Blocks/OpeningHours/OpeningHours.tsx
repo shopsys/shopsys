@@ -1,3 +1,4 @@
+import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
 import { TypeOpeningHours } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { Fragment } from 'react';
@@ -42,7 +43,6 @@ export const OpeningHours: FC<{ openingHours: StoreOrPacketeryPoint['openingHour
 
     return (
         <>
-            <div className="my-1 text-textDisabled">{t('Open') + ': '}</div>
             {'exceptionDays' in openingHours &&
                 openingHours.exceptionDays?.map((exceptionDay, index) => {
                     let exceptionDayText = formatDate(exceptionDay.from, 'D.M.');
@@ -73,7 +73,7 @@ export const OpeningHours: FC<{ openingHours: StoreOrPacketeryPoint['openingHour
                     );
                 })}
 
-            <div className={twMergeCustom('flex w-full flex-col text-sm', className)}>
+            <div className={twMergeCustom('flex w-full flex-col text-text', className)}>
                 {openingHours.openingHoursOfDays.map(({ date, dayOfWeek, openingHoursRanges }) => {
                     const isToday = openingHours.dayOfWeek === dayOfWeek;
                     const isClosedWholeDay = openingHoursRanges.length === 0;
@@ -82,26 +82,29 @@ export const OpeningHours: FC<{ openingHours: StoreOrPacketeryPoint['openingHour
                         <div
                             key={dayOfWeek}
                             className={twJoin(
-                                'flex flex-row',
-                                isToday && openingHours.isOpen && 'text-openingStatusOpen',
-                                isToday && !openingHours.isOpen && 'text-openingStatusOpenToday',
-                                isToday && isClosedWholeDay && 'text-openingStatusClosed',
+                                'flex flex-row py-1.5 px-2.5 items-center gap-2 vl:gap-5',
+                                isToday && 'bg-backgroundAccentLess',
                             )}
                         >
-                            <strong className="basis-32 text-left">
-                                {getDayName(openingHours.dayOfWeek, dayOfWeek)} {formatDate(date, 'D.M.')}
-                            </strong>
-                            <span className="flex-1">
+                            <h6 className="shrink-0  basis-32 uppercase">
+                                {getDayName(openingHours.dayOfWeek, dayOfWeek)} {formatDate(date, 'D. M.')}
+                            </h6>
+                            <span className="text-sm">
                                 {isClosedWholeDay ? (
-                                    <>&nbsp;{t('Closed')}</>
+                                    <>{t('Closed')}</>
                                 ) : (
                                     openingHoursRanges.map(({ openingTime, closingTime }, index) => (
                                         <Fragment key={index}>
-                                            {index > 0 && ','} {openingTime}&nbsp;-&nbsp;{closingTime}
+                                            {index > 0 && ','} {openingTime}&nbsp;&#8209;&nbsp;{closingTime}
                                         </Fragment>
                                     ))
                                 )}
                             </span>
+                            {isToday && (
+                                <span>
+                                    <OpeningStatus isDynamic className="block" isOpen={openingHours.isOpen} />
+                                </span>
+                            )}
                         </div>
                     );
                 })}

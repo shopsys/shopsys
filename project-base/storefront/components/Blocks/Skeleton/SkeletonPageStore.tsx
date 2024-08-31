@@ -6,24 +6,21 @@ export const SkeletonPageStore: FC = () => (
     <Webline>
         <SkeletonModuleBreadcrumbs count={3} />
 
-        <div className="flex flex-row items-stretch gap-16">
-            <Skeleton className="hidden h-[600px] w-[600px] vl:block" />
-
-            <div className="w-full">
-                <div className="mb-12 flex w-full flex-col gap-4 ">
-                    <Skeleton className="h-9 w-1/2" />
-                    <Skeleton className="mb-3 h-4" count={3} />
+        <div className="flex flex-col w-full lg:flex-row lg:gap-5">
+            <div className="w-full lg:basis-1/2">
+                <div className="mb-5 lg:flex lg:items-center">
+                    <Skeleton className="mb-4 h-8 w-80" />
                 </div>
 
-                <div className="flex">
-                    <div className="flex w-full flex-col">
-                        <div className="mb-7">
-                            <Skeleton className="mb-4 h-6 w-40" />
-                            <Skeleton className="mb-2 h-6 w-40 rounded" count={5} />
-                        </div>
+                <Skeleton className="mb-4 h-6 w-60" />
+                <Skeleton className="mb-2 h-4 w-40 rounded" count={5} />
 
-                        <Skeleton className="h-12 w-full" />
-                    </div>
+                <Skeleton className="mt-8 mb-4 h-6 w-60" />
+                <Skeleton className="mb-2 h-6 w-1/2 rounded" count={7} />
+            </div>
+            <div className="w-full lg:basis-1/2">
+                <div className="flex aspect-square w-full mt-5 p-5 bg-backgroundMore rounded-xl lg:mt-0">
+                    <Skeleton className="w-full h-full" containerClassName="w-full" />
                 </div>
             </div>
         </div>
