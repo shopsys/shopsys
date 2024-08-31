@@ -89,6 +89,36 @@ class CartTransportTest extends GraphQlTestCase
                             'name' => t('Pardubice', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
                         ],
                     ],
+                    [
+                        'node' => [
+                            'name' => t('Brno', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                        ],
+                    ],
+                    [
+                        'node' => [
+                            'name' => t('Praha', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                        ],
+                    ],
+                    [
+                        'node' => [
+                            'name' => t('Hradec Králové', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                        ],
+                    ],
+                    [
+                        'node' => [
+                            'name' => t('Olomouc', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                        ],
+                    ],
+                    [
+                        'node' => [
+                            'name' => t('Liberec', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                        ],
+                    ],
+                    [
+                        'node' => [
+                            'name' => t('Plzeň', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                        ],
+                    ],
                 ],
             ],
         ];
