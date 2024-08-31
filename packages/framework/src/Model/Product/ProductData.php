@@ -193,6 +193,11 @@ class ProductData
      */
     public $files;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Transport\Transport[]
+     */
+    public $excludedTransports;
+
     public function __construct()
     {
         $this->name = [];
@@ -221,5 +226,6 @@ class ProductData
         $this->shortDescriptionUsp5ByDomainId = [];
         $this->saleExclusion = [];
         $this->domainHidden = [];
+        $this->excludedTransports = [];
     }
 }

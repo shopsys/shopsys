@@ -165,6 +165,13 @@ class Product extends AbstractTranslatableEntity
     protected $weight;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Transport\Transport>
+     * @ORM\ManyToMany(targetEntity="Shopsys\FrameworkBundle\Model\Transport\Transport")
+     * @ORM\JoinTable(name="product_excluded_transports")
+     */
+    protected $excludedTransports;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[]|null $variants
      */
@@ -172,6 +179,7 @@ class Product extends AbstractTranslatableEntity
     {
         $this->translations = new ArrayCollection();
         $this->domains = new ArrayCollection();
+        $this->excludedTransports = new ArrayCollection();
         $this->catnum = $productData->catnum;
         $this->partno = $productData->partno;
         $this->ean = $productData->ean;
@@ -227,6 +235,7 @@ class Product extends AbstractTranslatableEntity
         $this->unit = $productData->unit;
         $this->weight = $productData->weight;
         $this->setTranslations($productData);
+        $this->setExcludedTransports($productData->excludedTransports);
     }
 
     /**
@@ -897,5 +906,31 @@ class Product extends AbstractTranslatableEntity
     public function getProductDomains(): array
     {
         return $this->domains->getValues();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport[] $excludedTransports
+     */
+    protected function setExcludedTransports($excludedTransports): void
+    {
+        foreach ($this->excludedTransports as $currentExcludedTransport) {
+            if (!in_array($currentExcludedTransport, $excludedTransports, true)) {
+                $this->excludedTransports->removeElement($currentExcludedTransport);
+            }
+        }
+
+        foreach ($excludedTransports as $excludedTransport) {
+            if (!$this->excludedTransports->contains($excludedTransport)) {
+                $this->excludedTransports->add($excludedTransport);
+            }
+        }
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
+     */
+    public function getExcludedTransports()
+    {
+        return $this->excludedTransports->getValues();
     }
 }

@@ -39,6 +39,9 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @method \App\Model\Product\Flag\Flag[] getFlags(int $domainId)
  * @method setDomains(\App\Model\Product\ProductData $productData)
  * @method \App\Model\Product\ProductDomain[] getProductDomains()
+ * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Transport\Transport> $excludedTransports
+ * @method setExcludedTransports(\App\Model\Transport\Transport[] $excludedTransports)
+ * @method \App\Model\Transport\Transport[] getExcludedTransports()
  */
 class Product extends BaseProduct
 {

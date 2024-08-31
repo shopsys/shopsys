@@ -1675,6 +1675,9 @@ msgstr ""
 msgid "Excluded stores"
 msgstr ""
 
+msgid "Excluded transports"
+msgstr ""
+
 msgid "Excluding VAT"
 msgstr ""
 

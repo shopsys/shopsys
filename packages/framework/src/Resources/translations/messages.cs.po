@@ -1675,6 +1675,9 @@ msgstr "Vyřazeno z prodeje"
 msgid "Excluded stores"
 msgstr "Vyjmuté prodejny"
 
+msgid "Excluded transports"
+msgstr "Zakázané dopravy"
+
 msgid "Excluding VAT"
 msgstr "Bez DPH"
 
