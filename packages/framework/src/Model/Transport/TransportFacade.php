@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Transport;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
@@ -277,13 +278,17 @@ class TransportFacade
     }
 
     /**
-     * @param int|null $totalWeight
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart|null $cart
      * @return \Shopsys\FrameworkBundle\Model\Transport\Transport[]
      */
-    public function getVisibleOnCurrentDomainWithEagerLoadedDomainsAndTranslations(?int $totalWeight = null): array
+    public function getVisibleOnCurrentDomainWithEagerLoadedDomainsAndTranslations(?Cart $cart = null): array
     {
         $domainId = $this->domain->getId();
-        $transports = $this->transportRepository->getAllWithEagerLoadedDomainsAndTranslations($this->domain->getCurrentDomainConfig(), $totalWeight);
+        $transports = $this->transportRepository->getAllWithEagerLoadedDomainsAndTranslations($this->domain->getCurrentDomainConfig(), $cart?->getTotalWeight());
+
+        if ($cart !== null) {
+            $transports = $this->transportVisibilityCalculation->filterTransportsByProductsInCart($transports, $cart);
+        }
 
         $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
 

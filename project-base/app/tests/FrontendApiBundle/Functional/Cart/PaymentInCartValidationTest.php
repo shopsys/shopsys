@@ -71,9 +71,9 @@ class PaymentInCartValidationTest extends GraphQlTestCase
 
     public function testInvalidPaymentTransportCombination(): void
     {
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_DRONE, Transport::class);
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL, Transport::class);
         $this->addTransportToDemoCart($transport->getUuid());
-        $payment = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_CARD, Payment::class);
+        $payment = $this->getReference(PaymentDataFixture::PAYMENT_CASH, Payment::class);
         $response = $this->addPaymentToDemoCart($payment->getUuid());
 
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);

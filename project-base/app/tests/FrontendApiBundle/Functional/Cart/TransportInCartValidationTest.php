@@ -109,6 +109,16 @@ class TransportInCartValidationTest extends GraphQlTestCase
         $this->assertSame(TransportInCart::INVALID_TRANSPORT_PAYMENT_COMBINATION_ERROR, $validationErrors['input'][0]['code']);
     }
 
+    public function testExcludedTransport(): void
+    {
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_DRONE, Transport::class);
+        $response = $this->addTransportToDemoCart($transport->getUuid());
+
+        $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
+        $validationErrors = $this->getErrorsExtensionValidationFromResponse($response);
+        $this->assertSame(TransportInCart::UNAVAILABLE_TRANSPORT_ERROR, $validationErrors['input'][0]['code']);
+    }
+
     /**
      * @return array
      */

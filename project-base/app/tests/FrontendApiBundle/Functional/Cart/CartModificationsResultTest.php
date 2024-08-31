@@ -399,6 +399,29 @@ class CartModificationsResultTest extends GraphQlTestCase
         self::assertTrue($transportModifications['transportUnavailable']);
     }
 
+    public function testExcludedTransportIsReportedAsUnavailable(): void
+    {
+        $newlyCreatedCart = $this->addTestingProductToNewCart(1);
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL, Transport::class);
+        $this->addTransportToCart($newlyCreatedCart['uuid'], $transport);
+        $this->setTransportAsExcludedForTestingProduct($transport);
+        $getCartQuery = '{
+            cart(cartInput: {
+                    cartUuid: "' . $newlyCreatedCart['uuid'] . '"
+                }
+            ) {
+                modifications {
+                    transportModifications {
+                        transportUnavailable
+                    }
+                }
+            }
+        }';
+
+        $transportModifications = $this->getTransportModificationsForCartQuery($getCartQuery);
+        self::assertTrue($transportModifications['transportUnavailable']);
+    }
+
     public function testHiddenTransportIsReportedAsUnavailable(): void
     {
         $newlyCreatedCart = $this->addTestingProductToNewCart(1);
@@ -683,5 +706,20 @@ class CartModificationsResultTest extends GraphQlTestCase
         $paymentData = $this->paymentDataFactory->createFromPayment($payment);
         $paymentData->pricesIndexedByDomainId[1] = $payment->getPrice(1)->getPrice()->add(Money::create(10));
         $this->paymentFacade->edit($payment, $paymentData);
+    }
+
+    /**
+     * @param \App\Model\Transport\Transport $transport
+     */
+    private function setTransportAsExcludedForTestingProduct(Transport $transport): void
+    {
+        // refresh testing product
+        $this->testingProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
+        // refresh transport
+        $transport = $this->transportFacade->getById($transport->getId());
+
+        $productData = $this->productDataFactory->createFromProduct($this->testingProduct);
+        $productData->excludedTransports = [$transport];
+        $this->productFacade->edit($this->testingProduct->getId(), $productData);
     }
 }

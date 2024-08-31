@@ -22,6 +22,7 @@ use Shopsys\FrontendApiBundle\Model\Order\Exception\InvalidPacketeryAddressIdUse
 use Shopsys\FrontendApiBundle\Model\Payment\Exception\PaymentPriceChangedException;
 use Shopsys\FrontendApiBundle\Model\Payment\PaymentValidationFacade;
 use Shopsys\FrontendApiBundle\Model\Transport\Exception\TransportPriceChangedException;
+use Shopsys\FrontendApiBundle\Model\Transport\Exception\TransportUnavailableForProductsInCartException;
 use Shopsys\FrontendApiBundle\Model\Transport\Exception\TransportWeightLimitExceededException;
 use Shopsys\FrontendApiBundle\Model\Transport\TransportValidationFacade;
 
@@ -148,6 +149,20 @@ class TransportAndPaymentWatcherFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
      */
+    protected function checkTransportAvailabilityForProductsInCart(Transport $transport, Cart $cart): void
+    {
+        try {
+            $this->transportValidationFacade->checkTransportAvailabilityForProductsInCart($transport, $cart);
+        } catch (TransportUnavailableForProductsInCartException) {
+            $this->cartWithModificationsResult->setTransportIsUnavailable();
+            $this->cartTransportFacade->unsetCartTransport($cart);
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     */
     protected function checkPersonalPickupStoreAvailability(Transport $transport, Cart $cart): void
     {
         try {
@@ -196,6 +211,7 @@ class TransportAndPaymentWatcherFacade
         }
         $this->checkTransportPrice($transport, $cart);
         $this->checkTransportWeightLimit($transport, $cart);
+        $this->checkTransportAvailabilityForProductsInCart($transport, $cart);
         $this->checkPersonalPickupStoreAvailability($transport, $cart);
         $this->checkPacketeryIdIsValid($transport, $cart);
     }

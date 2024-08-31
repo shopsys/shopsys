@@ -11,6 +11,7 @@ use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductFacade;
+use App\Model\Transport\Transport;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -99,6 +100,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         }
 
         $this->productDemoDataSetter->setProductParameterValues($productData, $parameterValues);
+        $productData->excludedTransports = [$this->getReference(TransportDataFixture::TRANSPORT_DRONE, Transport::class)];
 
         $this->createProduct($productData);
 

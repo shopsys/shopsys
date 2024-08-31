@@ -24,7 +24,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportFacade as BaseTransportFaca
  * @method bool isTransportVisibleAndEnabledOnCurrentDomain(\App\Model\Transport\Transport $transport)
  * @property \App\Model\Payment\PaymentFacade $paymentFacade
  * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Transport\TransportRepository $transportRepository, \App\Model\Payment\PaymentRepository $paymentRepository, \Shopsys\FrameworkBundle\Model\Transport\TransportVisibilityCalculation $transportVisibilityCalculation, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade, \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation, \Shopsys\FrameworkBundle\Model\Transport\TransportFactoryInterface $transportFactory, \Shopsys\FrameworkBundle\Model\Transport\TransportPriceFactoryInterface $transportPriceFactory, \App\Model\Payment\PaymentFacade $paymentFacade)
- * @method \App\Model\Transport\Transport[] getVisibleOnCurrentDomainWithEagerLoadedDomainsAndTranslations(int|null $totalWeight = null)
+ * @method \App\Model\Transport\Transport[] getVisibleOnCurrentDomainWithEagerLoadedDomainsAndTranslations(\App\Model\Cart\Cart|null $cart = null)
  */
 class TransportFacade extends BaseTransportFacade
 {

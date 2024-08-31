@@ -10,10 +10,12 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceProvider;
+use Shopsys\FrameworkBundle\Model\Transport\TransportVisibilityCalculation;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 use Shopsys\FrontendApiBundle\Model\Transport\Exception\InvalidTransportPaymentCombinationException;
 use Shopsys\FrontendApiBundle\Model\Transport\Exception\MissingPickupPlaceIdentifierException;
 use Shopsys\FrontendApiBundle\Model\Transport\Exception\TransportPriceChangedException;
+use Shopsys\FrontendApiBundle\Model\Transport\Exception\TransportUnavailableForProductsInCartException;
 use Shopsys\FrontendApiBundle\Model\Transport\Exception\TransportWeightLimitExceededException;
 
 class TransportValidationFacade
@@ -24,6 +26,7 @@ class TransportValidationFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceProvider $transportPriceProvider
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportVisibilityCalculation $transportVisibilityCalculation
      */
     public function __construct(
         protected readonly StoreFacade $storeFacade,
@@ -31,6 +34,7 @@ class TransportValidationFacade
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly CartApiFacade $cartApiFacade,
         protected readonly TransportPriceProvider $transportPriceProvider,
+        protected readonly TransportVisibilityCalculation $transportVisibilityCalculation,
     ) {
     }
 
@@ -58,6 +62,17 @@ class TransportValidationFacade
     {
         if ($transport->getMaxWeight() !== null && $transport->getMaxWeight() < $cart->getTotalWeight()) {
             throw new TransportWeightLimitExceededException();
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     */
+    public function checkTransportAvailabilityForProductsInCart(Transport $transport, Cart $cart): void
+    {
+        if ($this->transportVisibilityCalculation->filterTransportsByProductsInCart([$transport], $cart) === []) {
+            throw new TransportUnavailableForProductsInCartException();
         }
     }
 

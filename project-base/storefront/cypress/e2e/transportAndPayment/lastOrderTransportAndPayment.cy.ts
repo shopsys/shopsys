@@ -1,4 +1,8 @@
-import { changeSelectionOfPaymentByName, changeSelectionOfTransportByName } from './transportAndPaymentSupport';
+import {
+    changeSelectionOfPaymentByName,
+    changeSelectionOfTransportByName,
+    chooseTransportPersonalCollectionAndStore,
+} from './transportAndPaymentSupport';
 import { payment, transport, url } from 'fixtures/demodata';
 import { generateCreateOrderInput, generateCustomerRegistrationData } from 'fixtures/generators';
 import {
@@ -53,9 +57,9 @@ describe('Last order transport and payment select tests', () => {
 
         changeSelectionOfTransportByName(transport.ppl.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod(500);
-        changeSelectionOfTransportByName(transport.droneDelivery.name);
+        chooseTransportPersonalCollectionAndStore(transport.personalCollection.storeOstrava.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod(500);
-        changeSelectionOfPaymentByName(payment.payLater.name);
+        changeSelectionOfPaymentByName(payment.cash.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod(500);
         cy.reloadAndWaitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(this.test?.title, 'after second change and refresh', {
