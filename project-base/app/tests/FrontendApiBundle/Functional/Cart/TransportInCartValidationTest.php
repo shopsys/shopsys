@@ -134,24 +134,11 @@ class TransportInCartValidationTest extends GraphQlTestCase
      */
     private function addTransportToDemoCart(string $transportUuid, ?string $pickupPlaceIdentifier = null): array
     {
-        $pickupPlaceIdentifierLine = '';
-
-        if ($pickupPlaceIdentifier !== null) {
-            $pickupPlaceIdentifierLine = 'pickupPlaceIdentifier: "' . $pickupPlaceIdentifier . '"';
-        }
-        $changeTransportInCartMutation = '
-            mutation {
-                ChangeTransportInCart(input:{
-                    cartUuid: "' . CartDataFixture::CART_UUID . '"
-                    transportUuid: "' . $transportUuid . '"
-                    ' . $pickupPlaceIdentifierLine . '
-                }) {
-                    uuid
-                }
-            }
-        ';
-
-        return $this->getResponseContentForQuery($changeTransportInCartMutation);
+        return $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangeTransportInCartMutation.graphql', [
+            'cartUuid' => CartDataFixture::CART_UUID,
+            'transportUuid' => $transportUuid,
+            'pickupPlaceIdentifier' => $pickupPlaceIdentifier,
+        ]);
     }
 
     /**
@@ -199,17 +186,9 @@ class TransportInCartValidationTest extends GraphQlTestCase
      */
     private function addPaymentToDemoCart(string $paymentUuid): void
     {
-        $changeTransportInCartMutation = '
-            mutation {
-                ChangePaymentInCart(input:{
-                    cartUuid: "' . CartDataFixture::CART_UUID . '"
-                    paymentUuid: "' . $paymentUuid . '"
-                }) {
-                    uuid
-                }
-            }
-        ';
-
-        $this->getResponseContentForQuery($changeTransportInCartMutation);
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangePaymentInCartMutation.graphql', [
+            'cartUuid' => CartDataFixture::CART_UUID,
+            'paymentUuid' => $paymentUuid,
+        ]);
     }
 }

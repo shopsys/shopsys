@@ -108,20 +108,9 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
 
         $this->hideTestingProduct();
 
-        $removeFromCartMutation = 'mutation {
-            RemoveFromCart(input: {
-                cartItemUuid: "' . $cartItemUuid . '"
-            }) {
-                 modifications {
-                    itemModifications {
-                        noLongerListableCartItems{
-                            uuid
-                        }
-                    }
-                }
-            }
-        }';
-        $response = $this->getResponseContentForQuery($removeFromCartMutation);
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/RemoveFromCart.graphql', [
+            'cartItemUuid' => $cartItemUuid,
+        ]);
         $modifications = $this->getResponseDataForGraphQlType($response, 'RemoveFromCart')['modifications'];
 
         self::assertNotEmpty($modifications['itemModifications']['noLongerListableCartItems']);
@@ -134,31 +123,7 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
 
         $this->hideTestingProduct();
 
-        $getCartQuery = '{
-            cart {
-                modifications {
-                    itemModifications {
-                        noLongerListableCartItems {
-                            uuid
-                            product {
-                                uuid
-                            }
-                        }
-                        noLongerAvailableCartItemsDueToQuantity {
-                            uuid
-                        }
-                        cartItemsWithModifiedPrice {
-                            uuid
-                        }
-                        cartItemsWithChangedQuantity {
-                            uuid
-                        }
-                    }
-                }
-            }
-        }';
-
-        $response = $this->getResponseContentForQuery($getCartQuery);
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetCart.graphql');
         $data = $this->getResponseDataForGraphQlType($response, 'cart');
         $itemModifications = $data['modifications']['itemModifications'];
 
@@ -177,31 +142,7 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
 
         $this->modifyPriceOfTestingProduct();
 
-        $getCartQuery = '{
-            cart {
-                modifications {
-                    itemModifications {
-                        cartItemsWithModifiedPrice {
-                            uuid
-                            product {
-                                uuid
-                            }
-                        }
-                        noLongerAvailableCartItemsDueToQuantity {
-                            uuid
-                        }
-                        noLongerListableCartItems {
-                            uuid
-                        }
-                        cartItemsWithChangedQuantity {
-                            uuid
-                        }
-                    }
-                }
-            }
-        }';
-
-        $response = $this->getResponseContentForQuery($getCartQuery);
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetCart.graphql');
         $data = $this->getResponseDataForGraphQlType($response, 'cart');
         $itemModifications = $data['modifications']['itemModifications'];
 
@@ -220,31 +161,7 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
 
         $this->setOneItemLeftOnStockForTestingProduct();
 
-        $getCartQuery = '{
-            cart {
-                modifications {
-                    itemModifications {
-                        cartItemsWithChangedQuantity {
-                            uuid
-                            product {
-                                uuid
-                            }
-                        }
-                        noLongerAvailableCartItemsDueToQuantity {
-                            uuid
-                        }
-                        noLongerListableCartItems {
-                            uuid
-                        }
-                        cartItemsWithModifiedPrice {
-                            uuid
-                        }
-                    }
-                }
-            }
-        }';
-
-        $response = $this->getResponseContentForQuery($getCartQuery);
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetCart.graphql');
         $data = $this->getResponseDataForGraphQlType($response, 'cart');
         $itemModifications = $data['modifications']['itemModifications'];
 
@@ -263,31 +180,7 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
 
         $this->setNoItemLeftOnStockForTestingProduct();
 
-        $getCartQuery = '{
-            cart {
-                modifications {
-                    itemModifications {
-                        noLongerAvailableCartItemsDueToQuantity {
-                            uuid
-                            product {
-                                uuid
-                            }
-                        }
-                        noLongerListableCartItems {
-                            uuid
-                        }
-                        cartItemsWithModifiedPrice {
-                            uuid
-                        }
-                        cartItemsWithChangedQuantity {
-                            uuid
-                        }
-                    }
-                }
-            }
-        }';
-
-        $response = $this->getResponseContentForQuery($getCartQuery);
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetCart.graphql');
         $data = $this->getResponseDataForGraphQlType($response, 'cart');
         $itemModifications = $data['modifications']['itemModifications'];
 
@@ -306,17 +199,8 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
         $transport = $this->getReference($referenceName, Transport::class);
         $this->addTransportToExistingCart($transport);
         $this->changeTransportPrice($referenceName);
-        $getCartQuery = '{
-            cart {
-                modifications {
-                    transportModifications {
-                        transportPriceChanged
-                    }
-                }
-            }
-        }';
 
-        $transportModifications = $this->getTransportModificationsForCartQuery($getCartQuery);
+        $transportModifications = $this->getTransportModificationsForCartQuery();
         self::assertTrue($transportModifications['transportPriceChanged']);
     }
 
@@ -328,17 +212,7 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
         $this->addTransportToExistingCart($transport, $store->getUuid());
         $this->storeFacade->delete($store->getId());
 
-        $getCartQuery = '{
-            cart {
-                modifications {
-                    transportModifications {
-                        personalPickupStoreUnavailable
-                    }
-                }
-            }
-        }';
-
-        $transportModifications = $this->getTransportModificationsForCartQuery($getCartQuery);
+        $transportModifications = $this->getTransportModificationsForCartQuery();
         self::assertTrue($transportModifications['personalPickupStoreUnavailable']);
     }
 
@@ -350,17 +224,7 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
         $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
         $this->addTransportToExistingCart($transport, $store->getUuid());
 
-        $getCartQuery = '{
-            cart {
-                modifications {
-                    transportModifications {
-                        personalPickupStoreUnavailable
-                    }
-                }
-            }
-        }';
-
-        $transportModifications = $this->getTransportModificationsForCartQuery($getCartQuery);
+        $transportModifications = $this->getTransportModificationsForCartQuery();
         self::assertFalse($transportModifications['personalPickupStoreUnavailable']);
     }
 
@@ -370,17 +234,8 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
         $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL, Transport::class);
         $this->addTransportToExistingCart($transport);
         $this->transportFacade->deleteById($transport->getId());
-        $getCartQuery = '{
-            cart {
-                modifications {
-                    transportModifications {
-                        transportUnavailable
-                    }
-                }
-            }
-        }';
 
-        $transportModifications = $this->getTransportModificationsForCartQuery($getCartQuery);
+        $transportModifications = $this->getTransportModificationsForCartQuery();
         self::assertTrue($transportModifications['transportUnavailable']);
     }
 
@@ -390,17 +245,8 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
         $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL, Transport::class);
         $this->addTransportToExistingCart($transport);
         $this->setTransportAsExcludedForTestingProduct($transport);
-        $getCartQuery = '{
-            cart {
-                modifications {
-                    transportModifications {
-                        transportUnavailable
-                    }
-                }
-            }
-        }';
 
-        $transportModifications = $this->getTransportModificationsForCartQuery($getCartQuery);
+        $transportModifications = $this->getTransportModificationsForCartQuery();
         self::assertTrue($transportModifications['transportUnavailable']);
     }
 
@@ -411,17 +257,8 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
         $transport = $this->getReference($referenceName, Transport::class);
         $this->addTransportToExistingCart($transport);
         $this->hideTransport($referenceName);
-        $getCartQuery = '{
-            cart {
-                modifications {
-                    transportModifications {
-                        transportUnavailable
-                    }
-                }
-            }
-        }';
 
-        $transportModifications = $this->getTransportModificationsForCartQuery($getCartQuery);
+        $transportModifications = $this->getTransportModificationsForCartQuery();
         self::assertTrue($transportModifications['transportUnavailable']);
     }
 
@@ -430,17 +267,8 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
         $this->addTestingProductToNewCart(1);
         $transport = $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST, Transport::class);
         $this->addTransportToExistingCart($transport);
-        $getCartQuery = '{
-            cart {
-                modifications {
-                    transportModifications {
-                        transportWeightLimitExceeded
-                    }
-                }
-            }
-        }';
 
-        $transportModifications = $this->getTransportModificationsForCartQuery($getCartQuery);
+        $transportModifications = $this->getTransportModificationsForCartQuery();
         self::assertFalse($transportModifications['transportWeightLimitExceeded']);
 
         $transportModifications = $this->addTestingProductToExistingCartAndGetTransportModifications(1);
@@ -455,17 +283,7 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
         $this->addPaymentToExistingCart($payment);
         $this->changePaymentPrice($referenceName);
 
-        $getCartQuery = '{
-            cart {
-                modifications {
-                    paymentModifications {
-                        paymentPriceChanged
-                    }
-                }
-            }
-        }';
-
-        $paymentModifications = $this->getPaymentModifications($getCartQuery);
+        $paymentModifications = $this->getPaymentModifications();
         self::assertTrue($paymentModifications['paymentPriceChanged']);
     }
 
@@ -475,17 +293,8 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
         $payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD, Payment::class);
         $this->addPaymentToExistingCart($payment);
         $this->paymentFacade->deleteById($payment->getId());
-        $getCartQuery = '{
-            cart {
-                modifications {
-                    paymentModifications {
-                        paymentUnavailable
-                    }
-                }
-            }
-        }';
 
-        $paymentModifications = $this->getPaymentModifications($getCartQuery);
+        $paymentModifications = $this->getPaymentModifications();
         self::assertTrue($paymentModifications['paymentUnavailable']);
     }
 
@@ -573,24 +382,22 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
     }
 
     /**
-     * @param string $getCartQuery
      * @return array
      */
-    private function getTransportModificationsForCartQuery(string $getCartQuery): array
+    private function getTransportModificationsForCartQuery(): array
     {
-        $response = $this->getResponseContentForQuery($getCartQuery);
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetCart.graphql');
         $data = $this->getResponseDataForGraphQlType($response, 'cart');
 
         return $data['modifications']['transportModifications'];
     }
 
     /**
-     * @param string $getCartQuery
      * @return array
      */
-    private function getPaymentModifications(string $getCartQuery): array
+    private function getPaymentModifications(): array
     {
-        $response = $this->getResponseContentForQuery($getCartQuery);
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/GetCart.graphql');
         $data = $this->getResponseDataForGraphQlType($response, 'cart');
 
         return $data['modifications']['paymentModifications'];
@@ -602,22 +409,10 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
      */
     private function addTransportToExistingCart(Transport $transport, ?string $pickupPlaceIdentifier = null): void
     {
-        $pickupPlaceIdentifierLine = '';
-
-        if ($pickupPlaceIdentifier !== null) {
-            $pickupPlaceIdentifierLine = 'pickupPlaceIdentifier: "' . $pickupPlaceIdentifier . '"';
-        }
-        $changeTransportInCartMutation = '
-            mutation {
-                ChangeTransportInCart(input:{
-                    transportUuid: "' . $transport->getUuid() . '"
-                    ' . $pickupPlaceIdentifierLine . '
-                }) {
-                    uuid
-                }
-            }
-        ';
-        $this->getResponseContentForQuery($changeTransportInCartMutation);
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangeTransportInCartMutation.graphql', [
+            'transportUuid' => $transport->getUuid(),
+            'pickupPlaceIdentifier' => $pickupPlaceIdentifier,
+        ]);
     }
 
     /**
@@ -649,16 +444,9 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
      */
     private function addPaymentToExistingCart(Payment $payment): void
     {
-        $changeTransportInCartMutation = '
-            mutation {
-                ChangePaymentInCart(input:{
-                    paymentUuid: "' . $payment->getUuid() . '"
-                }) {
-                    uuid
-                }
-            }
-        ';
-        $this->getResponseContentForQuery($changeTransportInCartMutation);
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangePaymentInCartMutation.graphql', [
+            'paymentUuid' => $payment->getUuid(),
+        ]);
     }
 
     /**

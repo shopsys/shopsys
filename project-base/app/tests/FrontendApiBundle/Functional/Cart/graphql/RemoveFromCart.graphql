@@ -1,0 +1,19 @@
+mutation RemoveFromCart(
+    $cartItemUuid: Uuid!,
+    $cartUuid: Uuid,
+) {
+    RemoveFromCart(
+        input: {
+            cartItemUuid: $cartItemUuid
+            cartUuid: $cartUuid
+        }
+    ) {
+        modifications {
+            itemModifications {
+                noLongerListableCartItems{
+                    uuid
+                }
+            }
+        }
+    }
+}
