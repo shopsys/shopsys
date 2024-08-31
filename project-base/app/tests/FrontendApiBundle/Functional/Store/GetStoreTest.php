@@ -105,7 +105,7 @@ class GetStoreTest extends GraphQlTestCase
     #[Group('multidomain')]
     public function testStoreOnSecondDomainIsNotAvailable(): void
     {
-        $storeOnSecondDomain = $this->getReference(StoreDataFixture::STORE_PREFIX . 3, Store::class);
+        $storeOnSecondDomain = $this->getReference(StoreDataFixture::STORE_PREFIX . 9, Store::class);
 
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoreQuery.graphql', [
             'uuid' => $storeOnSecondDomain->getUuid(),
