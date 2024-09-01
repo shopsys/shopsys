@@ -122,6 +122,7 @@ module.exports = {
 
             imageOverlay: 'rgba(201, 201, 201, 0.5)',
             overlay: 'rgba(37, 40, 61, 0.5)',
+            transparent: 'transparent',
         },
         fontFamily: {
             default: ['var(--font-inter)'],
