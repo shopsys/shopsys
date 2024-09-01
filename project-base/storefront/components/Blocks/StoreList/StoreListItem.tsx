@@ -1,15 +1,25 @@
-import { TypeOpeningHoursFragment } from 'graphql/requests/stores/fragments/OpeningHoursFragment.generated';
-import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
-import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
+import { LinkButton } from 'components/Forms/Button/LinkButton';
+import { TypeOpeningHoursFragment } from 'graphql/requests/stores/fragments/OpeningHoursFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
+import { StoreOrPacketeryPoint } from 'utils/packetery/types';
+import { twMergeCustom } from 'utils/twMerge';
 
-export const StoreListItem: FC<{ store: StoreOrPacketeryPoint }> = ({ store }) => {
+type StoreListItemProps = {
+    store: StoreOrPacketeryPoint;
+    isSelected: boolean;
+};
+
+export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const { t } = useTranslation();
+
+    useEffect(() => {
+        setIsExpanded(isSelected);
+    }, [isSelected]);
 
     const getCurrentOpeningHours = (openingHours: TypeOpeningHoursFragment) => {
         const todayOpeningDayRanges = openingHours.openingHoursOfDays[0].openingHoursRanges;
@@ -31,25 +41,26 @@ export const StoreListItem: FC<{ store: StoreOrPacketeryPoint }> = ({ store }) =
 
     return (
         <div
-            className="bg-backgroundMore px-5 py-2.5 rounded-xl cursor-pointer"
+            className={twMergeCustom(
+                'bg-backgroundMore px-5 py-2.5 rounded-xl cursor-pointer border border-transparent',
+                isExpanded && 'border-borderAccent',
+            )}
             onClick={() => {
                 setIsExpanded((isExpanded) => !isExpanded);
             }}
         >
-            <div className="flex items-center justify-between gap-2.5">
-                <div className="w-full">
-                    <div className="max-vl:mb-2.5">
+            <div className="flex items-center justify-between gap-3.5">
+                <div className="w-full xl:flex items-center justify-between">
+                    <div className="max-xl:mb-2.5">
                         <h5>{store.name}</h5>
-                        <p className="mt-1.5">
+                        <p className="mt-1.5 text-xs">
                             {store.street}, {store.postcode} {store.city}
                         </p>
                     </div>
-                    {!isExpanded && (
-                        <div className="flex items-center mt-1.5">
-                            <OpeningStatus isOpen={store.openingHours.isOpen} />
-                            <span className="ml-2.5">{getCurrentOpeningHours(store.openingHours)}</span>
-                        </div>
-                    )}
+                    <div className="xl:text-right flex items-center xl:block">
+                        <OpeningStatus className="xl:mb-1.5" isOpen={store.openingHours.isOpen} />
+                        <p className="ml-1.5 text-xs">{getCurrentOpeningHours(store.openingHours)}</p>
+                    </div>
                 </div>
                 <div>
                     <ArrowIcon className={`transform ${isExpanded ? 'rotate-180' : ''}`} />

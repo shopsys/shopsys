@@ -1,5 +1,6 @@
+import { StoresWrapper } from 'components/Blocks/StoreList/StoresWrapper';
 import { CommonLayout } from 'components/Layout/CommonLayout';
-import { StoresContent } from 'components/Pages/Stores/StoresContent';
+import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { useStoresQuery, StoresQueryDocument } from 'graphql/requests/stores/queries/StoresQuery.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
@@ -11,15 +12,17 @@ import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initS
 
 const StoresPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
-    const [{ data: storesData, fetching: areStoresFetching }] = useStoresQuery();
+    const [{ data: storesData, fetching: isStoresFetching }] = useStoresQuery();
     const breadcrumbs: TypeBreadcrumbFragment[] = [{ __typename: 'Link', name: t('Department stores'), slug: '' }];
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.stores, breadcrumbs);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
     return (
-        <CommonLayout breadcrumbs={breadcrumbs} isFetchingData={areStoresFetching} title={t('Stores')}>
-            {storesData?.stores && <StoresContent stores={storesData.stores} />}
+        <CommonLayout breadcrumbs={breadcrumbs} isFetchingData={isStoresFetching} title={t('Stores')}>
+            <SimpleLayout standardWidth heading={t('Stores')}>
+                {storesData?.stores && <StoresWrapper />}
+            </SimpleLayout>
         </CommonLayout>
     );
 };
