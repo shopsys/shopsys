@@ -90,7 +90,7 @@ class CustomerUploadedFileController
 
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 
-        if (!$hash && !$customerUser && !$this->administratorFrontSecurityFacade->isAdministratorLogged()) {
+        if ($this->customerUploadedFileFacade->isAccessToFileDenied($hash, $customerUser)) {
             throw new AccessDeniedException(sprintf('%s.%s', $uploadedFileSlug, $uploadedFileExtension));
         }
 

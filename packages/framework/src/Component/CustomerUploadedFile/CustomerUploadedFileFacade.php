@@ -267,8 +267,8 @@ class CustomerUploadedFileFacade extends AbstractUploadedFileFacade
         ?CustomerUser $customerUser = null,
         ?string $hash = null,
     ): CustomerUploadedFile {
-        if (!$hash && !$customerUser && !$this->administratorFrontSecurityFacade->isAdministratorLogged()) {
-            throw new InvalidArgumentException('Either hash or customerUser must be set.');
+        if ($this->isAccessToFileDenied($hash, $customerUser)) {
+            throw new InvalidArgumentException('Either hash or customerUser must be set or administrator must be logged in.');
         }
 
         return $this->customerUploadedFileRepository->getByIdSlugAndExtension(
@@ -302,5 +302,15 @@ class CustomerUploadedFileFacade extends AbstractUploadedFileFacade
     protected function getUploadedFileConfig(): UploadedFileConfigInterface
     {
         return $this->customerUploadedFileConfig;
+    }
+
+    /**
+     * @param string|null $hash
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
+     * @return bool
+     */
+    public function isAccessToFileDenied(?string $hash, ?CustomerUser $customerUser): bool
+    {
+        return !$hash && !$customerUser && !$this->administratorFrontSecurityFacade->isAdministratorLogged();
     }
 }
