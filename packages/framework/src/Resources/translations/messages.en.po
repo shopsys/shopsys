@@ -2143,6 +2143,9 @@ msgstr ""
 msgid "Name %locale%"
 msgstr ""
 
+msgid "Name in the corresponding locale must be filled-in in order to display the file on the storefront"
+msgstr ""
+
 msgid "Name serves only for internal use within the administration"
 msgstr ""
 

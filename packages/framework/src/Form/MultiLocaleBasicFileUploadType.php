@@ -68,6 +68,11 @@ class MultiLocaleBasicFileUploadType extends AbstractType
                     'entry_type' => LocalizedType::class,
                     'allow_add' => true,
                     'entry_options' => [
+                        'attr' => [
+                            'icon' => true,
+                            'iconTitle' => t('Name in the corresponding locale must be filled-in in order to display the file on the storefront'),
+                            'iconPlacement' => 'right',
+                        ],
                         'label' => '',
                         'entry_options' => [
                             'constraints' => [

@@ -37,6 +37,10 @@ class UploadedFileFormType extends AbstractType
         $builder->add('names', LocalizedType::class, [
             'required' => false,
             'label' => t('Names'),
+            'attr' => [
+                'icon' => true,
+                'iconTitle' => t('Name in the corresponding locale must be filled-in in order to display the file on the storefront'),
+            ],
             'entry_options' => [
                 'required' => false,
                 'constraints' => [

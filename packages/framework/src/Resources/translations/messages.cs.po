@@ -2143,6 +2143,9 @@ msgstr "Název"
 msgid "Name %locale%"
 msgstr "Název %locale%"
 
+msgid "Name in the corresponding locale must be filled-in in order to display the file on the storefront"
+msgstr "Pro zobrazení souboru na doméně musí být vyplněn název v odpovídajícím jazyce"
+
 msgid "Name serves only for internal use within the administration"
 msgstr "Název slouží pouze pro interní použití v rámci administrace"
 

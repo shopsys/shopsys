@@ -46,6 +46,7 @@ export default class MultiplePicker {
         const _this = this;
 
         _this.items.push($item);
+        (new Register()).registerNewContent($item);
         $item.find('.js-picker-item-button-delete').click(() => {
             _this.removeItem($item);
         });
