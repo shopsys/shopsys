@@ -61,6 +61,6 @@ class ImageEntityConfig
             return $this->multipleByType[$key];
         }
 
-        throw new ImageTypeNotFoundException($this->entityClass, $type);
+        throw new ImageTypeNotFoundException($this->entityClass, $key);
     }
 }
