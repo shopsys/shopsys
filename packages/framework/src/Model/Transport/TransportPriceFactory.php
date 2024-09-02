@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Transport;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 
-class TransportPriceFactory implements TransportPriceFactoryInterface
+class TransportPriceFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
