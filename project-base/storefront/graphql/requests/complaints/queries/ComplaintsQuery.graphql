@@ -1,0 +1,11 @@
+query ComplaintsQuery($first: Int, $after: String, $searchInput: SearchInput) {
+    complaints(first: $first, after: $after, searchInput: $searchInput) {
+        totalCount
+        edges {
+            cursor
+            node {
+                ...ComplaintDetailFragment
+            }
+        }
+    }
+}

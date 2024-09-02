@@ -30,14 +30,13 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 const OrderDetailPage: FC = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
-    const [customerUrl, customerOrdersUrl] = getInternationalizedStaticUrls(['/customer', '/customer/orders'], url);
+    const [customerOrdersUrl] = getInternationalizedStaticUrls(['/customer/orders'], url);
     const router = useRouter();
     const orderNumber = getStringFromUrlQuery(router.query.orderNumber);
     const [{ data: orderData, fetching: isOrderDetailFetching, error: orderDetailError }] = useOrderDetailQuery({
         variables: { orderNumber },
     });
     const breadcrumbs: TypeBreadcrumbFragment[] = [
-        { __typename: 'Link', name: t('Customer'), slug: customerUrl },
         { __typename: 'Link', name: t('My orders'), slug: customerOrdersUrl },
         { __typename: 'Link', name: orderNumber, slug: '' },
     ];
@@ -48,10 +47,14 @@ const OrderDetailPage: FC = () => {
         <>
             <MetaRobots content="noindex" />
             <PageGuard errorRedirectUrl={customerOrdersUrl} isWithAccess={!orderDetailError}>
-                <CustomerLayout breadcrumbs={breadcrumbs} isFetchingData={isOrderDetailFetching}>
+                <CustomerLayout
+                    breadcrumbs={breadcrumbs}
+                    breadcrumbsType="orderList"
+                    isFetchingData={isOrderDetailFetching}
+                >
                     {!!orderData?.order && (
                         <>
-                            <h1 className="mt-0 vl:mt-4" tid={TIDs.order_detail_number_heading}>
+                            <h1 tid={TIDs.order_detail_number_heading}>
                                 {t('Your order')} {orderData.order.number}
                             </h1>
                             <OrderDetailContent order={orderData.order} />

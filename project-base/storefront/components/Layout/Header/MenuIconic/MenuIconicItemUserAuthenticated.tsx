@@ -22,10 +22,11 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
     const { t } = useTranslation();
     const logout = useLogout();
     const { url } = useDomainConfig();
-    const [customerUrl, customerOrdersUrl, customerEditProfileUrl] = getInternationalizedStaticUrls(
-        ['/customer', '/customer/orders', '/customer/edit-profile'],
-        url,
-    );
+    const [customerUrl, customerOrdersUrl, customerComplaintsUrl, customerEditProfileUrl] =
+        getInternationalizedStaticUrls(
+            ['/customer', '/customer/orders', '/customer/complaints', '/customer/edit-profile'],
+            url,
+        );
     const [isClicked, setIsClicked] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
     const isHoveredDelayed = useDebounce(isHovered, 200);
@@ -45,7 +46,11 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                 onMouseEnter={() => isDesktop && setIsHovered(true)}
                 onMouseLeave={() => isDesktop && setIsHovered(false)}
             >
-                <MenuIconicItemLink className="rounded-t p-3 max-lg:hidden transition-all" href={customerUrl}>
+                <MenuIconicItemLink
+                    className="rounded-t p-3 max-lg:hidden transition-all"
+                    href={customerUrl}
+                    type="account"
+                >
                     <div className="relative">
                         <UserIcon className="w-6 max-h-[22px]" />
                         <div className="w-[10px] h-[10px] absolute -right-1 -top-1 rounded-full bg-actionPrimaryBackground" />
@@ -93,7 +98,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                             <MenuIconicSubItemLink
                                 href={customerOrdersUrl}
                                 tid={TIDs.header_my_orders_link}
-                                type="orders"
+                                type="orderList"
                             >
                                 <div className={userMenuItemIconTwClass}>
                                     <SearchListIcon className="w-6 h-6" />
@@ -102,7 +107,23 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                             </MenuIconicSubItemLink>
                         </li>
                         <li className={userMenuItemTwClass}>
-                            <MenuIconicSubItemLink href={customerEditProfileUrl} tid={TIDs.header_edit_profile_link}>
+                            <MenuIconicSubItemLink
+                                href={customerComplaintsUrl}
+                                tid={TIDs.header_my_complaints_link}
+                                type="complaintList"
+                            >
+                                <div className={userMenuItemIconTwClass}>
+                                    <SearchListIcon className="w-6 h-6" />
+                                </div>
+                                {t('My complaints')}
+                            </MenuIconicSubItemLink>
+                        </li>
+                        <li className={userMenuItemTwClass}>
+                            <MenuIconicSubItemLink
+                                href={customerEditProfileUrl}
+                                tid={TIDs.header_edit_profile_link}
+                                type="editProfile"
+                            >
                                 <div className={userMenuItemIconTwClass}>
                                     <EditIcon className="w-6 h-6" />
                                 </div>

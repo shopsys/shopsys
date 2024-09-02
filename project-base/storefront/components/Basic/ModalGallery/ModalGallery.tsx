@@ -1,6 +1,7 @@
 import { ModalGalleryCarousel } from './ModalGalleryCarousel';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { Image } from 'components/Basic/Image/Image';
+import { TypeFileFragment } from 'graphql/requests/files/fragments/FileFragment.generated';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { TypeVideoTokenFragment } from 'graphql/requests/products/fragments/VideoTokenFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
@@ -11,7 +12,7 @@ import { twMergeCustom } from 'utils/twMerge';
 import { useKeypress } from 'utils/useKeyPress';
 
 type ModalGalleryProps = {
-    items: (TypeVideoTokenFragment | TypeImageFragment)[];
+    items: (TypeVideoTokenFragment | TypeImageFragment | TypeFileFragment)[];
     initialIndex: number;
     galleryName: string;
     onCloseModal: () => void;
@@ -30,6 +31,7 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
 
     const isImage = selectedGalleryItem.__typename === 'Image';
     const isVideo = selectedGalleryItem.__typename === 'VideoToken';
+    const isFile = selectedGalleryItem.__typename === 'File';
 
     const lastItemIndex = items.length - 1;
 
@@ -66,7 +68,7 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
     });
 
     return (
-        <div className="fixed inset-0 flex select-none flex-col bg-background p-2 z-overlay" onClick={onCloseModal}>
+        <div className="fixed inset-0 flex select-none flex-col bg-background p-2 z-maximum" onClick={onCloseModal}>
             <div className="flex w-full flex-1 flex-col justify-center">
                 <div className="relative my-auto flex max-h-[80dvh] flex-1 items-center justify-center" {...handlers}>
                     <SpinnerIcon className="absolute -z-above w-16 text-textInverted opacity-50" />
@@ -91,6 +93,20 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
                             className="aspect-video max-h-full w-full max-w-xl md:max-w-[1500px]"
                             src={`https://www.youtube.com/embed/${selectedGalleryItem.token}?autoplay=1&mute=1`}
                             title={selectedGalleryItem.description}
+                        />
+                    )}
+
+                    {isFile && (
+                        <Image
+                            key={selectedIndex}
+                            fill
+                            alt={selectedGalleryItem.anchorText || `${galleryName}-${selectedIndex}`}
+                            className="max-h-full object-contain"
+                            draggable={false}
+                            hash={selectedGalleryItem.url.split('?')[1]}
+                            sizes="(max-width: 768px) 100vw, 1200px"
+                            src={selectedGalleryItem.url.split('?')[0]}
+                            onLoad={() => setIsLoaded(true)}
                         />
                     )}
                 </div>

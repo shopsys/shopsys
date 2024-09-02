@@ -6,9 +6,14 @@ import { SkeletonPageComparison } from './SkeletonPageComparison';
 import { SkeletonPageConfirmation } from './SkeletonPageConfirmation';
 import { SkeletonPageContact } from './SkeletonPageContact';
 import { SkeletonPageContactInformation } from './SkeletonPageContactInformation';
+import { SkeletonPageCustomerAccount } from './SkeletonPageCustomerAccount';
+import { SkeletonPageCustomerComplaintDetail } from './SkeletonPageCustomerComplaintDetail';
+import { SkeletonPageCustomerComplaintList } from './SkeletonPageCustomerComplaintList';
+import { SkeletonPageCustomerComplaintNew } from './SkeletonPageCustomerComplaintNew';
+import { SkeletonPageCustomerEditProfile } from './SkeletonPageCustomerEditProfile';
+import { SkeletonPageCustomerOrderDetail } from './SkeletonPageCustomerOrderDetail';
+import { SkeletonPageCustomerOrderList } from './SkeletonPageCustomerOrderList';
 import { SkeletonPageHome } from './SkeletonPageHome';
-import { SkeletonPageOrder } from './SkeletonPageOrder';
-import { SkeletonPageOrders } from './SkeletonPageOrders';
 import { SkeletonPageProductDetail } from './SkeletonPageProductDetail';
 import { SkeletonPageProductDetailMainVariant } from './SkeletonPageProductDetailMainVariant';
 import { SkeletonPageProductsList } from './SkeletonPageProductsList';
@@ -73,16 +78,26 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({
             return <SkeletonPageContact />;
         case 'contact-information':
             return <SkeletonPageContactInformation />;
+        case 'account':
+            return <SkeletonPageCustomerAccount />;
+        case 'complaintNew':
+            return <SkeletonPageCustomerComplaintNew />;
+        case 'complaintDetail':
+            return <SkeletonPageCustomerComplaintDetail />;
+        case 'complaintList':
+            return <SkeletonPageCustomerComplaintList />;
+        case 'orderList':
+            return <SkeletonPageCustomerOrderList />;
+        case 'orderDetail':
+            return <SkeletonPageCustomerOrderDetail />;
+        case 'editProfile':
+            return <SkeletonPageCustomerEditProfile />;
         case 'flag':
             return <SkeletonPageProductsListSimple />;
         case 'homepage':
             return <SkeletonPageHome />;
         case 'order-confirmation':
             return <SkeletonPageConfirmation />;
-        case 'order':
-            return <SkeletonPageOrder />;
-        case 'orders':
-            return <SkeletonPageOrders />;
         case 'product':
             return <SkeletonPageProductDetail />;
         case 'productMainVariant':

@@ -22,6 +22,7 @@ export const CustomerLayout: FC<CustomerLayoutProps> = ({ pageHeading, children,
             <Webline>
                 <Breadcrumbs
                     key="breadcrumb"
+                    type={props.breadcrumbsType}
                     breadcrumbs={[
                         { __typename: 'Link', name: t('Customer'), slug: customerUrl },
                         ...(breadcrumbs ?? []),

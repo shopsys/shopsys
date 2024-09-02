@@ -1,4 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
@@ -41,15 +42,32 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
 
     return (
         <div className="bg-backgroundMore flex flex-col gap-5 rounded-md p-4 vl:p-6">
-            <div className="flex flex-col vl:flex-row vl:justify-between vl:items-start gap-6">
+            <div className="flex flex-col vl:flex-row vl:justify-between vl:items-start gap-4">
+                <Image
+                    priority
+                    alt={orderedItem.productMainImage?.name || ''}
+                    className="max-h-full object-contain h-[80px] w-[80px]"
+                    height={80}
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    src={orderedItem.productMainImage?.url}
+                    width={80}
+                />
                 <div className="flex flex-col gap-1">
-                    <h5>{orderedItem.name}</h5>
+                    <h5>
+                        {orderedItem.product?.isVisible ? (
+                            <ExtendedNextLink href={orderedItem.product.slug} type="product">
+                                {orderedItem.name}
+                            </ExtendedNextLink>
+                        ) : (
+                            orderedItem.name
+                        )}
+                    </h5>
                     <div className="flex gap-x-8 gap-y-2 flex-wrap">
                         <OrderedItemColumnInfo
                             title={t('Order number')}
                             value={
                                 <ExtendedNextLink
-                                    type="order"
+                                    type="orderDetail"
                                     href={{
                                         pathname: customerOrderDetailUrl,
                                         query: { orderNumber: orderedItem.order.number },
@@ -76,8 +94,9 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
                         />
                     </div>
                 </div>
-                <div className="flex gap-2 items-center">
+                <div className="flex gap-2 items-center md:ml-auto">
                     <Button
+                        className="w-full md:w-auto"
                         size="small"
                         onClick={(e) => openCreateComplaintPopup(e, orderedItem.order.uuid, orderedItem)}
                     >

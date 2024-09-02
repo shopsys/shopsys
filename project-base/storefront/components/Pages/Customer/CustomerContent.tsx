@@ -30,18 +30,21 @@ export const CustomerContent: FC = () => {
             <Webline>
                 <ul className="mb-8 flex flex-col flex-wrap gap-4 md:flex-row">
                     <CustomerListItem>
-                        <ExtendedNextLink href={customerOrdersUrl} type="orders">
+                        <ExtendedNextLink href={customerOrdersUrl} type="orderList">
                             <SearchListIcon className="mr-5 w-6 h-6" />
                             {t('My orders')}
                         </ExtendedNextLink>
                     </CustomerListItem>
 
                     <CustomerListItem>
-                        <ExtendedNextLink href={customerComplaintsUrl}>{t('My complaints')}</ExtendedNextLink>
+                        <ExtendedNextLink href={customerComplaintsUrl} type="complaintList">
+                            <SearchListIcon className="mr-5 w-6 h-6" />
+                            {t('My complaints')}
+                        </ExtendedNextLink>
                     </CustomerListItem>
 
                     <CustomerListItem>
-                        <ExtendedNextLink href={customerEditProfileUrl}>
+                        <ExtendedNextLink href={customerEditProfileUrl} type="editProfile">
                             <EditIcon className="mr-5 w-6 h-6" />
                             {t('Edit profile')}
                         </ExtendedNextLink>
