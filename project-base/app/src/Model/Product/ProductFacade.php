@@ -48,6 +48,8 @@ use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
  * @property \App\Model\Product\ProductFactory $productFactory
  * @method setAdditionalDataAfterCreate(\App\Model\Product\Product $product, \App\Model\Product\ProductData $productData)
  * @method editProductStockRelation(\App\Model\Product\ProductData $productData, \App\Model\Product\Product $product)
+ * @method createFriendlyUrlsWhenRenamed(\App\Model\Product\Product $product, array $originalNames)
+ * @method array getChangedNamesByLocale(\App\Model\Product\Product $product, array $originalNames)
  */
 class ProductFacade extends BaseProductFacade
 {
