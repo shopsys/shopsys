@@ -1595,6 +1595,8 @@ export type TypeOrder = {
   promoCode: Maybe<Scalars['String']['output']>;
   /** Current status of the order */
   status: Scalars['String']['output'];
+  /** Type of the order status */
+  statusType: TypeOrderStatusEnum;
   /** Billing address street name  */
   street: Scalars['String']['output'];
   /** The customer's telephone number */

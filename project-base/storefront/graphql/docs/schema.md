@@ -5795,6 +5795,15 @@ Current status of the order
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>statusType</strong></td>
+<td valign="top"><a href="#orderstatusenum">OrderStatusEnum</a>!</td>
+<td>
+
+Type of the order status
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>street</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>

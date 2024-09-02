@@ -1230,6 +1230,8 @@ type Order {
   promoCode: String
   "Current status of the order"
   status: String!
+  "Type of the order status"
+  statusType: OrderStatusEnum!
   "Billing address street name "
   street: String!
   "The customer's telephone number"
