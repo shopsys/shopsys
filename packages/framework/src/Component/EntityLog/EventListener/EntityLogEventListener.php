@@ -9,6 +9,7 @@ use Doctrine\ORM\Event\PostFlushEventArgs;
 use Doctrine\ORM\Event\PostPersistEventArgs;
 use Doctrine\ORM\Event\PostUpdateEventArgs;
 use Doctrine\ORM\Event\PreRemoveEventArgs;
+use Doctrine\ORM\PersistentCollection;
 use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableEntityConfig;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableEntityConfigFactory;
@@ -155,6 +156,12 @@ class EntityLogEventListener implements ResetInterface
         }
 
         $changeSet = $unitOfWork->getEntityChangeSet($entity);
+
+        foreach ($changeSet as $key => $value) {
+            if ($value instanceof PersistentCollection) {
+                unset($changeSet[$key]); //collection is logged in resolveChangesOnCollectionForEntity method
+            }
+        }
 
         if (count($changeSet) > 0) {
             $resolvedChangeSet = array_merge($resolvedChangeSet, $this->changeSetResolver->resolveChangeSetForEntity($changeSet, $entity));
