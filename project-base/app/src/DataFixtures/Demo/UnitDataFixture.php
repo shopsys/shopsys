@@ -6,6 +6,7 @@ namespace App\DataFixtures\Demo;
 
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
@@ -31,11 +32,13 @@ class UnitDataFixture extends AbstractReferenceFixture
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactory $unitDataFactory
      * @param \App\Component\Setting\Setting $setting
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         private readonly UnitFacade $unitFacade,
         private readonly UnitDataFactoryInterface $unitDataFactory,
         private readonly Setting $setting,
+        private readonly Domain $domain,
     ) {
     }
 
@@ -46,57 +49,57 @@ class UnitDataFixture extends AbstractReferenceFixture
     {
         $unitData = $this->unitDataFactory->create();
 
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+        foreach ($this->domain->getAllLocales() as $locale) {
             $unitData->name[$locale] = t('m³', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $this->createUnit($unitData, self::UNIT_CUBIC_METERS);
 
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+        foreach ($this->domain->getAllLocales() as $locale) {
             $unitData->name[$locale] = t('pcs', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $this->createUnit($unitData, self::UNIT_PIECES);
 
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+        foreach ($this->domain->getAllLocales() as $locale) {
             $unitData->name[$locale] = t('g', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $this->createUnit($unitData, self::UNIT_GRAM);
 
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+        foreach ($this->domain->getAllLocales() as $locale) {
             $unitData->name[$locale] = t('cm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $this->createUnit($unitData, self::UNIT_CENTIMETER);
 
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+        foreach ($this->domain->getAllLocales() as $locale) {
             $unitData->name[$locale] = t('in', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $this->createUnit($unitData, self::UNIT_INCH);
 
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+        foreach ($this->domain->getAllLocales() as $locale) {
             $unitData->name[$locale] = t('t', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $this->createUnit($unitData, self::UNIT_TON);
 
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+        foreach ($this->domain->getAllLocales() as $locale) {
             $unitData->name[$locale] = t('kW', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $this->createUnit($unitData, self::UNIT_KILOWATT);
 
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+        foreach ($this->domain->getAllLocales() as $locale) {
             $unitData->name[$locale] = t('kg', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $this->createUnit($unitData, self::UNIT_KILOGRAM);
 
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+        foreach ($this->domain->getAllLocales() as $locale) {
             $unitData->name[$locale] = t('W', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $this->createUnit($unitData, self::UNIT_WATT);
 
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+        foreach ($this->domain->getAllLocales() as $locale) {
             $unitData->name[$locale] = t('V', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $this->createUnit($unitData, self::UNIT_VOLT);
 
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+        foreach ($this->domain->getAllLocales() as $locale) {
             $unitData->name[$locale] = t('m', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
         $this->createUnit($unitData, self::UNIT_METER);
