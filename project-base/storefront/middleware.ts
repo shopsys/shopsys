@@ -62,13 +62,16 @@ export const middleware: NextMiddleware = async (request) => {
             });
         }
 
-        const pageTypeParsedResponse: { route: FriendlyPageTypesValue; redirectTo: string } =
+        const pageTypeParsedResponse: { route: FriendlyPageTypesValue; redirectTo: string; redirectCode: number } =
             await pageTypeResponse.json();
 
         if (pageTypeParsedResponse.redirectTo && pageTypeParsedResponse.redirectTo !== request.url) {
             return NextResponse.redirect(
-                new URL(`${pageTypeParsedResponse.redirectTo}?${queryParams}`, request.url).href,
-                301,
+                new URL(
+                    `${pageTypeParsedResponse.redirectTo}${queryParams.toString() !== '' ? `?${queryParams}` : ''}`,
+                    request.url,
+                ).href,
+                pageTypeParsedResponse.redirectCode,
             );
         }
 
