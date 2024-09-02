@@ -14,6 +14,7 @@ class ComplaintStatusFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFactory $complaintStatusFactory
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusRepository $complaintStatusRepository
+     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -38,6 +39,8 @@ class ComplaintStatusFacade
 
         $this->mailTemplateFacade->createMailTemplateForAllDomains(
             ComplaintMail::getMailTemplateNameByStatus($complaintStatus),
+            null,
+            $complaintStatus,
         );
 
         return $complaintStatus;

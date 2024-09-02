@@ -39,6 +39,7 @@ class OrderStatusFacade
 
         $this->mailTemplateFacade->createMailTemplateForAllDomains(
             OrderMail::getMailTemplateNameByStatus($orderStatus),
+            $orderStatus,
         );
 
         return $orderStatus;

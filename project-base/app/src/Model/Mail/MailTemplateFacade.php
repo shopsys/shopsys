@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade as BaseMailTemplateFac
  * @property \App\Model\Mail\MailTemplateBuilder $mailTemplateBuilder
  * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Mail\MailTemplateRepository $mailTemplateRepository, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade, \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactoryInterface $mailTemplateFactory, \App\Model\Mail\MailTemplateDataFactory $mailTemplateDataFactory, \Shopsys\FrameworkBundle\Model\Mail\MailTemplateAttachmentFilepathProvider $mailTemplateAttachmentFilepathProvider, \App\Model\Mail\MailTemplateBuilder $mailTemplateBuilder)
  * @method \App\Model\Mail\MailTemplate get(string $templateName, int $domainId)
+ * @method createMailTemplateForAllDomains(string $name, \App\Model\Order\Status\OrderStatus|null $orderStatus = null, \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus|null $complaintStatus = null)
  */
 class MailTemplateFacade extends BaseMailTemplateFacade
 {
