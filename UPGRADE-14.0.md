@@ -82,6 +82,38 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   see #project-base-diff to update your project
 
+#### moved category parameters to framework package ([#3336](https://github.com/shopsys/shopsys/pull/3336))
+
+-   method `\Shopsys\FrameworkBundle\Model\Category\CategoryFacade::__construct` changed its interface:
+    ```diff
+        public function __construct(
+            protected readonly EntityManagerInterface $em,
+            protected readonly CategoryRepository $categoryRepository,
+            protected readonly Domain $domain,
+            protected readonly CategoryVisibilityRecalculationScheduler $categoryVisibilityRecalculationScheduler,
+            protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+            protected readonly ImageFacade $imageFacade,
+            protected readonly PluginCrudExtensionFacade $pluginCrudExtensionFacade,
+            protected readonly CategoryWithPreloadedChildrenFactory $categoryWithPreloadedChildrenFactory,
+            protected readonly CategoryWithLazyLoadedVisibleChildrenFactory $categoryWithLazyLoadedVisibleChildrenFactory,
+            protected readonly CategoryFactoryInterface $categoryFactory,
+            protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
+            protected readonly EventDispatcherInterface $eventDispatcher,
+    +       protected readonly CategoryParameterFacade $categoryParameterFacade,
+        ) {
+    ```
+-   method `\Shopsys\FrameworkBundle\Model\Category\CategoryDataFactory::__construct` changed its interface:
+    ```diff
+        public function __construct(
+            protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+            protected readonly PluginCrudExtensionFacade $pluginCrudExtensionFacade,
+            protected readonly Domain $domain,
+            protected readonly ImageUploadDataFactory $imageUploadDataFactory,
+    +       protected readonly CategoryParameterRepository $categoryParameterRepository,
+        ) {
+    ```
+-   see #project-base-diff to update your project
+
 ## [Upgrade from v13.0.0 to v14.0.0](https://github.com/shopsys/shopsys/compare/v13.0.0...v14.0.0)
 
 #### add rounded price value to order process ([#2835](https://github.com/shopsys/shopsys/pull/2835))

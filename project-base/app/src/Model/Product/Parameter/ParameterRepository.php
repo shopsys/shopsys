@@ -6,17 +6,14 @@ namespace App\Model\Product\Parameter;
 
 use App\Model\Product\Parameter\Exception\ParameterGroupNotFoundException;
 use App\Model\Product\Parameter\Exception\ParameterValueNotFoundException;
-use App\Model\Product\Product;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository as BaseParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
-use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
 
 /**
  * @property \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
@@ -37,29 +34,11 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
  * @method __construct(\Doctrine\ORM\EntityManagerInterface $entityManager, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactoryInterface $parameterValueFactory, \App\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory)
  * @method \App\Model\Product\Parameter\Parameter[] getVisibleParametersByIds(int[] $parameterIds, string $locale)
  * @method \App\Model\Product\Parameter\ParameterValue[] getParameterValuesByIds(int[] $parameterValueIds)
+ * @method \App\Model\Product\Parameter\Parameter[] getParametersUsedByProductsInCategory(\App\Model\Category\Category $category, \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig)
+ * @method applyCategorySeoConditions(\Doctrine\ORM\QueryBuilder $queryBuilder, \App\Model\Category\Category $category, int $domainId)
  */
 class ParameterRepository extends BaseParameterRepository
 {
-    /**
-     * @param \App\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \App\Model\Product\Parameter\Parameter[]
-     */
-    public function getParametersUsedByProductsInCategory(Category $category, DomainConfig $domainConfig): array
-    {
-        $queryBuilder = $this->getParameterRepository()->createQueryBuilder('p')
-            ->select('p')
-            ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'p = ppv.parameter')
-            ->join('p.translations', 'pt', Join::WITH, 'pt.locale = :locale')
-            ->setParameter('locale', $domainConfig->getLocale())
-            ->orderBy(OrderByCollationHelper::createOrderByForLocale('pt.name', $domainConfig->getLocale()))
-            ->groupBy('p, pt');
-
-        $this->applyCategorySeoConditions($queryBuilder, $category, $domainConfig->getId());
-
-        return $queryBuilder->getQuery()->execute();
-    }
-
     /**
      * @param \App\Model\Category\Category $category
      * @param int $domainId
@@ -119,22 +98,6 @@ class ParameterRepository extends BaseParameterRepository
         }
 
         return $parameterValue;
-    }
-
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @param \App\Model\Category\Category $category
-     * @param int $domainId
-     */
-    private function applyCategorySeoConditions(QueryBuilder $queryBuilder, Category $category, int $domainId): void
-    {
-        $queryBuilder
-            ->join(Product::class, 'product', Join::WITH, 'ppv.product = product')
-            ->join(ProductCategoryDomain::class, 'pcd', Join::WITH, 'product = pcd.product')
-            ->andWhere('pcd.category = :category')
-            ->andWhere('pcd.domainId = :domainId')
-            ->setParameter('category', $category)
-            ->setParameter('domainId', $domainId);
     }
 
     /**

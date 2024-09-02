@@ -1285,6 +1285,12 @@ msgstr ""
 msgid "Filter by"
 msgstr ""
 
+msgid "Filter parameters"
+msgstr ""
+
+msgid "Filter parameters closed by default"
+msgstr ""
+
 msgid "Finish the assigning"
 msgstr ""
 
@@ -2003,6 +2009,9 @@ msgid "Parameter <strong>{{ name }}</strong> deleted"
 msgstr ""
 
 msgid "Parameters"
+msgstr ""
+
+msgid "Parameters order in category"
 msgstr ""
 
 msgid "Parameters overview"

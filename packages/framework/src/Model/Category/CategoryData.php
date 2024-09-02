@@ -63,6 +63,16 @@ class CategoryData
      */
     public $uuid;
 
+    /**
+     * @var int[]|null[]
+     */
+    public $parametersPosition;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
+     */
+    public $parametersCollapsed;
+
     public function __construct()
     {
         $this->name = [];
@@ -73,5 +83,7 @@ class CategoryData
         $this->enabled = [];
         $this->urls = new UrlListData();
         $this->pluginData = [];
+        $this->parametersPosition = [];
+        $this->parametersCollapsed = [];
     }
 }
