@@ -10,9 +10,12 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterValueNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
 
 class ParameterRepository
 {
@@ -79,6 +82,42 @@ class ParameterRepository
         }
 
         return $parameter;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
+     */
+    public function getParametersUsedByProductsInCategory(Category $category, DomainConfig $domainConfig): array
+    {
+        $queryBuilder = $this->getParameterRepository()->createQueryBuilder('p')
+            ->select('p')
+            ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'p = ppv.parameter')
+            ->join('p.translations', 'pt', Join::WITH, 'pt.locale = :locale')
+            ->setParameter('locale', $domainConfig->getLocale())
+            ->orderBy(OrderByCollationHelper::createOrderByForLocale('pt.name', $domainConfig->getLocale()))
+            ->groupBy('p, pt');
+
+        $this->applyCategorySeoConditions($queryBuilder, $category, $domainConfig->getId());
+
+        return $queryBuilder->getQuery()->execute();
+    }
+
+    /**
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @param int $domainId
+     */
+    protected function applyCategorySeoConditions(QueryBuilder $queryBuilder, Category $category, int $domainId): void
+    {
+        $queryBuilder
+            ->join(Product::class, 'product', Join::WITH, 'ppv.product = product')
+            ->join(ProductCategoryDomain::class, 'pcd', Join::WITH, 'product = pcd.product')
+            ->andWhere('pcd.category = :category')
+            ->andWhere('pcd.domainId = :domainId')
+            ->setParameter('category', $category)
+            ->setParameter('domainId', $domainId);
     }
 
     /**

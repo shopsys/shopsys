@@ -17,6 +17,8 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryParameterRepository;
 
 /**
  * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+ * @method fillNew(\App\Model\Category\CategoryData $categoryData)
+ * @method int[] getParametersSortedByPositionFilteredByCategory(\App\Model\Category\Category $category)
  */
 class CategoryDataFactory extends BaseCategoryDataFactory
 {
@@ -33,7 +35,7 @@ class CategoryDataFactory extends BaseCategoryDataFactory
         PluginCrudExtensionFacade $pluginCrudExtensionFacade,
         Domain $domain,
         ImageUploadDataFactory $imageUploadDataFactory,
-        private readonly CategoryParameterRepository $categoryParameterRepository,
+        CategoryParameterRepository $categoryParameterRepository,
         private readonly LinkedCategoryRepository $linkedCategoryRepository,
     ) {
         parent::__construct(
@@ -41,6 +43,7 @@ class CategoryDataFactory extends BaseCategoryDataFactory
             $pluginCrudExtensionFacade,
             $domain,
             $imageUploadDataFactory,
+            $categoryParameterRepository,
         );
     }
 
@@ -80,16 +83,6 @@ class CategoryDataFactory extends BaseCategoryDataFactory
 
     /**
      * @param \App\Model\Category\CategoryData $categoryData
-     */
-    protected function fillNew(BaseCategoryData $categoryData): void
-    {
-        parent::fillNew($categoryData);
-
-        $categoryData->parametersCollapsed = [];
-    }
-
-    /**
-     * @param \App\Model\Category\CategoryData $categoryData
      * @param \App\Model\Category\Category $category
      */
     protected function fillFromCategory(BaseCategoryData $categoryData, BaseCategory $category): void
@@ -105,21 +98,5 @@ class CategoryDataFactory extends BaseCategoryDataFactory
         $categoryData->linkedCategories = array_map(function (LinkedCategory $linkedCategory) {
             return $linkedCategory->getCategory();
         }, $linkedCategories);
-    }
-
-    /**
-     * @param \App\Model\Category\Category $category
-     * @return int[]
-     */
-    private function getParametersSortedByPositionFilteredByCategory(Category $category): array
-    {
-        $parameterIdsSortedByPosition = [];
-        $categoryParameters = $this->categoryParameterRepository->getCategoryParametersByCategorySortedByPosition($category);
-
-        foreach ($categoryParameters as $categoryParameter) {
-            $parameterIdsSortedByPosition[] = $categoryParameter->getParameter()->getId();
-        }
-
-        return $parameterIdsSortedByPosition;
     }
 }

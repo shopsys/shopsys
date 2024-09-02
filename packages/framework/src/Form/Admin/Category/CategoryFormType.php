@@ -15,11 +15,13 @@ use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
+use Shopsys\FrameworkBundle\Form\SortableValuesType;
 use Shopsys\FrameworkBundle\Form\UrlListType;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryData;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -41,6 +43,7 @@ class CategoryFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
      */
     public function __construct(
         private readonly CategoryFacade $categoryFacade,
@@ -48,6 +51,7 @@ class CategoryFormType extends AbstractType
         private readonly SeoSettingFacade $seoSettingFacade,
         private readonly PluginCrudExtensionFacade $pluginCrudExtensionFacade,
         private readonly Localization $localization,
+        private readonly ParameterRepository $parameterRepository,
     ) {
     }
 
@@ -229,6 +233,8 @@ class CategoryFormType extends AbstractType
             ->add('save', SubmitType::class);
 
         $this->pluginCrudExtensionFacade->extendForm($builder, 'category', 'pluginData');
+
+        $this->buildFilterParameters($builder, $options['category']);
     }
 
     /**
@@ -256,5 +262,43 @@ class CategoryFormType extends AbstractType
         $domainLocale = $domainConfig->getLocale();
 
         return $category === null ? '' : $category->getName($domainLocale);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category|null $category
+     */
+    protected function buildFilterParameters(
+        FormBuilderInterface $builder,
+        ?Category $category,
+    ): void {
+        if ($category === null) {
+            return;
+        }
+        $parametersFilterBuilder = $builder->add('parametersGroup', GroupType::class, ['label' => t('Filter parameters')]);
+
+        $parameterNamesById = [];
+
+        $parametersUsedByProductsInCategory = $this->parameterRepository->getParametersUsedByProductsInCategory($category, $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID));
+
+        foreach ($parametersUsedByProductsInCategory as $parameter) {
+            $parameterNamesById[$parameter->getId()] = $parameter->getName();
+        }
+
+        $parametersFilterBuilder->add('parametersPosition', SortableValuesType::class, [
+            'labels_by_value' => $parameterNamesById,
+            'label' => t('Parameters order in category'),
+            'required' => false,
+        ]);
+
+        $parametersFilterBuilder->add('parametersCollapsed', ChoiceType::class, [
+            'required' => false,
+            'label' => t('Filter parameters closed by default'),
+            'choices' => $parametersUsedByProductsInCategory,
+            'expanded' => true,
+            'choice_label' => 'name',
+            'choice_value' => 'id',
+            'multiple' => true,
+        ]);
     }
 }

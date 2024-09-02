@@ -280,12 +280,6 @@ msgstr ""
 msgid "Fill URL only for selected domain"
 msgstr ""
 
-msgid "Filter parameters"
-msgstr ""
-
-msgid "Filter parameters closed by default"
-msgstr ""
-
 msgid "Flag"
 msgstr ""
 
@@ -515,9 +509,6 @@ msgid "Page title"
 msgstr ""
 
 msgid "Parameter"
-msgstr ""
-
-msgid "Parameters order in category"
 msgstr ""
 
 msgid "Password"

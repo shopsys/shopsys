@@ -35,6 +35,7 @@ class CategoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFactoryInterface $categoryFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
+     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterFacade $categoryParameterFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -49,6 +50,7 @@ class CategoryFacade
         protected readonly CategoryFactoryInterface $categoryFactory,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
         protected readonly EventDispatcherInterface $eventDispatcher,
+        protected readonly CategoryParameterFacade $categoryParameterFacade,
     ) {
     }
 
@@ -110,6 +112,8 @@ class CategoryFacade
         $this->friendlyUrlFacade->createFriendlyUrls('front_product_list', $category->getId(), $category->getNames());
         $this->imageFacade->manageImages($category, $categoryData->image);
 
+        $this->categoryParameterFacade->saveRelation($category, $categoryData->parametersPosition, $categoryData->parametersCollapsed);
+
         $this->pluginCrudExtensionFacade->saveAllData('category', $category->getId(), $categoryData->pluginData);
 
         $this->categoryVisibilityRecalculationScheduler->scheduleRecalculation();
@@ -140,6 +144,8 @@ class CategoryFacade
         $this->createFriendlyUrlsWhenRenamed($category, $originalNames);
 
         $this->imageFacade->manageImages($category, $categoryData->image);
+
+        $this->categoryParameterFacade->saveRelation($category, $categoryData->parametersPosition, $categoryData->parametersCollapsed);
 
         $this->pluginCrudExtensionFacade->saveAllData('category', $category->getId(), $categoryData->pluginData);
 
