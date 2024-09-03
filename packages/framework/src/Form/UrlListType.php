@@ -102,7 +102,6 @@ class UrlListType extends AbstractType
         $view->vars['routeName'] = $options['route_name'];
         $view->vars['entityId'] = $options['entity_id'];
         $view->vars['mainUrlsSlugsOnDomains'] = $mainUrlsSlugsOnDomains;
-        $view->vars['domainUrlsById'] = $this->getDomainUrlsIndexedById();
     }
 
     /**
@@ -128,7 +127,11 @@ class UrlListType extends AbstractType
         $friendlyUrlsByDomain = [];
 
         if ($entityId !== null) {
-            $friendlyUrls = $this->friendlyUrlFacade->getAllByRouteNameAndEntityId($routeName, $entityId);
+            $friendlyUrls = $this->friendlyUrlFacade->getAllByRouteNameDomainIdsAndEntityIds(
+                $routeName,
+                $entityId,
+                $this->domain->getAdminEnabledDomainIds(),
+            );
 
             foreach ($friendlyUrls as $friendlyUrl) {
                 $friendlyUrlsByDomain[$friendlyUrl->getDomainId()][] = $friendlyUrl;
@@ -174,8 +177,7 @@ class UrlListType extends AbstractType
     {
         $mainFriendlyUrlsSlugsByDomainId = [];
 
-        foreach ($this->domain->getAll() as $domainConfig) {
-            $domainId = $domainConfig->getId();
+        foreach ($this->domain->getAdminEnabledDomainIds() as $domainId) {
             $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl(
                 $domainId,
                 $routeName,
@@ -190,19 +192,5 @@ class UrlListType extends AbstractType
         }
 
         return $mainFriendlyUrlsSlugsByDomainId;
-    }
-
-    /**
-     * @return string[]
-     */
-    private function getDomainUrlsIndexedById()
-    {
-        $domainUrlsById = [];
-
-        foreach ($this->domain->getAll() as $domainConfig) {
-            $domainUrlsById[$domainConfig->getId()] = $domainConfig->getUrl();
-        }
-
-        return $domainUrlsById;
     }
 }

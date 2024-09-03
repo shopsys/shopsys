@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException
 use Shopsys\FrameworkBundle\Component\Domain\Exception\UnableToResolveDomainException;
 use Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Symfony\Component\HttpFoundation\Request;
 
 class Domain implements DomainIdsProviderInterface
@@ -26,10 +27,12 @@ class Domain implements DomainIdsProviderInterface
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[] $domainConfigs
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
      */
     public function __construct(
-        protected array $domainConfigs,
-        protected Setting $setting,
+        protected readonly array $domainConfigs,
+        protected readonly Setting $setting,
+        protected readonly AdministratorFacade $administratorFacade,
     ) {
     }
 
@@ -214,5 +217,37 @@ class Domain implements DomainIdsProviderInterface
     public function isB2b(): bool
     {
         return $this->getCurrentDomainConfig()->isB2b();
+    }
+
+    /**
+     * @return int[]
+     */
+    public function getAdminEnabledDomainIds(): array
+    {
+        $selectedDomainIds = $this->administratorFacade->getCurrentlyLoggedAdministrator()->getDisplayOnlyDomainIds();
+
+        return count($selectedDomainIds) > 0 ? $selectedDomainIds : $this->getAllIds();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
+     */
+    public function getAdminEnabledDomains(): array
+    {
+        $domains = [];
+
+        foreach ($this->getAdminEnabledDomainIds() as $selectedDomainId) {
+            $domains[$selectedDomainId] = $this->getDomainConfigById($selectedDomainId);
+        }
+
+        return $domains;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAdminAllDomainsEnabled(): bool
+    {
+        return count($this->getAdminEnabledDomainIds()) === count($this->getAllIds());
     }
 }

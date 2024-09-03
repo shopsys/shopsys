@@ -130,6 +130,17 @@ class FriendlyUrlFacade
     }
 
     /**
+     * @param string $routeName
+     * @param int $entityId
+     * @param int[] $domainIds
+     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[]
+     */
+    public function getAllByRouteNameDomainIdsAndEntityIds(string $routeName, int $entityId, array $domainIds): array
+    {
+        return $this->friendlyUrlRepository->getAllByRouteNameDomainIdsAndEntityIds($routeName, $entityId, $domainIds);
+    }
+
+    /**
      * @param int $domainId
      * @param string $routeName
      * @param int $entityId

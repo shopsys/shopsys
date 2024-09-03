@@ -9,6 +9,7 @@ use Monolog\Handler\NullHandler;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Shopsys\FrameworkBundle\Model\Feed\FeedCronModule;
 use Shopsys\FrameworkBundle\Model\Feed\FeedExport;
 use Shopsys\FrameworkBundle\Model\Feed\FeedFacade;
@@ -42,7 +43,8 @@ class FeedCronModuleTest extends TestCase
 
         $defaultTimeZone = new DateTimeZone('Europe/Prague');
         $domainConfig = new DomainConfig(1, 'http://example.com', 'name', 'en', $defaultTimeZone);
-        $domain = new Domain([$domainConfig], $settingMock);
+        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $domain = new Domain([$domainConfig], $settingMock, $administratorFacadeMock);
 
         $feedExportMock = $this->getMockBuilder(FeedExport::class)
             ->disableOriginalConstructor()

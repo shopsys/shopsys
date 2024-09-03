@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouter;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RequestContext;
@@ -25,7 +26,8 @@ class DomainRouterFactoryTest extends TestCase
         $defaultTimeZone = new DateTimeZone('Europe/Prague');
         $domainConfig = new DomainConfig(Domain::THIRD_DOMAIN_ID, 'http://example.com:8080', 'example', 'en', $defaultTimeZone);
         $settingMock = $this->createMock(Setting::class);
-        $domain = new Domain([$domainConfig], $settingMock);
+        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $domain = new Domain([$domainConfig], $settingMock, $administratorFacadeMock);
 
         $localizedRouterMock = $this->getMockBuilder(RouterInterface::class)->getMock();
         $friendlyUrlRouterMock = $this->getMockBuilder(FriendlyUrlRouter::class)

@@ -11,6 +11,7 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -144,8 +145,9 @@ class OrderFacadeHeurekaTest extends TestCase
     {
         $defaultTimeZone = new DateTimeZone('Europe/Prague');
         $domainConfig = new DomainConfig(Domain::FIRST_DOMAIN_ID, '', '', 'cs', $defaultTimeZone);
+        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
 
-        return new Domain([$domainConfig], $this->createMock(Setting::class));
+        return new Domain([$domainConfig], $this->createMock(Setting::class), $administratorFacadeMock);
     }
 
     /**

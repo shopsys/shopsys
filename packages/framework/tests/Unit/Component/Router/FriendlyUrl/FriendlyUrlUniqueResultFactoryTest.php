@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlUniqueResultFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 
 class FriendlyUrlUniqueResultFactoryTest extends TestCase
 {
@@ -31,7 +32,8 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
     public function testCreateNewUnique(): void
     {
         $settingMock = $this->createMock(Setting::class);
-        $domain = new Domain($this->getDomainConfigs(), $settingMock);
+        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $domain = new Domain($this->getDomainConfigs(), $settingMock, $administratorFacadeMock);
 
         $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(
             new FriendlyUrlFactory($domain, new EntityNameResolver([])),
@@ -54,7 +56,8 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
     public function testCreateOldUnique(): void
     {
         $settingMock = $this->createMock(Setting::class);
-        $domain = new Domain($this->getDomainConfigs(), $settingMock);
+        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $domain = new Domain($this->getDomainConfigs(), $settingMock, $administratorFacadeMock);
 
         $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(
             new FriendlyUrlFactory($domain, new EntityNameResolver([])),
@@ -80,7 +83,8 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
     public function testCreateNotUnique(): void
     {
         $settingMock = $this->createMock(Setting::class);
-        $domain = new Domain($this->getDomainConfigs(), $settingMock);
+        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $domain = new Domain($this->getDomainConfigs(), $settingMock, $administratorFacadeMock);
 
         $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(
             new FriendlyUrlFactory($domain, new EntityNameResolver([])),
