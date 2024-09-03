@@ -39,7 +39,7 @@ class DomainController extends AdminBaseController
     public function domainTabsAction()
     {
         return $this->render('@ShopsysFramework/Admin/Inline/Domain/tabs.html.twig', [
-            'domainConfigs' => $this->domain->getAll(),
+            'domainConfigs' => $this->domain->getAdminEnabledDomains(),
             'selectedDomainId' => $this->adminDomainTabsFacade->getSelectedDomainId(),
         ]);
     }
@@ -142,7 +142,7 @@ class DomainController extends AdminBaseController
     {
         $domainConfigs = [];
 
-        foreach ($this->domain->getAll() as $domainConfig) {
+        foreach ($this->domain->getAdminEnabledDomains() as $domainConfig) {
             if (!isset($domainConfigs[$domainConfig->getLocale()])) {
                 $domainConfigs[$domainConfig->getLocale()] = $domainConfig;
             }
