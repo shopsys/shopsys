@@ -3175,8 +3175,8 @@ msgstr "Vyhledávání ve nahraných souborech podle názvu souboru, přípony n
 msgid "Searching in all currencies"
 msgstr "Vyhledává se ve všech měnách"
 
-msgid "Searching searches in complaint number, order number, delivery last name, delivery company name, last name from order, email from order. It is possible to use wildcards * and ?."
-msgstr "Vyhledávání hledá v čísle reklamace, čísle objednávky, příjmení pro doručení, názvu firmy pro doručení, příjmení z objednávky a e-mailu objednávky. Je možné používat operátory * a ?."
+msgid "Searching searches in complaint number, order number, delivery last name, delivery company name, last name from order, email from order, complaint author last name, complaint author company name. It is possible to use wildcards * and ?."
+msgstr "Vyhledávání hledá v čísle reklamace, čísle objednávky, příjmení pro doručení, názvu firmy pro doručení, příjmení z objednávky, e-mailu objednávky, příjmení zadavatele reklamace a názvu firmy zadavatele reklamace. Je možné používat operátory * a ?."
 
 msgid "Searching searches in last name, company name, email, telephone. It is possible to use wildcards * and ?."
 msgstr "Vyhledávání hledá v příjmení, názvu firmy, e-mailu a telefonu. Je možné používat operátory * a ?."

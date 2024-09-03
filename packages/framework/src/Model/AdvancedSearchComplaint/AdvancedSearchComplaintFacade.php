@@ -104,6 +104,10 @@ class AdvancedSearchComplaintFacade
                         NORMALIZED(o.lastName) LIKE NORMALIZED(:text)
                         OR
                         NORMALIZED(o.email) LIKE NORMALIZED(:text)
+                        OR
+                        NORMALIZED(ba.companyName) LIKE NORMALIZED(:text)
+                        OR
+                        NORMALIZED(cu.lastName) LIKE NORMALIZED(:text)
                     )');
             $querySearchText = DatabaseSearching::getFullTextLikeSearchString($quickSearchData->text);
             $queryBuilder->setParameter('text', $querySearchText);
