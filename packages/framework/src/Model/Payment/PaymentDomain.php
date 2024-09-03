@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Payment;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
 /**
@@ -53,16 +54,38 @@ class PaymentDomain
     protected $vat;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod|null
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod")
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+     */
+    protected $goPayPaymentMethod;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    protected $hiddenByGoPay;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
+     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod|null $goPayPaymentMethod
+     * @param bool $hiddenByGoPay
      */
-    public function __construct(Payment $payment, int $domainId, Vat $vat)
-    {
+    public function __construct(
+        Payment $payment,
+        int $domainId,
+        Vat $vat,
+        ?GoPayPaymentMethod $goPayPaymentMethod = null,
+        bool $hiddenByGoPay = false,
+    ) {
         $this->payment = $payment;
         $this->domainId = $domainId;
         $this->vat = $vat;
         $this->enabled = true;
+        $this->goPayPaymentMethod = $goPayPaymentMethod;
+        $this->hiddenByGoPay = $hiddenByGoPay;
     }
 
     /**
@@ -103,5 +126,37 @@ class PaymentDomain
     public function setVat($vat): void
     {
         $this->vat = $vat;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod|null
+     */
+    public function getGoPayPaymentMethod()
+    {
+        return $this->goPayPaymentMethod;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod|null $goPayPaymentMethod
+     */
+    public function setGoPayPaymentMethod($goPayPaymentMethod): void
+    {
+        $this->goPayPaymentMethod = $goPayPaymentMethod;
+    }
+
+    /**
+     * @param bool $state
+     */
+    public function setHiddenByGoPay(bool $state): void
+    {
+        $this->hiddenByGoPay = $state;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHiddenByGoPay()
+    {
+        return $this->hiddenByGoPay;
     }
 }

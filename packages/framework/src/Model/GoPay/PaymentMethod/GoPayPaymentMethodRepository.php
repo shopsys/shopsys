@@ -31,18 +31,19 @@ class GoPayPaymentMethodRepository
      */
     public function getAll(): array
     {
-        return $this->getPaymentMethodRepository()->findAll();
+        return $this->getPaymentMethodRepository()->findBy([], ['available' => 'desc']);
     }
 
     /**
-     * @param int $currencyId
+     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod[]
      */
-    public function getAllIndexedByIdentifierByCurrencyId(int $currencyId): array
+    public function getAllIndexedByIdentifierByDomainId(int $domainId): array
     {
         return $this->getPaymentMethodRepository()
             ->createQueryBuilder('pm')
-            ->where('pm.currency = :currency')->setParameter('currency', $currencyId)
+            ->where('pm.domainId = :domainId')
+            ->setParameter('domainId', $domainId)
             ->indexBy('pm', 'pm.identifier')
             ->getQuery()
             ->execute();

@@ -127,7 +127,7 @@ class PaymentRepository
             ->andWhere('p.deleted = false')
             ->andWhere('pd.enabled = true')
             ->andWhere('p.hidden = false')
-            ->andWhere('p.hiddenByGoPay = false');
+            ->andWhere('pd.hiddenByGoPay = false');
 
         $payment = $queryBuilder->getQuery()->getOneOrNullResult();
 
@@ -140,11 +140,19 @@ class PaymentRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod $goPayPaymentMethod
+     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Payment\Payment[]
      */
-    public function getByGoPayPaymentMethod(GoPayPaymentMethod $goPayPaymentMethod): array
+    public function getByGoPayPaymentMethod(GoPayPaymentMethod $goPayPaymentMethod, int $domainId): array
     {
-        return $this->getPaymentRepository()->findBy(['goPayPaymentMethod' => $goPayPaymentMethod]);
+        return $this->getPaymentRepository()
+            ->createQueryBuilder('p')
+            ->join(PaymentDomain::class, 'pd', Join::WITH, 'p.id = pd.payment AND pd.domainId = :domainId')
+            ->where('pd.goPayPaymentMethod = :goPayPaymentMethod')
+            ->setParameter('domainId', $domainId)
+            ->setParameter('goPayPaymentMethod', $goPayPaymentMethod)
+            ->getQuery()
+            ->execute();
     }
 
     /**

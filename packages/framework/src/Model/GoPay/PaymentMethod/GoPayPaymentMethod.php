@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(
  *      name="gopay_payment_methods",
  *      uniqueConstraints={
- *          @ORM\UniqueConstraint(name="gopay_payment_method_unique", columns={"currency_id", "identifier"})
+ *          @ORM\UniqueConstraint(name="gopay_payment_method_unique", columns={"domain_id", "identifier"})
  *      }
  * )
  * @ORM\Entity
@@ -48,6 +48,12 @@ class GoPayPaymentMethod
     protected $currency;
 
     /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
+    protected $domainId;
+
+    /**
      * @var string
      * @ORM\Column(type="string", length=255)
      */
@@ -66,16 +72,20 @@ class GoPayPaymentMethod
     protected $paymentGroup;
 
     /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    protected $available;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodData $paymentMethodData
      */
     public function __construct(GoPayPaymentMethodData $paymentMethodData)
     {
         $this->identifier = $paymentMethodData->identifier;
-        $this->name = $paymentMethodData->name;
         $this->currency = $paymentMethodData->currency;
-        $this->imageNormalUrl = $paymentMethodData->imageNormalUrl;
-        $this->imageLargeUrl = $paymentMethodData->imageLargeUrl;
-        $this->paymentGroup = $paymentMethodData->paymentGroup;
+
+        $this->fillCommonFields($paymentMethodData);
     }
 
     /**
@@ -83,10 +93,20 @@ class GoPayPaymentMethod
      */
     public function edit(GoPayPaymentMethodData $goPayPaymentMethodData): void
     {
+        $this->fillCommonFields($goPayPaymentMethodData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodData $goPayPaymentMethodData
+     */
+    public function fillCommonFields(GoPayPaymentMethodData $goPayPaymentMethodData): void
+    {
         $this->name = $goPayPaymentMethodData->name;
         $this->imageNormalUrl = $goPayPaymentMethodData->imageNormalUrl;
         $this->imageLargeUrl = $goPayPaymentMethodData->imageLargeUrl;
         $this->paymentGroup = $goPayPaymentMethodData->paymentGroup;
+        $this->domainId = $goPayPaymentMethodData->domainId;
+        $this->available = $goPayPaymentMethodData->available;
     }
 
     /**
@@ -143,5 +163,26 @@ class GoPayPaymentMethod
     public function getPaymentGroup()
     {
         return $this->paymentGroup;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDomainId()
+    {
+        return $this->domainId;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAvailable()
+    {
+        return $this->available;
+    }
+
+    public function setUnavailable()
+    {
+        $this->available = false;
     }
 }

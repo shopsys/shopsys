@@ -64,7 +64,7 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
         $swiftForFirstDomain = sprintf(GoPayDataFixture::AIRBANK_SWIFT_PATTERN, $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale());
 
         $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
-        $paymentGoPayBankAccount = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT_DOMAIN . Domain::FIRST_DOMAIN_ID, Payment::class);
+        $paymentGoPayBankAccount = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT, Payment::class);
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePaymentInOrderMutation.graphql', [
             'input' => [
                 'orderUuid' => $order->getUuid(),
@@ -81,7 +81,7 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
 
     public function testChangePaymentInOrderMutationNonExistingOrder(): void
     {
-        $paymentGoPayBankAccount = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT_DOMAIN . Domain::FIRST_DOMAIN_ID, Payment::class);
+        $paymentGoPayBankAccount = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT, Payment::class);
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePaymentInOrderMutation.graphql', [
             'input' => [
                 'orderUuid' => '00000000-0000-0000-0000-000000000000',
@@ -117,11 +117,11 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
     public function testChangePaymentInOrderValidationUnavailablePayment(): void
     {
         $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
-        $paymentGoPayOnSecondDomain = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . Domain::SECOND_DOMAIN_ID, Payment::class);
+        $paymentGoPay = $this->getReference(PaymentDataFixture::PAYMENT_LATER, Payment::class);
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePaymentInOrderMutation.graphql', [
             'input' => [
                 'orderUuid' => $order->getUuid(),
-                'paymentUuid' => $paymentGoPayOnSecondDomain->getUuid(),
+                'paymentUuid' => $paymentGoPay->getUuid(),
             ],
         ]);
 
@@ -207,7 +207,7 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
     private function testInvalidSwift(string $swift): void
     {
         $order = $this->getReference(OrderDataFixture::ORDER_WITH_GOPAY_PAYMENT_1, Order::class);
-        $paymentGoPayBankAccount = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT_DOMAIN . Domain::FIRST_DOMAIN_ID, Payment::class);
+        $paymentGoPayBankAccount = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT, Payment::class);
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePaymentInOrderMutation.graphql', [
             'input' => [
                 'orderUuid' => $order->getUuid(),

@@ -83,6 +83,10 @@
 {%- endblock localized_form_rows %}
 
 {% block multidomain_row -%}
+    {% set attrClass = form.vars.attr.class ?? '' %}
+    {% if attrClass %}
+        <div class="{{ attrClass }}">
+    {% endif %}
     {% if form.vars.macro is not null %}
         {% if form.vars.macro.name == 'seoFormRowMacros' %}
             {% import '@ShopsysFramework/Admin/Form/seoFormRowMacros.html.twig' as seoFormRowMacros %}
@@ -108,6 +112,9 @@
                 {{- block('multidomain_form_rows') -}}
             </div>
         {% endif %}
+    {% endif %}
+    {% if attrClass %}
+        </div>
     {% endif %}
 {%- endblock multidomain_row %}
 

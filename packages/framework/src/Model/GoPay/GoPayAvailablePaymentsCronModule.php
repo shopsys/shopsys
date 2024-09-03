@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\GoPay\Exception\GoPayNotConfiguredException;
+use Shopsys\FrameworkBundle\Model\GoPay\Exception\GoPayNotEnabledOnDomainException;
 use Shopsys\FrameworkBundle\Model\GoPay\Exception\GoPayPaymentDownloadException;
 use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
@@ -18,13 +19,11 @@ class GoPayAvailablePaymentsCronModule implements SimpleCronModuleInterface
     protected Logger $logger;
 
     /**
-     * @param array $goPayConfig
      * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade $paymentMethodFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        protected readonly array $goPayConfig,
         protected readonly GoPayPaymentMethodFacade $paymentMethodFacade,
         protected readonly EntityManagerInterface $em,
         protected readonly Domain $domain,
@@ -48,8 +47,6 @@ class GoPayAvailablePaymentsCronModule implements SimpleCronModuleInterface
             $this->em->beginTransaction();
             $this->downloadAndUpdatePaymentMethodsForAllDomains();
             $this->em->commit();
-        } catch (GoPayNotConfiguredException $exception) {
-            $this->logger->alert('GoPay configuration is not set.');
         } catch (Exception $exception) {
             $this->logger->error($exception->getMessage(), ['exception' => $exception]);
             $this->em->rollback();
@@ -63,14 +60,25 @@ class GoPayAvailablePaymentsCronModule implements SimpleCronModuleInterface
         $allDomains = $this->domain->getAll();
 
         foreach ($allDomains as $domain) {
-            if (array_key_exists($domain->getLocale(), $this->goPayConfig) === false) {
-                continue;
-            }
-
-            $this->logger->info(sprintf('downloading for %s locale', $domain->getLocale()));
-
             try {
+                $this->logger->info(sprintf(
+                    'Downloading for the domain %d (%s)',
+                    $domain->getId(),
+                    $domain->getName(),
+                ));
                 $this->paymentMethodFacade->downloadAndUpdatePaymentMethods($domain);
+            } catch (GoPayNotEnabledOnDomainException $ex) {
+                $this->logger->info(sprintf(
+                    'GoPay is not enabled on the domain %d (%s)',
+                    $domain->getId(),
+                    $domain->getName(),
+                ));
+            } catch (GoPayNotConfiguredException $exception) {
+                $this->logger->alert(sprintf(
+                    'GoPay configuration is not set properly for the domain %d (%s)',
+                    $domain->getId(),
+                    $domain->getName(),
+                ));
             } catch (GoPayPaymentDownloadException $ex) {
                 $this->logger->error($ex->getMessage(), [
                     'exception' => $ex,

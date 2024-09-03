@@ -62,9 +62,9 @@ class PaymentData
     public $uuid;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod|null
+     * @var array<int, \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod|null>
      */
-    public $goPayPaymentMethod;
+    public $goPayPaymentMethodByDomainId;
 
     /**
      * @var string
@@ -72,7 +72,7 @@ class PaymentData
     public $type;
 
     /**
-     * @var bool
+     * @var array<int, bool>
      */
     public $hiddenByGoPay;
 
@@ -87,6 +87,8 @@ class PaymentData
         $this->czkRounding = false;
         $this->pricesIndexedByDomainId = [];
         $this->vatsIndexedByDomainId = [];
+        $this->goPayPaymentMethodByDomainId = [];
+        $this->hiddenByGoPay = [];
         $this->type = Payment::TYPE_BASIC;
     }
 }

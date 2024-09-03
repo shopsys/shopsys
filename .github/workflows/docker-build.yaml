@@ -703,9 +703,7 @@ jobs:
             BRANCH_NAME: ${{ needs.variables.outputs.BRANCH_NAME }}
             BRANCH_NAME_ESCAPED: ${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}
             TRAEFIK_HOSTS: ${{ needs.variables.outputs.TRAEFIK_HOSTS }}
-            GOPAY_GOID: ${{ secrets.GOPAY_GOID }}
-            GOPAY_CLIENTID: ${{ secrets.GOPAY_CLIENTID }}
-            GOPAY_CLIENTSECRET: ${{ secrets.GOPAY_CLIENTSECRET }}
+            GOPAY_CONFIG_VALUE: ${{ secrets.GOPAY_CONFIG }}
             PACKETERY_API_KEY_VALUE: ${{ secrets.PACKETERY_API_KEY }}
             PACKETERY_API_PASSWORD_VALUE: ${{ secrets.PACKETERY_API_PASSWORD }}
             FACEBOOK_CLIENTID: ${{ secrets.FACEBOOK_CLIENTID }}

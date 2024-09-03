@@ -8,6 +8,7 @@ use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\FlashMessage\FlashMessageTrait;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\GoPay\Exception\GoPayNotConfiguredException;
+use Shopsys\FrameworkBundle\Model\GoPay\Exception\GoPayNotEnabledOnDomainException;
 use Shopsys\FrameworkBundle\Model\GoPay\Exception\GoPayPaymentDownloadException;
 use Shopsys\FrameworkBundle\Model\GoPay\GoPayFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
@@ -81,7 +82,10 @@ class PaymentServiceFacade
             $paymentServiceFacade->createTransaction($paymentTransactionData, $paymentSetupCreationData);
             $this->paymentTransactionFacade->create($paymentTransactionData);
         } catch (PaymentServiceFacadeNotRegisteredException $exception) {
-            $this->logger->error($exception->getMessage());
+            $this->logger->error(
+                $exception->getMessage(),
+                ['exception' => $exception],
+            );
         }
 
         return $paymentSetupCreationData;
@@ -102,8 +106,11 @@ class PaymentServiceFacade
                 if ($update) {
                     $this->paymentTransactionFacade->edit($paymentTransaction->getId(), $paymentTransactionData);
                 }
-            } catch (PaymentServiceFacadeNotRegisteredException|GoPayNotConfiguredException|PaymentTransactionHasNoAssignedPayment $exception) {
-                $this->logger->error($exception->getMessage());
+            } catch (PaymentServiceFacadeNotRegisteredException|GoPayNotConfiguredException|GoPayNotEnabledOnDomainException|PaymentTransactionHasNoAssignedPayment $exception) {
+                $this->logger->error(
+                    $exception->getMessage(),
+                    ['exception' => $exception],
+                );
             }
         }
     }
@@ -123,7 +130,10 @@ class PaymentServiceFacade
                 $update = $paymentServiceFacade->refundTransaction($paymentTransactionData, $refundAmount);
             } catch (GoPayPaymentDownloadException $exception) {
                 $this->addErrorFlash(t('GoPay API return error - go to GoPay admin and find transaction %paymentId% and check if is all right.', ['%paymentId%' => $paymentTransaction->getExternalPaymentIdentifier()]));
-                $this->logger->error('GoPay API return error.', [$exception]);
+                $this->logger->error(
+                    'GoPay API return error.',
+                    ['exception' => $exception],
+                );
                 $update = false;
             }
 
@@ -137,7 +147,10 @@ class PaymentServiceFacade
                 $this->paymentTransactionFacade->edit($paymentTransaction->getId(), $paymentTransactionData);
             }
         } catch (PaymentServiceFacadeNotRegisteredException|PaymentTransactionHasNoAssignedPayment $exception) {
-            $this->logger->error($exception->getMessage());
+            $this->logger->error(
+                $exception->getMessage(),
+                ['exception' => $exception],
+            );
         }
     }
 }

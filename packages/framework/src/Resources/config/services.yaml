@@ -690,7 +690,7 @@ services:
 
     Shopsys\FrameworkBundle\Model\GoPay\GoPayClientFactory:
         arguments:
-            - '%gopay_config%'
+            $clientConfigs: '%env(json:GOPAY_CONFIG)%'
 
     Shopsys\FrameworkBundle\Model\Heureka\HeurekaSetting: ~
 

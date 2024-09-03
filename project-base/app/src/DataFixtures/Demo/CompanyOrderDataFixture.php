@@ -85,7 +85,7 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
                 ProductDataFixture::PRODUCT_PREFIX . '10' => 3,
             ],
             TransportDataFixture::TRANSPORT_PERSONAL,
-            PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . $domainId,
+            PaymentDataFixture::PAYMENT_GOPAY_CARD,
             $customerUser,
         );
 

@@ -5,13 +5,17 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\Payment;
 
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainsType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Form\PriceAndVatTableByDomainsType;
+use Shopsys\FrameworkBundle\Form\WarningMessageType;
+use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
 use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
@@ -24,6 +28,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class PaymentFormType extends AbstractType
 {
@@ -31,11 +37,13 @@ class PaymentFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade $goPayPaymentMethodFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         private readonly TransportFacade $transportFacade,
         private readonly PaymentFacade $paymentFacade,
         private readonly GoPayPaymentMethodFacade $goPayPaymentMethodFacade,
+        private readonly Domain $domain,
     ) {
     }
 
@@ -75,7 +83,10 @@ class PaymentFormType extends AbstractType
                 'required' => false,
                 'label' => t('Display on'),
             ])
-            ->add('hidden', YesNoType::class, $this->getHiddenFieldOptions($payment))
+            ->add('hidden', YesNoType::class, [
+                'required' => false,
+                'label' => t('Hidden'),
+            ])
             ->add('transports', ChoiceType::class, [
                 'required' => false,
                 'choices' => $this->transportFacade->getAll(),
@@ -99,18 +110,34 @@ class PaymentFormType extends AbstractType
                     'class' => 'js-payment-type',
                 ],
             ])
-            ->add('goPayPaymentMethod', ChoiceType::class, [
+            ->add('goPayPaymentMethodByDomainId', MultidomainType::class, [
+                'entry_type' => ChoiceType::class,
+                'options_by_domain_id' => $this->getGopayPaymentMethodOptionsByDomainId(),
+                'entry_options' => [
+                    'placeholder' => '---',
+                    'choice_label' => 'name',
+                    'choice_value' => 'id',
+                    'multiple' => false,
+                    'expanded' => false,
+                    'required' => true,
+                ],
                 'label' => t('GoPay payment method'),
-                'choices' => $this->goPayPaymentMethodFacade->getAll(),
-                'choice_label' => 'name',
-                'choice_value' => 'id',
-                'multiple' => false,
-                'expanded' => false,
                 'required' => true,
+                'macro' => [
+                    'name' => 'seoFormRowMacros.multidomainRow',
+                    'recommended_length' => null,
+                ],
                 'attr' => [
                     'class' => 'js-payment-gopay-payment-method',
                 ],
             ]);
+
+        if ($payment !== null) {
+            $this->addHiddenByGoPayWarning(
+                $options['data'],
+                $builderBasicInformationGroup,
+            );
+        }
 
         $builderPriceGroup = $builder->create('prices', GroupType::class, [
             'label' => t('Prices'),
@@ -179,6 +206,27 @@ class PaymentFormType extends AbstractType
     }
 
     /**
+     * @return array
+     */
+    private function getGopayPaymentMethodOptionsByDomainId(): array
+    {
+        $allGoPayPaymentMethods = $this->goPayPaymentMethodFacade->getAll();
+        $optionsByDomainId = [];
+
+        foreach ($allGoPayPaymentMethods as $goPayPaymentMethod) {
+            $optionsByDomainId[$goPayPaymentMethod->getDomainId()]['choices'][] = $goPayPaymentMethod;
+        }
+
+        foreach ($optionsByDomainId as $domainId => $options) {
+            $optionsByDomainId[$domainId]['group_by'] = function (GoPayPaymentMethod $goPayPaymentMethod): string {
+                return $goPayPaymentMethod->isAvailable() ? t('Available') : t('Hidden in GoPay');
+            };
+        }
+
+        return $optionsByDomainId;
+    }
+
+    /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver): void
@@ -188,28 +236,53 @@ class PaymentFormType extends AbstractType
             ->setDefaults([
                 'data_class' => PaymentData::class,
                 'attr' => ['novalidate' => 'novalidate'],
+                'constraints' => [
+                    new Callback([$this, 'validateGopayPaymentMethod']),
+                ],
             ]);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment|null $payment
-     * @return array
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
+     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      */
-    private function getHiddenFieldOptions(?Payment $payment): array
+    public function validateGopayPaymentMethod(PaymentData $paymentData, ExecutionContextInterface $context): void
     {
-        $hiddenFieldOptions = [
-            'required' => false,
-            'label' => t('Hidden'),
-        ];
-
-        if ($payment !== null && $payment->isHiddenByGoPay()) {
-            $hiddenFieldOptions['attr'] = [
-                'disabled' => true,
-                'icon' => true,
-                'iconTitle' => t('This payment method is hidden by GoPay.'),
-            ];
+        if ($paymentData->type !== Payment::TYPE_GOPAY) {
+            return;
         }
 
-        return $hiddenFieldOptions;
+        foreach ($paymentData->enabled as $domainId => $enabled) {
+            if ($enabled && $paymentData->goPayPaymentMethodByDomainId[$domainId] === null) {
+                $context->buildViolation('Please select GoPay payment method for enabled domain ' . $this->domain->getDomainConfigById($domainId)->getName())
+                    ->atPath('goPayPaymentMethodByDomainId[1]')
+                    ->addViolation();
+            }
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     */
+    public function addHiddenByGoPayWarning(PaymentData $paymentData, FormBuilderInterface $builder): void
+    {
+        $domainIdsWithHiddenByGoPay = array_keys(array_filter($paymentData->hiddenByGoPay));
+        $domainNames = [];
+
+        if (count($domainIdsWithHiddenByGoPay) === 0) {
+            return;
+        }
+
+        foreach ($domainIdsWithHiddenByGoPay as $domainId) {
+            $domainNames[] = $this->domain->getDomainConfigById($domainId)->getName();
+        }
+
+        $builder->add('hiddenByGoPay', WarningMessageType::class, [
+            'data' => t('This payment method is hidden by GoPay on domains: %domains%', [
+                '%domains%' => implode(', ', $domainNames),
+            ]),
+            'position' => ['after' => 'enabled'],
+        ]);
     }
 }

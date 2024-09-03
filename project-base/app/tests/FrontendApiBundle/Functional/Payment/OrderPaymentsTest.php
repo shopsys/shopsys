@@ -10,7 +10,6 @@ use App\Model\Order\Order;
 use App\Model\Payment\Payment;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrontendApiBundle\Component\Price\MoneyFormatterHelper;
@@ -84,7 +83,7 @@ class OrderPaymentsTest extends GraphQlTestCase
             'orderReferenceName' => OrderDataFixture::ORDER_PREFIX . 24,
             'expectedCurrentPaymentReferenceName' => PaymentDataFixture::PAYMENT_LATER,
             'expectedAvailablePaymentReferenceNames' => [
-                PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT_DOMAIN . Domain::SECOND_DOMAIN_ID,
+                PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT,
             ],
         ];
     }
@@ -96,11 +95,11 @@ class OrderPaymentsTest extends GraphQlTestCase
     {
         yield 'order with personal collection transport' => [
             'orderReferenceName' => OrderDataFixture::ORDER_PREFIX . 1,
-            'expectedCurrentPaymentReferenceName' => PaymentDataFixture::PAYMENT_GOPAY_DOMAIN . Domain::FIRST_DOMAIN_ID,
+            'expectedCurrentPaymentReferenceName' => PaymentDataFixture::PAYMENT_GOPAY_CARD,
             'expectedAvailablePaymentReferenceNames' => [
                 PaymentDataFixture::PAYMENT_CARD,
                 PaymentDataFixture::PAYMENT_CASH,
-                PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT_DOMAIN . Domain::FIRST_DOMAIN_ID,
+                PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT,
             ],
         ];
 
@@ -108,7 +107,7 @@ class OrderPaymentsTest extends GraphQlTestCase
             'orderReferenceName' => OrderDataFixture::ORDER_PREFIX . 3,
             'expectedCurrentPaymentReferenceName' => PaymentDataFixture::PAYMENT_CASH_ON_DELIVERY,
             'expectedAvailablePaymentReferenceNames' => [
-                PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT_DOMAIN . Domain::FIRST_DOMAIN_ID,
+                PaymentDataFixture::PAYMENT_GOPAY_BANK_ACCOUNT,
             ],
         ];
     }

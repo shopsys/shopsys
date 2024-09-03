@@ -8,12 +8,12 @@
 
         const onPaymentChange = function () {
             const selectedType = $paymentType.val();
-            const $goPayPaymentMethodFormLine = $('.js-payment-gopay-payment-method').closest('.form-line');
+            const $goPayPaymentMethodDiv = $('.js-payment-gopay-payment-method');
 
             if (selectedType === 'goPay') {
-                $goPayPaymentMethodFormLine.show();
+                $goPayPaymentMethodDiv.show();
             } else {
-                $goPayPaymentMethodFormLine.hide();
+                $goPayPaymentMethodDiv.hide();
             }
         };
 

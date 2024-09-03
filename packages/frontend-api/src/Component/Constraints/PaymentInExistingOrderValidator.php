@@ -68,7 +68,7 @@ class PaymentInExistingOrderValidator extends ConstraintValidator
         ?string $paymentGoPayBankSwift,
         PaymentInExistingOrder $constraint,
     ): void {
-        $goPayPaymentMethod = $payment->getGoPayPaymentMethod();
+        $goPayPaymentMethod = $payment->getGoPayPaymentMethodByDomainId($order->getDomainId());
 
         if ($paymentGoPayBankSwift === null || $goPayPaymentMethod === null) {
             return;

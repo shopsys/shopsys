@@ -9,11 +9,11 @@ use Shopsys\FrameworkBundle\Model\GoPay\GoPayClientFactory as BaseGoPayClientFac
 class GoPayClientFactory extends BaseGoPayClientFactory
 {
     /**
-     * @param string $locale
+     * @param array $gopayConfig
      * @return \Tests\FrontendApiBundle\Functional\Payment\GoPay\GoPayClient
      */
-    public function createByLocale(string $locale): GoPayClient
+    protected function createInstance(array $gopayConfig): GoPayClient
     {
-        return new GoPayClient($this->getConfigByLocale($locale));
+        return new GoPayClient($gopayConfig);
     }
 }

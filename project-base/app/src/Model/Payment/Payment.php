@@ -21,7 +21,6 @@ use Shopsys\FrameworkBundle\Model\Payment\Payment as BasePayment;
  * @method __construct(\App\Model\Payment\PaymentData $paymentData)
  * @method edit(\App\Model\Payment\PaymentData $paymentData)
  * @method setData(\App\Model\Payment\PaymentData $paymentData)
- * @method setGoPayPaymentMethod(\App\Model\Payment\PaymentData $paymentData)
  */
 class Payment extends BasePayment
 {

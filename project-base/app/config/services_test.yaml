@@ -43,7 +43,7 @@ services:
 
     Tests\FrontendApiBundle\Functional\Payment\GoPay\GoPayClientFactory:
         arguments:
-            - '%gopay_config%'
+            $clientConfigs: '%env(json:GOPAY_CONFIG)%'
 
     test.client:
         alias: Tests\App\Test\Client

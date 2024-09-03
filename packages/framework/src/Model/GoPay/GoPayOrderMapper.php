@@ -31,7 +31,8 @@ class GoPayOrderMapper
     public function createGoPayPaymentData(Order $order, ?string $goPayBankSwift): array
     {
         $orderPayment = $order->getPayment();
-        $defaultPaymentInstrument = $orderPayment->getGoPayPaymentMethod() !== null ? $orderPayment->getGoPayPaymentMethod()->getIdentifier() : '';
+        $gopayPaymentMethod = $orderPayment->getGoPayPaymentMethodByDomainId($order->getDomainId());
+        $defaultPaymentInstrument = $gopayPaymentMethod !== null ? $gopayPaymentMethod->getIdentifier() : '';
 
         $goPayPaymentItemsData = $this->createGoPayPaymentItemsData($order);
         $router = $this->domainRouterFactory->getRouter($order->getDomainId());

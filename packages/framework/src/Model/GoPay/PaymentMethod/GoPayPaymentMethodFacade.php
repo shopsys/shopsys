@@ -73,10 +73,9 @@ class GoPayPaymentMethodFacade
     public function downloadAndUpdatePaymentMethods(DomainConfig $domainConfig): void
     {
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainConfig->getId());
-        $goPayClient = $this->goPayClientFactory->createByLocale($domainConfig->getLocale());
+        $goPayClient = $this->goPayClientFactory->createByDomain($domainConfig);
         $goPayPaymentMethodsRawData = $goPayClient->downloadGoPayPaymentMethodsByCurrency($currency);
-        $paymentMethodByIdentifier =
-            $this->goPayPaymentMethodRepository->getAllIndexedByIdentifierByCurrencyId($currency->getId());
+        $paymentMethodByIdentifier = $this->goPayPaymentMethodRepository->getAllIndexedByIdentifierByDomainId($domainConfig->getId());
 
         foreach ($goPayPaymentMethodsRawData as $goPayPaymentMethodRawData) {
             $paymentIdentifier = $goPayPaymentMethodRawData['paymentInstrument'];
@@ -84,16 +83,24 @@ class GoPayPaymentMethodFacade
             if (array_key_exists($paymentIdentifier, $paymentMethodByIdentifier)) {
                 $paymentMethod = $paymentMethodByIdentifier[$paymentIdentifier];
                 $this->editByRawData($paymentMethod, $goPayPaymentMethodRawData, $goPayClient->getLanguage());
-                $this->paymentFacade->unHideByGoPayPaymentMethod($paymentMethod);
+                $this->paymentFacade->unHideByGoPayPaymentMethod($paymentMethod, $domainConfig->getId());
                 unset($paymentMethodByIdentifier[$paymentIdentifier]);
             } else {
-                $this->createFromRawData($goPayPaymentMethodRawData, $currency, $goPayClient->getLanguage());
+                $this->createFromRawData(
+                    $goPayPaymentMethodRawData,
+                    $currency,
+                    $goPayClient->getLanguage(),
+                    $domainConfig->getId(),
+                );
             }
         }
 
         foreach ($paymentMethodByIdentifier as $paymentMethod) {
-            $this->paymentFacade->hideByGoPayPaymentMethod($paymentMethod);
+            $paymentMethod->setUnavailable();
+            $this->paymentFacade->hideByGoPayPaymentMethod($paymentMethod, $domainConfig->getId());
         }
+
+        $this->em->flush();
     }
 
     /**
@@ -127,6 +134,7 @@ class GoPayPaymentMethodFacade
         $goPayPaymentMethodData->imageNormalUrl = $goPayMethodRawData['image']['normal'];
         $goPayPaymentMethodData->imageLargeUrl = $goPayMethodRawData['image']['large'];
         $goPayPaymentMethodData->paymentGroup = $goPayMethodRawData['group'];
+        $goPayPaymentMethodData->available = true;
     }
 
     /**
@@ -150,15 +158,18 @@ class GoPayPaymentMethodFacade
      * @param array $goPayMethodRawData
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param string $language
+     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod
      */
     protected function createFromRawData(
         array $goPayMethodRawData,
         Currency $currency,
         string $language,
+        int $domainId,
     ): GoPayPaymentMethod {
         $paymentMethodData = $this->goPayPaymentMethodDataFactory->createInstance();
         $paymentMethodData->currency = $currency;
+        $paymentMethodData->domainId = $domainId;
 
         $this->setFromGoPayRawData($paymentMethodData, $goPayMethodRawData, $language);
         $paymentMethod = $this->create($paymentMethodData);

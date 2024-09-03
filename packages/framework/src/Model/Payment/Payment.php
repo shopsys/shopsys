@@ -95,23 +95,10 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     protected $uuid;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod|null
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod")
-     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
-     */
-    protected $goPayPaymentMethod;
-
-    /**
      * @var string
      * @ORM\Column(type="string")
      */
     protected $type;
-
-    /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
-    protected $hiddenByGoPay;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
@@ -146,8 +133,15 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         $this->hidden = $paymentData->hidden;
         $this->czkRounding = $paymentData->czkRounding;
         $this->type = $paymentData->type;
-        $this->setGoPayPaymentMethod($paymentData);
-        $this->hiddenByGoPay = $paymentData->hiddenByGoPay;
+
+        if ($paymentData->type !== self::TYPE_GOPAY) {
+            $this->resetGopayPaymentMethods();
+        } else {
+            foreach ($this->domains as $paymentDomain) {
+                $paymentDomain->setHiddenByGoPay(!$paymentDomain->getGoPayPaymentMethod()?->isAvailable());
+            }
+        }
+
         $this->setTranslations($paymentData);
     }
 
@@ -363,24 +357,37 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     }
 
     /**
+     * @param int $domainId
      * @return bool
      */
-    public function isHiddenByGoPay()
+    public function isHiddenByGoPayByDomainId(int $domainId): bool
     {
-        return $this->hiddenByGoPay;
-    }
-
-    public function hideByGoPay(): void
-    {
-        $this->hiddenByGoPay = true;
+        return $this->getPaymentDomain($domainId)->isHiddenByGoPay();
     }
 
     /**
+     * @param int $domainId
+     */
+    public function hideByGoPayOnDomain(int $domainId): void
+    {
+        $this->getPaymentDomain($domainId)->setHiddenByGoPay(true);
+    }
+
+    /**
+     * @param int $domainId
+     */
+    public function unHideByGoPayOnDomain(int $domainId): void
+    {
+        $this->getPaymentDomain($domainId)->setHiddenByGoPay(false);
+    }
+
+    /**
+     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod|null
      */
-    public function getGoPayPaymentMethod()
+    public function getGoPayPaymentMethodByDomainId(int $domainId)
     {
-        return $this->goPayPaymentMethod;
+        return $this->getPaymentDomain($domainId)->getGoPayPaymentMethod();
     }
 
     /**
@@ -389,23 +396,6 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     public function getType()
     {
         return $this->type;
-    }
-
-    public function unHideByGoPay(): void
-    {
-        $this->hiddenByGoPay = false;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentData $paymentData
-     */
-    protected function setGoPayPaymentMethod(PaymentData $paymentData): void
-    {
-        $this->goPayPaymentMethod = null;
-
-        if ($this->type === self::TYPE_GOPAY) {
-            $this->goPayPaymentMethod = $paymentData->goPayPaymentMethod;
-        }
     }
 
     /**
@@ -425,6 +415,8 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
             $domainId = $paymentDomain->getDomainId();
             $paymentDomain->setEnabled($paymentData->enabled[$domainId]);
             $paymentDomain->setVat($paymentData->vatsIndexedByDomainId[$domainId]);
+            $paymentDomain->setGoPayPaymentMethod($paymentData->goPayPaymentMethodByDomainId[$domainId] ?? null);
+            $paymentDomain->setHiddenByGoPay($paymentData->hiddenByGoPay[$domainId] ?? false);
         }
     }
 
@@ -436,11 +428,25 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
         $domainIds = array_keys($paymentData->enabled);
 
         foreach ($domainIds as $domainId) {
-            $paymentDomain = new PaymentDomain($this, $domainId, $paymentData->vatsIndexedByDomainId[$domainId]);
+            $paymentDomain = new PaymentDomain(
+                $this,
+                $domainId,
+                $paymentData->vatsIndexedByDomainId[$domainId],
+                $paymentData->goPayPaymentMethodByDomainId[$domainId] ?? null,
+                $paymentData->hiddenByGoPay[$domainId] ?? false,
+            );
             $this->domains->add($paymentDomain);
         }
 
         $this->setDomains($paymentData);
+    }
+
+    protected function resetGopayPaymentMethods(): void
+    {
+        foreach ($this->domains as $paymentDomain) {
+            $paymentDomain->setGoPayPaymentMethod(null);
+            $paymentDomain->setHiddenByGoPay(false);
+        }
     }
 
     /**

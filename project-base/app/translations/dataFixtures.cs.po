@@ -955,11 +955,11 @@ msgstr "Genius repro SP-M120 černá"
 msgid "Glass cleaner and a glass-ceramic plates (4019786908123)"
 msgstr "Čistič skla a sklokeramických desek ( 4019786908123 )"
 
-msgid "GoPay - Payment By Card [%locale%]"
-msgstr "GoPay - Platba kartou [%locale%]"
+msgid "GoPay - Payment By Card"
+msgstr "GoPay - Platba kartou"
 
-msgid "GoPay - Quick Bank Account Transfer [%locale%]"
-msgstr "GoPay - Rychlý bankovní převod [%locale%]"
+msgid "GoPay - Quick Bank Account Transfer"
+msgstr "GoPay - Rychlý bankovní převod"
 
 msgid "Goods care"
 msgstr "Péče o výrobky"

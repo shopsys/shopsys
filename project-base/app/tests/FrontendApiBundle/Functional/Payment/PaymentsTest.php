@@ -85,7 +85,7 @@ class PaymentsTest extends GraphQlTestCase
                 'goPayPaymentMethod' => null,
             ],
             [
-                'name' => t('GoPay - Payment By Card [%locale%]', ['%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'name' => t('GoPay - Payment By Card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'description' => null,
                 'instruction' => null,
                 'position' => 3,
@@ -105,7 +105,7 @@ class PaymentsTest extends GraphQlTestCase
                 ],
             ],
             [
-                'name' => t('GoPay - Quick Bank Account Transfer [%locale%]', ['%locale%' => $firstDomainLocale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
+                'name' => t('GoPay - Quick Bank Account Transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'description' => t('Quick and Safe payment via bank account transfer.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'instruction' => null,
                 'position' => 4,

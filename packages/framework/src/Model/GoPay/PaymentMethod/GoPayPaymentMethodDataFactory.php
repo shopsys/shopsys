@@ -28,6 +28,8 @@ class GoPayPaymentMethodDataFactory
         $goPayPaymentMethodData->imageNormalUrl = $paymentMethod->getImageNormalUrl();
         $goPayPaymentMethodData->imageLargeUrl = $paymentMethod->getImageLargeUrl();
         $goPayPaymentMethodData->paymentGroup = $paymentMethod->getPaymentGroup();
+        $goPayPaymentMethodData->domainId = $paymentMethod->getDomainId();
+        $goPayPaymentMethodData->available = $paymentMethod->isAvailable();
 
         return $goPayPaymentMethodData;
     }
