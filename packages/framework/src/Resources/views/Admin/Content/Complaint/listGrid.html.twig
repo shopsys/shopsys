@@ -12,6 +12,10 @@
     {{ domainIcon(value, 'small') }}
 {% endblock %}
 
+{% block grid_value_cell_id_customer_name %}
+    <a href="{{ url('admin_customer_edit', { id: row.customerUserId }) }}">{{ value }}</a>
+{% endblock %}
+
 {% block grid_value_cell_id_created_at %}
     {{ value|formatDateTime }}
 {% endblock %}
