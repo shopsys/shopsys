@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class AdminDomainTabsFacade
 {
-    protected const SESSION_SELECTED_DOMAIN = 'selected_domain_id';
+    protected const string SESSION_SELECTED_DOMAIN = 'selected_domain_id';
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
@@ -48,11 +48,18 @@ class AdminDomainTabsFacade
         try {
             $domainId = $this->requestStack->getSession()->get(static::SESSION_SELECTED_DOMAIN);
 
-            return $this->domain->getDomainConfigById($domainId);
-        } catch (InvalidDomainIdException | SessionNotFoundException) {
-            $allDomains = $this->domain->getAll();
+            if (!in_array($domainId, $this->domain->getAdminEnabledDomainIds(), true)) {
+                throw new InvalidDomainIdException();
+            }
 
-            return reset($allDomains);
+            return $this->domain->getDomainConfigById($domainId);
+        } catch (InvalidDomainIdException|SessionNotFoundException) {
+            $allowedDomainIds = $this->domain->getAdminEnabledDomainIds();
+            $firstAllowedDomainId = reset($allowedDomainIds);
+
+            $this->setSelectedDomainId($firstAllowedDomainId);
+
+            return $this->domain->getDomainConfigById($firstAllowedDomainId);
         }
     }
 }

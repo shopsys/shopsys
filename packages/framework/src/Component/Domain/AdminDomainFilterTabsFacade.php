@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class AdminDomainFilterTabsFacade
 {
-    protected const SESSION_PREFIX = 'admin_domain_filter_tabs_';
+    protected const string SESSION_PREFIX = 'admin_domain_filter_tabs_';
 
     /**
      * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
@@ -54,9 +54,13 @@ class AdminDomainFilterTabsFacade
                 return null;
             }
 
+            if (!in_array($domainId, $this->domain->getAdminEnabledDomainIds(), true)) {
+                throw new InvalidDomainIdException();
+            }
+
             return $this->domain->getDomainConfigById($domainId);
         } catch (InvalidDomainIdException|SessionNotFoundException) {
-            $this->requestStack->getSession()->set($this->getSessionKey($namespace), null);
+            $this->setSelectedDomainId($namespace, null);
 
             return null;
         }
