@@ -4,6 +4,15 @@
 {% block h1 %}{{ 'Brand overview'|trans }}{% endblock %}
 
 {% block main_content %}
+    <div class="wrap-bar">
+        <a href="{{ url('admin_brand_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>
+            {{ 'Create new brand'|trans }}
+        </a>
+    </div>
+
+    {{ gridView.render() }}
+
     <div class="wrap-divider wrap-divider--bottom">
         <div class="form-group">
             <h2 class="form-group__title">
@@ -30,11 +39,4 @@
             </div>
         </div>
     </div>
-    <div class="wrap-bar">
-        <a href="{{ url('admin_brand_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
-            <i class="btn__icon">+</i>
-            {{ 'Create new brand'|trans }}
-        </a>
-    </div>
-    {{ gridView.render() }}
 {% endblock %}
