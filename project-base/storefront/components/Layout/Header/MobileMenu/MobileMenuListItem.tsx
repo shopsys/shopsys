@@ -1,6 +1,7 @@
 import { MenuItem } from './MobileMenuContent';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
+import { DEFAULT_SKELETON_TYPE } from 'config/constants';
 
 type DropdownMenuListProps = {
     navigationItem: MenuItem;
@@ -16,6 +17,7 @@ export const DropdownMenuListItem: FC<DropdownMenuListProps> = ({ navigationItem
             <ExtendedNextLink
                 className="flex-1 font-bold text-text no-underline uppercase"
                 href={navigationItem.link}
+                skeletonType={DEFAULT_SKELETON_TYPE}
                 onClick={onNavigate}
             >
                 {navigationItem.name}
