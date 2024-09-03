@@ -44,6 +44,9 @@ class ComplaintItemDataFactory
         $complaintItemData->description = $complaintItem->getDescription();
         $complaintItemData->orderItem = $complaintItem->getOrderItem();
         $complaintItemData->files = $this->customerUploadedFileDataFactory->createByEntity($complaintItem);
+        $complaintItemData->productName = $complaintItem->getProductName();
+        $complaintItemData->catnum = $complaintItem->getCatnum();
+        $complaintItemData->product = $complaintItem->getProduct();
 
         return $complaintItemData;
     }

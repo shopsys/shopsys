@@ -20,6 +20,12 @@ class ComplaintItemFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('productName', TextType::class, [
+                'disabled' => true,
+            ])
+            ->add('catnum', TextType::class, [
+                'disabled' => true,
+            ])
             ->add('description', TextType::class, [
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter description']),
