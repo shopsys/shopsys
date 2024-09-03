@@ -91,6 +91,8 @@ class Domain implements DomainIdsProviderInterface
     {
         $domainConfigsWithDataCreated = [];
 
+        $this->setting->initAllDomainsSettings();
+
         foreach ($this->domainConfigs as $domainConfig) {
             $domainId = $domainConfig->getId();
 

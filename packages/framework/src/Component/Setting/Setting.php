@@ -33,6 +33,8 @@ class Setting
      */
     protected array $values;
 
+    protected bool $allValuesLoaded = false;
+
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Setting\SettingValueRepository $settingValueRepository
@@ -124,6 +126,24 @@ class Setting
         $this->em->flush();
     }
 
+    public function initAllDomainsSettings(): void
+    {
+        if ($this->allValuesLoaded) {
+            return;
+        }
+
+        $settings = $this->settingValueRepository->getAllDomainsSettingValues();
+
+        foreach ($settings as $settingValue) {
+            $domainId = $settingValue->getDomainId();
+            $settingName = $settingValue->getName();
+
+            $this->values[$domainId][$settingName] = $settingValue;
+        }
+
+        $this->allValuesLoaded = true;
+    }
+
     /**
      * @param int|null $domainId
      */
@@ -148,6 +168,7 @@ class Setting
 
     public function clearCache()
     {
+        $this->allValuesLoaded = false;
         $this->values = [];
     }
 }

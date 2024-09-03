@@ -34,6 +34,14 @@ class SettingValueRepository
     }
 
     /**
+     * @return \Shopsys\FrameworkBundle\Component\Setting\SettingValue[]
+     */
+    public function getAllDomainsSettingValues(): array
+    {
+        return $this->getSettingValueRepository()->findAll();
+    }
+
+    /**
      * @param int $fromDomainId
      * @param int $toDomainId
      */
