@@ -77,7 +77,7 @@ export const AutocompleteSearch: FC = () => {
     return (
         <>
             <div
-                className={twJoin('relative flex w-full transition-all', isWithValidSearchQuery && 'z-[10002]')}
+                className={twJoin('relative flex w-full transition-all', isWithValidSearchQuery && 'z-aboveOverlay')}
                 onFocus={() => setIsSearchResultsPopupOpen(true)}
             >
                 <SearchInput

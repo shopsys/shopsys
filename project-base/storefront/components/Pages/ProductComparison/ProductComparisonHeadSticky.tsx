@@ -14,7 +14,7 @@ export const ProductComparisonHeadSticky: FC<ProductComparisonHeadStickyProps> =
     return (
         <div
             className={twJoin(
-                'fixed top-0 left-0 z-[12] w-full overflow-hidden border-b-2 border-borderAccentLess bg-tableBackgroundContrast px-5',
+                'fixed top-0 left-0 z-menu w-full overflow-hidden border-b-2 border-borderAccentLess bg-tableBackgroundContrast px-5',
                 tableStickyHeadActive ? 'flex' : 'hidden',
             )}
         >

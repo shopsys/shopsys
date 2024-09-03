@@ -39,7 +39,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
     const checkedFlags = getCheckedFlags(defaultProductFiltersMap, filterOptions.flags, currentFilter?.flags);
 
     return (
-        <div className="z-aboveOverlay rounded py-4 vl:z-[0]">
+        <div className="z-aboveOverlay rounded py-4 vl:z-base">
             <div className="h4 mb-3 uppercase">{t('Selected filters')}</div>
 
             <div className="mb-4 flex flex-col gap-3">
