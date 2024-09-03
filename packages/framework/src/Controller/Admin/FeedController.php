@@ -101,9 +101,14 @@ class FeedController extends AdminBaseController
         $feedsData = [];
         $feedConfigs = $this->feedRegistry->getAllFeedConfigs();
 
+        $allowedDomainIds = $this->domain->getAdminEnabledDomainIds();
 
         foreach ($feedConfigs as $feedConfig) {
             foreach ($feedConfig->getDomainIds() as $domainId) {
+                if (!in_array($domainId, $allowedDomainIds, true)) {
+                    continue;
+                }
+
                 $domainConfig = $this->domain->getDomainConfigById($domainId);
                 $feedInfo = $feedConfig->getFeed()->getInfo();
                 $feedModulesIndexedByDomainId = $this->feedModuleRepository->getFeedModulesByConfigIndexedByDomainId($feedConfig);
