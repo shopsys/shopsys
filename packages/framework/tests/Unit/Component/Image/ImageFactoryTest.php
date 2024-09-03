@@ -12,7 +12,6 @@ use Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\EntityMultipleImageException;
-use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Image\ImageFactory;
 use Shopsys\FrameworkBundle\Component\Image\ImageRepository;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
@@ -31,7 +30,7 @@ class ImageFactoryTest extends TestCase
         $imageFactory = new ImageFactory($imageProcessorMock, $this->getFileUpload(), new EntityNameResolver([]));
 
         $this->expectException(EntityMultipleImageException::class);
-        $imageFactory->createMultiple($imageEntityConfig, 1, [], [], 'type');
+        $imageFactory->createMultiple($imageEntityConfig, 1, ['test1.png', 'test2.png'], ['test1_tmp.png', 'test2_tmp.png'], 'type');
     }
 
     public function testCreateMultiple(): void
@@ -59,27 +58,6 @@ class ImageFactoryTest extends TestCase
             $this->assertSame('entityName', $image->getEntityName());
             $this->assertContains(array_pop($temporaryFiles)->getTemporaryFilename(), $filenames);
         }
-    }
-
-    public function testCreate(): void
-    {
-        $imageEntityConfig = new ImageEntityConfig('entityName', 'entityClass', [], ['type' => true]);
-        $filename = 'filename.jpg';
-
-        $imageProcessorMock = $this->getMockBuilder(ImageProcessor::class)
-            ->disableOriginalConstructor()
-            ->onlyMethods(['convertToShopFormatAndGetNewFilename'])
-            ->getMock();
-        $imageProcessorMock->expects($this->any())->method('convertToShopFormatAndGetNewFilename')->willReturn(
-            $filename,
-        );
-
-        $imageFactory = new ImageFactory($imageProcessorMock, $this->getFileUpload(), new EntityNameResolver([]));
-        $image = $imageFactory->create($imageEntityConfig->getEntityName(), 1, [], $filename, 'type');
-        $temporaryFiles = $image->getTemporaryFilesForUpload();
-
-        $this->assertInstanceOf(Image::class, $image);
-        $this->assertSame($filename, array_pop($temporaryFiles)->getTemporaryFilename());
     }
 
     /**

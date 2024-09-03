@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Image;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use Psr\Log\LoggerInterface;
@@ -33,7 +32,7 @@ class ImageFacade
      * @param \League\Flysystem\FilesystemOperator $filesystem
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageLocator $imageLocator
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFactoryInterface $imageFactory
+     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFactory $imageFactory
      * @param \League\Flysystem\MountManager $mountManager
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Shopsys\FrameworkBundle\Component\Cdn\CdnFacade $cdnFacade
@@ -47,7 +46,7 @@ class ImageFacade
         protected readonly FilesystemOperator $filesystem,
         protected readonly FileUpload $fileUpload,
         protected readonly ImageLocator $imageLocator,
-        protected readonly ImageFactoryInterface $imageFactory,
+        protected readonly ImageFactory $imageFactory,
         protected readonly MountManager $mountManager,
         protected readonly LoggerInterface $logger,
         protected readonly CdnFacade $cdnFacade,
@@ -65,62 +64,25 @@ class ImageFacade
         $imageEntityConfig = $this->imageConfig->getImageEntityConfig($entity);
         $uploadedFiles = $imageUploadData->uploadedFiles;
         $orderedImages = $imageUploadData->orderedImages;
+        $imagesToDelete = $imageUploadData->imagesToDelete;
 
         if ($imageEntityConfig->isMultiple($type) === false) {
+            if (count($uploadedFiles) > 0) {
+                $imagesToDelete = $orderedImages;
+            }
+
             if (count($orderedImages) > 1) {
                 array_shift($orderedImages);
-                $this->deleteImages($entity, $orderedImages);
-            }
-            $this->uploadImage($entity, $imageUploadData->uploadedFilenames, $uploadedFiles, $type);
-
-            if (count($uploadedFiles) === 0) {
-                $this->saveImagesPathnames($imageUploadData);
+                $imagesToDelete = $orderedImages;
             }
         } else {
             $this->saveImageOrdering($orderedImages);
-            $this->saveImagesPathnames($imageUploadData);
-            $this->uploadImages($entity, $imageUploadData->uploadedFilenames, $uploadedFiles, $type);
         }
 
-        $this->deleteImages($entity, $imageUploadData->imagesToDelete);
-    }
+        $this->saveImagesPathnames($imageUploadData);
+        $this->uploadImages($entity, $imageUploadData->uploadedFilenames, $uploadedFiles, $type);
 
-    /**
-     * @param object $entity
-     * @param array<int, array<string,string>> $namesIndexedByImageIdAndLocale
-     * @param array<int, string> $temporaryFilenamesIndexedByImageId
-     * @param string|null $type
-     */
-    protected function uploadImage(
-        object $entity,
-        array $namesIndexedByImageIdAndLocale,
-        array $temporaryFilenamesIndexedByImageId,
-        ?string $type,
-    ): void {
-        if (count($temporaryFilenamesIndexedByImageId) > 0) {
-            $imageEntityConfig = $this->imageConfig->getImageEntityConfig($entity);
-            $entityId = $this->getEntityId($entity);
-            $oldImage = $this->imageRepository->findImageByEntity(
-                $imageEntityConfig->getEntityName(),
-                $entityId,
-                $type,
-            );
-
-            if ($oldImage !== null) {
-                $this->em->remove($oldImage);
-            }
-
-            $newImage = $this->imageFactory->create(
-                $imageEntityConfig->getEntityName(),
-                $entityId,
-                array_pop($namesIndexedByImageIdAndLocale),
-                array_pop($temporaryFilenamesIndexedByImageId),
-                $type,
-            );
-            $this->em->persist($newImage);
-
-            $this->em->flush();
-        }
+        $this->deleteImages($entity, $imagesToDelete);
     }
 
     /**
@@ -299,43 +261,6 @@ class ImageFacade
     public function getById(int $imageId): Image
     {
         return $this->imageRepository->getById($imageId);
-    }
-
-    /**
-     * @param object $sourceEntity
-     * @param object $targetEntity
-     */
-    public function copyImages(object $sourceEntity, object $targetEntity): void
-    {
-        $sourceImages = $this->getAllImagesByEntity($sourceEntity);
-
-        foreach ($sourceImages as $sourceImage) {
-            try {
-                $this->mountManager->copy(
-                    'main://' . $this->imageLocator->getAbsoluteImageFilepath(
-                        $sourceImage,
-                    ),
-                    'main://' . TransformString::removeDriveLetterFromPath(
-                        $this->fileUpload->getTemporaryFilepath($sourceImage->getFilename()),
-                    ),
-                );
-            } catch (Exception $exception) {
-                $this->logger->error('Image could not be copied', [$exception]);
-
-                continue;
-            }
-
-            $targetImage = $this->imageFactory->create(
-                $this->imageConfig->getImageEntityConfig($targetEntity)->getEntityName(),
-                $this->getEntityId($targetEntity),
-                $sourceImage->getNames(),
-                $sourceImage->getFilename(),
-                $sourceImage->getType(),
-            );
-
-            $this->em->persist($targetImage);
-        }
-        $this->em->flush();
     }
 
     /**

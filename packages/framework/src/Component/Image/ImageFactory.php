@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\EntityMultipleImageException;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 
-class ImageFactory implements ImageFactoryInterface
+class ImageFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor $imageProcessor
@@ -32,7 +32,7 @@ class ImageFactory implements ImageFactoryInterface
      * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image
      */
-    public function create(
+    protected function create(
         string $entityName,
         int $entityId,
         array $namesIndexedByLocale,
@@ -62,7 +62,7 @@ class ImageFactory implements ImageFactoryInterface
         array $temporaryFilenames,
         ?string $type,
     ): array {
-        if (!$imageEntityConfig->isMultiple($type)) {
+        if (!$imageEntityConfig->isMultiple($type) && count($temporaryFilenames) > 1) {
             $message = 'Entity ' . $imageEntityConfig->getEntityClass()
                 . ' is not allowed to have multiple images for type ' . ($type ?: 'NULL');
 
