@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Component\Localization\CustomDateTimeFormatPatternRe
 use Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatter;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProvider;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 
@@ -89,7 +90,8 @@ class DateTimeFormatterExtensionTest extends TestCase
             ->getMock();
         $dateTimeZone = new DateTimeZone(self::DISPLAY_TIME_ZONE);
         $domainConfig = new DomainConfig(1, 'http://example.com', 'name', 'en', $dateTimeZone);
+        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
 
-        return new Domain([$domainConfig], $settingMock);
+        return new Domain([$domainConfig], $settingMock, $administratorFacadeMock);
     }
 }

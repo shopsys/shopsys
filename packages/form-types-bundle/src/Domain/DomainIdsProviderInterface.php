@@ -10,4 +10,9 @@ interface DomainIdsProviderInterface
      * @return int[]
      */
     public function getAllIds();
+
+    /**
+     * @return int[]
+     */
+    public function getAdminEnabledDomainIds(): array;
 }
