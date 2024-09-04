@@ -2,10 +2,12 @@ import { StoreListItem } from './StoreListItem';
 import { useEffect, useRef } from 'react';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
-export const StoreList: FC<{ stores: StoreOrPacketeryPoint[]; selectedStoreUuid: string | null }> = ({
-    stores,
-    selectedStoreUuid,
-}) => {
+type StoreListProps = {
+    stores: StoreOrPacketeryPoint[];
+    selectedStoreUuid: string | null;
+};
+
+export const StoreList: FC<StoreListProps> = ({ stores, selectedStoreUuid }) => {
     const storeRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
     useEffect(() => {

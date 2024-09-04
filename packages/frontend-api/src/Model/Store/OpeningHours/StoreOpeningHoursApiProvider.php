@@ -28,17 +28,6 @@ class StoreOpeningHoursApiProvider
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
-     * @return bool
-     */
-    public function isOpenNow(Store $store): bool
-    {
-        $now = new DateTimeImmutable(timezone: $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($store->getDomainId()));
-
-        return $this->storeOpeningHoursProvider->getOpeningHoursSetting($store)->isOpenAt($now);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
      * @return \Shopsys\FrontendApiBundle\Model\Store\OpeningHours\OpeningHoursWithDateData[]
      */
     public function getFollowingWeekOpeningHours(Store $store): array
@@ -76,5 +65,30 @@ class StoreOpeningHoursApiProvider
         }
 
         return $openingHoursData;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
+     * @return string
+     */
+    public function getStatus(Store $store): string
+    {
+        $now = new DateTimeImmutable(timezone: $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($store->getDomainId()));
+        $oneHourLater = $now->modify('+1 hour');
+        $openingHoursSetting = $this->storeOpeningHoursProvider->getOpeningHoursSetting($store);
+
+        if ($openingHoursSetting->isOpenAt($now)) {
+            if ($openingHoursSetting->isClosedAt($oneHourLater)) {
+                return StoreOpeningTypeEnum::STATUS_CLOSED_SOON;
+            }
+
+            return StoreOpeningTypeEnum::STATUS_OPEN;
+        }
+
+        if ($openingHoursSetting->isOpenAt($oneHourLater)) {
+            return StoreOpeningTypeEnum::STATUS_OPEN_SOON;
+        }
+
+        return StoreOpeningTypeEnum::STATUS_CLOSED;
     }
 }

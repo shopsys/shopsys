@@ -4,9 +4,9 @@ OpeningHoursDecorator:
     config:
         description: "Represents store opening hours"
         fields:
-            isOpen:
-                type: "Boolean!"
-                description: "Is store currently open?"
+            status:
+                type: "StoreOpeningStatusEnum!"
+                description: "Status of store opening"
             dayOfWeek:
                 type: "Int!"
                 description: "Current day of the week"

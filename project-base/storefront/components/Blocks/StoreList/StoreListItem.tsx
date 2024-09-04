@@ -2,9 +2,9 @@ import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
-import { TypeOpeningHoursFragment } from 'graphql/requests/stores/fragments/OpeningHoursFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getTodayOpeningHours } from 'utils/openingHours/openingHoursHelper';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -20,24 +20,6 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
     useEffect(() => {
         setIsExpanded(isSelected);
     }, [isSelected]);
-
-    const getCurrentOpeningHours = (openingHours: TypeOpeningHoursFragment) => {
-        const todayOpeningDayRanges = openingHours.openingHoursOfDays[0].openingHoursRanges;
-
-        if (todayOpeningDayRanges.length === 0) {
-            return null;
-        }
-
-        return (
-            <>
-                {todayOpeningDayRanges.map(({ openingTime, closingTime }, index) => (
-                    <Fragment key={index}>
-                        {index > 0 && ','} {openingTime}&nbsp;&#8209;&nbsp;{closingTime}
-                    </Fragment>
-                ))}
-            </>
-        );
-    };
 
     return (
         <div
@@ -58,8 +40,8 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
                         </p>
                     </div>
                     <div className="xl:text-right flex items-center xl:block">
-                        <OpeningStatus className="xl:mb-1.5" isOpen={store.openingHours.isOpen} />
-                        <p className="ml-1.5 text-xs">{getCurrentOpeningHours(store.openingHours)}</p>
+                        <OpeningStatus className="xl:mb-1.5" status={store.openingHours.status} />
+                        <p className="ml-2.5 text-xs">{getTodayOpeningHours(store.openingHours)}</p>
                     </div>
                 </div>
                 <div>
