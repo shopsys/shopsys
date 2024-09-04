@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Blog\Article;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleExportScheduler;
 use Shopsys\FrameworkBundle\Model\Blog\BlogVisibilityRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
@@ -159,5 +161,17 @@ class BlogArticleFacade
     public function getAllVisibleOnDomain(DomainConfig $domainConfig): array
     {
         return $this->blogArticleRepository->getAllVisibleOnDomain($domainConfig);
+    }
+
+    /**
+     * @param int|null $selectedDomainId
+     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $searchData
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getQueryBuilderForQuickSearch(
+        ?int $selectedDomainId,
+        QuickSearchFormData $searchData,
+    ): QueryBuilder {
+        return $this->blogArticleRepository->getQueryBuilderForQuickSearch($selectedDomainId, $searchData);
     }
 }

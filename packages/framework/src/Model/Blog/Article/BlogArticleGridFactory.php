@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Blog\Article;
 
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -24,28 +25,16 @@ class BlogArticleGridFactory
     }
 
     /**
-     * @param int|null $domainId
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    public function create(?int $domainId): Grid
+    public function create(QueryBuilder $queryBuilder): Grid
     {
-        if ($domainId === null) {
-            $locale = $this->domain->getLocale();
-            $queryBuilder = $this->blogArticleRepository->getAllBlogArticlesByLocaleQueryBuilder(
-                $locale,
-            );
-        } else {
-            $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
-            $queryBuilder = $this->blogArticleRepository->getBlogArticlesByDomainIdAndLocaleQueryBuilderIfInBlogCategory(//getBlogArticlesByDomainIdAndLocaleQueryBuilder(
-                $domainId,
-                $locale,
-            );
-        }
-
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'ba.id');
 
         $grid = $this->gridFactory->create('blog_article', $dataSource);
         $grid->setDefaultOrder('createdAt DESC');
+        $grid->enablePaging();
 
         $grid->addColumn('name', 'bat.name', t('Name'));
         $grid->addColumn('createdAt', 'ba.createdAt', t('Date of creation'));

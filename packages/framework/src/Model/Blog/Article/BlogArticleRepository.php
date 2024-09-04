@@ -10,6 +10,10 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
+use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Exception\BlogArticleNotFoundException;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 
@@ -17,9 +21,12 @@ class BlogArticleRepository
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(protected readonly EntityManagerInterface $em)
-    {
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+        protected readonly Domain $domain,
+    ) {
     }
 
     /**
@@ -91,6 +98,29 @@ class BlogArticleRepository
             ->join('ba.translations', 'bat', Join::WITH, 'bat.locale = :locale')
             ->setParameter('locale', $locale)
             ->orderBy('ba.createdAt', 'DESC');
+    }
+
+    /**
+     * @param int|null $domainId
+     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $searchData
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getQueryBuilderForQuickSearch(?int $domainId, QuickSearchFormData $searchData): QueryBuilder
+    {
+        if ($domainId === null) {
+            $locale = $this->domain->getLocale();
+            $queryBuilder = $this->getAllBlogArticlesByLocaleQueryBuilder($locale);
+        } else {
+            $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
+            $queryBuilder = $this->getBlogArticlesByDomainIdAndLocaleQueryBuilderIfInBlogCategory($domainId, $locale);
+        }
+
+        if (TransformString::emptyToNull($searchData->text) !== null) {
+            $queryBuilder->andWhere('NORMALIZED(bat.name) LIKE NORMALIZED(:searchData)')
+                ->setParameter('searchData', DatabaseSearching::getFullTextLikeSearchString($searchData->text));
+        }
+
+        return $queryBuilder;
     }
 
     /**
