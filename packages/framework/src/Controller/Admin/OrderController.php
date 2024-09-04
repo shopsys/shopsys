@@ -175,6 +175,10 @@ class OrderController extends AdminBaseController
             $queryBuilder
                 ->andWhere('o.domainId = :selectedDomainId')
                 ->setParameter('selectedDomainId', $selectedDomainId);
+        } else {
+            $queryBuilder
+                ->andWhere('o.domainId IN (:domainIds)')
+                ->setParameter('domainIds', $this->domain->getAdminEnabledDomainIds());
         }
 
         $dataSource = new QueryBuilderWithRowManipulatorDataSource(
