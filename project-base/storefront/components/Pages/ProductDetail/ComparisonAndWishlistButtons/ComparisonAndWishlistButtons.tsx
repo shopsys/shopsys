@@ -13,7 +13,7 @@ export const ComparisonAndWishlistButtons: FC<ComparisonAndWishlistButtonsProps>
     const { toggleProductInWishlist, isProductInWishlist } = useWishlist();
 
     return (
-        <div className="flex flex-col gap-y-4 gap-x-4 vl:flex-row h-28 lg:h-10">
+        <div className="flex flex-wrap gap-x-4">
             <ProductCompareButton
                 isWithText
                 isProductInComparison={isProductInComparison(product.uuid)}

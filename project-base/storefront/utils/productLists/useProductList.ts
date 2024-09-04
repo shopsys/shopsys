@@ -104,8 +104,13 @@ export const useProductList = (
         }
     };
 
-    const isProductInList = (productUuid: string) =>
-        !!productListData?.productList?.products.find((product) => product.uuid === productUuid);
+    const isProductInList = (productUuid: string) => {
+        if (!productListUuid) {
+            return false;
+        }
+
+        return !!productListData?.productList?.products.find((product) => product.uuid === productUuid);
+    };
 
     const toggleProductInList = (productUuid: string) => {
         if (isProductInList(productUuid)) {
@@ -116,7 +121,7 @@ export const useProductList = (
     };
 
     return {
-        productListData,
+        productListData: productListUuid ? productListData : null,
         isProductInList,
         removeList,
         toggleProductInList,
