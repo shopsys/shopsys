@@ -135,6 +135,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   WARNING! This migration can take up to several hours to run, depending on the size of your database. We recommend running it in a staging environment first to estimate the time it will take to run on production. You can run this migration before deploying the new version to production so your project is not locked during deployment and then once again after deployment only for entries created in the meantime.
 
+#### moved FlagDetailFriendlyUrlDataProvider from project-base to the framework ([#3403](https://github.com/shopsys/shopsys/pull/3403))
+
+-   see #project-base-diff to update your project
+
 ## [Upgrade from v13.0.0 to v14.0.0](https://github.com/shopsys/shopsys/compare/v13.0.0...v14.0.0)
 
 #### add rounded price value to order process ([#2835](https://github.com/shopsys/shopsys/pull/2835))
