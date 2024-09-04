@@ -1,0 +1,3 @@
+StoreConnectionDecorator:
+    type: object
+    decorator: true

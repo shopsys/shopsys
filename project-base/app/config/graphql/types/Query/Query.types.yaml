@@ -4,7 +4,6 @@ Query:
         - 'QueryDecorator'
         - 'CustomerUserQuery'
         - 'CategoryQuery'
-        - 'StoreQuery'
         - 'SliderQuery'
         - 'FlagQuery'
         - 'OrderQuery'
