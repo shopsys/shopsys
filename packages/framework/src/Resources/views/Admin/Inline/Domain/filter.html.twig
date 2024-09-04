@@ -1,4 +1,4 @@
-{% if domainConfigs|length > 1 %}
+{% if isMultidomain() %}
     <div class="in-domain" role="tablist">
         {% if selectedDomainId is null %}
             <span class="in-domain__item in-domain__item--active">
