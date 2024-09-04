@@ -35,6 +35,7 @@ export const STATIC_REWRITE_PATHS = {
         '/wishlist': '/wishlist',
         '/styleguide': '/styleguide',
         '/social-login': '/social-login',
+        '/_feedback': '/_feedback',
     },
     [(nextConfig?.publicRuntimeConfig?.domains?.[1]?.url || process.env.DOMAIN_HOSTNAME_2) as string]: {
         '/search': '/hledani',
@@ -68,6 +69,7 @@ export const STATIC_REWRITE_PATHS = {
         '/wishlist': '/oblibene-produkty',
         '/styleguide': '/styleguide',
         '/social-login': '/social-login',
+        '/_feedback': '/_feedback',
     },
 } as const;
 

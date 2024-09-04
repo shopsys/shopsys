@@ -65,6 +65,7 @@ const getRobotsTxtContent = (
             '/order/contact-information',
             '/order/transport-and-payment',
             '/grapesjs-template',
+            '/_feedback',
             { url: '/order-detail/:urlHash', param: '*' },
         ],
         domain,

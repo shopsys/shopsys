@@ -1,5 +1,6 @@
 import { DeferredLoaders } from './DeferredLoaders';
 import { Fonts, ralewayFont } from './Fonts';
+import { PageHeadScripts } from './PageHeadScripts';
 import { Portal } from 'components/Basic/Portal/Portal';
 import { DeferredSymfonyDebugToolbar } from 'components/Basic/SymfonyDebugToolbar/DeferredSymfonyDebugToolbar';
 import { DeferredUserConsent } from 'components/Blocks/UserConsent/DeferredUserConsent';
@@ -31,6 +32,7 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }
 
     return (
         <div className={ralewayFont.variable}>
+            <PageHeadScripts />
             <Fonts />
             <DeferredLoaders />
             <DeferredGtmHeadScript />
