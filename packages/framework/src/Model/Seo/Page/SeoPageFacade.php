@@ -89,8 +89,6 @@ class SeoPageFacade
 
         $this->em->remove($seoPage);
         $this->em->flush();
-
-        $this->friendlyUrlFacade->removeFriendlyUrlsForAllDomains('front_page_seo', $seoPageId);
     }
 
     /**

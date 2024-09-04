@@ -236,19 +236,6 @@ class FriendlyUrlFacade
     }
 
     /**
-     * @param string $routeName
-     * @param int $entityId
-     */
-    public function removeFriendlyUrlsForAllDomains(string $routeName, int $entityId): void
-    {
-        foreach ($this->getAllByRouteNameAndEntityId($routeName, $entityId) as $friendlyUrl) {
-            $this->em->remove($friendlyUrl);
-        }
-
-        $this->em->flush();
-    }
-
-    /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $mainFriendlyUrl
      */
     protected function renewMainFriendlyUrlSlugCache(FriendlyUrl $mainFriendlyUrl): void

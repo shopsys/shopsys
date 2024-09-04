@@ -128,6 +128,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   property `\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData::$id` has been removed, use `\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData::$entityId` instead
 -   method `\Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleDetailFriendlyUrlDataProvider::createFromIdAndName()` has been removed, use `\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactory::createFromIdAndName()` instead
 -   method `\Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryDetailFriendlyUrlDataProvider::createFromIdAndName()` has been removed, use `\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactory::createFromIdAndName()` instead
+-   method `\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade::removeFriendlyUrlsForAllDomains()` has been removed without a replacement
 -   see #project-base-diff to update your project
 
 ## [Upgrade from v13.0.0 to v14.0.0](https://github.com/shopsys/shopsys/compare/v13.0.0...v14.0.0)
