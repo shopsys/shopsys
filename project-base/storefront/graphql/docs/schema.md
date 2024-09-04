@@ -136,6 +136,7 @@
     * [ProductListTypeEnum](#productlisttypeenum)
     * [ProductOrderingModeEnum](#productorderingmodeenum)
     * [RecommendationType](#recommendationtype)
+    * [StoreOpeningStatusEnum](#storeopeningstatusenum)
   * [Scalars](#scalars)
     * [Boolean](#boolean)
     * [DateTime](#datetime)
@@ -5117,20 +5118,20 @@ Current day of the week
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isOpen</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td>
-
-Is store currently open?
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>openingHoursOfDays</strong></td>
 <td valign="top">[<a href="#openinghoursofday">OpeningHoursOfDay</a>!]!</td>
 <td>
 
 Opening hours for every day of the week (1 for Monday 7 for Sunday)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>status</strong></td>
+<td valign="top"><a href="#storeopeningstatusenum">StoreOpeningStatusEnum</a>!</td>
+<td>
+
+Status of store opening
 
 </td>
 </tr>
@@ -10298,7 +10299,7 @@ One of the possible methods of the customer user login
 </thead>
 <tbody>
 <tr>
-<td valign="top"><strong>admin</strong></td>
+<td valign="top"><strong>web</strong></td>
 <td></td>
 </tr>
 <tr>
@@ -10314,7 +10315,7 @@ One of the possible methods of the customer user login
 <td></td>
 </tr>
 <tr>
-<td valign="top"><strong>web</strong></td>
+<td valign="top"><strong>admin</strong></td>
 <td></td>
 </tr>
 </tbody>
@@ -10360,11 +10361,11 @@ One of possible types of the product list
 </thead>
 <tbody>
 <tr>
-<td valign="top"><strong>COMPARISON</strong></td>
+<td valign="top"><strong>WISHLIST</strong></td>
 <td></td>
 </tr>
 <tr>
-<td valign="top"><strong>WISHLIST</strong></td>
+<td valign="top"><strong>COMPARISON</strong></td>
 <td></td>
 </tr>
 </tbody>
@@ -10381,18 +10382,10 @@ One of possible ordering modes for product
 </thead>
 <tbody>
 <tr>
-<td valign="top"><strong>NAME_ASC</strong></td>
+<td valign="top"><strong>PRIORITY</strong></td>
 <td>
 
-Order by name ascending
-
-</td>
-</tr>
-<tr>
-<td valign="top"><strong>NAME_DESC</strong></td>
-<td>
-
-Order by name descending
+Order by priority
 
 </td>
 </tr>
@@ -10413,10 +10406,18 @@ Order by price descending
 </td>
 </tr>
 <tr>
-<td valign="top"><strong>PRIORITY</strong></td>
+<td valign="top"><strong>NAME_ASC</strong></td>
 <td>
 
-Order by priority
+Order by name ascending
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>NAME_DESC</strong></td>
+<td>
+
+Order by name descending
 
 </td>
 </tr>
@@ -10458,6 +10459,51 @@ Order by relevance
 <tr>
 <td valign="top"><strong>personalized</strong></td>
 <td></td>
+</tr>
+</tbody>
+</table>
+
+### StoreOpeningStatusEnum
+
+Status of store opening
+
+<table>
+<thead>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>OPEN</strong></td>
+<td>
+
+Store is currently opened
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>CLOSED</strong></td>
+<td>
+
+Store is currently closed
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>OPEN_SOON</strong></td>
+<td>
+
+Store will be opened soon
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>CLOSED_SOON</strong></td>
+<td>
+
+Store will be closed soon
+
+</td>
 </tr>
 </tbody>
 </table>

@@ -12,6 +12,11 @@ use Shopsys\FrameworkBundle\Model\Store\Store;
 
 class StoreOpeningHoursApiProvider
 {
+    public const STATUS_OPEN = 'OPEN';
+    public const STATUS_CLOSED = 'CLOSED';
+    public const STATUS_OPEN_SOON = 'OPEN_SOON';
+    public const STATUS_CLOSED_SOON = 'CLOSED_SOON';
+
     /**
      * @param \Shopsys\FrameworkBundle\Model\Store\OpeningHours\StoreOpeningHoursProvider $storeOpeningHoursProvider
      * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
@@ -24,17 +29,6 @@ class StoreOpeningHoursApiProvider
         protected readonly OpeningHoursWithDateDataFactory $openingHoursWithDateDataFactory,
         protected readonly OpeningHoursRangeDataFactory $openingHoursRangeDataFactory,
     ) {
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
-     * @return bool
-     */
-    public function isOpenNow(Store $store): bool
-    {
-        $now = new DateTimeImmutable(timezone: $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($store->getDomainId()));
-
-        return $this->storeOpeningHoursProvider->getOpeningHoursSetting($store)->isOpenAt($now);
     }
 
     /**
@@ -76,5 +70,30 @@ class StoreOpeningHoursApiProvider
         }
 
         return $openingHoursData;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Store\Store $store
+     * @return string
+     */
+    public function getStatus(Store $store): string
+    {
+        $now = new DateTimeImmutable(timezone: $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($store->getDomainId()));
+        $oneHourLater = $now->modify('+1 hour');
+        $openingHoursSetting = $this->storeOpeningHoursProvider->getOpeningHoursSetting($store);
+
+        if ($openingHoursSetting->isOpenAt($now)) {
+            if ($openingHoursSetting->isClosedAt($oneHourLater)) {
+                return self::STATUS_CLOSED_SOON;
+            }
+
+            return self::STATUS_OPEN;
+        }
+
+        if ($openingHoursSetting->isOpenAt($oneHourLater)) {
+            return self::STATUS_OPEN_SOON;
+        }
+
+        return self::STATUS_CLOSED;
     }
 }

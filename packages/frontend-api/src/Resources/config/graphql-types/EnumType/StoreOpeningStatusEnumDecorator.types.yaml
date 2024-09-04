@@ -1,0 +1,18 @@
+StoreOpeningStatusEnumDecorator:
+    type: enum
+    decorator: true
+    config:
+        description: "Status of store opening"
+        values:
+            OPEN:
+                value: '@=constant("Shopsys\\FrontendApiBundle\\Model\\Store\\OpeningHours\\StoreOpeningHoursApiProvider::STATUS_OPEN")'
+                description: "Store is currently opened"
+            CLOSED:
+                value: '@=constant("Shopsys\\FrontendApiBundle\\Model\\Store\\OpeningHours\\StoreOpeningHoursApiProvider::STATUS_CLOSED")'
+                description: "Store is currently closed"
+            OPEN_SOON:
+                value: '@=constant("Shopsys\\FrontendApiBundle\\Model\\Store\\OpeningHours\\StoreOpeningHoursApiProvider::STATUS_OPEN_SOON")'
+                description: "Store will be opened soon"
+            CLOSED_SOON:
+                value: '@=constant("Shopsys\\FrontendApiBundle\\Model\\Store\\OpeningHours\\StoreOpeningHoursApiProvider::STATUS_CLOSED_SOON")'
+                description: "Store will be closed soon"

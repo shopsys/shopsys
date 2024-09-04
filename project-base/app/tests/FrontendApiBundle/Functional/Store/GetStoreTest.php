@@ -22,6 +22,7 @@ use Shopsys\FrameworkBundle\Model\Store\StoreDataFactory;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Model\Store\StoreFriendlyUrlProvider;
 use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrontendApiBundle\Model\Store\OpeningHours\StoreOpeningHoursApiProvider;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -168,7 +169,7 @@ class GetStoreTest extends GraphQlTestCase
      * @param array $openingRangesModifiers
      * @param \DateTimeImmutable|null $publicHolidayDate
      * @param array $publicHolidayExcludedStoresIds
-     * @param bool $expectedIsOpen
+     * @param string $expectedStatus
      * @param array $expectedOpeningRangesModifiers
      */
     #[DataProvider('openingHoursDataProvider')]
@@ -176,7 +177,7 @@ class GetStoreTest extends GraphQlTestCase
         array $openingRangesModifiers,
         ?DateTimeImmutable $publicHolidayDate,
         array $publicHolidayExcludedStoresIds,
-        bool $expectedIsOpen,
+        string $expectedStatus,
         array $expectedOpeningRangesModifiers,
     ): void {
         $store = $this->updateStoreOpeningHours($openingRangesModifiers);
@@ -196,8 +197,8 @@ class GetStoreTest extends GraphQlTestCase
         self::assertArrayHasKey('store', $response['data']);
         self::assertArrayHasKey('openingHours', $response['data']['store']);
         self::assertArrayHasKey('openingHoursOfDays', $response['data']['store']['openingHours']);
-        self::assertArrayHasKey('isOpen', $response['data']['store']['openingHours']);
-        self::assertEquals($expectedIsOpen, $response['data']['store']['openingHours']['isOpen']);
+        self::assertArrayHasKey('status', $response['data']['store']['openingHours']);
+        self::assertEquals($expectedStatus, $response['data']['store']['openingHours']['status']);
         self::assertEquals(
             array_merge($expectedOpeningRanges, ['dayOfWeek' => $dayOfWeek]),
             $response['data']['store']['openingHours']['openingHoursOfDays'][0], // today is always first
@@ -211,13 +212,13 @@ class GetStoreTest extends GraphQlTestCase
     {
         yield 'store with one opening range' => [
             'openingRangesModifiers' => [
-                ['openingTime' => '-1 hour', 'closingTime' => '+1 hour'],
+                ['openingTime' => '-2 hour', 'closingTime' => '+2 hour'],
             ],
             'publicHolidayDate' => null,
             'publicHolidayExcludedStoresIds' => [],
-            'expectedIsOpen' => true,
+            'expectedStatus' => StoreOpeningHoursApiProvider::STATUS_OPEN,
             'expectedOpeningRangesModifiers' => [
-                ['openingTime' => '-1 hour', 'closingTime' => '+1 hour'],
+                ['openingTime' => '-2 hour', 'closingTime' => '+2 hour'],
             ],
         ];
 
@@ -227,7 +228,7 @@ class GetStoreTest extends GraphQlTestCase
             ],
             'publicHolidayDate' => static::getToday(),
             'publicHolidayExcludedStoresIds' => [1],
-            'expectedIsOpen' => true,
+            'expectedStatus' => StoreOpeningHoursApiProvider::STATUS_CLOSED_SOON,
             'expectedOpeningRangesModifiers' => [
                 ['openingTime' => '-1 hour', 'closingTime' => '+1 hour'],
             ],
@@ -239,7 +240,7 @@ class GetStoreTest extends GraphQlTestCase
             ],
             'publicHolidayDate' => static::getToday(),
             'publicHolidayExcludedStoresIds' => [],
-            'expectedIsOpen' => false,
+            'expectedStatus' => StoreOpeningHoursApiProvider::STATUS_CLOSED,
             'expectedOpeningRangesModifiers' => [],
         ];
 
@@ -247,7 +248,7 @@ class GetStoreTest extends GraphQlTestCase
             'openingRangesModifiers' => [],
             'publicHolidayDate' => null,
             'publicHolidayExcludedStoresIds' => [],
-            'expectedIsOpen' => false,
+            'expectedStatus' => StoreOpeningHoursApiProvider::STATUS_CLOSED,
             'expectedOpeningRangesModifiers' => [],
         ];
 
@@ -257,7 +258,7 @@ class GetStoreTest extends GraphQlTestCase
             ],
             'publicHolidayDate' => null,
             'publicHolidayExcludedStoresIds' => [],
-            'expectedIsOpen' => false,
+            'expectedStatus' => StoreOpeningHoursApiProvider::STATUS_OPEN_SOON,
             'expectedOpeningRangesModifiers' => [
                 ['openingTime' => '+1 hour', 'closingTime' => '+2 hour'],
             ],
@@ -269,7 +270,7 @@ class GetStoreTest extends GraphQlTestCase
             ],
             'publicHolidayDate' => null,
             'publicHolidayExcludedStoresIds' => [],
-            'expectedIsOpen' => false,
+            'expectedStatus' => StoreOpeningHoursApiProvider::STATUS_CLOSED,
             'expectedOpeningRangesModifiers' => [
                 ['openingTime' => '-2 hour', 'closingTime' => '-1 hour'],
             ],
@@ -281,7 +282,7 @@ class GetStoreTest extends GraphQlTestCase
             ],
             'publicHolidayDate' => null,
             'publicHolidayExcludedStoresIds' => [],
-            'expectedIsOpen' => false,
+            'expectedStatus' => StoreOpeningHoursApiProvider::STATUS_OPEN_SOON,
             'expectedOpeningRangesModifiers' => [
                 ['openingTime' => '+1 hour', 'closingTime' => '-1 hour'],
             ],
@@ -295,7 +296,7 @@ class GetStoreTest extends GraphQlTestCase
             ],
             'publicHolidayDate' => null,
             'publicHolidayExcludedStoresIds' => [],
-            'expectedIsOpen' => false,
+            'expectedStatus' => StoreOpeningHoursApiProvider::STATUS_OPEN_SOON,
             'expectedOpeningRangesModifiers' => [
                 ['openingTime' => '-5 hour', 'closingTime' => '-4 hour'],
                 ['openingTime' => '-2 hour', 'closingTime' => '-1 hour'],
@@ -311,7 +312,7 @@ class GetStoreTest extends GraphQlTestCase
             ],
             'publicHolidayDate' => null,
             'publicHolidayExcludedStoresIds' => [],
-            'expectedIsOpen' => true,
+            'expectedStatus' => StoreOpeningHoursApiProvider::STATUS_CLOSED_SOON,
             'expectedOpeningRangesModifiers' => [
                 ['openingTime' => '-5 hour', 'closingTime' => '-4 hour'],
                 ['openingTime' => '-2 hour', 'closingTime' => '+1 hour'],

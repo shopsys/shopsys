@@ -1429,10 +1429,10 @@ export type TypeOpeningHours = {
   __typename?: 'OpeningHours';
   /** Current day of the week */
   dayOfWeek: Scalars['Int']['output'];
-  /** Is store currently open? */
-  isOpen: Scalars['Boolean']['output'];
   /** Opening hours for every day of the week (1 for Monday 7 for Sunday) */
   openingHoursOfDays: Array<TypeOpeningHoursOfDay>;
+  /** Status of store opening */
+  status: TypeStoreOpeningStatusEnum;
 };
 
 /** Represents store opening hours for a specific day */
@@ -2844,6 +2844,18 @@ export type TypeStoreEdge = {
   /** The item at the end of the edge. */
   node: Maybe<TypeStore>;
 };
+
+/** Status of store opening */
+export enum TypeStoreOpeningStatusEnum {
+  /** Store is currently closed */
+  Closed = 'CLOSED',
+  /** Store will be closed soon */
+  ClosedSoon = 'CLOSED_SOON',
+  /** Store is currently opened */
+  Open = 'OPEN',
+  /** Store will be opened soon */
+  OpenSoon = 'OPEN_SOON'
+}
 
 export type TypeToken = {
   __typename?: 'Token';

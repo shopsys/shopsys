@@ -27,11 +27,11 @@ class OpeningHoursResolverMap extends ResolverMap
     {
         return [
             'OpeningHours' => [
-                'isOpen' => function (array $openingHours): bool {
+                'status' => function (array $openingHours): string {
                     /** @var \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours $openingHour */
                     $openingHour = reset($openingHours);
 
-                    return $this->storeOpeningHoursApiProvider->isOpenNow($openingHour->getStore());
+                    return $this->storeOpeningHoursApiProvider->getStatus($openingHour->getStore());
                 },
                 'dayOfWeek' => function (array $openingHours): int {
                     /** @var \Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHours $openingHour */

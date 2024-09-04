@@ -102,7 +102,7 @@ export const OpeningHours: FC<{ openingHours: StoreOrPacketeryPoint['openingHour
                             </span>
                             {isToday && (
                                 <span>
-                                    <OpeningStatus isDynamic className="block" isOpen={openingHours.isOpen} />
+                                    <OpeningStatus isDynamic className="block" status={openingHours.status} />
                                 </span>
                             )}
                         </div>

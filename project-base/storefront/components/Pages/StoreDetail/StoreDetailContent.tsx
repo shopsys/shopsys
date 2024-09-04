@@ -36,7 +36,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                         <h1>{store.storeName}</h1>
 
                         <div className="lg:mb-5 lg:ml-5">
-                            <OpeningStatus isOpen={store.openingHours.isOpen} />
+                            <OpeningStatus status={store.openingHours.status} />
                         </div>
                     </div>
 

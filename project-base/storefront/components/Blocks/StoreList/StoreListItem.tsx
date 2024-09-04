@@ -53,8 +53,8 @@ export const StoreListItem: FC<{ store: StoreOrPacketeryPoint; isSelected: boole
                         </p>
                     </div>
                     <div className="xl:text-right flex items-center xl:block">
-                        <OpeningStatus className="xl:mb-1.5" isOpen={store.openingHours.isOpen} />
-                        <p className="ml-1.5 text-xs">{getCurrentOpeningHours(store.openingHours)}</p>
+                        <OpeningStatus className="xl:mb-1.5" status={store.openingHours.status} />
+                        <p className="ml-2.5 text-xs">{getCurrentOpeningHours(store.openingHours)}</p>
                     </div>
                 </div>
                 <div>
