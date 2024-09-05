@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider;
+use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory;
 
@@ -28,6 +29,7 @@ class ProductEntityFieldMapper
      * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider $productFrontendLimitProvider
      * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      */
     public function __construct(
         protected readonly Domain $domain,
@@ -39,6 +41,7 @@ class ProductEntityFieldMapper
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
         protected readonly ProductFrontendLimitProvider $productFrontendLimitProvider,
         protected readonly DataLoaderInterface $productsSellableByIdsBatchLoader,
+        protected readonly ProductVisibilityFacade $productVisibilityFacade,
     ) {
     }
 
@@ -179,5 +182,20 @@ class ProductEntityFieldMapper
     public function getHreflangLinks(Product $product): array
     {
         return $this->hreflangLinksFacade->getForProduct($product, $this->domain->getId());
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return bool
+     */
+    public function isVisible(Product $product): bool
+    {
+        $productVisibility = $this->productVisibilityFacade->getProductVisibility(
+            $product,
+            $this->currentCustomerUser->getPricingGroup(),
+            $this->domain->getId(),
+        );
+
+        return $productVisibility->isVisible();
     }
 }
