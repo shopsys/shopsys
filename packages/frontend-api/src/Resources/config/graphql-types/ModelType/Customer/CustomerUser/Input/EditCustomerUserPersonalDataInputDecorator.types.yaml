@@ -4,6 +4,8 @@ EditCustomerUserPersonalDataInputDecorator:
         - 'ChangePersonalDataInputDecorator'
         - 'TelephoneInputObjectDecorator'
     config:
+        validation:
+            -   Shopsys\FrontendApiBundle\Component\Constraints\CustomerUserRoleGroupAllowEdit:
         fields:
             customerUserUuid:
                 type: "Uuid"
@@ -17,4 +19,3 @@ EditCustomerUserPersonalDataInputDecorator:
                 description: "Customer user role group uuid."
                 validation:
                     -   Shopsys\FrontendApiBundle\Component\Constraints\CustomerUserRoleGroup:
-                    -   Shopsys\FrontendApiBundle\Component\Constraints\CustomerUserRoleGroupAllowEdit:

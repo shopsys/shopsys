@@ -31,7 +31,7 @@ class CustomerUserRoleGroupAllowEditValidator extends ConstraintValidator
      * @param mixed $value
      * @param \Symfony\Component\Validator\Constraint $constraint
      */
-    public function validate($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof CustomerUserRoleGroupAllowEdit) {
             throw new UnexpectedTypeException($constraint, CustomerUserRoleGroupAllowEdit::class);
@@ -43,57 +43,64 @@ class CustomerUserRoleGroupAllowEditValidator extends ConstraintValidator
             return;
         }
 
-        $customerUserGroupRoleUuid = $value;
-        $this->canEditCustomerUserRoleGroup($currentCustomerUser, $customerUserGroupRoleUuid, $constraint);
+        $customerUserGroupRoleToBeSetUuid = $value->roleGroupUuid;
+        $editedCustomerUserUuid = $value->customerUserUuid;
+
+        $canEditCustomerUserRoleGroup = $this->canEditCustomerUserRoleGroup(
+            $currentCustomerUser,
+            $customerUserGroupRoleToBeSetUuid,
+            $editedCustomerUserUuid,
+        );
+
+        if (!$canEditCustomerUserRoleGroup) {
+            $this->context->buildViolation($constraint->message)
+                ->setCode(CustomerUserRoleGroupAllowEdit::CUSTOMER_USER_ROLE_GROUP_CANNOT_BE_CHANGED)
+                ->addViolation();
+        }
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param string $customerUserGroupRoleUuid
-     * @param \Shopsys\FrontendApiBundle\Component\Constraints\CustomerUserRoleGroupAllowEdit $constraint
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $currentCustomerUser
+     * @param string $customerUserGroupRoleToBeSetUuid
+     * @param string $editedCustomerUserUuid
+     * @return bool
      */
     protected function canEditCustomerUserRoleGroup(
-        CustomerUser $customerUser,
-        string $customerUserGroupRoleUuid,
-        CustomerUserRoleGroupAllowEdit $constraint,
-    ): void {
+        CustomerUser $currentCustomerUser,
+        string $customerUserGroupRoleToBeSetUuid,
+        string $editedCustomerUserUuid,
+    ): bool {
         if ($this->security->isGranted(CustomerUserRole::ROLE_API_ALL)) {
-            $this->canEditCustomerUserRoleGroupForRoleApiAll($customerUser, $customerUserGroupRoleUuid, $constraint);
-
-            return;
+            return $this->canEditCustomerUserRoleGroupForRoleApiAll(
+                $currentCustomerUser,
+                $customerUserGroupRoleToBeSetUuid,
+                $editedCustomerUserUuid,
+            );
         }
 
-        if ($customerUserGroupRoleUuid === $customerUser->getRoleGroup()->getUuid()) {
-            return;
-        }
-
-        $this->context->buildViolation($constraint->message)
-            ->setCode(CustomerUserRoleGroupAllowEdit::CUSTOMER_USER_ROLE_GROUP_CANNOT_BE_CHANGED)
-            ->addViolation();
+        return $customerUserGroupRoleToBeSetUuid === $currentCustomerUser->getRoleGroup()->getUuid();
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param string $customerUserGroupRoleUuid
-     * @param \Shopsys\FrontendApiBundle\Component\Constraints\CustomerUserRoleGroupAllowEdit $constraint
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $currentCustomerUser
+     * @param string $customerUserGroupRoleToBeSetUuid
+     * @param string $editedCustomerUserUuid
+     * @return bool
      */
     protected function canEditCustomerUserRoleGroupForRoleApiAll(
-        CustomerUser $customerUser,
-        string $customerUserGroupRoleUuid,
-        CustomerUserRoleGroupAllowEdit $constraint,
-    ): void {
-        if ($customerUserGroupRoleUuid === $customerUser->getRoleGroup()->getUuid()) {
-            return;
+        CustomerUser $currentCustomerUser,
+        string $customerUserGroupRoleToBeSetUuid,
+        string $editedCustomerUserUuid,
+    ): bool {
+        if (
+            $currentCustomerUser->getUuid() !== $editedCustomerUserUuid ||
+            $customerUserGroupRoleToBeSetUuid === $currentCustomerUser->getRoleGroup()->getUuid()
+        ) {
+            return true;
         }
 
-        $customer = $customerUser->getCustomer();
+        $customer = $currentCustomerUser->getCustomer();
 
-        if ($this->customerFacade->hasMultipleCustomerUsersWithDefaultCustomerUserRoleGroup($customer)) {
-            return;
-        }
-
-        $this->context->buildViolation($constraint->messageForLastCustomerUser)
-            ->setCode(CustomerUserRoleGroupAllowEdit::LAST_CUSTOMER_USER_ROLE_GROUP_CANNOT_BE_CHANGED)
-            ->addViolation();
+        return $this->customerFacade->hasMultipleCustomerUsersWithDefaultCustomerUserRoleGroup($customer);
     }
 }

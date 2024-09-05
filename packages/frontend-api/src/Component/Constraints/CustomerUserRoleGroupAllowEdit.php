@@ -32,6 +32,6 @@ class CustomerUserRoleGroupAllowEdit extends Constraint
      */
     public function getTargets(): string|array
     {
-        return self::PROPERTY_CONSTRAINT;
+        return self::CLASS_CONSTRAINT;
     }
 }
