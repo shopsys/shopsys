@@ -165,6 +165,10 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
              - { name: doctrine.event_listener, event: postFlush, priority: 1 }
     ```
 
+#### fixed redundant log for the Money type if the scale of compared object was different ([#3405](https://github.com/shopsys/shopsys/pull/3405))
+
+-   class `\Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\ResolvedChanges` now implements `\JsonSerializable` interface to provide output for the `json_encode` function, update your implementation if you need to provide more than default data
+
 ## [Upgrade from v13.0.0 to v14.0.0](https://github.com/shopsys/shopsys/compare/v13.0.0...v14.0.0)
 
 #### add rounded price value to order process ([#2835](https://github.com/shopsys/shopsys/pull/2835))
