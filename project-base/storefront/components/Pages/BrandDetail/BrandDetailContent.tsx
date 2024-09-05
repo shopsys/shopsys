@@ -1,7 +1,7 @@
 import { BrandDetailProductsWrapper } from './BrandDetailProductsWrapper';
 import { Image } from 'components/Basic/Image/Image';
 import { UserText } from 'components/Basic/UserText/UserText';
-import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
+import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/DeferredFilterAndSortingBar';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeBrandDetailFragment } from 'graphql/requests/brands/fragments/BrandDetailFragment.generated';
 import { useRef } from 'react';
@@ -33,7 +33,10 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
             </Webline>
             <Webline>
                 <div className="scroll-mt-5" ref={paginationScrollTargetRef}>
-                    <SortingBar sorting={brand.products.orderingMode} totalCount={brand.products.totalCount} />
+                    <DeferredFilterAndSortingBar
+                        sorting={brand.products.orderingMode}
+                        totalCount={brand.products.totalCount}
+                    />
                     <BrandDetailProductsWrapper brand={brand} paginationScrollTargetRef={paginationScrollTargetRef} />
                 </div>
             </Webline>

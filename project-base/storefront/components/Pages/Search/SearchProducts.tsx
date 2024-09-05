@@ -1,9 +1,8 @@
 import { SearchProductsContent } from './SearchProductsContent';
 import { useSearchProductsData } from './searchUtils';
-import { FilterIcon } from 'components/Basic/Icon/FilterIcon';
 import { FilterPanel } from 'components/Blocks/Product/Filter/FilterPanel';
 import { SkeletonModuleProductsList } from 'components/Blocks/Skeleton/SkeletonModuleProductsList';
-import { SortingBar } from 'components/Blocks/SortingBar/SortingBar';
+import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/DeferredFilterAndSortingBar';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
@@ -75,19 +74,12 @@ export const SearchProducts: FC = () => {
                 <Overlay isActive={isPanelOpen} onClick={handlePanelOpenerClick} />
 
                 <div className="flex flex-1 flex-col" ref={paginationScrollTargetRef}>
-                    <div
-                        className="relative mb-3 flex h-12 w-full cursor-pointer flex-row justify-center rounded bg-backgroundAccent py-3 px-8 font-bold uppercase leading-7 text-textInverted vl:hidden"
-                        onClick={handlePanelOpenerClick}
-                    >
-                        <FilterIcon className="mr-3 w-6 font-bold text-textInverted" />
-                        {t('Filter')}
-                    </div>
-
-                    <SortingBar
+                    <DeferredFilterAndSortingBar
+                        handlePanelOpenerClick={handlePanelOpenerClick}
                         sorting={searchProductsData.orderingMode}
                         totalCount={searchProductsData.totalCount}
                         customSortOptions={[
-                            TypeProductOrderingModeEnum.Relevance,
+                            TypeProductOrderingModeEnum.Priority,
                             TypeProductOrderingModeEnum.PriceAsc,
                             TypeProductOrderingModeEnum.PriceDesc,
                         ]}

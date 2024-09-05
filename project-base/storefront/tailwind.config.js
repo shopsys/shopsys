@@ -59,7 +59,7 @@ module.exports = {
             actionPrimaryBorder: '#00CDBE',
             actionPrimaryBorderActive: '#01BEB0',
             actionPrimaryBorderDisabled: '#8AE4DD',
-            actionPrimaryBorderHovered: '#004EB6',
+            actionPrimaryBorderHovered: '#01BEB0',
             actionInvertedText: '#004EB6',
             actionInvertedTextActive: '#FFFFFF',
             actionInvertedTextDisabled: '#B6C3D8',
