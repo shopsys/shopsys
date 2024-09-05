@@ -339,10 +339,22 @@ class ProductDomain
      */
     public function setFlags($flags): void
     {
-        $this->flags->clear();
+        $existingFlags = [];
+
+        foreach ($this->flags as $flag) {
+            $existingFlags[$flag->getId()] = $flag;
+        }
 
         foreach ($flags as $flag) {
-            $this->flags->add($flag);
+            if (!array_key_exists($flag->getId(), $existingFlags)) {
+                $this->flags->add($flag);
+            } else {
+                unset($existingFlags[$flag->getId()]);
+            }
+        }
+
+        foreach ($existingFlags as $flag) {
+            $this->flags->removeElement($flag);
         }
     }
 
