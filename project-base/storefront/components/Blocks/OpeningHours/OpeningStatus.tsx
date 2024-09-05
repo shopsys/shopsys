@@ -1,18 +1,24 @@
+import { Flag } from 'components/Basic/Flag/Flag';
 import useTranslation from 'next-translate/useTranslation';
 import { twMergeCustom } from 'utils/twMerge';
 
-export const OpeningStatus: FC<{ isOpen: boolean }> = ({ isOpen, className }) => {
+export const OpeningStatus: FC<{ isOpen: boolean; isDynamic?: boolean }> = ({
+    isOpen,
+    isDynamic = false,
+    className,
+}) => {
     const { t } = useTranslation();
 
     return (
-        <div
+        <Flag
+            type={isDynamic ? 'dynamic' : 'custom'}
             className={twMergeCustom(
-                'inline-block rounded py-1 px-3 font-medium uppercase leading-normal text-textInverted',
+                'text-textInverted',
                 isOpen ? 'bg-openingStatusOpen' : 'bg-openingStatusClosed',
                 className,
             )}
         >
-            {isOpen ? t('Currently open') : t('Currently closed')}
-        </div>
+            {isOpen ? t('Open') : t('Closed')}
+        </Flag>
     );
 };

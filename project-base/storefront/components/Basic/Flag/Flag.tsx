@@ -1,14 +1,20 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { twMergeCustom } from 'utils/twMerge';
 
-type FlagProps = { href?: string };
+export type FlagTypes = 'blog' | 'dynamic' | 'custom';
 
-export const Flag: FC<FlagProps> = ({ children, href, className }) => {
+type FlagProps = {
+    href?: string;
+    type?: FlagTypes;
+};
+
+export const Flag: FC<FlagProps> = ({ children, href, className, type = 'custom' }) => {
     const flagTwClass = twMergeCustom(
-        'inline-flex rounded py-1 px-2 text-xs uppercase',
+        'inline-flex rounded px-1.5 py-0.5 text-xs',
         className,
-        'bg-backgroundAccent !text-textInverted no-underline',
-        'hover:bg-backgroundAccentMore hover:text-textInverted hover:!no-underline',
+        type === 'blog' &&
+            'bg-backgroundAccent !text-textInverted no-underline hover:bg-backgroundAccentMore hover:text-textInverted hover:!no-underline',
+        type === 'dynamic' && '!text-textInverted text-zero py-1.5 rounded-full vl:text-xs vl:py-0.5 vl:rounded',
     );
 
     if (href) {

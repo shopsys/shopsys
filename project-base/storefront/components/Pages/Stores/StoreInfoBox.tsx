@@ -14,7 +14,7 @@ export const StoreInfoBox: FC<StoreInfoBoxProps> = ({ store, closeInfoBoxCallbac
     const { t } = useTranslation();
 
     return (
-        <div className="top-0 left-0 z-above flex h-full w-full flex-col items-center justify-center bg-background py-4 text-center vl:absolute vl:px-10">
+        <div className="top-0 left-0 z-above flex h-full w-full flex-col items-center justify-center bg-background py-4 text-center vl:absolute">
             <RemoveIcon
                 className="absolute top-4 right-4 w-5 cursor-pointer text-textAccent"
                 onClick={closeInfoBoxCallback}
@@ -22,7 +22,9 @@ export const StoreInfoBox: FC<StoreInfoBoxProps> = ({ store, closeInfoBoxCallbac
 
             <h2 className="mb-3">{store.name}</h2>
 
-            <OpeningStatus className="mb-3" isOpen={store.openingHours.isOpen} />
+            <div className="mb-3">
+                <OpeningStatus isOpen={store.openingHours.isOpen} />
+            </div>
 
             <div>
                 {store.street}

@@ -31,7 +31,9 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles }) => (
                     {article.blogCategories.map((blogPreviewCategorie) => (
                         <Fragment key={blogPreviewCategorie.uuid}>
                             {blogPreviewCategorie.parent && (
-                                <Flag href={blogPreviewCategorie.link}>{blogPreviewCategorie.name}</Flag>
+                                <Flag href={blogPreviewCategorie.link} type="blog">
+                                    {blogPreviewCategorie.name}
+                                </Flag>
                             )}
                         </Fragment>
                     ))}

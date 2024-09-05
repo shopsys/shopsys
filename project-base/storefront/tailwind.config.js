@@ -146,6 +146,7 @@ module.exports = {
             },
             fontSize: {
                 clamp: 'clamp(16px, 4vw, 22px)',
+                zero: [0, 0],
             },
             borderRadius: {
                 DEFAULT: '0.1875rem',

@@ -41,7 +41,9 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles }) =>
                                 {blogArticle.blogCategories.map((blogArticleCategory) => (
                                     <Fragment key={blogArticleCategory.uuid}>
                                         {blogArticleCategory.parent && (
-                                            <Flag href={blogArticleCategory.link}>{blogArticleCategory.name}</Flag>
+                                            <Flag href={blogArticleCategory.link} type="blog">
+                                                {blogArticleCategory.name}
+                                            </Flag>
                                         )}
                                     </Fragment>
                                 ))}
