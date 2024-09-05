@@ -469,6 +469,9 @@ msgstr "Množství musí být větší než {{ compared_value }}"
 msgid "Redirect target must be relative path (with leading slash) or absolute path starting by protocol (http:// or https://)"
 msgstr "Cíl přesměrování musí být relativní cesta (začínající lomítkem) nebo absolutni cesta začínající protokolem (http:// nebo https://)"
 
+msgid "Quantity of \"%itemName%\" item must not be greater than the ordered quantity (%orderedQuantity%)"
+msgstr "Množství položky \"%itemName%\" nesmí být vyšší než objednané množství (%orderedQuantity%)"
+
 msgid "Same description is used on another domain"
 msgstr "Stejný popis už je používán na jiné doméně"
 

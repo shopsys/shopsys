@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\Complaint;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Form\Admin\Complaint\Status\ComplaintItemsType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyCustomerType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyDomainIconType;
@@ -23,6 +24,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ComplaintFormType extends AbstractType
 {
@@ -65,6 +67,7 @@ class ComplaintFormType extends AbstractType
                 'attr' => [
                     'novalidate' => 'novalidate',
                 ],
+                'constraints' => [new Constraints\Callback([$this, 'validateQuantityIsLessOrEqualThanOrdered'])],
             ]);
     }
 
@@ -254,5 +257,31 @@ class ComplaintFormType extends AbstractType
             ]);
 
         return $builderItemsGroup;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintData $complaintData
+     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
+     */
+    public function validateQuantityIsLessOrEqualThanOrdered(
+        ComplaintData $complaintData,
+        ExecutionContextInterface $context,
+    ): void {
+        foreach ($complaintData->complaintItems as $complaintItemData) {
+            $orderedQuantity = $complaintItemData->orderItem?->getQuantity();
+
+            if ($complaintItemData->orderItem === null || $complaintItemData->quantity <= $orderedQuantity) {
+                continue;
+            }
+
+            $message = t('Quantity of "%itemName%" item must not be greater than the ordered quantity (%orderedQuantity%)', [
+                '%itemName%' => $complaintItemData->productName,
+                '%orderedQuantity%' => $orderedQuantity,
+            ], Translator::VALIDATOR_TRANSLATION_DOMAIN);
+            $context
+                ->buildViolation($message)
+                ->atPath('complaintItems')
+                ->addViolation();
+        }
     }
 }

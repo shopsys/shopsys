@@ -1,4 +1,5 @@
 import './validationArticle';
+import './validationComplaintItem';
 import './validationCustomer';
 import './validationFreTransportAndPayment';
 import './validationMailTemplate';
