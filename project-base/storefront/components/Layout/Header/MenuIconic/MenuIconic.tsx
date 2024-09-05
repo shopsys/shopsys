@@ -23,13 +23,13 @@ export const MenuIconic: FC = () => {
     const isUserLoggedIn = useIsUserLoggedIn();
 
     const menuCountTwClass =
-        'flex w-4 h-4 text-white text-[10px] leading-[10px] rounded-full bg-heartIconFull align-center justify-center pt-[4px] absolute -top-1 -right-2';
+        'flex w-4 h-4 text-white text-[10px] leading-[10px] rounded-full bg-activeIconFull align-center justify-center pt-[4px] absolute -top-1 -right-2';
 
     return (
         <ul className="flex items-center gap-1 h-12">
             <MenuIconicItem className="max-lg:hidden">
                 <MenuIconicItemLink href={storesUrl} type="stores">
-                    <MarkerIcon className="w-5 lg:w-6" />
+                    <MarkerIcon className="w-6" />
                     {t('Stores')}
                 </MenuIconicItemLink>
             </MenuIconicItem>
@@ -37,7 +37,7 @@ export const MenuIconic: FC = () => {
             <MenuIconicItem className="max-lg:hidden">
                 <MenuIconicItemLink href={productComparisonUrl} title={t('Comparison')} type="comparison">
                     <div className="relative">
-                        <CompareIcon className="w-5 lg:w-6" isFull={false} />
+                        <CompareIcon className="w-6" isFull={false} />
                         {!!comparison?.products.length && (
                             <span className={menuCountTwClass}>{comparison.products.length}</span>
                         )}
@@ -49,7 +49,7 @@ export const MenuIconic: FC = () => {
             <MenuIconicItem>
                 <MenuIconicItemLink href={wishlistUrl} title={t('Wishlist')} type="wishlist">
                     <div className="relative">
-                        <HeartIcon className="w-5 lg:w-6" isFull={false} />
+                        <HeartIcon className="w-6" isFull={false} />
                         {!!wishlist?.products.length && (
                             <span className={menuCountTwClass}>{wishlist.products.length}</span>
                         )}

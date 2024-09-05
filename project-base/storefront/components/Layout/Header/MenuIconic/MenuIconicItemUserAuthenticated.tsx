@@ -12,8 +12,11 @@ import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { useLogout } from 'utils/auth/useLogout';
+import { desktopFirstSizes } from 'utils/mediaQueries';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { twMergeCustom } from 'utils/twMerge';
+import { useGetWindowSize } from 'utils/ui/useGetWindowSize';
+import { useDebounce } from 'utils/useDebounce';
 
 export const MenuIconicItemUserAuthenticated: FC = () => {
     const { t } = useTranslation();
@@ -25,53 +28,57 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
     );
     const [isClicked, setIsClicked] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
+    const isHoveredDelayed = useDebounce(isHovered, 200);
 
     const userMenuItemTwClass =
-        'h-14 rounded-xl bg-backgroundAccentLess hover:bg-backgroundMost active:bg-backgroundMost';
+        'h-14 rounded-xl bg-backgroundAccentLess border border-background hover:bg-background hover:border-borderAccentLess';
     const userMenuItemIconTwClass = 'flex flex-row w-[44px] justify-start';
+
+    const { width } = useGetWindowSize();
+    const isDesktop = width > desktopFirstSizes.tablet;
 
     return (
         <>
             <div
                 className="group lg:relative z-aboveOverlay"
                 tid={TIDs.my_account_link}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
+                onMouseEnter={() => isDesktop && setIsHovered(true)}
+                onMouseLeave={() => isDesktop && setIsHovered(false)}
             >
                 <MenuIconicItemLink className="rounded-t p-3 max-lg:hidden transition-all" href={customerUrl}>
                     <div className="relative">
-                        <UserIcon className="w-5 lg:w-6 max-h-[22px]" isFull={false} />
+                        <UserIcon className="w-6 max-h-[22px]" isFull={false} />
                         <div className="w-[10px] h-[10px] absolute -right-1 -top-1 rounded-full bg-actionPrimaryBackground" />
                     </div>
                     {t('My account')}
                 </MenuIconicItemLink>
 
                 <div className="order-2 flex h-full w-12 cursor-pointer items-center justify-center text-lg outline-none lg:hidden">
-                    <ExtendedNextLink
-                        href={customerUrl}
-                        onClick={(e) => {
-                            e.preventDefault();
+                    <div
+                        onClick={() => {
                             setIsClicked(!isClicked);
                             setIsClicked(!isHovered);
                         }}
                     >
                         <div className="relative flex h-full w-full items-center justify-center text-textInverted transition-colors">
-                            <UserIcon className="w-6 lg:w-4 text-textInverted" isFull={false} />
+                            <UserIcon className="w-6 text-textInverted max-h-[22px]" isFull={false} />
                             <div className="w-[10px] h-[10px] absolute -right-1 -top-1 rounded-full bg-actionPrimaryBackground" />
                         </div>
-                    </ExtendedNextLink>
+                    </div>
                 </div>
 
                 <div
                     className={twMergeCustom(
-                        'pointer-events-none absolute top-full -right-[100%] z-cart block min-w-[315px] origin-top-right scale-50 rounded-xl transition-all group-hover:pointer-events-auto p-4',
+                        'pointer-events-none absolute top-0 -right-[100%] z-cart block min-w-[315px] origin-top-right rounded-xl p-5',
+                        'lg:top-full lg:transition-all',
                         'bg-none scale-50 opacity-0',
-                        'group-hover:bg-background group-hover:scale-100 group-hover:opacity-100',
+                        isHoveredDelayed &&
+                            'group-hover:bg-background group-hover:scale-100 group-hover:opacity-100 group-hover:pointer-events-auto',
                         isClicked &&
-                            'scale-100 opacity-100 bg-background top-0 right-0 rounded-none h-dvh fixed z-aboveOverlay pointer-events-auto',
+                            'scale-100 opacity-100 bg-background top-0 right-0 rounded-none h-dvh fixed z-aboveOverlay pointer-events-auto transition-[right]',
                     )}
                 >
-                    <div className="flex flex-row justify-between mb-10 lg:hidden">
+                    <div className="flex flex-row justify-between m-5 lg:hidden">
                         <ExtendedNextLink href={customerUrl} onClick={() => setIsClicked(false)}>
                             <ArrowRightIcon className="rotate-180 text-borderAccent w-4" />
                         </ExtendedNextLink>
@@ -81,7 +88,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                             onClick={() => setIsClicked(false)}
                         />
                     </div>
-                    <ul className="flex flex-col gap-[10px] max-h-[87dvh] overflow-auto">
+                    <ul className="flex flex-col max-h-[87dvh] overflow-auto gap-2 p-1">
                         <li className={userMenuItemTwClass}>
                             <MenuIconicSubItemLink
                                 href={customerOrdersUrl}
@@ -115,7 +122,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
             </div>
 
             <Overlay
-                isActive={isClicked || isHovered}
+                isActive={isClicked || isHoveredDelayed}
                 onClick={() => {
                     setIsClicked(false);
                     setIsHovered(false);

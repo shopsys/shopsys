@@ -23,7 +23,7 @@ export const MenuIconicItemUserUnauthenticated: FC = () => {
             tid={TIDs.layout_header_menuiconic_login_link_popup}
             onClick={handleLogin}
         >
-            <UserIcon className="w-5 lg:w-6" isFull={false} />
+            <UserIcon className="w-6 max-h-[22px]" isFull={false} />
             <span className="hidden lg:inline-block">{t('Login')}</span>
         </MenuIconicItemLink>
     );

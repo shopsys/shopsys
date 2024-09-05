@@ -11,19 +11,25 @@ export const MenuIconicItem: FC<{ title?: string }> = ({ children, className, ti
 
 type MenuIconicItemLinkProps = { onClick?: () => void; href?: string; title?: string; type?: PageType };
 
-const menuIconicSubItemLink = 'flex items-center h-14 px-5 py-3 text-sm text-text no-underline font-semibold';
+const menuIconicSubItemLinkTwClass = 'flex items-center h-14 px-5 py-3 text-sm text-text no-underline font-semibold';
 
 export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({ children, href, onClick, type, tid }) => {
     if (href) {
         return (
-            <ExtendedNextLink className={menuIconicSubItemLink} href={href} tid={tid} type={type} onClick={onClick}>
+            <ExtendedNextLink
+                className={menuIconicSubItemLinkTwClass}
+                href={href}
+                tid={tid}
+                type={type}
+                onClick={onClick}
+            >
                 {children}
             </ExtendedNextLink>
         );
     }
 
     return (
-        <a className={menuIconicSubItemLink} tid={tid} onClick={onClick}>
+        <a className={menuIconicSubItemLinkTwClass} tid={tid} onClick={onClick}>
             {children}
         </a>
     );
