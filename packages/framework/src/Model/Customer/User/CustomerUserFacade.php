@@ -165,6 +165,7 @@ class CustomerUserFacade
         ?DeliveryAddress $deliveryAddress = null,
     ) {
         $customerUser = $this->getCustomerUserById($customerUserId);
+        $customerUserOriginalRoles = $customerUser->getRoles();
 
         if (
             $customerUserUpdateData->deliveryAddressData
@@ -197,6 +198,10 @@ class CustomerUserFacade
             $this->newsletterFacade->addSubscribedEmailIfNotExists($customerUser->getEmail(), $customerUser->getDomainId());
         } else {
             $this->newsletterFacade->deleteSubscribedEmailIfExists($customerUser->getEmail(), $customerUser->getDomainId());
+        }
+
+        if ($this->areRolesChanged($customerUser->getRoles(), $customerUserOriginalRoles)) {
+            $this->customerUserRefreshTokenChainFacade->removeAllCustomerUserRefreshTokenChains($customerUser);
         }
 
         return $customerUser;
@@ -464,5 +469,15 @@ class CustomerUserFacade
     public function isLastSecurityChangeOlderThan(string $customerUserUuid, DateTimeInterface $referenceDateTime): bool
     {
         return $this->customerUserRepository->isLastSecurityChangeOlderThan($customerUserUuid, $referenceDateTime);
+    }
+
+    /**
+     * @param string[] $customerUserCurrentRoles
+     * @param string[] $customerUserOriginalRoles
+     * @return bool
+     */
+    protected function areRolesChanged(array $customerUserCurrentRoles, array $customerUserOriginalRoles): bool
+    {
+        return array_diff($customerUserCurrentRoles, $customerUserOriginalRoles) !== [] || array_diff($customerUserOriginalRoles, $customerUserCurrentRoles) !== [];
     }
 }
