@@ -4075,6 +4075,15 @@ Unique complaint number
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>order</strong></td>
+<td valign="top"><a href="#order">Order</a>!</td>
+<td>
+
+Order for which the complaint was created
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>status</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -4224,6 +4233,15 @@ Files attached to the complaint order item
 <td>
 
 Order item
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>product</strong></td>
+<td valign="top"><a href="#product">Product</a></td>
+<td>
+
+Product of the order item
 
 </td>
 </tr>
@@ -5168,6 +5186,11 @@ Product images
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>isSellingDenied</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>isVisible</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
@@ -6147,15 +6170,6 @@ Order to which the order item belongs
 <td>
 
 Product of the order item
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>productMainImage</strong></td>
-<td valign="top"><a href="#image">Image</a></td>
-<td>
-
-Product main image by params
 
 </td>
 </tr>
@@ -7762,6 +7776,11 @@ Product images
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>isVisible</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>link</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -8956,6 +8975,11 @@ Product images
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>isSellingDenied</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>isVisible</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
@@ -12025,6 +12049,11 @@ Product images
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>isSellingDenied</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>isVisible</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>

@@ -72,3 +72,5 @@ ProductDecorator:
             files:
                 type: "[File!]!"
                 resolve: '@=query("filesByProductPromiseQuery", value)'
+            isVisible:
+                type: "Boolean!"

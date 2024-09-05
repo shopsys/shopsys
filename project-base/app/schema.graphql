@@ -628,6 +628,8 @@ type Complaint {
   items: [ComplaintItem!]!
   "Unique complaint number"
   number: String!
+  "Order for which the complaint was created"
+  order: Order!
   "Status of the complaint"
   status: String!
   "UUID"
@@ -670,6 +672,8 @@ type ComplaintItem {
   files(type: String = "default"): [File!]
   "Order item"
   orderItem: OrderItem
+  "Product of the order item"
+  product: Product
   "Product name"
   productName: String!
   "Quantity of the order item"
@@ -992,6 +996,7 @@ type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   images(type: String = null): [Image!]!
   isMainVariant: Boolean!
   isSellingDenied: Boolean!
+  isVisible: Boolean!
   "Product link"
   link: String!
   "Product image by params"
@@ -1366,8 +1371,6 @@ type OrderItem {
   order: Order!
   "Product of the order item"
   product: Product
-  "Product main image by params"
-  productMainImage: Image
   "Quantity of order items in the order"
   quantity: Int!
   "Total price for the quantity of order item"
@@ -1701,6 +1704,7 @@ interface Product {
   images(type: String = null): [Image!]!
   isMainVariant: Boolean!
   isSellingDenied: Boolean!
+  isVisible: Boolean!
   "Product link"
   link: String!
   "Product image by params"
@@ -2142,6 +2146,7 @@ type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   images(type: String = null): [Image!]!
   isMainVariant: Boolean!
   isSellingDenied: Boolean!
+  isVisible: Boolean!
   "Product link"
   link: String!
   "Product image by params"
@@ -2453,6 +2458,7 @@ type Variant implements Product & Hreflang & Breadcrumb & Slug {
   images(type: String = null): [Image!]!
   isMainVariant: Boolean!
   isSellingDenied: Boolean!
+  isVisible: Boolean!
   "Product link"
   link: String!
   "Product image by params"

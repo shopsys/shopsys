@@ -765,6 +765,8 @@ export type TypeComplaint = {
   items: Array<TypeComplaintItem>;
   /** Unique complaint number */
   number: Scalars['String']['output'];
+  /** Order for which the complaint was created */
+  order: TypeOrder;
   /** Status of the complaint */
   status: Scalars['String']['output'];
   /** UUID */
@@ -810,6 +812,8 @@ export type TypeComplaintItem = {
   files: Maybe<Array<TypeFile>>;
   /** Order item */
   orderItem: Maybe<TypeOrderItem>;
+  /** Product of the order item */
+  product: Maybe<TypeProduct>;
   /** Product name */
   productName: Scalars['String']['output'];
   /** Quantity of the order item */
@@ -1168,6 +1172,7 @@ export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & Type
   images: Array<TypeImage>;
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
+  isVisible: Scalars['Boolean']['output'];
   /** Product link */
   link: Scalars['String']['output'];
   /** Product image by params */
@@ -1736,8 +1741,6 @@ export type TypeOrderItem = {
   order: TypeOrder;
   /** Product of the order item */
   product: Maybe<TypeProduct>;
-  /** Product main image by params */
-  productMainImage: Maybe<TypeImage>;
   /** Quantity of order items in the order */
   quantity: Scalars['Int']['output'];
   /** Total price for the quantity of order item */
@@ -2103,6 +2106,7 @@ export type TypeProduct = {
   images: Array<TypeImage>;
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
+  isVisible: Scalars['Boolean']['output'];
   /** Product link */
   link: Scalars['String']['output'];
   /** Product image by params */
@@ -2819,6 +2823,7 @@ export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & T
   images: Array<TypeImage>;
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
+  isVisible: Scalars['Boolean']['output'];
   /** Product link */
   link: Scalars['String']['output'];
   /** Product image by params */
@@ -3183,6 +3188,7 @@ export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug
   images: Array<TypeImage>;
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
+  isVisible: Scalars['Boolean']['output'];
   /** Product link */
   link: Scalars['String']['output'];
   /** Product image by params */

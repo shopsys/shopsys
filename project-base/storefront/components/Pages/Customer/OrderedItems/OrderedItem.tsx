@@ -45,11 +45,11 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
             <div className="flex flex-col vl:flex-row vl:justify-between vl:items-start gap-4">
                 <Image
                     priority
-                    alt={orderedItem.productMainImage?.name || ''}
+                    alt={orderedItem.product?.mainImage?.name || ''}
                     className="max-h-full object-contain h-[80px] w-[80px]"
                     height={80}
                     sizes="(max-width: 768px) 100vw, 50vw"
-                    src={orderedItem.productMainImage?.url}
+                    src={orderedItem.product?.mainImage?.url}
                     width={80}
                 />
                 <div className="flex flex-col gap-1">
