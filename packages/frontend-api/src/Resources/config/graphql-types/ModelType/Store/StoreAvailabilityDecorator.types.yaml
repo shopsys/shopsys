@@ -1,0 +1,15 @@
+StoreAvailabilityDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Represents an availability in an individual store"
+        fields:
+            availabilityInformation:
+                type: "String!"
+                description: "Detailed information about availability"
+            availabilityStatus:
+                type: "AvailabilityStatusEnum!"
+                description: "Availability status in a format suitable for usage in the code"
+            store:
+                type: "Store"
+                description: "Store"

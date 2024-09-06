@@ -49,4 +49,4 @@ overblog_dataloader:
             batch_load_fn: "@App\\FrontendApi\\Model\\Category\\ReadyCategorySeoMixBatchLoader:loadByCategoryIds"
         storesBatchLoader:
             alias: "stores_batch_loader"
-            batch_load_fn: "@App\\FrontendApi\\Model\\Store\\StoresBatchLoader:loadByIds"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Store\\StoresBatchLoader:loadByIds"
