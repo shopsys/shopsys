@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Model\Store;
+namespace Shopsys\FrontendApiBundle\Model\Store;
 
 use GraphQL\Executor\Promise\Promise;
 use GraphQL\Executor\Promise\PromiseAdapter;
@@ -15,8 +15,8 @@ class StoresBatchLoader
      * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
      */
     public function __construct(
-        private readonly PromiseAdapter $promiseAdapter,
-        private readonly StoreFacade $storeFacade,
+        protected readonly PromiseAdapter $promiseAdapter,
+        protected readonly StoreFacade $storeFacade,
     ) {
     }
 

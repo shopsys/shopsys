@@ -6,3 +6,5 @@ StoreConnection:
             totalCount:
                 type: "Int!"
                 description: "Total number of stores"
+    inherits:
+        - 'StoreConnectionDecorator'

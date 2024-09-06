@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\Store;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\Store;
 
 use App\Model\Transport\Transport;
 use Overblog\GraphQLBundle\Definition\Argument;
@@ -19,8 +19,8 @@ class StoresQuery extends AbstractQuery
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        private readonly StoreFacade $storeFacade,
-        private readonly Domain $domain,
+        protected readonly StoreFacade $storeFacade,
+        protected readonly Domain $domain,
     ) {
     }
 

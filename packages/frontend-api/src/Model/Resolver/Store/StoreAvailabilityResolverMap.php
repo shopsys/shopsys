@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\Store;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\Store;
 
 use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
@@ -13,7 +13,7 @@ class StoreAvailabilityResolverMap extends ResolverMap
      * @param \Overblog\DataLoader\DataLoaderInterface $storesBatchLoader
      */
     public function __construct(
-        private readonly DataLoaderInterface $storesBatchLoader,
+        protected readonly DataLoaderInterface $storesBatchLoader,
     ) {
     }
 

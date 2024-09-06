@@ -196,3 +196,9 @@ services:
         exclude: '../../Voter/Exception'
         resource: '../../Voter/'
         tags: [ 'security.voter' ]
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Store\StoreAvailabilityResolverMap:
+        arguments:
+            $storesBatchLoader: '@stores_batch_loader'
+        tags:
+            - { name: overblog_graphql.resolver_map, schema: default }
