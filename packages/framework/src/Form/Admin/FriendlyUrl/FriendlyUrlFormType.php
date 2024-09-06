@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Form\Admin;
+namespace Shopsys\FrameworkBundle\Form\Admin\FriendlyUrl;
 
-use App\Component\Router\FriendlyUrl\FriendlyUrlData;
-use App\Component\Router\FriendlyUrl\FriendlyUrlGridFactory;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlGridFactory;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Symfony\Component\Form\AbstractType;
@@ -22,7 +22,7 @@ class FriendlyUrlFormType extends AbstractType
     /**
      * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
      */
-    public function __construct(private DateTimeFormatterExtension $dateTimeFormatterExtension)
+    public function __construct(private readonly DateTimeFormatterExtension $dateTimeFormatterExtension)
     {
     }
 
@@ -30,9 +30,9 @@ class FriendlyUrlFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /** @var \App\Component\Router\FriendlyUrl\FriendlyUrlData $friendlyUrlData */
+        /** @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData $friendlyUrlData */
         $friendlyUrlData = $options['data'];
 
         $builder
@@ -103,7 +103,7 @@ class FriendlyUrlFormType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => FriendlyUrlData::class,
@@ -115,7 +115,7 @@ class FriendlyUrlFormType extends AbstractType
     }
 
     /**
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlData $friendlyUrlData
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData $friendlyUrlData
      * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      */
     public function checkRedirectValidity(FriendlyUrlData $friendlyUrlData, ExecutionContextInterface $context): void

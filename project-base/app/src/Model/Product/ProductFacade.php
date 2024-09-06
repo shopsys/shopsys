@@ -36,27 +36,25 @@ use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
  * @property \App\Model\Product\ProductRepository $productRepository
  * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
  * @property \App\Component\Image\ImageFacade $imageFacade
- * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
- * @property \App\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
- * @property \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
+ * @property \App\Model\Product\ProductFactory $productFactory
+ * @property \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
  * @method \App\Model\Product\Product getById(int $productId)
+ * @method \App\Model\Product\Product create(\App\Model\Product\ProductData $productData, string $priority = \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum::REGULAR)
+ * @method setAdditionalDataAfterCreate(\App\Model\Product\Product $product, \App\Model\Product\ProductData $productData)
  * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[][] getAllProductSellingPricesIndexedByDomainId(\App\Model\Product\Product $product)
  * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[] getAllProductSellingPricesByDomainId(\App\Model\Product\Product $product, int $domainId)
- * @method refreshProductManualInputPrices(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Component\Money\Money[]|null[] $manualInputPrices)
  * @method createProductVisibilities(\App\Model\Product\Product $product)
  * @method \App\Model\Product\Product getOneByCatnumExcludeMainVariants(string $productCatnum)
  * @method \App\Model\Product\Product getByUuid(string $uuid)
- * @method \App\Model\Product\Product create(\App\Model\Product\ProductData $productData, string $priority = \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum::REGULAR)
- * @property \App\Model\Product\ProductFactory $productFactory
- * @method setAdditionalDataAfterCreate(\App\Model\Product\Product $product, \App\Model\Product\ProductData $productData)
  * @method editProductStockRelation(\App\Model\Product\ProductData $productData, \App\Model\Product\Product $product)
- * @property \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
  * @method \App\Model\Product\Product[] getAllByIds(int[] $ids)
+ * @method createFriendlyUrlsWhenRenamed(\App\Model\Product\Product $product, array $originalNames)
+ * @method array getChangedNamesByLocale(\App\Model\Product\Product $product, array $originalNames)
  */
 class ProductFacade extends BaseProductFacade
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $em
+     * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
@@ -64,14 +62,14 @@ class ProductFacade extends BaseProductFacade
      * @param \App\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade $productManualInputPriceFacade
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
      * @param \App\Model\Product\ProductFactory $productFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactory $productAccessoryFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactory $productCategoryDomainFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactory $productParameterValueFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactory $productVisibilityFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface $productAccessoryFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactoryInterface $productCategoryDomainFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactoryInterface $productParameterValueFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface $productVisibilityFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade

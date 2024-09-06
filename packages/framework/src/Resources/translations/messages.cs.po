@@ -43,6 +43,12 @@ msgstr ""
 msgid "0"
 msgstr ""
 
+msgid "301 (Permanent redirect)"
+msgstr "301 (Trvalé přesměrování)"
+
+msgid "302 (Temporary redirect)"
+msgstr "302 (Dočasné přesměrování)"
+
 msgid "<a href=\"{{ url }}\">Default unit is not set.</a>"
 msgstr "<a href=\"{{ url }}\">Není nastavena výchozí jednotka.</a>"
 
@@ -559,6 +565,9 @@ msgstr "Kategorie <strong>{{ name }}</strong> byla smazána"
 msgid "Category guidepost on main page"
 msgstr "Rozcestník kategorií na titulní stránce"
 
+msgid "Category with prefilled filters"
+msgstr "Kategorie s předvyplněnými filtry"
+
 msgid "Change for"
 msgstr "Změna pro"
 
@@ -585,6 +594,9 @@ msgstr "Vyberte náhradu"
 
 msgid "Choose the article that provides information about how user consent is obtained, managed, and withdrawn on this domain."
 msgstr "Vyberte článek, který poskytuje informace o tom, jak je na této doméně získáván, spravován a odvoláván souhlas se správou osobních údajů."
+
+msgid "Choose type of redirect"
+msgstr "Vyberte typ přesměrování"
 
 msgid "Chosen payment name"
 msgstr "Název zvolené platby"
@@ -1165,6 +1177,9 @@ msgstr "Opravdu chcete odstranit tuto doručovací adresu?"
 msgid "Do you really want to remove this flag?"
 msgstr "Opravdu chcete odstranit tento příznak?"
 
+msgid "Do you really want to remove this friendly URL? Removing friendly URL may have bad impact to SEO performance."
+msgstr "Opravdu si přejete odebrat tuto hezkou URL? Odstranění hezké URL může mít špatný vliv na SEO."
+
 msgid "Do you really want to remove this holiday / internal day?"
 msgstr "Opravdu si přejete odstranit tento svátek / interní den?"
 
@@ -1516,6 +1531,9 @@ msgstr "Zadaný zákazník nebyl nalezen, prosím překontrolujte zadané údaje
 msgid "Entity"
 msgstr "Entita"
 
+msgid "Entity ID"
+msgstr "ID entity"
+
 msgid "Entity identifier"
 msgstr "Identifikárot entity"
 
@@ -1753,6 +1771,9 @@ msgstr "Frekvence"
 msgid "Friday"
 msgstr "Pátek"
 
+msgid "Friendly URL \"%slug%\" was removed."
+msgstr "Hezká URL \"%slug%\" byla smazána."
+
 msgid "From"
 msgstr "Od"
 
@@ -1965,6 +1986,9 @@ msgstr "Poslední dokončení"
 
 msgid "Last login"
 msgstr "Poslední přihlášení"
+
+msgid "Last modification"
+msgstr "Poslední modifikace"
 
 msgid "Last name"
 msgstr "Příjmení"
@@ -2914,6 +2938,12 @@ msgstr ""
 msgid "Rate can't be modified. It is necessary to create new rate, remove existing one and replace it with new one."
 msgstr "Výši sazby nelze upravit. Je třeba vytvořit novou sazbu a starou odstranit s nahrazením za novou."
 
+msgid "Redirect target"
+msgstr "Cíl přesměrování"
+
+msgid "Redirect type"
+msgstr "Typ přesměrování"
+
 msgid "Refund amount"
 msgstr "Refundovat částku"
 
@@ -3067,6 +3097,9 @@ msgstr "Vyhledat dle názvu, katalogového čísla nebo partno produktu..."
 msgid "Search by name..."
 msgstr "Vyhledat dle názvu..."
 
+msgid "Search by slug..."
+msgstr "Vyhledat podle slugu..."
+
 msgid "Search in transfers"
 msgstr "Hledání v přenosech"
 
@@ -3087,6 +3120,9 @@ msgstr "Vyhledávání hledá v názvu. Je možné používat operátory * a ?."
 
 msgid "Searching searches in order number, registered customer email, customer's email in order, customer's last name and company name. It is possible to use wildcards * and ?."
 msgstr "Vyhledávání hledá v číslu objednávky, e-mailu registrovaného zákazníka, e-mailu zákazníka v objednávce, příjmení zákazníka a názvu firmy. Je možné používat operátory * a ?."
+
+msgid "Searching searches in slugs. It is possible to use wildcards * and ?."
+msgstr "Vyhledávání hledá ve sluzích. Je možné používat operátory * a ?."
 
 msgid "Select new value"
 msgstr "Zvolte novou hodnotu"
@@ -3291,6 +3327,9 @@ msgstr "Byla upravena stránka slideru <strong><a href=\"{{ url }}\">{{ name }}<
 
 msgid "Slider pages"
 msgstr "Stránky slideru"
+
+msgid "Slug"
+msgstr ""
 
 msgid "Some data may not be localized or serve the technical administrators of the e-shop."
 msgstr "Některé údaje nemusí být lokalizovány nebo slouží technickým správcům e-shopu."
@@ -3637,6 +3676,9 @@ msgstr "Přehled jednotek"
 msgid "Unsupported two factor authentication method"
 msgstr "Nepodporovaná metoda dvoufaktorového ověření"
 
+msgid "Unused friendly URL list"
+msgstr "Seznam nepoužívaných hezkých URL"
+
 msgid "Unused friendly URLs - full"
 msgstr "Seznam nepoužívaných hezkých URL - vše"
 
@@ -3882,6 +3924,9 @@ msgstr "Musíte nejdřív nějakou platbu vytvořit."
 
 msgid "You have to create some shipping first."
 msgstr "Musíte nejdřív nějakou dopravu vytvořit."
+
+msgid "You have to set redirect code for redirect."
+msgstr "Pro nastavení přesměrování musíte zadat typ přesměrování."
 
 msgid "You have unsaved changes!"
 msgstr "Máte neuložené změny!"

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Component\Router\FriendlyUrl;
+namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
@@ -12,17 +12,17 @@ use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 
 class FriendlyUrlGridFactory implements GridFactoryInterface
 {
-    private QuickSearchFormData $quickSearchFormData;
+    protected QuickSearchFormData $quickSearchFormData;
 
     /**
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      */
     public function __construct(
-        private FriendlyUrlFacade $friendlyUrlFacade,
-        private AdminDomainTabsFacade $adminDomainTabsFacade,
-        private GridFactory $gridFactory,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+        protected readonly GridFactory $gridFactory,
     ) {
         $this->quickSearchFormData = new QuickSearchFormData();
     }

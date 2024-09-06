@@ -81,7 +81,6 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $categorySeoMenu->addChild('new_filters', ['route' => 'admin_categoryseo_newfilters', 'label' => t('Extended SEO category - filters'), 'display' => false]);
         $categorySeoMenu->addChild('new_combinations', ['route' => 'admin_categoryseo_newcombinations', 'label' => t('Extended SEO category - combinations'), 'display' => false]);
         $categorySeoMenu->addChild('new_combination', ['route' => 'admin_categoryseo_readycombination', 'label' => t('Extended SEO category - set combinations with SEO values'), 'display' => false]);
-        $seoMenu->addChild('unusedFriendlyUrlList', ['route' => 'admin_unused_friendly_url_list', 'label' => t('Unused friendly URL list')]);
 
         $listMenu = $settingsMenu->getChild('lists');
         $listMenu->removeChild('availabilities');

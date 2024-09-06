@@ -43,6 +43,12 @@ msgstr ""
 msgid "0"
 msgstr ""
 
+msgid "301 (Permanent redirect)"
+msgstr ""
+
+msgid "302 (Temporary redirect)"
+msgstr ""
+
 msgid "<a href=\"{{ url }}\">Default unit is not set.</a>"
 msgstr ""
 
@@ -559,6 +565,9 @@ msgstr ""
 msgid "Category guidepost on main page"
 msgstr ""
 
+msgid "Category with prefilled filters"
+msgstr ""
+
 msgid "Change for"
 msgstr ""
 
@@ -584,6 +593,9 @@ msgid "Choose replacement"
 msgstr ""
 
 msgid "Choose the article that provides information about how user consent is obtained, managed, and withdrawn on this domain."
+msgstr ""
+
+msgid "Choose type of redirect"
 msgstr ""
 
 msgid "Chosen payment name"
@@ -1165,6 +1177,9 @@ msgstr ""
 msgid "Do you really want to remove this flag?"
 msgstr ""
 
+msgid "Do you really want to remove this friendly URL? Removing friendly URL may have bad impact to SEO performance."
+msgstr ""
+
 msgid "Do you really want to remove this holiday / internal day?"
 msgstr ""
 
@@ -1516,6 +1531,9 @@ msgstr ""
 msgid "Entity"
 msgstr ""
 
+msgid "Entity ID"
+msgstr ""
+
 msgid "Entity identifier"
 msgstr ""
 
@@ -1753,6 +1771,9 @@ msgstr ""
 msgid "Friday"
 msgstr ""
 
+msgid "Friendly URL \"%slug%\" was removed."
+msgstr ""
+
 msgid "From"
 msgstr ""
 
@@ -1964,6 +1985,9 @@ msgid "Last finished at"
 msgstr ""
 
 msgid "Last login"
+msgstr ""
+
+msgid "Last modification"
 msgstr ""
 
 msgid "Last name"
@@ -2914,6 +2938,12 @@ msgstr ""
 msgid "Rate can't be modified. It is necessary to create new rate, remove existing one and replace it with new one."
 msgstr ""
 
+msgid "Redirect target"
+msgstr ""
+
+msgid "Redirect type"
+msgstr ""
+
 msgid "Refund amount"
 msgstr ""
 
@@ -3067,6 +3097,9 @@ msgstr ""
 msgid "Search by name..."
 msgstr ""
 
+msgid "Search by slug..."
+msgstr ""
+
 msgid "Search in transfers"
 msgstr ""
 
@@ -3086,6 +3119,9 @@ msgid "Searching searches in name. It is possible to use wildcards * and ?."
 msgstr ""
 
 msgid "Searching searches in order number, registered customer email, customer's email in order, customer's last name and company name. It is possible to use wildcards * and ?."
+msgstr ""
+
+msgid "Searching searches in slugs. It is possible to use wildcards * and ?."
 msgstr ""
 
 msgid "Select new value"
@@ -3290,6 +3326,9 @@ msgid "Slider page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modifie
 msgstr ""
 
 msgid "Slider pages"
+msgstr ""
+
+msgid "Slug"
 msgstr ""
 
 msgid "Some data may not be localized or serve the technical administrators of the e-shop."
@@ -3637,6 +3676,9 @@ msgstr ""
 msgid "Unsupported two factor authentication method"
 msgstr ""
 
+msgid "Unused friendly URL list"
+msgstr ""
+
 msgid "Unused friendly URLs - full"
 msgstr ""
 
@@ -3881,6 +3923,9 @@ msgid "You have to create some payment first."
 msgstr ""
 
 msgid "You have to create some shipping first."
+msgstr ""
+
+msgid "You have to set redirect code for redirect."
 msgstr ""
 
 msgid "You have unsaved changes!"

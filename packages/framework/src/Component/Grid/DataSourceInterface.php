@@ -26,10 +26,10 @@ interface DataSourceInterface
     ): PaginationResult;
 
     /**
-     * @param int $rowId
+     * @param int|string $rowId
      * @return array
      */
-    public function getOneRow(int $rowId): array;
+    public function getOneRow(int|string $rowId): array;
 
     /**
      * @return int

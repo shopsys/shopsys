@@ -413,6 +413,11 @@ services:
     Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory:
         arguments: ['%shopsys.router.friendly_url_router_filepath%']
 
+    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\NormalizeUrlTrailingSlashListener:
+        public: true
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+
     Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory:
         arguments:
             $localeRoutersResourcesFilepathMask: '%shopsys.router.locale_router_filepath_mask%'

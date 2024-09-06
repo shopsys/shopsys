@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\CartDataFixture;
-use App\DataFixtures\Demo\VatDataFixture;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class CompanyFieldsAreValidatedTest extends GraphQlTestCase
@@ -44,11 +42,6 @@ class CompanyFieldsAreValidatedTest extends GraphQlTestCase
      */
     private function getMutation(): string
     {
-        $domainId = $this->domain->getId();
-        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId, Vat::class);
-
-        $product1UnitPrice = $this->getMutationPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh);
-
         return '
             mutation {
                 CreateOrder(

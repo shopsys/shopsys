@@ -24,10 +24,10 @@ class QueryBuilderWithRowManipulatorDataSource extends QueryBuilderDataSource
     }
 
     /**
-     * @param int $rowId
+     * @param int|string $rowId
      * @return array
      */
-    public function getOneRow(int $rowId): array
+    public function getOneRow(int|string $rowId): array
     {
         $row = parent::getOneRow($rowId);
 

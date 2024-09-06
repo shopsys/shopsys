@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Filter;
 
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
@@ -115,7 +116,7 @@ class FlagFilterChoiceRepository
             ->from(Flag::class, 'f')
             ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
             ->andWhere($flagsQueryBuilder->expr()->exists($clonedProductsQueryBuilder))
-            ->orderBy('ft.name', 'asc')
+            ->orderBy(OrderByCollationHelper::createOrderByForLocale('ft.name', $locale), 'asc')
             ->setParameter('locale', $locale);
 
         foreach ($clonedProductsQueryBuilder->getParameters() as $parameter) {

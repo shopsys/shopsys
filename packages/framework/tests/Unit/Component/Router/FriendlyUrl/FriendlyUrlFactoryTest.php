@@ -41,9 +41,9 @@ class FriendlyUrlFactoryTest extends TestCase
             $this->assertSame($routeName, $friendlyUrl->getRouteName());
 
             if ($friendlyUrl->getDomainId() === 1) {
-                $this->assertSame($namesByLocale['cs'] . '/', $friendlyUrl->getSlug());
+                $this->assertSame($namesByLocale['cs'], $friendlyUrl->getSlug());
             } elseif ($friendlyUrl->getDomainId() === 2) {
-                $this->assertSame($namesByLocale['en'] . '/', $friendlyUrl->getSlug());
+                $this->assertSame($namesByLocale['en'], $friendlyUrl->getSlug());
             }
         }
     }

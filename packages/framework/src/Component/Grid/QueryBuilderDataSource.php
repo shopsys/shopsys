@@ -48,10 +48,10 @@ class QueryBuilderDataSource implements DataSourceInterface
     }
 
     /**
-     * @param int $rowId
+     * @param int|string $rowId
      * @return array
      */
-    public function getOneRow(int $rowId): array
+    public function getOneRow(int|string $rowId): array
     {
         $queryBuilder = clone $this->queryBuilder;
         $this->prepareQueryWithOneRow($queryBuilder, $rowId);
@@ -91,9 +91,9 @@ class QueryBuilderDataSource implements DataSourceInterface
 
     /**
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
-     * @param int $rowId
+     * @param int|string $rowId
      */
-    protected function prepareQueryWithOneRow(QueryBuilder $queryBuilder, int $rowId): void
+    protected function prepareQueryWithOneRow(QueryBuilder $queryBuilder, int|string $rowId): void
     {
         $queryBuilder
             ->andWhere($this->rowIdSourceColumnName . ' = :rowId')
