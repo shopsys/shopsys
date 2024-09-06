@@ -1,12 +1,29 @@
-import { GoogleMapSingleMarker } from './GoogleMapSingleMarker';
+import { GoogleMapMarkerIcon } from 'components/Basic/Icon/GoogleMapMarkerIcon';
 import { AnyProps, PointFeature } from 'supercluster';
+import { twJoin } from 'tailwind-merge';
 
 const ClusterMarker: FC = ({ children }) => (
-    <div
-        className={`absolute -translate-x-1/2 -translate-y-1/2 flex justify-center items-center w-12 h-12
-          bg-white border-8 border-black border-opacity-40 rounded-full font-bold`}
-    >
-        {children}
+    <div className="absolute -translate-x-1/2 -translate-y-full w-6 h-[30px] text-backgroundBrand">
+        <GoogleMapMarkerIcon className={twJoin('w-6 h-[30px]')} />
+
+        <div className="absolute inset-0 flex pt-1 justify-center text-textInverted text-xs font-bold">{children}</div>
+    </div>
+);
+
+const SingleMarker: FC<{ onClick: () => void; isActive: boolean; isDetail?: boolean }> = ({
+    isActive,
+    isDetail,
+    onClick,
+}) => (
+    <div className="absolute -translate-x-1/2 -translate-y-full" onClick={onClick}>
+        <GoogleMapMarkerIcon
+            isSingle
+            className={twJoin(
+                'w-5 h-[26px] text-backgroundBrand',
+                isActive && 'origin-bottom scale-125',
+                isDetail ? 'cursor-default' : 'cursor-pointer',
+            )}
+        />
     </div>
 );
 
@@ -30,11 +47,5 @@ export const GoogleMapMarker: FC<GoogleMapMarkerProps> = ({
         return <ClusterMarker>{pointCount}</ClusterMarker>;
     }
 
-    return (
-        <GoogleMapSingleMarker
-            isActive={isActive}
-            isDetail={isDetail}
-            onClick={() => onMarkerClicked(markerIdentifier)}
-        />
-    );
+    return <SingleMarker isActive={isActive} isDetail={isDetail} onClick={() => onMarkerClicked(markerIdentifier)} />;
 };
