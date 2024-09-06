@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Store;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
 use Shopsys\FrameworkBundle\Model\Store\Exception\StoreByUuidNotFoundException;
 use Shopsys\FrameworkBundle\Model\Store\Exception\StoreNotFoundException;
 
@@ -67,13 +68,27 @@ class StoreRepository
 
     /**
      * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Store\StoresFilterOptions|null $storesFilterOptions
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getStoresByDomainIdQueryBuilder(int $domainId): QueryBuilder
-    {
-        return $this->getAllStoresQueryBuilder()
+    public function getStoresByDomainIdQueryBuilder(
+        int $domainId,
+        ?StoresFilterOptions $storesFilterOptions = null,
+    ): QueryBuilder {
+        $queryBuilder = $this->getAllStoresQueryBuilder()
             ->andWhere('s.domainId = :domainId')
             ->setParameter('domainId', $domainId);
+
+        if ($storesFilterOptions !== null) {
+            if ($storesFilterOptions->getSearchText() !== null) {
+                $queryBuilder
+                    ->andWhere('(normalized(s.city) LIKE normalized(:searchText) OR normalized(s.postcode) LIKE normalized(:searchText))')
+                    ->setParameter('searchText', DatabaseSearching::getFullTextLikeSearchString($storesFilterOptions->getSearchText()))
+                ;
+            }
+        }
+
+        return $queryBuilder;
     }
 
     /**
@@ -95,11 +110,16 @@ class StoreRepository
      * @param int $domainId
      * @param int|null $limit
      * @param int|null $offset
+     * @param \Shopsys\FrameworkBundle\Model\Store\StoresFilterOptions|null $storesFilterOptions
      * @return \Shopsys\FrameworkBundle\Model\Store\Store[]
      */
-    public function getStoresByDomainId(int $domainId, ?int $limit = null, ?int $offset = null): array
-    {
-        $queryBuilder = $this->getStoresByDomainIdQueryBuilder($domainId);
+    public function getStoresByDomainId(
+        int $domainId,
+        ?int $limit = null,
+        ?int $offset = null,
+        ?StoresFilterOptions $storesFilterOptions = null,
+    ): array {
+        $queryBuilder = $this->getStoresByDomainIdQueryBuilder($domainId, $storesFilterOptions);
 
         if ($limit !== null) {
             $queryBuilder->setMaxResults($limit);
@@ -123,11 +143,12 @@ class StoreRepository
 
     /**
      * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Store\StoresFilterOptions|null $storesFilterOptions
      * @return int
      */
-    public function getStoresCountByDomainId(int $domainId): int
+    public function getStoresCountByDomainId(int $domainId, ?StoresFilterOptions $storesFilterOptions): int
     {
-        $queryBuilder = $this->getStoresByDomainIdQueryBuilder($domainId)
+        $queryBuilder = $this->getStoresByDomainIdQueryBuilder($domainId, $storesFilterOptions)
             ->resetDQLPart('orderBy')
             ->select('COUNT(s)');
 

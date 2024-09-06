@@ -2,7 +2,7 @@ import { GoogleMapMarker } from './GoogleMapMarker';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import GoogleMapReact from 'google-map-react';
 import getConfig from 'next/config';
-import { useEffect, useMemo, useState } from 'react';
+import {useMemo, useRef, useState} from 'react';
 import { PointFeature } from 'supercluster';
 import { MapMarker, MapMarkerNullable } from 'types/map';
 import useSupercluster from 'use-supercluster';
@@ -14,7 +14,6 @@ type GoogleMapProps = {
     markers?: MapMarkerNullable[];
     activeMarkerHandler?: (id: string) => void;
     isDetail?: boolean;
-    closeMarkers?: boolean;
 };
 
 type MarkerProperties = {
@@ -43,7 +42,6 @@ export const GoogleMap: FC<GoogleMapProps> = ({
     markers,
     activeMarkerHandler,
     isDetail,
-    closeMarkers,
 }) => {
     const { publicRuntimeConfig } = getConfig();
     const { mapSetting } = useDomainConfig();
@@ -52,6 +50,7 @@ export const GoogleMap: FC<GoogleMapProps> = ({
     const [activeMarkerIdentifier, setActiveMarkerIdentifier] = useState<string>('');
     const [zoom, setZoom] = useState<number>(defaultZoom ?? mapSetting.zoom);
     const [bounds, setBounds] = useState<GeoJSON.BBox>();
+    const mapRef = useRef<any>(null);
 
     const markersClusterConfig: PointFeature<MarkerProperties>[] = useMemo(() => {
         const validMarkers = (markers?.filter((marker) => marker.latitude !== null && marker.longitude !== null) ??
@@ -60,7 +59,7 @@ export const GoogleMap: FC<GoogleMapProps> = ({
         return validMarkers.map(markerMapper);
     }, [markers]);
 
-    const { clusters } = useSupercluster({
+    const { clusters, supercluster } = useSupercluster({
         points: markersClusterConfig,
         zoom,
         bounds,
@@ -75,11 +74,29 @@ export const GoogleMap: FC<GoogleMapProps> = ({
         }
     };
 
-    useEffect(() => {
-        if (closeMarkers) {
-            setActiveMarkerIdentifier('');
+    const handleClusterClick = (cluster: any) => {
+        const { cluster_id, point_count } = cluster.properties;
+
+        if (supercluster && cluster_id) {
+            const expansionZoom = Math.min(
+                supercluster.getClusterExpansionZoom(cluster_id),
+                20 // Max zoom level
+            );
+
+            const markersInCluster = supercluster.getLeaves(cluster_id, point_count); // Get all markers in this cluster
+
+            const latLngBounds = new google.maps.LatLngBounds();
+            markersInCluster.forEach(marker => {
+                latLngBounds.extend({
+                    lat: marker.geometry.coordinates[1],
+                    lng: marker.geometry.coordinates[0],
+                });
+            });
+
+            setZoom(expansionZoom); // Set the zoom level to zoom into the cluster
+            mapRef.current?.fitBounds(latLngBounds); // Adjust map bounds to fit all markers
         }
-    }, [closeMarkers]);
+    };
 
     return (
         <div className="w-full">
@@ -87,6 +104,7 @@ export const GoogleMap: FC<GoogleMapProps> = ({
                 bootstrapURLKeys={{ key: publicRuntimeConfig.googleMapApiKey }}
                 defaultCenter={{ lat: defaultLatitude, lng: defaultLongitude }}
                 defaultZoom={defaultZoom ?? mapSetting.zoom}
+                ref={mapRef}
                 options={{
                     disableDoubleClickZoom: true,
                     fullscreenControl: false,
@@ -111,6 +129,7 @@ export const GoogleMap: FC<GoogleMapProps> = ({
                             activeMarkerIdentifier={activeMarkerIdentifier}
                             cluster={cluster}
                             isDetail={isDetail}
+                            onClusterClicked={handleClusterClick}
                             onMarkerClicked={selectMarkerHandler}
                             {...coordinates}
                         />

@@ -275,6 +275,11 @@ QueryDecorator:
                 resolve: "@=query('storesQuery', args)"
                 complexity: "@=dynamicPaginationComplexity(args)"
                 description: "Returns list of stores that can be paginated using `first`, `last`, `before` and `after` keywords"
+                args:
+                    searchText:
+                        type: "String"
+                        defaultValue: null
+                        description: "Search for city or post code"
             store:
                 type: 'Store'
                 resolve: "@=query('storeQuery', args['uuid'], args['urlSlug'])"

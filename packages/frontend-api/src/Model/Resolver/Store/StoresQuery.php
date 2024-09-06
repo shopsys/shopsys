@@ -9,6 +9,7 @@ use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
+use Shopsys\FrameworkBundle\Model\Store\StoresFilterOptions;
 use Shopsys\FrontendApiBundle\Component\Validation\PageSizeValidator;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
@@ -33,11 +34,18 @@ class StoresQuery extends AbstractQuery
         PageSizeValidator::checkMaxPageSize($argument);
         $domainId = $this->domain->getId();
 
-        $paginator = new Paginator(function ($offset, $limit) use ($domainId) {
-            return $this->storeFacade->getStoresByDomainId($domainId, $limit, $offset);
+        /** @var string|null $searchText */
+        $searchText = $argument->offsetGet('searchText');
+
+        $filterOptions = new StoresFilterOptions(
+            searchText: $searchText,
+        );
+
+        $paginator = new Paginator(function ($offset, $limit) use ($domainId, $filterOptions) {
+            return $this->storeFacade->getStoresByDomainId($domainId, $limit, $offset, $filterOptions);
         });
 
-        $storesCount = $this->storeFacade->getStoresCountByDomainId($domainId);
+        $storesCount = $this->storeFacade->getStoresCountByDomainId($domainId, $filterOptions);
 
         return $paginator->auto($argument, $storesCount);
     }

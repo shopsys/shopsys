@@ -134,20 +134,26 @@ class StoreFacade
      * @param int $domainId
      * @param int|null $limit
      * @param int|null $offset
+     * @param \Shopsys\FrameworkBundle\Model\Store\StoresFilterOptions|null $storesFilterOptions
      * @return \Shopsys\FrameworkBundle\Model\Store\Store[]
      */
-    public function getStoresByDomainId(int $domainId, ?int $limit = null, ?int $offset = null): array
-    {
-        return $this->storeRepository->getStoresByDomainId($domainId, $limit, $offset);
+    public function getStoresByDomainId(
+        int $domainId,
+        ?int $limit = null,
+        ?int $offset = null,
+        ?StoresFilterOptions $storesFilterOptions = null,
+    ): array {
+        return $this->storeRepository->getStoresByDomainId($domainId, $limit, $offset, $storesFilterOptions);
     }
 
     /**
      * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Store\StoresFilterOptions|null $storesFilterOptions
      * @return int
      */
-    public function getStoresCountByDomainId(int $domainId): int
+    public function getStoresCountByDomainId(int $domainId, ?StoresFilterOptions $storesFilterOptions = null): int
     {
-        return $this->storeRepository->getStoresCountByDomainId($domainId);
+        return $this->storeRepository->getStoresCountByDomainId($domainId, $storesFilterOptions);
     }
 
     /**

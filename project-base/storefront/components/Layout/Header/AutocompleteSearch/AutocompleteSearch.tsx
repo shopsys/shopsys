@@ -1,5 +1,5 @@
 import { AUTOCOMPLETE_CATEGORY_LIMIT, AUTOCOMPLETE_PRODUCT_LIMIT, MINIMAL_SEARCH_QUERY_LENGTH } from './constants';
-import { SearchInput } from 'components/Forms/TextInput/SearchInput';
+import { SearchInput } from 'components/Layout/Header/AutocompleteSearch/SearchInput';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { AnimatePresence } from 'framer-motion';
 import {
