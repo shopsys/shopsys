@@ -45,4 +45,5 @@ twig:
         - 'Admin/Form/productsFormTheme.html.twig'
     globals:
         globalMultipleFormSetting: '@Shopsys\FrameworkBundle\Component\Form\MultipleFormSetting'
+        usersnapApiKey: '%env(USERSNAP_PROJECT_API_KEY)%'
     strict_variables: true

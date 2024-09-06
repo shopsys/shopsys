@@ -15,6 +15,18 @@
             };
         </script>
 
+        {% if usersnapApiKey is defined and usersnapApiKey is not empty %}
+            <script type="text/javascript">
+                window.onUsersnapLoad = function (api) {
+                    api.init();
+                };
+                const script = document.createElement('script');
+                script.defer = true;
+                script.src = 'https://widget.usersnap.com/global/load/{{ usersnapApiKey }}?onload=onUsersnapLoad';
+                document.getElementsByTagName('head')[0].appendChild(script);
+            </script>
+        {% endif %}
+
         <title>{{ 'Administration'|trans }} {% block title %}Shopsys Platform{% endblock %}</title>
     </head>
 
