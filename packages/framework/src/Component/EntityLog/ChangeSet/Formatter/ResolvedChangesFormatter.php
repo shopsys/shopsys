@@ -11,12 +11,14 @@ class ResolvedChangesFormatter
      * @param \Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter\ScalarDataTypeFormatter $scalarDataTypeFormatter
      * @param \Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter\MoneyDataTypeFormatter $moneyDataTypeFormatter
      * @param \Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter\DateTimeDataTypeFormatter $dateTimeDataTypeFormatter
+     * @param \Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter\BooleanDataTypeFormatter $booleanDataTypeFormatter
      */
     public function __construct(
         protected readonly CollectionChangesFormatter $collectionChangesFormatter,
         protected readonly ScalarDataTypeFormatter $scalarDataTypeFormatter,
         protected readonly MoneyDataTypeFormatter $moneyDataTypeFormatter,
         protected readonly DateTimeDataTypeFormatter $dateTimeDataTypeFormatter,
+        protected readonly BooleanDataTypeFormatter $booleanDataTypeFormatter,
     ) {
     }
 
@@ -59,6 +61,18 @@ class ResolvedChangesFormatter
                     [
                         '%attribute%' => $attribute,
                         '%changes%' => $this->moneyDataTypeFormatter->formatChanges($changes),
+                    ],
+                );
+
+                continue;
+            }
+
+            if ($changes['dataType'] === 'boolean') {
+                $formattedChanges[] = t(
+                    'Attribute %attribute% was changed %changes%',
+                    [
+                        '%attribute%' => $attribute,
+                        '%changes%' => $this->booleanDataTypeFormatter->formatChanges($changes),
                     ],
                 );
 

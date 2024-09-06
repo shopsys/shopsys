@@ -169,6 +169,19 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   class `\Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\ResolvedChanges` now implements `\JsonSerializable` interface to provide output for the `json_encode` function, update your implementation if you need to provide more than default data
 
+#### improved formatting of Entity logs ([#3410](https://github.com/shopsys/shopsys/pull/3410))
+
+-   method `\Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter\ResolvedChangesFormatter::__construct` changed its interface:
+    ```diff
+        public function __construct(
+            protected readonly CollectionChangesFormatter $collectionChangesFormatter,
+            protected readonly ScalarDataTypeFormatter $scalarDataTypeFormatter,
+            protected readonly MoneyDataTypeFormatter $moneyDataTypeFormatter,
+            protected readonly DateTimeDataTypeFormatter $dateTimeDataTypeFormatter,
+    +       protected readonly BooleanDataTypeFormatter $booleanDataTypeFormatter,
+        ) {
+    ```
+
 ## [Upgrade from v13.0.0 to v14.0.0](https://github.com/shopsys/shopsys/compare/v13.0.0...v14.0.0)
 
 #### add rounded price value to order process ([#2835](https://github.com/shopsys/shopsys/pull/2835))

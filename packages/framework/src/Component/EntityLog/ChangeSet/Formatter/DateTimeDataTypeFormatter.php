@@ -18,7 +18,7 @@ class DateTimeDataTypeFormatter
     }
 
     /**
-     * @param array $changes
+     * @param array{oldReadableValue: null, newReadableValue: null, oldValue: string, newValue: string} $changes
      * @return string
      */
     public function formatChanges(array $changes): string
