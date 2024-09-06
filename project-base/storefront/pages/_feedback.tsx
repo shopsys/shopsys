@@ -5,15 +5,15 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { usePersistStore } from 'store/usePersistStore';
+import { useCookiesStore } from 'store/useCookiesStore';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { ServerSidePropsType, initServerSideProps } from 'utils/serverSide/initServerSideProps';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 const Feedback: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
-    const updateUserSnapState = usePersistStore((s) => s.updateUserSnapState);
-    const isUserSnapEnabled = usePersistStore((s) => s.isUserSnapEnabled);
+    const setCookiesStoreState = useCookiesStore((state) => state.setCookiesStoreState);
+    const isUserSnapEnabled = useCookiesStore((store) => store.isUserSnapEnabled);
     const router = useRouter();
     const [isLoadingOverlayVisible, setIsLoadingOverlayVisible] = useState(false);
 
@@ -21,7 +21,7 @@ const Feedback: FC<ServerSidePropsType> = () => {
         if (isUserSnapEnabled) {
             setIsLoadingOverlayVisible(true);
             showSuccessMessage(t('The feedback tool has been successfully deactivated for you'));
-            updateUserSnapState({ isUserSnapEnabled: false });
+            setCookiesStoreState({ isUserSnapEnabled: false });
             setTimeout(() => {
                 router.reload();
             }, 2000);
@@ -29,7 +29,7 @@ const Feedback: FC<ServerSidePropsType> = () => {
             return;
         }
         showSuccessMessage(t('The feedback reporting tool has been successfully activated for you'));
-        updateUserSnapState({ isUserSnapEnabled: true });
+        setCookiesStoreState({ isUserSnapEnabled: true });
     };
 
     return (

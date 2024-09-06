@@ -7,11 +7,10 @@ import {
 } from './slices/createContactInformationSlice';
 import { PacketerySlice, createPacketerySlice, defaultPacketeryState } from './slices/createPacketerySlice';
 import { createUserSlice, defaultUserState, UserSlice } from './slices/createUserSlice';
-import { UserSnapSlice, createUserSnapSlice, defaultUserSnapState } from './slices/createUserSnapSlice';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-export type PersistStore = AuthLoadingSlice & UserSlice & ContactInformationSlice & PacketerySlice & UserSnapSlice;
+export type PersistStore = AuthLoadingSlice & UserSlice & ContactInformationSlice & PacketerySlice;
 
 const PERSIST_STORE_NAME = 'shopsys-platform-persist-store';
 
@@ -23,7 +22,6 @@ export const usePersistStore = create<PersistStore>()(
                 ...createUserSlice(...store),
                 ...createContactInformationSlice(...store),
                 ...createPacketerySlice(...store),
-                ...createUserSnapSlice(...store),
             }),
             PERSIST_STORE_NAME,
         ),
@@ -39,7 +37,6 @@ export const usePersistStore = create<PersistStore>()(
                         ...defaultUserState,
                         ...defaultContactInformationState,
                         ...defaultPacketeryState,
-                        ...defaultUserSnapState,
                     };
                 }
 
