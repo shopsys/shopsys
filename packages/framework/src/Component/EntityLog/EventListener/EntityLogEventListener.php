@@ -27,14 +27,16 @@ class EntityLogEventListener implements ResetInterface
     protected array $logs = [];
 
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Doctrine\ORM\EntityManagerInterface $entityLogEntityManager
+     * @param \Doctrine\ORM\EntityManagerInterface $applicationEntityManager
      * @param \Psr\Log\LoggerInterface $monolog
      * @param \Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableEntityConfigFactory $loggableEntityConfigFactory
      * @param \Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\ChangeSetResolver $changeSetResolver
      * @param \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade $entityLogFacade
      */
     public function __construct(
-        protected readonly EntityManagerInterface $em,
+        protected readonly EntityManagerInterface $entityLogEntityManager,
+        protected readonly EntityManagerInterface $applicationEntityManager,
         protected readonly LoggerInterface $monolog,
         protected readonly LoggableEntityConfigFactory $loggableEntityConfigFactory,
         protected readonly ChangeSetResolver $changeSetResolver,
@@ -55,14 +57,13 @@ class EntityLogEventListener implements ResetInterface
 
         foreach ($this->logs as $log) {
             $log->setLogCollectionNumber($logCollectionNumber);
-            $this->em->persist($log);
+            $this->entityLogEntityManager->persist($log);
         }
 
         $this->logs = [];
-        $this->em->flush();
+        $this->entityLogEntityManager->flush();
     }
 
-    //create
     /**
      * @param \Doctrine\ORM\Event\PostPersistEventArgs $args
      */
@@ -72,7 +73,6 @@ class EntityLogEventListener implements ResetInterface
         $this->log(EntityLogActionEnum::CREATE, $entity);
     }
 
-    //update
     /**
      * @param \Doctrine\ORM\Event\PostUpdateEventArgs $args
      */
@@ -82,7 +82,6 @@ class EntityLogEventListener implements ResetInterface
         $this->log(EntityLogActionEnum::UPDATE, $entity);
     }
 
-    //delete
     /**
      * @param \Doctrine\ORM\Event\PreRemoveEventArgs $args
      */
@@ -100,11 +99,11 @@ class EntityLogEventListener implements ResetInterface
     {
         $loggableSetup = $this->loggableEntityConfigFactory->getLoggableSetupByEntity($entity);
 
-        try {
-            if (!$loggableSetup->isLoggable()) {
-                return;
-            }
+        if (!$loggableSetup->isLoggable()) {
+            return;
+        }
 
+        try {
             $this->registerLog($entity, $loggableSetup, $action);
         } catch (Throwable $exception) {
             $this->monolog->error($exception->getMessage());
@@ -141,7 +140,7 @@ class EntityLogEventListener implements ResetInterface
     protected function resolveUpdateChangeSet(object $entity): array
     {
         $resolvedChangeSet = [];
-        $unitOfWork = $this->em->getUnitOfWork();
+        $unitOfWork = $this->applicationEntityManager->getUnitOfWork();
 
         $scheduledCollectionUpdates = $unitOfWork->getScheduledCollectionUpdates();
 

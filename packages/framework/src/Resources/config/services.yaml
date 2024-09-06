@@ -37,6 +37,14 @@ services:
             - '@doctrine.dbal.default_connection'
             - '@doctrine.orm.default_configuration'
 
+    doctrine.orm.entity_logging:
+        class: Doctrine\ORM\EntityManager
+        factory: [Doctrine\ORM\EntityManager, create]
+        public: true
+        arguments:
+            - '@doctrine.dbal.default_connection'
+            - '@doctrine.orm.default_configuration'
+
     doctrine.orm.entity_manager.abstract:
         synthetic: true
         public: true
@@ -1045,6 +1053,8 @@ services:
             $resettableServices: !tagged kernel.reset
 
     Shopsys\FrameworkBundle\Component\EntityLog\EventListener\EntityLogEventListener:
+        arguments:
+            $entityLogEntityManager: '@doctrine.orm.entity_logging'
         tags:
             - { name: doctrine.event_listener, event: postPersist, priority: 1 }
             - { name: doctrine.event_listener, event: postUpdate, priority: 1 }
