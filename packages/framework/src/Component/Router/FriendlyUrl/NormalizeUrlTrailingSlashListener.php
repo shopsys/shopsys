@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Component\Router\FriendlyUrl;
+namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
 use Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -16,7 +16,7 @@ class NormalizeUrlTrailingSlashListener
      * @param \Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter $router
      */
     public function __construct(
-        private readonly CurrentDomainRouter $router,
+        protected readonly CurrentDomainRouter $router,
     ) {
     }
 
@@ -46,14 +46,12 @@ class NormalizeUrlTrailingSlashListener
      * @param array $routerData
      * @param \Symfony\Component\HttpKernel\Event\ExceptionEvent $event
      */
-    private function setRedirectResponse(array $routerData, ExceptionEvent $event): void
+    protected function setRedirectResponse(array $routerData, ExceptionEvent $event): void
     {
-        // Filter parameters of redirect controller
         if (array_key_exists('_controller', $routerData) && $routerData['_controller'] === 'FrameworkBundle:Redirect:redirect') {
             unset($routerData['route'], $routerData['permanent']);
         }
 
-        // Filter route parameters
         $parameters = array_replace(
             $event->getRequest()->query->all(),
             array_filter(

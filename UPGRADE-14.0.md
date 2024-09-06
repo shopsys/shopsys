@@ -114,6 +114,23 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     ```
 -   see #project-base-diff to update your project
 
+#### moved most of the FriendlyUrl functionality from project-base to the framework ([#3320](https://github.com/shopsys/shopsys/pull/3320))
+
+-   99% of functionality has been moved; only functionality connected to ReadyCategorySeoMix is still kept in project-base, until SEO categories are moved to the framework
+-   for more information, see the [section about the features movement](#movement-of-features-from-project-base-to-packages)
+-   method `\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository::__construct` changed its interface:
+    ```diff
+        public function __construct(
+            protected readonly EntityManagerInterface $em,
+    +       protected readonly EntityNameResolver $entityNameResolver,
+        ) {
+    ```
+-   property `\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData::$id` has been removed, use `\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData::$entityId` instead
+-   method `\Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleDetailFriendlyUrlDataProvider::createFromIdAndName()` has been removed, use `\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactory::createFromIdAndName()` instead
+-   method `\Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryDetailFriendlyUrlDataProvider::createFromIdAndName()` has been removed, use `\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactory::createFromIdAndName()` instead
+-   method `\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade::removeFriendlyUrlsForAllDomains()` has been removed without a replacement
+-   see #project-base-diff to update your project
+
 ## [Upgrade from v13.0.0 to v14.0.0](https://github.com/shopsys/shopsys/compare/v13.0.0...v14.0.0)
 
 #### add rounded price value to order process ([#2835](https://github.com/shopsys/shopsys/pull/2835))

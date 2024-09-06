@@ -13,12 +13,6 @@ msgstr ""
 msgid "-- Select name of the transfer --"
 msgstr ""
 
-msgid "301 (Permanent redirect)"
-msgstr ""
-
-msgid "302 (Temporary redirect)"
-msgstr ""
-
 msgid "<strong><a href=\"{{ url }}\">Notification bar</a></strong> has been successfuly updated"
 msgstr ""
 
@@ -133,9 +127,6 @@ msgstr ""
 msgid "Apply to selected products"
 msgstr ""
 
-msgid "Article"
-msgstr ""
-
 msgid "Articles - full"
 msgstr ""
 
@@ -190,25 +181,16 @@ msgstr ""
 msgid "Billing address - name, last name, company, company number, tax number and billing address"
 msgstr ""
 
-msgid "Blog article"
-msgstr ""
-
 msgid "Blog article - full"
 msgstr ""
 
 msgid "Blog article - view"
 msgstr ""
 
-msgid "Blog category"
-msgstr ""
-
 msgid "Blog category - full"
 msgstr ""
 
 msgid "Blog category - view"
-msgstr ""
-
-msgid "Brand"
 msgstr ""
 
 msgid "Brand overview"
@@ -268,25 +250,16 @@ msgstr ""
 msgid "Categories transfer"
 msgstr ""
 
-msgid "Category"
-msgstr ""
-
 msgid "Category description"
 msgstr ""
 
 msgid "Category name"
 msgstr ""
 
-msgid "Category with prefilled filters"
-msgstr ""
-
 msgid "Center"
 msgstr ""
 
 msgid "Choose this category and continue"
-msgstr ""
-
-msgid "Choose type of redirect"
 msgstr ""
 
 msgid "Chosen payment name"
@@ -478,9 +451,6 @@ msgstr ""
 msgid "Do you really want to remove this flag?"
 msgstr ""
 
-msgid "Do you really want to remove this friendly URL? Removing friendly URL may have bad impact to SEO performance."
-msgstr ""
-
 msgid "Do you really want to remove this language constant translation?"
 msgstr ""
 
@@ -625,12 +595,6 @@ msgstr ""
 msgid "Entered code is not valid"
 msgstr ""
 
-msgid "Entity"
-msgstr ""
-
-msgid "Entity ID"
-msgstr ""
-
 msgid "Error messages"
 msgstr ""
 
@@ -727,9 +691,6 @@ msgstr ""
 msgid "Free transport and payment - view"
 msgstr ""
 
-msgid "Friendly URL \"%slug%\" was removed."
-msgstr ""
-
 msgid "From"
 msgstr ""
 
@@ -824,9 +785,6 @@ msgid "Language constants - full"
 msgstr ""
 
 msgid "Language constants - view"
-msgstr ""
-
-msgid "Last modification"
 msgstr ""
 
 msgid "Last name"
@@ -1240,9 +1198,6 @@ msgstr ""
 msgid "Privacy policy article setting - view"
 msgstr ""
 
-msgid "Product"
-msgstr ""
-
 msgid "Products - full"
 msgstr ""
 
@@ -1315,12 +1270,6 @@ msgstr ""
 msgid "RGB Hex"
 msgstr ""
 
-msgid "Redirect target"
-msgstr ""
-
-msgid "Redirect type"
-msgstr ""
-
 msgid "Registration"
 msgstr ""
 
@@ -1372,9 +1321,6 @@ msgstr ""
 msgid "SEO combination of category with ID {{ ReadyCategorySeoMixId }} has not been removed, because it was not found"
 msgstr ""
 
-msgid "SEO page"
-msgstr ""
-
 msgid "Sale"
 msgstr ""
 
@@ -1399,13 +1345,7 @@ msgstr "Search"
 msgid "Search by code..."
 msgstr ""
 
-msgid "Search by slug..."
-msgstr ""
-
 msgid "Search in transfers"
-msgstr ""
-
-msgid "Searching searches in slugs. It is possible to use wildcards * and ?."
 msgstr ""
 
 msgid "Selected administrator role group doesn't exist."
@@ -1450,16 +1390,10 @@ msgstr ""
 msgid "Slider items - view"
 msgstr ""
 
-msgid "Slug"
-msgstr ""
-
 msgid "Standard"
 msgstr ""
 
 msgid "Stocking"
-msgstr ""
-
-msgid "Store"
 msgstr ""
 
 msgid "Storefront queries cache has been cleaned."
@@ -1645,9 +1579,6 @@ msgstr ""
 msgid "Unsupported two factor authentication method"
 msgstr ""
 
-msgid "Unused friendly URL list"
-msgstr ""
-
 msgid "Unused friendly URLs - full"
 msgstr ""
 
@@ -1733,9 +1664,6 @@ msgid "You can upload following formats: PNG, JPG"
 msgstr ""
 
 msgid "You can upload following formats: PNG, JPG, GIF"
-msgstr ""
-
-msgid "You have to set redirect code for redirect."
 msgstr ""
 
 msgid "Youtube ID"

@@ -1063,3 +1063,8 @@ services:
         arguments:
             $transportDsn: '%env(MESSENGER_TRANSPORT_DSN)%'
             $messageBus: '@Shopsys\FrameworkBundle\Component\Messenger\MessageBusDecorator.inner'
+
+    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\NormalizeUrlTrailingSlashListener:
+        public: true
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }

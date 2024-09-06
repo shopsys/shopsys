@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Flag;
 
-use App\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagData;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade as BaseFlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFactory;
@@ -29,7 +29,7 @@ class FlagFacade extends BaseFlagFacade
      * @param \App\Model\Product\Flag\FlagRepository $flagRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFactory $flagFactory
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
     public function __construct(
         EntityManagerInterface $em,

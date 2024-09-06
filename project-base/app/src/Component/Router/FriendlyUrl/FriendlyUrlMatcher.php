@@ -85,7 +85,7 @@ class FriendlyUrlMatcher extends BaseFriendlyUrlMatcher
     }
 
     /**
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
      * @param array $matchedParameters
      * @return array
      */
@@ -108,7 +108,7 @@ class FriendlyUrlMatcher extends BaseFriendlyUrlMatcher
     }
 
     /**
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl $friendlyUrl
      * @param array $matchedParameters
      * @return array
      */

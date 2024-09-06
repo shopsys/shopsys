@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProviderInterface;
 
@@ -18,7 +17,7 @@ class FlagDetailFriendlyUrlDataProvider implements FriendlyUrlDataProviderInterf
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlDataFactory $friendlyUrlDataFactory
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactoryInterface $friendlyUrlDataFactory
      */
     public function __construct(
         private EntityManagerInterface $em,
@@ -28,7 +27,7 @@ class FlagDetailFriendlyUrlDataProvider implements FriendlyUrlDataProviderInterf
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \App\Component\Router\FriendlyUrl\FriendlyUrlData[]
+     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData[]
      */
     public function getFriendlyUrlData(DomainConfig $domainConfig): array
     {
@@ -48,7 +47,7 @@ class FlagDetailFriendlyUrlDataProvider implements FriendlyUrlDataProviderInterf
         $friendlyUrlsData = [];
 
         foreach ($scalarData as $data) {
-            $friendlyUrlsData[] = $this->createFromIdAndName($data['id'], $data['name']);
+            $friendlyUrlsData[] = $this->friendlyUrlDataFactory->createFromIdAndName($data['id'], $data['name']);
         }
 
         return $friendlyUrlsData;
@@ -60,20 +59,5 @@ class FlagDetailFriendlyUrlDataProvider implements FriendlyUrlDataProviderInterf
     public function getRouteName(): string
     {
         return self::ROUTE_NAME;
-    }
-
-    /**
-     * @param int $id
-     * @param string $name
-     * @return \App\Component\Router\FriendlyUrl\FriendlyUrlData
-     */
-    public function createFromIdAndName(int $id, string $name): FriendlyUrlData
-    {
-        /** @var \App\Component\Router\FriendlyUrl\FriendlyUrlData $friendlyUrlData */
-        $friendlyUrlData = $this->friendlyUrlDataFactory->create();
-        $friendlyUrlData->id = $id;
-        $friendlyUrlData->name = $name;
-
-        return $friendlyUrlData;
     }
 }

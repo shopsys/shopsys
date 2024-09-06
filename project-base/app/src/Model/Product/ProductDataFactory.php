@@ -33,7 +33,6 @@ use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
  * @property \App\Model\Product\Pricing\ProductInputPriceFacade $productInputPriceFacade
  * @property \App\Model\Product\Unit\UnitFacade $unitFacade
  * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
- * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
  * @method fillProductStockByProduct(\App\Model\Product\ProductData $productData, \App\Model\Product\Product $product)
  * @method fillProductStockByStocks(\App\Model\Product\ProductData $productData)
  * @method \App\Model\Product\ProductData create()
@@ -46,7 +45,7 @@ class ProductDataFactory extends BaseProductDataFactory
      * @param \App\Model\Product\Unit\UnitFacade $unitFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginDataFormExtensionFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface $productParameterValueDataFactory

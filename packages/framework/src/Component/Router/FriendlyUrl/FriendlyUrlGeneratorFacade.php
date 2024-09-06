@@ -85,7 +85,7 @@ class FriendlyUrlGeneratorFacade
         foreach ($friendlyUrlsData as $friendlyUrlData) {
             $this->friendlyUrlFacade->createFriendlyUrlForDomain(
                 $routeName,
-                $friendlyUrlData->id,
+                $friendlyUrlData->entityId,
                 $friendlyUrlData->name,
                 $domainConfig->getId(),
             );

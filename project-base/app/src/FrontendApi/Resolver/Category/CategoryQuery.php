@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\FrontendApi\Resolver\Category;
 
 use App\Component\Deprecation\DeprecatedMethodException;
-use App\Component\Router\FriendlyUrl\FriendlyUrlFacade as AppFriendlyUrlFacade;
 use App\FrontendApi\Model\Product\Filter\ProductFilterFacade;
 use App\FrontendApi\Resolver\Category\Exception\ReadyCategorySeoMixNotFoundUserError;
 use App\Model\Category\Category;
@@ -18,6 +17,7 @@ use App\Model\Product\Parameter\ParameterFacade;
 use GraphQL\Type\Definition\ResolveInfo;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade as AppFriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
@@ -41,7 +41,7 @@ class CategoryQuery extends BaseCategoryQuery
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\FrontendApi\Model\Product\Filter\ProductFilterFacade $productFilterFacade
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $appFriendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $appFriendlyUrlFacade
      * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductOrderingModeProvider $productOrderingModeProvider

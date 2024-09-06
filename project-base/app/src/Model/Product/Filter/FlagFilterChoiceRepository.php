@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 /**
  * @property \App\Model\Product\ProductRepository $productRepository
  * @method __construct(\App\Model\Product\ProductRepository $productRepository)
+ * @method \App\Model\Product\Flag\Flag[] getVisibleFlagsByProductsQueryBuilder(\Doctrine\ORM\QueryBuilder $productsQueryBuilder, string $locale)
  */
 class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
 {
@@ -112,38 +113,6 @@ class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
             ->andWhere('pd0.domainId = :domainId')
             ->resetDQLPart('orderBy')
             ->setParameter('domainId', $domainId);
-
-        $flagsQueryBuilder = $productsQueryBuilder->getEntityManager()->createQueryBuilder();
-        $flagsQueryBuilder
-            ->select('f, ft')
-            ->from(Flag::class, 'f')
-            ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
-            ->andWhere($flagsQueryBuilder->expr()->exists($clonedProductsQueryBuilder))
-            ->orderBy(OrderByCollationHelper::createOrderByForLocale('ft.name', $locale), 'asc')
-            ->setParameter('locale', $locale);
-
-        foreach ($clonedProductsQueryBuilder->getParameters() as $parameter) {
-            $flagsQueryBuilder->setParameter($parameter->getName(), $parameter->getValue());
-        }
-
-        return $flagsQueryBuilder->getQuery()->execute();
-    }
-
-    /**
-     * @param \Doctrine\ORM\QueryBuilder $productsQueryBuilder
-     * @param string $locale
-     * @return \App\Model\Product\Flag\Flag[]
-     */
-    protected function getVisibleFlagsByProductsQueryBuilder(QueryBuilder $productsQueryBuilder, $locale): array
-    {
-        $clonedProductsQueryBuilder = clone $productsQueryBuilder;
-
-        $clonedProductsQueryBuilder
-            ->select('1')
-            ->join('p.flags', 'pf')
-            ->andWhere('pf.id = f.id')
-            ->andWhere('f.visible = true')
-            ->resetDQLPart('orderBy');
 
         $flagsQueryBuilder = $productsQueryBuilder->getEntityManager()->createQueryBuilder();
         $flagsQueryBuilder
