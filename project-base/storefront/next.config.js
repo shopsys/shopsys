@@ -42,6 +42,7 @@ const nextConfig = {
         showSymfonyToolbar: process.env.SHOW_SYMFONY_TOOLBAR,
         shouldUseDefer: process.env.SHOULD_USE_DEFER === '1',
         userSnapApiKey: process.env.USERSNAP_PROJECT_API_KEY,
+        userSnapEnabledDefaultValue: process.env.USERSNAP_STOREFRONT_ENABLED_BY_DEFAULT === '1',
         domains: [
             {
                 publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_1,
