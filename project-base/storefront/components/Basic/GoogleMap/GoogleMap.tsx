@@ -59,6 +59,7 @@ export const GoogleMap: FC<GoogleMapProps> = ({
         return validMarkers.map(markerMapper);
     }, [markers]);
 
+
     const { clusters, supercluster } = useSupercluster({
         points: markersClusterConfig,
         zoom,
