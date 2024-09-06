@@ -129,13 +129,11 @@ module.exports = {
         },
         zIndex: {
             hidden: -1000,
-            above: 1,
-            flag: 10,
+            base: 0,
+            flag: 10, // due to cypress tests
+            above: 11,
             menu: 1010,
-            aboveMenu: 1020,
             overlay: 1030,
-            mobileMenu: 1040,
-            aboveMobileMenu: 1050,
             cart: 6000,
             aboveOverlay: 10001,
             maximum: 10100,
