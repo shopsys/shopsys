@@ -36,6 +36,7 @@ twig:
         - '@ShopsysFramework/Admin/Form/promoCodeLimitFormTheme.html.twig'
         - '@ShopsysFramework/Admin/Form/rolesType.html.twig'
         - '@ShopsysFramework/Admin/Form/storeOpeningHoursFormTheme.html.twig'
+        - '@ShopsysFramework/Admin/Form/transportPricesFormTheme.html.twig'
         - '@ShopsysFramework/Admin/Form/warningMessage.html.twig'
         - 'Admin/Form/grapesJsMailType.html.twig'
         - 'Admin/Form/grapesJsType.html.twig'

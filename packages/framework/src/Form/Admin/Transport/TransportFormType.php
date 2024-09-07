@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\Transport;
 
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DisplayVariablesType;
 use Shopsys\FrameworkBundle\Form\DomainsType;
@@ -13,7 +15,7 @@ use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
-use Shopsys\FrameworkBundle\Form\PriceAndVatTableByDomainsType;
+use Shopsys\FrameworkBundle\Form\TransportInputPricesType;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
@@ -38,11 +40,13 @@ class TransportFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportTypeEnum $transportTypeEnum
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         private readonly PaymentFacade $paymentFacade,
         private readonly TransportFacade $transportFacade,
-        protected readonly TransportTypeEnum $transportTypeEnum,
+        private readonly TransportTypeEnum $transportTypeEnum,
+        private readonly Domain $domain,
     ) {
     }
 
@@ -127,10 +131,21 @@ class TransportFormType extends AbstractType
             'label' => t('Prices'),
         ]);
 
-        $builderPricesGroup->add('pricesByDomains', PriceAndVatTableByDomainsType::class, [
-            'pricesIndexedByDomainId' => $this->transportFacade->getPricesIndexedByDomainId($transport),
-            'inherit_data' => true,
-            'render_form_row' => false,
+        $optionsByDomainId = [];
+
+        $pricesIndexedByTransportPriceId = $transport instanceof Transport ? $this->transportFacade->getPricesIndexedByTransportPriceId($transport) : [];
+
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $optionsByDomainId[$domainId] = [
+                'domain_id' => $domainId,
+                'current_transport_prices_indexed_by_id' => $pricesIndexedByTransportPriceId,
+            ];
+        }
+
+        $builderPricesGroup->add('inputPricesByDomain', MultidomainType::class, [
+            'label' => false,
+            'entry_type' => TransportInputPricesType::class,
+            'options_by_domain_id' => $optionsByDomainId,
         ]);
 
         $builderAdditionalInformationGroup = $builder->create('additionalInformation', GroupType::class, [

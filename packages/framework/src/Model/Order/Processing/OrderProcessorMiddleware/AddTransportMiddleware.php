@@ -45,11 +45,9 @@ class AddTransportMiddleware implements OrderProcessorMiddlewareInterface
         }
 
         $domainId = $orderProcessingData->getDomainId();
-        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
 
         $transportPrice = $this->transportPriceCalculation->calculatePrice(
             $transport,
-            $currency,
             $orderProcessingData->orderData->getProductsTotalPriceAfterAppliedDiscounts(),
             $domainId,
         );

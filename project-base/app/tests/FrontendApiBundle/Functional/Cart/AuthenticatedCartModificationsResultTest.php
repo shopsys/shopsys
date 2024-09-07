@@ -423,7 +423,7 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
         // refresh transport, so we're able to work with it as with an entity
         $transport = $this->getReference($transportReferenceName, Transport::class);
         $transportData = $this->transportDataFactory->createFromTransport($transport);
-        $transportData->pricesIndexedByDomainId[1] = $transport->getPrice(1)->getPrice()->add(Money::create(10));
+        $transportData->inputPricesByDomain[1]->pricesWithLimits[0]->price = $transport->getLowestPriceOnDomain(1)->getPrice()->add(Money::create(10));
         $this->transportFacade->edit($transport, $transportData);
     }
 

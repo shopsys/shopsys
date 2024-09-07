@@ -162,9 +162,7 @@ class PriceQuery extends AbstractQuery
     protected function calculateIndependentTransportPrice(Transport $transport): Price
     {
         return $this->transportPriceCalculation->calculateIndependentPrice(
-            $transport,
-            $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId()),
-            $this->domain->getId(),
+            $transport->getLowestPriceOnDomain($this->domain->getId()),
         );
     }
 }

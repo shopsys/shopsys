@@ -10,9 +10,7 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
 
 class TransportFacade
@@ -54,7 +52,7 @@ class TransportFacade
         $transport = $this->transportFactory->create($transportData);
         $this->em->persist($transport);
         $this->em->flush();
-        $this->updateTransportPrices($transport, $transportData->pricesIndexedByDomainId);
+        $this->updateTransportPrices($transport, $transportData->inputPricesByDomain);
         $this->imageFacade->manageImages($transport, $transportData->image);
         $transport->setPayments($transportData->payments);
         $this->em->flush();
@@ -69,7 +67,7 @@ class TransportFacade
     public function edit(Transport $transport, TransportData $transportData)
     {
         $transport->edit($transportData);
-        $this->updateTransportPrices($transport, $transportData->pricesIndexedByDomainId);
+        $this->updateTransportPrices($transport, $transportData->inputPricesByDomain);
         $this->imageFacade->manageImages($transport, $transportData->image);
         $transport->setPayments($transportData->payments);
         $this->em->flush();
@@ -122,22 +120,22 @@ class TransportFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money[] $pricesIndexedByDomainId
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportInputPricesData[] $inputPricesDataIndexedByDomainId
      */
-    protected function updateTransportPrices(Transport $transport, array $pricesIndexedByDomainId): void
+    protected function updateTransportPrices(Transport $transport, array $inputPricesDataIndexedByDomainId): void
     {
-        foreach ($this->domain->getAllIds() as $domainId) {
-            $existPriceForDomain = $transport->hasPriceForDomain($domainId);
-            $transport->setPrice($pricesIndexedByDomainId[$domainId], $domainId);
+        $this->deleteAllPricesByTransport($transport);
 
-            if ($existPriceForDomain !== false) {
-                continue;
+        $prices = [];
+
+        foreach ($inputPricesDataIndexedByDomainId as $domainId => $pricesData) {
+            foreach ($pricesData->pricesWithLimits as $pricesWithLimitData) {
+                $prices[] = $this->transportPriceFactory->create($transport, $pricesWithLimitData->price, $domainId, $pricesWithLimitData->maxWeight);
             }
-
-            $transport->addPrice(
-                $this->transportPriceFactory->create($transport, $pricesIndexedByDomainId[$domainId], $domainId),
-            );
         }
+
+        $transport->setPrices($prices);
+        $this->em->flush();
     }
 
     public function getAll()
@@ -154,22 +152,19 @@ class TransportFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Money\Money[]
      */
     public function getTransportPricesWithVatByCurrencyAndDomainIdIndexedByTransportId(
-        Currency $currency,
         int $domainId,
     ): array {
         $transportPricesWithVatByTransportId = [];
         $transports = $this->getAllIncludingDeleted();
 
         foreach ($transports as $transport) {
+            $transportInputPrice = $transport->getLowestPriceOnDomain($domainId);
             $transportPrice = $this->transportPriceCalculation->calculateIndependentPrice(
-                $transport,
-                $currency,
-                $domainId,
+                $transportInputPrice,
             );
             $transportPricesWithVatByTransportId[$transport->getId()] = $transportPrice->getPriceWithVat();
         }
@@ -197,7 +192,7 @@ class TransportFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[][]
      */
     public function getIndependentBasePricesIndexedByDomainId(Transport $transport): array
     {
@@ -205,11 +200,8 @@ class TransportFacade
 
         foreach ($transport->getPrices() as $transportInputPrice) {
             $domainId = $transportInputPrice->getDomainId();
-            $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
-            $prices[$domainId] = $this->transportPriceCalculation->calculateIndependentPrice(
-                $transport,
-                $currency,
-                $domainId,
+            $prices[$domainId][] = $this->transportPriceCalculation->calculateIndependentPrice(
+                $transportInputPrice,
             );
         }
 
@@ -217,26 +209,16 @@ class TransportFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport|null $transport
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
      */
-    public function getPricesIndexedByDomainId(?Transport $transport): array
+    public function getPricesIndexedByTransportPriceId(Transport $transport): array
     {
         $prices = [];
 
-        foreach ($this->domain->getAllIds() as $domainId) {
-            $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
-
-            if ($transport === null) {
-                $prices[$domainId] = Price::zero();
-
-                continue;
-            }
-
-            $prices[$domainId] = $this->transportPriceCalculation->calculateIndependentPrice(
-                $transport,
-                $currency,
-                $domainId,
+        foreach ($transport->getPrices() as $transportPrice) {
+            $prices[$transportPrice->getId()] = $this->transportPriceCalculation->calculateIndependentPrice(
+                $transportPrice,
             );
         }
 
@@ -293,5 +275,15 @@ class TransportFacade
         $visiblePayments = $this->paymentFacade->getVisibleOnCurrentDomain();
 
         return $this->transportVisibilityCalculation->filterVisible($transports, $visiblePayments, $domainId);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
+     */
+    protected function deleteAllPricesByTransport(Transport $transport): void
+    {
+        $this->transportRepository->deleteAllPricesByTransport($transport);
+        $transport->setPrices([]);
+        $this->em->flush();
     }
 }

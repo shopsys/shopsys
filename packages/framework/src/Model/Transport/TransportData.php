@@ -42,14 +42,9 @@ class TransportData
     public $enabled;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Money\Money[]
+     * @var \Shopsys\FrameworkBundle\Model\Transport\TransportInputPricesData[]
      */
-    public $pricesIndexedByDomainId;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[]
-     */
-    public $vatsIndexedByDomainId;
+    public $inputPricesByDomain;
 
     /**
      * @var string|null
@@ -90,8 +85,7 @@ class TransportData
         $this->hidden = false;
         $this->enabled = [];
         $this->payments = [];
-        $this->pricesIndexedByDomainId = [];
-        $this->vatsIndexedByDomainId = [];
+        $this->inputPricesByDomain = [];
         $this->type = TransportTypeEnum::TYPE_COMMON;
     }
 }

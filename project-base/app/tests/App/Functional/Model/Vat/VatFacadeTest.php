@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
+use Shopsys\FrameworkBundle\Model\Transport\TransportInputPricesData;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class VatFacadeTest extends TransactionFunctionalTestCase
@@ -61,7 +62,10 @@ class VatFacadeTest extends TransactionFunctionalTestCase
         $payment = $this->getReference(PaymentDataFixture::PAYMENT_CASH, Payment::class);
         $paymentData = $this->paymentDataFactory->createFromPayment($payment);
 
-        $transportData->vatsIndexedByDomainId[Domain::FIRST_DOMAIN_ID] = $vatToDelete;
+        $transportInputPricesData = new TransportInputPricesData();
+        $transportInputPricesData->vat = $vatToDelete;
+        $transportData->inputPricesByDomain[Domain::FIRST_DOMAIN_ID] = $transportInputPricesData;
+
         $this->transportFacade->edit($transport, $transportData);
 
         $paymentData->vatsIndexedByDomainId[Domain::FIRST_DOMAIN_ID] = $vatToDelete;

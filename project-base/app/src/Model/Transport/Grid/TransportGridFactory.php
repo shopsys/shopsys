@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Transport\Grid\TransportGridFactory as BaseTra
  * @property \App\Model\Transport\TransportRepository $transportRepository
  * @property \App\Model\Transport\TransportFacade $transportFacade
  * @method __construct(\Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory, \App\Model\Transport\TransportRepository $transportRepository, \Shopsys\FrameworkBundle\Model\Localization\Localization $localization, \App\Model\Transport\TransportFacade $transportFacade, \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade)
- * @method \Shopsys\FrameworkBundle\Component\Money\Money getDisplayPrice(\App\Model\Transport\Transport $transport)
+ * @method \Shopsys\FrameworkBundle\Model\Pricing\Price[] getDisplayPrices(\App\Model\Transport\Transport $transport)
  */
 class TransportGridFactory extends BaseTransportGridFactory
 {

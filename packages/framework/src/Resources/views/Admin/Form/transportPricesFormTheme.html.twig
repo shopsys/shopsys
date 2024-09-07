@@ -1,0 +1,85 @@
+{% block transport_input_prices_row %}
+    <div class="form-line__box">
+        {% if isMultidomain() %}
+            <div class="form-line__box__title">
+                <span class="form-line__box__title__image">
+                    {{ domainIcon(domainId, 'large') }}
+                </span>
+                <strong class="form-line__box__title__name">
+                    {{ 'Domain %domainName%'|trans({'%domainName%' : getDomainName(domainId)}) }}
+                </strong>
+            </div>
+        {% endif %}
+        {{ form_widget(form) }}
+    </div>
+{% endblock %}
+
+{% block transport_input_prices_widget %}
+    <div {% if isMultidomain() %} class="form-line__box__content"{% endif %}>
+        {{ form_widget(form) }}
+    </div>
+{% endblock %}
+
+{% macro priceWithLimitRow(priceWithLimit, index) %}
+    {% set domainId = priceWithLimit.vars.domain_id %}
+    {% set transportPrice = priceWithLimit.vars.transport_calculated_price %}
+    <tr class="js-transport-prices-item js-form-group table-form__row" data-index="{{ index }}">
+        {{ form_widget(priceWithLimit.transportPriceId) }}
+        <td class="table-form__cell table-form__cell--del-before">
+            {{ form_widget(priceWithLimit.price, { isSimple: false, symbolAfterInput: currencySymbolByDomainId(domainId)} ) }}
+            {{ form_errors(priceWithLimit.price, { errors_attr: { class: 'table-limits__cell__error' } } ) }}
+        </td>
+        <td class="table-form__cell table-form__cell--del-before">
+            {{ form_widget(priceWithLimit.maxWeight, { isSimple: false, symbolAfterInput: 'g'|trans } ) }}
+            {{ form_errors(priceWithLimit.maxWeight, { errors_attr: { class: 'table-limits__cell__error' } } ) }}
+        </td>
+        <td class="table-form__cell table-form__cell--del-before">
+            {% if transportPrice is not null %}
+                {{ transportPrice.priceWithoutVat|priceWithCurrencyByDomainId(domainId) }}
+            {% endif %}
+        </td>
+        <td class="table-form__cell table-form__cell--del-before">
+            {% if transportPrice is not null %}
+                {{ transportPrice.priceWithVat|priceWithCurrencyByDomainId(domainId) }}
+            {% endif %}
+        </td>
+        <td class="table-form__cell table-form__cell--actions">
+            <a href="#" class="js-transport-prices-item-remove table-form__action"><i class="svg svg-delete-thin in-icon"></i></a>
+        </td>
+    </tr>
+{% endmacro %}
+
+{% block transport_prices_with_limits_collection_widget %}
+    {% import _self as self %}
+    <div class="js-form-group form-group js-transport-prices-form-group">
+        <table class="table-form" id="transport-prices">
+            <thead>
+            <tr class="table-form__row">
+                <th class="table-form__cell table-form__cell--del-before table-form__cell--label">{{ 'Input price with VAT'|trans }}</th>
+                <th class="table-form__cell table-form__cell--del-before table-form__cell--label">{{ 'Weight limit (optional)'|trans }}</th>
+                <th class="table-form__cell table-form__cell--del-before table-form__cell--label">{{ 'Calculated price excluding VAT'|trans }}</th>
+                <th class="table-form__cell table-form__cell--del-before table-form__cell--label">{{ 'Calculated price including VAT'|trans }}</th>
+                <th class="table-form__cell table-form__cell--del-after"></th>
+            </tr>
+            </thead>
+            <tbody class="js-transport-prices" data-prototype="{{ self.priceWithLimitRow(form.vars.prototype)|escape }}" data-index="{{ form|length }}">
+
+            {% for key, priceWithLimit in form %}
+                {{ self.priceWithLimitRow(priceWithLimit, key) }}
+            {% else %}
+                {% do form.setRendered %}
+            {% endfor %}
+
+            </tbody>
+        </table>
+
+        <div class="form-line form-line--no-top-border">
+            <div class="form-line__line form-line__line--no-space">
+                <a href="#" class="js-transport-prices-item-add btn btn--plus">
+                    <i class="btn__icon">+</i>
+                    {{ 'Add another price with weight limit'|trans }}
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

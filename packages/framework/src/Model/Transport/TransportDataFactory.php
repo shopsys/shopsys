@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Transport;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
-use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 
 class TransportDataFactory implements TransportDataFactoryInterface
@@ -15,11 +14,13 @@ class TransportDataFactory implements TransportDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportInputPricesDataFactory $transportInputPricesDataFactory
      */
     public function __construct(
         protected readonly VatFacade $vatFacade,
         protected readonly Domain $domain,
         protected readonly ImageUploadDataFactory $imageUploadDataFactory,
+        protected readonly TransportInputPricesDataFactory $transportInputPricesDataFactory,
     ) {
     }
 
@@ -54,8 +55,7 @@ class TransportDataFactory implements TransportDataFactoryInterface
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $transportData->enabled[$domainId] = true;
-            $transportData->pricesIndexedByDomainId[$domainId] = Money::zero();
-            $transportData->vatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatForDomain($domainId);
+            $transportData->inputPricesByDomain[$domainId] = $this->transportInputPricesDataFactory->create($domainId);
         }
 
         foreach ($this->domain->getAllLocales() as $locale) {
@@ -107,8 +107,7 @@ class TransportDataFactory implements TransportDataFactoryInterface
 
         foreach ($this->domain->getAllIds() as $domainId) {
             $transportData->enabled[$domainId] = $transport->isEnabled($domainId);
-            $transportData->pricesIndexedByDomainId[$domainId] = $transport->getPrice($domainId)->getPrice();
-            $transportData->vatsIndexedByDomainId[$domainId] = $transport->getTransportDomain($domainId)->getVat();
+            $transportData->inputPricesByDomain[$domainId] = $this->transportInputPricesDataFactory->createFromTransport($transport, $domainId);
         }
 
         $transportData->daysUntilDelivery = $transport->getDaysUntilDelivery();

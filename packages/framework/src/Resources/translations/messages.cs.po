@@ -100,6 +100,9 @@ msgstr "Přidat další předpis e-mailový whitelist"
 msgid "Add another parameter"
 msgstr "Přidat další parametr"
 
+msgid "Add another price with weight limit"
+msgstr "Přidat další cenu s váhovým limitem"
+
 msgid "Add country"
 msgstr "Přidat stát"
 
@@ -4009,6 +4012,9 @@ msgstr "Středa"
 msgid "Weight (g)"
 msgstr "Hmotnost (g)"
 
+msgid "Weight limit (optional)"
+msgstr "Váhový limit (nepovinný)"
+
 msgid "When changing the default currency there is no recalculation of prices"
 msgstr "Při změně výchozí měny nedochází k žádnému přepočtu cen"
 
@@ -4149,6 +4155,9 @@ msgstr "z"
 
 msgid "from \"oldReadableValue\" to \"newReadableValue\""
 msgstr "z \"oldReadableValue\" na \"newReadableValue\""
+
+msgid "g"
+msgstr "g"
 
 msgid "higher or equal"
 msgstr "větší nebo rovno"

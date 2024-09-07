@@ -12,11 +12,10 @@ use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
-use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
-use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentPriceNotFoundException;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportDomainNotFoundException;
+use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportPriceNotFoundException;
 
 /**
  * @ORM\Table(name="transports")
@@ -224,43 +223,11 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
-     * @param int $domainId
+     * @param array<int, \Shopsys\FrameworkBundle\Model\Transport\TransportPrice> $prices
      */
-    public function setPrice(
-        Money $price,
-        int $domainId,
-    ): void {
-        foreach ($this->prices as $transportInputPrice) {
-            if ($transportInputPrice->getDomainId() === $domainId) {
-                $transportInputPrice->setPrice($price);
-
-                return;
-            }
-        }
-    }
-
-    /**
-     * @param int $domainId
-     * @return bool
-     */
-    public function hasPriceForDomain(int $domainId): bool
+    public function setPrices($prices)
     {
-        foreach ($this->prices as $transportInputPrice) {
-            if ($transportInputPrice->getDomainId() === $domainId) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPrice $transportPrice
-     */
-    public function addPrice(TransportPrice $transportPrice): void
-    {
-        $this->prices->add($transportPrice);
+        $this->prices = new ArrayCollection($prices);
     }
 
     /**
@@ -308,7 +275,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
         foreach ($this->domains as $transportDomain) {
             $domainId = $transportDomain->getDomainId();
             $transportDomain->setEnabled($transportData->enabled[$domainId]);
-            $transportDomain->setVat($transportData->vatsIndexedByDomainId[$domainId]);
+            $transportDomain->setVat($transportData->inputPricesByDomain[$domainId]->vat);
         }
     }
 
@@ -320,7 +287,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
         $domainIds = array_keys($transportData->enabled);
 
         foreach ($domainIds as $domainId) {
-            $transportDomain = new TransportDomain($this, $domainId, $transportData->vatsIndexedByDomainId[$domainId]);
+            $transportDomain = new TransportDomain($this, $domainId, $transportData->inputPricesByDomain[$domainId]->vat);
             $this->domains->add($transportDomain);
         }
 
@@ -400,17 +367,40 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Transport\TransportPrice
      */
-    public function getPrice(int $domainId): TransportPrice
+    public function getLowestPriceOnDomain(int $domainId): TransportPrice
     {
-        foreach ($this->prices as $price) {
-            if ($price->getDomainId() === $domainId) {
-                return $price;
+        $lowestPrice = null;
+
+        foreach ($this->getPricesByDomainId($domainId) as $transportPrice) {
+            if ($lowestPrice === null || $transportPrice->getPrice()->isLessThanOrEqualTo($lowestPrice->getPrice())) {
+                $lowestPrice = $transportPrice;
             }
         }
 
-        $message = 'Transport price with domain ID ' . $domainId . ' and transport ID ' . $this->getId() . ' not found.';
+        if ($lowestPrice === null) {
+            $message = 'Transport price with domain ID ' . $domainId . ' and transport ID ' . $this->getId() . ' not found.';
 
-        throw new PaymentPriceNotFoundException($message);
+            throw new TransportPriceNotFoundException($message);
+        }
+
+        return $lowestPrice;
+    }
+
+    /**
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Transport\TransportPrice[]
+     */
+    public function getPricesByDomainId(int $domainId): array
+    {
+        $prices = array_filter($this->prices->toArray(), static fn (TransportPrice $price) => $price->getDomainId() === $domainId);
+
+        if ($prices !== []) {
+            return $prices;
+        }
+
+        $message = 'Transport prices with domain ID ' . $domainId . ' and transport ID ' . $this->getId() . ' not found.';
+
+        throw new TransportPriceNotFoundException($message);
     }
 
     /**

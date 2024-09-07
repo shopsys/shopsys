@@ -100,6 +100,9 @@ msgstr ""
 msgid "Add another parameter"
 msgstr ""
 
+msgid "Add another price with weight limit"
+msgstr ""
+
 msgid "Add country"
 msgstr ""
 
@@ -4009,6 +4012,9 @@ msgstr ""
 msgid "Weight (g)"
 msgstr ""
 
+msgid "Weight limit"
+msgstr ""
+
 msgid "When changing the default currency there is no recalculation of prices"
 msgstr ""
 
@@ -4148,6 +4154,9 @@ msgid "from"
 msgstr ""
 
 msgid "from \"oldReadableValue\" to \"newReadableValue\""
+msgstr ""
+
+msgid "g"
 msgstr ""
 
 msgid "higher or equal"
