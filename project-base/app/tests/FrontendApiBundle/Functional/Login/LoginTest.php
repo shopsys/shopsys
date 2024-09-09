@@ -19,9 +19,11 @@ class LoginTest extends GraphQlTestCase
     public function testLoginMutation(): void
     {
         $graphQlType = 'Login';
-        $response = $this->getResponseContentForQuery(self::getLoginQuery());
 
-        $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/LoginMutation.graphql',
+            $this->getDefaultCredentials(),
+        );
         $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
 
         $this->assertArrayHasKey('tokens', $responseData);
@@ -32,15 +34,17 @@ class LoginTest extends GraphQlTestCase
 
         try {
             $this->tokenFacade->getTokenByString($responseData['tokens']['accessToken']);
-        } catch (Throwable $throwable) {
+        } catch (Throwable) {
             $this->fail('Token is not valid');
         }
 
         $clientOptions = ['HTTP_X-Auth-Token' => sprintf('Bearer %s', $responseData['tokens']['accessToken'])];
         $this->configureCurrentClient(null, null, $clientOptions);
-        $authorizationResponse = $this->getResponseContentForQuery(self::getLoginQuery());
 
-        $this->assertResponseContainsArrayOfDataForGraphQlType($authorizationResponse, $graphQlType);
+        $authorizationResponse = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/LoginMutation.graphql',
+            $this->getDefaultCredentials(),
+        );
         $authorizationResponseData = $this->getResponseDataForGraphQlType($authorizationResponse, $graphQlType);
 
         $this->assertArrayHasKey('tokens', $authorizationResponseData);
@@ -50,13 +54,13 @@ class LoginTest extends GraphQlTestCase
         $this->assertIsString($authorizationResponseData['tokens']['refreshToken']);
     }
 
-    public function testInvalidTokenException()
+    public function testInvalidTokenException(): void
     {
         $this->expectException(InvalidTokenUserMessageException::class);
         $this->tokenFacade->getTokenByString('abcd');
     }
 
-    public function testInvalidTokenInHeader()
+    public function testInvalidTokenInHeader(): void
     {
         $expectedError = [
             'errors' => [
@@ -71,28 +75,22 @@ class LoginTest extends GraphQlTestCase
 
         $this->configureCurrentClient(null, null, ['HTTP_X-Auth-Token' => 'Bearer 123']);
 
-        $response = $this->getResponseContentForQuery(self::getLoginQuery());
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/LoginMutation.graphql',
+            $this->getDefaultCredentials(),
+        );
 
         $this->assertSame($expectedError, $response);
     }
 
     /**
-     * @return string
+     * @return array<string, string>
      */
-    private static function getLoginQuery(): string
+    private function getDefaultCredentials(): array
     {
-        return '
-            mutation {
-                Login(input: {
-                    email: "no-reply@shopsys.com"
-                    password: "user123"
-                }) {
-                    tokens {
-                        accessToken
-                        refreshToken
-                    }
-                }
-            }
-        ';
+        return [
+            'email' => 'no-reply@shopsys.com',
+            'password' => 'user123',
+        ];
     }
 }

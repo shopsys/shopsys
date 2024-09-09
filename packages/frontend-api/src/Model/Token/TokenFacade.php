@@ -63,7 +63,7 @@ class TokenFacade
         $tokenBuilder->withClaim(FrontendApiUser::CLAIM_DEVICE_ID, $deviceId);
         $tokenBuilder->withClaim(
             FrontendApiUser::CLAIM_ADMINISTRATOR_UUID,
-            $administrator !== null ? $administrator->getUuid() : null,
+            $administrator?->getUuid(),
         );
 
         foreach (TokenCustomerUserTransformer::transform($customerUser) as $key => $value) {

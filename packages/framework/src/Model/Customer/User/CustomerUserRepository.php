@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
+use DateTimeInterface;
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
@@ -203,5 +205,33 @@ class CustomerUserRepository
     public function getAll(): array
     {
         return $this->getCustomerUserRepository()->findAll();
+    }
+
+    /**
+     * @param string $customerUserUuid
+     * @param \DateTimeInterface $referenceDateTime
+     * @return bool
+     */
+    public function isLastSecurityChangeOlderThan(string $customerUserUuid, DateTimeInterface $referenceDateTime): bool
+    {
+        $lastSecurityChange = $this->em->createQueryBuilder()
+            ->select('u.lastSecurityChange')
+            ->from(CustomerUser::class, 'u')
+            ->where('u.uuid = :uuid')
+            ->setParameter('uuid', $customerUserUuid)
+            ->getQuery()
+            ->getOneOrNullResult(AbstractQuery::HYDRATE_ARRAY);
+
+        if ($lastSecurityChange === null) {
+            return false;
+        }
+
+        $lastSecurityChangeDateTime = $lastSecurityChange['lastSecurityChange'];
+
+        if ($lastSecurityChangeDateTime === null) {
+            return true;
+        }
+
+        return $lastSecurityChangeDateTime < $referenceDateTime;
     }
 }
