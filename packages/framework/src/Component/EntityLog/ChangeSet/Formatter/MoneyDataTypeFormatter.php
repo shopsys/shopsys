@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 class MoneyDataTypeFormatter
 {
     /**
-     * @param array $changes
+     * @param array{oldReadableValue: string|null, newReadableValue: string|null, oldValue: \Shopsys\FrameworkBundle\Component\Money\Money|null, newValue: \Shopsys\FrameworkBundle\Component\Money\Money|null} $changes
      * @return string
      */
     public function formatChanges(array $changes): string
