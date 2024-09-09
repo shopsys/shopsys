@@ -10,6 +10,7 @@ import { TypeSimplePaymentFragment } from 'graphql/requests/payments/fragments/S
 import { TypePriceFragment } from 'graphql/requests/prices/fragments/PriceFragment.generated';
 import { TypeTransportWithAvailablePaymentsFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
+import { twJoin } from 'tailwind-merge';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 
 type TransportAndPaymentProps = {
@@ -30,7 +31,7 @@ export const TransportAndPayment: FC<TransportAndPaymentProps> = ({ payment, tra
                         <OrderSummaryTextAndImage>
                             {transport.name}
                             <div
-                                className="flex h-8 w-8 items-center"
+                                className={twJoin('flex h-8 w-8 items-center', !transport.mainImage?.url && 'hidden')}
                                 tid={TIDs.order_summary_transport_and_payment_image}
                             >
                                 <Image
@@ -52,7 +53,7 @@ export const TransportAndPayment: FC<TransportAndPaymentProps> = ({ payment, tra
                         <OrderSummaryTextAndImage>
                             {payment.name}
                             <div
-                                className="flex h-8 w-8 items-center"
+                                className={twJoin('flex h-8 w-8 items-center', !payment.mainImage?.url && 'hidden')}
                                 tid={TIDs.order_summary_transport_and_payment_image}
                             >
                                 <Image

@@ -8411,6 +8411,20 @@ Store location longitude
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Transport image by params
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>

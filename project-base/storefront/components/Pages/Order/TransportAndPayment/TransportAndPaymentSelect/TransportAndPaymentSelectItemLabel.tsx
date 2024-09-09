@@ -32,7 +32,10 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
 
     return (
         <div className="flex w-full flex-row items-center gap-5">
-            <div className="flex w-12  h-12 items-center" tid={TIDs.transport_and_payment_list_item_image}>
+            <div
+                className={twJoin('flex w-12  h-12 items-center', !image && 'hidden')}
+                tid={TIDs.transport_and_payment_list_item_image}
+            >
                 <Image alt={image?.name ?? name} className="w-auto max-h-12" height={48} src={image?.url} width={48} />
             </div>
 
