@@ -14,7 +14,7 @@ type BreadcrumbsProps = {
     type?: FriendlyPagesTypesKey;
 };
 
-export const breadcrumbsTwClass = 'flex items-center gap-3 py-3 lg:ml-4 lg:py-0';
+export const breadcrumbsTwClass = 'flex items-center gap-3';
 
 export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className }) => {
     const { t } = useTranslation();
@@ -32,7 +32,7 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className
             <BreadcrumbsMetadata breadcrumbs={breadcrumbs} />
 
             <div className={twMergeCustom(breadcrumbsTwClass, className)}>
-                <ArrowIcon className="mr-3 w-3 rotate-90 text-textDisabled lg:hidden" />
+                <ArrowIcon className="mr-3 w-2.5 rotate-90 text-borderAccent lg:hidden" />
 
                 <BreadcrumbsLink href="/" skeletonType="homepage">
                     {t('Home page')}
@@ -58,8 +58,8 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className
 };
 
 export const BreadcrumbsSpan: FC = ({ tid }) => (
-    <span className="hidden text-textDisabled lg:flex items-center" tid={tid}>
-        <ArrowIcon className="-rotate-90 w-3" />
+    <span className="hidden text-borderAccent lg:flex items-center" tid={tid}>
+        <ArrowIcon className="-rotate-90 w-2.5" />
     </span>
 );
 
@@ -70,7 +70,7 @@ const BreadcrumbsLink: FC<{ href: string; type?: FriendlyPagesTypesKey; skeleton
     children,
 }) => (
     <ExtendedNextLink
-        className="hidden no-underline font-semibold text-[13px] last-of-type:inline lg:inline hover:no-underline"
+        className="hidden font-secondary no-underline font-semibold text-[13px] last-of-type:inline lg:inline hover:no-underline"
         href={href}
         skeletonType={skeletonType}
         type={type}

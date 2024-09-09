@@ -1,3 +1,4 @@
+import { ProductItemProps } from './ProductListItem';
 import { ProductsListContent } from './ProductsListContent';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { SkeletonModuleProductListItem } from 'components/Blocks/Skeleton/SkeletonModuleProductListItem';
@@ -7,6 +8,7 @@ import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragment
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
+import { twJoin } from 'tailwind-merge';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 import { calculatePageSize } from 'utils/loadMore/calculatePageSize';
 import { useCurrentLoadMoreQuery } from 'utils/queryParams/useCurrentLoadMoreQuery';
@@ -18,10 +20,16 @@ type ProductsListProps = {
     areProductsFetching?: boolean;
     isLoadingMoreProducts?: boolean;
     category?: TypeCategoryDetailFragment;
+    productItemProps?: Partial<ProductItemProps>;
 };
 
-export const productListTwClass =
-    'relative mb-5 grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-x-2 gap-y-6 pt-6';
+export const productListTwClass = twJoin(
+    'relative mb-5 grid gap-2.5 sm:gap-x-5 sm:gap-y-6 pt-5',
+    'grid-cols-1',
+    'xs:grid-cols-2',
+    'lg:grid-cols-3',
+    'xl:grid-cols-4',
+);
 
 export const ProductsList: FC<ProductsListProps> = ({
     products,
@@ -30,6 +38,7 @@ export const ProductsList: FC<ProductsListProps> = ({
     isLoadingMoreProducts,
     category,
     gtmMessageOrigin = GtmMessageOriginType.other,
+    productItemProps,
 }) => {
     const currentLoadMore = useCurrentLoadMoreQuery();
 
@@ -44,6 +53,7 @@ export const ProductsList: FC<ProductsListProps> = ({
                     className={productListTwClass}
                     gtmMessageOrigin={gtmMessageOrigin}
                     gtmProductListName={gtmProductListName}
+                    productItemProps={productItemProps}
                     products={products}
                 >
                     {category && (

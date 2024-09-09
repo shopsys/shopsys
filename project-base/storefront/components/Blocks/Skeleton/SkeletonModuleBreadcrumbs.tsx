@@ -10,7 +10,7 @@ type SkeletonModuleBreadcrumbsProps = {
 };
 
 export const SkeletonModuleBreadcrumbs: FC<SkeletonModuleBreadcrumbsProps> = ({ count }) => (
-    <div className={twMergeCustom('mb-8', breadcrumbsTwClass)}>
+    <div className={twMergeCustom('mb-4', breadcrumbsTwClass)}>
         {createEmptyArray(count).map((_, index) => (
             <Fragment key={index}>
                 <Skeleton className="w-28" containerClassName={twJoin(index >= 1 && 'hidden lg:block')} />

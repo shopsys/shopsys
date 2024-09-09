@@ -20,7 +20,7 @@ export const ProductComparePopup: FC = () => {
                 <ExtendedNextLink href={productComparisonUrl} type="comparison">
                     <Button>
                         <span>{t('Show products comparison')}</span>
-                        <ArrowSecondaryIcon className="rotate-90" />
+                        <ArrowSecondaryIcon className="-rotate-90" />
                     </Button>
                 </ExtendedNextLink>
             </div>

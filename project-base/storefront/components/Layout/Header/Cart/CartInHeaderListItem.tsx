@@ -24,9 +24,9 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
     return (
         <li
             key={uuid}
-            className="flex flex-row flex-wrap w-full items-center gap-x-6 border-b border-borderAccentLess py-3 last:border-b-[3px] h-auto lg:flex-nowrap relative"
+            className="relative flex h-auto w-full flex-row flex-wrap items-center gap-x-6 border-b border-borderAccentLess py-3 last:border-b-[3px] lg:flex-nowrap"
         >
-            <div className="flex flex-row gap-x-6 items-center w-full min-h-20">
+            <div className="flex min-h-20 w-full flex-row items-center gap-x-6">
                 <ExtendedNextLink
                     className="flex w-20 items-center justify-center"
                     href={productSlug}
@@ -43,15 +43,17 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                 </ExtendedNextLink>
 
                 <ExtendedNextLink
-                    className="flex-1 cursor-pointer text-sm font-semibold outline-none no-underline text-tableText hover:text-link hover:underline"
+                    className="flex-1 cursor-pointer font-secondary text-sm font-semibold text-tableText no-underline outline-none hover:text-link hover:underline"
                     href={productSlug}
                     type="product"
                 >
                     {product.fullName}
                 </ExtendedNextLink>
             </div>
-            <div className="flex flex-row lg:w-full lg:w-auto gap-x-6 mt-2 lg:mt-0">
-                <div className="text-sm w-20 text-center">{quantity + ' ' + product.unit.name}</div>
+            <div className="mt-2 flex flex-row gap-x-6 lg:mt-0 lg:w-auto">
+                <div className="w-20 text-center font-secondary text-sm font-semibold">
+                    {quantity + ' ' + product.unit.name}
+                </div>
 
                 {isProductPriceVisible && (
                     <div className="w-28 break-words font-secondary font-bold text-price lg:text-right">

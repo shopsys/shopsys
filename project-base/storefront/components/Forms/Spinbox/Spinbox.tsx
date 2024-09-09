@@ -109,7 +109,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
 
                 <input
                     aria-label={`${t('Quantity')} ${id}`}
-                    className="h-full min-w-0 flex-1 border-0 p-0 text-center text-lg font-bold text-inputText outline-none font-secondary"
+                    className="h-full min-w-0 flex-1 border-0 p-0 text-center font-secondary text-lg font-bold text-inputText outline-none"
                     defaultValue={defaultValue}
                     max={max}
                     min={min}
@@ -136,7 +136,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
         return (
             <div
                 className={twJoin(
-                    'inline-flex overflow-hidden rounded-md border-2 border-inputBorder items-center h-12',
+                    'inline-flex h-12 items-center overflow-hidden rounded-md border-2 border-inputBorder',
                     'bg-inputBackground',
                     'border-inputBorder',
                     size === 'small' ? 'w-20' : 'w-28',
@@ -162,7 +162,7 @@ type SpinboxButtonProps = {
 const SpinboxButton: FC<SpinboxButtonProps> = ({ children, disabled, ...props }) => (
     <button
         className={twMergeCustom([
-            'flex min-h-0 px-2 cursor-pointer items-center justify-center border-none bg-none text-inputBorder hover:text-inputBorderHovered outline-none',
+            'flex min-h-0 cursor-pointer items-center justify-center border-none bg-none px-2 text-inputBorder outline-none hover:text-inputBorderHovered',
             disabled && 'pointer-events-none text-inputBorderDisabled',
         ])}
         {...props}

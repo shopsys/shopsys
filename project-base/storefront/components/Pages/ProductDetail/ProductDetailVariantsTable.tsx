@@ -64,10 +64,10 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ isSellingD
                             );
                         }}
                     >
-                        {variant.availability.name}
                         <ProductAvailableStoresCount
                             availableStoresCount={variant.availableStoresCount}
                             isMainVariant={false}
+                            name={variant.availability.name}
                         />
                     </div>
 

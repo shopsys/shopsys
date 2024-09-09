@@ -18,51 +18,51 @@ export const ProductListItemPlaceholder: FC<ProductListItemPlaceholderProps> = (
     product,
     className,
     visibleItemsConfig = PREDEFINED_VISIBLE_ITEMS_CONFIGS.largeItem,
-    size = 'extraLarge',
+    size = 'large',
 }) => {
     return (
         <li
             className={twMergeCustom(
-                'group relative flex select-none flex-col justify-between gap-2.5 p-5 text-left rounded-xl h-ful transition',
+                'group relative flex select-none flex-col justify-between gap-2.5 rounded-xl border border-backgroundMore bg-backgroundMore px-2.5 py-5 text-left transition sm:px-5',
                 'bg-backgroundMore',
                 'hover:bg-backgroundMost',
                 className,
             )}
         >
             <ExtendedNextLink
-                className="flex h-full select-none flex-col justify-between no-underline hover:no-underline text-text hover:text-text"
+                className="flex h-full select-none flex-col justify-between gap-2.5 text-text no-underline hover:text-link hover:no-underline"
                 draggable={false}
                 href={product.slug}
                 type={product.isMainVariant ? 'productMainVariant' : 'product'}
             >
-                <div className="flex flex-col gap-2">
-                    <ProductListItemImage product={product} size={size} visibleItemsConfig={{ flags: false }} />
+                <ProductListItemImage product={product} size={size} visibleItemsConfig={{ flags: false }} />
 
-                    <div className="font-semibold font-secondary mb-4">{product.fullName}</div>
+                <div className="line-clamp-3 min-h-[3.75rem] font-secondary text-sm font-semibold group-hover:text-link group-hover:underline">
+                    {product.fullName}
                 </div>
 
                 <div>
                     {visibleItemsConfig.price && <ProductPrice productPrice={product.price} />}
 
                     {visibleItemsConfig.storeAvailability && (
-                        <div className="flex flex-col gap-1 text-sm text-text">
-                            <div>{product.availability.name}</div>
+                        <div className="min-h-10">
                             <ProductAvailableStoresCount
                                 availableStoresCount={product.availableStoresCount}
                                 isMainVariant={product.isMainVariant}
+                                name={product.availability.name}
                             />
                         </div>
                     )}
                 </div>
             </ExtendedNextLink>
 
-            <div className="flex w-full items-center gap-2">
+            <div className="flex w-full items-center justify-between gap-1 sm:justify-normal sm:gap-2.5">
                 {visibleItemsConfig.addToCart && <Skeleton className="h-10" containerClassName="w-1/2" />}
 
                 {visibleItemsConfig.productListButtons && (
                     <>
-                        <Skeleton className="w-8 h-8" />
-                        <Skeleton className="w-8 h-8" />
+                        <Skeleton className="h-8 w-8" />
+                        <Skeleton className="h-8 w-8" />
                     </>
                 )}
             </div>

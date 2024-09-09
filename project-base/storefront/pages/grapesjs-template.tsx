@@ -44,13 +44,11 @@ const Index: FC = () => {
 
             <Webline>
                 <ArticleTitle>Blog or Article title</ArticleTitle>
-                <div className="px-5">
-                    <div className="mb-12 flex w-full flex-col">
-                        <div className="mb-2 text-left text-xs font-semibold text-textAccent">
-                            {new Date().toLocaleDateString() + ''}
-                        </div>
-                        <GrapesJs className="gjs-editable pt-4 pb-4" />
+                <div className="mb-12 flex w-full flex-col">
+                    <div className="mb-2 text-left text-xs font-semibold text-textAccent">
+                        {new Date().toLocaleDateString() + ''}
                     </div>
+                    <GrapesJs className="gjs-editable pt-4 pb-4" />
                 </div>
             </Webline>
 

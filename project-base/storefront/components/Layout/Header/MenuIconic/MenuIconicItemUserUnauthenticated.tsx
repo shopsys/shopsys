@@ -19,7 +19,7 @@ export const MenuIconicItemUserUnauthenticated: FC = () => {
 
     return (
         <MenuIconicItemLink
-            className="cursor-pointer"
+            className="cursor-pointer lg:w-[72px]"
             tid={TIDs.layout_header_menuiconic_login_link_popup}
             onClick={handleLogin}
         >

@@ -1,10 +1,11 @@
 export const ArrowSecondaryIcon: SvgFC = (props) => (
-    <svg {...props} viewBox="0 0 16 17" xmlns="http://www.w3.org/2000/svg">
+    <svg {...props} viewBox="0 0 12 13" xmlns="http://www.w3.org/2000/svg">
         <path
-            clipRule="evenodd"
-            d="M8.994 16.8H7.006V4.668L1.42 10.213 0 8.79 8 .783l8 8.008-1.42 1.422-5.586-5.544v12.13Z"
-            fill="currentColor"
-            fillRule="evenodd"
+            d="M6 1.75L6 11.5M10.5 7.75L6.53033 11.7197C6.23744 12.0126 5.76256 12.0126 5.46967 11.7197L1.5 7.75"
+            fill="none"
+            stroke="currentColor"
+            strokeLinecap="round"
+            strokeWidth="2"
         />
     </svg>
 );

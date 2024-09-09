@@ -23,7 +23,7 @@ export const NavigationItem: FC<NavigationItemProps> = ({ navigationItem, skelet
                 href={navigationItem.link}
                 skeletonType={skeletonType}
                 className={twJoin(
-                    'relative m-0 flex items-center px-6 xl:px-5 group-first-of-type:pl-0 py-4 text-sm font-bold uppercase vl:text-base',
+                    'relative m-0 flex items-center p-5 group-first-of-type:pl-0 text-sm font-bold font-secondary vl:text-base',
                     'text-linkInverted no-underline',
                     'hover:text-linkInvertedHovered hover:no-underline group-hover:text-linkInvertedHovered group-hover:no-underline',
                     'active:text-linkInvertedHovered',

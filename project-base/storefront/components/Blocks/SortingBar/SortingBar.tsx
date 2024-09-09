@@ -35,12 +35,12 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
     const [isSortMenuOpen, setIsSortMenuOpen] = useState(false);
 
     const sortOptionsLabels = {
-        [TypeProductOrderingModeEnum.Priority]: t('priority'),
-        [TypeProductOrderingModeEnum.PriceAsc]: t('price ascending'),
-        [TypeProductOrderingModeEnum.PriceDesc]: t('price descending'),
-        [TypeProductOrderingModeEnum.Relevance]: t('relevance'),
-        [TypeProductOrderingModeEnum.NameAsc]: t('name ascending'),
-        [TypeProductOrderingModeEnum.NameDesc]: t('name descending'),
+        [TypeProductOrderingModeEnum.Priority]: t('Priority'),
+        [TypeProductOrderingModeEnum.PriceAsc]: t('Price ascending'),
+        [TypeProductOrderingModeEnum.PriceDesc]: t('Price descending'),
+        [TypeProductOrderingModeEnum.Relevance]: t('Relevance'),
+        [TypeProductOrderingModeEnum.NameAsc]: t('Name ascending'),
+        [TypeProductOrderingModeEnum.NameDesc]: t('Name descending'),
     };
 
     const sortOptions = (customSortOptions || DEFAULT_SORT_OPTIONS).filter((sortOption) =>
@@ -56,18 +56,23 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
     return (
         <>
             <Button
-                className={twJoin('relative flex-1 vl:mb-3 vl:hidden gap-3', isSortMenuOpen && 'z-aboveOverlay')}
                 variant="inverted"
+                className={twJoin(
+                    'relative w-full flex-1 justify-start sm:w-auto vl:hidden',
+                    isSortMenuOpen && 'z-aboveOverlay',
+                )}
                 onClick={() => setIsSortMenuOpen(!isSortMenuOpen)}
             >
                 <SortIcon className="size-5" />
-                {t('Sort')}
+                <span className="line-clamp-1 overflow-hidden text-left leading-tight">
+                    {sortOptionsLabels[selectedSortOption] || t('Sort')}
+                </span>
             </Button>
             <div
                 className={twJoin(
-                    'bg-background rounded-xl vl:flex flex-col vl:flex-row vl:gap-2.5 ',
+                    'flex-col rounded-xl bg-background vl:flex vl:flex-row vl:gap-2.5 ',
                     isSortMenuOpen
-                        ? 'flex absolute w-[60%] right-0 top-full z-aboveOverlay mt-1 py-2.5 px-5 divide-y divide-borderAccentLess'
+                        ? 'absolute right-0 top-full z-aboveOverlay mt-1 flex w-[60%] divide-y divide-borderAccentLess px-5 py-2.5'
                         : 'hidden',
                 )}
             >
@@ -93,8 +98,8 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
                     );
                 })}
             </div>
-            <div className="text-inputPlaceholder text-xs hidden vl:block">
-                {totalCount} {t('Products count', { count: totalCount })}
+            <div className="hidden font-secondary text-xs text-inputPlaceholder vl:block">
+                {totalCount} {t('products count', { count: totalCount })}
             </div>
             {isSortMenuOpen && <Overlay isActive={isSortMenuOpen} onClick={() => setIsSortMenuOpen(false)} />}
         </>

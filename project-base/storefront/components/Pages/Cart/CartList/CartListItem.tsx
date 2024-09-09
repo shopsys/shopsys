@@ -93,7 +93,7 @@ export const CartListItem: FC<CartListItemProps> = ({
 
                         {!!product.availableStoresCount && (
                             <span className="ml-1 inline font-normal vl:ml-0 vl:block">
-                                {t('or immediately in {{ count }} stores', {
+                                {t('or at {{ count }} stores', {
                                     count: product.availableStoresCount,
                                 })}
                             </span>

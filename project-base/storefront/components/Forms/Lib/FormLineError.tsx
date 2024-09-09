@@ -34,7 +34,7 @@ export const FormLineError: FC<FormLineErrorProps> = ({ inputType, error, textIn
                 )}
             />
             {error.message !== undefined && (
-                <span className="text-sm font-secondary text-inputError">{error.message}</span>
+                <span className="font-secondary text-sm text-inputError">{error.message}</span>
             )}
         </div>
     );

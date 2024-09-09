@@ -54,11 +54,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
                         onClickCapture={() => setSelectedGalleryItemIndex(0)}
                     />
 
-                    {!!flags.length && (
-                        <div className="absolute top-3 left-4 flex flex-col">
-                            <ProductFlags flags={flags} />
-                        </div>
-                    )}
+                    {!!flags.length && <ProductFlags flags={flags} variant="detail" />}
                 </div>
 
                 {!!galleryItems.length && (

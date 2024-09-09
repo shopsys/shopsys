@@ -10,9 +10,10 @@ type ProductListItemImageProps = {
     size: ProductItemProps['size'];
     product: ProductItemProps['product'];
     visibleItemsConfig: ProductItemProps['visibleItemsConfig'];
+    tid?: string;
 };
 
-export const ProductListItemImage: FC<ProductListItemImageProps> = ({ product, visibleItemsConfig, size }) => {
+export const ProductListItemImage: FC<ProductListItemImageProps> = ({ product, visibleItemsConfig, size, tid }) => {
     const [imageSizeClassName, imageSize] = (() => {
         switch (size) {
             case 'extraLarge':
@@ -20,16 +21,18 @@ export const ProductListItemImage: FC<ProductListItemImageProps> = ({ product, v
             case 'large':
                 return ['h-[180px] w-[180px]', 180];
             case 'medium':
-                return ['h-[150px] w-[150px]', 150];
+                return ['h-[142px] w-[142px]', 142];
             case 'small':
                 return ['h-[94px] w-[94px]', 94];
+            case 'extraSmall':
+                return ['h-[80px] w-[80px]', 80];
             default:
                 return ['h-[220px] w-[220px]', 220];
         }
     })();
 
     return (
-        <div className="relative flex items-center justify-center mx-auto w-full" tid={TIDs.product_list_item_image}>
+        <div className="flex items-center justify-center" tid={tid || TIDs.product_list_item_image}>
             <Image
                 alt={product.mainImage?.name || product.fullName}
                 className={twJoin('max-h-full object-contain', imageSizeClassName)}
@@ -40,9 +43,7 @@ export const ProductListItemImage: FC<ProductListItemImageProps> = ({ product, v
             />
 
             {!!product.flags.length && visibleItemsConfig?.flags && (
-                <div className="absolute top-0 right-0 flex flex-col items-end justify-end">
-                    <ProductFlags flags={product.flags} />
-                </div>
+                <ProductFlags flags={product.flags} variant="list" />
             )}
         </div>
     );

@@ -36,9 +36,9 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                 // see https://tailwindcss.com/docs/hover-focus-and-other-states#styling-based-on-sibling-state
                 className={twMergeCustom(
                     inputType === 'text-input' &&
-                        'top-2 text-sm peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-2 peer-focus:text-sm font-normal peer-focus:font-normal peer-placeholder-shown:font-semibold',
+                        'top-2 text-sm peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:font-semibold peer-focus:top-2 peer-focus:text-sm peer-focus:font-normal',
                     (inputType === 'text-input' || inputType === 'selectbox' || inputType === 'textarea') &&
-                        'absolute left-3 z-[2] block transition-all text-inputPlaceholder peer-disabled:text-inputPlaceholderDisabled peer-focus:text-inputPlaceholderActive peer-hover:text-inputPlaceholderHovered',
+                        'absolute left-3 z-[2] block text-inputPlaceholder transition-all peer-hover:text-inputPlaceholderHovered peer-focus:text-inputPlaceholderActive peer-disabled:text-inputPlaceholderDisabled',
                     (inputType === 'text-input' || inputType === 'selectbox' || inputType === 'textarea') &&
                         (selectBoxLabelIsFloated === undefined || selectBoxLabelIsFloated === true) &&
                         'transform-none peer-placeholder-shown:-translate-y-1/2 peer-focus:transform-none',
@@ -57,22 +57,22 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                         selectBoxLabelIsFloated && 'top-[9px] text-sm',
                     ],
                     inputType === 'textarea' &&
-                        'top-1 text-sm peer-placeholder-shown:top-6 peer-placeholder-shown:text-md peer-focus:top-1 peer-focus:text-sm bg-background pr-1',
-                    disabled && 'text-inputTextDisabled hover:text-inputTextDisabled',
+                        'top-1 pr-1 text-sm peer-placeholder-shown:top-6 peer-placeholder-shown:text-base peer-placeholder-shown:font-semibold peer-focus:top-1 peer-focus:text-sm peer-focus:font-normal',
+                    disabled && 'text-inputTextDisabled',
                     className,
                 )}
             >
                 {(inputType === 'checkbox' || inputType === 'radio') && (
                     <div
                         className={twMergeCustom(
-                            'flex size-5 min-w-5 border border-inputBorder bg-inputBackground group-hover:bg-inputBackgroundHovered p-[3px] transition ',
+                            'flex size-5 min-w-5 border border-inputBorder bg-inputBackground p-[3px] transition group-hover:bg-inputBackgroundHovered ',
                             inputType === 'checkbox' ? 'rounded' : 'rounded-full p-[5px]',
                             'active:scale-90',
                             checked
                                 ? 'border-inputBorderActive bg-inputBackgroundActive group-hover:bg-inputBackgroundActive '
-                                : 'group-hover:border-inputBorderHovered border-2 group-active:border-inputBorderHovered',
+                                : 'border-2 group-hover:border-inputBorderHovered group-active:border-inputBorderHovered',
                             disabled &&
-                                'group-hover:bg-inputBackgroundDisabled border-inputBorderDisabled group-hover:border-inputBorderDisabled group-active:border-inputBorderDisabled',
+                                'border-inputBorderDisabled group-hover:border-inputBorderDisabled group-hover:bg-inputBackgroundDisabled group-active:border-inputBorderDisabled',
                             disabled && checked && 'bg-inputBorderDisabled group-hover:bg-inputBorderDisabled',
                         )}
                     >

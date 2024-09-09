@@ -48,7 +48,7 @@ h6,
 
 h1,
 .h1 {
-    @apply text-2xl lg:text-4xl;
+    @apply mb-5 text-2xl lg:text-4xl;
 }
 
 h2,
@@ -73,7 +73,7 @@ h5,
 
 h6,
 .h6 {
-    @apply text-xs uppercase tracking-wider lg:text-xs;
+    @apply text-xs uppercase tracking-wider;
 }
 
 td,
@@ -94,11 +94,11 @@ table {
 }
 
 p {
-    @apply break-words text-sm leading-5 lg:text-base;
+    @apply break-words text-sm lg:text-base;
 }
 
 a {
-    @apply cursor-pointer text-sm leading-5 text-link underline outline-none hover:text-linkHovered hover:underline active:text-linkHovered disabled:text-linkDisabled lg:text-base;
+    @apply cursor-pointer text-sm text-link underline outline-none hover:text-linkHovered hover:underline active:text-linkHovered disabled:text-linkDisabled lg:text-base;
 }
 
 b,

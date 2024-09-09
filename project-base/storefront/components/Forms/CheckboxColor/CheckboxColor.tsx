@@ -13,6 +13,7 @@ type CheckboxColorProps = NativeProps & {
     value: any;
     label?: string;
     bgColor?: string;
+    count?: number;
 };
 
 export const CheckboxColor: FC<CheckboxColorProps> = ({
@@ -20,6 +21,7 @@ export const CheckboxColor: FC<CheckboxColorProps> = ({
     label,
     id,
     name,
+    count,
     disabled,
     required,
     value,
@@ -27,9 +29,10 @@ export const CheckboxColor: FC<CheckboxColorProps> = ({
 }) => (
     <ColorLabelWrapper
         bgColor={bgColor}
+        checked={value}
+        count={count}
+        disabled={disabled}
         htmlFor={id}
-        isActive={value}
-        isDisabled={disabled}
         isLightColor={tinycolor(bgColor).isLight()}
         label={label}
     >

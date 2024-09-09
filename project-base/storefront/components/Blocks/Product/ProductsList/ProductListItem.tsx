@@ -39,7 +39,7 @@ export type ProductItemProps = {
     toggleProductInComparison: () => void;
     toggleProductInWishlist: () => void;
     visibleItemsConfig?: ProductVisibleItemsConfigType;
-    size?: 'small' | 'medium' | 'large' | 'extraLarge';
+    size?: 'extraSmall' | 'small' | 'medium' | 'large' | 'extraLarge';
     onClick?: (product: TypeListedProductFragment, index: number) => void;
 } & FunctionComponentProps;
 
@@ -56,7 +56,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
             toggleProductInWishlist,
             className,
             visibleItemsConfig = PREDEFINED_VISIBLE_ITEMS_CONFIGS.largeItem,
-            size = 'extraLarge',
+            size = 'large',
             onClick,
         },
         ref,
@@ -70,9 +70,8 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 ref={ref}
                 tid={TIDs.blocks_product_list_listeditem_ + product.catalogNumber}
                 className={twMergeCustom(
-                    'group relative flex select-none flex-col justify-between gap-2.5 p-5 text-left rounded-xl h-ful transition',
-                    'bg-backgroundMore',
-                    'hover:bg-backgroundMost',
+                    'group relative flex select-none flex-col justify-between gap-2.5 rounded-xl border border-backgroundMore bg-backgroundMore px-2.5 py-5 text-left transition sm:px-5',
+                    'hover:border-backgroundMost hover:bg-background',
                     className,
                 )}
             >
@@ -81,7 +80,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                         title={t('Remove from wishlist')}
                         className={twJoin(
                             'absolute left-3 z-above flex h-5 w-5 cursor-pointer items-center justify-center rounded-full p-0 transition',
-                            'border-none bg-backgroundAccentLess outline-none text-text',
+                            'border-none bg-backgroundAccentLess text-text outline-none',
                             'hover:bg-backgroundAccent hover:text-textInverted',
                         )}
                         onClick={toggleProductInWishlist}
@@ -91,7 +90,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 )}
 
                 <ExtendedNextLink
-                    className="flex h-full select-none flex-col justify-between no-underline hover:no-underline text-text hover:text-text"
+                    className="flex h-full select-none flex-col justify-between gap-2.5 text-text no-underline hover:text-link hover:no-underline"
                     draggable={false}
                     href={product.slug}
                     type={product.isMainVariant ? 'productMainVariant' : 'product'}
@@ -106,33 +105,31 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                         onClick?.(product, listIndex);
                     }}
                 >
-                    <div className="flex flex-col gap-2">
-                        <ProductListItemImage product={product} size={size} visibleItemsConfig={visibleItemsConfig} />
+                    <ProductListItemImage product={product} size={size} visibleItemsConfig={visibleItemsConfig} />
 
-                        <div className="font-semibold font-secondary mb-4">{product.fullName}</div>
+                    <div className="line-clamp-3 min-h-[3.75rem] font-secondary text-sm font-semibold group-hover:text-link group-hover:underline">
+                        {product.fullName}
                     </div>
 
-                    <div>
-                        {visibleItemsConfig.price && !(product.isMainVariant && product.isSellingDenied) && (
-                            <ProductPrice
-                                isPriceFromVisible={visibleItemsConfig.priceFromWord}
-                                productPrice={product.price}
+                    {visibleItemsConfig.price && !(product.isMainVariant && product.isSellingDenied) && (
+                        <ProductPrice
+                            isPriceFromVisible={visibleItemsConfig.priceFromWord}
+                            productPrice={product.price}
+                        />
+                    )}
+
+                    {visibleItemsConfig.storeAvailability && (
+                        <div className="min-h-10">
+                            <ProductAvailableStoresCount
+                                availableStoresCount={product.availableStoresCount}
+                                isMainVariant={product.isMainVariant}
+                                name={product.availability.name}
                             />
-                        )}
-
-                        {visibleItemsConfig.storeAvailability && (
-                            <div className="flex flex-col justify-between text-sm text-text h-16">
-                                <div>{product.availability.name}</div>
-                                <ProductAvailableStoresCount
-                                    availableStoresCount={product.availableStoresCount}
-                                    isMainVariant={product.isMainVariant}
-                                />
-                            </div>
-                        )}
-                    </div>
+                        </div>
+                    )}
                 </ExtendedNextLink>
 
-                <div className="flex w-full items-center gap-2">
+                <div className="flex w-full items-center justify-between gap-1 sm:justify-normal sm:gap-2.5">
                     {visibleItemsConfig.addToCart && (
                         <ProductAction
                             gtmMessageOrigin={gtmMessageOrigin}
@@ -143,7 +140,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                     )}
 
                     {visibleItemsConfig.productListButtons && (
-                        <div className="flex justify-end gap-2">
+                        <>
                             <ProductCompareButton
                                 isProductInComparison={isProductInComparison}
                                 toggleProductInComparison={toggleProductInComparison}
@@ -152,7 +149,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                                 isProductInWishlist={isProductInWishlist}
                                 toggleProductInWishlist={toggleProductInWishlist}
                             />
-                        </div>
+                        </>
                     )}
                 </div>
             </li>

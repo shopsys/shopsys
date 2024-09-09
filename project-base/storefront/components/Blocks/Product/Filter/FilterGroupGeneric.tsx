@@ -6,6 +6,7 @@ import {
     ShowAllButton,
 } from './FilterElements';
 import { useFilterShowLess } from './utils/useFilterShowLess';
+import { ProductFlag } from 'components/Blocks/Product/ProductFlag';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
@@ -15,13 +16,14 @@ import { useUpdateFilterQuery } from 'utils/queryParams/useUpdateFilterQuery';
 
 type FilterFieldType = 'flags' | 'brands';
 
-export type MappedFilterOption = { name: string; uuid: string; count?: number };
+export type MappedFilterOption = { name: string; uuid: string; count?: number; rgbColor?: string };
 
 type FilterGroupGenericProps = {
     title: string;
     filterField: FilterFieldType;
     options: MappedFilterOption[];
     defaultNumberOfShownItems: number;
+    isActive: boolean;
 };
 
 export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
@@ -29,6 +31,7 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
     options,
     defaultNumberOfShownItems,
     filterField,
+    isActive,
 }) => {
     const { t } = useTranslation();
     const [isGroupOpen, setIsGroupOpen] = useState(true);
@@ -57,7 +60,12 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
 
     return (
         <FilterGroupWrapper>
-            <FilterGroupTitle isOpen={isGroupOpen} title={title} onClick={() => setIsGroupOpen(!isGroupOpen)} />
+            <FilterGroupTitle
+                isActive={isActive}
+                isOpen={isGroupOpen}
+                title={title}
+                onClick={() => setIsGroupOpen(!isGroupOpen)}
+            />
             {isGroupOpen && (
                 <FilterGroupContent>
                     {defaultOptions && (
@@ -68,13 +76,20 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
                                 const isChecked = !!selectedItems?.includes(option.uuid) || isFlagAndSelectedByDefault;
                                 const isDisabled = option.count === 0 && !isChecked;
 
+                                const optionLabel =
+                                    filterField === 'flags' ? (
+                                        <ProductFlag name={option.name} rgbColor={option.rgbColor ?? ''} />
+                                    ) : (
+                                        option.name
+                                    );
+
                                 return (
                                     <FilterGroupContentItem key={option.uuid} isDisabled={isDisabled}>
                                         <Checkbox
                                             count={option.count}
                                             disabled={isDisabled}
                                             id={`${filterField}.${index}.checked`}
-                                            label={option.name}
+                                            label={optionLabel}
                                             name={`${filterField}.${index}.checked`}
                                             value={isChecked}
                                             onChange={() => handleCheck(option.uuid)}
@@ -85,7 +100,7 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
 
                             {isShowLessMoreShown && (
                                 <ShowAllButton onClick={() => setAreAllItemsShown((prev) => !prev)}>
-                                    {isWithAllItemsShown ? t('show less') : t('show more')}
+                                    {isWithAllItemsShown ? t('Show less') : t('Show more')}
                                 </ShowAllButton>
                             )}
                         </>

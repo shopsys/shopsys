@@ -75,7 +75,7 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                             <li key={file.url}>
                                 <a className="no-underline" href={file.url}>
                                     {file.anchorText}
-                                    <ArrowSecondaryIcon className="rotate-180 ml-1" />
+                                    <ArrowSecondaryIcon className="rotate-90 ml-1" />
                                 </a>
                             </li>
                         ))}

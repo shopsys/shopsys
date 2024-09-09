@@ -1,7 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ReactElement } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
-import { twJoin } from 'tailwind-merge';
+import { twMergeCustom } from 'utils/twMerge';
 
 type LabelLinkProps = {
     isDisabled?: boolean;
@@ -36,9 +36,9 @@ export const LabelLink: FC<LabelLinkProps> = ({
     render,
     onClick,
 }) => {
-    const labelLinkTwClassName = twJoin(
-        'px-4 py-1 rounded-full no-underline transition-all flex justify-center items-center',
-        'bg-labelLinkBackground text-labelLinkText border-labelLinkBorder',
+    const labelLinkTwClassName = twMergeCustom(
+        'px-4 py-1 rounded-full no-underline transition-all flex justify-center items-center font-semibold font-secondary',
+        'bg-labelLinkBackground text-labelLinkText border-labelLinkBorder text-sm',
         'hover:bg-labelLinkBackgroundHovered hover:text-labelLinkTextHovered hover:border-labelLinkBorderHovered hover:no-underline hover:cursor-pointer',
         isDisabled && 'bg-labelLinkBackgroundDisabled text-labelLinkTextDisabled border-labelLinkBorderDisabled',
         isActive && 'bg-labelLinkBackgroundActive text-labelLinkTextActive border-labelLinkBorderActive',

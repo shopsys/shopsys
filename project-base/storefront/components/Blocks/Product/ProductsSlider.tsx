@@ -1,6 +1,6 @@
 import { ProductItemProps } from './ProductsList/ProductListItem';
 import { ProductsListContent } from './ProductsList/ProductsListContent';
-import { ArrowRightIcon } from 'components/Basic/Icon/ArrowRightIcon';
+import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
@@ -13,6 +13,10 @@ import { isWholeElementVisible } from 'utils/ui/isWholeElementVisible';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 import { wait } from 'utils/wait';
 
+export const VISIBLE_SLIDER_ITEMS = 5;
+export const VISIBLE_SLIDER_ITEMS_LAST_VISITED = 8;
+export const VISIBLE_SLIDER_ITEMS_BLOG = 3;
+
 export type ProductsSliderProps = {
     products: TypeListedProductFragment[];
     gtmProductListName: GtmProductListNameType;
@@ -20,7 +24,7 @@ export type ProductsSliderProps = {
     isWithArrows?: boolean;
     wrapperClassName?: string;
     productItemProps?: Partial<ProductItemProps>;
-    isBlogPage?: boolean;
+    visibleSliderItems?: number;
 };
 
 const productTwClass = 'snap-center border-b-0 md:snap-start mx-1.5 first:ml-0 last:mr-0';
@@ -33,14 +37,13 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     wrapperClassName,
     isWithArrows = true,
     productItemProps,
-    isBlogPage = false,
+    visibleSliderItems = VISIBLE_SLIDER_ITEMS,
 }) => {
     const { t } = useTranslation();
-    const maxVisibleSlides = isBlogPage ? 3 : 4;
     const sliderRef = useRef<HTMLDivElement>(null);
     const [productElementRefs, setProductElementRefs] = useState<Array<RefObject<HTMLLIElement>>>();
     const [activeIndex, setActiveIndex] = useState(0);
-    const isWithControls = products.length > maxVisibleSlides && isWithArrows;
+    const isWithControls = products.length > visibleSliderItems && isWithArrows;
     const isMobile = !useMediaMin('vl');
 
     useEffect(() => {
@@ -85,7 +88,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
 
     const handleNext = () => {
         const nextIndex = activeIndex + 1;
-        const isEndSlide = nextIndex + maxVisibleSlides > productElementRefs!.length;
+        const isEndSlide = nextIndex + visibleSliderItems > productElementRefs!.length;
 
         if (isMobile && isEndSlide) {
             return;
@@ -102,13 +105,26 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
         trackMouse: true,
     });
 
+    const twClass = (visibleSliderItems: number) => {
+        switch (visibleSliderItems) {
+            case VISIBLE_SLIDER_ITEMS:
+                return 'auto-cols-[225px] sm:auto-cols-[60%]  md:auto-cols-[45%] lg:auto-cols-[30%] vl:auto-cols-[25%] xl:auto-cols-[20%]';
+            case VISIBLE_SLIDER_ITEMS_BLOG:
+                return 'auto-cols-[80%] lg:auto-cols-[45%] xl:auto-cols-[33.33%]';
+            case VISIBLE_SLIDER_ITEMS_LAST_VISITED:
+                return 'auto-cols-[45%] sm:auto-cols-[30%] lg:auto-cols-[16.5%] vl:auto-cols-[14%] xl:auto-cols-[12.5%]';
+            default:
+                return '';
+        }
+    };
+
     return (
         <div className="relative" tid={tid}>
             {isWithControls && (
                 <div
                     className={twMergeCustom(
                         'absolute -top-10 right-0 hidden items-center justify-center  gap-2',
-                        isBlogPage ? 'xl:flex' : 'vl:flex',
+                        visibleSliderItems === VISIBLE_SLIDER_ITEMS_BLOG ? 'xl:flex' : 'vl:flex',
                     )}
                 >
                     <SliderButton title={t('Previous products')} type="prev" onClick={handlePrevious} />
@@ -124,10 +140,8 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
                     products={products}
                     swipeHandlers={handlers}
                     className={twMergeCustom([
-                        "grid snap-x snap-mandatory auto-cols-[80%] md:auto-cols-[45%] grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] [&::-webkit-scrollbar]:hidden ",
-                        isBlogPage
-                            ? 'lg:auto-cols-[45%] xl:auto-cols-[33.3%]'
-                            : 'lg:auto-cols-[30%] vl:auto-cols-[25%]',
+                        "grid snap-x snap-mandatory grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] [&::-webkit-scrollbar]:hidden",
+                        twClass(visibleSliderItems),
                         wrapperClassName,
                     ])}
                     productItemProps={{
@@ -149,6 +163,6 @@ const SliderButton: FC<SliderButtonProps> = ({ type, isDisabled, onClick, title 
         title={title}
         onClick={onClick}
     >
-        <ArrowRightIcon className={twJoin('w-5', type === 'prev' && 'rotate-180')} />
+        <ArrowSecondaryIcon className={twJoin('w-5', type === 'prev' ? 'rotate-90' : '-rotate-90')} />
     </button>
 );

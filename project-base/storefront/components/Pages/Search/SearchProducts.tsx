@@ -53,11 +53,11 @@ export const SearchProducts: FC = () => {
                 <div className="h4 mb-3">{t('Found products')}</div>
             </div>
 
-            <div className="relative mb-8 flex flex-col vl:mb-10 vl:flex-row vl:flex-wrap vl:gap-12">
+            <div className="mb-8 flex scroll-mt-5 flex-col vl:mb-10 vl:flex-row vl:flex-wrap vl:gap-4">
                 <div
                     className={twJoin(
-                        'fixed top-0 left-0 bottom-0 right-10 max-w-md -translate-x-full vl:static vl:w-80 vl:translate-x-0 vl:transition-none',
-                        isPanelOpen && 'z-aboveOverlay translate-x-0 transition',
+                        'fixed bottom-0 left-0 right-10 top-0 max-w-[400px] -translate-x-full overflow-hidden transition max-vl:z-aboveOverlay vl:static vl:w-[227px] vl:translate-x-0 vl:rounded-none vl:transition-none',
+                        isPanelOpen && 'translate-x-0',
                     )}
                 >
                     <FilterPanel

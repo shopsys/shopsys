@@ -54,7 +54,7 @@ export const MenuIconic: FC = () => {
                             <span className={menuCountTwClass}>{wishlist.products.length}</span>
                         )}
                     </div>
-                    <span className="max-lg:hidden">{t('Wishlist')}</span>
+                    <span className="max-lg:hidden">{t('Favorites')}</span>
                 </MenuIconicItemLink>
             </MenuIconicItem>
 

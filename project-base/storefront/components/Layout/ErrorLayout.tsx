@@ -5,7 +5,7 @@ import { Webline } from './Webline/Webline';
 export const ErrorLayout: FC = ({ children }) => (
     <>
         <Webline
-            className="relative mb-8"
+            className="relative mb-4"
             wrapperClassName="bg-gradient-to-tr from-backgroundBrand to-backgroundBrandLess"
         >
             <Header simpleHeader />

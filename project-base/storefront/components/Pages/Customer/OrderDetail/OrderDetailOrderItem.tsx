@@ -61,7 +61,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
                     </span>
                 )}
                 {isPriceVisible(orderItem.totalPrice.priceWithVat) && (
-                    <span className="font-bold text-right">{formatPrice(orderItem.totalPrice.priceWithVat)}</span>
+                    <span className="text-right font-bold">{formatPrice(orderItem.totalPrice.priceWithVat)}</span>
                 )}
 
                 {isUserLoggedIn && orderItem.type === TypeOrderItemTypeEnum.Product && (

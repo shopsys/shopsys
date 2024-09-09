@@ -1,4 +1,4 @@
-import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
+import { ProductsSlider, VISIBLE_SLIDER_ITEMS_LAST_VISITED } from 'components/Blocks/Product/ProductsSlider';
 import { SkeletonModuleLastVisitedProducts } from 'components/Blocks/Skeleton/SkeletonModuleLastVisitedProducts';
 import { useProductsByCatnums } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
@@ -18,12 +18,22 @@ export const LastVisitedProductsContent: FC<LastVisitedProductsProps> = ({ produ
         return null;
     }
 
+    const productItemStyleProps = {
+        size: 'small' as const,
+        visibleItemsConfig: { price: false, addToCart: false, flags: false, storeAvailability: false },
+    };
+
     return (
         <>
             {lastVisitedProducts && !areProductsFetching ? (
                 <ProductsSlider
                     gtmProductListName={GtmProductListNameType.last_visited_products}
                     products={lastVisitedProducts}
+                    visibleSliderItems={VISIBLE_SLIDER_ITEMS_LAST_VISITED}
+                    productItemProps={{
+                        visibleItemsConfig: productItemStyleProps.visibleItemsConfig,
+                        size: productItemStyleProps.size,
+                    }}
                 />
             ) : (
                 <SkeletonModuleLastVisitedProducts />

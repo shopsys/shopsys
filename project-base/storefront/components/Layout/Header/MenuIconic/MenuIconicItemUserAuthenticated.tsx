@@ -43,19 +43,22 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
     return (
         <>
             <div
-                className={twJoin('group lg:relative', (isClicked || isHovered) && 'z-aboveOverlay')}
                 tid={TIDs.my_account_link}
+                className={twJoin(
+                    'group w-10 sm:w-12 lg:relative lg:-mb-2.5 lg:w-[72px] lg:pb-2.5',
+                    (isClicked || isHovered) && 'z-aboveOverlay',
+                )}
                 onMouseEnter={() => isDesktop && setIsHovered(true)}
                 onMouseLeave={() => isDesktop && setIsHovered(false)}
             >
                 <MenuIconicItemLink
-                    className="rounded-t p-3 max-lg:hidden transition-all"
+                    className="rounded-t p-3 transition-all max-lg:hidden"
                     href={customerUrl}
                     type="account"
                 >
                     <div className="relative">
-                        <UserIcon className="w-6 max-h-[22px]" />
-                        <div className="w-[10px] h-[10px] absolute -right-1 -top-1 rounded-full bg-actionPrimaryBackground" />
+                        <UserIcon className="max-h-[22px] w-6" />
+                        <div className="absolute -right-1 -top-1 h-[10px] w-[10px] rounded-full bg-actionPrimaryBackground" />
                     </div>
                     {t('My account')}
                 </MenuIconicItemLink>
@@ -68,31 +71,31 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                         }}
                     >
                         <div className="relative flex h-full w-full items-center justify-center text-textInverted transition-colors">
-                            <UserIcon className="w-6 text-textInverted max-h-[22px]" />
-                            <div className="w-[10px] h-[10px] absolute -right-1 -top-1 rounded-full bg-actionPrimaryBackground" />
+                            <UserIcon className="max-h-[22px] w-6 text-textInverted" />
+                            <div className="absolute -right-1 -top-1 h-[10px] w-[10px] rounded-full bg-actionPrimaryBackground" />
                         </div>
                     </div>
                 </div>
 
                 <div
                     className={twMergeCustom(
-                        'pointer-events-none absolute top-0 -right-[100%] block min-w-[355px] origin-top-right rounded-xl px-5',
-                        'lg:top-full lg:transition-all lg:p-5',
-                        'bg-none scale-50 opacity-0',
+                        'pointer-events-none absolute right-0 top-0 block min-w-[355px] origin-top-right rounded-xl px-5 lg:-right-[100%]',
+                        'lg:top-full lg:p-5 lg:transition-all',
+                        'scale-50 bg-none opacity-0',
                         isHoveredDelayed &&
-                            'group-hover:bg-background group-hover:scale-100 group-hover:opacity-100 group-hover:pointer-events-auto z-cart',
+                            'z-cart group-hover:pointer-events-auto group-hover:scale-100 group-hover:bg-background group-hover:opacity-100',
                         isClicked &&
-                            'scale-100 opacity-100 bg-background top-0 right-0 rounded-none h-dvh fixed z-aboveOverlay pointer-events-auto transition-[right]',
+                            'pointer-events-auto fixed right-0 top-0 z-aboveOverlay h-dvh scale-100 rounded-none bg-background opacity-100 transition-[right]',
                     )}
                 >
-                    <div className="flex flex-row justify-between m-5 lg:hidden">
-                        <span className="text-base w-full text-center">{t('My account')}</span>
+                    <div className="m-5 flex flex-row justify-between lg:hidden">
+                        <span className="w-full text-center text-base">{t('My account')}</span>
                         <RemoveIcon
-                            className="w-4 text-borderAccent cursor-pointer"
+                            className="w-4 cursor-pointer text-borderAccent"
                             onClick={() => setIsClicked(false)}
                         />
                     </div>
-                    <ul className="flex flex-col max-h-[87dvh] overflow-auto gap-2 p-1">
+                    <ul className="flex max-h-[87dvh] flex-col gap-2 overflow-auto p-1">
                         <li className={userMenuItemTwClass}>
                             <MenuIconicSubItemLink
                                 href={customerOrdersUrl}
@@ -100,7 +103,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                                 type="orderList"
                             >
                                 <div className={userMenuItemIconTwClass}>
-                                    <SearchListIcon className="w-6 h-6" />
+                                    <SearchListIcon className="h-6 w-6" />
                                 </div>
                                 {t('My orders')}
                             </MenuIconicSubItemLink>
@@ -112,7 +115,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                                 type="complaintList"
                             >
                                 <div className={userMenuItemIconTwClass}>
-                                    <SearchListIcon className="w-6 h-6" />
+                                    <SearchListIcon className="h-6 w-6" />
                                 </div>
                                 {t('My complaints')}
                             </MenuIconicSubItemLink>
@@ -124,7 +127,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                                 type="editProfile"
                             >
                                 <div className={userMenuItemIconTwClass}>
-                                    <EditIcon className="w-6 h-6" />
+                                    <EditIcon className="h-6 w-6" />
                                 </div>
                                 {t('Edit profile')}
                             </MenuIconicSubItemLink>
@@ -133,7 +136,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                             <li className={userMenuItemTwClass}>
                                 <MenuIconicSubItemLink href={customerUsersUrl} type="customer-users">
                                     <div className={userMenuItemIconTwClass}>
-                                        <UserIcon className="w-6 max-h-[22px]" />
+                                        <UserIcon className="max-h-[22px] w-6" />
                                     </div>
                                     {t('Customer users')}
                                 </MenuIconicSubItemLink>
@@ -142,7 +145,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                         <li className={userMenuItemTwClass}>
                             <MenuIconicSubItemLink tid={TIDs.header_logout} onClick={logout}>
                                 <div className={userMenuItemIconTwClass}>
-                                    <ExitIcon className="w-6 h-6" />
+                                    <ExitIcon className="h-6 w-6" />
                                 </div>
                                 {t('Logout')}
                             </MenuIconicSubItemLink>

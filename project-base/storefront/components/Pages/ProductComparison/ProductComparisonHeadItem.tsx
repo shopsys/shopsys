@@ -90,11 +90,7 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
                 <RemoveIcon className="w-4" />
             </Button>
 
-            {product.flags.length > 0 && (
-                <div className="absolute left-0 top-0 mt-7 flex flex-col items-start z-0">
-                    <ProductFlags flags={product.flags} />
-                </div>
-            )}
+            {product.flags.length > 0 && <ProductFlags flags={product.flags} variant="comparison" />}
         </th>
     );
 };
