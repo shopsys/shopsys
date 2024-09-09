@@ -189,7 +189,8 @@ export const checkContactInformationFormIsNotVisible = () => {
 };
 
 export const changeOrderDetailDynamicPartsToStaticDemodata = (shouldChangeBreadcrumb: boolean = false) => {
-    changeElementText(TIDs.order_detail_number, order.numberHeading);
+    changeElementText(TIDs.order_detail_number_heading, order.numberHeading);
+    changeElementText(TIDs.order_detail_number, order.number);
     changeElementText(TIDs.order_detail_creation_date, order.creationDate, false);
 
     if (shouldChangeBreadcrumb) {

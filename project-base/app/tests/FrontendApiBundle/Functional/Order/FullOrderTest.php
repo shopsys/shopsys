@@ -73,7 +73,7 @@ class FullOrderTest extends GraphQlTestCase
         $this->addCzechPostTransportToCart($cartUuid);
         $this->addCashOnDeliveryPaymentToCart($cartUuid);
 
-        $this->assertSame($this->createOrderAndGetData($cartUuid), $expected);
+        $this->assertSame($expected, $this->createOrderAndGetData($cartUuid));
     }
 
     /**

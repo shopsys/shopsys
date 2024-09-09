@@ -29,6 +29,7 @@ export const StoreSelect: FC<StoreSelectProps> = ({ selectedStoreUuid, stores, o
                         value={pickupPlace.identifier}
                         label={
                             <TransportAndPaymentSelectItemLabel
+                                isSelected={selectedStoreUuid === pickupPlace.identifier}
                                 name={pickupPlace.name}
                                 pickupPlaceDetail={pickupPlace}
                             />

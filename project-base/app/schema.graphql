@@ -1259,16 +1259,29 @@ input OrderInput {
 type OrderItem {
   "Name of the order item"
   name: String!
+  "Product of the order item"
+  product: Product
   "Quantity of order items in the order"
   quantity: Int!
   "Total price for the quantity of order item"
   totalPrice: Price!
+  "Type of the order item"
+  type: OrderItemTypeEnum!
   "Unit of measurement used for the order item"
   unit: String
   "Order item price per unit"
   unitPrice: Price!
   "Applied VAT rate percentage applied to the order item"
   vatRate: String!
+}
+
+"One of possible types of the order item"
+enum OrderItemTypeEnum {
+  discount
+  payment
+  product
+  rounding
+  transport
 }
 
 type OrderPaymentsConfig {

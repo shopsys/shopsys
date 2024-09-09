@@ -36,6 +36,13 @@ class OrderItemResolverMap extends ResolverMap
                 'vatRate' => function (OrderItem $orderItem) {
                     return $orderItem->getVatPercent();
                 },
+                'product' => function (OrderItem $orderItem) {
+                    if ($orderItem->isTypeProduct()) {
+                        return $orderItem->getProduct();
+                    }
+
+                    return null;
+                },
             ],
         ];
     }

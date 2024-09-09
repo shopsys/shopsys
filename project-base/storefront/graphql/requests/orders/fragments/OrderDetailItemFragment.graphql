@@ -10,4 +10,11 @@ fragment OrderDetailItemFragment on OrderItem {
     vatRate
     quantity
     unit
+    type
+    product {
+        slug
+        mainImage {
+            ...ImageFragment
+        }
+    }
 }

@@ -76,6 +76,10 @@ mutation CreateFullOrder(
                 quantity
                 vatRate
                 unit
+                type
+                product {
+                    uuid
+                }
             }
             firstName
             lastName

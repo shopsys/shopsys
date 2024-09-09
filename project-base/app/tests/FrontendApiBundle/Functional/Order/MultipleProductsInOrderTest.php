@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -20,54 +21,53 @@ class MultipleProductsInOrderTest extends GraphQlTestCase
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         $expectedOrderItems = $this->getExpectedOrderItems();
         $expected = [
-            'data' => [
-                'CreateOrder' => [
-                    'order' => [
-                        'transport' => [
-                            'name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                        ],
-                        'payment' => [
-                            'name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                        ],
-                        'status' => t('New [adjective]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                        'totalPrice' => self::getSerializedOrderTotalPriceByExpectedOrderItems(
-                            $expectedOrderItems,
-                        ),
-                        'items' => $expectedOrderItems,
-                        'firstName' => 'firstName',
-                        'lastName' => 'lastName',
-                        'email' => 'user@example.com',
-                        'telephone' => '+53 123456789',
-                        'companyName' => 'Airlocks s.r.o.',
-                        'companyNumber' => '1234',
-                        'companyTaxNumber' => 'EU4321',
-                        'street' => '123 Fake Street',
-                        'city' => 'Springfield',
-                        'postcode' => '12345',
-                        'country' => [
-                            'code' => 'CZ',
-                        ],
-                        'isDeliveryAddressDifferentFromBilling' => true,
-                        'deliveryFirstName' => 'deliveryFirstName',
-                        'deliveryLastName' => 'deliveryLastName',
-                        'deliveryCompanyName' => null,
-                        'deliveryTelephone' => null,
-                        'deliveryStreet' => 'deliveryStreet',
-                        'deliveryCity' => 'deliveryCity',
-                        'deliveryPostcode' => '13453',
-                        'deliveryCountry' => [
-                            'code' => 'SK',
-                        ],
-                        'note' => 'Thank You',
-                    ],
+            'order' => [
+                'transport' => [
+                    'name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 ],
+                'payment' => [
+                    'name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                ],
+                'status' => t('New [adjective]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'totalPrice' => self::getSerializedOrderTotalPriceByExpectedOrderItems(
+                    $expectedOrderItems,
+                ),
+                'items' => $expectedOrderItems,
+                'firstName' => 'firstName',
+                'lastName' => 'lastName',
+                'email' => 'user@example.com',
+                'telephone' => '+53 123456789',
+                'companyName' => 'Airlocks s.r.o.',
+                'companyNumber' => '1234',
+                'companyTaxNumber' => 'EU4321',
+                'street' => '123 Fake Street',
+                'city' => 'Springfield',
+                'postcode' => '12345',
+                'country' => [
+                    'code' => 'CZ',
+                ],
+                'isDeliveryAddressDifferentFromBilling' => true,
+                'deliveryFirstName' => 'deliveryFirstName',
+                'deliveryLastName' => 'deliveryLastName',
+                'deliveryCompanyName' => null,
+                'deliveryTelephone' => null,
+                'deliveryStreet' => 'deliveryStreet',
+                'deliveryCity' => 'deliveryCity',
+                'deliveryPostcode' => '13453',
+                'deliveryCountry' => [
+                    'code' => 'SK',
+                ],
+                'note' => 'Thank You',
+                'paymentTransactionsCount' => 0,
+                'isPaid' => false,
+                'heurekaAgreement' => true,
             ],
         ];
         $cartUuid = $this->addProductsToCart();
         $this->addCzechPostTransportToCart($cartUuid);
         $this->addCashOnDeliveryPaymentToCart($cartUuid);
 
-        $this->assertQueryWithExpectedArray($this->getMutation($cartUuid), $expected);
+        $this->assertSame($expected, $this->createOrderAndGetData($cartUuid));
     }
 
     /**
@@ -81,25 +81,32 @@ class MultipleProductsInOrderTest extends GraphQlTestCase
 
         $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId, Vat::class);
 
-        $helloKittyName = t('Television', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale) . ' ' .
-            t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale) . ' ' .
-            t('plasma', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale);
+        $helloKittyProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
+        $hundredCrownsTicketProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72', Product::class);
 
         return [
             [
-                'name' => $helloKittyName,
+                'name' => $helloKittyProduct->getFullName($firstDomainLocale),
                 'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh),
                 'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('2891.70', $vatHigh),
                 'quantity' => 1,
                 'vatRate' => $vatHigh->getPercent(),
                 'unit' => t('pcs', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'type' => OrderItemTypeEnum::TYPE_PRODUCT,
+                'product' => [
+                    'uuid' => $helloKittyProduct->getUuid(),
+                ],
             ], [
-                'name' => t('100 Czech crowns ticket', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'name' => $hundredCrownsTicketProduct->getFullName($firstDomainLocale),
                 'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
                 'totalPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh, 2),
                 'quantity' => 2,
                 'vatRate' => $vatHigh->getPercent(),
                 'unit' => t('pcs', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'type' => OrderItemTypeEnum::TYPE_PRODUCT,
+                'product' => [
+                    'uuid' => $hundredCrownsTicketProduct->getUuid(),
+                ],
             ], [
                 'name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('49.9', $vatZero),
@@ -107,6 +114,8 @@ class MultipleProductsInOrderTest extends GraphQlTestCase
                 'quantity' => 1,
                 'vatRate' => $vatZero->getPercent(),
                 'unit' => null,
+                'type' => OrderItemTypeEnum::TYPE_PAYMENT,
+                'product' => null,
             ], [
                 'name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'unitPrice' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
@@ -114,99 +123,44 @@ class MultipleProductsInOrderTest extends GraphQlTestCase
                 'quantity' => 1,
                 'vatRate' => $vatHigh->getPercent(),
                 'unit' => null,
+                'type' => OrderItemTypeEnum::TYPE_TRANSPORT,
+                'product' => null,
             ],
         ];
     }
 
     /**
      * @param string $cartUuid
-     * @return string
+     * @return array
      */
-    private function getMutation(string $cartUuid): string
+    private function createOrderAndGetData(string $cartUuid): array
     {
-        return 'mutation {
-                    CreateOrder(
-                        input: {
-                            cartUuid: "' . $cartUuid . '"
-                            firstName: "firstName"
-                            lastName: "lastName"
-                            email: "user@example.com"
-                            telephone: "+53 123456789"
-                            onCompanyBehalf: true
-                            companyName: "Airlocks s.r.o."
-                            companyNumber: "1234"
-                            companyTaxNumber: "EU4321"
-                            street: "123 Fake Street"
-                            city: "Springfield"
-                            postcode: "12345"
-                            country: "CZ"
-                            note:"Thank You"
-                            isDeliveryAddressDifferentFromBilling: true
-                            deliveryFirstName: "deliveryFirstName"
-                            deliveryLastName: "deliveryLastName"
-                            deliveryStreet: "deliveryStreet"
-                            deliveryCity: "deliveryCity"
-                            deliveryCountry: "SK"
-                            deliveryPostcode: "13453"
-                        }
-                    ) {
-                        order {
-                            transport {
-                                name
-                            }
-                            payment {
-                                name
-                            }
-                            status
-                            totalPrice {
-                                priceWithVat
-                                priceWithoutVat
-                                vatAmount
-                            }
-                            items {
-                                name
-                                unitPrice {
-                                    priceWithVat
-                                    priceWithoutVat
-                                    vatAmount
-                                }
-                                totalPrice {
-                                    priceWithVat
-                                    priceWithoutVat
-                                    vatAmount
-                                }
-                                quantity
-                                vatRate
-                                unit
-                            }
-                            firstName
-                            lastName
-                            email
-                            telephone
-                            companyName
-                            companyNumber
-                            companyTaxNumber
-                            street
-                            city
-                            postcode
-                            country {
-                                code
-                            }
-                            isDeliveryAddressDifferentFromBilling
-                            deliveryFirstName
-                            deliveryLastName
-                            deliveryCompanyName
-                            deliveryTelephone
-                            deliveryStreet
-                            deliveryCity
-                            deliveryPostcode
-                            deliveryCountry {
-                                code
-                            }
-                            note
-                        }
-                    }
-                }';
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CreateFullOrderMutation.graphql', [
+            'cartUuid' => $cartUuid,
+            'firstName' => 'firstName',
+            'lastName' => 'lastName',
+            'email' => 'user@example.com',
+            'telephone' => '+53 123456789',
+            'onCompanyBehalf' => true,
+            'companyName' => 'Airlocks s.r.o.',
+            'companyNumber' => '1234',
+            'companyTaxNumber' => 'EU4321',
+            'street' => '123 Fake Street',
+            'city' => 'Springfield',
+            'postcode' => '12345',
+            'country' => 'CZ',
+            'note' => 'Thank You',
+            'isDeliveryAddressDifferentFromBilling' => true,
+            'deliveryFirstName' => 'deliveryFirstName',
+            'deliveryLastName' => 'deliveryLastName',
+            'deliveryStreet' => 'deliveryStreet',
+            'deliveryCity' => 'deliveryCity',
+            'deliveryCountry' => 'SK',
+            'deliveryPostcode' => '13453',
+            'heurekaAgreement' => true,
+        ]);
+
+        return $this->getResponseDataForGraphQlType($response, 'CreateOrder');
     }
 
     /**

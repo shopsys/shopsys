@@ -1,5 +1,5 @@
+import { OrderPaymentStatusBar } from './OrderPaymentStatusBar';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { InfoIconInCircle } from 'components/Basic/Icon/InfoIconInCircle';
 import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
@@ -8,8 +8,6 @@ import { TIDs } from 'cypress/tids';
 import { TypeListedOrderFragment } from 'graphql/requests/orders/fragments/ListedOrderFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { ReactNode } from 'react';
-import { twJoin } from 'tailwind-merge';
-import { PaymentTypeEnum } from 'types/payment';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
@@ -30,26 +28,7 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
 
     return (
         <div className="bg-backgroundMore flex flex-col gap-5 rounded-md p-4 vl:p-6">
-            {order.payment.type === PaymentTypeEnum.GoPay && (
-                <div
-                    className={twJoin(
-                        'p-2 rounded-md flex gap-2',
-                        order.isPaid ? 'bg-backgroundSuccess' : 'bg-backgroundWarning',
-                    )}
-                >
-                    {order.isPaid ? (
-                        <>
-                            <InfoIconInCircle className="w-4 text-backgroundSuccessMore" />
-                            {t('The order was paid')}
-                        </>
-                    ) : (
-                        <>
-                            <InfoIconInCircle className="w-4 text-backgroundWarningMore" />
-                            {t('The order has not been paid')}
-                        </>
-                    )}
-                </div>
-            )}
+            <OrderPaymentStatusBar orderIsPaid={order.isPaid} orderPaymentType={order.payment.type} />
             <div className="flex flex-col vl:flex-row vl:justify-between vl:items-start gap-6">
                 <div className="flex flex-col gap-5">
                     <div className="flex gap-x-8 gap-y-2 flex-wrap">
@@ -150,14 +129,23 @@ type OrderItemColumnInfoProps = {
     value: ReactNode;
     valueClassName?: string;
     wrapperClassName?: string;
+    tid?: string;
 };
 
-const OrderItemColumnInfo: FC<OrderItemColumnInfoProps> = ({ title, value, valueClassName, wrapperClassName }) => {
+export const OrderItemColumnInfo: FC<OrderItemColumnInfoProps> = ({
+    title,
+    value,
+    valueClassName,
+    wrapperClassName,
+    tid,
+}) => {
     return (
         <div className={twMergeCustom('flex gap-4 items-end', wrapperClassName)}>
             <div className="flex flex-col gap-1">
                 <span className="text-sm">{title}</span>
-                <span className={twMergeCustom('font-bold leading-none', valueClassName)}>{value}</span>
+                <span className={twMergeCustom('font-bold leading-none', valueClassName)} tid={tid}>
+                    {value}
+                </span>
             </div>
         </div>
     );
@@ -169,7 +157,7 @@ type OrderItemRowInfoProps = {
     rowValueClassName?: string;
 };
 
-const OrderItemRowInfo: FC<OrderItemRowInfoProps> = ({ title, value, rowValueClassName }) => {
+export const OrderItemRowInfo: FC<OrderItemRowInfoProps> = ({ title, value, rowValueClassName }) => {
     return (
         <div className="grid grid-cols-[85px_1fr]">
             <span className="text-sm">{title}</span>

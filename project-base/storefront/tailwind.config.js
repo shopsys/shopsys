@@ -28,6 +28,7 @@ module.exports = {
             linkInvertedDisabled: '#727588',
             linkInvertedHovered: '#FFF0C4',
 
+            borderLess: '#FAFAFA',
             borderAccent: '#7892BC',
             borderAccentLess: '#E0E0E0',
             borderAccentSuccess: '#20D3C6',
@@ -44,7 +45,9 @@ module.exports = {
             backgroundDark: '#25283D',
             backgroundError: '#EC5353',
             backgroundSuccess: '#20D3C6',
+            backgroundSuccessMore: '#149F96',
             backgroundWarning: '#FCBD46',
+            backgroundWarningMore: '#D58B00',
 
             price: '#004EB6',
 
