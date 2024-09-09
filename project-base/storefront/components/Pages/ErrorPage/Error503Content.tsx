@@ -2,10 +2,22 @@ import { ErrorPage, ErrorPageTextHeading, ErrorPageTextMain } from './ErrorPageE
 import { ErrorLayout } from 'components/Layout/ErrorLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import useTranslation from 'next-translate/useTranslation';
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 
 export const Error503Content: FC = () => {
     const { t } = useTranslation();
+    const router = useRouter();
+
+    useEffect(() => {
+        const onRouteChangeComplete = () => router.reload();
+
+        router.events.on('routeChangeComplete', onRouteChangeComplete);
+
+        return () => {
+            router.events.off('routeChangeComplete', onRouteChangeComplete);
+        };
+    }, []);
 
     return (
         <ErrorLayout>
