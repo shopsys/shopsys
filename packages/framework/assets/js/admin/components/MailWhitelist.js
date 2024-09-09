@@ -2,12 +2,9 @@ import Register from '../../common/utils/Register';
 import { addNewItemToCollection, removeItemFromCollection } from '../validation/customization/customizeCollectionBundle';
 
 export default class MailWhitelist {
-    static init () {
-        const $mailWhitelistItemAdd = $('.js-mail-whitelist-item-add');
-        const $mailWhitelist = $('.js-mail-whitelist');
-
-        $mailWhitelistItemAdd.off('click');
-        $mailWhitelist.off('click', '.js-mail-whitelist-item-remove');
+    static init ($container) {
+        const $mailWhitelistItemAdd = $container.filterAllNodes('.js-mail-whitelist-item-add');
+        const $mailWhitelist = $container.filterAllNodes('.js-mail-whitelist');
 
         $mailWhitelist.on('click', '.js-mail-whitelist-item-remove', function (event) {
             const $collection = $(this).closest('.js-mail-whitelist');
@@ -22,7 +19,7 @@ export default class MailWhitelist {
         });
 
         $mailWhitelistItemAdd.on('click', function () {
-            const $collection = $('.js-mail-whitelist');
+            const $collection = $(this).closest('.js-form-group').find('.js-mail-whitelist');
             const index = $collection.data('index');
 
             const prototype = $collection.data('prototype');

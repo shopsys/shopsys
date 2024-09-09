@@ -2,12 +2,9 @@ import Register from '../../common/utils/Register';
 import { addNewItemToCollection, removeItemFromCollection } from '../validation/customization/customizeCollectionBundle';
 
 export default class OpeningHoursCollection {
-    static init () {
-        const $openingHoursItemAdd = $('.js-opening-hours-item-add');
-        const $openingHoursCollection = $('.js-opening-hours');
-
-        $openingHoursItemAdd.off('click');
-        $openingHoursCollection.off('click', '.js-opening-hours-item-remove');
+    static init ($container) {
+        const $openingHoursItemAdd = $container.filterAllNodes('.js-opening-hours-item-add');
+        const $openingHoursCollection = $container.filterAllNodes('.js-opening-hours');
 
         $openingHoursCollection.on('click', '.js-opening-hours-item-remove', function (event) {
             const $item = $(this).closest('.js-opening-hours-item');
