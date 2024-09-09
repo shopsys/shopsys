@@ -148,10 +148,11 @@ class ImageRepository
      * @param string|null $type
      * @return int
      */
-    public function getImagesCountByEntityIndexedById(string $entityName, int $entityId, ?string $type = null): int
+    public function getNewImagePosition(string $entityName, int $entityId, ?string $type = null): int
     {
-        $queryBuilder = $this->em->createQueryBuilder()
-            ->select('COUNT(i)')
+        $queryBuilder = $this->getImageRepository()
+            ->createQueryBuilder('i', 'i.id')
+            ->select('MAX(i.position)')
             ->from(Image::class, 'i', 'i.id')
             ->andWhere('i.entityName = :entityName')->setParameter('entityName', $entityName)
             ->andWhere('i.entityId = :entityId')->setParameter('entityId', $entityId);
@@ -162,6 +163,8 @@ class ImageRepository
             $queryBuilder->andWhere('i.type = :type')->setParameter('type', $type);
         }
 
-        return $queryBuilder->getQuery()->getSingleScalarResult();
+        $position = $queryBuilder->getQuery()->getSingleScalarResult();
+
+        return $position === null ? 0 : ++$position;
     }
 }

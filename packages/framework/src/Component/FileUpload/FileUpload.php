@@ -266,7 +266,7 @@ class FileUpload implements ResetInterface
             return $this->positionByEntityAndType[$entityName][$entityId][$uploadEntityType][$type];
         }
 
-        $position = $this->imageRepository->getImagesCountByEntityIndexedById(
+        $position = $this->imageRepository->getNewImagePosition(
             $entityName,
             $entityId,
             $type,
