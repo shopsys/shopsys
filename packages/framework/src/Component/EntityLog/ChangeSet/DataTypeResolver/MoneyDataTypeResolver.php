@@ -24,15 +24,14 @@ class MoneyDataTypeResolver extends AbstractDataTypeResolver
      */
     public function getResolvedChanges(array $changes): ResolvedChanges
     {
-        $oldMoney = $changes[0];
-        $newMoney = $changes[1];
+        [$oldMoney, $newMoney] = $changes;
 
         return new ResolvedChanges(
             EntityLogFacade::getEntityNameByEntity($oldMoney ?? $newMoney),
             $oldMoney?->getAmount(),
-            $oldMoney?->getAmount(),
+            $oldMoney,
             $newMoney?->getAmount(),
-            $newMoney?->getAmount(),
+            $newMoney,
         );
     }
 
