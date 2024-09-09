@@ -9,7 +9,6 @@ use Doctrine\ORM\EntityRepository;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileInterface;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileRepositoryInterface;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Exception\CustomerFileNotFoundException;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
 class CustomerUploadedFileRepository implements UploadedFileRepositoryInterface
 {
@@ -85,32 +84,21 @@ class CustomerUploadedFileRepository implements UploadedFileRepositoryInterface
      * @param int $customerUploadedFileId
      * @param string $customerUploadedFileSlug
      * @param string $customerUploadedFileExtension
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
-     * @param string|null $hash
+     * @param string $hash
      * @return \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile
      */
-    public function getByIdSlugAndExtension(
+    public function getByIdSlugAndExtensionAndHash(
         int $customerUploadedFileId,
         string $customerUploadedFileSlug,
         string $customerUploadedFileExtension,
-        ?CustomerUser $customerUser = null,
-        ?string $hash = null,
+        string $hash,
     ): CustomerUploadedFile {
         $queryBuilder = $this->getCustomerUploadedFileRepository()
             ->createQueryBuilder('cuf')
             ->andWhere('cuf.id = :uploadedFileId')->setParameter('uploadedFileId', $customerUploadedFileId)
             ->andWhere('cuf.slug = :uploadedFileSlug')->setParameter('uploadedFileSlug', $customerUploadedFileSlug)
-            ->andWhere('cuf.extension = :uploadedFileExtension')->setParameter('uploadedFileExtension', $customerUploadedFileExtension);
-
-        if ($customerUser) {
-            $queryBuilder->andWhere('cuf.customerUser = :customerUser')
-                ->setParameter('customerUser', $customerUser);
-        }
-
-        if ($hash) {
-            $queryBuilder->andWhere('cuf.hash = :hash')
-                ->setParameter('hash', $hash);
-        }
+            ->andWhere('cuf.extension = :uploadedFileExtension')->setParameter('uploadedFileExtension', $customerUploadedFileExtension)
+            ->andWhere('cuf.hash = :hash')->setParameter('hash', $hash);
 
         $customerUploadedFile = $queryBuilder->getQuery()->getOneOrNullResult();
 

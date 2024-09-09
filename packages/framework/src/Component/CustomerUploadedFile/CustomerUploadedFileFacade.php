@@ -256,27 +256,24 @@ class CustomerUploadedFileFacade extends AbstractUploadedFileFacade
      * @param int $customerUploadedFileId
      * @param string $customerUploadedFileSlug
      * @param string $customerUploadedFileExtension
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
-     * @param string|null $hash
+     * @param string $hash
      * @return \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile
      */
-    public function getByIdSlugExtensionAndCustomerUserOrHash(
+    public function getByIdSlugExtensionAndHash(
         int $customerUploadedFileId,
         string $customerUploadedFileSlug,
         string $customerUploadedFileExtension,
-        ?CustomerUser $customerUser = null,
-        ?string $hash = null,
+        string $hash,
     ): CustomerUploadedFile {
-        if ($this->isAccessToFileDenied($hash, $customerUser)) {
+        if ($this->isAccessToFileDenied($hash)) {
             throw new InvalidArgumentException('Either hash or customerUser must be set or administrator must be logged in.');
         }
 
-        return $this->customerUploadedFileRepository->getByIdSlugAndExtension(
+        return $this->customerUploadedFileRepository->getByIdSlugAndExtensionAndHash(
             $customerUploadedFileId,
             $customerUploadedFileSlug,
             $customerUploadedFileExtension,
-            $hash ? null : $customerUser,
-            $hash ?? null,
+            $hash,
         );
     }
 
@@ -306,11 +303,10 @@ class CustomerUploadedFileFacade extends AbstractUploadedFileFacade
 
     /**
      * @param string|null $hash
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      * @return bool
      */
-    public function isAccessToFileDenied(?string $hash, ?CustomerUser $customerUser): bool
+    public function isAccessToFileDenied(?string $hash): bool
     {
-        return !$hash && !$customerUser && !$this->administratorFrontSecurityFacade->isAdministratorLogged();
+        return !$hash && !$this->administratorFrontSecurityFacade->isAdministratorLogged();
     }
 }

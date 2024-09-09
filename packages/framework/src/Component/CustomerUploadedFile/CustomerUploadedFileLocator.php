@@ -27,6 +27,7 @@ class CustomerUploadedFileLocator extends AbstractUploadedFileLocator
             return $domainRouter->generate('front_customer_uploaded_file_download', [
                 'uploadedFileId' => $customerUploadedFile->getId(),
                 'uploadedFilename' => $customerUploadedFile->getSlugWithExtension(),
+                'hash' => $customerUploadedFile->getHash(),
             ]);
         }
 
@@ -48,6 +49,7 @@ class CustomerUploadedFileLocator extends AbstractUploadedFileLocator
             return $domainRouter->generate('front_customer_uploaded_file_view', [
                 'uploadedFileId' => $customerUploadedFile->getId(),
                 'uploadedFilename' => $customerUploadedFile->getSlugWithExtension(),
+                'hash' => $customerUploadedFile->getHash(),
             ]);
         }
 

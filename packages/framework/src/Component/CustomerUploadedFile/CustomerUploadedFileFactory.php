@@ -44,12 +44,12 @@ class CustomerUploadedFileFactory
 
         $entityClassName = $this->entityNameResolver->resolve(CustomerUploadedFile::class);
 
-        $hash = $customerUser === null ? ByteString::fromRandom(32)->toString() : null;
+        $hash = ByteString::fromRandom(32)->toString();
 
         return new $entityClassName($entityName, $entityId, $type, pathinfo(
             $temporaryFilepath,
             PATHINFO_BASENAME,
-        ), $uploadedFilename, $position, $customerUser, $hash);
+        ), $uploadedFilename, $position, $hash, $customerUser);
     }
 
     /**
