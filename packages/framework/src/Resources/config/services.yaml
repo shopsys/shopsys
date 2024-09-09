@@ -225,6 +225,8 @@ services:
         arguments: [!tagged shopsys.data_type_resolver]
 
     Shopsys\FrameworkBundle\Component\EntityLog\EventListener\EntityLogEventListener:
+        arguments:
+            $entityLogEntityManager: '@doctrine.orm.entity_logging'
         tags:
             - { name: doctrine.event_listener, event: postPersist, priority: 1 }
             - { name: doctrine.event_listener, event: postUpdate, priority: 1 }
@@ -978,6 +980,14 @@ services:
         class: Shopsys\FrameworkBundle\Form\Constraints\ImageAbstractFilesystemValidator
 
     doctrine.orm.default_entity_manager:
+        arguments:
+            - '@doctrine.dbal.default_connection'
+            - '@doctrine.orm.default_configuration'
+        class: Doctrine\ORM\EntityManager
+        factory: [Doctrine\ORM\EntityManager, create]
+        public: true
+
+    doctrine.orm.entity_logging:
         arguments:
             - '@doctrine.dbal.default_connection'
             - '@doctrine.orm.default_configuration'
