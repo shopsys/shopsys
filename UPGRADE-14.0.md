@@ -139,6 +139,32 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 -   see #project-base-diff to update your project
 
+#### fixed EntityLogger to no longer empty collection that is cleared and filled on every update ([#3406](https://github.com/shopsys/shopsys/pull/3406))
+
+-   method `\Shopsys\FrameworkBundle\Component\EntityLog\EventListener\EntityLogEventListener::__construct` changed its interface:
+    ```diff
+        public function __construct(
+    -       protected readonly EntityManagerInterface $em,
+    +       protected readonly EntityManagerInterface $entityLogEntityManager,
+    +       protected readonly EntityManagerInterface $applicationEntityManager,
+            protected readonly LoggerInterface $monolog,
+            protected readonly LoggableEntityConfigFactory $loggableEntityConfigFactory,
+            protected readonly ChangeSetResolver $changeSetResolver,
+            protected readonly EntityLogFacade $entityLogFacade,
+        ) {
+    ```
+-   definition of service `Shopsys\FrameworkBundle\Component\EntityLog\EventListener\EntityLogEventListener` changed:
+    ```diff
+        Shopsys\FrameworkBundle\Component\EntityLog\EventListener\EntityLogEventListener:
+    +    arguments:
+    +        $entityLogEntityManager: '@doctrine.orm.entity_logging'
+         tags:
+             - { name: doctrine.event_listener, event: postPersist, priority: 1 }
+             - { name: doctrine.event_listener, event: postUpdate, priority: 1 }
+             - { name: doctrine.event_listener, event: preRemove, priority: 1 }
+             - { name: doctrine.event_listener, event: postFlush, priority: 1 }
+    ```
+
 ## [Upgrade from v13.0.0 to v14.0.0](https://github.com/shopsys/shopsys/compare/v13.0.0...v14.0.0)
 
 #### add rounded price value to order process ([#2835](https://github.com/shopsys/shopsys/pull/2835))
