@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\Formatter;
 class CollectionChangesFormatter
 {
     /**
-     * @param array $changes
+     * @param array{insertedItems: array<\Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\ResolvedChanges>, deletedItems: array<\Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\ResolvedChanges>} $changes
      * @return string
      */
     public function formatChanges(array $changes): string
