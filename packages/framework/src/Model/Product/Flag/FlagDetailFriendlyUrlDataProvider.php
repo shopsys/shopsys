@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Product\Flag;
+namespace Shopsys\FrameworkBundle\Model\Product\Flag;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
@@ -13,15 +13,15 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProvider
 
 class FlagDetailFriendlyUrlDataProvider implements FriendlyUrlDataProviderInterface
 {
-    private const ROUTE_NAME = 'front_flag_detail';
+    protected const string ROUTE_NAME = 'front_flag_detail';
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactoryInterface $friendlyUrlDataFactory
      */
     public function __construct(
-        private EntityManagerInterface $em,
-        private FriendlyUrlDataFactoryInterface $friendlyUrlDataFactory,
+        protected readonly EntityManagerInterface $em,
+        protected readonly FriendlyUrlDataFactoryInterface $friendlyUrlDataFactory,
     ) {
     }
 
