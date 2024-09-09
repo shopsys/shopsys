@@ -168,7 +168,7 @@ class MailTemplateConfiguration
         foreach ($allOrderStatuses as $orderStatus) {
             $this->addMailTemplateVariables(
                 OrderMail::getMailTemplateNameByStatus($orderStatus),
-                $mailTemplateVariables->withNewName($orderStatus->getName()),
+                $mailTemplateVariables->withNewName(t('Order') . ' - ' . $orderStatus->getName()),
             );
         }
     }
@@ -182,7 +182,7 @@ class MailTemplateConfiguration
         foreach ($allComplaintStatuses as $complaintStatus) {
             $this->addMailTemplateVariables(
                 ComplaintMail::getMailTemplateNameByStatus($complaintStatus),
-                $mailTemplateVariables->withNewName($complaintStatus->getName()),
+                $mailTemplateVariables->withNewName(t('Complaint') . ' - ' . $complaintStatus->getName()),
             );
         }
     }
