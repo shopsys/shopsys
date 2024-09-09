@@ -181,7 +181,7 @@ class FileUpload implements ResetInterface
             $entity->setFileAsUploaded($key, $originalFilename);
         }
 
-        if ($entity instanceof Image && $entity->getId() === null) {
+        if (($entity instanceof Image || $entity instanceof CustomerUploadedFile) && $entity->getId() === null) {
             $entity->setPosition($this->getPositionForNewEntity($entity));
         }
     }
@@ -276,7 +276,7 @@ class FileUpload implements ResetInterface
                 $entityId,
                 $type,
             ),
-            'customerFile' => $this->customerUploadedFileRepository->getCustomerUploadedFilesCountByEntityIndexedById(
+            'customerFile' => $this->customerUploadedFileRepository->getNewCustomerUploadedFilePosition(
                 $entityName,
                 $entityId,
                 $type,
@@ -285,6 +285,8 @@ class FileUpload implements ResetInterface
                 sprintf('Unknown upload entity type "%s"', $uploadEntityType),
             ),
         };
+
+        $this->positionByEntityAndType[$entityName][$entityId][$uploadEntityType][$type] = $position;
 
         return $position;
     }

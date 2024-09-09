@@ -9,7 +9,6 @@ use Doctrine\ORM\EntityRepository;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileInterface;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileRepositoryInterface;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Exception\CustomerFileNotFoundException;
-use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
 class CustomerUploadedFileRepository implements UploadedFileRepositoryInterface
@@ -126,20 +125,21 @@ class CustomerUploadedFileRepository implements UploadedFileRepositoryInterface
      * @param string $type
      * @return int
      */
-    public function getCustomerUploadedFilesCountByEntityIndexedById(
+    public function getNewCustomerUploadedFilePosition(
         string $entityName,
         int $entityId,
         string $type = 'default',
     ): int {
         $queryBuilder = $this->getCustomerUploadedFileRepository()
-            ->createQueryBuilder('cuf')
-            ->select('COUNT(cuf)')
-            ->from(UploadedFile::class, 'cuf', 'cuf.id')
+            ->createQueryBuilder('cuf', 'cuf.id')
+            ->select('MAX(cuf.position)')
             ->andWhere('cuf.entityName = :entityName')->setParameter('entityName', $entityName)
             ->andWhere('cuf.entityId = :entityId')->setParameter('entityId', $entityId)
             ->andWhere('cuf.type = :type')->setParameter('type', $type);
 
-        return $queryBuilder->getQuery()->getSingleScalarResult();
+        $position = $queryBuilder->getQuery()->getSingleScalarResult();
+
+        return $position === null ? 0 : ++$position;
     }
 
     /**
