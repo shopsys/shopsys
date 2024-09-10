@@ -1,0 +1,38 @@
+ComplaintItemInputDecorator:
+    type: input-object
+    decorator: true
+    config:
+        fields:
+            orderItemUuid:
+                type: "Uuid!"
+                description: "UUID of the order item"
+                validation:
+                    -   NotBlank:
+                            message: "Order item is required"
+            quantity:
+                type: "Int!"
+                description: "Quantity of the complaint item"
+                validation:
+                    -   NotBlank:
+                            message: "Please enter quantity"
+                    -   Type:
+                            type: "integer"
+                            message: "Quantity must be an integer"
+                    -   Range:
+                            min: 1
+                            minMessage: "Quantity must be greater than 0"
+            description:
+                type: "String!"
+                description: "Description of the complaint item"
+                validation:
+                    -   NotBlank:
+                            message: "Description is required"
+            files:
+                type: "[FileUpload!]"
+                description: "Files attached to the complaint item"
+                validation:
+                  -   NotBlank:
+                        message: "Please attach files"
+                  -   \Shopsys\FrontendApiBundle\Component\Constraints\FileUpload:
+                        mimeTypes: ['image/jpeg', 'image/png']
+                        maxSize: 10485760

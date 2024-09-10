@@ -6,8 +6,11 @@ namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\OrderDataFixture;
 use App\Model\Order\Order;
+use DateTime;
+use DateTimeInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
+use Tests\FrontendApiBundle\Test\ReferenceDataAccessor;
 
 class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
 {
@@ -26,7 +29,8 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
         ?int $offsetInExpected,
         ?int $lengthInExpected,
     ): void {
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/getOrders.graphql', $queryVariables);
+        $resolvedQueryVariables = $this->resolveReferenceDataAccessors($queryVariables);
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/getOrders.graphql', $resolvedQueryVariables);
 
         $responseData = $this->getResponseDataForGraphQlType($response, 'orders');
 
@@ -76,6 +80,42 @@ class GetOrdersAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
 
         //last 2 orders
         yield [['last' => 2], 4, 2];
+
+        // filter by order item catnum
+        yield [
+            [
+                'first' => 2,
+                'filter' => [
+                    'orderItemsCatnum' => new ReferenceDataAccessor(
+                        OrderDataFixture::ORDER_PREFIX . 2,
+                        fn (Order $order) => $order->getProductItems()[1]->getProduct()->getCatnum(),
+                    ),
+                ],
+            ],
+            4,
+            1,
+        ];
+
+        // filter by order item product uuid
+        yield [
+            [
+                'first' => 1,
+                'filter' => [
+                    'orderItemsProductUuid' => new ReferenceDataAccessor(
+                        OrderDataFixture::ORDER_PREFIX . 2,
+                        fn (Order $order) => $order->getProductItems()[0]->getProduct()->getUuid(),
+                    ),
+                ],
+            ],
+            4,
+            1,
+        ];
+
+        // filter by order created after date
+        yield [['filter' => ['createdAfter' => (new DateTime('-1 year'))->format(DateTimeInterface::ATOM)]], null, null];
+
+        // filter by order status
+        yield [['filter' => ['status' => 'inProgress']], 0, 1];
     }
 
     /**

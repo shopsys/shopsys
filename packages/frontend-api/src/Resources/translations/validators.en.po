@@ -19,6 +19,9 @@ msgstr ""
 msgid "Customer role group not found."
 msgstr ""
 
+msgid "Description is required"
+msgstr ""
+
 msgid "Email cannot be longer than {{ limit }} characters"
 msgstr ""
 
@@ -26,6 +29,9 @@ msgid "Email is not filled"
 msgstr ""
 
 msgid "Email is not valid"
+msgstr ""
+
+msgid "Error occurred while uploading file."
 msgstr ""
 
 msgid "First name cannot be longer than {{ limit }} characters"
@@ -49,6 +55,12 @@ msgstr ""
 msgid "Old password must be at least {{ limit }} characters long"
 msgstr ""
 
+msgid "Order is required"
+msgstr ""
+
+msgid "Order item is required"
+msgstr ""
+
 msgid "Password must be at least {{ limit }} characters long"
 msgstr ""
 
@@ -68,6 +80,9 @@ msgid "Payment {{ paymentUuid }} is not available for order {{ orderUuid }}"
 msgstr ""
 
 msgid "Pickup place with provided UUID is not available"
+msgstr ""
+
+msgid "Please attach files"
 msgstr ""
 
 msgid "Please check Tax number format"
@@ -113,6 +128,9 @@ msgid "Please enter only numbers and the + character"
 msgstr ""
 
 msgid "Please enter password"
+msgstr ""
+
+msgid "Please enter quantity"
 msgstr ""
 
 msgid "Please enter street"
@@ -163,6 +181,12 @@ msgstr ""
 msgid "Promo code is not available for your pricing group. Maybe you forgot to log in."
 msgstr ""
 
+msgid "Quantity must be an integer"
+msgstr ""
+
+msgid "Quantity must be greater than 0"
+msgstr ""
+
 msgid "Selected payment price has changed"
 msgstr ""
 
@@ -202,6 +226,9 @@ msgstr ""
 msgid "Telephone number cannot be shorter than {{ limit }} characters"
 msgstr ""
 
+msgid "The file {{ fileName }} is too big."
+msgstr ""
+
 msgid "The payment is not allowed in combination with already selected transport"
 msgstr ""
 
@@ -233,6 +260,9 @@ msgid "Transport must be set in cart before sending the order"
 msgstr ""
 
 msgid "Transport with provided UUID is not available"
+msgstr ""
+
+msgid "Type of file {{ fileName }} is unsupported."
 msgstr ""
 
 msgid "You must be logged in if you want to provide the delivery address UUID in the order input"

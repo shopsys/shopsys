@@ -27,6 +27,9 @@ OrderDecorator:
             status:
                 type: "String!"
                 description: "Current status of the order"
+            statusType:
+                type: "OrderStatusEnum!"
+                description: "Type of the order status"
 
             totalPrice:
                 type: "Price!"

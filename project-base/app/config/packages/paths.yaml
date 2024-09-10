@@ -1,5 +1,7 @@
 parameters:
     shopsys.content_dir_name: 'content'
+    shopsys.customer_uploaded_file_config_filepath: '%kernel.project_dir%/config/customer_uploaded_files.yaml'
+    shopsys.customer_uploaded_file_dir: '/web/data/customerUploadedFiles/'
     shopsys.data_fixtures.resources_dir: '%kernel.project_dir%/src/DataFixtures/resources'
     shopsys.data_fixtures_images.resources_dir: '%shopsys.data_fixtures.resources_dir%/images/'
     shopsys.data_fixtures_uploaded_files.resources_dir: '%shopsys.data_fixtures.resources_dir%/uploaded_files/'

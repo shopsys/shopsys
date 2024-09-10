@@ -1,5 +1,5 @@
-query getOrders ($first: Int, $last: Int) {
-    orders (first: $first, last: $last) {
+query getOrders ($first: Int, $last: Int, $filter: OrderFilterInput) {
+    orders (first: $first, last: $last, filter: $filter) {
         edges {
             node {
                 status

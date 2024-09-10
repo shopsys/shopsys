@@ -83,7 +83,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                         {
                                             label: (
                                                 <p>
-                                                    <strong>{t('Different delivery address')}</strong>
+                                                    <span className="font-bold">{t('Different delivery address')}</span>
                                                 </p>
                                             ),
                                             value: 'new-delivery-address',

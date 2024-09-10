@@ -7,11 +7,13 @@ namespace Tests\FrameworkBundle\Unit\Component\Image;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileRepository;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageEntityConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\EntityMultipleImageException;
+use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Image\ImageFactory;
 use Shopsys\FrameworkBundle\Component\Image\ImageRepository;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
@@ -71,16 +73,17 @@ class ImageFactoryTest extends TestCase
         $parameterBag = new ParameterBag();
         $parameterBag->set('kernel.project_dir', sys_get_temp_dir());
         $imageRepositoryMock = $this->createMock(ImageRepository::class);
+        $customerUploadedFileRepositoryMock = $this->createMock(CustomerUploadedFileRepository::class);
 
         return new FileUpload(
             'temporaryDir',
-            'uploadedFileDir',
-            'imageDir',
+            [Image::class => 'imageDir'],
             $fileNamingConvention,
             $mountManager,
             $abstractFilesystem,
             $parameterBag,
             $imageRepositoryMock,
+            $customerUploadedFileRepositoryMock,
         );
     }
 }

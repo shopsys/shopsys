@@ -3,7 +3,7 @@ import { FieldError } from 'react-hook-form';
 import { twJoin } from 'tailwind-merge';
 
 type FormLineErrorProps = {
-    inputType: 'textarea' | 'text-input' | 'checkbox' | 'text-input-password' | 'select';
+    inputType: 'textarea' | 'text-input' | 'checkbox' | 'text-input-password' | 'select' | 'dropzone';
     textInputSize?: 'small' | 'default';
     error?: FieldError;
 };
@@ -17,6 +17,7 @@ export const FormLineError: FC<FormLineErrorProps> = ({ inputType, error, textIn
     const isInputPassword = inputType === 'text-input-password';
     const isCheckbox = inputType === 'checkbox';
     const isSelect = inputType === 'select';
+    const isDropzone = inputType === 'dropzone';
 
     const isTextInputSmall = textInputSize === 'small';
 
@@ -29,6 +30,7 @@ export const FormLineError: FC<FormLineErrorProps> = ({ inputType, error, textIn
                     isInputPassword && `right-11 -translate-y-1/2 ${isTextInputSmall ? '-top-8' : '-top-9'}`,
                     isCheckbox && '-right-5',
                     isSelect && '-top-10 right-11 z-[2]',
+                    isDropzone && 'top-1 right-0',
                 )}
             />
             {error.message !== undefined && <span className="text-sm text-inputError">{error.message}</span>}

@@ -156,7 +156,7 @@ class Image extends AbstractTranslatableEntity implements EntityFileUploadInterf
         if ($this->temporaryFilename !== null) {
             $files[static::UPLOAD_KEY] = new FileForUpload(
                 $this->temporaryFilename,
-                true,
+                self::class,
                 $this->entityName,
                 $this->type . '/',
                 FileNamingConvention::TYPE_ID,

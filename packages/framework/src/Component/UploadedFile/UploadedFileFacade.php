@@ -7,36 +7,44 @@ namespace Shopsys\FrameworkBundle\Component\UploadedFile;
 use Doctrine\ORM\EntityManagerInterface;
 use InvalidArgumentException;
 use League\Flysystem\FilesystemOperator;
+use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\AbstractUploadedFileFacade;
+use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\AbstractUploadedFileLocator;
+use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileRepositoryInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfigInterface;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
-use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\EntityIdentifierException;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\MultipleFilesNotAllowedException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\UploadedFile\UploadedFileFormData;
 
-class UploadedFileFacade
+/**
+ * @method \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile getById(int $uploadedFileId)
+ * @method \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[] getUploadedFilesByEntity(object $entity, string $type = \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig::DEFAULT_TYPE_NAME)
+ */
+class UploadedFileFacade extends AbstractUploadedFileFacade
 {
     /**
+     * @param \League\Flysystem\FilesystemOperator $filesystem
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRepository $uploadedFileRepository
-     * @param \League\Flysystem\FilesystemOperator $filesystem
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator $uploadedFileLocator
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFactoryInterface $uploadedFileFactory
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRelationFactory $uploadedFileRelationFactory
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRelationRepository $uploadedFileRelationRepository
      */
     public function __construct(
-        protected readonly EntityManagerInterface $em,
+        FilesystemOperator $filesystem,
+        EntityManagerInterface $em,
         protected readonly UploadedFileConfig $uploadedFileConfig,
         protected readonly UploadedFileRepository $uploadedFileRepository,
-        protected readonly FilesystemOperator $filesystem,
         protected readonly UploadedFileLocator $uploadedFileLocator,
         protected readonly UploadedFileFactoryInterface $uploadedFileFactory,
         protected readonly UploadedFileRelationFactory $uploadedFileRelationFactory,
         protected readonly UploadedFileRelationRepository $uploadedFileRelationRepository,
     ) {
+        parent::__construct($filesystem, $em);
     }
 
     /**
@@ -218,18 +226,6 @@ class UploadedFileFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
-     */
-    public function deleteFileFromFilesystem(UploadedFile $uploadedFile): void
-    {
-        $filepath = $this->uploadedFileLocator->getAbsoluteUploadedFileFilepath($uploadedFile);
-
-        if ($this->filesystem->has($filepath)) {
-            $this->filesystem->delete($filepath);
-        }
-    }
-
-    /**
      * @param object $entity
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[] $uploadedFiles
      * @param string $type
@@ -248,64 +244,12 @@ class UploadedFileFacade
     }
 
     /**
-     * @param object $entity
-     * @param string $type
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
-     */
-    public function getUploadedFilesByEntity(
-        object $entity,
-        string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME,
-    ): array {
-        return $this->uploadedFileRepository->getUploadedFilesByEntity(
-            $this->uploadedFileConfig->getEntityName($entity),
-            $this->getEntityId($entity),
-            $type,
-        );
-    }
-
-    /**
-     * @param object $entity
-     * @return int
-     */
-    protected function getEntityId(object $entity): int
-    {
-        $entityMetadata = $this->em->getClassMetadata(get_class($entity));
-        $identifier = $entityMetadata->getIdentifierValues($entity);
-
-        if (count($identifier) === 1) {
-            return array_pop($identifier);
-        }
-
-        $message = 'Entity "' . get_class($entity) . '" has not set primary key or primary key is compound."';
-
-        throw new EntityIdentifierException($message);
-    }
-
-    /**
-     * @param int $uploadedFileId
-     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile
-     */
-    public function getById(int $uploadedFileId): UploadedFile
-    {
-        return $this->uploadedFileRepository->getById($uploadedFileId);
-    }
-
-    /**
      * @param int[] $uploadedFileIds
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile[]
      */
     public function getByIds(array $uploadedFileIds): array
     {
         return $this->uploadedFileRepository->getByIds($uploadedFileIds);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $uploadedFile
-     * @return string
-     */
-    public function getAbsoluteUploadedFileFilepath(UploadedFile $uploadedFile): string
-    {
-        return $this->uploadedFileLocator->getAbsoluteUploadedFileFilepath($uploadedFile);
     }
 
     /**
@@ -340,20 +284,6 @@ class UploadedFileFacade
         }
 
         $this->em->flush();
-    }
-
-    /**
-     * @param array $fileNamesIndexedByFileId
-     */
-    protected function updateFilenamesAndSlugs(array $fileNamesIndexedByFileId): void
-    {
-        foreach ($fileNamesIndexedByFileId as $fileId => $fileName) {
-            $file = $this->getById($fileId);
-
-            $file->setNameAndSlug($fileName);
-
-            $this->em->flush();
-        }
     }
 
     /**
@@ -554,5 +484,29 @@ class UploadedFileFacade
         }
 
         return $translationsByLocale;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileRepositoryInterface
+     */
+    protected function getRepository(): UploadedFileRepositoryInterface
+    {
+        return $this->uploadedFileRepository;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\AbstractUploadedFile\AbstractUploadedFileLocator
+     */
+    protected function getFileLocator(): AbstractUploadedFileLocator
+    {
+        return $this->uploadedFileLocator;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfigInterface
+     */
+    protected function getUploadedFileConfig(): UploadedFileConfigInterface
+    {
+        return $this->uploadedFileConfig;
     }
 }

@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\Item;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Litipk\BigNumbers\Decimal;
+use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\Loggable;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableChild;
@@ -31,6 +32,12 @@ class OrderItem
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
+
+    /**
+     * @var string
+     * @ORM\Column(type="guid", unique=true)
+     */
+    protected $uuid;
 
     /**
      * @var string
@@ -157,6 +164,7 @@ class OrderItem
         ?string $unitName,
         ?string $catnum,
     ) {
+        $this->uuid = Uuid::uuid4()->toString();
         $this->order = $order; // Must be One-To-Many Bidirectional because of unnecessary join table
         $this->name = $name;
         $this->unitPriceWithoutVat = $price->getPriceWithoutVat();
@@ -176,6 +184,14 @@ class OrderItem
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUuid()
+    {
+        return $this->uuid;
     }
 
     /**

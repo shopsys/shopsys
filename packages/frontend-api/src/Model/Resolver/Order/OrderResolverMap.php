@@ -34,6 +34,9 @@ class OrderResolverMap extends ResolverMap
                 'status' => function (Order $order) {
                     return $order->getStatus()->getName($this->domain->getLocale());
                 },
+                'statusType' => function (Order $order) {
+                    return $order->getStatus()->getType();
+                },
                 'items' => function (Order $order) {
                     return $order->getItemsSortedWithRelatedItems();
                 },

@@ -127,6 +127,21 @@ services:
     Shopsys\FrameworkBundle\Component\Cron\CronModuleFactoryInterface:
         alias: Shopsys\FrameworkBundle\Component\Cron\CronModuleFactory
 
+    Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Config\CustomerUploadedFileConfig:
+        arguments:
+            - '%shopsys.customer_uploaded_file_config_filepath%'
+        factory: ['@Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Config\CustomerUploadedFileConfigLoader', loadFromYaml]
+
+    Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileDeleteDoctrineListener:
+        tags:
+            - { name: doctrine.event_listener, event: preRemove }
+
+    Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileLocator:
+        arguments:
+            - '%shopsys.customer_uploaded_file_dir%'
+
+    Shopsys\FrameworkBundle\Component\CustomerUploadedFile\DirectoryStructureCreator: ~
+
     Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade:
         public: true
 
@@ -265,7 +280,12 @@ services:
     Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention: ~
 
     Shopsys\FrameworkBundle\Component\FileUpload\FileUpload:
-        arguments: ['%shopsys.var_dir%', '%shopsys.uploaded_file_dir%', '%shopsys.image_dir%']
+        arguments:
+            $temporaryDir: '%shopsys.var_dir%'
+            $directoriesByFileClass:
+                Shopsys\FrameworkBundle\Component\Image\Image: '%shopsys.image_dir%'
+                Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile: '%shopsys.uploaded_file_dir%'
+                Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile: '%shopsys.customer_uploaded_file_dir%'
 
     Shopsys\FrameworkBundle\Component\Filesystem\FilepathComparator: ~
 

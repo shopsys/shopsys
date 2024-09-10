@@ -9,6 +9,7 @@ const CUSTOM_PAGE_TYPES = [
     'order-confirmation',
     'order',
     'orders',
+    'complaint',
     'productMainVariant',
     'registration',
     'stores',

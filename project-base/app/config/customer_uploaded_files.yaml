@@ -1,0 +1,14 @@
+# It is best practice to name first type as "default"
+#
+# Example:
+#-   name: complaintItem
+#    class: Shopsys\FrameworkBundle\Model\Complaint\ComplaintItem
+#    types:
+#        -   name: default
+#            multiple: true
+
+-   name: complaintItem
+    class: Shopsys\FrameworkBundle\Model\Complaint\ComplaintItem
+    types:
+        -   name: default
+            multiple: true

@@ -27,6 +27,7 @@ const getErrorMessageTranslationString = (errorCode: FlashMessageKeys, t: Transl
         'wishlist-product-already-in-list': t('Product in wishlist already exists.'),
         'wishlist-product-not-in-list': t('Product in wishlist not found.'),
         'article-not-found': t('Article not found.'),
+        'invalid-quantity': t('Complaint item quantity exceeds the order item quantity.'),
     };
 
     return ERROR_MESSAGES[errorCode];

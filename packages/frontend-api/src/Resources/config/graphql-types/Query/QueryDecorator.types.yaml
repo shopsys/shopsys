@@ -99,7 +99,29 @@ QueryDecorator:
                 type: "OrderConnection"
                 argsBuilder: "Relay::Connection"
                 resolve: "@=query('ordersQuery', args)"
+                args:
+                    filter:
+                        type: "OrderFilterInput"
                 description: "Returns list of orders that can be paginated using `first`, `last`, `before` and `after` keywords"
+            orderItems:
+                type: "OrderItemConnection!"
+                argsBuilder: "Relay::Connection"
+                resolve: "@=query('orderItemsQuery', args)"
+                complexity: "@=dynamicPaginationComplexity(args)"
+                args:
+                    filter:
+                        type: "OrderItemsFilterInput"
+            orderItemsSearch:
+                type: "OrderItemConnection!"
+                argsBuilder: "Relay::Connection"
+                resolve: "@=query('orderItemsSearchQuery', args)"
+                complexity: "@=dynamicPaginationComplexity(args)"
+                args:
+                    searchInput:
+                        type: "SearchInput!"
+                    filter:
+                        type: "OrderItemsFilterInput"
+                description: "Returns list of searched order items that can be paginated using `first`, `last`, `before` and `after` keywords"
             order:
                 type: 'Order'
                 resolve: "@=query('orderByUuidOrUrlHashQuery', args['uuid'], args['urlHash'])"

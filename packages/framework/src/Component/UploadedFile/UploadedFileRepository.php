@@ -7,9 +7,10 @@ namespace Shopsys\FrameworkBundle\Component\UploadedFile;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileRepositoryInterface;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException;
 
-class UploadedFileRepository
+class UploadedFileRepository implements UploadedFileRepositoryInterface
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

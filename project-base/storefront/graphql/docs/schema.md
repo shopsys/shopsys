@@ -35,6 +35,8 @@
     * [CategoryEdge](#categoryedge)
     * [CategoryHierarchyItem](#categoryhierarchyitem)
     * [CompanyCustomerUser](#companycustomeruser)
+    * [Complaint](#complaint)
+    * [ComplaintItem](#complaintitem)
     * [Country](#country)
     * [CreateOrderResult](#createorderresult)
     * [CustomerUserRoleGroup](#customeruserrolegroup)
@@ -63,6 +65,8 @@
     * [OrderConnection](#orderconnection)
     * [OrderEdge](#orderedge)
     * [OrderItem](#orderitem)
+    * [OrderItemConnection](#orderitemconnection)
+    * [OrderItemEdge](#orderitemedge)
     * [OrderPaymentsConfig](#orderpaymentsconfig)
     * [PageInfo](#pageinfo)
     * [Parameter](#parameter)
@@ -110,12 +114,16 @@
     * [ChangePaymentInOrderInput](#changepaymentinorderinput)
     * [ChangePersonalDataInput](#changepersonaldatainput)
     * [ChangeTransportInCartInput](#changetransportincartinput)
+    * [ComplaintInput](#complaintinput)
+    * [ComplaintItemInput](#complaintiteminput)
     * [ContactFormInput](#contactforminput)
     * [DeliveryAddressInput](#deliveryaddressinput)
     * [EditCustomerUserPersonalDataInput](#editcustomeruserpersonaldatainput)
     * [LoginInput](#logininput)
     * [NewsletterSubscriptionDataInput](#newslettersubscriptiondatainput)
+    * [OrderFilterInput](#orderfilterinput)
     * [OrderInput](#orderinput)
+    * [OrderItemsFilterInput](#orderitemsfilterinput)
     * [ParameterFilter](#parameterfilter)
     * [PersonalDataAccessRequestInput](#personaldataaccessrequestinput)
     * [ProductFilter](#productfilter)
@@ -133,6 +141,7 @@
     * [AvailabilityStatusEnum](#availabilitystatusenum)
     * [LoginTypeEnum](#logintypeenum)
     * [OrderItemTypeEnum](#orderitemtypeenum)
+    * [OrderStatusEnum](#orderstatusenum)
     * [PersonalDataAccessRequestTypeEnum](#personaldataaccessrequesttypeenum)
     * [ProductListTypeEnum](#productlisttypeenum)
     * [ProductOrderingModeEnum](#productorderingmodeenum)
@@ -140,6 +149,7 @@
   * [Scalars](#scalars)
     * [Boolean](#boolean)
     * [DateTime](#datetime)
+    * [FileUpload](#fileupload)
     * [Float](#float)
     * [Int](#int)
     * [Money](#money)
@@ -680,6 +690,75 @@ Returns order filtered using UUID, orderNumber, or urlHash
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>orderItems</strong></td>
+<td valign="top"><a href="#orderitemconnection">OrderItemConnection</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">after</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">filter</td>
+<td valign="top"><a href="#orderitemsfilterinput">OrderItemsFilterInput</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">last</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>orderItemsSearch</strong></td>
+<td valign="top"><a href="#orderitemconnection">OrderItemConnection</a>!</td>
+<td>
+
+Returns list of searched order items that can be paginated using `first`, `last`, `before` and `after` keywords
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">after</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">filter</td>
+<td valign="top"><a href="#orderitemsfilterinput">OrderItemsFilterInput</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">last</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">searchInput</td>
+<td valign="top"><a href="#searchinput">SearchInput</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>orderPaymentFailedContent</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -738,6 +817,11 @@ Returns list of orders that can be paginated using `first`, `last`, `before` and
 <tr>
 <td colspan="2" align="right" valign="top">before</td>
 <td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">filter</td>
+<td valign="top"><a href="#orderfilterinput">OrderFilterInput</a></td>
 <td></td>
 </tr>
 <tr>
@@ -1329,6 +1413,20 @@ Send message to the site owner
 <tr>
 <td colspan="2" align="right" valign="top">input</td>
 <td valign="top"><a href="#contactforminput">ContactFormInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>CreateComplaint</strong></td>
+<td valign="top"><a href="#complaint">Complaint</a>!</td>
+<td>
+
+Create a new complaint
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#complaintinput">ComplaintInput</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -3810,6 +3908,203 @@ UUID
 </tbody>
 </table>
 
+### Complaint
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>createdAt</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a>!</td>
+<td>
+
+Date and time when the complaint was created
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>deliveryCity</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+City name for delivery
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>deliveryCompanyName</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Company name for delivery
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>deliveryCountry</strong></td>
+<td valign="top"><a href="#country">Country</a>!</td>
+<td>
+
+Country for delivery
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>deliveryFirstName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+First name of the contact person for delivery
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>deliveryLastName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Last name of the contact person for delivery
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>deliveryPostcode</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Zip code for delivery
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>deliveryStreet</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Street name for delivery
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>deliveryTelephone</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Contact telephone number for delivery
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>items</strong></td>
+<td valign="top">[<a href="#complaintitem">ComplaintItem</a>!]!</td>
+<td>
+
+All items in the complaint
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>number</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Unique complaint number
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ComplaintItem
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>catnum</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Catalog number
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>description</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Description of the complaint order item
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>files</strong></td>
+<td valign="top">[<a href="#file">File</a>!]</td>
+<td>
+
+Files attached to the complaint order item
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>orderItem</strong></td>
+<td valign="top"><a href="#orderitem">OrderItem</a></td>
+<td>
+
+Order item
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>productName</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Product name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>quantity</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Quantity of the order item
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### Country
 
 Represents country
@@ -5500,6 +5795,15 @@ Current status of the order
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>statusType</strong></td>
+<td valign="top"><a href="#orderstatusenum">OrderStatusEnum</a>!</td>
+<td>
+
+Type of the order status
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>street</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -5668,11 +5972,29 @@ Represent one item in the order
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong>catnum</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Catalog number of the order item product
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
 Name of the order item
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>order</strong></td>
+<td valign="top"><a href="#order">Order</a>!</td>
+<td>
+
+Order to which the order item belongs
 
 </td>
 </tr>
@@ -5731,11 +6053,99 @@ Order item price per unit
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID of the order item
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>vatRate</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
 Applied VAT rate percentage applied to the order item
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### OrderItemConnection
+
+A connection to a list of items.
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>edges</strong></td>
+<td valign="top">[<a href="#orderitemedge">OrderItemEdge</a>]</td>
+<td>
+
+Information to aid in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>pageInfo</strong></td>
+<td valign="top"><a href="#pageinfo">PageInfo</a>!</td>
+<td>
+
+Information to aid in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>totalCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Total number of order items
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### OrderItemEdge
+
+An edge in a connection.
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>cursor</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+A cursor for use in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>node</strong></td>
+<td valign="top"><a href="#orderitem">OrderItem</a></td>
+<td>
+
+The item at the end of the edge.
 
 </td>
 </tr>
@@ -9110,6 +9520,97 @@ UUID of a transport that should be added to the cart. If this is set to null, th
 </tbody>
 </table>
 
+### ComplaintInput
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>deliveryAddress</strong></td>
+<td valign="top"><a href="#deliveryaddressinput">DeliveryAddressInput</a>!</td>
+<td>
+
+Delivery address
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>items</strong></td>
+<td valign="top">[<a href="#complaintiteminput">ComplaintItemInput</a>!]!</td>
+<td>
+
+All items in the complaint
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>orderUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID of the order
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ComplaintItemInput
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>description</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Description of the complaint item
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>files</strong></td>
+<td valign="top">[<a href="#fileupload">FileUpload</a>!]</td>
+<td>
+
+Files attached to the complaint item
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>orderItemUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID of the order item
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>quantity</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Quantity of the complaint item
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### ContactFormInput
 
 <table>
@@ -9385,6 +9886,58 @@ Represents the main input object to subscribe for e-mail newsletter
 </tbody>
 </table>
 
+### OrderFilterInput
+
+Filter orders
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>createdAfter</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
+<td>
+
+Filter orders created after this date
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>orderItemsCatnum</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Filter orders by order items with product catalog number (OR condition with orderItemsProductUuid)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>orderItemsProductUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+Filter orders by order items with product UUID (OR condition with orderItemsCatnum)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>status</strong></td>
+<td valign="top"><a href="#orderstatusenum">OrderStatusEnum</a></td>
+<td>
+
+Filter orders created after this date
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### OrderInput
 
 Represents the main input object to create orders
@@ -9629,6 +10182,76 @@ Billing address street name (will be on the tax invoice)
 <td>
 
 The customer's phone number
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### OrderItemsFilterInput
+
+Filter order items
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>catnum</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Filter order items by product catalog number (OR condition with productUuid)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>orderCreatedAfter</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
+<td>
+
+Filter order items in orders created after this date
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>orderStatus</strong></td>
+<td valign="top"><a href="#orderstatusenum">OrderStatusEnum</a></td>
+<td>
+
+Filter orders created after this date
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>orderUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+Filter order items by order with this UUID
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>productUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+Filter order items by product with this UUID (OR condition with catnum)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>type</strong></td>
+<td valign="top"><a href="#orderitemtypeenum">OrderItemTypeEnum</a></td>
+<td>
+
+Filter order items by type
 
 </td>
 </tr>
@@ -10372,6 +10995,51 @@ One of possible types of the order item
 </tbody>
 </table>
 
+### OrderStatusEnum
+
+Status of order
+
+<table>
+<thead>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>canceled</strong></td>
+<td>
+
+Canceled
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>done</strong></td>
+<td>
+
+Done
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>inProgress</strong></td>
+<td>
+
+In progress
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>new</strong></td>
+<td>
+
+New
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### PersonalDataAccessRequestTypeEnum
 
 One of two possible types for personal data access request
@@ -10523,6 +11191,10 @@ The `Boolean` scalar type represents `true` or `false`.
 ### DateTime
 
 Represents and encapsulates an ISO-8601 encoded UTC date-time value
+
+### FileUpload
+
+Represents and encapsulates a file upload
 
 ### Float
 

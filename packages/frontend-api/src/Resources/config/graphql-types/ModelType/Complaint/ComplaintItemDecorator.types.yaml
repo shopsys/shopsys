@@ -1,0 +1,28 @@
+ComplaintItemDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            orderItem:
+                type: "OrderItem"
+                description: "Order item"
+            productName:
+                type: "String!"
+                description: "Product name"
+            catnum:
+                type: "String!"
+                description: "Catalog number"
+            quantity:
+                type: "Int!"
+                description: "Quantity of the order item"
+            description:
+                type: "String!"
+                description: "Description of the complaint order item"
+            files:
+                type: "[File!]"
+                description: "Files attached to the complaint order item"
+                resolve: '@=query("customerFilesByEntityPromiseQuery", value, args["type"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: "default"

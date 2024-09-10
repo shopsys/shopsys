@@ -1,5 +1,6 @@
 fragment OrderDetailItemFragment on OrderItem {
     __typename
+    uuid
     name
     unitPrice {
         ...PriceFragment
@@ -11,6 +12,11 @@ fragment OrderDetailItemFragment on OrderItem {
     quantity
     unit
     type
+    order {
+        uuid
+        number
+        creationDate
+    }
     product {
         slug
         mainImage {

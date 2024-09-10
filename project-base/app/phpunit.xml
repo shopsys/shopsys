@@ -16,7 +16,7 @@
     <env name="KERNEL_CLASS" value="App\Kernel"/>
     <env name="APP_ENV" value="test"/>
     <env name="APP_DEBUG" value="false"/>
-    <ini name="memory_limit" value="2G"/>
+    <ini name="memory_limit" value="4G"/>
   </php>
   <testsuites>
     <testsuite name="Unit">

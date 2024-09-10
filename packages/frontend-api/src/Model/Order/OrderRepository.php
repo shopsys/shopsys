@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Order;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Order;
@@ -84,13 +85,22 @@ class OrderRepository
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param int $limit
      * @param int $offset
+     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderFilter $filter
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
-    public function getCustomerUserOrderLimitedList(CustomerUser $customerUser, int $limit, int $offset): array
-    {
-        return $this->createOrderQueryBuilder()
-            ->andWhere('o.customerUser = :customerUser')
-            ->setParameter('customerUser', $customerUser)
+    public function getCustomerUserOrderLimitedList(
+        CustomerUser $customerUser,
+        int $limit,
+        int $offset,
+        ?OrderFilter $filter = null,
+    ): array {
+        $queryBuilder = $this->createCustomerUserOrderLimitedList($customerUser);
+
+        if ($filter) {
+            $this->applyOrderFilterToQueryBuilder($filter, $queryBuilder);
+        }
+
+        return $queryBuilder
             ->orderBy('o.createdAt', 'DESC')
             ->setFirstResult($offset)
             ->setMaxResults($limit)
@@ -100,16 +110,21 @@ class OrderRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderFilter $filter
      * @return int
      */
-    public function getCustomerUserOrderCount(CustomerUser $customerUser): int
+    public function getCustomerUserOrderCount(CustomerUser $customerUser, OrderFilter $filter): int
     {
-        return $this->em->createQueryBuilder()
+        $queryBuilder = $this->em->createQueryBuilder()
             ->select('count(o.id)')
             ->from(Order::class, 'o')
             ->where('o.deleted = FALSE')
             ->andWhere('o.customerUser = :customerUser')
-            ->setParameter('customerUser', $customerUser)
+            ->setParameter('customerUser', $customerUser);
+
+        $this->applyOrderFilterToQueryBuilder($filter, $queryBuilder);
+
+        return $queryBuilder
             ->getQuery()
             ->getSingleScalarResult();
     }
@@ -150,32 +165,42 @@ class OrderRepository
      * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
      * @param int $limit
      * @param int $offset
+     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderFilter $orderFilter
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
-    public function getCustomerOrderLimitedList(Customer $customer, int $limit, int $offset): array
-    {
-        return $this->createOrderQueryBuilder()
+    public function getCustomerOrderLimitedList(
+        Customer $customer,
+        int $limit,
+        int $offset,
+        OrderFilter $orderFilter,
+    ): array {
+        $queryBuilder = $this->createOrderQueryBuilder()
             ->andWhere('o.customer = :customer')
             ->setParameter('customer', $customer)
             ->orderBy('o.createdAt', 'DESC')
             ->setFirstResult($offset)
-            ->setMaxResults($limit)
-            ->getQuery()
-            ->execute();
+            ->setMaxResults($limit);
+
+        $this->applyOrderFilterToQueryBuilder($orderFilter, $queryBuilder);
+
+        return $queryBuilder->getQuery()->execute();
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderFilter $orderFilter
      * @return int
      */
-    public function getCustomerOrderCount(Customer $customer): int
+    public function getCustomerOrderCount(Customer $customer, OrderFilter $orderFilter): int
     {
-        return $this->createOrderQueryBuilder()
+        $queryBuilder = $this->createOrderQueryBuilder()
             ->select('count(o.id)')
             ->andWhere('o.customer = :customerUser')
-            ->setParameter('customerUser', $customer)
-            ->getQuery()
-            ->getSingleScalarResult();
+            ->setParameter('customerUser', $customer);
+
+        $this->applyOrderFilterToQueryBuilder($orderFilter, $queryBuilder);
+
+        return $queryBuilder->getQuery()->getSingleScalarResult();
     }
 
     /**
@@ -237,5 +262,50 @@ class OrderRepository
         }
 
         return $order;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function createCustomerUserOrderLimitedList(CustomerUser $customerUser): QueryBuilder
+    {
+        return $this->createOrderQueryBuilder()
+            ->andWhere('o.customerUser = :customerUser')
+            ->setParameter('customerUser', $customerUser);
+    }
+
+    /**
+     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderFilter $filter
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
+     */
+    protected function applyOrderFilterToQueryBuilder(OrderFilter $filter, QueryBuilder $queryBuilder): void
+    {
+        if ($filter->getCreatedAfter() !== null) {
+            $queryBuilder->andWhere('o.createdAt >= :createdAfter')
+                ->setParameter('createdAfter', $filter->getCreatedAfter());
+        }
+
+        if ($filter->getStatuses() !== null && count($filter->getStatuses()) > 0) {
+            $queryBuilder->andWhere('o.status IN (:statuses)')
+                ->setParameter('statuses', $filter->getStatuses());
+        }
+
+        if ($filter->getOrderItemsCatnum() === null && $filter->getOrderItemsProductUuid() === null) {
+            return;
+        }
+
+        $queryBuilder->leftJoin('o.items', 'oi');
+
+        if ($filter->getOrderItemsCatnum() !== null) {
+            $queryBuilder->andWhere('oi.catnum = :catnum')
+                ->setParameter('catnum', $filter->getOrderItemsCatnum());
+        }
+
+        if ($filter->getOrderItemsProductUuid() !== null) {
+            $queryBuilder->leftJoin('oi.product', 'p')
+                ->andWhere('p.uuid = :productUuid')
+                ->setParameter('productUuid', $filter->getOrderItemsProductUuid());
+        }
     }
 }

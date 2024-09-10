@@ -1,0 +1,4 @@
+ComplaintInput:
+    type: input-object
+    inherits:
+        - 'ComplaintInputDecorator'

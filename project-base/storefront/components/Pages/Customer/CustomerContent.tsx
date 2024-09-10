@@ -11,8 +11,8 @@ export const CustomerContent: FC = () => {
     const { t } = useTranslation();
     const logout = useLogout();
     const { url } = useDomainConfig();
-    const [customerOrdersUrl, customerEditProfileUrl] = getInternationalizedStaticUrls(
-        ['/customer/orders', '/customer/edit-profile'],
+    const [customerOrdersUrl, customerComplaintsUrl, customerEditProfileUrl] = getInternationalizedStaticUrls(
+        ['/customer/orders', '/customer/complaints', '/customer/edit-profile'],
         url,
     );
 
@@ -30,6 +30,10 @@ export const CustomerContent: FC = () => {
                         <ExtendedNextLink href={customerOrdersUrl} type="orders">
                             {t('My orders')}
                         </ExtendedNextLink>
+                    </CustomerListItem>
+
+                    <CustomerListItem>
+                        <ExtendedNextLink href={customerComplaintsUrl}>{t('My complaints')}</ExtendedNextLink>
                     </CustomerListItem>
 
                     <CustomerListItem>

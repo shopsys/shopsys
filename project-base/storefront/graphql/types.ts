@@ -14,6 +14,8 @@ export type Scalars = {
   Float: { input: number; output: number; }
   /** Represents and encapsulates an ISO-8601 encoded UTC date-time value */
   DateTime: { input: any; output: any; }
+  /** Represents and encapsulates a file upload */
+  FileUpload: { input: any; output: any; }
   /** Represents and encapsulates monetary value */
   Money: { input: string; output: string; }
   /** Represents and encapsulates a string for password */
@@ -739,6 +741,75 @@ export type TypeCompanyCustomerUser = TypeCustomerUser & {
   uuid: Scalars['Uuid']['output'];
 };
 
+export type TypeComplaint = {
+  __typename?: 'Complaint';
+  /** Date and time when the complaint was created */
+  createdAt: Scalars['DateTime']['output'];
+  /** City name for delivery */
+  deliveryCity: Scalars['String']['output'];
+  /** Company name for delivery */
+  deliveryCompanyName: Maybe<Scalars['String']['output']>;
+  /** Country for delivery */
+  deliveryCountry: TypeCountry;
+  /** First name of the contact person for delivery */
+  deliveryFirstName: Scalars['String']['output'];
+  /** Last name of the contact person for delivery */
+  deliveryLastName: Scalars['String']['output'];
+  /** Zip code for delivery */
+  deliveryPostcode: Scalars['String']['output'];
+  /** Street name for delivery */
+  deliveryStreet: Scalars['String']['output'];
+  /** Contact telephone number for delivery */
+  deliveryTelephone: Scalars['String']['output'];
+  /** All items in the complaint */
+  items: Array<TypeComplaintItem>;
+  /** Unique complaint number */
+  number: Scalars['String']['output'];
+  /** UUID */
+  uuid: Scalars['Uuid']['output'];
+};
+
+export type TypeComplaintInput = {
+  /** Delivery address */
+  deliveryAddress: TypeDeliveryAddressInput;
+  /** All items in the complaint */
+  items: Array<TypeComplaintItemInput>;
+  /** UUID of the order */
+  orderUuid: Scalars['Uuid']['input'];
+};
+
+export type TypeComplaintItem = {
+  __typename?: 'ComplaintItem';
+  /** Catalog number */
+  catnum: Scalars['String']['output'];
+  /** Description of the complaint order item */
+  description: Scalars['String']['output'];
+  /** Files attached to the complaint order item */
+  files: Maybe<Array<TypeFile>>;
+  /** Order item */
+  orderItem: Maybe<TypeOrderItem>;
+  /** Product name */
+  productName: Scalars['String']['output'];
+  /** Quantity of the order item */
+  quantity: Scalars['Int']['output'];
+};
+
+
+export type TypeComplaintItemFilesArgs = {
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type TypeComplaintItemInput = {
+  /** Description of the complaint item */
+  description: Scalars['String']['input'];
+  /** Files attached to the complaint item */
+  files: InputMaybe<Array<Scalars['FileUpload']['input']>>;
+  /** UUID of the order item */
+  orderItemUuid: Scalars['Uuid']['input'];
+  /** Quantity of the complaint item */
+  quantity: Scalars['Int']['input'];
+};
+
 export type TypeContactFormInput = {
   /** Email address of the sender */
   email: Scalars['String']['input'];
@@ -1152,6 +1223,8 @@ export type TypeMutation = {
   ChangeTransportInCart: TypeCart;
   /** Send message to the site owner */
   ContactForm: Scalars['Boolean']['output'];
+  /** Create a new complaint */
+  CreateComplaint: TypeComplaint;
   /** Create a new delivery address */
   CreateDeliveryAddress: Array<TypeDeliveryAddress>;
   /** Creates complete order with products and addresses */
@@ -1249,6 +1322,11 @@ export type TypeMutationChangeTransportInCartArgs = {
 
 export type TypeMutationContactFormArgs = {
   input: TypeContactFormInput;
+};
+
+
+export type TypeMutationCreateComplaintArgs = {
+  input: TypeComplaintInput;
 };
 
 
@@ -1517,6 +1595,8 @@ export type TypeOrder = {
   promoCode: Maybe<Scalars['String']['output']>;
   /** Current status of the order */
   status: Scalars['String']['output'];
+  /** Type of the order status */
+  statusType: TypeOrderStatusEnum;
   /** Billing address street name  */
   street: Scalars['String']['output'];
   /** The customer's telephone number */
@@ -1553,6 +1633,18 @@ export type TypeOrderEdge = {
   cursor: Scalars['String']['output'];
   /** The item at the end of the edge. */
   node: Maybe<TypeOrder>;
+};
+
+/** Filter orders */
+export type TypeOrderFilterInput = {
+  /** Filter orders created after this date */
+  createdAfter: InputMaybe<Scalars['DateTime']['input']>;
+  /** Filter orders by order items with product catalog number (OR condition with orderItemsProductUuid) */
+  orderItemsCatnum: InputMaybe<Scalars['String']['input']>;
+  /** Filter orders by order items with product UUID (OR condition with orderItemsCatnum) */
+  orderItemsProductUuid: InputMaybe<Scalars['Uuid']['input']>;
+  /** Filter orders created after this date */
+  status: InputMaybe<TypeOrderStatusEnum>;
 };
 
 /** Represents the main input object to create orders */
@@ -1614,8 +1706,12 @@ export type TypeOrderInput = {
 /** Represent one item in the order */
 export type TypeOrderItem = {
   __typename?: 'OrderItem';
+  /** Catalog number of the order item product */
+  catnum: Maybe<Scalars['String']['output']>;
   /** Name of the order item */
   name: Scalars['String']['output'];
+  /** Order to which the order item belongs */
+  order: TypeOrder;
   /** Product of the order item */
   product: Maybe<TypeProduct>;
   /** Quantity of order items in the order */
@@ -1628,8 +1724,30 @@ export type TypeOrderItem = {
   unit: Maybe<Scalars['String']['output']>;
   /** Order item price per unit */
   unitPrice: TypePrice;
+  /** UUID of the order item */
+  uuid: Scalars['Uuid']['output'];
   /** Applied VAT rate percentage applied to the order item */
   vatRate: Scalars['String']['output'];
+};
+
+/** A connection to a list of items. */
+export type TypeOrderItemConnection = {
+  __typename?: 'OrderItemConnection';
+  /** Information to aid in pagination. */
+  edges: Maybe<Array<Maybe<TypeOrderItemEdge>>>;
+  /** Information to aid in pagination. */
+  pageInfo: TypePageInfo;
+  /** Total number of order items */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** An edge in a connection. */
+export type TypeOrderItemEdge = {
+  __typename?: 'OrderItemEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge. */
+  node: Maybe<TypeOrderItem>;
 };
 
 /** One of possible types of the order item */
@@ -1641,6 +1759,22 @@ export enum TypeOrderItemTypeEnum {
   Transport = 'transport'
 }
 
+/** Filter order items */
+export type TypeOrderItemsFilterInput = {
+  /** Filter order items by product catalog number (OR condition with productUuid) */
+  catnum: InputMaybe<Scalars['String']['input']>;
+  /** Filter order items in orders created after this date */
+  orderCreatedAfter: InputMaybe<Scalars['DateTime']['input']>;
+  /** Filter orders created after this date */
+  orderStatus: InputMaybe<TypeOrderStatusEnum>;
+  /** Filter order items by order with this UUID */
+  orderUuid: InputMaybe<Scalars['Uuid']['input']>;
+  /** Filter order items by product with this UUID (OR condition with catnum) */
+  productUuid: InputMaybe<Scalars['Uuid']['input']>;
+  /** Filter order items by type */
+  type: InputMaybe<TypeOrderItemTypeEnum>;
+};
+
 export type TypeOrderPaymentsConfig = {
   __typename?: 'OrderPaymentsConfig';
   /** All available payment methods for the order (excluding the current one) */
@@ -1648,6 +1782,18 @@ export type TypeOrderPaymentsConfig = {
   /** Current payment method used in the order */
   currentPayment: TypePayment;
 };
+
+/** Status of order */
+export enum TypeOrderStatusEnum {
+  /** Canceled */
+  Canceled = 'canceled',
+  /** Done */
+  Done = 'done',
+  /** In progress */
+  InProgress = 'inProgress',
+  /** New */
+  New = 'new'
+}
 
 /** Information about pagination in a connection. */
 export type TypePageInfo = {
@@ -2195,6 +2341,9 @@ export type TypeQuery = {
   notificationBars: Maybe<Array<TypeNotificationBar>>;
   /** Returns order filtered using UUID, orderNumber, or urlHash */
   order: Maybe<TypeOrder>;
+  orderItems: TypeOrderItemConnection;
+  /** Returns list of searched order items that can be paginated using `first`, `last`, `before` and `after` keywords */
+  orderItemsSearch: TypeOrderItemConnection;
   /** Returns HTML content for order with failed payment. */
   orderPaymentFailedContent: Scalars['String']['output'];
   /** Returns HTML content for order with successful payment. */
@@ -2355,6 +2504,25 @@ export type TypeQueryOrderArgs = {
 };
 
 
+export type TypeQueryOrderItemsArgs = {
+  after: InputMaybe<Scalars['String']['input']>;
+  before: InputMaybe<Scalars['String']['input']>;
+  filter: InputMaybe<TypeOrderItemsFilterInput>;
+  first: InputMaybe<Scalars['Int']['input']>;
+  last: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+export type TypeQueryOrderItemsSearchArgs = {
+  after: InputMaybe<Scalars['String']['input']>;
+  before: InputMaybe<Scalars['String']['input']>;
+  filter: InputMaybe<TypeOrderItemsFilterInput>;
+  first: InputMaybe<Scalars['Int']['input']>;
+  last: InputMaybe<Scalars['Int']['input']>;
+  searchInput: TypeSearchInput;
+};
+
+
 export type TypeQueryOrderPaymentFailedContentArgs = {
   orderUuid: Scalars['Uuid']['input'];
 };
@@ -2378,6 +2546,7 @@ export type TypeQueryOrderSentPageContentArgs = {
 export type TypeQueryOrdersArgs = {
   after: InputMaybe<Scalars['String']['input']>;
   before: InputMaybe<Scalars['String']['input']>;
+  filter: InputMaybe<TypeOrderFilterInput>;
   first: InputMaybe<Scalars['Int']['input']>;
   last: InputMaybe<Scalars['Int']['input']>;
 };

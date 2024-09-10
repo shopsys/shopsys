@@ -87,6 +87,10 @@ services:
         arguments:
             $categoriesSearchResultsProviders: !tagged 'shopsys.frontend_api.categories_search_results_provider'
 
+    Shopsys\FrontendApiBundle\Model\Resolver\ConsumerUploadedFile\CustomerUploadedFileQuery:
+        arguments:
+            $customerUploadedFilesBatchLoader: '@customer_uploaded_files_batch_loader'
+
     Shopsys\FrontendApiBundle\Model\Resolver\Image\AdvertImagesQuery:
         arguments:
             $imagesBatchLoader: '@images_batch_loader'

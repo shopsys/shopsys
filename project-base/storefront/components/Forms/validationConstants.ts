@@ -11,4 +11,6 @@ export const VALIDATION_CONSTANTS = {
     companyNumberExactLength: 8,
     companyTaxNumberMaxLength: 50,
     passwordMinLength: 6,
+    fileMaxSize: 10485760,
+    maxFilesCount: 10,
 } as const;
