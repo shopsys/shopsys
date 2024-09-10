@@ -47,7 +47,7 @@ npm publish
 
 # set new version of @shopsys/framework to %s in project-base/app/package.json
 
-# commit the changes manually with "npm package is now updated for %s release
+# commit the changes manually with "npm package is now updated for %s release"
 ',
             $version->getVersionString(),
             $version->getVersionString(),
