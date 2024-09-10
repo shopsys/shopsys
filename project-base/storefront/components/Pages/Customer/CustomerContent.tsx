@@ -41,7 +41,6 @@ export const CustomerContent: FC = () => {
                     </CustomerListItem>
 
                     <CustomerListItem>
-                        <ExtendedNextLink href={customerEditProfileUrl}>{t('Edit profile')}</ExtendedNextLink>
                         <ExtendedNextLink href={customerEditProfileUrl}>
                             <EditIcon className="mr-5 w-6 h-6" />
                             {t('Edit profile')}

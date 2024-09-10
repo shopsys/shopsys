@@ -119,6 +119,13 @@ export const clickOnSendOrderButton = () => {
     cy.getByTID([TIDs.blocks_orderaction_next]).click();
 };
 
+export const mouseOverUserMenuButton = () => {
+    cy.getByTID([TIDs.my_account_link]).should('be.visible').realMouseMove(0, 10);
+    cy.wait(1000);
+    cy.getByTID([TIDs.my_account_link]).should('be.visible').realMouseMove(-1, -15);
+    cy.wait(1000);
+};
+
 export const fillInNoteInThirdStep = (note: string) => {
     cy.get('#contact-information-form-note').should('have.attr', 'placeholder', placeholder.note).type(note);
 };

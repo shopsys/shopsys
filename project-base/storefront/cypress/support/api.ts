@@ -215,14 +215,9 @@ Cypress.Commands.add('registerAsNewUser', (registrationInput: TypeRegistrationDa
                 'Content-Type': 'application/json',
             },
         })
-        .then((response) => {
-            if (!response.body?.data?.Register) {
-                expect(response.body.errors).to.be.an('array').and.not.be.empty;
-                return;
-            }
-
+        .its('body.data.Register')
+        .then((registrationResponse) => {
             if (shouldLogin) {
-                const registrationResponse = response.body.data.Register;
                 expect(registrationResponse.tokens.accessToken).to.be.a('string').and.not.be.empty;
                 expect(registrationResponse.tokens.refreshToken).to.be.a('string').and.not.be.empty;
                 cy.setCookie('accessToken', registrationResponse.tokens.accessToken, { path: '/' });
