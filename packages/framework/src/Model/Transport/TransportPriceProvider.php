@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\PersonalPickupPointMiddleware;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportPriceNotFoundException;
 
 class TransportPriceProvider
 {
@@ -48,6 +49,12 @@ class TransportPriceProvider
             $orderInput,
             $orderData,
         );
+
+        if (count($orderData->getItemsByType(OrderItemTypeEnum::TYPE_TRANSPORT)) === 0) {
+            $message = sprintf('Transport price with domain ID "%d", transport ID "%d", and cart total weight %dg not found.', $domainConfig->getId(), $transport->getId(), $cart->getTotalWeight());
+
+            throw new TransportPriceNotFoundException($message);
+        }
 
         return $orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_TRANSPORT];
     }

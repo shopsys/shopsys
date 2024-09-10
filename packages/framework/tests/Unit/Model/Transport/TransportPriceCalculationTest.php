@@ -24,6 +24,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportInputPricesData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPrice;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
+use Shopsys\FrameworkBundle\Model\Transport\TransportPriceFacade;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
 
 class TransportPriceCalculationTest extends TestCase
@@ -87,8 +88,9 @@ class TransportPriceCalculationTest extends TestCase
         $currencyFacadeMock
             ->expects($this->any())->method('getDomainDefaultCurrencyByDomainId')
             ->willReturn(new Currency($currencyData));
+        $transportPriceFacadeMock = $this->createMock(TransportPriceFacade::class);
 
-        $transportPriceCalculation = new TransportPriceCalculation($basePriceCalculation, $pricingSettingMock, $customerUserRoleResolverMock, $currencyFacadeMock);
+        $transportPriceCalculation = new TransportPriceCalculation($basePriceCalculation, $pricingSettingMock, $customerUserRoleResolverMock, $currencyFacadeMock, $transportPriceFacadeMock);
 
         $vatData = new VatData();
         $vatData->name = 'vat';

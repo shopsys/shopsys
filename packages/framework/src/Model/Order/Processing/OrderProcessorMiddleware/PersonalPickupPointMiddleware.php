@@ -36,20 +36,23 @@ class PersonalPickupPointMiddleware implements OrderProcessorMiddlewareInterface
         $pickupPlaceIdentifier = $orderProcessingData->orderInput->findAdditionalData(static::ADDITIONAL_DATA_PICKUP_PLACE_IDENTIFIER);
 
         $orderData = $orderProcessingData->orderData;
-        $transport = $orderProcessingData->orderInput->getTransport();
+        $transportItems = $orderData->getItemsByType(OrderItemTypeEnum::TYPE_TRANSPORT);
 
-        if ($pickupPlaceIdentifier === null || $transport === null) {
+        if ($pickupPlaceIdentifier === null || count($transportItems) === 0) {
             return $orderProcessingStack->processNext($orderProcessingData);
         }
 
-        if ($transport->isPersonalPickup()) {
+        $transportItemData = $transportItems[0];
+        $transport = $transportItemData->transport;
+
+        if ($transport?->isPersonalPickup()) {
             try {
                 $store = $this->storeFacade->getByUuidAndDomainId(
                     $pickupPlaceIdentifier,
                     $orderProcessingData->getDomainId(),
                 );
 
-                $orderData->getItemsByType(OrderItemTypeEnum::TYPE_TRANSPORT)[0]->name .= ' ' . $store->getName();
+                $transportItemData->name .= ' ' . $store->getName();
 
                 $this->updateDeliveryDataByStore($orderData, $store);
             } catch (StoreByUuidNotFoundException) {

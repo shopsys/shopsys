@@ -17,12 +17,14 @@ class TransportPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver $customerUserRoleResolver
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceFacade $transportPriceFacade
      */
     public function __construct(
         protected readonly BasePriceCalculation $basePriceCalculation,
         protected readonly PricingSetting $pricingSetting,
         protected readonly CustomerUserRoleResolver $customerUserRoleResolver,
         protected readonly CurrencyFacade $currencyFacade,
+        protected readonly TransportPriceFacade $transportPriceFacade,
     ) {
     }
 
@@ -30,18 +32,22 @@ class TransportPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
      * @param int $domainId
+     * @param int $cartTotalWeight
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
      */
     public function calculatePrice(
         Transport $transport,
         Price $productsPrice,
         int $domainId,
+        int $cartTotalWeight,
     ): Price {
         if ($this->isFree($productsPrice, $domainId)) {
             return Price::zero();
         }
 
-        return $this->calculateIndependentPrice($transport->getLowestPriceOnDomain($domainId));
+        $transportPrice = $this->transportPriceFacade->getTransportPriceOnDomainByTransportAndClosestWeight($domainId, $transport, $cartTotalWeight);
+
+        return $this->calculateIndependentPrice($transportPrice);
     }
 
     /**
