@@ -16,7 +16,9 @@ export const Error403Content: FC = () => {
                             {t("Sorry, you don't have permission to access this page.")}
                         </ErrorPageTextMain>
 
-                        <ErrorPageButtonLink href="/">{t('Back to shop')}</ErrorPageButtonLink>
+                        <ErrorPageButtonLink href="/" skeletonType="homepage">
+                            {t('Back to shop')}
+                        </ErrorPageButtonLink>
                     </div>
                 </ErrorPage>
             </Webline>

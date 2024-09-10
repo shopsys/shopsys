@@ -34,7 +34,12 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }
     useCookiesStoreSync();
 
     if (pageProps.isForbidden) {
-        return <Error403Content />;
+        return (
+            <>
+                <DeferredLoaders />
+                <Error403Content />
+            </>
+        );
     }
 
     if (pageProps.isMaintenance) {
