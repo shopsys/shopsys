@@ -30,7 +30,7 @@ describe('Payment select tests', () => {
         checkCanGoToNextOrderStep();
         takeSnapshotAndCompare(this.test?.title, 'after payment selection', {
             blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.order_summary_transport_and_payment_image },
             ],
@@ -50,7 +50,7 @@ describe('Payment select tests', () => {
         checkCanGoToNextOrderStep();
         takeSnapshotAndCompare(this.test?.title, 'after changing payment selection', {
             blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.order_summary_transport_and_payment_image },
             ],
@@ -65,7 +65,7 @@ describe('Payment select tests', () => {
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(this.test?.title, 'after selecting', {
             blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.order_summary_transport_and_payment_image },
             ],
@@ -75,7 +75,7 @@ describe('Payment select tests', () => {
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(this.test?.title, 'after removing', {
             blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.order_summary_transport_and_payment_image },
             ],
@@ -87,7 +87,7 @@ describe('Payment select tests', () => {
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(this.test?.title, 'after selecting', {
             blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.order_summary_transport_and_payment_image },
             ],
@@ -97,7 +97,7 @@ describe('Payment select tests', () => {
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(this.test?.title, 'after removing', {
             blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.order_summary_transport_and_payment_image },
             ],
@@ -109,7 +109,7 @@ describe('Payment select tests', () => {
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(this.test?.title, 'after selecting', {
             blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.order_summary_transport_and_payment_image },
             ],
@@ -120,7 +120,7 @@ describe('Payment select tests', () => {
         takeSnapshotAndCompare(this.test?.title, 'after removing transport', {
             blackout: [
                 { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.transport_and_payment_list_item_image },
             ],
         });
 
@@ -128,7 +128,7 @@ describe('Payment select tests', () => {
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(this.test?.title, 'after selecting transport incompatible with the previous payment', {
             blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.order_summary_transport_and_payment_image },
             ],

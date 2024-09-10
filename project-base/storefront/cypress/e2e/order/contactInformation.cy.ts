@@ -46,7 +46,7 @@ describe('Contact information page tests', () => {
         checkUrl(url.order.transportAndPayment);
         takeSnapshotAndCompare(this.test?.title, 'transport and payment page', {
             blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
             ],
         });
@@ -72,7 +72,7 @@ describe('Contact information page tests', () => {
         checkUrl(url.order.transportAndPayment);
         takeSnapshotAndCompare(this.test?.title, 'transport and payment page', {
             blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
             ],
         });

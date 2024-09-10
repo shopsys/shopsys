@@ -34,7 +34,7 @@ describe('Cart login tests', () => {
         checkAndHideSuccessToast('Successfully logged in');
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(this.test?.title, 'cart page after login', {
-            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }, { tid: TIDs.footer_social_links }],
+            blackout: [{ tid: TIDs.cart_list_item_image }, { tid: TIDs.footer_social_links }],
         });
 
         goToHomepageFromHeader();
@@ -42,7 +42,7 @@ describe('Cart login tests', () => {
         checkPopupIsVisible(true);
         goToCartPageFromHeader();
         takeSnapshotAndCompare(this.test?.title, 'cart page after adding product to cart', {
-            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }, { tid: TIDs.footer_social_links }],
+            blackout: [{ tid: TIDs.cart_list_item_image }, { tid: TIDs.footer_social_links }],
         });
 
         logoutFromHeader();
@@ -66,7 +66,7 @@ describe('Cart login tests', () => {
         checkPopupIsVisible(true);
         goToCartPageFromHeader();
         takeSnapshotAndCompare(this.test?.title, 'cart page after adding product to cart', {
-            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }, { tid: TIDs.footer_social_links }],
+            blackout: [{ tid: TIDs.cart_list_item_image }, { tid: TIDs.footer_social_links }],
         });
 
         logoutFromHeader();
@@ -91,7 +91,7 @@ describe('Cart login tests', () => {
 
         goToCartPageFromHeader();
         takeSnapshotAndCompare(this.test?.title, 'cart page after adding product to cart', {
-            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }, { tid: TIDs.footer_social_links }],
+            blackout: [{ tid: TIDs.cart_list_item_image }, { tid: TIDs.footer_social_links }],
         });
 
         logoutFromHeader();
@@ -107,14 +107,14 @@ describe('Cart login tests', () => {
         goToCartPageFromHeader();
 
         takeSnapshotAndCompare(this.test?.title, 'cart page after adding second product to cart', {
-            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }, { tid: TIDs.footer_social_links }],
+            blackout: [{ tid: TIDs.cart_list_item_image }, { tid: TIDs.footer_social_links }],
         });
         loginFromHeader(registrationInput.email, password);
         checkAndHideSuccessToast('Successfully logged in');
         checkAndHideInfoToast('Your cart has been modified. Please check the changes.');
 
         takeSnapshotAndCompare(this.test?.title, 'cart page after second login', {
-            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }, { tid: TIDs.footer_social_links }],
+            blackout: [{ tid: TIDs.cart_list_item_image }, { tid: TIDs.footer_social_links }],
         });
     });
 
@@ -126,7 +126,7 @@ describe('Cart login tests', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.cart);
 
         takeSnapshotAndCompare(this.test?.title, 'cart page after first login', {
-            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }, { tid: TIDs.footer_social_links }],
+            blackout: [{ tid: TIDs.cart_list_item_image }, { tid: TIDs.footer_social_links }],
         });
 
         logoutFromHeader();
