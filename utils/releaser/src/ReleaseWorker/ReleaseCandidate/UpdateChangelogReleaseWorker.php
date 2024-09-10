@@ -19,7 +19,11 @@ final class UpdateChangelogReleaseWorker extends AbstractShopsysReleaseWorker
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): string {
-        return 'Dump new features to appropriate CHANGELOG-XX.X.md, save new release as draft and [Manually] check everything is ok';
+        return sprintf(
+            'Dump new features to appropriate CHANGELOG-%s.%s.md, save new release as draft and [Manually] check everything is ok',
+            $version->getMajor()->getValue(),
+            $version->getMinor()->getValue(),
+        );
     }
 
     /**
@@ -41,16 +45,27 @@ final class UpdateChangelogReleaseWorker extends AbstractShopsysReleaseWorker
 
         $this->symfonyStyle->note('Choose previous highest tag as Previous tag and then click on Generate release notes.');
 
-        $this->symfonyStyle->note('Copy contents of release to appropriate CHANGELOG-XX.X.md with appropriate title and correct formatting.');
-
         $this->symfonyStyle->note(
             sprintf(
-                'Save release as draft and commit new changelog content with message "changelog is now updated for %s release"',
-                $version->getOriginalString(),
+                'Copy contents of release to CHANGELOG-%s.%s.md with appropriate title and check the changes.',
+                $version->getMajor()->getValue(),
+                $version->getMinor()->getValue(),
             ),
         );
 
-        $this->confirm('Confirm you have checked appropriate CHANGELOG-XX.X.md and the changes are committed. Also confirm that release is saved as draft.');
+        $this->symfonyStyle->note('Save release as draft');
+
+        $this->confirm(
+            sprintf(
+                'Confirm you have copied the release notes to CHANGELOG-%s.%s.md, checked the changes and saved release as draft.',
+                $version->getMajor()->getValue(),
+                $version->getMinor()->getValue(),
+            ),
+        );
+
+        $this->processRunner->run('php phing markdown-fix');
+
+        $this->commit(sprintf('changelog is now updated for %s release', $version->getOriginalString()));
     }
 
     /**
