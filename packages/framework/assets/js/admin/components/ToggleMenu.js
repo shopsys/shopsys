@@ -7,16 +7,24 @@ export default class ToggleMenu {
         this.$items = $toggleMenu.filterAllNodes('.js-toggle-menu-item');
 
         this.$items.click(function (event) {
+            const isOpened = $(this).hasClass('open');
+
             ToggleMenu.hideAllSubmenus(_this);
 
-            $(this).filterAllNodes('.js-toggle-menu-submenu').show();
-            $(this).addClass('open');
+            if (!isOpened) {
+                $(this).filterAllNodes('.js-toggle-menu-submenu').show();
+                $(this).addClass('open');
+            }
 
             event.stopPropagation();
         });
 
         $(document).on('click', function () {
             ToggleMenu.hideAllSubmenus(_this);
+        });
+
+        this.$items.find('.js-toggle-menu-submenu').on('click', function (event) {
+            event.stopPropagation();
         });
     }
 
