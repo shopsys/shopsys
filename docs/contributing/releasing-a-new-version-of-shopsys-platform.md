@@ -35,19 +35,19 @@ The whole release process is divided into 3 stages that are run separately:
 To perform a desired stage, run the following command in the `php-fpm` docker container and follow the instructions that you'll be asked in the console.
 
 ```sh
-vendor/bin/monorepo-builder release <release-number> --stage <stage> --initial-branch <branch-name-for-released-version> -v
+vendor/bin/monorepo-builder release <release-number> --stage <stage> --initial-branch <initial-branch> -v
 ```
 
 !!! note
 
     -   The "release-number" argument is the desired tag you want to release. It should always follow [the semantic versioning](https://semver.org/)
         and start with the "v" prefix, e.g., `v7.0.0`.
-    -   The "initial-branch" argument is the name of branch which will be used for releasing e.g. `rc-7-0-0`.
+    -   The "initial-branch" argument is the name of branch the version has been built on e.g. `7.0`.
 
 If you want only to display a particular stage, along with the release worker class names, add the `--dry-run` argument:
 
 ```sh
-vendor/bin/monorepo-builder release <release-number> --dry-run --stage <stage> --initial-branch <branch-name-for-released-version> -v
+vendor/bin/monorepo-builder release <release-number> --dry-run --stage <stage> --initial-branch <initial-branch> -v
 ```
 
 !!! note
