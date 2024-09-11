@@ -676,6 +676,11 @@ input ContactFormInput {
   name: String!
 }
 
+input Coordinates {
+  latitude: String!
+  longitude: String!
+}
+
 "Represents country"
 type Country {
   "Country code in ISO 3166-1 alpha-2"
@@ -1977,6 +1982,8 @@ type Query {
   stores(
     after: String
     before: String
+    "Returns stores with distance from given coordinates"
+    coordinates: Coordinates = null
     first: Int
     last: Int
     "Search for city or post code"
@@ -2285,6 +2292,8 @@ type Store implements Breadcrumb & Slug {
   country: Country!
   "Store description"
   description: String
+  "Distance from the user in meters"
+  distance: Int
   "Store images"
   images(type: String = null): [Image!]!
   "Is set as default store"

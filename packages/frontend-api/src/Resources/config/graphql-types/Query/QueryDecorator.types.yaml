@@ -302,6 +302,10 @@ QueryDecorator:
                         type: "String"
                         defaultValue: null
                         description: "Search for city or post code"
+                    coordinates:
+                        type: "Coordinates"
+                        defaultValue: null
+                        description: "Returns stores with distance from given coordinates"
             store:
                 type: 'Store'
                 resolve: "@=query('storeQuery', args['uuid'], args['urlSlug'])"

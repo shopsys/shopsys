@@ -1,5 +1,6 @@
 {
     "404": "404",
+    "{{ distance }} km from you": "{{ distance }} km od vás",
     "About shopping": "About shopping",
     "About Shopsys": "About Shopsys",
     "Accept all": "Accept all",

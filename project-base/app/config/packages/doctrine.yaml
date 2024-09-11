@@ -18,6 +18,8 @@ doctrine:
         auto_generate_proxy_classes: false
         auto_mapping: false
         dql:
+            numeric_functions:
+                distance: Shopsys\FrameworkBundle\Component\Doctrine\DistanceFunction
             string_functions:
                 bool_and: App\Component\Doctrine\BoolAndFunction
                 collate: Shopsys\FrameworkBundle\Component\Doctrine\CollateFunction
