@@ -8,14 +8,15 @@ use App\Model\Transport\Transport;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrontendApiBundle\Component\Validation\PageSizeValidator;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
+use Shopsys\FrontendApiBundle\Model\Store\StoreFacade;
+use Shopsys\FrontendApiBundle\Model\Store\StoresFilterOptions;
 
 class StoresQuery extends AbstractQuery
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Store\StoreFacade $storeFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Store\StoreFacade $storeFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
@@ -33,11 +34,18 @@ class StoresQuery extends AbstractQuery
         PageSizeValidator::checkMaxPageSize($argument);
         $domainId = $this->domain->getId();
 
-        $paginator = new Paginator(function ($offset, $limit) use ($domainId) {
-            return $this->storeFacade->getStoresByDomainId($domainId, $limit, $offset);
+        /** @var string|null $searchText */
+        $searchText = $argument->offsetGet('searchText');
+
+        $filterOptions = new StoresFilterOptions(
+            searchText: $searchText,
+        );
+
+        $paginator = new Paginator(function ($offset, $limit) use ($domainId, $filterOptions) {
+            return $this->storeFacade->getFilteredStores($domainId, $filterOptions, $limit, $offset);
         });
 
-        $storesCount = $this->storeFacade->getStoresCountByDomainId($domainId);
+        $storesCount = $this->storeFacade->getFilteredStoresCount($domainId, $filterOptions);
 
         return $paginator->auto($argument, $storesCount);
     }

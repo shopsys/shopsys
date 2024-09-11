@@ -1974,7 +1974,14 @@ type Query {
   "Returns store filtered using UUID or URL slug"
   store(urlSlug: String, uuid: Uuid): Store
   "Returns list of stores that can be paginated using `first`, `last`, `before` and `after` keywords"
-  stores(after: String, before: String, first: Int, last: Int): StoreConnection!
+  stores(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    "Search for city or post code"
+    searchText: String = null
+  ): StoreConnection!
   "Returns complete list of transport methods"
   transport(uuid: Uuid!): Transport
   "Returns available transport methods based on the current cart state"

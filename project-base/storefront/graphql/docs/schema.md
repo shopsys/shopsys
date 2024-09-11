@@ -1216,6 +1216,15 @@ Returns list of stores that can be paginated using `first`, `last`, `before` and
 <td></td>
 </tr>
 <tr>
+<td colspan="2" align="right" valign="top">searchText</td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Search for city or post code
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>transport</strong></td>
 <td valign="top"><a href="#transport">Transport</a></td>
 <td>
