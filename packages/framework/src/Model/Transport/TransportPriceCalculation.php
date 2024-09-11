@@ -41,11 +41,11 @@ class TransportPriceCalculation
         int $domainId,
         int $cartTotalWeight,
     ): Price {
+        $transportPrice = $this->transportPriceFacade->getTransportPriceOnDomainByTransportAndClosestWeight($domainId, $transport, $cartTotalWeight);
+
         if ($this->isFree($productsPrice, $domainId)) {
             return Price::zero();
         }
-
-        $transportPrice = $this->transportPriceFacade->getTransportPriceOnDomainByTransportAndClosestWeight($domainId, $transport, $cartTotalWeight);
 
         return $this->calculateIndependentPrice($transportPrice);
     }

@@ -24,7 +24,6 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportTypeEnum;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -121,10 +120,6 @@ class TransportFormType extends AbstractType
                     ]),
                 ],
                 'label' => t('Days until delivery'),
-            ])
-            ->add('maxWeight', IntegerType::class, [
-                'label' => t('Maximum weight (g)'),
-                'required' => false,
             ]);
 
         $builderPricesGroup = $builder->create('prices', GroupType::class, [

@@ -92,12 +92,6 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     protected $daysUntilDelivery;
 
     /**
-     * @var int|null
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    protected $maxWeight;
-
-    /**
      * @var string|null
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -142,7 +136,6 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
         $this->hidden = $transportData->hidden;
         $this->daysUntilDelivery = $transportData->daysUntilDelivery;
         $this->type = $transportData->type;
-        $this->maxWeight = $transportData->maxWeight > 0 ? $transportData->maxWeight : null;
         $this->trackingUrl = $transportData->trackingUrl;
         $this->setTranslations($transportData);
     }
@@ -433,14 +426,6 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     public function isPacketery(): bool
     {
         return $this->type === TransportTypeEnum::TYPE_PACKETERY;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getMaxWeight()
-    {
-        return $this->maxWeight;
     }
 
     /**

@@ -57,11 +57,6 @@ class TransportData
     public $daysUntilDelivery;
 
     /**
-     * @var int|null
-     */
-    public $maxWeight;
-
-    /**
      * @var string|null
      */
     public $trackingUrl;

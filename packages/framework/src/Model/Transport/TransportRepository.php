@@ -170,7 +170,8 @@ class TransportRepository
 
         if ($totalWeight !== null) {
             $queryBuilder
-                ->andWhere('t.maxWeight IS NULL OR t.maxWeight >= :maxWeight')
+                ->join('t.prices', 'tp', Join::WITH, 'tp.domainId = :domainId')
+                ->andWhere('tp.maxWeight IS NULL OR tp.maxWeight >= :maxWeight')
                 ->setParameter('maxWeight', $totalWeight);
         }
 

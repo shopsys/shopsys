@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Store\Exception\StoreByUuidNotFoundException;
+use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportPriceNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade;
@@ -23,7 +24,6 @@ use Shopsys\FrontendApiBundle\Model\Payment\Exception\PaymentPriceChangedExcepti
 use Shopsys\FrontendApiBundle\Model\Payment\PaymentValidationFacade;
 use Shopsys\FrontendApiBundle\Model\Transport\Exception\TransportPriceChangedException;
 use Shopsys\FrontendApiBundle\Model\Transport\Exception\TransportUnavailableForProductsInCartException;
-use Shopsys\FrontendApiBundle\Model\Transport\Exception\TransportWeightLimitExceededException;
 use Shopsys\FrontendApiBundle\Model\Transport\TransportValidationFacade;
 
 class TransportAndPaymentWatcherFacade
@@ -68,6 +68,7 @@ class TransportAndPaymentWatcherFacade
         Cart $cart,
     ): CartWithModificationsResult {
         $this->cartWithModificationsResult = $cartWithModificationsResult;
+        $this->checkTransport($cart);
 
         $domainId = $this->domain->getId();
 
@@ -97,7 +98,6 @@ class TransportAndPaymentWatcherFacade
         );
         $this->cartWithModificationsResult->setRoundingPrice($orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_ROUNDING]);
 
-        $this->checkTransport($cart);
         $this->checkPayment($cart);
 
         return $this->cartWithModificationsResult;
@@ -107,13 +107,16 @@ class TransportAndPaymentWatcherFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
      */
-    protected function checkTransportPrice(Transport $transport, Cart $cart): void
+    protected function checkTransportPriceAndWeightLimit(Transport $transport, Cart $cart): void
     {
         try {
-            $this->transportValidationFacade->checkTransportPrice($transport, $cart);
+            $this->transportValidationFacade->checkTransportPriceAndWeightLimit($transport, $cart);
         } catch (TransportPriceChangedException $exception) {
             $this->cartWithModificationsResult->setTransportPriceChanged(true);
             $this->cartTransportFacade->setTransportWatchedPrice($cart, $exception->getCurrentTransportPrice()->getPriceWithVat());
+        } catch (TransportPriceNotFoundException) {
+            $this->cartWithModificationsResult->setTransportWeightLimitExceeded(true);
+            $this->cartTransportFacade->unsetCartTransport($cart);
         }
     }
 
@@ -128,20 +131,6 @@ class TransportAndPaymentWatcherFacade
         } catch (PaymentPriceChangedException $exception) {
             $this->cartWithModificationsResult->setPaymentPriceChanged(true);
             $this->cartPaymentFacade->setPaymentWatchedPrice($cart, $exception->getCurrentPaymentPrice()->getPriceWithVat());
-        }
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     */
-    protected function checkTransportWeightLimit(Transport $transport, Cart $cart): void
-    {
-        try {
-            $this->transportValidationFacade->checkTransportWeightLimit($transport, $cart);
-        } catch (TransportWeightLimitExceededException) {
-            $this->cartWithModificationsResult->setTransportWeightLimitExceeded(true);
-            $this->cartTransportFacade->unsetCartTransport($cart);
         }
     }
 
@@ -209,8 +198,12 @@ class TransportAndPaymentWatcherFacade
 
             return;
         }
-        $this->checkTransportPrice($transport, $cart);
-        $this->checkTransportWeightLimit($transport, $cart);
+
+        $this->checkTransportPriceAndWeightLimit($transport, $cart);
+
+        if ($cart->getTransport() === null) {
+            return;
+        }
         $this->checkTransportAvailabilityForProductsInCart($transport, $cart);
         $this->checkPersonalPickupStoreAvailability($transport, $cart);
         $this->checkPacketeryIdIsValid($transport, $cart);

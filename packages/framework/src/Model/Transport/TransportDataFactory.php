@@ -114,7 +114,6 @@ class TransportDataFactory implements TransportDataFactoryInterface
         $transportData->payments = $transport->getPayments();
         $transportData->image = $this->imageUploadDataFactory->createFromEntityAndType($transport);
         $transportData->type = $transport->getType();
-        $transportData->maxWeight = $transport->getMaxWeight();
         $transportData->trackingUrl = $transport->getTrackingUrl();
     }
 }

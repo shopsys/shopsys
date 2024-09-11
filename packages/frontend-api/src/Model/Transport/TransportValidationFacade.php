@@ -8,7 +8,9 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
+use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportPriceNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
+use Shopsys\FrameworkBundle\Model\Transport\TransportPriceFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceProvider;
 use Shopsys\FrameworkBundle\Model\Transport\TransportVisibilityCalculation;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
@@ -27,6 +29,7 @@ class TransportValidationFacade
      * @param \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceProvider $transportPriceProvider
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportVisibilityCalculation $transportVisibilityCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceFacade $transportPriceFacade
      */
     public function __construct(
         protected readonly StoreFacade $storeFacade,
@@ -35,6 +38,7 @@ class TransportValidationFacade
         protected readonly CartApiFacade $cartApiFacade,
         protected readonly TransportPriceProvider $transportPriceProvider,
         protected readonly TransportVisibilityCalculation $transportVisibilityCalculation,
+        protected readonly TransportPriceFacade $transportPriceFacade,
     ) {
     }
 
@@ -60,7 +64,13 @@ class TransportValidationFacade
      */
     public function checkTransportWeightLimit(Transport $transport, Cart $cart): void
     {
-        if ($transport->getMaxWeight() !== null && $transport->getMaxWeight() < $cart->getTotalWeight()) {
+        try {
+            $this->transportPriceFacade->getTransportPriceOnDomainByTransportAndClosestWeight(
+                $this->domain->getId(),
+                $transport,
+                $cart->getTotalWeight(),
+            );
+        } catch (TransportPriceNotFoundException) {
             throw new TransportWeightLimitExceededException();
         }
     }
@@ -80,7 +90,7 @@ class TransportValidationFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
      */
-    public function checkTransportPrice(Transport $transport, Cart $cart): void
+    public function checkTransportPriceAndWeightLimit(Transport $transport, Cart $cart): void
     {
         $calculatedTransportPrice = $this->transportPriceProvider->getTransportPrice(
             $cart,
