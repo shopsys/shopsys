@@ -73,6 +73,10 @@ class ComplaintController extends AdminBaseController
             $queryBuilder
                 ->andWhere('cmp.domainId = :selectedDomainId')
                 ->setParameter('selectedDomainId', $selectedDomainId);
+        } else {
+            $queryBuilder
+                ->andWhere('cmp.domainId IN (:domainIds)')
+                ->setParameter('domainIds', $this->domain->getAdminEnabledDomainIds());
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/Complaint/list.html.twig', [
