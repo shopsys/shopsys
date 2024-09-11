@@ -76,7 +76,7 @@ class GetStoreTest extends GraphQlTestCase
             [$uuid, $expectedStoreData] = $dataSet;
 
             $graphQlType = 'store';
-            $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoreQuery.graphql', [
+            $response = $this->getResponseContentForGql(__DIR__ . '/graphql/StoreQuery.graphql', [
                 'uuid' => $uuid,
             ]);
             $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
@@ -108,7 +108,7 @@ class GetStoreTest extends GraphQlTestCase
     {
         $storeOnSecondDomain = $this->getReference(StoreDataFixture::STORE_PREFIX . 9, Store::class);
 
-        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoreQuery.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/StoreQuery.graphql', [
             'uuid' => $storeOnSecondDomain->getUuid(),
         ]);
         $this->assertResponseContainsArrayOfErrors($response);
@@ -120,7 +120,7 @@ class GetStoreTest extends GraphQlTestCase
         );
 
         $urlSlug = 'zilina';
-        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoreQuery.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/StoreQuery.graphql', [
             'slug' => $urlSlug,
         ]);
         $this->assertResponseContainsArrayOfErrors($response);
@@ -138,7 +138,7 @@ class GetStoreTest extends GraphQlTestCase
             [$urlSlug, $expectedStoreData] = $dataSet;
 
             $graphQlType = 'store';
-            $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoreQuery.graphql', [
+            $response = $this->getResponseContentForGql(__DIR__ . '/graphql/StoreQuery.graphql', [
                 'slug' => $urlSlug,
             ]);
             $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
@@ -187,7 +187,7 @@ class GetStoreTest extends GraphQlTestCase
             $this->createClosedDay($publicHolidayDate, $publicHolidayExcludedStoresIds);
         }
 
-        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoreOpeningHoursQuery.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/StoreOpeningHoursQuery.graphql', [
             'uuid' => $store->getUuid(),
         ]);
 
