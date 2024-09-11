@@ -34,9 +34,7 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
             href={productUrl}
             type={product.__typename === 'RegularProduct' ? 'product' : 'productMainVariant'}
             className={twJoin(
-                'group flex items-center justify-between gap-5 gap-y-4 p-3 no-underline transition-colors hover:no-underline',
-                'bg-backgroundMore',
-                'hover:bg-background',
+                'group flex items-center justify-between gap-5 gap-y-4 p-3 no-underline transition-colors hover:bg-background hover:no-underline',
             )}
             onClick={() =>
                 onGtmProductClickEventHandler(

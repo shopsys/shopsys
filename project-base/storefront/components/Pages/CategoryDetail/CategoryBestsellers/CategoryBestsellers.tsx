@@ -21,7 +21,7 @@ export const CategoryBestsellers: FC<CategoryBestsellersProps> = ({ products }) 
     const showMoreCount = products.length - NUMBER_OF_VISIBLE_ITEMS;
 
     return (
-        <div className="mb-5 rounded-xl bg-backgroundMore p-5">
+        <div className="relative mb-5 rounded-xl bg-backgroundMore p-5">
             <div className="mb-3 break-words text-center font-secondary text-lg font-semibold">
                 {t('Do not want to choose? Choose certainty')}
             </div>

@@ -27,7 +27,7 @@ export type ProductsSliderProps = {
     visibleSliderItems?: number;
 };
 
-const productTwClass = 'snap-center border-b-0 md:snap-start mx-1.5 first:ml-0 last:mr-0';
+const productTwClass = 'snap-center md:snap-start mx-1.5 first:ml-0 last:mr-0';
 
 export const ProductsSlider: FC<ProductsSliderProps> = ({
     products,

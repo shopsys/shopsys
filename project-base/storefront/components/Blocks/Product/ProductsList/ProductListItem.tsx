@@ -71,7 +71,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 tid={TIDs.blocks_product_list_listeditem_ + product.catalogNumber}
                 className={twMergeCustom(
                     'group relative flex select-none flex-col justify-between gap-2.5 rounded-xl border border-backgroundMore bg-backgroundMore px-2.5 py-5 text-left transition sm:px-5',
-                    'hover:border-backgroundMost hover:bg-background',
+                    'hover:border-borderAccentLess hover:bg-background',
                     className,
                 )}
             >
@@ -79,7 +79,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                     <button
                         title={t('Remove from wishlist')}
                         className={twJoin(
-                            'absolute left-3 z-above flex h-5 w-5 cursor-pointer items-center justify-center rounded-full p-0 transition',
+                            'absolute left-3 flex h-5 w-5 cursor-pointer items-center justify-center rounded-full p-0 transition',
                             'border-none bg-backgroundAccentLess text-text outline-none',
                             'hover:bg-backgroundAccent hover:text-textInverted',
                         )}

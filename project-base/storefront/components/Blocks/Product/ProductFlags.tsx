@@ -10,14 +10,14 @@ export const ProductFlags: FC<ProductFlagsProps> = ({ flags, variant }) => {
     }
 
     const variantTwClass = {
-        list: 'top-0 right-0 items-end z-above',
+        list: 'top-5 right-2.5 sm:right-5 items-end z-above',
         detail: 'top-3 left-4',
         comparison: 'top-3 left-0',
         bestsellers: 'flex-row relative flex-wrap mb-3 gap-2',
     };
 
     return (
-        <div className={twMergeCustom('absolute flex flex-col gap-1 items-start', variantTwClass[variant])}>
+        <div className={twMergeCustom('absolute flex flex-col items-start gap-1', variantTwClass[variant])}>
             {flags.map(({ name, rgbColor }, index) => (
                 <ProductFlag key={index} name={name} rgbColor={rgbColor} />
             ))}
