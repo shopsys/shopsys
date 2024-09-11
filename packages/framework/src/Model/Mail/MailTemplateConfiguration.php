@@ -21,6 +21,10 @@ class MailTemplateConfiguration
 {
     public const TYPE_ORDER_STATUS = 'order-status';
     public const TYPE_COMPLAINT_STATUS = 'complaint-status';
+    public const TYPES_WITH_SEND_MAIL_SETTING = [
+        self::TYPE_ORDER_STATUS,
+        self::TYPE_COMPLAINT_STATUS,
+    ];
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables[]
