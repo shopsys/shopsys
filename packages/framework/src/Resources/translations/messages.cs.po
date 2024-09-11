@@ -571,6 +571,9 @@ msgstr "Rozcestník kategorií na titulní stránce"
 msgid "Category with prefilled filters"
 msgstr "Kategorie s předvyplněnými filtry"
 
+msgid "Catnum"
+msgstr "Katalogové číslo"
+
 msgid "Change for"
 msgstr "Změna pro"
 

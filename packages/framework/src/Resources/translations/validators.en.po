@@ -466,10 +466,10 @@ msgstr ""
 msgid "Quantity must be greater than {{ compared_value }}"
 msgstr ""
 
-msgid "Redirect target must be relative path (with leading slash) or absolute path starting by protocol (http:// or https://)"
+msgid "Quantity of \"%itemName%\" item must not be greater than the ordered quantity (%orderedQuantity%)"
 msgstr ""
 
-msgid "Quantity of \"%itemName%\" item must not be greater than the ordered quantity (%orderedQuantity%)"
+msgid "Redirect target must be relative path (with leading slash) or absolute path starting by protocol (http:// or https://)"
 msgstr ""
 
 msgid "Same description is used on another domain"

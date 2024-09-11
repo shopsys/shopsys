@@ -571,6 +571,9 @@ msgstr ""
 msgid "Category with prefilled filters"
 msgstr ""
 
+msgid "Catnum"
+msgstr ""
+
 msgid "Change for"
 msgstr ""
 
