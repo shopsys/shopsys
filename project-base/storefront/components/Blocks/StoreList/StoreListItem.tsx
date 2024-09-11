@@ -3,7 +3,7 @@ import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
 import useTranslation from 'next-translate/useTranslation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getTodayOpeningHours } from 'utils/openingHours/openingHoursHelper';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { twMergeCustom } from 'utils/twMerge';
@@ -16,13 +16,25 @@ type StoreListItemProps = {
 export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const { t } = useTranslation();
+    const itemRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         setIsExpanded(isSelected);
     }, [isSelected]);
 
+    useEffect(() => {
+        if (isExpanded && itemRef.current) {
+            itemRef.current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest',
+                inline: 'center',
+            });
+        }
+    }, [isExpanded]);
+
     return (
         <div
+            ref={itemRef}
             className={twMergeCustom(
                 'bg-backgroundMore px-5 py-2.5 rounded-xl cursor-pointer border border-transparent',
                 isExpanded && 'border-borderAccent',
