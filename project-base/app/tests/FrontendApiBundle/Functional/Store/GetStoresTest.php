@@ -69,17 +69,17 @@ class GetStoresTest extends GraphQlTestCase
     {
         return [
             [
-                $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoresQuery.graphql'),
+                $this->getResponseContentForGql(__DIR__ . '/graphql/StoresQuery.graphql'),
                 $this->getExpectedStores(),
             ],
             [
-                $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoresQuery.graphql', [
+                $this->getResponseContentForGql(__DIR__ . '/graphql/StoresQuery.graphql', [
                     'first' => 1,
                 ]),
                 array_slice($this->getExpectedStores(), 0, 1),
             ],
             [
-                $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoresQuery.graphql', [
+                $this->getResponseContentForGql(__DIR__ . '/graphql/StoresQuery.graphql', [
                     'last' => 1,
                 ]),
                 array_slice($this->getExpectedStores(), 7, 1),
