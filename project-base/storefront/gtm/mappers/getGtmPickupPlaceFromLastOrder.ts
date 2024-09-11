@@ -1,4 +1,5 @@
 import { TypeLastOrderFragment } from 'graphql/requests/orders/fragments/LastOrderFragment.generated';
+import { TypeStoreOpeningStatusEnum } from 'graphql/types';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
 export const getGtmPickupPlaceFromLastOrder = (
@@ -19,7 +20,7 @@ export const getGtmPickupPlaceFromLastOrder = (
     },
     description: null,
     openingHours: {
-        isOpen: false,
+        status: TypeStoreOpeningStatusEnum.Closed,
         dayOfWeek: 0,
         openingHoursOfDays: [],
     },

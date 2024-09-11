@@ -1,5 +1,5 @@
 fragment OpeningHoursFragment on OpeningHours {
-    isOpen
+    status
     dayOfWeek
     openingHoursOfDays {
         date

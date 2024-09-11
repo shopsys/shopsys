@@ -1,5 +1,5 @@
 import { PacketeryExtendedPoint, PacketeryPickFunction, StoreOrPacketeryPoint } from './types';
-import { TypeOpeningHours } from 'graphql/types';
+import { TypeOpeningHours, TypeStoreOpeningStatusEnum } from 'graphql/types';
 
 /**
  * @see https://docs.packetery.com/01-pickup-point-selection/02-widget-v6.html
@@ -52,7 +52,7 @@ const mapPacketeryOpeningHoursToInternalOpeningHours = (
     };
 
     const internalOpeningHours: TypeOpeningHours = {
-        isOpen: false,
+        status: TypeStoreOpeningStatusEnum.Closed,
         dayOfWeek: new Date().getDay(),
         openingHoursOfDays: [],
     };

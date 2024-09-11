@@ -1,5 +1,5 @@
 import { TypeTransportWithAvailablePaymentsAndStoresFragment } from '../../../graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
-import { TypeOpeningHoursOfDay } from '../../../graphql/types';
+import { TypeOpeningHoursOfDay, TypeStoreOpeningStatusEnum } from '../../../graphql/types';
 import { transport } from 'fixtures/demodata';
 import { TIDs } from 'tids';
 
@@ -27,7 +27,7 @@ export const changeDayOfWeekInTransportsApiResponse = (dayOfWeek: number) => {
                 (transport: TypeTransportWithAvailablePaymentsAndStoresFragment) => {
                     transport?.stores?.edges?.forEach((edge) => {
                         if (edge?.node?.openingHours) {
-                            edge.node.openingHours.isOpen = true;
+                            edge.node.openingHours.status = 'OPEN' as TypeStoreOpeningStatusEnum;
                             edge.node.openingHours.dayOfWeek = dayOfWeek;
                             edge.node.openingHours.openingHoursOfDays = getStaticOpeningHoursOfDays();
                         }
@@ -46,7 +46,7 @@ export const changeDayOfWeekInChangeTransportMutationResponse = (dayOfWeek: numb
                     ?.transport as TypeTransportWithAvailablePaymentsAndStoresFragment
             )?.stores?.edges?.forEach((edge) => {
                 if (edge?.node?.openingHours) {
-                    edge.node.openingHours.isOpen = true;
+                    edge.node.openingHours.status = 'OPEN' as TypeStoreOpeningStatusEnum;
                     edge.node.openingHours.dayOfWeek = dayOfWeek;
                     edge.node.openingHours.openingHoursOfDays = getStaticOpeningHoursOfDays();
                 }
