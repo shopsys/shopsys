@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Complaint;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFacade;
 use Shopsys\FrameworkBundle\Model\Complaint\Exception\ComplaintNotFoundException;
 
 class ComplaintFacade
@@ -12,10 +13,12 @@ class ComplaintFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintRepository $complaintRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFacade $customerUploadedFileFacade
      */
     public function __construct(
         protected readonly ComplaintRepository $complaintRepository,
         protected readonly EntityManagerInterface $em,
+        protected readonly CustomerUploadedFileFacade $customerUploadedFileFacade,
     ) {
     }
 
@@ -42,6 +45,27 @@ class ComplaintFacade
     {
         $complaint = $this->getById($id);
         $complaint->edit($complaintData);
+        $this->editItems($complaint, $complaintData->complaintItems);
+        $this->em->flush();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\Complaint $complaint
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData[] $complaintItemsData
+     */
+    protected function editItems(Complaint $complaint, array $complaintItemsData): void
+    {
+        foreach ($complaint->getItems() as $complaintItem) {
+            $complaintItemId = $complaintItem->getId();
+
+            if (!array_key_exists($complaintItemId, $complaintItemsData)) {
+                continue;
+            }
+
+            $orderItemData = $complaintItemsData[$complaintItemId];
+            $complaintItem->edit($orderItemData);
+        }
+
         $this->em->flush();
     }
 }

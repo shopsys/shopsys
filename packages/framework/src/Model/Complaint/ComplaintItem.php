@@ -76,6 +76,14 @@ class ComplaintItem
     /**
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData $complaintItemData
      */
+    public function edit(ComplaintItemData $complaintItemData): void
+    {
+        $this->setData($complaintItemData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData $complaintItemData
+     */
     protected function setData(ComplaintItemData $complaintItemData)
     {
         $this->orderItem = $complaintItemData->orderItem;

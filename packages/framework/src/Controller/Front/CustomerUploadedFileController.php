@@ -8,6 +8,7 @@ use League\Flysystem\FilesystemOperator;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFile;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFacade;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\DownloadFileResponse;
+use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -19,11 +20,13 @@ class CustomerUploadedFileController
      * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFacade $customerUploadedFileFacade
      * @param \League\Flysystem\FilesystemOperator $filesystem
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
      */
     public function __construct(
         protected readonly CustomerUploadedFileFacade $customerUploadedFileFacade,
         protected readonly FilesystemOperator $filesystem,
         protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly AdministratorFrontSecurityFacade $administratorFrontSecurityFacade,
     ) {
     }
 
@@ -87,7 +90,7 @@ class CustomerUploadedFileController
 
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 
-        if (!$hash && !$customerUser) {
+        if ($this->customerUploadedFileFacade->isAccessToFileDenied($hash, $customerUser)) {
             throw new AccessDeniedException(sprintf('%s.%s', $uploadedFileSlug, $uploadedFileExtension));
         }
 

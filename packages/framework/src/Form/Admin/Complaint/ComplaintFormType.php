@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\Complaint;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Form\Admin\Complaint\Status\ComplaintItemsType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyCustomerType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyDomainIconType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyOrderType;
@@ -22,6 +24,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ComplaintFormType extends AbstractType
 {
@@ -46,6 +49,7 @@ class ComplaintFormType extends AbstractType
     {
         $builder->add($this->createBasicInformationGroup($builder, $options['complaint']));
         $builder->add($this->createDeliveryAddressGroup($builder));
+        $builder->add($this->createItemsGroup($builder));
 
         $builder->add('save', SubmitType::class);
     }
@@ -63,6 +67,7 @@ class ComplaintFormType extends AbstractType
                 'attr' => [
                     'novalidate' => 'novalidate',
                 ],
+                'constraints' => [new Constraints\Callback([$this, 'validateQuantityIsLessOrEqualThanOrdered'])],
             ]);
     }
 
@@ -230,5 +235,53 @@ class ComplaintFormType extends AbstractType
             ]);
 
         return $builderDeliveryAddressGroup;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    private function createItemsGroup(FormBuilderInterface $builder): FormBuilderInterface
+    {
+        $builderItemsGroup = $builder->create('itemsGroup', GroupType::class, [
+            'label' => t('Complaint items'),
+        ]);
+
+        $builderItemsGroup
+            ->add('complaintItems', ComplaintItemsType::class, [
+                'label' => false,
+                'entry_type' => ComplaintItemFormType::class,
+                'error_bubbling' => false,
+                'allow_add' => false,
+                'allow_delete' => false,
+            ]);
+
+        return $builderItemsGroup;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintData $complaintData
+     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
+     */
+    public function validateQuantityIsLessOrEqualThanOrdered(
+        ComplaintData $complaintData,
+        ExecutionContextInterface $context,
+    ): void {
+        foreach ($complaintData->complaintItems as $complaintItemData) {
+            $orderedQuantity = $complaintItemData->orderItem?->getQuantity();
+
+            if ($complaintItemData->orderItem === null || $complaintItemData->quantity <= $orderedQuantity) {
+                continue;
+            }
+
+            $message = t('Quantity of "%itemName%" item must not be greater than the ordered quantity (%orderedQuantity%)', [
+                '%itemName%' => $complaintItemData->productName,
+                '%orderedQuantity%' => $orderedQuantity,
+            ], Translator::VALIDATOR_TRANSLATION_DOMAIN);
+            $context
+                ->buildViolation($message)
+                ->atPath('complaintItems')
+                ->addViolation();
+        }
     }
 }

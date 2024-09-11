@@ -571,6 +571,9 @@ msgstr ""
 msgid "Category with prefilled filters"
 msgstr ""
 
+msgid "Catnum"
+msgstr ""
+
 msgid "Change for"
 msgstr ""
 
@@ -671,6 +674,9 @@ msgid "Complaint Nr."
 msgstr ""
 
 msgid "Complaint Nr. <strong><a href=\"{{ url }}\">{{ number }}</a></strong> modified"
+msgstr ""
+
+msgid "Complaint items"
 msgstr ""
 
 msgid "Complaint number"
@@ -2990,6 +2996,9 @@ msgid "Promo codes - generated batches"
 msgstr ""
 
 msgid "Promo codes - view"
+msgstr ""
+
+msgid "Quantity"
 msgstr ""
 
 msgid "Quick product search"

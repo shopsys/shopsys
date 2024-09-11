@@ -271,6 +271,9 @@ msgstr ""
 msgid "Please enter default pricing group"
 msgstr ""
 
+msgid "Please enter description"
+msgstr ""
+
 msgid "Please enter discount percentage"
 msgstr ""
 
@@ -461,6 +464,9 @@ msgid "Promo code \"%promoCode%\" is not yet valid."
 msgstr ""
 
 msgid "Quantity must be greater than {{ compared_value }}"
+msgstr ""
+
+msgid "Quantity of \"%itemName%\" item must not be greater than the ordered quantity (%orderedQuantity%)"
 msgstr ""
 
 msgid "Redirect target must be relative path (with leading slash) or absolute path starting by protocol (http:// or https://)"

@@ -287,7 +287,7 @@ class Complaint
      */
     public function getItems()
     {
-        return $this->items->toArray();
+        return $this->items->getValues();
     }
 
     /**
