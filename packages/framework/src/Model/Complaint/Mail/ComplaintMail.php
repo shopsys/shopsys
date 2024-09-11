@@ -48,7 +48,7 @@ class ComplaintMail implements MessageFactoryInterface
         $complaintDomainId = $complaint->getDomainId();
 
         return new MessageData(
-            $complaint->getOrder()->getEmail(),
+            $complaint->getCustomerUser() ? $complaint->getCustomerUser()->getEmail() : $complaint->getOrder()->getEmail(),
             $mailTemplate->getBccEmail(),
             $mailTemplate->getBody(),
             $mailTemplate->getSubject(),
