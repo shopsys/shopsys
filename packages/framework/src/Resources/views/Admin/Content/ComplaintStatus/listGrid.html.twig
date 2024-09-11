@@ -1,0 +1,33 @@
+{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+
+{% block grid_action_cell_type_delete %}
+    {% if row.cs.statusType == STATUS_TYPE_NEW %}
+        <span title="{{ 'This status can\'t be deleted. This is automatically assigned status to all new complaints.'|trans }}"
+            class="js-tooltip cursor-help in-icon in-icon--info" data-toggle="tooltip" data-placement="top"
+        >
+            {{ icon('info') }}
+        </span>
+    {% elseif row.cs.statusType == STATUS_TYPE_RESOLVED %}
+        <span title="{{ 'This status can\'t be deleted, because there is a functionality bounded to it - it identifies complaints that were successfully processed.'|trans }}"
+            class="js-tooltip cursor-help in-icon in-icon--info" data-toggle="tooltip" data-placement="top"
+        >
+            {{ icon('info') }}
+        </span>
+    {% else %}
+        {{ gridView.renderBlock('grid_action_cell', {actionColumn: actionColumn, row: row}) }}
+    {% endif %}
+{% endblock %}
+
+{% block grid_no_data %}
+    {{ 'No complaint statuses found.'|trans }}
+{% endblock %}
+
+{% block grid_pager_totalcount %}
+    {% set entityName = 'complaint statuses'|trans %}
+    {{ parent() }}
+{% endblock %}
+
+{% block grid_inline_edit_add_button %}
+    {% set addEntity = 'Create new complaint status'|trans %}
+    {{ parent() }}
+{% endblock %}

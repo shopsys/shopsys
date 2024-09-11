@@ -397,6 +397,9 @@ msgstr ""
 msgid "Batch ID"
 msgstr ""
 
+msgid "Because status \"%name%\" is used with other complaints also, you have to choose a new status which will replace the existing one. Which status you want to set to these complaints? When changing this, there won't be emails sent to customers."
+msgstr ""
+
 msgid "Because status \"%name%\" is used with other orders also, you have to choose a new status which will replace the existing one. Which status you want to set to these orders? When changing this, there won't be emails sent to customers."
 msgstr ""
 
@@ -664,6 +667,36 @@ msgstr ""
 msgid "Company number"
 msgstr ""
 
+msgid "Complaint Nr."
+msgstr ""
+
+msgid "Complaint Nr. <strong><a href=\"{{ url }}\">{{ number }}</a></strong> modified"
+msgstr ""
+
+msgid "Complaint number"
+msgstr ""
+
+msgid "Complaint statuses - full"
+msgstr ""
+
+msgid "Complaint statuses - view"
+msgstr ""
+
+msgid "Complaint statuses overview"
+msgstr ""
+
+msgid "Complaints"
+msgstr ""
+
+msgid "Complaints - full"
+msgstr ""
+
+msgid "Complaints - view"
+msgstr ""
+
+msgid "Complaints overview"
+msgstr ""
+
 msgid "Complement to title"
 msgstr ""
 
@@ -773,6 +806,9 @@ msgid "Create new brand"
 msgstr ""
 
 msgid "Create new category"
+msgstr ""
+
+msgid "Create new complaint status"
 msgstr ""
 
 msgid "Create new country"
@@ -1060,6 +1096,18 @@ msgstr ""
 msgid "Delivery address is the same as billing address"
 msgstr ""
 
+msgid "Delivery city"
+msgstr ""
+
+msgid "Delivery last name"
+msgstr ""
+
+msgid "Delivery phone number"
+msgstr ""
+
+msgid "Delivery street"
+msgstr ""
+
 msgid "Department stores"
 msgstr ""
 
@@ -1136,6 +1184,9 @@ msgid "Do you really want to remove pricing group \"%name%\" permanently? It is 
 msgstr ""
 
 msgid "Do you really want to remove rate \"%name%\" permanently? It is not used anywhere."
+msgstr ""
+
+msgid "Do you really want to remove status of complaint \"%name%\" permanently? It is not used anywhere."
 msgstr ""
 
 msgid "Do you really want to remove status of orders \"%name%\" permanently? It is not used anywhere."
@@ -1352,6 +1403,12 @@ msgid "Editing category"
 msgstr ""
 
 msgid "Editing category - %name%"
+msgstr ""
+
+msgid "Editing complaint"
+msgstr ""
+
+msgid "Editing complaint - Nr. %number%"
 msgstr ""
 
 msgid "Editing country"
@@ -2329,6 +2386,12 @@ msgstr ""
 msgid "No brands found. You have to create some first."
 msgstr ""
 
+msgid "No complaint statuses found."
+msgstr ""
+
+msgid "No complaints found."
+msgstr ""
+
 msgid "No countries found. You have to create some first."
 msgstr ""
 
@@ -2486,6 +2549,9 @@ msgid "Operator information - full"
 msgstr ""
 
 msgid "Operator information - view"
+msgstr ""
+
+msgid "Order"
 msgstr ""
 
 msgid "Order Nr."
@@ -3109,6 +3175,9 @@ msgstr ""
 msgid "Searching in all currencies"
 msgstr ""
 
+msgid "Searching searches in complaint number, order number, delivery last name, delivery company name, last name from order, email from order, complaint author last name, complaint author company name. It is possible to use wildcards * and ?."
+msgstr ""
+
 msgid "Searching searches in last name, company name, email, telephone. It is possible to use wildcards * and ?."
 msgstr ""
 
@@ -3161,6 +3230,9 @@ msgid "Selected brand doesn't exist."
 msgstr ""
 
 msgid "Selected category doesn't exist."
+msgstr ""
+
+msgid "Selected complaint status doesn't exist."
 msgstr ""
 
 msgid "Selected currency doesn't exist."
@@ -3346,6 +3418,18 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
+msgid "Status of complaints"
+msgstr ""
+
+msgid "Status of complaints <strong>{{ name }}</strong> deleted"
+msgstr ""
+
+msgid "Status of complaints <strong>{{ name }}</strong> is reserved and can't be deleted"
+msgstr ""
+
+msgid "Status of complaints <strong>{{ oldName }}</strong> replaced by status <strong>{{ newName }}</strong> and deleted."
+msgstr ""
+
 msgid "Status of order"
 msgstr ""
 
@@ -3472,10 +3556,16 @@ msgstr ""
 msgid "This payment method is hidden by GoPay on domains: %domains%"
 msgstr ""
 
+msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies complaints that were successfully processed."
+msgstr ""
+
 msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies orders that were not successfully processed."
 msgstr ""
 
 msgid "This status can't be deleted, because there is a functionality bounded to it - it identifies orders that were successfully processed."
+msgstr ""
+
+msgid "This status can't be deleted. This is automatically assigned status to all new complaints."
 msgstr ""
 
 msgid "This status can't be deleted. This is automatically assigned status to all new orders."
@@ -3959,6 +4049,12 @@ msgid "blog articles"
 msgstr ""
 
 msgid "brands"
+msgstr ""
+
+msgid "complaint statuses"
+msgstr ""
+
+msgid "complaints"
 msgstr ""
 
 msgid "countries"

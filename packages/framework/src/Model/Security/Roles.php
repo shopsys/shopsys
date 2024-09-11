@@ -157,6 +157,12 @@ class Roles
     public const string ROLE_FILES_FULL = 'ROLE_FILES_FULL';
     public const string ROLE_FILES_VIEW = 'ROLE_FILES_VIEW';
 
+    public const string ROLE_COMPLAINT_FULL = 'ROLE_COMPLAINT_FULL';
+    public const string ROLE_COMPLAINT_VIEW = 'ROLE_COMPLAINT_VIEW';
+
+    public const string ROLE_COMPLAINT_STATUS_FULL = 'ROLE_COMPLAINT_STATUS_FULL';
+    public const string ROLE_COMPLAINT_STATUS_VIEW = 'ROLE_COMPLAINT_STATUS_VIEW';
+
     /**
      * @return array<string, string>
      */
@@ -368,6 +374,14 @@ class Roles
             [
                 static::ROLE_FILES_FULL => t('Files - full'),
                 static::ROLE_FILES_VIEW => t('Files - view'),
+            ],
+            [
+                static::ROLE_COMPLAINT_FULL => t('Complaints - full'),
+                static::ROLE_COMPLAINT_VIEW => t('Complaints - view'),
+            ],
+            [
+                static::ROLE_COMPLAINT_STATUS_FULL => t('Complaint statuses - full'),
+                static::ROLE_COMPLAINT_STATUS_VIEW => t('Complaint statuses - view'),
             ],
         ];
     }

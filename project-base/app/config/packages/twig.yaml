@@ -15,6 +15,7 @@ twig:
         - '@ShopsysFramework/Admin/Form/displayOnlyCustomer.html.twig'
         - '@ShopsysFramework/Admin/Form/displayOnlyDomainIconFields.html.twig'
         - '@ShopsysFramework/Admin/Form/displayOnlyFields.html.twig'
+        - '@ShopsysFramework/Admin/Form/displayOnlyOrder.html.twig'
         - '@ShopsysFramework/Admin/Form/displayOnlyUrl.html.twig'
         - '@ShopsysFramework/Admin/Form/displayVariablesFormTheme.html.twig'
         - '@ShopsysFramework/Admin/Form/fileuploadFields.html.twig'

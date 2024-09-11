@@ -12,6 +12,11 @@ class ComplaintData
     public $uuid;
 
     /**
+     * @var int
+     */
+    public $domainId;
+
+    /**
      * @var string
      */
     public $number;
@@ -67,7 +72,7 @@ class ComplaintData
     public $deliveryCountry;
 
     /**
-     * @var string|null
+     * @var \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus|null
      */
     public $status;
 

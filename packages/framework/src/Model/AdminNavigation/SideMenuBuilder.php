@@ -206,6 +206,20 @@ class SideMenuBuilder
             $roleGroupMenu->setExtra('superadmin', true);
         }
 
+        $complaintsMenu = $menu->addChild('complaints', [
+            'route' => 'admin_complaint_list',
+            'label' => t('Complaints'),
+        ]);
+
+        $complaintsMenu->addChild(
+            'admin_complaint_edit',
+            [
+                'route' => 'admin_complaint_edit',
+                'label' => t('Editing complaint'),
+                'display' => false,
+            ],
+        );
+
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_CUSTOMERS, $menu);
 
         return $menu;
@@ -509,6 +523,10 @@ class SideMenuBuilder
         $listsMenu->addChild(
             'order_statuses',
             ['route' => 'admin_orderstatus_list', 'label' => t('Status of orders')],
+        );
+        $listsMenu->addChild(
+            'complaint_statuses',
+            ['route' => 'admin_complaintstatus_list', 'label' => t('Status of complaints')],
         );
         $brandsMenu = $listsMenu->addChild('brands', ['route' => 'admin_brand_list', 'label' => t('Brands')]);
         $brandsMenu->addChild('new', ['route' => 'admin_brand_new', 'label' => t('New brand'), 'display' => false]);

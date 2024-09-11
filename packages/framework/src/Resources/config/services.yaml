@@ -580,6 +580,17 @@ services:
     Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFactory
 
+    Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint\AdvancedSearchComplaintFacade:
+        arguments:
+            $advancedSearchQueryBuilderExtender: '@shopsys.shop.model.advanced_search.advanced_search_query_builder_extender.complaint'
+
+    Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint\AdvancedSearchComplaintFilterTranslation: ~
+
+    Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint\ComplaintAdvancedSearchConfig: ~
+
+    Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint\Filter\:
+        resource: '../../Model/AdvancedSearchComplaint/Filter/*Filter.php'
+
     Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\AdvancedSearchOrderFacade:
         arguments:
             $advancedSearchQueryBuilderExtender: '@shopsys.shop.model.advanced_search.advanced_search_query_builder_extender.order'
@@ -1082,6 +1093,11 @@ services:
 
     shopsys.component.elasticsearch.tracer:
         class: Psr\Log\NullLogger
+
+    shopsys.shop.model.advanced_search.advanced_search_query_builder_extender.complaint:
+        arguments:
+            $advancedSearchConfig: '@Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint\ComplaintAdvancedSearchConfig'
+        class: Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender
 
     shopsys.shop.model.advanced_search.advanced_search_query_builder_extender.order:
         arguments:

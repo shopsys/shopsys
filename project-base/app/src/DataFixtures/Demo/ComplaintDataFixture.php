@@ -17,12 +17,12 @@ use Shopsys\FrameworkBundle\Model\Complaint\ComplaintDataFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintNumberSequenceRepository;
-use Shopsys\FrameworkBundle\Model\Complaint\ComplaintStatusEnum;
+use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus;
 use Shopsys\FrontendApiBundle\Model\Complaint\ComplaintApiFacade;
 
 class ComplaintDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    private const UUID_NAMESPACE = '4bd62d36-8baa-4f8a-b074-c084641823b0';
+    private const string UUID_NAMESPACE = '4bd62d36-8baa-4f8a-b074-c084641823b0';
     public const string COMPLAINT_PREFIX = 'complaint_';
 
     /**
@@ -52,14 +52,24 @@ class ComplaintDataFixture extends AbstractReferenceFixture implements Dependent
         $order1 = $this->getReference(OrderDataFixture::ORDER_PREFIX . 1);
         $orderItems1 = $order1->getProductItems();
         $orderItem1 = $this->createComplaintItemData(reset($orderItems1), 'Both broken!', 2);
-        $complaint1 = $this->createComplaint($customerUser1, $order1, ComplaintStatusEnum::STATUS_NEW, [$orderItem1]);
+        $complaint1 = $this->createComplaint(
+            $customerUser1,
+            $order1,
+            $this->getReference(ComplaintStatusDataFixture::COMPLAINT_STATUS_NEW, ComplaintStatus::class),
+            [$orderItem1],
+        );
         $this->addReference(self::COMPLAINT_PREFIX . 1, $complaint1);
 
         /** @var \App\Model\Order\Order $order2 */
         $order2 = $this->getReference(OrderDataFixture::ORDER_PREFIX . 2);
         $orderItems2 = $order2->getProductItems();
         $orderItem2 = $this->createComplaintItemData(reset($orderItems2), 'Broken!', 1);
-        $complaint2 = $this->createComplaint($customerUser1, $order2, ComplaintStatusEnum::STATUS_RESOLVED, [$orderItem2]);
+        $complaint2 = $this->createComplaint(
+            $customerUser1,
+            $order2,
+            $this->getReference(ComplaintStatusDataFixture::COMPLAINT_STATUS_RESOLVED, ComplaintStatus::class),
+            [$orderItem2],
+        );
         $this->addReference(self::COMPLAINT_PREFIX . 2, $complaint2);
     }
 
@@ -70,26 +80,27 @@ class ComplaintDataFixture extends AbstractReferenceFixture implements Dependent
     {
         return [
             OrderDataFixture::class,
+            ComplaintStatusDataFixture::class,
         ];
     }
 
     /**
      * @param \App\Model\Customer\User\CustomerUser $customerUser
      * @param \App\Model\Order\Order $order
-     * @param string $status
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus $status
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData[] $items
-     *@throws \Shopsys\FrameworkBundle\Model\NumberSequence\Exception\NumberSequenceNotFoundException
      * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint
      */
     private function createComplaint(
         CustomerUser $customerUser,
         Order $order,
-        string $status,
+        ComplaintStatus $status,
         array $items,
     ): Complaint {
         $complaintData = $this->complaintDataFactory->create();
         $complaintData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, md5(serialize(func_get_args())))->toString();
         $complaintData->number = $this->complaintNumberSequenceRepository->getNextNumber();
+        $complaintData->domainId = $order->getDomainId();
         $complaintData->customerUser = $customerUser;
         $complaintData->order = $order;
         $complaintData->status = $status;

@@ -34,6 +34,9 @@ class MenuItemsGrantedRolesSetting
             'customers' . static::MENU_ITEM_PATH_SEPARATOR . 'newsletter' => [
                 Roles::ROLE_NEWSLETTER_VIEW,
             ],
+            'customers' . static::MENU_ITEM_PATH_SEPARATOR . 'complaint' => [
+                Roles::ROLE_COMPLAINT_VIEW,
+            ],
             'customers' . static::MENU_ITEM_PATH_SEPARATOR . 'promo_codes' => [
                 Roles::ROLE_PROMO_CODE_VIEW,
             ],
@@ -123,6 +126,9 @@ class MenuItemsGrantedRolesSetting
             ],
             'settings' . static::MENU_ITEM_PATH_SEPARATOR . 'lists' . static::MENU_ITEM_PATH_SEPARATOR . 'order_statuses' => [
                 Roles::ROLE_ORDER_STATUS_VIEW,
+            ],
+            'settings' . static::MENU_ITEM_PATH_SEPARATOR . 'lists' . static::MENU_ITEM_PATH_SEPARATOR . 'complaint_statuses' => [
+                Roles::ROLE_COMPLAINT_STATUS_VIEW,
             ],
             'settings' . static::MENU_ITEM_PATH_SEPARATOR . 'lists' . static::MENU_ITEM_PATH_SEPARATOR . 'brands' => [
                 Roles::ROLE_BRAND_VIEW,

@@ -30,6 +30,12 @@ class Complaint
     protected $uuid;
 
     /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
+    protected $domainId;
+
+    /**
      * @var string
      * @ORM\Column(type="string", length=30, unique=true, nullable=false)
      */
@@ -105,8 +111,9 @@ class Complaint
     protected $createdAt;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=255)
+     * @var \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus")
+     * @ORM\JoinColumn(nullable=false)
      */
     protected $status;
 
@@ -128,8 +135,22 @@ class Complaint
     public function __construct(ComplaintData $complaintData, array $complaintItems)
     {
         $this->createdAt = new DateTime();
-        $this->setItems($complaintItems);
+        $this->uuid = $complaintData->uuid ?? Uuid::uuid4()->toString();
+        $this->number = $complaintData->number;
+        $this->domainId = $complaintData->domainId;
+        $this->order = $complaintData->order;
+        $this->customerUser = $complaintData->customerUser;
 
+        $this->setData($complaintData);
+
+        $this->setItems($complaintItems);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintData $complaintData
+     */
+    public function edit(ComplaintData $complaintData): void
+    {
         $this->setData($complaintData);
     }
 
@@ -155,6 +176,14 @@ class Complaint
     public function getNumber()
     {
         return $this->number;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDomainId()
+    {
+        return $this->domainId;
     }
 
     /**
@@ -246,7 +275,7 @@ class Complaint
     }
 
     /**
-     * @return string
+     * @return \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus
      */
     public function getStatus()
     {
@@ -266,10 +295,6 @@ class Complaint
      */
     protected function setData(ComplaintData $complaintData): void
     {
-        $this->uuid = $complaintData->uuid ?? Uuid::uuid4()->toString();
-        $this->number = $complaintData->number;
-        $this->order = $complaintData->order;
-        $this->customerUser = $complaintData->customerUser;
         $this->deliveryFirstName = $complaintData->deliveryFirstName;
         $this->deliveryLastName = $complaintData->deliveryLastName;
         $this->deliveryCompanyName = $complaintData->deliveryCompanyName;

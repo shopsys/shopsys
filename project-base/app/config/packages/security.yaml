@@ -57,6 +57,8 @@ security:
             - ROLE_LANGUAGE_CONSTANTS_FULL
             - ROLE_TRANSFER_VIEW
             - ROLE_FILES_FULL
+            - ROLE_COMPLAINT_FULL
+            - ROLE_COMPLAINT_STATUS_FULL
         ROLE_ALL_VIEW:
             - ROLE_ORDER_VIEW
             - ROLE_CUSTOMER_VIEW
@@ -107,6 +109,8 @@ security:
             - ROLE_LANGUAGE_CONSTANTS_VIEW
             - ROLE_TRANSFER_VIEW
             - ROLE_FILES_VIEW
+            - ROLE_COMPLAINT_VIEW
+            - ROLE_COMPLAINT_STATUS_VIEW
         ROLE_ORDER_FULL: [ROLE_ORDER_VIEW]
         ROLE_CUSTOMER_FULL: [ROLE_CUSTOMER_VIEW]
         ROLE_NEWSLETTER_FULL: [ROLE_NEWSLETTER_VIEW]
@@ -154,6 +158,8 @@ security:
         ROLE_HEUREKA_FULL: [ROLE_HEUREKA_VIEW]
         ROLE_LANGUAGE_CONSTANTS_FULL: [ROLE_LANGUAGE_CONSTANTS_VIEW]
         ROLE_FILES_FULL: [ROLE_FILES_VIEW]
+        ROLE_COMPLAINT_FULL: [ROLE_COMPLAINT_VIEW]
+        ROLE_COMPLAINT_STATUS_FULL: [ROLE_COMPLAINT_STATUS_VIEW]
         # FE API ROLES
         ROLE_API_ALL: [ROLE_API_CUSTOMER_SELF_MANAGE]
 
@@ -384,6 +390,12 @@ security:
         - { path: ^/%admin_url%/brand/edit, roles: ROLE_BRAND_FULL, methods: [POST] }
         - { path: ^/%admin_url%/brand/delete, roles: ROLE_BRAND_FULL }
         - { path: ^/%admin_url%/brand/, roles: ROLE_BRAND_VIEW }
+        # complaints
+        - { path: ^/%admin_url%/complaint/edit, roles: ROLE_COMPLAINT_FULL, methods: [ POST ] }
+        - { path: ^/%admin_url%/complaint/, roles: ROLE_COMPLAINT_VIEW }
+        # complaint statuses
+        - { path: ^/%admin_url%/complaint-status/delete, roles: ROLE_COMPLAINT_STATUS_FULL }
+        - { path: ^/%admin_url%/complaint-status/, roles: ROLE_COMPLAINT_STATUS_VIEW }
         # countries
         - { path: ^/%admin_url%/country/new, roles: ROLE_COUNTRY_FULL }
         - { path: ^/%admin_url%/country/edit, roles: ROLE_COUNTRY_FULL, methods: [POST] }

@@ -1,0 +1,8 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Complaint statuses overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Complaint statuses overview'|trans }}{% endblock %}
+
+{% block main_content %}
+    {{ gridView.render() }}
+{% endblock %}
