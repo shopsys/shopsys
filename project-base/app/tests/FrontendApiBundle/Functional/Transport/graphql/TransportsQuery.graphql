@@ -5,10 +5,7 @@ query TransportsQuery($cartUuid: Uuid) {
         instruction,
         position,
         daysUntilDelivery
-        transportType {
-            name
-            code
-        }
+        transportTypeCode
         price {
             priceWithVat
             priceWithoutVat

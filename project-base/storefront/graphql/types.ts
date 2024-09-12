@@ -3152,8 +3152,8 @@ export type TypeTransport = {
   price: TypePrice;
   /** Stores available for personal pickup */
   stores: Maybe<TypeStoreConnection>;
-  /** Type of transport */
-  transportType: TypeTransportType;
+  /** Code of transport type */
+  transportTypeCode: TypeTransportTypeEnum;
   /** UUID */
   uuid: Scalars['Uuid']['output'];
 };
@@ -3176,14 +3176,12 @@ export type TypeTransportPriceArgs = {
   cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
 };
 
-/** Represents a transport type */
-export type TypeTransportType = {
-  __typename?: 'TransportType';
-  /** Code of transport */
-  code: Scalars['String']['output'];
-  /** Name of transport type */
-  name: Scalars['String']['output'];
-};
+/** One of the possible methods of the transport type */
+export enum TypeTransportTypeEnum {
+  Common = 'common',
+  Packetery = 'packetery',
+  PersonalPickup = 'personal_pickup'
+}
 
 /** Represents a unit */
 export type TypeUnit = {

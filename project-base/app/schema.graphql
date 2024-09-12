@@ -2428,18 +2428,17 @@ type Transport {
   price(cartUuid: Uuid = null): Price!
   "Stores available for personal pickup"
   stores: StoreConnection
-  "Type of transport"
-  transportType: TransportType!
+  "Code of transport type"
+  transportTypeCode: TransportTypeEnum!
   "UUID"
   uuid: Uuid!
 }
 
-"Represents a transport type"
-type TransportType {
-  "Code of transport"
-  code: String!
-  "Name of transport type"
-  name: String!
+"One of the possible methods of the transport type"
+enum TransportTypeEnum {
+  common
+  packetery
+  personal_pickup
 }
 
 "Represents a unit"

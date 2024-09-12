@@ -64,7 +64,7 @@ const getSelectedPickupPlace = (
         return null;
     }
 
-    if (isPacketeryTransport(transport.transportType.code)) {
+    if (isPacketeryTransport(transport.transportTypeCode)) {
         return packeteryPickupPoint;
     }
 

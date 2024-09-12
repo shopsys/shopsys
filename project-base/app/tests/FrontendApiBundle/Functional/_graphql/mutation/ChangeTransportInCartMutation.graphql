@@ -12,10 +12,7 @@ mutation ChangeTransportInCart(
         transport {
             uuid
             name
-            transportType {
-                name
-                code
-            }
+            transportTypeCode
             payments {
                 uuid
                 name

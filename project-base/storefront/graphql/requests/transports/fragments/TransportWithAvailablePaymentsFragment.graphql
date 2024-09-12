@@ -13,9 +13,6 @@ fragment TransportWithAvailablePaymentsFragment on Transport {
         ...SimplePaymentFragment
     }
     daysUntilDelivery
-    transportType {
-        __typename
-        code
-    }
+    transportTypeCode
     isPersonalPickup
 }

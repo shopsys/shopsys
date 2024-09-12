@@ -18,10 +18,7 @@ query GetCart(
             instruction
             position
             daysUntilDelivery
-            transportType {
-                name
-                code
-            }
+            transportTypeCode
             price {
                 priceWithVat
                 priceWithoutVat
