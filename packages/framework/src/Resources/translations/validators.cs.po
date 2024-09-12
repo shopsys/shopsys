@@ -511,9 +511,6 @@ msgstr "Toto pole musí zůstat prázdné"
 msgid "This value is not a valid email address."
 msgstr "Tato hodnota není platnou e-mailovou adresou."
 
-msgid "Transport type name cannot be longer than {{ limit }} characters"
-msgstr "Název typu dopravy nesmí být delší než {{ limit }} znaků"
-
 msgid "Unit name cannot be longer than {{ limit }} characters"
 msgstr "Název jednotky nesmí být delší než {{ limit }} znaků"
 

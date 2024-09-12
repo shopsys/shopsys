@@ -1546,12 +1546,6 @@ msgstr ""
 msgid "Editing slider page - %name%"
 msgstr ""
 
-msgid "Editing transport type"
-msgstr ""
-
-msgid "Editing transport type - %code%"
-msgstr ""
-
 msgid "Editing warehouse"
 msgstr ""
 
@@ -2506,9 +2500,6 @@ msgstr ""
 msgid "No subscribers found."
 msgstr ""
 
-msgid "No transport types found."
-msgstr ""
-
 msgid "No units found. You have to create some first."
 msgstr ""
 
@@ -2693,6 +2684,9 @@ msgid "Out of stock"
 msgstr ""
 
 msgid "Package tracking"
+msgstr ""
+
+msgid "Packetery"
 msgstr ""
 
 msgid "Page <strong>{{ name }}</strong> deleted"
@@ -3743,18 +3737,6 @@ msgid "Transfers - view"
 msgstr ""
 
 msgid "Transport type"
-msgstr ""
-
-msgid "Transport type <strong><a href=\"{{ url }}\">{{ code }}</a></strong> modified"
-msgstr ""
-
-msgid "Transport types"
-msgstr ""
-
-msgid "Transport types - full"
-msgstr ""
-
-msgid "Transport types - view"
 msgstr ""
 
 msgid "Transports and payments - full"

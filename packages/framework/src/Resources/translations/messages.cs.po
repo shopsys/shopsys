@@ -1546,12 +1546,6 @@ msgstr "Editace stránky slideru"
 msgid "Editing slider page - %name%"
 msgstr "Editace stránky slideru - %name%"
 
-msgid "Editing transport type"
-msgstr "Editace typu dopravy"
-
-msgid "Editing transport type - %code%"
-msgstr "Editace typu dopravy - %code%"
-
 msgid "Editing warehouse"
 msgstr "Editace skladu"
 
@@ -2506,9 +2500,6 @@ msgstr "Žádná prodejna není vytvořena. Nejdříve musíte nějakou vytvoři
 msgid "No subscribers found."
 msgstr "Doposud se nikdo nepřihlásil k odběru newsletteru."
 
-msgid "No transport types found."
-msgstr "Nebyly nalezeny žádné typy doprav."
-
 msgid "No units found. You have to create some first."
 msgstr "Nebyly nalezeny žádné jednotky. Nejprve musíte nějaké vytvořit."
 
@@ -2694,6 +2685,9 @@ msgstr "Vyprodáno"
 
 msgid "Package tracking"
 msgstr "Sledování zásilky"
+
+msgid "Packetery"
+msgstr "Zásilkovna"
 
 msgid "Page <strong>{{ name }}</strong> deleted"
 msgstr "Stránka <strong>{{ name }}</strong> byla smazána"
@@ -3744,18 +3738,6 @@ msgstr "Přehled chyb v přenosech - zobrazení"
 
 msgid "Transport type"
 msgstr "Typ dopravy"
-
-msgid "Transport type <strong><a href=\"{{ url }}\">{{ code }}</a></strong> modified"
-msgstr "Byl upraven typ dopravy <strong><a href=\"{{ url }}\">{{ code }}</a></strong>"
-
-msgid "Transport types"
-msgstr "Typy doprav"
-
-msgid "Transport types - full"
-msgstr "Typy doprav - vše"
-
-msgid "Transport types - view"
-msgstr "Typy doprav - zobrazení"
 
 msgid "Transports and payments - full"
 msgstr "Dopravy a platby - vše"

@@ -1,0 +1,4 @@
+TransportTypeEnum:
+    type: enum
+    inherits:
+        - 'TransportTypeEnumDecorator'

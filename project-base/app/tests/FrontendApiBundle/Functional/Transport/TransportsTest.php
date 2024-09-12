@@ -10,6 +10,7 @@ use App\DataFixtures\Demo\VatDataFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
+use Shopsys\FrameworkBundle\Model\Transport\TransportTypeEnum;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class TransportsTest extends GraphQlTestCase
@@ -51,10 +52,7 @@ class TransportsTest extends GraphQlTestCase
                 'instruction' => null,
                 'position' => 0,
                 'daysUntilDelivery' => 5,
-                'transportType' => [
-                    'name' => t('Standard', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                    'code' => 'common',
-                ],
+                'transportTypeCode' => TransportTypeEnum::TYPE_COMMON,
                 'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatHigh),
                 'images' => [
                     [
@@ -74,10 +72,7 @@ class TransportsTest extends GraphQlTestCase
                 'instruction' => null,
                 'position' => 1,
                 'daysUntilDelivery' => 4,
-                'transportType' => [
-                    'name' => t('Standard', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                    'code' => 'common',
-                ],
+                'transportTypeCode' => TransportTypeEnum::TYPE_COMMON,
                 'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('200', $vatHigh),
                 'images' => [
                     [
@@ -104,10 +99,7 @@ class TransportsTest extends GraphQlTestCase
                 'instruction' => null,
                 'position' => 2,
                 'daysUntilDelivery' => 0,
-                'transportType' => [
-                    'name' => t('Personal pickup', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                    'code' => 'personal_pickup',
-                ],
+                'transportTypeCode' => TransportTypeEnum::TYPE_PERSONAL_PICKUP,
                 'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
                 'images' => [
                     [
@@ -177,10 +169,7 @@ class TransportsTest extends GraphQlTestCase
                 'instruction' => null,
                 'position' => 3,
                 'daysUntilDelivery' => 0,
-                'transportType' => [
-                    'name' => t('Standard', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                    'code' => 'common',
-                ],
+                'transportTypeCode' => TransportTypeEnum::TYPE_COMMON,
                 'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
                 'images' => [],
                 'payments' => [
@@ -200,10 +189,7 @@ class TransportsTest extends GraphQlTestCase
                 'instruction' => null,
                 'position' => 4,
                 'daysUntilDelivery' => 2,
-                'transportType' => [
-                    'name' => t('Packetery', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                    'code' => 'packetery',
-                ],
+                'transportTypeCode' => TransportTypeEnum::TYPE_PACKETERY,
                 'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('49.95', $vatHigh),
                 'images' => [],
                 'payments' => [

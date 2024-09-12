@@ -1,0 +1,12 @@
+TransportTypeEnumDecorator:
+    type: enum
+    decorator: true
+    config:
+        description: "One of the possible methods of the transport type"
+        values:
+            common:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Transport\\TransportTypeEnum::TYPE_COMMON")'
+            packetery:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Transport\\TransportTypeEnum::TYPE_PACKETERY")'
+            personal_pickup:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Transport\\TransportTypeEnum::TYPE_PERSONAL_PICKUP")'

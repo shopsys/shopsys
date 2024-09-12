@@ -16,8 +16,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
-use Shopsys\FrameworkBundle\Model\Transport\Type\TransportType;
-use Shopsys\FrameworkBundle\Model\Transport\Type\TransportTypeFacade;
+use Shopsys\FrameworkBundle\Model\Transport\TransportTypeEnum;
 
 class TransportDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -33,13 +32,11 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
      * @param \App\Model\Transport\TransportFacade $transportFacade
      * @param \App\Model\Transport\TransportDataFactory $transportDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Type\TransportTypeFacade $transportTypeFacade
      */
     public function __construct(
         private readonly TransportFacade $transportFacade,
         private readonly TransportDataFactory $transportDataFactory,
         private readonly PriceConverter $priceConverter,
-        private readonly TransportTypeFacade $transportTypeFacade,
     ) {
     }
 
@@ -94,7 +91,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
             );
         }
 
-        $transportData->transportType = $this->transportTypeFacade->getByCode(TransportType::TYPE_PERSONAL_PICKUP);
+        $transportData->type = TransportTypeEnum::TYPE_PERSONAL_PICKUP;
 
         $this->setPriceForAllDomains($transportData, Money::zero());
         $this->createTransport(self::TRANSPORT_PERSONAL, $transportData);
@@ -121,7 +118,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         }
 
         $this->setPriceForAllDomains($transportData, Money::create('49.95'));
-        $transportData->transportType = $this->transportTypeFacade->getByCode(TransportType::TYPE_PACKETERY);
+        $transportData->type = TransportTypeEnum::TYPE_PACKETERY;
         $this->createTransport(self::TRANSPORT_PACKETERY, $transportData);
     }
 

@@ -6,13 +6,16 @@ namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
-use Shopsys\FrameworkBundle\Model\Transport\Type\TransportType;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
 class Version20240403091822 extends AbstractMigration implements ContainerAwareInterface
 {
     use MultidomainMigrationTrait;
+
+    private const string TRANSPORT_TYPE_COMMON = 'common';
+    private const string TRANSPORT_TYPE_PACKETERY = 'packetery';
+    private const string TRANSPORT_TYPE_PERSONAL_PICKUP = 'personal_pickup';
 
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
@@ -297,7 +300,7 @@ class Version20240403091822 extends AbstractMigration implements ContainerAwareI
                 CONSTRAINT FK_11E2A9472C2AC5D3 FOREIGN KEY (translatable_id) REFERENCES transport_types (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
             $this->sql('CREATE UNIQUE INDEX UNIQ_C43F2EC877153098 ON transport_types (code)');
 
-            $this->sql('INSERT INTO transport_types (code) VALUES (\'' . TransportType::TYPE_COMMON . '\')');
+            $this->sql('INSERT INTO transport_types (code) VALUES (\'' . self::TRANSPORT_TYPE_COMMON . '\')');
 
             foreach ($this->getAllLocales() as $locale) {
                 $this->sql('INSERT INTO transport_type_translations (translatable_id, name, locale) VALUES (1, \'' . t('Standard', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale) . '\', \'' . $locale . '\')');
@@ -329,7 +332,7 @@ class Version20240403091822 extends AbstractMigration implements ContainerAwareI
         }
 
         if ($this->isAppMigrationNotInstalledRemoveIfExists('Version20231004072533')) {
-            $this->sql('INSERT INTO transport_types (code) VALUES (\'' . TransportType::TYPE_PERSONAL_PICKUP . '\')');
+            $this->sql('INSERT INTO transport_types (code) VALUES (\'' . self::TRANSPORT_TYPE_PERSONAL_PICKUP . '\')');
             $lastTransportTypeId = $this->connection->lastInsertId('transport_types_id_seq');
 
             foreach ($this->getAllLocales() as $locale) {
@@ -378,7 +381,7 @@ class Version20240403091822 extends AbstractMigration implements ContainerAwareI
         }
 
         if ($this->isAppMigrationNotInstalledRemoveIfExists('Version20210813063216')) {
-            $this->sql('INSERT INTO transport_types (code) VALUES (\'' . TransportType::TYPE_PACKETERY . '\')');
+            $this->sql('INSERT INTO transport_types (code) VALUES (\'' . self::TRANSPORT_TYPE_PACKETERY . '\')');
             $lastTransportTypeId = $this->connection->lastInsertId('transport_types_id_seq');
             $this->sql('INSERT INTO transport_type_translations (translatable_id, name, locale) VALUES (' . $lastTransportTypeId . ', \'Zásilkovna\', \'cs\')');
             $this->sql('INSERT INTO transport_type_translations (translatable_id, name, locale) VALUES (' . $lastTransportTypeId . ', \'Packetery\', \'en\')');

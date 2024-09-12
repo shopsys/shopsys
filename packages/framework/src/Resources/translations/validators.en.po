@@ -511,9 +511,6 @@ msgstr ""
 msgid "This value is not a valid email address."
 msgstr ""
 
-msgid "Transport type name cannot be longer than {{ limit }} characters"
-msgstr ""
-
 msgid "Unit name cannot be longer than {{ limit }} characters"
 msgstr ""
 

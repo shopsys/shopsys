@@ -175,9 +175,6 @@ msgstr "Upravit data"
 msgid "Edit store"
 msgstr "Upravit prodejnu"
 
-msgid "Edit transport type"
-msgstr "Upravit typ dopravy"
-
 msgid "Editing banner"
 msgstr "Upravit banner"
 
@@ -603,9 +600,6 @@ msgstr "Vybraný příznak nelze smazat."
 
 msgid "This flag can not be deleted as it is used in definition of"
 msgstr "Tento příznak nelze smazat, protože se používá v definici"
-
-msgid "Transport types"
-msgstr "Typy doprav"
 
 msgid "Type"
 msgstr "Typ"

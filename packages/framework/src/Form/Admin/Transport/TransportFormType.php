@@ -19,7 +19,7 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
-use Shopsys\FrameworkBundle\Model\Transport\Type\TransportTypeFacade;
+use Shopsys\FrameworkBundle\Model\Transport\TransportTypeEnum;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -37,12 +37,12 @@ class TransportFormType extends AbstractType
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Type\TransportTypeFacade $transportTypeFacade
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportTypeEnum $transportTypeEnum
      */
     public function __construct(
         private readonly PaymentFacade $paymentFacade,
         private readonly TransportFacade $transportFacade,
-        private readonly TransportTypeFacade $transportTypeFacade,
+        protected readonly TransportTypeEnum $transportTypeEnum,
     ) {
     }
 
@@ -97,11 +97,9 @@ class TransportFormType extends AbstractType
                 'empty_message' => t('You have to create some payment first.'),
                 'label' => t('Available payment methods'),
             ])
-            ->add('transportType', ChoiceType::class, [
+            ->add('type', ChoiceType::class, [
                 'required' => true,
-                'choices' => $this->transportTypeFacade->getAll(),
-                'choice_label' => 'name',
-                'choice_value' => 'id',
+                'choices' => $this->transportTypeEnum->getAllIndexedByTranslations(),
                 'constraints' => [
                     new NotBlank(),
                 ],
