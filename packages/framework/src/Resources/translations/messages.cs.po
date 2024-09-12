@@ -670,6 +670,9 @@ msgstr "Název firmy"
 msgid "Company number"
 msgstr "IČ"
 
+msgid "Complaint"
+msgstr "Reklamace"
+
 msgid "Complaint Nr."
 msgstr "Reklamace č."
 
@@ -681,6 +684,12 @@ msgstr "Položky reklamace"
 
 msgid "Complaint number"
 msgstr "Číslo reklamace"
+
+msgid "Complaint status"
+msgstr "Stav reklamace"
+
+msgid "Complaint status has changed"
+msgstr "Stav reklamace se změnil"
 
 msgid "Complaint statuses - full"
 msgstr "Stavy reklamací - vše"
@@ -1041,6 +1050,12 @@ msgstr "Dny pro přesun mezi sklady"
 
 msgid "Days until delivery"
 msgstr "Dní do doručení"
+
+msgid "Dear customer, <br /><br />Processing your complaint has been finished."
+msgstr "Vážený zákazníku, <br /><br />Zpracování Vaší reklamace bylo dokončeno."
+
+msgid "Dear customer, <br /><br />Your complaint is being processed."
+msgstr "Vážený zákazníku, <br /><br />Vaše reklamace se zpracovává."
 
 msgid "Default VAT rate"
 msgstr "Výchozí sazba DPH"

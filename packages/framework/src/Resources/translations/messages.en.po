@@ -670,6 +670,9 @@ msgstr ""
 msgid "Company number"
 msgstr ""
 
+msgid "Complaint"
+msgstr ""
+
 msgid "Complaint Nr."
 msgstr ""
 
@@ -680,6 +683,12 @@ msgid "Complaint items"
 msgstr ""
 
 msgid "Complaint number"
+msgstr ""
+
+msgid "Complaint status"
+msgstr ""
+
+msgid "Complaint status has changed"
 msgstr ""
 
 msgid "Complaint statuses - full"
@@ -1040,6 +1049,12 @@ msgid "Days for transfer between warehouses"
 msgstr ""
 
 msgid "Days until delivery"
+msgstr ""
+
+msgid "Dear customer, <br /><br />Processing your complaint has been finished."
+msgstr ""
+
+msgid "Dear customer, <br /><br />Your complaint is being processed."
 msgstr ""
 
 msgid "Default VAT rate"
