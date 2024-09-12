@@ -1,0 +1,4 @@
+Coordinates:
+    type: input-object
+    inherits:
+        - 'CoordinatesDecorator'

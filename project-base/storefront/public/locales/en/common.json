@@ -1,5 +1,6 @@
 {
     "404": "404",
+    "{{ distance }} km from you": "{{ distance }} km from you",
     "About shopping": "About shopping",
     "About Shopsys": "About Shopsys",
     "Accept all": "Accept all",
@@ -43,6 +44,7 @@
     "Choose your bank": "Choose your bank",
     "City": "City",
     "City must be at most {{ max }} characters": "City must be at most {{ max }} characters",
+    "City or postcode": "City or postcode",
     "Clear all": "Cancel all",
     "Close": "Close",
     "Closed": "Closed",

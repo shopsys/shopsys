@@ -291,3 +291,27 @@ QueryDecorator:
                 resolve: "@=query('customerUserRoleGroupsQuery')"
                 access: "@=isGranted('is_company_owner_voter')"
                 description: "Returns all customer user role groups"
+            stores:
+                type: "StoreConnection!"
+                argsBuilder: "Relay::Connection"
+                resolve: "@=query('storesQuery', args)"
+                complexity: "@=dynamicPaginationComplexity(args)"
+                description: "Returns list of stores that can be paginated using `first`, `last`, `before` and `after` keywords"
+                args:
+                    searchText:
+                        type: "String"
+                        defaultValue: null
+                        description: "Search for city or post code"
+                    coordinates:
+                        type: "Coordinates"
+                        defaultValue: null
+                        description: "Returns stores with distance from given coordinates"
+            store:
+                type: 'Store'
+                resolve: "@=query('storeQuery', args['uuid'], args['urlSlug'])"
+                args:
+                    uuid:
+                        type: "Uuid"
+                    urlSlug:
+                        type: "String"
+                description: "Returns store filtered using UUID or URL slug"

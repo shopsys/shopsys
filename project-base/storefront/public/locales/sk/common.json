@@ -1,5 +1,6 @@
 {
     "404": "404",
+    "{{ distance }} km from you": "{{ distance }} km od vás",
     "About shopping": "About shopping",
     "About Shopsys": "About Shopsys",
     "Accept all": "Accept all",
@@ -43,6 +44,7 @@
     "Choose your bank": "Vyberte svoju banku",
     "City": "Mesto",
     "City must be at most {{ max }} characters": "Mesto nesmí být delší než {{ max }} znaků",
+    "City or postcode": "Mesto alebo PSČ",
     "Clear all": "Zrušiť všetko",
     "Close": "Zatvoriť",
     "Closed": "Zatvorené",

@@ -819,6 +819,11 @@ export type TypeContactFormInput = {
   name: Scalars['String']['input'];
 };
 
+export type TypeCoordinates = {
+  latitude: Scalars['String']['input'];
+  longitude: Scalars['String']['input'];
+};
+
 /** Represents country */
 export type TypeCountry = {
   __typename?: 'Country';
@@ -2630,8 +2635,10 @@ export type TypeQueryStoreArgs = {
 export type TypeQueryStoresArgs = {
   after: InputMaybe<Scalars['String']['input']>;
   before: InputMaybe<Scalars['String']['input']>;
+  coordinates?: InputMaybe<TypeCoordinates>;
   first: InputMaybe<Scalars['Int']['input']>;
   last: InputMaybe<Scalars['Int']['input']>;
+  searchText?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -2968,6 +2975,8 @@ export type TypeStore = TypeBreadcrumb & TypeSlug & {
   country: TypeCountry;
   /** Store description */
   description: Maybe<Scalars['String']['output']>;
+  /** Distance from the user in meters */
+  distance: Maybe<Scalars['Int']['output']>;
   /** Store images */
   images: Array<TypeImage>;
   /** Is set as default store */

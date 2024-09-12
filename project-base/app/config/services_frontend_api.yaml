@@ -56,12 +56,6 @@ services:
             $productsVisibleAndSortedByIdsBatchLoader: '@products_visible_and_sorted_by_ids_batch_loader'
             $productsByEntitiesBatchLoader: '@products_by_entities_batch_loader'
 
-    App\FrontendApi\Resolver\Store\StoreAvailabilityResolverMap:
-        arguments:
-            $storesBatchLoader: '@stores_batch_loader'
-        tags:
-            - { name: overblog_graphql.resolver_map, schema: default }
-
     Shopsys\FrontendApiBundle\Model\Category\CategoryFacade:
         alias: App\FrontendApi\Model\Category\CategoryFacade
 
@@ -145,3 +139,9 @@ services:
     Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsQuery:
         alias: App\FrontendApi\Resolver\Products\ProductsQuery
         public: true
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Store\StoreAvailabilityResolverMap:
+        arguments:
+            $storesBatchLoader: '@stores_batch_loader'
+        tags:
+            - { name: overblog_graphql.resolver_map, schema: default }

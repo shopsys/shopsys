@@ -7,7 +7,6 @@ namespace App\FrontendApi\Resolver\Slug;
 use App\Component\Router\FriendlyUrl\FriendlyUrlRepository;
 use App\FrontendApi\Resolver\Products\Flag\FlagQuery;
 use App\FrontendApi\Resolver\Slug\Exception\NoResultFoundForSlugUserError;
-use App\FrontendApi\Resolver\Store\StoreQuery;
 use App\Model\Article\Article;
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
@@ -27,6 +26,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Article\ArticleQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductDetailQuery;
+use Shopsys\FrontendApiBundle\Model\Resolver\Store\StoreQuery;
 
 class SlugQuery extends AbstractQuery
 {
@@ -39,7 +39,7 @@ class SlugQuery extends AbstractQuery
      * @param \Shopsys\FrontendApiBundle\Model\Blog\Category\BlogCategoryQuery $blogCategoryQuery
      * @param \App\FrontendApi\Resolver\Category\CategoryQuery $categoryQuery
      * @param \Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductDetailQuery $productDetailQuery
-     * @param \App\FrontendApi\Resolver\Store\StoreQuery $storeQuery
+     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Store\StoreQuery $storeQuery
      * @param \App\FrontendApi\Resolver\Products\Flag\FlagQuery $flagQuery
      */
     public function __construct(

@@ -15,4 +15,5 @@ fragment ListedStoreFragment on Store {
     country {
         ...CountryFragment
     }
+    distance
 }
