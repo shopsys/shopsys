@@ -1,5 +1,7 @@
 # UPGRADING FROM 13.x to 14.0.1
 
+> We highly recommend to update directly to version 14.0.1 and not to separate the upgrade process to 14.0.0 and then 14.0.1 as several possible problems were solved there.
+
 The releases of Shopsys Platform adhere to the [Backward Compatibility Promise](https://docs.shopsys.com/en/latest/contributing/backward-compatibility-promise/) to make the upgrades to new versions easier and help long-term maintainability.
 
 ## Recommended way of upgrading
