@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLog;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogRepository;
 use Shopsys\FrameworkBundle\Model\Country\Country;
+use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
@@ -85,6 +86,11 @@ class EntityLogTest extends TransactionFunctionalTestCase
      */
     private OrderItemFacade $orderItemFacade;
 
+    /**
+     * @inject
+     */
+    private Localization $localization;
+
     public function testCreateEntity(): void
     {
         $order = $this->getNewOrder();
@@ -153,7 +159,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $entityName = EntityLogFacade::getEntityNameByEntity($orderFromDb);
 
         $expectedOldCity = $orderFromDb->getCity();
-        $expectedOldStatusName = $orderFromDb->getStatus()->getName();
+        $expectedOldStatusName = $orderFromDb->getStatus()->getName($this->localization->getAdminLocale());
         $expectedOldStatusId = $orderFromDb->getStatus()->getId();
 
         $orderData = $this->orderDataFactory->createFromOrder($orderFromDb);
@@ -179,7 +185,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $this->assertSame($expectedOldStatusId, $log->getChangeSet()['status']['oldValue']);
         $this->assertSame($expectedOldStatusName, $log->getChangeSet()['status']['oldReadableValue']);
         $this->assertSame($newStatus->getId(), $log->getChangeSet()['status']['newValue']);
-        $this->assertSame($newStatus->getName(), $log->getChangeSet()['status']['newReadableValue']);
+        $this->assertSame($newStatus->getName($this->localization->getAdminLocale()), $log->getChangeSet()['status']['newReadableValue']);
     }
 
     public function testEditCollectionEntity(): void
