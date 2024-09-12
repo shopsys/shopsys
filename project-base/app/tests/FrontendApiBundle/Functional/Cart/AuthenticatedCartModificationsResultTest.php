@@ -271,7 +271,7 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
         $transportModifications = $this->getTransportModificationsForCartQuery();
         self::assertFalse($transportModifications['transportWeightLimitExceeded']);
 
-        $transportModifications = $this->addTestingProductToExistingCartAndGetTransportModifications(1);
+        $transportModifications = $this->addTestingProductToExistingCartAndGetTransportModifications(3);
         self::assertTrue($transportModifications['transportWeightLimitExceeded']);
     }
 

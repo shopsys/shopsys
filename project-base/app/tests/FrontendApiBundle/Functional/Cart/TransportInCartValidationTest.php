@@ -6,8 +6,10 @@ namespace Tests\FrontendApiBundle\Functional\Cart;
 
 use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\PaymentDataFixture;
+use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\Model\Payment\Payment;
+use App\Model\Product\Product;
 use App\Model\Transport\Transport;
 use App\Model\Transport\TransportDataFactory;
 use App\Model\Transport\TransportFacade;
@@ -80,7 +82,8 @@ class TransportInCartValidationTest extends GraphQlTestCase
 
     public function testTransportWeightLimitExceeded(): void
     {
-        $response = $this->addTransportWithExceededWeightLimitToDemoCart();
+        $this->addProductsToDemoCartSoCzechPostWeightLimitIsExceeded();
+        $response = $this->addCzechPostTransportToDemoCart();
 
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
         $validationErrors = $this->getErrorsExtensionValidationFromResponse($response);
@@ -154,7 +157,7 @@ class TransportInCartValidationTest extends GraphQlTestCase
     /**
      * @return array
      */
-    private function addTransportWithExceededWeightLimitToDemoCart(): array
+    private function addCzechPostTransportToDemoCart(): array
     {
         $transport = $this->getReference(TransportDataFixture::TRANSPORT_CZECH_POST, Transport::class);
 
@@ -189,6 +192,16 @@ class TransportInCartValidationTest extends GraphQlTestCase
         $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangePaymentInCartMutation.graphql', [
             'cartUuid' => CartDataFixture::CART_UUID,
             'paymentUuid' => $paymentUuid,
+        ]);
+    }
+
+    private function addProductsToDemoCartSoCzechPostWeightLimitIsExceeded(): void
+    {
+        $helloKittyProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
+            'cartUuid' => CartDataFixture::CART_UUID,
+            'productUuid' => $helloKittyProduct->getUuid(),
+            'quantity' => 10,
         ]);
     }
 }

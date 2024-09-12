@@ -161,6 +161,13 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
             $priceWithLimitData->maxWeight = $maxWeight;
             $transportInputPricesData->pricesWithLimits = [$priceWithLimitData];
 
+            if ($maxWeight !== null) {
+                $priceWithLimitData2 = $this->transportInputPricesDataFactory->createPriceWithLimitDataInstance();
+                $priceWithLimitData2->price = $convertedPrice->multiply(2);
+                $priceWithLimitData2->maxWeight = $maxWeight * 2;
+                $transportInputPricesData->pricesWithLimits[] = $priceWithLimitData2;
+            }
+
             $transportData->inputPricesByDomain[$domainId] = $transportInputPricesData;
         }
     }
