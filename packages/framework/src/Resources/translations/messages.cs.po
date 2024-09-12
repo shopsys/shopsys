@@ -2227,9 +2227,6 @@ msgstr "Max. trvání (mm:ss)"
 msgid "Maximal duration from all runs in last seven days"
 msgstr "Maximální trvání všech cronů za posledních sedm dní"
 
-msgid "Maximum weight (g)"
-msgstr "Maximální hmotnost (g)"
-
 msgid "Menu"
 msgstr "Menu"
 

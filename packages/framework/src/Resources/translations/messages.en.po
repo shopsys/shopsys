@@ -2227,9 +2227,6 @@ msgstr ""
 msgid "Maximal duration from all runs in last seven days"
 msgstr ""
 
-msgid "Maximum weight (g)"
-msgstr ""
-
 msgid "Menu"
 msgstr ""
 
@@ -4012,7 +4009,7 @@ msgstr ""
 msgid "Weight (g)"
 msgstr ""
 
-msgid "Weight limit"
+msgid "Weight limit (optional)"
 msgstr ""
 
 msgid "When changing the default currency there is no recalculation of prices"
