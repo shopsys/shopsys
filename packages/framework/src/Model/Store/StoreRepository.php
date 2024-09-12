@@ -122,19 +122,6 @@ class StoreRepository
     }
 
     /**
-     * @param int $domainId
-     * @return int
-     */
-    public function getStoresCountByDomainId(int $domainId): int
-    {
-        $queryBuilder = $this->getStoresByDomainIdQueryBuilder($domainId)
-            ->resetDQLPart('orderBy')
-            ->select('COUNT(s)');
-
-        return (int)$queryBuilder->getQuery()->getSingleScalarResult();
-    }
-
-    /**
      * @param string $uuid
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Store\Store
