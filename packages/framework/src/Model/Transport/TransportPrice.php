@@ -8,7 +8,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 
 /**
- * @ORM\Table(name="transport_prices")
+ * @ORM\Table(
+ *     name="transport_prices",
+ *     uniqueConstraints={
+ *          @ORM\UniqueConstraint(name="unique_weight_limit_on_domain", columns={"max_weight", "domain_id", "transport_id"})
+ *      }
+ * )
  * @ORM\Entity
  */
 class TransportPrice

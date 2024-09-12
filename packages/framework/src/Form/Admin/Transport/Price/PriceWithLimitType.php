@@ -15,6 +15,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class PriceWithLimitType extends AbstractType
 {
@@ -28,6 +29,9 @@ class PriceWithLimitType extends AbstractType
         $builder
             ->add('price', MoneyType::class, [
                 'scale' => 6,
+                'constraints' => [
+                    new NotBlank(['message' => 'Please enter price']),
+                ],
             ])
             ->add('maxWeight', IntegerType::class)
             ->add('transportPriceId', HiddenType::class);

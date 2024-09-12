@@ -10,3 +10,4 @@ import './validationPayment';
 import './validationPromoCode';
 import './validationHreflangSetting';
 import './validationStore';
+import './validationTransportPrices';

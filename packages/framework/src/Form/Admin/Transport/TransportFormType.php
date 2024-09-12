@@ -8,6 +8,7 @@ use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DisplayVariablesType;
 use Shopsys\FrameworkBundle\Form\DomainsType;
@@ -32,6 +33,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class TransportFormType extends AbstractType
 {
@@ -245,6 +247,43 @@ class TransportFormType extends AbstractType
             ->setDefaults([
                 'data_class' => TransportData::class,
                 'attr' => ['novalidate' => 'novalidate'],
+                'constraints' => [
+                    new Constraints\Callback([$this, 'validateTransportPricesOnDomain']),
+                ],
             ]);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
+     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
+     */
+    public function validateTransportPricesOnDomain(
+        TransportData $transportData,
+        ExecutionContextInterface $context,
+    ): void {
+        foreach ($transportData->inputPricesByDomain as $domainId => $pricesData) {
+            $weightLimits = [];
+
+            if ($pricesData->pricesWithLimits === []) {
+                $context
+                    ->buildViolation(t('Please enter at least one price', [], Translator::VALIDATOR_TRANSLATION_DOMAIN))
+                    ->atPath(sprintf('inputPricesByDomain[%d].pricesWithLimits', $domainId))
+                    ->addViolation();
+            }
+
+            foreach ($pricesData->pricesWithLimits as $priceData) {
+                if ($priceData === null) {
+                    continue;
+                }
+
+                if (in_array($priceData->maxWeight, $weightLimits, true)) {
+                    $context
+                        ->buildViolation(t('Please use each limit only once', [], Translator::VALIDATOR_TRANSLATION_DOMAIN))
+                        ->atPath(sprintf('inputPricesByDomain[%d].pricesWithLimits', $domainId))
+                        ->addViolation();
+                }
+                $weightLimits[] = $priceData->maxWeight;
+            }
+        }
     }
 }

@@ -51,6 +51,7 @@ class TransportInputPricesType extends AbstractType
                     'entry_type' => PriceWithLimitType::class,
                     'allow_add' => true,
                     'allow_delete' => true,
+                    'error_bubbling' => false,
                     'entry_options' => [
                         'domain_id' => $options['domain_id'],
                         'current_transport_prices_indexed_by_id' => $options['current_transport_prices_indexed_by_id'],
