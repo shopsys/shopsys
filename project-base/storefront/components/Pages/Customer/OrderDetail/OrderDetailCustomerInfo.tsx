@@ -18,7 +18,10 @@ export const OrderDetailCustomerInfo: FC<OrderDetailCustomerInfoProps> = ({ orde
 
     return (
         <div className="flex w-full flex-col vl:flex-row vl:flex-wrap xl:flex-nowrap gap-6">
-            <InformationCard heading={t('Contact information')} icon={<UserIcon className="[&>path]:stroke-1" />}>
+            <InformationCard
+                heading={t('Contact information')}
+                icon={<UserIcon className="[&>path]:stroke-1" isFull={false} />}
+            >
                 <span>
                     {order.firstName} {order.lastName}
                 </span>

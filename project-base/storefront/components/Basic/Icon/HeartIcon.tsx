@@ -1,17 +1,11 @@
 export const HeartIcon: SvgFC<{ isFull: boolean }> = ({ isFull, ...props }) => (
-    <svg
-        {...props}
-        fill={isFull ? 'currentColor' : 'none'}
-        viewBox="0 0 17 15"
-        width="17"
-        xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg {...props} fill={isFull ? 'currentColor' : 'none'} viewBox="0 0 17 15" xmlns="http://www.w3.org/2000/svg">
         <path
             d="M7.73766 2.45036C7.92761 2.6701 8.20372 2.79639 8.49418 2.79639C8.78464 2.79639 9.06075 2.6701 9.2507 2.45036C10.6472 0.834856 12.8338 0.485994 14.5217 1.87418C16.2586 3.30266 16.4712 5.71231 15.1273 7.42342C14.4873 8.23832 13.1449 9.56362 11.7386 10.877C10.4847 12.0481 9.23022 13.1639 8.49418 13.8114C7.75813 13.1639 6.50362 12.0481 5.24973 10.877C3.84348 9.56362 2.50101 8.23832 1.86102 7.42342C0.526134 5.72372 0.752877 3.32325 2.47712 1.86548C4.11809 0.478109 6.33367 0.826203 7.73766 2.45036Z"
             stroke="currentColor"
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeWidth="2"
+            strokeWidth="1.5"
         />
     </svg>
 );

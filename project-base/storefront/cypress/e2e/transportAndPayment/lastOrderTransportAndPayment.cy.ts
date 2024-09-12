@@ -26,7 +26,7 @@ describe('Last order transport and payment select tests', () => {
 
         takeSnapshotAndCompare(this.test?.title, 'preselected transport and payment', {
             blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.order_summary_transport_and_payment_image },
             ],
@@ -45,7 +45,7 @@ describe('Last order transport and payment select tests', () => {
         cy.reloadAndWaitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(this.test?.title, 'after first change and refresh', {
             blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.order_summary_transport_and_payment_image },
             ],
@@ -60,7 +60,7 @@ describe('Last order transport and payment select tests', () => {
         cy.reloadAndWaitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(this.test?.title, 'after second change and refresh', {
             blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.order_summary_transport_and_payment_image },
             ],

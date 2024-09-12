@@ -73,7 +73,9 @@ export const CartInHeader: FC = ({ className }) => {
 
             <div
                 className={twJoin(
-                    'pointer-events-none absolute top-full right-0 z-cart hidden origin-top-right scale-75 p-5 transition-all group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100 lg:block lg:rounded lg:rounded-tr-none lg:bg-background lg:opacity-0 lg:shadow-md',
+                    'pointer-events-none absolute top-full right-0 z-cart hidden origin-top-right p-5 scale-75 transition-all',
+                    'group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100',
+                    'lg:block lg:rounded lg:rounded-tr-none lg:bg-background lg:opacity-0 lg:shadow-md',
                     !cart?.items.length
                         ? 'lg:flex lg:w-96 lg:flex-nowrap lg:items-center lg:justify-between'
                         : 'lg:w-[510px]',

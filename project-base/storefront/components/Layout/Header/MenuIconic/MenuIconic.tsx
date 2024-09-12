@@ -6,7 +6,6 @@ import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { MarkerIcon } from 'components/Basic/Icon/MarkerIcon';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import useTranslation from 'next-translate/useTranslation';
-import { twJoin } from 'tailwind-merge';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
 import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
@@ -23,12 +22,39 @@ export const MenuIconic: FC = () => {
     const { wishlist } = useWishlist();
     const isUserLoggedIn = useIsUserLoggedIn();
 
+    const menuCountTwClass =
+        'flex w-4 h-4 text-white text-[10px] leading-[10px] rounded-full bg-activeIconFull align-center justify-center pt-[4px] absolute -top-1 -right-2';
+
     return (
         <ul className="flex items-center gap-1 h-12">
             <MenuIconicItem className="max-lg:hidden">
                 <MenuIconicItemLink href={storesUrl} type="stores">
-                    <MarkerIcon className="w-4" />
+                    <MarkerIcon className="w-6" />
                     {t('Stores')}
+                </MenuIconicItemLink>
+            </MenuIconicItem>
+
+            <MenuIconicItem className="max-lg:hidden">
+                <MenuIconicItemLink href={productComparisonUrl} title={t('Comparison')} type="comparison">
+                    <div className="relative">
+                        <CompareIcon className="w-6" isFull={false} />
+                        {!!comparison?.products.length && (
+                            <span className={menuCountTwClass}>{comparison.products.length}</span>
+                        )}
+                    </div>
+                    {t('Comparison')}
+                </MenuIconicItemLink>
+            </MenuIconicItem>
+
+            <MenuIconicItem>
+                <MenuIconicItemLink href={wishlistUrl} title={t('Wishlist')} type="wishlist">
+                    <div className="relative">
+                        <HeartIcon className="w-6" isFull={false} />
+                        {!!wishlist?.products.length && (
+                            <span className={menuCountTwClass}>{wishlist.products.length}</span>
+                        )}
+                    </div>
+                    <span className="max-lg:hidden">{t('Wishlist')}</span>
                 </MenuIconicItemLink>
             </MenuIconicItem>
 
@@ -38,25 +64,6 @@ export const MenuIconic: FC = () => {
                 ) : (
                     <MenuIconicItemUserUnauthenticated />
                 )}
-            </MenuIconicItem>
-
-            <MenuIconicItem className="max-lg:hidden">
-                <MenuIconicItemLink href={productComparisonUrl} title={t('Comparison')} type="comparison">
-                    <CompareIcon className="w-4" isFull={!!comparison?.products.length} />
-                    {!!comparison?.products.length && <span>{comparison.products.length}</span>}
-                </MenuIconicItemLink>
-            </MenuIconicItem>
-
-            <MenuIconicItem>
-                <MenuIconicItemLink href={wishlistUrl} title={t('Wishlist')} type="wishlist">
-                    <HeartIcon
-                        className={twJoin('w-6 lg:w-4', wishlist?.products.length ? 'text-activeIconFull' : '')}
-                        isFull={!!wishlist?.products.length}
-                    />
-                    <span className="max-lg:hidden">
-                        {!!wishlist?.products.length && <span>{wishlist.products.length}</span>}
-                    </span>
-                </MenuIconicItemLink>
             </MenuIconicItem>
         </ul>
     );

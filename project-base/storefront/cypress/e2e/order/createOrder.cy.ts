@@ -10,6 +10,7 @@ import {
     changeOrderConfirmationDynamicPartsToStaticDemodata,
     submitRegistrationFormAfterOrder,
     goToOrderDetailFromOrderList,
+    mouseOverUserMenuButton,
 } from './orderSupport';
 import { transport, payment, customer1, orderNote, url, promoCode, password } from 'fixtures/demodata';
 import { generateCustomerRegistrationData } from 'fixtures/generators';
@@ -241,6 +242,7 @@ describe('Create order tests', () => {
         clickOnSendOrderButton();
         cy.waitForStableAndInteractiveDOM();
         changeOrderConfirmationDynamicPartsToStaticDemodata();
+        mouseOverUserMenuButton();
         takeSnapshotAndCompare(this.test?.title, 'order confirmation', {
             blackout: [{ tid: TIDs.footer_social_links }],
         });

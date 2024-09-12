@@ -30,7 +30,7 @@ describe('Transport select tests', () => {
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(this.test?.title, 'after selecting', {
             blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.order_summary_transport_and_payment_image },
             ],
@@ -47,7 +47,7 @@ describe('Transport select tests', () => {
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(this.test?.title, 'after selecting', {
             blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.order_summary_transport_and_payment_image },
             ],
@@ -66,7 +66,7 @@ describe('Transport select tests', () => {
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(this.test?.title, 'after selecting, deselecting, and selecting again', {
             blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.order_summary_transport_and_payment_image },
             ],
@@ -81,7 +81,7 @@ describe('Transport select tests', () => {
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(this.test?.title, 'after selecting', {
             blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.order_summary_transport_and_payment_image },
             ],
@@ -91,7 +91,7 @@ describe('Transport select tests', () => {
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(this.test?.title, 'after removing', {
             blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
             ],
         });
@@ -105,7 +105,7 @@ describe('Transport select tests', () => {
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(this.test?.title, 'after selecting', {
             blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.order_summary_transport_and_payment_image },
             ],
@@ -115,7 +115,7 @@ describe('Transport select tests', () => {
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(this.test?.title, 'after removing', {
             blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
             ],
         });
@@ -150,7 +150,7 @@ describe('Transport select tests', () => {
 
         takeSnapshotAndCompare(this.test?.title, 'transport and payment page with too few products', {
             blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
             ],
         });
@@ -158,7 +158,7 @@ describe('Transport select tests', () => {
         cy.addProductToCartForTest(products.helloKitty.uuid, 1099);
         cy.visitAndWaitForStableAndInteractiveDOM(url.cart);
         takeSnapshotAndCompare(this.test?.title, 'cart page with enough products', {
-            blackout: [{ tid: TIDs.cart_list_item_image, shouldNotOffset: true }, { tid: TIDs.footer_social_links }],
+            blackout: [{ tid: TIDs.cart_list_item_image }, { tid: TIDs.footer_social_links }],
         });
 
         goToNextOrderStep();
@@ -166,7 +166,7 @@ describe('Transport select tests', () => {
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(this.test?.title, 'transport and payment page with enough products', {
             blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image, shouldNotOffset: true },
+                { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
             ],
         });
