@@ -2,6 +2,7 @@ import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
+import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useRef, useState } from 'react';
 import { getTodayOpeningHours } from 'utils/openingHours/openingHoursHelper';
@@ -51,7 +52,7 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
                             {store.street}, {store.postcode} {store.city}
                         </p>
                     </div>
-                    <div className="xl:text-right flex items-center xl:block">
+                    <div className="xl:text-right flex items-center xl:block" tid={TIDs.store_opening_status}>
                         <OpeningStatus className="xl:mb-1.5" status={store.openingHours.status} />
                         <p className="ml-2.5 text-xs">{getTodayOpeningHours(store.openingHours)}</p>
                     </div>
