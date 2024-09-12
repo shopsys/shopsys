@@ -5,11 +5,15 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusTypeEnum;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
-class Version20240816221930 extends AbstractMigration
+class Version20240816221930 extends AbstractMigration implements ContainerAwareInterface
 {
+    use MultidomainMigrationTrait;
+
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
@@ -33,18 +37,13 @@ class Version20240816221930 extends AbstractMigration
             ADD
                 CONSTRAINT FK_BBBBB6722C2AC5D3 FOREIGN KEY (translatable_id) REFERENCES complaint_statuses (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
 
-        $this->createComplaintStatusWithEnglishAndCzechTranslations(
-            1,
-            ComplaintStatusTypeEnum::STATUS_TYPE_NEW,
-            'New',
-            'Nová',
-        );
-        $this->createComplaintStatusWithEnglishAndCzechTranslations(
-            2,
-            'resolved',
-            'Resolved',
-            'Vyřízena',
-        );
+        $this->createComplaintStatus(1, ComplaintStatusTypeEnum::STATUS_TYPE_NEW);
+        $this->createComplaintStatus(2, ComplaintStatusTypeEnum::STATUS_TYPE_RESOLVED);
+
+        foreach ($this->getAllLocales() as $locale) {
+            $this->createComplaintStatusTranslations(1, t('New', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale), $locale);
+            $this->createComplaintStatusTranslations(2, t('Resolved', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale), $locale);
+        }
 
         $this->sql('ALTER SEQUENCE complaint_statuses_id_seq RESTART WITH 3');
 
@@ -65,34 +64,32 @@ class Version20240816221930 extends AbstractMigration
 
     /**
      * @param int $complaintStatusId
-     * @param string $complaintStatus
-     * @param string $complaintStatusEnglishName
-     * @param string $complaintStatusCzechName
+     * @param string $complaintStatusType
      */
-    private function createComplaintStatusWithEnglishAndCzechTranslations(
-        int $complaintStatusId,
-        string $complaintStatus,
-        string $complaintStatusEnglishName,
-        string $complaintStatusCzechName,
-    ): void {
+    private function createComplaintStatus(int $complaintStatusId, string $complaintStatusType): void
+    {
         $this->sql('INSERT INTO complaint_statuses (id, status_type) VALUES (:id, :statusType)', [
             'id' => $complaintStatusId,
-            'statusType' => $complaintStatus,
+            'statusType' => $complaintStatusType,
         ]);
+    }
+
+    /**
+     * @param int $complaintStatusId
+     * @param string $complaintStatusTranslatedName
+     * @param string $locale
+     */
+    private function createComplaintStatusTranslations(
+        int $complaintStatusId,
+        string $complaintStatusTranslatedName,
+        string $locale,
+    ): void {
         $this->sql(
             'INSERT INTO complaint_status_translations (translatable_id, name, locale) VALUES (:translatableId, :name, :locale)',
             [
                 'translatableId' => $complaintStatusId,
-                'name' => $complaintStatusEnglishName,
-                'locale' => 'en',
-            ],
-        );
-        $this->sql(
-            'INSERT INTO complaint_status_translations (translatable_id, name, locale) VALUES (:translatableId, :name, :locale)',
-            [
-                'translatableId' => $complaintStatusId,
-                'name' => $complaintStatusCzechName,
-                'locale' => 'cs',
+                'name' => $complaintStatusTranslatedName,
+                'locale' => $locale,
             ],
         );
     }
