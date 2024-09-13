@@ -29,7 +29,7 @@ class CustomerUserFactory implements CustomerUserFactoryInterface
         $customerUser = new $entityClassName($customerUserData);
 
         if ($customerUserData->password !== null) {
-            $this->customerUserPasswordFacade->changePassword($customerUser, $customerUserData->password);
+            $this->customerUserPasswordFacade->setPassword($customerUser, $customerUserData->password);
         }
 
         return $customerUser;

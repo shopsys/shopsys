@@ -91,12 +91,21 @@ class CustomerUserPasswordFacade
      */
     public function changePassword(CustomerUser $customerUser, string $password): void
     {
+        $this->setPassword($customerUser, $password);
+
+        $this->customerUserRefreshTokenChainFacade->removeAllCustomerUserRefreshTokenChains($customerUser);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @param string $password
+     */
+    public function setPassword(CustomerUser $customerUser, string $password): void
+    {
         $passwordHasher = $this->passwordHasherFactory->getPasswordHasher($customerUser);
         $passwordHash = $passwordHasher->hash($password);
         $customerUser->setPasswordHash($passwordHash);
 
         $this->em->flush();
-
-        $this->customerUserRefreshTokenChainFacade->removeAllCustomerUserRefreshTokenChains($customerUser);
     }
 }

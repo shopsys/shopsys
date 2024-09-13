@@ -11,22 +11,11 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade as Ba
  * @property \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
  * @property \App\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
  * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository, \Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface $passwordHasherFactory, \Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMailFacade $resetPasswordMailFacade, \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator, \App\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade)
+ * @method changePassword(\App\Model\Customer\User\CustomerUser $customerUser, string $password)
+ * @method setPassword(\App\Model\Customer\User\CustomerUser $customerUser, string $password)
  */
 class CustomerUserPasswordFacade extends BaseCustomerUserPasswordFacade
 {
-    /**
-     * @param \App\Model\Customer\User\CustomerUser $customerUser
-     * @param string $password
-     */
-    public function changePassword(CustomerUser $customerUser, string $password): void
-    {
-        if ($password !== '') {
-            parent::changePassword($customerUser, $password);
-        } else {
-            $customerUser->setPasswordHash('');
-        }
-    }
-
     /**
      * @param string $email
      * @param int $domainId

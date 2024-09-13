@@ -141,6 +141,12 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     protected $roleGroup;
 
     /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime|null
+     */
+    protected $lastSecurityChange;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
      */
     public function __construct(CustomerUserData $customerUserData)
@@ -489,5 +495,10 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     public function getRoleGroup()
     {
         return $this->roleGroup;
+    }
+
+    public function updateLastSecurityChange(): void
+    {
+        $this->lastSecurityChange = new DateTime();
     }
 }

@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Token;
 
 use GraphQL\Error\FormattedError;
+use Lcobucci\JWT\Token\RegisteredClaims;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
+use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
 use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
 use Shopsys\FrontendApiBundle\Model\User\FrontendApiUserProvider;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -26,10 +29,12 @@ class TokenAuthenticator extends AbstractAuthenticator
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Token\TokenFacade $tokenFacade
      * @param \Shopsys\FrontendApiBundle\Model\User\FrontendApiUserProvider $frontendApiUserProvider
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      */
     public function __construct(
         protected readonly TokenFacade $tokenFacade,
         protected readonly FrontendApiUserProvider $frontendApiUserProvider,
+        protected readonly CustomerUserFacade $customerUserFacade,
     ) {
     }
 
@@ -49,6 +54,13 @@ class TokenAuthenticator extends AbstractAuthenticator
         $token = $this->tokenFacade->getTokenByString($credentials);
 
         $email = $token->claims()->get(FrontendApiUser::CLAIM_EMAIL);
+
+        $uuid = $token->claims()->get(FrontendApiUser::CLAIM_UUID);
+        $issuedAt = $token->claims()->get(RegisteredClaims::ISSUED_AT);
+
+        if (!$this->customerUserFacade->isLastSecurityChangeOlderThan($uuid, $issuedAt)) {
+            throw new InvalidTokenUserMessageException();
+        }
 
         return new Passport(
             new UserBadge($email, function () use ($token) {
