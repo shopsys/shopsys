@@ -36,7 +36,7 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                             title={t('Order number')}
                             value={
                                 <ExtendedNextLink
-                                    type="order"
+                                    type="orderDetail"
                                     href={{
                                         pathname: customerOrderDetailUrl,
                                         query: { orderNumber: order.number },
@@ -110,7 +110,7 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                     <LinkButton
                         size="small"
                         tid={TIDs.my_orders_link_ + listIndex}
-                        type="order"
+                        type="orderDetail"
                         href={{
                             pathname: customerOrderDetailUrl,
                             query: { orderNumber: order.number },

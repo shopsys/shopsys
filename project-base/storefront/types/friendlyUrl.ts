@@ -29,6 +29,10 @@ export const FriendlyPagesTypes = {
     store: 'front_stores_detail',
     flag: 'front_flag_detail',
     seo_category: 'front_category_seo',
+    complaintNew: 'front_customer_complaint_new',
+    complaintList: 'front_customer_complaint_list',
+    orderList: 'front_customer_order_list',
+    account: 'front_customer_account',
 } as const;
 
 export const FriendlyPagesDestinations: Record<FriendlyPagesTypesKey, string> = {
@@ -41,6 +45,10 @@ export const FriendlyPagesDestinations: Record<FriendlyPagesTypesKey, string> = 
     store: '/stores/[storeSlug]',
     flag: '/flags/[flagSlug]',
     seo_category: '/categories/[categorySlug]',
+    complaintNew: '/customer/new-complaints',
+    complaintList: '/customer/complaints',
+    orderList: '/customer/orders',
+    account: '/customer/account',
 } as const;
 
 export type FriendlyPagesTypesKey = keyof typeof FriendlyPagesTypes;

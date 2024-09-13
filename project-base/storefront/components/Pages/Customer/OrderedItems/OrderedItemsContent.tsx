@@ -36,7 +36,6 @@ export const OrderedItemsContent: FC<OrderedItemsContentProps> = ({ isFetching, 
                     <OrderedItem key={item.uuid} orderedItem={item} />
                 ))}
             </div>
-
             <Pagination paginationScrollTargetRef={paginationScrollTargetRef} totalCount={totalCount || 0} />
         </div>
     );

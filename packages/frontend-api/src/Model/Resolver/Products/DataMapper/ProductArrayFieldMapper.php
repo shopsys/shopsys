@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
@@ -24,6 +25,7 @@ class ProductArrayFieldMapper
      * @param \Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider $productFrontendLimitProvider
      * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      */
     public function __construct(
         protected readonly CategoryFacade $categoryFacade,
@@ -33,6 +35,7 @@ class ProductArrayFieldMapper
         protected readonly ParameterWithValuesFactory $parameterWithValuesFactory,
         protected readonly ProductFrontendLimitProvider $productFrontendLimitProvider,
         protected readonly DataLoaderInterface $productsSellableByIdsBatchLoader,
+        protected readonly CurrentCustomerUser $currentCustomerUser,
     ) {
     }
 
@@ -212,5 +215,22 @@ class ProductArrayFieldMapper
     public function getHreflangLinks(array $data): array
     {
         return $data['hreflang_links'];
+    }
+
+    /**
+     * @param array $data
+     * @return bool
+     */
+    public function isVisible(array $data): bool
+    {
+        $currentCustomerPricingGroup = $this->currentCustomerUser->getPricingGroup();
+
+        foreach ($data['visibility'] as $visibility) {
+            if ($currentCustomerPricingGroup->getId() === $visibility['pricing_group_id']) {
+                return $visibility['visible'];
+            }
+        }
+
+        return false;
     }
 }

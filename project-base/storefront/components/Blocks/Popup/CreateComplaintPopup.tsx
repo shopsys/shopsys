@@ -11,18 +11,20 @@ import { TextInputControlled } from 'components/Forms/TextInput/TextInputControl
 import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { useComplaintForm, useComplaintFormMeta } from 'components/Pages/Customer/complaintFormMeta';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { useCreateComplaint } from 'graphql/requests/complaints/mutations/CreateComplaintMutation.generated';
 import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import useTranslation from 'next-translate/useTranslation';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { Controller, FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
-import { useSessionStore } from 'store/useSessionStore';
 import { ComplaintFormType } from 'types/form';
 import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
 import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 import { blurInput } from 'utils/forms/blurInput';
+import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
@@ -32,9 +34,11 @@ type CreateComplaintPopupProps = {
 };
 
 export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid, orderItem }) => {
+    const router = useRouter();
     const { t } = useTranslation();
+    const { url } = useDomainConfig();
+    const [customerComplaintsUrl] = getInternationalizedStaticUrls(['/customer/complaints'], url);
     const [, createComplaint] = useCreateComplaint();
-    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const user = useCurrentCustomerData();
 
     const defaultDeliveryAddressChecked = user?.deliveryAddresses[0]?.uuid || '';
@@ -113,7 +117,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid,
             return;
         }
 
-        updatePortalContent(null);
+        router.replace(customerComplaintsUrl);
 
         showSuccessMessage(t('Complaint has been created'));
     };

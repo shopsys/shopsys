@@ -1,0 +1,8 @@
+ComplaintConnectionDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            totalCount:
+                type: "Int!"
+                description: "Total number of complaints"

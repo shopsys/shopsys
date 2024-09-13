@@ -23,6 +23,7 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrontendApiBundle\Model\Complaint\ComplaintApiFacade;
 use Shopsys\FrontendApiBundle\Model\Complaint\ComplaintDataApiFactory;
 use Shopsys\FrontendApiBundle\Model\Complaint\ComplaintItemDataApiFactory;
+use Shopsys\FrontendApiBundle\Model\Complaint\ComplaintRepository;
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
 use Shopsys\FrontendApiBundle\Model\Order\OrderItemApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\InvalidAccessUserError;
@@ -54,6 +55,8 @@ class ComplaintApiFacadeTest extends TestCase
 
     private MockObject $security;
 
+    private MockObject $complaintRepository;
+
     protected function setUp(): void
     {
         $this->em = $this->createMock(EntityManagerInterface::class);
@@ -67,6 +70,7 @@ class ComplaintApiFacadeTest extends TestCase
         $this->complaintDataApiFactory = $this->createMock(ComplaintDataApiFactory::class);
         $this->complaintItemDataApiFactory = $this->createMock(ComplaintItemDataApiFactory::class);
         $this->security = $this->createMock(Security::class);
+        $this->complaintRepository = $this->createMock(ComplaintRepository::class);
 
         $this->complaintApiFacade = new ComplaintApiFacade(
             $this->em,
@@ -80,6 +84,7 @@ class ComplaintApiFacadeTest extends TestCase
             $this->complaintDataApiFactory,
             $this->complaintItemDataApiFactory,
             $this->security,
+            $this->complaintRepository,
         );
     }
 

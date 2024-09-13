@@ -53,10 +53,10 @@ class CustomerUploadedFile extends AbstractUploadedFile
     protected $customerUser;
 
     /**
-     * @var string|null
-     * @ORM\Column(type="string", length=32, nullable=true)
+     * @var string
+     * @ORM\Column(type="string", length=32)
      */
-    protected $hash = null;
+    protected $hash;
 
     /**
      * @param string $entityName
@@ -65,8 +65,8 @@ class CustomerUploadedFile extends AbstractUploadedFile
      * @param string $temporaryFilename
      * @param string $uploadedFilename
      * @param int $position
+     * @param string $hash
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
-     * @param string|null $hash
      */
     public function __construct(
         string $entityName,
@@ -75,8 +75,8 @@ class CustomerUploadedFile extends AbstractUploadedFile
         string $temporaryFilename,
         string $uploadedFilename,
         int $position,
+        string $hash,
         ?CustomerUser $customerUser = null,
-        string $hash = null,
     ) {
         $this->entityName = $entityName;
         $this->entityId = $entityId;
@@ -84,8 +84,8 @@ class CustomerUploadedFile extends AbstractUploadedFile
         $this->setTemporaryFilename($temporaryFilename);
         $this->setNameAndSlug($uploadedFilename);
         $this->position = $position;
-        $this->customerUser = $customerUser;
         $this->hash = $hash;
+        $this->customerUser = $customerUser;
     }
 
     /**
@@ -168,5 +168,13 @@ class CustomerUploadedFile extends AbstractUploadedFile
     protected function getFileForUploadCategory(): string
     {
         return $this->entityName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHash()
+    {
+        return $this->hash;
     }
 }

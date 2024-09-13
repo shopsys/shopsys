@@ -765,8 +765,32 @@ export type TypeComplaint = {
   items: Array<TypeComplaintItem>;
   /** Unique complaint number */
   number: Scalars['String']['output'];
+  /** Order for which the complaint was created */
+  order: TypeOrder;
+  /** Status of the complaint */
+  status: Scalars['String']['output'];
   /** UUID */
   uuid: Scalars['Uuid']['output'];
+};
+
+/** A connection to a list of items. */
+export type TypeComplaintConnection = {
+  __typename?: 'ComplaintConnection';
+  /** Information to aid in pagination. */
+  edges: Maybe<Array<Maybe<TypeComplaintEdge>>>;
+  /** Information to aid in pagination. */
+  pageInfo: TypePageInfo;
+  /** Total number of complaints */
+  totalCount: Scalars['Int']['output'];
+};
+
+/** An edge in a connection. */
+export type TypeComplaintEdge = {
+  __typename?: 'ComplaintEdge';
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge. */
+  node: Maybe<TypeComplaint>;
 };
 
 export type TypeComplaintInput = {
@@ -788,6 +812,8 @@ export type TypeComplaintItem = {
   files: Maybe<Array<TypeFile>>;
   /** Order item */
   orderItem: Maybe<TypeOrderItem>;
+  /** Product of the order item */
+  product: Maybe<TypeProduct>;
   /** Product name */
   productName: Scalars['String']['output'];
   /** Quantity of the order item */
@@ -1146,6 +1172,7 @@ export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & Type
   images: Array<TypeImage>;
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
+  isVisible: Scalars['Boolean']['output'];
   /** Product link */
   link: Scalars['String']['output'];
   /** Product image by params */
@@ -2079,6 +2106,7 @@ export type TypeProduct = {
   images: Array<TypeImage>;
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
+  isVisible: Scalars['Boolean']['output'];
   /** Product link */
   link: Scalars['String']['output'];
   /** Product image by params */
@@ -2317,6 +2345,10 @@ export type TypeQuery = {
   categoriesSearch: TypeCategoryConnection;
   /** Returns category filtered using UUID or URL slug */
   category: Maybe<TypeCategory>;
+  /** Returns complaint filtered using UUID */
+  complaint: TypeComplaint;
+  /** Returns list of complaints that can be paginated using `first`, `last`, `before` and `after` keywords */
+  complaints: TypeComplaintConnection;
   /** Returns available countries */
   countries: Array<TypeCountry>;
   /** Returns currently logged in customer user */
@@ -2483,6 +2515,20 @@ export type TypeQueryCategoryArgs = {
   orderingMode: InputMaybe<TypeProductOrderingModeEnum>;
   urlSlug: InputMaybe<Scalars['String']['input']>;
   uuid: InputMaybe<Scalars['Uuid']['input']>;
+};
+
+
+export type TypeQueryComplaintArgs = {
+  number: Scalars['String']['input'];
+};
+
+
+export type TypeQueryComplaintsArgs = {
+  after: InputMaybe<Scalars['String']['input']>;
+  before: InputMaybe<Scalars['String']['input']>;
+  first: InputMaybe<Scalars['Int']['input']>;
+  last: InputMaybe<Scalars['Int']['input']>;
+  searchInput: InputMaybe<TypeSearchInput>;
 };
 
 
@@ -2777,6 +2823,7 @@ export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & T
   images: Array<TypeImage>;
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
+  isVisible: Scalars['Boolean']['output'];
   /** Product link */
   link: Scalars['String']['output'];
   /** Product image by params */
@@ -3141,6 +3188,7 @@ export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug
   images: Array<TypeImage>;
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
+  isVisible: Scalars['Boolean']['output'];
   /** Product link */
   link: Scalars['String']['output'];
   /** Product image by params */

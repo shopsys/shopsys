@@ -50,6 +50,7 @@ export const UserNavigation: FC = () => {
                         key={index}
                         className={getMenuItemTwClass(menuItem.link, router.asPath)}
                         href={menuItem.link}
+                        type={menuItem.type}
                     >
                         {menuItem.text}
                         {menuItem.count && (

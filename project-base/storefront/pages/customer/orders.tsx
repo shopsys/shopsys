@@ -46,7 +46,12 @@ const OrdersPage: FC = () => {
     return (
         <>
             <MetaRobots content="noindex" />
-            <CustomerLayout breadcrumbs={breadcrumbs} pageHeading={t('My orders')} title={t('My orders')}>
+            <CustomerLayout
+                breadcrumbs={breadcrumbs}
+                breadcrumbsType="account"
+                pageHeading={t('My orders')}
+                title={t('My orders')}
+            >
                 <OrdersContent
                     areOrdersFetching={areOrdersFetching}
                     orders={mappedOrders}

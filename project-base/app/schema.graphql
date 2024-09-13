@@ -628,8 +628,30 @@ type Complaint {
   items: [ComplaintItem!]!
   "Unique complaint number"
   number: String!
+  "Order for which the complaint was created"
+  order: Order!
+  "Status of the complaint"
+  status: String!
   "UUID"
   uuid: Uuid!
+}
+
+"A connection to a list of items."
+type ComplaintConnection {
+  "Information to aid in pagination."
+  edges: [ComplaintEdge]
+  "Information to aid in pagination."
+  pageInfo: PageInfo!
+  "Total number of complaints"
+  totalCount: Int!
+}
+
+"An edge in a connection."
+type ComplaintEdge {
+  "A cursor for use in pagination."
+  cursor: String!
+  "The item at the end of the edge."
+  node: Complaint
 }
 
 input ComplaintInput {
@@ -650,6 +672,8 @@ type ComplaintItem {
   files(type: String = "default"): [File!]
   "Order item"
   orderItem: OrderItem
+  "Product of the order item"
+  product: Product
   "Product name"
   productName: String!
   "Quantity of the order item"
@@ -972,6 +996,7 @@ type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   images(type: String = null): [Image!]!
   isMainVariant: Boolean!
   isSellingDenied: Boolean!
+  isVisible: Boolean!
   "Product link"
   link: String!
   "Product image by params"
@@ -1679,6 +1704,7 @@ interface Product {
   images(type: String = null): [Image!]!
   isMainVariant: Boolean!
   isSellingDenied: Boolean!
+  isVisible: Boolean!
   "Product link"
   link: String!
   "Product image by params"
@@ -1886,6 +1912,13 @@ type Query {
   "Returns category filtered using UUID or URL slug"
   category(filter: ProductFilter, orderingMode: ProductOrderingModeEnum, urlSlug: String, uuid: Uuid): Category
   CompanyCustomerUser: CompanyCustomerUser
+  "Returns complaint filtered using UUID"
+  complaint(
+    "Complaint number"
+    number: String!
+  ): Complaint!
+  "Returns list of complaints that can be paginated using `first`, `last`, `before` and `after` keywords"
+  complaints(after: String, before: String, first: Int, last: Int, searchInput: SearchInput): ComplaintConnection!
   "Returns available countries"
   countries: [Country!]!
   "Returns currently logged in customer user"
@@ -2113,6 +2146,7 @@ type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   images(type: String = null): [Image!]!
   isMainVariant: Boolean!
   isSellingDenied: Boolean!
+  isVisible: Boolean!
   "Product link"
   link: String!
   "Product image by params"
@@ -2424,6 +2458,7 @@ type Variant implements Product & Hreflang & Breadcrumb & Slug {
   images(type: String = null): [Image!]!
   isMainVariant: Boolean!
   isSellingDenied: Boolean!
+  isVisible: Boolean!
   "Product link"
   link: String!
   "Product image by params"

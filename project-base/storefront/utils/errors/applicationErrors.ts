@@ -13,6 +13,7 @@ const ApplicationErrors = {
     'blog-category-not-found': 'flash-message',
     'image-type-invalid': 'flash-message',
     'order-not-found': 'flash-message',
+    'complaint-not-found': 'flash-message',
     'personal-data-hash-invalid': 'flash-message',
     'product-price-missing': 'flash-message',
     'no-result-found-for-slug': 'no-flash-message',

@@ -159,6 +159,9 @@ export const cacheUpdates: UpdatesConfig = {
         ChangePaymentInOrder(_result, _args, cache) {
             invalidateFields(cache, ['order']);
         },
+        CreateComplaint(_result, _args, cache) {
+            invalidateFields(cache, ['complaints']);
+        },
     },
 };
 

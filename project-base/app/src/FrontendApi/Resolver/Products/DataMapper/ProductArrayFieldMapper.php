@@ -7,6 +7,7 @@ namespace App\FrontendApi\Resolver\Products\DataMapper;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
@@ -23,6 +24,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFie
  * @method \App\Model\Product\Flag\Flag[] getFlags(array $data)
  * @method \App\Model\Product\Brand\Brand|null getBrand(array $data)
  * @property \App\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
+ * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
  */
 class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
 {
@@ -34,6 +36,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
      * @param \App\FrontendApi\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider $productFrontendLimitProvider
      * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader
+     * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Overblog\DataLoader\DataLoaderInterface $categoriesBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $flagsBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $brandsBatchLoader
@@ -46,11 +49,21 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
         ParameterWithValuesFactory $parameterWithValuesFactory,
         ProductFrontendLimitProvider $productFrontendLimitProvider,
         DataLoaderInterface $productsSellableByIdsBatchLoader,
+        CurrentCustomerUser $currentCustomerUser,
         private DataLoaderInterface $categoriesBatchLoader,
         private DataLoaderInterface $flagsBatchLoader,
         private DataLoaderInterface $brandsBatchLoader,
     ) {
-        parent::__construct($categoryFacade, $flagFacade, $brandFacade, $productElasticsearchProvider, $parameterWithValuesFactory, $productFrontendLimitProvider, $productsSellableByIdsBatchLoader);
+        parent::__construct(
+            $categoryFacade,
+            $flagFacade,
+            $brandFacade,
+            $productElasticsearchProvider,
+            $parameterWithValuesFactory,
+            $productFrontendLimitProvider,
+            $productsSellableByIdsBatchLoader,
+            $currentCustomerUser,
+        );
     }
 
     /**

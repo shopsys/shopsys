@@ -19,6 +19,7 @@ fragment OrderDetailItemFragment on OrderItem {
     }
     product {
         slug
+        isVisible
         mainImage {
             ...ImageFragment
         }

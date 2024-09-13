@@ -36,6 +36,8 @@
     * [CategoryHierarchyItem](#categoryhierarchyitem)
     * [CompanyCustomerUser](#companycustomeruser)
     * [Complaint](#complaint)
+    * [ComplaintConnection](#complaintconnection)
+    * [ComplaintEdge](#complaintedge)
     * [ComplaintItem](#complaintitem)
     * [Country](#country)
     * [CreateOrderResult](#createorderresult)
@@ -531,6 +533,58 @@ Returns category filtered using UUID or URL slug
 <tr>
 <td colspan="2" valign="top"><strong>CompanyCustomerUser</strong></td>
 <td valign="top"><a href="#companycustomeruser">CompanyCustomerUser</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>complaint</strong></td>
+<td valign="top"><a href="#complaint">Complaint</a>!</td>
+<td>
+
+Returns complaint filtered using UUID
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">number</td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Complaint number
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>complaints</strong></td>
+<td valign="top"><a href="#complaintconnection">ComplaintConnection</a>!</td>
+<td>
+
+Returns list of complaints that can be paginated using `first`, `last`, `before` and `after` keywords
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">after</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">before</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">last</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">searchInput</td>
+<td valign="top"><a href="#searchinput">SearchInput</a></td>
 <td></td>
 </tr>
 <tr>
@@ -4021,11 +4075,108 @@ Unique complaint number
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>order</strong></td>
+<td valign="top"><a href="#order">Order</a>!</td>
+<td>
+
+Order for which the complaint was created
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>status</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Status of the complaint
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
 UUID
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ComplaintConnection
+
+A connection to a list of items.
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>edges</strong></td>
+<td valign="top">[<a href="#complaintedge">ComplaintEdge</a>]</td>
+<td>
+
+Information to aid in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>pageInfo</strong></td>
+<td valign="top"><a href="#pageinfo">PageInfo</a>!</td>
+<td>
+
+Information to aid in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>totalCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Total number of complaints
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ComplaintEdge
+
+An edge in a connection.
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>cursor</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+A cursor for use in pagination.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>node</strong></td>
+<td valign="top"><a href="#complaint">Complaint</a></td>
+<td>
+
+The item at the end of the edge.
 
 </td>
 </tr>
@@ -4082,6 +4233,15 @@ Files attached to the complaint order item
 <td>
 
 Order item
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>product</strong></td>
+<td valign="top"><a href="#product">Product</a></td>
+<td>
+
+Product of the order item
 
 </td>
 </tr>
@@ -5026,6 +5186,11 @@ Product images
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>isSellingDenied</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>isVisible</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
@@ -7611,6 +7776,11 @@ Product images
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>isVisible</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>link</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -8805,6 +8975,11 @@ Product images
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>isSellingDenied</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>isVisible</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
@@ -11874,6 +12049,11 @@ Product images
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>isSellingDenied</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>isVisible</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>

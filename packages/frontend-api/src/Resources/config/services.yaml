@@ -121,6 +121,12 @@ services:
             $imagesBatchLoader: '@images_batch_loader'
             $firstImageBatchLoader: '@first_image_batch_loader'
 
+    Shopsys\FrontendApiBundle\Model\Resolver\Order\OrderItemResolverMap:
+        arguments:
+            $firstImageBatchLoader: '@first_image_batch_loader'
+        tags:
+            - { name: overblog_graphql.resolver_map, schema: default }
+
     Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductFilesQuery:
         arguments:
             $filesBatchLoader: '@files_batch_loader'

@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Complaint\ComplaintFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintNumberSequenceRepository;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Order;
@@ -39,6 +40,7 @@ class ComplaintApiFacade
      * @param \Shopsys\FrontendApiBundle\Model\Complaint\ComplaintDataApiFactory $complaintDataApiFactory
      * @param \Shopsys\FrontendApiBundle\Model\Complaint\ComplaintItemDataApiFactory $complaintItemDataApiFactory
      * @param \Symfony\Component\Security\Core\Security $security
+     * @param \Shopsys\FrontendApiBundle\Model\Complaint\ComplaintRepository $complaintRepository
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -52,6 +54,7 @@ class ComplaintApiFacade
         protected readonly ComplaintDataApiFactory $complaintDataApiFactory,
         protected readonly ComplaintItemDataApiFactory $complaintItemDataApiFactory,
         protected readonly Security $security,
+        protected readonly ComplaintRepository $complaintRepository,
     ) {
     }
 
@@ -168,5 +171,45 @@ class ComplaintApiFacade
         if ($complaintItemInputData['quantity'] > $orderItem->getQuantity()) {
             throw new InvalidQuantityUserError('Complaint item quantity is higher than order item quantity');
         }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @param int $limit
+     * @param int $offset
+     * @param string|null $search
+     * @return array
+     */
+    public function getCustomerUserComplaintsLimitedList(
+        CustomerUser $customerUser,
+        int $limit,
+        int $offset,
+        ?string $search = null,
+    ): array {
+        return $this->complaintRepository->getCustomerUserComplaintsLimitedList($customerUser, $limit, $offset, $search);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @param string|null $search
+     * @return int
+     */
+    public function getCustomerUserComplaintsLimitedListCount(
+        CustomerUser $customerUser,
+        ?string $search = null,
+    ): int {
+        return $this->complaintRepository->getCustomerUserComplaintsListCount($customerUser, $search);
+    }
+
+    /**
+     * @param string $complaintNumber
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint|null
+     */
+    public function findByComplaintNumberAndCustomerUser(
+        string $complaintNumber,
+        CustomerUser $customerUser,
+    ): ?Complaint {
+        return $this->complaintRepository->findByComplaintNumberAndCustomerUser($complaintNumber, $customerUser);
     }
 }

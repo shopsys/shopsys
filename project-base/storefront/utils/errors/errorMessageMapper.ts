@@ -15,6 +15,7 @@ const getErrorMessageTranslationString = (errorCode: FlashMessageKeys, t: Transl
         'blog-category-not-found': t('Category not found.'),
         'image-type-invalid': t('Invalid image type.'),
         'order-not-found': t('Order not found.'),
+        'complaint-not-found': t('Complaint not found.'),
         'personal-data-hash-invalid': t('Invalid hash.'),
         'product-price-missing': t('Product price is missing.'),
         'store-not-found': t('Store not found.'),

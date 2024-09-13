@@ -1,9 +1,10 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
+import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { SearchInput } from 'components/Forms/TextInput/SearchInput';
 import { CustomerLayout } from 'components/Layout/CustomerLayout';
 import { MINIMAL_SEARCH_QUERY_LENGTH } from 'components/Layout/Header/AutocompleteSearch/constants';
-import { OrderedItemsContent } from 'components/Pages/Customer/Complaints/OrderedItemsContent';
+import { OrderedItemsContent } from 'components/Pages/Customer/OrderedItems/OrderedItemsContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { DEFAULT_ORDERED_ITEMS_FILTER, DEFAULT_PAGE_SIZE } from 'config/constants';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
@@ -34,7 +35,7 @@ const NewComplaintPage: FC = () => {
     const currentPage = useCurrentPageQuery();
     const { url } = useDomainConfig();
     const [customerComplaintsUrl, customerComplaintsNewUrl] = getInternationalizedStaticUrls(
-        ['/customer/complaints', '/customer/complaints/new'],
+        ['/customer/complaints', '/customer/new-complaint'],
         url,
     );
     const userIdentifier = useCookiesStore((store) => store.userIdentifier);
@@ -46,13 +47,15 @@ const NewComplaintPage: FC = () => {
         { __typename: 'Link', name: t('New complaint'), slug: customerComplaintsNewUrl },
     ];
 
-    const [{ data: orderedItemsData, fetching: orderedItemsFetching }] = useOrderedItemsQuery({
-        variables: {
-            first: DEFAULT_PAGE_SIZE,
-            after: getEndCursor(currentPage),
-            filter: DEFAULT_ORDERED_ITEMS_FILTER,
+    const [{ data: orderedItemsData, fetching: orderedItemsFetching, error: orderedItemsError }] = useOrderedItemsQuery(
+        {
+            variables: {
+                first: DEFAULT_PAGE_SIZE,
+                after: getEndCursor(currentPage),
+                filter: DEFAULT_ORDERED_ITEMS_FILTER,
+            },
         },
-    });
+    );
 
     const [{ data: searchOrderedItemsData, fetching: searchOrderedItemsDataFetching }] = useSearchOrderedItemsQuery({
         variables: {
@@ -86,23 +89,30 @@ const NewComplaintPage: FC = () => {
     return (
         <>
             <MetaRobots content="noindex" />
-            <CustomerLayout breadcrumbs={breadcrumbs} pageHeading={t('New complaint')} title={t('New complaint')}>
-                <div className="mb-5">
-                    <SearchInput
-                        className="w-full border border-inputBorder"
-                        label={t('Search for a product you want to complain about')}
-                        shouldShowSpinnerInInput={searchOrderedItemsDataFetching}
-                        value={searchQueryValue}
-                        onChange={(e) => setSearchQueryValue(e.currentTarget.value)}
-                        onClear={() => setSearchQueryValue('')}
+            <PageGuard errorRedirectUrl={customerComplaintsUrl} isWithAccess={!orderedItemsError}>
+                <CustomerLayout
+                    breadcrumbs={breadcrumbs}
+                    breadcrumbsType="complaintList"
+                    pageHeading={t('New complaint')}
+                    title={t('New complaint')}
+                >
+                    <div className="mb-5">
+                        <SearchInput
+                            className="w-full border border-inputBorder"
+                            label={t('Search for a product you complained about')}
+                            shouldShowSpinnerInInput={searchOrderedItemsDataFetching}
+                            value={searchQueryValue}
+                            onChange={(e) => setSearchQueryValue(e.currentTarget.value)}
+                            onClear={() => setSearchQueryValue('')}
+                        />
+                    </div>
+                    <OrderedItemsContent
+                        isFetching={orderedItemsFetching || searchOrderedItemsDataFetching}
+                        items={mappedOrderedItems}
+                        totalCount={orderedItemsTotalCount}
                     />
-                </div>
-                <OrderedItemsContent
-                    isFetching={orderedItemsFetching || searchOrderedItemsDataFetching}
-                    items={mappedOrderedItems}
-                    totalCount={orderedItemsTotalCount}
-                />
-            </CustomerLayout>
+                </CustomerLayout>
+            </PageGuard>
         </>
     );
 };

@@ -39,3 +39,9 @@ ComplaintDecorator:
             items:
                 type: "[ComplaintItem!]!"
                 description: "All items in the complaint"
+            status:
+                type: "String!"
+                description: "Status of the complaint"
+            order:
+                type: "Order!"
+                description: "Order for which the complaint was created"

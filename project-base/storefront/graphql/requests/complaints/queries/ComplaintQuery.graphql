@@ -1,0 +1,5 @@
+query ComplaintQuery($complaintNumber: String!) {
+    complaint(number: $complaintNumber) {
+        ...ComplaintDetailFragment
+    }
+}

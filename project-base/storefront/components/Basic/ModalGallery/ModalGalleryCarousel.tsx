@@ -1,12 +1,13 @@
 import { PlayIcon } from 'components/Basic/Icon/PlayIcon';
 import { Image } from 'components/Basic/Image/Image';
+import { TypeFileFragment } from 'graphql/requests/files/fragments/FileFragment.generated';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { TypeVideoTokenFragment } from 'graphql/requests/products/fragments/VideoTokenFragment.generated';
 import { RefObject } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 type ModalGalleryCarouselProps = {
-    items: (TypeVideoTokenFragment | TypeImageFragment)[];
+    items: (TypeVideoTokenFragment | TypeImageFragment | TypeFileFragment)[];
     itemsRefs: RefObject<HTMLLIElement>[];
     selectedIndex: number;
     galleryName: string;
@@ -25,6 +26,7 @@ export const ModalGalleryCarousel: FC<ModalGalleryCarouselProps> = ({
             {items.map((galleryItem, index) => {
                 const isImage = galleryItem.__typename === 'Image';
                 const isVideo = galleryItem.__typename === 'VideoToken';
+                const isFile = galleryItem.__typename === 'File';
 
                 return (
                     <li
@@ -63,6 +65,17 @@ export const ModalGalleryCarousel: FC<ModalGalleryCarouselProps> = ({
 
                                 <PlayIcon className="absolute top-1/2 left-1/2 flex h-8 w-8 -translate-y-1/2 -translate-x-1/2 items-center justify-center rounded-full bg-overlay text-textInverted" />
                             </div>
+                        )}
+                        {isFile && (
+                            <Image
+                                alt={galleryItem.anchorText || `${galleryName}-${index}`}
+                                className="max-h-full w-auto object-contain"
+                                draggable={false}
+                                hash={galleryItem.url.split('?')[1]}
+                                height={80}
+                                src={galleryItem.url.split('?')[0]}
+                                width={80}
+                            />
                         )}
                     </li>
                 );
