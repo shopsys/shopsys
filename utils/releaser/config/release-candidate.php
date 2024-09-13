@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Shopsys\Releaser\ReleaseWorker\CheckCorrectReleaseVersionReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckLatestVersionOfReleaserReleaseWorker;
+use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckPackagesGithubActionsBuildsAfterSplitReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckPackagesGithubActionsBuildsReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckProjectBaseBuild;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckReleaseBlogPostReleaseWorker;
@@ -57,7 +58,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
     $services->set(TestYourBranchLocallyReleaseWorker::class);
     $services->set(ForceYourBranchSplitReleaseWorker::class);
     $services->set(CheckShopsysInstallReleaseWorker::class);
-    $services->set(CheckProjectBaseBuild::class);
+    $services->set(CheckPackagesGithubActionsBuildsAfterSplitReleaseWorker::class);
     $services->set(VerifyMinorUpgradeReleaseWorker::class);
     $services->set(SendBranchForReviewAndTestsReleaseWorker::class);
 };

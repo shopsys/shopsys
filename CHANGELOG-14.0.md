@@ -1,4 +1,4 @@
-# Changelog for 14.0.x
+# Changelog for 14.0
 
 All notable changes that change in some way the behavior of any of our packages are maintained by the monorepo repository.
 
@@ -34,6 +34,38 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 <!-- Add generated changelog below this line -->
 <!-- Release notes generated using configuration in .github/release.yml at 14.0 -->
+
+## [v14.0.1](https://github.com/shopsys/shopsys/compare/v14.0.0...v14.0.1) (2024-09-13)
+
+### :sparkles: Enhancements and features
+
+-   [framework] improved formatting of Entity logs by @TomasLudvik in https://github.com/shopsys/shopsys/pull/3410
+
+### :bug: Bug Fixes
+
+-   [shopsys] moved two attributes of ProductFormType from project-base to framework by @stanoMilan in https://github.com/shopsys/shopsys/pull/3320
+-   [shopsys] moved CSRFExtension from project-base to framework by @stanoMilan in https://github.com/shopsys/shopsys/pull/3318
+-   [shopsys] fixed image resolving for transport in FrontendAPI by @stanoMilan in https://github.com/shopsys/shopsys/pull/3316
+-   [framework] fixed price range query by @stanoMilan in https://github.com/shopsys/shopsys/pull/3312
+-   [framework] fixed query wrongly loading flags from Product instead of ProductDomain by @stanoMilan in https://github.com/shopsys/shopsys/pull/3310
+-   [shopsys] fixed duplicate addDomain to query builder by @stanoMilan in https://github.com/shopsys/shopsys/pull/3338
+-   [framework] annotations fixer access of nullable does not break fixer by @stanoMilan in https://github.com/shopsys/shopsys/pull/3357
+-   [framework] fix create ImageTypeNotFoundException with null imageType attr by @stanoMilan in https://github.com/shopsys/shopsys/pull/3334
+-   [framework] entity log no longer logs collection without change by @stanoMilan in https://github.com/shopsys/shopsys/pull/3375
+-   [framework] fixed wrong columns used in migration Version20240102112523 by @stanoMilan in https://github.com/shopsys/shopsys/pull/3402
+-   [framework] fixed EntityLogger to no longer empty collection that is cleared and filled on every update by @TomasLudvik in https://github.com/shopsys/shopsys/pull/3406
+-   [framework] fixed redundant log for the Money type if the scale of compared object was different by @stanoMilan in https://github.com/shopsys/shopsys/pull/3405
+
+### :hammer: Developer experience and refactoring
+
+-   [shopsys] moved migration of stock settings from project-base to framework by @stanoMilan in https://github.com/shopsys/shopsys/pull/3340
+-   [shopsys] moved category parameters to framework package by @stanoMilan in https://github.com/shopsys/shopsys/pull/3336
+-   [framework] EntityLogEventListener now handles PersistentCollection directly instead of catching Exception by @stanoMilan in https://github.com/shopsys/shopsys/pull/3374
+-   [shopsys] moved friendly urls from project-base to the framework by @TomasLudvik in https://github.com/shopsys/shopsys/pull/3368
+-   [framework] flags are no longer all deleted and then recreated but are properly managed by @stanoMilan in https://github.com/shopsys/shopsys/pull/3404
+-   [shopsys] moved FlagDetailFriendlyUrlDataProvider from project-base to framework by @stanoMilan in https://github.com/shopsys/shopsys/pull/3403
+
+**Full Changelog**: https://github.com/shopsys/shopsys/compare/v14.0.0...v14.0.1
 
 ## [v14.0.0](https://github.com/shopsys/shopsys/compare/v13.0.0...v14.0.0) (2024-05-06)
 

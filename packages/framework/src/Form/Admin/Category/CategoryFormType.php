@@ -275,7 +275,7 @@ class CategoryFormType extends AbstractType
         if ($category === null) {
             return;
         }
-        $parametersFilterBuilder = $builder->create('parametersGroup', GroupType::class, ['label' => t('Filter parameters')]);
+        $parametersFilterBuilder = $builder->add('parametersGroup', GroupType::class, ['label' => t('Filter parameters')]);
 
         $parameterNamesById = [];
 

@@ -19,7 +19,7 @@ final class UpdateLicenseAcknowledgementsReleaseWorker extends AbstractShopsysRe
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): string {
-        return '[Manually] Generate license acknowledgements in open-source-license-acknowledgements-and-third-party-copyrights.md';
+        return 'Generate license acknowledgements in open-source-license-acknowledgements-and-third-party-copyrights.md';
     }
 
     /**
@@ -30,15 +30,11 @@ final class UpdateLicenseAcknowledgementsReleaseWorker extends AbstractShopsysRe
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): void {
-        $this->symfonyStyle->note(
-            [
-                'Regenerate open-source-license-acknowledgements-and-third-party-copyrights.md file',
-                'Run: php ./utils/license-acknowledgements-generator/generate-acknowledgements.php',
-                'and commit the changes with the note "regenerated open source license acknowledgements"',
-            ],
-        );
+        $this->processRunner->run('php ./utils/license-acknowledgements-generator/generate-acknowledgements.php');
 
-        $this->confirm('Confirm the changes are committed.');
+        $this->processRunner->run('php phing markdown-fix');
+
+        $this->commit('regenerated open source license acknowledgements');
     }
 
     /**

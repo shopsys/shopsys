@@ -1,5 +1,7 @@
 # UPGRADING FROM 13.x to 14.0.1
 
+> We highly recommend to update directly to version 14.0.1 and not to separate the upgrade process to 14.0.0 and then 14.0.1 as several possible problems were solved there.
+
 The releases of Shopsys Platform adhere to the [Backward Compatibility Promise](https://docs.shopsys.com/en/latest/contributing/backward-compatibility-promise/) to make the upgrades to new versions easier and help long-term maintainability.
 
 ## Recommended way of upgrading
@@ -60,27 +62,29 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     - see #project-base-diff to update your project
 -->
 
-## [Upgrade from v14.0.0 to v14.0.1-dev](https://github.com/shopsys/shopsys/compare/v14.0.0...14.0.1)
+## [Upgrade from v14.0.1 to v14.0.2-dev](https://github.com/shopsys/shopsys/compare/v14.0.1...14.0)
+
+## [Upgrade from v14.0.0 to v14.0.1](https://github.com/shopsys/shopsys/compare/v14.0.0...14.0.1)
 
 #### fixed image resolving for transport in FrontendAPI ([#3316](https://github.com/shopsys/shopsys/pull/3316))
 
--   see #project-base-diff to update your project
+-   see [project-base diff](https://github.com/shopsys/project-base/commit/a2702ac7e6d2934898d055ea61876c9bd81e5773) to update your project
 
 #### moved CSRFExtension from project-base to framework ([#3318](https://github.com/shopsys/shopsys/pull/3318))
 
--   see #project-base-diff to update your project
+-   see [project-base diff](https://github.com/shopsys/project-base/commit/0716ec8623cf26415ccec37bf18d3171d8d5a9ac) to update your project
 
 #### moved two attributes of ProductFormType from project-base to the framework ([#3320](https://github.com/shopsys/shopsys/pull/3320))
 
--   see #project-base-diff to update your project
+-   see [project-base diff](https://github.com/shopsys/project-base/commit/28d3b9b870d142f038ca10823b39b2b2fb3db23a) to update your project
 
 #### moved migration of stock settings from project-base to framework ([#3340](https://github.com/shopsys/shopsys/pull/3340))
 
--   see #project-base-diff to update your project
+-   see [project-base diff](https://github.com/shopsys/project-base/commit/d0759321ea8b613491e228fc266b86885c57cac1) to update your project
 
 #### fixed duplicate addDomain to query builder ([#3338](https://github.com/shopsys/shopsys/pull/3338))
 
--   see #project-base-diff to update your project
+-   see [project-base diff](https://github.com/shopsys/project-base/commit/77cdc2d388a696b8d1e08feeee3bd03fbc7efcea) to update your project
 
 #### moved category parameters to framework package ([#3336](https://github.com/shopsys/shopsys/pull/3336))
 
@@ -112,9 +116,9 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
     +       protected readonly CategoryParameterRepository $categoryParameterRepository,
         ) {
     ```
--   see #project-base-diff to update your project
+-   see [project-base diff](https://github.com/shopsys/project-base/commit/31449c51721db4649739c05a7f525e0dc8c97f49) to update your project
 
-#### moved most of the FriendlyUrl functionality from project-base to the framework ([#3320](https://github.com/shopsys/shopsys/pull/3320))
+#### moved most of the FriendlyUrl functionality from project-base to the framework ([#3368](https://github.com/shopsys/shopsys/pull/3368))
 
 -   99% of functionality has been moved; only functionality connected to ReadyCategorySeoMix is still kept in project-base, until SEO categories are moved to the framework
 -   for more information, see the [section about the features movement](#movement-of-features-from-project-base-to-packages)
@@ -129,7 +133,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 -   method `\Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleDetailFriendlyUrlDataProvider::createFromIdAndName()` has been removed, use `\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactory::createFromIdAndName()` instead
 -   method `\Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryDetailFriendlyUrlDataProvider::createFromIdAndName()` has been removed, use `\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactory::createFromIdAndName()` instead
 -   method `\Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade::removeFriendlyUrlsForAllDomains()` has been removed without a replacement
--   see #project-base-diff to update your project
+-   see [project-base diff](https://github.com/shopsys/project-base/commit/1c8b71a49252939016c01e2a4605a1c9977c42e5) to update your project
 
 #### fixed wrong columns used in migration Version20240102112523 ([#3402](https://github.com/shopsys/shopsys/pull/3402))
 
@@ -137,7 +141,7 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
 
 #### moved FlagDetailFriendlyUrlDataProvider from project-base to the framework ([#3403](https://github.com/shopsys/shopsys/pull/3403))
 
--   see #project-base-diff to update your project
+-   see [project-base diff](https://github.com/shopsys/project-base/commit/162aafc223c8316af2a1fceb63332ac7f7691223) to update your project
 
 #### fixed EntityLogger to no longer empty collection that is cleared and filled on every update ([#3406](https://github.com/shopsys/shopsys/pull/3406))
 
