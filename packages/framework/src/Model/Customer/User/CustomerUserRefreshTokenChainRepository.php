@@ -63,6 +63,9 @@ class CustomerUserRefreshTokenChainRepository
                 ->getQuery()
                 ->execute();
         }
+
+        $customerUser->updateLastSecurityChange();
+        $this->em->flush();
     }
 
     /**

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\EntityLog\Detection;
 
 use Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogSourceEnum;
-use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
 use Symfony\Component\Security\Core\Security;
 
 class DetectionFacade
@@ -16,11 +16,9 @@ class DetectionFacade
 
     /**
      * @param \Symfony\Component\Security\Core\Security $security
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      */
     public function __construct(
         protected readonly Security $security,
-        protected readonly CurrentCustomerUser $currentCustomerUser,
     ) {
     }
 
@@ -29,10 +27,10 @@ class DetectionFacade
         $this->source = EntityLogSourceEnum::USER;
         $this->userIdentifier = 'notLoggedCustomer';
 
-        $currentCustomer = $this->currentCustomerUser->findCurrentCustomerUser();
+        $user = $this->security->getUser();
 
-        if ($currentCustomer) {
-            $this->userIdentifier = $currentCustomer->getUserIdentifier();
+        if ($user instanceof FrontendApiUser) {
+            $this->userIdentifier = $user->getUserIdentifier();
         }
     }
 

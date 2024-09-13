@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
@@ -453,5 +454,15 @@ class CustomerUserFacade
     public function getAll(): array
     {
         return $this->customerUserRepository->getAll();
+    }
+
+    /**
+     * @param string $customerUserUuid
+     * @param \DateTimeInterface $referenceDateTime
+     * @return bool
+     */
+    public function isLastSecurityChangeOlderThan(string $customerUserUuid, DateTimeInterface $referenceDateTime): bool
+    {
+        return $this->customerUserRepository->isLastSecurityChangeOlderThan($customerUserUuid, $referenceDateTime);
     }
 }
