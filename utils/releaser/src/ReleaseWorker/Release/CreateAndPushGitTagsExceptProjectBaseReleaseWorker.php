@@ -73,6 +73,8 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
             $this->processRunner->run('git config --global credential.helper "cache --timeout=3600"');
         }
 
+        $this->processRunner->run('git checkout ' . $initialBranchName);
+
         $this->symfonyStyle->note(
             'You will be asked for your Github credentials if you have not saved them yet.
             As we require two factor authentication, you will need to provide repo scope token instead of password.
