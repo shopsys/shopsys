@@ -37,7 +37,7 @@ export const MenuIconicPlaceholder: FC = () => {
             </li>
 
             <li className={placeholderItemTwClass}>
-                <UserIcon className="w-6 max-h-[22px]" isFull={false} />
+                <UserIcon className="w-6 max-h-[22px]" />
                 <Skeleton className="w-10" containerClassName="max-lg:hidden" />
             </li>
         </ul>

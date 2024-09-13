@@ -48,7 +48,7 @@ describe('Simple page visit tests with screenshots', () => {
     it('stores page visit with screenshot', function () {
         cy.visitAndWaitForStableAndInteractiveDOM(url.stores);
         takeSnapshotAndCompare(this.test?.title, 'stores page', {
-            blackout: [{ tid: TIDs.footer_social_links }, { tid: TIDs.stores_map }],
+            blackout: [{ tid: TIDs.footer_social_links }, { tid: TIDs.stores_map }, { tid: TIDs.store_opening_status }],
         });
     });
 
