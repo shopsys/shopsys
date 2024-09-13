@@ -16,4 +16,4 @@ jobs:
             -   name: Cancel reviews older than seven days
                 working-directory: cancel-old-reviews
                 run: |
-                    /bin/bash ./.github/cancel-old-reviews.sh ${{ github.event.repository.default_branch }} ${{ secrets.ACTIONS_TOKEN }}
+                    /bin/bash ./.github/cancel-old-reviews.sh
