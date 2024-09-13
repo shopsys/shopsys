@@ -47,7 +47,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
             >
                 <MenuIconicItemLink className="rounded-t p-3 max-lg:hidden transition-all" href={customerUrl}>
                     <div className="relative">
-                        <UserIcon className="w-6 max-h-[22px]" isFull={false} />
+                        <UserIcon className="w-6 max-h-[22px]" />
                         <div className="w-[10px] h-[10px] absolute -right-1 -top-1 rounded-full bg-actionPrimaryBackground" />
                     </div>
                     {t('My account')}
@@ -61,7 +61,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                         }}
                     >
                         <div className="relative flex h-full w-full items-center justify-center text-textInverted transition-colors">
-                            <UserIcon className="w-6 text-textInverted max-h-[22px]" isFull={false} />
+                            <UserIcon className="w-6 text-textInverted max-h-[22px]" />
                             <div className="w-[10px] h-[10px] absolute -right-1 -top-1 rounded-full bg-actionPrimaryBackground" />
                         </div>
                     </div>
