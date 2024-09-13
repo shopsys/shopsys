@@ -904,6 +904,9 @@ msgstr "Vytvořeno administrátorem"
 msgid "Created on"
 msgstr "Vytvořeno dne"
 
+msgid "Creating a record requires all domains to be enabled as domain-specific fields cannot be empty. If you want to proceed, select all domains in the Domain filter in the header first."
+msgstr "Vytvoření záznamu vyžaduje, aby byly povoleny všechny domény, protože pole specifická pro doménu nemohou být prázdná. Pokud chcete pokračovat, nejprve vyberte všechny domény ve filtru domény v záhlaví."
+
 msgid "Creation date"
 msgstr "Datum vytvoření"
 

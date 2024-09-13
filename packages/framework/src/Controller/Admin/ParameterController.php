@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\ParameterFormType;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterNotFoundException;
@@ -20,11 +21,13 @@ class ParameterController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGridFactory $parameterGridFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactoryInterface $parameterDataFactory
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         protected readonly ParameterFacade $parameterFacade,
         protected readonly ParameterGridFactory $parameterGridFactory,
         protected readonly ParameterDataFactoryInterface $parameterDataFactory,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -53,6 +56,12 @@ class ParameterController extends AdminBaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if (!$this->domain->hasAdminAllDomainsEnabled()) {
+                $this->addErrorFlash(t('Creating a record requires all domains to be enabled as domain-specific fields cannot be empty. If you want to proceed, select all domains in the Domain filter in the header first.'));
+
+                return $this->redirectToRoute('admin_parameter_new');
+            }
+
             $parameter = $this->parameterFacade->create($parameterData);
 
             $this->addSuccessFlashTwig(
