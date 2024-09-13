@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\Country\CountryFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Country\CountryDataFactory;
@@ -20,12 +21,14 @@ class CountryController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryDataFactory $countryDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         protected readonly CountryGridFactory $countryGridFactory,
         protected readonly CountryDataFactory $countryDataFactory,
         protected readonly CountryFacade $countryFacade,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -96,6 +99,12 @@ class CountryController extends AdminBaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if (!$this->domain->hasAdminAllDomainsEnabled()) {
+                $this->addErrorFlash(t('Creating a record requires all domains to be enabled as domain-specific fields cannot be empty. If you want to proceed, select all domains in the Domain filter in the header first.'));
+
+                return $this->redirectToRoute('admin_country_new');
+            }
+
             $country = $this->countryFacade->create($countryData);
 
             $this

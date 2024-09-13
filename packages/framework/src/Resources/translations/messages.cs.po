@@ -904,6 +904,9 @@ msgstr "Vytvořeno administrátorem"
 msgid "Created on"
 msgstr "Vytvořeno dne"
 
+msgid "Creating a record requires all domains to be enabled as domain-specific fields cannot be empty. If you want to proceed, select all domains in the Domain filter in the header first."
+msgstr "Vytvoření záznamu vyžaduje, aby byly povoleny všechny domény, protože pole specifická pro doménu nemohou být prázdná. Pokud chcete pokračovat, nejprve vyberte všechny domény ve filtru domény v záhlaví."
+
 msgid "Creation date"
 msgstr "Datum vytvoření"
 
@@ -4296,3 +4299,4 @@ msgstr "{1} Byl vytvořen <strong>%count%</strong> slevový kupón|[2,4] Byly vy
 
 msgid "{1}Sales representative \"%label%\" is assigned to %count% customer and will be removed if you proceed.<br><br> Customer:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[2,10]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[11,Inf]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br> +%extraCount% more<br><br> Do you really want to remove sales representative \"%label%\" permanently?"
 msgstr "{1}Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkovi a bude odstraněn, pokud budete pokračovat.<br><br>Zákazník:<br>%customersEnumeration%<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?|[2,10]Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkům a bude odstraněn, pokud budete pokračovat.<br><br>Zákazníci:<br>%customersEnumeration%<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?|[11,14]Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkům a bude odstraněn, pokud budete pokračovat.<br><br>Zákazníci:<br>%customersEnumeration%<br>+%extraCount% další<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?|[15,Inf]Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkům a bude odstraněn, pokud budete pokračovat.<br><br>Zákazníci:<br>%customersEnumeration%<br>+%extraCount% dalších<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?"
+

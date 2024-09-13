@@ -63,6 +63,12 @@ class SeoPageController extends AdminBaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if (!$this->domain->hasAdminAllDomainsEnabled()) {
+                $this->addErrorFlash(t('Creating a record requires all domains to be enabled as domain-specific fields cannot be empty. If you want to proceed, select all domains in the Domain filter in the header first.'));
+
+                return $this->redirectToRoute('admin_seopage_new');
+            }
+
             $seoPage = $this->seoPageFacade->create($seoPageData);
 
             $this
