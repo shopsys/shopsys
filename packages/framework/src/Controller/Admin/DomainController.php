@@ -158,7 +158,7 @@ class DomainController extends AdminBaseController
     {
         $data = [];
 
-        foreach ($this->domain->getAll() as $domainConfig) {
+        foreach ($this->domain->getAdminEnabledDomains() as $domainConfig) {
             $data[] = [
                 'id' => $domainConfig->getId(),
                 'name' => $domainConfig->getName(),
