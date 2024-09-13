@@ -26,7 +26,7 @@
         "symfony/translation": "^5.4"
     },
     "require-dev": {
-        "shopsys/coding-standards": "dev-rc-14-0-1 as 14.0.1"
+        "shopsys/coding-standards": "14.0.1"
     },
     "config": {
         "allow-plugins": {

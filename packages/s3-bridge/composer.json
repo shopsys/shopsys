@@ -20,17 +20,17 @@
         "aws/aws-sdk-php": "^3.220.0",
         "league/flysystem": "^3.11",
         "league/flysystem-aws-s3-v3": "^3.12.2",
-        "shopsys/form-types-bundle": "dev-rc-14-0-1 as 14.0.1",
-        "shopsys/framework": "dev-rc-14-0-1 as 14.0.1",
-        "shopsys/migrations": "dev-rc-14-0-1 as 14.0.1",
-        "shopsys/plugin-interface": "dev-rc-14-0-1 as 14.0.1",
+        "shopsys/form-types-bundle": "14.0.1",
+        "shopsys/framework": "14.0.1",
+        "shopsys/migrations": "14.0.1",
+        "shopsys/plugin-interface": "14.0.1",
         "symfony/config": "^5.4",
         "symfony/dependency-injection": "^5.4",
         "symfony/http-kernel": "^5.4"
     },
     "require-dev": {
         "phpstan/phpstan": "^1.6.8",
-        "shopsys/coding-standards": "dev-rc-14-0-1 as 14.0.1"
+        "shopsys/coding-standards": "14.0.1"
     },
     "config": {
         "allow-plugins": {

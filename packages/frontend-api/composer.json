@@ -27,10 +27,10 @@
         "overblog/graphql-bundle": "1.3.2",
         "overblog/graphiql-bundle": "^0.3",
         "overblog/dataloader-bundle": "^0.6.0",
-        "shopsys/form-types-bundle": "dev-rc-14-0-1 as 14.0.1",
-        "shopsys/framework": "dev-rc-14-0-1 as 14.0.1",
-        "shopsys/migrations": "dev-rc-14-0-1 as 14.0.1",
-        "shopsys/plugin-interface": "dev-rc-14-0-1 as 14.0.1",
+        "shopsys/form-types-bundle": "14.0.1",
+        "shopsys/framework": "14.0.1",
+        "shopsys/migrations": "14.0.1",
+        "shopsys/plugin-interface": "14.0.1",
         "symfony/config": "^5.4",
         "symfony/dependency-injection": "^5.4",
         "symfony/http-foundation": "^5.4",
@@ -40,7 +40,7 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5.20",
-        "shopsys/coding-standards": "dev-rc-14-0-1 as 14.0.1"
+        "shopsys/coding-standards": "14.0.1"
     },
     "config": {
         "allow-plugins": {
