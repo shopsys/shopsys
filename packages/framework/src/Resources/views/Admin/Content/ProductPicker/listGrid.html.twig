@@ -20,7 +20,7 @@
             <span class="js-product-visibility-icon in-icon svg
                 {% if isVisibleForDefaultPricingGroupOnEachDomain(row.product) %}
                     svg-visible in-icon--visible
-                {% elseif value and not isVisibleForDefaultPricingGroupOnEachDomain(row.product) %}
+                {% elseif isVisibleForDefaultPricingGroupOnSomeDomain(row.product) %}
                     svg-visible in-icon--partially-visible
                 {% else %}
                     svg-invisible in-icon--invisible
