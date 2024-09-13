@@ -2059,6 +2059,9 @@ msgstr ""
 msgid "Items per page:"
 msgstr ""
 
+msgid "Keep empty if you do not want to limit the price by products' weight"
+msgstr ""
+
 msgid "Language"
 msgstr ""
 
@@ -2225,6 +2228,9 @@ msgid "Max duration (mm:ss)"
 msgstr ""
 
 msgid "Maximal duration from all runs in last seven days"
+msgstr ""
+
+msgid "Maximum weight of products in the cart to apply the price"
 msgstr ""
 
 msgid "Menu"
@@ -4007,9 +4013,6 @@ msgid "Wednesday"
 msgstr ""
 
 msgid "Weight (g)"
-msgstr ""
-
-msgid "Weight limit (optional)"
 msgstr ""
 
 msgid "When changing the default currency there is no recalculation of prices"

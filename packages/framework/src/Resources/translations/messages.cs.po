@@ -2059,6 +2059,9 @@ msgstr "Název položky"
 msgid "Items per page:"
 msgstr "Položek na stránku:"
 
+msgid "Keep empty if you do not want to limit the price by products' weight"
+msgstr "Pokud nechcete omezit cenu podle hmotnosti produktů, nechte pole prázdné."
+
 msgid "Language"
 msgstr "Jazyk"
 
@@ -2226,6 +2229,9 @@ msgstr "Max. trvání (mm:ss)"
 
 msgid "Maximal duration from all runs in last seven days"
 msgstr "Maximální trvání všech cronů za posledních sedm dní"
+
+msgid "Maximum weight of products in the cart to apply the price"
+msgstr "Maximální hmotnost produktů v košíku pro uplatnění ceny"
 
 msgid "Menu"
 msgstr "Menu"
@@ -4008,9 +4014,6 @@ msgstr "Středa"
 
 msgid "Weight (g)"
 msgstr "Hmotnost (g)"
-
-msgid "Weight limit (optional)"
-msgstr "Váhový limit (nepovinný)"
 
 msgid "When changing the default currency there is no recalculation of prices"
 msgstr "Při změně výchozí měny nedochází k žádnému přepočtu cen"

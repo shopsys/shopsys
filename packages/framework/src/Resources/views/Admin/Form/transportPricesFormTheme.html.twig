@@ -56,8 +56,15 @@
         <table class="table-form" id="transport-prices">
             <thead>
             <tr class="table-form__row">
-                <th class="table-form__cell table-form__cell--del-before table-form__cell--label">{{ 'Input price with VAT'|trans }}</th>
-                <th class="table-form__cell table-form__cell--del-before table-form__cell--label">{{ 'Weight limit (optional)'|trans }}</th>
+                <th class="table-form__cell table-form__cell--del-before table-form__cell--label">{{ inputPriceLabel() }}</th>
+                <th class="table-form__cell table-form__cell--del-before table-form__cell--label">
+                    {{ 'Maximum weight of products in the cart to apply the price'|trans }}
+                    <span title="{{ 'Keep empty if you do not want to limit the price by products\' weight'|trans }}"
+                          class="js-tooltip cursor-help in-icon in-icon--info" data-toggle="tooltip" data-placement="top"
+                    >
+                        {{ icon('info') }}
+                    </span>
+                </th>
                 <th class="table-form__cell table-form__cell--del-before table-form__cell--label">{{ 'Calculated price excluding VAT'|trans }}</th>
                 <th class="table-form__cell table-form__cell--del-before table-form__cell--label">{{ 'Calculated price including VAT'|trans }}</th>
                 <th class="table-form__cell table-form__cell--del-after"></th>
