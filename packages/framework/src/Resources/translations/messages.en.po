@@ -2275,6 +2275,9 @@ msgstr ""
 msgid "Navigation item <strong>{{ name }}</strong> has been removed"
 msgstr ""
 
+msgid "New"
+msgstr ""
+
 msgid "New SEO page"
 msgstr ""
 
@@ -3047,6 +3050,9 @@ msgid "Reset filter"
 msgstr ""
 
 msgid "Reset password request was sent to <strong>{{ email }}</strong>"
+msgstr ""
+
+msgid "Resolved"
 msgstr ""
 
 msgid "Return back"

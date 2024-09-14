@@ -2275,6 +2275,9 @@ msgstr "Byla upravena položka navigace <strong><a href=\"{{ url }}\">{{ name }}
 msgid "Navigation item <strong>{{ name }}</strong> has been removed"
 msgstr "Položka navigace <strong>{{ name }}</strong> byla odebrána"
 
+msgid "New"
+msgstr "Nová"
+
 msgid "New SEO page"
 msgstr "Nová SEO stránka"
 
@@ -3048,6 +3051,9 @@ msgstr "Zrušit filtr"
 
 msgid "Reset password request was sent to <strong>{{ email }}</strong>"
 msgstr "Žádost o resetování hesla byla odeslána na adresu <strong>{{ email }}</strong>"
+
+msgid "Resolved"
+msgstr "Vyřízena"
 
 msgid "Return back"
 msgstr "Vrátit zpět"
