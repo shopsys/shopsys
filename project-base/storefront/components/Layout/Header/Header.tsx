@@ -14,7 +14,7 @@ type HeaderProps = {
 
 export const Header: FC<HeaderProps> = ({ simpleHeader }) => {
     return (
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-3 py-3 lg:gap-x-7 lg:pb-5 lg:pt-6" tid={TIDs.header}>
+        <div className="flex flex-wrap items-center gap-y-3 pb-4 pt-3 lg:gap-x-7 lg:pb-1 lg:pt-6" tid={TIDs.header}>
             <Logo />
 
             {simpleHeader ? (
@@ -25,7 +25,7 @@ export const Header: FC<HeaderProps> = ({ simpleHeader }) => {
                         <DeferredAutocompleteSearch />
                     </div>
 
-                    <div className="order-2 flex">
+                    <div className="order-2 ml-auto flex">
                         <DeferredMenuIconic />
                     </div>
 

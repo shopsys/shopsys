@@ -1,7 +1,9 @@
 import { CartIcon } from 'components/Basic/Icon/CartIcon';
+import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 
 export const SkeletonModuleCartInHeader: FC = () => {
+    const { t } = useTranslation();
     return (
         <div className="order-3 flex vl:order-4">
             <div className="hidden h-11 min-w-[151px] cursor-pointer items-center gap-x-2 rounded-lg border border-actionPrimaryText px-3 text-actionPrimaryText no-underline transition-all hover:no-underline group-hover:shadow-lg lg:flex">
@@ -18,7 +20,7 @@ export const SkeletonModuleCartInHeader: FC = () => {
                     'active:border-actionPrimaryBorderActive active:bg-actionPrimaryBackgroundActive active:text-actionPrimaryTextActive',
                 )}
             >
-                <CartIcon className="w-6" />
+                <CartIcon className="size-6" />
             </div>
         </div>
     );

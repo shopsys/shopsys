@@ -36,7 +36,7 @@ export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({ children, h
 };
 
 const menuIconicItemLinkTwClass =
-    'flex flex-col items-center justify-center py-4 px-3 gap-2 rounded-tr-none text-sm text-linkInverted no-underline transition-colors hover:text-linkInvertedHovered hover:no-underline';
+    'w-10 sm:w-12 lg:w-auto flex flex-col items-center justify-center gap-1 rounded-tr-none text-[13px] leading-4 font-semibold text-linkInverted no-underline transition-colors hover:text-linkInvertedHovered hover:no-underline font-secondary';
 
 export const MenuIconicItemLink: FC<MenuIconicItemLinkProps> = forwardRef(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -52,28 +52,27 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                 onMouseLeave={() => isDesktop && setIsHovered(false)}
             >
                 <MenuIconicItemLink
-                    className="rounded-t p-3 transition-all max-lg:hidden"
+                    className="text-nowrap rounded-t transition-all max-lg:hidden"
                     href={customerUrl}
                     type="account"
                 >
                     <div className="relative">
-                        <UserIcon className="max-h-[22px] w-6" />
+                        <UserIcon className="size-6" />
                         <div className="absolute -right-1 -top-1 h-[10px] w-[10px] rounded-full bg-actionPrimaryBackground" />
                     </div>
                     {t('My account')}
                 </MenuIconicItemLink>
 
-                <div className="order-2 flex h-full w-12 cursor-pointer items-center justify-center text-lg outline-none lg:hidden">
+                <div className="order-2 flex cursor-pointer items-center justify-center text-lg outline-none lg:hidden">
                     <div
+                        className="relative flex items-center justify-center text-textInverted transition-colors"
                         onClick={() => {
                             setIsClicked(!isClicked);
                             setIsClicked(!isHovered);
                         }}
                     >
-                        <div className="relative flex h-full w-full items-center justify-center text-textInverted transition-colors">
-                            <UserIcon className="max-h-[22px] w-6 text-textInverted" />
-                            <div className="absolute -right-1 -top-1 h-[10px] w-[10px] rounded-full bg-actionPrimaryBackground" />
-                        </div>
+                        <UserIcon className="size-6 text-textInverted" />
+                        <div className="absolute -right-1 -top-1 h-[10px] w-[10px] rounded-full bg-actionPrimaryBackground" />
                     </div>
                 </div>
 
@@ -103,7 +102,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                                 type="orderList"
                             >
                                 <div className={userMenuItemIconTwClass}>
-                                    <SearchListIcon className="h-6 w-6" />
+                                    <SearchListIcon className="size-6" />
                                 </div>
                                 {t('My orders')}
                             </MenuIconicSubItemLink>
@@ -115,7 +114,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                                 type="complaintList"
                             >
                                 <div className={userMenuItemIconTwClass}>
-                                    <SearchListIcon className="h-6 w-6" />
+                                    <SearchListIcon className="size-6" />
                                 </div>
                                 {t('My complaints')}
                             </MenuIconicSubItemLink>
@@ -127,7 +126,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                                 type="editProfile"
                             >
                                 <div className={userMenuItemIconTwClass}>
-                                    <EditIcon className="h-6 w-6" />
+                                    <EditIcon className="size-6" />
                                 </div>
                                 {t('Edit profile')}
                             </MenuIconicSubItemLink>
@@ -145,7 +144,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                         <li className={userMenuItemTwClass}>
                             <MenuIconicSubItemLink tid={TIDs.header_logout} onClick={logout}>
                                 <div className={userMenuItemIconTwClass}>
-                                    <ExitIcon className="h-6 w-6" />
+                                    <ExitIcon className="size-6" />
                                 </div>
                                 {t('Logout')}
                             </MenuIconicSubItemLink>

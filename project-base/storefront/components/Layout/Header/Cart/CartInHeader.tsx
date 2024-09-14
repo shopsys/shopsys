@@ -68,7 +68,7 @@ export const CartInHeader: FC = ({ className }) => {
                 onMouseLeave={() => isDesktop && setIsHovered(false)}
             >
                 {isCartFetchingOrUnavailable && (
-                    <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded bg-backgroundMore py-2 opacity-50" />
+                    <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded-lg bg-backgroundMore py-2 opacity-50" />
                 )}
                 <ExtendedNextLink
                     href={cartUrl}

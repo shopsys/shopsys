@@ -9,7 +9,7 @@ export const Logo: FC = () => (
     <>
         <LogoMetadata />
         <ExtendedNextLink
-            className="flex-1 vl:flex-none order-2 lg:order-1"
+            className="flex-1 vl:flex-none order-2 lg:order-1 px-2 sm:px-3 lg:px-0"
             href="/"
             tid={TIDs.header_homepage_link}
             type="homepage"
