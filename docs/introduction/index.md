@@ -17,6 +17,7 @@
 -   [Cron](./cron.md)
 -   [Using Form Types](./using-form-types.md)
 -   [Friendly URL](./friendly-url.md)
+-   [Memory Cache](./memory-cache.md)
 -   [Front-end Breadcrumb Navigation](./front-end-breadcrumb-navigation.md)
 -   [Autocompletion for Phing Targets](./autocompletion-for-phing-targets.md)
 -   [Blackfire profiling](./blackfire-profiling.md)
