@@ -30,7 +30,7 @@ export const BlogPreview: FC<BlogPreviewProps> = ({ blogArticles, blogUrl, fetch
     return (
         <div className="py-10 vl:py-16 vl:pb-20">
             <div className="mb-5 flex flex-wrap items-baseline">
-                <h2 className="mr-8 mb-2 transform-none text-3xl font-bold leading-9">{t('Shopsys magazine')}</h2>
+                <h2 className="mr-8 mb-2 transform-none text-3xl font-bold leading-9">{t('Magazine')}</h2>
 
                 {!!blogUrl && (
                     <ExtendedNextLink

@@ -1,7 +1,9 @@
 import { ProductsSlider } from './ProductsSlider';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
 import { usePromotedProductsQuery } from 'graphql/requests/products/queries/PromotedProductsQuery.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
+import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useDeferredRender } from 'utils/useDeferredRender';
 
@@ -16,24 +18,36 @@ const ProductsSliderPlaceholder = dynamic(() =>
 );
 
 export const DeferredPromotedProducts: FC = () => {
+    const { t } = useTranslation();
     const [{ data: promotedProductsData, fetching: arePromotedProductsFetching }] = usePromotedProductsQuery();
     const shouldRender = useDeferredRender('promoted_products');
 
+    const weblineTwClasses = 'mb-6';
+
     if (arePromotedProductsFetching) {
-        return <SkeletonModulePromotedProducts />;
+        return (
+            <Webline className={weblineTwClasses}>
+                <SkeletonModulePromotedProducts />
+            </Webline>
+        );
     }
 
-    if (!promotedProductsData?.promotedProducts) {
+    if (!promotedProductsData?.promotedProducts.length) {
         return null;
     }
 
-    return shouldRender ? (
-        <ProductsSlider
-            gtmProductListName={GtmProductListNameType.homepage_promo_products}
-            products={promotedProductsData.promotedProducts}
-            tid={TIDs.blocks_product_slider_promoted_products}
-        />
-    ) : (
-        <ProductsSliderPlaceholder products={promotedProductsData.promotedProducts} />
+    return (
+        <Webline className={weblineTwClasses}>
+            <h2 className="mb-3">{t('Promoted products')}</h2>
+            {shouldRender ? (
+                <ProductsSlider
+                    gtmProductListName={GtmProductListNameType.homepage_promo_products}
+                    products={promotedProductsData.promotedProducts}
+                    tid={TIDs.blocks_product_slider_promoted_products}
+                />
+            ) : (
+                <ProductsSliderPlaceholder products={promotedProductsData.promotedProducts} />
+            )}
+        </Webline>
     );
 };
