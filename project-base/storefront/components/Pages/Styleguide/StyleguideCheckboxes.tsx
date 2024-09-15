@@ -5,6 +5,7 @@ import { useState } from 'react';
 export const StyleguideCheckboxes: FC = () => {
     const [isChecked, setIsChecked] = useState(false);
     const [isChecked2, setIsChecked2] = useState(false);
+    const [isChecked3, setIsChecked3] = useState(true);
 
     return (
         <StyleguideSection className="flex flex-col gap-3" title="Checkboxes">
@@ -30,6 +31,14 @@ export const StyleguideCheckboxes: FC = () => {
                 name="Disabled checkbox"
                 value={false}
                 onChange={() => null}
+            />
+            <Checkbox
+                disabled
+                id="checkboxDisabled"
+                label="Disabled checkbox"
+                name="Disabled checked checkbox"
+                value={isChecked3}
+                onChange={() => setIsChecked3((currentChecked) => !currentChecked)}
             />
         </StyleguideSection>
     );

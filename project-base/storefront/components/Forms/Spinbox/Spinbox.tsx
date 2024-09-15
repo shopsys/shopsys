@@ -1,3 +1,5 @@
+import { MinusIcon } from 'components/Basic/Icon/MinusIcon';
+import { PlusIcon } from 'components/Basic/Icon/PlusIcon';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
 import { FormEventHandler, forwardRef, useEffect, useRef, useState } from 'react';
@@ -102,12 +104,12 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     onMouseLeave={() => setIsHoldingDecrease(false)}
                     onMouseUp={() => setIsHoldingDecrease(false)}
                 >
-                    -
+                    <MinusIcon className="size-4" />
                 </SpinboxButton>
 
                 <input
                     aria-label={`${t('Quantity')} ${id}`}
-                    className="h-full min-w-0 flex-1 border-0 p-0 text-center text-base font-bold text-inputText outline-none"
+                    className="h-full min-w-0 flex-1 border-0 p-0 text-center text-lg font-bold text-inputText outline-none font-secondary"
                     defaultValue={defaultValue}
                     max={max}
                     min={min}
@@ -126,7 +128,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     onMouseLeave={() => setIsHoldingIncrease(false)}
                     onMouseUp={() => setIsHoldingIncrease(false)}
                 >
-                    +
+                    <PlusIcon className="size-4" />
                 </SpinboxButton>
             </>
         );
@@ -134,10 +136,10 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
         return (
             <div
                 className={twJoin(
-                    'inline-flex overflow-hidden rounded border-[3px] items-center',
+                    'inline-flex overflow-hidden rounded-md border-2 border-inputBorder items-center h-12',
                     'bg-inputBackground',
                     'border-inputBorder',
-                    size === 'small' ? 'w-20 [&>button]:translate-y-0 [&>button]:text-2xl' : 'h-12 w-32',
+                    size === 'small' ? 'w-20' : 'w-28',
                 )}
             >
                 {content}
@@ -160,7 +162,7 @@ type SpinboxButtonProps = {
 const SpinboxButton: FC<SpinboxButtonProps> = ({ children, disabled, ...props }) => (
     <button
         className={twMergeCustom([
-            'flex min-h-0 w-6 cursor-pointer items-center justify-center border-none bg-none p-0 text-2xl text-inputBorder hover:text-inputBorderHovered outline-none',
+            'flex min-h-0 px-2 cursor-pointer items-center justify-center border-none bg-none text-inputBorder hover:text-inputBorderHovered outline-none',
             disabled && 'pointer-events-none text-inputBorderDisabled',
         ])}
         {...props}

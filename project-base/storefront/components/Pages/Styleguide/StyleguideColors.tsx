@@ -1,14 +1,8 @@
 import { StyleguideSection } from './StyleguideElements';
-import React from 'react';
 import { twJoin } from 'tailwind-merge';
-import tailwindConfigRaw from 'tailwind.config.js';
-import resolveConfig from 'tailwindcss/resolveConfig';
 
-const fullConfig = resolveConfig(tailwindConfigRaw);
-
-const tailwindColors = fullConfig.theme.backgroundColor;
-
-export const StyleguideColors: FC = () => {
+type StyleguideColorsProps = { tailwindColors: Record<string, any> };
+export const StyleguideColors: FC<StyleguideColorsProps> = ({ tailwindColors }) => {
     return (
         <StyleguideSection
             className="grid items-stretch grid-cols-[repeat(auto-fit,minmax(100px,250px))] gap-1"

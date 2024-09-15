@@ -35,21 +35,21 @@ export const CustomerContent: FC = () => {
                 <ul className="mb-8 flex flex-col flex-wrap gap-4 md:flex-row">
                     <CustomerListItem>
                         <ExtendedNextLink href={customerOrdersUrl} type="orderList">
-                            <SearchListIcon className="mr-5 w-6 h-6" />
+                            <SearchListIcon className="mr-5 size-6" />
                             {t('My orders')}
                         </ExtendedNextLink>
                     </CustomerListItem>
 
                     <CustomerListItem>
                         <ExtendedNextLink href={customerComplaintsUrl} type="complaintList">
-                            <SearchListIcon className="mr-5 w-6 h-6" />
+                            <SearchListIcon className="mr-5 size-6" />
                             {t('My complaints')}
                         </ExtendedNextLink>
                     </CustomerListItem>
 
                     <CustomerListItem>
                         <ExtendedNextLink href={customerEditProfileUrl} type="editProfile">
-                            <EditIcon className="mr-5 w-6 h-6" />
+                            <EditIcon className="mr-5 size-6" />
                             {t('Edit profile')}
                         </ExtendedNextLink>
                     </CustomerListItem>
@@ -57,7 +57,7 @@ export const CustomerContent: FC = () => {
                     {canManageUsers && (
                         <CustomerListItem>
                             <ExtendedNextLink href={customerUsersUrl}>
-                                <UserIcon className="mr-5 w-6 h-6" />
+                                <UserIcon className="mr-5 size-6" />
                                 {t('Customer users')}
                             </ExtendedNextLink>
                         </CustomerListItem>
@@ -65,7 +65,7 @@ export const CustomerContent: FC = () => {
 
                     <CustomerListItem>
                         <a tid={TIDs.customer_page_logout} onClick={logout}>
-                            <ExitIcon className="mr-5 w-6 h-6" />
+                            <ExitIcon className="mr-5 size-6" />
                             {t('Logout')}
                         </a>
                     </CustomerListItem>

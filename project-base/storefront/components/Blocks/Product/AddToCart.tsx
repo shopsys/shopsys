@@ -23,6 +23,7 @@ type AddToCartProps = {
     gtmProductListName: GtmProductListNameType;
     listIndex: number;
     isWithSpinbox?: boolean;
+    buttonSize?: 'small' | 'medium' | 'large';
 };
 
 export const AddToCart: FC<AddToCartProps> = ({
@@ -34,6 +35,7 @@ export const AddToCart: FC<AddToCartProps> = ({
     listIndex,
     className,
     isWithSpinbox = true,
+    buttonSize = 'medium',
 }) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
     const { t } = useTranslation();
@@ -76,10 +78,9 @@ export const AddToCart: FC<AddToCartProps> = ({
                 />
             )}
             <Button
-                className="py-2"
                 isDisabled={isAddingToCart}
                 name="add-to-cart"
-                size="small"
+                size={buttonSize}
                 tid={TIDs.blocks_product_addtocart}
                 onClick={onAddToCartHandler}
             >

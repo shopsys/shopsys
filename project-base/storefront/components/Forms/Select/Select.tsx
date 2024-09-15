@@ -37,7 +37,7 @@ const Control = (props: any) => {
         >
             <components.Control
                 // class "peer" is used for styling in LabelWrapper
-                className="selectbox peer font-bold"
+                className="selectbox peer font-semibold"
                 {...props}
             />
         </LabelWrapper>

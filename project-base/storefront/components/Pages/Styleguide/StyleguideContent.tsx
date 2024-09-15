@@ -14,12 +14,12 @@ import { StyleguideTooltips } from './StyleguideTooltips';
 import { StyleguideTypography } from './StyleguideTypography';
 import { Webline } from 'components/Layout/Webline/Webline';
 
-type StyleguideContentProps = { iconList: string[] };
+type StyleguideContentProps = { iconList?: string[]; tailwindColors?: Record<string, any> };
 
-export const StyleguideContent: FC<StyleguideContentProps> = ({ iconList }) => {
+export const StyleguideContent: FC<StyleguideContentProps> = ({ iconList, tailwindColors }) => {
     return (
         <Webline className="mb-10 flex flex-col gap-10">
-            <StyleguideColors />
+            {tailwindColors && <StyleguideColors tailwindColors={tailwindColors} />}
             <StyleguideTypography />
             <StyleguideButtons />
             <StyleguidePopups />
@@ -31,7 +31,7 @@ export const StyleguideContent: FC<StyleguideContentProps> = ({ iconList }) => {
             <StyleguideCheckboxes />
             <StyleguideSpinboxes />
             <StyleguideTables />
-            <StyleguideIcons iconList={iconList} />
+            {iconList && <StyleguideIcons iconList={iconList} />}
             <StyleguideNotImplementedYet />
         </Webline>
     );

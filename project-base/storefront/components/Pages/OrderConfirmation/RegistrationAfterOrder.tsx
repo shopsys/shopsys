@@ -89,7 +89,7 @@ export const RegistrationAfterOrder: FC = () => {
     return (
         <div className="relative mb-20 flex flex-col rounded border-2 border-borderAccent lg:flex-row">
             <div className="w-full p-5 lg:w-1/2 lg:py-8 lg:px-10">
-                <div className="mb-5 text-4xl font-bold leading-10 [&>strong]:text-textAccent">
+                <div className="mb-5 text-4xl font-bold [&>strong]:text-textAccent">
                     <Trans
                         components={{ 0: <br />, 1: <strong /> }}
                         i18nKey="Finish registration to loyalty program."

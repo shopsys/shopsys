@@ -46,11 +46,9 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                                 key={parameter.uuid}
                                 className="bg-tableBackground odd:bg-tableBackgroundContrast border-none"
                             >
-                                <Cell className="py-2 text-left text-sm font-bold uppercase leading-5">
-                                    {parameter.name}
-                                </Cell>
+                                <Cell className="py-2 text-left text-sm font-bold uppercase">{parameter.name}</Cell>
 
-                                <Cell className="py-2 text-right text-sm leading-5">
+                                <Cell className="py-2 text-right text-sm">
                                     {parameter.values.map((value, index) =>
                                         formatParameterValue(
                                             value.text + (parameter.unit?.name ? ` (${parameter.unit.name})` : ''),

@@ -8,8 +8,8 @@ type NativeButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'disabled
 export type ButtonBaseProps = {
     isDisabled?: boolean;
     isWithDisabledLook?: boolean;
-    size?: 'small' | 'medium';
-    variant?: 'primary' | 'inverted';
+    size?: 'small' | 'medium' | 'large';
+    variant?: 'primary' | 'secondary' | 'inverted';
 };
 
 export type ButtonProps = ButtonBaseProps & NativeButtonProps;
@@ -50,25 +50,39 @@ export const getButtonClassName = (
     isWithDisabledLook: ButtonBaseProps['isWithDisabledLook'],
 ) => {
     return twJoin(
-        'inline-flex w-auto h-fit cursor-pointer items-center justify-center gap-2 rounded-lg text-center font-bold outline-none transition-all hover:no-underline border-2',
-        size === 'small' && 'py-1 px-4 text-sm',
-        size === 'medium' && 'py-3 px-8',
+        'inline-flex w-auto h-fit cursor-pointer items-center justify-center gap-2 rounded-md text-center font-bold font-secondary outline-none transition-all hover:no-underline',
+        'outline-2 outline-offset-[-2px]',
+        size === 'small' && 'px-4 py-2 text-xs leading-3',
+        size === 'medium' && 'px-4 py-2 text-sm leading-5',
+        size === 'large' && 'px-8 py-4 text-lg leading-4',
         variant === 'primary' && [
-            'border-actionPrimaryBorder bg-actionPrimaryBackground text-actionPrimaryText',
-            'hover:border-actionPrimaryBorderHovered hover:bg-actionPrimaryBackgroundHovered hover:text-actionPrimaryTextHovered',
-            'active:border-actionPrimaryBorderActive active:bg-actionPrimaryBackgroundActive active:text-actionPrimaryTextActive',
+            'outline-actionPrimaryBorder bg-actionPrimaryBackground text-actionPrimaryText',
+            !isDisabled &&
+                'hover:outline-actionPrimaryBorderHovered hover:bg-actionPrimaryBackgroundHovered hover:text-actionPrimaryTextHovered',
+            !isDisabled &&
+                'active:outline-actionPrimaryBorderActive active:bg-actionPrimaryBackgroundActive active:text-actionPrimaryTextActive',
             isDisabled &&
-                'border-actionPrimaryBorderDisabled bg-actionPrimaryBackgroundDisabled text-actionPrimaryTextDisabled',
+                'outline-actionPrimaryBorderDisabled bg-actionPrimaryBackgroundDisabled text-actionPrimaryTextDisabled',
+        ],
+        variant === 'secondary' && [
+            'outline-actionSecondaryBorder bg-actionSecondaryBackground text-actionSecondaryText',
+            !isDisabled &&
+                'hover:outline-actionSecondaryBorderHovered hover:bg-actionSecondaryBackgroundHovered hover:text-actionSecondaryTextHovered',
+            !isDisabled &&
+                'active:outline-actionSecondaryBorderActive active:bg-actionSecondaryBackgroundActive active:text-actionSecondaryTextActive',
+            isDisabled &&
+                'outline-actionSecondaryBorderDisabled bg-actionSecondaryBackgroundDisabled text-actionSecondaryTextDisabled',
         ],
         variant === 'inverted' && [
-            'border-actionInvertedBorder bg-actionInvertedBackground text-actionInvertedText',
-            'hover:border-actionInvertedBorderHovered hover:bg-actionInvertedBackgroundHovered hover:text-actionInvertedTextHovered',
-            'active:border-actionInvertedBorderActive active:bg-actionInvertedBackgroundActive active:text-actionInvertedTextActive',
+            'outline-actionInvertedBorder bg-actionInvertedBackground text-actionInvertedText',
+            !isDisabled &&
+                'hover:outline-actionInvertedBorderHovered hover:bg-actionInvertedBackgroundHovered hover:text-actionInvertedTextHovered',
+            !isDisabled &&
+                'active:outline-actionInvertedBorderActive active:bg-actionInvertedBackgroundActive active:text-actionInvertedTextActive',
             isDisabled &&
-                'border-actionInvertedBorderDisabled bg-actionInvertedBackgroundDisabled text-actionInvertedTextDisabled',
+                'outline-actionInvertedBorderDisabled bg-actionInvertedBackgroundDisabled text-actionInvertedTextDisabled',
         ],
         (isDisabled || isWithDisabledLook) && 'cursor-no-drop',
-        isDisabled && 'pointer-events-none',
     );
 };
 
