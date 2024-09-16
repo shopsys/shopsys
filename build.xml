@@ -243,6 +243,12 @@
         <exec executable="${path.bin}/phpunit" logoutput="true" passthru="true" checkreturn="true">
             <arg value="--colors=always"/>
             <arg value="--configuration"/>
+            <arg value="${path.packages}/convertim/phpunit.xml"/>
+            <arg value="${path.packages}/convertim/tests"/>
+        </exec>
+        <exec executable="${path.bin}/phpunit" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="--colors=always"/>
+            <arg value="--configuration"/>
             <arg value="${path.packages}/product-feed-google/phpunit.xml"/>
             <arg value="${path.packages}/product-feed-google/tests"/>
         </exec>
@@ -373,6 +379,15 @@
             <arg value="--dir=${path.packages}/category-feed-luigis-box/src"/>
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.packages}/category-feed-luigis-box/src/Resources/translations"/>
+            <arg line="${domains-info.locales}"/>
+        </exec>
+        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
+            <arg value="${path.bin-console}"/>
+            <arg value="jms:translation:extract"/>
+            <arg value="--bundle=ShopsysConvertimBundle"/>
+            <arg value="--dir=${path.packages}/convertim/src"/>
+            <arg value="--output-format=po"/>
+            <arg value="--output-dir=${path.packages}/convertim/src/Resources/translations"/>
             <arg line="${domains-info.locales}"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">

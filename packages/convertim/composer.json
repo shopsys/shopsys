@@ -1,0 +1,58 @@
+{
+    "name": "shopsys/convertim",
+    "type": "library",
+    "description": "A Symfony bundle to integrate Convertim into Shopsys Platform.",
+    "keywords": ["Shopsys Platform", "SSFW", "convertim", "checkout", "integration"],
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Shopsys",
+            "homepage": "https://www.shopsys.com/"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Shopsys\\ConvertimBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\ConvertimBundle\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^8.3",
+        "shopsys/form-types-bundle": "15.0.x-dev",
+        "shopsys/framework": "15.0.x-dev",
+        "shopsys/migrations": "15.0.x-dev",
+        "shopsys/plugin-interface": "15.0.x-dev",
+        "symfony/config": "^5.4",
+        "symfony/dependency-injection": "^5.4",
+        "symfony/form": "^5.4",
+        "symfony/http-foundation": "^5.4",
+        "symfony/http-kernel": "^5.4",
+        "symfony/routing": "^5.4",
+        "symfony/translation": "^5.4",
+        "twig/twig": "^3.5.0"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.11.7",
+        "phpstan/phpstan-doctrine": "^1.4.8.",
+        "phpstan/phpstan-phpunit": "^1.4.0",
+        "phpstan/phpstan-symfony": "^1.4.6",
+        "phpunit/phpunit": "^9.5.20",
+        "shopsys/coding-standards": "15.0.x-dev"
+    },
+    "extra": {
+        "symfony": {
+            "require": "^5.4",
+            "docker": false
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/flex": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

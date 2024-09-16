@@ -13,7 +13,7 @@ There is a list of all the repositories maintained by the monorepo:
 -   [shopsys/migrations](https://github.com/shopsys/migrations)
 -   [shopsys/monorepo-tools](https://github.com/shopsys/monorepo-tools)
 -   [shopsys/plugin-interface](https://github.com/shopsys/plugin-interface)
--   [shopsys/brand-feed-luigis-box](https://github.com/shopsys/category-feed-luigis-box)
+-   [shopsys/brand-feed-luigis-box](https://github.com/shopsys/brand-feed-luigis-box)
 -   [shopsys/category-feed-luigis-box](https://github.com/shopsys/category-feed-luigis-box)
 -   [shopsys/product-feed-google](https://github.com/shopsys/product-feed-google)
 -   [shopsys/product-feed-heureka](https://github.com/shopsys/product-feed-heureka)
@@ -27,6 +27,7 @@ There is a list of all the repositories maintained by the monorepo:
 -   [shopsys/php-image](https://github.com/shopsys/php-image)
 -   [shopsys/luigis-box](https://github.com/shopsys/luigis-box)
 -   [shopsys/administration](https://github.com/shopsys/administration)
+-   [shopsys/convertim](https://github.com/shopsys/convertim)
 
 Packages are formatted by release version.
 You can see all the changes done to the package that you carry about with this tree.
