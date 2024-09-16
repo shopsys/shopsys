@@ -34,19 +34,22 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
     return (
         <div className="flex w-full flex-row items-center gap-5">
             <div
-                className={twJoin('flex w-12  h-12 items-center', !image && 'hidden')}
+                className={twJoin('flex h-12  w-12 items-center', !image && 'hidden')}
                 tid={TIDs.transport_and_payment_list_item_image}
             >
-                <Image alt={image?.name ?? name} className="w-auto max-h-12" height={48} src={image?.url} width={48} />
+                <Image alt={image?.name ?? name} className="max-h-12 w-auto" height={48} src={image?.url} width={48} />
             </div>
 
             <div className="flex flex-1 flex-col lg:flex-auto lg:basis-full lg:flex-row lg:items-center lg:gap-3">
                 <div>
-                    <div className={twJoin(isSelected && 'font-bold')} tid={TIDs.pages_order_selectitem_label_name}>
+                    <div
+                        className={twJoin(isSelected && 'font-bold', pickupPlaceDetail && 'lg:w-32')}
+                        tid={TIDs.pages_order_selectitem_label_name}
+                    >
                         {name}
                     </div>
 
-                    {description && <div className="text-textDisabled text-sm">{description}</div>}
+                    {description && <div className="text-sm text-textDisabled">{description}</div>}
                 </div>
 
                 {pickupPlaceDetail && (
