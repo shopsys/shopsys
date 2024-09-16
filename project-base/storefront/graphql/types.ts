@@ -3023,6 +3023,8 @@ export type TypeStore = TypeBreadcrumb & TypeSlug & {
   latitude: Maybe<Scalars['String']['output']>;
   /** Store location longitude */
   longitude: Maybe<Scalars['String']['output']>;
+  /** Transport image by params */
+  mainImage: Maybe<TypeImage>;
   /** Store name */
   name: Scalars['String']['output'];
   /** Store opening hours */
@@ -3040,6 +3042,11 @@ export type TypeStore = TypeBreadcrumb & TypeSlug & {
 
 
 export type TypeStoreImagesArgs = {
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type TypeStoreMainImageArgs = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 

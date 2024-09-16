@@ -2320,6 +2320,8 @@ type Store implements Breadcrumb & Slug {
   latitude: String
   "Store location longitude"
   longitude: String
+  "Transport image by params"
+  mainImage(type: String = null): Image
   "Store name"
   name: String!
   "Store opening hours"

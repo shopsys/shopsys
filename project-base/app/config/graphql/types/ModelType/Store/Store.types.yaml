@@ -59,3 +59,11 @@ Store:
                     type:
                         type: "String"
                         defaultValue: null
+            mainImage:
+                type: "Image"
+                description: "Transport image by params"
+                resolve: '@=query("mainImageByEntityPromiseQuery", value, args["type"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
