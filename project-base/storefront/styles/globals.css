@@ -161,9 +161,13 @@ input[type='number'] {
 
 .Toastify {
     --toastify-toast-min-height: 48px;
-    --toastify-toast-width: 700px;
     --toastify-font-family: sans-serif;
     --toastify-z-index: 10100;
+    --toastify-toast-width: 480px;
+
+    @screen lg {
+        --toastify-toast-width: 700px;
+    }
 }
 
 .Toastify__toast {
