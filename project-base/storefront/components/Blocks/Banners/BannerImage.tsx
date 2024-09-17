@@ -1,4 +1,4 @@
-import NextImage from 'next/image';
+import { Image } from 'components/Basic/Image/Image';
 
 type BannerImageProps = {
     mobileSrc: string;
@@ -9,24 +9,24 @@ type BannerImageProps = {
 };
 
 export const BannerImage: FC<BannerImageProps> = ({ mobileSrc, desktopSrc, mobileAlt, desktopAlt, isFirst }) => (
-    <div className="relative h-[283px] w-full">
-        <NextImage
+    <div className="relative h-[250px] w-full md:h-[345px] vl:h-[425px]">
+        <Image
+            fill
             alt={desktopAlt}
             className="hidden h-full w-full object-cover vl:block"
-            layout="fill"
             loader={({ src }) => `${src}?width=936`}
-            objectFit="cover"
             priority={isFirst}
+            sizes="(max-width: 1023px) 100vw, 1400px"
             src={desktopSrc}
             onDragStart={(e) => e.preventDefault()}
         />
-        <NextImage
+        <Image
+            fill
             alt={mobileAlt}
-            className="block h-full w-full object-cover vl:hidden "
-            layout="fill"
+            className="block h-full w-full object-cover vl:hidden"
             loader={({ src }) => `${src}?width=991`}
-            objectFit="cover"
             priority={isFirst}
+            sizes="(max-width: 1023px) 100vw, 50vw"
             src={mobileSrc}
             onDragStart={(e) => e.preventDefault()}
         />

@@ -10,7 +10,7 @@ type CarouselAction =
     | { type: 'STOP_SLIDING' };
 
 export const getBannerOrderCSSProperty = (index: number, pos: number, numItems: number) => {
-    return `order-${(index - pos + numItems + 1) % numItems}`;
+    return (index - pos + numItems + 1) % numItems;
 };
 
 export const bannersReducer = (state: CarouselState, action: CarouselAction): CarouselState => {

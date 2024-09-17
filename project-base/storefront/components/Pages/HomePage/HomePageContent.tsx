@@ -33,8 +33,8 @@ export const HomePageContent: FC = () => {
                     <DeferredRecommendedProducts
                         recommendationType={TypeRecommendationType.Personalized}
                         render={(recommendedProductsContent) => (
-                            <Webline className="mb-6">
-                                <h2 className="mb-3">{t('Recommended for you')}</h2> {recommendedProductsContent}
+                            <Webline className="mb-10">
+                                <h3 className="mb-4">{t('Recommended for you')}</h3> {recommendedProductsContent}
                             </Webline>
                         )}
                     />

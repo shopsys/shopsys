@@ -140,8 +140,10 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
                     products={products}
                     swipeHandlers={handlers}
                     className={twMergeCustom([
-                        "grid snap-x snap-mandatory grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] [&::-webkit-scrollbar]:hidden",
-                        twClass(visibleSliderItems),
+                        "grid snap-x snap-mandatory auto-cols-[80%] grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] md:auto-cols-[45%] [&::-webkit-scrollbar]:hidden",
+                        isBlogPage
+                            ? 'lg:auto-cols-[45%] xl:auto-cols-[33.3%]'
+                            : 'lg:auto-cols-[30%] vl:auto-cols-[25%]',
                         wrapperClassName,
                     ])}
                     productItemProps={{

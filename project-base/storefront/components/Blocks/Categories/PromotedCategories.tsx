@@ -1,4 +1,4 @@
-import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
+import { PromotedCategoriesContent } from './PromotedCategoriesContent';
 import { SkeletonModulePromotedCategories } from 'components/Blocks/Skeleton/SkeletonModulePromotedCategories';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { usePromotedCategoriesQuery } from 'graphql/requests/categories/queries/PromotedCategoriesQuery.generated';
@@ -8,7 +8,7 @@ export const PromotedCategories: FC = () => {
     const { t } = useTranslation();
     const [{ data: promotedCategoriesData, fetching: arePromotedCategoriesFetching }] = usePromotedCategoriesQuery();
 
-    const weblineTwClasses = 'mb-6';
+    const weblineTwClasses = 'mb-10';
 
     if (arePromotedCategoriesFetching) {
         return (
@@ -24,8 +24,8 @@ export const PromotedCategories: FC = () => {
 
     return (
         <Webline className={weblineTwClasses}>
-            <h2 className="mb-3">{t('Promoted categories')}</h2>
-            <SimpleNavigation listedItems={promotedCategoriesData.promotedCategories} />
+            <h3 className="mb-4">{t('Shop by category')}</h3>
+            <PromotedCategoriesContent promotedCategoriesData={promotedCategoriesData} />
         </Webline>
     );
 };

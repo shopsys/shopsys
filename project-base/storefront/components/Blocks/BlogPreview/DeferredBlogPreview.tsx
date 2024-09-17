@@ -3,6 +3,7 @@ import { BLOG_PREVIEW_VARIABLES } from 'config/constants';
 import { useBlogArticlesQuery } from 'graphql/requests/articlesInterface/blogArticles/queries/BlogArticlesQuery.generated';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import dynamic from 'next/dynamic';
+import { twJoin } from 'tailwind-merge';
 import { useDeferredRender } from 'utils/useDeferredRender';
 
 const BlogPreview = dynamic(() => import('./BlogPreview').then((component) => component.BlogPreview), {
@@ -26,17 +27,25 @@ export const DeferredBlogPreview: FC = () => {
         return null;
     }
 
+    const bgImage = blogPreviewData.blogArticles.edges[0]?.node?.mainImage?.url;
+    const bgImageTwClass = twJoin(
+        'xl:rounded-xl py-16 bg-cover bg-center',
+        "after:content-[''] after:block after:absolute after:inset-0 after:bg-backgroundDark after:bg-opacity-80 after:xl:rounded-xl",
+    );
+
     return (
-        <Webline>
-            {shouldRender ? (
-                <BlogPreview
-                    blogArticles={blogPreviewData.blogArticles.edges}
-                    blogUrl={blogUrl}
-                    fetchingArticles={areBlogArticlesFetching}
-                />
-            ) : (
-                <BlogPreviewPlaceholder blogArticles={blogPreviewData.blogArticles.edges} blogUrl={blogUrl} />
-            )}
+        <Webline className="xl:max-w-[1400px] relative px-0">
+            <div className={bgImageTwClass} style={{ backgroundImage: `url(${bgImage})` }}>
+                {shouldRender ? (
+                    <BlogPreview
+                        blogArticles={blogPreviewData.blogArticles.edges}
+                        blogUrl={blogUrl}
+                        fetchingArticles={areBlogArticlesFetching}
+                    />
+                ) : (
+                    <BlogPreviewPlaceholder blogArticles={blogPreviewData.blogArticles.edges} blogUrl={blogUrl} />
+                )}
+            </div>
         </Webline>
     );
 };
