@@ -34,7 +34,7 @@ final class ForceYourBranchSplitReleaseWorker extends AbstractShopsysReleaseWork
             'Push your branch and force split it on GitHub Actions',
             'https://github.com/shopsys/shopsys/actions/workflows/monorepo-force-split-branch.yaml',
         ]);
-        $this->symfonyStyle->note('Do not worry, it is quite common that some builds fail on Github Actions at this point.');
+
         $this->confirm('Continue after the branch is split');
     }
 

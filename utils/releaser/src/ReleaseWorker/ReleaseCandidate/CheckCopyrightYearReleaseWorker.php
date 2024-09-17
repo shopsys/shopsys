@@ -6,9 +6,10 @@ namespace Shopsys\Releaser\ReleaseWorker\ReleaseCandidate;
 
 use PharIo\Version\Version;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
+use Shopsys\Releaser\ReleaseWorker\Message;
 use Shopsys\Releaser\Stage;
 
-final class CheckProjectBaseBuild extends AbstractShopsysReleaseWorker
+final class CheckCopyrightYearReleaseWorker extends AbstractShopsysReleaseWorker
 {
     /**
      * @param \PharIo\Version\Version $version
@@ -19,7 +20,7 @@ final class CheckProjectBaseBuild extends AbstractShopsysReleaseWorker
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): string {
-        return '[Manually] Check project-base build on GitHub Actions';
+        return 'Check that the year in the LICENSE and other files is set correctly to the current year';
     }
 
     /**
@@ -30,12 +31,9 @@ final class CheckProjectBaseBuild extends AbstractShopsysReleaseWorker
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): void {
-        $this->symfonyStyle->note([
-            'check project-base build on GitHub Actions',
-            '  https://github.com/shopsys/project-base/actions/workflows/run-checks-tests.yaml',
-        ]);
+        $this->symfonyStyle->confirm('Confirm that the year in the LICENSE and other files is set correctly to the current year');
 
-        $this->confirm('Confirm the build is ok');
+        $this->symfonyStyle->success(Message::SUCCESS);
     }
 
     /**

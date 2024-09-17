@@ -73,6 +73,8 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
             $this->processRunner->run('git config --global credential.helper "cache --timeout=3600"');
         }
 
+        $this->processRunner->run('git checkout ' . $initialBranchName);
+
         $this->symfonyStyle->note(
             'You will be asked for your Github credentials if you have not saved them yet.
             As we require two factor authentication, you will need to provide repo scope token instead of password.
@@ -127,9 +129,12 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
 
             $this->processRunner->run('rm -r ' . $tempDirectory);
             $this->symfonyStyle->note(
-                'Wait for packagist to get new versions of all packages excluding monorepo and project-base',
+                'Wait 10 seconds for packagist to get new versions of all packages excluding monorepo and project-base',
             );
-            $this->confirm('Confirm that there are new versions of all packages excluding monorepo and project-base');
+
+            sleep(10);
+
+            $this->checkAllPackagesHaveTag($packageNames, $versionString);
         } else {
             $packageNamesWithProblemsMessage = sprintf(
                 'package%s %s',
@@ -148,10 +153,58 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
     }
 
     /**
+     * @param string $packageName
+     * @param string $versionString
+     * @return bool
+     */
+    private function checkPackageTagExists(string $packageName, string $versionString): bool
+    {
+        $url = sprintf(
+            'https://github.com/shopsys/%s/releases/tag/%s',
+            $packageName,
+            $versionString,
+        );
+
+        $headers = get_headers($url, true);
+
+        return $headers[0] === 'HTTP/1.1 200 OK';
+    }
+
+    /**
      * @return string
      */
     public function getStage(): string
     {
         return Stage::RELEASE;
+    }
+
+    /**
+     * @param string[] $packageNames
+     * @param string $versionString
+     */
+    private function checkAllPackagesHaveTag(array $packageNames, string $versionString): void
+    {
+        $allPackagesHaveTag = true;
+
+        foreach ($packageNames as $packageName) {
+            $packageExists = $this->checkPackageTagExists($packageName, $versionString);
+
+            if ($packageExists) {
+                $this->symfonyStyle->note(sprintf('Package %s has tag %s released on GitHub.', $packageName, $versionString));
+            } else {
+                $this->symfonyStyle->error(sprintf('Tag %s has not been found for package %s on GitHub.', $versionString, $packageName));
+                $allPackagesHaveTag = false;
+            }
+        }
+
+        if ($allPackagesHaveTag) {
+            return;
+        }
+
+        $runChecksAgain = $this->symfonyStyle->ask('Run the checks again?', 'yes');
+
+        if ($runChecksAgain) {
+            $this->checkAllPackagesHaveTag($packageNames, $versionString);
+        }
     }
 }

@@ -45,11 +45,8 @@ final class CheckShopsysInstallReleaseWorker extends AbstractCheckShopsysInstall
 
 git clone https://github.com/shopsys/project-base.git
 git checkout %1$s
-
-# in composer.json, change a version of all shopsys/* packages from "%2$s" to "dev-%1$s as %2$s"
 ',
             $branchName,
-            $version->getVersionString(),
         ));
     }
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\Releaser\ReleaseWorker\ReleaseCandidate;
+namespace Shopsys\Releaser\ReleaseWorker\Release;
 
 use PharIo\Version\Version;
 use Shopsys\Releaser\ReleaseWorker\AbstractSetMutualDependenciesToVersionReleaseWorker;
@@ -16,7 +16,7 @@ final class SetMutualDependenciesToVersionReleaseWorker extends AbstractSetMutua
      */
     protected function getVersionString(Version $version): string
     {
-        return 'dev-' . $this->currentBranchName . ' as ' . $version->getVersionString();
+        return $version->getVersionString();
     }
 
     /**
@@ -24,6 +24,6 @@ final class SetMutualDependenciesToVersionReleaseWorker extends AbstractSetMutua
      */
     public function getStage(): string
     {
-        return Stage::RELEASE_CANDIDATE;
+        return Stage::RELEASE;
     }
 }
