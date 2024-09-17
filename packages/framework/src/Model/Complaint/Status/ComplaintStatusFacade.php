@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Complaint\Status;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMail;
+use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade;
 
 class ComplaintStatusFacade
 {
@@ -12,11 +14,13 @@ class ComplaintStatusFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFactory $complaintStatusFactory
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusRepository $complaintStatusRepository
+     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ComplaintStatusFactory $complaintStatusFactory,
         protected readonly ComplaintStatusRepository $complaintStatusRepository,
+        protected readonly MailTemplateFacade $mailTemplateFacade,
     ) {
     }
 
@@ -32,6 +36,12 @@ class ComplaintStatusFacade
         );
         $this->em->persist($complaintStatus);
         $this->em->flush();
+
+        $this->mailTemplateFacade->createMailTemplateForAllDomains(
+            ComplaintMail::getMailTemplateNameByStatus($complaintStatus),
+            null,
+            $complaintStatus,
+        );
 
         return $complaintStatus;
     }

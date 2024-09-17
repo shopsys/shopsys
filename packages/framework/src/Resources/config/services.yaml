@@ -654,6 +654,8 @@ services:
     Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFactory
 
+    Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMail: ~
+
     Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsDataFactory
 

@@ -74,6 +74,13 @@ class MailTemplate
     protected $orderStatus;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus|null
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus")
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
+     */
+    protected $complaintStatus;
+
+    /**
      * @param string $name
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateData $mailTemplateData
@@ -95,6 +102,7 @@ class MailTemplate
         $this->body = $mailTemplateData->body;
         $this->sendMail = $mailTemplateData->sendMail;
         $this->orderStatus = $mailTemplateData->orderStatus;
+        $this->complaintStatus = $mailTemplateData->complaintStatus;
     }
 
     /**
@@ -159,6 +167,14 @@ class MailTemplate
     public function getOrderStatus()
     {
         return $this->orderStatus;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus|null
+     */
+    public function getComplaintStatus()
+    {
+        return $this->complaintStatus;
     }
 
     /**

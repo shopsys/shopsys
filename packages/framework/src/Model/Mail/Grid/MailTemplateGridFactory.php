@@ -39,6 +39,7 @@ class MailTemplateGridFactory implements GridFactoryInterface
         $grid->addColumn('name', 'mt.name', t('Name'), true);
         $grid->addColumn('subject', 'mt.subject', t('Subject'), true);
         $grid->addColumn('orderStatus', 'orderStatusName', t('Order status'), true);
+        $grid->addColumn('complaintStatus', 'complaintStatusName', t('Complaint status'), true);
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_mail_edit', ['id' => 'mt.id']);

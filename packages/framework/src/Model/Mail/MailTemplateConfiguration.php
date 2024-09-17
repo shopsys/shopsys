@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Mail;
 
 use Shopsys\FrameworkBundle\Model\Administrator\Mail\TwoFactorAuthenticationMail;
+use Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMail;
+use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerActivationMail;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\RegistrationMail;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMail;
@@ -18,6 +20,11 @@ use Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataExportMail;
 class MailTemplateConfiguration
 {
     public const TYPE_ORDER_STATUS = 'order-status';
+    public const TYPE_COMPLAINT_STATUS = 'complaint-status';
+    public const TYPES_WITH_SEND_MAIL_SETTING = [
+        self::TYPE_ORDER_STATUS,
+        self::TYPE_COMPLAINT_STATUS,
+    ];
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables[]
@@ -26,11 +33,15 @@ class MailTemplateConfiguration
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade $complaintStatusFacade
      */
-    public function __construct(protected readonly OrderStatusFacade $orderStatusFacade)
-    {
+    public function __construct(
+        protected readonly OrderStatusFacade $orderStatusFacade,
+        protected readonly ComplaintStatusFacade $complaintStatusFacade,
+    ) {
         $this->registerStaticMailTemplates();
         $this->registerOrderStatusMailTemplates();
+        $this->registerComplaintStatusMailTemplates();
         $this->registerTwoFactorAuthenticationCodeMailTemplate();
         $this->registerCustomerActivationMailTemplate();
     }
@@ -138,6 +149,20 @@ class MailTemplateConfiguration
             );
     }
 
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables
+     */
+    protected function createComplaintStatusMailTemplateVariables(): MailTemplateVariables
+    {
+        $mailTemplateVariables = new MailTemplateVariables('', self::TYPE_COMPLAINT_STATUS);
+
+        return $mailTemplateVariables
+            ->addVariable(ComplaintMail::VARIABLE_COMPLAINT_NUMBER, t('Complaint number'))
+            ->addVariable(ComplaintMail::VARIABLE_ORDER_NUMBER, t('Order number'))
+            ->addVariable(ComplaintMail::VARIABLE_DATE, t('Date and time of order creation'))
+            ->addVariable(ComplaintMail::VARIABLE_URL, t('E-shop URL address'), MailTemplateVariables::CONTEXT_BODY);
+    }
+
     protected function registerOrderStatusMailTemplates(): void
     {
         $mailTemplateVariables = $this->createOrderStatusMailTemplateVariables();
@@ -147,7 +172,21 @@ class MailTemplateConfiguration
         foreach ($allOrderStatuses as $orderStatus) {
             $this->addMailTemplateVariables(
                 OrderMail::getMailTemplateNameByStatus($orderStatus),
-                $mailTemplateVariables->withNewName($orderStatus->getName()),
+                $mailTemplateVariables->withNewName(t('Order') . ' - ' . $orderStatus->getName()),
+            );
+        }
+    }
+
+    protected function registerComplaintStatusMailTemplates(): void
+    {
+        $mailTemplateVariables = $this->createComplaintStatusMailTemplateVariables();
+
+        $allComplaintStatuses = $this->complaintStatusFacade->getAll();
+
+        foreach ($allComplaintStatuses as $complaintStatus) {
+            $this->addMailTemplateVariables(
+                ComplaintMail::getMailTemplateNameByStatus($complaintStatus),
+                $mailTemplateVariables->withNewName(t('Complaint') . ' - ' . $complaintStatus->getName()),
             );
         }
     }

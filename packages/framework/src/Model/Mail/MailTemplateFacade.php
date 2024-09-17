@@ -8,6 +8,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
+use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 
 class MailTemplateFacade
 {
@@ -78,11 +80,18 @@ class MailTemplateFacade
 
     /**
      * @param string $name
+     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus|null $orderStatus
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus|null $complaintStatus
      */
-    public function createMailTemplateForAllDomains($name)
-    {
+    public function createMailTemplateForAllDomains(
+        string $name,
+        ?OrderStatus $orderStatus = null,
+        ?ComplaintStatus $complaintStatus = null,
+    ): void {
         foreach ($this->domain->getAll() as $domainConfig) {
             $mailTemplateData = $this->mailTemplateDataFactory->create();
+            $mailTemplateData->orderStatus = $orderStatus;
+            $mailTemplateData->complaintStatus = $complaintStatus;
             $mailTemplate = $this->mailTemplateFactory->create($name, $domainConfig->getId(), $mailTemplateData);
             $this->em->persist($mailTemplate);
         }

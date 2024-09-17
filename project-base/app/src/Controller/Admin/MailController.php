@@ -41,7 +41,11 @@ class MailController extends baseMailController
             MailTemplateFormType::class,
             $mailTemplateData,
             [
-                'allow_disable_sending' => ($mailTemplateVariables->getType() === MailTemplateConfiguration::TYPE_ORDER_STATUS),
+                'allow_disable_sending' => in_array(
+                    $mailTemplateVariables->getType(),
+                    MailTemplateConfiguration::TYPES_WITH_SEND_MAIL_SETTING,
+                    true,
+                ),
                 'entity' => $mailTemplate,
                 'required_subject_variables' => $mailTemplateVariables->getRequiredSubjectVariables(),
                 'required_body_variables' => $mailTemplateVariables->getRequiredBodyVariables(),

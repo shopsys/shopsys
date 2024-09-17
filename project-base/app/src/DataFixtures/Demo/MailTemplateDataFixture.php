@@ -91,7 +91,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
             $mailTemplateData->subject = t('Reset password request', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $mailTemplateData->body = t('Dear customer.<br /><br />'
                 . 'You can set a new password following this link: <a href="{new_password_url}">{new_password_url}</a>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $mailTemplateData->orderStatus = null;
+            $mailTemplateData->complaintStatus = null;
 
             $this->createMailTemplate($manager, MailTemplate::RESET_PASSWORD_NAME, $mailTemplateData, $domainId);
 
