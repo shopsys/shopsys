@@ -20,6 +20,7 @@ import { useGtmProductDetailViewEvent } from 'gtm/utils/pageViewEvents/useGtmPro
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { isPriceVisible } from 'utils/mappers/price';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 
 type ProductDetailContentProps = {
@@ -81,9 +82,11 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                         {!!product.usps.length && <ProductDetailUsps usps={product.usps} />}
 
                         <div className="bg-backgroundMore rounded-xl p-3 sm:p-6 flex flex-col gap-4">
-                            <div className="text-2xl font-bold text-price font-secondary">
-                                {formatPrice(product.price.priceWithVat)}
-                            </div>
+                            {isPriceVisible(product.price.priceWithVat) && (
+                                <div className="text-2xl font-bold text-price font-secondary">
+                                    {formatPrice(product.price.priceWithVat)}
+                                </div>
+                            )}
 
                             <ProductDetailAvailability product={product} />
 

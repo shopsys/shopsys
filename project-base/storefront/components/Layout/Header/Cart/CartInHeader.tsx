@@ -15,6 +15,7 @@ import { twJoin } from 'tailwind-merge';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useRemoveFromCart } from 'utils/cart/useRemoveFromCart';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { isPriceVisible } from 'utils/mappers/price';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -40,6 +41,8 @@ export const CartInHeader: FC = ({ className }) => {
     const { removeFromCart, isRemovingFromCart } = useRemoveFromCart(GtmProductListNameType.cart);
     const [isHovered, setIsHovered] = useState(false);
 
+    const isPriceVisibleOrEmtpyCart = isPriceVisible(cart?.totalItemsPrice.priceWithVat) || !cart?.items.length;
+
     return (
         <div
             className={twMergeCustom('group relative lg:flex', className)}
@@ -54,7 +57,7 @@ export const CartInHeader: FC = ({ className }) => {
                 href={cartUrl}
                 tid={TIDs.header_cart_link}
                 className={twJoin(
-                    'min-w-24 hidden items-center gap-x-3 rounded h-12 pr-2 pl-4 no-underline transition-all hover:no-underline group-hover:rounded-b-none group-hover:shadow-lg lg:flex border',
+                    'min-w-14 hidden items-center gap-x-3 rounded h-12 pr-2 pl-4 no-underline transition-all hover:no-underline group-hover:rounded-b-none group-hover:shadow-lg lg:flex border',
                     cart?.items.length ? nonEmptyCartTwClassName : emptyCartTwClassName,
                 )}
             >
@@ -62,13 +65,16 @@ export const CartInHeader: FC = ({ className }) => {
                     <CartIcon className="w-6 lg:w-5" />
                     {!!cart?.items.length && <CartCount>{cart.items.length}</CartCount>}
                 </span>
-                <span className="hidden text-sm font-semibold lg:block">
-                    {cart?.items.length
-                        ? formatPrice(cart.totalItemsPrice.priceWithVat, {
-                              explicitZero: true,
-                          })
-                        : t('Empty')}
-                </span>
+
+                {isPriceVisibleOrEmtpyCart && (
+                    <span className="hidden text-sm font-semibold lg:block">
+                        {cart?.items.length
+                            ? formatPrice(cart.totalItemsPrice.priceWithVat, {
+                                  explicitZero: true,
+                              })
+                            : t('Empty')}
+                    </span>
+                )}
             </ExtendedNextLink>
 
             <div

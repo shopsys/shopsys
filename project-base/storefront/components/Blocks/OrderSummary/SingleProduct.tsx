@@ -2,7 +2,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { TIDs } from 'cypress/tids';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
-import { mapPriceForCalculations } from 'utils/mappers/price';
+import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
 
 type SingleProductProps = {
     item: TypeCartItemFragment;
@@ -31,9 +31,11 @@ export const SingleProduct: FC<SingleProductProps> = ({ item }) => {
                     <span>{item.product.fullName}</span>
                 </span>
 
-                <strong className="ml-auto w-24 text-right text-sm">
-                    {formatPrice(mapPriceForCalculations(item.product.price.priceWithVat) * item.quantity)}
-                </strong>
+                {isPriceVisible(item.product.price.priceWithVat) && (
+                    <strong className="ml-auto w-24 text-right text-sm">
+                        {formatPrice(mapPriceForCalculations(item.product.price.priceWithVat) * item.quantity)}
+                    </strong>
+                )}
             </div>
         </li>
     );

@@ -5,6 +5,7 @@ import { TypePersonalDataDetailQuery } from 'graphql/requests/personalData/queri
 import useTranslation from 'next-translate/useTranslation';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { isPriceVisible } from 'utils/mappers/price';
 
 type PersonalDataDetailContentProps = {
     personalDataDetail: TypePersonalDataDetailQuery;
@@ -199,10 +200,14 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                                                 <CellMinor>{t('Payment')}</CellMinor>
                                                 <Cell>{order.payment.name}</Cell>
                                             </Row>
-                                            <Row>
-                                                <CellMinor>{t('Total price including VAT')}</CellMinor>
-                                                <Cell>{formatPrice(parseFloat(order.totalPrice.priceWithVat))}</Cell>
-                                            </Row>
+                                            {isPriceVisible(order.totalPrice.priceWithVat) && (
+                                                <Row>
+                                                    <CellMinor>{t('Total price including VAT')}</CellMinor>
+                                                    <Cell>
+                                                        {formatPrice(parseFloat(order.totalPrice.priceWithVat))}
+                                                    </Cell>
+                                                </Row>
+                                            )}
                                         </Table>
                                     </Cell>
                                 </Row>

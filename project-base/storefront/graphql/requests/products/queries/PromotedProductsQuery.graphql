@@ -1,4 +1,4 @@
-query PromotedProductsQuery @redisCache(ttl: 3600) {
+query PromotedProductsQuery {
     promotedProducts {
         ...ListedProductFragment
     }

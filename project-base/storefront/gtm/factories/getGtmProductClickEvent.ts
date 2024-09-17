@@ -10,11 +10,13 @@ export const getGtmProductClickEvent = (
     gtmProductListName: GtmProductListNameType,
     listIndex: number,
     domainUrl: string,
+    arePricesHidden: boolean,
 ): GtmProductClickEventType => ({
     event: GtmEventType.product_click,
     ecommerce: {
         listName: gtmProductListName,
         products: [mapGtmListedProductType(product, listIndex, domainUrl)],
+        arePricesHidden,
     },
     _clear: true,
 });

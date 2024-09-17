@@ -36,6 +36,7 @@ export const useCurrentCustomerData = (): CurrentCustomerType | null | undefined
         oldPassword: '',
         newPassword: '',
         newPasswordConfirm: '',
+        arePricesHidden: !currentCustomerUser.roles.includes('ROLE_API_CUSTOMER_SEES_PRICES'),
     };
 };
 

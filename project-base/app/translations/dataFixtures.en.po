@@ -1102,6 +1102,9 @@ msgstr ""
 msgid "LG E410 Optimus L1 II White"
 msgstr ""
 
+msgid "Limited user"
+msgstr ""
+
 msgid "Localization"
 msgstr ""
 

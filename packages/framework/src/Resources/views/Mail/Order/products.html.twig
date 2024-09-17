@@ -9,8 +9,8 @@
         <tr>
             <td style="font-weight: bold;">{{ item.name }}</td>
             <td style="text-align: right;">{{ item.quantity|formatNumber(orderLocale) }} {{ item.unitName }}</td>
-            <td style="text-align: right;">{{ item.unitPriceWithVat|priceTextWithCurrencyByCurrencyIdAndLocale(order.currency.id, orderLocale) }}</td>
-            <td style="text-align: right;">{{ orderItemTotalPricesById[item.id].priceWithVat|priceTextWithCurrencyByCurrencyIdAndLocale(order.currency.id, orderLocale) }}</td>
+            <td style="text-align: right;">{{ item.unitPriceWithVat|priceTextWithCurrencyByCurrencyIdAndLocale(order.currency.id, orderLocale)|hidePrice(order.customerUser) }}</td>
+            <td style="text-align: right;">{{ orderItemTotalPricesById[item.id].priceWithVat|priceTextWithCurrencyByCurrencyIdAndLocale(order.currency.id, orderLocale)|hidePrice(order.customerUser) }}</td>
         </tr>
     {% endfor %}
 </table>

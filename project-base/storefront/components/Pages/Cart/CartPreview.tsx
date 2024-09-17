@@ -3,14 +3,14 @@ import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
-import { mapPriceForCalculations } from 'utils/mappers/price';
+import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
 
 export const CartPreview: FC = () => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const { cart } = useCurrentCart();
 
-    if (!cart?.items.length) {
+    if (!cart?.items.length || !isPriceVisible(cart.totalItemsPrice.priceWithVat)) {
         return null;
     }
 

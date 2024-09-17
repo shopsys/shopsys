@@ -979,6 +979,9 @@ msgstr ""
 msgid "Customer phone number"
 msgstr ""
 
+msgid "Customer sees prices"
+msgstr ""
+
 msgid "Customer self manage"
 msgstr ""
 

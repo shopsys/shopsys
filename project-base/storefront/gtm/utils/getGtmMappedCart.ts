@@ -1,3 +1,4 @@
+import { getGtmPriceBasedOnVisibility } from './getGtmPriceBasedOnVisibility';
 import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { mapGtmCartItemType } from 'gtm/mappers/mapGtmCartItemType';
 import { GtmCartInfoType } from 'gtm/types/objects';
@@ -21,8 +22,8 @@ export const getGtmMappedCart = (
     const mappedCart: GtmCartInfoType = {
         abandonedCartUrl,
         currencyCode: domain.currencyCode,
-        valueWithoutVat: parseFloat(cart.totalItemsPrice.priceWithoutVat),
-        valueWithVat: parseFloat(cart.totalItemsPrice.priceWithVat),
+        valueWithoutVat: getGtmPriceBasedOnVisibility(cart.totalItemsPrice.priceWithoutVat),
+        valueWithVat: getGtmPriceBasedOnVisibility(cart.totalItemsPrice.priceWithVat),
         products,
     };
 

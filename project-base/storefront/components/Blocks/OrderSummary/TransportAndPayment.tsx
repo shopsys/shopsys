@@ -12,6 +12,7 @@ import { TypeTransportWithAvailablePaymentsFragment } from 'graphql/requests/tra
 import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { isPriceVisible } from 'utils/mappers/price';
 
 type TransportAndPaymentProps = {
     transport: TypeTransportWithAvailablePaymentsFragment | null;
@@ -43,9 +44,11 @@ export const TransportAndPayment: FC<TransportAndPaymentProps> = ({ payment, tra
                                 />
                             </div>
                         </OrderSummaryTextAndImage>
-                        <OrderSummaryPrice>
-                            <strong>{formatPrice(transport.price.priceWithVat)}</strong>
-                        </OrderSummaryPrice>
+                        {isPriceVisible(transport.price.priceWithVat) && (
+                            <OrderSummaryPrice>
+                                <strong>{formatPrice(transport.price.priceWithVat)}</strong>
+                            </OrderSummaryPrice>
+                        )}
                     </OrderSummaryRow>
                 )}
                 {payment && (
@@ -65,9 +68,11 @@ export const TransportAndPayment: FC<TransportAndPaymentProps> = ({ payment, tra
                                 />
                             </div>
                         </OrderSummaryTextAndImage>
-                        <OrderSummaryPrice>
-                            <strong>{formatPrice(payment.price.priceWithVat)}</strong>
-                        </OrderSummaryPrice>
+                        {isPriceVisible(payment.price.priceWithVat) && (
+                            <OrderSummaryPrice>
+                                <strong>{formatPrice(payment.price.priceWithVat)}</strong>
+                            </OrderSummaryPrice>
+                        )}
                     </OrderSummaryRow>
                 )}
                 {roundingPrice && (

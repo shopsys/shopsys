@@ -3,6 +3,7 @@ import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { mapGtmShippingInfo } from 'gtm/mappers/mapGtmShippingInfo';
 import { GtmTransportChangeEventType } from 'gtm/types/events';
 import { GtmCartInfoType } from 'gtm/types/objects';
+import { getGtmPriceBasedOnVisibility } from 'gtm/utils/getGtmPriceBasedOnVisibility';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
 export const getGtmTransportChangeEvent = (
@@ -10,6 +11,7 @@ export const getGtmTransportChangeEvent = (
     updatedTransport: TypeTransportWithAvailablePaymentsAndStoresFragment,
     updatedPickupPlace: StoreOrPacketeryPoint | null,
     paymentName: string | undefined,
+    arePricesHidden: boolean,
 ): GtmTransportChangeEventType => {
     const { transportDetail, transportExtra } = mapGtmShippingInfo(updatedPickupPlace);
 
@@ -25,8 +27,9 @@ export const getGtmTransportChangeEvent = (
             transportType: updatedTransport.name,
             transportDetail,
             transportExtra,
-            transportPriceWithoutVat: parseFloat(updatedTransport.price.priceWithoutVat),
-            transportPriceWithVat: parseFloat(updatedTransport.price.priceWithVat),
+            transportPriceWithoutVat: getGtmPriceBasedOnVisibility(updatedTransport.price.priceWithoutVat),
+            transportPriceWithVat: getGtmPriceBasedOnVisibility(updatedTransport.price.priceWithVat),
+            arePricesHidden,
         },
         _clear: true,
     };

@@ -2,10 +2,12 @@ import { TypeSimplePaymentFragment } from 'graphql/requests/payments/fragments/S
 import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { GtmPaymentChangeEventType } from 'gtm/types/events';
 import { GtmCartInfoType } from 'gtm/types/objects';
+import { getGtmPriceBasedOnVisibility } from 'gtm/utils/getGtmPriceBasedOnVisibility';
 
 export const getGtmPaymentChangeEvent = (
     gtmCartInfo: GtmCartInfoType,
     updatedPayment: TypeSimplePaymentFragment,
+    arePricesHidden: boolean,
 ): GtmPaymentChangeEventType => ({
     event: GtmEventType.payment_change,
     ecommerce: {
@@ -14,9 +16,10 @@ export const getGtmPaymentChangeEvent = (
         products: gtmCartInfo.products ?? [],
         currencyCode: gtmCartInfo.currencyCode,
         paymentType: updatedPayment.name,
-        paymentPriceWithoutVat: parseFloat(updatedPayment.price.priceWithoutVat),
-        paymentPriceWithVat: parseFloat(updatedPayment.price.priceWithVat),
+        paymentPriceWithoutVat: getGtmPriceBasedOnVisibility(updatedPayment.price.priceWithoutVat),
+        paymentPriceWithVat: getGtmPriceBasedOnVisibility(updatedPayment.price.priceWithVat),
         promoCodes: gtmCartInfo.promoCodes,
+        arePricesHidden,
     },
     _clear: true,
 });

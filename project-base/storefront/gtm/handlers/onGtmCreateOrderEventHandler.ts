@@ -6,6 +6,7 @@ import { gtmSafePushEvent } from 'gtm/utils/gtmSafePushEvent';
 export const onGtmCreateOrderEventHandler = (
     gtmCreateOrderEventOrderPart: GtmCreateOrderEventOrderPartType | undefined,
     gtmCreateOrderEventUserPart: GtmUserInfoType | undefined,
+    arePricesHidden: boolean,
     isPaymentSuccessful?: boolean,
 ): void => {
     if (gtmCreateOrderEventOrderPart === undefined || gtmCreateOrderEventUserPart === undefined) {
@@ -15,6 +16,7 @@ export const onGtmCreateOrderEventHandler = (
     const gtmCreateOrderEvent = getGtmCreateOrderEvent(
         gtmCreateOrderEventOrderPart,
         gtmCreateOrderEventUserPart,
+        arePricesHidden,
         isPaymentSuccessful,
     );
 

@@ -1102,6 +1102,9 @@ msgstr "LG 58LA790W (FHD)"
 msgid "LG E410 Optimus L1 II White"
 msgstr "LG E410 Optimus L1 II White"
 
+msgid "Limited user"
+msgstr "Limitovaný uživatel"
+
 msgid "Localization"
 msgstr "Lokalizace"
 

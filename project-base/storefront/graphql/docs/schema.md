@@ -11441,8 +11441,6 @@ The `Int` scalar type represents non-fractional signed whole numeric values. Int
 
 ### Money
 
-Represents and encapsulates monetary value
-
 ### Password
 
 Represents and encapsulates a string for password

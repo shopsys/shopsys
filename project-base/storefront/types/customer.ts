@@ -42,4 +42,5 @@ export type CurrentCustomerType = {
     pricingGroup: string;
     hasPasswordSet: boolean;
     loginInfo: TypeLoginInfo;
+    arePricesHidden: boolean;
 };

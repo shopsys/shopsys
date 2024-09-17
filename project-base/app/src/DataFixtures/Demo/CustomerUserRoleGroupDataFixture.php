@@ -15,6 +15,7 @@ class CustomerUserRoleGroupDataFixture extends AbstractReferenceFixture
 {
     public const ROLE_GROUP_OWNER = 'role_group_owner';
     public const ROLE_GROUP_USER = 'role_group_user';
+    public const ROLE_GROUP_LIMITED_USER = 'role_group_limited_user';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupDataFactory $customerUserRoleGroupDataFactory
@@ -38,10 +39,20 @@ class CustomerUserRoleGroupDataFixture extends AbstractReferenceFixture
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
             $customerUserRoleGroupData->names[$locale] = t('User', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
-        $customerUserRoleGroupData->roles = [CustomerUserRole::ROLE_API_CUSTOMER_SELF_MANAGE];
+        $customerUserRoleGroupData->roles = [CustomerUserRole::ROLE_API_CUSTOMER_SELF_MANAGE, CustomerUserRole::ROLE_API_CUSTOMER_SEES_PRICES];
 
         $customerUserRoleGroup = $this->customerUserRoleGroupFacade->create($customerUserRoleGroupData);
         $this->addReference(self::ROLE_GROUP_USER, $customerUserRoleGroup);
+
+        $customerUserRoleGroupData = $this->customerUserRoleGroupDataFactory->create();
+
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+            $customerUserRoleGroupData->names[$locale] = t('Limited user', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        }
+        $customerUserRoleGroupData->roles = [CustomerUserRole::ROLE_API_CUSTOMER_SELF_MANAGE];
+
+        $customerUserRoleGroup = $this->customerUserRoleGroupFacade->create($customerUserRoleGroupData);
+        $this->addReference(self::ROLE_GROUP_LIMITED_USER, $customerUserRoleGroup);
     }
 
     /**

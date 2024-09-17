@@ -1038,7 +1038,6 @@ type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   variants: [Variant!]!
 }
 
-"Represents and encapsulates monetary value"
 scalar Money
 
 type Mutation {

@@ -6,6 +6,7 @@ import { Translate } from 'next-translate';
 import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { isPriceVisible } from 'utils/mappers/price';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
 type TransportAndPaymentSelectItemLabelProps = {
@@ -68,7 +69,7 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                 )}
             </div>
 
-            {price && (
+            {price && isPriceVisible(price.priceWithVat) && (
                 <div className="shrink-0 text-right text-sm font-bold lg:basis-20">
                     {formatPrice(price.priceWithVat)}
                 </div>

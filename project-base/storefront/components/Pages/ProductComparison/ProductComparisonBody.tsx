@@ -20,7 +20,7 @@ export const ProductComparisonBody: FC<ProductComparisonBodyProps> = ({ compared
                 </BodyItem>
                 {comparedProducts.map((product) => (
                     <BodyItem key={`price-${product.uuid}`}>
-                        <ProductPrice productPrice={product.price} />
+                        <ProductPrice placeholder="-" productPrice={product.price} />
                     </BodyItem>
                 ))}
             </tr>

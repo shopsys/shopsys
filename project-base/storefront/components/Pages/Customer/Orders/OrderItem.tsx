@@ -10,6 +10,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { ReactNode } from 'react';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { isPriceVisible } from 'utils/mappers/price';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -50,12 +51,14 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                             title={t('Date of order')}
                             value={formatDate(order.creationDate, 'DD. MM. YYYY')}
                         />
-                        <OrderItemColumnInfo
-                            title={t('Price')}
-                            value={formatPrice(order.totalPrice.priceWithVat)}
-                            valueClassName="text-price"
-                            wrapperClassName="w-20"
-                        />
+                        {isPriceVisible(order.totalPrice.priceWithVat) && (
+                            <OrderItemColumnInfo
+                                title={t('Price')}
+                                value={formatPrice(order.totalPrice.priceWithVat)}
+                                valueClassName="text-price"
+                                wrapperClassName="w-20"
+                            />
+                        )}
                         <OrderItemColumnInfo
                             title={t('Status')}
                             value={order.status}

@@ -8,6 +8,7 @@ import {
 import { TypePriceFragment } from 'graphql/requests/prices/fragments/PriceFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { isPriceVisible } from 'utils/mappers/price';
 
 type PromoCodeProps = {
     promoCode: string;
@@ -23,9 +24,11 @@ export const PromoCode: FC<PromoCodeProps> = ({ discount, promoCode }) => {
             <OrderSummaryContent>
                 <OrderSummaryRow>
                     <OrderSummaryTextAndImage>{`${t('Promo code')}: ${promoCode}`}</OrderSummaryTextAndImage>
-                    <OrderSummaryPrice>
-                        <strong>-{formatPrice(discount.priceWithVat)}</strong>
-                    </OrderSummaryPrice>
+                    {isPriceVisible(discount.priceWithVat) && (
+                        <OrderSummaryPrice>
+                            <strong>-{formatPrice(discount.priceWithVat)}</strong>
+                        </OrderSummaryPrice>
+                    )}
                 </OrderSummaryRow>
             </OrderSummaryContent>
         </OrderSummaryRowWrapper>

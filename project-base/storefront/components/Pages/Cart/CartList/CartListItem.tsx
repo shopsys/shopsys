@@ -8,7 +8,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { MouseEventHandler, useRef, useEffect } from 'react';
 import { AddToCart } from 'utils/cart/useAddToCart';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
-import { mapPriceForCalculations } from 'utils/mappers/price';
+import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
 
 type CartListItemProps = {
     item: TypeCartItemFragment;
@@ -114,16 +114,20 @@ export const CartListItem: FC<CartListItemProps> = ({
                 />
             </div>
 
-            <div className="flex items-center justify-end text-sm vl:w-32">
-                {formatPrice(product.price.priceWithVat) + '\u00A0/\u00A0' + product.unit.name}
-            </div>
+            {isPriceVisible(product.price.priceWithVat) && (
+                <div className="flex items-center justify-end text-sm vl:w-32">
+                    {formatPrice(product.price.priceWithVat) + '\u00A0/\u00A0' + product.unit.name}
+                </div>
+            )}
 
-            <div
-                className="ml-auto flex items-center justify-end text-sm text-price lg:text-base vl:w-32"
-                tid={TIDs.pages_cart_list_item_totalprice}
-            >
-                {formatPrice(mapPriceForCalculations(product.price.priceWithVat) * quantity)}
-            </div>
+            {isPriceVisible(product.price.priceWithVat) && (
+                <div
+                    className="ml-auto flex items-center justify-end text-sm text-price lg:text-base vl:w-32"
+                    tid={TIDs.pages_cart_list_item_totalprice}
+                >
+                    {formatPrice(mapPriceForCalculations(product.price.priceWithVat) * quantity)}
+                </div>
+            )}
 
             <RemoveCartItemButton
                 className="absolute right-0 top-5 flex items-center vl:static"

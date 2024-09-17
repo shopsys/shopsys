@@ -72,7 +72,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $order->addItem($orderItem);
         $order->setStatus($status);
 
-        $generatedXml = $this->twigEnvironment->render('Front/Content/PersonalData/export.xml.twig', [
+        $generatedXml = $this->twigEnvironment->render('@ShopsysFramework/Front/Content/PersonalData/export.xml.twig', [
             'customerUser' => $customerUser,
             'orders' => [
                 0 => $order,

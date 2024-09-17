@@ -1,4 +1,5 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { useRemoveFromCartMutation } from 'graphql/requests/cart/mutations/RemoveFromCartMutation.generated';
@@ -17,6 +18,7 @@ export const useRemoveFromCart = (gtmProductListName: GtmProductListNameType) =>
     const { url, currencyCode } = useDomainConfig();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const { fetchCart } = useCurrentCart();
+    const currentCustomerData = useCurrentCustomerData();
 
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
 
@@ -33,7 +35,14 @@ export const useRemoveFromCart = (gtmProductListName: GtmProductListNameType) =>
             updateCartUuid(removeItemFromCartActionResult.data.RemoveFromCart.uuid);
 
             import('gtm/handlers/onGtmRemoveFromCartEventHandler').then(({ onGtmRemoveFromCartEventHandler }) => {
-                onGtmRemoveFromCartEventHandler(cartItem, currencyCode, listIndex, gtmProductListName, url);
+                onGtmRemoveFromCartEventHandler(
+                    cartItem,
+                    currencyCode,
+                    listIndex,
+                    gtmProductListName,
+                    url,
+                    !!currentCustomerData?.arePricesHidden,
+                );
             });
 
             dispatchBroadcastChannel('refetchCart');

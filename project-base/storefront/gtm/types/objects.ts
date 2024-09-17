@@ -48,8 +48,8 @@ export type GtmPageInfoType =
 export type GtmCartInfoType = {
     abandonedCartUrl: string | undefined;
     currencyCode: string;
-    valueWithoutVat: number;
-    valueWithVat: number;
+    valueWithoutVat: number | null;
+    valueWithVat: number | null;
     products: GtmCartItemType[] | undefined;
     promoCodes?: string[];
 };
@@ -83,8 +83,8 @@ export type GtmProductInterface = {
     name: string;
     availability: string;
     flags: string[];
-    priceWithoutVat: number;
-    priceWithVat: number;
+    priceWithoutVat: number | null;
+    priceWithVat: number | null;
     vatAmount: number;
     sku: string;
     url: string;

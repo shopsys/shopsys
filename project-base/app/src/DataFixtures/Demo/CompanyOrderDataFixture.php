@@ -168,6 +168,25 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
             PaymentDataFixture::PAYMENT_CASH,
             $customerUser,
         );
+
+        $customerUser = $this->getReferenceForDomain(CompanyDataFixture::COMPANY_USER_PETER_KOVAC, $domainId, CustomerUser::class);
+        $orderData = $this->orderDataFactory->create();
+        $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW, OrderStatus::class);
+        $this->mapCustomerUserDataToOrderData($orderData, $customerUser);
+        $this->mapCompanyAddressDataToOrderData($orderData, $companyCustomer);
+        $this->mapDeliveryAddressDataToOrderData($orderData, $customerUser);
+        $orderData->domainId = $domainId;
+        $orderData->currency = $domainDefaultCurrency;
+        $orderData->createdAt = (new DateTime('now -1 day'))->setTime(18, 30, 01);
+        $this->createOrder(
+            $orderData,
+            [
+                ProductDataFixture::PRODUCT_PREFIX . '1' => 1,
+            ],
+            TransportDataFixture::TRANSPORT_PPL,
+            PaymentDataFixture::PAYMENT_CARD,
+            $customerUser,
+        );
     }
 
     /**

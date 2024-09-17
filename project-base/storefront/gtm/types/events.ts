@@ -51,9 +51,10 @@ export type GtmAddToCartEventType = GtmEventInterface<
         ecommerce: {
             listName: GtmProductListNameType;
             currencyCode: string;
-            valueWithoutVat: number;
-            valueWithVat: number;
+            valueWithoutVat: number | null;
+            valueWithVat: number | null;
             products: GtmCartItemType[] | undefined;
+            arePricesHidden: boolean;
         };
         cart?: GtmCartInfoType | null;
     }
@@ -65,9 +66,10 @@ export type GtmRemoveFromCartEventType = GtmEventInterface<
         ecommerce: {
             listName: GtmProductListNameType;
             currencyCode: string;
-            valueWithoutVat: number;
-            valueWithVat: number;
+            valueWithoutVat: number | null;
+            valueWithVat: number | null;
             products: GtmCartItemType[] | undefined;
+            arePricesHidden: boolean;
         };
         cart?: GtmCartInfoType | null;
     }
@@ -78,9 +80,10 @@ export type GtmCartViewEventType = GtmEventInterface<
     {
         ecommerce: {
             currencyCode: string;
-            valueWithoutVat: number;
-            valueWithVat: number;
+            valueWithoutVat: number | null;
+            valueWithVat: number | null;
             products: GtmCartItemType[] | undefined;
+            arePricesHidden: boolean;
         };
     }
 >;
@@ -91,6 +94,7 @@ export type GtmProductListViewEventType = GtmEventInterface<
         ecommerce: {
             listName: GtmProductListNameType;
             products: GtmListedProductType[] | undefined;
+            arePricesHidden: boolean;
         };
     }
 >;
@@ -101,6 +105,7 @@ export type GtmProductClickEventType = GtmEventInterface<
         ecommerce: {
             listName: GtmProductListNameType;
             products: GtmListedProductType[] | undefined;
+            arePricesHidden: boolean;
         };
     }
 >;
@@ -110,9 +115,10 @@ export type GtmProductDetailViewEventType = GtmEventInterface<
     {
         ecommerce: {
             currencyCode: string;
-            valueWithoutVat: number;
-            valueWithVat: number;
+            valueWithoutVat: number | null;
+            valueWithVat: number | null;
             products: GtmProductInterface[] | undefined;
+            arePricesHidden: boolean;
         };
     }
 >;
@@ -122,9 +128,10 @@ export type GtmPaymentAndTransportPageViewEventType = GtmEventInterface<
     {
         ecommerce: {
             currencyCode: string;
-            valueWithoutVat: number;
-            valueWithVat: number;
+            valueWithoutVat: number | null;
+            valueWithVat: number | null;
             products: GtmCartItemType[] | undefined;
+            arePricesHidden: boolean;
         };
     }
 >;
@@ -155,17 +162,18 @@ export type GtmTransportChangeEventType = GtmEventInterface<
     GtmEventType.transport_change,
     {
         ecommerce: {
-            valueWithoutVat: number;
-            valueWithVat: number;
+            valueWithoutVat: number | null;
+            valueWithVat: number | null;
             currencyCode: string;
             promoCodes?: string[];
             paymentType?: string;
-            transportPriceWithoutVat: number;
-            transportPriceWithVat: number;
+            transportPriceWithoutVat: number | null;
+            transportPriceWithVat: number | null;
             transportType: string;
             transportDetail: string;
             transportExtra: string[];
             products: GtmCartItemType[];
+            arePricesHidden: boolean;
         };
     }
 >;
@@ -175,10 +183,11 @@ export type GtmContactInformationPageViewEventType = GtmEventInterface<
     {
         ecommerce: {
             currencyCode: string;
-            valueWithoutVat: number;
-            valueWithVat: number;
+            valueWithoutVat: number | null;
+            valueWithVat: number | null;
             promoCodes?: string[];
             products: GtmCartItemType[] | undefined;
+            arePricesHidden: boolean;
         };
     }
 >;
@@ -188,13 +197,14 @@ export type GtmPaymentChangeEventType = GtmEventInterface<
     {
         ecommerce: {
             currencyCode: string;
-            valueWithoutVat: number;
-            valueWithVat: number;
+            valueWithoutVat: number | null;
+            valueWithVat: number | null;
             promoCodes?: string[];
             paymentType: string;
-            paymentPriceWithoutVat: number;
-            paymentPriceWithVat: number;
+            paymentPriceWithoutVat: number | null;
+            paymentPriceWithVat: number | null;
             products: GtmCartItemType[] | undefined;
+            arePricesHidden: boolean;
         };
     }
 >;
@@ -211,11 +221,11 @@ export type GtmPaymentFailEventType = GtmEventInterface<
 export type GtmCreateOrderEventOrderPartType = {
     currencyCode: string;
     id: string;
-    valueWithoutVat: number;
-    valueWithVat: number;
+    valueWithoutVat: number | null;
+    valueWithVat: number | null;
     vatAmount: number;
-    paymentPriceWithoutVat: number;
-    paymentPriceWithVat: number;
+    paymentPriceWithoutVat: number | null;
+    paymentPriceWithVat: number | null;
     promoCodes?: string[];
     discountAmount?: number;
     paymentType: string;
@@ -230,7 +240,7 @@ export type GtmPurchaseEventPaymentPartType = {
 export type GtmCreateOrderEventType = GtmEventInterface<
     GtmEventType.create_order,
     {
-        ecommerce: GtmCreateOrderEventOrderPartType & GtmPurchaseEventPaymentPartType;
+        ecommerce: GtmCreateOrderEventOrderPartType & GtmPurchaseEventPaymentPartType & { arePricesHidden: boolean };
         user: GtmUserInfoType;
     }
 >;

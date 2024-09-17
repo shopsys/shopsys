@@ -16,7 +16,6 @@ export type Scalars = {
   DateTime: { input: any; output: any; }
   /** Represents and encapsulates a file upload */
   FileUpload: { input: any; output: any; }
-  /** Represents and encapsulates monetary value */
   Money: { input: string; output: string; }
   /** Represents and encapsulates a string for password */
   Password: { input: any; output: any; }

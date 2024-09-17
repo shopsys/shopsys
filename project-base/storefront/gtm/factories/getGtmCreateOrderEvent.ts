@@ -4,21 +4,23 @@ import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { mapGtmCartItemType } from 'gtm/mappers/mapGtmCartItemType';
 import { GtmCreateOrderEventOrderPartType, GtmCreateOrderEventType } from 'gtm/types/events';
 import { GtmUserInfoType, GtmReviewConsentsType } from 'gtm/types/objects';
+import { getGtmPriceBasedOnVisibility } from 'gtm/utils/getGtmPriceBasedOnVisibility';
 import { getGtmUserInfo } from 'gtm/utils/getGtmUserInfo';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { CurrentCustomerType } from 'types/customer';
 import { DomainConfigType } from 'utils/domain/domainConfig';
-import { mapPriceForCalculations } from 'utils/mappers/price';
 
 export const getGtmCreateOrderEvent = (
     gtmCreateOrderEventOrderPart: GtmCreateOrderEventOrderPartType,
     gtmCreateOrderEventUserPart: GtmUserInfoType,
+    arePricesHidden: boolean,
     isPaymentSuccessful?: boolean,
 ): GtmCreateOrderEventType => ({
     event: GtmEventType.create_order,
     ecommerce: {
         ...gtmCreateOrderEventOrderPart,
         isPaymentSuccessful,
+        arePricesHidden,
     },
     user: gtmCreateOrderEventUserPart,
     _clear: true,
@@ -34,11 +36,11 @@ export const getGtmCreateOrderEventOrderPart = (
 ): GtmCreateOrderEventOrderPartType => ({
     currencyCode: domainConfig.currencyCode,
     id: orderNumber,
-    valueWithoutVat: parseFloat(cart.totalPrice.priceWithoutVat),
-    valueWithVat: parseFloat(cart.totalPrice.priceWithVat),
+    valueWithoutVat: getGtmPriceBasedOnVisibility(cart.totalPrice.priceWithoutVat),
+    valueWithVat: getGtmPriceBasedOnVisibility(cart.totalPrice.priceWithVat),
     vatAmount: parseFloat(cart.totalPrice.vatAmount),
-    paymentPriceWithoutVat: mapPriceForCalculations(payment.price.priceWithoutVat),
-    paymentPriceWithVat: mapPriceForCalculations(payment.price.priceWithVat),
+    paymentPriceWithoutVat: getGtmPriceBasedOnVisibility(payment.price.priceWithoutVat),
+    paymentPriceWithVat: getGtmPriceBasedOnVisibility(payment.price.priceWithVat),
     promoCodes: promoCode !== null ? [promoCode] : undefined,
     paymentType: payment.name,
     reviewConsents,
