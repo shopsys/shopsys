@@ -158,6 +158,7 @@ class MailTemplateConfiguration
 
         return $mailTemplateVariables
             ->addVariable(ComplaintMail::VARIABLE_COMPLAINT_NUMBER, t('Complaint number'))
+            ->addVariable(ComplaintMail::VARIABLE_COMPLAINT_DETAIL_URL, t('Complaint detail URL'))
             ->addVariable(ComplaintMail::VARIABLE_ORDER_NUMBER, t('Order number'))
             ->addVariable(ComplaintMail::VARIABLE_DATE, t('Date and time of order creation'))
             ->addVariable(ComplaintMail::VARIABLE_URL, t('E-shop URL address'), MailTemplateVariables::CONTEXT_BODY);
