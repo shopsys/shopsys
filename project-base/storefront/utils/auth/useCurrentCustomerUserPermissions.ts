@@ -14,7 +14,7 @@ export const useCurrentCustomerUserPermissions = () => {
         !currentCustomerUser || !isCompanyUser || currentCustomerUser.roles.includes(CustomerUserRoleEnum.ROLE_API_ALL);
 
     return {
-        uuid: currentCustomerUser?.uuid,
+        currentCustomerUserUuid: currentCustomerUser?.uuid,
         canManageUsers,
         canManageProfile,
     };

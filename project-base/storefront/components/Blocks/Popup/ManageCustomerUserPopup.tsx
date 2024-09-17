@@ -36,7 +36,7 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
     const [, customerEditUser] = useEditCustomerUserPersonalDataMutation();
     const [, customerAddUser] = useAddNewCustomerUserMutation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
-    const { canManageProfile, uuid } = useCurrentCustomerUserPermissions();
+    const { canManageProfile, currentCustomerUserUuid: uuid } = useCurrentCustomerUserPermissions();
     const customerUserRoleGroupsAsSelectOptions = useCustomerUserGroupsAsSelectOptions();
     const customerUserData = getCustomerUser(customerUser);
 

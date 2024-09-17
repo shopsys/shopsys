@@ -23,6 +23,7 @@ const CUSTOM_PAGE_TYPES = [
     'order-confirmation',
     'contact',
     'wishlist',
+    'customer-users',
 ] as const;
 
 export type PageType = FriendlyPagesTypesKey | (typeof CUSTOM_PAGE_TYPES)[number];

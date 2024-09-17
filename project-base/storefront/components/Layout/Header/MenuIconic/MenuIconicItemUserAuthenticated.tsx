@@ -133,8 +133,11 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                             </MenuIconicSubItemLink>
                         </li>
                         {canManageUsers && (
-                            <li className="block border-t border-borderAccent">
-                                <MenuIconicSubItemLink href={customerUsersUrl}>
+                            <li className={userMenuItemTwClass}>
+                                <MenuIconicSubItemLink href={customerUsersUrl} type="customer-users">
+                                    <div className={userMenuItemIconTwClass}>
+                                        <UserIcon className="w-6 max-h-[22px]" />
+                                    </div>
                                     {t('Customer users')}
                                 </MenuIconicSubItemLink>
                             </li>

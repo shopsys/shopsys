@@ -77,6 +77,7 @@ export const useUserMenuItems = (): UserMenuItemType[] => {
         {
             text: t('Customer users'),
             link: customerUsersUrl,
+            type: 'customer-users',
         },
     ];
 };

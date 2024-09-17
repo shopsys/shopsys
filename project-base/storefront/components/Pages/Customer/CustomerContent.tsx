@@ -2,6 +2,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { EditIcon } from 'components/Basic/Icon/EditIcon';
 import { ExitIcon } from 'components/Basic/Icon/ExitIcon';
 import { SearchListIcon } from 'components/Basic/Icon/SearchListIcon';
+import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
@@ -55,7 +56,10 @@ export const CustomerContent: FC = () => {
 
                     {canManageUsers && (
                         <CustomerListItem>
-                            <ExtendedNextLink href={customerUsersUrl}>{t('Customer users')}</ExtendedNextLink>
+                            <ExtendedNextLink href={customerUsersUrl}>
+                                <UserIcon className="mr-5 w-6 h-6" />
+                                {t('Customer users')}
+                            </ExtendedNextLink>
                         </CustomerListItem>
                     )}
 

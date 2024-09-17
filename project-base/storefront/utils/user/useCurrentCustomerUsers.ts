@@ -2,7 +2,7 @@ import { useRedirectOnPermissionsChange } from './useRedirectOnPermissionsChange
 import { useCurrentCustomerUsersQuery } from 'graphql/requests/customer/queries/CurrentCustomerUsersQuery.generated';
 
 export const useCurrentCustomerUsers = () => {
-    const [{ data: currentCustomerUsersData, error }] = useCurrentCustomerUsersQuery({
+    const [{ data: currentCustomerUsersData, error, fetching }] = useCurrentCustomerUsersQuery({
         requestPolicy: 'network-only',
     });
     const { redirect } = useRedirectOnPermissionsChange();
@@ -11,5 +11,8 @@ export const useCurrentCustomerUsers = () => {
         redirect();
     }
 
-    return currentCustomerUsersData?.customerUsers ?? [];
+    return {
+        customerUsers: currentCustomerUsersData?.customerUsers ?? [],
+        customerUsersIsFetching: fetching,
+    };
 };
