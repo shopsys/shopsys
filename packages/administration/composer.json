@@ -33,7 +33,7 @@
         "symfony/http-kernel": "^5.4",
         "symfony/routing": "^5.4",
         "symfony/translation": "^5.4",
-        "twig/twig": "^3.5.0"
+        "twig/twig": "^3.14.0"
     },
     "require-dev": {
         "phpstan/phpstan": "^1.11.7",
