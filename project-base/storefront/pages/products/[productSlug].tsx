@@ -102,9 +102,10 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     .toPromise();
 
             const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
-                productResponse.error?.graphQLErrors,
+                productResponse.error,
                 productResponse.data?.product,
                 context.res,
+                domainConfig.url,
             );
 
             if (serverSideErrorResponse) {

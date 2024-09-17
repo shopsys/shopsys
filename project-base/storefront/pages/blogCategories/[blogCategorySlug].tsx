@@ -87,9 +87,10 @@ export const getServerSideProps = getServerSidePropsWrapper(
             const isRedirectedFromSsr = getIsRedirectedFromSsr(context.req.headers);
             if (isRedirectedFromSsr) {
                 const serverSideErrorResponse = handleServerSideErrorResponseForFriendlyUrls(
-                    blogCategoryResponse.error?.graphQLErrors,
+                    blogCategoryResponse.error,
                     blogCategoryResponse.data?.blogCategory,
                     context.res,
+                    domainConfig.url,
                 );
 
                 if (serverSideErrorResponse) {

@@ -1,5 +1,9 @@
 import { AuthConfig, AuthUtilities } from '@urql/exchange-auth';
-import { RefreshTokensDocument } from 'graphql/requests/auth/mutations/RefreshTokensMutation.generated';
+import {
+    RefreshTokensDocument,
+    TypeRefreshTokens,
+    TypeRefreshTokensVariables,
+} from 'graphql/requests/auth/mutations/RefreshTokensMutation.generated';
 import { GetServerSidePropsContext, NextPageContext, PreviewData } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 import { CombinedError, makeOperation, Operation } from 'urql';
@@ -63,7 +67,11 @@ const doTryRefreshToken = async (
     mutate: AuthUtilities['mutate'],
     context?: GetServerSidePropsContext | NextPageContext,
 ): Promise<void> => {
-    const { data: refreshTokenData } = await mutate(RefreshTokensDocument, { refreshToken });
+    const { data: refreshTokenData } = await mutate<TypeRefreshTokens, TypeRefreshTokensVariables>(
+        RefreshTokensDocument,
+        { refreshToken },
+    );
+
     if (!refreshTokenData?.RefreshTokens) {
         removeTokensFromCookies(context);
 
