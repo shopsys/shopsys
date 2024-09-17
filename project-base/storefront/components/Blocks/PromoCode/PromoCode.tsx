@@ -46,7 +46,7 @@ export const PromoCode: FC = () => {
             ) : (
                 <>
                     <Button
-                        className="max-sm:w-full text-sm mb-3"
+                        className="mb-3 text-sm max-sm:w-full"
                         tid={TIDs.blocks_promocode_add_button}
                         variant="inverted"
                         onClick={() => setIsContentVisible(!isContentVisible)}
@@ -76,7 +76,7 @@ export const PromoCode: FC = () => {
                                         }}
                                     />
                                     <SubmitButton
-                                        className="!rounded-r !rounded-l-none !px-3 h-auto"
+                                        className="h-auto !rounded-l-none !rounded-r !px-3"
                                         isWithDisabledLook={!formProviderMethods.formState.isValid}
                                         tid={TIDs.blocks_promocode_apply_button}
                                         variant="inverted"

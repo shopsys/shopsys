@@ -48,7 +48,7 @@ export const OrderSteps: FC<OrderStepsProps> = ({ activeStep, domainUrl }) => {
     );
 };
 
-const OrderStepsListItem: FC = ({ children }) => <li className="relative w-1/3 p-3 lg:py-3 lg:px-5">{children}</li>;
+const OrderStepsListItem: FC = ({ children }) => <li className="relative w-1/3 p-3 lg:px-5 lg:py-3">{children}</li>;
 
 type OrderStepsListItemLinkProps = { isActive: boolean; isClickable?: boolean; href?: string };
 

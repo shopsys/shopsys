@@ -26,13 +26,13 @@ export const ProductsSliderPlaceholder: FC<ProductsSliderPlaceholderProps> = ({
                         className="ml-1 h-8 w-8 cursor-pointer rounded border-none pt-1 outline-none transition"
                         title={t('Previous products')}
                     >
-                        <ArrowSecondaryIcon className="-translate-y-[2px] rotate-90 w-5 text-text hover:text-textAccent disabled:text-textDisabled" />
+                        <ArrowSecondaryIcon className="w-5 -translate-y-[2px] rotate-90 text-text hover:text-textAccent disabled:text-textDisabled" />
                     </button>
                     <button
                         className="ml-1 h-8 w-8 cursor-pointer rounded border-none pt-1 outline-none transition"
                         title={t('Next products')}
                     >
-                        <ArrowSecondaryIcon className="-translate-y-[2px] -rotate-90 w-5 text-text hover:text-textAccent disabled:text-textDisabled" />
+                        <ArrowSecondaryIcon className="w-5 -translate-y-[2px] -rotate-90 text-text hover:text-textAccent disabled:text-textDisabled" />
                     </button>
                 </div>
             )}

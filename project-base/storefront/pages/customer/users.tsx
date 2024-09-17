@@ -59,7 +59,7 @@ const UsersPage: FC = () => {
         <>
             <MetaRobots content="noindex" />
             <CustomerLayout breadcrumbs={breadcrumbs} pageHeading={t('Customer users')} title={t('Customer users')}>
-                <div className="w-full flex flex-col gap-4">
+                <div className="flex w-full flex-col gap-4">
                     <Button className="w-fit" size="small" onClick={(e) => openManageCustomerUserPopup(e)}>
                         {t('Add new user')}
                     </Button>

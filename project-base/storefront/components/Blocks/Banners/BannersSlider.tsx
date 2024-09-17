@@ -82,17 +82,17 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
                         className={twJoin(
                             'flex',
                             !bannerSliderState.isSliding
-                                ? `transform translate-x-[calc(-100%)] transition-transform duration-${SLIDER_SLIDE_DURATION} ease-in-out`
+                                ? `translate-x-[calc(-100%)] transform transition-transform duration-${SLIDER_SLIDE_DURATION} ease-in-out`
                                 : bannerSliderState.slideDirection === 'PREV'
-                                  ? 'transform translate-x-[calc(2*(-100%))]'
-                                  : 'transform translate-x-0',
+                                  ? 'translate-x-[calc(2*(-100%))] transform'
+                                  : 'translate-x-0 transform',
                         )}
                     >
                         {sliderItems.map((item, index) => (
                             <div
                                 key={index}
                                 className={twJoin(
-                                    'flex-[1_0_100%] basis-full flex',
+                                    'flex flex-[1_0_100%] basis-full',
                                     getBannerOrderCSSProperty(index, bannerSliderState.sliderPosition, numItems),
                                 )}
                             >
@@ -116,8 +116,8 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
                         <button
                             key={sliderItem.uuid}
                             className={twJoin(
-                                'group relative block h-2 w-3 cursor-pointer rounded-full vl:rounded font-bold outline-none transition',
-                                'vl:mx-0 vl:h-full vl:px-8 vl:w-full border-8 vl:border-2 vl:border-solid vl:text-left',
+                                'group relative block h-2 w-3 cursor-pointer rounded-full font-bold outline-none transition vl:rounded',
+                                'border-8 vl:mx-0 vl:h-full vl:w-full vl:border-2 vl:border-solid vl:px-8 vl:text-left',
                                 'border-actionInvertedBorder bg-actionInvertedBackground text-actionInvertedText',
                                 'hover:border-actionInvertedBorderHovered hover:bg-actionInvertedBackgroundHovered hover:text-actionInvertedTextHovered',
                                 isActive &&
@@ -127,7 +127,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
                         >
                             <TriangleIcon
                                 className={twJoin(
-                                    'absolute top-1/2 left-3 hidden w-2 -translate-y-1/2 text-actionInvertedText',
+                                    'absolute left-3 top-1/2 hidden w-2 -translate-y-1/2 text-actionInvertedText',
                                     isActive && 'vl:block',
                                 )}
                             />

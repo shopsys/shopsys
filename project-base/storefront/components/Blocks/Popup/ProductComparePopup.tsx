@@ -16,7 +16,7 @@ export const ProductComparePopup: FC = () => {
             <div className="text-base lg:text-lg">{t('Comparison')}</div>
 
             <div className="flex flex-col">
-                <p className="text-bigger font-semiBold mt-[15px] mb-5">{t('Product added to comparison.')}</p>
+                <p className="text-bigger font-semiBold mb-5 mt-[15px]">{t('Product added to comparison.')}</p>
                 <ExtendedNextLink href={productComparisonUrl} type="comparison">
                     <Button>
                         <span>{t('Show products comparison')}</span>

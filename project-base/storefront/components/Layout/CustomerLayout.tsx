@@ -29,7 +29,7 @@ export const CustomerLayout: FC<CustomerLayoutProps> = ({ pageHeading, children,
                     ]}
                 />
             </Webline>
-            <Webline className="flex lg:flex-row flex-col gap-6 mt-8 lg:mt-4 vl:mt-12">
+            <Webline className="mt-8 flex flex-col gap-6 lg:mt-4 lg:flex-row vl:mt-12">
                 <UserNavigation />
                 <div className="w-full">
                     {pageHeading && <h1 className={isUserLoggedIn ? '' : 'mt-0 vl:mt-4'}>{pageHeading}</h1>}

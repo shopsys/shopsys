@@ -96,13 +96,13 @@ export const CustomerUsersTable: FC = () => {
     return (
         <Table className="w-full border-0 p-0">
             {customerUsers.map((user) => (
-                <Row key={user.uuid} className="bg-tableBackground odd:bg-tableBackgroundContrast border-none">
+                <Row key={user.uuid} className="border-none bg-tableBackground odd:bg-tableBackgroundContrast">
                     <Cell className="py-2 text-left text-sm font-bold uppercase leading-5">
                         {user.firstName} {user.lastName} {currentCustomerUserUuid === user.uuid && `(${t('You')})`}
                     </Cell>
 
-                    <Cell className="py-2 text-left text-sm hidden vl:table-cell">{user.email}</Cell>
-                    <Cell align="right" className="flex justify-end gap-2 py-2 text-sm">
+                    <Cell className="hidden py-2 text-left text-sm leading-5 vl:table-cell">{user.email}</Cell>
+                    <Cell align="right" className="flex justify-end gap-2 py-2 text-sm leading-5">
                         <Button size="small" variant="inverted" onClick={(e) => openManageCustomerUserPopup(e, user)}>
                             <EditIcon className="size-4" /> <span className="hidden sm:block">{t('Edit')}</span>
                         </Button>

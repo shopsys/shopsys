@@ -7,7 +7,7 @@ export const SkeletonPageCustomerAccount: FC = () => (
         <SkeletonModuleBreadcrumbs count={2} />
         <Skeleton className="mb-4 h-11 w-60 lg:mb-4" containerClassName="flex justify-center" />
 
-        <div className="mb-5 flex flex-col md:grid md:grid-cols-4 gap-5">
+        <div className="mb-5 flex flex-col gap-5 md:grid md:grid-cols-4">
             <Skeleton className="h-16 w-full" />
             <Skeleton className="h-16 w-full" />
             <Skeleton className="h-16 w-full" />

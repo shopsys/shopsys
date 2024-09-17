@@ -14,7 +14,7 @@ export const ProductComparisonHeadSticky: FC<ProductComparisonHeadStickyProps> =
     return (
         <div
             className={twJoin(
-                'fixed top-0 left-0 z-menu w-full overflow-hidden border-b-2 border-borderAccentLess bg-tableBackgroundContrast px-5',
+                'fixed left-0 top-0 z-menu w-full overflow-hidden border-b-2 border-borderAccentLess bg-tableBackgroundContrast px-5',
                 tableStickyHeadActive ? 'flex' : 'hidden',
             )}
         >
@@ -23,7 +23,7 @@ export const ProductComparisonHeadSticky: FC<ProductComparisonHeadStickyProps> =
                 {props.comparedProducts.map((product, index) => (
                     <div
                         key={`headSticky-${product.uuid}`}
-                        className="border-r-1 flex min-w-[calc(182px+12px*2)] max-w-[calc(182px+12px*2)] shrink-0 basis-64 items-center py-3 px-1 sm:min-w-[calc(205px+20px*2)] sm:max-w-[calc(205px+20px*2)]"
+                        className="border-r-1 flex min-w-[calc(182px+12px*2)] max-w-[calc(182px+12px*2)] shrink-0 basis-64 items-center px-1 py-3 sm:min-w-[calc(205px+20px*2)] sm:max-w-[calc(205px+20px*2)]"
                         style={index === 0 ? { marginLeft: -props.tableMarginLeft } : undefined}
                     >
                         <a className="relative h-16 w-16" href={product.slug}>

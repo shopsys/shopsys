@@ -49,7 +49,7 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className
                     </Fragment>
                 ))}
 
-                <span className="hidden font-semibold text-[13px] lg:inline-block" tid={TIDs.breadcrumbs_tail}>
+                <span className="hidden text-[13px] font-semibold lg:inline-block" tid={TIDs.breadcrumbs_tail}>
                     {lastBreadcrumb.name}
                 </span>
             </div>
@@ -58,8 +58,8 @@ export const Breadcrumbs: FC<BreadcrumbsProps> = ({ breadcrumbs, type, className
 };
 
 export const BreadcrumbsSpan: FC = ({ tid }) => (
-    <span className="hidden text-borderAccent lg:flex items-center" tid={tid}>
-        <ArrowIcon className="-rotate-90 w-2.5" />
+    <span className="hidden items-center text-borderAccent lg:flex" tid={tid}>
+        <ArrowIcon className="w-2.5 -rotate-90" />
     </span>
 );
 
@@ -70,7 +70,7 @@ const BreadcrumbsLink: FC<{ href: string; type?: FriendlyPagesTypesKey; skeleton
     children,
 }) => (
     <ExtendedNextLink
-        className="hidden font-secondary no-underline font-semibold text-[13px] last-of-type:inline lg:inline hover:no-underline"
+        className="hidden font-secondary text-[13px] font-semibold no-underline last-of-type:inline hover:no-underline lg:inline"
         href={href}
         skeletonType={skeletonType}
         type={type}

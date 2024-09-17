@@ -29,11 +29,11 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
         <>
             <div
                 className={twJoin(
-                    'flex flex-col vl:flex-row gap-3 vl:gap-5 first:border-none vl:items-center first:pt-0 last:pb-0',
+                    'flex flex-col gap-3 first:border-none first:pt-0 last:pb-0 vl:flex-row vl:items-center vl:gap-5',
                 )}
             >
                 <Image alt={orderItem.name} height={60} src={orderItem.product?.mainImage?.url} width={60} />
-                <div className="w-full flex flex-col vl:flex-row flex-wrap justify-between gap-3 vl:gap-5 last:border-none border-b border-b-borderLess vl:items-center">
+                <div className="flex w-full flex-col flex-wrap justify-between gap-3 border-b border-b-borderLess last:border-none vl:flex-row vl:items-center vl:gap-5">
                     <ExtendedNextLink className="w-fit" href={orderItem.product?.slug ?? ''} type="product">
                         {orderItem.name}
                     </ExtendedNextLink>
@@ -61,7 +61,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                 {t('Description')}: <span className="font-bold">{complaintItem.description}</span>
             </div>
 
-            <ul className="flex w-full items-center gap-2 mt-2">
+            <ul className="mt-2 flex w-full items-center gap-2">
                 {complaintItem.files?.map((file, index) => {
                     const isWithAdditionalImages =
                         index === galleryLastShownItemIndex && galleryAdditionalItemsCount > 0;
@@ -75,14 +75,14 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                         <li
                             key={index}
                             className={twJoin(
-                                'flex w-1/5 cursor-pointer items-center justify-center sm:h-16 vl:w-auto hover:outline outline-borderAccent rounded-lg outline-1',
+                                'flex w-1/5 cursor-pointer items-center justify-center rounded-lg outline-1 outline-borderAccent hover:outline sm:h-16 vl:w-auto',
                                 isWithAdditionalImages && 'relative',
                             )}
                             onClick={() => setSelectedGalleryItemIndex(imagePosition)}
                         >
                             <Image
                                 alt={file.anchorText || `${orderItem.name}-${index}`}
-                                className="bg-backgroundMore aspect-square max-h-full object-contain mix-blend-multiply p-1 rounded-md"
+                                className="aspect-square max-h-full rounded-md bg-backgroundMore object-contain p-1 mix-blend-multiply"
                                 hash={file.url.split('?')[1]}
                                 height={90}
                                 src={file.url.split('?')[0]}
@@ -90,7 +90,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                             />
 
                             {isWithAdditionalImages && (
-                                <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center bg-imageOverlay text-lg font-bold rounded-lg">
+                                <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center rounded-lg bg-imageOverlay text-lg font-bold">
                                     +{galleryAdditionalItemsCount}
                                 </div>
                             )}

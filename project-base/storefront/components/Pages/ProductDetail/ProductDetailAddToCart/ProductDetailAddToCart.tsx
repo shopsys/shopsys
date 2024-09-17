@@ -65,7 +65,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
                         />
                         <div className="ml-2 flex-1">
                             <Button
-                                className="whitespace-nowrap px-4 sm:px-8 w-fit h-12"
+                                className="h-12 w-fit whitespace-nowrap px-4 sm:px-8"
                                 isDisabled={isAddingToCart}
                                 tid={TIDs.pages_productdetail_addtocart_button}
                                 onClick={onAddToCartHandler}

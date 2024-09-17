@@ -7,12 +7,12 @@ export const SkeletonModuleCustomerComplaintNew: FC = () => (
         <div className="w-full">
             <div className="flex">
                 <div className="flex w-full flex-col">
-                    <Skeleton className="h-11 w-72 mb-4" />
-                    <Skeleton className="h-10 w-full mb-4" />
+                    <Skeleton className="mb-4 h-11 w-72" />
+                    <Skeleton className="mb-4 h-10 w-full" />
 
-                    <Skeleton className="h-36 w-full mb-5" />
-                    <Skeleton className="h-36 w-full mb-5" />
-                    <Skeleton className="h-36 w-full mb-5" />
+                    <Skeleton className="mb-5 h-36 w-full" />
+                    <Skeleton className="mb-5 h-36 w-full" />
+                    <Skeleton className="mb-5 h-36 w-full" />
                 </div>
             </div>
         </div>

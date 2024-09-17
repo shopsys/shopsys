@@ -14,7 +14,7 @@ export const FilterGroupInStock: FC<FilterGroupInStockProps> = ({ inStockCount }
     const { updateFilterInStockQuery } = useUpdateFilterQuery();
 
     return (
-        <div className="bg-backgroundMore p-5 py-2.5 rounded-md">
+        <div className="rounded-md bg-backgroundMore p-5 py-2.5">
             <Checkbox
                 count={inStockCount}
                 id="onlyInStock"

@@ -29,7 +29,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
                     value={value}
                     // class "peer" is used for styling in LabelWrapper
                     className={twJoin(
-                        'peer w-full resize-y appearance-none rounded-md border-2 border-inputBorder hover:border-inputBorderHovered focus:border-inputTextActive bg-inputBackground py-5 px-[10px] text-inputText font-bold placeholder:opacity-0 focus:outline-none disabled:pointer-events-none disabled:cursor-no-drop disabled:opacity-50',
+                        'peer w-full resize-y appearance-none rounded-md border-2 border-inputBorder bg-inputBackground px-[10px] py-5 font-bold text-inputText placeholder:opacity-0 hover:border-inputBorderHovered focus:border-inputTextActive focus:outline-none disabled:pointer-events-none disabled:cursor-no-drop disabled:opacity-50',
                         '[&:-internal-autofill-selected]:!bg-inputBackground [&:-internal-autofill-selected]:!shadow-inner [&:-webkit-autofill]:!bg-inputBackground [&:-webkit-autofill]:!shadow-inner [&:-webkit-autofill]:hover:!bg-inputBackgroundHovered [&:-webkit-autofill]:hover:!shadow-inner [&:-webkit-autofill]:focus:!bg-inputBackgroundActive [&:-webkit-autofill]:focus:!shadow-inner',
                         hasError && 'border-inputError shadow-none',
                     )}

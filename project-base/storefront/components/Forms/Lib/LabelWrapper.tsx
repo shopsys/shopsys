@@ -79,7 +79,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                         {inputType === 'checkbox' ? (
                             <CheckmarkIcon
                                 className={twMergeCustom(
-                                    'h-full opacity-0 transition text-inputTextInverted',
+                                    'h-full text-inputTextInverted opacity-0 transition',
                                     checked && 'opacity-100',
                                     disabled && 'text-inputTextDisabled',
                                 )}
@@ -95,12 +95,10 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                     </div>
                 )}
 
-                <div className="w-full flex justify-between">
+                <div className="flex w-full justify-between">
                     <div className="w-full">{label}</div>
-                    {required && (
-                        <div className="ml-0.5 text-textError text-2xl leading-none font-bold font-default">*</div>
-                    )}
-                    {!!count && !checked && <div className="text-inputPlaceholder font-normal ml-auto">({count})</div>}
+                    {required && <div className="ml-1 text-textError">*</div>}
+                    {!!count && !checked && <div className="ml-auto font-normal text-inputPlaceholder">({count})</div>}
                 </div>
             </label>
         )}

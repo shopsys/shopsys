@@ -13,9 +13,9 @@ export const DropdownMenuListItem: FC<DropdownMenuListProps> = ({ navigationItem
     const isWithChildren = !!navigationItem.children?.length;
 
     return (
-        <div key={navigationItem.link} className="flex py-3 border-b border-borderAccent last:border-b-0">
+        <div key={navigationItem.link} className="flex border-b border-borderAccent py-3 last:border-b-0">
             <ExtendedNextLink
-                className="flex-1 font-bold text-text no-underline uppercase"
+                className="flex-1 font-bold uppercase text-text no-underline"
                 href={navigationItem.link}
                 skeletonType={DEFAULT_SKELETON_TYPE}
                 onClick={onNavigate}

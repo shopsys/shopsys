@@ -9,7 +9,7 @@ export const ProductFlag: FC<ProductFlagProps> = ({ name, rgbColor }) => {
         <div
             style={{ backgroundColor: rgbColor || '#cdb3ff' }}
             className={twJoin(
-                'inline-flex rounded py-1 px-2 text-xs text-text z-flag',
+                'z-flag inline-flex rounded px-2 py-1 text-xs text-text',
                 tinycolor(rgbColor).isDark() && 'text-textInverted',
             )}
         >

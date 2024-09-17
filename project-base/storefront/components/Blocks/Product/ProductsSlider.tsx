@@ -158,7 +158,7 @@ type SliderButtonProps = { type?: 'prev' | 'next'; onClick: () => void; isDisabl
 
 const SliderButton: FC<SliderButtonProps> = ({ type, isDisabled, onClick, title }) => (
     <button
-        className="cursor-pointer disabled:cursor-auto rounded border-none p-1 outline-none transition text-text hover:text-textAccent disabled:text-textDisabled"
+        className="cursor-pointer rounded border-none p-1 text-text outline-none transition hover:text-textAccent disabled:cursor-auto disabled:text-textDisabled"
         disabled={isDisabled}
         title={title}
         onClick={onClick}

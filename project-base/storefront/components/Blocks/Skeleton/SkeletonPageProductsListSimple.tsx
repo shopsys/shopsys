@@ -20,7 +20,7 @@ export const SkeletonPageProductsListSimple: FC = () => (
                     <Skeleton className="h-10 rounded lg:w-20 " />
                 </div>
 
-                <div className="mt-10 mb-8 flex flex-wrap justify-between gap-2 vl:hidden">
+                <div className="mb-8 mt-10 flex flex-wrap justify-between gap-2 vl:hidden">
                     <Skeleton className="h-12 w-40" />
                     <Skeleton className="h-12 w-32" />
                 </div>

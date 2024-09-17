@@ -90,19 +90,19 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
     };
 
     return (
-        <div className="grid vl:grid-cols-2 w-full gap-4">
+        <div className="grid w-full gap-4 vl:grid-cols-2">
             {deliveryAddresses.map((address) => (
                 <div
                     key={address.uuid}
                     className={twJoin(
-                        'relative flex w-full justify-between rounded-md bg-background border-2 border-borderAccentLess p-4',
+                        'relative flex w-full justify-between rounded-md border-2 border-borderAccentLess bg-background p-4',
                         defaultDeliveryAddress?.uuid === address.uuid
                             ? 'border-borderAccent bg-backgroundAccentLess'
                             : 'cursor-pointer',
                     )}
                     onClick={() => setDefaultItemHandler(address.uuid)}
                 >
-                    <div className="flex flex-col w-full">
+                    <div className="flex w-full flex-col">
                         <strong className="mr-1">
                             {address.firstName} {address.lastName}
                         </strong>
@@ -112,12 +112,12 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                         </span>
                         <span>{address.country.name}</span>
                         {address.telephone && (
-                            <div className="flex gap-2 items-center">
+                            <div className="flex items-center gap-2">
                                 {address.telephone}
                                 <PhoneIcon className="w-4" />
                             </div>
                         )}
-                        <div className="flex space-between gap-2 mt-auto pt-2">
+                        <div className="space-between mt-auto flex gap-2 pt-2">
                             <Button
                                 className="flex-1"
                                 size="small"

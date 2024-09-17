@@ -16,13 +16,13 @@ export const SkeletonModuleProductsList: FC<SkeletonModuleProductsListProps> = (
     <div>
         {!isWithoutDescription && (
             <div className="flex w-full flex-col">
-                <Skeleton className="h-11 w-1/4 mb-5" />
-                <Skeleton className="h-32 w-full mb-7" />
+                <Skeleton className="mb-5 h-11 w-1/4" />
+                <Skeleton className="mb-7 h-32 w-full" />
             </div>
         )}
 
         {isWithoutNavigation && (
-            <div className="my-7 grid md:grid-cols-3 lg:grid-cols-4 vl:grid-cols-5 gap-2">
+            <div className="my-7 grid gap-2 md:grid-cols-3 lg:grid-cols-4 vl:grid-cols-5">
                 {createEmptyArray(5).map((_, index) => (
                     <Skeleton key={index} className="h-20 w-full" />
                 ))}
@@ -35,7 +35,7 @@ export const SkeletonModuleProductsList: FC<SkeletonModuleProductsListProps> = (
             <div className="w-full">
                 <div className="flex">
                     <div className="flex w-full flex-col">
-                        <Skeleton className="h-96 w-full mb-5" />
+                        <Skeleton className="mb-5 h-96 w-full" />
 
                         <div className="mb-10 flex flex-wrap justify-between gap-2 vl:hidden">
                             <Skeleton className="h-12 w-40" />

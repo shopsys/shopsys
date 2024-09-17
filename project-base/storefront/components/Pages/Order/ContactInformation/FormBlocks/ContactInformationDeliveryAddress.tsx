@@ -94,7 +94,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                     render={(radiobutton, key) => (
                                         <div
                                             key={key}
-                                            className="relative mt-4 flex w-full flex-wrap rounded p-5 bg-background border-2 border-borderAccent"
+                                            className="relative mt-4 flex w-full flex-wrap rounded border-2 border-borderAccent bg-background p-5"
                                         >
                                             {radiobutton}
                                         </div>

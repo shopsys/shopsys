@@ -26,7 +26,7 @@ const Index: FC = () => {
                 className="relative mb-8"
                 wrapperClassName="bg-gradient-to-tr from-backgroundBrand to-backgroundBrandLess"
             >
-                <div className="flex flex-wrap items-center gap-y-3 py-3 gap-x-1 lg:gap-x-7 lg:pb-5 lg:pt-6">
+                <div className="flex flex-wrap items-center gap-x-1 gap-y-3 py-3 lg:gap-x-7 lg:pb-5 lg:pt-6">
                     <Logo />
 
                     <div className="order-6 h-12 w-full transition lg:relative lg:order-4 lg:w-full vl:order-2 vl:flex-1">
@@ -48,7 +48,7 @@ const Index: FC = () => {
                     <div className="mb-2 text-left text-xs font-semibold text-textAccent">
                         {new Date().toLocaleDateString() + ''}
                     </div>
-                    <GrapesJs className="gjs-editable pt-4 pb-4" />
+                    <GrapesJs className="gjs-editable pb-4 pt-4" />
                 </div>
             </Webline>
 

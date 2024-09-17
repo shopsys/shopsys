@@ -9,7 +9,7 @@ type InformationCardProps = {
 export const InformationCard: FC<InformationCardProps> = ({ children, icon, heading, className }) => {
     return (
         <div className={twMergeCustom('flex gap-4', className)}>
-            <div className="flex aspect-square min-h-[72px] min-w-[72px] h-[72px] w-[72px] items-center justify-center rounded-full bg-backgroundMore [&>svg]:h-12 [&>svg]:w-12 [&>svg]:text-backgroundAccent">
+            <div className="flex aspect-square h-[72px] min-h-[72px] w-[72px] min-w-[72px] items-center justify-center rounded-full bg-backgroundMore [&>svg]:h-12 [&>svg]:w-12 [&>svg]:text-backgroundAccent">
                 {icon}
             </div>
 

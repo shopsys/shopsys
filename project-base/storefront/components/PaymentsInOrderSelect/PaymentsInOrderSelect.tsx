@@ -85,7 +85,7 @@ export const PaymentsInOrderSelect: FC<PaymentsInOrderSelectProps> = ({
                             ? t('Repeat payment or change your payment method')
                             : t('Change order payment')}
                     </h4>
-                    <div className="flex flex-col w-full bg-backgroundMore rounded-md overflow-hidden">
+                    <div className="flex w-full flex-col overflow-hidden rounded-md bg-backgroundMore">
                         <ul className="w-full">
                             {isPaymentByCardAvailable && (
                                 <PaymentsInOrderSelectItem

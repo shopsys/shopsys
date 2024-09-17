@@ -60,7 +60,7 @@ export const ContactInformationEmail: FC = () => {
                 }}
             />
             {isCustomerUserRegisteredData?.isCustomerUserRegistered && !isUserLoggedIn && (
-                <div className="flex flex-col gap-2 mt-4">
+                <div className="mt-4 flex flex-col gap-2">
                     <span>{t('User with this email is already registered')}</span>
                     <Button
                         className="w-fit"

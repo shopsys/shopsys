@@ -123,7 +123,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid,
     };
 
     return (
-        <Popup className="w-11/12 lg:w-4/5 overflow-x-auto">
+        <Popup className="w-11/12 overflow-x-auto lg:w-4/5">
             <FormProvider {...formProviderMethods}>
                 <Form onSubmit={formProviderMethods.handleSubmit(createComplaintHandler)}>
                     <FormContentWrapper>
@@ -216,7 +216,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid,
                                     render={(radiobutton, key) => (
                                         <div
                                             key={key}
-                                            className="relative flex w-full flex-wrap rounded p-5 bg-background border-2 border-borderAccent"
+                                            className="relative flex w-full flex-wrap rounded border-2 border-borderAccent bg-background p-5"
                                         >
                                             {radiobutton}
                                         </div>
@@ -350,7 +350,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid,
                                 <SubmitButton>
                                     {isSubmitting ? (
                                         <>
-                                            <Loader className="w-4 h-4" /> {t('Sending...')}
+                                            <Loader className="h-4 w-4" /> {t('Sending...')}
                                         </>
                                     ) : (
                                         t('Send complaint')

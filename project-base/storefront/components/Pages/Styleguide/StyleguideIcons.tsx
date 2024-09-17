@@ -30,9 +30,9 @@ export const StyleguideIcons: FC<StyleguideIconsProps> = ({ iconList }) => {
     }, []);
 
     return (
-        <StyleguideSection className="md:columns-2 lg:columns-3 gap-3" title="Icons">
+        <StyleguideSection className="gap-3 md:columns-2 lg:columns-3" title="Icons">
             {icons?.map(({ Icon, name }, index) => (
-                <div key={index} className="flex gap-3 items-center mt-3 first:mt-0">
+                <div key={index} className="mt-3 flex items-center gap-3 first:mt-0">
                     <Icon className="w-10" />
                     <span>{name}</span>
                 </div>

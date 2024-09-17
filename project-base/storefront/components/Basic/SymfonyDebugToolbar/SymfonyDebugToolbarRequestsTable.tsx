@@ -45,7 +45,7 @@ export const RequestsTable: FC<RequestsTableProps> = ({ responses }) => {
 };
 
 const TableHeaderCell: FC = ({ children }) => (
-    <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider bg-tableBackgroundHeader text-tableTextHeader">
+    <th className="bg-tableBackgroundHeader px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-tableTextHeader">
         {children}
     </th>
 );

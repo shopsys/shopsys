@@ -27,7 +27,7 @@ export const MenuIconic: FC = () => {
 
     return (
         <ul className="flex lg:gap-7">
-            <MenuIconicItem className="max-lg:hidden flex">
+            <MenuIconicItem className="flex max-lg:hidden">
                 <MenuIconicItemLink href={storesUrl} type="stores">
                     <MarkerIcon className="size-6" />
                     {t('Stores')}

@@ -23,7 +23,7 @@ type CellProps = {
 };
 
 export const Row: FC = ({ children, className }) => (
-    <tr className={twMergeCustom('bg-tableBackground odd:bg-tableBackgroundContrast text-tableText', className)}>
+    <tr className={twMergeCustom('bg-tableBackground text-tableText odd:bg-tableBackgroundContrast', className)}>
         {children}
     </tr>
 );

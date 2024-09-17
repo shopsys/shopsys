@@ -43,7 +43,7 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
                 <Image alt="footer logo" src={imageLogo} />
             </a>
             <ExtendedNextLink
-                className="self-center text-greyLight no-underline transition hover:text-whitesmoke hover:no-underline"
+                className="text-greyLight hover:text-whitesmoke self-center no-underline transition hover:no-underline"
                 href={userConsentUrl}
             >
                 {t('User consent update')}

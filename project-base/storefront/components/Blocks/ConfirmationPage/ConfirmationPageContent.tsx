@@ -11,7 +11,7 @@ type ConfirmationPageContentProps = {
 
 export const ConfirmationPageContent: FC<ConfirmationPageContentProps> = ({ heading, content, AdditionalContent }) => {
     return (
-        <div className="mt-16 mb-10 flex flex-col items-center justify-center lg:mt-16 lg:mb-24 lg:flex-row lg:items-start">
+        <div className="mb-10 mt-16 flex flex-col items-center justify-center lg:mb-24 lg:mt-16 lg:flex-row lg:items-start">
             <div className="mb-0 w-40 lg:mr-32">
                 <Image alt={heading} src={sentCartImage} />
             </div>

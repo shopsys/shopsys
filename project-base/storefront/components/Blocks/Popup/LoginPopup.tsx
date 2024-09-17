@@ -24,8 +24,8 @@ export const LoginPopup: FC<LoginFormProps> = ({ defaultEmail, shouldOverwriteCu
                     />
                 </div>
 
-                <div className="mt-7 w-full lg:mt-0 lg:w-1/2 lg:pl-5 flex flex-col">
-                    <div className="mb-6 -mr-4 flex w-full justify-between rounded-l bg-backgroundAccentLess p-4">
+                <div className="mt-7 flex w-full flex-col lg:mt-0 lg:w-1/2 lg:pl-5">
+                    <div className="-mr-4 mb-6 flex w-full justify-between rounded-l bg-backgroundAccentLess p-4">
                         <p className="text-lg text-textAccent lg:text-xl">
                             {t("Don't have an account yet? Register.")}
                         </p>

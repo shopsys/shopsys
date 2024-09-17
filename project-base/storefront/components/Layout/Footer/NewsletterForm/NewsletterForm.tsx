@@ -69,7 +69,7 @@ export const NewsletterForm: FC = () => {
 
                             <div className="flex flex-col">
                                 <SubmitButton
-                                    className="max-lg:mt-3 lg:ml-3 py-0 h-12"
+                                    className="h-12 py-0 max-lg:mt-3 lg:ml-3"
                                     isWithDisabledLook={!formProviderMethods.formState.isValid}
                                     variant="inverted"
                                 >

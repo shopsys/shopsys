@@ -50,7 +50,7 @@ export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> =
 
     return (
         <Webline className="flex flex-col items-center">
-            <h1 className="max-w-3xl w-full">{t('Personal data overview')}</h1>
+            <h1 className="w-full max-w-3xl">{t('Personal data overview')}</h1>
             {contentSiteText && (
                 <div className="max-w-3xl [&_section]:mb-5 [&_section]:block [&_section]:text-justify ">
                     <UserText htmlContent={contentSiteText} />
@@ -58,7 +58,7 @@ export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> =
             )}
             <FormProvider {...formProviderMethods}>
                 <Form
-                    className="w-full flex justify-center"
+                    className="flex w-full justify-center"
                     onSubmit={formProviderMethods.handleSubmit(onPersonalDataOverviewHandler)}
                 >
                     <FormContentWrapper>

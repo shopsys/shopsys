@@ -44,7 +44,7 @@ export const SearchInput: FC<SearchInputProps> = ({
                 value={value}
                 className={twMergeCustom(
                     // class "peer" is used for styling in LabelWrapper
-                    'peer mb-0 h-12 w-full rounded-md border-2 border-inputBackground bg-inputBackground pr-20 pl-11 text-inputText placeholder:text-inputPlaceholder',
+                    'peer mb-0 h-12 w-full rounded-md border-2 border-inputBackground bg-inputBackground pl-11 pr-20 text-inputText placeholder:text-inputPlaceholder',
                     '[&:-internal-autofill-selected]:!bg-inputBackground [&:-internal-autofill-selected]:!shadow-inner [&:-webkit-autofill]:!bg-inputBackground [&:-webkit-autofill]:!shadow-inner',
                     '[&:-webkit-autofill]:hover:!bg-inputBackgroundHovered [&:-webkit-autofill]:hover:!shadow-inner',
                     '[&:-webkit-autofill]:focus:!bg-inputBackgroundActive [&:-webkit-autofill]:focus:!shadow-inner',
@@ -58,7 +58,7 @@ export const SearchInput: FC<SearchInputProps> = ({
             />
 
             <button
-                className="absolute flex items-center left-3 top-1/2 -translate-y-1/2"
+                className="absolute left-3 top-1/2 flex -translate-y-1/2 items-center"
                 title={t('Search')}
                 type="submit"
                 onClick={onSearch}

@@ -15,7 +15,7 @@ export const OrderPaymentStatusBar: FC<OrderPaymentStatusBarProps> = ({ orderPay
             {orderPaymentType === PaymentTypeEnum.GoPay && (
                 <div
                     className={twMergeCustom(
-                        'p-2 rounded-md flex gap-2',
+                        'flex gap-2 rounded-md p-2',
                         orderIsPaid ? 'bg-backgroundSuccess text-textInverted' : 'bg-backgroundWarning',
                         className,
                     )}

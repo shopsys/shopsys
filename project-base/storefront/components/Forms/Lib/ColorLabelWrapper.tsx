@@ -36,12 +36,12 @@ export const ColorLabelWrapper: FC<ColorLabelWrapperProps> = ({
             <div
                 style={{ backgroundColor: bgColor }}
                 className={twMergeCustom(
-                    'flex size-7 border border-text bg-inputBackground justify-center transition rounded shrink-0',
+                    'flex size-7 shrink-0 justify-center rounded border border-text bg-inputBackground transition',
                     checked
                         ? 'border-text'
                         : 'group-hover:border-inputBorderHovered group-active:border-inputBorderHovered',
                     disabled &&
-                        'border-inputBorderDisabled outline-0 group-hover:border-inputBorderDisabled group-hover:bg-inputBorderDisabled group-active:border-inputBorderDisabled group-active:outline-0 active:scale-100',
+                        'border-inputBorderDisabled outline-0 active:scale-100 group-hover:border-inputBorderDisabled group-hover:bg-inputBorderDisabled group-active:border-inputBorderDisabled group-active:outline-0',
                     disabled && checked && 'bg-inputBorderDisabled group-hover:bg-inputBorderDisabled',
                 )}
             >
@@ -54,9 +54,9 @@ export const ColorLabelWrapper: FC<ColorLabelWrapperProps> = ({
                     )}
                 />
             </div>
-            <div className="w-full flex justify-between">
+            <div className="flex w-full justify-between">
                 <div className="w-full">{label}</div>
-                {!!count && !checked && <div className="text-inputPlaceholder font-normal ml-auto">({count})</div>}
+                {!!count && !checked && <div className="ml-auto font-normal text-inputPlaceholder">({count})</div>}
             </div>
         </label>
     </div>

@@ -20,12 +20,12 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
     const [customerComplaintDetailUrl] = getInternationalizedStaticUrls(['/customer/complaint-detail'], url);
 
     return (
-        <div className="bg-backgroundMore flex flex-col gap-5 rounded-md p-4 vl:p-6">
-            <div className="flex flex-col vl:flex-row vl:justify-between vl:items-start gap-4">
+        <div className="flex flex-col gap-5 rounded-md bg-backgroundMore p-4 vl:p-6">
+            <div className="flex flex-col gap-4 vl:flex-row vl:items-start vl:justify-between">
                 <Image
                     priority
                     alt={complaintItem.items[0].orderItem?.product?.mainImage?.name || ''}
-                    className="max-h-full object-contain h-[80px] w-[80px]"
+                    className="h-[80px] max-h-full w-[80px] object-contain"
                     height={80}
                     sizes="(max-width: 768px) 100vw, 50vw"
                     src={complaintItem.items[0].orderItem?.product?.mainImage?.url}
@@ -41,7 +41,7 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
                             complaintItem.items[0].orderItem?.name
                         )}
                     </h5>
-                    <div className="flex gap-x-8 gap-y-2 flex-wrap">
+                    <div className="flex flex-wrap gap-x-8 gap-y-2">
                         <ComplaintItemColumnInfo
                             title={t('Complaint number')}
                             value={
@@ -67,9 +67,9 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
                         />
                     </div>
                 </div>
-                <div className="flex gap-2 items-center md:ml-auto">
+                <div className="flex items-center gap-2 md:ml-auto">
                     <LinkButton
-                        className="w-full md:w-auto whitespace-nowrap"
+                        className="w-full whitespace-nowrap md:w-auto"
                         size="small"
                         type="complaintDetail"
                         href={{
@@ -99,7 +99,7 @@ const ComplaintItemColumnInfo: FC<ComplaintItemColumnInfoProps> = ({
     wrapperClassName,
 }) => {
     return (
-        <div className={twMergeCustom('flex gap-4 items-end', wrapperClassName)}>
+        <div className={twMergeCustom('flex items-end gap-4', wrapperClassName)}>
             <div className="flex flex-col gap-1">
                 <span className="text-sm">{title}</span>
                 <span className={twMergeCustom('font-bold leading-none', valueClassName)}>{value}</span>

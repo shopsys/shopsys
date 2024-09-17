@@ -82,7 +82,7 @@ export const OpeningHours: FC<{ openingHours: StoreOrPacketeryPoint['openingHour
                         <div
                             key={dayOfWeek}
                             className={twJoin(
-                                'flex flex-row py-1.5 px-2.5 items-center gap-2 vl:gap-5',
+                                'flex flex-row items-center gap-2 px-2.5 py-1.5 vl:gap-5',
                                 isToday && 'bg-backgroundAccentLess',
                             )}
                         >

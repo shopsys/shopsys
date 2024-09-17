@@ -17,13 +17,13 @@ export const OrderDetailCustomerInfo: FC<OrderDetailCustomerInfoProps> = ({ orde
         order.transport.isPersonalPickup || isPacketeryTransport(order.transport.transportTypeCode);
 
     return (
-        <div className="flex w-full flex-col vl:flex-row vl:flex-wrap xl:flex-nowrap gap-6">
+        <div className="flex w-full flex-col gap-6 vl:flex-row vl:flex-wrap xl:flex-nowrap">
             <InformationCard heading={t('Contact information')} icon={<UserIcon className="[&>path]:stroke-1" />}>
                 <span>
                     {order.firstName} {order.lastName}
                 </span>
                 <ExtendedNextLink
-                    className="text-textAccent underline hover:text-greyDark hover:no-underline"
+                    className="hover:text-greyDark text-textAccent underline hover:no-underline"
                     href={`mailto:${order.email}`}
                 >
                     {order.email}

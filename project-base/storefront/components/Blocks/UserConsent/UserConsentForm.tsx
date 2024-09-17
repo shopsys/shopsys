@@ -88,7 +88,7 @@ export const UserConsentForm: FC<UserConsentFormProps> = ({ onSetCallback }) => 
                 render={(toggleSwitch) => <ToggleContent name={t('Preferences')} toggleSwitch={toggleSwitch} />}
             />
 
-            <div className="mt-10 mb-5 flex flex-wrap justify-end gap-3">
+            <div className="mb-5 mt-10 flex flex-wrap justify-end gap-3">
                 <Button size="small" onClick={saveUserConsentChoices}>
                     {t('Save choices')}
                 </Button>

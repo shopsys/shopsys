@@ -49,10 +49,10 @@ export const ResetPasswordContent: FC = () => {
 
     return (
         <Webline className="flex flex-col items-center">
-            <h1 className="max-w-3xl w-full">{t('Forgotten password')}</h1>
+            <h1 className="w-full max-w-3xl">{t('Forgotten password')}</h1>
             <FormProvider {...formProviderMethods}>
                 <Form
-                    className="w-full flex justify-center"
+                    className="flex w-full justify-center"
                     onSubmit={formProviderMethods.handleSubmit(onResetPasswordHandler)}
                 >
                     <FormContentWrapper>

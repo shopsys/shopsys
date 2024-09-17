@@ -13,9 +13,9 @@ export const SortingBarItem: FC<SortingBarItemProps> = ({ children, isActive, hr
         <a
             href={href}
             className={twMergeCustom(
-                'text-right vl:text-center font-secondary vl:relative py-4 vl:py-2.5 vl:px-5 uppercase text-xs font-bold underline text-link hover:text-linkHovered  vl:bg-backgroundMore vl:rounded-t-xl ',
+                'py-4 text-right font-secondary text-xs font-bold uppercase text-link underline hover:text-linkHovered vl:relative vl:rounded-t-xl vl:bg-backgroundMore vl:px-5  vl:py-2.5 vl:text-center ',
                 isActive &&
-                    'font-semibold text-text no-underline vl:bg-background vl:border vl:border-borderAccentLess vl:after:w-full vl:after:h-[2px] vl:after:bg-background vl:after:absolute vl:after:bottom-[-2px] vl:after:left-0',
+                    'font-semibold text-text no-underline vl:border vl:border-borderAccentLess vl:bg-background vl:after:absolute vl:after:bottom-[-2px] vl:after:left-0 vl:after:h-[2px] vl:after:w-full vl:after:bg-background',
             )}
             onClick={handleOnClick}
         >

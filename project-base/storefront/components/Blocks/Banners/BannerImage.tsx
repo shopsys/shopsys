@@ -12,7 +12,7 @@ export const BannerImage: FC<BannerImageProps> = ({ mobileSrc, desktopSrc, mobil
     <div className="relative h-[283px] w-full">
         <NextImage
             alt={desktopAlt}
-            className="hidden vl:block h-full w-full object-cover"
+            className="hidden h-full w-full object-cover vl:block"
             layout="fill"
             loader={({ src }) => `${src}?width=936`}
             objectFit="cover"
@@ -22,7 +22,7 @@ export const BannerImage: FC<BannerImageProps> = ({ mobileSrc, desktopSrc, mobil
         />
         <NextImage
             alt={mobileAlt}
-            className="block vl:hidden h-full w-full object-cover "
+            className="block h-full w-full object-cover vl:hidden "
             layout="fill"
             loader={({ src }) => `${src}?width=991`}
             objectFit="cover"

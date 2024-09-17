@@ -13,7 +13,7 @@ export const SimpleLayout: FC<SimpleLayoutProps> = ({ heading, children, standar
             children
         ) : (
             <div className="flex w-full justify-center">
-                <div className="my-7 w-full rounded bg-backgroundMore px-2 pt-5 pb-4 lg:w-[690px] lg:px-14 lg:pt-10 lg:pb-8">
+                <div className="my-7 w-full rounded bg-backgroundMore px-2 pb-4 pt-5 lg:w-[690px] lg:px-14 lg:pb-8 lg:pt-10">
                     {children}
                 </div>
             </div>

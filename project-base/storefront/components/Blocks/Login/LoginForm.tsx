@@ -84,7 +84,7 @@ export const LoginForm: FC<LoginFormProps> = ({
 
     return (
         <FormProvider {...formProviderMethods}>
-            <Form className="w-full flex justify-center" onSubmit={formProviderMethods.handleSubmit(onLoginHandler)}>
+            <Form className="flex w-full justify-center" onSubmit={formProviderMethods.handleSubmit(onLoginHandler)}>
                 <FormContentWrapper className={formContentWrapperClassName}>
                     <FormBlockWrapper>
                         <TextInputControlled
@@ -111,14 +111,14 @@ export const LoginForm: FC<LoginFormProps> = ({
                             }}
                         />
 
-                        <FormButtonWrapper className="mt-5 mb-5 flex flex-col items-center justify-between gap-4 lg:mb-0 lg:border-none lg:p-0">
+                        <FormButtonWrapper className="mb-5 mt-5 flex flex-col items-center justify-between gap-4 lg:mb-0 lg:border-none lg:p-0">
                             <FormButtonWrapper>
                                 <SubmitButton tid={TIDs.login_form_submit_button}>{t('Log-in')}</SubmitButton>
                             </FormButtonWrapper>
 
                             {settingsData?.settings?.socialNetworkLoginConfig !== undefined &&
                                 settingsData.settings.socialNetworkLoginConfig.length > 0 && (
-                                    <div className="flex gap-2 lg:order-2 w-full justify-center">
+                                    <div className="flex w-full justify-center gap-2 lg:order-2">
                                         {settingsData.settings.socialNetworkLoginConfig.map((socialNetwork) => (
                                             <SocialNetworkLoginLink
                                                 key={socialNetwork}
@@ -134,7 +134,7 @@ export const LoginForm: FC<LoginFormProps> = ({
                                     </div>
                                 )}
 
-                            <div className="lg:order-3 w-full flex justify-center items-center gap-1 whitespace-nowrap text-sm py-3">
+                            <div className="flex w-full items-center justify-center gap-1 whitespace-nowrap py-3 text-sm lg:order-3">
                                 <ExtendedNextLink href={resetPasswordUrl}>{t('Lost your password?')}</ExtendedNextLink>
                             </div>
                         </FormButtonWrapper>
@@ -148,7 +148,7 @@ export const LoginForm: FC<LoginFormProps> = ({
 const SocialNetworkLoginLink: FC<{ href: string; socialNetwork: TypeLoginTypeEnum }> = ({ href, socialNetwork }) => {
     return (
         <ExtendedNextLink
-            className="bg-background h-12 w-full shadow-md rounded flex justify-center items-center hover:shadow-greyLight"
+            className="hover:shadow-greyLight flex h-12 w-full items-center justify-center rounded bg-background shadow-md"
             href={href}
         >
             <SocialNetworkIcon socialNetwork={socialNetwork} />

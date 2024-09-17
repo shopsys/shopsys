@@ -36,7 +36,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
         <>
             <div
                 key={productName}
-                className="flex basis-1/2 flex-col items-start gap-6 vl:basis-3/5 vl:flex-row w-full"
+                className="flex w-full basis-1/2 flex-col items-start gap-6 vl:basis-3/5 vl:flex-row"
             >
                 <div
                     className={twJoin('relative flex w-full justify-center vl:order-2')}
@@ -75,7 +75,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
                                 <li
                                     key={index}
                                     className={twJoin(
-                                        'flex w-1/5 cursor-pointer items-center justify-center sm:h-16 vl:w-auto hover:outline outline-borderAccent rounded-lg outline-1',
+                                        'flex w-1/5 cursor-pointer items-center justify-center rounded-lg outline-1 outline-borderAccent hover:outline sm:h-16 vl:w-auto',
                                         (isWithAdditionalImages || isVideo) && 'relative',
                                     )}
                                     onClick={() => setSelectedGalleryItemIndex(index + 1)}
@@ -83,7 +83,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
                                     {isImage && (
                                         <Image
                                             alt={galleryItem.name || `${productName}-${index}`}
-                                            className="bg-backgroundMore aspect-square max-h-full object-contain mix-blend-multiply p-1 rounded-md"
+                                            className="aspect-square max-h-full rounded-md bg-backgroundMore object-contain p-1 mix-blend-multiply"
                                             height={90}
                                             src={galleryItemThumbnail?.url}
                                             tid={TIDs.product_gallery_image}
@@ -100,14 +100,14 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
                                                 src={`https://img.youtube.com/vi/${galleryItem.token}/1.jpg`}
                                                 width={90}
                                             />
-                                            <div className="absolute items-center justify-center bg-imageOverlay w-full h-full flex rounded-lg overflow-hidden">
+                                            <div className="absolute flex h-full w-full items-center justify-center overflow-hidden rounded-lg bg-imageOverlay">
                                                 <PlayIcon className="h-8 w-8 rounded-full text-textInverted" />
                                             </div>
                                         </>
                                     )}
 
                                     {isWithAdditionalImages && (
-                                        <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center bg-imageOverlay text-lg font-bold rounded-lg">
+                                        <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center rounded-lg bg-imageOverlay text-lg font-bold">
                                             +{galleryAdditionalItemsCount}
                                         </div>
                                     )}

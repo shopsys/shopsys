@@ -22,8 +22,8 @@ export const UserConsent: FC<{ url: string }> = ({ url }) => {
     }
 
     return (
-        <div className="fixed left-0 bottom-0 z-maximum flex w-full justify-end">
-            <div className="absolute right-4 bottom-3 w-[calc(100vw-32px)] max-w-lg rounded border-4 border-borderAccent bg-backgroundMore p-5 shadow-md">
+        <div className="fixed bottom-0 left-0 z-maximum flex w-full justify-end">
+            <div className="absolute bottom-3 right-4 w-[calc(100vw-32px)] max-w-lg rounded border-4 border-borderAccent bg-backgroundMore p-5 shadow-md">
                 <UserConsentForm onSetCallback={onSetCallback} />
             </div>
         </div>
