@@ -1,7 +1,7 @@
 import { Button } from 'components/Forms/Button/Button';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
-import { Form, FormBlockWrapper, FormButtonWrapper, FormHeading, FormContentWrapper } from 'components/Forms/Form/Form';
+import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
@@ -26,6 +26,7 @@ import { useSessionStore } from 'store/useSessionStore';
 import { CurrentCustomerType } from 'types/customer';
 import { CustomerChangeProfileFormType } from 'types/form';
 import { CombinedError } from 'urql';
+import { useCurrentCustomerUserPermissions } from 'utils/auth/useCurrentCustomerUserPermissions';
 import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
 import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 import { useErrorPopup } from 'utils/forms/useErrorPopup';
@@ -53,12 +54,13 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
     const [formProviderMethods] = useCustomerChangeProfileForm({
         ...currentCustomerUser,
         country: {
-            label: currentCustomerUser.country?.name ?? '',
-            value: currentCustomerUser.country?.code ?? '',
+            label: currentCustomerUser.country.name,
+            value: currentCustomerUser.country.code,
         },
     });
     const formMeta = useCustomerChangeProfileFormMeta(formProviderMethods);
     const countriesAsSelectOptions = useCountriesAsSelectOptions();
+    const { canManageProfile } = useCurrentCustomerUserPermissions();
 
     useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.other);
 
@@ -316,6 +318,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                         required: true,
                                         type: 'text',
                                         autoComplete: 'organization',
+                                        disabled: !canManageProfile,
                                     }}
                                 />
                                 <TextInputControlled
@@ -327,6 +330,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                         label: formMeta.fields.companyNumber.label,
                                         required: true,
                                         type: 'text',
+                                        disabled: !canManageProfile,
                                     }}
                                 />
                                 <TextInputControlled
@@ -338,6 +342,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                         label: formMeta.fields.companyTaxNumber.label,
                                         required: false,
                                         type: 'text',
+                                        disabled: !canManageProfile,
                                     }}
                                 />
                             </>
@@ -356,6 +361,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                 required: true,
                                 type: 'text',
                                 autoComplete: 'street-address',
+                                disabled: !canManageProfile,
                             }}
                         />
                         <FormColumn>
@@ -369,6 +375,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                     required: true,
                                     type: 'text',
                                     autoComplete: 'address-level2',
+                                    disabled: !canManageProfile,
                                 }}
                             />
                             <TextInputControlled
@@ -385,6 +392,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                     required: true,
                                     type: 'text',
                                     autoComplete: 'postal-code',
+                                    disabled: !canManageProfile,
                                 }}
                             />
                         </FormColumn>
@@ -396,6 +404,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                                         <Select
                                             required
                                             hasError={invalid}
+                                            isDisabled={!canManageProfile}
                                             label={formMeta.fields.country.label}
                                             options={countriesAsSelectOptions}
                                             value={countriesAsSelectOptions.find(

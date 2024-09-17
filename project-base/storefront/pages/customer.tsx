@@ -33,7 +33,13 @@ const CustomerPage: FC = () => {
 export const getServerSideProps = getServerSidePropsWrapper(
     ({ redisClient, domainConfig, t }) =>
         async (context) =>
-            initServerSideProps({ context, authenticationRequired: true, redisClient, domainConfig, t }),
+            initServerSideProps({
+                context,
+                authenticationConfig: { authenticationRequired: true },
+                redisClient,
+                domainConfig,
+                t,
+            }),
 );
 
 export default CustomerPage;

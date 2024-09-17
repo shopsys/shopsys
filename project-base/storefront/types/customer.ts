@@ -1,9 +1,20 @@
-import { TypeCountryFragment } from 'graphql/requests/countries/fragments/CountryFragment.generated';
-import { TypeLoginInfo } from 'graphql/types';
+import { TypeCountry, TypeCustomerUserRoleGroup, TypeLoginInfo } from 'graphql/types';
 
 export enum CustomerTypeEnum {
     CommonCustomer = 'commonCustomer',
     CompanyCustomer = 'companyCustomer',
+}
+
+export enum CustomerUserRoleEnum {
+    ROLE_API_ALL = 'ROLE_API_ALL',
+    ROLE_API_CUSTOMER_SELF_MANAGE = 'ROLE_API_CUSTOMER_SELF_MANAGE',
+    ROLE_API_LOGGED_CUSTOMER = 'ROLE_API_LOGGED_CUSTOMER',
+}
+
+export enum CustomerUserAreaEnum {
+    B2C = 'B2C',
+    B2B = 'B2B',
+    B2E = 'B2E',
 }
 
 export type DeliveryAddressType = {
@@ -15,7 +26,14 @@ export type DeliveryAddressType = {
     telephone: string;
     firstName: string;
     lastName: string;
-    country: TypeCountryFragment;
+    country: TypeCountry;
+};
+
+export type CustomerUserType = {
+    firstName: string;
+    lastName: string;
+    email: string;
+    telephone: string;
 };
 
 export type CurrentCustomerType = {
@@ -29,7 +47,7 @@ export type CurrentCustomerType = {
     street: string;
     city: string;
     postcode: string;
-    country: TypeCountryFragment | null;
+    country: TypeCountry;
     newsletterSubscription: boolean;
     companyName: string;
     companyNumber: string;
@@ -43,4 +61,6 @@ export type CurrentCustomerType = {
     hasPasswordSet: boolean;
     loginInfo: TypeLoginInfo;
     arePricesHidden: boolean;
+    roles: string[];
+    roleGroup: TypeCustomerUserRoleGroup;
 };

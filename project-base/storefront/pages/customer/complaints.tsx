@@ -109,7 +109,9 @@ export const getServerSideProps = getServerSidePropsWrapper(
 
             return initServerSideProps<TypeComplaintsQueryVariables>({
                 context,
-                authenticationRequired: true,
+                authenticationConfig: {
+                    authenticationRequired: true,
+                },
                 prefetchedQueries: [
                     {
                         query: ComplaintsQueryDocument,

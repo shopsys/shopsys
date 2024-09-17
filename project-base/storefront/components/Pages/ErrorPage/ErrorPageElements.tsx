@@ -1,5 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Button } from 'components/Forms/Button/Button';
+import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { twJoin } from 'tailwind-merge';
 
 type ErrorPageProps = { isWithoutImage?: boolean };
@@ -19,8 +20,12 @@ export const ErrorPageTextHeading: FC = ({ children }) => <div className="text-2
 
 export const ErrorPageTextMain: FC = ({ children }) => <div className="mt-4">{children}</div>;
 
-export const ErrorPageButtonLink: FC<{ href: string }> = ({ href, children }) => (
-    <ExtendedNextLink href={href}>
+export const ErrorPageButtonLink: FC<{ href: string; skeletonType?: PageType }> = ({
+    href,
+    children,
+    skeletonType,
+}) => (
+    <ExtendedNextLink href={href} skeletonType={skeletonType}>
         <Button className="mt-5">{children}</Button>
     </ExtendedNextLink>
 );

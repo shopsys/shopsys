@@ -161,6 +161,15 @@ export const cacheUpdates: UpdatesConfig = {
         ChangePaymentInOrder(_result, _args, cache) {
             invalidateFields(cache, ['order']);
         },
+        AddNewCustomerUser(_result, _args, cache) {
+            invalidateFields(cache, ['customerUsers', 'currentCustomerUser']);
+        },
+        EditCustomerUserPersonalData(_result, _args, cache) {
+            invalidateFields(cache, ['customerUsers', 'currentCustomerUser']);
+        },
+        RemoveCustomerUser(_result, _args, cache) {
+            invalidateFields(cache, ['customerUsers', 'currentCustomerUser']);
+        },
         CreateComplaint(_result, _args, cache) {
             invalidateFields(cache, ['complaints']);
         },

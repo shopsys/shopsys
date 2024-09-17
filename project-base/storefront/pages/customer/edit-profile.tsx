@@ -15,7 +15,7 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 const EditProfilePage: FC = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
-    const [customerEditProfileUrl] = getInternationalizedStaticUrls(['/customer/edit-profile'], url);
+    const [customerEditProfileUrl] = getInternationalizedStaticUrls(['/customer', '/customer/edit-profile'], url);
     const currentCustomerUserData = useCurrentCustomerData();
     const breadcrumbs: TypeBreadcrumbFragment[] = [
         { __typename: 'Link', name: t('Edit profile'), slug: customerEditProfileUrl },
@@ -44,7 +44,13 @@ const EditProfilePage: FC = () => {
 export const getServerSideProps = getServerSidePropsWrapper(
     ({ redisClient, domainConfig, t }) =>
         async (context) =>
-            initServerSideProps({ context, authenticationRequired: true, redisClient, domainConfig, t }),
+            initServerSideProps({
+                context,
+                authenticationConfig: { authenticationRequired: true },
+                redisClient,
+                domainConfig,
+                t,
+            }),
 );
 
 export default EditProfilePage;

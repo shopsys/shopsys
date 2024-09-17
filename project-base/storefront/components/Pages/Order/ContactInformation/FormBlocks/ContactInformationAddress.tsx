@@ -10,6 +10,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
 import { SelectOptionType } from 'types/selectOptions';
+import { useCurrentCustomerUserPermissions } from 'utils/auth/useCurrentCustomerUserPermissions';
 import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
 
 export const ContactInformationAddress: FC = () => {
@@ -18,6 +19,7 @@ export const ContactInformationAddress: FC = () => {
     const formProviderMethods = useFormContext<ContactInformation>();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const countriesAsSelectOptions = useCountriesAsSelectOptions();
+    const { canManageProfile } = useCurrentCustomerUserPermissions();
 
     return (
         <FormBlockWrapper>
@@ -29,6 +31,7 @@ export const ContactInformationAddress: FC = () => {
                     name={formMeta.fields.street.name}
                     render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
                     textInputProps={{
+                        disabled: !canManageProfile,
                         label: formMeta.fields.street.label,
                         required: true,
                         type: 'text',
@@ -44,6 +47,7 @@ export const ContactInformationAddress: FC = () => {
                     name={formMeta.fields.city.name}
                     render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
                     textInputProps={{
+                        disabled: !canManageProfile,
                         label: formMeta.fields.city.label,
                         required: true,
                         type: 'text',
@@ -61,6 +65,7 @@ export const ContactInformationAddress: FC = () => {
                         </FormLine>
                     )}
                     textInputProps={{
+                        disabled: !canManageProfile,
                         label: formMeta.fields.postcode.label,
                         required: true,
                         type: 'text',
@@ -76,6 +81,7 @@ export const ContactInformationAddress: FC = () => {
                         <>
                             <Select
                                 hasError={invalid}
+                                isDisabled={!canManageProfile}
                                 label={formMeta.fields.country.label}
                                 options={countriesAsSelectOptions}
                                 value={countriesAsSelectOptions.find((option) => option.value === field.value.value)}

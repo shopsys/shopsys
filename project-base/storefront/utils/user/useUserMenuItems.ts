@@ -1,6 +1,7 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import useTranslation from 'next-translate/useTranslation';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
+import { useCurrentCustomerUserPermissions } from 'utils/auth/useCurrentCustomerUserPermissions';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
 import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
@@ -17,11 +18,25 @@ export const useUserMenuItems = (): UserMenuItemType[] => {
     const { url } = useDomainConfig();
     const { comparison } = useComparison();
     const { wishlist } = useWishlist();
-    const [customerOrdersUrl, customerComplaintsUrl, customerEditProfileUrl, productComparisonUrl, wishlistUrl] =
-        getInternationalizedStaticUrls(
-            ['/customer/orders', '/customer/complaints', '/customer/edit-profile', '/product-comparison', '/wishlist'],
-            url,
-        );
+    const { canManageUsers } = useCurrentCustomerUserPermissions();
+    const [
+        customerOrdersUrl,
+        customerComplaintsUrl,
+        customerUsersUrl,
+        customerEditProfileUrl,
+        productComparisonUrl,
+        wishlistUrl,
+    ] = getInternationalizedStaticUrls(
+        [
+            '/customer/orders',
+            '/customer/complaints',
+            '/customer/users',
+            '/customer/edit-profile',
+            '/product-comparison',
+            '/wishlist',
+        ],
+        url,
+    );
 
     const userMenuItems: UserMenuItemType[] = [
         {
@@ -53,5 +68,16 @@ export const useUserMenuItems = (): UserMenuItemType[] => {
         },
     ];
 
-    return userMenuItems;
+    if (!canManageUsers) {
+        return userMenuItems;
+    }
+
+    return [
+        ...userMenuItems,
+        {
+            text: t('Customer users'),
+            link: customerUsersUrl,
+            type: 'customer-users',
+        },
+    ];
 };

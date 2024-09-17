@@ -1,0 +1,12 @@
+fragment SimpleCustomerUserFragment on CustomerUser {
+    __typename
+    uuid
+    firstName
+    lastName
+    email
+    telephone
+    roles
+    roleGroup {
+        ...CustomerUserRoleGroupFragment
+    }
+}

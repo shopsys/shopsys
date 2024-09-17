@@ -67,7 +67,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
 
     return initServerSideProps<TypeOrdersQueryVariables>({
         context,
-        authenticationRequired: true,
+        authenticationConfig: { authenticationRequired: true },
         prefetchedQueries: [
             {
                 query: OrdersQueryDocument,

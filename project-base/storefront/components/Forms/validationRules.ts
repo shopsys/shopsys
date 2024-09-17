@@ -108,6 +108,20 @@ export const validateCountry = (t: Translate): Schema => {
         );
 };
 
+export const validateRoleGroup = (t: Translate): Schema => {
+    return Yup.object()
+        .shape({
+            label: Yup.string().required(),
+            value: Yup.string().required(),
+        })
+        .required(t('Please select a role group'))
+        .test(
+            'non-null-or-empty-string',
+            t('Please select a role group'),
+            (value: { label: string; value: string }) => value.value !== '',
+        );
+};
+
 export const validateCompanyName = (t: Translate): Schema => {
     return Yup.string().max(
         VALIDATION_CONSTANTS.companyNameMaxLength,

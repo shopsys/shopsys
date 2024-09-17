@@ -34,6 +34,8 @@ const ApplicationErrors = {
     'article-not-found-terms-and-conditions': 'no-flash-message',
     'article-not-found-privacy-policy': 'no-flash-message',
     'article-not-found-user-consent-policy': 'no-flash-message',
+    'cannot-remove-own-customer-user': 'flash-message',
+    'access-denied': 'flash-message',
     'invalid-quantity': 'flash-message',
 } as const;
 

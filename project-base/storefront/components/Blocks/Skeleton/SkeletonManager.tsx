@@ -13,6 +13,7 @@ import { SkeletonPageCustomerComplaintNew } from './SkeletonPageCustomerComplain
 import { SkeletonPageCustomerEditProfile } from './SkeletonPageCustomerEditProfile';
 import { SkeletonPageCustomerOrderDetail } from './SkeletonPageCustomerOrderDetail';
 import { SkeletonPageCustomerOrderList } from './SkeletonPageCustomerOrderList';
+import { SkeletonPageCustomerUsers } from './SkeletonPageCustomerUsers';
 import { SkeletonPageHome } from './SkeletonPageHome';
 import { SkeletonPageProductDetail } from './SkeletonPageProductDetail';
 import { SkeletonPageProductDetailMainVariant } from './SkeletonPageProductDetailMainVariant';
@@ -86,6 +87,8 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({
             return <SkeletonPageCustomerComplaintDetail />;
         case 'complaintList':
             return <SkeletonPageCustomerComplaintList />;
+        case 'customer-users':
+            return <SkeletonPageCustomerUsers />;
         case 'orderList':
             return <SkeletonPageCustomerOrderList />;
         case 'orderDetail':

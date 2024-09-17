@@ -122,7 +122,9 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
 
     return initServerSideProps<TypeOrderedItemsQueryVariables>({
         context,
-        authenticationRequired: true,
+        authenticationConfig: {
+            authenticationRequired: true,
+        },
         prefetchedQueries: [
             {
                 query: OrderedItemsQueryDocument,

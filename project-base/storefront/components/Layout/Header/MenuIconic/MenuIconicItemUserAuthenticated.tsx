@@ -11,6 +11,7 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
+import { useCurrentCustomerUserPermissions } from 'utils/auth/useCurrentCustomerUserPermissions';
 import { useLogout } from 'utils/auth/useLogout';
 import { desktopFirstSizes } from 'utils/mediaQueries';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
@@ -22,9 +23,10 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
     const { t } = useTranslation();
     const logout = useLogout();
     const { url } = useDomainConfig();
-    const [customerUrl, customerOrdersUrl, customerComplaintsUrl, customerEditProfileUrl] =
+    const { canManageUsers } = useCurrentCustomerUserPermissions();
+    const [customerUrl, customerOrdersUrl, customerComplaintsUrl, customerEditProfileUrl, customerUsersUrl] =
         getInternationalizedStaticUrls(
-            ['/customer', '/customer/orders', '/customer/complaints', '/customer/edit-profile'],
+            ['/customer', '/customer/orders', '/customer/complaints', '/customer/edit-profile', '/customer/users'],
             url,
         );
     const [isClicked, setIsClicked] = useState(false);
@@ -130,6 +132,16 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                                 {t('Edit profile')}
                             </MenuIconicSubItemLink>
                         </li>
+                        {canManageUsers && (
+                            <li className={userMenuItemTwClass}>
+                                <MenuIconicSubItemLink href={customerUsersUrl} type="customer-users">
+                                    <div className={userMenuItemIconTwClass}>
+                                        <UserIcon className="w-6 max-h-[22px]" />
+                                    </div>
+                                    {t('Customer users')}
+                                </MenuIconicSubItemLink>
+                            </li>
+                        )}
                         <li className={userMenuItemTwClass}>
                             <MenuIconicSubItemLink tid={TIDs.header_logout} onClick={logout}>
                                 <div className={userMenuItemIconTwClass}>
