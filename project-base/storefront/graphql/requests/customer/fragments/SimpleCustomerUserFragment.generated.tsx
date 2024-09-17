@@ -1,7 +1,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { CustomerUserRoleGroupFragment } from './CustomerUserRoleGroupFragment.generated';
+import { CustomerUserRoleGroupFragment } from './CustomerUserRoleGroupGragment.generated';
 export type TypeSimpleCustomerUserFragment_CompanyCustomerUser_ = { __typename: 'CompanyCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<string>, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } };
 
 export type TypeSimpleCustomerUserFragment_RegularCustomerUser_ = { __typename: 'RegularCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<string>, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } };
