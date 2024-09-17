@@ -12,6 +12,7 @@ security:
             - ROLE_CUSTOMER_FULL
             - ROLE_NEWSLETTER_FULL
             - ROLE_PROMO_CODE_FULL
+            - ROLE_SALES_REPRESENTATIVE_FULL
             - ROLE_PRODUCT_FULL
             - ROLE_TOP_PRODUCT_FULL
             - ROLE_BESTSELLING_PRODUCT_FULL
@@ -64,6 +65,7 @@ security:
             - ROLE_CUSTOMER_VIEW
             - ROLE_NEWSLETTER_VIEW
             - ROLE_PROMO_CODE_VIEW
+            - ROLE_SALES_REPRESENTATIVE_VIEW
             - ROLE_PRODUCT_VIEW
             - ROLE_TOP_PRODUCT_VIEW
             - ROLE_BESTSELLING_PRODUCT_VIEW
@@ -115,6 +117,7 @@ security:
         ROLE_CUSTOMER_FULL: [ROLE_CUSTOMER_VIEW]
         ROLE_NEWSLETTER_FULL: [ROLE_NEWSLETTER_VIEW]
         ROLE_PROMO_CODE_FULL: [ROLE_PROMO_CODE_VIEW]
+        ROLE_SALES_REPRESENTATIVE_FULL: [ROLE_SALES_REPRESENTATIVE_VIEW]
         ROLE_PRODUCT_FULL: [ROLE_PRODUCT_VIEW]
         ROLE_TOP_PRODUCT_FULL: [ROLE_TOP_PRODUCT_VIEW]
         ROLE_BESTSELLING_PRODUCT_FULL: [ROLE_BESTSELLING_PRODUCT_VIEW]
@@ -254,6 +257,11 @@ security:
         - { path: ^/%admin_url%/promo-code/new-mass-generate, roles: ROLE_PROMO_CODE_FULL }
         - { path: ^/%admin_url%/promo-code/delete, roles: ROLE_PROMO_CODE_FULL }
         - { path: ^/%admin_url%/promo-code/, roles: ROLE_PROMO_CODE_VIEW }
+        # sales representatives
+        - { path: ^/%admin_url%/sales-representative/new, roles: ROLE_SALES_REPRESENTATIVE_FULL }
+        - { path: ^/%admin_url%/sales-representative/edit, roles: ROLE_SALES_REPRESENTATIVE_FULL, methods: [POST] }
+        - { path: ^/%admin_url%/sales-representative/delete, roles: ROLE_SALES_REPRESENTATIVE_FULL }
+        - { path: ^/%admin_url%/sales-representative/, roles: ROLE_SALES_REPRESENTATIVE_VIEW }
         # products, top/bestselling products, flags, parameters, and units
         - { path: ^/%admin_url%/product/list, roles: ROLE_PRODUCT_FULL, methods: [POST] } # mass edit form
         - { path: ^/%admin_url%/product/new, roles: ROLE_PRODUCT_FULL }
