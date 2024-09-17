@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\OrderStatusDataFixture;
 use App\Model\Order\Order;
 use App\Model\Order\Status\OrderStatus;
+use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData;
@@ -31,10 +32,20 @@ class OrderStatusFacadeTest extends TransactionFunctionalTestCase
      */
     private OrderDataFactory $orderDataFactory;
 
+    /**
+     * @inject
+     */
+    private Localization $localization;
+
     public function testDeleteByIdAndReplace()
     {
         $orderStatusData = new OrderStatusData();
-        $orderStatusData->name = ['en' => 'name'];
+        $namesByLocale = [];
+
+        foreach ($this->localization->getLocalesOfAllDomains() as $locale) {
+            $namesByLocale[$locale] = 'name';
+        }
+        $orderStatusData->name = $namesByLocale;
         $orderStatusToDelete = $this->orderStatusFacade->create($orderStatusData);
         $orderStatusToReplaceWith = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW, OrderStatus::class);
         $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . '1', Order::class);
