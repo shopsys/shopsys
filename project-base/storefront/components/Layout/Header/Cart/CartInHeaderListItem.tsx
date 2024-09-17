@@ -5,7 +5,7 @@ import { TIDs } from 'cypress/tids';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { MouseEventHandler } from 'react';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
-import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
+import { mapPriceForCalculations } from 'utils/mappers/price';
 
 type CartInHeaderListItemProps = {
     cartItem: TypeCartItemFragment;

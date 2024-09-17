@@ -1,6 +1,5 @@
 import { CartInHeaderListItem } from './CartInHeaderListItem';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { ArrowRightIcon } from 'components/Basic/Icon/ArrowRightIcon';
 import { CartIcon } from 'components/Basic/Icon/CartIcon';
 import { EmptyCartIcon } from 'components/Basic/Icon/EmptyCartIcon';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
@@ -19,7 +18,6 @@ import { twJoin } from 'tailwind-merge';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useRemoveFromCart } from 'utils/cart/useRemoveFromCart';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
-import { isPriceVisible } from 'utils/mappers/price';
 import { desktopFirstSizes } from 'utils/mediaQueries';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { twMergeCustom } from 'utils/twMerge';
@@ -55,12 +53,14 @@ export const CartInHeader: FC = ({ className }) => {
 
     const shouldDisplayTransportBar = cart?.remainingAmountWithVatForFreeTransport !== null && cart?.items.length;
 
-    const isPriceVisibleOrEmtpyCart = isPriceVisible(cart?.totalItemsPrice.priceWithVat) || !cart?.items.length;
-
     return (
         <>
             <div
-                className={twMergeCustom('group relative lg:flex z-aboveOverlay lg:pb-[10px] lg:mb-[-10px]', className)}
+                className={twMergeCustom(
+                    'group relative lg:flex lg:pb-[10px] lg:mb-[-10px]',
+                    (isClicked || isHovered) && 'z-aboveOverlay',
+                    className,
+                )}
                 onMouseEnter={() => isDesktop && setIsHovered(true)}
                 onMouseLeave={() => isDesktop && setIsHovered(false)}
             >
@@ -118,7 +118,7 @@ export const CartInHeader: FC = ({ className }) => {
 
                 <div
                     className={twMergeCustom(
-                        'pointer-events-none absolute top-[-12px] right-[-15px] z-cart origin-top-right scale-75 transition-all bg-background',
+                        'pointer-events-none absolute top-[-12px] right-[-15px] z-cart min-w-[315px] origin-top-right scale-75 transition-all bg-background',
                         'lg:block lg:rounded-lg lg:opacity-0 lg:right-0 lg:top-full lg:h-auto lg:p-5 lg:scale-75',
                         isHoveredDelayed &&
                             'group-hover:pointer-events-auto group-hover:opacity-100 group-hover:scale-100',
@@ -133,10 +133,7 @@ export const CartInHeader: FC = ({ className }) => {
                     {(isHovered || isClicked) && (
                         <>
                             <div className="flex flex-row justify-between mb-10 lg:hidden pr-1">
-                                <ExtendedNextLink href={cartUrl} onClick={() => setIsClicked(false)}>
-                                    <ArrowRightIcon className="rotate-180 text-borderAccent w-4" />
-                                </ExtendedNextLink>
-                                <span className="text-base">{t('Cart')}</span>
+                                <span className="text-base w-full text-center">{t('Cart')}</span>
                                 <RemoveIcon
                                     className="w-4 text-borderAccent cursor-pointer"
                                     onClick={() => setIsClicked(false)}
