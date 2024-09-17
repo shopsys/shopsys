@@ -25,34 +25,26 @@ export const HomePageContent: FC = () => {
         <>
             <SearchMetadata />
             <CommonLayout>
-                <Webline className="mb-14">
+                <Webline className="mb-14 xl:max-w-[1432px]">
                     <Banners />
                 </Webline>
 
-                <Webline className="mb-6">
-                    <h2 className="mb-3">{t('Promoted categories')}</h2>
-                    <PromotedCategories />
-                </Webline>
+                <PromotedCategories />
 
                 {isLuigisBoxActive && (
                     <DeferredRecommendedProducts
                         recommendationType={TypeRecommendationType.Personalized}
                         render={(recommendedProductsContent) => (
-                            <Webline className="mb-6">
-                                <h2 className="mb-3">{t('Recommended for you')}</h2> {recommendedProductsContent}
+                            <Webline className="mb-10">
+                                <h3 className="mb-4">{t('Recommended for you')}</h3> {recommendedProductsContent}
                             </Webline>
                         )}
                     />
                 )}
 
-                <Webline className="mb-6">
-                    <h2 className="mb-3">{t('Promoted products')}</h2>
-                    <DeferredPromotedProducts />
-                </Webline>
+                <DeferredPromotedProducts />
 
-                <Webline>
-                    <DeferredBlogPreview />
-                </Webline>
+                <DeferredBlogPreview />
 
                 <DeferredLastVisitedProducts />
             </CommonLayout>

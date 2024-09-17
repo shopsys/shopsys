@@ -9,11 +9,11 @@ export const BlogPreviewPlaceholder: FC<BlogPreviewPlaceholderProps> = ({ blogAr
 
     return (
         <div>
-            <h2 className="text-creamWhite">{t('Shopsys magazine')}</h2>
+            <h2 className="text-creamWhite">{t('Magazine')}</h2>
 
             {!!blogUrl && (
                 <ExtendedNextLink className="text-creamWhite " href={blogUrl} type="blogCategory">
-                    {t('View all')}
+                    {t('All articles')}
                 </ExtendedNextLink>
             )}
 

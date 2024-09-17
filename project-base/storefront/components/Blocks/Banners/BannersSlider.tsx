@@ -1,6 +1,6 @@
 import { BannerImage } from './BannerImage';
+import { BannersDot } from './BannersDot';
 import { bannersReducer, getBannerOrderCSSProperty } from './bannersUtils';
-import { TriangleIcon } from 'components/Basic/Icon/TriangleIcon';
 import { TIDs } from 'cypress/tids';
 import { TypeSliderItemFragment } from 'graphql/requests/sliderItems/fragments/SliderItemFragment.generated';
 import { useEffect, useReducer, useRef } from 'react';
@@ -66,33 +66,39 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
         trackMouse: true,
     });
 
+    const slidingButtonsTwClass = twJoin(
+        'snap-mandatory vl:grid vl:snap-x vl:auto-cols-[21%] vl:grid-flow-col vl:justify-start vl:overflow-x-auto vl:overscroll-x-contain',
+        "vl:[-ms-overflow-style:'none'] vl:[scrollbar-width:'none'] vl:[&::-webkit-scrollbar]:hidden",
+        "vl:after:sticky vl:after:right-0 vl:after:top-0 vl:after:block vl:after:h-full vl:after:w-3 vl:after:bg-backgroundDark vl:after:bg-gradient-to-r vl:after:from-background vl:after:to-transparent vl:after:opacity-25 vl:after:content-['']",
+    );
+
     return (
-        <div className="flex flex-col gap-6 vl:flex-row" tid={TIDs.banners_slider}>
+        <div className="flex flex-col" tid={TIDs.banners_slider}>
             <div
                 {...handlers}
-                className="rounded vl:basis-3/4"
+                className=""
                 onMouseEnter={checkAndClearInterval}
                 onMouseLeave={() => {
                     checkAndClearInterval();
                     startInterval();
                 }}
             >
-                <div className="w-full overflow-hidden">
+                <div className="w-full overflow-hidden rounded-xl vl:rounded-b-none">
                     <div
                         className={twJoin(
                             'flex',
                             !bannerSliderState.isSliding
-                                ? `transform translate-x-[calc(-100%)] transition-transform duration-${SLIDER_SLIDE_DURATION} ease-in-out`
+                                ? `translate-x-[calc(-100%)] transform transition-transform duration-${SLIDER_SLIDE_DURATION} ease-in-out`
                                 : bannerSliderState.slideDirection === 'PREV'
-                                  ? 'transform translate-x-[calc(2*(-100%))]'
-                                  : 'transform translate-x-0',
+                                  ? 'translate-x-[calc(2*(-100%))] transform'
+                                  : 'translate-x-0 transform',
                         )}
                     >
                         {sliderItems.map((item, index) => (
                             <div
                                 key={index}
                                 className={twJoin(
-                                    'flex-[1_0_100%] basis-full flex',
+                                    'flex flex-[1_0_100%] basis-full',
                                     getBannerOrderCSSProperty(index, bannerSliderState.sliderPosition, numItems),
                                 )}
                             >
@@ -108,31 +114,25 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
                     </div>
                 </div>
             </div>
-            <div className="flex flex-1 justify-center gap-1 vl:flex-col vl:justify-start vl:gap-4">
+            <div
+                className={twJoin(
+                    'relative mt-3 flex justify-center gap-5 overflow-hidden',
+                    'vl:mt-0 vl:gap-0 vl:rounded-b-md vl:border vl:border-t-0 vl:border-borderAccentLess',
+                    sliderItems.length > 4 && slidingButtonsTwClass,
+                )}
+            >
                 {sliderItems.map((sliderItem, index) => {
                     const isActive = index === bannerSliderState.sliderPosition;
 
                     return (
-                        <button
+                        <BannersDot
                             key={sliderItem.uuid}
-                            className={twJoin(
-                                'group relative block h-2 w-3 cursor-pointer rounded-full vl:rounded font-bold outline-none transition',
-                                'vl:mx-0 vl:h-full vl:px-8 vl:w-full border-8 vl:border-2 vl:border-solid vl:text-left',
-                                'border-actionInvertedBorder bg-actionInvertedBackground text-actionInvertedText',
-                                'hover:border-actionInvertedBorderHovered hover:bg-actionInvertedBackgroundHovered hover:text-actionInvertedTextHovered',
-                                isActive &&
-                                    'border-actionInvertedBorderActive bg-actionInvertedBackgroundActive text-actionInvertedTextActive',
-                            )}
-                            onClick={() => moveToSlide(index)}
-                        >
-                            <TriangleIcon
-                                className={twJoin(
-                                    'absolute top-1/2 left-3 hidden w-2 -translate-y-1/2 text-actionInvertedText',
-                                    isActive && 'vl:block',
-                                )}
-                            />
-                            <span className="hidden vl:inline-block">{sliderItem.name}</span>
-                        </button>
+                            index={index}
+                            isActive={isActive}
+                            moveToSlide={moveToSlide}
+                            slideInterval={SLIDER_AUTOMATIC_SLIDE_INTERVAL}
+                            sliderItem={sliderItem}
+                        />
                     );
                 })}
             </div>

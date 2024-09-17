@@ -4,43 +4,53 @@ import { Image } from 'components/Basic/Image/Image';
 import { TIDs } from 'cypress/tids';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import { Fragment } from 'react';
+import { useFormatDate } from 'utils/formatting/useFormatDate';
 
 type SideProps = {
     articles: TypeListedBlogArticleFragment[];
 };
 
-export const BlogPreviewSide: FC<SideProps> = ({ articles }) => (
-    <div className="grid snap-x snap-mandatory gap-4 overflow-y-hidden overscroll-x-contain max-vl:grid-flow-col max-vl:overflow-x-auto auto-cols-[40%] lg:gap-6 vl:flex vl:basis-1/3 vl:flex-col vl:gap-3">
-        {articles.map((article) => (
-            <ArticleLink
-                key={article.uuid}
-                className="flex flex-1 snap-start flex-col gap-2 vl:flex-row transition-colors bg-backgroundMore hover:bg-backgroundMost p-4 no-underline hover:no-underline"
-                href={article.link}
-            >
-                <Image
-                    alt={article.mainImage?.name || article.name}
-                    className="rounded h-20 w-auto mx-auto"
-                    height={250}
-                    sizes="(max-width: 600px) 90vw, (max-width: 1024px) 40vw, 10vw"
-                    src={article.mainImage?.url}
-                    tid={TIDs.blog_preview_image}
-                    width={768}
-                />
+export const BlogPreviewSide: FC<SideProps> = ({ articles }) => {
+    const { formatDate } = useFormatDate();
 
-                <div className="flex flex-1 flex-col items-start gap-2">
-                    {article.blogCategories.map((blogPreviewCategorie) => (
-                        <Fragment key={blogPreviewCategorie.uuid}>
-                            {blogPreviewCategorie.parent && (
-                                <Flag href={blogPreviewCategorie.link} type="blog">
-                                    {blogPreviewCategorie.name}
-                                </Flag>
-                            )}
-                        </Fragment>
-                    ))}
+    return (
+        <div className="flex flex-col gap-6 flex-1">
+            {articles.map((article) => (
+                <ArticleLink
+                    key={article.uuid}
+                    className="flex flex-col vl:flex-row gap-5 snap-start no-underline hover:no-underline"
+                    href={article.link}
+                >
+                    <Image
+                        alt={article.mainImage?.name || article.name}
+                        className="rounded-xl aspect-video object-cover vl:max-h-24 vl:max-w-36"
+                        height={220}
+                        sizes="(max-width: 600px) 90vw, (max-width: 1024px) 40vw, 10vw"
+                        src={article.mainImage?.url}
+                        tid={TIDs.blog_preview_image}
+                        width={320}
+                    />
 
-                    {article.name}
-                </div>
-            </ArticleLink>
-        ))}
-    </div>
-);
+                    <div className="flex flex-col items-start gap-2">
+                        <div className="flex items-center gap-6 whitespace-nowrap">
+                            <span className="text-inputPlaceholder text-sm font-secondary font-semibold">
+                                {formatDate(article.publishDate, 'l')}
+                            </span>
+                            {article.blogCategories.map((blogPreviewCategorie) => (
+                                <Fragment key={blogPreviewCategorie.uuid}>
+                                    {blogPreviewCategorie.parent && (
+                                        <Flag href={blogPreviewCategorie.link} type="blog">
+                                            {blogPreviewCategorie.name}
+                                        </Flag>
+                                    )}
+                                </Fragment>
+                            ))}
+                        </div>
+
+                        <h5 className="text-textInverted">{article.name}</h5>
+                    </div>
+                </ArticleLink>
+            ))}
+        </div>
+    );
+};
