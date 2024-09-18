@@ -40,7 +40,7 @@ class HiddenPriceExtension extends AbstractExtension
      */
     public function hidePriceFilter(string $price, ?CustomerUser $customerUser): string
     {
-        if ($customerUser !== null && !$this->customerUserRoleProvider->canSeePrices($customerUser)) {
+        if (!$this->customerUserRoleProvider->canCustomerUserSeePrices($customerUser)) {
             return MoneyFormatterHelper::HIDDEN_FORMAT;
         }
 

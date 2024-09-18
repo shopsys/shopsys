@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Payment;
 
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleProvider;
 use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -14,10 +15,12 @@ class PaymentPriceCalculation
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation $basePriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleProvider $customerUserRoleProvider
      */
     public function __construct(
         protected readonly BasePriceCalculation $basePriceCalculation,
         protected readonly PricingSetting $pricingSetting,
+        protected readonly CustomerUserRoleProvider $customerUserRoleProvider,
     ) {
     }
 
@@ -64,6 +67,10 @@ class PaymentPriceCalculation
      */
     protected function isFree(Price $productsPrice, int $domainId): bool
     {
+        if (!$this->customerUserRoleProvider->canCurrentCustomerUserSeePrices()) {
+            return false;
+        }
+
         $freeTransportAndPaymentPriceLimit = $this->pricingSetting->getFreeTransportAndPaymentPriceLimit($domainId);
 
         if ($freeTransportAndPaymentPriceLimit === null) {
@@ -71,32 +78,5 @@ class PaymentPriceCalculation
         }
 
         return $productsPrice->getPriceWithVat()->isGreaterThanOrEqualTo($freeTransportAndPaymentPriceLimit);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment[] $payments
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
-     */
-    public function getCalculatedPricesIndexedByPaymentId(
-        array $payments,
-        Currency $currency,
-        Price $productsPrice,
-        int $domainId,
-    ): array {
-        $paymentsPricesByPaymentId = [];
-
-        foreach ($payments as $payment) {
-            $paymentsPricesByPaymentId[$payment->getId()] = $this->calculatePrice(
-                $payment,
-                $currency,
-                $productsPrice,
-                $domainId,
-            );
-        }
-
-        return $paymentsPricesByPaymentId;
     }
 }

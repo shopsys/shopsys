@@ -342,11 +342,12 @@ class PaymentFacade
     public function isPaymentVisibleAndEnabledOnCurrentDomain(Payment $payment): bool
     {
         try {
-            $this->getEnabledOnDomainByUuid($payment->getUuid(), $this->domain->getId());
+            $domainId = $this->domain->getId();
+            $payment = $this->getEnabledOnDomainByUuid($payment->getUuid(), $domainId);
+
+            return $this->paymentVisibilityCalculation->isVisible($payment, $domainId);
         } catch (PaymentNotFoundException $exception) {
             return false;
         }
-
-        return true;
     }
 }
