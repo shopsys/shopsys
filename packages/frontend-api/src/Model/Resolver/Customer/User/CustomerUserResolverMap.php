@@ -6,7 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Customer\User;
 
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleProvider;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginInfoFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\Exception\MissingCustomerUserLoginTypeException;
@@ -16,12 +16,12 @@ class CustomerUserResolverMap extends ResolverMap
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade $customerUserLoginTypeFacade
      * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginInfoFactory $loginInfoFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleProvider $customerUserRoleProvider
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver $customerUserRoleResolver
      */
     public function __construct(
         protected readonly CustomerUserLoginTypeFacade $customerUserLoginTypeFacade,
         protected readonly LoginInfoFactory $loginInfoFactory,
-        protected readonly CustomerUserRoleProvider $customerUserRoleProvider,
+        protected readonly CustomerUserRoleResolver $customerUserRoleResolver,
     ) {
     }
 
@@ -65,7 +65,7 @@ class CustomerUserResolverMap extends ResolverMap
                 return $this->loginInfoFactory->createFromCustomerUserLoginType($mostRecentLoginType);
             },
             'roles' => function (CustomerUser $customerUser) {
-                return $this->customerUserRoleProvider->getRolesForCustomerUser($customerUser);
+                return $this->customerUserRoleResolver->getRolesForCustomerUser($customerUser);
             },
         ];
 

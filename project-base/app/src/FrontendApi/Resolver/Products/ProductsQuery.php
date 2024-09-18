@@ -189,10 +189,6 @@ class ProductsQuery extends BaseProductsQuery
 
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
-        $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForAll(
-            $argument,
-        );
-
         if ($argument['categorySlug'] !== null) {
             $category = $this->categoryQuery->categoryOrSeoMixByUuidOrUrlSlugQuery($info, null, $argument['categorySlug']);
 
@@ -220,6 +216,10 @@ class ProductsQuery extends BaseProductsQuery
                 $flag,
             );
         }
+
+        $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForAll(
+            $argument,
+        );
 
         return $this->productConnectionFactory->createConnectionForAll(
             function ($offset, $limit) use ($argument, $productFilterData) {

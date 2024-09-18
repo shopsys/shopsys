@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\FrontendApiBundle\Functional\Price;
+namespace Tests\FrontendApiBundle\Functional\Customer\User;
 
 use App\DataFixtures\Demo\CustomerUserDataFixture;
 use App\DataFixtures\Demo\CustomerUserRoleGroupDataFixture;
@@ -17,7 +17,7 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
-class HiddenPricesTest extends GraphQlWithLoginTestCase
+class CustomerUserWithLimitedRoleGroupTest extends GraphQlWithLoginTestCase
 {
     /**
      * @inject
@@ -47,19 +47,12 @@ class HiddenPricesTest extends GraphQlWithLoginTestCase
     public function testCustomerUserCannotSeeProductPrices(): void
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
-        $query = '
-            query {
-                product(uuid: "' . $product->getUuid() . '") {
-                    price {
-                        priceWithVat
-                        priceWithoutVat
-                    }
-                }
-            }
-        ';
+        $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/query/ProductQuery.graphql', [
+            'uuid' => $product->getUuid(),
+        ]);
 
-        $response = $this->getResponseContentForQuery($query);
-        $price = $response['data']['product']['price'];
+        $productData = $this->getResponseDataForGraphQlType($response, 'product');
+        $price = $productData['price'];
         $this->assertSame('***', $price['priceWithVat']);
         $this->assertSame('***', $price['priceWithoutVat']);
     }
@@ -67,33 +60,16 @@ class HiddenPricesTest extends GraphQlWithLoginTestCase
     public function testCustomerUserCannotSeeOrderPrices(): void
     {
         $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . '4', Order::class);
-        $query = '
-            query {
-                order(uuid: "' . $order->getUuid() . '") {
-                    totalPrice {
-                        priceWithVat
-                        priceWithoutVat
-                    }
-                    items {
-                        totalPrice {
-                            priceWithVat
-                            priceWithoutVat
-                        }
-                        unitPrice {
-                            priceWithVat
-                            priceWithoutVat
-                        }
-                    }
-                }
-            }
-        ';
+        $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/query/OrderDetailQuery.graphql', [
+            'uuid' => $order->getUuid(),
+        ]);
 
-        $response = $this->getResponseContentForQuery($query);
-        $order = $response['data']['order'];
-        $this->assertSame('***', $order['totalPrice']['priceWithVat']);
-        $this->assertSame('***', $order['totalPrice']['priceWithoutVat']);
+        $orderData = $this->getResponseDataForGraphQlType($response, 'order');
 
-        foreach ($order['items'] as $item) {
+        $this->assertSame('***', $orderData['totalPrice']['priceWithVat']);
+        $this->assertSame('***', $orderData['totalPrice']['priceWithoutVat']);
+
+        foreach ($orderData['items'] as $item) {
             $this->assertSame('***', $item['totalPrice']['priceWithVat']);
             $this->assertSame('***', $item['totalPrice']['priceWithoutVat']);
             $this->assertSame('***', $item['unitPrice']['priceWithVat']);
@@ -103,21 +79,9 @@ class HiddenPricesTest extends GraphQlWithLoginTestCase
 
     public function testCustomerUserCannotSeeGatewayPayments(): void
     {
-        $query = '
-            query {
-                payments {
-                    uuid
-                    type
-                    price {
-                        priceWithVat
-                        priceWithoutVat
-                    }
-                }
-            }
-        ';
+        $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/query/PaymentsQuery.graphql');
 
-        $response = $this->getResponseContentForQuery($query);
-        $payments = $response['data']['payments'];
+        $payments = $this->getResponseDataForGraphQlType($response, 'payments');
         $this->assertCount(4, $payments);
 
         foreach ($payments as $payment) {
@@ -130,26 +94,45 @@ class HiddenPricesTest extends GraphQlWithLoginTestCase
     public function testCustomerUserCannotUseFreeTransport(): void
     {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
-        $mutation = 'mutation {
-            AddToCart(
-                input: {
-                    productUuid: "' . $product->getUuid() . '"
-                    quantity: 1
-                }
-            ) {
-                cart {
-                    uuid
-                    remainingAmountWithVatForFreeTransport
-                }
-            }
-        }';
+        $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/mutation/AddToCartMutation.graphql', [
+            'productUuid' => $product->getUuid(),
+            'quantity' => 100,
+        ]);
 
-        $response = $this->getResponseContentForQuery($mutation);
-        $newlyCreatedCart = $response['data']['AddToCart']['cart'];
+        $addToCart = $this->getResponseDataForGraphQlType($response, 'AddToCart');
+
+        $newlyCreatedCart = $addToCart['cart'];
 
         self::assertNull(
             $newlyCreatedCart['remainingAmountWithVatForFreeTransport'],
             'Actual remaining price has to be null for limited user who cannot see prices',
         );
+    }
+
+    public function testCustomerUserCannotUseFilterByPrice(): void
+    {
+        $minimalPrice = $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('75000');
+        $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/query/ProductsQuery.graphql', [
+            'first' => 1,
+            'minimalPrice' => $minimalPrice,
+        ]);
+
+        $this->assertResponseContainsArrayOfErrors($response);
+        $errors = $this->getErrorsFromResponse($response);
+
+        $this->assertSame('Filtering by price is not allowed for current user.', $errors[0]['message']);
+    }
+
+    public function testCustomerUserCannotUseOrderingByPrice(): void
+    {
+        $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/query/ProductsQuery.graphql', [
+            'first' => 1,
+            'orderingMode' => 'PRICE_ASC',
+        ]);
+
+        $this->assertResponseContainsArrayOfErrors($response);
+        $errors = $this->getErrorsFromResponse($response);
+
+        $this->assertSame('Ordering by price is not allowed for current user.', $errors[0]['message']);
     }
 }

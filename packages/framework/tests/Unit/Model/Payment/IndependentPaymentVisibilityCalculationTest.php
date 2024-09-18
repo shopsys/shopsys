@@ -10,7 +10,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleProvider;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver;
 use Shopsys\FrameworkBundle\Model\Payment\IndependentPaymentVisibilityCalculation;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Tests\FrameworkBundle\Test\SetTranslatorTrait;
@@ -21,7 +21,7 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
 
     private Domain|MockObject $domainMock;
 
-    private CustomerUserRoleProvider|MockObject $customerUserRoleProviderMock;
+    private CustomerUserRoleResolver|MockObject $customerUserRoleResolverMock;
 
     private IndependentPaymentVisibilityCalculation $paymentVisibilityCalculation;
 
@@ -34,10 +34,10 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
                 new DomainConfig(Domain::FIRST_DOMAIN_ID, '', '', 'cs', $defaultTimeZone),
             );
 
-        $this->customerUserRoleProviderMock = $this->createMock(CustomerUserRoleProvider::class);
+        $this->customerUserRoleResolverMock = $this->createMock(CustomerUserRoleResolver::class);
         $this->paymentVisibilityCalculation = new IndependentPaymentVisibilityCalculation(
             $this->domainMock,
-            $this->customerUserRoleProviderMock,
+            $this->customerUserRoleResolverMock,
         );
     }
 
@@ -70,7 +70,7 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
         $paymentMock->method('getName')->willReturn($name);
         $paymentMock->method('isEnabled')->willReturn($isEnabled);
 
-        $this->customerUserRoleProviderMock->method('canCurrentCustomerUserSeePrices')->willReturn($canSeePrices);
+        $this->customerUserRoleResolverMock->method('canCurrentCustomerUserSeePrices')->willReturn($canSeePrices);
         $this->domainMock->method('getDomainConfigById')->willReturn((object)['locale' => 'en']);
 
         $this->assertEquals($expectedResult, $this->paymentVisibilityCalculation->isIndependentlyVisible($paymentMock, 1));

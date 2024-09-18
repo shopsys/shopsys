@@ -1,0 +1,25 @@
+query ProductsQuery(
+    $first: Int
+    $last: Int
+    $before: String
+    $after: String
+    $orderingMode: ProductOrderingModeEnum
+    $minimalPrice: Money
+) {
+    products (
+        first: $first,
+        last: $last,
+        before: $before,
+        after: $after,
+        filter: {
+            minimalPrice: $minimalPrice
+        },
+        orderingMode: $orderingMode
+    ) {
+        edges {
+            node {
+                name
+            }
+        }
+    }
+}

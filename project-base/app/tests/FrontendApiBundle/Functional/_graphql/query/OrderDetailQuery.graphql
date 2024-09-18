@@ -1,0 +1,19 @@
+query Order($uuid: Uuid) {
+    order(uuid: $uuid) {
+        totalPrice {
+            priceWithVat
+            priceWithoutVat
+        }
+        items {
+            totalPrice {
+                priceWithVat
+                priceWithoutVat
+            }
+            unitPrice {
+                priceWithVat
+                priceWithoutVat
+            }
+        }
+    }
+
+}
