@@ -201,6 +201,7 @@
     "My orders": "Moje objednávky",
     "name ascending": "Názov A-Z",
     "name descending": "Názov Z-A",
+    "Need advice?": "Potrebujete poradiť?",
     "New complaint": "Nová reklamácia",
     "New customer registration": "Registrácia nového zákazníka",
     "New password": "Nové heslo",
@@ -512,6 +513,7 @@
     "Your permissions have changed. You are being redirected": "Vaše oprávnenia boli zmenené. Prebieha presmerovanie",
     "Your preferences have been set.": "Vaše nastavenie bolo uložené",
     "Your profile has been changed successfully": "Váš profil bol úspešne zmenený",
+    "Your sales representative": "Váš obchodný zástupca",
     "Your transport and payment selection has been removed.": "Your transport and payment selection has been removed.",
     "Zip code cannot be longer than {{ postcodeLength }} characters": "PSČ nesmie byť dlhší ako {{ postcodeLength }} znakov"
 }

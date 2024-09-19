@@ -856,6 +856,9 @@ msgstr "Vytvořit nový parametr"
 msgid "Create new product"
 msgstr "Vytvořit nové zboží"
 
+msgid "Create new sales representative"
+msgstr "Vytvořit nového obchodního zástupce"
+
 msgid "Create new store"
 msgstr "Vytvořit novou prodejnu"
 
@@ -1210,6 +1213,9 @@ msgstr "Opravdu si přejete trvale odstranit cenovou skupinu \"%name%\"? Nikde n
 msgid "Do you really want to remove rate \"%name%\" permanently? It is not used anywhere."
 msgstr "Opravdu si přejete trvale odstranit sazbu \"%name%\"? Nikde není použita."
 
+msgid "Do you really want to remove sales representative \"%label%\" permanently? It is not used anywhere."
+msgstr "Opravdu si přejete trvale odstranit obchodního zástupce \"%name%\"? Nikde není použit."
+
 msgid "Do you really want to remove status of complaint \"%name%\" permanently? It is not used anywhere."
 msgstr "Opravdu si přejete trvale odstranit stav reklamace \"%name%\"? Nikde není použitý."
 
@@ -1323,6 +1329,9 @@ msgstr "Trvání (mm:ss)"
 
 msgid "Duration (seconds)"
 msgstr "Trvání (sekundy)"
+
+msgid "E-mail"
+msgstr "E-mail"
 
 msgid "E-mail addresses whitelist"
 msgstr "Whitelist e-mailových adres"
@@ -1518,6 +1527,12 @@ msgstr "Editace slevového kupónu"
 
 msgid "Editing promo code - %code%"
 msgstr "Editace slevového kupónu - %code%"
+
+msgid "Editing sales representative"
+msgstr "Editace obchodního zástupce"
+
+msgid "Editing sales representative - %label%"
+msgstr "Editace obchodního zástupce - %label%"
 
 msgid "Editing shipping"
 msgstr "Editace dopravy"
@@ -2368,6 +2383,9 @@ msgstr "Nový slevový kupón"
 msgid "New registered customers"
 msgstr "Nově registrovaní zákazníci"
 
+msgid "New sales representative"
+msgstr "Nový obchodní zástupce"
+
 msgid "New shipping"
 msgstr "Nová doprava"
 
@@ -2475,6 +2493,9 @@ msgstr "Nebyly nalezeny žádné slevové kupóny. Nejprve musíte nějaký vytv
 
 msgid "No records found."
 msgstr "Nebyly nalezeny žádné záznamy."
+
+msgid "No sales representatives found."
+msgstr "Doposud nebyli vytvořeny žádní obchodní zástupci."
 
 msgid "No shipping created so far."
 msgstr "Doposud nebyly vytvořeny žádné dopravy."
@@ -3157,6 +3178,27 @@ msgstr "Nastavení prodeje s/bez DPH"
 msgid "Sales overview (last 7 days)"
 msgstr "Přehled prodejů (za posledních 7 dní)"
 
+msgid "Sales representative"
+msgstr "Obchodní zástupce"
+
+msgid "Sales representative <strong><a href=\"{{ url }}\">{{ label }}</a></strong> was created"
+msgstr "Obchodní zástupce <strong><a href=\"{{ url }}\">{{ label }}</a></strong> byl vytvořen"
+
+msgid "Sales representative <strong><a href=\"{{ url }}\">{{ label }}</a></strong> was edited"
+msgstr "Obchodní zástupce <strong><a href=\"{{ url }}\">{{ label }}</a></strong> byl upraven"
+
+msgid "Sales representative <strong>{{ label }}</strong> deleted."
+msgstr "Obchodní zástupce <strong>{{ label }}</strong> byl smazán."
+
+msgid "Sales representatives"
+msgstr "Obchodní zástupci"
+
+msgid "Sales representatives - full"
+msgstr "Obchodní zástupci - vše"
+
+msgid "Sales representatives - view"
+msgstr "Obchodní zástupci - zobrazení"
+
 msgid "Saturday"
 msgstr "Sobota"
 
@@ -3312,6 +3354,9 @@ msgstr "Zvolený produkt neexistuje."
 
 msgid "Selected promo code doesn't exist."
 msgstr "Zvolený slevový kupón neexistuje."
+
+msgid "Selected sales representative doesn't exist."
+msgstr "Zvolený obchodní zástupce neexistuje."
 
 msgid "Selected shipping doesn't exist."
 msgstr "Zvolená doprava neexistuje."
@@ -4183,6 +4228,9 @@ msgstr "slevové kupóny"
 msgid "records"
 msgstr "záznamů"
 
+msgid "sales representatives"
+msgstr "obchodní zástupci"
+
 msgid "subscribers"
 msgstr "odběratelé newsletteru"
 
@@ -4215,4 +4263,7 @@ msgstr "{1} Před odesláním formuláře musíte počkat 1 vteřinu. |[2,4] Př
 
 msgid "{1}<strong>%count%</strong> promo code has been created|[2,Inf]<strong>%count%</strong> promo codes have been created"
 msgstr "{1} Byl vytvořen <strong>%count%</strong> slevový kupón|[2,4] Byly vytvořeny <strong>%count%</strong> slevové kupóny|[5,Inf] Bylo vytvořeno <strong>%count%</strong> slevových kupónů"
+
+msgid "{1}Sales representative \"%label%\" is assigned to %count% customer and will be removed if you proceed.<br><br> Customer:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[2,10]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[11,Inf]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br> +%extraCount% more<br><br> Do you really want to remove sales representative \"%label%\" permanently?"
+msgstr "{1}Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkovi a bude odstraněn, pokud budete pokračovat.<br><br>Zákazník:<br>%customersEnumeration%<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?|[2,10]Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkům a bude odstraněn, pokud budete pokračovat.<br><br>Zákazníci:<br>%customersEnumeration%<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?|[11,14]Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkům a bude odstraněn, pokud budete pokračovat.<br><br>Zákazníci:<br>%customersEnumeration%<br>+%extraCount% další<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?|[15,Inf]Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkům a bude odstraněn, pokud budete pokračovat.<br><br>Zákazníci:<br>%customersEnumeration%<br>+%extraCount% dalších<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?"
 

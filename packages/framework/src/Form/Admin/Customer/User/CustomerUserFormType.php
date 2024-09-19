@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserLoginInformationProv
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
+use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeFacade;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -44,6 +45,7 @@ class CustomerUserFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserLoginInformationProvider $customerUserLoginInformationProvider
+     * @param \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeFacade $salesRepresentativeFacade
      */
     public function __construct(
         private readonly PricingGroupFacade $pricingGroupFacade,
@@ -53,6 +55,7 @@ class CustomerUserFormType extends AbstractType
         private readonly Domain $domain,
         private readonly CustomerFacade $customerFacade,
         private readonly CustomerUserLoginInformationProvider $customerUserLoginInformationProvider,
+        private readonly SalesRepresentativeFacade $salesRepresentativeFacade,
     ) {
     }
 
@@ -115,6 +118,15 @@ class CustomerUserFormType extends AbstractType
                 'disabled' => !$options['allowEditSystemData'],
             ]);
 
+        $builderSystemDataGroup
+            ->add('salesRepresentative', ChoiceType::class, [
+                'required' => false,
+                'choices' => $this->salesRepresentativeFacade->getAll(),
+                'choice_label' => 'fullName',
+                'choice_value' => 'id',
+                'label' => t('Sales representative'),
+                'disabled' => !$options['allowEditSystemData'],
+            ]);
 
         $builderPersonalDataGroup = $builder->create('personalData', GroupType::class, [
             'label' => t('Personal data'),

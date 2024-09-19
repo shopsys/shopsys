@@ -33,4 +33,7 @@ fragment CustomerUserFragment on CustomerUser {
     roleGroup {
         ...CustomerUserRoleGroupFragment
     }
+    salesRepresentative {
+        ...SalesRepresentativeFragment
+    }
 }

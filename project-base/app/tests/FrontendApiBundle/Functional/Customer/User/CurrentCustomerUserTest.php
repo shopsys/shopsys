@@ -74,6 +74,12 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
                 'loginType' => LoginTypeEnum::WEB,
                 'externalId' => null,
             ],
+            'salesRepresentative' => [
+                'firstName' => 'Jan',
+                'lastName' => 'Dvořák',
+                'email' => 'no-reply99@shopsys.com',
+                'telephone' => '585425321',
+            ],
         ];
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CurrentCustomerUserQuery.graphql');

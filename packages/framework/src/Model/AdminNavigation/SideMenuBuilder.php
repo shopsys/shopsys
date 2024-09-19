@@ -157,6 +157,21 @@ class SideMenuBuilder
             'display' => false,
         ]);
 
+        $salesRepresentativeMenu = $menu->addChild('salesRepresentatives', [
+            'route' => 'admin_salesrepresentative_list',
+            'label' => t('Sales representatives'),
+        ]);
+        $salesRepresentativeMenu->addChild('salesRepresentativeNew', [
+            'route' => 'admin_salesrepresentative_new',
+            'label' => t('New sales representative'),
+            'display' => false,
+        ]);
+        $salesRepresentativeMenu->addChild('salesRepresentativeEdit', [
+            'route' => 'admin_salesrepresentative_edit',
+            'display' => false,
+            'label' => t('Editing sales representative'),
+        ]);
+
         $menu->addChild('newsletter', [
             'route' => 'admin_newsletter_list',
             'label' => t('Email newsletter'),

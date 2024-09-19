@@ -48,5 +48,11 @@ query CurrentCustomerUserQuery {
             externalId
             loginType
         }
+        salesRepresentative {
+            firstName
+            lastName
+            email
+            telephone
+        }
     }
 }

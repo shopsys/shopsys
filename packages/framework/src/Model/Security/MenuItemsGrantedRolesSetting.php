@@ -40,6 +40,9 @@ class MenuItemsGrantedRolesSetting
             'customers' . static::MENU_ITEM_PATH_SEPARATOR . 'promo_codes' => [
                 Roles::ROLE_PROMO_CODE_VIEW,
             ],
+            'customers' . static::MENU_ITEM_PATH_SEPARATOR . 'sales_representatives' => [
+                Roles::ROLE_SALES_REPRESENTATIVE_VIEW,
+            ],
             'products' . static::MENU_ITEM_PATH_SEPARATOR . 'products' => [
                 Roles::ROLE_PRODUCT_VIEW,
             ],

@@ -118,6 +118,7 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
         $customerUserData->lastName = $customerUser->getLastName();
         $customerUserData->email = $customerUser->getEmail();
         $customerUserData->pricingGroup = $customerUser->getPricingGroup();
+        $customerUserData->salesRepresentative = $customerUser->getSalesRepresentative();
         $customerUserData->createdAt = $customerUser->getCreatedAt();
         $customerUserData->telephone = $customerUser->getTelephone();
         $customerUserData->customer = $customerUser->getCustomer();

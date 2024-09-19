@@ -24,6 +24,9 @@ class Roles
     public const string ROLE_PROMO_CODE_FULL = 'ROLE_PROMO_CODE_FULL';
     public const string ROLE_PROMO_CODE_VIEW = 'ROLE_PROMO_CODE_VIEW';
 
+    public const string ROLE_SALES_REPRESENTATIVE_FULL = 'ROLE_SALES_REPRESENTATIVE_FULL';
+    public const string ROLE_SALES_REPRESENTATIVE_VIEW = 'ROLE_SALES_REPRESENTATIVE_VIEW';
+
     public const string ROLE_PRODUCT_FULL = 'ROLE_PRODUCT_FULL';
     public const string ROLE_PRODUCT_VIEW = 'ROLE_PRODUCT_VIEW';
 
@@ -196,6 +199,10 @@ class Roles
             [
                 static::ROLE_PROMO_CODE_FULL => t('Promo codes - full'),
                 static::ROLE_PROMO_CODE_VIEW => t('Promo codes - view'),
+            ],
+            [
+                static::ROLE_SALES_REPRESENTATIVE_FULL => t('Sales representatives - full'),
+                static::ROLE_SALES_REPRESENTATIVE_VIEW => t('Sales representatives - view'),
             ],
             [
                 static::ROLE_PRODUCT_FULL => t('Products - full'),

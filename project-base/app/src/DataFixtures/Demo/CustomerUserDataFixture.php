@@ -19,6 +19,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative;
 
 class CustomerUserDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -39,6 +40,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     private const string KEY_CUSTOMER_USER_DATA_TELEPHONE = 'telephone';
     private const string KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION = 'newsletterSubscription';
     private const string KEY_CUSTOMER_USER_DATA_UUID = 'uuid';
+    private const string KEY_CUSTOMER_USER_DATA_SALES_REPRESENTATIVE = 'salesRepresentative';
 
     private const string KEY_ADDRESS_COMPANY_CUSTOMER = 'companyCustomer';
     private const string KEY_ADDRESS_COMPANY_NAME = 'companyName';
@@ -125,6 +127,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
         $customerUserData->customer = $customerUserUpdateData->customerUserData->customer;
         $customerUserData->newsletterSubscription = $data[self::KEY_CUSTOMER_USER_DATA][self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION] ?? false;
         $customerUserData->uuid = $data[self::KEY_CUSTOMER_USER_DATA][self::KEY_CUSTOMER_USER_DATA_UUID];
+        $customerUserData->salesRepresentative = $data[self::KEY_CUSTOMER_USER_DATA][self::KEY_CUSTOMER_USER_DATA_SALES_REPRESENTATIVE] ?? null;
 
         $this->setBillingAddressData($customerUserUpdateData, $data[self::KEY_BILLING_ADDRESS]);
 
@@ -152,6 +155,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '605000123',
                     self::KEY_CUSTOMER_USER_DATA_NEWSLETTER_SUBSCRIPTION => true,
                     self::KEY_CUSTOMER_USER_DATA_UUID => '7b817d8b-41a3-4fc0-8570-08c9989f6dd9',
+                    self::KEY_CUSTOMER_USER_DATA_SALES_REPRESENTATIVE => $this->getReference(SalesRepresentativeDataFixture::SALES_REPRESENTATIVE_1, SalesRepresentative::class),
                 ],
                 self::KEY_BILLING_ADDRESS => [
                     self::KEY_ADDRESS_COMPANY_CUSTOMER => true,
@@ -490,6 +494,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     {
         return [
             CountryDataFixture::class,
+            SalesRepresentativeDataFixture::class,
         ];
     }
 

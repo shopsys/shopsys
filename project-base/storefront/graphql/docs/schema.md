@@ -91,6 +91,7 @@
     * [ProductPrice](#productprice)
     * [RegularCustomerUser](#regularcustomeruser)
     * [RegularProduct](#regularproduct)
+    * [SalesRepresentative](#salesrepresentative)
     * [SeoPage](#seopage)
     * [SeoSetting](#seosetting)
     * [Settings](#settings)
@@ -3934,6 +3935,15 @@ The customer user role group
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>salesRepresentative</strong></td>
+<td valign="top"><a href="#salesrepresentative">SalesRepresentative</a></td>
+<td>
+
+Sales representative assigned to customer
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>street</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -7598,6 +7608,15 @@ The customer user role group
 <td></td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>salesRepresentative</strong></td>
+<td valign="top"><a href="#salesrepresentative">SalesRepresentative</a></td>
+<td>
+
+Sales representative assigned to customer
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>street</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
@@ -7946,6 +7965,82 @@ List of availabilities in individual stores
 <td>
 
 List of product's unique selling propositions
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### SalesRepresentative
+
+Represents sales representative
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>email</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Email address
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>firstName</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+First name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>image</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Sales representative image
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Last name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Phone number
 
 </td>
 </tr>
@@ -11744,6 +11839,15 @@ The customer user role group
 <td colspan="2" valign="top"><strong>roles</strong></td>
 <td valign="top">[<a href="#string">String</a>!]!</td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>salesRepresentative</strong></td>
+<td valign="top"><a href="#salesrepresentative">SalesRepresentative</a></td>
+<td>
+
+Sales representative assigned to customer
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>street</strong></td>

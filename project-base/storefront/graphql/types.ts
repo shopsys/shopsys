@@ -732,6 +732,8 @@ export type TypeCompanyCustomerUser = TypeCustomerUser & {
   /** The customer user role group */
   roleGroup: TypeCustomerUserRoleGroup;
   roles: Array<Scalars['String']['output']>;
+  /** Sales representative assigned to customer */
+  salesRepresentative: Maybe<TypeSalesRepresentative>;
   /** street name */
   street: Maybe<Scalars['String']['output']>;
   /** Phone number */
@@ -891,6 +893,8 @@ export type TypeCustomerUser = {
   /** The customer user role group */
   roleGroup: TypeCustomerUserRoleGroup;
   roles: Array<Scalars['String']['output']>;
+  /** Sales representative assigned to customer */
+  salesRepresentative: Maybe<TypeSalesRepresentative>;
   /** street name */
   street: Maybe<Scalars['String']['output']>;
   /** Phone number */
@@ -2783,6 +2787,8 @@ export type TypeRegularCustomerUser = TypeCustomerUser & {
   /** The customer user role group */
   roleGroup: TypeCustomerUserRoleGroup;
   roles: Array<Scalars['String']['output']>;
+  /** Sales representative assigned to customer */
+  salesRepresentative: Maybe<TypeSalesRepresentative>;
   /** street name */
   street: Maybe<Scalars['String']['output']>;
   /** Phone number */
@@ -2892,6 +2898,29 @@ export type TypeRemovePromoCodeFromCartInput = {
   cartUuid: InputMaybe<Scalars['Uuid']['input']>;
   /** Promo code to be removed */
   promoCode: Scalars['String']['input'];
+};
+
+/** Represents sales representative */
+export type TypeSalesRepresentative = {
+  __typename?: 'SalesRepresentative';
+  /** Email address */
+  email: Maybe<Scalars['String']['output']>;
+  /** First name */
+  firstName: Maybe<Scalars['String']['output']>;
+  /** Sales representative image */
+  image: Maybe<TypeImage>;
+  /** Last name */
+  lastName: Maybe<Scalars['String']['output']>;
+  /** Phone number */
+  telephone: Maybe<Scalars['String']['output']>;
+  /** UUID */
+  uuid: Scalars['Uuid']['output'];
+};
+
+
+/** Represents sales representative */
+export type TypeSalesRepresentativeImageArgs = {
+  type?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Represents search input object */

@@ -597,6 +597,8 @@ type CompanyCustomerUser implements CustomerUser {
   "The customer user role group"
   roleGroup: CustomerUserRoleGroup!
   roles: [String!]!
+  "Sales representative assigned to customer"
+  salesRepresentative: SalesRepresentative
   "street name"
   street: String
   "Phone number"
@@ -745,6 +747,8 @@ interface CustomerUser {
   "The customer user role group"
   roleGroup: CustomerUserRoleGroup!
   roles: [String!]!
+  "Sales representative assigned to customer"
+  salesRepresentative: SalesRepresentative
   "street name"
   street: String
   "Phone number"
@@ -2107,6 +2111,8 @@ type RegularCustomerUser implements CustomerUser {
   "The customer user role group"
   roleGroup: CustomerUserRoleGroup!
   roles: [String!]!
+  "Sales representative assigned to customer"
+  salesRepresentative: SalesRepresentative
   "street name"
   street: String
   "Phone number"
@@ -2203,6 +2209,22 @@ input RemovePromoCodeFromCartInput {
   cartUuid: Uuid = null
   "Promo code to be removed"
   promoCode: String!
+}
+
+"Represents sales representative"
+type SalesRepresentative {
+  "Email address"
+  email: String
+  "First name"
+  firstName: String
+  "Sales representative image"
+  image(type: String = null): Image
+  "Last name"
+  lastName: String
+  "Phone number"
+  telephone: String
+  "UUID"
+  uuid: Uuid!
 }
 
 "Represents search input object"

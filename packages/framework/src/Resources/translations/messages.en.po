@@ -856,6 +856,9 @@ msgstr ""
 msgid "Create new product"
 msgstr ""
 
+msgid "Create new sales representative"
+msgstr ""
+
 msgid "Create new store"
 msgstr ""
 
@@ -1210,6 +1213,9 @@ msgstr ""
 msgid "Do you really want to remove rate \"%name%\" permanently? It is not used anywhere."
 msgstr ""
 
+msgid "Do you really want to remove sales representative \"%label%\" permanently? It is not used anywhere."
+msgstr ""
+
 msgid "Do you really want to remove status of complaint \"%name%\" permanently? It is not used anywhere."
 msgstr ""
 
@@ -1322,6 +1328,9 @@ msgid "Duration (mm:ss)"
 msgstr ""
 
 msgid "Duration (seconds)"
+msgstr ""
+
+msgid "E-mail"
 msgstr ""
 
 msgid "E-mail addresses whitelist"
@@ -1517,6 +1526,12 @@ msgid "Editing promo code"
 msgstr ""
 
 msgid "Editing promo code - %code%"
+msgstr ""
+
+msgid "Editing sales representative"
+msgstr ""
+
+msgid "Editing sales representative - %label%"
 msgstr ""
 
 msgid "Editing shipping"
@@ -2368,6 +2383,9 @@ msgstr ""
 msgid "New registered customers"
 msgstr ""
 
+msgid "New sales representative"
+msgstr ""
+
 msgid "New shipping"
 msgstr ""
 
@@ -2474,6 +2492,9 @@ msgid "No promo codes found. You have to create some first."
 msgstr ""
 
 msgid "No records found."
+msgstr ""
+
+msgid "No sales representatives found."
 msgstr ""
 
 msgid "No shipping created so far."
@@ -3157,6 +3178,27 @@ msgstr ""
 msgid "Sales overview (last 7 days)"
 msgstr ""
 
+msgid "Sales representative"
+msgstr ""
+
+msgid "Sales representative <strong><a href=\"{{ url }}\">{{ label }}</a></strong> was created"
+msgstr ""
+
+msgid "Sales representative <strong><a href=\"{{ url }}\">{{ label }}</a></strong> was edited"
+msgstr ""
+
+msgid "Sales representative <strong>{{ label }}</strong> deleted."
+msgstr ""
+
+msgid "Sales representatives"
+msgstr ""
+
+msgid "Sales representatives - full"
+msgstr ""
+
+msgid "Sales representatives - view"
+msgstr ""
+
 msgid "Saturday"
 msgstr ""
 
@@ -3311,6 +3353,9 @@ msgid "Selected product doesn't exist."
 msgstr ""
 
 msgid "Selected promo code doesn't exist."
+msgstr ""
+
+msgid "Selected sales representative doesn't exist."
 msgstr ""
 
 msgid "Selected shipping doesn't exist."
@@ -4183,6 +4228,9 @@ msgstr ""
 msgid "records"
 msgstr ""
 
+msgid "sales representatives"
+msgstr ""
+
 msgid "subscribers"
 msgstr ""
 
@@ -4214,5 +4262,8 @@ msgid "{1} You must wait 1 second before submitting the form. |[2,Inf] You must 
 msgstr ""
 
 msgid "{1}<strong>%count%</strong> promo code has been created|[2,Inf]<strong>%count%</strong> promo codes have been created"
+msgstr ""
+
+msgid "{1}Sales representative \"%label%\" is assigned to %count% customer and will be removed if you proceed.<br><br> Customer:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[2,10]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[11,Inf]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br> +%extraCount% more<br><br> Do you really want to remove sales representative \"%label%\" permanently?"
 msgstr ""
 

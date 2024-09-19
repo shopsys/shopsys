@@ -37,6 +37,11 @@ class CustomerUserData
     public $pricingGroup;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative|null
+     */
+    public $salesRepresentative;
+
+    /**
      * @var \DateTime|null
      */
     public $createdAt;
