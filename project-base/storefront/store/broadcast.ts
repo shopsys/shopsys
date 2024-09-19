@@ -1,3 +1,4 @@
+import { isClient } from 'utils/isClient';
 import { StateCreator, StoreMutatorIdentifier } from 'zustand';
 
 export type Broadcast = <
@@ -13,6 +14,10 @@ type BroadcastImpl = <T>(f: StateCreator<T, [], []>, name: string) => StateCreat
 
 const broadcastImpl: BroadcastImpl = (f, name) => (set, get, store) => {
     type Item = { [key: string]: unknown };
+    if (!isClient || !('BroadcastChannel' in window)) {
+        return f(set, get, store);
+    }
+
     const channel = new BroadcastChannel(name);
 
     const onSet: typeof set = (...args) => {

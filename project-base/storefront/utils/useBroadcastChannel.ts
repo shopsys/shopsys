@@ -13,7 +13,7 @@ const broadcastChannelSameTabConfig: Record<BroadcastChannelsType, boolean> = {
 };
 
 export const dispatchBroadcastChannel = (name: BroadcastChannelsType, messageEventPayloadData?: any) => {
-    const channel = isClient ? new BroadcastChannel(name) : undefined;
+    const channel = isClient && 'BroadcastChannel' in window ? new BroadcastChannel(name) : undefined;
 
     channel?.postMessage({ tabId, ...messageEventPayloadData });
     channel?.close();
@@ -21,7 +21,7 @@ export const dispatchBroadcastChannel = (name: BroadcastChannelsType, messageEve
 
 export const useBroadcastChannel = (name: BroadcastChannelsType, callBack: (messageEventData: any) => void) => {
     useEffect(() => {
-        const channel = isClient ? new BroadcastChannel(name) : null;
+        const channel = isClient && 'BroadcastChannel' in window ? new BroadcastChannel(name) : null;
 
         if (!channel) {
             return void null;
