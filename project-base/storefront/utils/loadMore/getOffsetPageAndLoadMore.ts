@@ -1,7 +1,7 @@
 import { calculatePageSize } from './calculatePageSize';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 
-const PRODUCT_LIST_LIMIT = 100;
+const PRODUCT_LIST_LIMIT = 310;
 
 export const getOffsetPageAndLoadMore = (
     currentPage: number,

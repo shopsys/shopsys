@@ -127,8 +127,8 @@ describe('getOffsetPageAndLoadMore tests', () => {
         });
 
         expect(getOffsetPageAndLoadMore(2, 10, 50)).toStrictEqual({
-            updatedPage: 11,
-            updatedLoadMore: 1,
+            updatedPage: 7,
+            updatedLoadMore: 5,
         });
     });
 });
@@ -199,7 +199,7 @@ describe('getRedirectWithOffsetPage tests', () => {
             ),
         ).toStrictEqual({
             redirect: {
-                destination: '/my-url?lm=1&page=11',
+                destination: '/my-url?lm=5&page=7',
                 permanent: false,
             },
         });
@@ -212,7 +212,7 @@ describe('getRedirectWithOffsetPage tests', () => {
                 {
                     [LOAD_MORE_QUERY_PARAMETER_NAME]: '11',
                 },
-                100,
+                310,
             ),
         ).toStrictEqual({
             redirect: {
@@ -292,7 +292,7 @@ describe('getRedirectWithOffsetPage tests', () => {
 
         currentQueryWithoutDynamicPageAndLoadMoreQuery[PAGE_QUERY_PARAMETER_NAME] = '13';
 
-        expect(getRedirectWithOffsetPage(2, 11, '/my-url', currentQuery, 100)).toStrictEqual({
+        expect(getRedirectWithOffsetPage(2, 11, '/my-url', currentQuery, 310)).toStrictEqual({
             redirect: {
                 destination: `/my-url?${stringify(currentQueryWithoutDynamicPageAndLoadMoreQuery)}`,
                 permanent: false,
