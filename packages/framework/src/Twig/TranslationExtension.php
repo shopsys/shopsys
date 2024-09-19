@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Twig;
 
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
+use Twig\Runtime\EscaperRuntime;
 use Twig\TwigFilter;
 
 class TranslationExtension extends AbstractExtension
@@ -13,7 +14,7 @@ class TranslationExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFilter[]
      */
-    public function getFilters()
+    public function getFilters(): array
     {
         return [
             new TwigFilter('transHtml', $this->transHtml(...), [
@@ -26,7 +27,7 @@ class TranslationExtension extends AbstractExtension
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return 'translation';
     }
@@ -64,13 +65,12 @@ class TranslationExtension extends AbstractExtension
      * @param array $elements
      * @return array
      */
-    protected function getEscapedElements(Environment $twig, array $elements)
+    protected function getEscapedElements(Environment $twig, array $elements): array
     {
-        $defaultEscapeFilterCallable = $twig->getFilter('escape')->getCallable();
         $escapedElements = [];
 
         foreach ($elements as $key => $element) {
-            $escapedElements[$key] = $defaultEscapeFilterCallable($twig, $element);
+            $escapedElements[$key] = $twig->getRuntime(EscaperRuntime::class)->escape($element);
         }
 
         return $escapedElements;
