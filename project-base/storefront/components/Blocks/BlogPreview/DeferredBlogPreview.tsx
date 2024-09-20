@@ -19,7 +19,7 @@ export const DeferredBlogPreview: FC = () => {
         variables: BLOG_PREVIEW_VARIABLES,
     });
     const [{ data: settingsData }] = useSettingsQuery({ requestPolicy: 'cache-only' });
-    const blogUrl = settingsData?.settings?.mainBlogCategoryUrl;
+    const blogData = settingsData?.settings?.mainBlogCategoryData;
 
     const shouldRender = useDeferredRender('blog_preview');
 
@@ -27,7 +27,6 @@ export const DeferredBlogPreview: FC = () => {
         return null;
     }
 
-    const bgImage = blogPreviewData.blogArticles.edges[0]?.node?.mainImage?.url;
     const bgImageTwClass = twJoin(
         'xl:rounded-xl py-16 bg-cover bg-center',
         "after:content-[''] after:block after:absolute after:inset-0 after:bg-backgroundDark after:bg-opacity-80 after:xl:rounded-xl",
@@ -35,15 +34,21 @@ export const DeferredBlogPreview: FC = () => {
 
     return (
         <Webline className="xl:max-w-[1400px] relative px-0">
-            <div className={bgImageTwClass} style={{ backgroundImage: `url(${bgImage})` }}>
+            <div
+                className={bgImageTwClass}
+                style={{ backgroundImage: `url(${blogData?.mainBlogCategoryMainImage?.url})` }}
+            >
                 {shouldRender ? (
                     <BlogPreview
                         blogArticles={blogPreviewData.blogArticles.edges}
-                        blogUrl={blogUrl}
+                        blogUrl={blogData?.mainBlogCategoryUrl}
                         fetchingArticles={areBlogArticlesFetching}
                     />
                 ) : (
-                    <BlogPreviewPlaceholder blogArticles={blogPreviewData.blogArticles.edges} blogUrl={blogUrl} />
+                    <BlogPreviewPlaceholder
+                        blogArticles={blogPreviewData.blogArticles.edges}
+                        blogUrl={blogData?.mainBlogCategoryUrl}
+                    />
                 )}
             </div>
         </Webline>
