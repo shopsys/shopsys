@@ -16,9 +16,9 @@ export const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = ({ onRemoveFr
             tid={TIDs.pages_cart_removecartitembutton}
             title={t('Remove from cart')}
             className={twMergeCustom(
-                'flex h-7 w-7 cursor-pointer items-center justify-center rounded-full border-none outline-none transition',
-                'text-actionInvertedText',
-                'hover:text-actionInvertedTextActive',
+                'flex h-6 w-6 cursor-pointer items-center justify-center rounded-full border-none outline-none transition',
+                'text-tableCross',
+                'hover:text-tableCrossHover hover:bg-tableCrossHoverBg rounded-lg',
                 className,
             )}
             onClick={onRemoveFromCart}

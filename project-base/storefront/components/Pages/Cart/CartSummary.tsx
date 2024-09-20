@@ -1,4 +1,4 @@
-import { FreeTransport } from 'components/Blocks/FreeTransport/FreeTransport';
+import FreeTransportRange from 'components/Blocks/FreeTransport/FreeTransportRange';
 import { PromoCode } from 'components/Blocks/PromoCode/PromoCode';
 import { CartPreview } from 'components/Pages/Cart/CartPreview';
 
@@ -8,7 +8,7 @@ export const CartSummary: FC = () => (
             <PromoCode />
         </div>
         <div className="ml-auto flex justify-end items-center vl:pr-8 lg:w-1/2 vl:w-5/12">
-            <FreeTransport />
+            <FreeTransportRange />
         </div>
         <div className="lg:w-full vl:w-3/12">
             <CartPreview />

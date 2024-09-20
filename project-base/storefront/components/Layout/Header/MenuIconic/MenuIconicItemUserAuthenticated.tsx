@@ -1,7 +1,5 @@
 import { MenuIconicItemLink, MenuIconicSubItemLink } from './MenuIconicElements';
 import { SalesRepresentative } from './SalesRepresentative';
-import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { ArrowRightIcon } from 'components/Basic/Icon/ArrowRightIcon';
 import { EditIcon } from 'components/Basic/Icon/EditIcon';
 import { ExitIcon } from 'components/Basic/Icon/ExitIcon';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
@@ -12,6 +10,7 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
+import { twJoin } from 'tailwind-merge';
 import { useCurrentCustomerUserPermissions } from 'utils/auth/useCurrentCustomerUserPermissions';
 import { useLogout } from 'utils/auth/useLogout';
 import { desktopFirstSizes } from 'utils/mediaQueries';
@@ -44,7 +43,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
     return (
         <>
             <div
-                className="group lg:relative z-aboveOverlay"
+                className={twJoin('group lg:relative', (isClicked || isHovered) && 'z-aboveOverlay')}
                 tid={TIDs.my_account_link}
                 onMouseEnter={() => isDesktop && setIsHovered(true)}
                 onMouseLeave={() => isDesktop && setIsHovered(false)}
@@ -77,20 +76,17 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
 
                 <div
                     className={twMergeCustom(
-                        'pointer-events-none absolute top-0 -right-[100%] z-cart block min-w-max origin-top-right rounded-xl p-5',
-                        'lg:top-full lg:transition-all',
+                        'pointer-events-none absolute top-0 -right-[100%] block min-w-[355px] origin-top-right rounded-xl px-5',
+                        'lg:top-full lg:transition-all lg:p-5',
                         'bg-none scale-50 opacity-0',
                         isHoveredDelayed &&
-                            'group-hover:bg-background group-hover:scale-100 group-hover:opacity-100 group-hover:pointer-events-auto',
+                            'group-hover:bg-background group-hover:scale-100 group-hover:opacity-100 group-hover:pointer-events-auto z-cart',
                         isClicked &&
                             'scale-100 opacity-100 bg-background top-0 right-0 rounded-none h-dvh fixed z-aboveOverlay pointer-events-auto transition-[right]',
                     )}
                 >
                     <div className="flex flex-row justify-between m-5 lg:hidden">
-                        <ExtendedNextLink href={customerUrl} onClick={() => setIsClicked(false)}>
-                            <ArrowRightIcon className="rotate-180 text-borderAccent w-4" />
-                        </ExtendedNextLink>
-                        <span className="text-base">{t('My account')}</span>
+                        <span className="text-base w-full text-center">{t('My account')}</span>
                         <RemoveIcon
                             className="w-4 text-borderAccent cursor-pointer"
                             onClick={() => setIsClicked(false)}

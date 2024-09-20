@@ -22,7 +22,11 @@ const CartPage: FC<ServerSidePropsType> = () => {
     return (
         <>
             <MetaRobots content="noindex" />
-            <CommonLayout isFetchingData={isCartFetchingOrUnavailable} pageTypeOverride="cart" title={t('Cart')}>
+            <CommonLayout
+                isFetchingData={isCartFetchingOrUnavailable}
+                pageTypeOverride="cart"
+                title={t('Shopping cart')}
+            >
                 {cart?.items.length ? <CartContent cart={cart} /> : <EmptyCart />}
             </CommonLayout>
         </>
