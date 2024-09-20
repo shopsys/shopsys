@@ -55,6 +55,7 @@
     * [Link](#link)
     * [LoginInfo](#logininfo)
     * [LoginResult](#loginresult)
+    * [MainBlogCategoryData](#mainblogcategorydata)
     * [MainVariant](#mainvariant)
     * [NavigationItem](#navigationitem)
     * [NavigationItemCategoriesByColumns](#navigationitemcategoriesbycolumns)
@@ -5051,6 +5052,39 @@ The type of login (web, facebook, google, etc.)
 </tbody>
 </table>
 
+### MainBlogCategoryData
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>mainBlogCategoryMainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Main image of the blog main category
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>mainBlogCategoryUrl</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Absolute URL of the blog main category
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### MainVariant
 
 Represents a product
@@ -8231,11 +8265,11 @@ Returns true if Heureka is available for the current domain
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>mainBlogCategoryUrl</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>mainBlogCategoryData</strong></td>
+<td valign="top"><a href="#mainblogcategorydata">MainBlogCategoryData</a>!</td>
 <td>
 
-Absolute URL of the blog main category
+Main blog category URL and background image
 
 </td>
 </tr>
