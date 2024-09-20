@@ -11,13 +11,6 @@ vi.mock('urql/fetcher', () => ({
     fetcher: vi.fn(() => mockRequestWithFetcher),
 }));
 
-const isClientGetter = vi.fn();
-vi.mock('helpers/isClient', () => ({
-    get isClient() {
-        return isClientGetter();
-    },
-}));
-
 vi.mock('next/config', () => ({
     default: () => ({
         serverRuntimeConfig: { internalGraphqlEndpoint: 'https://test.ts/graphql/' },
@@ -49,7 +42,6 @@ describe('createClient test', () => {
     afterEach(cleanup);
 
     test('created client (and URQL) do not filter out Redis cache directive on the client (in component)', async () => {
-        (isClientGetter as Mock).mockImplementation(() => true);
         const publicGraphqlEndpoint = 'https://test.ts/graphql/';
 
         const UrqlWrapper: FC = ({ children }) => {
@@ -90,7 +82,6 @@ describe('createClient test', () => {
     });
 
     test('created client (and URQL) do not filter out Redis cache directive on the server', async () => {
-        (isClientGetter as Mock).mockImplementation(() => false);
         const publicGraphqlEndpoint = 'https://test.ts/graphql/';
 
         const client = createClient({
