@@ -24,10 +24,10 @@ SettingsDecorator:
                 type: String!
                 resolve: "@=query('displayTimezoneQuery')"
                 description: "Timezone that is used for displaying time"
-            mainBlogCategoryUrl:
-                type: String
-                resolve: "@=query('mainBlogCategoryUrlQuery')"
-                description: "Absolute URL of the blog main category"
+            mainBlogCategoryData:
+                type: "MainBlogCategoryData!"
+                resolve: "@=query('mainBlogCategoryDataQuery')"
+                description: "Main blog category URL and background image"
             heurekaEnabled:
                 type: Boolean!
                 resolve: "@=query('heurekaEnabledQuery')"

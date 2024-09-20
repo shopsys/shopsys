@@ -8,12 +8,12 @@ use App\DataFixtures\Demo\BlogArticleDataFixture;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
-class MainBlogCategoryUrlSettingsTest extends GraphQlTestCase
+class MainBlogCategoryDataSettingsTest extends GraphQlTestCase
 {
-    public function testMainBlogCategoryUrlSettings(): void
+    public function testMainBlogCategoryDataSettings(): void
     {
         $graphQlType = 'settings';
-        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/MainBlogCategoryUrlSettingsQuery.graphql');
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/MainBlogCategoryDataSettingsQuery.graphql');
         $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
         $expectedBlogUrl = $this->getLocalizedPathOnFirstDomainByRouteName(
             'front_blogcategory_detail',
@@ -22,7 +22,12 @@ class MainBlogCategoryUrlSettingsTest extends GraphQlTestCase
             ],
         );
 
-        $expectedData = ['mainBlogCategoryUrl' => $expectedBlogUrl];
+        $expectedData = [
+            'mainBlogCategoryData' => [
+                'mainBlogCategoryUrl' => $expectedBlogUrl,
+                'mainBlogCategoryMainImage' => null,
+            ],
+        ];
 
         self::assertSame($expectedData, $responseData);
     }

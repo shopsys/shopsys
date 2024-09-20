@@ -8,37 +8,49 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNo
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
+use Shopsys\FrontendApiBundle\Model\Resolver\Image\ImagesQuery;
 
-class MainBlogCategoryUrlQuery extends AbstractQuery
+class MainBlogCategoryDataQuery extends AbstractQuery
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Image\ImagesQuery $imagesQuery
      */
     public function __construct(
         protected readonly BlogCategoryFacade $blogCategoryFacade,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly ImagesQuery $imagesQuery,
     ) {
     }
 
     /**
-     * @return string|null
+     * @return \Shopsys\FrontendApiBundle\Model\Resolver\Settings\MainBlogCategoryData
      */
-    public function mainBlogCategoryUrlQuery(): ?string
+    public function mainBlogCategoryDataQuery(): MainBlogCategoryData
     {
+        $mainBlogCategoryData = new MainBlogCategoryData();
+
         $mainBlogCategoryId = $this->blogCategoryFacade->findVisibleMainBlogCategoryIdOnCurrentDomain();
 
         if ($mainBlogCategoryId === null) {
-            return null;
+            return $mainBlogCategoryData;
         }
 
         try {
-            return $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityIdOnCurrentDomain(
+            $mainBlogCategoryData->mainBlogCategoryUrl = $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityIdOnCurrentDomain(
                 'front_blogcategory_detail',
                 $mainBlogCategoryId,
             );
+            $mainBlogCategoryData->mainBlogCategoryMainImage = $this->imagesQuery->mainImageByEntityIdPromiseQuery(
+                $mainBlogCategoryId,
+                'blogCategory',
+                null,
+            );
+
+            return $mainBlogCategoryData;
         } catch (FriendlyUrlNotFoundException) {
-            return null;
+            return $mainBlogCategoryData;
         }
     }
 }

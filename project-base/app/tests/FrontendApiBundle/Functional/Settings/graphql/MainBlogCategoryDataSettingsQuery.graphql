@@ -1,0 +1,11 @@
+query MainBlogCategoryDataSettingsQuery {
+    settings {
+        mainBlogCategoryData {
+            mainBlogCategoryUrl
+            mainBlogCategoryMainImage {
+                name
+                url
+            }
+        }
+    }
+}
