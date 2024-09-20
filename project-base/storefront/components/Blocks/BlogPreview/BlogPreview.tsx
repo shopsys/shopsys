@@ -8,8 +8,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { mapConnectionEdges } from 'utils/mappers/connection';
-import { desktopFirstSizes } from 'utils/mediaQueries';
-import { useGetWindowSize } from 'utils/ui/useGetWindowSize';
+import { useMediaMin } from 'utils/ui/useMediaMin';
 
 export type BlogPreviewProps = {
     blogArticles: TypeBlogArticleConnectionFragment['edges'] | undefined;
@@ -24,8 +23,7 @@ export const BlogPreview: FC<BlogPreviewProps> = ({ blogArticles, blogUrl, fetch
     const blogMainItems = blogItems?.slice(0, 2);
     const blogSideItems = blogItems?.slice(2);
 
-    const { width } = useGetWindowSize();
-    const isDesktop = width > desktopFirstSizes.notLargeDesktop;
+    const isDesktop = useMediaMin('vl');
 
     return (
         <div className="w-full max-w-7xl mx-auto px-5 z-above relative">

@@ -4,13 +4,15 @@ import { Image } from 'components/Basic/Image/Image';
 import { TIDs } from 'cypress/tids';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import { Fragment } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 
 type MainProps = {
     articles: TypeListedBlogArticleFragment[];
+    isPlaceholder?: boolean;
 };
 
-export const BlogPreviewMain: FC<MainProps> = ({ articles }) => {
+export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false }) => {
     const { formatDate } = useFormatDate();
 
     return (
@@ -33,18 +35,34 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles }) => {
 
                     <div className="flex flex-col items-start gap-2.5">
                         <div className="flex items-center gap-x-6 gap-y-1 flex-wrap">
-                            <span className="text-inputPlaceholder text-sm font-secondary font-semibold">
-                                {formatDate(article.publishDate, 'l')}
-                            </span>
-                            {article.blogCategories.map((blogCategory) => (
-                                <Fragment key={blogCategory.uuid}>
-                                    {!!blogCategory.parent && (
-                                        <Flag href={blogCategory.link} type="blog">
-                                            {blogCategory.name}
-                                        </Flag>
-                                    )}
-                                </Fragment>
-                            ))}
+                            {isPlaceholder ? (
+                                <>
+                                    <Skeleton className="w-20 h-5" />
+                                    <Skeleton className="w-32 h-5" />
+                                </>
+                            ) : (
+                                <>
+                                    <span className="text-inputPlaceholder text-sm font-secondary font-semibold">
+                                        {formatDate(article.publishDate, 'l')}
+                                    </span>
+
+                                    {article.blogCategories.map((blogPreviewCategory) => {
+                                        if (!blogPreviewCategory.parent) {
+                                            return null;
+                                        }
+
+                                        return (
+                                            <Flag
+                                                key={blogPreviewCategory.uuid}
+                                                href={blogPreviewCategory.link}
+                                                type="blog"
+                                            >
+                                                {blogPreviewCategory.name}
+                                            </Flag>
+                                        );
+                                    })}
+                                </>
+                            )}
                         </div>
 
                         <h4 className="text-textInverted">{article.name}</h4>

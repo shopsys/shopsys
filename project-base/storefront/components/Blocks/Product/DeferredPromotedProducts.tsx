@@ -22,27 +22,29 @@ export const DeferredPromotedProducts: FC = () => {
     const [{ data: promotedProductsData, fetching: arePromotedProductsFetching }] = usePromotedProductsQuery();
     const shouldRender = useDeferredRender('promoted_products');
 
+    if (arePromotedProductsFetching) {
+        return (
+            <Webline className="mb-10">
+                <SkeletonModulePromotedProducts />
+            </Webline>
+        );
+    }
+
     if (!promotedProductsData?.promotedProducts.length) {
         return null;
     }
 
     return (
         <Webline className="mb-10">
-            {arePromotedProductsFetching ? (
-                <SkeletonModulePromotedProducts />
+            <h3 className="mb-4">{t('News on offer')}</h3>
+            {shouldRender ? (
+                <ProductsSlider
+                    gtmProductListName={GtmProductListNameType.homepage_promo_products}
+                    products={promotedProductsData.promotedProducts}
+                    tid={TIDs.blocks_product_slider_promoted_products}
+                />
             ) : (
-                <>
-                    <h3 className="mb-4">{t('News on offer')}</h3>
-                    {shouldRender ? (
-                        <ProductsSlider
-                            gtmProductListName={GtmProductListNameType.homepage_promo_products}
-                            products={promotedProductsData.promotedProducts}
-                            tid={TIDs.blocks_product_slider_promoted_products}
-                        />
-                    ) : (
-                        <ProductsSliderPlaceholder products={promotedProductsData.promotedProducts} />
-                    )}
-                </>
+                <ProductsSliderPlaceholder products={promotedProductsData.promotedProducts} />
             )}
         </Webline>
     );

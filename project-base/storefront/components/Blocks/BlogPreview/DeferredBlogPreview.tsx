@@ -35,17 +35,17 @@ export const DeferredBlogPreview: FC = () => {
 
     return (
         <Webline className="xl:max-w-[1400px] relative px-0">
-            {shouldRender ? (
-                <div className={bgImageTwClass} style={{ backgroundImage: `url(${bgImage})` }}>
+            <div className={bgImageTwClass} style={{ backgroundImage: `url(${bgImage})` }}>
+                {shouldRender ? (
                     <BlogPreview
                         blogArticles={blogPreviewData.blogArticles.edges}
                         blogUrl={blogUrl}
                         fetchingArticles={areBlogArticlesFetching}
                     />
-                </div>
-            ) : (
-                <BlogPreviewPlaceholder blogArticles={blogPreviewData.blogArticles.edges} blogUrl={blogUrl} />
-            )}
+                ) : (
+                    <BlogPreviewPlaceholder blogArticles={blogPreviewData.blogArticles.edges} blogUrl={blogUrl} />
+                )}
+            </div>
         </Webline>
     );
 };

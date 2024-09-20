@@ -8,6 +8,14 @@ export const PromotedCategories: FC = () => {
     const { t } = useTranslation();
     const [{ data: promotedCategoriesData, fetching: arePromotedCategoriesFetching }] = usePromotedCategoriesQuery();
 
+    if (arePromotedCategoriesFetching) {
+        return (
+            <Webline className="mb-10">
+                <SkeletonModulePromotedCategories />
+            </Webline>
+        );
+    }
+
     if (!promotedCategoriesData?.promotedCategories.length) {
         return null;
     }
@@ -15,11 +23,7 @@ export const PromotedCategories: FC = () => {
     return (
         <Webline className="mb-10">
             <h3 className="mb-4">{t('Shop by category')}</h3>
-            {arePromotedCategoriesFetching ? (
-                <SkeletonModulePromotedCategories />
-            ) : (
-                <PromotedCategoriesContent promotedCategoriesData={promotedCategoriesData} />
-            )}
+            <PromotedCategoriesContent promotedCategoriesData={promotedCategoriesData} />
         </Webline>
     );
 };

@@ -76,7 +76,6 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
         <div className="flex flex-col" tid={TIDs.banners_slider}>
             <div
                 {...handlers}
-                className=""
                 onMouseEnter={checkAndClearInterval}
                 onMouseLeave={() => {
                     checkAndClearInterval();

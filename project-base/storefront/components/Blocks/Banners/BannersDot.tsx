@@ -1,10 +1,8 @@
 import { TypeSliderItemFragment } from 'graphql/requests/sliderItems/fragments/SliderItemFragment.generated';
 import { useEffect, useRef, useState } from 'react';
-import { desktopFirstSizes } from 'utils/mediaQueries';
 import { twMergeCustom } from 'utils/twMerge';
 import { isWholeElementVisible } from 'utils/ui/isWholeElementVisible';
-import { useGetWindowSize } from 'utils/ui/useGetWindowSize';
-import { useEffectOnce } from 'utils/useEffectOnce';
+import { useMediaMin } from 'utils/ui/useMediaMin';
 
 export type BannersDotProps = {
     index: number;
@@ -17,12 +15,9 @@ export type BannersDotProps = {
 export const BannersDot: FC<BannersDotProps> = ({ index, isActive, sliderItem, moveToSlide, slideInterval }) => {
     const dotRef = useRef<HTMLButtonElement>(null);
     const [start, setStart] = useState(false);
-    const { width } = useGetWindowSize();
-    const isDesktop = width > desktopFirstSizes.notLargeDesktop;
+    const isDesktop = useMediaMin('vl');
 
-    useEffectOnce(() => {
-        setStart(true);
-    });
+    useEffect(() => setStart(true), []);
 
     useEffect(() => {
         if (isDesktop && isActive && dotRef.current && isWholeElementVisible(dotRef.current)) {
