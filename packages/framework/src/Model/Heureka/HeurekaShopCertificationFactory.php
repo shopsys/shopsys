@@ -35,7 +35,7 @@ class HeurekaShopCertificationFactory
         $options = ['service' => $languageId];
 
         $heurekaShopCertification = new ShopCertification($heurekaApiKey, $options);
-        $heurekaShopCertification->setOrderId($order->getId());
+        $heurekaShopCertification->setOrderId($order->getNumber());
         $heurekaShopCertification->setEmail($order->getEmail());
 
         foreach ($order->getProductItems() as $item) {
