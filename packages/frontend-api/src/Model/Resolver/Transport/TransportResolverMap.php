@@ -28,6 +28,9 @@ class TransportResolverMap extends ResolverMap
                 'payments' => function (Transport $transport) {
                     return $this->paymentFacade->getVisibleOnCurrentDomainByTransport($transport);
                 },
+                'transportTypeCode' => function (Transport $transport) {
+                    return $transport->getType();
+                },
             ],
         ];
     }

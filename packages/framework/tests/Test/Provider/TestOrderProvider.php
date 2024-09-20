@@ -20,8 +20,7 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
-use Shopsys\FrameworkBundle\Model\Transport\Type\TransportType;
-use Shopsys\FrameworkBundle\Model\Transport\Type\TransportTypeData;
+use Shopsys\FrameworkBundle\Model\Transport\TransportTypeEnum;
 
 class TestOrderProvider
 {
@@ -60,7 +59,7 @@ class TestOrderProvider
 
         $transportData = static::createTransportDataInstance();
         $transportData->name = ['cs' => 'transportName'];
-        $transportData->transportType = static::createTransportTypeInstance();
+        $transportData->type = TransportTypeEnum::TYPE_COMMON;
         $orderData->transport = static::createTransportInstance($transportData);
 
         $paymentData = static::createPaymentDataInstance();
@@ -82,7 +81,7 @@ class TestOrderProvider
 
         $transportData = static::createTransportDataInstance();
         $transportData->name = ['cs' => 'transportName'];
-        $transportData->transportType = static::createTransportTypeInstance();
+        $transportData->type = TransportTypeEnum::TYPE_COMMON;
         $orderTransport->setTransport(static::createTransportInstance($transportData));
 
         return $orderTransport;
@@ -173,22 +172,6 @@ class TestOrderProvider
         $countryData->names = ['cs' => 'Slovenská republika'];
 
         return static::createCountryInstance($countryData);
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Transport\Type\TransportTypeData
-     */
-    public static function createTransportTypeDataInstance(): TransportTypeData
-    {
-        return new TransportTypeData();
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Transport\Type\TransportType
-     */
-    public static function createTransportTypeInstance(): TransportType
-    {
-        return new TransportType(static::createTransportTypeDataInstance());
     }
 
     /**

@@ -3,7 +3,5 @@ fragment SimpleTransportFragment on Transport {
     uuid
     name
     description
-    transportType {
-        code
-    }
+    transportTypeCode
 }

@@ -82,7 +82,7 @@ export const useCreateOrder = (
                 formValues,
                 currentCart.pickupPlace,
                 user,
-                isPacketeryTransport(currentCart.transport?.transportType.code),
+                isPacketeryTransport(currentCart.transport?.transportTypeCode),
             ),
         );
 

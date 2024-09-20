@@ -102,7 +102,6 @@
     * [StoreEdge](#storeedge)
     * [Token](#token)
     * [Transport](#transport)
-    * [TransportType](#transporttype)
     * [Unit](#unit)
     * [Variant](#variant)
     * [VideoToken](#videotoken)
@@ -150,6 +149,7 @@
     * [ProductOrderingModeEnum](#productorderingmodeenum)
     * [RecommendationType](#recommendationtype)
     * [StoreOpeningStatusEnum](#storeopeningstatusenum)
+    * [TransportTypeEnum](#transporttypeenum)
   * [Scalars](#scalars)
     * [Boolean](#boolean)
     * [DateTime](#datetime)
@@ -8858,11 +8858,11 @@ Stores available for personal pickup
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>transportType</strong></td>
-<td valign="top"><a href="#transporttype">TransportType</a>!</td>
+<td colspan="2" valign="top"><strong>transportTypeCode</strong></td>
+<td valign="top"><a href="#transporttypeenum">TransportTypeEnum</a>!</td>
 <td>
 
-Type of transport
+Code of transport type
 
 </td>
 </tr>
@@ -8872,41 +8872,6 @@ Type of transport
 <td>
 
 UUID
-
-</td>
-</tr>
-</tbody>
-</table>
-
-### TransportType
-
-Represents a transport type
-
-<table>
-<thead>
-<tr>
-<th align="left">Field</th>
-<th align="right">Argument</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td colspan="2" valign="top"><strong>code</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Code of transport
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Name of transport type
 
 </td>
 </tr>
@@ -11508,6 +11473,31 @@ Store is currently opened
 Store will be opened soon
 
 </td>
+</tr>
+</tbody>
+</table>
+
+### TransportTypeEnum
+
+One of the possible methods of the transport type
+
+<table>
+<thead>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>common</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>packetery</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>personal_pickup</strong></td>
+<td></td>
 </tr>
 </tbody>
 </table>

@@ -14,6 +14,7 @@ use App\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Store\Store;
+use Shopsys\FrameworkBundle\Model\Transport\TransportTypeEnum;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class CartTransportTest extends GraphQlTestCase
@@ -66,10 +67,7 @@ class CartTransportTest extends GraphQlTestCase
             'instruction' => null,
             'position' => 2,
             'daysUntilDelivery' => 0,
-            'transportType' => [
-                'name' => t('Personal pickup', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'code' => 'personal_pickup',
-            ],
+            'transportTypeCode' => TransportTypeEnum::TYPE_PERSONAL_PICKUP,
             'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
             'images' => [
                 [

@@ -1,7 +1,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type TypeSimpleTransportFragment = { __typename: 'Transport', uuid: string, name: string, description: string | null, transportType: { __typename?: 'TransportType', code: string } };
+export type TypeSimpleTransportFragment = { __typename: 'Transport', uuid: string, name: string, description: string | null, transportTypeCode: Types.TypeTransportTypeEnum };
 
 
       export interface PossibleTypesResultData {
@@ -86,8 +86,6 @@ export const SimpleTransportFragment = gql`
   uuid
   name
   description
-  transportType {
-    code
-  }
+  transportTypeCode
 }
     `;

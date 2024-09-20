@@ -38,6 +38,6 @@ TransportDecorator:
             payments:
                 type: "[Payment!]!"
                 description: "List of assigned payments"
-            transportType:
-                type: "TransportType!"
-                description: "Type of transport"
+            transportTypeCode:
+                type: "TransportTypeEnum!"
+                description: "Code of transport type"

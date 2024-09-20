@@ -16,9 +16,7 @@ fragment OrderDetailFragment on Order {
             url
         }
         isPersonalPickup
-        transportType {
-            code
-        }
+        transportTypeCode
     }
     payment {
         __typename

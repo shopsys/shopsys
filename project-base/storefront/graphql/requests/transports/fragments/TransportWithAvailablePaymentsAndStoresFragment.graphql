@@ -16,9 +16,6 @@ fragment TransportWithAvailablePaymentsAndStoresFragment on Transport {
     stores {
         ...ListedStoreConnectionFragment
     }
-    transportType {
-        __typename
-        code
-    }
+    transportTypeCode
     isPersonalPickup
 }

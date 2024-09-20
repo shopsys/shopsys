@@ -1,4 +1,0 @@
-TransportType:
-    type: object
-    inherits:
-        - 'TransportTypeDecorator'

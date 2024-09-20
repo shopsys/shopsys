@@ -97,7 +97,7 @@ export const useTransportChangeInSelect = (
             return;
         }
 
-        if (updatedTransport.isPersonalPickup || isPacketeryTransport(updatedTransport.transportType.code)) {
+        if (updatedTransport.isPersonalPickup || isPacketeryTransport(updatedTransport.transportTypeCode)) {
             if (!preSelectedPickupPlace) {
                 openPersonalPickupPopup(updatedTransport);
 
@@ -139,7 +139,7 @@ export const useTransportChangeInSelect = (
     };
 
     const openPersonalPickupPopup = (newTransport: TypeTransportWithAvailablePaymentsFragment) => {
-        if (isPacketeryTransport(newTransport.transportType.code)) {
+        if (isPacketeryTransport(newTransport.transportTypeCode)) {
             openPacketeryPopup(newTransport);
 
             return;
@@ -266,7 +266,7 @@ export const useLoadTransportAndPaymentFromLastOrder = (
         }
 
         let lastOrderPickupPlaceDataFromApi;
-        if (!isPacketeryTransport(lastOrder.lastOrder.transport.transportType.code)) {
+        if (!isPacketeryTransport(lastOrder.lastOrder.transport.transportTypeCode)) {
             lastOrderPickupPlaceDataFromApi = (
                 await client
                     .query<TypeStoreQuery, TypeStoreQueryVariables>(StoreQueryDocument, {

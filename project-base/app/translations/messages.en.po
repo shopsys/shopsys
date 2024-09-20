@@ -175,9 +175,6 @@ msgstr ""
 msgid "Edit store"
 msgstr ""
 
-msgid "Edit transport type"
-msgstr ""
-
 msgid "Editing banner"
 msgstr ""
 
@@ -602,9 +599,6 @@ msgid "The selected flag cannot be deleted."
 msgstr ""
 
 msgid "This flag can not be deleted as it is used in definition of"
-msgstr ""
-
-msgid "Transport types"
 msgstr ""
 
 msgid "Type"

@@ -14,7 +14,7 @@ type OrderDetailCustomerInfoProps = {
 export const OrderDetailCustomerInfo: FC<OrderDetailCustomerInfoProps> = ({ order }) => {
     const { t } = useTranslation();
     const isPickupPlaceTransport =
-        order.transport.isPersonalPickup || isPacketeryTransport(order.transport.transportType.code);
+        order.transport.isPersonalPickup || isPacketeryTransport(order.transport.transportTypeCode);
 
     return (
         <div className="flex w-full flex-col vl:flex-row vl:flex-wrap xl:flex-nowrap gap-6">

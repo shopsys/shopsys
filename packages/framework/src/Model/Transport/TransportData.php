@@ -62,11 +62,6 @@ class TransportData
     public $daysUntilDelivery;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\Type\TransportType|null
-     */
-    public $transportType;
-
-    /**
      * @var int|null
      */
     public $maxWeight;
@@ -81,6 +76,11 @@ class TransportData
      */
     public $trackingInstructions;
 
+    /**
+     * @var string
+     */
+    public $type;
+
     public function __construct()
     {
         $this->name = [];
@@ -92,5 +92,6 @@ class TransportData
         $this->payments = [];
         $this->pricesIndexedByDomainId = [];
         $this->vatsIndexedByDomainId = [];
+        $this->type = TransportTypeEnum::TYPE_COMMON;
     }
 }

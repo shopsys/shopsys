@@ -17,7 +17,6 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentPriceNotFoundException;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportDomainNotFoundException;
-use Shopsys\FrameworkBundle\Model\Transport\Type\TransportType;
 
 /**
  * @ORM\Table(name="transports")
@@ -94,13 +93,6 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     protected $daysUntilDelivery;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Transport\Type\TransportType
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Transport\Type\TransportType")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    protected $transportType;
-
-    /**
      * @var int|null
      * @ORM\Column(type="integer", nullable=true)
      */
@@ -111,6 +103,12 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $trackingUrl;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=25)
+     */
+    protected $type;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
@@ -144,7 +142,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     {
         $this->hidden = $transportData->hidden;
         $this->daysUntilDelivery = $transportData->daysUntilDelivery;
-        $this->transportType = $transportData->transportType;
+        $this->type = $transportData->type;
         $this->maxWeight = $transportData->maxWeight > 0 ? $transportData->maxWeight : null;
         $this->trackingUrl = $transportData->trackingUrl;
         $this->setTranslations($transportData);
@@ -432,19 +430,11 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Transport\Type\TransportType
-     */
-    public function getTransportType()
-    {
-        return $this->transportType;
-    }
-
-    /**
      * @return bool
      */
     public function isPersonalPickup(): bool
     {
-        return $this->transportType->getCode() === TransportType::TYPE_PERSONAL_PICKUP;
+        return $this->type === TransportTypeEnum::TYPE_PERSONAL_PICKUP;
     }
 
     /**
@@ -452,7 +442,7 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
      */
     public function isPacketery(): bool
     {
-        return $this->transportType->getCode() === TransportType::TYPE_PACKETERY;
+        return $this->type === TransportTypeEnum::TYPE_PACKETERY;
     }
 
     /**
@@ -478,5 +468,13 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     public function getTrackingInstruction($locale = null)
     {
         return $this->translation($locale)->getTrackingInstruction();
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

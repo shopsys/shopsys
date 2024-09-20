@@ -129,9 +129,6 @@ class Roles
     public const string ROLE_PARAMETER_VALUE_FULL = 'ROLE_PARAMETER_VALUE_FULL';
     public const string ROLE_PARAMETER_VALUE_VIEW = 'ROLE_PARAMETER_VALUE_VIEW';
 
-    public const string ROLE_TRANSPORT_TYPE_FULL = 'ROLE_TRANSPORT_TYPE_FULL';
-    public const string ROLE_TRANSPORT_TYPE_VIEW = 'ROLE_TRANSPORT_TYPE_VIEW';
-
     public const string ROLE_SEO_FULL = 'ROLE_SEO_FULL';
     public const string ROLE_SEO_VIEW = 'ROLE_SEO_VIEW';
 
@@ -339,10 +336,6 @@ class Roles
             [
                 static::ROLE_PARAMETER_VALUE_FULL => t('Color parameter values - full'),
                 static::ROLE_PARAMETER_VALUE_VIEW => t('Color parameter values - view'),
-            ],
-            [
-                static::ROLE_TRANSPORT_TYPE_FULL => t('Transport types - full'),
-                static::ROLE_TRANSPORT_TYPE_VIEW => t('Transport types - view'),
             ],
             [
                 static::ROLE_SEO_FULL => t('SEO - full'),

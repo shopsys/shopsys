@@ -32,7 +32,6 @@ use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFact
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
-use Shopsys\FrameworkBundle\Model\Transport\Type\TransportType;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 use Webmozart\Assert\Assert;
 
@@ -389,10 +388,10 @@ class OrderFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Transport\Type\TransportType $transportType
+     * @param string $transportType
      * @return \Shopsys\FrameworkBundle\Model\Order\Order[]
      */
-    public function getAllWithoutTrackingNumberByTransportType(TransportType $transportType): array
+    public function getAllWithoutTrackingNumberByTransportType(string $transportType): array
     {
         return $this->orderRepository->getAllWithoutTrackingNumberByTransportType($transportType);
     }
