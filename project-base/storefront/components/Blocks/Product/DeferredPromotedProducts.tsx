@@ -22,9 +22,11 @@ export const DeferredPromotedProducts: FC = () => {
     const [{ data: promotedProductsData, fetching: arePromotedProductsFetching }] = usePromotedProductsQuery();
     const shouldRender = useDeferredRender('promoted_products');
 
+    const weblineTwClasses = 'mb-10';
+
     if (arePromotedProductsFetching) {
         return (
-            <Webline className="mb-10">
+            <Webline className={weblineTwClasses}>
                 <SkeletonModulePromotedProducts />
             </Webline>
         );
@@ -35,7 +37,7 @@ export const DeferredPromotedProducts: FC = () => {
     }
 
     return (
-        <Webline className="mb-10">
+        <Webline className={weblineTwClasses}>
             <h3 className="mb-4">{t('News on offer')}</h3>
             {shouldRender ? (
                 <ProductsSlider

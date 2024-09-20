@@ -25,9 +25,7 @@ export const HomePageContent: FC = () => {
         <>
             <SearchMetadata />
             <CommonLayout>
-                <Webline className="mb-14 xl:max-w-[1432px]">
-                    <Banners />
-                </Webline>
+                <Banners />
 
                 <PromotedCategories />
 

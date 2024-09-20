@@ -8,9 +8,11 @@ export const PromotedCategories: FC = () => {
     const { t } = useTranslation();
     const [{ data: promotedCategoriesData, fetching: arePromotedCategoriesFetching }] = usePromotedCategoriesQuery();
 
+    const weblineTwClasses = 'mb-10';
+
     if (arePromotedCategoriesFetching) {
         return (
-            <Webline className="mb-10">
+            <Webline className={weblineTwClasses}>
                 <SkeletonModulePromotedCategories />
             </Webline>
         );
@@ -21,7 +23,7 @@ export const PromotedCategories: FC = () => {
     }
 
     return (
-        <Webline className="mb-10">
+        <Webline className={weblineTwClasses}>
             <h3 className="mb-4">{t('Shop by category')}</h3>
             <PromotedCategoriesContent promotedCategoriesData={promotedCategoriesData} />
         </Webline>
