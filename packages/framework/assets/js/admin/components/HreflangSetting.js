@@ -5,12 +5,9 @@ import {
 } from '../validation/customization/customizeCollectionBundle';
 
 export default class HreflangSetting {
-    static init () {
-        const $collectionItemAddButton = $('.js-hreflang-setting-item-add');
-        const $collection = $('.js-hreflang-setting');
-
-        $collectionItemAddButton.off('click');
-        $collection.off('click', '.js-hreflang-setting-item-remove');
+    static init ($container) {
+        const $collectionItemAddButton = $container.filterAllNodes('.js-hreflang-setting-item-add');
+        const $collection = $container.filterAllNodes('.js-hreflang-setting');
 
         $collection.on('click', '.js-hreflang-setting-item-remove', function (event) {
             const $collection = $(this).closest('.js-hreflang-setting');
@@ -25,7 +22,7 @@ export default class HreflangSetting {
         });
 
         $collectionItemAddButton.on('click', function () {
-            const $collection = $('.js-hreflang-setting');
+            const $collection = $(this).closest('.js-form-group').find('.js-hreflang-setting');
             const index = $collection.data('index');
 
             const prototype = $collection.data('prototype');

@@ -2,12 +2,9 @@ import Register from '../../common/utils/Register';
 import { addNewItemToCollection, removeItemFromCollection } from '../validation/customization/customizeCollectionBundle';
 
 export default class PromoCodeFlags {
-    static init () {
-        const $flagsItemAdd = $('.js-flags-item-add');
-        const $flags = $('.js-flags');
-
-        $flagsItemAdd.off('click');
-        $flags.off('click', '.js-flags-item-remove');
+    static init ($container) {
+        const $flagsItemAdd = $container.filterAllNodes('.js-flags-item-add');
+        const $flags = $container.filterAllNodes('.js-flags');
 
         $flags.on('click', '.js-flags-item-remove', function (event) {
             const $collection = $(this).closest('.js-flags');
@@ -22,7 +19,7 @@ export default class PromoCodeFlags {
         });
 
         $flagsItemAdd.on('click', function () {
-            const $collection = $('.js-flags');
+            const $collection = $(this).closest('.js-form-group').find('.js-flags');
             const index = $collection.data('index');
 
             const prototype = $collection.data('prototype');

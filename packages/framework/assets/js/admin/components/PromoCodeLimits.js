@@ -3,11 +3,10 @@ import { addNewItemToCollection, removeItemFromCollection } from '../validation/
 
 export default class PromoCodeLimits {
 
-    static init () {
-        $('.js-limits-item-add').off('click');
-        $('.js-limits').off('click', '.js-limits-item-remove');
+    static init ($container) {
+        const $collection = $container.filterAllNodes('.js-limits');
 
-        $('.js-limits').on('click', '.js-limits-item-remove', function (event) {
+        $collection.on('click', '.js-limits-item-remove', function (event) {
             const $collection = $(this).closest('.js-limits');
 
             const $item = $(this).closest('.js-limits-item');
@@ -19,8 +18,8 @@ export default class PromoCodeLimits {
             event.preventDefault();
         });
 
-        $('.js-limits-item-add').on('click', function () {
-            const $collection = $('.js-limits');
+        $container.filterAllNodes('.js-limits-item-add').on('click', function () {
+            const $collection = $(this).closest('.js-form-group').find('.js-limits');
             const index = $collection.data('index');
 
             const prototype = $collection.data('prototype');
@@ -41,7 +40,7 @@ export default class PromoCodeLimits {
             return false;
         });
 
-        PromoCodeLimits.refreshCount($('.js-limits'));
+        PromoCodeLimits.refreshCount($collection);
     }
 
     static refreshCount ($collection) {

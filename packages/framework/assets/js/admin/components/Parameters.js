@@ -3,12 +3,10 @@ import { addNewItemToCollection, removeItemFromCollection } from '../validation/
 
 export default class Parameters {
 
-    static init () {
+    static init ($container) {
+        const $collection = $container.filterAllNodes('.js-parameters');
 
-        $('.js-parameters-item-add').off('click');
-        $('.js-parameters').off('click', '.js-parameters-item-remove');
-
-        $('.js-parameters').on('click', '.js-parameters-item-remove', function (event) {
+        $collection.on('click', '.js-parameters-item-remove', function (event) {
             const $collection = $(this).closest('.js-parameters');
 
             const $item = $(this).closest('.js-parameters-item');
@@ -20,8 +18,8 @@ export default class Parameters {
             event.preventDefault();
         });
 
-        $('.js-parameters-item-add').on('click', function () {
-            const $collection = $('.js-parameters');
+        $container.filterAllNodes('.js-parameters-item-add').on('click', function () {
+            const $collection = $(this).closest('.js-form-group').find('.js-parameters');
             const index = $collection.data('index');
 
             const prototype = $collection.data('prototype');
@@ -42,7 +40,7 @@ export default class Parameters {
             return false;
         });
 
-        Parameters.refreshCount($('.js-parameters'));
+        Parameters.refreshCount($collection);
     }
 
     static refreshCount ($collection) {

@@ -9,18 +9,16 @@ import Window from '../utils/Window';
 
 export default class OrderItems {
 
-    constructor () {
-        $('#js-order-items').off('click', '.js-order-item-remove');
-        $('#js-order-item-add').off('click');
+    constructor ($container) {
+        const $collection = $container.filterAllNodes('#js-order-items');
+        $collection.on('click', '.js-order-item-remove', (event) => this.onRemoveItemClick(event));
+        $container.filterAllNodes('#js-order-item-add').on('click', (event) => this.onAddItemClick(event));
 
-        $('#js-order-items').on('click', '.js-order-item-remove', (event) => this.onRemoveItemClick(event));
-        $('#js-order-item-add').on('click', (event) => this.onAddItemClick(event));
-
-        this.refreshCount($('#js-order-items'));
+        this.refreshCount($collection);
 
         const _this = this;
         // eslint-disable-next-line no-new
-        new ProductPicker($('#js-order-item-add-product'), (productId, productName) => {
+        new ProductPicker($container.filterAllNodes('#js-order-item-add-product'), (productId, productName) => {
             _this.addProduct(productId, productName);
         });
     }
@@ -157,7 +155,7 @@ export default class OrderItems {
 
     static init ($container) {
         // eslint-disable-next-line no-new
-        new OrderItems();
+        new OrderItems($container);
 
         $container.filterAllNodes('.js-order-item-any').each(function () {
             const $orderItem = $(this);
