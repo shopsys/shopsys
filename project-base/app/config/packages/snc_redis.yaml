@@ -6,6 +6,8 @@ snc_redis:
             dsn: 'redis://%env(REDIS_HOST)%'
             options:
                 prefix: '%env(REDIS_PREFIX)%:%build-version%:cache:bestselling_products:'
+                connection_timeout: 2
+                read_write_timeout: 5
         blog_article_export_queue:
             type: 'phpredis'
             alias: 'blog_article_export_queue'
@@ -13,12 +15,16 @@ snc_redis:
             options:
                 serialization: 'json'
                 prefix: '%env(REDIS_PREFIX)%:queue:blog_article_export:'
+                connection_timeout: 2
+                read_write_timeout: 5
         doctrine_query:
             type: 'phpredis'
             alias: 'doctrine_query'
             dsn: 'redis://%env(REDIS_HOST)%'
             options:
                 prefix: '%env(REDIS_PREFIX)%:%build-version%:cache:doctrine:query:'
+                connection_timeout: 2
+                read_write_timeout: 5
         # client is used exclusively for cleaning old versions of redis caches and should not be used for anything else
         global:
             type: 'phpredis'
@@ -26,21 +32,29 @@ snc_redis:
             dsn: 'redis://%env(REDIS_HOST)%'
             options:
                 prefix: '%env(REDIS_PREFIX)%:'
+                connection_timeout: 2
+                read_write_timeout: 5
         image:
             type: 'phpredis'
             alias: 'image'
             dsn: 'redis://%env(REDIS_HOST)%'
             options:
                 prefix: '%env(REDIS_PREFIX)%:%build-version%:cache:image:'
+                connection_timeout: 2
+                read_write_timeout: 5
         main_friendly_url_slugs:
             type: 'phpredis'
             alias: 'main_friendly_url_slugs'
             dsn: 'redis://%env(REDIS_HOST)%'
             options:
                 prefix: '%env(REDIS_PREFIX)%:%build-version%:cache:main_friendly_url_slugs:'
+                connection_timeout: 2
+                read_write_timeout: 5
         storefront_graphql_query:
             type: 'phpredis'
             alias: 'storefront_graphql_query'
             dsn: 'redis://%env(REDIS_HOST)%'
             options:
                 prefix: '%env(REDIS_PREFIX)%:fe:'
+                connection_timeout: 2
+                read_write_timeout: 5
