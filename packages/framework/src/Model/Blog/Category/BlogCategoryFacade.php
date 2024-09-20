@@ -110,6 +110,10 @@ class BlogCategoryFacade
 
         $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::BLOG_CATEGORIES_QUERY_KEY_PART);
 
+        if ($blogCategory->isMainPage()) {
+            $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::SETTINGS_QUERY_KEY_PART);
+        }
+
         return $blogCategory;
     }
 
