@@ -25,7 +25,10 @@ class MainBlogCategoryDataSettingsTest extends GraphQlTestCase
         $expectedData = [
             'mainBlogCategoryData' => [
                 'mainBlogCategoryUrl' => $expectedBlogUrl,
-                'mainBlogCategoryMainImage' => null,
+                'mainBlogCategoryMainImage' => [
+                    'name' => 'Main blog page - en',
+                    'url' => 'http://127.0.0.1:8000/content-test/images/blogCategory/500.jpg',
+                ],
             ],
         ];
 
