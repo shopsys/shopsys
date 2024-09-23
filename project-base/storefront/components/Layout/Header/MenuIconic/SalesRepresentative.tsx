@@ -21,37 +21,37 @@ export const SalesRepresentative: FC = () => {
     }
 
     return (
-        <div className="flex items-start gap-4 w-full pt-4">
+        <div className="flex w-full items-start gap-4 pt-4">
             {salesRepresentative.image && (
                 <Image
                     alt={t('Need advice?')}
-                    className="w-12 h-12 rounded-full object-cover"
+                    className="h-12 w-12 rounded-full object-cover"
                     height={100}
                     src={salesRepresentative.image.url}
                     width={100}
                 />
             )}
-            <div className="font-medium dark:text-white w-full">
+            <div className="dark:text-white w-full font-medium">
                 {fullName && (
                     <>
-                        <p className="text-lg font-semibold font-secondary leading-7">{fullName}</p>
-                        <p className="text-xs font-semibold font-secondary text-textSubtle uppercase tracking-wider">
+                        <p className="font-secondary text-lg font-semibold leading-7">{fullName}</p>
+                        <p className="font-secondary text-xs font-semibold uppercase tracking-wider text-textSubtle">
                             {t('Your sales representative')}
                         </p>
                     </>
                 )}
                 {telephone && (
-                    <div className="flex gap-2 items-center my-2">
-                        <PhoneIcon className="w-6 h-6 p-0.5 flex-shrink-0" />
-                        <a className="no-underline text-sm text-text" href={`tel:${telephone}`}>
+                    <div className="my-2 flex items-center gap-2">
+                        <PhoneIcon className="h-6 w-6 flex-shrink-0 p-0.5" />
+                        <a className="text-sm text-text no-underline" href={`tel:${telephone}`}>
                             {formatPhoneNumber(telephone)}
                         </a>
                     </div>
                 )}
                 {email && (
-                    <div className="flex gap-2 items-center mt-1 w-full max-w-80 lg:max-w-full overflow-auto">
-                        <MailIcon className="w-6 h-6 flex-shrink-0" />
-                        <a className="max-w-44 lg:max-w-96 no-underline text-sm text-text" href={`mailto:${email}`}>
+                    <div className="mt-1 flex w-full max-w-80 items-center gap-2 overflow-auto lg:max-w-full">
+                        <MailIcon className="h-6 w-6 flex-shrink-0" />
+                        <a className="max-w-44 text-sm text-text no-underline lg:max-w-96" href={`mailto:${email}`}>
                             {email}
                         </a>
                     </div>

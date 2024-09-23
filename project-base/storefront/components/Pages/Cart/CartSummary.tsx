@@ -7,7 +7,7 @@ export const CartSummary: FC = () => (
         <div className="pr-0 lg:w-1/2 vl:w-4/12 vl:pr-4">
             <PromoCode />
         </div>
-        <div className="ml-auto flex justify-end items-center vl:pr-8 lg:w-1/2 vl:w-5/12">
+        <div className="ml-auto flex items-center justify-end lg:w-1/2 vl:w-5/12 vl:pr-8">
             <FreeTransportRange />
         </div>
         <div className="lg:w-full vl:w-3/12">
