@@ -28,7 +28,9 @@ class SliderItemRepository extends BaseSliderItemRepository
             ->where('si.domainId = :domainId')
             ->andWhere('si.hidden = :hidden')
             ->andWhere('si.datetimeVisibleFrom is NULL or si.datetimeVisibleFrom <= :now')
-            ->andWhere('si.datetimeVisibleTo is NULL or si.datetimeVisibleTo >= :now');
+            ->andWhere('si.datetimeVisibleTo is NULL or si.datetimeVisibleTo >= :now')
+            ->orderBy('si.position')
+            ->addOrderBy('si.id');
 
         $queryBuilder->setParameters([
             'domainId' => $domainId,
