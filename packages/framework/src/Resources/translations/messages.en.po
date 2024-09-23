@@ -679,6 +679,9 @@ msgstr ""
 msgid "Complaint Nr. <strong><a href=\"{{ url }}\">{{ number }}</a></strong> modified"
 msgstr ""
 
+msgid "Complaint detail URL"
+msgstr ""
+
 msgid "Complaint items"
 msgstr ""
 
@@ -686,9 +689,6 @@ msgid "Complaint number"
 msgstr ""
 
 msgid "Complaint status"
-msgstr ""
-
-msgid "Complaint status has changed"
 msgstr ""
 
 msgid "Complaint statuses - full"
@@ -1057,10 +1057,10 @@ msgstr ""
 msgid "Days until delivery"
 msgstr ""
 
-msgid "Dear customer, <br /><br />Processing your complaint has been finished."
+msgid "Dear customer, <br /><br />Your complaint with number {complaint_number} from order number {order_number} created {date} has been finished. For more information, visit <a href=\"{complaint_detail_url}\">complaint detail</a>.<br /><br />Do you need anything else? Visit our <a href=\"{url}\">website</a>."
 msgstr ""
 
-msgid "Dear customer, <br /><br />Your complaint is being processed."
+msgid "Dear customer, <br /><br />Your complaint with number {complaint_number} from order number {order_number} created {date} is being processed. For more information, visit <a href=\"{complaint_detail_url}\">complaint detail</a>.<br /><br />Do you need anything else? Visit our <a href=\"{url}\">website</a>."
 msgstr ""
 
 msgid "Default VAT rate"
@@ -3488,6 +3488,9 @@ msgid "Started at"
 msgstr ""
 
 msgid "Status"
+msgstr ""
+
+msgid "Status of complaint with number {complaint_number} from order number {order_number} created on {date} has changed"
 msgstr ""
 
 msgid "Status of complaints"

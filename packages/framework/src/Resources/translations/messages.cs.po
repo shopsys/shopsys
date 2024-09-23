@@ -679,6 +679,9 @@ msgstr "Reklamace č."
 msgid "Complaint Nr. <strong><a href=\"{{ url }}\">{{ number }}</a></strong> modified"
 msgstr "Byla upravena reklamace č. <strong><a href=\"{{ url }}\">{{ number }}</a></strong>"
 
+msgid "Complaint detail URL"
+msgstr "URL detailu reklamace"
+
 msgid "Complaint items"
 msgstr "Položky reklamace"
 
@@ -687,9 +690,6 @@ msgstr "Číslo reklamace"
 
 msgid "Complaint status"
 msgstr "Stav reklamace"
-
-msgid "Complaint status has changed"
-msgstr "Stav reklamace se změnil"
 
 msgid "Complaint statuses - full"
 msgstr "Stavy reklamací - vše"
@@ -1057,11 +1057,11 @@ msgstr "Dny pro přesun mezi sklady"
 msgid "Days until delivery"
 msgstr "Dní do doručení"
 
-msgid "Dear customer, <br /><br />Processing your complaint has been finished."
-msgstr "Vážený zákazníku, <br /><br />Zpracování Vaší reklamace bylo dokončeno."
+msgid "Dear customer, <br /><br />Your complaint with number {complaint_number} from order number {order_number} created {date} has been finished. For more information, visit <a href=\"{complaint_detail_url}\">complaint detail</a>.<br /><br />Do you need anything else? Visit our <a href=\"{url}\">website</a>."
+msgstr "Vážený zákazníku, <br /><br />Vaše reklamace s číslem {complaint_number} z objednávky číslo {order_number} vytvořené {date} byla vyřízena. Pro více informací navštivte <a href=\"{complaint_detail_url}\">detail reklamace</a>.<br /><br />Potřebujete cokoliv jiného? Navštivte naše <a href=\"{url}\">webové stránky</a>."
 
-msgid "Dear customer, <br /><br />Your complaint is being processed."
-msgstr "Vážený zákazníku, <br /><br />Vaše reklamace se zpracovává."
+msgid "Dear customer, <br /><br />Your complaint with number {complaint_number} from order number {order_number} created {date} is being processed. For more information, visit <a href=\"{complaint_detail_url}\">complaint detail</a>.<br /><br />Do you need anything else? Visit our <a href=\"{url}\">website</a>."
+msgstr "Vážený zákazníku, <br /><br />Vaše reklamace s číslem {complaint_number} z objednávky číslo {order_number} vytvořené {date} se zpracovává. Pro více informací navštivte <a href=\"{complaint_detail_url}\">detail reklamace</a>.<br /><br />Potřebujete cokoliv jiného? Navštivte naše <a href=\"{url}\">webové stránky</a>."
 
 msgid "Default VAT rate"
 msgstr "Výchozí sazba DPH"
@@ -3489,6 +3489,9 @@ msgstr "Začátek"
 
 msgid "Status"
 msgstr "Stav"
+
+msgid "Status of complaint with number {complaint_number} from order number {order_number} created on {date} has changed"
+msgstr "Stav reklamace s číslem {complaint_number} z objednávky číslo {order_number} vytvořené {date} se změnil"
 
 msgid "Status of complaints"
 msgstr "Stavy reklamací"

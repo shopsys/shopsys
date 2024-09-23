@@ -1,5 +1,5 @@
 front_customer_order_detail_registered:
-    path: /customer/orders/detail/{orderNumber}
+    path: /customer/order-detail
 
 front_customer_order_detail_unregistered:
     path: /order-detail/{urlHash}
@@ -38,3 +38,6 @@ front_personal_data_export:
 
 front_stores:
     path: /stores
+
+front_complaint_detail:
+    path: /customer/complaint-detail

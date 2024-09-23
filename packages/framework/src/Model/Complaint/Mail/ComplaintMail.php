@@ -18,11 +18,12 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ComplaintMail implements MessageFactoryInterface
 {
-    protected const MAIL_TEMPLATE_NAME_PREFIX = 'complaint_status_';
-    public const VARIABLE_COMPLAINT_NUMBER = '{complaint_number}';
-    public const VARIABLE_ORDER_NUMBER = '{order_number}';
-    public const VARIABLE_DATE = '{date}';
-    public const VARIABLE_URL = '{url}';
+    protected const string MAIL_TEMPLATE_NAME_PREFIX = 'complaint_status_';
+    public const string VARIABLE_COMPLAINT_NUMBER = '{complaint_number}';
+    public const string VARIABLE_ORDER_NUMBER = '{order_number}';
+    public const string VARIABLE_DATE = '{date}';
+    public const string VARIABLE_URL = '{url}';
+    public const string VARIABLE_COMPLAINT_DETAIL_URL = '{complaint_detail_url}';
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
@@ -80,6 +81,7 @@ class ComplaintMail implements MessageFactoryInterface
 
         return [
             self::VARIABLE_COMPLAINT_NUMBER => htmlspecialchars($complaint->getNumber(), ENT_QUOTES),
+            self::VARIABLE_COMPLAINT_DETAIL_URL => $this->getComplaintDetailUrl($complaint),
             self::VARIABLE_ORDER_NUMBER => htmlspecialchars($complaint->getOrder()->getNumber(), ENT_QUOTES),
             self::VARIABLE_DATE => $this->getFormattedDateTime($complaint),
             self::VARIABLE_URL => $router->generate('front_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL),
@@ -118,5 +120,18 @@ class ComplaintMail implements MessageFactoryInterface
     protected function getDomainLocaleByComplaint(Complaint $complaint)
     {
         return $this->domain->getDomainConfigById($complaint->getDomainId())->getLocale();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\Complaint $complaint
+     * @return string
+     */
+    protected function getComplaintDetailUrl(Complaint $complaint): string
+    {
+        return $this->domainRouterFactory->getRouter($complaint->getDomainId())->generate(
+            'front_complaint_detail',
+            ['complaintNumber' => $complaint->getNumber()],
+            UrlGeneratorInterface::ABSOLUTE_URL,
+        );
     }
 }
