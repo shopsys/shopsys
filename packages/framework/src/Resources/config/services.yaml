@@ -314,6 +314,10 @@ services:
     Shopsys\FrameworkBundle\Component\Form\TimedSpamValidationListener:
         $options: []
 
+    Shopsys\FrameworkBundle\Component\Grid\CleanStorefrontCacheOnSaveOrderingListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+
     Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditRegistry:
         arguments: [!tagged shopsys.grid_inline_edit]
 
@@ -778,10 +782,6 @@ services:
         alias: Shopsys\FrameworkBundle\Model\Module\EnabledModuleFactory
 
     Shopsys\FrameworkBundle\Model\Module\ModuleList: ~
-
-    Shopsys\FrameworkBundle\Model\Navigation\NavigationSaveOrderingListener:
-        tags:
-            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
 
     Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriberFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriberFactory
