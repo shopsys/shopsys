@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\EntityLog\Detection;
 
 use Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogSourceEnum;
-use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
 use Symfony\Component\Security\Core\Security;
 
 class DetectionFacade
@@ -29,7 +28,7 @@ class DetectionFacade
 
         $user = $this->security->getUser();
 
-        if ($user instanceof FrontendApiUser) {
+        if ($user !== null) {
             $this->userIdentifier = $user->getUserIdentifier();
         }
     }
