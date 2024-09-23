@@ -13,6 +13,7 @@ class CleanStorefrontCacheFacade
     public const string BLOG_CATEGORIES_QUERY_KEY_PART = 'BlogCategories';
     public const string ARTICLES_QUERY_KEY_PART = 'ArticlesQuery';
     public const string SETTINGS_QUERY_KEY_PART = 'SettingsQuery';
+    public const string SLIDER_ITEMS_QUERY_KEY_PART = 'SliderItemsQuery';
 
     /**
      * @param \Redis $storefrontGraphqlQueryClient
