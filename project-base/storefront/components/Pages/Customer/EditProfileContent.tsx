@@ -21,16 +21,14 @@ import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { onGtmSendFormEventHandler } from 'gtm/handlers/onGtmSendFormEventHandler';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
-import { Controller, FormProvider, Path, SubmitHandler, UseFormReturn } from 'react-hook-form';
+import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { useSessionStore } from 'store/useSessionStore';
 import { CurrentCustomerType } from 'types/customer';
 import { CustomerChangeProfileFormType } from 'types/form';
-import { CombinedError } from 'urql';
 import { useCurrentCustomerUserPermissions } from 'utils/auth/useCurrentCustomerUserPermissions';
 import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
-import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
+import { handleFormErrors } from 'utils/forms/handleFormErrors';
 import { useErrorPopup } from 'utils/forms/useErrorPopup';
-import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 const DeliveryAddressPopup = dynamic(
@@ -102,12 +100,11 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
             },
         });
 
-        handleUpdateResult(
-            changeProfileResult.data?.ChangePersonalData !== undefined,
-            changeProfileResult.error,
-            formProviderMethods,
-            formMeta.messages,
-        );
+        if (changeProfileResult.data?.ChangePersonalData !== undefined) {
+            showSuccessMessage(formMeta.messages.success);
+        }
+
+        handleFormErrors(changeProfileResult.error, formProviderMethods, t, formMeta.messages.error);
     };
 
     const onChangePasswordHandler = async (customerChangeProfileFormData: CustomerChangeProfileFormType) => {
@@ -124,59 +121,16 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
             newPassword: customerChangeProfileFormData.newPassword,
         });
 
-        handleUpdateResult(
-            changePasswordResult.data?.ChangePassword !== undefined,
+        if (changePasswordResult.data?.ChangePassword !== undefined) {
+            showSuccessMessage(t('Your password has been changed.'));
+        }
+
+        handleFormErrors(
             changePasswordResult.error,
             formProviderMethods,
-            {
-                success: t('Your password has been changed.'),
-                error: t('There was an error while changing your password'),
-            },
+            t,
+            t('There was an error while changing your password'),
         );
-    };
-
-    const handleUpdateResult = (
-        isResultOk: boolean,
-        error: CombinedError | undefined,
-        formProviderMethods: UseFormReturn<CustomerChangeProfileFormType>,
-        messages: { success?: string; error?: string },
-        callbacks?: { success?: () => void; error?: () => void },
-    ) => {
-        if (isResultOk) {
-            if (messages.success !== undefined) {
-                showSuccessMessage(messages.success);
-                formProviderMethods.setValue('oldPassword', '', { shouldValidate: true });
-                formProviderMethods.setValue('newPassword', '', { shouldValidate: true });
-                formProviderMethods.setValue('newPasswordConfirm', '', { shouldValidate: true });
-            }
-            if (callbacks?.success !== undefined) {
-                callbacks.success();
-            }
-        }
-
-        if (error === undefined) {
-            return;
-        }
-
-        const { userError, applicationError } = getUserFriendlyErrors(error, t);
-
-        if (applicationError !== undefined) {
-            if (messages.error !== undefined) {
-                showErrorMessage(messages.error, GtmMessageOriginType.other);
-            }
-            if (callbacks?.error !== undefined) {
-                callbacks.error();
-            }
-        }
-
-        if (userError?.validation !== undefined) {
-            for (const fieldName in userError.validation) {
-                formProviderMethods.setError(
-                    fieldName as Path<CustomerChangeProfileFormType>,
-                    userError.validation[fieldName],
-                );
-            }
-        }
     };
 
     const openDeliveryAddressPopup = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
