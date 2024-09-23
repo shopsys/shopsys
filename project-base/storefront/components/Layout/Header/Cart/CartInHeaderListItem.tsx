@@ -6,6 +6,7 @@ import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFr
 import { MouseEventHandler } from 'react';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { mapPriceForCalculations } from 'utils/mappers/price';
+import { isPriceVisible } from 'utils/mappers/price';
 
 type CartInHeaderListItemProps = {
     cartItem: TypeCartItemFragment;
@@ -18,6 +19,7 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
 }) => {
     const formatPrice = useFormatPrice();
     const productSlug = product.__typename === 'Variant' ? product.mainVariant!.slug : product.slug;
+    const isProductPriceVisible = isPriceVisible(product.price.priceWithVat);
 
     return (
         <li
@@ -51,9 +53,11 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
             <div className="flex flex-row lg:w-full lg:w-auto gap-x-6 mt-2 lg:mt-0">
                 <div className="text-sm w-20 text-center">{quantity + ' ' + product.unit.name}</div>
 
-                <div className="w-28 break-words lg:text-right font-bold text-price">
-                    {formatPrice(mapPriceForCalculations(product.price.priceWithVat) * quantity)}
-                </div>
+                {isProductPriceVisible && (
+                    <div className="w-28 break-words font-secondary font-bold text-price lg:text-right">
+                        {formatPrice(mapPriceForCalculations(product.price.priceWithVat) * quantity)}
+                    </div>
+                )}
             </div>
             <RemoveCartItemButton
                 className="absolute right-0 top-2 lg:relative lg:right-0 lg:top-0"

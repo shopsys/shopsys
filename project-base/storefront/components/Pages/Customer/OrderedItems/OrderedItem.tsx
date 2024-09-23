@@ -9,6 +9,7 @@ import { ReactNode } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { isPriceVisible } from 'utils/mappers/price';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -86,12 +87,14 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
                             value={`${orderedItem.quantity} ${orderedItem.unit}`}
                             wrapperClassName="w-20"
                         />
-                        <OrderedItemColumnInfo
-                            title={t('Price')}
-                            value={formatPrice(orderedItem.totalPrice.priceWithVat)}
-                            valueClassName="text-price"
-                            wrapperClassName="min-w-[80px]"
-                        />
+                        {isPriceVisible(orderedItem.totalPrice.priceWithVat) && (
+                            <OrderedItemColumnInfo
+                                title={t('Price')}
+                                value={formatPrice(orderedItem.totalPrice.priceWithVat)}
+                                valueClassName="text-price"
+                                wrapperClassName="min-w-[80px]"
+                            />
+                        )}
                     </div>
                 </div>
                 <div className="flex gap-2 items-center md:ml-auto">

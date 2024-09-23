@@ -18,6 +18,7 @@ import { twJoin } from 'tailwind-merge';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useRemoveFromCart } from 'utils/cart/useRemoveFromCart';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { isPriceVisible } from 'utils/mappers/price';
 import { desktopFirstSizes } from 'utils/mediaQueries';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { twMergeCustom } from 'utils/twMerge';
@@ -48,6 +49,7 @@ export const CartInHeader: FC = ({ className }) => {
     const [isHovered, setIsHovered] = useState(false);
     const isHoveredDelayed = useDebounce(isHovered, 200);
 
+    const isPriceVisibleOrEmtpyCart = isPriceVisible(cart?.totalItemsPrice.priceWithVat) || !cart?.items.length;
     const { width } = useGetWindowSize();
     const isDesktop = width > desktopFirstSizes.tablet;
 
@@ -71,8 +73,11 @@ export const CartInHeader: FC = ({ className }) => {
                     href={cartUrl}
                     tid={TIDs.header_cart_link}
                     className={twJoin(
-                        'min-w-[132px] hidden items-center gap-x-3 rounded-lg h-11 pr-2 pl-4 no-underline transition-all hover:no-underline group-hover:shadow-lg lg:flex border cursor-pointer',
+                        'hidden items-center gap-x-3 rounded-lg h-11 pr-2 pl-4 no-underline transition-all hover:no-underline group-hover:shadow-lg lg:flex border cursor-pointer',
                         cart?.items.length ? nonEmptyCartTwClassName : emptyCartTwClassName,
+                        !isPriceVisible(cart?.totalItemsPrice.priceWithVat) && cart?.items.length
+                            ? 'min-w-14'
+                            : 'min-w-[132px]',
                     )}
                     onClick={() => {
                         setIsClicked(!isClicked);
@@ -83,18 +88,20 @@ export const CartInHeader: FC = ({ className }) => {
                         <CartIcon className="w-6 lg:w-5" />
                         {!!cart?.items.length && <CartCount>{cart.items.length}</CartCount>}
                     </span>
-                    <span
-                        className={twJoin(
-                            'hidden text-sm font-semibold lg:block',
-                            !cart?.items.length && 'lg:w-full lg:text-center',
-                        )}
-                    >
-                        {cart?.items.length
-                            ? formatPrice(cart.totalItemsPrice.priceWithVat, {
-                                  explicitZero: true,
-                              })
-                            : t('Empty')}
-                    </span>
+                    {isPriceVisibleOrEmtpyCart && (
+                        <span
+                            className={twJoin(
+                                'hidden text-sm font-semibold lg:block',
+                                !cart?.items.length && 'lg:w-full lg:text-center',
+                            )}
+                        >
+                            {cart?.items.length
+                                ? formatPrice(cart.totalItemsPrice.priceWithVat, {
+                                      explicitZero: true,
+                                  })
+                                : t('Empty')}
+                        </span>
+                    )}
                 </ExtendedNextLink>
 
                 <div className="flex cursor-pointer items-center justify-center text-lg outline-none lg:hidden">

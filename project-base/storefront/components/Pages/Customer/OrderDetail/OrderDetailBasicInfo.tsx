@@ -9,6 +9,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { useAddOrderItemsToCart } from 'utils/cart/useAddOrderItemsToCart';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { isPriceVisible } from 'utils/mappers/price';
 import { twMergeCustom } from 'utils/twMerge';
 
 type OrderDetailBasicInfoProps = {
@@ -45,11 +46,13 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                         title={t('Date of order')}
                         value={formatDate(order.creationDate, 'DD. MM. YYYY')}
                     />
-                    <OrderItemColumnInfo
-                        title={t('Price')}
-                        value={formatPrice(order.totalPrice.priceWithVat)}
-                        valueClassName="text-textAccent"
-                    />
+                    {isPriceVisible(order.totalPrice.priceWithVat) && (
+                        <OrderItemColumnInfo
+                            title={t('Price')}
+                            value={formatPrice(order.totalPrice.priceWithVat)}
+                            valueClassName="text-textAccent"
+                        />
+                    )}
                     <OrderItemColumnInfo title={t('Status')} value={order.status} />
                 </div>
                 <Button
@@ -65,7 +68,9 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                 <OrderRowWrapper className="flex gap-4 flex-col">
                     <div className="flex gap-4">
                         {t('Transport')} - {orderTransport.name}
-                        <span className="font-bold">{formatPrice(orderTransport.totalPrice.priceWithVat)}</span>
+                        {isPriceVisible(order.totalPrice.priceWithVat) && (
+                            <span className="font-bold">{formatPrice(orderTransport.totalPrice.priceWithVat)}</span>
+                        )}
                     </div>
                     {order.trackingUrl && (
                         <div>
@@ -81,13 +86,17 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
             {orderPayment && (
                 <OrderRowWrapper className="flex gap-4">
                     {t('Payment')} - {orderPayment.name}
-                    <span className="font-bold">{formatPrice(orderPayment.totalPrice.priceWithVat)}</span>
+                    {isPriceVisible(order.totalPrice.priceWithVat) && (
+                        <span className="font-bold">{formatPrice(orderPayment.totalPrice.priceWithVat)}</span>
+                    )}
                 </OrderRowWrapper>
             )}
             {orderRounding && (
                 <OrderRowWrapper className="flex gap-4">
                     {t('Rounding')}
-                    <span className="font-bold">{formatPrice(orderRounding.totalPrice.priceWithVat)}</span>
+                    {isPriceVisible(order.totalPrice.priceWithVat) && (
+                        <span className="font-bold">{formatPrice(orderRounding.totalPrice.priceWithVat)}</span>
+                    )}
                 </OrderRowWrapper>
             )}
             <div className="bg-background border-[5px] border-borderLess rounded-md p-7">

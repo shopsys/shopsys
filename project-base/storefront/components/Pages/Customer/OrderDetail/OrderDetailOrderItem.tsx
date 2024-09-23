@@ -9,6 +9,7 @@ import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { isPriceVisible } from 'utils/mappers/price';
 
 type OrderDetailOrderItemProps = {
     orderItem: TypeOrderDetailItemFragment;
@@ -59,7 +60,9 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
                         {orderItem.unit}
                     </span>
                 )}
-                <span className="font-bold text-right">{formatPrice(orderItem.totalPrice.priceWithVat)}</span>
+                {isPriceVisible(orderItem.totalPrice.priceWithVat) && (
+                    <span className="font-bold text-right">{formatPrice(orderItem.totalPrice.priceWithVat)}</span>
+                )}
 
                 {isUserLoggedIn && orderItem.type === TypeOrderItemTypeEnum.Product && (
                     <Button
