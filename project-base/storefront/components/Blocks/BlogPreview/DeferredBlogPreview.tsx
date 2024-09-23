@@ -1,3 +1,4 @@
+import { Webline } from 'components/Layout/Webline/Webline';
 import { BLOG_PREVIEW_VARIABLES } from 'config/constants';
 import { useBlogArticlesQuery } from 'graphql/requests/articlesInterface/blogArticles/queries/BlogArticlesQuery.generated';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
@@ -21,13 +22,21 @@ export const DeferredBlogPreview: FC = () => {
 
     const shouldRender = useDeferredRender('blog_preview');
 
-    return shouldRender ? (
-        <BlogPreview
-            blogArticles={blogPreviewData?.blogArticles.edges}
-            blogUrl={blogUrl}
-            fetchingArticles={areBlogArticlesFetching}
-        />
-    ) : (
-        <BlogPreviewPlaceholder blogArticles={blogPreviewData?.blogArticles.edges} blogUrl={blogUrl} />
+    if (!blogPreviewData?.blogArticles.edges?.length) {
+        return null;
+    }
+
+    return (
+        <Webline>
+            {shouldRender ? (
+                <BlogPreview
+                    blogArticles={blogPreviewData.blogArticles.edges}
+                    blogUrl={blogUrl}
+                    fetchingArticles={areBlogArticlesFetching}
+                />
+            ) : (
+                <BlogPreviewPlaceholder blogArticles={blogPreviewData.blogArticles.edges} blogUrl={blogUrl} />
+            )}
+        </Webline>
     );
 };

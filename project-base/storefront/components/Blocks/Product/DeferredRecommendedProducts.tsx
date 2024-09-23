@@ -1,5 +1,6 @@
 import { ProductsSlider } from './ProductsSlider';
 import { SkeletonModuleProductSlider } from 'components/Blocks/Skeleton/SkeletonModuleProductSlider';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useRecommendedProductsQuery } from 'graphql/requests/products/queries/RecommendedProductsQuery.generated';
 import { TypeRecommendationType } from 'graphql/types';
@@ -37,11 +38,15 @@ export const DeferredRecommendedProducts: FC<DeferredRecommendedProductsProps> =
     });
     const shouldRender = useDeferredRender('recommended_products');
 
+    const weblineTwClasses = 'mb-6';
+
     if (areRecommendedProductsFetching) {
-        return render(
-            <SkeletonModuleProductSlider
-                isWithSimpleCards={recommendationType === TypeRecommendationType.BasketPopup}
-            />,
+        return (
+            <Webline className={weblineTwClasses}>
+                <SkeletonModuleProductSlider
+                    isWithSimpleCards={recommendationType === TypeRecommendationType.BasketPopup}
+                />
+            </Webline>
         );
     }
 
@@ -57,22 +62,26 @@ export const DeferredRecommendedProducts: FC<DeferredRecommendedProductsProps> =
                 : undefined,
     };
 
-    return shouldRender
-        ? render(
-              <ProductsSlider
-                  gtmProductListName={GtmProductListNameType.luigis_box_recommended_products}
-                  products={recommendedProductsData.recommendedProducts}
-                  productItemProps={{
-                      size: productItemStyleProps.size,
-                      visibleItemsConfig: productItemStyleProps.visibleItemsConfig,
-                  }}
-              />,
-          )
-        : render(
-              <ProductsSliderPlaceholder
-                  products={recommendedProductsData.recommendedProducts}
-                  size={productItemStyleProps.size}
-                  visibleItemsConfig={productItemStyleProps.visibleItemsConfig}
-              />,
-          );
+    return (
+        <Webline className={weblineTwClasses}>
+            {shouldRender
+                ? render(
+                      <ProductsSlider
+                          gtmProductListName={GtmProductListNameType.luigis_box_recommended_products}
+                          products={recommendedProductsData.recommendedProducts}
+                          productItemProps={{
+                              size: productItemStyleProps.size,
+                              visibleItemsConfig: productItemStyleProps.visibleItemsConfig,
+                          }}
+                      />,
+                  )
+                : render(
+                      <ProductsSliderPlaceholder
+                          products={recommendedProductsData.recommendedProducts}
+                          size={productItemStyleProps.size}
+                          visibleItemsConfig={productItemStyleProps.visibleItemsConfig}
+                      />,
+                  )}
+        </Webline>
+    );
 };

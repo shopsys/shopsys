@@ -28,7 +28,7 @@ class PromotedCategoryRepository
 
         return $queryBuilder
             ->addSelect('ct, cd')
-            ->join(TopCategory::class, 'tc', Join::WITH, 'tc.category = c')
+            ->join(TopCategory::class, 'tc', Join::WITH, 'tc.category = c AND tc.domainId = :domainId')
             ->join('c.translations', 'ct', Join::WITH, 'ct.locale = :locale')
             ->setParameter('locale', $domainConfig->getLocale())
             ->orderBy('tc.position')

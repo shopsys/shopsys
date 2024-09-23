@@ -25,14 +25,9 @@ export const HomePageContent: FC = () => {
         <>
             <SearchMetadata />
             <CommonLayout>
-                <Webline className="mb-14">
-                    <Banners />
-                </Webline>
+                <Banners />
 
-                <Webline className="mb-6">
-                    <h2 className="mb-3">{t('Promoted categories')}</h2>
-                    <PromotedCategories />
-                </Webline>
+                <PromotedCategories />
 
                 {isLuigisBoxActive && (
                     <DeferredRecommendedProducts
@@ -45,14 +40,9 @@ export const HomePageContent: FC = () => {
                     />
                 )}
 
-                <Webline className="mb-6">
-                    <h2 className="mb-3">{t('Promoted products')}</h2>
-                    <DeferredPromotedProducts />
-                </Webline>
+                <DeferredPromotedProducts />
 
-                <Webline>
-                    <DeferredBlogPreview />
-                </Webline>
+                <DeferredBlogPreview />
 
                 <DeferredLastVisitedProducts />
             </CommonLayout>

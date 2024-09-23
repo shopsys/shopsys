@@ -1,17 +1,28 @@
 import { BannersSlider } from './BannersSlider';
 import { SkeletonModuleBanners } from 'components/Blocks/Skeleton/SkeletonModuleBanners';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { useSliderItemsQuery } from 'graphql/requests/sliderItems/queries/SliderItemsQuery.generated';
 
 export const Banners: FC = () => {
     const [{ data: sliderItemsData, fetching: areSliderItemsFetching }] = useSliderItemsQuery();
 
+    const weblineTwClasses = 'mb-14';
+
     if (areSliderItemsFetching) {
-        return <SkeletonModuleBanners />;
+        return (
+            <Webline className={weblineTwClasses}>
+                <SkeletonModuleBanners />
+            </Webline>
+        );
     }
 
     if (!sliderItemsData?.sliderItems.length) {
         return null;
     }
 
-    return <BannersSlider sliderItems={sliderItemsData.sliderItems} />;
+    return (
+        <Webline className={weblineTwClasses}>
+            <BannersSlider sliderItems={sliderItemsData.sliderItems} />
+        </Webline>
+    );
 };
