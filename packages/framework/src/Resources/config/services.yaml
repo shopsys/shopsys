@@ -95,6 +95,12 @@ services:
         arguments: [ '@Shopsys\FrameworkBundle\Component\CKEditor\CKEditorRendererDecorator.inner' ]
         decorates: fos_ck_editor.renderer
 
+    Shopsys\FrameworkBundle\Component\Cache\InMemoryCache: ~
+
+    Shopsys\FrameworkBundle\Component\Cache\InMemoryCacheResetListener:
+        tags:
+            - { name: doctrine.event_listener, event: onClear }
+
     Shopsys\FrameworkBundle\Component\Cdn\CdnFacade:
         arguments:
             $cdnDomain: '%env(CDN_DOMAIN)%'

@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Brand;
 
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
-use Symfony\Contracts\Service\ResetInterface;
 
-class BrandCachedFacade implements ResetInterface
+class BrandCachedFacade
 {
-    /**
-     * @var array<int, array<int, string>>
-     */
-    protected array $brandUrlsIndexedByBrandIdAndDomainId = [];
+    protected const string BRAND_URL_CACHE_NAMESPACE = 'brandUrl';
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
+     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
      */
-    public function __construct(protected readonly FriendlyUrlFacade $friendlyUrlFacade)
-    {
+    public function __construct(
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly InMemoryCache $inMemoryCache,
+    ) {
     }
 
     /**
@@ -28,22 +28,15 @@ class BrandCachedFacade implements ResetInterface
      */
     public function getBrandUrlByDomainId(int $brandId, int $domainId): string
     {
-        if (
-            !array_key_exists($brandId, $this->brandUrlsIndexedByBrandIdAndDomainId)
-            || !array_key_exists($domainId, $this->brandUrlsIndexedByBrandIdAndDomainId[$brandId])
-        ) {
-            $this->brandUrlsIndexedByBrandIdAndDomainId[$brandId][$domainId] = $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId(
+        return $this->inMemoryCache->getOrSaveValue(
+            static::BRAND_URL_CACHE_NAMESPACE,
+            fn () => $this->friendlyUrlFacade->getAbsoluteUrlByRouteNameAndEntityId(
                 $domainId,
                 'front_brand_detail',
                 $brandId,
-            );
-        }
-
-        return $this->brandUrlsIndexedByBrandIdAndDomainId[$brandId][$domainId];
-    }
-
-    public function reset(): void
-    {
-        $this->brandUrlsIndexedByBrandIdAndDomainId = [];
+            ),
+            $brandId,
+            $domainId,
+        );
     }
 }

@@ -4,33 +4,28 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product;
 
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
-use Symfony\Contracts\Service\ResetInterface;
 
-class ProductCachedAttributesFacade implements ResetInterface
+class ProductCachedAttributesFacade
 {
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice[]
-     */
-    protected array $sellingPricesByProductId;
-
-    /**
-     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[][]
-     */
-    protected array $parameterValuesByProductId;
+    protected const string SELLING_PRICES_CACHE_NAMESPACE = 'sellingPricesByProductId';
+    protected const string PARAMETER_VALUES_CACHE_NAMESPACE = 'parameterValuesByProductId';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
+     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
      */
     public function __construct(
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         protected readonly ParameterRepository $parameterRepository,
         protected readonly Localization $localization,
+        protected readonly InMemoryCache $inMemoryCache,
     ) {
     }
 
@@ -40,8 +35,10 @@ class ProductCachedAttributesFacade implements ResetInterface
      */
     public function getProductSellingPrice(Product $product)
     {
-        if (isset($this->sellingPricesByProductId[$product->getId()])) {
-            return $this->sellingPricesByProductId[$product->getId()];
+        $key = (string)$product->getId();
+
+        if ($this->inMemoryCache->hasItem(static::SELLING_PRICES_CACHE_NAMESPACE, $key)) {
+            return $this->inMemoryCache->getItem(static::SELLING_PRICES_CACHE_NAMESPACE, $key);
         }
 
         try {
@@ -49,7 +46,7 @@ class ProductCachedAttributesFacade implements ResetInterface
         } catch (MainVariantPriceCalculationException $ex) {
             $productPrice = null;
         }
-        $this->sellingPricesByProductId[$product->getId()] = $productPrice;
+        $this->inMemoryCache->save(static::SELLING_PRICES_CACHE_NAMESPACE, $productPrice, $key);
 
         return $productPrice;
     }
@@ -61,33 +58,29 @@ class ProductCachedAttributesFacade implements ResetInterface
      */
     public function getProductParameterValues(Product $product, ?string $locale = null)
     {
-        if (isset($this->parameterValuesByProductId[$product->getId()])) {
-            return $this->parameterValuesByProductId[$product->getId()];
-        }
-        $locale = $locale ?? $this->localization->getLocale();
+        return $this->inMemoryCache->getOrSaveValue(
+            static::PARAMETER_VALUES_CACHE_NAMESPACE,
+            function () use ($product, $locale) {
+                $locale = $locale ?? $this->localization->getLocale();
 
-        $productParameterValues = $this->parameterRepository->getProductParameterValuesByProductSortedByOrderingPriorityAndName(
-            $product,
-            $locale,
+                $productParameterValues = $this->parameterRepository->getProductParameterValuesByProductSortedByOrderingPriorityAndName(
+                    $product,
+                    $locale,
+                );
+
+                foreach ($productParameterValues as $index => $productParameterValue) {
+                    $parameter = $productParameterValue->getParameter();
+
+                    if ($parameter->getName($locale) === null
+                        || $productParameterValue->getValue()->getLocale() !== $locale
+                    ) {
+                        unset($productParameterValues[$index]);
+                    }
+                }
+
+                return $productParameterValues;
+            },
+            $product->getId(),
         );
-
-        foreach ($productParameterValues as $index => $productParameterValue) {
-            $parameter = $productParameterValue->getParameter();
-
-            if ($parameter->getName($locale) === null
-                || $productParameterValue->getValue()->getLocale() !== $locale
-            ) {
-                unset($productParameterValues[$index]);
-            }
-        }
-        $this->parameterValuesByProductId[$product->getId()] = $productParameterValues;
-
-        return $productParameterValues;
-    }
-
-    public function reset(): void
-    {
-        $this->sellingPricesByProductId = [];
-        $this->parameterValuesByProductId = [];
     }
 }

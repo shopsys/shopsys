@@ -8,26 +8,24 @@ use App\Model\CategorySeo\Exception\UnableToFindReadyCategorySeoMixException;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ObjectRepository;
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
-use Symfony\Contracts\Service\ResetInterface;
 use function GuzzleHttp\json_encode;
 
-class ReadyCategorySeoMixRepository implements ResetInterface
+class ReadyCategorySeoMixRepository
 {
-    /**
-     * @var string[][][]
-     */
-    private array $readySeoCategorySetup;
+    private const string READY_SEO_CATEGORY_SETUP_CACHE_NAMESPACE = 'readySeoCategorySetup';
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
      */
     public function __construct(
-        private EntityManagerInterface $em,
+        private readonly EntityManagerInterface $em,
+        private readonly InMemoryCache $inMemoryCache,
     ) {
-        $this->readySeoCategorySetup = [];
     }
 
     /**
@@ -150,7 +148,7 @@ class ReadyCategorySeoMixRepository implements ResetInterface
      */
     private function isJsonCombinationSeoCategory(int $categoryId, int $domainId, string $combinationJson): bool
     {
-        $readySeoCategorySetup = $this->getReadySeoCategorySetupFromLocalCache($categoryId, $domainId);
+        $readySeoCategorySetup = $this->getReadySeoCategorySetupFromCache($categoryId, $domainId);
 
         return in_array($combinationJson, $readySeoCategorySetup, true);
     }
@@ -160,28 +158,31 @@ class ReadyCategorySeoMixRepository implements ResetInterface
      * @param int $domainId
      * @return string[]
      */
-    private function getReadySeoCategorySetupFromLocalCache(int $categoryId, int $domainId): array
+    private function getReadySeoCategorySetupFromCache(int $categoryId, int $domainId): array
     {
-        if (($this->readySeoCategorySetup[$domainId][$categoryId] ?? null) === null) {
-            $scalarData = $this->em->createQueryBuilder()
-                ->select('rcsm.choseCategorySeoMixCombinationJson as json')
-                ->from(ReadyCategorySeoMix::class, 'rcsm')
-                ->where('IDENTITY(rcsm.category) = :categoryId')
-                ->andWhere('rcsm.domainId = :domainId')
-                ->setParameter('categoryId', $categoryId)
-                ->setParameter('domainId', $domainId)
-                ->getQuery()->getScalarResult();
+        return $this->inMemoryCache->getOrSaveValue(
+            self::READY_SEO_CATEGORY_SETUP_CACHE_NAMESPACE,
+            function () use ($categoryId, $domainId): array {
+                $scalarData = $this->em->createQueryBuilder()
+                    ->select('rcsm.choseCategorySeoMixCombinationJson as json')
+                    ->from(ReadyCategorySeoMix::class, 'rcsm')
+                    ->where('IDENTITY(rcsm.category) = :categoryId')
+                    ->andWhere('rcsm.domainId = :domainId')
+                    ->setParameter('categoryId', $categoryId)
+                    ->setParameter('domainId', $domainId)
+                    ->getQuery()->getScalarResult();
 
-            $readySeoCategorySetup = [];
+                $readySeoCategorySetup = [];
 
-            foreach ($scalarData as $data) {
-                $readySeoCategorySetup[] = $data['json'];
-            }
+                foreach ($scalarData as $data) {
+                    $readySeoCategorySetup[] = $data['json'];
+                }
 
-            $this->readySeoCategorySetup[$domainId][$categoryId] = $readySeoCategorySetup;
-        }
-
-        return $this->readySeoCategorySetup[$domainId][$categoryId];
+                return $readySeoCategorySetup;
+            },
+            $categoryId,
+            $domainId,
+        );
     }
 
     /**
@@ -227,10 +228,5 @@ class ReadyCategorySeoMixRepository implements ResetInterface
             ->getArrayResult();
 
         return array_column($result, 'categoryId');
-    }
-
-    public function reset(): void
-    {
-        $this->readySeoCategorySetup = [];
     }
 }

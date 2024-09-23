@@ -13,6 +13,7 @@ use App\Model\ProductVideo\ProductVideo;
 use App\Model\ProductVideo\ProductVideoTranslationsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
@@ -66,6 +67,7 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \App\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider $productExportFieldProvider
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \App\Model\Product\ProductRepository $productRepository
+     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
      * @param \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
      * @param \App\Model\ProductVideo\ProductVideoTranslationsRepository $productVideoTranslationsRepository
@@ -85,6 +87,7 @@ class ProductExportRepository extends BaseProductExportRepository
         BaseProductExportFieldProvider $productExportFieldProvider,
         PricingGroupSettingFacade $pricingGroupSettingFacade,
         ProductRepository $productRepository,
+        InMemoryCache $inMemoryCache,
         private readonly ProductPriceCalculation $productPriceCalculation,
         private readonly BreadcrumbFacade $breadcrumbFacade,
         private readonly ProductVideoTranslationsRepository $productVideoTranslationsRepository,
@@ -104,6 +107,7 @@ class ProductExportRepository extends BaseProductExportRepository
             $productExportFieldProvider,
             $pricingGroupSettingFacade,
             $productRepository,
+            $inMemoryCache,
         );
     }
 

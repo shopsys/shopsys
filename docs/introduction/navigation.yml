@@ -18,6 +18,7 @@ arrange:
     - cron.md
     - using-form-types.md
     - friendly-url.md
+    - memory-cache.md
     - front-end-breadcrumb-navigation.md
     - autocompletion-for-phing-targets.md
     - required-php-configuration.md

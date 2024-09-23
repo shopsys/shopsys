@@ -6,6 +6,7 @@ namespace Tests\ProductFeed\HeurekaBundle\Unit;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -57,6 +58,7 @@ class HeurekaFeedItemTest extends TestCase
             $this->heurekaCategoryFacadeMock,
             $this->categoryFacadeMock,
             $productAvailabilityFacadeMock,
+            new InMemoryCache(),
         );
 
         $this->defaultDomain = $this->createDomainConfigMock(Domain::FIRST_DOMAIN_ID, 'https://example.cz', 'cs');

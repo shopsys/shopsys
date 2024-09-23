@@ -7,6 +7,7 @@ namespace Tests\FrameworkBundle\Unit\Component\Image;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileRepository;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention;
@@ -74,6 +75,7 @@ class ImageFactoryTest extends TestCase
         $parameterBag->set('kernel.project_dir', sys_get_temp_dir());
         $imageRepositoryMock = $this->createMock(ImageRepository::class);
         $customerUploadedFileRepositoryMock = $this->createMock(CustomerUploadedFileRepository::class);
+        $inMemoryCache = new InMemoryCache();
 
         return new FileUpload(
             'temporaryDir',
@@ -84,6 +86,7 @@ class ImageFactoryTest extends TestCase
             $parameterBag,
             $imageRepositoryMock,
             $customerUploadedFileRepositoryMock,
+            $inMemoryCache,
         );
     }
 }
