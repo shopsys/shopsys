@@ -39,8 +39,6 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
         'shopsys/monorepo-builder',
         'shopsys/backend-api',
         'shopsys/read-model',
-        // used in newer versions
-        'shopsys/administration',
         // forks
         'shopsys/postgres-search-bundle',
         'shopsys/doctrine-orm',
