@@ -2995,6 +2995,9 @@ msgstr ""
 msgid "Product settings on the main page successfully changed"
 msgstr ""
 
+msgid "Product type"
+msgstr ""
+
 msgid "Products"
 msgstr ""
 
@@ -3872,6 +3875,9 @@ msgid "Uploaded file <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modif
 msgstr ""
 
 msgid "Uploading..."
+msgstr ""
+
+msgid "Upon inquiry"
 msgstr ""
 
 msgid "Url address"
