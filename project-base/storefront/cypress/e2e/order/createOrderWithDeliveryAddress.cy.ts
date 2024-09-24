@@ -18,7 +18,7 @@ import {
 } from 'support';
 import { TIDs } from 'tids';
 
-describe('Create order with delivery address tests', () => {
+describe('Create Order With Delivery Address Tests', () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
 
@@ -30,7 +30,7 @@ describe('Create order with delivery address tests', () => {
         fillBillingInfoForDeliveryAddressTests();
     });
 
-    it('should keep filled delivery address after page refresh', function () {
+    it('[Preserve Form On Refresh] keep filled delivery address after page refresh', function () {
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(this.test?.title, 'contact information form before filling', {
             blackout: [
@@ -62,7 +62,7 @@ describe('Create order with delivery address tests', () => {
         takeSnapshotAndCompare(this.test?.title, 'order detail', { blackout: [{ tid: TIDs.footer_social_links }] });
     });
 
-    it('should keep filled delivery address after unchecking the checkbox for different delivery address and then checking it again', function () {
+    it('[Preserve Form On Checkbox Change] keep filled delivery address after unchecking the checkbox for different delivery address and then checking it again', function () {
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(this.test?.title, 'contact information form before filling', {
             blackout: [
@@ -97,12 +97,12 @@ describe('Create order with delivery address tests', () => {
     });
 });
 
-describe('Delivery address in order tests (logged-in user)', () => {
+describe('Delivery Address In Order Tests (Logged-in User)', () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('should keep filled delivery address for logged-in user after page refresh', function () {
+    it('[Logged Preserve Form On Refresh] keep filled delivery address for logged-in user after page refresh', function () {
         cy.registerAsNewUser(
             generateCustomerRegistrationData(
                 'commonCustomer',
@@ -143,7 +143,7 @@ describe('Delivery address in order tests (logged-in user)', () => {
         takeSnapshotAndCompare(this.test?.title, 'order detail', { blackout: [{ tid: TIDs.footer_social_links }] });
     });
 
-    it('should keep filled delivery address for logged-in user after unchecking the checkbox for different delivery address and then checking it again', function () {
+    it('[Logged Preserve Form On Checkbox Change] keep filled delivery address for logged-in user after unchecking the checkbox for different delivery address and then checking it again', function () {
         cy.registerAsNewUser(
             generateCustomerRegistrationData(
                 'commonCustomer',
@@ -187,7 +187,7 @@ describe('Delivery address in order tests (logged-in user)', () => {
         takeSnapshotAndCompare(this.test?.title, 'order detail', { blackout: [{ tid: TIDs.footer_social_links }] });
     });
 
-    it('should first select saved default delivery address for logged-in user, but then fill and keep new delivery address after refresh', function () {
+    it('[Logged Default Fill New] first select saved default delivery address for logged-in user, but then fill and keep new delivery address after refresh', function () {
         registerAndCreateOrderForDeliveryAddressTests(
             'first-select-saved-then-fill-and-keep-filled-after-refresh@shopsys.com',
         );
@@ -223,7 +223,7 @@ describe('Delivery address in order tests (logged-in user)', () => {
         takeSnapshotAndCompare(this.test?.title, 'order detail', { blackout: [{ tid: TIDs.footer_social_links }] });
     });
 
-    it('should first select saved default delivery address for logged-in user, then fill new delivery address, then change it to a saved one and back to the new address which should stay filled', function () {
+    it('[Logged Default Fill New Default] first select saved default delivery address for logged-in user, then fill new delivery address, then change it to a saved one and back to the new address which should stay filled', function () {
         registerAndCreateOrderForDeliveryAddressTests(
             'first-select-saved-then-change-to-new-then-to-saved-and-to-new-again-logged-in@shopsys.com',
         );
@@ -269,7 +269,7 @@ describe('Delivery address in order tests (logged-in user)', () => {
     });
 });
 
-describe('Delivery address in order tests (with pickup point)', () => {
+describe('Delivery Address In Order Tests (Pickup Point)', () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
 
@@ -281,7 +281,7 @@ describe('Delivery address in order tests (with pickup point)', () => {
         fillBillingInfoForDeliveryAddressTests();
     });
 
-    it('should prefill delivery address from selected pickup point and keep delivery contact after refresh', function () {
+    it('[Preserve Pickup On Refresh] prefill delivery address from selected pickup point and keep delivery contact after refresh', function () {
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(this.test?.title, 'contact information form before filling', {
             blackout: [
@@ -311,7 +311,7 @@ describe('Delivery address in order tests (with pickup point)', () => {
         takeSnapshotAndCompare(this.test?.title, 'order detail', { blackout: [{ tid: TIDs.footer_social_links }] });
     });
 
-    it('should prefill delivery address from selected pickup point and keep delivery contact after unchecking the checkbox for different delivery contact and then checking it again', function () {
+    it('[Preserve Pickup On Checkbox Change] prefill delivery address from selected pickup point and keep delivery contact after unchecking the checkbox for different delivery contact and then checking it again', function () {
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         takeSnapshotAndCompare(this.test?.title, 'contact information form before filling', {
             blackout: [
@@ -345,12 +345,12 @@ describe('Delivery address in order tests (with pickup point)', () => {
     });
 });
 
-describe('Delivery address in order tests (with pickup point, logged-in user)', () => {
+describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('should not prefill delivery contact for logged-in user with saved address and with selected pickup point, and then keep the filled delivery information after refresh', function () {
+    it('[Logged No Prefill On Pickup Preserve On Refresh] not prefill delivery contact for logged-in user with saved address and with selected pickup point, and then keep the filled delivery information after refresh', function () {
         registerAndCreateOrderForDeliveryAddressTests(
             'no-prefill-contact-information-with-selected-pickup-place@shopsys.com',
             transport.personalCollection.uuid,
@@ -388,7 +388,7 @@ describe('Delivery address in order tests (with pickup point, logged-in user)', 
         takeSnapshotAndCompare(this.test?.title, 'order detail', { blackout: [{ tid: TIDs.footer_social_links }] });
     });
 
-    it('should not prefill delivery contact for logged-in user with saved address and pickup point, but keep filled delivery information after unchecking and checking checkbox for different delivery address', function () {
+    it('[Logged No Prefill On Pickup Preserve On Checkbox Change] not prefill delivery contact for logged-in user with saved address and pickup point, but keep filled delivery information after unchecking and checking checkbox for different delivery address', function () {
         registerAndCreateOrderForDeliveryAddressTests(
             'keep-delivery-address-with-saved-after-uncheck@shopsys.com',
             transport.personalCollection.uuid,

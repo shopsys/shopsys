@@ -4,12 +4,12 @@ import { generateCustomerRegistrationData, generateCreateOrderInput } from 'fixt
 import { checkUrl, initializePersistStoreInLocalStorageToDefaultValues, takeSnapshotAndCompare } from 'support';
 import { TIDs } from 'tids';
 
-describe('Order repeat tests as logged-in user from order list', () => {
+describe('Order Repeat Tests From Order List (Logged-in User)', () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('should repeat order (pre-fill cart) for logged-in user with initially empty cart', function () {
+    it('[Logged Repeat With Empty] repeat order (pre-fill cart) for logged-in user with initially empty cart', function () {
         const email = 'order-repeat-logged-in-with-empty-cart@shopsys.com';
         cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer', email));
         cy.addProductToCartForTest(products.helloKitty.uuid, 3);
@@ -27,7 +27,7 @@ describe('Order repeat tests as logged-in user from order list', () => {
         });
     });
 
-    it('should repeat order (pre-fill cart) for logged-in user with initially filled cart and allowed merging', function () {
+    it('[Logged Repeat With Prefilled And Merge] repeat order (pre-fill cart) for logged-in user with initially filled cart and allowed merging', function () {
         const email = 'order-repeat-logged-in-with-filled-cart-and-merging@shopsys.com';
         cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer', email));
         cy.addProductToCartForTest(products.helloKitty.uuid, 3);
@@ -47,7 +47,7 @@ describe('Order repeat tests as logged-in user from order list', () => {
         });
     });
 
-    it('should repeat order (pre-fill cart) for logged-in user with initially filled cart and disallowed merging', function () {
+    it('[Logged Repeat With Prefilled And No Merge] repeat order (pre-fill cart) for logged-in user with initially filled cart and disallowed merging', function () {
         const email = 'order-repeat-logged-in-with-filled-cart-without-merging@shopsys.com';
         cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer', email));
         cy.addProductToCartForTest(products.helloKitty.uuid, 3);
@@ -68,12 +68,12 @@ describe('Order repeat tests as logged-in user from order list', () => {
     });
 });
 
-describe('Order repeat tests as unlogged user from order detail', () => {
+describe('Order Repeat Tests From Order Detail (Unlogged User)', () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('should repeat order (pre-fill cart) for unlogged user with initially empty cart', function () {
+    it('[Anon Repeat With Empty] repeat order (pre-fill cart) for unlogged user with initially empty cart', function () {
         const email = 'order-repeat-unlogged-with-empty-cart@shopsys.com';
         cy.addProductToCartForTest(products.helloKitty.uuid, 3).then((cart) =>
             cy.storeCartUuidInLocalStorage(cart.uuid),
@@ -93,7 +93,7 @@ describe('Order repeat tests as unlogged user from order detail', () => {
         });
     });
 
-    it('should repeat order (pre-fill cart) for unlogged user with initially filled cart and allowed merging', function () {
+    it('[Anon Repeat With Prefilled Merge] repeat order (pre-fill cart) for unlogged user with initially filled cart and allowed merging', function () {
         const email = 'order-repeat-unlogged-with-filled-cart-and-merging@shopsys.com';
         cy.addProductToCartForTest(products.helloKitty.uuid, 3).then((cart) =>
             cy.storeCartUuidInLocalStorage(cart.uuid),
@@ -116,7 +116,7 @@ describe('Order repeat tests as unlogged user from order detail', () => {
         });
     });
 
-    it('should repeat order (pre-fill cart) for unlogged user with initially filled cart and disallowed merging', function () {
+    it('[Anon Repeat With Prefilled No Merge] repeat order (pre-fill cart) for unlogged user with initially filled cart and disallowed merging', function () {
         const email = 'order-repeat-unlogged-with-filled-cart-without-merging@shopsys.com';
         cy.addProductToCartForTest(products.helloKitty.uuid, 3).then((cart) =>
             cy.storeCartUuidInLocalStorage(cart.uuid),

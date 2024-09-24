@@ -15,12 +15,12 @@ import {
 } from 'support';
 import { TIDs } from 'tids';
 
-describe('Product add to cart tests', () => {
+describe('Product Add To Cart Tests', () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('should add product to cart from brand page', function () {
+    it('[Brand Page Add] add product to cart from brand page', function () {
         cy.visitAndWaitForStableAndInteractiveDOM(url.brandsOverview);
 
         goToPageThroughSimpleNavigation(22);
@@ -37,7 +37,7 @@ describe('Product add to cart tests', () => {
         checkPopupIsVisible(true);
     });
 
-    it('should add product to cart from product detail', function () {
+    it('[Product Detail Add] add product to cart from product detail', function () {
         cy.visitAndWaitForStableAndInteractiveDOM(products.helloKitty.url);
 
         addToCartOnProductDetailPage();
@@ -53,7 +53,7 @@ describe('Product add to cart tests', () => {
         checkPopupIsVisible(true);
     });
 
-    it('should add product to cart from category page', function () {
+    it('[Category Page Add] add product to cart from category page', function () {
         cy.visitAndWaitForStableAndInteractiveDOM(url.categoryElectronics);
 
         addProductToCartFromProductList(products.helloKitty.catnum);
@@ -69,7 +69,7 @@ describe('Product add to cart tests', () => {
         checkPopupIsVisible(true);
     });
 
-    it('should add variant product to cart from product detail', function () {
+    it('[Product Variant Add] add variant product to cart from product detail', function () {
         cy.visitAndWaitForStableAndInteractiveDOM(products.philips32PFL4308.url);
 
         addVariantToCartFromMainVariantDetail(products.philips54CRT.catnum);
@@ -82,7 +82,7 @@ describe('Product add to cart tests', () => {
         checkPopupIsVisible(true);
     });
 
-    it('should add product to cart from promoted products on homepage', function () {
+    it('[Promoted Products Add] add product to cart from promoted products on homepage', function () {
         cy.visitAndWaitForStableAndInteractiveDOM('/');
 
         addProductToCartFromPromotedProductsOnHomepage(products.helloKitty.catnum);
@@ -99,7 +99,7 @@ describe('Product add to cart tests', () => {
         checkPopupIsVisible(true);
     });
 
-    it('should add product to cart from search results page', function () {
+    it('[Search Page Add] add product to cart from search results page', function () {
         cy.visitAndWaitForStableAndInteractiveDOM('/');
 
         searchProductByNameWithAutocomplete(products.helloKitty.name);

@@ -17,12 +17,12 @@ import {
 } from 'support';
 import { TIDs } from 'tids';
 
-describe('Transport select tests', () => {
+describe('Transport Select Tests', () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('should select transport to home', function () {
+    it('[Transport Home] select transport to home', function () {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
@@ -37,7 +37,7 @@ describe('Transport select tests', () => {
         });
     });
 
-    it('should select personal pickup transport', function () {
+    it('[Personal Collection] select personal pickup transport', function () {
         changeDayOfWeekInTransportsApiResponse(1);
         changeDayOfWeekInChangeTransportMutationResponse(1);
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
@@ -54,7 +54,7 @@ describe('Transport select tests', () => {
         });
     });
 
-    it('should select a transport, deselect it, and then change the transport option', function () {
+    it('[Change Transport] select a transport, deselect it, and then change the transport option', function () {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
@@ -73,7 +73,7 @@ describe('Transport select tests', () => {
         });
     });
 
-    it('should be able to remove transport using repeated clicks', function () {
+    it('[Remove Transport Repeated Click] be able to remove transport using repeated clicks', function () {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
@@ -97,7 +97,7 @@ describe('Transport select tests', () => {
         });
     });
 
-    it('should be able to remove transport using reset button', function () {
+    it('[Remove Transport Button Click] remove transport using reset button', function () {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
@@ -121,7 +121,7 @@ describe('Transport select tests', () => {
         });
     });
 
-    it('should redirect to cart page and not display transport options if cart is empty and user is not logged in', function () {
+    it('[Anon No Transport Empty Cart] redirect to cart page and not display transport options if cart is empty and user is not logged in', function () {
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
         checkTransportSelectionIsNotVisible();
@@ -132,7 +132,7 @@ describe('Transport select tests', () => {
         });
     });
 
-    it('should redirect to cart page and not display transport options if cart is empty and user is logged in', function () {
+    it('[Logged No Transport Empty Cart] redirect to cart page and not display transport options if cart is empty and user is logged in', function () {
         cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer'));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
@@ -144,7 +144,7 @@ describe('Transport select tests', () => {
         });
     });
 
-    it('should change price for transport when cart is large enough for transport to be free', function () {
+    it('[Transport Fee] change price for transport when cart is large enough for transport to be free', function () {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 

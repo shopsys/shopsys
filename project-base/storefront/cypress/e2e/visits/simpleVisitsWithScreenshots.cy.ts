@@ -8,7 +8,7 @@ describe('Simple page visit tests with screenshots', () => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('homepage visit with screenshot', function () {
+    it('[Homepage] homepage visit with screenshot', function () {
         cy.visitAndWaitForStableAndInteractiveDOM('/');
         takeSnapshotAndCompare(this.test?.title, 'homepage', {
             blackout: [
@@ -21,7 +21,7 @@ describe('Simple page visit tests with screenshots', () => {
         });
     });
 
-    it('product detail visit with screenshot', function () {
+    it('[Product Detail] product detail visit with screenshot', function () {
         cy.visitAndWaitForStableAndInteractiveDOM(url.productHelloKitty);
         takeSnapshotAndCompare(this.test?.title, 'product detail', {
             blackout: [
@@ -33,7 +33,7 @@ describe('Simple page visit tests with screenshots', () => {
         });
     });
 
-    it('category detail visit with screenshot', function () {
+    it('[Category Detail] category detail visit with screenshot', function () {
         cy.visitAndWaitForStableAndInteractiveDOM(url.categoryElectronics);
         takeSnapshotAndCompare(this.test?.title, 'category detail', {
             blackout: [
@@ -45,16 +45,14 @@ describe('Simple page visit tests with screenshots', () => {
         });
     });
 
-    it('stores page visit with screenshot', function () {
-        // skip this test because the stores page test is failing on dynamic data
-        this.skip();
+    it('[Stores] stores page visit with screenshot', function () {
         cy.visitAndWaitForStableAndInteractiveDOM(url.stores);
         takeSnapshotAndCompare(this.test?.title, 'stores page', {
             blackout: [{ tid: TIDs.footer_social_links }, { tid: TIDs.stores_map }, { tid: TIDs.store_opening_status }],
         });
     });
 
-    it('blog article detail visit with screenshot', function () {
+    it('[Blog Detail] blog article detail visit with screenshot', function () {
         cy.visitAndWaitForStableAndInteractiveDOM(url.blogArticleGrapesJs);
         changeBlogArticleDynamicPartsToStaticDemodata();
         takeSnapshotAndCompare(this.test?.title, 'blog article detail', {

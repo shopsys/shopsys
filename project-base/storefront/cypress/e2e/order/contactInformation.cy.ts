@@ -23,12 +23,12 @@ import {
 } from 'support';
 import { TIDs } from 'tids';
 
-describe('Contact information page tests', () => {
+describe('Contact Information Page Tests', () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('should redirect to cart page and not display contact information form if cart is empty and user is not logged in', function () {
+    it('[Anon Empty Cart] redirect to cart page and not display contact information form if cart is empty and user is not logged in', function () {
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
         checkTransportSelectionIsNotVisible();
@@ -37,7 +37,7 @@ describe('Contact information page tests', () => {
         takeSnapshotAndCompare(this.test?.title, 'empty cart page', { blackout: [{ tid: TIDs.footer_social_links }] });
     });
 
-    it('should redirect to transport and payment select page and not display contact information form if transport and payment are not selected and user is not logged in', function () {
+    it('[Anon Transport & Payment] redirect to transport and payment select page and not display contact information form if transport and payment are not selected and user is not logged in', function () {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
@@ -52,7 +52,7 @@ describe('Contact information page tests', () => {
         });
     });
 
-    it('should redirect to cart page and not display contact information form if cart is empty and user is logged in', function () {
+    it('[Logged Empty Cart] redirect to cart page and not display contact information form if cart is empty and user is logged in', function () {
         cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer'));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
@@ -62,7 +62,7 @@ describe('Contact information page tests', () => {
         takeSnapshotAndCompare(this.test?.title, 'empty cart page', { blackout: [{ tid: TIDs.footer_social_links }] });
     });
 
-    it('should redirect to transport and payment select page and not display contact information form if transport and payment are not selected and user is logged in', function () {
+    it('[Logged Transport & Payment] redirect to transport and payment select page and not display contact information form if transport and payment are not selected and user is logged in', function () {
         cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer'));
         cy.addProductToCartForTest();
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
@@ -78,7 +78,7 @@ describe('Contact information page tests', () => {
         });
     });
 
-    it('should keep filled contact information after page refresh', function () {
+    it('[Preserve Contact Form] keep filled contact information after page refresh', function () {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.preselectTransportForTest(transport.czechPost.uuid);
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
@@ -98,7 +98,7 @@ describe('Contact information page tests', () => {
         });
     });
 
-    it('should keep changed contact information after page refresh for logged-in user', function () {
+    it('[Logged Preserve Contact Form] keep changed contact information after page refresh for logged-in user', function () {
         cy.registerAsNewUser(
             generateCustomerRegistrationData('commonCustomer', 'refresh-page-contact-information@shopsys.com'),
         );
@@ -122,7 +122,7 @@ describe('Contact information page tests', () => {
         });
     });
 
-    it('should remove contact information after logout', function () {
+    it('[Logout Clear Form] remove contact information after logout', function () {
         cy.registerAsNewUser(
             generateCustomerRegistrationData('commonCustomer', 'remove-contact-information-after-logout@shopsys.com'),
         );

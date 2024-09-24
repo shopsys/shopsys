@@ -12,7 +12,7 @@ import {
 } from 'support';
 import { TIDs } from 'tids';
 
-describe('Last order transport and payment select tests', () => {
+describe('Last Order Transport And Payment Select Tests', () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
 
@@ -25,7 +25,7 @@ describe('Last order transport and payment select tests', () => {
         cy.addProductToCartForTest();
     });
 
-    it('should preselect transport and payment from last order for logged-in user', function () {
+    it('[Preselect T&P] preselect transport and payment from last order for logged-in user', function () {
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
         takeSnapshotAndCompare(this.test?.title, 'preselected transport and payment', {
@@ -37,7 +37,7 @@ describe('Last order transport and payment select tests', () => {
         });
     });
 
-    it('should be able to change preselected transport and payment from last order for logged-in user and keep the new selection after refresh', function () {
+    it('[Change T&P And Preserve On Refresh] change preselected transport and payment from last order for logged-in user and keep the new selection after refresh', function () {
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
         changeSelectionOfTransportByName(transport.czechPost.name);
