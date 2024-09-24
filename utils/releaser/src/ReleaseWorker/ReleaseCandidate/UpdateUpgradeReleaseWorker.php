@@ -42,7 +42,9 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): void {
-        $this->processRunner->run('php phing upgrade-merge');
+        $this->processRunner->run(
+            sprintf('php phing -D version=%s upgrade-merge', $version->getMajor()->getValue() . '.' . $version->getMinor()->getValue()),
+        );
 
         $this->updateUpgradeFileWithReleasedVersion($version, $initialBranchName);
 
