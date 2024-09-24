@@ -3007,6 +3007,9 @@ msgstr "Zboží bylo uloženo do objednávky"
 msgid "Product settings on the main page successfully changed"
 msgstr "Nastavení zboží na titulce bylo úspěšně změněno."
 
+msgid "Product type"
+msgstr "Typ produktu"
+
 msgid "Products"
 msgstr "Zboží"
 
@@ -3891,6 +3894,9 @@ msgstr "Soubor <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl upraven
 
 msgid "Uploading..."
 msgstr "Nahrávám..."
+
+msgid "Upon inquiry"
+msgstr "Na poptávku"
 
 msgid "Url address"
 msgstr "Url adresa"

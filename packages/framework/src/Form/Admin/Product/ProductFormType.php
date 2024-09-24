@@ -35,6 +35,7 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
@@ -66,6 +67,7 @@ class ProductFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Form\Transformers\ProductParameterValueToProductParameterValuesLocalizedTransformer $productParameterValueToProductParameterValuesLocalizedTransformer
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum $productTypeEnum
      */
     public function __construct(
         private readonly BrandFacade $brandFacade,
@@ -79,6 +81,7 @@ class ProductFormType extends AbstractType
         private readonly ProductParameterValueToProductParameterValuesLocalizedTransformer $productParameterValueToProductParameterValuesLocalizedTransformer,
         private readonly ProductFacade $productFacade,
         private readonly TransportFacade $transportFacade,
+        private readonly ProductTypeEnum $productTypeEnum,
     ) {
     }
 
@@ -162,6 +165,14 @@ class ProductFormType extends AbstractType
         $builderBasicInformationGroup = $builder->create('basicInformationGroup', GroupType::class, [
             'label' => t('Basic information'),
         ]);
+
+        if (!$this->isProductMainVariant($product)) {
+            $builderBasicInformationGroup->add('productType', ChoiceType::class, [
+                'required' => true,
+                'choices' => $this->productTypeEnum->getAllIndexedByTranslations(),
+                'label' => t('Product type'),
+            ]);
+        }
 
         $builderBasicInformationGroup->add('catnum', TextType::class, [
             'required' => false,
@@ -737,7 +748,7 @@ class ProductFormType extends AbstractType
                 'error_bubbling' => false,
                 'render_form_row' => false,
             ])
-               ->addModelTransformer($this->productParameterValueToProductParameterValuesLocalizedTransformer));
+                ->addModelTransformer($this->productParameterValueToProductParameterValuesLocalizedTransformer));
 
         return $builderParametersGroup;
     }
