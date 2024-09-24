@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Transport\Price;
 
 use Override;
 use Shopsys\FrameworkBundle\Model\Transport\PriceWithLimitData;
+use Shopsys\FrameworkBundle\Twig\InputPriceLabelExtension;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -20,6 +21,14 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class PriceWithLimitType extends AbstractType
 {
     /**
+     * @param \Shopsys\FrameworkBundle\Twig\InputPriceLabelExtension $inputPriceLabelExtension
+     */
+    public function __construct(
+        protected readonly InputPriceLabelExtension $inputPriceLabelExtension,
+    ) {
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
@@ -32,6 +41,7 @@ class PriceWithLimitType extends AbstractType
                 'constraints' => [
                     new NotBlank(['message' => 'Please enter price']),
                 ],
+                'label' => $this->inputPriceLabelExtension->getInputPriceLabel(),
             ])
             ->add('maxWeight', IntegerType::class)
             ->add('transportPriceId', HiddenType::class);

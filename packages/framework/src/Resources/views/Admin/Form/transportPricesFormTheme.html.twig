@@ -27,6 +27,9 @@
     <tr class="js-transport-prices-item js-form-group table-form__row" data-index="{{ index }}">
         {{ form_widget(priceWithLimit.transportPriceId) }}
         <td class="table-form__cell table-form__cell--del-before">
+            <div class="display-none">
+                {{ form_label(priceWithLimit.price) }}
+            </div>
             {{ form_widget(priceWithLimit.price, { isSimple: false, symbolAfterInput: currencySymbolByDomainId(domainId)} ) }}
             {{ form_errors(priceWithLimit.price, { errors_attr: { class: 'table-limits__cell__error' } } ) }}
         </td>
