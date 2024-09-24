@@ -184,6 +184,7 @@ class ProductDataFactory
         $productData->weight = $product->getWeight();
         $productData->files = $this->uploadedFileDataFactory->createByEntity($product);
         $productData->excludedTransports = $product->getExcludedTransports();
+        $productData->productType = $product->getProductType();
 
         $this->fillProductStockByProduct($productData, $product);
     }
