@@ -117,6 +117,9 @@
             "catnum": {
                 "type": "text"
             },
+            "product_type": {
+                "type": "keyword"
+            },
             "partno": {
                 "type": "text"
             },
