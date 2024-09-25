@@ -46,15 +46,16 @@ npm login
 npm publish
 
 # set new version of @shopsys/framework to %s in project-base/app/package.json
-
-# commit the changes manually with "npm package is now updated for %s release"
 ',
-            $version->getVersionString(),
             $version->getVersionString(),
             $version->getVersionString(),
         ));
         $this->confirm('Confirm the new version of NPM package is published');
-        $this->confirm('Confirm that you have updated version of @shopsys/framework in project-base/app/package.json and committed changes');
+        $this->confirm('Confirm that you have updated version of @shopsys/framework in project-base/app/package.json and the changes are ready to be committed');
+        $this->commit(sprintf(
+            'npm package is now updated for %s release',
+            $version->getVersionString(),
+        ));
     }
 
     /**
