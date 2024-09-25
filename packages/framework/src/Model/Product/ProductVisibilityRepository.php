@@ -139,6 +139,7 @@ class ProductVisibilityRepository
             'domainId' => null,
             'pricingGroupId' => null,
             'variantTypeMain' => Product::VARIANT_TYPE_MAIN,
+            'inquiryProductType' => ProductTypeEnum::TYPE_INQUIRY,
         ];
 
         $variableTypes = [
@@ -147,6 +148,7 @@ class ProductVisibilityRepository
             'domainId' => Types::INTEGER,
             'pricingGroupId' => Types::INTEGER,
             'variantTypeMain' => Types::STRING,
+            'inquiryProductType' => Types::STRING,
         ];
 
         if ($productIds !== null) {
@@ -168,6 +170,8 @@ class ProductVisibilityRepository
                         AND
                         (
                             p.variant_type = :variantTypeMain
+                            OR
+                            p.product_type = :inquiryProductType
                             OR
                             EXISTS (
                                 SELECT 1
