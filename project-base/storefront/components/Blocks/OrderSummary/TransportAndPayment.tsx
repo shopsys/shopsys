@@ -75,7 +75,7 @@ export const TransportAndPayment: FC<TransportAndPaymentProps> = ({ payment, tra
                         )}
                     </OrderSummaryRow>
                 )}
-                {roundingPrice && (
+                {roundingPrice && isPriceVisible(roundingPrice.priceWithVat) && (
                     <OrderSummaryRow>
                         <OrderSummaryTextAndImage>{t('Rounding')}</OrderSummaryTextAndImage>
                         <OrderSummaryPrice>
