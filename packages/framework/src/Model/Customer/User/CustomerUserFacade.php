@@ -413,9 +413,15 @@ class CustomerUserFacade
     public function editCustomerUser(int $id, CustomerUserData $customerUserData): CustomerUser
     {
         $customerUser = $this->getCustomerUserById($id);
+        $customerUserOriginalRoles = $customerUser->getRoles();
+
         $customerUser->edit($customerUserData);
 
         $this->em->flush();
+
+        if ($this->areRolesChanged($customerUser->getRoles(), $customerUserOriginalRoles)) {
+            $this->customerUserRefreshTokenChainFacade->removeAllCustomerUserRefreshTokenChains($customerUser);
+        }
 
         return $customerUser;
     }
