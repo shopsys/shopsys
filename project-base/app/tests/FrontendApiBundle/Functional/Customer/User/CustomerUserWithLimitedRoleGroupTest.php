@@ -10,6 +10,7 @@ use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Customer\User\CustomerUser;
 use App\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup;
@@ -39,7 +40,7 @@ class CustomerUserWithLimitedRoleGroupTest extends GraphQlWithLoginTestCase
         $customerUserData = $this->customerUserDataFactory->createFromCustomerUser($customerUser);
         $customerUserData->roleGroup = $this->getReference(CustomerUserRoleGroupDataFixture::ROLE_GROUP_LIMITED_USER, CustomerUserRoleGroup::class);
 
-        $this->customerUserFacade->editCustomerUser($customerUser->getId(), $customerUserData);
+        $this->editCustomerUser($customerUser->getId(), $customerUserData);
 
         $this->login();
     }
@@ -134,5 +135,18 @@ class CustomerUserWithLimitedRoleGroupTest extends GraphQlWithLoginTestCase
         $errors = $this->getErrorsFromResponse($response);
 
         $this->assertSame('Ordering by price is not allowed for current user.', $errors[0]['message']);
+    }
+
+    /**
+     * @param int $id
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData $customerUserData
+     */
+    private function editCustomerUser(int $id, CustomerUserData $customerUserData): void
+    {
+        $customerUser = $this->customerUserFacade->getCustomerUserById($id);
+
+        $customerUser->edit($customerUserData);
+
+        $this->em->flush();
     }
 }
