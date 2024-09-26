@@ -44,7 +44,11 @@ export const PaymentsInOrderSelect: FC<PaymentsInOrderSelectProps> = ({
     );
 
     useEffect(() => {
-        setSelectedPaymentForChange(currentOrderPayment);
+        setSelectedPaymentForChange(
+            !isPaymentByCardAvailable && currentOrderPayment?.type === PaymentTypeEnum.GoPay
+                ? undefined
+                : currentOrderPayment,
+        );
     }, [currentOrderPayment?.uuid]);
 
     const changePaymentSubmitHandler = async () => {
@@ -115,7 +119,11 @@ export const PaymentsInOrderSelect: FC<PaymentsInOrderSelectProps> = ({
                                     {t('The price of your order may change by the price of the payment')}
                                     <InfoIcon />
                                 </span>
-                                <Button className="w-fit" onClick={changePaymentSubmitHandler}>
+                                <Button
+                                    className="w-fit"
+                                    isDisabled={!selectedPaymentForChange}
+                                    onClick={changePaymentSubmitHandler}
+                                >
                                     {t('Pay with the selected method')}
                                     {isChangePaymentInOrderFetching && <SpinnerIcon className="ml-2 w-5" />}
                                 </Button>

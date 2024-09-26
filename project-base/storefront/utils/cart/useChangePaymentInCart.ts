@@ -25,10 +25,10 @@ export const useChangePaymentInCart = () => {
     const gtmCart = useLatest(gtmCartInfo);
 
     const changePaymentInCart = useCallback<ChangePaymentInCart>(
-        async (newPaymentUuid, newGoPayBankSwift) => {
+        async (newPaymentUuid) => {
             const changePaymentResult = await changePaymentInCartMutation(
                 {
-                    input: { paymentUuid: newPaymentUuid, paymentGoPayBankSwift: newGoPayBankSwift, cartUuid },
+                    input: { paymentUuid: newPaymentUuid, paymentGoPayBankSwift: null, cartUuid },
                 },
                 { additionalTypenames: ['dedup'] },
             );

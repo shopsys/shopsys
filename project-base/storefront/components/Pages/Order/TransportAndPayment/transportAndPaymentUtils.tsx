@@ -236,13 +236,6 @@ export const getTransportAndPaymentValidationMessages = (
             errorMessage: t('Please select payment'),
         };
     }
-    if (getIsGoPayBankTransferPayment(payment) && !paymentGoPayBankSwift) {
-        errors.goPaySwift = {
-            name: 'goPaySwift',
-            label: t('Choose your bank'),
-            errorMessage: t('Please select your bank'),
-        };
-    }
 
     return errors;
 };

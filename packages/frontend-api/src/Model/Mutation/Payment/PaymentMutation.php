@@ -48,6 +48,8 @@ class PaymentMutation extends AbstractMutation
         }
 
         try {
+            $order->resetOrderPaymentStatusPageValidityHash();
+
             return $this->paymentServiceFacade->payOrder($order);
         } catch (Throwable $exception) {
             throw new Error($exception->getMessage(), null, null, [], null, $exception);

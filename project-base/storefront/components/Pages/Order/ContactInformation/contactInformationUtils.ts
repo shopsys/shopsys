@@ -160,6 +160,7 @@ const useHandleCreateOrderResult = () => {
                 orderUuid: createdOrder.uuid,
                 orderEmail: formValues.email,
                 orderPaymentType: createdOrder.payment.type,
+                orderPaymentStatusPageValidityHash: undefined,
             };
 
             if (!user) {

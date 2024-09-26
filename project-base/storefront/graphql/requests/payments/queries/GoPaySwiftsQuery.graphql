@@ -1,7 +1,0 @@
-query GoPaySwiftsQuery($currencyCode: String!) {
-    GoPaySwifts(currencyCode: $currencyCode) {
-        name
-        imageNormalUrl
-        swift
-    }
-}
