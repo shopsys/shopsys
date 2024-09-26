@@ -1,0 +1,12 @@
+ProductTypeEnumDecorator:
+    type: enum
+    decorator: true
+    config:
+        description: "One of possible product types"
+        values:
+            BASIC:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Product\\ProductTypeEnum::TYPE_BASIC")'
+                description: "Basic product"
+            INQUIRY:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Product\\ProductTypeEnum::TYPE_INQUIRY")'
+                description: "Product with inquiry form instead of add to cart button"
