@@ -71,6 +71,7 @@ class OrderDataFactory
         $orderData->companyName = $order->getCompanyName();
         $orderData->companyNumber = $order->getCompanyNumber();
         $orderData->companyTaxNumber = $order->getCompanyTaxNumber();
+        $orderData->isCompanyCustomer = $order->getCompanyName() !== null && $order->getCompanyNumber() !== null;
         $orderData->street = $order->getStreet();
         $orderData->city = $order->getCity();
         $orderData->postcode = $order->getPostcode();
