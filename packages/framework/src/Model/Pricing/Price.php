@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Pricing;
 
+use Shopsys\FrameworkBundle\Component\Money\HiddenMoney;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 
 class Price
@@ -111,5 +112,16 @@ class Price
     public function isZero(): bool
     {
         return $this->priceWithoutVat->isZero() && $this->priceWithVat->isZero();
+    }
+
+    /**
+     * @return self
+     */
+    public static function createHiddenPrice(): self
+    {
+        return new self(
+            new HiddenMoney(),
+            new HiddenMoney(),
+        );
     }
 }
