@@ -29,7 +29,7 @@ fragment ListedProductFragment on Product {
         name
     }
     isMainVariant
-
+    isInquiryType
     ... on Variant {
         mainVariant {
             slug

@@ -45,6 +45,7 @@ fragment ProductDetailInterfaceFragment on Product {
         ...HreflangLinksFragment
     }
     isMainVariant
+    isInquiryType
     productVideos {
         ...VideoTokenFragment
     }
