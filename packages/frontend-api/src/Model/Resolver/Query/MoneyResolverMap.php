@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Query;
 
 use GraphQL\Language\AST\StringValueNode;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
+use Shopsys\FrameworkBundle\Component\Money\HiddenMoney;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
 use Shopsys\FrontendApiBundle\Component\Price\MoneyFormatterHelper;
@@ -36,14 +37,26 @@ class MoneyResolverMap extends ResolverMap
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $money
+     * @return bool
+     */
+    protected function shouldShowAmount(Money $money): bool
+    {
+        if ($money instanceof HiddenMoney) {
+            return false;
+        }
+
+        return
+            $this->security->getUser() === null ||
+            $this->security->isGranted(CustomerUserRole::ROLE_API_CUSTOMER_SEES_PRICES);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $money
      * @return string
      */
     protected function serializeMoney(Money $money): string
     {
-        if (
-            $this->security->getUser() === null ||
-            $this->security->isGranted(CustomerUserRole::ROLE_API_CUSTOMER_SEES_PRICES)
-        ) {
+        if ($this->shouldShowAmount($money)) {
             return MoneyFormatterHelper::formatWithMaxFractionDigits($money);
         }
 

@@ -28,4 +28,15 @@ class ProductPrice extends Price
     {
         return $this->priceFrom;
     }
+
+    /**
+     * @return self
+     */
+    public static function createHiddenProductPrice(): self
+    {
+        return new self(
+            self::createHiddenPrice(),
+            false,
+        );
+    }
 }
