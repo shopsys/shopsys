@@ -50,33 +50,59 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
 
     return (
         <>
-            {product.isSellingDenied ? (
-                <p className="text-textError">{t('This item can no longer be purchased')}</p>
-            ) : (
-                <div className="text-sm vl:text-base">
-                    <div className="flex items-center justify-between">
-                        <Spinbox
-                            defaultValue={1}
-                            id={product.uuid}
-                            max={product.stockQuantity}
-                            min={1}
-                            ref={spinboxRef}
-                            step={1}
-                        />
-                        <div className="ml-2 flex-1">
-                            <Button
-                                className="h-12 w-fit whitespace-nowrap px-4 sm:px-8"
-                                isDisabled={isAddingToCart}
-                                tid={TIDs.pages_productdetail_addtocart_button}
-                                onClick={onAddToCartHandler}
-                            >
-                                {isAddingToCart ? <Loader className="w-[18px]" /> : <CartIcon className="w-[18px]" />}
-                                {t('Add to cart')}
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-            )}
+            {(() => {
+                switch (true) {
+                    case product.isInquiryType:
+                        return (
+                            <div className="text-sm vl:text-base">
+                                <div className="flex items-center justify-between">
+                                    <div className="ml-2 flex-1">
+                                        <Button
+                                            className="whitespace-nowrap px-4 sm:px-8 w-fit h-12"
+                                            // @todo open inquiry modal on click
+                                        >
+                                            {t('Inquire')}
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+
+                    case product.isSellingDenied:
+                        return <p className="text-textError">{t('This item can no longer be purchased')}</p>;
+
+                    default:
+                        return (
+                            <div className="text-sm vl:text-base">
+                                <div className="flex items-center justify-between">
+                                    <Spinbox
+                                        defaultValue={1}
+                                        id={product.uuid}
+                                        max={product.stockQuantity}
+                                        min={1}
+                                        ref={spinboxRef}
+                                        step={1}
+                                    />
+                                    <div className="ml-2 flex-1">
+                                        <Button
+                                            className="h-12 w-fit whitespace-nowrap px-4 sm:px-8"
+                                            isDisabled={isAddingToCart}
+                                            tid={TIDs.pages_productdetail_addtocart_button}
+                                            onClick={onAddToCartHandler}
+                                        >
+                                            {isAddingToCart ? (
+                                                <Loader className="w-[18px]" />
+                                            ) : (
+                                                <CartIcon className="w-[18px]" />
+                                            )}
+                                            {t('Add to cart')}
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                }
+            })()}
         </>
     );
 };
