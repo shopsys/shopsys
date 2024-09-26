@@ -16,6 +16,17 @@ type ProductActionProps = {
 export const ProductAction: FC<ProductActionProps> = ({ product, gtmProductListName, gtmMessageOrigin, listIndex }) => {
     const { t } = useTranslation();
 
+    if (product.isInquiryType) {
+        return (
+            // @todo change link to modal with inquiry form
+            <ExtendedNextLink className="no-underline" href={product.slug} type="productMainVariant">
+                <Button className="py-2" size="small">
+                    {t('Inquire')}
+                </Button>
+            </ExtendedNextLink>
+        );
+    }
+
     if (product.isMainVariant) {
         return (
             <ExtendedNextLink className="no-underline" href={product.slug} type="productMainVariant">
