@@ -87,11 +87,12 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
                     <div
                         className={twJoin(
                             'flex',
-                            !bannerSliderState.isSliding
-                                ? `translate-x-[calc(-100%)] transform transition-transform duration-${SLIDER_SLIDE_DURATION} ease-in-out`
-                                : bannerSliderState.slideDirection === 'PREV'
-                                  ? 'translate-x-[calc(2*(-100%))] transform'
-                                  : 'translate-x-0 transform',
+                            sliderItems.length > 1 &&
+                                (!bannerSliderState.isSliding
+                                    ? `translate-x-[calc(-100%)] transform transition-transform duration-${SLIDER_SLIDE_DURATION} ease-in-out`
+                                    : bannerSliderState.slideDirection === 'PREV'
+                                      ? 'translate-x-[calc(2*(-100%))] transform'
+                                      : 'translate-x-0 transform'),
                         )}
                     >
                         {sliderItems.map((item, index) => {

@@ -5,6 +5,7 @@ import { PromotedCategories } from 'components/Blocks/Categories/PromotedCategor
 import { DeferredPromotedProducts } from 'components/Blocks/Product/DeferredPromotedProducts';
 import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
 import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
+import { UpsList } from 'components/Blocks/UpsList/UpsList';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
@@ -26,6 +27,8 @@ export const HomePageContent: FC = () => {
             <SearchMetadata />
             <CommonLayout>
                 <Banners />
+
+                <UpsList />
 
                 <PromotedCategories />
 
