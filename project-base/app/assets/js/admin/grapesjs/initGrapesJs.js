@@ -13,6 +13,7 @@ import './plugins/grapesjs-custom-image-plugin';
 import './plugins/grapesjs-custom-link-plugin';
 import './plugins/grapesjs-custom-image-file-plugin';
 import './plugins/grapesjs-custom-iframe-plugin';
+import './plugins/grapesjs-table-custom-plugin';
 import 'magnific-popup';
 import { Buffer } from 'buffer';
 global.Buffer = Buffer;
@@ -66,6 +67,7 @@ export default class InitGrapesJs {
             'customButtons',
             'text-with-image',
             'custom-blocks',
+            'table-custom',
             'custom-image',
             'custom-link',
             'custom-image-file',
