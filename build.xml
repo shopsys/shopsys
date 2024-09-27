@@ -502,7 +502,12 @@
     </target>
 
     <target name="upgrade-merge" description="Merges all upgrade notes into UPGRADE-{X.X}.md according to structure specified in upgrade-notes/_layout.md.">
-        <input message="Enter version to merge upgrade notes for:" propertyName="version"/>
+        <if>
+            <not><isset property="version"/></not>
+            <then>
+                <input message="Enter version to merge upgrade notes for:" propertyName="version"/>
+            </then>
+        </if>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.upgrade-notes}/upgrade_notes.php"/>
             <arg value="${version}"/>

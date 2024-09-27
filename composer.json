@@ -205,7 +205,7 @@
         "symfony/var-dumper": "^5.4",
         "symplify/easy-coding-standard": "^12.2.0",
         "symplify/monorepo-builder": "^8.3.48",
-        "zalas/phpunit-injector": "2.5.x-dev as 2.5.1"
+        "zalas/phpunit-injector": "2.5.x-dev#9f3af55 as 2.5.1"
     },
     "conflict": {
         "symfony/symfony": "*",
