@@ -37,7 +37,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 <!-- Release notes generated using configuration in .github/release.yml at 15.0 -->
 
-## What's Changed
+## [v15.0.0](https://github.com/shopsys/shopsys/compare/v14.0.1...v15.0.0) (2024-09-27)
 
 ### :construction: Changes that require additional implementation if you are using Frontend API
 
