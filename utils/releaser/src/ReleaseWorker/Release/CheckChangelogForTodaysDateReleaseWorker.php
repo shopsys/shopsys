@@ -76,7 +76,10 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
 
             return;
         } catch (LogicException) {
-            $this->symfonyStyle->error('Unable to find current release headline in file "%s".');
+            $this->symfonyStyle->error(sprintf(
+                'Unable to find current release headline in file "%s".',
+                $changelogFilePath,
+            ));
             $this->renderCommonError();
 
             return;
