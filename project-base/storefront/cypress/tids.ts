@@ -86,6 +86,7 @@ export enum TIDs {
     blog_preview_image = 'blog_preview_image',
     product_gallery_image = 'product_gallery_image',
     stores_map = 'stores_map',
+    store_opening_hours = 'store_opening_hours',
     store_opening_status = 'store_opening_status',
     blog_article_publication_date = 'blog_article_publication_date',
 }

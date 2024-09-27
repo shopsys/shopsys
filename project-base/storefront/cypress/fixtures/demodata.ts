@@ -1,5 +1,6 @@
 export const brandSencor = 'Sencor';
 
+export const openingHours = '09:00 - 11:00, 13:00 - 17:00';
 export const buttonName = {
     login: 'Login',
 };

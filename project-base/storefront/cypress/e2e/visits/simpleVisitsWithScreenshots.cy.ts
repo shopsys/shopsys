@@ -1,4 +1,7 @@
-import { changeBlogArticleDynamicPartsToStaticDemodata } from './visitsSupport';
+import {
+    changeBlogArticleDynamicPartsToStaticDemodata,
+    changeStoreOpeningHoursToStaticDemodata,
+} from './visitsSupport';
 import { url } from 'fixtures/demodata';
 import { initializePersistStoreInLocalStorageToDefaultValues, takeSnapshotAndCompare } from 'support';
 import { TIDs } from 'tids';
@@ -47,6 +50,7 @@ describe('Simple page visit tests with screenshots', () => {
 
     it('[Stores] stores page visit with screenshot', function () {
         cy.visitAndWaitForStableAndInteractiveDOM(url.stores);
+        changeStoreOpeningHoursToStaticDemodata();
         takeSnapshotAndCompare(this.test?.title, 'stores page', {
             blackout: [{ tid: TIDs.footer_social_links }, { tid: TIDs.stores_map }, { tid: TIDs.store_opening_status }],
         });
