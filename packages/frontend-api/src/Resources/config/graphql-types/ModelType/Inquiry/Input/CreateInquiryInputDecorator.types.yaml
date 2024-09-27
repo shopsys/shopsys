@@ -1,0 +1,52 @@
+CreateInquiryInputDecorator:
+    type: input-object
+    inherits:
+        - 'NameInputObjectDecorator'
+        - 'TelephoneInputObjectDecorator'
+    decorator: true
+    config:
+        fields:
+            productUuid:
+                type: "Uuid!"
+                description: "Product UUID"
+            email:
+                type: "String!"
+                description: "The customer's email address"
+                validation:
+                    -   NotBlank:
+                            message: "Please enter email"
+                    -   Email:
+                            message: "Please enter valid email"
+                    -   Length:
+                            max: 255
+                            maxMessage: "Email cannot be longer than {{ limit }} characters"
+            companyName:
+                type: "String"
+                description: "The customer’s company name"
+                validation:
+                    -   Length:
+                            max: 100
+                            maxMessage: "Company name cannot be longer than {{ limit }} characters"
+            companyNumber:
+                type: "String"
+                description: "The customer’s company identification number"
+                validation:
+                    -   Length:
+                            max: 50
+                            maxMessage: "Identification number cannot be longer than {{ limit }} characters"
+                    -   Regex:
+                            pattern: '/^[0-9]+$/'
+                            message: "Please fill in numbers only"
+            companyTaxNumber:
+                type: "String"
+                description: "The customer’s company tax number"
+                validation:
+                    -   Length:
+                            max: 50
+                            maxMessage: "Tax number cannot be longer than {{ limit }} characters"
+                    -   Regex:
+                            pattern: '/^[0-9A-Z]*([0-9]+[A-Z]+|[A-Z]+[0-9]+)[0-9A-Z]*$/'
+                            message: "Please check Tax number format"
+            note:
+                type: "String"
+                description: "Customer's question or note to the inquiry product"
