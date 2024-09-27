@@ -39,6 +39,6 @@ final class CheckPackagesGithubActionsBuildsReleaseWorker extends AbstractCheckP
     ): void {
         $this->releasingBranchName = $version->getOriginalString();
 
-        parent::work($version);
+        parent::work($version, $this->releasingBranchName);
     }
 }
