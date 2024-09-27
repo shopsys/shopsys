@@ -2035,6 +2035,15 @@ msgstr ""
 msgid "Input price without VAT"
 msgstr ""
 
+msgid "Inquiries"
+msgstr ""
+
+msgid "Inquiries - view"
+msgstr ""
+
+msgid "Inquiries overview"
+msgstr ""
+
 msgid "Instagram URL"
 msgstr ""
 
@@ -2465,6 +2474,9 @@ msgid "No files found."
 msgstr ""
 
 msgid "No flags found. You have to create some first."
+msgstr ""
+
+msgid "No inquiries found."
 msgstr ""
 
 msgid "No logs created so far."
@@ -3254,6 +3266,9 @@ msgid "Search in uploaded files by filename, extension or translated name. It is
 msgstr ""
 
 msgid "Searching in all currencies"
+msgstr ""
+
+msgid "Searching searches in company number, company name, customer last name, and customer email. It is possible to use wildcards * and ?."
 msgstr ""
 
 msgid "Searching searches in complaint number, order number, delivery last name, delivery company name, last name from order, email from order, complaint author last name, complaint author company name. It is possible to use wildcards * and ?."
@@ -4175,6 +4190,9 @@ msgid "in category (between first and second row of products)"
 msgstr ""
 
 msgid "include"
+msgstr ""
+
+msgid "inquiries"
 msgstr ""
 
 msgid "is"

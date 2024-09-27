@@ -36,6 +36,7 @@ class SideMenuBuilder
 
         $menu->addChild($this->createDashboardMenu());
         $menu->addChild($this->createOrdersMenu());
+        $menu->addChild($this->createInquiriesMenu());
         $menu->addChild($this->createCustomersMenu());
         $menu->addChild($this->createProductsMenu());
         $menu->addChild($this->createPricingMenu());
@@ -97,6 +98,22 @@ class SideMenuBuilder
         ]);
 
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_ORDERS, $menu);
+
+        return $menu;
+    }
+
+    /**
+     * @return \Knp\Menu\ItemInterface
+     */
+    protected function createInquiriesMenu(): ItemInterface
+    {
+        $menu = $this->menuFactory->createItem('inquiries', [
+            'route' => 'admin_inquiry_list',
+            'label' => t('Inquiries'),
+        ]);
+        $menu->setExtra('icon', 'letter');
+
+        $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_INQUIRIES, $menu);
 
         return $menu;
     }

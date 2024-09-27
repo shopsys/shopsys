@@ -50,4 +50,9 @@ class InquiryData
      * @var \Shopsys\FrameworkBundle\Model\Product\Product|null
      */
     public $product;
+
+    /**
+     * @var \DateTimeImmutable|null
+     */
+    public $createdAt;
 }
