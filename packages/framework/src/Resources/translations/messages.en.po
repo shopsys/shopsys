@@ -2041,6 +2041,15 @@ msgstr ""
 msgid "Input price without VAT"
 msgstr ""
 
+msgid "Inquiries"
+msgstr ""
+
+msgid "Inquiries - view"
+msgstr ""
+
+msgid "Inquiries overview"
+msgstr ""
+
 msgid "Instagram URL"
 msgstr ""
 
@@ -2471,6 +2480,9 @@ msgid "No files found."
 msgstr ""
 
 msgid "No flags found. You have to create some first."
+msgstr ""
+
+msgid "No inquiries found."
 msgstr ""
 
 msgid "No logs created so far."
@@ -3274,6 +3286,9 @@ msgstr ""
 msgid "Searching in all currencies"
 msgstr ""
 
+msgid "Searching searches in company number, company name, customer last name, and customer email. It is possible to use wildcards * and ?."
+msgstr ""
+
 msgid "Searching searches in complaint number, order number, delivery last name, delivery company name, last name from order, email from order, complaint author last name, complaint author company name. It is possible to use wildcards * and ?."
 msgstr ""
 
@@ -3629,6 +3644,9 @@ msgid "The higher the priority, the higher the country will be shown in the list
 msgstr ""
 
 msgid "The optimal size of the icon is 46x26 px. Only PNG format is allowed."
+msgstr ""
+
+msgid "The product is no longer in the catalog. This was the catalog number at the time of the inquiry."
 msgstr ""
 
 msgid "There are no parameter values of type color yet."
@@ -4193,6 +4211,9 @@ msgid "in category (between first and second row of products)"
 msgstr ""
 
 msgid "include"
+msgstr ""
+
+msgid "inquiries"
 msgstr ""
 
 msgid "is"

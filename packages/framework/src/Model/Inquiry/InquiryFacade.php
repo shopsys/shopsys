@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Inquiry;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
+use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 
 class InquiryFacade
 {
@@ -32,5 +35,34 @@ class InquiryFacade
         $this->em->flush();
 
         return $inquiry;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $quickSearchData
+     * @param string $locale
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getInquiryListQueryBuilderByQuickSearchData(
+        QuickSearchFormData $quickSearchData,
+        string $locale,
+    ): QueryBuilder {
+        $queryBuilder = $this->inquiryRepository->getInquiriesQueryBuilder($locale);
+
+        if ($quickSearchData->text !== null && $quickSearchData->text !== '') {
+            $queryBuilder
+                ->andWhere('(
+                    i.companyNumber LIKE :text
+                    OR
+                    NORMALIZED(i.lastName) LIKE NORMALIZED(:text)
+                    OR
+                    NORMALIZED(i.companyName) LIKE NORMALIZED(:text)
+                    OR
+                    NORMALIZED(i.email) LIKE NORMALIZED(:text)
+                )');
+            $querySearchText = DatabaseSearching::getFullTextLikeSearchString($quickSearchData->text);
+            $queryBuilder->setParameter('text', $querySearchText);
+        }
+
+        return $queryBuilder;
     }
 }

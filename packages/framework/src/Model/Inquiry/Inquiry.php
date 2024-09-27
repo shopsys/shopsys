@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Inquiry;
 
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -63,6 +64,12 @@ class Inquiry
     protected $companyTaxNumber;
 
     /**
+     * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable")
+     */
+    protected $createdAt;
+
+    /**
      * @var string
      * @ORM\Column(type="text", nullable=true)
      */
@@ -86,6 +93,8 @@ class Inquiry
      */
     public function __construct(InquiryData $inquiryData)
     {
+        $this->createdAt = $inquiryData->createdAt ?? new DateTimeImmutable();
+
         $this->setData($inquiryData);
     }
 

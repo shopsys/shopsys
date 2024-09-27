@@ -2041,6 +2041,15 @@ msgstr "Vstupní cena s DPH"
 msgid "Input price without VAT"
 msgstr "Vstupní cena bez DPH"
 
+msgid "Inquiries"
+msgstr "Poptávky"
+
+msgid "Inquiries - view"
+msgstr "Poptávky - zobrazení"
+
+msgid "Inquiries overview"
+msgstr "Přehled poptávek"
+
 msgid "Instagram URL"
 msgstr "Instagram URL"
 
@@ -2472,6 +2481,9 @@ msgstr "Žádné soubory nebyly nalezeny."
 
 msgid "No flags found. You have to create some first."
 msgstr "Nebyly nalezeny žádné příznaky. Nejprve musíte nějaké vytvořit."
+
+msgid "No inquiries found."
+msgstr "Nebyly nalezeny žádné poptávky."
 
 msgid "No logs created so far."
 msgstr "Žádné protokoly nejsou zatím vytvořeny."
@@ -3274,6 +3286,9 @@ msgstr "Vyhledávání ve nahraných souborech podle názvu souboru, přípony n
 msgid "Searching in all currencies"
 msgstr "Vyhledává se ve všech měnách"
 
+msgid "Searching searches in company number, company name, customer last name, and customer email. It is possible to use wildcards * and ?."
+msgstr "Vyhledávání hledá v IČ, názvu firmy, příjmení zákazníka, a e-mailu zákazníka. Je možné používat operátory * a ?."
+
 msgid "Searching searches in complaint number, order number, delivery last name, delivery company name, last name from order, email from order, complaint author last name, complaint author company name. It is possible to use wildcards * and ?."
 msgstr "Vyhledávání hledá v čísle reklamace, čísle objednávky, příjmení pro doručení, názvu firmy pro doručení, příjmení z objednávky, e-mailu objednávky, příjmení zadavatele reklamace a názvu firmy zadavatele reklamace. Je možné používat operátory * a ?."
 
@@ -3630,6 +3645,9 @@ msgstr "Čím vyšší priorita, tím bude stát zobrazen výše v seznamech. St
 
 msgid "The optimal size of the icon is 46x26 px. Only PNG format is allowed."
 msgstr "Optimální velikost ikony je 46x26 px. Je povolen pouze PNG formát."
+
+msgid "The product is no longer in the catalog. This was the catalog number at the time of the inquiry."
+msgstr "Produkt již není v katalogu. Toto bylo katalogové číslo v době vytvoření poptávky."
 
 msgid "There are no parameter values of type color yet."
 msgstr "Žádná hodnota parametru typu barva zatím nebyla vytvořena."
@@ -4194,6 +4212,9 @@ msgstr "v kategorii (mezi prvním a druhým řádkem produktů)"
 
 msgid "include"
 msgstr "obsahuje"
+
+msgid "inquiries"
+msgstr "poptávky"
 
 msgid "is"
 msgstr "je"

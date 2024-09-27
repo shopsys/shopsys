@@ -27,6 +27,7 @@ class Version20240926162253 extends AbstractMigration
                 company_number VARCHAR(50) DEFAULT NULL,
                 company_tax_number VARCHAR(50) DEFAULT NULL,
                 note TEXT DEFAULT NULL,
+                created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
                 PRIMARY KEY(id)
             )');
         $this->sql('CREATE INDEX IDX_1CCE4D54584665A ON inquiries (product_id)');
@@ -37,6 +38,8 @@ class Version20240926162253 extends AbstractMigration
                 CONSTRAINT FK_1CCE4D54584665A FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE
             SET
                 NULL NOT DEFERRABLE INITIALLY IMMEDIATE');
+
+        $this->sql('COMMENT ON COLUMN inquiries.created_at IS \'(DC2Type:datetime_immutable)\'');
     }
 
     /**

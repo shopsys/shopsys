@@ -13,6 +13,7 @@ class ConfigureMenuEvent extends Event
     public const SIDE_MENU_ROOT = 'shopsys.admin_side_menu.configure_root';
     public const SIDE_MENU_DASHBOARD = 'shopsys.admin_side_menu.configure_dashboard';
     public const SIDE_MENU_ORDERS = 'shopsys.admin_side_menu.configure_orders';
+    public const SIDE_MENU_INQUIRIES = 'shopsys.admin_side_menu.configure_inquiries';
     public const SIDE_MENU_CUSTOMERS = 'shopsys.admin_side_menu.configure_customers';
     public const SIDE_MENU_PRODUCTS = 'shopsys.admin_side_menu.configure_products';
     public const SIDE_MENU_PRICING = 'shopsys.admin_side_menu.configure_pricing';

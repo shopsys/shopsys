@@ -1,0 +1,24 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Inquiries overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Inquiries overview'|trans }}{% endblock %}
+
+{% block main_content %}
+    <div class="in-tab js-tabs">
+        <div class="in-tab__heading">
+            <a href="#"
+               class="in-tab__heading__item js-tabs-button active"
+               data-tab-id="quick"
+            >
+                {{ 'Quick search'|trans }}
+            </a>
+        </div>
+        <div class="in-tab__content">
+            <div class="in-tab__content__in js-tabs-content" data-tab-id="quick">
+                {% include '@ShopsysFramework/Admin/Content/Inquiry/quickSearchFormContent.html.twig' with {quickSearchForm: quickSearchForm} %}
+            </div>
+        </div>
+    </div>
+
+    {{ gridView.render() }}
+{% endblock %}
