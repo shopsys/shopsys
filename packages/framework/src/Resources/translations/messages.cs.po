@@ -2230,8 +2230,8 @@ msgstr "Max. trvání (mm:ss)"
 msgid "Maximal duration from all runs in last seven days"
 msgstr "Maximální trvání všech cronů za posledních sedm dní"
 
-msgid "Maximum weight of products in the cart to apply the price"
-msgstr "Maximální hmotnost produktů v košíku pro uplatnění ceny"
+msgid "Maximum weight of products"
+msgstr "Maximální hmotnost produktů"
 
 msgid "Menu"
 msgstr "Menu"

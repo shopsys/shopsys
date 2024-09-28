@@ -30,11 +30,11 @@
             <div class="display-none">
                 {{ form_label(priceWithLimit.price) }}
             </div>
-            {{ form_widget(priceWithLimit.price, { isSimple: false, symbolAfterInput: currencySymbolByDomainId(domainId)} ) }}
+            {{ form_widget(priceWithLimit.price, { isSimple: false, symbolAfterInput: currencySymbolByDomainId(domainId), attr: { style: 'width: 50%;' } } ) }}
             {{ form_errors(priceWithLimit.price, { errors_attr: { class: 'table-limits__cell__error' } } ) }}
         </td>
         <td class="table-form__cell table-form__cell--del-before">
-            {{ form_widget(priceWithLimit.maxWeight, { isSimple: false, symbolAfterInput: 'g'|trans } ) }}
+            {{ form_widget(priceWithLimit.maxWeight, { isSimple: false, symbolAfterInput: 'g'|trans, attr: { style: 'width: 50%;' } } ) }}
             {{ form_errors(priceWithLimit.maxWeight, { errors_attr: { class: 'table-limits__cell__error' } } ) }}
         </td>
         <td class="table-form__cell table-form__cell--del-before">
@@ -61,7 +61,7 @@
             <tr class="table-form__row">
                 <th class="table-form__cell table-form__cell--del-before table-form__cell--label">{{ inputPriceLabel() }}</th>
                 <th class="table-form__cell table-form__cell--del-before table-form__cell--label">
-                    {{ 'Maximum weight of products in the cart to apply the price'|trans }}
+                    {{ 'Maximum weight of products'|trans }}
                     <span title="{{ 'Keep empty if you do not want to limit the price by products\' weight'|trans }}"
                           class="js-tooltip cursor-help in-icon in-icon--info" data-toggle="tooltip" data-placement="top"
                     >

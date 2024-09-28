@@ -2230,7 +2230,7 @@ msgstr ""
 msgid "Maximal duration from all runs in last seven days"
 msgstr ""
 
-msgid "Maximum weight of products in the cart to apply the price"
+msgid "Maximum weight of products"
 msgstr ""
 
 msgid "Menu"
