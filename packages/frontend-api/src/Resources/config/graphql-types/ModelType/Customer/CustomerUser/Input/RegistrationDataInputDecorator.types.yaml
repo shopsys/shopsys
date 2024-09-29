@@ -1,30 +1,17 @@
 RegistrationDataInputDecorator:
     type: input-object
     decorator: true
+    inherits:
+        - 'NameInputObjectDecorator'
+        - 'TelephoneInputObjectDecorator'
+        - 'BillingAddressInputObjectDecorator'
+        - 'CompanyInputObjectDecorator'
     config:
         description: "Represents the main input object to register customer user"
         fields:
-            firstName:
-                type: "String!"
-                description: "Customer user first name"
-                validation:
-                    -   NotBlank:
-                            message: "Please enter first name"
-                    -   Length:
-                            max: 100
-                            maxMessage: "First name cannot be longer than {{ limit }} characters"
-            lastName:
-                type: "String!"
-                description: "Customer user last name"
-                validation:
-                    -   NotBlank:
-                            message: "Please enter last name"
-                    -   Length:
-                            max: 100
-                            maxMessage: "Last name cannot be longer than {{ limit }} characters"
             email:
                 type: "String!"
-                description: "Customer user email."
+                description: "The customer's email address"
                 validation:
                     -   NotBlank:
                             message: "Please enter email"
@@ -37,13 +24,24 @@ RegistrationDataInputDecorator:
                             message: "This email is already registered"
             password:
                 type: "Password!"
-                description: "Customer user password."
+                description: "Customer user password"
                 validation:
                     -   NotBlank:
-                            message: "Please enter password"
+                            message: "Please enter new password"
                     -   Length:
                             min: 6
                             minMessage: "Password must be at least {{ limit }} characters long"
+            newsletterSubscription:
+                type: "Boolean!"
+                description: "Whether customer user should receive newsletters or not"
+            cartUuid:
+                type: "Uuid"
+                description: "Uuid of the cart that should be merged to the cart of the newly registered user"
+                defaultValue: null
+            lastOrderUuid:
+                type: "Uuid"
+                description: "Uuid of the last order that should be paired with the newly registered user"
+                defaultValue: null
             productListsUuids:
                 type: "[Uuid!]!"
                 description: "Uuids of product lists that should be merged to the product lists of the user after registration"
