@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Slider;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 
 /**
@@ -37,12 +38,14 @@ class SliderItem implements OrderableEntityInterface
 
     /**
      * @var int
+     * @Gedmo\SortableGroup
      * @ORM\Column(type="integer")
      */
     protected $domainId;
 
     /**
      * @var int|null
+     * @Gedmo\SortablePosition
      * @ORM\Column(type="integer", nullable=true)
      */
     protected $position;
