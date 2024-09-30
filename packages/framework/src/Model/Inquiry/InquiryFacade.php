@@ -24,6 +24,15 @@ class InquiryFacade
     }
 
     /**
+     * @param int $id
+     * @return \Shopsys\FrameworkBundle\Model\Inquiry\Inquiry
+     */
+    public function getById(int $id): Inquiry
+    {
+        return $this->inquiryRepository->getById($id);
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Inquiry\InquiryData $inquiryData
      * @return \Shopsys\FrameworkBundle\Model\Inquiry\Inquiry
      */

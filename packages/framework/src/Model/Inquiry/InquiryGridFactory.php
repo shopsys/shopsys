@@ -47,6 +47,7 @@ class InquiryGridFactory
         $grid->addColumn('company', 'company', t('Company (Company number)'), true);
         $grid->addColumn('createdAt', 'i.createdAt', t('Created'), true);
 
+        $grid->addActionColumn('file-all', t('Show detail'), 'admin_inquiry_detail', ['id' => 'i.id']);
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Inquiry/listGrid.html.twig');
 

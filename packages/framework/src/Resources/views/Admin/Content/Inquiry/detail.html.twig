@@ -1,0 +1,89 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Inquiry by'|trans }} {{ inquiry.email }}{% endblock %}
+{% block h1 %}{{ 'Inquiry by'|trans }} {{ inquiry.email }}{% endblock %}
+
+{% block main_content %}
+    <div class="form-group">
+        <div class="form-group__title">{{ 'Customer detail'|trans }}</div>
+        <div class="form-group__content">
+            <table class="table-main">
+                <tr>
+                    <th>{{ 'First name'|trans }}</th>
+                    <td>{{ inquiry.firstName }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'Last name'|trans }}</th>
+                    <td>{{ inquiry.lastName }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'Email'|trans }}</th>
+                    <td>{{ inquiry.email }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'Telephone'|trans }}</th>
+                    <td>{{ inquiry.telephone }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'Company name'|trans }}</th>
+                    <td>{{ inquiry.companyName ?: '-' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'Company number'|trans }}</th>
+                    <td>{{ inquiry.companyNumber ?: '-' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'Company Tax number'|trans }}</th>
+                    <td>{{ inquiry.companyTaxNumber ?: '-' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'Created'|trans }}</th>
+                    <td>{{ inquiry.createdAt|formatDateTime }}</td>
+                </tr>
+                <tr>
+                    <th colspan="2">{{ 'Note'|trans }}</th>
+                </tr>
+                <tr>
+                    <td colspan="2">{{ inquiry.note }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="form-group__title">{{ 'Inquired product'|trans }}</div>
+        <div class="form-group__content">
+            <table class="table-main">
+                <tr>
+                    {% if inquiry.product is not null %}
+                        <td>
+                            {{ image(inquiry.product, { height: 100, type: null }) }}
+                        </td>
+                        <td>
+                            <a href="{{ url('admin_product_edit', { id: inquiry.product.id }) }}">{{ inquiry.product.name }}</a>
+                        </td>
+                        <td>
+                            {{ 'Catalog number'|trans }}: <strong>{{ inquiry.product.catnum }}</strong>
+                        </td>
+                        <td>
+                            {{ inquiry.product.shortDescription(getDomain().id) }}
+                        </td>
+                    {% else %}
+                        <td>
+                            {{ 'Catalog number'|trans }}: <strong>{{ inquiry.productCatnum }}</strong>
+                        </td>
+                        <td>
+                            {{ 'Product associated with this inquiry is no longer available in the catalog.'|trans }}
+                        </td>
+                    {% endif %}
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
+        {% block fixed_bar_content %}
+            <a href="{{ url('admin_inquiry_list') }}" class="btn-link-style">{{ 'Back to overview'|trans }}</a>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

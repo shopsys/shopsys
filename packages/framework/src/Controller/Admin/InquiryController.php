@@ -47,4 +47,18 @@ class InquiryController extends AdminBaseController
             'quickSearchForm' => $quickSearchForm->createView(),
         ]);
     }
+
+    /**
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    #[Route(path: '/inquiry/detail/{id}', requirements: ['id' => '\d+'])]
+    public function detailAction(int $id): Response
+    {
+        $inquiry = $this->inquiryFacade->getById($id);
+
+        return $this->render('@ShopsysFramework/Admin/Content/Inquiry/detail.html.twig', [
+            'inquiry' => $inquiry,
+        ]);
+    }
 }

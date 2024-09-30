@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Model\Inquiry\Exception\InquiryNotFoundException;
 
 class InquiryRepository
 {
@@ -25,6 +26,21 @@ class InquiryRepository
     protected function getInquiryRepository(): EntityRepository
     {
         return $this->em->getRepository(Inquiry::class);
+    }
+
+    /**
+     * @param int $id
+     * @return \Shopsys\FrameworkBundle\Model\Inquiry\Inquiry
+     */
+    public function getById(int $id): Inquiry
+    {
+        $inquiry = $this->getInquiryRepository()->find($id);
+
+        if ($inquiry === null) {
+            throw new InquiryNotFoundException();
+        }
+
+        return $inquiry;
     }
 
     /**
