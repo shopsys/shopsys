@@ -24,10 +24,10 @@
                             placeholder: 'Search by name...'|trans
                         }
                     }) }}
-                    <i class="svg svg-info cursor-help js-tooltip box-quick-search__icon in-icon in-icon--info"
+                    <i class="svg cursor-help js-tooltip box-quick-search__icon in-icon in-icon--info"
                        data-toggle="tooltip" data-placement="top"
                        title="{{ 'Searching searches in name. It is possible to use wildcards * and ?.'|trans }}"
-                    ></i>
+                    >{{ icon('info-circle-fill') }}</i>
                 </div>
                 {{ form_widget(quickSearchForm.submit, { attr: { class : 'box-quick-search__btn' }, label: 'Search [verb]'|trans, full_name: ''}) }}
             </div>

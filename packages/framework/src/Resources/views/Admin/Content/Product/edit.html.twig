@@ -12,15 +12,15 @@
 {% block product_visibilities %}
     {% if isMultidomain() %}
         <span class="position-relative js-product-visibility" data-visibility-url="{{ url('admin_product_visibility', {productId: product.id}) }}">
-            <span class="in-product-visibility__title-position js-product-visibility-icon in-icon svg
+            <span class="in-product-visibility__title-position js-product-visibility-icon in-icon svg">
                 {% if isVisibleForDefaultPricingGroupOnEachDomain(product) %}
-                    svg-visible in-icon--visible
+                    {{ icon('eye-fill', {class: 'in-icon--visible'}) }}
                 {% elseif isVisibleForDefaultPricingGroupOnSomeDomain(product) %}
-                    svg-visible in-icon--partially-visible
+                    {{ icon('eye-fill', {class: 'in-icon--partially-visible'}) }}
                 {% else %}
-                    svg-invisible in-icon--invisible
-                {% endif %}"
-            ></span>
+                    {{ icon('eye-slash', {class: 'in-icon--invisible'}) }}
+                {% endif %}
+            </span>
             <span class="js-product-visibility-box position-relative">
                 <span class="in-product-visibility in-product-visibility--down js-product-visibility-box-window display-none"></span>
             </span>
@@ -28,10 +28,10 @@
     {% else %}
         {% if isVisibleForDefaultPricingGroupOnEachDomain(product) %}
             <a href="{{ findUrlByDomainId('front_product_detail', { id: product.id }, getDomain().id) }}">
-                <span class="in-icon svg svg-visible in-icon--visible"></span>
+                {{ icon('eye-fill', {class: 'in-icon--visible'}) }}
             </a>
         {% else %}
-            <span class="in-icon svg svg-invisible in-icon--invisible"></span>
+            {{ icon('eye-slash', {class: 'in-icon--invisible'}) }}
         {% endif %}
     {% endif %}
 {% endblock %}

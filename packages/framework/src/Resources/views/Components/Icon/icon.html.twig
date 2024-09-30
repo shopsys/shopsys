@@ -1,8 +1,8 @@
 {% if type == 'svg-font' %}
-    <i class="svg svg-{{ name }}{% if attr.class is not null %} {{ attr.class|trim }}{% endif %}"
-        {% if attr.title is not null %}title="{{ attr.title }}"{% endif %}
-        {% for key, value in attr.data %}
-            data-{{ key }}="{{ value }}"
-        {% endfor %}
-        ></i>
+    <i class="svg bi-{{ name}} {% if attr.class is not null %} {{ attr.class|trim }}{% endif %}"
+       {% if attr.title is not null %}title="{{ attr.title }}"{% endif %}
+            {% for key, value in attr.data %}
+                data-{{ key }}="{{ value }}"
+            {% endfor %}
+    ></i>
 {% endif %}

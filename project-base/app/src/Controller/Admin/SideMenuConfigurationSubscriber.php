@@ -125,7 +125,7 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     protected function createIntegrationsMenu(ConfigureMenuEvent $event): ItemInterface
     {
         $integrationsMenu = $event->getMenuFactory()->createItem('integrations', ['label' => t('Integrations')]);
-        $integrationsMenu->setExtra('icon', 'gear');
+        $integrationsMenu->setExtra('icon', 'plugin');
 
         $integrationsMenu->addChild('feeds', ['route' => 'admin_feed_list', 'label' => t('XML Feeds')]);
 

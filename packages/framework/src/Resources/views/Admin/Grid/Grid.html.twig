@@ -182,7 +182,7 @@
                         </div>
                     </div>
                     <span class="js-inline-edit-saving">
-                        <span class="svg svg-gear in-icon in-icon--spinner"></span>
+                        <span class="in-icon in-icon--spinner">{{ icon('gear') }}</span>
                     </span>
                 {% else %}
                     {% if grid.inlineEdit %}
@@ -204,16 +204,16 @@
 
 {% block grid_action_cell %}
     {% if actionColumn.type == 'edit' %}
-        {% set icon = 'pencil' %}
+        {% set icon = 'pencil-square' %}
     {% elseif actionColumn.type == 'delete' %}
-        {% set icon = 'trash' %}
+        {% set icon = 'trash-fill' %}
     {% elseif actionColumn.type == 'resetPassword' %}
-        {% set icon = 'letter' %}
+        {% set icon = 'envelope-arrow-up-fill' %}
     {% else %}
         {% set icon = actionColumn.type %}
     {% endif %}
     <a
-        class="in-icon in-icon--{{ actionColumn.type }} svg svg-{{ icon }} table-action{% if actionColumn.classAttribute %} {{ actionColumn.classAttribute }}{% endif %}{% if actionColumn.ajaxConfirm %} js-ajax-confirm{% endif %}"
+        class="in-icon in-icon--{{ actionColumn.type }} table-action{% if actionColumn.classAttribute %} {{ actionColumn.classAttribute }}{% endif %}{% if actionColumn.ajaxConfirm %} js-ajax-confirm{% endif %}"
         {% if actionColumn.ajaxConfirm %}
             data-ajax-confirm-on-open="true"
         {% endif %}
@@ -224,7 +224,7 @@
             data-confirm-message="{{ actionColumn.confirmMessage }}"
             data-confirm-contiue-url="{{ actionColumn.targetUrl(row) }}"
         {%- endif %}
-    ></a>
+    >{{ icon(icon) }}</a>
 {% endblock %}
 
 {% block grid_pager_totalcount %}

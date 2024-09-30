@@ -2,7 +2,7 @@
     {% for item in knp_menu_get_breadcrumbs_array(knp_menu_get_current_item('admin_side_menu')) %}
         {% if item.item.name == 'root' %}
             <a href="{{ url('admin_default_dashboard') }}" class="in-breadcrumb__item in-breadcrumb__item--home">
-                <i class="svg svg-house"></i>
+                {{ icon('house-fill') }}
             </a>
         {% elseif loop.last %}
             <span class="in-breadcrumb__item in-breadcrumb__item--actual">{{ breadcrumbOverrider.lastItemOverridden ? breadcrumbOverrider.lastItemLabel : item.label }}</span>

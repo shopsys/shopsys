@@ -49,7 +49,7 @@
             {% if item.name == 'root' %}
                 <li class="side-menu__item side-menu__item--collapse js-side-menu-collapse-button">
                     <span title="{{ 'Collapse menu'|trans }}" class="side-menu__item__link">
-                        <i class="svg svg-arrow-left"></i><span class="side-menu__item__text">{{ 'Collapse menu'|trans }}</span>
+                        {{ icon('arrow-left-circle') }}<span class="side-menu__item__text">{{ 'Collapse menu'|trans }}</span>
                     </span>
                 </li>
             {% endif %}
@@ -93,7 +93,7 @@
         {%- if superadmin %}
             {%- set classes = classes|merge([classes[0] ~ '--superadmin']) -%}
         {%- endif -%}
-        {%- set icon = item.extra('icon')|default(item.level > 2 ? 'arrow-strong' : '') -%}
+        {%- set icon = item.extra('icon')|default(item.level > 2 ? 'chevron-right' : '') -%}
         <li{{ self.attributes(item.attributes, classes) }}>
             {%- if item.uri is not empty and (not matcher.isCurrent(item) or options.currentAsLink) -%}
                 {{ block('linkElement') }}
@@ -117,8 +117,8 @@
 {% endblock %}
 
 {% block label %}
-    {%- if icon is not null -%}
-        <i class="svg svg-{{ icon }}"></i>
+    {%- if icon -%}
+        {{ icon(icon) }}
     {%- endif -%}
     {%- set class = item.level == 1 ? 'side-menu__item__text' : 'side-menu__submenu__item__text' -%}
     <span{{ self.attributes(item.labelAttributes, [class]) }}>

@@ -40,6 +40,7 @@ import Translator from 'bazinga-translator';
 
             // Now we're going to wrap that input field with a Bootstrap button.
             // The input will actually still be there, it will just be float above and transparent (done with the CSS).
+            // @todo what about icons in js files?
             $elem.wrap('<a class="js-fileInputWrapper btn ' + className + '"></a>').parent().prepend($('<span></span>').html(buttonWord)).prepend($('<i class="svg svg-folder btn__icon"></i>'));
         })
 

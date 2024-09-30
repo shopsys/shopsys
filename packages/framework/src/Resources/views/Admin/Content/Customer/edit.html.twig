@@ -5,7 +5,7 @@
     {{ 'Editing customer'|trans }} - {{ customerUser.fullName }}
     {% if ssoLoginAsUserUrl is not null %}
         <a href="{{ ssoLoginAsUserUrl }}" target="_blank" class="btn-link-style btn-link-style--iconic-l">
-            <i class="svg svg-forward-page"></i>
+            {{ icon('box-arrow-up-right') }}
             <span>
                 {{ 'Log in as user'|trans }}
             </span>
