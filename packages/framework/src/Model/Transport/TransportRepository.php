@@ -170,12 +170,26 @@ class TransportRepository
 
         if ($totalWeight !== null) {
             $queryBuilder
-                ->andWhere('t.maxWeight IS NULL OR t.maxWeight >= :maxWeight')
+                ->join('t.prices', 'tp', Join::WITH, 'tp.domainId = :domainId')
+                ->andWhere('tp.maxWeight IS NULL OR tp.maxWeight >= :maxWeight')
                 ->setParameter('maxWeight', $totalWeight);
         }
 
         return $queryBuilder
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
+     */
+    public function deleteAllPricesByTransport(Transport $transport): void
+    {
+        $this->em->createQueryBuilder()
+            ->delete(TransportPrice::class, 'tp')
+            ->where('tp.transport = :transport')
+            ->setParameter('transport', $transport)
+            ->getQuery()
+            ->execute();
     }
 }

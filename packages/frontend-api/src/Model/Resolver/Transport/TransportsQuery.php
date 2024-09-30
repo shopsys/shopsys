@@ -41,6 +41,6 @@ class TransportsQuery extends AbstractQuery
             return $this->transportFacade->getVisibleOnCurrentDomainWithEagerLoadedDomainsAndTranslations();
         }
 
-        return $this->transportFacade->getVisibleOnCurrentDomainWithEagerLoadedDomainsAndTranslations($cart->getTotalWeight());
+        return $this->transportFacade->getVisibleOnCurrentDomainWithEagerLoadedDomainsAndTranslations($cart);
     }
 }

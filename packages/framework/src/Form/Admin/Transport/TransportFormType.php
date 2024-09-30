@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\Transport;
 
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DisplayVariablesType;
 use Shopsys\FrameworkBundle\Form\DomainsType;
@@ -13,7 +16,7 @@ use Shopsys\FrameworkBundle\Form\FormRenderingConfigurationExtension;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
-use Shopsys\FrameworkBundle\Form\PriceAndVatTableByDomainsType;
+use Shopsys\FrameworkBundle\Form\TransportInputPricesType;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
@@ -22,7 +25,6 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportTypeEnum;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -31,6 +33,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class TransportFormType extends AbstractType
 {
@@ -38,11 +41,13 @@ class TransportFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportTypeEnum $transportTypeEnum
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         private readonly PaymentFacade $paymentFacade,
         private readonly TransportFacade $transportFacade,
-        protected readonly TransportTypeEnum $transportTypeEnum,
+        private readonly TransportTypeEnum $transportTypeEnum,
+        private readonly Domain $domain,
     ) {
     }
 
@@ -117,20 +122,27 @@ class TransportFormType extends AbstractType
                     ]),
                 ],
                 'label' => t('Days until delivery'),
-            ])
-            ->add('maxWeight', IntegerType::class, [
-                'label' => t('Maximum weight (g)'),
-                'required' => false,
             ]);
 
         $builderPricesGroup = $builder->create('prices', GroupType::class, [
             'label' => t('Prices'),
         ]);
 
-        $builderPricesGroup->add('pricesByDomains', PriceAndVatTableByDomainsType::class, [
-            'pricesIndexedByDomainId' => $this->transportFacade->getPricesIndexedByDomainId($transport),
-            'inherit_data' => true,
-            'render_form_row' => false,
+        $optionsByDomainId = [];
+
+        $pricesIndexedByTransportPriceId = $transport instanceof Transport ? $this->transportFacade->getPricesIndexedByTransportPriceId($transport) : [];
+
+        foreach ($this->domain->getAllIds() as $domainId) {
+            $optionsByDomainId[$domainId] = [
+                'domain_id' => $domainId,
+                'current_transport_prices_indexed_by_id' => $pricesIndexedByTransportPriceId,
+            ];
+        }
+
+        $builderPricesGroup->add('inputPricesByDomain', MultidomainType::class, [
+            'label' => false,
+            'entry_type' => TransportInputPricesType::class,
+            'options_by_domain_id' => $optionsByDomainId,
         ]);
 
         $builderAdditionalInformationGroup = $builder->create('additionalInformation', GroupType::class, [
@@ -235,6 +247,43 @@ class TransportFormType extends AbstractType
             ->setDefaults([
                 'data_class' => TransportData::class,
                 'attr' => ['novalidate' => 'novalidate'],
+                'constraints' => [
+                    new Constraints\Callback([$this, 'validateTransportPricesOnDomain']),
+                ],
             ]);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportData $transportData
+     * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
+     */
+    public function validateTransportPricesOnDomain(
+        TransportData $transportData,
+        ExecutionContextInterface $context,
+    ): void {
+        foreach ($transportData->inputPricesByDomain as $domainId => $pricesData) {
+            $weightLimits = [];
+
+            if ($pricesData->pricesWithLimits === []) {
+                $context
+                    ->buildViolation(t('Please enter at least one price', [], Translator::VALIDATOR_TRANSLATION_DOMAIN))
+                    ->atPath(sprintf('inputPricesByDomain[%d].pricesWithLimits', $domainId))
+                    ->addViolation();
+            }
+
+            foreach ($pricesData->pricesWithLimits as $priceData) {
+                if ($priceData === null) {
+                    continue;
+                }
+
+                if (in_array($priceData->maxWeight, $weightLimits, true)) {
+                    $context
+                        ->buildViolation(t('Please use each limit only once', [], Translator::VALIDATOR_TRANSLATION_DOMAIN))
+                        ->atPath(sprintf('inputPricesByDomain[%d].pricesWithLimits', $domainId))
+                        ->addViolation();
+                }
+                $weightLimits[] = $priceData->maxWeight;
+            }
+        }
     }
 }

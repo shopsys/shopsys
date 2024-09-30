@@ -37,6 +37,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
+use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -64,6 +65,7 @@ class ProductFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginDataFormExtensionFacade
      * @param \Shopsys\FrameworkBundle\Form\Transformers\ProductParameterValueToProductParameterValuesLocalizedTransformer $productParameterValueToProductParameterValuesLocalizedTransformer
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      */
     public function __construct(
         private readonly BrandFacade $brandFacade,
@@ -76,6 +78,7 @@ class ProductFormType extends AbstractType
         private readonly PluginCrudExtensionFacade $pluginDataFormExtensionFacade,
         private readonly ProductParameterValueToProductParameterValuesLocalizedTransformer $productParameterValueToProductParameterValuesLocalizedTransformer,
         private readonly ProductFacade $productFacade,
+        private readonly TransportFacade $transportFacade,
     ) {
     }
 
@@ -229,6 +232,14 @@ class ProductFormType extends AbstractType
             ->add('weight', IntegerType::class, [
                 'label' => t('Weight (g)'),
                 'required' => false,
+            ])
+            ->add('excludedTransports', ChoiceType::class, [
+                'required' => false,
+                'choices' => $this->transportFacade->getAll(),
+                'choice_label' => 'name',
+                'multiple' => true,
+                'expanded' => false,
+                'label' => t('Excluded transports'),
             ]);
 
         return $builderBasicInformationGroup;

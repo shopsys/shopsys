@@ -12,11 +12,14 @@ use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportPriceNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 
 class AddTransportMiddleware implements OrderProcessorMiddlewareInterface
 {
+    public const string ADDITIONAL_DATA_CART_TOTAL_WEIGHT = 'cartTotalWeight';
+
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
@@ -45,15 +48,20 @@ class AddTransportMiddleware implements OrderProcessorMiddlewareInterface
         }
 
         $domainId = $orderProcessingData->getDomainId();
-        $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
 
-        $transportPrice = $this->transportPriceCalculation->calculatePrice(
-            $transport,
-            $currency,
-            $orderProcessingData->orderData->getProductsTotalPriceAfterAppliedDiscounts(),
-            $domainId,
-        );
+        /** @var int $cartTotalWeight */
+        $cartTotalWeight = $orderProcessingData->orderInput->findAdditionalData(static::ADDITIONAL_DATA_CART_TOTAL_WEIGHT) ?? 0;
 
+        try {
+            $transportPrice = $this->transportPriceCalculation->calculatePrice(
+                $transport,
+                $orderProcessingData->orderData->getProductsTotalPriceAfterAppliedDiscounts(),
+                $domainId,
+                $cartTotalWeight,
+            );
+        } catch (TransportPriceNotFoundException) {
+            return $orderProcessingStack->processNext($orderProcessingData);
+        }
 
         $orderData = $orderProcessingData->orderData;
 

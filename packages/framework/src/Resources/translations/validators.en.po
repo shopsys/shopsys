@@ -229,6 +229,9 @@ msgstr ""
 msgid "Please enter at least one discount limit"
 msgstr ""
 
+msgid "Please enter at least one price"
+msgstr ""
+
 msgid "Please enter city"
 msgstr ""
 
@@ -428,6 +431,9 @@ msgid "Please enter whole number."
 msgstr ""
 
 msgid "Please enter zip code"
+msgstr ""
+
+msgid "Please use each limit only once"
 msgstr ""
 
 msgid "Previously selected main URL dos not exist any more"

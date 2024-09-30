@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Transport;
 
+use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Payment\IndependentPaymentVisibilityCalculation;
@@ -34,9 +35,12 @@ class TransportVisibilityCalculationTest extends TestCase
         $independentPaymentVisibilityCalculationMock = $this
             ->createMock(IndependentPaymentVisibilityCalculation::class);
 
+        $entityManagerMock = $this->createMock(EntityManagerInterface::class);
+
         $transportVisibilityCalculation = new TransportVisibilityCalculation(
             $independentTransportVisibilityCalculationMock,
             $independentPaymentVisibilityCalculationMock,
+            $entityManagerMock,
         );
 
         $this->assertFalse($transportVisibilityCalculation->isVisible($transportMock, [], $domainId));
@@ -72,9 +76,12 @@ class TransportVisibilityCalculationTest extends TestCase
             ->with($this->equalTo($paymentMock), $this->equalTo($domainId))
             ->willReturn(false);
 
+        $entityManagerMock = $this->createMock(EntityManagerInterface::class);
+
         $transportVisibilityCalculation = new TransportVisibilityCalculation(
             $independentTransportVisibilityCalculationMock,
             $independentPaymentVisibilityCalculationMock,
+            $entityManagerMock,
         );
 
         $this->assertFalse($transportVisibilityCalculation->isVisible($transportMock, [$paymentMock], $domainId));
@@ -114,9 +121,12 @@ class TransportVisibilityCalculationTest extends TestCase
             ->with($this->equalTo($paymentMock), $this->equalTo($domainId))
             ->willReturn(true);
 
+        $entityManagerMock = $this->createMock(EntityManagerInterface::class);
+
         $transportVisibilityCalculation = new TransportVisibilityCalculation(
             $independentTransportVisibilityCalculationMock,
             $independentPaymentVisibilityCalculationMock,
+            $entityManagerMock,
         );
 
         $this->assertFalse($transportVisibilityCalculation->isVisible($transportMock, [$paymentMock], $domainId));
@@ -156,9 +166,12 @@ class TransportVisibilityCalculationTest extends TestCase
             ->with($this->equalTo($paymentMock), $this->equalTo($domainId))
             ->willReturn(true);
 
+        $entityManagerMock = $this->createMock(EntityManagerInterface::class);
+
         $transportVisibilityCalculation = new TransportVisibilityCalculation(
             $independentTransportVisibilityCalculationMock,
             $independentPaymentVisibilityCalculationMock,
+            $entityManagerMock,
         );
 
         $this->assertTrue($transportVisibilityCalculation->isVisible($transportMock, [$paymentMock], $domainId));
@@ -199,9 +212,12 @@ class TransportVisibilityCalculationTest extends TestCase
             ->with($this->equalTo($paymentMock), $this->equalTo($domainId))
             ->willReturn(true);
 
+        $entityManagerMock = $this->createMock(EntityManagerInterface::class);
+
         $transportVisibilityCalculation = new TransportVisibilityCalculation(
             $independentTransportVisibilityCalculationMock,
             $independentPaymentVisibilityCalculationMock,
+            $entityManagerMock,
         );
 
         $transports = [$transportHiddenMock, $transportVisibleMock];

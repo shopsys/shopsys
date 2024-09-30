@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
  * @property \App\Model\Product\Product[] $accessories
  * @property \Shopsys\FrameworkBundle\Model\Product\Unit\Unit|null $unit
  * @property \App\Model\Product\Flag\Flag[][]|null[][] $flagsByDomainId
+ * @property \App\Model\Transport\Transport[] $excludedTransports
  */
 class ProductData extends BaseProductData
 {

@@ -183,6 +183,7 @@ class ProductDataFactory
         $productData->pluginData = $this->pluginDataFormExtensionFacade->getAllData('product', $product->getId());
         $productData->weight = $product->getWeight();
         $productData->files = $this->uploadedFileDataFactory->createByEntity($product);
+        $productData->excludedTransports = $product->getExcludedTransports();
 
         $this->fillProductStockByProduct($productData, $product);
     }

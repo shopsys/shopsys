@@ -76,7 +76,6 @@ class OrderItemsType extends AbstractType
 
         $view->vars['order'] = $order;
         $view->vars['transportPricesWithVatByTransportId'] = $this->transportFacade->getTransportPricesWithVatByCurrencyAndDomainIdIndexedByTransportId(
-            $order->getCurrency(),
             $order->getDomainId(),
         );
         $view->vars['transportVatPercentsByTransportId'] = $this->transportFacade->getTransportVatPercentsByDomainIdIndexedByTransportId(

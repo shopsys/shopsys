@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
+use Shopsys\FrameworkBundle\Model\Transport\TransportInputPricesDataFactory;
 use Shopsys\FrameworkBundle\Model\Transport\TransportTypeEnum;
 
 class TransportDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
@@ -32,11 +33,13 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
      * @param \App\Model\Transport\TransportFacade $transportFacade
      * @param \App\Model\Transport\TransportDataFactory $transportDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportInputPricesDataFactory $transportInputPricesDataFactory
      */
     public function __construct(
         private readonly TransportFacade $transportFacade,
         private readonly TransportDataFactory $transportDataFactory,
         private readonly PriceConverter $priceConverter,
+        private readonly TransportInputPricesDataFactory $transportInputPricesDataFactory,
     ) {
     }
 
@@ -47,7 +50,6 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     {
         $transportData = $this->transportDataFactory->create();
         $transportData->daysUntilDelivery = 5;
-        $transportData->maxWeight = 5000;
         $transportData->trackingUrl = 'https://www.postaonline.cz/trackandtrace/-/zasilka/cislo?parcelNumbers={tracking_number}';
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
@@ -57,7 +59,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
             $transportData->instructions[$locale] = t('the Czech Post will try to deliver your parcel on time, but it will not succeed and despite the constant presence of your person at home, it will not catch you and you will have to pick up the parcel personally at the counter. Here, however, you have to endure an endlessly long line and an eternally grumpy lady postman.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        $this->setPriceForAllDomains($transportData, Money::create('99.95'));
+        $this->setPriceForAllDomains($transportData, Money::create('99.95'), 5000);
         $this->createTransport(self::TRANSPORT_CZECH_POST, $transportData);
 
         $transportData = $this->transportDataFactory->create();
@@ -136,8 +138,9 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
     /**
      * @param \App\Model\Transport\TransportData $transportData
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
+     * @param int|null $maxWeight
      */
-    private function setPriceForAllDomains(TransportData $transportData, Money $price): void
+    private function setPriceForAllDomains(TransportData $transportData, Money $price, ?int $maxWeight = null): void
     {
         $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
 
@@ -151,8 +154,21 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
                 $domainId,
             );
 
-            $transportData->vatsIndexedByDomainId[$domainId] = $vat;
-            $transportData->pricesIndexedByDomainId[$domainId] = $convertedPrice;
+            $transportInputPricesData = $this->transportInputPricesDataFactory->create($domainId);
+            $transportInputPricesData->vat = $vat;
+            $priceWithLimitData = $this->transportInputPricesDataFactory->createPriceWithLimitDataInstance();
+            $priceWithLimitData->price = $convertedPrice;
+            $priceWithLimitData->maxWeight = $maxWeight;
+            $transportInputPricesData->pricesWithLimits = [$priceWithLimitData];
+
+            if ($maxWeight !== null) {
+                $priceWithLimitData2 = $this->transportInputPricesDataFactory->createPriceWithLimitDataInstance();
+                $priceWithLimitData2->price = $convertedPrice->multiply(2);
+                $priceWithLimitData2->maxWeight = $maxWeight * 2;
+                $transportInputPricesData->pricesWithLimits[] = $priceWithLimitData2;
+            }
+
+            $transportData->inputPricesByDomain[$domainId] = $transportInputPricesData;
         }
     }
 

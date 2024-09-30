@@ -7,6 +7,7 @@ namespace Tests\FrameworkBundle\Unit\Model\Order\Processing\OrderProcessorMiddle
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\PersonalPickupPointMiddleware;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Shopsys\FrameworkBundle\Model\Store\StoreData;
@@ -40,9 +41,7 @@ class PersonalPickupPointMiddlewareTest extends MiddlewareTestCase
         $orderProcessingData->orderInput->setTransport($transport);
         $orderProcessingData->orderInput->addAdditionalData(PersonalPickupPointMiddleware::ADDITIONAL_DATA_PICKUP_PLACE_IDENTIFIER, $expectedPersonalPickupPoint);
 
-        $transportData = new OrderItemData();
-        $transportData->type = OrderItemTypeEnum::TYPE_TRANSPORT;
-        $orderProcessingData->orderData->items[] = $transportData;
+        $this->addTransportItemToOrderProcessingData($transport, $orderProcessingData);
 
         $city = 'city';
         $street = 'street';
@@ -81,6 +80,9 @@ class PersonalPickupPointMiddlewareTest extends MiddlewareTestCase
         $transport->method('isPersonalPickup')->willReturn(false);
 
         $orderProcessingData->orderInput->setTransport($transport);
+
+        $this->addTransportItemToOrderProcessingData($transport, $orderProcessingData);
+
         $orderProcessingData->orderInput->addAdditionalData(PersonalPickupPointMiddleware::ADDITIONAL_DATA_PICKUP_PLACE_IDENTIFIER, $expectedPersonalPickupPoint);
 
         $personalPickupPointMiddleware = $this->createPersonalPickupPointMiddleware();
@@ -122,5 +124,20 @@ class PersonalPickupPointMiddlewareTest extends MiddlewareTestCase
         }
 
         return new PersonalPickupPointMiddleware($storeFacadeMock);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
+     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData $orderProcessingData
+     */
+    private function addTransportItemToOrderProcessingData(
+        Transport $transport,
+        OrderProcessingData $orderProcessingData,
+    ): void {
+        $transportData = new OrderItemData();
+        $transportData->type = OrderItemTypeEnum::TYPE_TRANSPORT;
+        $transportData->transport = $transport;
+
+        $orderProcessingData->orderData->items[] = $transportData;
     }
 }

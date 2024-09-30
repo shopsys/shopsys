@@ -100,6 +100,9 @@ msgstr "Přidat další předpis e-mailový whitelist"
 msgid "Add another parameter"
 msgstr "Přidat další parametr"
 
+msgid "Add another price with weight limit"
+msgstr "Přidat další cenu s váhovým limitem"
+
 msgid "Add country"
 msgstr "Přidat stát"
 
@@ -1675,6 +1678,9 @@ msgstr "Vyřazeno z prodeje"
 msgid "Excluded stores"
 msgstr "Vyjmuté prodejny"
 
+msgid "Excluded transports"
+msgstr "Zakázané dopravy"
+
 msgid "Excluding VAT"
 msgstr "Bez DPH"
 
@@ -2053,6 +2059,9 @@ msgstr "Název položky"
 msgid "Items per page:"
 msgstr "Položek na stránku:"
 
+msgid "Keep empty if you do not want to limit the price by products' weight"
+msgstr "Pokud nechcete omezit cenu podle hmotnosti produktů, nechte pole prázdné."
+
 msgid "Language"
 msgstr "Jazyk"
 
@@ -2221,8 +2230,8 @@ msgstr "Max. trvání (mm:ss)"
 msgid "Maximal duration from all runs in last seven days"
 msgstr "Maximální trvání všech cronů za posledních sedm dní"
 
-msgid "Maximum weight (g)"
-msgstr "Maximální hmotnost (g)"
+msgid "Maximum weight of products"
+msgstr "Maximální hmotnost produktů"
 
 msgid "Menu"
 msgstr "Menu"
@@ -4146,6 +4155,9 @@ msgstr "z"
 
 msgid "from \"oldReadableValue\" to \"newReadableValue\""
 msgstr "z \"oldReadableValue\" na \"newReadableValue\""
+
+msgid "g"
+msgstr "g"
 
 msgid "higher or equal"
 msgstr "větší nebo rovno"

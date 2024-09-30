@@ -46,5 +46,43 @@ query GetCart(
             priceWithVat
             vatAmount
         }
+        modifications {
+            itemModifications {
+                noLongerAvailableCartItemsDueToQuantity {
+                    uuid
+                    product {
+                        uuid
+                    }
+                }
+                noLongerListableCartItems {
+                    uuid
+                    product {
+                        uuid
+                    }
+                }
+                cartItemsWithModifiedPrice {
+                    uuid
+                    product {
+                        uuid
+                    }
+                }
+                cartItemsWithChangedQuantity {
+                    uuid
+                    product {
+                        uuid
+                    }
+                }
+            }
+            paymentModifications {
+                paymentPriceChanged
+                paymentUnavailable
+            }
+            transportModifications {
+                transportWeightLimitExceeded
+                transportUnavailable
+                personalPickupStoreUnavailable
+                transportPriceChanged
+            }
+        }
     }
 }

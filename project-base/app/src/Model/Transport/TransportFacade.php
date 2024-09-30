@@ -15,16 +15,17 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportFacade as BaseTransportFaca
  * @method \App\Model\Transport\Transport getById(int $id)
  * @method \App\Model\Transport\Transport[] getVisibleOnCurrentDomain(\App\Model\Payment\Payment[] $visiblePayments)
  * @method \App\Model\Transport\Transport[] getVisibleByDomainId(int $domainId, \App\Model\Payment\Payment[] $visiblePaymentsOnDomain)
- * @method updateTransportPrices(\App\Model\Transport\Transport $transport, \Shopsys\FrameworkBundle\Component\Money\Money[] $pricesIndexedByDomainId)
+ * @method updateTransportPrices(\App\Model\Transport\Transport $transport, \Shopsys\FrameworkBundle\Model\Transport\TransportInputPricesData[] $inputPricesDataIndexedByDomainId)
  * @method \App\Model\Transport\Transport[] getAllIncludingDeleted()
- * @method \Shopsys\FrameworkBundle\Model\Pricing\Price[] getIndependentBasePricesIndexedByDomainId(\App\Model\Transport\Transport $transport)
- * @method \Shopsys\FrameworkBundle\Model\Pricing\Price[] getPricesIndexedByDomainId(\App\Model\Transport\Transport|null $transport)
+ * @method \Shopsys\FrameworkBundle\Model\Pricing\Price[][] getIndependentBasePricesIndexedByDomainId(\App\Model\Transport\Transport $transport)
+ * @method \Shopsys\FrameworkBundle\Model\Pricing\Price[] getPricesIndexedByTransportPriceId(\App\Model\Transport\Transport $transport)
  * @method \App\Model\Transport\Transport getByUuid(string $uuid)
  * @method \App\Model\Transport\Transport getEnabledOnDomainByUuid(string $uuid, int $domainId)
  * @method bool isTransportVisibleAndEnabledOnCurrentDomain(\App\Model\Transport\Transport $transport)
  * @property \App\Model\Payment\PaymentFacade $paymentFacade
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Transport\TransportRepository $transportRepository, \App\Model\Payment\PaymentRepository $paymentRepository, \Shopsys\FrameworkBundle\Model\Transport\TransportVisibilityCalculation $transportVisibilityCalculation, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade, \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation, \Shopsys\FrameworkBundle\Model\Transport\TransportFactoryInterface $transportFactory, \Shopsys\FrameworkBundle\Model\Transport\TransportPriceFactoryInterface $transportPriceFactory, \App\Model\Payment\PaymentFacade $paymentFacade)
- * @method \App\Model\Transport\Transport[] getVisibleOnCurrentDomainWithEagerLoadedDomainsAndTranslations(int|null $totalWeight = null)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Transport\TransportRepository $transportRepository, \App\Model\Payment\PaymentRepository $paymentRepository, \Shopsys\FrameworkBundle\Model\Transport\TransportVisibilityCalculation $transportVisibilityCalculation, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade, \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation, \Shopsys\FrameworkBundle\Model\Transport\TransportFactoryInterface $transportFactory, \Shopsys\FrameworkBundle\Model\Transport\TransportPriceFactory $transportPriceFactory, \App\Model\Payment\PaymentFacade $paymentFacade)
+ * @method \App\Model\Transport\Transport[] getVisibleOnCurrentDomainWithEagerLoadedDomainsAndTranslations(\App\Model\Cart\Cart|null $cart = null)
+ * @method deleteAllPricesByTransport(\App\Model\Transport\Transport $transport)
  */
 class TransportFacade extends BaseTransportFacade
 {

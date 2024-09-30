@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\AddT
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
+use Shopsys\FrameworkBundle\Model\Transport\TransportInputPricesData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 use Tests\FrameworkBundle\Test\IsPriceEqual;
 use Tests\FrameworkBundle\Test\MiddlewareTestCase;
@@ -26,7 +27,9 @@ class AddTransportMiddlewareTest extends MiddlewareTestCase
         $transportData = new TransportData();
         $transportData->name = ['en' => $expectedTransportName];
         $transportData->enabled = [1 => true];
-        $transportData->vatsIndexedByDomainId = [1 => $this->createVat()];
+        $transportInputPricesData = new TransportInputPricesData();
+        $transportInputPricesData->vat = $this->createVat();
+        $transportData->inputPricesByDomain = [1 => $transportInputPricesData];
         $transport = new Transport($transportData);
 
         $orderProcessingData->orderInput->setTransport($transport);

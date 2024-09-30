@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 use Shopsys\FrontendApiBundle\Model\Transport\Exception\InvalidTransportPaymentCombinationException;
 use Shopsys\FrontendApiBundle\Model\Transport\Exception\MissingPickupPlaceIdentifierException;
+use Shopsys\FrontendApiBundle\Model\Transport\Exception\TransportUnavailableForProductsInCartException;
 use Shopsys\FrontendApiBundle\Model\Transport\Exception\TransportWeightLimitExceededException;
 use Shopsys\FrontendApiBundle\Model\Transport\TransportValidationFacade;
 use Symfony\Component\Validator\Constraint;
@@ -58,6 +59,7 @@ class TransportInCartValidator extends ConstraintValidator
             $this->checkTransportPaymentRelation($transport, $value->cartUuid, $constraint);
             $this->checkRequiredPickupPlaceIdentifier($transport, $pickupPlaceIdentifier, $constraint);
             $this->checkPersonalPickupStoreAvailability($transport, $pickupPlaceIdentifier, $constraint);
+            $this->checkTransportAvailabilityForProductsInCart($transport, $value->cartUuid, $constraint);
             $this->checkTransportWeightLimit($transport, $value->cartUuid, $constraint);
         } catch (TransportNotFoundException $exception) {
             $this->context->buildViolation($constraint->unavailableTransportMessage)
@@ -127,6 +129,28 @@ class TransportInCartValidator extends ConstraintValidator
         } catch (TransportWeightLimitExceededException $exception) {
             $this->context->buildViolation($transportInCartConstraint->weightLimitExceededMessage)
                 ->setCode(TransportInCart::WEIGHT_LIMIT_EXCEEDED_ERROR)
+                ->addViolation();
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
+     * @param string|null $cartUuid
+     * @param \Shopsys\FrontendApiBundle\Component\Constraints\TransportInCart $transportInCartConstraint
+     */
+    protected function checkTransportAvailabilityForProductsInCart(
+        Transport $transport,
+        ?string $cartUuid,
+        TransportInCart $transportInCartConstraint,
+    ): void {
+        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+        $cart = $this->cartApiFacade->getCartCreateIfNotExists($customerUser, $cartUuid);
+
+        try {
+            $this->transportValidationFacade->checkTransportAvailabilityForProductsInCart($transport, $cart);
+        } catch (TransportUnavailableForProductsInCartException) {
+            $this->context->buildViolation($transportInCartConstraint->unavailableTransportMessage)
+                ->setCode(TransportInCart::UNAVAILABLE_TRANSPORT_ERROR)
                 ->addViolation();
         }
     }

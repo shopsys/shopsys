@@ -59,3 +59,4 @@ import './StaticConfirmWindow';
 import './Statistics';
 import './SymfonyToolbarSupport';
 import './ToggleMenu';
+import './TransportPriceWithWeightLimitCollection';

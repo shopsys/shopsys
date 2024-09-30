@@ -100,6 +100,9 @@ msgstr ""
 msgid "Add another parameter"
 msgstr ""
 
+msgid "Add another price with weight limit"
+msgstr ""
+
 msgid "Add country"
 msgstr ""
 
@@ -1675,6 +1678,9 @@ msgstr ""
 msgid "Excluded stores"
 msgstr ""
 
+msgid "Excluded transports"
+msgstr ""
+
 msgid "Excluding VAT"
 msgstr ""
 
@@ -2053,6 +2059,9 @@ msgstr ""
 msgid "Items per page:"
 msgstr ""
 
+msgid "Keep empty if you do not want to limit the price by products' weight"
+msgstr ""
+
 msgid "Language"
 msgstr ""
 
@@ -2221,7 +2230,7 @@ msgstr ""
 msgid "Maximal duration from all runs in last seven days"
 msgstr ""
 
-msgid "Maximum weight (g)"
+msgid "Maximum weight of products"
 msgstr ""
 
 msgid "Menu"
@@ -4145,6 +4154,9 @@ msgid "from"
 msgstr ""
 
 msgid "from \"oldReadableValue\" to \"newReadableValue\""
+msgstr ""
+
+msgid "g"
 msgstr ""
 
 msgid "higher or equal"

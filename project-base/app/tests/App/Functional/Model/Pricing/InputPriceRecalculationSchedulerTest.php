@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\InputPriceRecalculator;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
+use Shopsys\FrameworkBundle\Model\Transport\PriceWithLimitData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\HttpFoundation\Request;
@@ -158,7 +159,9 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
         $transportData = $this->transportDataFactory->create();
 
         $paymentData->pricesIndexedByDomainId[Domain::FIRST_DOMAIN_ID] = $inputPrice;
-        $transportData->pricesIndexedByDomainId[Domain::FIRST_DOMAIN_ID] = $inputPrice;
+        $priceWithLimitData = new PriceWithLimitData();
+        $priceWithLimitData->price = $inputPrice;
+        $transportData->inputPricesByDomain[Domain::FIRST_DOMAIN_ID]->pricesWithLimits = [$priceWithLimitData];
 
         $vatData = new VatData();
         $vatData->name = 'vat';
@@ -197,6 +200,6 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
         $this->em->refresh($transport);
 
         $this->assertThat($payment->getPrice(Domain::FIRST_DOMAIN_ID)->getPrice(), new IsMoneyEqual($expectedPrice));
-        $this->assertThat($transport->getPrice(Domain::FIRST_DOMAIN_ID)->getPrice(), new IsMoneyEqual($expectedPrice));
+        $this->assertThat($transport->getLowestPriceOnDomain(Domain::FIRST_DOMAIN_ID)->getPrice(), new IsMoneyEqual($expectedPrice));
     }
 }

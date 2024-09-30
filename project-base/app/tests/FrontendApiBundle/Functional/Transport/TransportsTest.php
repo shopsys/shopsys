@@ -24,9 +24,9 @@ class TransportsTest extends GraphQlTestCase
 
         $locale = $this->getFirstDomainLocale();
         $expectedTransportsData = [
+            ['name' => t('Czech post', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
             ['name' => t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
             ['name' => t('Personal collection', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
-            ['name' => t('Drone delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
             ['name' => t('Packeta', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
         ];
         $this->assertCount(count($expectedTransportsData), $responseData);

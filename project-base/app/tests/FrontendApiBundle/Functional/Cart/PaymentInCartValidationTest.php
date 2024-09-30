@@ -71,9 +71,9 @@ class PaymentInCartValidationTest extends GraphQlTestCase
 
     public function testInvalidPaymentTransportCombination(): void
     {
-        $transport = $this->getReference(TransportDataFixture::TRANSPORT_DRONE, Transport::class);
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PPL, Transport::class);
         $this->addTransportToDemoCart($transport->getUuid());
-        $payment = $this->getReference(PaymentDataFixture::PAYMENT_GOPAY_CARD, Payment::class);
+        $payment = $this->getReference(PaymentDataFixture::PAYMENT_CASH, Payment::class);
         $response = $this->addPaymentToDemoCart($payment->getUuid());
 
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
@@ -87,18 +87,10 @@ class PaymentInCartValidationTest extends GraphQlTestCase
      */
     private function addPaymentToDemoCart(string $paymentUuid): array
     {
-        $changePaymentInCartMutation = '
-            mutation {
-                ChangePaymentInCart(input:{
-                    cartUuid: "' . CartDataFixture::CART_UUID . '"
-                    paymentUuid: "' . $paymentUuid . '"
-                }) {
-                    uuid
-                }
-            }
-        ';
-
-        return $this->getResponseContentForQuery($changePaymentInCartMutation);
+        return $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangePaymentInCartMutation.graphql', [
+            'cartUuid' => CartDataFixture::CART_UUID,
+            'paymentUuid' => $paymentUuid,
+        ]);
     }
 
     /**
@@ -134,17 +126,9 @@ class PaymentInCartValidationTest extends GraphQlTestCase
      */
     private function addTransportToDemoCart(string $transportUuid): void
     {
-        $changeTransportInCartMutation = '
-            mutation {
-                ChangeTransportInCart(input:{
-                    cartUuid: "' . CartDataFixture::CART_UUID . '"
-                    transportUuid: "' . $transportUuid . '"
-                }) {
-                    uuid
-                }
-            }
-        ';
-
-        $this->getResponseContentForQuery($changeTransportInCartMutation);
+        $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/ChangeTransportInCartMutation.graphql', [
+            'cartUuid' => CartDataFixture::CART_UUID,
+            'transportUuid' => $transportUuid,
+        ]);
     }
 }

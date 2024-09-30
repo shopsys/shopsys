@@ -229,6 +229,9 @@ msgstr "Vyplňte prosím název článku"
 msgid "Please enter at least one discount limit"
 msgstr "Vložte, prosím, alespoň jeden limit se slevou"
 
+msgid "Please enter at least one price"
+msgstr "Zadejte prosím aspoň jednu cenu"
+
 msgid "Please enter city"
 msgstr "Vyplňte prosím město"
 
@@ -429,6 +432,9 @@ msgstr "Zadejte prosím celé číslo."
 
 msgid "Please enter zip code"
 msgstr "Vyplňte prosím PSČ"
+
+msgid "Please use each limit only once"
+msgstr "Zadejte prosím každý limit pouze jednou"
 
 msgid "Previously selected main URL dos not exist any more"
 msgstr "Původně vybraná hlavní URL již neexistuje"

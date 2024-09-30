@@ -46,7 +46,7 @@ class TransportGridFactory implements GridFactoryInterface
             't.id',
             function ($row) {
                 $transport = $this->transportRepository->findById($row['t']['id']);
-                $row['displayPrice'] = $this->getDisplayPrice($transport);
+                $row['prices'] = $this->getDisplayPrices($transport);
                 $row['domainId'] = $this->adminDomainTabsFacade->getSelectedDomainId();
 
                 return $row;
@@ -57,7 +57,7 @@ class TransportGridFactory implements GridFactoryInterface
         $grid->enableDragAndDrop(Transport::class);
 
         $grid->addColumn('name', 'tt.name', t('Name'));
-        $grid->addColumn('price', 'displayPrice', t('Price'));
+        $grid->addColumn('prices', 'prices', t('Prices'));
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_transport_edit', ['id' => 't.id']);
@@ -71,15 +71,15 @@ class TransportGridFactory implements GridFactoryInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
      */
-    protected function getDisplayPrice(Transport $transport)
+    protected function getDisplayPrices(Transport $transport): array
     {
         $transportBasePricesIndexedByDomainId = $this->transportFacade->getIndependentBasePricesIndexedByDomainId(
             $transport,
         );
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
 
-        return $transportBasePricesIndexedByDomainId[$domainId]->getPriceWithVat();
+        return $transportBasePricesIndexedByDomainId[$domainId];
     }
 }
