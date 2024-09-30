@@ -1,6 +1,5 @@
-import { MenuIconicItemLink } from './MenuIconicElements';
-import { MenuIconicItemUserAuthenticatedPopover } from './MenuIconicItemUserAuthenticatedPopover';
-import { MenuMyAccountList } from './MenuMyAccountList';
+import { MenuIconicItemLink, MenuIconicItemUserPopover } from './MenuIconicElements';
+import { MenuIconicItemUserAuthenticatedContent } from './MenuIconicItemUserAuthenticatedContent';
 import { Drawer } from 'components/Basic/Drawer/Drawer';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
@@ -59,12 +58,12 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                 </div>
 
                 <Drawer className="lg:hidden" isClicked={isClicked} setIsClicked={setIsClicked} title={t('My account')}>
-                    <MenuMyAccountList />
+                    <MenuIconicItemUserAuthenticatedContent />
                 </Drawer>
 
-                <MenuIconicItemUserAuthenticatedPopover isHovered={isHoveredDelayed}>
-                    <MenuMyAccountList />
-                </MenuIconicItemUserAuthenticatedPopover>
+                <MenuIconicItemUserPopover isAuthenticated isHovered={isHoveredDelayed}>
+                    <MenuIconicItemUserAuthenticatedContent />
+                </MenuIconicItemUserPopover>
             </div>
 
             <Overlay

@@ -1,4 +1,4 @@
-import { MenuIconicSubItemLink } from './MenuIconicElements';
+import { MenuIconicItemUserAuthenticatedContentListItem, MenuIconicSubItemLink } from './MenuIconicElements';
 import { SalesRepresentative } from './SalesRepresentative';
 import { ComplaintsIcon } from 'components/Basic/Icon/ComplaintsIcon';
 import { EditIcon } from 'components/Basic/Icon/EditIcon';
@@ -14,7 +14,7 @@ import { useCurrentCustomerUserPermissions } from 'utils/auth/useCurrentCustomer
 import { useLogout } from 'utils/auth/useLogout';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
-export const MenuMyAccountList: FC = () => {
+export const MenuIconicItemUserAuthenticatedContent: FC = () => {
     const { t } = useTranslation();
     const logout = useLogout();
     const user = useCurrentCustomerData();
@@ -43,13 +43,13 @@ export const MenuMyAccountList: FC = () => {
                 </span>
             </div>
             <ul className="flex max-h-[87dvh] flex-col gap-2">
-                <MenuMyAccountListItem>
+                <MenuIconicItemUserAuthenticatedContentListItem>
                     <MenuIconicSubItemLink href={customerOrdersUrl} tid={TIDs.header_my_orders_link} type="orderList">
                         <SearchListIcon className="size-6" />
                         {t('My orders')}
                     </MenuIconicSubItemLink>
-                </MenuMyAccountListItem>
-                <MenuMyAccountListItem>
+                </MenuIconicItemUserAuthenticatedContentListItem>
+                <MenuIconicItemUserAuthenticatedContentListItem>
                     <MenuIconicSubItemLink
                         href={customerComplaintsUrl}
                         tid={TIDs.header_my_complaints_link}
@@ -58,8 +58,8 @@ export const MenuMyAccountList: FC = () => {
                         <ComplaintsIcon className="size-6" />
                         {t('My complaints')}
                     </MenuIconicSubItemLink>
-                </MenuMyAccountListItem>
-                <MenuMyAccountListItem>
+                </MenuIconicItemUserAuthenticatedContentListItem>
+                <MenuIconicItemUserAuthenticatedContentListItem>
                     <MenuIconicSubItemLink
                         href={customerEditProfileUrl}
                         tid={TIDs.header_edit_profile_link}
@@ -68,33 +68,23 @@ export const MenuMyAccountList: FC = () => {
                         <EditIcon className="size-6" />
                         {t('Edit profile')}
                     </MenuIconicSubItemLink>
-                </MenuMyAccountListItem>
+                </MenuIconicItemUserAuthenticatedContentListItem>
                 {canManageUsers && (
-                    <MenuMyAccountListItem>
+                    <MenuIconicItemUserAuthenticatedContentListItem>
                         <MenuIconicSubItemLink href={customerUsersUrl} type="customer-users">
                             <UserIcon className="max-h-5.5 w-6" />
                             {t('Customer users')}
                         </MenuIconicSubItemLink>
-                    </MenuMyAccountListItem>
+                    </MenuIconicItemUserAuthenticatedContentListItem>
                 )}
-                <MenuMyAccountListItem>
+                <MenuIconicItemUserAuthenticatedContentListItem>
                     <MenuIconicSubItemLink tid={TIDs.header_logout} onClick={logout}>
                         <ExitIcon className="size-6" />
                         {t('Logout')}
                     </MenuIconicSubItemLink>
-                </MenuMyAccountListItem>
+                </MenuIconicItemUserAuthenticatedContentListItem>
                 <SalesRepresentative />
             </ul>
         </>
     );
 };
-
-const MenuMyAccountListItem: FC = ({ children }) => (
-    <li
-        className={twJoin(
-            'h-14 rounded-xl border border-background bg-backgroundMore hover:border-borderAccentLess hover:bg-background',
-        )}
-    >
-        {children}
-    </li>
-);
