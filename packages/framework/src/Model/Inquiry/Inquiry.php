@@ -114,4 +114,100 @@ class Inquiry
         $this->product = $inquiryData->product;
         $this->productCatnum = $inquiryData->product->getCatnum();
     }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTelephone()
+    {
+        return $this->telephone;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCompanyName()
+    {
+        return $this->companyName;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCompanyNumber()
+    {
+        return $this->companyNumber;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCompanyTaxNumber()
+    {
+        return $this->companyTaxNumber;
+    }
+
+    /**
+     * @return \DateTimeImmutable
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getNote()
+    {
+        return $this->note;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product|null
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProductCatnum()
+    {
+        return $this->productCatnum;
+    }
 }

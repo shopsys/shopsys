@@ -113,6 +113,12 @@ class SideMenuBuilder
         ]);
         $menu->setExtra('icon', 'letter');
 
+        $menu->addChild('detail', [
+            'route' => 'admin_inquiry_detail',
+            'label' => t('Inquiry detail'),
+            'display' => false,
+        ]);
+
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_INQUIRIES, $menu);
 
         return $menu;

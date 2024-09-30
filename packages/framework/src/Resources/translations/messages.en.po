@@ -658,6 +658,9 @@ msgstr ""
 msgid "Company"
 msgstr ""
 
+msgid "Company (Company number)"
+msgstr ""
+
 msgid "Company data"
 msgstr ""
 
@@ -2041,6 +2044,9 @@ msgstr ""
 msgid "Input price without VAT"
 msgstr ""
 
+msgid "Inquired product"
+msgstr ""
+
 msgid "Inquiries"
 msgstr ""
 
@@ -2048,6 +2054,12 @@ msgid "Inquiries - view"
 msgstr ""
 
 msgid "Inquiries overview"
+msgstr ""
+
+msgid "Inquiry by"
+msgstr ""
+
+msgid "Inquiry detail"
 msgstr ""
 
 msgid "Instagram URL"
@@ -2989,6 +3001,9 @@ msgstr ""
 msgid "Product <strong>{{ product|productDisplayName }}</strong> deleted"
 msgstr ""
 
+msgid "Product associated with this inquiry is no longer available in the catalog."
+msgstr ""
+
 msgid "Product excluded from sale"
 msgstr ""
 
@@ -3491,6 +3506,9 @@ msgid "Short description USP"
 msgstr ""
 
 msgid "Short description can be set in the main variant."
+msgstr ""
+
+msgid "Show detail"
 msgstr ""
 
 msgid "Site"
