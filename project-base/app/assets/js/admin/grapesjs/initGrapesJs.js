@@ -3,6 +3,7 @@ import grapesjs from 'grapesjs';
 import webPagePlugin from 'grapesjs-preset-webpage';
 import ckeditorPlugin from 'grapesjs-plugin-ckeditor';
 import newsletterPlugin from 'grapesjs-preset-newsletter';
+import customCodePlugin from 'grapesjs-custom-code';
 import './grapesjs-non-editable-page';
 import './plugins/grapesjs-custom-buttons-plugin';
 import './plugins/grapesjs-products-plugin';
@@ -19,7 +20,6 @@ import { Buffer } from 'buffer';
 global.Buffer = Buffer;
 
 export default class InitGrapesJs {
-
     static init ($container) {
         let isAnyButtonOnPage = false;
         $container.filterAllNodes('.js-grapesjs-button').each((index, element) => {
@@ -63,6 +63,7 @@ export default class InitGrapesJs {
         const plugins = [
             webPagePlugin,
             ckeditorPlugin,
+            customCodePlugin,
             'nonEditablePage',
             'customButtons',
             'text-with-image',
@@ -102,7 +103,18 @@ export default class InitGrapesJs {
                             { name: 'format', items: ['Format'] },
                             { name: 'size', items: ['FontSize'] },
                             { name: 'links', items: ['Link', 'Unlink'] },
-                            { name: 'paragraph', items: ['NumberedList', 'BulletedList', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
+                            {
+                                name: 'paragraph',
+                                items: [
+                                    'NumberedList',
+                                    'BulletedList',
+                                    '-',
+                                    'JustifyLeft',
+                                    'JustifyCenter',
+                                    'JustifyRight',
+                                    'JustifyBlock'
+                                ]
+                            },
                             { name: 'colors', items: ['TextColor', 'BGColor'] },
                             { name: 'document', items: ['Source'] },
                             { name: 'insert', items: ['SpecialChar'] }
@@ -115,6 +127,14 @@ export default class InitGrapesJs {
                 },
                 customButtons: {
                     textareaId: textareaId
+                },
+                [customCodePlugin]: {
+                    blockCustomCode: {
+                        label: 'Custom code',
+                        category: 'Basic',
+                        media: '',
+                        attributes: { class: 'fa fa-code fa-solid' }
+                    }
                 }
             },
             styleManager: {
@@ -125,7 +145,7 @@ export default class InitGrapesJs {
             selectorManager: {
                 componentFirst: true,
                 // eslint-disable-next-line no-useless-escape
-                escapeName: name => name.trim().replace(/([^a-z0-9\w\#\!\:\[\]&-]+)/gi, '-')
+                escapeName: (name) => name.trim().replace(/([^a-z0-9\w\#\!\:\[\]&-]+)/gi, '-')
             },
             assetManager: {
                 custom: {
@@ -208,24 +228,35 @@ export default class InitGrapesJs {
                             { name: 'format', items: ['Format'] },
                             { name: 'size', items: ['FontSize'] },
                             { name: 'links', items: ['Link', 'Unlink'] },
-                            { name: 'paragraph', items: ['NumberedList', 'BulletedList', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
+                            {
+                                name: 'paragraph',
+                                items: [
+                                    'NumberedList',
+                                    'BulletedList',
+                                    '-',
+                                    'JustifyLeft',
+                                    'JustifyCenter',
+                                    'JustifyRight',
+                                    'JustifyBlock'
+                                ]
+                            },
                             { name: 'colors', items: ['TextColor', 'BGColor'] },
                             { name: 'document', items: ['Source'] },
                             { name: 'insert', items: ['SpecialChar', 'strinsert'] }
                         ],
                         extraPlugins: 'strinsert',
                         strinsert_strings: [
-                            { 'name': 'Povinné proměnné' },
+                            { name: 'Povinné proměnné' },
                             ...variables
                                 .filter((variable) => variable.isRequired === true)
                                 .map((variable) => {
-                                    return { 'name': variable.label, 'value': variable.placeholder };
+                                    return { name: variable.label, value: variable.placeholder };
                                 }),
-                            { 'name': 'Volitelné proměnné' },
+                            { name: 'Volitelné proměnné' },
                             ...variables
                                 .filter((variable) => variable.isRequired === false)
                                 .map((variable) => {
-                                    return { 'name': variable.label, 'value': variable.placeholder };
+                                    return { name: variable.label, value: variable.placeholder };
                                 })
                         ]
                     }
@@ -288,4 +319,4 @@ export default class InitGrapesJs {
     }
 }
 
-(new Register()).registerCallback(InitGrapesJs.init, 'InitGrapesJs.init');
+new Register().registerCallback(InitGrapesJs.init, 'InitGrapesJs.init');
