@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Customer\User;
 
-use App\DataFixtures\Demo\OrderDataFixture;
-use App\Model\Order\Order;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -106,40 +104,6 @@ class RegisterTest extends GraphQlTestCase
                 $i++;
             }
         }
-    }
-
-    public function testRegisterWithOrderPairing()
-    {
-        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 19, Order::class);
-        $graphQlType = 'Register';
-        $mutationVariables = self::getRegisterQueryVariables(
-            'not-registered-user@shopsys.com',
-            'NotRegistered',
-            'User',
-        );
-        $mutationVariables['lastOrderUuid'] = $order->getUuid();
-        $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/mutation/RegistrationMutation.graphql', $mutationVariables);
-
-        $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
-
-        $this->assertArrayHasKey('tokens', $responseData);
-        $this->assertIsString($responseData['tokens']['accessToken']);
-
-        $this->assertArrayHasKey('tokens', $responseData);
-        $this->assertIsString($responseData['tokens']['refreshToken']);
-    }
-
-    public function testRegisterWithOrderPairingError(): void
-    {
-        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . 1, Order::class);
-        $mutationVariables = self::getRegisterQueryVariables(
-            'new-one-no-reply@shopsys.com',
-            'Adam',
-            'Bořič',
-        );
-        $mutationVariables['lastOrderUuid'] = $order->getUuid();
-        $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/mutation/RegistrationMutation.graphql', $mutationVariables);
-        $this->assertResponseContainsArrayOfErrors($response);
     }
 
     /**

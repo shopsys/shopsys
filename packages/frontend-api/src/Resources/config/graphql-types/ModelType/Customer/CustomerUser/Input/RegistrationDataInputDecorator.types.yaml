@@ -38,10 +38,6 @@ RegistrationDataInputDecorator:
                 type: "Uuid"
                 description: "Uuid of the cart that should be merged to the cart of the newly registered user"
                 defaultValue: null
-            lastOrderUuid:
-                type: "Uuid"
-                description: "Uuid of the last order that should be paired with the newly registered user"
-                defaultValue: null
             productListsUuids:
                 type: "[Uuid!]!"
                 description: "Uuids of product lists that should be merged to the product lists of the user after registration"

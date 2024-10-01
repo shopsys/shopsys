@@ -1,0 +1,16 @@
+mutation RegistrationMutation(
+    $orderUrlHash: String!
+    $password: Password!,
+) {
+    RegisterByOrder(
+        input: {
+            orderUrlHash: $orderUrlHash
+            password: $password
+        }
+    ) {
+        tokens {
+            accessToken
+            refreshToken
+        }
+    }
+}

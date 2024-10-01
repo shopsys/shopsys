@@ -134,6 +134,7 @@
     * [ProductListUpdateInput](#productlistupdateinput)
     * [RecoverPasswordInput](#recoverpasswordinput)
     * [RefreshTokenInput](#refreshtokeninput)
+    * [RegistrationByOrderInput](#registrationbyorderinput)
     * [RegistrationDataInput](#registrationdatainput)
     * [RemoveCustomerUserDataInput](#removecustomeruserdatainput)
     * [RemoveFromCartInput](#removefromcartinput)
@@ -1647,6 +1648,20 @@ Register new customer user
 <tr>
 <td colspan="2" align="right" valign="top">input</td>
 <td valign="top"><a href="#registrationdatainput">RegistrationDataInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>RegisterByOrder</strong></td>
+<td valign="top"><a href="#loginresult">LoginResult</a>!</td>
+<td>
+
+Register new customer user using an order data
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#registrationbyorderinput">RegistrationByOrderInput</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -10834,6 +10849,38 @@ The refresh token.
 </tbody>
 </table>
 
+### RegistrationByOrderInput
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>orderUrlHash</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Order URL hash
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>password</strong></td>
+<td valign="top"><a href="#password">Password</a>!</td>
+<td>
+
+Customer user password
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### RegistrationDataInput
 
 Represents the main input object to register customer user
@@ -10943,15 +10990,6 @@ Customer user first name
 <td>
 
 Customer user last name
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>lastOrderUuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
-<td>
-
-Uuid of the last order that should be paired with the newly registered user
 
 </td>
 </tr>

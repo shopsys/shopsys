@@ -21,6 +21,9 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory as
  * @method \App\Model\Customer\User\CustomerUserUpdateData createFromCustomerUser(\App\Model\Customer\User\CustomerUser $customerUser)
  * @method \App\Model\Customer\User\CustomerUserUpdateData createAmendedByOrder(\App\Model\Customer\User\CustomerUser $customerUser, \App\Model\Order\Order $order, \App\Model\Customer\DeliveryAddress|null $deliveryAddress)
  * @method \App\Model\Customer\BillingAddressData getAmendedBillingAddressDataByOrder(\App\Model\Order\Order $order, \App\Model\Customer\BillingAddress $billingAddress)
+ * @method \App\Model\Customer\User\CustomerUserUpdateData createFromOrder(\App\Model\Order\Order $order, string $password)
+ * @method fillBillingAddressDataFromOrder(\App\Model\Order\Order $order, \App\Model\Customer\BillingAddressData $billingAddressData)
+ * @method \App\Model\Customer\User\CustomerUserData getCustomerUserDataByOrder(\App\Model\Order\Order $order, string $password)
  */
 class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
 {

@@ -1,0 +1,20 @@
+RegistrationByOrderInputDecorator:
+    type: input-object
+    decorator: true
+    config:
+        fields:
+            orderUrlHash:
+                type: "String!"
+                description: "Order URL hash"
+                validation:
+                    -   NotBlank:
+                            message: "Please enter order URL hash"
+            password:
+                type: "Password!"
+                description: "Customer user password"
+                validation:
+                    -   NotBlank:
+                            message: "Please enter new password"
+                    -   Length:
+                            min: 6
+                            minMessage: "Password must be at least {{ limit }} characters long"

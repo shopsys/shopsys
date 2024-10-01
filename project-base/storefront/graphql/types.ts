@@ -1294,6 +1294,8 @@ export type TypeMutation = {
   RefreshTokens: TypeToken;
   /** Register new customer user */
   Register: TypeLoginResult;
+  /** Register new customer user using an order data */
+  RegisterByOrder: TypeLoginResult;
   /** delete customer user */
   RemoveCustomerUser: Scalars['Boolean']['output'];
   /** Remove product from cart */
@@ -1427,6 +1429,11 @@ export type TypeMutationRefreshTokensArgs = {
 
 export type TypeMutationRegisterArgs = {
   input: TypeRegistrationDataInput;
+};
+
+
+export type TypeMutationRegisterByOrderArgs = {
+  input: TypeRegistrationByOrderInput;
 };
 
 
@@ -2730,6 +2737,13 @@ export type TypeRefreshTokenInput = {
   refreshToken: Scalars['String']['input'];
 };
 
+export type TypeRegistrationByOrderInput = {
+  /** Order URL hash */
+  orderUrlHash: Scalars['String']['input'];
+  /** Customer user password */
+  password: Scalars['Password']['input'];
+};
+
 /** Represents the main input object to register customer user */
 export type TypeRegistrationDataInput = {
   /** UUID */
@@ -2754,8 +2768,6 @@ export type TypeRegistrationDataInput = {
   firstName: Scalars['String']['input'];
   /** Customer user last name */
   lastName: Scalars['String']['input'];
-  /** Uuid of the last order that should be paired with the newly registered user */
-  lastOrderUuid: InputMaybe<Scalars['Uuid']['input']>;
   /** Whether customer user should receive newsletters or not */
   newsletterSubscription: Scalars['Boolean']['input'];
   /** Customer user password */

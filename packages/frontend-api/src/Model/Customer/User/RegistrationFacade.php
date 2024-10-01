@@ -4,12 +4,18 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Customer\User;
 
+use DateTime;
+use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory as FrameworkCustomerUserUpdateDataFactory;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
+use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
+use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
+use Shopsys\FrontendApiBundle\Model\Order\Exception\RegisterByOrderIsNotPossibleUserError;
 
 class RegistrationFacade
 {
@@ -18,12 +24,18 @@ class RegistrationFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory $frameworkCustomerUserUpdateDataFactory
      */
     public function __construct(
         protected readonly CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
         protected readonly CustomerUserFacade $customerUserFacade,
         protected readonly NewsletterFacade $newsletterFacade,
         protected readonly Domain $domain,
+        protected readonly OrderFacade $orderFacade,
+        protected readonly EntityManagerInterface $em,
+        protected readonly FrameworkCustomerUserUpdateDataFactory $frameworkCustomerUserUpdateDataFactory,
     ) {
     }
 
@@ -54,6 +66,36 @@ class RegistrationFacade
         if ($customerUser->isNewsletterSubscription()) {
             $this->newsletterFacade->addSubscribedEmailIfNotExists($customerUser->getEmail(), $customerUser->getDomainId());
         }
+
+        return $customerUser;
+    }
+
+    /**
+     * @param string $orderUrlHash
+     * @param string $password
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
+     */
+    public function registerByOrder(string $orderUrlHash, string $password): CustomerUser
+    {
+        try {
+            $order = $this->orderFacade->getByUrlHashAndDomain($orderUrlHash, $this->domain->getId());
+        } catch (OrderNotFoundException) {
+            throw new RegisterByOrderIsNotPossibleUserError('Order not found.');
+        }
+
+        if ($order->getCustomerUser() !== null) {
+            throw new RegisterByOrderIsNotPossibleUserError('Order is owned by another customer.');
+        }
+
+        if ($order->getCreatedAt() < new DateTime('-1 hour')) {
+            throw new RegisterByOrderIsNotPossibleUserError('Registration for a established order is possible only within an hour of establishment of an order.');
+        }
+
+        $customerUserUpdateData = $this->frameworkCustomerUserUpdateDataFactory->createFromOrder($order, $password);
+        $customerUser = $this->customerUserFacade->create($customerUserUpdateData);
+
+        $order->setCustomerUser($customerUser);
+        $this->em->flush();
 
         return $customerUser;
     }

@@ -591,6 +591,10 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderData->street = 'Křivá 12';
         $orderData->city = 'Jablonec';
         $orderData->postcode = '78952';
+        $orderData->isCompanyCustomer = true;
+        $orderData->companyName = 'BestCompanyEver, s.r.o.';
+        $orderData->companyNumber = '555555';
+        $orderData->companyTaxNumber = 'CZ555555';
         $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class);
         $orderData->deliveryAddressSameAsBillingAddress = false;
         $orderData->deliveryCity = 'Ostrava 1';
