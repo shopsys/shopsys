@@ -147,6 +147,14 @@ class Inquiry
     }
 
     /**
+     * @return string
+     */
+    public function getFullName(): string
+    {
+        return $this->firstName . ' ' . $this->lastName;
+    }
+
+    /**
      * @return int
      */
     public function getDomainId()

@@ -166,6 +166,9 @@ msgstr "Doplňující informace k přihlášení"
 msgid "Address"
 msgstr "Adresa"
 
+msgid "Admin inquiry detail URL"
+msgstr "URL detailu poptávky v administraci"
+
 msgid "Administration"
 msgstr "Administrace"
 
@@ -660,6 +663,9 @@ msgstr "Firma"
 
 msgid "Company (Company number)"
 msgstr "Firma (IČ)"
+
+msgid "Company Tax number"
+msgstr "DIČ firmy"
 
 msgid "Company data"
 msgstr "Firemní údaje"
@@ -2062,6 +2068,12 @@ msgstr "Poptávka od"
 msgid "Inquiry detail"
 msgstr "Detail poptávky"
 
+msgid "Inquiry info sent to administrator"
+msgstr "Informace o poptávce odesílaná administrátorovi"
+
+msgid "Inquiry info sent to customer"
+msgstr "Informace o poptávce odesílaná zákazníkovi"
+
 msgid "Instagram URL"
 msgstr "Instagram URL"
 
@@ -3004,8 +3016,17 @@ msgstr "Produkt <strong>{{ product|productDisplayName }}</strong> byl smazán"
 msgid "Product associated with this inquiry is no longer available in the catalog."
 msgstr "Produkt v této poptávce není již dostupný v katalogu."
 
+msgid "Product catnum"
+msgstr "Katalogové číslo produktu"
+
+msgid "Product detail URL"
+msgstr "URL detailu produktu"
+
 msgid "Product excluded from sale"
 msgstr "Zboží je vyřazeno z prodeje"
+
+msgid "Product image URL"
+msgstr "URL obrázku produktu"
 
 msgid "Product in order"
 msgstr "Zboží v objednávce"

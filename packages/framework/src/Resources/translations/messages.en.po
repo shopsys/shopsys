@@ -166,6 +166,9 @@ msgstr ""
 msgid "Address"
 msgstr ""
 
+msgid "Admin inquiry detail URL"
+msgstr ""
+
 msgid "Administration"
 msgstr ""
 
@@ -659,6 +662,9 @@ msgid "Company"
 msgstr ""
 
 msgid "Company (Company number)"
+msgstr ""
+
+msgid "Company Tax number"
 msgstr ""
 
 msgid "Company data"
@@ -2062,6 +2068,12 @@ msgstr ""
 msgid "Inquiry detail"
 msgstr ""
 
+msgid "Inquiry info sent to administrator"
+msgstr ""
+
+msgid "Inquiry info sent to customer"
+msgstr ""
+
 msgid "Instagram URL"
 msgstr ""
 
@@ -3004,7 +3016,16 @@ msgstr ""
 msgid "Product associated with this inquiry is no longer available in the catalog."
 msgstr ""
 
+msgid "Product catnum"
+msgstr ""
+
+msgid "Product detail URL"
+msgstr ""
+
 msgid "Product excluded from sale"
+msgstr ""
+
+msgid "Product image URL"
 msgstr ""
 
 msgid "Product in order"
