@@ -58,41 +58,57 @@ class PasswordChangedMail implements MessageFactoryInterface
 }
 ```
 
-## Add new email template into data fixtures
+## Add a new email template to the database
 
 We need to populate the database with some data to test the email template.  
-To do that, we can just create a new record in `src/DataFixtures/Demo/MailTemplateDataFixture.php`
+To do that, we can create a new database migration.
+Although it's possible to use DataFixtures, we recommend using migrations for this task.
+DataFixtures are not run during production deployment, and it is possible that the missing email template will cause errors.
 
-```diff
-// class App\DataFixtures\Demo\MailTemplateDataFixture
+```php
+namespace App\Migrations;
+
+use App\Component\Mail\PasswordChangedMail;
+use Doctrine\DBAL\Schema\Schema;
+use Shopsys\FrameworkBundle\Migrations\MultidomainMigrationTrait;
+use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+
+class VersionXXXXXXXXXXXXXX extends AbstractMigration implements ContainerAwareInterface
+{
+    use MultidomainMigrationTrait;
 
     /**
-     * @param \Doctrine\Persistence\ObjectManager $manager
+     * @param \Doctrine\DBAL\Schema\Schema $schema
      */
-    public function load(ObjectManager $manager)
+    public function up(Schema $schema): void
     {
-        $mailTemplateData = $this->mailTemplateDataFactory->create();
-        $mailTemplateData->sendMail = true;
+        foreach ($this->getAllDomainIds() as $domainId) {
+            $domainLocale = $this->getDomainLocale($domainId);
 
-        foreach ($this->domain->getAll() as $domainConfig) {
-
-            // ... already existing templates
-
-+           $mailTemplateData->subject = t('Your password has changed');
-+           $mailTemplateData->body = t('Dear {fullname},<br/><br/>
-+           We wanted to let you know that your password has changed.
-+           <br/><br/>
-+           If you did not perform this action, you can recover access by entering {email} into the form at {password_reset_url}
-+           <br/><br/>
-+           Best regards
-+           ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-+
-+           $this->createMailTemplate($manager, PasswordChangedMail::MAIL_TEMPLATE_NAME, $mailTemplateData, $domainId);
+             $this->sql(
+                'INSERT INTO mail_templates (name, domain_id, subject, body, send_mail) VALUES (:mailTemplateName, :domainId, :subject, :body, :sendMail)',
+                [
+                    'mailTemplateName' => PasswordChangedMail::MAIL_TEMPLATE_NAME,
+                    'domainId' => $domainId,
+                    'subject' => t('Your password has changed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainLocale),
+                    'body' => t('Dear {fullname},<br/><br/>
+                        We wanted to let you know that your password has changed.
+                        <br/><br/>
+                        If you did not perform this action, you can recover access by entering {email} into the form at {password_reset_url}
+                        <br/><br/>
+                        Best regards
+                        ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+                    'sendMail' => true,
+                ],
+            );
+        }
+    }
 ```
 
 You can see we used several variable placeholders in this template (`{fullname}`, `{email}`, and `{password_reset_url}`).
 Right now, they are treated as plain text.
-We will allow to replace them with real values in the next step.
+We will allow replacing them with real values in the next step.
 
 !!! note
 
