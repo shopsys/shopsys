@@ -34,110 +34,23 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
     public function load(ObjectManager $manager): void
     {
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
-            $mailTemplateData = $this->mailTemplateDataFactory->create();
-            $mailTemplateData->sendMail = true;
-
             $domainId = $domainConfig->getId();
             $locale = $domainConfig->getLocale();
-            $mailTemplateData->subject = t(
-                'Thank you for your order no. {number} placed at {date}',
-                [],
-                Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                $locale,
-            );
-            $mailTemplateData->body = t('Dear customer,<br /><br />'
-                . 'Your order has been placed successfully.<br /><br />'
-                . 'You will be contacted when the order state changes.<br />'
-                . 'Order number: {number} <br />'
-                . 'Date and time of creation: {date} <br />'
-                . 'E-shop link: {url} <br />'
-                . 'Order detail link: {order_detail_url} <br />'
-                . 'Shipping: {transport} <br />'
-                . 'Payment: {payment} <br />'
-                . 'Total price including VAT: {total_price} <br />'
-                . 'Billing address:<br /> {billing_address} <br />'
-                . 'Delivery address: {delivery_address} <br />'
-                . 'Note: {note} <br />'
-                . 'Products: {products} <br />'
-                . '{transport_instructions} <br />'
-                . '{payment_instructions}', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $mailTemplateData->orderStatus = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW, OrderStatus::class);
 
-            $this->createMailTemplate($manager, 'order_status_1', $mailTemplateData, $domainId);
+            $this->createOrderPlacedMailTemplate($locale, $manager, $domainId);
+            $this->createOrderProcessedMailTemplate($locale, $manager, $domainId);
+            $this->createOrderFinishedMailTemplate($locale, $manager, $domainId);
+            $this->createOrderCanceledMailTemplate($locale, $manager, $domainId);
 
-            $mailTemplateData->sendMail = false;
-            $mailTemplateData->subject = t('Order status has changed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $mailTemplateData->body = t('Dear customer, <br /><br />'
-                . 'Your order is being processed.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $mailTemplateData->orderStatus = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_IN_PROGRESS, OrderStatus::class);
+            $this->createResetPasswordMailTemplate($locale, $manager, $domainId);
+            $this->createRegistrationCompleteMailTemplate($locale, $manager, $domainId);
 
-            $this->createMailTemplate($manager, 'order_status_2', $mailTemplateData, $domainId);
+            $this->createPersonalInformationOverviewMailTemplate($locale, $manager, $domainId);
+            $this->createPersonalInformationExportMailTemplate($locale, $manager, $domainId);
 
-            $mailTemplateData->subject = t('Order status has changed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $mailTemplateData->body = t('Dear customer, <br /><br />'
-                . 'Processing your order has been finished.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $mailTemplateData->orderStatus = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_DONE, OrderStatus::class);
+            $this->createCustomerActivationMailTemplate($locale, $manager, $domainId);
 
-            $this->createMailTemplate($manager, 'order_status_3', $mailTemplateData, $domainId);
-
-            $mailTemplateData->subject = t('Order status has changed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $mailTemplateData->body = t('Dear customer, <br /><br />'
-                . 'Your order has been cancelled.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $mailTemplateData->orderStatus = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_CANCELED, OrderStatus::class);
-
-            $this->createMailTemplate($manager, 'order_status_4', $mailTemplateData, $domainId);
-
-            $mailTemplateData->sendMail = true;
-            $mailTemplateData->subject = t('Reset password request', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $mailTemplateData->body = t('Dear customer.<br /><br />'
-                . 'You can set a new password following this link: <a href="{new_password_url}">{new_password_url}</a>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $mailTemplateData->complaintStatus = null;
-
-            $this->createMailTemplate($manager, MailTemplate::RESET_PASSWORD_NAME, $mailTemplateData, $domainId);
-
-            $mailTemplateData->subject = t('Registration completed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $mailTemplateData->body = t('Dear customer, <br /><br />'
-                . 'your registration is completed. <br />'
-                . 'Name: {first_name} {last_name}<br />'
-                . 'Email: {email}<br />'
-                . 'E-shop link: {url}<br />'
-                . 'Log in page: {login_page}', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-
-            $this->createMailTemplate($manager, MailTemplate::REGISTRATION_CONFIRM_NAME, $mailTemplateData, $domainId);
-
-            $mailTemplateData->subject = t('Personal information overview - {domain}', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $mailTemplateData->body = t('Dear customer, <br /><br />
-            based on your email {email}, we are sending you a link to your personal details. By clicking on the link below, you will be taken to a page listing all the<br/>
-            personal details which we have in evidence in our online store {domain}. 
-            <br/><br/>
-            To overview your personal information please click here - {url} <br/>
-            The link is valid for next 24 hours.<br/>
-            Best Regards <br/><br/>
-            team of {domain}', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-
-            $this->createMailTemplate($manager, MailTemplate::PERSONAL_DATA_ACCESS_NAME, $mailTemplateData, $domainId);
-
-            $mailTemplateData->subject = t('Personal information export - {domain}', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $mailTemplateData->body = t('Dear customer, <br/><br/>
-based on your email {email}, we are sending you a link where you can download your personal details registered on our online store in readable format. Clicking on the link will take you to a page where you’ll be able to download these informations, which we have in evidence in our online store {domain}. 
-<br/><br/>
-To download your personal information please click here - {url}<br/> 
-The link is valid for next 24 hours.
-<br/><br/>
-Best regards<br/>
-team of {domain}
-', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-
-            $this->createMailTemplate($manager, MailTemplate::PERSONAL_DATA_EXPORT_NAME, $mailTemplateData, $domainId);
-
-            $mailTemplateData->subject = t('Customer activation', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $mailTemplateData->body = t('Dear customer,<br /><br />you can finish registration and set new password via this link: <a href="{activation_url}">{activation_url}</a>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-
-            $this->createMailTemplate($manager, CustomerActivationMail::CUSTOMER_ACTIVATION_NAME, $mailTemplateData, $domainId);
-
-            $mailTemplateData->subject = t('Authentication code', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $mailTemplateData->body = t('Authentication code for two factor authentication: {authentication_code}', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-            $this->createMailTemplate($manager, TwoFactorAuthenticationMail::TWO_FACTOR_AUTHENTICATION_CODE, $mailTemplateData, $domainId);
+            $this->createAdminTwoFactorAuthenticationMailTemplate($locale, $manager, $domainId);
         }
     }
 
@@ -186,5 +99,224 @@ team of {domain}
             PaymentDataFixture::class,
             OrderStatusDataFixture::class,
         ];
+    }
+
+    /**
+     * @param string $locale
+     * @param \Doctrine\Persistence\ObjectManager $manager
+     * @param int $domainId
+     */
+    private function createOrderPlacedMailTemplate(string $locale, ObjectManager $manager, int $domainId): void
+    {
+        $mailTemplateData = $this->mailTemplateDataFactory->create();
+        $mailTemplateData->sendMail = true;
+
+        $mailTemplateData->subject = t(
+            'Thank you for your order no. {number} placed at {date}',
+            [],
+            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+            $locale,
+        );
+        $mailTemplateData->body = t('Dear customer,<br /><br />'
+            . 'Your order has been placed successfully.<br /><br />'
+            . 'You will be contacted when the order state changes.<br />'
+            . 'Order number: {number} <br />'
+            . 'Date and time of creation: {date} <br />'
+            . 'E-shop link: {url} <br />'
+            . 'Order detail link: {order_detail_url} <br />'
+            . 'Shipping: {transport} <br />'
+            . 'Payment: {payment} <br />'
+            . 'Total price including VAT: {total_price} <br />'
+            . 'Billing address:<br /> {billing_address} <br />'
+            . 'Delivery address: {delivery_address} <br />'
+            . 'Note: {note} <br />'
+            . 'Products: {products} <br />'
+            . '{transport_instructions} <br />'
+            . '{payment_instructions}', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->orderStatus = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW, OrderStatus::class);
+
+        $this->createMailTemplate($manager, 'order_status_1', $mailTemplateData, $domainId);
+    }
+
+    /**
+     * @param string $locale
+     * @param \Doctrine\Persistence\ObjectManager $manager
+     * @param int $domainId
+     */
+    private function createOrderProcessedMailTemplate(string $locale, ObjectManager $manager, int $domainId): void
+    {
+        $mailTemplateData = $this->mailTemplateDataFactory->create();
+        $mailTemplateData->sendMail = false;
+
+        $mailTemplateData->subject = t('Order status has changed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->body = t('Dear customer, <br /><br />'
+            . 'Your order is being processed.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->orderStatus = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_IN_PROGRESS, OrderStatus::class);
+
+        $this->createMailTemplate($manager, 'order_status_2', $mailTemplateData, $domainId);
+    }
+
+    /**
+     * @param string $locale
+     * @param \Doctrine\Persistence\ObjectManager $manager
+     * @param int $domainId
+     */
+    private function createOrderFinishedMailTemplate(string $locale, ObjectManager $manager, int $domainId): void
+    {
+        $mailTemplateData = $this->mailTemplateDataFactory->create();
+        $mailTemplateData->sendMail = false;
+
+        $mailTemplateData->subject = t('Order status has changed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->body = t('Dear customer, <br /><br />'
+            . 'Processing your order has been finished.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->orderStatus = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_DONE, OrderStatus::class);
+
+        $this->createMailTemplate($manager, 'order_status_3', $mailTemplateData, $domainId);
+    }
+
+    /**
+     * @param string $locale
+     * @param \Doctrine\Persistence\ObjectManager $manager
+     * @param int $domainId
+     */
+    private function createOrderCanceledMailTemplate(string $locale, ObjectManager $manager, int $domainId): void
+    {
+        $mailTemplateData = $this->mailTemplateDataFactory->create();
+        $mailTemplateData->sendMail = false;
+
+        $mailTemplateData->subject = t('Order status has changed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->body = t('Dear customer, <br /><br />'
+            . 'Your order has been cancelled.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->orderStatus = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_CANCELED, OrderStatus::class);
+
+        $this->createMailTemplate($manager, 'order_status_4', $mailTemplateData, $domainId);
+    }
+
+    /**
+     * @param string $locale
+     * @param \Doctrine\Persistence\ObjectManager $manager
+     * @param int $domainId
+     */
+    private function createResetPasswordMailTemplate(string $locale, ObjectManager $manager, int $domainId): void
+    {
+        $mailTemplateData = $this->mailTemplateDataFactory->create();
+        $mailTemplateData->sendMail = true;
+
+        $mailTemplateData->subject = t('Reset password request', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->body = t('Dear customer.<br /><br />'
+            . 'You can set a new password following this link: <a href="{new_password_url}">{new_password_url}</a>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+
+        $this->createMailTemplate($manager, MailTemplate::RESET_PASSWORD_NAME, $mailTemplateData, $domainId);
+    }
+
+    /**
+     * @param string $locale
+     * @param \Doctrine\Persistence\ObjectManager $manager
+     * @param int $domainId
+     */
+    private function createRegistrationCompleteMailTemplate(
+        string $locale,
+        ObjectManager $manager,
+        int $domainId,
+    ): void {
+        $mailTemplateData = $this->mailTemplateDataFactory->create();
+        $mailTemplateData->sendMail = true;
+
+        $mailTemplateData->subject = t('Registration completed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->body = t('Dear customer, <br /><br />'
+            . 'your registration is completed. <br />'
+            . 'Name: {first_name} {last_name}<br />'
+            . 'Email: {email}<br />'
+            . 'E-shop link: {url}<br />'
+            . 'Log in page: {login_page}', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+
+        $this->createMailTemplate($manager, MailTemplate::REGISTRATION_CONFIRM_NAME, $mailTemplateData, $domainId);
+    }
+
+    /**
+     * @param string $locale
+     * @param \Doctrine\Persistence\ObjectManager $manager
+     * @param int $domainId
+     */
+    private function createPersonalInformationOverviewMailTemplate(
+        string $locale,
+        ObjectManager $manager,
+        int $domainId,
+    ): void {
+        $mailTemplateData = $this->mailTemplateDataFactory->create();
+        $mailTemplateData->sendMail = true;
+
+        $mailTemplateData->subject = t('Personal information overview - {domain}', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->body = t('Dear customer, <br /><br />
+            based on your email {email}, we are sending you a link to your personal details. By clicking on the link below, you will be taken to a page listing all the<br/>
+            personal details which we have in evidence in our online store {domain}. 
+            <br/><br/>
+            To overview your personal information please click here - {url} <br/>
+            The link is valid for next 24 hours.<br/>
+            Best Regards <br/><br/>
+            team of {domain}', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+
+        $this->createMailTemplate($manager, MailTemplate::PERSONAL_DATA_ACCESS_NAME, $mailTemplateData, $domainId);
+    }
+
+    /**
+     * @param string $locale
+     * @param \Doctrine\Persistence\ObjectManager $manager
+     * @param int $domainId
+     */
+    private function createPersonalInformationExportMailTemplate(
+        string $locale,
+        ObjectManager $manager,
+        int $domainId,
+    ): void {
+        $mailTemplateData = $this->mailTemplateDataFactory->create();
+        $mailTemplateData->sendMail = true;
+
+        $mailTemplateData->subject = t('Personal information export - {domain}', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->body = t('Dear customer, <br/><br/>
+based on your email {email}, we are sending you a link where you can download your personal details registered on our online store in readable format. Clicking on the link will take you to a page where you’ll be able to download these informations, which we have in evidence in our online store {domain}. 
+<br/><br/>
+To download your personal information please click here - {url}<br/> 
+The link is valid for next 24 hours.
+<br/><br/>
+Best regards<br/>
+team of {domain}
+', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+
+        $this->createMailTemplate($manager, MailTemplate::PERSONAL_DATA_EXPORT_NAME, $mailTemplateData, $domainId);
+    }
+
+    /**
+     * @param string $locale
+     * @param \Doctrine\Persistence\ObjectManager $manager
+     * @param int $domainId
+     */
+    private function createCustomerActivationMailTemplate(string $locale, ObjectManager $manager, int $domainId): void
+    {
+        $mailTemplateData = $this->mailTemplateDataFactory->create();
+        $mailTemplateData->sendMail = true;
+
+        $mailTemplateData->subject = t('Customer activation', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->body = t('Dear customer,<br /><br />you can finish registration and set new password via this link: <a href="{activation_url}">{activation_url}</a>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+
+        $this->createMailTemplate($manager, CustomerActivationMail::CUSTOMER_ACTIVATION_NAME, $mailTemplateData, $domainId);
+    }
+
+    /**
+     * @param string $locale
+     * @param \Doctrine\Persistence\ObjectManager $manager
+     * @param int $domainId
+     */
+    private function createAdminTwoFactorAuthenticationMailTemplate(
+        string $locale,
+        ObjectManager $manager,
+        int $domainId,
+    ): void {
+        $mailTemplateData = $this->mailTemplateDataFactory->create();
+        $mailTemplateData->sendMail = true;
+
+        $mailTemplateData->subject = t('Authentication code', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->body = t('Authentication code for two factor authentication: {authentication_code}', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $this->createMailTemplate($manager, TwoFactorAuthenticationMail::TWO_FACTOR_AUTHENTICATION_CODE, $mailTemplateData, $domainId);
     }
 }
