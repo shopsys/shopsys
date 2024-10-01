@@ -7,6 +7,11 @@ namespace Shopsys\FrameworkBundle\Model\Inquiry;
 class InquiryData
 {
     /**
+     * @var int|null
+     */
+    public $domainId;
+
+    /**
      * @var string|null
      */
     public $firstName;

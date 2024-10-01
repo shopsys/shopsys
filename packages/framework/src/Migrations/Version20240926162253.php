@@ -17,6 +17,7 @@ class Version20240926162253 extends AbstractMigration
         $this->sql('
             CREATE TABLE inquiries (
                 id SERIAL NOT NULL,
+                domain_id INT NOT NULL,
                 product_id INT DEFAULT NULL,
                 product_catnum VARCHAR(100) NOT NULL,
                 first_name VARCHAR(100) NOT NULL,

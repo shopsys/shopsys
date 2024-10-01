@@ -22,6 +22,12 @@ class Inquiry
     protected $id;
 
     /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
+    protected $domainId;
+
+    /**
      * @var string
      * @ORM\Column(type="string", length=100)
      */
@@ -94,6 +100,7 @@ class Inquiry
     public function __construct(InquiryData $inquiryData)
     {
         $this->createdAt = $inquiryData->createdAt ?? new DateTimeImmutable();
+        $this->domainId = $inquiryData->domainId;
 
         $this->setData($inquiryData);
     }
@@ -137,6 +144,14 @@ class Inquiry
     public function getLastName()
     {
         return $this->lastName;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDomainId()
+    {
+        return $this->domainId;
     }
 
     /**

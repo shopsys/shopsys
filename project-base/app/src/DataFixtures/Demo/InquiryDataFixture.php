@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Inquiry\InquiryDataFactory;
 use Shopsys\FrameworkBundle\Model\Inquiry\InquiryFacade;
 
@@ -30,7 +31,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
     {
         $inquiryProduct = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '45');
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'Mark';
         $inquiryData->lastName = 'Spencer';
         $inquiryData->email = 'mark.spencer@example.com';
@@ -43,7 +44,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-03 10:28:23');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'Laura';
         $inquiryData->lastName = 'Davis';
         $inquiryData->email = 'laura.davis@example.com';
@@ -56,7 +57,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-03 7:51:10');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'Daniel';
         $inquiryData->lastName = 'Clark';
         $inquiryData->email = 'daniel.clark@example.com';
@@ -69,7 +70,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-03 7:55:14');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'Sarah';
         $inquiryData->lastName = 'Johnson';
         $inquiryData->email = 'sarah.johnson@example.com';
@@ -82,7 +83,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 8:34:17');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'Kevin';
         $inquiryData->lastName = 'Miller';
         $inquiryData->email = 'kevin.miller@example.com';
@@ -95,7 +96,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 8:19:42');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'Jessica';
         $inquiryData->lastName = 'Adams';
         $inquiryData->email = 'jessica.adams@example.com';
@@ -108,7 +109,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 8:51:07');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'Brian';
         $inquiryData->lastName = 'Wilson';
         $inquiryData->email = 'brian.wilson@example.com';
@@ -121,7 +122,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 9:08:42');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'Emma';
         $inquiryData->lastName = 'Thompson';
         $inquiryData->email = 'emma.thompson@example.com';
@@ -134,7 +135,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 9:17:39');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'Oliver';
         $inquiryData->lastName = 'Brown';
         $inquiryData->email = 'oliver.brown@example.com';
@@ -147,7 +148,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 9:18:22');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'Hannah';
         $inquiryData->lastName = 'White';
         $inquiryData->email = 'hannah.white@example.com';
@@ -160,7 +161,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 10:04:53');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'Lucas';
         $inquiryData->lastName = 'King';
         $inquiryData->email = 'lucas.king@example.com';
@@ -173,7 +174,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 10:14:41');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'Sophie';
         $inquiryData->lastName = 'Robinson';
         $inquiryData->email = 'sophie.robinson@example.com';
@@ -186,7 +187,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 10:02:05');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'Nathan';
         $inquiryData->lastName = 'Green';
         $inquiryData->email = 'nathan.green@example.com';
@@ -199,7 +200,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 10:06:42');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'Megan';
         $inquiryData->lastName = 'Stewart';
         $inquiryData->email = 'megan.stewart@example.com';
@@ -212,7 +213,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 09:42:54');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'David';
         $inquiryData->lastName = 'Scott';
         $inquiryData->email = 'david.scott@example.com';
@@ -225,7 +226,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 09:53:05');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'Grace';
         $inquiryData->lastName = 'Lewis';
         $inquiryData->email = 'grace.lewis@example.com';
@@ -238,7 +239,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 09:30:35');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'James';
         $inquiryData->lastName = 'Parker';
         $inquiryData->email = 'james.parker@example.com';
@@ -251,7 +252,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 09:38:27');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'Anna';
         $inquiryData->lastName = 'Walker';
         $inquiryData->email = 'anna.walker@example.com';
@@ -264,7 +265,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 09:30:44');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'Liam';
         $inquiryData->lastName = 'Bell';
         $inquiryData->email = 'liam.bell@example.com';
@@ -277,7 +278,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 09:58:20');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'Emily';
         $inquiryData->lastName = 'Brooks';
         $inquiryData->email = 'emily.brooks@example.com';
@@ -290,7 +291,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 09:33:58');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'Joshua';
         $inquiryData->lastName = 'Morgan';
         $inquiryData->email = 'joshua.morgan@example.com';
@@ -303,7 +304,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 09:56:50');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'Isabella';
         $inquiryData->lastName = 'Murphy';
         $inquiryData->email = 'isabella.murphy@example.com';
@@ -316,7 +317,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 09:48:56');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'Mason';
         $inquiryData->lastName = 'Reed';
         $inquiryData->email = 'mason.reed@example.com';
@@ -329,7 +330,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 09:18:35');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'Victoria';
         $inquiryData->lastName = 'Patterson';
         $inquiryData->email = 'victoria.patterson@example.com';
@@ -342,7 +343,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 09:55:34');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'Ryan';
         $inquiryData->lastName = 'Mitchell';
         $inquiryData->email = 'ryan.mitchell@example.com';
@@ -355,7 +356,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 10:07:41');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'Zoe';
         $inquiryData->lastName = 'Turner';
         $inquiryData->email = 'zoe.turner@example.com';
@@ -368,7 +369,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 10:17:27');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'Dylan';
         $inquiryData->lastName = 'Evans';
         $inquiryData->email = 'dylan.evans@example.com';
@@ -381,7 +382,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 10:10:56');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'Charlotte';
         $inquiryData->lastName = 'Hughes';
         $inquiryData->email = 'charlotte.hughes@example.com';
@@ -394,7 +395,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 09:25:41');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::FIRST_DOMAIN_ID);
         $inquiryData->firstName = 'Benjamin';
         $inquiryData->lastName = 'Wood';
         $inquiryData->email = 'benjamin.wood@example.com';
@@ -407,7 +408,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 10:04:51');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::SECOND_DOMAIN_ID);
         $inquiryData->firstName = 'Lily';
         $inquiryData->lastName = 'Foster';
         $inquiryData->email = 'lily.foster@example.com';
@@ -420,7 +421,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 9:22:14');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::SECOND_DOMAIN_ID);
         $inquiryData->firstName = 'Gabriel';
         $inquiryData->lastName = 'Griffin';
         $inquiryData->email = 'gabriel.griffin@example.com';
@@ -433,7 +434,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 10:15:41');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::SECOND_DOMAIN_ID);
         $inquiryData->firstName = 'Sophia';
         $inquiryData->lastName = 'Evans';
         $inquiryData->email = 'sophia.evans@example.com';
@@ -446,7 +447,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 10:18:11');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::SECOND_DOMAIN_ID);
         $inquiryData->firstName = 'Ethan';
         $inquiryData->lastName = 'Bailey';
         $inquiryData->email = 'ethan.bailey@example.com';
@@ -459,7 +460,7 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 17:42:37');
         $this->inquiryFacade->create($inquiryData);
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create(Domain::SECOND_DOMAIN_ID);
         $inquiryData->firstName = 'Madison';
         $inquiryData->lastName = 'Perry';
         $inquiryData->email = 'madison.perry@example.com';

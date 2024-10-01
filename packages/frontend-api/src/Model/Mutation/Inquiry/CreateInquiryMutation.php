@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Mutation\Inquiry;
 
 use Overblog\GraphQLBundle\Definition\Argument;
 use Psr\Log\LoggerInterface;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Inquiry\InquiryData;
 use Shopsys\FrameworkBundle\Model\Inquiry\InquiryDataFactory;
 use Shopsys\FrameworkBundle\Model\Inquiry\InquiryFacade;
@@ -21,12 +22,14 @@ class CreateInquiryMutation extends AbstractMutation
      * @param \Shopsys\FrameworkBundle\Model\Inquiry\InquiryDataFactory $inquiryDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Inquiry\InquiryFacade $inquiryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         protected readonly LoggerInterface $logger,
         protected readonly InquiryDataFactory $inquiryDataFactory,
         protected readonly InquiryFacade $inquiryFacade,
         protected readonly ProductFacade $productFacade,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -54,7 +57,7 @@ class CreateInquiryMutation extends AbstractMutation
     {
         $input = $argument['input'];
 
-        $inquiryData = $this->inquiryDataFactory->create();
+        $inquiryData = $this->inquiryDataFactory->create($this->domain->getId());
         $product = $this->productFacade->getByUuid($input['productUuid']);
 
         $inquiryData->firstName = $input['firstName'];
