@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Form\CustomerUserListType;
 use Shopsys\FrameworkBundle\Form\DeliveryAddressListType;
 use Shopsys\FrameworkBundle\Form\OrderListType;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,11 +20,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CustomerUserUpdateFormType extends AbstractType
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        private readonly CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
+        private readonly CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
         private readonly Domain $domain,
     ) {
     }

@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\DuplicateEmailException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
@@ -27,7 +27,7 @@ class UserFacadeTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    protected CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory;
+    protected CustomerUserUpdateDataFactory $customerUserUpdateDataFactory;
 
     public function testChangeEmailToExistingEmailButDifferentDomainDoNotThrowException()
     {

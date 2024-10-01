@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures\Performance;
 
 use App\DataFixtures\Demo\CountryDataFixture;
+use App\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Generator as Faker;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
@@ -15,7 +16,6 @@ use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class CustomerUserDataFixture
@@ -47,7 +47,7 @@ class CustomerUserDataFixture
         private readonly Faker $faker,
         private readonly PersistentReferenceFacade $persistentReferenceFacade,
         private readonly ProgressBarFactory $progressBarFactory,
-        private readonly CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
+        private readonly CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
         private readonly DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory,
     ) {
         $this->userCountPerDomain = $userCountPerDomain;

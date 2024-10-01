@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 
-class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInterface
+class CustomerUserUpdateDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory

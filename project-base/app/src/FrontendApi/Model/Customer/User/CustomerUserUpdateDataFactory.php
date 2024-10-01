@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory as FrameworkCustomerUserUpdateDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserUpdateDataFactory as BaseCustomerUserUpdateDataFactory;
 
 /**
@@ -29,7 +29,7 @@ class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
      */
     public function __construct(
-        CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
+        FrameworkCustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
         BillingAddressDataFactory $billingAddressDataFactory,
         CustomerUserDataFactory $customerUserDataFactory,
         protected readonly CountryFacade $countryFacade,
