@@ -15,10 +15,14 @@ class InquiryDataFactory
     }
 
     /**
+     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Inquiry\InquiryData
      */
-    public function create(): InquiryData
+    public function create(int $domainId): InquiryData
     {
-        return $this->createInstance();
+        $inquiryData = $this->createInstance();
+        $inquiryData->domainId = $domainId;
+
+        return $inquiryData;
     }
 }
