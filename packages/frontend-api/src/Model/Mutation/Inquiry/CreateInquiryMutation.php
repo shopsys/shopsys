@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Inquiry\InquiryData;
 use Shopsys\FrameworkBundle\Model\Inquiry\InquiryDataFactory;
 use Shopsys\FrameworkBundle\Model\Inquiry\InquiryFacade;
+use Shopsys\FrameworkBundle\Model\Inquiry\Mail\InquiryMailFacade;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
@@ -22,6 +23,7 @@ class CreateInquiryMutation extends AbstractMutation
      * @param \Shopsys\FrameworkBundle\Model\Inquiry\InquiryDataFactory $inquiryDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Inquiry\InquiryFacade $inquiryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
+     * @param \Shopsys\FrameworkBundle\Model\Inquiry\Mail\InquiryMailFacade $inquiryMailFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
@@ -29,6 +31,7 @@ class CreateInquiryMutation extends AbstractMutation
         protected readonly InquiryDataFactory $inquiryDataFactory,
         protected readonly InquiryFacade $inquiryFacade,
         protected readonly ProductFacade $productFacade,
+        protected readonly InquiryMailFacade $inquiryMailFacade,
         protected readonly Domain $domain,
     ) {
     }
@@ -41,7 +44,9 @@ class CreateInquiryMutation extends AbstractMutation
     {
         try {
             $inquiryData = $this->createInquiryDataFromArgument($argument);
-            $this->inquiryFacade->create($inquiryData);
+            $inquiry = $this->inquiryFacade->create($inquiryData);
+
+            $this->inquiryMailFacade->sendMail($inquiry);
 
             return true;
         } catch (ProductNotFoundException) {
