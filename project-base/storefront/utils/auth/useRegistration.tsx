@@ -1,5 +1,6 @@
+import { useRegistrationByOrderMutation } from 'graphql/requests/registration/mutations/RegistrationByOrderMutation.generated';
 import { useRegistrationMutation } from 'graphql/requests/registration/mutations/RegistrationMutation.generated';
-import { TypeRegistrationDataInput } from 'graphql/types';
+import { TypeLoginResult, TypeRegistrationByOrderInput, TypeRegistrationDataInput } from 'graphql/types';
 import { GtmFormType } from 'gtm/enums/GtmFormType';
 import { onGtmSendFormEventHandler } from 'gtm/handlers/onGtmSendFormEventHandler';
 import { useRouter } from 'next/router';
@@ -10,6 +11,7 @@ import { blurInput } from 'utils/forms/blurInput';
 
 export const useRegistration = () => {
     const [, registerMutation] = useRegistrationMutation();
+    const [, registerByOrderMutation] = useRegistrationByOrderMutation();
     const router = useRouter();
     const updateAuthLoadingState = usePersistStore((s) => s.updateAuthLoadingState);
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
@@ -32,7 +34,6 @@ export const useRegistration = () => {
                 email: registrationInput.email,
                 firstName: registrationInput.firstName,
                 lastName: registrationInput.lastName,
-                lastOrderUuid: registrationInput.lastOrderUuid,
                 newsletterSubscription: registrationInput.newsletterSubscription,
                 password: registrationInput.password,
                 postcode: registrationInput.postcode,
@@ -44,28 +45,48 @@ export const useRegistration = () => {
         });
 
         if (registerResult.data?.Register) {
-            const accessToken = registerResult.data.Register.tokens.accessToken;
-            const refreshToken = registerResult.data.Register.tokens.refreshToken;
-
-            setTokensToCookies(accessToken, refreshToken);
-            updateCartUuid(null);
-            updateProductListUuids({});
-
-            updateAuthLoadingState(
-                registerResult.data.Register.showCartMergeInfo
-                    ? 'registration-loading-with-cart-modifications'
-                    : 'registration-loading',
-            );
-            updatePageLoadingState({ isPageLoading: true, redirectPageType: 'homepage' });
-            updateUserEntryState('registration');
-            onGtmSendFormEventHandler(GtmFormType.registration);
-            router.replace('/').then(() => router.reload());
-
-            return undefined;
+            return processRegisterResult(registerResult.data.Register);
         }
 
         return registerResult.error;
     };
 
-    return register;
+    function processRegisterResult(registerResultData: TypeLoginResult) {
+        const accessToken = registerResultData.tokens.accessToken;
+        const refreshToken = registerResultData.tokens.refreshToken;
+
+        setTokensToCookies(accessToken, refreshToken);
+        updateCartUuid(null);
+        updateProductListUuids({});
+
+        updateAuthLoadingState(
+            registerResultData.showCartMergeInfo
+                ? 'registration-loading-with-cart-modifications'
+                : 'registration-loading',
+        );
+        updatePageLoadingState({ isPageLoading: true, redirectPageType: 'homepage' });
+        updateUserEntryState('registration');
+        onGtmSendFormEventHandler(GtmFormType.registration);
+        router.replace('/').then(() => router.reload());
+
+        return undefined;
+    }
+
+    const registerByOrder = async (registrationInput: TypeRegistrationByOrderInput) => {
+        blurInput();
+        const registerResult = await registerByOrderMutation({
+            input: {
+                orderUrlHash: registrationInput.orderUrlHash,
+                password: registrationInput.password,
+            },
+        });
+
+        if (registerResult.data?.RegisterByOrder) {
+            return processRegisterResult(registerResult.data.RegisterByOrder);
+        }
+
+        return registerResult.error;
+    };
+
+    return { register, registerByOrder };
 };
