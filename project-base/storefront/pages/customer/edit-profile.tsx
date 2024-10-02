@@ -33,7 +33,7 @@ const EditProfilePage: FC = () => {
                 pageHeading={t('Edit profile')}
                 title={t('Edit profile')}
             >
-                {currentCustomerUserData !== undefined && currentCustomerUserData !== null && (
+                {currentCustomerUserData !== undefined && (
                     <EditProfileContent currentCustomerUser={currentCustomerUserData} />
                 )}
             </CustomerLayout>

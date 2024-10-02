@@ -79,7 +79,7 @@ export const useCreateOrder = (
         const createOrderResult = await createOrderMutation(
             getCreateOrderMutationVariables(
                 cartUuid,
-                formValues,
+                { ...formValues, email: user?.email ?? formValues.email },
                 currentCart.pickupPlace,
                 user,
                 isPacketeryTransport(currentCart.transport?.transportTypeCode),
@@ -158,7 +158,7 @@ const useHandleCreateOrderResult = () => {
         if (wasOrderCreated && createdOrder) {
             const orderConfirmationUrlQuery: OrderConfirmationUrlQuery = {
                 orderUuid: createdOrder.uuid,
-                orderEmail: formValues.email,
+                orderEmail: user?.email ?? formValues.email,
                 orderPaymentType: createdOrder.payment.type,
                 orderPaymentStatusPageValidityHash: undefined,
             };
