@@ -3,12 +3,14 @@ import { RegistrationCompany } from './RegistrationCompany';
 import { RegistrationPassword } from './RegistrationPassword';
 import { RegistrationUser } from './RegistrationUser';
 import { useRegistrationForm, useRegistrationFormMeta } from './registrationFormMeta';
+import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
+import { AnimatePresence } from 'framer-motion';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import useTranslation from 'next-translate/useTranslation';
 import { FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
@@ -58,7 +60,13 @@ export const RegistrationContent: FC = () => {
                     <FormContentWrapper>
                         <RegistrationUser />
 
-                        {customerValue === 'companyCustomer' && <RegistrationCompany />}
+                        <AnimatePresence initial={false}>
+                            {customerValue === 'companyCustomer' && (
+                                <AnimateCollapseDiv className="!flex flex-col" keyName="registration-company-data">
+                                    <RegistrationCompany />
+                                </AnimateCollapseDiv>
+                            )}
+                        </AnimatePresence>
 
                         <RegistrationPassword />
 

@@ -1,6 +1,8 @@
 import { ModalGalleryCarousel } from './ModalGalleryCarousel';
+import { AnimateSlideDiv } from 'components/Basic/Animations/AnimateSlideDiv';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { Image } from 'components/Basic/Image/Image';
+import { AnimatePresence } from 'framer-motion';
 import { TypeFileFragment } from 'graphql/requests/files/fragments/FileFragment.generated';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { TypeVideoTokenFragment } from 'graphql/requests/products/fragments/VideoTokenFragment.generated';
@@ -22,6 +24,7 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
     const { t } = useTranslation();
 
     const [selectedIndex, setSelectedIndex] = useState(initialIndex);
+    const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
     const itemsRefs: Array<RefObject<HTMLLIElement>> = Array(items.length)
         .fill(null)
         .map(() => createRef());
@@ -37,15 +40,19 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
 
     const isCarouselDisplayed = items.length > 1 && (!isImage || isLoaded);
 
-    const selectPreviousItem = () =>
+    const selectPreviousItem = () => {
+        setSlideDirection('left');
         setSelectedIndex((currentSelectedIndex) =>
             currentSelectedIndex > 0 ? currentSelectedIndex - 1 : lastItemIndex,
         );
+    };
 
-    const selectNextItem = () =>
+    const selectNextItem = () => {
+        setSlideDirection('right');
         setSelectedIndex((currentSelectedIndex) =>
             currentSelectedIndex < lastItemIndex ? currentSelectedIndex + 1 : 0,
         );
+    };
 
     useEffect(() => {
         if (isCarouselDisplayed) {
@@ -72,43 +79,66 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
             <div className="flex w-full flex-1 flex-col justify-center">
                 <div className="relative my-auto flex max-h-[80dvh] flex-1 items-center justify-center" {...handlers}>
                     <SpinnerIcon className="absolute -z-above w-16 text-textInverted opacity-50" />
+                    <AnimatePresence initial={false}>
+                        {isImage && (
+                            <AnimateSlideDiv
+                                className="relative !block size-full"
+                                direction={slideDirection}
+                                keyName={`image-${selectedIndex}`}
+                            >
+                                <Image
+                                    key={selectedIndex}
+                                    fill
+                                    alt={selectedGalleryItem.name || `${galleryName}-${selectedIndex}`}
+                                    className="max-h-full object-contain"
+                                    draggable={false}
+                                    sizes="(max-width: 768px) 100vw, 1200px"
+                                    src={selectedGalleryItem.url}
+                                    onLoad={() => setIsLoaded(true)}
+                                />
+                            </AnimateSlideDiv>
+                        )}
+                    </AnimatePresence>
 
-                    {isImage && (
-                        <Image
-                            key={selectedIndex}
-                            fill
-                            alt={selectedGalleryItem.name || `${galleryName}-${selectedIndex}`}
-                            className="max-h-full object-contain"
-                            draggable={false}
-                            sizes="(max-width: 768px) 100vw, 1200px"
-                            src={selectedGalleryItem.url}
-                            onLoad={() => setIsLoaded(true)}
-                        />
-                    )}
+                    <AnimatePresence initial={false}>
+                        {isVideo && (
+                            <AnimateSlideDiv
+                                className="relative !block size-full"
+                                direction={slideDirection}
+                                keyName={`video-${selectedIndex}`}
+                            >
+                                <iframe
+                                    allowFullScreen
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    className="aspect-video max-h-full w-full max-w-xl md:max-w-[1500px]"
+                                    src={`https://www.youtube.com/embed/${selectedGalleryItem.token}?autoplay=1&mute=1`}
+                                    title={selectedGalleryItem.description}
+                                />
+                            </AnimateSlideDiv>
+                        )}
+                    </AnimatePresence>
 
-                    {isVideo && (
-                        <iframe
-                            allowFullScreen
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            className="aspect-video max-h-full w-full max-w-xl md:max-w-[1500px]"
-                            src={`https://www.youtube.com/embed/${selectedGalleryItem.token}?autoplay=1&mute=1`}
-                            title={selectedGalleryItem.description}
-                        />
-                    )}
-
-                    {isFile && (
-                        <Image
-                            key={selectedIndex}
-                            fill
-                            alt={selectedGalleryItem.anchorText || `${galleryName}-${selectedIndex}`}
-                            className="max-h-full object-contain"
-                            draggable={false}
-                            hash={selectedGalleryItem.url.split('?')[1]}
-                            sizes="(max-width: 768px) 100vw, 1200px"
-                            src={selectedGalleryItem.url.split('?')[0]}
-                            onLoad={() => setIsLoaded(true)}
-                        />
-                    )}
+                    <AnimatePresence initial={false}>
+                        {isFile && (
+                            <AnimateSlideDiv
+                                className="relative !block size-full"
+                                direction={slideDirection}
+                                keyName={`file-${selectedIndex}`}
+                            >
+                                <Image
+                                    key={selectedIndex}
+                                    fill
+                                    alt={selectedGalleryItem.anchorText || `${galleryName}-${selectedIndex}`}
+                                    className="max-h-full object-contain"
+                                    draggable={false}
+                                    hash={selectedGalleryItem.url.split('?')[1]}
+                                    sizes="(max-width: 768px) 100vw, 1200px"
+                                    src={selectedGalleryItem.url.split('?')[0]}
+                                    onLoad={() => setIsLoaded(true)}
+                                />
+                            </AnimateSlideDiv>
+                        )}
+                    </AnimatePresence>
                 </div>
 
                 {isImage && selectedGalleryItem.name && (

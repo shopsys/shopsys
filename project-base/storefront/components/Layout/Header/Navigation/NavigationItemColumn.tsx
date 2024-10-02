@@ -2,6 +2,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { Image } from 'components/Basic/Image/Image';
 import { TypeColumnCategoriesFragment } from 'graphql/requests/navigation/fragments/ColumnCategoriesFragment.generated';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
+import { twJoin } from 'tailwind-merge';
 
 type NavigationItemColumnProps = {
     columnCategories: TypeColumnCategoriesFragment[];
@@ -10,13 +11,14 @@ type NavigationItemColumnProps = {
 };
 
 export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({
+    className,
     columnCategories,
     skeletonType,
     onLinkClick,
 }) => (
     <>
         {columnCategories.map((columnCategories, columnIndex) => (
-            <ul key={columnIndex} className="flex flex-col gap-9">
+            <ul key={columnIndex} className={twJoin('flex flex-col gap-9', className)}>
                 {columnCategories.categories.map((columnCategory, columnCategoryIndex) => (
                     <li key={columnCategoryIndex}>
                         <ExtendedNextLink

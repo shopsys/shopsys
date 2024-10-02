@@ -1,8 +1,8 @@
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper';
-import { ReactNode } from 'react';
-import SelectReact from 'react-select';
-import { components, Props } from 'react-select';
+import { m } from 'framer-motion';
+import { ReactNode, useState } from 'react';
+import SelectReact, { components, Props } from 'react-select';
 import { twJoin } from 'tailwind-merge';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
 
@@ -20,7 +20,12 @@ type SelectProps = NativeProps & {
 const DropdownIndicator = (props: any) => {
     return (
         <components.DropdownIndicator {...props}>
-            <ArrowIcon className={twJoin('text-inputText', props.isDisabled && 'text-inputTextDisabled')} />
+            <m.div
+                animate={{ rotate: props.selectProps.menuIsOpen ? 180 : 0 }}
+                transition={{ type: 'tween', duration: 0.2 }}
+            >
+                <ArrowIcon className={twJoin('text-inputText', props.isDisabled && 'text-inputTextDisabled')} />
+            </m.div>
         </components.DropdownIndicator>
     );
 };
@@ -45,6 +50,15 @@ const Control = (props: any) => {
 };
 
 export const Select: FC<SelectProps> = ({ hasError, onChange, options, defaultValue, isDisabled, value, ...props }) => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const openMenuHandler = () => setIsMenuOpen(true);
+    const closeMenuHandler = () => {
+        const menu = document.querySelector(`.select__menu`);
+        menu?.classList.add('animate-fadeOut');
+        setIsMenuOpen(false);
+    };
+
     return (
         <SelectReact
             classNamePrefix="select"
@@ -53,6 +67,7 @@ export const Select: FC<SelectProps> = ({ hasError, onChange, options, defaultVa
             inputId={props.id}
             isDisabled={isDisabled}
             isSearchable={false}
+            menuIsOpen={isMenuOpen}
             options={options}
             placeholder={props.label}
             value={value}
@@ -90,6 +105,8 @@ export const Select: FC<SelectProps> = ({ hasError, onChange, options, defaultVa
                 },
             }}
             onChange={onChange}
+            onMenuClose={closeMenuHandler}
+            onMenuOpen={openMenuHandler}
             {...props}
         />
     );

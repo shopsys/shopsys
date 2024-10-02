@@ -1,3 +1,6 @@
+import { AnimateAppearSlideY } from 'components/Basic/Animations/AnimateAppearSlideY';
+import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
+import { AnimateSlideDiv } from 'components/Basic/Animations/AnimateSlideDiv';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { LabelLink } from 'components/Basic/LabelLink/LabelLink';
 import { twJoin } from 'tailwind-merge';
@@ -22,12 +25,20 @@ export const FilterGroupTitle: FC<{ isOpen: boolean; title: string; onClick: () 
     </div>
 );
 
-export const FilterGroupContent: FC = ({ children }) => (
-    <div className="flex flex-col flex-wrap gap-2.5 pt-2.5">{children}</div>
+export const FilterGroupContent: FC<{ keyName?: string }> = ({ children, keyName }) => (
+    <AnimateCollapseDiv className="!block" keyName={keyName}>
+        <div className="!flex flex-col flex-wrap gap-2.5 pt-2.5">{children}</div>
+    </AnimateCollapseDiv>
 );
 
-export const FilterGroupContentItem: FC<{ isDisabled: boolean }> = ({ children, isDisabled }) => (
-    <div className={twJoin('', isDisabled && 'pointer-events-none opacity-30')}>{children}</div>
+export const FilterGroupContentItem: FC<{ isDisabled: boolean; keyName?: string }> = ({
+    children,
+    isDisabled,
+    keyName,
+}) => (
+    <AnimateAppearSlideY className={twJoin('!block', isDisabled && 'pointer-events-none opacity-30')} keyName={keyName}>
+        {children}
+    </AnimateAppearSlideY>
 );
 
 export const ShowAllButton: FC<{ onClick: () => void }> = ({ children, onClick }) => (
@@ -47,8 +58,10 @@ export const SelectedParametersName: FC = ({ children }) => (
     <p className="font-secondary text-xs font-semibold text-inputPlaceholder">{children}</p>
 );
 
-export const SelectedParametersList: FC = ({ children }) => (
-    <div className="flex flex-wrap items-center gap-x-2.5 gap-y-2">{children}</div>
+export const SelectedParametersList: FC<{ keyName?: string }> = ({ children, keyName }) => (
+    <AnimateSlideDiv className="!flex flex-wrap items-center gap-x-2.5 gap-y-2" direction="right" keyName={keyName}>
+        {children}
+    </AnimateSlideDiv>
 );
 
 export const SelectedParametersListItem: FC<{ onClick: () => void }> = ({ children, onClick }) => (

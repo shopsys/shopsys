@@ -1,16 +1,18 @@
 import { PromoCodeInfo } from './PromoCodeInfo';
 import { usePromoCodeForm, usePromoCodeFormMeta } from './promoCodeFormMeta';
+import { MinusIcon } from 'components/Basic/Icon/MinusIcon';
 import { PlusIcon } from 'components/Basic/Icon/PlusIcon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Button } from 'components/Forms/Button/Button';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
-import { Form } from 'components/Forms/Form/Form';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { TIDs } from 'cypress/tids';
+import { AnimatePresence, m } from 'framer-motion';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { FormProvider } from 'react-hook-form';
+import { collapseExpandAnimation } from 'utils/animations/animationVariants';
 import { useApplyPromoCodeToCart } from 'utils/cart/useApplyPromoCodeToCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useRemovePromoCodeFromCart } from 'utils/cart/useRemovePromoCodeFromCart';
@@ -51,44 +53,51 @@ export const PromoCode: FC = () => {
                         variant="inverted"
                         onClick={() => setIsContentVisible(!isContentVisible)}
                     >
-                        <PlusIcon className="w-3" />
+                        {isContentVisible ? <MinusIcon className="w-3" /> : <PlusIcon className="w-3" />}
                         {t('I have a discount coupon')}
                     </Button>
-                    {isContentVisible && (
-                        <FormProvider {...formProviderMethods}>
-                            <Form
-                                className="mt-15 sm:mt-0"
-                                onSubmit={formProviderMethods.handleSubmit((promoCodeFormData) =>
-                                    applyPromoCodeToCart(promoCodeFormData.promoCode),
-                                )}
-                            >
-                                <div className="flex max-w-sm">
-                                    <TextInputControlled
-                                        isWithoutFormLineError
-                                        control={formProviderMethods.control}
-                                        formName={formMeta.formName}
-                                        name={formMeta.fields.promoCode.name}
-                                        render={(textInput) => textInput}
-                                        textInputProps={{
-                                            label: formMeta.fields.promoCode.label,
-                                            required: true,
-                                            className: '!rounded-r-none border-r-0',
-                                        }}
-                                    />
-                                    <SubmitButton
-                                        className="h-auto !rounded-l-none !rounded-r !px-3"
-                                        isWithDisabledLook={!formProviderMethods.formState.isValid}
-                                        tid={TIDs.blocks_promocode_apply_button}
-                                        variant="inverted"
-                                    >
-                                        {isApplyingPromoCodeToCart && <Loader className="w-4" />}
+                    <AnimatePresence initial={false}>
+                        {isContentVisible && (
+                            <FormProvider {...formProviderMethods}>
+                                <m.form
+                                    key="promo-code"
+                                    animate="open"
+                                    className="mt-15 !flex sm:mt-0"
+                                    exit="closed"
+                                    initial="closed"
+                                    variants={collapseExpandAnimation}
+                                    onSubmit={formProviderMethods.handleSubmit((promoCodeFormData) =>
+                                        applyPromoCodeToCart(promoCodeFormData.promoCode),
+                                    )}
+                                >
+                                    <div className="flex w-full sm:w-fit lg:max-w-sm">
+                                        <TextInputControlled
+                                            isWithoutFormLineError
+                                            control={formProviderMethods.control}
+                                            formName={formMeta.formName}
+                                            name={formMeta.fields.promoCode.name}
+                                            render={(textInput) => textInput}
+                                            textInputProps={{
+                                                label: formMeta.fields.promoCode.label,
+                                                required: true,
+                                                className: '!rounded-r-none border-r-0',
+                                            }}
+                                        />
+                                        <SubmitButton
+                                            className="h-auto !rounded-l-none !rounded-r !px-3"
+                                            isWithDisabledLook={!formProviderMethods.formState.isValid}
+                                            tid={TIDs.blocks_promocode_apply_button}
+                                            variant="inverted"
+                                        >
+                                            {isApplyingPromoCodeToCart && <Loader className="w-4" />}
 
-                                        {t('Apply')}
-                                    </SubmitButton>
-                                </div>
-                            </Form>
-                        </FormProvider>
-                    )}
+                                            {t('Apply')}
+                                        </SubmitButton>
+                                    </div>
+                                </m.form>
+                            </FormProvider>
+                        )}
+                    </AnimatePresence>
                 </>
             )}
         </div>

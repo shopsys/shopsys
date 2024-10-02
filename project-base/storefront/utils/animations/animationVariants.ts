@@ -4,6 +4,7 @@ import { CSSProperties } from 'react';
 export const collapseExpandAnimation: Variants = {
     open: (height: CSSProperties['height'] = 'auto') => ({
         height,
+        type: 'tween',
         transitionEnd: { overflow: 'visible' },
     }),
     closed: {
@@ -19,5 +20,20 @@ export const fadeAnimation: Variants = {
     },
     hidden: {
         opacity: 0,
+    },
+};
+
+export const slideAnimation = {
+    hiddenRight: {
+        x: '25%',
+        opacity: 0.75,
+    },
+    hiddenLeft: {
+        x: '-25%',
+        opacity: 0.75,
+    },
+    visible: {
+        x: 0,
+        opacity: 1,
     },
 };

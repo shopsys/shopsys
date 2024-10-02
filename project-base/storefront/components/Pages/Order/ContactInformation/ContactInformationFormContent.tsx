@@ -1,3 +1,4 @@
+import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { FormBlockWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
@@ -7,6 +8,7 @@ import { ContactInformationCustomer } from 'components/Pages/Order/ContactInform
 import { ContactInformationDeliveryAddress } from 'components/Pages/Order/ContactInformation/FormBlocks/ContactInformationDeliveryAddress';
 import { ContactInformationUser } from 'components/Pages/Order/ContactInformation/FormBlocks/ContactInformationUser';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
+import { AnimatePresence } from 'framer-motion';
 import useTranslation from 'next-translate/useTranslation';
 import { useRef } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
@@ -29,7 +31,13 @@ export const ContactInformationFormContent: FC = () => {
 
                 <ContactInformationUser />
 
-                {customerValue === 'companyCustomer' && <ContactInformationCompany />}
+                <AnimatePresence initial={false}>
+                    {customerValue === 'companyCustomer' && (
+                        <AnimateCollapseDiv className="!block" keyName="company-contact-information">
+                            <ContactInformationCompany />
+                        </AnimateCollapseDiv>
+                    )}
+                </AnimatePresence>
 
                 <ContactInformationAddress />
 

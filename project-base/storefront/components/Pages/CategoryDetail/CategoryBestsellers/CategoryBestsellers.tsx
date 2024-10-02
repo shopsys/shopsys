@@ -1,9 +1,12 @@
 import { CategoryBestsellersListItem } from './CategoryBestsellersListItem';
+import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
+import { AnimatePresence } from 'framer-motion';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useGtmSliderProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmSliderProductListViewEvent';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
+import { twJoin } from 'tailwind-merge';
 
 const NUMBER_OF_VISIBLE_ITEMS = 3;
 
@@ -27,14 +30,18 @@ export const CategoryBestsellers: FC<CategoryBestsellersProps> = ({ products }) 
             </div>
 
             <div className="mb-3 flex flex-col divide-y divide-borderAccentLess">
-                {shownProducts.map((product, index) => (
-                    <CategoryBestsellersListItem
-                        key={product.uuid}
-                        gtmProductListName={GtmProductListNameType.bestsellers}
-                        listIndex={index}
-                        product={product}
-                    />
-                ))}
+                <AnimatePresence initial={false}>
+                    {shownProducts.map((product, index) => (
+                        <AnimateCollapseDiv key={product.uuid} className={twJoin('!block')} keyName={product.uuid}>
+                            <CategoryBestsellersListItem
+                                key={product.uuid}
+                                gtmProductListName={GtmProductListNameType.bestsellers}
+                                listIndex={index}
+                                product={product}
+                            />
+                        </AnimateCollapseDiv>
+                    ))}
+                </AnimatePresence>
             </div>
 
             {products.length > NUMBER_OF_VISIBLE_ITEMS && (

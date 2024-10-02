@@ -1,8 +1,10 @@
+import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { TIDs } from 'cypress/tids';
+import { AnimatePresence } from 'framer-motion';
 import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useRef, useState } from 'react';
 import { getTodayOpeningHours } from 'utils/openingHours/openingHoursHelper';
@@ -64,25 +66,27 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
                 </div>
             </div>
 
-            {isExpanded && (
-                <div className="mt-2.5">
-                    {store.description && (
+            <AnimatePresence initial={false}>
+                {isExpanded && (
+                    <AnimateCollapseDiv className="mt-2.5 !block" keyName="store-info">
+                        {store.description && (
+                            <InfoItem>
+                                <StoreHeading text={t('Store description')} />
+                                <p>{store.description}</p>
+                            </InfoItem>
+                        )}
+
                         <InfoItem>
-                            <StoreHeading text={t('Store description')} />
-                            <p>{store.description}</p>
+                            <StoreHeading text={t('Opening hours')} />
+                            <OpeningHours openingHours={store.openingHours} />
                         </InfoItem>
-                    )}
 
-                    <InfoItem>
-                        <StoreHeading text={t('Opening hours')} />
-                        <OpeningHours openingHours={store.openingHours} />
-                    </InfoItem>
-
-                    <LinkButton href={store.slug} size="small" type="store" variant="inverted">
-                        {t('Store detail')}
-                    </LinkButton>
-                </div>
-            )}
+                        <LinkButton href={store.slug} size="small" type="store" variant="inverted">
+                            {t('Store detail')}
+                        </LinkButton>
+                    </AnimateCollapseDiv>
+                )}
+            </AnimatePresence>
         </div>
     );
 };

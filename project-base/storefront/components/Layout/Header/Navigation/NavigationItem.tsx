@@ -1,6 +1,8 @@
+import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { NavigationItemColumn } from 'components/Layout/Header/Navigation/NavigationItemColumn';
+import { AnimatePresence, m } from 'framer-motion';
 import { TypeCategoriesByColumnFragment } from 'graphql/requests/navigation/fragments/CategoriesByColumnsFragment.generated';
 import { useState } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
@@ -31,25 +33,36 @@ export const NavigationItem: FC<NavigationItemProps> = ({ navigationItem, skelet
                 )}
             >
                 {navigationItem.name}
-                {hasChildren && (
-                    <ArrowIcon
-                        className={twJoin(
-                            'ml-2 text-linkInverted',
-                            isMenuOpenedDelayed && 'group-hover:rotate-180 group-hover:text-linkInvertedHovered',
-                        )}
-                    />
-                )}
+                <AnimatePresence initial={false}>
+                    {hasChildren && (
+                        <m.div
+                            animate={{ rotate: isMenuOpenedDelayed ? 180 : 0 }}
+                            className="ml-2 flex items-start"
+                            transition={{ type: 'tween', duration: 0.2 }}
+                        >
+                            <ArrowIcon
+                                className={twJoin(
+                                    ' text-linkInverted',
+                                    isMenuOpenedDelayed && 'group-hover:text-linkInvertedHovered',
+                                )}
+                            />
+                        </m.div>
+                    )}
+                </AnimatePresence>
             </ExtendedNextLink>
 
-            {hasChildren && isMenuOpenedDelayed && (
-                <div className="absolute left-0 right-0 z-menu grid grid-cols-4 gap-11 bg-background px-10 py-12 shadow-md">
-                    <NavigationItemColumn
-                        columnCategories={navigationItem.categoriesByColumns}
-                        skeletonType={skeletonType}
-                        onLinkClick={() => setIsMenuOpened(false)}
-                    />
-                </div>
-            )}
+            <AnimatePresence initial={false}>
+                {hasChildren && isMenuOpenedDelayed && (
+                    <AnimateCollapseDiv className="absolute left-0 right-0 z-menu !grid grid-cols-4 gap-11 bg-background px-10 shadow-md">
+                        <NavigationItemColumn
+                            className="py-12"
+                            columnCategories={navigationItem.categoriesByColumns}
+                            skeletonType={skeletonType}
+                            onLinkClick={() => setIsMenuOpened(false)}
+                        />
+                    </AnimateCollapseDiv>
+                )}
+            </AnimatePresence>
         </li>
     );
 };
