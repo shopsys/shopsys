@@ -1229,4 +1229,9 @@ class Order
     {
         return $this->customer;
     }
+
+    public function resetOrderPaymentStatusPageValidityHash(): void
+    {
+        $this->orderPaymentStatusPageValidityHash = Uuid::uuid4()->toString();
+    }
 }

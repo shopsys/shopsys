@@ -82,6 +82,9 @@ const handleErrorMessagesForMutation = (error: CombinedError) => {
     if (isWithToastAndConsoleErrorDebugging) {
         error.graphQLErrors
             .map((graphqlError) => mapGraphqlErrorForDevelopment(graphqlError))
+            .map((simplifiedGraphqlError) => {
+                return simplifiedGraphqlError;
+            })
             .forEach((simplifiedGraphqlError) => showErrorMessage(JSON.stringify(simplifiedGraphqlError)));
     }
 };

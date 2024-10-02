@@ -1,23 +1,15 @@
-import { TransportAndPaymentListItem } from './TransportAndPaymentListItem';
-import { TransportAndPaymentSelectItemLabel } from './TransportAndPaymentSelectItemLabel';
+import { PaymentListItem } from './PaymentSelectListItem';
+import { TransportListItem } from './TransportSelectListItem';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
-import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';
 import { PacketeryContainer } from 'components/Pages/Order/TransportAndPayment/PacketeryContainer';
 import {
-    getIsGoPayBankTransferPayment,
     usePaymentChangeInSelect,
     useTransportChangeInSelect,
 } from 'components/Pages/Order/TransportAndPayment/transportAndPaymentUtils';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
-import { TypeSimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
-import { useGoPaySwiftsQuery } from 'graphql/requests/payments/queries/GoPaySwiftsQuery.generated';
-import { TypeTransportStoresFragment } from 'graphql/requests/transports/fragments/TransportStoresFragment.generated';
 import { TypeTransportWithAvailablePaymentsFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
-import Skeleton from 'react-loading-skeleton';
-import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 import { ChangePaymentInCart } from 'utils/cart/useChangePaymentInCart';
 import { ChangeTransportInCart } from 'utils/cart/useChangeTransportInCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
@@ -39,95 +31,13 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
     isTransportSelectionLoading,
 }) => {
     const { t } = useTranslation();
-    const { currencyCode } = useDomainConfig();
-    const { transport, pickupPlace, payment, paymentGoPayBankSwift } = useCurrentCart();
-    const [{ data: goPaySwiftsData, fetching: areGoPaySwiftsFetching }] = useGoPaySwiftsQuery({
-        variables: { currencyCode },
-        pause: !getIsGoPayBankTransferPayment(payment),
-    });
-    const { changePayment, changeGoPaySwift, resetPaymentAndGoPayBankSwift } =
-        usePaymentChangeInSelect(changePaymentInCart);
+    const { transport, pickupPlace, payment } = useCurrentCart();
+    const { changePayment, resetPaymentAndGoPayBankSwift } = usePaymentChangeInSelect(changePaymentInCart);
     const { changeTransport, resetTransportAndPayment } = useTransportChangeInSelect(
         transports,
         lastOrderPickupPlace,
         changeTransportInCart,
         changePaymentInCart,
-    );
-
-    const renderTransportListItem = (
-        transportItem:
-            | (TypeTransportWithAvailablePaymentsFragment & TypeTransportStoresFragment)
-            | TypeTransportWithAvailablePaymentsFragment,
-        isActive: boolean,
-    ) => (
-        <TransportAndPaymentListItem key={transportItem.uuid} isActive={isActive}>
-            <Radiobutton
-                checked={isActive}
-                id={transportItem.uuid}
-                name="transport"
-                value={transportItem.uuid}
-                label={
-                    <TransportAndPaymentSelectItemLabel
-                        daysUntilDelivery={transportItem.daysUntilDelivery}
-                        description={transportItem.description}
-                        image={transportItem.mainImage}
-                        isSelected={isActive}
-                        name={transportItem.name}
-                        pickupPlaceDetail={isActive && pickupPlace ? pickupPlace : undefined}
-                        price={transportItem.price}
-                    />
-                }
-                onClick={changeTransport}
-            />
-        </TransportAndPaymentListItem>
-    );
-
-    const renderPaymentListItem = (paymentItem: TypeSimplePaymentFragment, isActive: boolean) => {
-        const isGoPaySwiftPayment =
-            paymentItem.uuid === payment?.uuid && payment.type === 'goPay' && getIsGoPayBankTransferPayment(payment);
-
-        return (
-            <TransportAndPaymentListItem key={paymentItem.uuid} isActive={isActive}>
-                <Radiobutton
-                    checked={isActive}
-                    id={paymentItem.uuid}
-                    name="payment"
-                    value={paymentItem.uuid}
-                    label={
-                        <TransportAndPaymentSelectItemLabel
-                            description={paymentItem.description}
-                            image={paymentItem.mainImage}
-                            isSelected={isActive}
-                            name={paymentItem.name}
-                            price={paymentItem.price}
-                        />
-                    }
-                    onClick={changePayment}
-                />
-                {isGoPaySwiftPayment && goPaySwiftSelect}
-            </TransportAndPaymentListItem>
-        );
-    };
-
-    const goPaySwiftSelect = (
-        <div className="relative w-full flex flex-col gap-2">
-            <b>{t('Choose your bank')}</b>
-            {areGoPaySwiftsFetching
-                ? createEmptyArray(2).map((_, index) => (
-                      <Skeleton key={index} className="h-6 w-36" containerClassName="h-6 w-36" />
-                  ))
-                : goPaySwiftsData?.GoPaySwifts.map((goPaySwift) => (
-                      <Radiobutton
-                          key={goPaySwift.swift}
-                          checked={paymentGoPayBankSwift === goPaySwift.swift}
-                          id={goPaySwift.swift}
-                          label={goPaySwift.name}
-                          name="goPaySwift"
-                          value={goPaySwift.swift}
-                          onChange={(event) => changeGoPaySwift(event.target.value)}
-                      />
-                  ))}
-        </div>
     );
 
     return (
@@ -137,9 +47,23 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                 <div tid={TIDs.pages_order_transport}>
                     <div className="h4 mb-3">{t('Choose transport')}</div>
                     <ul>
-                        {transport
-                            ? renderTransportListItem(transport, true)
-                            : transports.map((transportItem) => renderTransportListItem(transportItem, false))}
+                        {transport ? (
+                            <TransportListItem
+                                isActive
+                                changeTransport={changeTransport}
+                                pickupPlace={pickupPlace}
+                                transport={transport}
+                            />
+                        ) : (
+                            transports.map((transportItem) => (
+                                <TransportListItem
+                                    key={transportItem.uuid}
+                                    changeTransport={changeTransport}
+                                    pickupPlace={pickupPlace}
+                                    transport={transportItem}
+                                />
+                            ))
+                        )}
                     </ul>
                     {!!transport && (
                         <ResetButton
@@ -154,11 +78,18 @@ export const TransportAndPaymentSelect: FC<TransportAndPaymentSelectProps> = ({
                         {isTransportSelectionLoading && <LoaderWithOverlay className="w-8" />}
 
                         <div className="h4 mb-3">{t('Choose payment')}</div>
-
                         <ul>
-                            {payment
-                                ? renderPaymentListItem(payment, true)
-                                : transport.payments.map((paymentItem) => renderPaymentListItem(paymentItem, false))}
+                            {payment ? (
+                                <PaymentListItem isActive changePayment={changePayment} payment={payment} />
+                            ) : (
+                                transport.payments.map((paymentItem) => (
+                                    <PaymentListItem
+                                        key={paymentItem.uuid}
+                                        changePayment={changePayment}
+                                        payment={paymentItem}
+                                    />
+                                ))
+                            )}
                         </ul>
                         {payment !== null && (
                             <ResetButton

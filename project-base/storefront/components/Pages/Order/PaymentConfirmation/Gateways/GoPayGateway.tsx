@@ -32,9 +32,13 @@ export const GoPayGateway: FC<GoPayGatewayProps> = ({
             payOrder({ orderUuid }).then((payOrderResult) => {
                 if (payOrderResult.error?.graphQLErrors) {
                     for (const error of payOrderResult.error.graphQLErrors) {
-                        showErrorMessage(error.message);
+                        showErrorMessage(
+                            error.message.includes('Max transaction count reached')
+                                ? t('Max transaction count reached')
+                                : error.message,
+                        );
                     }
-
+                    setInitiatedPaymentGate(false);
                     return;
                 }
 
