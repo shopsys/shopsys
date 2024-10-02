@@ -7,11 +7,13 @@ import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 export type SkeletonModuleProductsListProps = {
     isWithoutDescription?: boolean;
     isWithoutNavigation?: boolean;
+    isWithoutBestsellers?: boolean;
 };
 
 export const SkeletonModuleProductsList: FC<SkeletonModuleProductsListProps> = ({
     isWithoutDescription,
     isWithoutNavigation,
+    isWithoutBestsellers = false,
 }) => (
     <div>
         {!isWithoutDescription && (
@@ -21,8 +23,8 @@ export const SkeletonModuleProductsList: FC<SkeletonModuleProductsListProps> = (
             </div>
         )}
 
-        {isWithoutNavigation && (
-            <div className="my-7 grid gap-2 md:grid-cols-3 lg:grid-cols-4 vl:grid-cols-5">
+        {!isWithoutNavigation && (
+            <div className="mb-7 grid gap-2 md:grid-cols-3 lg:grid-cols-4 vl:grid-cols-5">
                 {createEmptyArray(5).map((_, index) => (
                     <Skeleton key={index} className="h-20 w-full" />
                 ))}
@@ -35,16 +37,18 @@ export const SkeletonModuleProductsList: FC<SkeletonModuleProductsListProps> = (
             <div className="w-full">
                 <div className="flex">
                     <div className="flex w-full flex-col">
-                        <Skeleton className="mb-5 h-96 w-full" />
+                        {!isWithoutBestsellers && <Skeleton className="mb-5 h-96 w-full" />}
 
-                        <div className="mb-10 flex flex-wrap justify-between gap-2 vl:hidden">
-                            <Skeleton className="h-12 w-40" />
-                            <Skeleton className="h-12 w-32" />
+                        <div className="mb-10 flex flex-col justify-between gap-2 sm:flex-row vl:hidden">
+                            <Skeleton className="h-8 w-full sm:w-40" />
+                            <Skeleton className="h-8 w-full sm:w-40" />
                         </div>
+
                         <div className="hidden items-center justify-between vl:flex">
                             <Skeleton className="h-9 w-24" containerClassName="flex gap-3" count={3} />
                             <Skeleton className="h-4 w-20" />
                         </div>
+
                         <div className={productListTwClass}>
                             {createEmptyArray(DEFAULT_PAGE_SIZE).map((_, index) => (
                                 <SkeletonModuleProductListItem key={index} />

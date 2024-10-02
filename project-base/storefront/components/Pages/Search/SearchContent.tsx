@@ -26,24 +26,25 @@ export const SearchContent: FC<SearchContentProps> = ({ searchResults }) => {
             <h1 tid={TIDs.search_results_heading}>{`${t(
                 'Search results for',
             )} "${getStringFromUrlQuery(router.query.q)}"`}</h1>
+
             {!!searchResults.articlesSearch.length && (
-                <div className="mt-6">
-                    <div className="h4 mb-3">{t('Found articles')}</div>
-                    <SimpleNavigation listedItems={searchResults.articlesSearch} />
+                <div className="mt-5 lg:mt-9">
+                    <h5 className="mb-2">{t('Found articles')}</h5>
+                    <SimpleNavigation isWithoutSlider listedItems={searchResults.articlesSearch} />
                 </div>
             )}
 
             {!!searchResults.brandSearch.length && (
-                <div className="mt-6">
-                    <div className="h4 mb-3">{t('Found brands')}</div>
-                    <SimpleNavigation listedItems={searchResults.brandSearch} />
+                <div className="mt-5 lg:mt-9">
+                    <h5 className="mb-2">{t('Found brands')}</h5>
+                    <SimpleNavigation isWithoutSlider listedItems={searchResults.brandSearch} />
                 </div>
             )}
 
             {!!mappedCategoriesSearchResults?.length && (
-                <div className="mt-6">
-                    <div className="h4 mb-3">{t('Found categories')}</div>
-                    <SimpleNavigation listedItems={mappedCategoriesSearchResults} />
+                <div className="mt-5 lg:mt-9">
+                    <h5 className="mb-2">{t('Found categories')}</h5>
+                    <SimpleNavigation isWithoutSlider listedItems={mappedCategoriesSearchResults} />
                 </div>
             )}
         </>

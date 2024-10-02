@@ -1,6 +1,7 @@
 import { SearchProductsContent } from './SearchProductsContent';
 import { useSearchProductsData } from './searchUtils';
 import { FilterPanel } from 'components/Blocks/Product/Filter/FilterPanel';
+import { FilterSelectedParameters } from 'components/Blocks/Product/Filter/FilterSelectedParameters';
 import { SkeletonModuleProductsList } from 'components/Blocks/Skeleton/SkeletonModuleProductsList';
 import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/DeferredFilterAndSortingBar';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
@@ -37,8 +38,8 @@ export const SearchProducts: FC = () => {
     if (areSearchProductsFetching) {
         return (
             <>
-                <Skeleton className="h-full" containerClassName="block h-7 w-72 mb-3" />
-                <SkeletonModuleProductsList isWithoutDescription isWithoutNavigation />
+                <Skeleton className="mb-5 h-11 w-1/4" />
+                <SkeletonModuleProductsList isWithoutBestsellers isWithoutDescription isWithoutNavigation />;
             </>
         );
     }
@@ -49,9 +50,7 @@ export const SearchProducts: FC = () => {
 
     return (
         <>
-            <div className="mt-6">
-                <div className="h4 mb-3">{t('Found products')}</div>
-            </div>
+            <h5 className="mb-2 mt-5 lg:my-9">{t('Found products')}</h5>
 
             <div className="mb-8 flex scroll-mt-5 flex-col vl:mb-10 vl:flex-row vl:flex-wrap vl:gap-4">
                 <div
@@ -74,16 +73,20 @@ export const SearchProducts: FC = () => {
                 <Overlay isActive={isPanelOpen} onClick={handlePanelOpenerClick} />
 
                 <div className="flex flex-1 flex-col" ref={paginationScrollTargetRef}>
-                    <DeferredFilterAndSortingBar
-                        handlePanelOpenerClick={handlePanelOpenerClick}
-                        sorting={searchProductsData.orderingMode}
-                        totalCount={searchProductsData.totalCount}
-                        customSortOptions={[
-                            TypeProductOrderingModeEnum.Priority,
-                            TypeProductOrderingModeEnum.PriceAsc,
-                            TypeProductOrderingModeEnum.PriceDesc,
-                        ]}
-                    />
+                    <div className="flex flex-col">
+                        <FilterSelectedParameters filterOptions={searchProductsData.productFilterOptions} />
+
+                        <DeferredFilterAndSortingBar
+                            handlePanelOpenerClick={handlePanelOpenerClick}
+                            sorting={searchProductsData.orderingMode}
+                            totalCount={searchProductsData.totalCount}
+                            customSortOptions={[
+                                TypeProductOrderingModeEnum.Priority,
+                                TypeProductOrderingModeEnum.PriceAsc,
+                                TypeProductOrderingModeEnum.PriceDesc,
+                            ]}
+                        />
+                    </div>
 
                     <SearchProductsContent
                         areSearchProductsFetching={areSearchProductsFetching}
