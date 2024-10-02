@@ -150,6 +150,10 @@ class CustomerUserFacade
         $this->em->persist($customerUser);
         $this->em->flush();
 
+        if ($customerUserData->newsletterSubscription) {
+            $this->newsletterFacade->addSubscribedEmailIfNotExists($customerUser->getEmail(), $customerUser->getDomainId());
+        }
+
         return $customerUser;
     }
 
@@ -194,7 +198,7 @@ class CustomerUserFacade
             $customerUserUpdateData->billingAddressData,
         );
 
-        if ($customerUser->isNewsletterSubscription()) {
+        if ($customerUserUpdateData->customerUserData->newsletterSubscription) {
             $this->newsletterFacade->addSubscribedEmailIfNotExists($customerUser->getEmail(), $customerUser->getDomainId());
         } else {
             $this->newsletterFacade->deleteSubscribedEmailIfExists($customerUser->getEmail(), $customerUser->getDomainId());

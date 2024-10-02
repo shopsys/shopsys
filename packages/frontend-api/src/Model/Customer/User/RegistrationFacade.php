@@ -61,13 +61,7 @@ class RegistrationFacade
 
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromRegistrationData($registrationData);
 
-        $customerUser = $this->customerUserFacade->create($customerUserUpdateData);
-
-        if ($customerUser->isNewsletterSubscription()) {
-            $this->newsletterFacade->addSubscribedEmailIfNotExists($customerUser->getEmail(), $customerUser->getDomainId());
-        }
-
-        return $customerUser;
+        return $this->customerUserFacade->create($customerUserUpdateData);
     }
 
     /**
