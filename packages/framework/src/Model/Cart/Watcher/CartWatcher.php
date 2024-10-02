@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
+use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 
 class CartWatcher
@@ -60,6 +61,13 @@ class CartWatcher
         foreach ($cart->getItems() as $item) {
             try {
                 $product = $item->getProduct();
+
+                if ($product->getProductType() === ProductTypeEnum::TYPE_INQUIRY) {
+                    $notListableItems[] = $item;
+
+                    continue;
+                }
+
                 $productVisibility = $this->productVisibilityFacade
                     ->getProductVisibility(
                         $product,
