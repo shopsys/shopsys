@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Search;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
+use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use stdClass;
 
 class FilterQuery
@@ -241,40 +242,48 @@ class FilterQuery
         }
 
         $clone->filters[] = [
-            'nested' => [
-                'path' => 'prices',
-                'query' => [
-                    'bool' => [
-                        'must' => [
-                            'match_all' => new stdClass(),
-                        ],
-                        'filter' => [
-                            'bool' => [
-                                'must' => [
-                                    [
-                                        'range' => [
-                                            'prices.filtering_minimal_price' => [
-                                                'gte' => $priceGte,
+            'bool' => [
+                'should' => [
+                    [
+                        'nested' => [
+                            'path' => 'prices',
+                            'query' => [
+                                'bool' => [
+                                    'must' => [
+                                        'match_all' => new stdClass(),
+                                    ],
+                                    'filter' => [
+                                        [
+                                            'range' => [
+                                                'prices.filtering_minimal_price' => [
+                                                    'gte' => $priceGte,
+                                                ],
                                             ],
                                         ],
-                                    ],
-                                    [
-                                        'range' => [
-                                            'prices.filtering_maximal_price' => [
-                                                'lte' => $priceLte,
+                                        [
+                                            'range' => [
+                                                'prices.filtering_maximal_price' => [
+                                                    'lte' => $priceLte,
+                                                ],
                                             ],
                                         ],
-                                    ],
-                                    [
-                                        'term' => [
-                                            'prices.pricing_group_id' => $pricingGroup->getId(),
+                                        [
+                                            'term' => [
+                                                'prices.pricing_group_id' => $pricingGroup->getId(),
+                                            ],
                                         ],
                                     ],
                                 ],
                             ],
                         ],
                     ],
+                    [
+                        'term' => [
+                            'product_type' => ProductTypeEnum::TYPE_INQUIRY,
+                        ],
+                    ],
                 ],
+                'minimum_should_match' => 1,
             ],
         ];
 
@@ -830,7 +839,6 @@ class FilterQuery
                     ],
                 ],
             ],
-
         ];
 
         return $query;
