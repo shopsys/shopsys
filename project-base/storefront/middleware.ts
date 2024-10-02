@@ -15,6 +15,9 @@ const MIDDLEWARE_STATUS_MESSAGE_KEY = 'middleware-status-message';
 
 export const middleware: NextMiddleware = async (request) => {
     try {
+        if (request.url.includes('_next/data')) {
+            return new NextResponse(null, { status: 404 });
+        }
         const host = getHostFromRequest(request);
         const domainUrlFromStaticUrls = getDomainUrlFromStaticUrls(host);
         const staticUrlsAvailableForDomain = getStaticUrlsAvailableForDomain(domainUrlFromStaticUrls);
