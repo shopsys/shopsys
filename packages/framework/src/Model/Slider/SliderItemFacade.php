@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Slider;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 
 class SliderItemFacade
 {
@@ -16,6 +17,7 @@ class SliderItemFacade
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemFactoryInterface $sliderItemFactory
+     * @param \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -23,6 +25,7 @@ class SliderItemFacade
         protected readonly ImageFacade $imageFacade,
         protected readonly Domain $domain,
         protected readonly SliderItemFactoryInterface $sliderItemFactory,
+        protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
     ) {
     }
 
@@ -47,6 +50,8 @@ class SliderItemFacade
         $this->em->flush();
         $this->imageFacade->manageImages($sliderItem, $sliderItemData->image);
 
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::SLIDER_ITEMS_QUERY_KEY_PART);
+
         return $sliderItem;
     }
 
@@ -63,6 +68,8 @@ class SliderItemFacade
         $this->em->flush();
         $this->imageFacade->manageImages($sliderItem, $sliderItemData->image);
 
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::SLIDER_ITEMS_QUERY_KEY_PART);
+
         return $sliderItem;
     }
 
@@ -75,6 +82,8 @@ class SliderItemFacade
 
         $this->em->remove($sliderItem);
         $this->em->flush();
+
+        $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::SLIDER_ITEMS_QUERY_KEY_PART);
     }
 
     /**
