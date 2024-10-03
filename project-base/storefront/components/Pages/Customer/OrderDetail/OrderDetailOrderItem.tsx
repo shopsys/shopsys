@@ -48,7 +48,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
                 {isDiscount ? (
                     <span>{orderItem.name}</span>
                 ) : orderItem.product?.isVisible ? (
-                    <ExtendedNextLink className="w-full vl:w-fit" href={orderItem.product.slug}>
+                    <ExtendedNextLink className="w-full vl:w-fit" href={orderItem.product.slug} skeletonType="product">
                         {orderItem.name}
                     </ExtendedNextLink>
                 ) : (
