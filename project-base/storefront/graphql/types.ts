@@ -485,12 +485,25 @@ export type TypeCartInput = {
 /** Represent one item in the cart */
 export type TypeCartItem = {
   __typename?: 'CartItem';
+  /** Discounts applied to the cart item */
+  discounts: Array<TypeCartItemDiscount>;
   /** Product in the cart */
   product: TypeProduct;
   /** Quantity of items in the cart */
   quantity: Scalars['Int']['output'];
   /** Cart item UUID */
   uuid: Scalars['Uuid']['output'];
+};
+
+/** Represent discount of item in the cart */
+export type TypeCartItemDiscount = {
+  __typename?: 'CartItemDiscount';
+  /** Code of the promo code */
+  promoCode: Scalars['String']['output'];
+  /** Total discount */
+  totalDiscount: TypePrice;
+  /** Discount per unit */
+  unitDiscount: TypePrice;
 };
 
 export type TypeCartItemModificationsResult = {

@@ -1,0 +1,9 @@
+fragment CartItemDiscountFragment on CartItemDiscount {
+    promoCode
+    totalDiscount {
+        ...PriceFragment
+    }
+    unitDiscount {
+        ...PriceFragment
+    }
+}

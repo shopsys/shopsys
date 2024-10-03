@@ -191,4 +191,12 @@ class CartItem
     {
         return $this->uuid;
     }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Cart\Cart
+     */
+    public function getCart()
+    {
+        return $this->cart;
+    }
 }
