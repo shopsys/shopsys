@@ -40,6 +40,7 @@ const ComplaintsPage: FC = () => {
     const userIdentifier = useCookiesStore((store) => store.userIdentifier);
     const [searchQueryValue, setSearchQueryValue] = useState('');
     const debouncedSearchQuery = useDebounce(searchQueryValue, 300);
+    const isSearchQueryValid = debouncedSearchQuery.length >= MINIMAL_SEARCH_QUERY_LENGTH;
 
     const breadcrumbs: TypeBreadcrumbFragment[] = [
         { __typename: 'Link', name: t('My complaints'), slug: customerComplaintsUrl },
@@ -48,10 +49,10 @@ const ComplaintsPage: FC = () => {
     const [{ data: complaintsData, fetching: complaintsDataFetching }] = useComplaintsQuery({
         variables: {
             first: DEFAULT_PAGE_SIZE,
-            after: getEndCursor(currentPage),
+            after: isSearchQueryValid ? null : getEndCursor(currentPage),
             searchInput: {
                 parameters: [],
-                search: debouncedSearchQuery.length >= MINIMAL_SEARCH_QUERY_LENGTH ? debouncedSearchQuery : '',
+                search: isSearchQueryValid ? debouncedSearchQuery : '',
                 isAutocomplete: false,
                 userIdentifier,
             },
