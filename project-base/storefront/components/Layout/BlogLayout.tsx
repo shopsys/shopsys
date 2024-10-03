@@ -14,11 +14,9 @@ export const BlogLayout: FC<BlogLayoutProps> = ({ children, activeCategoryUuid }
     return (
         <Webline>
             <div className="scroll-mt-5" ref={paginationScrollTargetRef}>
-                <div className="mb-16 flex flex-col vl:flex-row">
-                    <div className="order-2 mb-16 flex w-full flex-col vl:order-1 vl:w-7/12 vl:flex-1 xl:w-2/3">
-                        {children}
-                    </div>
-                    <div className="order-1 mb-7 flex w-full flex-col vl:order-2 vl:w-5/12 vl:pl-8 xl:w-1/3">
+                <div className="mb-[60px] flex flex-col gap-3 md:gap-10 vl:flex-row xl:gap-[116px]">
+                    <div className="order-2 flex w-full flex-col vl:order-1 vl:flex-1">{children}</div>
+                    <div className="order-1 w-full vl:order-2 vl:w-[300px]">
                         <BlogSignpost
                             activeItem={activeCategoryUuid}
                             blogCategoryItems={blogCategoriesData?.blogCategories}

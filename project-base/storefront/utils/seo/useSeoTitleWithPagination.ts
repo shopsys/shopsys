@@ -7,18 +7,19 @@ export const useSeoTitleWithPagination = (
     totalCount: number | undefined,
     name: string | null | undefined,
     seoTitle?: string | null | undefined,
+    pageSize: number = DEFAULT_PAGE_SIZE,
 ) => {
     const { t } = useTranslation();
     const currentPage = useCurrentPageQuery();
     const currentLoadMore = useCurrentLoadMoreQuery();
     const title = seoTitle || name;
 
-    if (!totalCount || totalCount < DEFAULT_PAGE_SIZE) {
+    if (!totalCount || totalCount < pageSize) {
         return title;
     }
 
     if (currentLoadMore > 0) {
-        const totalPages = Math.ceil(totalCount / DEFAULT_PAGE_SIZE);
+        const totalPages = Math.ceil(totalCount / pageSize);
         return `${title} ${t('page {{ currentPage }} to {{ currentPageWithLoadMore }} from {{ totalPages }}', {
             currentPage,
             totalPages,
@@ -28,6 +29,6 @@ export const useSeoTitleWithPagination = (
 
     return `${title} ${t('page {{ currentPage }} from {{ totalPages }}', {
         currentPage,
-        totalPages: Math.ceil(totalCount / DEFAULT_PAGE_SIZE),
+        totalPages: Math.ceil(totalCount / pageSize),
     })}`;
 };
