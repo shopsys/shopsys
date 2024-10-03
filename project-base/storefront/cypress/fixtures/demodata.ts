@@ -128,6 +128,10 @@ export const transport = {
             uuid: '67ac2c38-7bdd-59fa-b762-0704cee8323e',
             name: 'Ostrava',
         },
+        storePardubice: {
+            uuid: 'c0b38c80-9755-5030-930b-fa971e03c4bd',
+            name: 'Pardubice',
+        },
     },
     czechPost: {
         uuid: 'f411f93c-6658-5bf6-ad68-cd69a83a88c0',

@@ -1,4 +1,5 @@
 import {
+    changeOpeningHoursStatusToEmptyString,
     changeSelectionOfPaymentByName,
     changeSelectionOfTransportByName,
     chooseTransportPersonalCollectionAndStore,
@@ -57,18 +58,18 @@ describe('Last Order Transport And Payment Select Tests', () => {
 
         changeSelectionOfTransportByName(transport.ppl.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod(500);
-        chooseTransportPersonalCollectionAndStore(transport.personalCollection.storeOstrava.name);
+        chooseTransportPersonalCollectionAndStore(transport.personalCollection.storePardubice.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod(500);
         changeSelectionOfPaymentByName(payment.cash.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod(500);
         cy.reloadAndWaitForStableAndInteractiveDOM();
-        // skip last snapshot because of dynamic data in stores select
-        this.skip();
+        changeOpeningHoursStatusToEmptyString();
         takeSnapshotAndCompare(this.test?.title, 'after second change and refresh', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.order_summary_transport_and_payment_image },
+                { tid: TIDs.opening_hours },
             ],
         });
     });

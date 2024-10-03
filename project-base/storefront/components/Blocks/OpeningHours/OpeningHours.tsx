@@ -1,4 +1,5 @@
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
+import { TIDs } from 'cypress/tids';
 import { TypeOpeningHours } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { Fragment } from 'react';
@@ -73,7 +74,7 @@ export const OpeningHours: FC<{ openingHours: StoreOrPacketeryPoint['openingHour
                     );
                 })}
 
-            <div className={twMergeCustom('flex w-full flex-col text-text', className)}>
+            <div className={twMergeCustom('flex w-full flex-col text-text', className)} tid={TIDs.opening_hours}>
                 {openingHours.openingHoursOfDays.map(({ date, dayOfWeek, openingHoursRanges }) => {
                     const isToday = openingHours.dayOfWeek === dayOfWeek;
                     const isClosedWholeDay = openingHoursRanges.length === 0;
@@ -86,7 +87,7 @@ export const OpeningHours: FC<{ openingHours: StoreOrPacketeryPoint['openingHour
                                 isToday && 'bg-backgroundAccentLess',
                             )}
                         >
-                            <h6 className="shrink-0  basis-32 uppercase">
+                            <h6 className="basis-32 uppercase md:shrink-0">
                                 {getDayName(openingHours.dayOfWeek, dayOfWeek)} {formatDate(date, 'D. M.')}
                             </h6>
                             <span className="text-sm">
@@ -101,7 +102,7 @@ export const OpeningHours: FC<{ openingHours: StoreOrPacketeryPoint['openingHour
                                 )}
                             </span>
                             {isToday && (
-                                <span>
+                                <span tid={TIDs.opening_hours_status}>
                                     <OpeningStatus isDynamic className="block" status={openingHours.status} />
                                 </span>
                             )}
