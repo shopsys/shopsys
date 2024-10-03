@@ -1,0 +1,15 @@
+CartItemDiscountDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Represent discount of item in the cart"
+        fields:
+            promoCode:
+                type: "String!"
+                description: "Code of the promo code"
+            totalDiscount:
+                type: "Price!"
+                description: "Total discount"
+            unitDiscount:
+                type: "Price!"
+                description: "Discount per unit"
