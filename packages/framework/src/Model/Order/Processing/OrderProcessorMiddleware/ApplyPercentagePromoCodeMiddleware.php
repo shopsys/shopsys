@@ -101,6 +101,13 @@ class ApplyPercentagePromoCodeMiddleware extends AbstractPromoCodeMiddleware
         $locale = $domainConfig->getLocale();
         $domainId = $domainConfig->getId();
 
+        $unitDiscountPrice = $this->discountCalculation->calculatePercentageDiscountRoundedByCurrency(
+            $productItem->getUnitPrice(),
+            (float)$productItem->vatPercent,
+            (float)$promoCodeLimit->getDiscount(),
+            $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId),
+        );
+
         $discountPrice = $this->discountCalculation->calculatePercentageDiscountRoundedByCurrency(
             $productItem->getTotalPrice(),
             (float)$productItem->vatPercent,
@@ -115,10 +122,11 @@ class ApplyPercentagePromoCodeMiddleware extends AbstractPromoCodeMiddleware
         $discountOrderItemData = $this->orderItemDataFactory->create(OrderItemTypeEnum::TYPE_DISCOUNT);
 
         $discountPrice = $discountPrice->inverse();
+        $unitDiscountPrice = $unitDiscountPrice->inverse();
 
         $discountOrderItemData->name = $this->getOrderItemName($locale, $promoCodeLimit, $productItem);
         $discountOrderItemData->quantity = 1;
-        $discountOrderItemData->setUnitPrice($discountPrice);
+        $discountOrderItemData->setUnitPrice($unitDiscountPrice);
         $discountOrderItemData->setTotalPrice($discountPrice);
         $discountOrderItemData->vatPercent = $productItem->vatPercent;
         $discountOrderItemData->promoCode = $promoCode;

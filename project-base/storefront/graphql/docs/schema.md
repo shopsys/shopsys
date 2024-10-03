@@ -24,6 +24,7 @@
     * [BrandFilterOption](#brandfilteroption)
     * [Cart](#cart)
     * [CartItem](#cartitem)
+    * [CartItemDiscount](#cartitemdiscount)
     * [CartItemModificationsResult](#cartitemmodificationsresult)
     * [CartModificationsResult](#cartmodificationsresult)
     * [CartMultipleAddedProductModificationsResult](#cartmultipleaddedproductmodificationsresult)
@@ -3317,6 +3318,15 @@ Represent one item in the cart
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong id="cartitem.discounts">discounts</strong></td>
+<td valign="top">[<a href="#cartitemdiscount">CartItemDiscount</a>!]!</td>
+<td>
+
+Discounts applied to the cart item
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="cartitem.product">product</strong></td>
 <td valign="top"><a href="#product">Product</a>!</td>
 <td>
@@ -3340,6 +3350,50 @@ Quantity of items in the cart
 <td>
 
 Cart item UUID
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### CartItemDiscount
+
+Represent discount of item in the cart
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="cartitemdiscount.promocode">promoCode</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Code of the promo code
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="cartitemdiscount.totaldiscount">totalDiscount</strong></td>
+<td valign="top"><a href="#price">Price</a>!</td>
+<td>
+
+Total discount
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="cartitemdiscount.unitdiscount">unitDiscount</strong></td>
+<td valign="top"><a href="#price">Price</a>!</td>
+<td>
+
+Discount per unit
 
 </td>
 </tr>
