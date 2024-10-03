@@ -39,4 +39,7 @@ fragment CartItemFragment on CartItem {
             name
         }
     }
+    discount {
+        ...CartItemDiscountFragment
+    }
 }

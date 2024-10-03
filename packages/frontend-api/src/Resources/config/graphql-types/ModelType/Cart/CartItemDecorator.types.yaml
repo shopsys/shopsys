@@ -13,3 +13,6 @@ CartItemDecorator:
             quantity:
                 type: "Int!"
                 description: "Quantity of items in the cart"
+            discount:
+                type: "[CartItemDiscount!]"
+                description: "Discount applied to the cart item"
