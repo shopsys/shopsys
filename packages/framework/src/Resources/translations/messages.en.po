@@ -1900,6 +1900,9 @@ msgstr ""
 msgid "Go to Frontend"
 msgstr ""
 
+msgid "Go to associated customer user"
+msgstr ""
+
 msgid "Go to page:"
 msgstr ""
 

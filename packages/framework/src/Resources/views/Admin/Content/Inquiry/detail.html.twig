@@ -14,7 +14,14 @@
                 </tr>
                 <tr>
                     <th>{{ 'Last name'|trans }}</th>
-                    <td>{{ inquiry.lastName }}</td>
+                    <td>
+                        {{ inquiry.lastName }}
+                        {% if inquiry.customerUser %}
+                            <a class="padding-left-10" href="{{ url('admin_customer_user_edit', { id: inquiry.customerUser.id }) }}">
+                                {{ icon('forward-page') }} {{ 'Go to associated customer user'|trans }}
+                            </a>
+                        {% endif %}
+                    </td>
                 </tr>
                 <tr>
                     <th>{{ 'Email'|trans }}</th>

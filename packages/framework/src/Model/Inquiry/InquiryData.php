@@ -60,4 +60,9 @@ class InquiryData
      * @var \DateTimeImmutable|null
      */
     public $createdAt;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
+     */
+    public $customerUser;
 }
