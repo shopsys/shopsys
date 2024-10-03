@@ -862,6 +862,27 @@ export type TypeCountry = {
   name: Scalars['String']['output'];
 };
 
+export type TypeCreateInquiryInput = {
+  /** The customer’s company name */
+  companyName: InputMaybe<Scalars['String']['input']>;
+  /** The customer’s company identification number */
+  companyNumber: InputMaybe<Scalars['String']['input']>;
+  /** The customer’s company tax number */
+  companyTaxNumber: InputMaybe<Scalars['String']['input']>;
+  /** The customer's email address */
+  email: Scalars['String']['input'];
+  /** Customer user first name */
+  firstName: Scalars['String']['input'];
+  /** Customer user last name */
+  lastName: Scalars['String']['input'];
+  /** Customer's question or note to the inquiry product */
+  note: InputMaybe<Scalars['String']['input']>;
+  /** Product UUID */
+  productUuid: Scalars['Uuid']['input'];
+  /** The customer's telephone number */
+  telephone: Scalars['String']['input'];
+};
+
 export type TypeCreateOrderResult = {
   __typename?: 'CreateOrderResult';
   cart: Maybe<TypeCart>;
@@ -1274,6 +1295,8 @@ export type TypeMutation = {
   CreateComplaint: TypeComplaint;
   /** Create a new delivery address */
   CreateDeliveryAddress: Array<TypeDeliveryAddress>;
+  /** Send the inquiry for the product */
+  CreateInquiry: Scalars['Boolean']['output'];
   /** Creates complete order with products and addresses */
   CreateOrder: TypeCreateOrderResult;
   /** Delete delivery address by Uuid */
@@ -1381,6 +1404,11 @@ export type TypeMutationCreateComplaintArgs = {
 
 export type TypeMutationCreateDeliveryAddressArgs = {
   input: TypeDeliveryAddressInput;
+};
+
+
+export type TypeMutationCreateInquiryArgs = {
+  input: TypeCreateInquiryInput;
 };
 
 
