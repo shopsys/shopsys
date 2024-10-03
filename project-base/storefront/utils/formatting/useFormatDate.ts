@@ -12,7 +12,7 @@ export const useFormatDate = (): {
     const timezone = settingsData?.settings?.displayTimezone || fallbackTimezone;
 
     return {
-        formatDate: (date, format) => formatDate(date, timezone, format),
+        formatDate: (date) => formatDate(date, timezone),
         formatDateAndTime: (date) => formatDateAndTime(date, timezone),
     };
 };

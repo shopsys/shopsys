@@ -26,7 +26,7 @@ export const ComplaintDetailBasicInfo: FC<ComplaintDetailBasicInfoProps> = ({ co
                     <ComplaintItemColumnInfo
                         tid={TIDs.complaint_detail_creation_date}
                         title={t('Creation date')}
-                        value={formatDate(complaint.createdAt, 'DD. MM. YYYY')}
+                        value={formatDate(complaint.createdAt)}
                     />
                     <ComplaintItemColumnInfo title={t('Status')} value={complaint.status} />
                 </div>

@@ -133,7 +133,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                                             </Row>
                                             <Row>
                                                 <CellMinor>{t('Creation date')}</CellMinor>
-                                                <Cell>{formatDate(order.creationDate, 'l')}</Cell>
+                                                <Cell>{formatDate(order.creationDate)}</Cell>
                                             </Row>
                                             <Row>
                                                 <CellMinor>{t('First name')}</CellMinor>
@@ -233,7 +233,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                         >
                             <Row>
                                 <CellMinor>{newsLetterSubscriber.email}</CellMinor>
-                                <td className="text-right">{formatDate(newsLetterSubscriber.createdAt, 'l')}</td>
+                                <td className="text-right">{formatDate(newsLetterSubscriber.createdAt)}</td>
                             </Row>
                         </Table>
                     </>
