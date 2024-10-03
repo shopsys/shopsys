@@ -21,23 +21,23 @@ export const MenuIconicPlaceholder: FC = () => {
         <ul className="flex items-center gap-1 h-12">
             <li className="max-lg:hidden">
                 <ExtendedNextLink className={placeholderItemTwClass} href={storesUrl} type="stores">
-                    <MarkerIcon className="w-6" />
+                    <MarkerIcon className="size-6" />
                     {t('Stores')}
                 </ExtendedNextLink>
             </li>
 
             <li className={twJoin('max-lg:hidden', placeholderItemTwClass)}>
-                <CompareIcon className="w-6" isFull={false} />
+                <CompareIcon className="size-6" />
                 {t('Comparison')}
             </li>
 
             <li className={twJoin('max-lg:hidden', placeholderItemTwClass)}>
-                <HeartIcon className="w-6" isFull={false} />
+                <HeartIcon className="size-6" />
                 {t('Wishlist')}
             </li>
 
             <li className={placeholderItemTwClass}>
-                <UserIcon className="w-6 max-h-[22px]" />
+                <UserIcon className="size-6 max-h-[22px]" />
                 <Skeleton className="w-10" containerClassName="max-lg:hidden" />
             </li>
         </ul>

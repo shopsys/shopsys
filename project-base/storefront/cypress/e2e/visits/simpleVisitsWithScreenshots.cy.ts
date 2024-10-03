@@ -34,8 +34,6 @@ describe('Simple page visit tests with screenshots', () => {
     });
 
     it('category detail visit with screenshot', function () {
-        // skip this test because the category page test is failing on icon rendering
-        this.skip();
         cy.visitAndWaitForStableAndInteractiveDOM(url.categoryElectronics);
         takeSnapshotAndCompare(this.test?.title, 'category detail', {
             blackout: [
