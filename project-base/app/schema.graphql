@@ -712,6 +712,27 @@ type Country {
   name: String!
 }
 
+input CreateInquiryInput {
+  "The customer’s company name"
+  companyName: String
+  "The customer’s company identification number"
+  companyNumber: String
+  "The customer’s company tax number"
+  companyTaxNumber: String
+  "The customer's email address"
+  email: String!
+  "Customer user first name"
+  firstName: String!
+  "Customer user last name"
+  lastName: String!
+  "Customer's question or note to the inquiry product"
+  note: String
+  "Product UUID"
+  productUuid: Uuid!
+  "The customer's telephone number"
+  telephone: String!
+}
+
 type CreateOrderResult {
   cart: Cart
   order: Order
@@ -1082,6 +1103,8 @@ type Mutation {
   CreateComplaint(input: ComplaintInput!): Complaint!
   "Create a new delivery address"
   CreateDeliveryAddress(input: DeliveryAddressInput!): [DeliveryAddress!]!
+  "Send the inquiry for the product"
+  CreateInquiry(input: CreateInquiryInput!): Boolean!
   "Creates complete order with products and addresses"
   CreateOrder(input: OrderInput!): CreateOrderResult!
   "Delete delivery address by Uuid"
