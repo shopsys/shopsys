@@ -38,21 +38,34 @@ class CartWithPromoCodeTest extends GraphQlTestCase
         ]);
         $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
 
-        $query = 'query{
-            cart(cartInput: {
+        $query = 'query {
+            cart (cartInput: {
                 cartUuid: "' . $cartUuid . '"
             }){
                 uuid
-                items{
+                items {
                     uuid
                     quantity
+                    discounts {
+                        promoCode
+                        totalDiscount {
+                            priceWithVat
+                            priceWithoutVat
+                            vatAmount
+                        }
+                        unitDiscount {
+                            priceWithVat
+                            priceWithoutVat
+                            vatAmount
+                        }
+                    }
                 }
-                totalPrice{
+                totalPrice {
                     priceWithVat
                     priceWithoutVat
                     vatAmount
                 }
-                totalDiscountPrice{
+                totalDiscountPrice {
                     priceWithVat
                     priceWithoutVat
                     vatAmount
@@ -65,6 +78,26 @@ class CartWithPromoCodeTest extends GraphQlTestCase
         $cartData = $this->getResponseContentForQuery($query)['data']['cart'];
         $this->assertSame($this->getSerializedPriceConvertedToDomainDefaultCurrency('2602.48', $vatHigh), $cartData['totalPrice']);
         $this->assertSame($this->getSerializedPriceConvertedToDomainDefaultCurrency('289.26', $vatHigh), $cartData['totalDiscountPrice']);
+
+        $this->assertSame(
+            [
+                [
+                    'promoCode' => 'test',
+                    'totalDiscount' => [
+                        'priceWithVat' => $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('-350.000000'),
+                        'priceWithoutVat' => $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('-289.250000'),
+                        'vatAmount' => $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('-60.750000'),
+                    ],
+                    'unitDiscount' => [
+                        'priceWithVat' => $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('-350.000000'),
+                        'priceWithoutVat' => $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('-289.250000'),
+                        'vatAmount' => $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('-60.750000'),
+                    ],
+                ],
+            ],
+            $cartData['items'][0]['discounts'],
+        );
+
 
         $product72 = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '72', Product::class);
 
@@ -97,6 +130,7 @@ class CartWithPromoCodeTest extends GraphQlTestCase
         ];
 
         $addToCartResult = $addAnotherToCartResponse['data']['AddToCart'];
+
         $this->assertSame($totalPriceExpected, $addToCartResult['cart']['totalPrice']);
         $this->assertSame($totalDiscountPriceExpected, $addToCartResult['cart']['totalDiscountPrice']);
     }
