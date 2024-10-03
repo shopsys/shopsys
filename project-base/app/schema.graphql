@@ -382,12 +382,24 @@ input CartInput {
 
 "Represent one item in the cart"
 type CartItem {
+  "Discounts applied to the cart item"
+  discounts: [CartItemDiscount!]!
   "Product in the cart"
   product: Product!
   "Quantity of items in the cart"
   quantity: Int!
   "Cart item UUID"
   uuid: Uuid!
+}
+
+"Represent discount of item in the cart"
+type CartItemDiscount {
+  "Code of the promo code"
+  promoCode: String!
+  "Total discount"
+  totalDiscount: Price!
+  "Discount per unit"
+  unitDiscount: Price!
 }
 
 type CartItemModificationsResult {
