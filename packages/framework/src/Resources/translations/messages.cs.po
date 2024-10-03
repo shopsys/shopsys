@@ -1903,6 +1903,9 @@ msgstr "Vygenerované dávky"
 msgid "Go to Frontend"
 msgstr "Přejít na Frontend"
 
+msgid "Go to associated customer user"
+msgstr "Přejít na přiřazeného zákazníka"
+
 msgid "Go to page:"
 msgstr "Přejít na stránku:"
 

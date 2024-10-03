@@ -95,6 +95,13 @@ class Inquiry
     protected $productCatnum;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser")
+     * @ORM\JoinColumn(nullable=true, name="customer_user_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    protected $customerUser;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Inquiry\InquiryData $inquiryData
      */
     public function __construct(InquiryData $inquiryData)
@@ -120,6 +127,7 @@ class Inquiry
         $this->note = $inquiryData->note;
         $this->product = $inquiryData->product;
         $this->productCatnum = $inquiryData->product->getCatnum();
+        $this->customerUser = $inquiryData->customerUser;
     }
 
     /**
@@ -232,5 +240,13 @@ class Inquiry
     public function getProductCatnum()
     {
         return $this->productCatnum;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
+     */
+    public function getCustomerUser()
+    {
+        return $this->customerUser;
     }
 }
