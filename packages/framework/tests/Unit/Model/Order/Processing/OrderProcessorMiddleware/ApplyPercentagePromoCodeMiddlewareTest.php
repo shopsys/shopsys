@@ -63,6 +63,8 @@ class ApplyPercentagePromoCodeMiddlewareTest extends MiddlewareTestCase
 
         $applyPercentagePromoCodeMiddleware = $this->createApplyPercentagePromoCodeMiddleware([
             new Price(Money::create(10), Money::create('12.1')),
+            new Price(Money::create(10), Money::create('12.1')),
+            new Price(Money::create(100), Money::create(121)),
             new Price(Money::create(200), Money::create(242)),
         ]);
         $result = $applyPercentagePromoCodeMiddleware->handle($orderProcessingData, $this->createOrderProcessingStack());
