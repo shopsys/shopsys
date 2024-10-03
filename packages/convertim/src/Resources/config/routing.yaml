@@ -1,0 +1,4 @@
+shopsys_convertim:
+    resource: "@ShopsysConvertimBundle/Controller"
+    prefix: /convertim
+    type: attribute

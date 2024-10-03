@@ -17,6 +17,10 @@ shopsys_administration:
     prefix: /%admin_url%
     resource: "@ShopsysAdministrationBundle/Controller"
 
+shopsys_convertim:
+    prefix: /convertim
+    resource: "@ShopsysConvertimBundle/Controller"
+
 shopsys_framework:
     prefix: /%admin_url%
     resource: "@ShopsysFrameworkBundle/Controller/Admin"

@@ -23,6 +23,7 @@ class AnnotatedRouteControllerLoader extends BaseAnnotatedRouteControllerLoader
     protected function getDefaultRouteName(ReflectionClass $class, ReflectionMethod $method): string
     {
         $routeName = parent::getDefaultRouteName($class, $method);
+        $routeName = preg_replace('/^(shopsys_convertim)/', 'convertim', $routeName);
 
         return preg_replace('/^(app_|shopsys_framework_)/', '', $routeName);
     }
