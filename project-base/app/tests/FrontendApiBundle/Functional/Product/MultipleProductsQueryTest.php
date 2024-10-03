@@ -61,6 +61,11 @@ class MultipleProductsQueryTest extends GraphQlTestCase
             "node": {
               "name": "' . t('Samsung UE75HU7500 (UHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale) . '"
             }
+          },
+          {
+            "node": {
+              "name": "' . t('Sencor SDB 4002M4', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale) . '"
+            }
           }
         ]
       }
