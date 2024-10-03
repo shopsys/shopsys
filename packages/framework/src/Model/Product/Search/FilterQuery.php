@@ -94,6 +94,15 @@ class FilterQuery
         }
 
         if ($orderingModeId === ProductListOrderingConfig::ORDER_BY_PRICE_ASC) {
+            $clone->sorting['_script'] = [
+                'type' => 'number',
+                'script' => [
+                    'lang' => 'painless',
+                    'source' => 'doc[\'product_type\'].value == \'inquiry\' ? 1 : 0',
+                ],
+                'order' => 'asc',
+            ];
+
             $clone->sorting['prices.price_with_vat'] = [
                 'order' => 'asc',
                 'nested' => [
@@ -112,6 +121,15 @@ class FilterQuery
         }
 
         if ($orderingModeId === ProductListOrderingConfig::ORDER_BY_PRICE_DESC) {
+            $clone->sorting['_script'] = [
+                'type' => 'number',
+                'script' => [
+                    'lang' => 'painless',
+                    'source' => 'doc[\'product_type\'].value == \'inquiry\' ? 1 : 0',
+                ],
+                'order' => 'asc',
+            ];
+
             $clone->sorting['prices.price_with_vat'] = [
                 'order' => 'desc',
                 'nested' => [
