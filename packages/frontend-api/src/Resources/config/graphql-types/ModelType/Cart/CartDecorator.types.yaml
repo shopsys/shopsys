@@ -18,8 +18,8 @@ CartDecorator:
             selectedPickupPlaceIdentifier:
                 type: "String"
                 description: "Selected pickup place identifier if provided"
-            promoCode:
-                type: "String"
+            promoCodes:
+                type: "[PromoCode!]!"
                 description: "Applied promo code if provided"
             modifications:
                 type: "CartModificationsResult!"
