@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Product\Parameter;
+namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -10,19 +10,19 @@ class ParameterGroupFacade
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \App\Model\Product\Parameter\ParameterGroupFactory $parameterGroupFactory
-     * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupFactoryInterface $parameterGroupFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
      */
     public function __construct(
-        private readonly EntityManagerInterface $em,
-        private readonly ParameterGroupFactory $parameterGroupFactory,
-        private readonly ParameterRepository $parameterRepository,
+        protected readonly EntityManagerInterface $em,
+        protected readonly ParameterGroupFactoryInterface $parameterGroupFactory,
+        protected readonly ParameterRepository $parameterRepository,
     ) {
     }
 
     /**
-     * @param \App\Model\Product\Parameter\ParameterGroupData $parameterGroupData
-     * @return \App\Model\Product\Parameter\ParameterGroup
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupData $parameterGroupData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup
      */
     public function create(ParameterGroupData $parameterGroupData): ParameterGroup
     {
@@ -35,8 +35,8 @@ class ParameterGroupFacade
 
     /**
      * @param int $parameterGroupId
-     * @param \App\Model\Product\Parameter\ParameterGroupData $parameterGroupData
-     * @return \App\Model\Product\Parameter\ParameterGroup
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupData $parameterGroupData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup
      */
     public function edit(int $parameterGroupId, ParameterGroupData $parameterGroupData): ParameterGroup
     {
@@ -49,7 +49,7 @@ class ParameterGroupFacade
     }
 
     /**
-     * @return \App\Model\Product\Parameter\ParameterGroup[]
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup[]
      */
     public function getAll(): array
     {

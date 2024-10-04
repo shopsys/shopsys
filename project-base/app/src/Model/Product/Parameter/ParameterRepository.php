@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Parameter;
 
-use App\Model\Product\Parameter\Exception\ParameterGroupNotFoundException;
 use App\Model\Product\Parameter\Exception\ParameterValueNotFoundException;
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Category\Category;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository as BaseParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData;
@@ -17,33 +16,19 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 
 /**
- * @method \App\Model\Product\Parameter\Parameter|null findById(int $parameterId)
- * @method \App\Model\Product\Parameter\Parameter getById(int $parameterId)
- * @method \App\Model\Product\Parameter\Parameter[] getParametersUsedByProductsInCategory(\App\Model\Category\Category $category, \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[] getParametersUsedByProductsInCategory(\App\Model\Category\Category $category, \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig)
  * @method applyCategorySeoConditions(\Doctrine\ORM\QueryBuilder $queryBuilder, \App\Model\Category\Category $category, int $domainId)
- * @method \App\Model\Product\Parameter\Parameter getByUuid(string $uuid)
- * @method \App\Model\Product\Parameter\Parameter[] getAll()
- * @method \App\Model\Product\Parameter\Parameter[] getAllWithTranslations(string $locale)
  * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValuesByProduct(\App\Model\Product\Product $product)
  * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValuesByProductSortedByOrderingPriorityAndName(\App\Model\Product\Product $product, string $locale)
  * @method string[][] getParameterValuesIndexedByProductIdAndParameterNameForProducts(\App\Model\Product\Product[] $products, string $locale)
- * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[] getProductParameterValuesByParameter(\App\Model\Product\Parameter\Parameter $parameter)
- * @method \App\Model\Product\Parameter\Parameter|null findParameterByNames(string[] $namesByLocale)
- * @method \App\Model\Product\Parameter\Parameter[] getParametersByUuids(string[] $uuids)
- * @method \App\Model\Product\Parameter\Parameter[] getVisibleParametersByIds(int[] $parameterIds, string $locale)
- * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] getParameterValuesByParameter(\App\Model\Product\Parameter\Parameter $parameter)
- * @method updateParameterValueInProductsByConversion(\App\Model\Product\Parameter\Parameter $parameter, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $oldParameterValue, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $newParameterValue)
- * @method \App\Model\Product\Parameter\Parameter[] getSliderParametersWithoutTheirsNumericValueFilled()
- * @method int getCountOfParameterValuesWithoutTheirsNumericValueFilledQueryBuilder(\App\Model\Product\Parameter\Parameter $parameter)
  * @method \App\Model\Product\Product[] getProductsByParameterValues(\Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] $parameterValues)
- * @method bool existsParameterByName(string $name, string $locale, \App\Model\Product\Parameter\Parameter|null $excludeParameter = null)
  */
 class ParameterRepository extends BaseParameterRepository
 {
     /**
      * @param \App\Model\Category\Category $category
      * @param int $domainId
-     * @return \App\Model\Product\Parameter\Parameter[]
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
      */
     public function getParametersUsedByProductsInCategoryWithoutSlider(Category $category, int $domainId): array
     {
@@ -61,7 +46,7 @@ class ParameterRepository extends BaseParameterRepository
 
     /**
      * @param \App\Model\Category\Category $category
-     * @param \App\Model\Product\Parameter\Parameter $parameter
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
      * @param int $domainId
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
@@ -100,29 +85,6 @@ class ParameterRepository extends BaseParameterRepository
         }
 
         return $parameterValue;
-    }
-
-    /**
-     * @return \Doctrine\ORM\EntityRepository
-     */
-    private function getParameterGroupRepository(): EntityRepository
-    {
-        return $this->em->getRepository(ParameterGroup::class);
-    }
-
-    /**
-     * @param int $parameterGroupId
-     * @return \App\Model\Product\Parameter\ParameterGroup
-     */
-    public function getParameterGroupById(int $parameterGroupId): ParameterGroup
-    {
-        $parameterGroup = $this->getParameterGroupRepository()->find($parameterGroupId);
-
-        if ($parameterGroup === null) {
-            throw new ParameterGroupNotFoundException(sprintf('Parameter group with ID %s not found', $parameterGroupId));
-        }
-
-        return $parameterGroup;
     }
 
     /**
@@ -268,18 +230,5 @@ class ParameterRepository extends BaseParameterRepository
         }
 
         return $productParameterValuesIndexedByProductIdAndParameterName;
-    }
-
-    /**
-     * @return \App\Model\Product\Parameter\ParameterGroup[]
-     */
-    public function getAllParameterGroups(): array
-    {
-        return $this->em->createQueryBuilder()
-            ->select('pg')
-            ->from(ParameterGroup::class, 'pg')
-            ->orderBy('pg.orderingPriority', 'ASC')
-            ->getQuery()
-            ->execute();
     }
 }

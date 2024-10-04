@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Form\Admin\Product\Parameter;
 
-use App\Model\Product\Parameter\ParameterGroupFacade;
 use Shopsys\FrameworkBundle\Component\Form\FormBuilderHelper;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\ParameterFormType;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupFacade;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,7 +17,7 @@ class ParameterFormTypeExtension extends AbstractTypeExtension
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Form\FormBuilderHelper $formBuilderHelper
-     * @param \App\Model\Product\Parameter\ParameterGroupFacade $parameterGroupFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupFacade $parameterGroupFacade
      */
     public function __construct(
         private readonly FormBuilderHelper $formBuilderHelper,

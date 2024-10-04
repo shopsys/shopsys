@@ -12,6 +12,7 @@ use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Category\Category;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterGroupNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterValueNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -48,6 +49,14 @@ class ParameterRepository
     protected function getParameterValueRepository()
     {
         return $this->em->getRepository(ParameterValue::class);
+    }
+
+    /**
+     * @return \Doctrine\ORM\EntityRepository
+     */
+    protected function getParameterGroupRepository()
+    {
+        return $this->em->getRepository(ParameterGroup::class);
     }
 
     /**
@@ -635,5 +644,33 @@ class ParameterRepository
         return $queryBuilder
             ->getQuery()
             ->getSingleScalarResult() > 0;
+    }
+
+    /**
+     * @param int $parameterGroupId
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup
+     */
+    public function getParameterGroupById(int $parameterGroupId): ParameterGroup
+    {
+        $parameterGroup = $this->getParameterGroupRepository()->find($parameterGroupId);
+
+        if ($parameterGroup === null) {
+            throw new ParameterGroupNotFoundException(sprintf('Parameter group with ID %s not found', $parameterGroupId));
+        }
+
+        return $parameterGroup;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup[]
+     */
+    public function getAllParameterGroups(): array
+    {
+        return $this->em->createQueryBuilder()
+            ->select('pg')
+            ->from(ParameterGroup::class, 'pg')
+            ->orderBy('pg.orderingPriority', 'ASC')
+            ->getQuery()
+            ->execute();
     }
 }

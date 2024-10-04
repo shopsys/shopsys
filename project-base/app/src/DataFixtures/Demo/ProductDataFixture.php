@@ -7,7 +7,6 @@ namespace App\DataFixtures\Demo;
 use App\DataFixtures\Demo\DataSetter\ProductDemoDataSetter;
 use App\DataFixtures\Demo\DemoDataFactory\ProductDemoDataFactory;
 use App\Model\Category\Category;
-use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductFacade;
@@ -19,6 +18,7 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 
 class ProductDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {

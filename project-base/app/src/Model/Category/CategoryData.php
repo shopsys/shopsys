@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryData as BaseCategoryData;
 
 /**
  * @property \App\Model\Category\Category|null $parent
- * @property \App\Model\Product\Parameter\Parameter[] $parametersCollapsed
+ * @property \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[] $parametersCollapsed
  */
 class CategoryData extends BaseCategoryData
 {

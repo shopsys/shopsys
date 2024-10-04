@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Product\Parameter;
+namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 /**
  * @ORM\Table(name="parameter_groups")
  * @ORM\Entity
- * @method translation($locale = null): ParameterGroupTranslation
+ * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupTranslation translation(?string $locale = null)
  */
 class ParameterGroup extends AbstractTranslatableEntity
 {
@@ -25,8 +25,8 @@ class ParameterGroup extends AbstractTranslatableEntity
     protected $id;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Model\Product\Parameter\ParameterGroupTranslation>
-     * @Prezent\Translations(targetEntity="App\Model\Product\Parameter\ParameterGroupTranslation")
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupTranslation>
+     * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupTranslation")
      */
     protected $translations;
 
@@ -37,7 +37,7 @@ class ParameterGroup extends AbstractTranslatableEntity
     protected $orderingPriority;
 
     /**
-     * @param \App\Model\Product\Parameter\ParameterGroupData $parameterGroupData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupData $parameterGroupData
      */
     public function __construct(ParameterGroupData $parameterGroupData)
     {
@@ -48,7 +48,7 @@ class ParameterGroup extends AbstractTranslatableEntity
     }
 
     /**
-     * @param \App\Model\Product\Parameter\ParameterGroupData $parameterGroupData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupData $parameterGroupData
      */
     public function edit(ParameterGroupData $parameterGroupData): void
     {
@@ -57,17 +57,17 @@ class ParameterGroup extends AbstractTranslatableEntity
     }
 
     /**
-     * @return \App\Model\Product\Parameter\ParameterGroupTranslation
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupTranslation
      */
-    protected function createTranslation(): ParameterGroupTranslation
+    protected function createTranslation()
     {
         return new ParameterGroupTranslation();
     }
 
     /**
-     * @param \App\Model\Product\Parameter\ParameterGroupData $parameterGroupData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupData $parameterGroupData
      */
-    private function setTranslations(ParameterGroupData $parameterGroupData): void
+    protected function setTranslations(ParameterGroupData $parameterGroupData): void
     {
         foreach ($parameterGroupData->names as $locale => $name) {
             $this->translation($locale)->setName($name);
@@ -77,7 +77,7 @@ class ParameterGroup extends AbstractTranslatableEntity
     /**
      * @return string[]
      */
-    public function getNames(): array
+    public function getNames()
     {
         $namesByLocale = [];
 
@@ -91,7 +91,7 @@ class ParameterGroup extends AbstractTranslatableEntity
     /**
      * @return int
      */
-    public function getOrderingPriority(): int
+    public function getOrderingPriority()
     {
         return $this->orderingPriority;
     }
@@ -100,7 +100,7 @@ class ParameterGroup extends AbstractTranslatableEntity
      * @param string|null $locale
      * @return string|null
      */
-    public function getName($locale = null): ?string
+    public function getName($locale = null)
     {
         return $this->translation($locale)->getName();
     }
@@ -108,7 +108,7 @@ class ParameterGroup extends AbstractTranslatableEntity
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }

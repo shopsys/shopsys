@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use App\Model\Product\Parameter\ParameterGroup;
-use App\Model\Product\Parameter\ParameterGroupDataFactory;
-use App\Model\Product\Parameter\ParameterGroupFacade;
 use Doctrine\Persistence\ObjectManager;
 use InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupDataFactory;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupFacade;
 
 class ParameterGroupDataFixture extends AbstractReferenceFixture
 {
@@ -19,8 +19,8 @@ class ParameterGroupDataFixture extends AbstractReferenceFixture
     public const string PARAM_GROUP_MAIN_INFORMATION_MOUSE = 'param_group_main_information_mouse';
 
     /**
-     * @param \App\Model\Product\Parameter\ParameterGroupFacade $parameterGroupFacade
-     * @param \App\Model\Product\Parameter\ParameterGroupDataFactory $parameterGroupDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupFacade $parameterGroupFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupDataFactory $parameterGroupDataFactory
      */
     public function __construct(
         private readonly ParameterGroupFacade $parameterGroupFacade,
@@ -74,7 +74,7 @@ class ParameterGroupDataFixture extends AbstractReferenceFixture
 
     /**
      * @param array<string, string> $parameterGroupNameByLocale
-     * @return \App\Model\Product\Parameter\ParameterGroup
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup
      */
     private function createParameterGroup(array $parameterGroupNameByLocale): ParameterGroup
     {

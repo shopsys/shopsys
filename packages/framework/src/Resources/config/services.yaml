@@ -897,6 +897,12 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactory
 
+    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupDataFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupDataFactory
+
+    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupFactoryInterface:
+        alias: Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupFactory
+
     Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory
 

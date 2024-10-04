@@ -6,10 +6,7 @@ namespace App\DataFixtures\Demo;
 
 use App\DataFixtures\Demo\DataObject\ParameterDataFixtureData;
 use App\Model\Category\Category;
-use App\Model\Product\Parameter\Parameter;
-use App\Model\Product\Parameter\ParameterDataFactory;
 use App\Model\Product\Parameter\ParameterFacade;
-use App\Model\Product\Parameter\ParameterGroup;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use InvalidArgumentException;
@@ -19,6 +16,9 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Category\CategoryParameter;
 use Shopsys\FrameworkBundle\Model\Category\CategoryParameterFactory;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactory;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup;
 use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 
 class ParameterDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
@@ -96,7 +96,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
     private static array $parameterNameCacheByLocale = [];
 
     /**
-     * @param \App\Model\Product\Parameter\ParameterDataFactory $parameterDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactory $parameterDataFactory
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator $entityManager
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterFactory $categoryParameterFactory
@@ -299,10 +299,10 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
      * @param string[] $namesByLocale
      * @param \App\Model\Category\Category[] $asFilterInCategories
      * @param string|null $parameterType
-     * @param \App\Model\Product\Parameter\ParameterGroup|null $parameterGroup
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup|null $parameterGroup
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\Unit|null $unit
      * @param int $orderingPriority
-     * @return \App\Model\Product\Parameter\Parameter
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
      */
     private function createParameter(
         string $referenceName,
@@ -315,7 +315,6 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
     ): Parameter {
         $parameterData = $this->parameterDataFactory->create();
         $parameterData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, $referenceName)->toString();
-        $parameterData->visible = true;
 
         if ($parameterType !== null) {
             $parameterData->parameterType = $parameterType;

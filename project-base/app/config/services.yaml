@@ -461,9 +461,6 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Listing\RequestToOrderingModeIdConverter:
         alias: App\Model\Product\Listing\RequestToOrderingModeIdConverter
 
-    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactoryInterface:
-        alias: App\Model\Product\Parameter\ParameterDataFactory
-
     Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade:
         alias: App\Model\Product\Parameter\ParameterFacade
 
