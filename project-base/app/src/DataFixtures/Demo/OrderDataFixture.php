@@ -6,7 +6,6 @@ namespace App\DataFixtures\Demo;
 
 use App\Model\Administrator\Administrator;
 use App\Model\Order\Order;
-use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Order\Status\OrderStatus;
 use App\Model\Payment\Payment;
 use App\Model\Product\Product;
@@ -26,6 +25,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\PlaceOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
@@ -792,7 +792,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
      * @param string $transportReferenceName
      * @param string $paymentReferenceName
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
-     * @param \App\Model\Order\PromoCode\PromoCode|null $promoCode
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode|null $promoCode
      * @return \App\Model\Order\Order
      */
     private function createOrder(
