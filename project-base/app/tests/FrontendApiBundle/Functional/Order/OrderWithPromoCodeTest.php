@@ -85,8 +85,8 @@ class OrderWithPromoCodeTest extends GraphQlTestCase
         $this->assertArrayHasKey('orderCreated', $response['data']['CreateOrder']);
         $this->assertFalse($response['data']['CreateOrder']['orderCreated']);
         $this->assertArrayHasKey('cart', $response['data']['CreateOrder']);
-        $this->assertArrayHasKey('promoCode', $response['data']['CreateOrder']['cart']);
-        $this->assertNull($response['data']['CreateOrder']['cart']['promoCode']);
+        $this->assertArrayHasKey('promoCodes', $response['data']['CreateOrder']['cart']);
+        $this->assertCount(0, $response['data']['CreateOrder']['cart']['promoCodes']);
         $this->assertArrayHasKey('modifications', $response['data']['CreateOrder']['cart']);
         $this->assertArrayHasKey('promoCodeModifications', $response['data']['CreateOrder']['cart']['modifications']);
         $this->assertArrayHasKey('noLongerApplicablePromoCode', $response['data']['CreateOrder']['cart']['modifications']['promoCodeModifications']);
@@ -204,7 +204,9 @@ class OrderWithPromoCodeTest extends GraphQlTestCase
                             }
                         }
                         cart {
-                            promoCode
+                            promoCodes {
+                                code
+                            }
                             modifications {
                                 promoCodeModifications {
                                     noLongerApplicablePromoCode

@@ -355,7 +355,7 @@ type Cart {
   "Selected bank swift code of goPay payment bank transfer"
   paymentGoPayBankSwift: String
   "Applied promo code if provided"
-  promoCode: String
+  promoCodes: [PromoCode!]!
   "Remaining amount for free transport and payment; null = transport cannot be free"
   remainingAmountWithVatForFreeTransport: Money
   "Rounding amount if payment has rounding allowed"
@@ -1886,6 +1886,15 @@ type ProductPrice {
   priceWithVat: Money!
   "Total value of VAT"
   vatAmount: Money!
+}
+
+type PromoCode {
+  "The promo code code"
+  code: String!
+  "The promo code discount"
+  discount: Price!
+  "The promo code type"
+  type: String!
 }
 
 type Query {
