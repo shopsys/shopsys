@@ -515,14 +515,24 @@ jobs:
             -   name: Run Cypress tests
                 run: |
                     docker compose run cypress-regenerate
-            -   name: Push snapshots to the branch
+            -   name: Commit generated snapshots
                 run: |
                     cp -rf snapshots/* project-base/storefront/cypress/snapshots/
                     git config --global user.name 'ShopsysBot'
                     git config --global user.email 'shopsysbot@users.noreply.github.com'
                     git add project-base/storefront/cypress/snapshots
                     git commit -m "regenerate screenshots"
-                    git push
+            -   name: Remove "regenerate screenshots" label
+                run: |
+                    gh api \
+                        --method DELETE \
+                        -H "Accept: application/vnd.github+json" \
+                        -H "X-GitHub-Api-Version: 2022-11-28" \
+                        /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels/regenerate%20screenshots
+            -   name: Push changes
+                uses: ad-m/github-push-action@master
+                with:
+                    branch: ${{ github.head_ref }}
             -   name: PHP-FPM container logs
                 if: ${{ failure() }}
                 run: docker compose logs php-fpm
@@ -726,7 +736,7 @@ jobs:
             -   name: Run Cypress tests
                 run: |
                     PULL_REQUEST_LABELS=`gh api -H "Accept: application/vnd.github+json" /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels | jq '[.[].name]'`
-                    if echo "$PULL_REQUEST_LABELS" | jq -e '. | index("regenerate screenshots")' >/dev/null; then
+                    if ! echo "$PULL_REQUEST_LABELS" | jq -e '. | index("regenerate screenshots")' >/dev/null; then
                         docker compose run cypress-regenerate
                     else
                         docker compose run cypress
