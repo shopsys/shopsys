@@ -28,6 +28,7 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
     public const string PROMO_CODE_FOR_REGISTERED_ONLY = 'promo_code_for_registered_only';
     public const string PROMO_CODE_FOR_VIP_PRICING_GROUP = 'promo_code_for_vip_pricing_group';
     public const string PROMO_CODE_FOR_NEW_PRODUCT = 'promo_code_for_new_product';
+    public const string VALID_PROMO_CODE_NOMINAL = 'valid_promo_code_nominal';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
@@ -135,6 +136,7 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
         $promoCodeData->domainId = $domainId;
         $promoCode = $this->promoCodeFacade->create($promoCodeData);
         $this->setDefaultNominalLimit($promoCode);
+        $this->addReferenceForDomain(self::VALID_PROMO_CODE_NOMINAL, $promoCode, $domainId);
 
         $this->loadForOtherDomains();
     }

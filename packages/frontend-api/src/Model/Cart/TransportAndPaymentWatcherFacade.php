@@ -55,12 +55,11 @@ class TransportAndPaymentWatcherFacade
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResult $cartWithModificationsResult
      * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
-     * @return \Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResult
      */
     public function checkTransportAndPayment(
         CartWithModificationsResult $cartWithModificationsResult,
         Cart $cart,
-    ): CartWithModificationsResult {
+    ): void {
         $this->cartWithModificationsResult = $cartWithModificationsResult;
         $this->checkTransport($cart);
 
@@ -88,8 +87,6 @@ class TransportAndPaymentWatcherFacade
         $this->cartWithModificationsResult->setRoundingPrice($orderData->totalPricesByItemType[OrderItemTypeEnum::TYPE_ROUNDING]);
 
         $this->checkPayment($cart);
-
-        return $this->cartWithModificationsResult;
     }
 
     /**

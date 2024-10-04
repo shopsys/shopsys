@@ -457,7 +457,7 @@ export type TypeCart = {
   /** Selected bank swift code of goPay payment bank transfer */
   paymentGoPayBankSwift: Maybe<Scalars['String']['output']>;
   /** Applied promo code if provided */
-  promoCode: Maybe<Scalars['String']['output']>;
+  promoCodes: Array<TypePromoCode>;
   /** Remaining amount for free transport and payment; null = transport cannot be free */
   remainingAmountWithVatForFreeTransport: Maybe<Scalars['Money']['output']>;
   /** Rounding amount if payment has rounding allowed */
@@ -2331,6 +2331,16 @@ export type TypeProductPrice = {
   priceWithoutVat: Scalars['Money']['output'];
   /** Total value of VAT */
   vatAmount: Scalars['Money']['output'];
+};
+
+export type TypePromoCode = {
+  __typename?: 'PromoCode';
+  /** The promo code code */
+  code: Scalars['String']['output'];
+  /** The promo code discount */
+  discount: TypePrice;
+  /** The promo code type */
+  type: Scalars['String']['output'];
 };
 
 export type TypeQuery = {

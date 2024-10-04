@@ -47,7 +47,7 @@ class PriceWithoutDiscountTransportAndPaymentTest extends GraphQlTestCase
             ],
         );
         $data = $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
-        self::assertEquals($promoCode->getCode(), $data['promoCode']);
+        self::assertEquals($promoCode->getCode(), $data['promoCodes'][0]['code']);
 
         $testingTransport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL, Transport::class);
         $store = $this->getReference(StoreDataFixture::STORE_PREFIX . 1, Store::class);
