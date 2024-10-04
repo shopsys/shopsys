@@ -12,6 +12,7 @@ export default defineConfig({
         failSilently: false,
         SNAPSHOT_BASE_DIRECTORY: 'snapshots',
         SNAPSHOT_DIFF_DIRECTORY: 'snapshotDiffs',
+        skipSnapshots: false,
     },
     e2e: {
         setupNodeEvents(on, config) {

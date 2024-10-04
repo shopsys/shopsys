@@ -13,6 +13,7 @@ const ELEMENTS_WITH_DISABLED_HOVER_DURING_SCREENSHOTS = [
     '[for="newsletter-form-privacyPolicy"]',
     TIDs.simple_header_contact,
 ];
+const SKIP_SNAPHOTS = Cypress.env('skipSnapshots');
 
 Cypress.Commands.add(
     'getByTID',
@@ -143,6 +144,10 @@ export const takeSnapshotAndCompare = (
     options: Partial<SnapshotAdditionalOptions> = {},
     callbackBeforeBlackout?: () => void | undefined,
 ) => {
+    if (SKIP_SNAPHOTS) {
+        return;
+    }
+
     const optionsWithDefaultValues = {
         capture: options.capture ?? 'fullPage',
         wait: options.wait ?? 1000,
