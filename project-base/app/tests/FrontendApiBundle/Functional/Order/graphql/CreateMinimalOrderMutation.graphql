@@ -89,7 +89,7 @@ mutation CreateMinimalOrderMutation(
             note
         }
         cart {
-            promoCode {
+            promoCodes {
                 code
                 type
             }
