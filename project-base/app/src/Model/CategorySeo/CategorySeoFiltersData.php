@@ -17,7 +17,7 @@ class CategorySeoFiltersData
     public $useOrdering;
 
     /**
-     * @var \App\Model\Product\Parameter\Parameter[]
+     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
      */
     public $parameters = [];
 

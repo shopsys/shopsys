@@ -148,6 +148,9 @@ msgstr "32\" Philips 32PFL4308"
 msgid "320 x 300 x 10 mm"
 msgstr "320 x 300 x 10 mm"
 
+msgid "36 cm"
+msgstr ""
+
 msgid "36\""
 msgstr "36\""
 
@@ -267,6 +270,9 @@ msgstr "80x70x70 mm"
 
 msgid "9 Mpix"
 msgstr "9 Mpix"
+
+msgid "9000"
+msgstr ""
 
 msgid "<b>You have chosen GoPay Payment, you will be shown a payment gateway.</b>"
 msgstr "<b>Zvolili jste platbu GoPay, bude Vám zobrazena platební brána.</b>"
@@ -922,6 +928,9 @@ msgstr "Nejčastější dotazy FAQ"
 msgid "Full HD Electronics with LED technology and USB"
 msgstr "Elektro ve Full HD s technologií LED a USB"
 
+msgid "Functions"
+msgstr "Funkce"
+
 msgid "GENIUS LuxeMate I222 is a stylish black keyboard, which at first glance invites you to use your Apple design."
 msgstr "klávesnice s myší, bezdrátová, ultratenká, nano přijímač s konektorem USB, s bezdrátovou optickou myší s turborolováním, dosah až 10m, klávesnice obsahuje české znaky"
 
@@ -1447,6 +1456,9 @@ msgstr "Pravděpodobně ta nejlepší volba"
 msgid "Processor frequency (GHz)"
 msgstr "Frekvence procesoru (GHz)"
 
+msgid "Properties"
+msgstr "Vlastnosti"
+
 msgid "Quality digital camera with CMOS sensor with a resolution of 18 megapixels"
 msgstr "Kvalitní digitální zrcadlovka s CMOS snímačem s rozlišením 18 megapixelů"
 
@@ -1584,6 +1596,9 @@ msgstr "myš optická, konektor USB, 1200dpi, vhodná pro notebooky"
 
 msgid "Simple Genius Mouse NetScroll 310 offers the most widely used functional elements of a basic ergonomics. It has an optical sensor with a resolution of 800 DPI, which can handle work on a large number of standard surfaces. There are two classic buttons and the third with the paging function wheel. Genius NetScroll 310 is equipped with modern USB interface and finds use in conserving ambidextrous or in an office environment. <br><strong> Specifications: </strong><br><strong> Supported OS: </strong><br> Microsoft Windows 7, Vista, XP, 2003, 2000, 98SE <br> Mac OS 8.6 or later"
 msgstr "myš optická, konektor USB, 1200dpi, vhodná pro notebooky"
+
+msgid "Size and weight"
+msgstr "Rozměry a hmotnost"
 
 msgid "Sleek and compact stereo speakers in combination of black and metallic surface."
 msgstr "Jednopásmové stereo reproduktory SP-M120 s celkovým hudebním výkonem 2 W, černým lesklým povrchem a elegantním kovovým krytem."

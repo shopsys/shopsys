@@ -2,7 +2,7 @@ fragment ParameterFragment on Parameter {
     __typename
     uuid
     name
-    visible
+    group
     unit {
         __typename
         name

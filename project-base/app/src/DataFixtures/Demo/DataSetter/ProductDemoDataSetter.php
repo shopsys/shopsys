@@ -98,7 +98,7 @@ class ProductDemoDataSetter
     public function setProductParameterValues(ProductData $productData, array $parametersValues): void
     {
         foreach ($parametersValues as $parameterValues) {
-            /** @var \App\Model\Product\Parameter\Parameter $parameter */
+            /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter */
             $parameter = $parameterValues['parameter'];
 
             foreach ($parameterValues['values'] as $locale => $parameterValue) {

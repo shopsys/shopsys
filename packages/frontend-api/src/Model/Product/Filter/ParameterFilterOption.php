@@ -51,14 +51,6 @@ class ParameterFilterOption
     }
 
     /**
-     * @return bool
-     */
-    public function isVisible(): bool
-    {
-        return $this->parameter->isVisible();
-    }
-
-    /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Unit\Unit|null
      */
     public function getUnit(): ?Unit

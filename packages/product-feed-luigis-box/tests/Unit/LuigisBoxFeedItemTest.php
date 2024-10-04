@@ -111,7 +111,6 @@ class LuigisBoxFeedItemTest extends TestCase
 
         $parameter = $this->createMock(Parameter::class);
         $parameter->method('getName')->willReturn(self::PARAMETER_NAME);
-        $parameter->method('isVisible')->willReturn(true);
 
         $parameterValue = $this->createMock(ParameterValue::class);
         $parameterValue->method('getLocale')->willReturn(self::DEFAULT_LOCALE);

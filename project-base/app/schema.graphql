@@ -1488,7 +1488,6 @@ type Parameter {
   "UUID"
   uuid: Uuid!
   values: [ParameterValue!]!
-  visible: Boolean!
 }
 
 "Parameter filter option"

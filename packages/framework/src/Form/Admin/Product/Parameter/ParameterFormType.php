@@ -10,9 +10,9 @@ use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupFacade;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -27,11 +27,13 @@ class ParameterFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupFacade $parameterGroupFacade
      */
     public function __construct(
         private readonly UnitFacade $unitFacade,
         private readonly ParameterFacade $parameterFacade,
         private readonly Localization $localization,
+        private readonly ParameterGroupFacade $parameterGroupFacade,
     ) {
     }
 
@@ -73,7 +75,13 @@ class ParameterFormType extends AbstractType
                     ),
                 ],
             ])
-            ->add('visible', CheckboxType::class, ['required' => false])
+            ->add('group', ChoiceType::class, [
+                'placeholder' => t('-- Choose group --'),
+                'required' => false,
+                'choices' => $this->parameterGroupFacade->getAll(),
+                'choice_label' => 'name',
+                'choice_value' => 'id',
+            ])
             ->add('save', SubmitType::class);
     }
 

@@ -12,6 +12,7 @@ use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Category\Category;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterGroupNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterValueNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -48,6 +49,14 @@ class ParameterRepository
     protected function getParameterValueRepository()
     {
         return $this->em->getRepository(ParameterValue::class);
+    }
+
+    /**
+     * @return \Doctrine\ORM\EntityRepository
+     */
+    protected function getParameterGroupRepository()
+    {
+        return $this->em->getRepository(ParameterGroup::class);
     }
 
     /**
@@ -235,12 +244,21 @@ class ParameterRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getProductParameterValuesByProductQueryBuilder(Product $product)
-    {
+    protected function getProductParameterValuesByProductQueryBuilder(
+        Product $product,
+    ): QueryBuilder {
         return $this->em->createQueryBuilder()
             ->select('ppv')
             ->from(ProductParameterValue::class, 'ppv')
+            ->join('ppv.parameter', 'p')
+            ->join('ppv.value', 'pv')
+            ->leftJoin('p.group', 'pg')
             ->where('ppv.product = :product_id')
+            ->orderBy('CASE WHEN pg.position IS NULL THEN 1 ELSE 0 END', 'DESC')
+            ->addOrderBy('pg.position', 'ASC')
+            ->addOrderBy('p.id', 'ASC')
+            ->addOrderBy('pv.locale', 'ASC')
+            ->addOrderBy('IDENTITY(p.group)')
             ->setParameter('product_id', $product->getId());
     }
 
@@ -635,5 +653,79 @@ class ParameterRepository
         return $queryBuilder
             ->getQuery()
             ->getSingleScalarResult() > 0;
+    }
+
+    /**
+     * @param int $parameterGroupId
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup
+     */
+    public function getParameterGroupById(int $parameterGroupId): ParameterGroup
+    {
+        $parameterGroup = $this->getParameterGroupRepository()->find($parameterGroupId);
+
+        if ($parameterGroup === null) {
+            throw new ParameterGroupNotFoundException(sprintf('Parameter group with ID %s not found', $parameterGroupId));
+        }
+
+        return $parameterGroup;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup[]
+     */
+    public function getAllParameterGroups(): array
+    {
+        return $this->em->createQueryBuilder()
+            ->select('pg')
+            ->from(ParameterGroup::class, 'pg')
+            ->orderBy('pg.position', 'ASC')
+            ->getQuery()
+            ->execute();
+    }
+
+    /**
+     * @param string $locale
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getOrderedParameterGroupsQueryBuilder(string $locale)
+    {
+        return $this->em->createQueryBuilder()
+            ->select('pg, pgt')
+            ->from(ParameterGroup::class, 'pg')
+            ->join('pg.translations', 'pgt')
+            ->where('pgt.locale = :locale')
+            ->setParameter('locale', $locale)
+            ->orderBy('pg.position', 'ASC');
+    }
+
+    /**
+     * @param string $name
+     * @param string $locale
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup|null $excludeParameterGroup
+     * @return bool
+     */
+    public function existsParameterGroupByName(
+        string $name,
+        string $locale,
+        ?ParameterGroup $excludeParameterGroup = null,
+    ): bool {
+        $queryBuilder = $this->em->createQueryBuilder()
+            ->select('count(pg)')
+            ->from(ParameterGroup::class, 'pg')
+            ->join('pg.translations', 'pgt')
+            ->where('pgt.name = :name')
+            ->andWhere('pgt.locale = :locale')
+            ->setParameter('name', $name)
+            ->setParameter('locale', $locale);
+
+        if ($excludeParameterGroup !== null) {
+            $queryBuilder
+                ->andWhere('pg != :excludeParameterGroup')
+                ->setParameter('excludeParameterGroup', $excludeParameterGroup);
+        }
+
+        return $queryBuilder
+                ->getQuery()
+                ->getSingleScalarResult() > 0;
     }
 }

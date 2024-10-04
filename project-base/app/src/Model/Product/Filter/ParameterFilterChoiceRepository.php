@@ -102,7 +102,7 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
         $parametersIndexedById = [];
 
         foreach ($parameters as $parameter) {
-            /** @var \App\Model\Product\Parameter\Parameter $parameter */
+            /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter */
             $parametersIndexedById[$parameter->getId()] = $parameter;
         }
 
@@ -112,7 +112,7 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
     /**
      * @param array $rows
      * @param string $locale
-     * @return \App\Model\Product\Parameter\Parameter[]
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
      */
     protected function getVisibleParametersIndexedByIdOrderedByName(array $rows, $locale): array
     {
@@ -135,7 +135,7 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
 
         $parametersIndexedById = [];
 
-        /** @var \App\Model\Product\Parameter\Parameter $parameter */
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter */
         foreach ($parameters as $parameter) {
             $parametersIndexedById[$parameter->getId()] = $parameter;
         }

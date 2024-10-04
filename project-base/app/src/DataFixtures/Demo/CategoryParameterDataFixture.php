@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\DataFixtures\Demo;
 
 use App\Model\Category\Category;
-use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterRepository;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use ReflectionClass;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Model\Category\CategoryParameterFacade;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 
 class CategoryParameterDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {

@@ -160,6 +160,24 @@ class ParameterFacade
     }
 
     /**
+     * @param int[] $parameterValueIdsByParameterId
+     * @return string[]
+     */
+    public function getParameterValueNamesIndexedByParameterNames(array $parameterValueIdsByParameterId): array
+    {
+        $parameterValueNamesIndexedByParameterNames = [];
+
+        foreach ($parameterValueIdsByParameterId as $parameterId => $parameterValueId) {
+            $parameter = $this->getById((int)$parameterId);
+            $parameterValue = $this->parameterRepository->getParameterValueById((int)$parameterValueId);
+
+            $parameterValueNamesIndexedByParameterNames[$parameter->getName()] = $parameterValue->getText();
+        }
+
+        return $parameterValueNamesIndexedByParameterNames;
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
      * @param string $eventType
      * @see \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterEvent class

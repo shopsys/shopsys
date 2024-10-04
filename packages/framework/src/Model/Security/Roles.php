@@ -129,6 +129,9 @@ class Roles
     public const string ROLE_PARAMETER_VALUE_FULL = 'ROLE_PARAMETER_VALUE_FULL';
     public const string ROLE_PARAMETER_VALUE_VIEW = 'ROLE_PARAMETER_VALUE_VIEW';
 
+    public const string ROLE_PARAMETER_GROUP_FULL = 'ROLE_PARAMETER_GROUP_FULL';
+    public const string ROLE_PARAMETER_GROUP_VIEW = 'ROLE_PARAMETER_GROUP_VIEW';
+
     public const string ROLE_SEO_FULL = 'ROLE_SEO_FULL';
     public const string ROLE_SEO_VIEW = 'ROLE_SEO_VIEW';
 
@@ -220,6 +223,10 @@ class Roles
             [
                 static::ROLE_PARAMETER_FULL => t('Parameters - full'),
                 static::ROLE_PARAMETER_VIEW => t('Parameters - view'),
+            ],
+            [
+                static::ROLE_PARAMETER_GROUP_FULL => t('Parameter groups - full'),
+                static::ROLE_PARAMETER_GROUP_VIEW => t('Parameter groups - view'),
             ],
             [
                 static::ROLE_UNIT_FULL => t('Units - full'),

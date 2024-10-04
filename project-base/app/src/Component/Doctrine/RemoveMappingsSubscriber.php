@@ -9,7 +9,6 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 
 class RemoveMappingsSubscriber implements EventSubscriber
 {
@@ -29,8 +28,6 @@ class RemoveMappingsSubscriber implements EventSubscriber
     public function loadClassMetadata(LoadClassMetadataEventArgs $eventArgs): void
     {
         $classMetadata = $eventArgs->getClassMetadata();
-
-        $this->removeColumnsFromEntityMappings(Parameter::class, ['visible'], $classMetadata);
 
         $this->removeColumnsFromEntityMappings(PromoCode::class, ['percent'], $classMetadata);
     }

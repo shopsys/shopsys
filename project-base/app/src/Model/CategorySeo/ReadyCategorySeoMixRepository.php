@@ -69,7 +69,7 @@ class ReadyCategorySeoMixRepository
     }
 
     /**
-     * @param \App\Model\Product\Parameter\Parameter $parameter
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
      * @return \App\Model\CategorySeo\ReadyCategorySeoMix[]
      */
     public function getAllWithParameter(Parameter $parameter): array

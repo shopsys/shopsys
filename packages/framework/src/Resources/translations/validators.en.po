@@ -133,6 +133,12 @@ msgstr ""
 msgid "Opening hours setting is not valid"
 msgstr ""
 
+msgid "Parameter group name cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "Parameter group with this name already exists for the locale \"%locale%\"."
+msgstr ""
+
 msgid "Parameter name cannot be longer than {{ limit }} characters"
 msgstr ""
 
@@ -341,6 +347,9 @@ msgid "Please enter page URL"
 msgstr ""
 
 msgid "Please enter page name"
+msgstr ""
+
+msgid "Please enter parameter group name"
 msgstr ""
 
 msgid "Please enter parameter name"

@@ -94,7 +94,7 @@ class CategorySeoMix
     }
 
     /**
-     * @param \App\Model\Product\Parameter\Parameter[] $parameters
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[] $parameters
      * @return \App\Model\CategorySeo\ChoseCategorySeoMixCombination
      */
     public function getChoseCategorySeoMixCombination(array $parameters): ChoseCategorySeoMixCombination

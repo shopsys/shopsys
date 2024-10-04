@@ -23,7 +23,7 @@ class ReadyCategorySeoMixParameterParameterValue
     private $readyCategorySeoMix;
 
     /**
-     * @var \App\Model\Product\Parameter\Parameter
+     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
      * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter")
      * @ORM\JoinColumn(name="parameter_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
@@ -39,7 +39,7 @@ class ReadyCategorySeoMixParameterParameterValue
     private $parameterValue;
 
     /**
-     * @param \App\Model\Product\Parameter\Parameter $parameter
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $parameterValue
      */
     public function __construct(
@@ -59,7 +59,7 @@ class ReadyCategorySeoMixParameterParameterValue
     }
 
     /**
-     * @return \App\Model\Product\Parameter\Parameter
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
      */
     public function getParameter(): Parameter
     {
