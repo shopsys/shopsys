@@ -180,6 +180,7 @@
         "symfony/workflow": "^5.4",
         "tracy/tracy": "^2.4.13",
         "tuscanicz/enum": "^2.1",
+        "twbs/bootstrap-icons": "^1.11",
         "twig/twig": "^3.14.0",
         "webmozart/assert": "^1.4",
         "webonyx/graphql-php": "^15.6"

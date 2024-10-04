@@ -15,7 +15,9 @@
 
 {% block grid_value_cell_id_visible %}
     {% set value = not value %}
-    <span class="in-icon in-icon--no-click svg svg-{{ value ? 'visible in-icon--visible' : 'invisible in-icon--invisible' }}" title="{{ value ? 'Yes'|trans : 'No'|trans }}"></span>
+    <span class="in-icon in-icon--no-click svg" title="{{ value ? 'Yes'|trans : 'No'|trans }}">
+        {{ icon(value ? 'eye-fill' : 'eye-slash') }}
+    </span>
 {% endblock %}
 
 {% block grid_value_cell_id_positionName %}

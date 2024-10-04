@@ -61,7 +61,7 @@ class SideMenuBuilder
                 'label' => t('Dashboard'),
             ],
         );
-        $menu->setExtra('icon', 'house');
+        $menu->setExtra('icon', 'house-fill');
 
         $menu->addChild('detail', [
             'route' => 'admin_default_crondetail',
@@ -88,7 +88,7 @@ class SideMenuBuilder
             'route' => 'admin_order_list',
             'label' => t('Orders'),
         ]);
-        $menu->setExtra('icon', 'document-copy');
+        $menu->setExtra('icon', 'bag-fill');
 
         $menu->addChild('edit', [
             'route' => 'admin_order_edit',
@@ -112,7 +112,7 @@ class SideMenuBuilder
                 'label' => t('Customers'),
             ],
         );
-        $menu->setExtra('icon', 'person-public');
+        $menu->setExtra('icon', 'person-circle');
 
         $menu->addChild('customers_overview', [
             'route' => 'admin_customer_list',
@@ -246,7 +246,7 @@ class SideMenuBuilder
     protected function createProductsMenu(): ItemInterface
     {
         $menu = $this->menuFactory->createItem('products', ['label' => t('Products')]);
-        $menu->setExtra('icon', 'cart');
+        $menu->setExtra('icon', 'box-seam-fill');
 
         $productsMenu = $menu->addChild(
             'products',
@@ -289,7 +289,7 @@ class SideMenuBuilder
     protected function createPricingMenu(): ItemInterface
     {
         $menu = $this->menuFactory->createItem('pricing', ['label' => t('Pricing')]);
-        $menu->setExtra('icon', 'tag');
+        $menu->setExtra('icon', 'tag-fill');
 
         $menu->addChild('pricing_groups', ['route' => 'admin_pricinggroup_list', 'label' => t('Pricing groups')]);
         $menu->addChild('vat', ['route' => 'admin_vat_list', 'label' => t('VAT')]);
@@ -319,7 +319,7 @@ class SideMenuBuilder
     protected function createMarketingMenu(): ItemInterface
     {
         $menu = $this->menuFactory->createItem('marketing', ['label' => t('Marketing')]);
-        $menu->setExtra('icon', 'chart-piece');
+        $menu->setExtra('icon', 'clipboard-data-fill');
 
         $articlesMenu = $menu->addChild(
             'articles',
@@ -399,7 +399,7 @@ class SideMenuBuilder
             'files',
             ['label' => t('Files')],
         );
-        $menu->setExtra('icon', 'file-all');
+        $menu->setExtra('icon', 'file-earmark-fill');
 
         $filesMenu = $menu->addChild('files', ['route' => 'admin_uploadedfile_list', 'label' => t('Files overview')]);
 
@@ -424,7 +424,7 @@ class SideMenuBuilder
             'administrators',
             ['label' => t('Administrators')],
         );
-        $menu->setExtra('icon', 'person-door-man');
+        $menu->setExtra('icon', 'person-fill-lock');
 
         $administratorViewMenu = $menu->addChild('administrators_overview', ['route' => 'admin_administrator_list', 'label' => t('Administrators overview')]);
 
@@ -463,7 +463,7 @@ class SideMenuBuilder
     protected function createSettingsMenu(): ItemInterface
     {
         $menu = $this->menuFactory->createItem('settings', ['label' => t('Settings')]);
-        $menu->setExtra('icon', 'gear');
+        $menu->setExtra('icon', 'gear-fill');
 
         $identificationMenu = $menu->addChild('identification', ['label' => t('E-shop identification')]);
 

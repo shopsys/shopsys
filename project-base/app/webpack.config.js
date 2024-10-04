@@ -15,10 +15,6 @@ Encore
     .setManifestKeyPrefix('web')
     .cleanupOutputBeforeBuild()
     .autoProvidejQuery()
-    // hp entry?
-    // order entry?
-    // product entry?
-    // cart entry?
     .addEntry('admin', './assets/js/admin/admin.js')
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
