@@ -833,25 +833,38 @@ class FilterQuery
         $query = $this->getAbsoluteNumbersWithParametersQuery();
 
         $query['body']['aggs']['prices'] = [
-            'nested' => [
-                'path' => 'prices',
-            ],
-            'aggs' => [
-                'filter_pricing_group' => [
-                    'filter' => [
+            'filter' => [
+                'bool' => [
+                    'must_not' => [
                         'term' => [
-                            'prices.pricing_group_id' => $pricingGroupId,
+                            'product_type' => ProductTypeEnum::TYPE_INQUIRY,
                         ],
                     ],
+                ],
+            ],
+            'aggs' => [
+                'nested_prices' => [
+                    'nested' => [
+                        'path' => 'prices',
+                    ],
                     'aggs' => [
-                        'min_price' => [
-                            'min' => [
-                                'field' => 'prices.price_with_vat',
+                        'filter_pricing_group' => [
+                            'filter' => [
+                                'term' => [
+                                    'prices.pricing_group_id' => $pricingGroupId,
+                                ],
                             ],
-                        ],
-                        'max_price' => [
-                            'max' => [
-                                'field' => 'prices.price_with_vat',
+                            'aggs' => [
+                                'min_price' => [
+                                    'min' => [
+                                        'field' => 'prices.price_with_vat',
+                                    ],
+                                ],
+                                'max_price' => [
+                                    'max' => [
+                                        'field' => 'prices.price_with_vat',
+                                    ],
+                                ],
                             ],
                         ],
                     ],
