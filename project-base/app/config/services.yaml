@@ -356,18 +356,6 @@ services:
     Shopsys\FrameworkBundle\Model\Order\PlaceOrderFacade:
         alias: App\Model\Order\PlaceOrderFacade
 
-    Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade:
-        alias: App\Model\Order\PromoCode\CurrentPromoCodeFacade
-
-    Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface:
-        alias: App\Model\Order\PromoCode\PromoCodeDataFactory
-
-    Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade:
-        alias: App\Model\Order\PromoCode\PromoCodeFacade
-
-    Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeRepository:
-        alias: App\Model\Order\PromoCode\PromoCodeRepository
-
     Shopsys\FrameworkBundle\Model\Order\Status\Grid\OrderStatusGridFactory:
         alias: App\Model\Order\Status\Grid\OrderStatusGridFactory
 

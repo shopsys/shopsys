@@ -6,7 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Cart;
 
 use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\PromoCodeDataFixture;
-use App\Model\Order\PromoCode\PromoCode;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class RemovePromoCodeFromCartTest extends GraphQlTestCase
@@ -59,7 +59,7 @@ class RemovePromoCodeFromCartTest extends GraphQlTestCase
     }
 
     /**
-     * @return \App\Model\Order\PromoCode\PromoCode
+     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
      */
     public function applyValidPromoCodeToDefaultCart(): PromoCode
     {
