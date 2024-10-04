@@ -356,8 +356,8 @@ type Cart {
   payment: Payment
   "Selected bank swift code of goPay payment bank transfer"
   paymentGoPayBankSwift: String
-  "Applied promo code if provided"
-  promoCode: PromoCode
+  "Applied promo codes if provided"
+  promoCodes: [PromoCode!]!
   "Remaining amount for free transport and payment; null = transport cannot be free"
   remainingAmountWithVatForFreeTransport: Money
   "Rounding amount if payment has rounding allowed"
@@ -1947,6 +1947,8 @@ enum ProductTypeEnum {
 type PromoCode {
   "Code of the promo code"
   code: String!
+  "The promo code discount"
+  discount: Price!
   "Type of the promo code"
   type: PromoCodeTypeEnum!
 }

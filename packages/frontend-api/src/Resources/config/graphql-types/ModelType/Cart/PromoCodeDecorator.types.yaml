@@ -9,3 +9,6 @@ PromoCodeDecorator:
             type:
                 type: "PromoCodeTypeEnum!"
                 description: "Type of the promo code"
+            discount:
+                type: "Price!"
+                description: "The promo code discount"

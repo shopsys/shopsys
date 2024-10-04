@@ -8,9 +8,14 @@ mutation ApplyPromoCodeToCart(
             promoCode: $promoCode
         }) {
         uuid
-        promoCode {
+        promoCodes {
             code
             type
+            discount {
+                priceWithVat
+                priceWithoutVat
+                vatAmount
+            }
         }
         totalPrice {
             priceWithVat

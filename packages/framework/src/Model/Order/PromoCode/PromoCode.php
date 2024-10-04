@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class PromoCode
 {
-    public const MASS_GENERATED_CODE_LENGTH = 6;
+    public const int MASS_GENERATED_CODE_LENGTH = 6;
 
     /**
      * @var int

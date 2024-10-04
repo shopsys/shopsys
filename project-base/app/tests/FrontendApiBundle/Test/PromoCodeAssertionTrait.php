@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Test;
 
-use App\Model\Order\PromoCode\PromoCode;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 
 trait PromoCodeAssertionTrait
 {
     /**
-     * @param \App\Model\Order\PromoCode\PromoCode $promoCode
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
      * @param array $promoCodeData
      */
     public static function assertPromoCode(PromoCode $promoCode, array $promoCodeData): void

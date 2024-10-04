@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
+use Shopsys\FrontendApiBundle\Model\Order\PromoCode\PromoCodeWithDiscount;
 
 class CartWithModificationsResult
 {
@@ -76,6 +77,11 @@ class CartWithModificationsResult
     protected ?Money $remainingAmountWithVatForFreeTransport = null;
 
     protected ?Price $roundingPrice = null;
+
+    /**
+     * @var \Shopsys\FrontendApiBundle\Model\Order\PromoCode\PromoCodeWithDiscount[]
+     */
+    protected array $promoCodesWithAppliedDiscount = [];
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
@@ -285,6 +291,14 @@ class CartWithModificationsResult
     }
 
     /**
+     * @return \Shopsys\FrontendApiBundle\Model\Order\PromoCode\PromoCodeWithDiscount[]
+     */
+    public function getPromoCodes(): array
+    {
+        return $this->promoCodesWithAppliedDiscount;
+    }
+
+    /**
      * @return string|null
      */
     public function getSelectedPickupPlaceIdentifier(): ?string
@@ -402,5 +416,13 @@ class CartWithModificationsResult
     public function setRoundingPrice(?Price $roundingPrice): void
     {
         $this->roundingPrice = $roundingPrice;
+    }
+
+    /**
+     * @param \Shopsys\FrontendApiBundle\Model\Order\PromoCode\PromoCodeWithDiscount $promoCodeWithDiscountPrice
+     */
+    public function addPromoCodeWithAppliedDiscount(PromoCodeWithDiscount $promoCodeWithDiscountPrice): void
+    {
+        $this->promoCodesWithAppliedDiscount[] = $promoCodeWithDiscountPrice;
     }
 }
