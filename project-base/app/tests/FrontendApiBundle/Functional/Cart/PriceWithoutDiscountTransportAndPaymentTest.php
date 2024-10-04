@@ -4,24 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Cart;
 
-use App\DataFixtures\Demo\CurrencyDataFixture;
-use App\DataFixtures\Demo\PaymentDataFixture;
-use App\DataFixtures\Demo\ProductDataFixture;
-use App\DataFixtures\Demo\PromoCodeDataFixture;
-use App\DataFixtures\Demo\StoreDataFixture;
-use App\DataFixtures\Demo\TransportDataFixture;
-use App\Model\Cart\CartFacade;
-use App\Model\Order\PromoCode\PromoCode;
-use App\Model\Payment\Payment;
-use App\Model\Product\Product;
-use App\Model\Transport\Transport;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Store\Store;
-use Tests\FrameworkBundle\Test\IsMoneyEqual;
-use Tests\FrontendApiBundle\Test\GraphQlTestCase;
-use Tests\FrontendApiBundle\Test\PromoCodeAssertionTrait;
-
 class PriceWithoutDiscountTransportAndPaymentTest extends GraphQlTestCase
 {
     use PromoCodeAssertionTrait;
