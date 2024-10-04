@@ -280,6 +280,8 @@ type BlogCategory implements Breadcrumb & Slug & Hreflang {
   hreflangLinks: [HreflangLink!]!
   "The blog category absolute URL"
   link: String!
+  "Blog category image"
+  mainImage(type: String = null): Image
   "The blog category name"
   name: String!
   "The blog category parent"
