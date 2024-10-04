@@ -75,7 +75,7 @@ class ProductFilterConfigIdsDataFactory
      */
     protected function extractPriceRange(array $aggregationResult): PriceRange
     {
-        $pricesData = $aggregationResult['prices']['filter_pricing_group'];
+        $pricesData = $aggregationResult['prices']['nested_prices']['filter_pricing_group'];
 
         $minPrice = Money::create((string)($pricesData['min_price']['value'] ?? 0));
         $maxPrice = Money::create((string)($pricesData['max_price']['value'] ?? 0));
