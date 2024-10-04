@@ -51,6 +51,7 @@ If you are interested, you can read more about the monorepo approach here - http
 -   [shopsys/php-image](https://github.com/shopsys/php-image)
 -   [shopsys/luigis-box](https://github.com/shopsys/luigis-box)
 -   [shopsys/administration](https://github.com/shopsys/administration)
+-   [shopsys/convertim](https://github.com/shopsys/convertim)
 
 !!! note
 

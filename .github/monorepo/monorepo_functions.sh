@@ -22,6 +22,7 @@ get_all_packages() {
         google-cloud-bundle \
         s3-bridge \
         category-feed-luigis-box \
+        convertim \
         product-feed-zbozi \
         product-feed-google \
         product-feed-heureka \

@@ -42,4 +42,5 @@ return [
     Sentry\SentryBundle\SentryBundle::class => ['prod' => true],
     Overblog\DataLoaderBundle\OverblogDataLoaderBundle::class => ['all' => true],
     Shopsys\AdministrationBundle\ShopsysAdministrationBundle::class => ['all' => true],
+    Shopsys\ConvertimBundle\ShopsysConvertimBundle::class => ['all' => true],
 ];

@@ -1,9 +1,11 @@
 parameters:
     shopsys.packages.registry:
+        administration: { path: '%shopsys.framework.root_dir%/../administration', namespace: 'Shopsys\AdministrationBundle', app_namespace: 'App\Administration' }
         article-feed-luigis-box': { path: '%shopsys.framework.root_dir%/../article-feed-luigis-box', namespace: 'Shopsys\ArticleFeed\LuigisBoxBundle', app_namespace: 'App\ArticleFeed\LuigisBox' }
         brand-feed-luigis-box: { path: '%shopsys.framework.root_dir%/../brand-feed-luigis-box', namespace: 'Shopsys\BrandFeed\LuigisBoxBundle', app_namespace: 'App\BrandFeed\LuigisBox' }
         category-feed-luigis-box: { path: '%shopsys.framework.root_dir%/../category-feed-luigis-box', namespace: 'Shopsys\CategoryFeed\LuigisBoxBundle', app_namespace: 'App\CategoryFeed\LuigisBox' }
         coding-standards: { path: '%shopsys.framework.root_dir%/../coding-standards', namespace: 'Shopsys\CodingStandards', app_namespace: 'App\CodingStandards' }
+        convertim: { path: '%shopsys.framework.root_dir%/../convertim', namespace: 'Shopsys\ConvertimBundle', app_namespace: 'App\Convertim' }
         form-types-bundle: { path: '%shopsys.framework.root_dir%/../form-types-bundle', namespace: 'Shopsys\FormTypesBundle', app_namespace: 'App\FormTypes' }
         framework: { path: '%shopsys.framework.root_dir%', namespace: 'Shopsys\FrameworkBundle', app_namespace: 'App' }
         frontend-api: { path: '%shopsys.framework.root_dir%/../frontend-api', namespace: 'Shopsys\FrontendApiBundle', app_namespace: 'App\FrontendApi' }
