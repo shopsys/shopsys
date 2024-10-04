@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Component\Doctrine;
 
-use App\Model\Order\PromoCode\PromoCode;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LoadClassMetadataEventArgs;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 
 class RemoveMappingsSubscriber implements EventSubscriber
