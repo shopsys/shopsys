@@ -6,10 +6,10 @@ namespace Tests\FrontendApiBundle\Functional\Cart;
 
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\PromoCodeDataFixture;
-use App\Model\Order\PromoCode\PromoCode;
-use App\Model\Order\PromoCode\PromoCodeFacade;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class AuthenticatedRemovePromoCodeFromCartTest extends GraphQlWithLoginTestCase
@@ -68,7 +68,7 @@ class AuthenticatedRemovePromoCodeFromCartTest extends GraphQlWithLoginTestCase
     }
 
     /**
-     * @return \App\Model\Order\PromoCode\PromoCode
+     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
      */
     public function applyValidPromoCodeToCustomerCart(): PromoCode
     {

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use App\Model\Order\PromoCode\PromoCode;
 use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeCategory\PromoCodeCategoryFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
@@ -30,8 +30,8 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
     public const string PROMO_CODE_FOR_NEW_PRODUCT = 'promo_code_for_new_product';
 
     /**
-     * @param \App\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
-     * @param \App\Model\Order\PromoCode\PromoCodeDataFactory $promoCodeDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface $promoCodeDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeProduct\PromoCodeProductFactory $promoCodeProductFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeCategory\PromoCodeCategoryFactory $promoCodeCategoryFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitFactory $promoCodeLimitFactory
@@ -176,7 +176,7 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
     }
 
     /**
-     * @param \App\Model\Order\PromoCode\PromoCode $promoCode
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
      */
     private function setDefaultLimit(PromoCode $promoCode): void
     {
@@ -187,7 +187,7 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
     }
 
     /**
-     * @param \App\Model\Order\PromoCode\PromoCode $promoCode
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
      */
     private function setDefaultNominalLimit(PromoCode $promoCode): void
     {
