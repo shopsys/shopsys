@@ -6,13 +6,20 @@ namespace Shopsys\FrontendApiBundle\Model\Cart;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\CartPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
+use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeException;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeTypeEnum;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
+use Shopsys\FrontendApiBundle\Model\Order\PromoCode\PromoCodeWithDiscount;
 
 class CartWatcherFacade
 {
@@ -27,6 +34,8 @@ class CartWatcherFacade
      * @param \Shopsys\FrontendApiBundle\Model\Cart\TransportAndPaymentWatcherFacade $transportAndPaymentWatcherFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartPromoCodeFacade $cartPromoCodeFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactory $orderDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
      * @param \Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResultFactory $cartWithModificationsResultFactory
      */
     public function __construct(
@@ -38,6 +47,8 @@ class CartWatcherFacade
         protected readonly TransportAndPaymentWatcherFacade $transportAndPaymentWatcherFacade,
         protected readonly CurrentPromoCodeFacade $currentPromoCodeFacade,
         protected readonly CartPromoCodeFacade $cartPromoCodeFacade,
+        protected readonly OrderDataFactory $orderDataFactory,
+        protected readonly PromoCodeFacade $promoCodeFacade,
         protected readonly CartWithModificationsResultFactory $cartWithModificationsResultFactory,
     ) {
     }
@@ -57,7 +68,10 @@ class CartWatcherFacade
 
         $this->em->flush();
 
-        return $this->transportAndPaymentWatcherFacade->checkTransportAndPayment($this->cartWithModificationsResult, $cart);
+        $this->transportAndPaymentWatcherFacade->checkTransportAndPayment($this->cartWithModificationsResult, $cart);
+        $this->setPromoCodesWithAppliedDiscount($cart);
+
+        return $this->cartWithModificationsResult;
     }
 
     /**
@@ -110,10 +124,48 @@ class CartWatcherFacade
         foreach ($cart->getAllAppliedPromoCodes() as $promoCode) {
             try {
                 $this->currentPromoCodeFacade->getValidatedPromoCode($promoCode->getCode(), $cart);
-            } catch (PromoCodeException $exception) {
+            } catch (PromoCodeException) {
                 $this->cartPromoCodeFacade->removePromoCode($cart, $promoCode);
                 $this->cartWithModificationsResult->addChangedPromoCode($promoCode->getCode());
             }
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     */
+    protected function setPromoCodesWithAppliedDiscount(Cart $cart): void
+    {
+        $orderData = $this->orderDataFactory->createFromCart($cart, $this->domain->getCurrentDomainConfig());
+
+        if ($orderData->promoCode === null) {
+            return;
+        }
+
+        foreach ($cart->getAllAppliedPromoCodes() as $promoCode) {
+            if ($promoCode->getCode() !== $orderData->promoCode) {
+                continue;
+            }
+
+            if ($promoCode->isFreeTransportAndPaymentType()) {
+                $discount = new Price(Money::zero(), Money::zero());
+            } elseif ($promoCode->getDiscountType() === PromoCodeTypeEnum::DISCOUNT_TYPE_NOMINAL) {
+                $discount = $orderData->getTotalPriceForItemTypes([OrderItemTypeEnum::TYPE_DISCOUNT]);
+            } else {
+                $promoCodeLimit = $this->promoCodeFacade->getHighestLimitByPromoCodeAndTotalPrice($promoCode, $this->cartWithModificationsResult->getTotalItemsPrice());
+
+                $discount = new Price(
+                    Money::create($promoCodeLimit->getDiscount()),
+                    Money::create($promoCodeLimit->getDiscount()),
+                );
+            }
+
+            $this->cartWithModificationsResult->addPromoCodeWithAppliedDiscount(
+                new PromoCodeWithDiscount(
+                    $promoCode,
+                    $discount,
+                ),
+            );
         }
     }
 }

@@ -3215,11 +3215,11 @@ Selected bank swift code of goPay payment bank transfer
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="cart.promocode">promoCode</strong></td>
-<td valign="top"><a href="#promocode">PromoCode</a></td>
+<td colspan="2" valign="top"><strong id="cart.promocodes">promoCodes</strong></td>
+<td valign="top">[<a href="#promocode">PromoCode</a>!]!</td>
 <td>
 
-Applied promo code if provided
+Applied promo codes if provided
 
 </td>
 </tr>
@@ -8244,6 +8244,15 @@ Total value of VAT
 <td>
 
 Code of the promo code
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="promocode.discount">discount</strong></td>
+<td valign="top"><a href="#price">Price</a>!</td>
+<td>
+
+The promo code discount
 
 </td>
 </tr>

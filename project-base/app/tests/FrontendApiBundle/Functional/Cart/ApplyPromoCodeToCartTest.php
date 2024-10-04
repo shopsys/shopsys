@@ -67,29 +67,55 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
      */
     private CustomerUserIdentifierFactory $customerUserIdentifierFactory;
 
-    public function testApplyPromoCode(): void
+    public function testApplyPercentagePromoCode(): void
     {
         $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, PromoCode::class);
 
         $data = $this->applyPromoCodeToCartAndGetResponseData($promoCode->getCode());
 
         self::assertEquals(CartDataFixture::CART_UUID, $data['uuid']);
-        self::assertPromoCode($promoCode, $data['promoCode']);
+        self::assertPromoCode($promoCode, $data['promoCodes'][0]);
+        self::assertEquals(
+            [
+                'priceWithVat' => $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('250.000000'),
+                'priceWithoutVat' => $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('250.000000'),
+                'vatAmount' => '0.000000',
+            ],
+            $data['promoCodes'][0]['discount'],
+        );
     }
 
     public function testApplyPromoCodeForFreeTransport(): void
     {
-        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::PROMO_CODE_FOR_FREE_TRANSPORT_PAYMENT, 1, AppPromoCode::class);
+        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::PROMO_CODE_FOR_FREE_TRANSPORT_PAYMENT, 1, PromoCode::class);
         $vatZero = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $this->domain->getId(), Vat::class);
         $this->addCzechPostToCart();
         $this->addCashOnDeliveryPaymentToCart();
 
         $data = $this->applyPromoCodeToCartAndGetResponseData($promoCode->getCode());
 
-        self::assertPromoCode($promoCode, $data['promoCode']);
+        self::assertPromoCode($promoCode, $data['promoCodes'][0]);
         self::assertSame($this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero), $data['transport']['price']);
         self::assertSame($this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero), $data['payment']['price']);
         self::assertSame($this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('0'), $data['remainingAmountForFreeTransport']);
+    }
+
+    public function testApplyNominalPromoCode(): void
+    {
+        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE_NOMINAL, 1, PromoCode::class);
+
+        $data = $this->applyPromoCodeToCartAndGetResponseData($promoCode->getCode());
+
+        self::assertEquals(CartDataFixture::CART_UUID, $data['uuid']);
+        self::assertPromoCode($promoCode, $data['promoCodes'][0]);
+        self::assertEquals(
+            [
+                'priceWithVat' => $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('-2500.000000'),
+                'priceWithoutVat' => $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('-2066.000000'),
+                'vatAmount' => $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('-434.000000'),
+            ],
+            $data['promoCodes'][0]['discount'],
+        );
     }
 
     public function testApplyPromoCodeMultipleTimes(): void
@@ -99,7 +125,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
         $data = $this->applyPromoCodeToCartAndGetResponseData($promoCode->getCode());
 
         self::assertEquals(CartDataFixture::CART_UUID, $data['uuid']);
-        self::assertPromoCode($promoCode, $data['promoCode']);
+        self::assertPromoCode($promoCode, $data['promoCodes'][0]);
 
         // apply promo code again
         $response = $this->applyPromoCodeToCart($promoCode->getCode());
@@ -155,7 +181,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
         $cartUuid = $this->getResponseDataForGraphQlType($response, 'AddToCart')['cart']['uuid'];
 
         $data = $this->applyPromoCodeToCartAndGetResponseData($promoCode->getCode(), $cartUuid);
-        self::assertPromoCode($promoCode, $data['promoCode']);
+        self::assertPromoCode($promoCode, $data['promoCodes'][0]);
 
         // product has to be re-fetched due to identity map clearing to prevent "A new entity was found through the relationship" error
         $productInCart = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
@@ -169,7 +195,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
         $itemModifications = $data['modifications']['itemModifications'];
         $promoCodeModifications = $data['modifications']['promoCodeModifications'];
 
-        self::assertNull($data['promoCode']);
+        self::assertCount(0, $data['promoCodes']);
 
         self::assertNotEmpty($itemModifications['noLongerListableCartItems']);
         self::assertEquals($productInCart->getUuid(), $itemModifications['noLongerListableCartItems'][0]['product']['uuid']);
@@ -184,7 +210,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
 
         $data = $this->applyPromoCodeToCartAndGetResponseData($validPromoCode->getCode());
 
-        self::assertPromoCode($validPromoCode, $data['promoCode']);
+        self::assertPromoCode($validPromoCode, $data['promoCodes'][0]);
 
         $promoCodeData = $this->promoCodeDataFactory->createFromPromoCode($validPromoCode);
         $promoCodeData->remainingUses = 0;
@@ -197,7 +223,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
 
         $promoCodeModifications = $data['modifications']['promoCodeModifications'];
 
-        self::assertNull($data['promoCode']);
+        self::assertCount(0, $data['promoCodes']);
 
         self::assertNotEmpty($promoCodeModifications['noLongerApplicablePromoCode']);
         self::assertEquals($validPromoCode->getCode(), $promoCodeModifications['noLongerApplicablePromoCode'][0]);
