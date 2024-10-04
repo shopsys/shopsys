@@ -42,6 +42,14 @@ BlogCategoryDecorator:
             slug:
                 type: "String!"
                 description: "The blog category URL slug"
+            mainImage:
+                type: "Image"
+                description: "Blog category image"
+                resolve: '@=query("mainImageByBlogCategoryPromiseQuery", value, args["type"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
             breadcrumb:
                 type: "[Link!]!"
                 description: "Hierarchy of the current element in relation to the structure"

@@ -2726,6 +2726,20 @@ The blog category absolute URL
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td valign="top"><a href="#image">Image</a></td>
+<td>
+
+Blog category image
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">type</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
