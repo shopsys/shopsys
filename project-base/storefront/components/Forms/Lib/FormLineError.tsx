@@ -33,7 +33,9 @@ export const FormLineError: FC<FormLineErrorProps> = ({ inputType, error, textIn
                     isDropzone && 'top-1 right-0',
                 )}
             />
-            {error.message !== undefined && <span className="text-sm text-inputError">{error.message}</span>}
+            {error.message !== undefined && (
+                <span className="text-sm font-secondary text-inputError">{error.message}</span>
+            )}
         </div>
     );
 };

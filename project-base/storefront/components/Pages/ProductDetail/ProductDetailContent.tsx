@@ -53,7 +53,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                         videoIds={product.productVideos}
                     />
 
-                    <div className="flex flex-1 flex-col gap-4 w-full">
+                    <div className="flex w-full flex-1 flex-col gap-4">
                         <div className="flex flex-col gap-1">
                             {product.namePrefix && <ProductDetailPrefix>{product.namePrefix}</ProductDetailPrefix>}
 
@@ -81,9 +81,9 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
 
                         {!!product.usps.length && <ProductDetailUsps usps={product.usps} />}
 
-                        <div className="bg-backgroundMore rounded-xl p-3 sm:p-6 flex flex-col gap-4">
+                        <div className="flex flex-col gap-4 rounded-xl bg-backgroundMore p-3 sm:p-6">
                             {isPriceVisible(product.price.priceWithVat) && (
-                                <div className="text-2xl font-bold text-price font-secondary">
+                                <div className="font-secondary text-2xl font-bold text-price">
                                     {formatPrice(product.price.priceWithVat)}
                                 </div>
                             )}

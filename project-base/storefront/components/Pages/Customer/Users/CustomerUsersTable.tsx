@@ -101,8 +101,8 @@ export const CustomerUsersTable: FC = () => {
                         {user.firstName} {user.lastName} {currentCustomerUserUuid === user.uuid && `(${t('You')})`}
                     </Cell>
 
-                    <Cell className="py-2 text-left text-sm leading-5 hidden vl:table-cell">{user.email}</Cell>
-                    <Cell align="right" className="flex justify-end gap-2 py-2 text-sm leading-5">
+                    <Cell className="py-2 text-left text-sm hidden vl:table-cell">{user.email}</Cell>
+                    <Cell align="right" className="flex justify-end gap-2 py-2 text-sm">
                         <Button size="small" variant="inverted" onClick={(e) => openManageCustomerUserPopup(e, user)}>
                             <EditIcon className="size-4" /> <span className="hidden sm:block">{t('Edit')}</span>
                         </Button>

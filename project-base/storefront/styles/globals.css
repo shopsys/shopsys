@@ -48,32 +48,32 @@ h6,
 
 h1,
 .h1 {
-    @apply mb-3 text-3xl/tight tracking-tight lg:text-4xl/tight vl:mb-5;
+    @apply text-2xl lg:text-4xl;
 }
 
 h2,
 .h2 {
-    @apply text-2xl/tight lg:text-3xl/tight;
+    @apply text-xl lg:text-3xl;
 }
 
 h3,
 .h3 {
-    @apply text-xl/tight lg:text-2xl/normal;
+    @apply text-lg lg:text-2xl;
 }
 
 h4,
 .h4 {
-    @apply text-lg/normal lg:text-xl/normal;
+    @apply text-base lg:text-lg;
 }
 
 h5,
 .h5 {
-    @apply text-[17px]/normal lg:text-lg/normal;
+    @apply text-sm lg:text-base;
 }
 
 h6,
 .h6 {
-    @apply text-sm/normal lg:text-xs/normal;
+    @apply text-xs uppercase tracking-wider lg:text-xs;
 }
 
 td,
@@ -94,16 +94,16 @@ table {
 }
 
 p {
-    @apply break-words;
+    @apply break-words text-sm leading-5 lg:text-base;
 }
 
 a {
-    @apply cursor-pointer text-link underline outline-none hover:text-linkHovered hover:underline active:text-linkHovered disabled:text-linkDisabled;
+    @apply cursor-pointer text-sm leading-5 text-link underline outline-none hover:text-linkHovered hover:underline active:text-linkHovered disabled:text-linkDisabled lg:text-base;
 }
 
 b,
 strong {
-    @apply font-extrabold;
+    @apply font-bold;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -126,6 +126,10 @@ input[type='number'] {
     @apply hidden;
 }
 
+.select__single-value {
+    @apply !text-text;
+}
+
 .select__control {
     @apply !z-[2] !min-h-[56px] !cursor-pointer !items-end !self-end !rounded-md !border-2 !border-inputBorder !shadow-none  hover:!border-2 hover:!border-inputBorderHovered active:!border-inputBorderActive;
 }
@@ -143,11 +147,11 @@ input[type='number'] {
 }
 
 .select__option {
-    @apply !cursor-pointer !p-3;
+    @apply !cursor-pointer !p-3 font-semibold;
 }
 
 .select__option--is-selected {
-    @apply !bg-inputBackgroundActive !text-inputTextActive;
+    @apply !bg-inputBackground !text-inputTextActive hover:!text-inputTextActive;
 }
 .select__option--is-focused {
     @apply !bg-inputBackgroundHovered !text-inputTextHovered;

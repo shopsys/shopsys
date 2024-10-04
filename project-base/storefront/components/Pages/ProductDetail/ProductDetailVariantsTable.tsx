@@ -80,6 +80,7 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ isSellingD
                             t('This item can no longer be purchased')
                         ) : (
                             <AddToCart
+                                buttonSize="large"
                                 gtmMessageOrigin={GtmMessageOriginType.product_detail_page}
                                 gtmProductListName={GtmProductListNameType.product_detail_variants_table}
                                 listIndex={index}

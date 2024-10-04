@@ -6,18 +6,25 @@ export const StyleguideButtons: FC = () => {
         <StyleguideSection className="flex flex-col gap-5" title="Buttons">
             <StyleguideSubSection className="flex flex-wrap items-center gap-3" title="Variants">
                 <Button>Primary</Button>
+                <Button variant="secondary">Secondary</Button>
                 <Button variant="inverted">Inverted</Button>
             </StyleguideSubSection>
 
             <StyleguideSubSection className="flex flex-wrap items-center gap-3" title="Sizes">
-                <Button>Default</Button>
                 <Button size="small">Small</Button>
+                <Button>Default</Button>
+                <Button size="large">Large</Button>
             </StyleguideSubSection>
 
             <StyleguideSubSection className="flex flex-wrap items-center gap-3" title="Disabled">
-                <Button isDisabled>Default</Button>
-                <Button isDisabled size="small">
-                    Small
+                <Button isDisabled variant="primary">
+                    Primary
+                </Button>
+                <Button isDisabled variant="secondary">
+                    Secondary
+                </Button>
+                <Button isDisabled variant="inverted">
+                    Inverted
                 </Button>
             </StyleguideSubSection>
         </StyleguideSection>

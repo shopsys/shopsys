@@ -8,8 +8,8 @@ import * as Yup from 'yup';
 
 const getStyleguideExampleFormResolver = () =>
     yupResolver(
-        Yup.object().shape<Record<keyof { country: 'cz' | 'de' }, any>>({
-            country: Yup.string().oneOf(['cz', 'de']),
+        Yup.object().shape<Record<keyof { country: 'cz' | 'de' | 'pl' }, any>>({
+            country: Yup.string().oneOf(['cz', 'de', 'pl']),
         }),
     );
 
@@ -42,10 +42,15 @@ export const StyleguideRadiogroup: FC = () => {
                         {
                             label: 'Czechia',
                             value: 'cz',
+                            disabled: true,
                         },
                         {
                             label: 'Germany',
                             value: 'de',
+                        },
+                        {
+                            label: 'Poland',
+                            value: 'pl',
                         },
                     ]}
                     render={(radiobutton, key) => (

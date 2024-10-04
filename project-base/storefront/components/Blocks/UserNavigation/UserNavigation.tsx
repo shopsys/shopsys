@@ -26,10 +26,10 @@ export const UserNavigation: FC = () => {
     const logoutHandler = useLogout();
 
     return (
-        <div className="flex flex-col min-w-[300px] rounded-md overflow-hidden h-fit">
+        <div className="flex h-fit min-w-[300px] flex-col overflow-hidden rounded-md">
             <button
                 className={twJoin(
-                    'items-center last:border-none bg-backgroundMore no-underline px-6 py-3 flex justify-between gap-4 lg:hidden',
+                    'flex items-center justify-between gap-4 bg-backgroundMore px-6 py-3 no-underline last:border-none lg:hidden',
                     isExpanded && 'border-b border-borderAccent',
                 )}
                 onClick={() => setIsExpanded((prev) => !prev)}
@@ -41,7 +41,7 @@ export const UserNavigation: FC = () => {
             <m.div
                 key="user-navigation"
                 animate={isExpanded ? 'open' : 'closed'}
-                className="!flex flex-col lg:!h-auto px-4 bg-backgroundMore"
+                className="!flex flex-col bg-backgroundMore px-4 lg:!h-auto"
                 initial={false}
                 variants={collapseExpandAnimation}
             >
@@ -56,7 +56,7 @@ export const UserNavigation: FC = () => {
                         {menuItem.count && (
                             <div
                                 className={twJoin(
-                                    'min-w-[24px] px-1 items-center justify-center min-h-[24px] flex text-sm rounded-full bg-backgroundDark text-textInverted',
+                                    'flex min-h-[24px] min-w-[24px] items-center justify-center rounded-full bg-backgroundDark px-1 text-sm text-textInverted',
                                 )}
                             >
                                 {menuItem.count}
@@ -67,7 +67,7 @@ export const UserNavigation: FC = () => {
                 <Button
                     className={twJoin(
                         getMenuItemTwClass(),
-                        'font-normal normal-case bg-backgroundMore hover:bg-backgroundMore text-text hover:text-textAccent hover:underline',
+                        'font-primary bg-transparent text-base font-normal leading-5 text-text !outline-none hover:bg-transparent hover:text-textAccent hover:underline',
                     )}
                     onClick={logoutHandler}
                 >
