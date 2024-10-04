@@ -1,0 +1,26 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Parameter groups overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Parameter groups overview'|trans }}{% endblock %}
+
+{% block btn %}
+    <div class="wrap-bar__buttons">
+        <a href="{{ url('admin_parametergroup_new') }}" class="btn btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>{{ 'Create new parameter group'|trans }}
+        </a>
+    </div>
+{% endblock %}
+
+{% block main_content %}
+
+    <div class="js-multiple-grids-rows-unified">
+        {{ grid.render() }}
+
+        {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
+            {% block fixed_bar_content %}
+                <button class="js-drag-and-drop-grid-submit-all btn btn--disabled" type="button">{{ 'Save changes in order'|trans }}</button>
+            {% endblock %}
+        {% endembed %}
+    </div>
+
+{% endblock %}

@@ -539,6 +539,10 @@ class SideMenuBuilder
         $parametersMenu->addChild('parameters_edit', ['route' => 'admin_parameter_edit', 'display' => false, 'label' => t('Editing parameter')]);
         $parametersMenu->addChild('parameters_values_edit', ['route' => 'admin_parametervalues_edit', 'display' => false, 'label' => t('Parameter values')]);
 
+        $parameterGroupsMenu = $listsMenu->addChild('parametergroups', ['route' => 'admin_parametergroup_list', 'label' => t('Parameter groups')]);
+        $parameterGroupsMenu->addChild('parametergroups_new', ['route' => 'admin_parametergroup_new', 'display' => false, 'label' => t('New parameter group')]);
+        $parameterGroupsMenu->addChild('parametergroups_edit', ['route' => 'admin_parametergroup_edit', 'display' => false, 'label' => t('Editing parameter group')]);
+
         $listsMenu->addChild(
             'order_statuses',
             ['route' => 'admin_orderstatus_list', 'label' => t('Status of orders')],

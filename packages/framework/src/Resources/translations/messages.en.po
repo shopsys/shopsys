@@ -28,6 +28,9 @@ msgstr ""
 msgid "-- Choose brand --"
 msgstr ""
 
+msgid "-- Choose group --"
+msgstr ""
+
 msgid "-- Choose unit --"
 msgstr ""
 
@@ -856,6 +859,9 @@ msgstr ""
 msgid "Create new parameter"
 msgstr ""
 
+msgid "Create new parameter group"
+msgstr ""
+
 msgid "Create new product"
 msgstr ""
 
@@ -1273,7 +1279,13 @@ msgstr ""
 msgid "Do you really want to remove this page?"
 msgstr ""
 
+msgid "Do you really want to remove this parameter groups? By deleting this parameter group you will unset all groups by associated parameters. This step is irreversible!"
+msgstr ""
+
 msgid "Do you really want to remove this parameter? By deleting this parameter you will remove this parameter from a product where the parameter is assigned. This step is irreversible!"
+msgstr ""
+
+msgid "Do you really want to remove this parameter? Deleting the parameter will remove this parameter from the products and the possible landing page of the extended SEO category where the parameter is assigned. This step is irreversible!"
 msgstr ""
 
 msgid "Do you really want to remove this payment?"
@@ -1379,6 +1391,9 @@ msgid "Edit domain icon"
 msgstr ""
 
 msgid "Edit parameter"
+msgstr ""
+
+msgid "Edit parameter group"
 msgstr ""
 
 msgid "Edit store"
@@ -1502,6 +1517,9 @@ msgid "Editing page"
 msgstr ""
 
 msgid "Editing parameter"
+msgstr ""
+
+msgid "Editing parameter group"
 msgstr ""
 
 msgid "Editing parameter of type color"
@@ -2377,6 +2395,9 @@ msgstr ""
 msgid "New parameter"
 msgstr ""
 
+msgid "New parameter group"
+msgstr ""
+
 msgid "New password settings URL address"
 msgstr ""
 
@@ -2729,6 +2750,24 @@ msgid "Parameter <strong><a href=\"{{ url }}\">{{ name }}</a></strong> edited"
 msgstr ""
 
 msgid "Parameter <strong>{{ name }}</strong> deleted"
+msgstr ""
+
+msgid "Parameter group"
+msgstr ""
+
+msgid "Parameter group <strong><a href=\"{{ url }}\">{{ name }}</a></strong> edited"
+msgstr ""
+
+msgid "Parameter groups"
+msgstr ""
+
+msgid "Parameter groups - full"
+msgstr ""
+
+msgid "Parameter groups - view"
+msgstr ""
+
+msgid "Parameter groups overview"
 msgstr ""
 
 msgid "Parameter value"
@@ -3629,6 +3668,9 @@ msgid "The optimal size of the icon is 46x26 px. Only PNG format is allowed."
 msgstr ""
 
 msgid "There are no parameter values of type color yet."
+msgstr ""
+
+msgid "There is no parameter group yet."
 msgstr ""
 
 msgid "There is no warehouse on this domain yet."

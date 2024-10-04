@@ -12,11 +12,6 @@ class ParameterData
     public $name;
 
     /**
-     * @var bool
-     */
-    public $visible;
-
-    /**
      * @var string|null
      */
     public $uuid;
@@ -36,9 +31,13 @@ class ParameterData
      */
     public $unit;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup|null
+     */
+    public $group;
+
     public function __construct()
     {
         $this->name = [];
-        $this->visible = false;
     }
 }

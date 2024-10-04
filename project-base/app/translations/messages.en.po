@@ -7,9 +7,6 @@ msgstr ""
 msgid "\"Valid to\" must be greater than \"Valid from\""
 msgstr ""
 
-msgid "-- Choose group --"
-msgstr ""
-
 msgid "<strong><a href=\"{{ url }}\">Notification bar</a></strong> has been successfuly updated"
 msgstr ""
 
@@ -157,12 +154,6 @@ msgstr ""
 msgid "Do you really want to remove this notification bar?"
 msgstr ""
 
-msgid "Do you really want to remove this parameter? By deleting this parameter you will remove this parameter from a product where the parameter is assigned. This step is irreversible!"
-msgstr ""
-
-msgid "Do you really want to remove this parameter? Deleting the parameter will remove this parameter from the products and the possible landing page of the extended SEO category where the parameter is assigned. This step is irreversible!"
-msgstr ""
-
 msgid "Domain"
 msgstr ""
 
@@ -260,9 +251,6 @@ msgid "GTM ID"
 msgstr ""
 
 msgid "GTM creative"
-msgstr ""
-
-msgid "Group"
 msgstr ""
 
 msgid "Groups"
@@ -374,9 +362,6 @@ msgid "Meta description"
 msgstr ""
 
 msgid "Name"
-msgstr ""
-
-msgid "Name %locale%"
 msgstr ""
 
 msgid "Name prefix"
@@ -601,9 +586,6 @@ msgstr ""
 msgid "This flag can not be deleted as it is used in definition of"
 msgstr ""
 
-msgid "Type"
-msgstr ""
-
 msgid "Type of image"
 msgstr ""
 
@@ -617,9 +599,6 @@ msgid "Uh-oh, uh-oh. And specially <strong>\"%status_code% %status_text%\"</stro
 msgstr ""
 
 msgid "Unable to load list of language constants"
-msgstr ""
-
-msgid "Unit"
 msgstr ""
 
 msgid "Unlimited"

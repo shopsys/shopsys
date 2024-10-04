@@ -7,9 +7,6 @@ msgstr ""
 msgid "\"Valid to\" must be greater than \"Valid from\""
 msgstr "\"Platnost do\" musí být větší než \"Platnost od\""
 
-msgid "-- Choose group --"
-msgstr "-- Vybrat skupinu --"
-
 msgid "<strong><a href=\"{{ url }}\">Notification bar</a></strong> has been successfuly updated"
 msgstr "<strong><a href=\"{{ url }}\">Notifikační lišta</a></strong> byla úspěšně upravena"
 
@@ -157,12 +154,6 @@ msgstr "Opravdu chcete odstranit tento překlad jazykové konstanty?"
 msgid "Do you really want to remove this notification bar?"
 msgstr "Opravdu chcete odebrat tuto notifikační lištu?"
 
-msgid "Do you really want to remove this parameter? By deleting this parameter you will remove this parameter from a product where the parameter is assigned. This step is irreversible!"
-msgstr "Opravdu si přejete odebrat tento parametr? Smazáním parametru dojde i k odstranění parametru z produktů, ke kterým je parametr přiřazen. Tento krok nelze vzít zpět!"
-
-msgid "Do you really want to remove this parameter? Deleting the parameter will remove this parameter from the products and the possible landing page of the extended SEO category where the parameter is assigned. This step is irreversible!"
-msgstr "Opravdu chcete odebrat tento parametr? Smazáním parametru dojde k odebrání tohoto parametru u zboží a případné landing stránky rozšířeného SEO kategorií, kde je parametr přiřazen. Tento krok je nevratný!"
-
 msgid "Domain"
 msgstr "Doména"
 
@@ -261,9 +252,6 @@ msgstr "GTM ID"
 
 msgid "GTM creative"
 msgstr ""
-
-msgid "Group"
-msgstr "Skupina"
 
 msgid "Groups"
 msgstr "Skupiny"
@@ -375,9 +363,6 @@ msgstr "Meta popis"
 
 msgid "Name"
 msgstr "Název"
-
-msgid "Name %locale%"
-msgstr "Name %locale%"
 
 msgid "Name prefix"
 msgstr "Prefix názvu"
@@ -601,9 +586,6 @@ msgstr "Vybraný příznak nelze smazat."
 msgid "This flag can not be deleted as it is used in definition of"
 msgstr "Tento příznak nelze smazat, protože se používá v definici"
 
-msgid "Type"
-msgstr "Typ"
-
 msgid "Type of image"
 msgstr "Typ obrázku"
 
@@ -618,9 +600,6 @@ msgstr "To je nemilé, to je nemilé. A zrovna <strong>\"%status_code% %status_t
 
 msgid "Unable to load list of language constants"
 msgstr "Nepodařilo se načíst přehled jazykových konstant"
-
-msgid "Unit"
-msgstr "Jednotka"
 
 msgid "Unlimited"
 msgstr "Neomezeně"

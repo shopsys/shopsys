@@ -133,6 +133,12 @@ msgstr "Název nesmí být delší než {{ limit }} znaků"
 msgid "Opening hours setting is not valid"
 msgstr "Neplaté nastavení otevírací doby"
 
+msgid "Parameter group name cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "Parameter group with this name already exists for the locale \"%locale%\"."
+msgstr ""
+
 msgid "Parameter name cannot be longer than {{ limit }} characters"
 msgstr "Název parametru nesmí být delší než {{ limit }} znaků"
 
@@ -342,6 +348,9 @@ msgstr "Odkaz musí být platnou URL adresou"
 
 msgid "Please enter page name"
 msgstr "Prosím vyplňte název stránky"
+
+msgid "Please enter parameter group name"
+msgstr ""
 
 msgid "Please enter parameter name"
 msgstr "Vyplňte prosím název parametru"

@@ -209,7 +209,7 @@ class ReadyCategorySeoMixFacade
     }
 
     /**
-     * @param \App\Model\Product\Parameter\Parameter $parameter
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
      */
     public function deleteAllWithParameter(Parameter $parameter): void
     {

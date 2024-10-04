@@ -6,7 +6,6 @@ namespace App\FrontendApi\Model\Product\Filter;
 
 use App\Model\Category\Category;
 use App\Model\CategorySeo\ReadyCategorySeoMix;
-use App\Model\Product\Parameter\Parameter;
 use InvalidArgumentException;
 use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
 use Shopsys\FrameworkBundle\Model\Category\CategoryParameterFacade;
@@ -16,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue as BaseParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade as BaseProductOnCurrentDomainElasticFacade;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions;
@@ -25,11 +25,11 @@ use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory a
  * @property \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade
  * @method \Shopsys\FrontendApiBundle\Model\Product\Filter\FlagFilterOption createFlagFilterOption(\App\Model\Product\Flag\Flag $flag, int $count, bool $isAbsolute, bool $isSelected = false)
  * @method \Shopsys\FrontendApiBundle\Model\Product\Filter\BrandFilterOption createBrandFilterOption(\App\Model\Product\Brand\Brand $brand, int $count, bool $isAbsolute)
- * @method \Shopsys\FrontendApiBundle\Model\Product\Filter\ParameterFilterOption createParameterFilterOption(\App\Model\Product\Parameter\Parameter $parameter, \Shopsys\FrontendApiBundle\Model\Product\Filter\ParameterValueFilterOption[] $parameterValueFilterOptions, bool $collapsed, bool $isSliderAllowed, float|null $selectedValue = null)
+ * @method \Shopsys\FrontendApiBundle\Model\Product\Filter\ParameterFilterOption createParameterFilterOption(\Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter, \Shopsys\FrontendApiBundle\Model\Product\Filter\ParameterValueFilterOption[] $parameterValueFilterOptions, bool $collapsed, bool $isSliderAllowed, float|null $selectedValue = null)
  * @method \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions createProductFilterOptionsForBrand(\App\Model\Product\Brand\Brand $brand, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData)
- * @method bool isParameterFiltered(\App\Model\Product\Parameter\Parameter $parameter, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData)
- * @method bool isParameterValueFiltered(\App\Model\Product\Parameter\Parameter $parameter, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $parameterValue, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData)
- * @method int getParameterValueCount(\App\Model\Product\Parameter\Parameter $parameter, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $parameterValue, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData)
+ * @method bool isParameterFiltered(\Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData)
+ * @method bool isParameterValueFiltered(\Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $parameterValue, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData)
+ * @method int getParameterValueCount(\Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $parameterValue, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData)
  * @method \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions createProductFilterOptionsForFlag(\App\Model\Product\Flag\Flag $flag, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData)
  */
 class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
@@ -116,7 +116,7 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
         $collapsedParameters = $this->categoryParameterFacade->getParametersCollapsedByCategory($category);
 
         foreach ($productFilterConfig->getParameterChoices() as $parameterFilterChoice) {
-            /** @var \App\Model\Product\Parameter\Parameter $parameter */
+            /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter */
             $parameter = $parameterFilterChoice->getParameter();
             $isAbsolute = !$this->isParameterFiltered($parameter, $productFilterData);
 
@@ -213,7 +213,7 @@ class ProductFilterOptionsFactory extends BaseProductFilterOptionsFactory
 
     /**
      * @param \App\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
-     * @param \App\Model\Product\Parameter\Parameter $parameter
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $parameterValue
      * @return bool
      */
