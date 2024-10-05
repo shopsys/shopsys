@@ -1,7 +1,7 @@
-import { Tooltip } from 'components/Basic/Tooltip/Tooltip';
+import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
 import { LabelHTMLAttributes } from 'react';
-import { twJoin } from 'tailwind-merge';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
+import { twMergeCustom } from 'utils/twMerge';
 
 type NativeProps = ExtractNativePropsFromDefault<LabelHTMLAttributes<HTMLLabelElement>, never, 'htmlFor'>;
 
@@ -9,35 +9,55 @@ type ColorLabelWrapperProps = NativeProps & {
     label?: string;
     isLightColor: boolean;
     bgColor: string;
-    isDisabled?: boolean;
-    isActive: boolean;
+    count?: number;
+    checked?: boolean;
+    disabled?: boolean;
 };
 
 export const ColorLabelWrapper: FC<ColorLabelWrapperProps> = ({
     label,
     isLightColor,
     bgColor,
-    isDisabled,
-    isActive,
+    count,
+    disabled,
+    checked,
     htmlFor,
     children,
 }) => (
-    <div className="relative flex w-6">
+    <div className="relative w-full select-none">
         {children}
-        <Tooltip label={label}>
-            <label
-                htmlFor={htmlFor}
+        <label
+            htmlFor={htmlFor}
+            className={twMergeCustom(
+                'group relative flex w-full cursor-pointer items-center gap-2 text-sm font-semibold text-inputText',
+                disabled && 'cursor-no-drop text-inputTextDisabled opacity-60',
+            )}
+        >
+            <div
                 style={{ backgroundColor: bgColor }}
-                className={twJoin(
-                    'relative block h-6 w-6 cursor-pointer rounded-full',
-                    'after:absolute after:top-1/2 after:left-1/2 after:flex after:-translate-y-1/2 after:-translate-x-1/2 after:items-center after:justify-center after:text-lg after:opacity-0 after:content-["✕"]',
-                    'peer-checked:after:pointer-events-none peer-checked:after:absolute peer-checked:after:left-[12px] peer-checked:after:top-[11px] peer-checked:after:h-[10px] peer-checked:after:w-[6px] peer-checked:after:rotate-45 peer-checked:after:border-r-2 peer-checked:after:border-b-2 peer-checked:after:opacity-100 peer-checked:after:content-[""]',
-                    isDisabled && !isActive && 'pointer-events-none opacity-30 after:opacity-100',
-                    isLightColor
-                        ? 'after:text-inputTextInverted peer-checked:after:border-inputTextActive'
-                        : 'peer-checked:after:border-inputTextInverted',
+                className={twMergeCustom(
+                    'flex size-7 shrink-0 justify-center rounded border border-text bg-inputBackground transition',
+                    checked
+                        ? 'border-text'
+                        : 'group-hover:border-inputBorderHovered group-active:border-inputBorderHovered',
+                    disabled &&
+                        'border-inputBorderDisabled outline-0 active:scale-100 group-hover:border-inputBorderDisabled group-hover:bg-inputBorderDisabled group-active:border-inputBorderDisabled group-active:outline-0',
+                    disabled && checked && 'bg-inputBorderDisabled group-hover:bg-inputBorderDisabled',
                 )}
-            />
-        </Tooltip>
+            >
+                <CheckmarkIcon
+                    className={twMergeCustom(
+                        'h-full opacity-0 transition',
+                        checked && 'opacity-100',
+                        isLightColor ? 'text-text' : 'text-textInverted',
+                        disabled && 'text-inputTextDisabled',
+                    )}
+                />
+            </div>
+            <div className="flex w-full justify-between">
+                <div className="w-full">{label}</div>
+                {!!count && !checked && <div className="ml-auto font-normal text-inputPlaceholder">({count})</div>}
+            </div>
+        </label>
     </div>
 );

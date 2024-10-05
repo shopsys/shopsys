@@ -18,7 +18,7 @@ export const SkeletonPageBlogCategory: FC = () => (
                         ))}
                     </div>
                 </div>
-                <div className="order-1 mb-7 flex w-full flex-col vl:order-2 vl:w-5/12 xl:w-1/3 vl:pl-8">
+                <div className="order-1 mb-7 flex w-full flex-col vl:order-2 vl:w-5/12 vl:pl-8 xl:w-1/3">
                     <Skeleton className="h-[450px] vl:w-[400px]" containerClassName="order-1 vl:order-2" />
                 </div>
             </div>

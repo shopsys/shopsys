@@ -12,7 +12,7 @@ export const ComplaintDetailCustomerInfo: FC<ComplaintDetailCustomerInfoProps> =
     const { t } = useTranslation();
 
     return (
-        <div className="flex w-full flex-col vl:flex-row vl:flex-wrap xl:flex-nowrap gap-6">
+        <div className="flex w-full flex-col gap-6 vl:flex-row vl:flex-wrap xl:flex-nowrap">
             <InformationCard heading={t('Contact information')} icon={<UserIcon className="[&>path]:stroke-1" />}>
                 <span>
                     {complaint.deliveryFirstName} {complaint.deliveryLastName}

@@ -65,7 +65,7 @@ export const NotImplementedTooltip: FC = ({ children, className }) => {
             {active && (
                 <div
                     className={twJoin(
-                        'absolute -bottom-8 left-1/2 z-tooltip h-6 -translate-x-1/2 leading-4',
+                        'z-tooltip absolute -bottom-8 left-1/2 h-6 -translate-x-1/2 leading-4',
                         notImplementedTagTwClass,
                     )}
                 >

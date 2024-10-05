@@ -142,7 +142,7 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
     };
 
     return (
-        <Popup className="w-11/12 lg:w-4/5 vl:w-auto overflow-x-auto">
+        <Popup className="w-11/12 overflow-x-auto lg:w-4/5 vl:w-auto">
             <FormProvider {...formProviderMethods}>
                 <Form onSubmit={formProviderMethods.handleSubmit(onSubmitCustomerUserManageProfileFormHandler)}>
                     <FormContentWrapper>

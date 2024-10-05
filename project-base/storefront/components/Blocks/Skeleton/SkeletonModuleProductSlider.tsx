@@ -1,4 +1,5 @@
 import { SkeletonModuleProductListItem } from './SkeletonModuleProductListItem';
+import { VISIBLE_SLIDER_ITEMS } from 'components/Blocks/Product/ProductsSlider';
 import { twJoin } from 'tailwind-merge';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 
@@ -15,7 +16,7 @@ export const SkeletonModuleProductSlider: FC<SkeletonModuleProductsListProps> = 
                     !isWithSimpleCards && 'vl:auto-cols-[25%]',
                 ])}
             >
-                {createEmptyArray(4).map((_, index) => (
+                {createEmptyArray(VISIBLE_SLIDER_ITEMS).map((_, index) => (
                     <div key={index}>
                         <SkeletonModuleProductListItem isSimpleCard={isWithSimpleCards} />
                     </div>

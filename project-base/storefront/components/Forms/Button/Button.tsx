@@ -52,9 +52,9 @@ export const getButtonClassName = (
     return twJoin(
         'inline-flex w-auto h-fit cursor-pointer items-center justify-center gap-2 rounded-md text-center font-bold font-secondary outline-none transition-all hover:no-underline',
         'outline-2 outline-offset-[-2px]',
-        size === 'small' && 'px-4 py-2 text-xs leading-3',
-        size === 'medium' && 'px-4 py-2 text-sm leading-5',
-        size === 'large' && 'px-8 py-4 text-lg leading-4',
+        size === 'small' && 'px-4 py-2 text-xs',
+        size === 'medium' && 'p-2 text-xs sm:px-4 sm:text-sm',
+        size === 'large' && 'px-3 py-2 sm:px-8 sm:py-4 text-sm sm:text-lg',
         variant === 'primary' && [
             'outline-actionPrimaryBorder bg-actionPrimaryBackground text-actionPrimaryText',
             !isDisabled &&

@@ -5,7 +5,8 @@ module.exports = {
     content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
     theme: {
         screens: {
-            xs: em(320),
+            xxs: em(320),
+            xs: em(375),
             sm: em(480),
             md: em(600),
             lg: em(769),
@@ -90,6 +91,19 @@ module.exports = {
             actionInvertedBorderActive: '#25283D',
             actionInvertedBorderDisabled: '#A3ACBD',
             actionInvertedBorderHovered: '#7892BC',
+
+            secondaryText: '#FFFFFF',
+            secondaryTextActive: '#FFFFFF',
+            secondaryTextDisabled: '#B6C3D8',
+            secondaryTextHovered: '#004EB6',
+            secondaryBackground: '#004EB6',
+            secondaryBackgroundActive: '#004EB6',
+            secondaryBackgroundDisabled: '#FAFAFA',
+            secondaryBackgroundHovered: '#FFFFFF',
+            secondaryBorder: '#004EB6',
+            secondaryBorderActive: '#004EB6',
+            secondaryBorderDisabled: '#B6C3D8',
+            secondaryBorderHovered: '#004EB6',
 
             activeIconFull: '#EC5353',
 

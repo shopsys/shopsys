@@ -7,7 +7,7 @@ export const LoginContent: FC = () => {
 
     return (
         <Webline className="flex flex-col items-center">
-            <h1 className="max-w-3xl w-full">{t('Login')}</h1>
+            <h1 className="w-full max-w-3xl">{t('Login')}</h1>
             <LoginForm />
         </Webline>
     );

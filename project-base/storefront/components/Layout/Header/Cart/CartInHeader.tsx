@@ -59,7 +59,8 @@ export const CartInHeader: FC = ({ className }) => {
         <>
             <div
                 className={twMergeCustom(
-                    'group relative lg:flex lg:pb-[10px] lg:mb-[-10px]',
+                    'group relative lg:flex',
+                    !isCartFetchingOrUnavailable && 'lg:-mb-2.5 lg:pb-2.5',
                     (isClicked || isHovered) && 'z-aboveOverlay',
                     className,
                 )}
@@ -67,32 +68,32 @@ export const CartInHeader: FC = ({ className }) => {
                 onMouseLeave={() => isDesktop && setIsHovered(false)}
             >
                 {isCartFetchingOrUnavailable && (
-                    <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded bg-backgroundMore py-2 opacity-50" />
+                    <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded-lg bg-backgroundMore py-2 opacity-50" />
                 )}
                 <ExtendedNextLink
                     href={cartUrl}
                     tid={TIDs.header_cart_link}
                     className={twJoin(
-                        'hidden items-center gap-x-3 rounded-lg h-11 pr-2 pl-4 no-underline transition-all hover:no-underline group-hover:shadow-lg lg:flex border cursor-pointer',
+                        'hidden h-11 cursor-pointer items-center gap-x-2 rounded-lg border px-3 no-underline transition-all hover:no-underline group-hover:shadow-lg lg:flex',
                         cart?.items.length ? nonEmptyCartTwClassName : emptyCartTwClassName,
                         !isPriceVisible(cart?.totalItemsPrice.priceWithVat) && cart?.items.length
                             ? 'min-w-14'
-                            : 'min-w-[132px]',
+                            : 'min-w-[151px]',
                     )}
                     onClick={() => {
                         setIsClicked(!isClicked);
                         setIsClicked(!isHovered);
                     }}
                 >
-                    <span className="relative flex text-lg">
-                        <CartIcon className="w-6 lg:w-5" />
+                    <span className="relative flex">
+                        <CartIcon className="size-6" />
                         {!!cart?.items.length && <CartCount>{cart.items.length}</CartCount>}
                     </span>
                     {isPriceVisibleOrEmtpyCart && (
                         <span
                             className={twJoin(
-                                'hidden text-sm font-semibold lg:block',
-                                !cart?.items.length && 'lg:w-full lg:text-center',
+                                'hidden font-secondary text-sm font-bold lg:block',
+                                !cart?.items.length && 'lg:w-full',
                             )}
                         >
                             {cart?.items.length
@@ -107,11 +108,11 @@ export const CartInHeader: FC = ({ className }) => {
                 <div className="flex cursor-pointer items-center justify-center text-lg outline-none lg:hidden">
                     <div
                         className={twJoin(
-                            'relative flex h-full w-full items-center justify-center p-3 no-underline transition-colors hover:no-underline border rounded-lg',
-                            'bg-actionPrimaryBackground text-actionPrimaryText border-actionPrimaryBorder',
+                            'relative flex h-full w-full items-center justify-center rounded-md border p-3 no-underline transition-colors hover:no-underline',
+                            'border-actionPrimaryBorder bg-actionPrimaryBackground text-actionPrimaryText',
                             isHoveredDelayed &&
-                                'hover:bg-actionPrimaryBackgroundHovered hover:text-actionPrimaryTextHovered hover:border-actionPrimaryBorderHovered',
-                            'active:bg-actionPrimaryBackgroundActive active:text-actionPrimaryTextActive active:border-actionPrimaryBorderActive',
+                                'hover:border-actionPrimaryBorderHovered hover:bg-actionPrimaryBackgroundHovered hover:text-actionPrimaryTextHovered',
+                            'active:border-actionPrimaryBorderActive active:bg-actionPrimaryBackgroundActive active:text-actionPrimaryTextActive',
                         )}
                         onClick={(event) => {
                             event.preventDefault();
@@ -125,12 +126,12 @@ export const CartInHeader: FC = ({ className }) => {
 
                 <div
                     className={twMergeCustom(
-                        'pointer-events-none absolute top-[-12px] right-[-15px] z-cart min-w-[315px] origin-top-right scale-75 transition-all bg-background',
-                        'lg:block lg:rounded-lg lg:opacity-0 lg:right-0 lg:top-full lg:h-auto lg:p-5 lg:scale-75',
+                        'pointer-events-none absolute right-[-15px] top-[-12px] z-cart min-w-[315px] origin-top-right scale-75 bg-background transition-all',
+                        'lg:right-0 lg:top-full lg:block lg:h-auto lg:scale-75 lg:rounded-xl lg:p-5 lg:opacity-0',
                         isHoveredDelayed &&
-                            'group-hover:pointer-events-auto group-hover:opacity-100 group-hover:scale-100',
+                            'group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100',
                         isClicked &&
-                            'opacity-100 scale-100 top-0 right-0 rounded-none h-dvh fixed z-aboveOverlay pointer-events-auto',
+                            'pointer-events-auto fixed right-0 top-0 z-aboveOverlay h-dvh scale-100 rounded-none opacity-100',
                         (isClicked || isHovered) && 'p-5',
                         !cart?.items.length
                             ? 'lg:flex lg:w-96 lg:flex-nowrap lg:items-center lg:justify-between'
@@ -139,16 +140,16 @@ export const CartInHeader: FC = ({ className }) => {
                 >
                     {(isHovered || isClicked) && (
                         <>
-                            <div className="flex flex-row justify-between mb-10 lg:hidden pr-1">
-                                <span className="text-base w-full text-center">{t('Cart')}</span>
+                            <div className="mb-10 flex flex-row justify-between pr-1 lg:hidden">
+                                <span className="w-full text-center text-base">{t('Cart')}</span>
                                 <RemoveIcon
-                                    className="w-4 text-borderAccent cursor-pointer"
+                                    className="size-4 cursor-pointer text-borderAccent"
                                     onClick={() => setIsClicked(false)}
                                 />
                             </div>
                             {cart?.items.length ? (
                                 <>
-                                    <ul className="relative w-[315px] max-h-[78dvh] m-0 flex list-none flex-col overflow-y-auto p-0 lg:w-[510px] lg:max-h-[50dvh] overflow-auto">
+                                    <ul className="relative m-0 flex max-h-[78dvh] w-[315px] list-none flex-col overflow-auto overflow-y-auto p-0 lg:max-h-[50dvh] lg:w-[510px]">
                                         {isRemovingFromCart && <LoaderWithOverlay className="w-16" />}
                                         {cart.items.map((cartItem, listIndex) => (
                                             <CartInHeaderListItem
@@ -160,16 +161,12 @@ export const CartInHeader: FC = ({ className }) => {
                                     </ul>
                                     <div
                                         className={twJoin(
-                                            'flex pt-5 gap-4',
+                                            'flex items-center gap-4 pt-5',
                                             shouldDisplayTransportBar ? 'justify-between' : 'justify-end',
                                         )}
                                     >
                                         <FreeTransportRange />
-                                        <Button
-                                            className="rounded-lg"
-                                            size="small"
-                                            onClick={() => router.push(cartUrl)}
-                                        >
+                                        <Button className="rounded-lg" onClick={() => router.push(cartUrl)}>
                                             {t('Go to cart')}
                                         </Button>
                                     </div>
@@ -196,7 +193,7 @@ export const CartInHeader: FC = ({ className }) => {
 };
 
 const CartCount: FC = ({ children }) => (
-    <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-backgroundAccent text-[10px] font-bold leading-normal text-textInverted lg:-top-2 lg:-right-2">
+    <span className="absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-backgroundAccent px-0.5 font-secondary text-[10px] font-bold leading-normal text-textInverted lg:-right-2 lg:-top-[6.5px]">
         {children}
     </span>
 );

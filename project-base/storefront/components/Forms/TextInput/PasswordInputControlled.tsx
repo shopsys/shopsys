@@ -61,7 +61,7 @@ export const PasswordInputControlled: FC<PasswordInputControlledProps> = ({
                     alt="eye icon"
                     src={eyeIcon}
                     className={twJoin(
-                        'absolute top-1/2 right-4 w-6 -translate-y-1/2 cursor-pointer',
+                        'absolute right-4 top-1/2 w-6 -translate-y-1/2 cursor-pointer',
                         inputType === 'text' && 'opacity-50',
                     )}
                     onClick={togglePasswordVisibilityHandler}

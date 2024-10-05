@@ -3,7 +3,6 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { Image } from 'components/Basic/Image/Image';
 import { TIDs } from 'cypress/tids';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
-import { twJoin } from 'tailwind-merge';
 import { ListedItemPropType } from 'types/simpleNavigation';
 import { getStringWithoutTrailingSlash } from 'utils/parsing/stringWIthoutSlash';
 import { twMergeCustom } from 'utils/twMerge';
@@ -31,32 +30,29 @@ export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({
                 href={href}
                 type={linkType}
                 className={twMergeCustom(
-                    'flex h-full w-full cursor-pointer flex-col items-center justify-center gap-2 rounded px-2 py-4 no-underline transition lg:flex-row lg:justify-start lg:gap-3 lg:px-3 lg:py-2',
+                    'relative flex h-full w-full cursor-pointer items-center gap-5 rounded-xl border border-backgroundMore bg-backgroundMore px-5 py-2.5 no-underline transition lg:justify-start lg:gap-3 lg:px-3 lg:py-2',
+                    'text-text hover:border-borderAccentLess hover:bg-background hover:text-text hover:no-underline',
                     className,
-                    'bg-backgroundMore text-text',
-                    'hover:bg-backgroundMost hover:text-text hover:no-underline',
                 )}
             >
                 {itemImage && (
-                    <div className="h-12 w-16 shrink-0" tid={TIDs.simple_navigation_image}>
+                    <div className="shrink-0" tid={TIDs.simple_navigation_image}>
                         <Image
                             alt={itemImage.name || listedItem.name}
-                            className="mx-auto max-h-full w-auto mix-blend-multiply"
-                            height={48}
+                            className="h-auto max-h-14 w-auto max-w-14 mix-blend-multiply"
+                            height={56}
                             src={itemImage.url}
-                            width={64}
+                            width={56}
                         />
                     </div>
                 )}
 
                 {icon}
 
-                <div className={twJoin('text-center', itemImage && 'lg:text-left')}>
-                    <div className="text-sm">{listedItem.name}</div>
-                    {'totalCount' in listedItem && listedItem.totalCount !== undefined && (
-                        <span className="ml-2 whitespace-nowrap text-sm">({listedItem.totalCount})</span>
-                    )}
-                </div>
+                <div className="z-above text-sm font-semibold">{listedItem.name}</div>
+                {'totalCount' in listedItem && listedItem.totalCount !== undefined && (
+                    <span className="ml-2 whitespace-nowrap text-sm">({listedItem.totalCount})</span>
+                )}
             </ExtendedNextLink>
         </li>
     );

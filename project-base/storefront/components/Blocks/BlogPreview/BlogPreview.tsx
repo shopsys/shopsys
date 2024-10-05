@@ -1,7 +1,7 @@
 import { BlogPreviewMain } from './BlogPreviewMain';
 import { BlogPreviewSide } from './BlogPreviewSide';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { ArrowRightIcon } from 'components/Basic/Icon/ArrowRightIcon';
+import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { SkeletonModuleMagazine } from 'components/Blocks/Skeleton/SkeletonModuleMagazine';
 import { TypeBlogArticleConnectionFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/BlogArticleConnectionFragment.generated';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
@@ -30,7 +30,7 @@ export const BlogPreview: FC<BlogPreviewProps> = ({ blogArticles, blogUrl, fetch
     return (
         <div className="py-10 vl:py-16 vl:pb-20">
             <div className="mb-5 flex flex-wrap items-baseline">
-                <h2 className="mr-8 mb-2 transform-none text-3xl font-bold leading-9">{t('Magazine')}</h2>
+                <h2 className="mb-2 mr-8 transform-none text-3xl font-bold leading-9">{t('Magazine')}</h2>
 
                 {!!blogUrl && (
                     <ExtendedNextLink
@@ -40,7 +40,7 @@ export const BlogPreview: FC<BlogPreviewProps> = ({ blogArticles, blogUrl, fetch
                     >
                         <>
                             {t('View all')}
-                            <ArrowRightIcon className="relative top-0 ml-2 text-xs" />
+                            <ArrowSecondaryIcon className="relative top-0 ml-2 -rotate-90 text-xs" />
                         </>
                     </ExtendedNextLink>
                 )}

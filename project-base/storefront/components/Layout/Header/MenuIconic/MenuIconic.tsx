@@ -23,18 +23,18 @@ export const MenuIconic: FC = () => {
     const isUserLoggedIn = useIsUserLoggedIn();
 
     const menuCountTwClass =
-        'flex w-4 h-4 text-white text-[10px] leading-[10px] rounded-full bg-activeIconFull align-center justify-center pt-[4px] absolute -top-1 -right-2';
+        'absolute -right-2 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-activeIconFull px-0.5 font-secondary text-[10px] font-bold leading-normal text-textInverted lg:-right-2 lg:-top-[6.5px]';
 
     return (
-        <ul className="flex h-12 items-center gap-1">
-            <MenuIconicItem className="max-lg:hidden">
+        <ul className="flex lg:gap-7">
+            <MenuIconicItem className="flex max-lg:hidden">
                 <MenuIconicItemLink href={storesUrl} type="stores">
                     <MarkerIcon className="size-6" />
                     {t('Stores')}
                 </MenuIconicItemLink>
             </MenuIconicItem>
 
-            <MenuIconicItem className="max-lg:hidden">
+            <MenuIconicItem>
                 <MenuIconicItemLink href={productComparisonUrl} title={t('Comparison')} type="comparison">
                     <div className="relative">
                         <CompareIcon className="size-6" />
@@ -42,7 +42,7 @@ export const MenuIconic: FC = () => {
                             <span className={menuCountTwClass}>{comparison.products.length}</span>
                         )}
                     </div>
-                    {t('Comparison')}
+                    <span className="max-lg:hidden">{t('Comparison')}</span>
                 </MenuIconicItemLink>
             </MenuIconicItem>
 
@@ -54,11 +54,11 @@ export const MenuIconic: FC = () => {
                             <span className={menuCountTwClass}>{wishlist.products.length}</span>
                         )}
                     </div>
-                    <span className="max-lg:hidden">{t('Wishlist')}</span>
+                    <span className="max-lg:hidden">{t('Favorites')}</span>
                 </MenuIconicItemLink>
             </MenuIconicItem>
 
-            <MenuIconicItem className="relative">
+            <MenuIconicItem>
                 {isUserLoggedIn ? (
                     <MenuIconicItemUserAuthenticated className="relative" />
                 ) : (

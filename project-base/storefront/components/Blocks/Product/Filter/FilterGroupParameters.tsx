@@ -21,6 +21,7 @@ type FilterGroupParametersProps = {
     parameterIndex: number;
     parameter: ParametersType;
     defaultNumberOfShownParameters: number;
+    isActive: boolean;
 };
 
 export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
@@ -28,6 +29,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
     parameter,
     defaultNumberOfShownParameters,
     parameterIndex,
+    isActive,
 }) => {
     const { t } = useTranslation();
     const [isGroupCollapsed, setIsGroupCollapsed] = useState(parameter.isCollapsed);
@@ -57,6 +59,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
     return (
         <FilterGroupWrapper>
             <FilterGroupTitle
+                isActive={isActive}
                 isOpen={!isGroupCollapsed}
                 title={title + (parameter.unit?.name ? ` (${parameter.unit.name})` : '')}
                 onClick={() => setIsGroupCollapsed(!isGroupCollapsed)}
@@ -95,7 +98,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
 
                             {!!hiddenOptions.length && (
                                 <ShowAllButton onClick={() => setIsWithAllItemsShown((prev) => !prev)}>
-                                    {isWithAllItemsShown ? t('show less') : t('show more')}
+                                    {isWithAllItemsShown ? t('Show less') : t('Show more')}
                                 </ShowAllButton>
                             )}
                         </>
@@ -116,6 +119,7 @@ export const FilterGroupParameters: FC<FilterGroupParametersProps> = ({
                                     <CheckboxColor
                                         key={parameterValue.uuid}
                                         bgColor={parameterValue.rgbHex ?? undefined}
+                                        count={parameterValue.count}
                                         disabled={parameterValue.count === 0 && !isChecked}
                                         id={id}
                                         label={parameterValue.text}

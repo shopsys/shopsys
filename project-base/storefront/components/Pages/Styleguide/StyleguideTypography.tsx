@@ -4,7 +4,7 @@ import React from 'react';
 
 export const StyleguideTypography: FC = () => {
     return (
-        <StyleguideSection className="flex flex-wrap flex-col gap-3" title="Typography">
+        <StyleguideSection className="flex flex-col flex-wrap gap-3" title="Typography">
             <h1>H1 title</h1>
             <div className="h1">H1 className</div>
             <h2>H2 title</h2>

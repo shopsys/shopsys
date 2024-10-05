@@ -21,7 +21,7 @@ export const ProductDetailAvailabilityList: FC<ProductDetailAvailabilityListProp
                         storeAvailability.store && (
                             <li
                                 key={index}
-                                className="flex w-full items-center border-b border-borderAccent py-4 justify-between gap-4"
+                                className="flex w-full items-center justify-between gap-4 border-b border-borderAccent py-4"
                             >
                                 <strong className="w-36">{storeAvailability.store.storeName}</strong>
 

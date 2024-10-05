@@ -52,7 +52,7 @@ export const AutocompleteSearchPopup: FC<AutocompleteProps> = ({
                 initial="hidden"
                 variants={fadeAnimation}
                 className={twJoin(
-                    'gap-5 w-full absolute left-0 -bottom-3 z-aboveOverlay flex vl:w-[770px] origin-top translate-y-full flex-col vl:gap-6 rounded-xl bg-background p-7 overflow-auto',
+                    'absolute -bottom-3 left-0 z-aboveOverlay flex w-full origin-top translate-y-full flex-col gap-5 overflow-auto rounded-xl bg-background p-7 vl:w-[770px] vl:gap-6',
                     'max-h-[calc(85vh-169px)] md:max-h-[calc(98vh-169px)] lg:max-h-[calc(98vh-180px)] vl:max-h-[calc(98vh-120px)]',
                 )}
             >

@@ -50,15 +50,15 @@ export const PersonalDataExportContent: FC<PersonalDataExportContentProps> = ({ 
 
     return (
         <Webline className="flex flex-col items-center">
-            <h1 className="max-w-3xl w-full">{t('Personal data export')}</h1>
+            <h1 className="w-full max-w-3xl">{t('Personal data export')}</h1>
             {!!contentSiteText && (
-                <div className="mb-5 max-w-3xl block text-justify">
+                <div className="mb-5 block max-w-3xl text-justify">
                     <UserText htmlContent={contentSiteText} />
                 </div>
             )}
             <FormProvider {...formProviderMethods}>
                 <Form
-                    className="w-full flex justify-center"
+                    className="flex w-full justify-center"
                     onSubmit={formProviderMethods.handleSubmit(onPersonalDataExportHandler)}
                 >
                     <FormContentWrapper>

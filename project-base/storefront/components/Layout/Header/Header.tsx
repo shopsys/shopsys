@@ -14,18 +14,18 @@ type HeaderProps = {
 
 export const Header: FC<HeaderProps> = ({ simpleHeader }) => {
     return (
-        <div className="flex flex-wrap items-center gap-y-3 py-3 gap-x-4 lg:gap-x-7 lg:pb-5 lg:pt-6" tid={TIDs.header}>
+        <div className="flex flex-wrap items-center gap-y-3 pb-4 pt-3 lg:gap-x-7 lg:pb-1 lg:pt-6" tid={TIDs.header}>
             <Logo />
 
             {simpleHeader ? (
                 <HeaderContact />
             ) : (
                 <>
-                    <div className="order-6 h-12 w-full transition lg:relative lg:order-4 lg:w-full vl:order-2 vl:flex-1">
+                    <div className="order-6 h-12 w-full transition lg:relative lg:order-4 lg:w-full vl:order-2 vl:max-w-[400px] vl:flex-1 xl:ml-12">
                         <DeferredAutocompleteSearch />
                     </div>
 
-                    <div className="order-2 flex">
+                    <div className="order-2 ml-auto flex">
                         <DeferredMenuIconic />
                     </div>
 

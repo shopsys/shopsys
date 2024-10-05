@@ -30,11 +30,11 @@ export const FormLineError: FC<FormLineErrorProps> = ({ inputType, error, textIn
                     isInputPassword && `right-11 -translate-y-1/2 ${isTextInputSmall ? '-top-8' : '-top-9'}`,
                     isCheckbox && '-right-5',
                     isSelect && '-top-10 right-11 z-[2]',
-                    isDropzone && 'top-1 right-0',
+                    isDropzone && 'right-0 top-1',
                 )}
             />
             {error.message !== undefined && (
-                <span className="text-sm font-secondary text-inputError">{error.message}</span>
+                <span className="font-secondary text-sm text-inputError">{error.message}</span>
             )}
         </div>
     );

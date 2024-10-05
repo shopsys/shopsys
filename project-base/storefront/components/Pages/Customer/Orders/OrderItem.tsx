@@ -28,11 +28,11 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
     const [customerOrderDetailUrl] = getInternationalizedStaticUrls(['/customer/order-detail'], url);
 
     return (
-        <div className="bg-backgroundMore flex flex-col gap-5 rounded-md p-4 vl:p-6">
+        <div className="flex flex-col gap-5 rounded-md bg-backgroundMore p-4 vl:p-6">
             <OrderPaymentStatusBar orderIsPaid={order.isPaid} orderPaymentType={order.payment.type} />
-            <div className="flex flex-col vl:flex-row vl:justify-between vl:items-start gap-6">
+            <div className="flex flex-col gap-6 vl:flex-row vl:items-start vl:justify-between">
                 <div className="flex flex-col gap-5">
-                    <div className="flex gap-x-8 gap-y-2 flex-wrap">
+                    <div className="flex flex-wrap gap-x-8 gap-y-2">
                         <OrderItemColumnInfo
                             title={t('Order number')}
                             value={
@@ -101,7 +101,7 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                         {order.note && <OrderItemRowInfo title={t('Note')} value={order.note} />}
                     </div>
                 </div>
-                <div className="flex gap-2 items-center">
+                <div className="flex items-center gap-2">
                     <Button
                         size="small"
                         tid={TIDs.order_list_repeat_order_button}
@@ -143,7 +143,7 @@ export const OrderItemColumnInfo: FC<OrderItemColumnInfoProps> = ({
     tid,
 }) => {
     return (
-        <div className={twMergeCustom('flex gap-4 items-end', wrapperClassName)}>
+        <div className={twMergeCustom('flex items-end gap-4', wrapperClassName)}>
             <div className="flex flex-col gap-1">
                 <span className="text-sm">{title}</span>
                 <span className={twMergeCustom('font-bold leading-none', valueClassName)} tid={tid}>

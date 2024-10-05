@@ -37,7 +37,7 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
         <div
             ref={itemRef}
             className={twMergeCustom(
-                'bg-backgroundMore px-5 py-2.5 rounded-xl cursor-pointer border border-transparent',
+                'cursor-pointer rounded-xl border border-transparent bg-backgroundMore px-5 py-2.5',
                 isExpanded && 'border-borderAccent',
             )}
             onClick={() => {
@@ -45,14 +45,14 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
             }}
         >
             <div className="flex items-center justify-between gap-3.5">
-                <div className="w-full xl:flex items-center justify-between">
+                <div className="w-full items-center justify-between xl:flex">
                     <div className="max-xl:mb-2.5">
                         <h5>{store.name}</h5>
                         <p className="mt-1.5 text-xs">
                             {store.street}, {store.postcode} {store.city}
                         </p>
                     </div>
-                    <div className="xl:text-right flex items-center xl:block" tid={TIDs.store_opening_status}>
+                    <div className="flex items-center xl:block xl:text-right" tid={TIDs.store_opening_status}>
                         <OpeningStatus className="xl:mb-1.5" status={store.openingHours.status} />
                         <p className="ml-2.5 text-xs">{getTodayOpeningHours(store.openingHours)}</p>
                     </div>

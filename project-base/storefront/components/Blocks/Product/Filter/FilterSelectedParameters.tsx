@@ -1,6 +1,6 @@
 import { SelectedParametersList, SelectedParametersListItem, SelectedParametersName } from './FilterElements';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
-import { RemoveThinIcon } from 'components/Basic/Icon/RemoveThinIcon';
+import { ProductFlag } from 'components/Blocks/Product/ProductFlag';
 import { TypeProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { DefaultProductFiltersMapType } from 'store/slices/createSeoCategorySlice';
@@ -39,13 +39,49 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
     const checkedFlags = getCheckedFlags(defaultProductFiltersMap, filterOptions.flags, currentFilter?.flags);
 
     return (
-        <div className="z-aboveOverlay rounded py-4 vl:z-base">
-            <div className="h4 mb-3 uppercase">{t('Selected filters')}</div>
+        <div className="order-2 mt-5 vl:order-1 vl:mb-5 vl:mt-0">
+            <h6 className="mb-5 vl:mb-2">{t('Selected filters')}</h6>
 
-            <div className="mb-4 flex flex-col gap-3">
+            <div className="flex flex-wrap items-center gap-y-2">
+                {!!currentFilter?.onlyInStock && (
+                    <SelectedParametersList>
+                        <SelectedParametersName>{t('Availability')}</SelectedParametersName>
+                        <SelectedParametersListItem onClick={() => updateFilterInStockQuery(false)}>
+                            {t('Only goods in stock')}
+                            <SelectedParametersIcon />
+                        </SelectedParametersListItem>
+                    </SelectedParametersList>
+                )}
+
+                {(currentFilter?.minimalPrice !== undefined || currentFilter?.maximalPrice !== undefined) && (
+                    <SelectedParametersList>
+                        <SelectedParametersName>{t('Price')}</SelectedParametersName>
+                        <SelectedParametersListItem
+                            onClick={() => {
+                                updateFilterPricesQuery({ maximalPrice: undefined, minimalPrice: undefined });
+                            }}
+                        >
+                            {currentFilter.minimalPrice !== undefined && (
+                                <>
+                                    <span>{t('from')}&nbsp;</span>
+                                    {formatPrice(currentFilter.minimalPrice)}
+                                    {currentFilter.maximalPrice !== undefined && <>&nbsp;</>}
+                                </>
+                            )}
+                            {currentFilter.maximalPrice !== undefined && (
+                                <>
+                                    <span>{t('to')}&nbsp;</span>
+                                    {formatPrice(currentFilter.maximalPrice)}
+                                </>
+                            )}
+                            <SelectedParametersIcon />
+                        </SelectedParametersListItem>
+                    </SelectedParametersList>
+                )}
+
                 {!!checkedBrands?.length && (
                     <SelectedParametersList>
-                        <SelectedParametersName>{t('Brands')}:</SelectedParametersName>
+                        <SelectedParametersName>{t('Brands')}</SelectedParametersName>
                         {checkedBrands.map(
                             (checkedBrand) =>
                                 !!checkedBrand && (
@@ -63,13 +99,13 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
 
                 {!!checkedFlags.length && (
                     <SelectedParametersList>
-                        <SelectedParametersName>{t('Flags')}:</SelectedParametersName>
+                        <SelectedParametersName>{t('Flags')}</SelectedParametersName>
                         {checkedFlags.map((checkedFlag) => (
                             <SelectedParametersListItem
                                 key={checkedFlag.flag.uuid}
                                 onClick={() => updateFilterFlagsQuery(checkedFlag.flag.uuid)}
                             >
-                                {checkedFlag.flag.name}
+                                <ProductFlag name={checkedFlag.flag.name} rgbColor={checkedFlag.flag.rgbColor} />
                                 <SelectedParametersIcon />
                             </SelectedParametersListItem>
                         ))}
@@ -94,6 +130,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                                       uuid: string;
                                       text: string;
                                       isSelected: boolean;
+                                      rgbHex: string;
                                   }[]
                               ).filter((selectedParameterValue) => {
                                   return (
@@ -111,7 +148,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
 
                     return (
                         <SelectedParametersList key={selectedParameterOptions.uuid}>
-                            <SelectedParametersName>{selectedParameterOptions.name}:</SelectedParametersName>
+                            <SelectedParametersName>{selectedParameterOptions.name}</SelectedParametersName>
                             {isSliderParameter && (
                                 <SelectedParametersListItem
                                     key={selectedParameterOptions.uuid}
@@ -137,6 +174,12 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                                             updateFilterParametersQuery(selectedParameter.parameter, selectedValue.uuid)
                                         }
                                     >
+                                        {selectedValue.rgbHex && selectedValue.rgbHex !== '' && (
+                                            <div
+                                                className="mr-2 h-4 w-4 rounded border border-text"
+                                                style={{ backgroundColor: selectedValue.rgbHex }}
+                                            />
+                                        )}
                                         {selectedValue.text}
                                         <SelectedParametersIcon />
                                     </SelectedParametersListItem>
@@ -145,51 +188,18 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                     );
                 })}
 
-                {!!currentFilter?.onlyInStock && (
-                    <SelectedParametersList>
-                        <SelectedParametersName>{t('Availability')}:</SelectedParametersName>
-                        <SelectedParametersListItem onClick={() => updateFilterInStockQuery(false)}>
-                            {t('Only goods in stock')}
-                            <SelectedParametersIcon />
-                        </SelectedParametersListItem>
-                    </SelectedParametersList>
-                )}
-
-                {(currentFilter?.minimalPrice !== undefined || currentFilter?.maximalPrice !== undefined) && (
-                    <SelectedParametersList>
-                        <SelectedParametersName>{t('Price')}:</SelectedParametersName>
-                        <SelectedParametersListItem
-                            onClick={() => {
-                                updateFilterPricesQuery({ maximalPrice: undefined, minimalPrice: undefined });
-                            }}
-                        >
-                            {currentFilter.minimalPrice !== undefined && (
-                                <>
-                                    <span>{t('from')}&nbsp;</span>
-                                    {formatPrice(currentFilter.minimalPrice)}
-                                    {currentFilter.maximalPrice !== undefined ? ' ' : ''}
-                                </>
-                            )}
-                            {currentFilter.maximalPrice !== undefined && (
-                                <>
-                                    <span>{t('to')}&nbsp;</span>
-                                    {formatPrice(currentFilter.maximalPrice)}
-                                </>
-                            )}
-                            <SelectedParametersIcon />
-                        </SelectedParametersListItem>
-                    </SelectedParametersList>
-                )}
-            </div>
-            <div className="flex cursor-pointer items-center text-sm text-textDisabled" onClick={resetAllFilterQueries}>
-                <div className="font-bold uppercase">{t('Clear all')}</div>
-                <RemoveIcon className="ml-2 cursor-pointer" />
+                <div
+                    className="cursor-pointer font-secondary text-sm font-semibold text-link underline hover:text-linkHovered"
+                    onClick={resetAllFilterQueries}
+                >
+                    {t('Clear all')}
+                </div>
             </div>
         </div>
     );
 };
 
-const SelectedParametersIcon: FC = () => <RemoveThinIcon className="ml-3 w-3 cursor-pointer" />;
+const SelectedParametersIcon: FC = () => <RemoveIcon className="ml-3 w-3 cursor-pointer group-hover:text-textError" />;
 
 const getCheckedFlags = (
     defaultProductFiltersMap: DefaultProductFiltersMapType,

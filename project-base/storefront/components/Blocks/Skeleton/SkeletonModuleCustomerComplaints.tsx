@@ -5,7 +5,7 @@ export const SkeletonModuleCustomerComplaints: FC = () => {
     return (
         <div className="flex flex-col gap-7">
             {createEmptyArray(3).map((_, index) => (
-                <Skeleton key={index} className="h-[260px] sm:h-[212px] vl:h-[119px] !rounded-md" />
+                <Skeleton key={index} className="h-[260px] !rounded-md sm:h-[212px] vl:h-[119px]" />
             ))}
         </div>
     );

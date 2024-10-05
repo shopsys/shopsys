@@ -10,8 +10,8 @@ const barRangeTwClass =
     'relative h-[4px] rounded-md bg-actionPrimaryBorder transition-width ease-defaultTransition duration-200';
 const barRangeFullTwClass = barRangeTwClass + ' w-full';
 const freeTransportRangeTwClass = twJoin(
-    'flex w-full flex-col text-[11px] leading-[14px] mb-7 max-w-[180px] text-center',
-    'lg:text-xs lg:max-w-[260px] lg:leading-5 vl:mb-0 vl:block',
+    'flex w-full flex-col text-base mb-7 max-w-[180px] text-center font-semibold font-secondary',
+    'lg:text-xs lg:min-w-[260px] lg:max-w-[300px] w-full lg:leading-5 vl:mb-0 vl:block',
 );
 
 const FreeTransportRange: FC = () => {
@@ -57,7 +57,7 @@ const FreeTransportRange: FC = () => {
 
     return (
         <div className={freeTransportRangeTwClass} data-testid={testIdentifier}>
-            <strong>{t('Your delivery and payment is now free of charge!')}</strong>
+            {t('Your delivery and payment is now free of charge!')}
             <div className={barWrapperTwClass}>
                 <div className={barTwClass}>
                     <div className={barRangeFullTwClass} />

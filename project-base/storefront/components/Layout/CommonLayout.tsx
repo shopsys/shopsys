@@ -58,7 +58,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
             <NotificationBars />
 
             <Webline
-                className="relative mb-8"
+                className="relative mb-4"
                 wrapperClassName="bg-gradient-to-tr from-backgroundBrand to-backgroundBrandLess"
             >
                 <Header />
@@ -68,7 +68,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
             <Adverts withGapBottom withWebline positionName="header" />
 
             {!!breadcrumbs && !isPageLoading && !isFetchingData && (
-                <Webline className="mb-8">
+                <Webline className="mb-4">
                     <Breadcrumbs breadcrumbs={breadcrumbs} type={breadcrumbsType} />
                 </Webline>
             )}

@@ -18,7 +18,7 @@ export const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = ({ onRemoveFr
             className={twMergeCustom(
                 'flex h-6 w-6 cursor-pointer items-center justify-center rounded-full border-none outline-none transition',
                 'text-tableCross',
-                'hover:text-tableCrossHover hover:bg-tableCrossHoverBg rounded-lg',
+                'rounded-lg hover:bg-tableCrossHoverBg hover:text-tableCrossHover',
                 className,
             )}
             onClick={onRemoveFromCart}

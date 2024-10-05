@@ -21,7 +21,7 @@ export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ 
     return (
         <div
             className={twJoin(
-                'mr-1 text-sm flex cursor-pointer items-center font-secondary',
+                'mr-1 flex cursor-pointer items-center font-secondary text-sm',
                 product.availability.status === TypeAvailabilityStatusEnum.InStock && 'text-availabilityInStock',
                 product.availability.status === TypeAvailabilityStatusEnum.OutOfStock && 'text-availabilityOutOfStock',
             )}

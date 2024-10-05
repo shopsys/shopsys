@@ -103,10 +103,10 @@ export const NewPasswordContent: FC<NewPasswordContentProps> = ({ email, hash })
 
     return (
         <Webline className="flex flex-col items-center">
-            <h1 className="max-w-3xl w-full">{t('Set new password')}</h1>
+            <h1 className="w-full max-w-3xl">{t('Set new password')}</h1>
             <FormProvider {...formProviderMethods}>
                 <Form
-                    className="w-full flex justify-center"
+                    className="flex w-full justify-center"
                     onSubmit={formProviderMethods.handleSubmit(onNewPasswordHandler)}
                 >
                     <FormContentWrapper>

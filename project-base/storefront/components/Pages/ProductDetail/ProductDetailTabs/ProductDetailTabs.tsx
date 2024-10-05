@@ -40,11 +40,11 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
 
             {!!parameters.length && (
                 <TabsContent headingTextMobile={t('Parameters')}>
-                    <Table className="border-0 p-0 max-w-screen-lg mx-auto">
+                    <Table className="mx-auto max-w-screen-lg border-0 p-0">
                         {parameters.map((parameter) => (
                             <Row
                                 key={parameter.uuid}
-                                className="bg-tableBackground odd:bg-tableBackgroundContrast border-none"
+                                className="border-none bg-tableBackground odd:bg-tableBackgroundContrast"
                             >
                                 <Cell className="py-2 text-left text-sm font-bold uppercase">{parameter.name}</Cell>
 
@@ -75,7 +75,7 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                             <li key={file.url}>
                                 <a className="no-underline" href={file.url}>
                                     {file.anchorText}
-                                    <ArrowSecondaryIcon className="rotate-180 ml-1" />
+                                    <ArrowSecondaryIcon className="ml-1 rotate-90" />
                                 </a>
                             </li>
                         ))}

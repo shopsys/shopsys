@@ -30,7 +30,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
 
     return (
         <Webline className="mb-10">
-            <div className="flex flex-col w-full lg:flex-row lg:gap-5">
+            <div className="flex w-full flex-col lg:flex-row lg:gap-5">
                 <div className="w-full lg:basis-1/2">
                     <div className="mb-5 lg:flex lg:items-center">
                         <h1>{store.storeName}</h1>
@@ -84,7 +84,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                     </LinkButton>
                 </div>
                 <div className="w-full lg:basis-1/2">
-                    <div className="flex aspect-square w-full mt-5 p-5 bg-backgroundMore rounded-xl lg:mt-0">
+                    <div className="mt-5 flex aspect-square w-full rounded-xl bg-backgroundMore p-5 lg:mt-0">
                         <GoogleMap
                             isDetail
                             defaultZoom={15}
@@ -103,11 +103,11 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
             </div>
 
             {store.storeImages.length > 0 && (
-                <div className="mt-10 gap-4 grid snap-x snap-mandatory vl:gap-8 overflow-y-hidden overscroll-x-contain max-vl:grid-flow-col max-lg:overflow-x-auto lg:flex lg:flex-wrap">
+                <div className="mt-10 grid snap-x snap-mandatory gap-4 overflow-y-hidden overscroll-x-contain max-vl:grid-flow-col max-lg:overflow-x-auto lg:flex lg:flex-wrap vl:gap-8">
                     {store.storeImages.map((image, index) => (
                         <div
                             key={image.url}
-                            className="lightboxItem snap-start m-0.5 w-[280px] h-[190px] overflow-hidden rounded-xl flex justify-center"
+                            className="lightboxItem m-0.5 flex h-[190px] w-[280px] snap-start justify-center overflow-hidden rounded-xl"
                             data-src={image.url}
                             title={store.storeName}
                             onClick={() => setSelectedGalleryItemIndex(index)}

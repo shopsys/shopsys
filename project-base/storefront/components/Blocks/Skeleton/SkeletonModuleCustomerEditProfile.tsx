@@ -6,7 +6,7 @@ export const SkeletonModuleCustomerEditProfile: FC = () => (
 
         <div className="w-full max-w-3xl">
             <div className="flex w-full flex-col">
-                <Skeleton className="h-11 w-72 mb-4" />
+                <Skeleton className="mb-4 h-11 w-72" />
 
                 <Skeleton className="h-[1000px] w-full" />
             </div>

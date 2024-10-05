@@ -21,7 +21,7 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
         <div
             title={isProductInComparison ? t('Remove product from comparison') : t('Add product to comparison')}
             className={twMergeCustom(
-                'flex cursor-pointer items-center gap-2 p-2 text-link hover:text-linkHovered',
+                'flex cursor-pointer items-center gap-2 text-inputPlaceholder hover:text-inputPlaceholderHovered',
                 className,
             )}
             onClick={toggleProductInComparison}

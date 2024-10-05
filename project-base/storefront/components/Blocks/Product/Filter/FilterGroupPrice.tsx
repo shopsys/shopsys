@@ -9,9 +9,10 @@ type FilterGroupPriceProps = {
     title: string;
     initialMinPrice: string;
     initialMaxPrice: string;
+    isActive: boolean;
 };
 
-export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({ title, initialMinPrice, initialMaxPrice }) => {
+export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({ title, initialMinPrice, initialMaxPrice, isActive }) => {
     const [isGroupOpen, setIsGroupOpen] = useState(true);
     const currentFilter = useCurrentFilterQuery();
     const { updateFilterPriceMinimumQuery, updateFilterPriceMaximumQuery } = useUpdateFilterQuery();
@@ -35,7 +36,12 @@ export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({ title, initialMinP
 
     return (
         <FilterGroupWrapper>
-            <FilterGroupTitle isOpen={isGroupOpen} title={title} onClick={() => setIsGroupOpen(!isGroupOpen)} />
+            <FilterGroupTitle
+                isActive={isActive}
+                isOpen={isGroupOpen}
+                title={title}
+                onClick={() => setIsGroupOpen(!isGroupOpen)}
+            />
             {isGroupOpen && (
                 <FilterGroupContent>
                     <RangeSlider

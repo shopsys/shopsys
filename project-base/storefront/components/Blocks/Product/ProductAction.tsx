@@ -19,7 +19,7 @@ export const ProductAction: FC<ProductActionProps> = ({ product, gtmProductListN
     if (product.isMainVariant) {
         return (
             <ExtendedNextLink className="no-underline" href={product.slug} type="productMainVariant">
-                <Button className="py-2">{t('Choose variant')}</Button>
+                <Button>{t('Choose')}</Button>
             </ExtendedNextLink>
         );
     }

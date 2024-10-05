@@ -32,7 +32,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
 
             {!!userData && (
                 <Webline className="mt-6">
-                    <div className="h2 mt-6 mb-3">{t('Billing address')}</div>
+                    <div className="h2 mb-3 mt-6">{t('Billing address')}</div>
                     <Table>
                         <Row className="flex flex-col md:flex-row">
                             <Cell className="flex-1">
@@ -99,7 +99,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
 
                     {userData.deliveryAddresses.length > 0 && (
                         <>
-                            <div className="h2 mt-6 mb-3">{t('Delivery addresses')}</div>
+                            <div className="h2 mb-3 mt-6">{t('Delivery addresses')}</div>
                             <Table>
                                 {userData.deliveryAddresses.map((address) => (
                                     <Row key={address.uuid}>
@@ -222,7 +222,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
             <Webline className="mt-6">
                 {newsLetterSubscriber && (
                     <>
-                        <div className="h2 mt-6 mb-3">{t('Newsletter')}</div>
+                        <div className="h2 mb-3 mt-6">{t('Newsletter')}</div>
                         <Table
                             head={
                                 <Row>

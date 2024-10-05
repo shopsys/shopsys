@@ -21,7 +21,7 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles }) =>
                         href={blogArticle.link}
                         type="blogArticle"
                         className={twJoin(
-                            'flex w-full flex-col p-4 rounded md:flex-row md:gap-x-10 transition-colors',
+                            'flex w-full flex-col rounded p-4 transition-colors md:flex-row md:gap-x-10',
                             'bg-backgroundMore no-underline',
                             'hover:bg-backgroundMost hover:no-underline',
                         )}

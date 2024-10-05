@@ -1,5 +1,5 @@
 import Skeleton from 'react-loading-skeleton';
 
 export const SkeletonModuleAutocompleteSearch: FC = () => {
-    return <Skeleton className="relative flex w-full mb-0 h-12 rounded" />;
+    return <Skeleton className="relative mb-0 flex h-12 w-full rounded-md" />;
 };

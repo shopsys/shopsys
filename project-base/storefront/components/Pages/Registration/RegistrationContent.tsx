@@ -49,10 +49,10 @@ export const RegistrationContent: FC = () => {
 
     return (
         <Webline className="flex flex-col items-center">
-            <h1 className="max-w-3xl w-full">{t('New customer registration')}</h1>
+            <h1 className="w-full max-w-3xl">{t('New customer registration')}</h1>
             <FormProvider {...formProviderMethods}>
                 <Form
-                    className="max-w-3xl w-full flex justify-center"
+                    className="flex w-full max-w-3xl justify-center"
                     onSubmit={formProviderMethods.handleSubmit(onRegistrationHandler)}
                 >
                     <FormContentWrapper>

@@ -1,4 +1,4 @@
-import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
+import { ProductsSlider, VISIBLE_SLIDER_ITEMS_BLOG } from 'components/Blocks/Product/ProductsSlider';
 import { SkeletonModuleProductListItem } from 'components/Blocks/Skeleton/SkeletonModuleProductListItem';
 import { TypeProductsByCatnums } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -11,14 +11,14 @@ type GrapesJsProps = {
     rawProductPart: string;
     allFetchedProducts?: TypeProductsByCatnums | undefined;
     areProductsFetching: boolean;
-    isBlogPage?: boolean;
+    visibleSliderItems: number;
 };
 
 export const GrapesJsProducts: FC<GrapesJsProps> = ({
     rawProductPart,
     allFetchedProducts,
     areProductsFetching,
-    isBlogPage = false,
+    visibleSliderItems,
 }) => {
     const products = [];
 
@@ -52,15 +52,15 @@ export const GrapesJsProducts: FC<GrapesJsProps> = ({
         <div
             className={twMergeCustom(
                 'my-4',
-                isBlogPage && products.length > 3 ? 'xl:my-9' : '',
-                !isBlogPage && products.length > 4 ? 'vl:my-9' : '',
+                visibleSliderItems === VISIBLE_SLIDER_ITEMS_BLOG && products.length > 3 ? 'xl:my-9' : '',
+                visibleSliderItems !== VISIBLE_SLIDER_ITEMS_BLOG && products.length > 4 ? 'vl:my-9' : '',
             )}
         >
             <ProductsSlider
                 gtmMessageOrigin={GtmMessageOriginType.other}
                 gtmProductListName={GtmProductListNameType.other}
-                isBlogPage={isBlogPage}
                 products={products}
+                visibleSliderItems={visibleSliderItems}
             />
         </div>
     );

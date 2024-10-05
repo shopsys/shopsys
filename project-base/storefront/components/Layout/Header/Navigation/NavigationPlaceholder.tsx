@@ -14,7 +14,11 @@ export const NavigationPlaceholder: FC<NavigationProps> = ({ navigation, skeleto
                         href={navigationItem.link}
                         skeletonType={skeletonType}
                         className={twJoin(
-                            'relative m-0 flex items-center px-6 xl:px-5 group-first-of-type:pl-0 py-4 text-sm font-bold uppercase text-linkInverted no-underline hover:text-linkInvertedHovered hover:no-underline group-hover:text-linkInvertedHovered group-hover:no-underline vl:text-base',
+                            'relative m-0 flex items-center p-5 font-secondary text-sm font-bold group-first-of-type:pl-0 vl:text-base',
+                            'text-linkInverted no-underline',
+                            'hover:text-linkInvertedHovered hover:no-underline group-hover:text-linkInvertedHovered group-hover:no-underline',
+                            'active:text-linkInvertedHovered',
+                            'disabled:text-linkInvertedDisabled',
                         )}
                     >
                         {navigationItem.name}

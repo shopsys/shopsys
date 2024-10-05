@@ -8,7 +8,7 @@ type ErrorPageProps = { isWithoutImage?: boolean };
 export const ErrorPage: FC<ErrorPageProps> = ({ children, isWithoutImage }) => (
     <div
         className={twJoin(
-            'relative my-8 mx-auto flex w-full max-w-lg flex-col flex-wrap items-center pt-5 pb-48 text-center lg:mt-12 lg:mb-20 lg:pb-0',
+            'relative mx-auto my-8 flex w-full max-w-lg flex-col flex-wrap items-center pb-48 pt-5 text-center lg:mb-20 lg:mt-12 lg:pb-0',
             isWithoutImage && 'text-center',
         )}
     >

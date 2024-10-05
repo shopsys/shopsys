@@ -33,9 +33,9 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
     );
 
     return (
-        <div className="my-6 vl:mb-8 flex flex-col gap-4 bg-background">
-            <OrderRowWrapper className="flex justify-between gap-4 items-center">
-                <div className="gap-6  gap-y-2 vl:gap-8 flex flex-wrap">
+        <div className="my-6 flex flex-col gap-4 bg-background vl:mb-8">
+            <OrderRowWrapper className="flex items-center justify-between gap-4">
+                <div className="flex  flex-wrap gap-6 gap-y-2 vl:gap-8">
                     <OrderItemColumnInfo
                         tid={TIDs.order_detail_number}
                         title={t('Order number')}
@@ -65,7 +65,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                 </Button>
             </OrderRowWrapper>
             {orderTransport && (
-                <OrderRowWrapper className="flex gap-4 flex-col">
+                <OrderRowWrapper className="flex flex-col gap-4">
                     <div className="flex gap-4">
                         {t('Transport')} - {orderTransport.name}
                         {isPriceVisible(order.totalPrice.priceWithVat) && (
@@ -99,7 +99,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                     )}
                 </OrderRowWrapper>
             )}
-            <div className="bg-background border-[5px] border-borderLess rounded-md p-7">
+            <div className="rounded-md border-[5px] border-borderLess bg-background p-7">
                 {filteredOrderItems.map((orderItem) => (
                     <OrderDetailOrderItem
                         key={orderItem.name}
@@ -122,7 +122,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
 
 export const OrderRowWrapper: FC = ({ children, className }) => {
     return (
-        <div className={twMergeCustom('rounded-md bg-backgroundMore px-4 vl:px-6 py-3 vl:py-4', className)}>
+        <div className={twMergeCustom('rounded-md bg-backgroundMore px-4 py-3 vl:px-6 vl:py-4', className)}>
             {children}
         </div>
     );

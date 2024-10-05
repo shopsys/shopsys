@@ -49,19 +49,19 @@ export const Pagination: FC<PaginationProps> = ({
         updatePagination(pageNumber);
     };
 
+    const seenProducts = currentPageWithLoadMore * DEFAULT_PAGE_SIZE;
+    const remainingProducts = totalCount - seenProducts;
+    const loadMoreCount = remainingProducts > DEFAULT_PAGE_SIZE ? DEFAULT_PAGE_SIZE : remainingProducts;
+
     return (
-        <div className="flex w-full flex-col justify-between vl:flex-row vl:justify-between">
-            <div className="w-2/5" />
+        <div className="flex flex-col items-center justify-between gap-5 vl:flex-row">
+            {isWithLoadMore && hasNextPage && (
+                <Button className="px-3" variant="inverted" onClick={loadMore}>
+                    {t('Load more')} {loadMoreCount} {t('products count', { count: loadMoreCount })}
+                </Button>
+            )}
 
-            <div className="order-2 my-3 flex justify-center vl:order-1 vl:w-1/5">
-                {isWithLoadMore && hasNextPage && (
-                    <Button className="px-3" variant="inverted" onClick={loadMore}>
-                        {t('Load more')}
-                    </Button>
-                )}
-            </div>
-
-            <div className="order-1 my-3 flex w-full justify-center gap-1 vl:order-2 vl:w-2/5 vl:justify-end items-center">
+            <div className="ml-auto flex gap-1">
                 {paginationButtons.map((pageNumber, index, array) => {
                     const urlPageNumber = pageNumber > 1 ? pageNumber.toString() : undefined;
                     const pageParams = urlPageNumber
@@ -117,11 +117,11 @@ const PaginationButton: FC<PaginationButtonProps> = forwardRef(
             <Tag
                 href={href}
                 className={twJoin(
-                    'flex h-12 w-12 items-center justify-center rounded border-2 font-bold no-underline hover:no-underline',
-                    (isActive || isDotButton) && 'hover:cursor-default',
+                    'flex size-8 items-center justify-center rounded-lg border-2 font-bold no-underline hover:no-underline md:size-12',
+                    (isActive || isDotButton) && 'border-none hover:cursor-default',
                     isActive
-                        ? 'bg-actionInvertedBackgroundActive border-actionInvertedBorderActive text-actionInvertedTextActive'
-                        : 'bg-actionInvertedBackground border-actionInvertedBorder text-actionInvertedText hover:bg-actionInvertedBackgroundHovered hover:border-actionInvertedBorderHovered hover:text-actionInvertedTextHovered',
+                        ? 'border-actionInvertedBorderActive bg-actionInvertedBackgroundActive text-actionInvertedTextActive'
+                        : 'border-actionInvertedBorder bg-actionInvertedBackground text-actionInvertedText hover:border-actionInvertedBorderHovered hover:bg-actionInvertedBackgroundHovered hover:text-actionInvertedTextHovered',
                 )}
                 onClick={handleOnClick}
             >

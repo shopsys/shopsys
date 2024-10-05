@@ -17,7 +17,7 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles }) => (
                 key={article.uuid}
                 href={article.link}
                 className={twJoin(
-                    'flex-1 flex-col first:flex lg:flex p-5 rounded-md transition-colors no-underline',
+                    'flex-1 flex-col rounded-md p-5 no-underline transition-colors first:flex lg:flex',
                     'bg-backgroundMore',
                     'hover:bg-backgroundMost hover:no-underline',
                 )}

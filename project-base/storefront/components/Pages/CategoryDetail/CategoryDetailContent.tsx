@@ -1,5 +1,8 @@
 import { DeferredCategoryDetailProductsWrapper } from './CategoryDetailProductsWrapper/DeferredCategoryDetailProductsWrapper';
+import { CollapsibleText } from 'components/Basic/CollapsibleText/CollapsibleText';
+import { Image } from 'components/Basic/Image/Image';
 import { DeferredFilterPanel } from 'components/Blocks/Product/Filter/DeferredFilterPanel';
+import { FilterSelectedParameters } from 'components/Blocks/Product/Filter/FilterSelectedParameters';
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/DeferredFilterAndSortingBar';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -33,6 +36,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
     const [isPanelOpen, setIsPanelOpen] = useState(false);
     const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
     const currentPage = useCurrentPageQuery();
+    const scrollTargetRef = useRef<HTMLDivElement>(null);
 
     const title = useSeoTitleWithPagination(category.products.totalCount, category.name, category.seoH1);
 
@@ -52,13 +56,34 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
 
     return (
         <Webline>
+            <h1 ref={scrollTargetRef}>{title}</h1>
+            <div className="mb-7 flex flex-col-reverse justify-between gap-5 lg:flex-row">
+                {!!category.description && currentPage === 1 && (
+                    <CollapsibleText scrollTargetRef={scrollTargetRef} text={category.description} />
+                )}
+                <Image
+                    alt={category.name}
+                    className="rounden-lg h-full w-full rounded-lg md:max-w-80"
+                    height={150}
+                    src={category.images[0]?.url}
+                    width={300}
+                />
+            </div>
+
+            <SimpleNavigation
+                isWithoutSlider
+                className="my-7"
+                linkTypeOverride="category"
+                listedItems={[...category.children, ...category.linkedCategories]}
+            />
+
             <div
-                className="mb-7 flex scroll-mt-5 flex-col vl:mb-10 vl:flex-row vl:flex-wrap vl:gap-12"
+                className="mb-8 flex scroll-mt-5 flex-col vl:mb-10 vl:flex-row vl:flex-wrap vl:gap-4"
                 ref={paginationScrollTargetRef}
             >
                 <div
                     className={twJoin(
-                        'fixed top-0 left-0 bottom-0 right-10 max-w-[400px] -translate-x-full transition max-vl:z-aboveOverlay vl:static vl:w-[304px] vl:translate-x-0 vl:transition-none',
+                        'fixed bottom-0 left-0 right-10 top-0 max-w-[400px] -translate-x-full overflow-hidden transition max-vl:z-aboveOverlay vl:static vl:w-[227px] vl:translate-x-0 vl:rounded-none vl:transition-none',
                         isPanelOpen && 'translate-x-0',
                     )}
                 >
@@ -76,29 +101,17 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                 {isPanelOpen && <Overlay isActive={isPanelOpen} onClick={handlePanelOpenerClick} />}
 
                 <div className="flex flex-1 flex-col">
-                    <h1>{title}</h1>
-
-                    {!!category.description && currentPage === 1 && (
-                        <div dangerouslySetInnerHTML={{ __html: category.description }} />
-                    )}
-
-                    <SimpleNavigation
-                        className="mt-6"
-                        linkTypeOverride="category"
-                        listedItems={[...category.children, ...category.linkedCategories]}
-                    />
-
-                    {!!category.readyCategorySeoMixLinks.length && (
-                        <AdvancedSeoCategories readyCategorySeoMixLinks={category.readyCategorySeoMixLinks} />
-                    )}
-
                     {!!category.bestsellers.length && <CategoryBestsellers products={category.bestsellers} />}
 
-                    <DeferredFilterAndSortingBar
-                        handlePanelOpenerClick={handlePanelOpenerClick}
-                        sorting={category.products.orderingMode}
-                        totalCount={category.products.totalCount}
-                    />
+                    <div className="flex flex-col">
+                        <FilterSelectedParameters filterOptions={category.products.productFilterOptions} />
+
+                        <DeferredFilterAndSortingBar
+                            handlePanelOpenerClick={handlePanelOpenerClick}
+                            sorting={category.products.orderingMode}
+                            totalCount={category.products.totalCount}
+                        />
+                    </div>
 
                     <DeferredCategoryDetailProductsWrapper
                         category={category}
@@ -106,6 +119,9 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                     />
                 </div>
             </div>
+            {!!category.readyCategorySeoMixLinks.length && (
+                <AdvancedSeoCategories readyCategorySeoMixLinks={category.readyCategorySeoMixLinks} />
+            )}
         </Webline>
     );
 };

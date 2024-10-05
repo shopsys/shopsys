@@ -55,7 +55,7 @@ export const CartListItem: FC<CartListItemProps> = ({
             className="relative flex flex-row flex-wrap items-center gap-4 border-b border-borderAccent py-5 vl:flex-nowrap"
             tid={TIDs.pages_cart_list_item_ + product.catalogNumber}
         >
-            <div className="flex flex-1 basis-full pr-8 vl:basis-auto vl:pr-0 gap-1">
+            <div className="flex flex-1 basis-full gap-1 pr-8 vl:basis-auto vl:pr-0">
                 <div className="flex h-12 w-24 shrink-0">
                     <ExtendedNextLink
                         className="relative h-full w-full"
@@ -93,7 +93,7 @@ export const CartListItem: FC<CartListItemProps> = ({
 
                         {!!product.availableStoresCount && (
                             <span className="ml-1 inline font-normal vl:ml-0 vl:block">
-                                {t('or immediately in {{ count }} stores', {
+                                {t('or at {{ count }} stores', {
                                     count: product.availableStoresCount,
                                 })}
                             </span>

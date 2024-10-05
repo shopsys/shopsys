@@ -9,7 +9,7 @@ export const TransportAndPaymentListItem: FC<TransportAndPaymentListItemProps> =
 }) => (
     <li
         className={twMergeCustom(
-            'relative order-1 flex min-w-full cursor-pointer flex-wrap gap-2 border-b border-borderAccent p-4 last:border-b-0 transition',
+            'relative order-1 flex min-w-full cursor-pointer flex-wrap gap-2 border-b border-borderAccent p-4 transition last:border-b-0',
             isActive && 'bg-backgroundMost',
             className,
         )}

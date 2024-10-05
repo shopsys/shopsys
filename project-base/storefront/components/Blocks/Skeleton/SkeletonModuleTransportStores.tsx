@@ -3,29 +3,29 @@ import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 
 const SkeletonModuleStoreInPopup: FC = () => (
     <div className="flex w-full flex-row items-center gap-3 border-b border-borderAccent p-3">
-        <Skeleton className="rounded-full h-5 w-5" />
-        <Skeleton className="rounded-sm h-12 w-12" />
+        <Skeleton className="h-5 w-5 rounded-full" />
+        <Skeleton className="h-12 w-12 rounded-sm" />
         <div className="flex flex-1 flex-col text-sm lg:flex-auto lg:basis-full lg:flex-row lg:items-center lg:gap-3">
-            <Skeleton className="rounded-sm h-4 w-20" />
+            <Skeleton className="h-4 w-20 rounded-sm" />
             <div>
-                <Skeleton className="rounded-sm h-4 w-20" />
-                <Skeleton className="rounded-sm h-4 w-60" />
-                <Skeleton className="rounded-sm h-4 w-12 my-2" />
-                <div className="grid grid-cols-2 w-full mb-2">
-                    <Skeleton className="rounded-sm h-4 w-16" />
-                    <Skeleton className="rounded-sm h-4 w-36" />
-                    <Skeleton className="rounded-sm h-4 w-20" />
-                    <Skeleton className="rounded-sm h-4 w-36" />
-                    <Skeleton className="rounded-sm h-4 w-12" />
-                    <Skeleton className="rounded-sm h-4 w-36" />
-                    <Skeleton className="rounded-sm h-4 w-28" />
-                    <Skeleton className="rounded-sm h-4 w-24" />
-                    <Skeleton className="rounded-sm h-4 w-20" />
-                    <Skeleton className="rounded-sm h-4 w-24" />
-                    <Skeleton className="rounded-sm h-4 w-16" />
-                    <Skeleton className="rounded-sm h-4 w-36" />
-                    <Skeleton className="rounded-sm h-4 w-20" />
-                    <Skeleton className="rounded-sm h-4 w-24" />
+                <Skeleton className="h-4 w-20 rounded-sm" />
+                <Skeleton className="h-4 w-60 rounded-sm" />
+                <Skeleton className="my-2 h-4 w-12 rounded-sm" />
+                <div className="mb-2 grid w-full grid-cols-2">
+                    <Skeleton className="h-4 w-16 rounded-sm" />
+                    <Skeleton className="h-4 w-36 rounded-sm" />
+                    <Skeleton className="h-4 w-20 rounded-sm" />
+                    <Skeleton className="h-4 w-36 rounded-sm" />
+                    <Skeleton className="h-4 w-12 rounded-sm" />
+                    <Skeleton className="h-4 w-36 rounded-sm" />
+                    <Skeleton className="h-4 w-28 rounded-sm" />
+                    <Skeleton className="h-4 w-24 rounded-sm" />
+                    <Skeleton className="h-4 w-20 rounded-sm" />
+                    <Skeleton className="h-4 w-24 rounded-sm" />
+                    <Skeleton className="h-4 w-16 rounded-sm" />
+                    <Skeleton className="h-4 w-36 rounded-sm" />
+                    <Skeleton className="h-4 w-20 rounded-sm" />
+                    <Skeleton className="h-4 w-24 rounded-sm" />
                 </div>
             </div>
         </div>

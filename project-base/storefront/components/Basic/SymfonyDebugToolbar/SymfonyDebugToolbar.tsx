@@ -27,7 +27,7 @@ export const SymfonyDebugToolbar: FC<SymfonyDebugToolbarProps> = ({
 
     return (
         <div
-            className="fixed right-2 bottom-2 z-maximum flex flex-col items-end gap-2 rounded bg-backgroundMost p-3"
+            className="fixed bottom-2 right-2 z-maximum flex flex-col items-end gap-2 rounded bg-backgroundMost p-3"
             onMouseEnter={() => setIsTableDisplayed(true)}
             onMouseLeave={() => setIsTableDisplayed(false)}
         >

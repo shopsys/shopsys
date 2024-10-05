@@ -35,8 +35,8 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
     return (
         <div
             className={twJoin(
-                'flex gap-3 vl:gap-5 first:border-none items-center first:pt-0 last:pb-0',
-                isDiscount ? 'pb-5' : 'py-5 border-t border-t-borderAccentLess',
+                'flex items-center gap-3 first:border-none first:pt-0 last:pb-0 vl:gap-5',
+                isDiscount ? 'pb-5' : 'border-t border-t-borderAccentLess py-5',
             )}
         >
             {isDiscount ? (
@@ -44,7 +44,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
             ) : (
                 <Image alt={orderItem.name} height={60} src={orderItem.product?.mainImage?.url} width={60} />
             )}
-            <div className="w-full flex flex-wrap justify-between vl:grid vl:grid-cols-[4fr_1fr_2fr_1fr] gap-3 vl:gap-5 last:border-none border-b border-b-borderLess items-center">
+            <div className="flex w-full flex-wrap items-center justify-between gap-3 border-b border-b-borderLess last:border-none vl:grid vl:grid-cols-[4fr_1fr_2fr_1fr] vl:gap-5">
                 {isDiscount ? (
                     <span>{orderItem.name}</span>
                 ) : (
@@ -61,7 +61,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
                     </span>
                 )}
                 {isPriceVisible(orderItem.totalPrice.priceWithVat) && (
-                    <span className="font-bold text-right">{formatPrice(orderItem.totalPrice.priceWithVat)}</span>
+                    <span className="text-right font-bold">{formatPrice(orderItem.totalPrice.priceWithVat)}</span>
                 )}
 
                 {isUserLoggedIn && orderItem.type === TypeOrderItemTypeEnum.Product && (
