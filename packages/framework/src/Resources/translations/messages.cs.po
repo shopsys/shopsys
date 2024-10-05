@@ -355,9 +355,6 @@ msgstr "Atribut %attribute% byl změněn %changes%"
 msgid "Authentication code"
 msgstr "Ověřovací kód"
 
-msgid "Authenticator key"
-msgstr "Ověřovací klíč"
-
 msgid "Available"
 msgstr "Dostupné"
 
@@ -721,8 +718,11 @@ msgstr "Doplněk k titulku"
 msgid "Complement to title will be set as suffix to all titles e.g. if complement is set “ | My shop” and product name is “iPhone 7” the result title for this products page will be “iPhone 7 | My shop”."
 msgstr "Doplněk k názvu bude nastaven jako přípona ke všem titulkům, např. pokud je doplněk nastaven jako “ | Můj obchod“ a název produktu je “iPhone 7”, výsledným názvem pro tuto stránku produktu bude “iPhone 7 | Můj obchod”."
 
-msgid "Confirm authentication code"
-msgstr "Potvrzení ověřovacího kódu"
+msgid "Confirm code and enable two-factor authentication"
+msgstr "Potvrdit kód a povolit dvoufaktorovou autentizaci"
+
+msgid "Confirm one-time passcode"
+msgstr "Potvrďte jednorázový přístupový kód"
 
 msgid "Contact form"
 msgstr "Kontaktní formulář"
@@ -1594,6 +1594,9 @@ msgstr "Zapnout dvoufaktorové ověřování pomocí Google Autentikátoru"
 msgid "Enable two factor authentication by email"
 msgstr "Zapnout dvoufaktorové ověřování pomocí e-mailu"
 
+msgid "Enable two-factor authentication"
+msgstr "Povolit dvoufaktorové ověřování"
+
 msgid "Enable whitelist"
 msgstr "Whitelist aktivní"
 
@@ -1604,7 +1607,7 @@ msgid "Enter a 6 digit authentication from your email. You need to request it by
 msgstr "Vložte 6 místný ověřovací kód z e-mailu. Nejprve o něj musíte zažádat pomocí tlačítka níže."
 
 msgid "Enter a 6 digit authentication from your two factor authentication mobile application."
-msgstr "Vložte 6 místný ověřovací kód z mobilní aplikace pro dvoufaktorovou autentizaci."
+msgstr "Vložte 6 místný ověřovací kód z mobilní aplikace pro dvoufaktorové ověřování."
 
 msgid "Enter in the store local time"
 msgstr "Zadejte v lokálním čase prodejny"
@@ -1989,6 +1992,9 @@ msgstr "IP adresa"
 
 msgid "Icon"
 msgstr "Ikona"
+
+msgid "If you cannot scan the QR code, you can manually enter the following secret key:"
+msgstr "Pokud nemůžete naskenovat QR kód, můžete ručně zadat následující tajný klíč:"
 
 msgid "If you change currency settings, prices of all products will be recalculated"
 msgstr "Pokud změníte nastavení měn, dojde k přepočítání cen všech produktů"
@@ -2567,7 +2573,7 @@ msgid "On each run (usually every 5 minutes)"
 msgstr "Po každém spuštění (obvykle každých 5 minut)"
 
 msgid "One domain cannot be used in two groups"
-msgstr "Stejná doméne nemůže být použita ve dvou skupinách"
+msgstr "Stejná doména nemůže být použita ve dvou skupinách"
 
 msgid "Only checked products"
 msgstr "Pouze zaškrtnuté zboží"
@@ -2881,6 +2887,12 @@ msgstr "Překontrolujte prosím zadané hodnoty.<br>"
 msgid "Please fill all default values before creating a product"
 msgstr "Prosím vyplňte všechny výchozí hodnoty před vytvořením produktu"
 
+msgid "Please scan the QR code below using a one-time passcode generator application (such as Google Authenticator)."
+msgstr "Naskenujte prosím níže uvedený QR kód pomocí aplikace pro generování jednorázových přístupových kódů (jako je Google Authenticator)."
+
+msgid "Please use the button below to send the one-time passcode to your email address."
+msgstr "Použijte prosím tlačítko níže k odeslání jednorázového přístupového kódu na vaši e-mailovou adresu."
+
 msgid "Please wait until all files are uploaded and try again."
 msgstr "Prosím počkejte dokud nebudou nahrány všechny soubory a zkuste to znovu."
 
@@ -3088,6 +3100,9 @@ msgstr "Smazáno %dataType%: \"%readableValue%\""
 msgid "Replace file"
 msgstr "Nahradit soubor"
 
+msgid "Request a one-time passcode by email"
+msgstr "Požádejte o jednorázový přístupový kód e-mailem"
+
 msgid "Reset filter"
 msgstr "Zrušit filtr"
 
@@ -3219,6 +3234,9 @@ msgstr "Uložit nastavení skladu"
 
 msgid "Scaled promo code"
 msgstr "Škálovaný slevový kupón"
+
+msgid "Scan QR code"
+msgstr "Naskenujte QR kód"
 
 msgid "Schedule"
 msgstr "Naplánovat"

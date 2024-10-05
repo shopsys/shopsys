@@ -436,6 +436,10 @@ class SideMenuBuilder
             'edit',
             ['route' => 'admin_administrator_edit', 'label' => t('Editing administrator'), 'display' => false],
         );
+        $administratorViewMenu->addChild(
+            'enable-two-factor-authentication',
+            ['route' => 'admin_administrator_enable-two-factor-authentication', 'label' => t('Enable two-factor authentication'), 'display' => false],
+        );
 
         $administratorRoleGroupMenu = $menu->addChild('role_groups', ['route' => 'admin_administratorrolegroup_list', 'label' => t('Role Groups')]);
 

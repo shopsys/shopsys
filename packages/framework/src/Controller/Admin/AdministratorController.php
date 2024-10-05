@@ -454,7 +454,7 @@ class AdministratorController extends AdminBaseController
                 ],
             ],
         );
-        $form->add('verify', SubmitType::class, ['label' => t('Confirm authentication code')]);
+        $form->add('verify', SubmitType::class, ['label' => t('Confirm code and enable two-factor authentication')]);
 
         return $form;
     }
