@@ -16,7 +16,7 @@ export const UpsList: FC = () => {
             <div
                 className={twMergeCustom([
                     'vl:flex vl:justify-around',
-                    'grid gap-5 snap-x snap-mandatory auto-cols-[60%] sm:auto-cols-[37%] md:auto-cols-[26%] lg:auto-cols-[20%] grid-flow-col overflow-x-auto ',
+                    'grid snap-x snap-mandatory auto-cols-[60%] grid-flow-col gap-5 overflow-x-auto sm:auto-cols-[37%] md:auto-cols-[26%] lg:auto-cols-[20%] ',
                     "overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] [&::-webkit-scrollbar]:hidden",
                 ])}
             >

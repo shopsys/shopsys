@@ -34,9 +34,9 @@ export const BannersDot: FC<BannersDotProps> = ({ index, isActive, sliderItem, m
             key={sliderItem.uuid}
             ref={dotRef}
             className={twMergeCustom(
-                'group relative block size-4 cursor-pointer rounded-full transition bg-labelLinkBackground',
-                'vl:flex vl:h-auto vl:w-full vl:rounded-none vl:px-5 vl:py-2 vl:text-text vl:text-left vl:bg-backgroundMore',
-                'vl:after:content-[""] vl:after:absolute vl:after:inset-0 vl:after:border-borderAccentLess vl:after:border-t-[1px] vl:after:border-b-[1px]  vl:after:border-l-[1px] vl:after:last-of-type:border-r-[1px] vl:after:first-of-type:rounded-bl-md vl:after:last-of-type:rounded-br-md',
+                'group relative block size-4 cursor-pointer rounded-full bg-labelLinkBackground transition',
+                'vl:flex vl:h-auto vl:w-full vl:rounded-none vl:bg-backgroundMore vl:px-5 vl:py-2 vl:text-left vl:text-text',
+                'vl:after:absolute vl:after:inset-0 vl:after:border-b-[1px] vl:after:border-l-[1px] vl:after:border-t-[1px] vl:after:border-borderAccentLess  vl:after:content-[""] vl:after:first-of-type:rounded-bl-md vl:after:last-of-type:rounded-br-md vl:after:last-of-type:border-r-[1px]',
                 isActive && 'bg-textAccent vl:bg-background vl:text-textAccent',
             )}
             onClick={() => moveToSlide(index)}

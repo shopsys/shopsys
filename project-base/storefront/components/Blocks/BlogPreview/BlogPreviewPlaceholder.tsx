@@ -15,13 +15,13 @@ export const BlogPreviewPlaceholder: FC<BlogPreviewPlaceholderProps> = ({ blogAr
     const blogItems = useMemo(() => mapConnectionEdges<TypeListedBlogArticleFragment>(blogArticles), [blogArticles]);
 
     return (
-        <div className="w-full max-w-7xl mx-auto px-5 z-above relative">
+        <div className="relative z-above mx-auto w-full max-w-7xl px-5">
             <div className="mb-5 flex items-center justify-between">
                 <h3 className="text-textInverted">{t('Magazine')}</h3>
 
                 {!!blogUrl && (
                     <ExtendedNextLink
-                        className="no-underline text-textInverted text-sm font-secondary font-semibold tracking-wide hover:underline hover:text-textInverted"
+                        className="font-secondary text-sm font-semibold tracking-wide text-textInverted no-underline hover:text-textInverted hover:underline"
                         href={blogUrl}
                         type="blogCategory"
                     >
@@ -32,7 +32,7 @@ export const BlogPreviewPlaceholder: FC<BlogPreviewPlaceholderProps> = ({ blogAr
 
             <div
                 className={twJoin(
-                    'grid gap-5 grid-flow-col overflow-x-auto overscroll-x-contain snap-x snap-mandatory vl:flex vl:justify-between vl:gap-16',
+                    'grid snap-x snap-mandatory grid-flow-col gap-5 overflow-x-auto overscroll-x-contain vl:flex vl:justify-between vl:gap-16',
                     'auto-cols-[60%] md:auto-cols-[40%] lg:auto-cols-[30%]',
                     "[-ms-overflow-style:'none'] [scrollbar-width:'none'] [&::-webkit-scrollbar]:hidden",
                 )}

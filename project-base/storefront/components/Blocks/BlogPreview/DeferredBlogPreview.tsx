@@ -33,7 +33,7 @@ export const DeferredBlogPreview: FC = () => {
     );
 
     return (
-        <Webline className="xl:max-w-[1400px] relative px-0">
+        <Webline className="relative px-0 xl:max-w-[1400px]">
             <div
                 className={bgImageTwClass}
                 style={{ backgroundImage: `url(${blogData?.mainBlogCategoryMainImage?.url})` }}

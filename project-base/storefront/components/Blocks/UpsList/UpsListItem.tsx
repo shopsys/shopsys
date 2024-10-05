@@ -1,6 +1,6 @@
 export const UpsListItem: FC = ({ children }) => {
     return (
-        <div className="flex flex-col items-center justify-start text-center text-balance gap-2.5 max-w-[245px] w-full">
+        <div className="flex w-full max-w-[245px] flex-col items-center justify-start gap-2.5 text-balance text-center">
             {children}
         </div>
     );
