@@ -3,51 +3,73 @@ import { Flag } from 'components/Basic/Flag/Flag';
 import { Image } from 'components/Basic/Image/Image';
 import { TIDs } from 'cypress/tids';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
-import { Fragment } from 'react';
-import { twJoin } from 'tailwind-merge';
+import Skeleton from 'react-loading-skeleton';
+import { useFormatDate } from 'utils/formatting/useFormatDate';
 
 type MainProps = {
     articles: TypeListedBlogArticleFragment[];
+    isPlaceholder?: boolean;
 };
 
-export const BlogPreviewMain: FC<MainProps> = ({ articles }) => (
-    <>
-        {articles.map((article) => (
-            <ArticleLink
-                key={article.uuid}
-                href={article.link}
-                className={twJoin(
-                    'flex-1 flex-col rounded-md p-5 no-underline transition-colors first:flex lg:flex',
-                    'bg-backgroundMore',
-                    'hover:bg-backgroundMost hover:no-underline',
-                )}
-            >
-                <Image
-                    alt={article.mainImage?.name || article.name}
-                    className="mx-auto rounded"
-                    height={220}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 35vw"
-                    src={article.mainImage?.url}
-                    tid={TIDs.blog_preview_image}
-                    width={700}
-                />
+export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false }) => {
+    const { formatDate } = useFormatDate();
 
-                <div className="mt-2 flex flex-col items-start gap-2">
-                    {article.blogCategories.map((blogCategory) => (
-                        <Fragment key={blogCategory.uuid}>
-                            {!!blogCategory.parent && (
-                                <Flag href={blogCategory.link} type="blog">
-                                    {blogCategory.name}
-                                </Flag>
+    return (
+        <>
+            {articles.map((article) => (
+                <ArticleLink
+                    key={article.uuid}
+                    className="flex max-w-80 snap-start flex-col gap-5 no-underline hover:no-underline"
+                    href={article.link}
+                >
+                    <Image
+                        alt={article.mainImage?.name || article.name}
+                        className="aspect-video rounded-xl object-cover"
+                        height={220}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 35vw"
+                        src={article.mainImage?.url}
+                        tid={TIDs.blog_preview_image}
+                        width={320}
+                    />
+
+                    <div className="flex flex-col items-start gap-2.5">
+                        <div className="flex flex-wrap items-center gap-2 whitespace-nowrap">
+                            {isPlaceholder ? (
+                                <>
+                                    <Skeleton className="mr-6 h-5 w-20" />
+                                    <Skeleton className="h-5 w-32" />
+                                </>
+                            ) : (
+                                <>
+                                    <span className="mr-4 font-secondary text-sm font-semibold text-inputPlaceholder">
+                                        {formatDate(article.publishDate, 'l')}
+                                    </span>
+
+                                    {article.blogCategories.map((blogPreviewCategory) => {
+                                        if (!blogPreviewCategory.parent) {
+                                            return null;
+                                        }
+
+                                        return (
+                                            <Flag
+                                                key={blogPreviewCategory.uuid}
+                                                href={blogPreviewCategory.link}
+                                                type="blog"
+                                            >
+                                                {blogPreviewCategory.name}
+                                            </Flag>
+                                        );
+                                    })}
+                                </>
                             )}
-                        </Fragment>
-                    ))}
+                        </div>
 
-                    <div className="block text-lg font-bold leading-5">{article.name}</div>
+                        <h4 className="text-textInverted">{article.name}</h4>
 
-                    <div className="leading-5">{article.perex}</div>
-                </div>
-            </ArticleLink>
-        ))}
-    </>
-);
+                        <p className="font-normal text-textInverted">{article.perex}</p>
+                    </div>
+                </ArticleLink>
+            ))}
+        </>
+    );
+};

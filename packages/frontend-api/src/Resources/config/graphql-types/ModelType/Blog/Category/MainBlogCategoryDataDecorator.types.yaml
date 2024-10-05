@@ -1,0 +1,11 @@
+MainBlogCategoryDataDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            mainBlogCategoryUrl:
+                type: String
+                description: "Absolute URL of the blog main category"
+            mainBlogCategoryMainImage:
+                type: "Image"
+                description: "Main image of the blog main category"

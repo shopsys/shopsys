@@ -105,7 +105,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
         trackMouse: true,
     });
 
-    const twClass = (visibleSliderItems: number) => {
+    const productSliderTwClass = (visibleSliderItems: number) => {
         switch (visibleSliderItems) {
             case VISIBLE_SLIDER_ITEMS:
                 return 'auto-cols-[225px] sm:auto-cols-[60%]  md:auto-cols-[45%] lg:auto-cols-[30%] vl:auto-cols-[25%] xl:auto-cols-[20%]';
@@ -141,7 +141,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
                     swipeHandlers={handlers}
                     className={twMergeCustom([
                         "grid snap-x snap-mandatory grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] [&::-webkit-scrollbar]:hidden",
-                        twClass(visibleSliderItems),
+                        productSliderTwClass(visibleSliderItems),
                         wrapperClassName,
                     ])}
                     productItemProps={{

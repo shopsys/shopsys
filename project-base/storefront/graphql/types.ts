@@ -1144,6 +1144,14 @@ export enum TypeLoginTypeEnum {
   Web = 'web'
 }
 
+export type TypeMainBlogCategoryData = {
+  __typename?: 'MainBlogCategoryData';
+  /** Main image of the blog main category */
+  mainBlogCategoryMainImage: Maybe<TypeImage>;
+  /** Absolute URL of the blog main category */
+  mainBlogCategoryUrl: Maybe<Scalars['String']['output']>;
+};
+
 /** Represents a product */
 export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug & {
   __typename?: 'MainVariant';
@@ -2974,8 +2982,8 @@ export type TypeSettings = {
   displayTimezone: Scalars['String']['output'];
   /** Returns true if Heureka is available for the current domain */
   heurekaEnabled: Scalars['Boolean']['output'];
-  /** Absolute URL of the blog main category */
-  mainBlogCategoryUrl: Maybe<Scalars['String']['output']>;
+  /** Main blog category URL and background image */
+  mainBlogCategoryData: TypeMainBlogCategoryData;
   /** Max allowed payment transactions (how many times is user allowed to try the same payment) */
   maxAllowedPaymentTransactions: Scalars['Int']['output'];
   /** Settings related to pricing */

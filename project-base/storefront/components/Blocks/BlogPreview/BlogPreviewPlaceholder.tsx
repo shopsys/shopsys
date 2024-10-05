@@ -1,73 +1,44 @@
 import { BlogPreviewProps } from './BlogPreview';
+import { BlogPreviewMain } from './BlogPreviewMain';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
+import { useMemo } from 'react';
+import { twJoin } from 'tailwind-merge';
+import { mapConnectionEdges } from 'utils/mappers/connection';
 
 type BlogPreviewPlaceholderProps = Pick<BlogPreviewProps, 'blogArticles' | 'blogUrl'>;
 
 export const BlogPreviewPlaceholder: FC<BlogPreviewPlaceholderProps> = ({ blogArticles, blogUrl }) => {
     const { t } = useTranslation();
 
+    const blogItems = useMemo(() => mapConnectionEdges<TypeListedBlogArticleFragment>(blogArticles), [blogArticles]);
+
     return (
-        <div>
-            <h2 className="text-creamWhite">{t('Magazine')}</h2>
+        <div className="relative z-above mx-auto w-full max-w-7xl px-5">
+            <div className="mb-5 flex items-center justify-between">
+                <h3 className="text-textInverted">{t('Magazine')}</h3>
 
-            {!!blogUrl && (
-                <ExtendedNextLink className="text-creamWhite " href={blogUrl} type="blogCategory">
-                    {t('View all')}
-                </ExtendedNextLink>
-            )}
+                {!!blogUrl && (
+                    <ExtendedNextLink
+                        className="font-secondary text-sm font-semibold tracking-wide text-textInverted no-underline hover:text-textInverted hover:underline"
+                        href={blogUrl}
+                        type="blogCategory"
+                    >
+                        {t('All articles')}
+                    </ExtendedNextLink>
+                )}
+            </div>
 
-            {blogArticles?.slice(0, 2).map(
-                (item) =>
-                    item?.node && (
-                        <div key={item.node.uuid}>
-                            {item.node.blogCategories.map(
-                                (blogCategory) =>
-                                    !!blogCategory.parent && (
-                                        <ExtendedNextLink
-                                            key={blogCategory.uuid}
-                                            href={blogCategory.link}
-                                            type="blogCategory"
-                                        >
-                                            {blogCategory.name}
-                                        </ExtendedNextLink>
-                                    ),
-                            )}
-
-                            <ExtendedNextLink className="text-text" href={item.node.link} type="blogArticle">
-                                {item.node.name}
-                            </ExtendedNextLink>
-
-                            <div>{item.node.perex}</div>
-                        </div>
-                    ),
-            )}
-
-            {blogArticles?.slice(2).map(
-                (item) =>
-                    item?.node && (
-                        <div key={item.node.uuid}>
-                            {item.node.blogCategories.map(
-                                (blogCategory) =>
-                                    !!blogCategory.parent && (
-                                        <ExtendedNextLink
-                                            key={blogCategory.uuid}
-                                            href={blogCategory.link}
-                                            type="blogCategory"
-                                        >
-                                            {blogCategory.name}
-                                        </ExtendedNextLink>
-                                    ),
-                            )}
-
-                            <ExtendedNextLink className="text-text" href={item.node.link} type="blogArticle">
-                                {item.node.name}
-                            </ExtendedNextLink>
-
-                            <div>{item.node.perex}</div>
-                        </div>
-                    ),
-            )}
+            <div
+                className={twJoin(
+                    'grid snap-x snap-mandatory grid-flow-col gap-5 overflow-x-auto overscroll-x-contain vl:flex vl:justify-between vl:gap-16',
+                    'auto-cols-[60%] md:auto-cols-[40%] lg:auto-cols-[30%]',
+                    "[-ms-overflow-style:'none'] [scrollbar-width:'none'] [&::-webkit-scrollbar]:hidden",
+                )}
+            >
+                {!!blogItems && <BlogPreviewMain isPlaceholder articles={blogItems} />}
+            </div>
         </div>
     );
 };

@@ -17,6 +17,7 @@ use Doctrine\Persistence\ObjectManager;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\Image\Image;
+use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -78,6 +79,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         $this->processProductsImages();
         $this->processSliderItemsImages();
         $this->processStoresImages();
+        $this->processMainBlogCategoryImage();
 
         $this->syncDatabaseSequences(['images.id']);
     }
@@ -298,6 +300,20 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
 
             $this->saveImageIntoDb($store->getId(), 'store', $imageId, $names);
         }
+    }
+
+    private function processMainBlogCategoryImage(): void
+    {
+        $mainBlogCategoryImageId = 500;
+
+        $mainBlogCategory = $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_CATEGORY, BlogCategory::class);
+        $names = [];
+
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+            $names[$locale] = $mainBlogCategory->getName($locale);
+        }
+
+        $this->saveImageIntoDb($mainBlogCategory->getId(), 'blogCategory', $mainBlogCategoryImageId, $names);
     }
 
     /**

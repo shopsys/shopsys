@@ -6,7 +6,7 @@ import { useSliderItemsQuery } from 'graphql/requests/sliderItems/queries/Slider
 export const Banners: FC = () => {
     const [{ data: sliderItemsData, fetching: areSliderItemsFetching }] = useSliderItemsQuery();
 
-    const weblineTwClasses = 'mb-14';
+    const weblineTwClasses = 'mb-14 xl:max-w-[1432px]';
 
     if (areSliderItemsFetching) {
         return (

@@ -970,6 +970,13 @@ enum LoginTypeEnum {
   web
 }
 
+type MainBlogCategoryData {
+  "Main image of the blog main category"
+  mainBlogCategoryMainImage: Image
+  "Absolute URL of the blog main category"
+  mainBlogCategoryUrl: String
+}
+
 "Represents a product"
 type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   accessories: [Product!]!
@@ -2275,8 +2282,8 @@ type Settings {
   displayTimezone: String!
   "Returns true if Heureka is available for the current domain"
   heurekaEnabled: Boolean!
-  "Absolute URL of the blog main category"
-  mainBlogCategoryUrl: String
+  "Main blog category URL and background image"
+  mainBlogCategoryData: MainBlogCategoryData!
   "Max allowed payment transactions (how many times is user allowed to try the same payment)"
   maxAllowedPaymentTransactions: Int!
   "Settings related to pricing"

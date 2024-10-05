@@ -22,7 +22,7 @@ export const DeferredPromotedProducts: FC = () => {
     const [{ data: promotedProductsData, fetching: arePromotedProductsFetching }] = usePromotedProductsQuery();
     const shouldRender = useDeferredRender('promoted_products');
 
-    const weblineTwClasses = 'mb-6';
+    const weblineTwClasses = 'mb-10';
 
     if (arePromotedProductsFetching) {
         return (
@@ -38,7 +38,7 @@ export const DeferredPromotedProducts: FC = () => {
 
     return (
         <Webline className={weblineTwClasses}>
-            <h2 className="mb-3">{t('Promoted products')}</h2>
+            <h3 className="mb-4">{t('News on offer')}</h3>
             {shouldRender ? (
                 <ProductsSlider
                     gtmProductListName={GtmProductListNameType.homepage_promo_products}

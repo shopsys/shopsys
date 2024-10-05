@@ -1,6 +1,6 @@
 import { BannerImage } from './BannerImage';
+import { BannersDot } from './BannersDot';
 import { bannersReducer, getBannerOrderCSSProperty } from './bannersUtils';
-import { TriangleIcon } from 'components/Basic/Icon/TriangleIcon';
 import { TIDs } from 'cypress/tids';
 import { TypeSliderItemFragment } from 'graphql/requests/sliderItems/fragments/SliderItemFragment.generated';
 import { useEffect, useReducer, useRef } from 'react';
@@ -66,75 +66,90 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
         trackMouse: true,
     });
 
+    const slidingButtonsTwClass = twJoin(
+        'snap-mandatory vl:grid vl:snap-x vl:auto-cols-[21%] vl:grid-flow-col vl:justify-start vl:overflow-x-auto vl:overscroll-x-contain',
+        "vl:[-ms-overflow-style:'none'] vl:[scrollbar-width:'none'] vl:[&::-webkit-scrollbar]:hidden",
+    );
+
     return (
-        <div className="flex flex-col gap-6 vl:flex-row" tid={TIDs.banners_slider}>
-            <div
+        <div className="flex flex-col" tid={TIDs.banners_slider}>
+            <a
                 {...handlers}
-                className="rounded vl:basis-3/4"
+                href={sliderItems[bannerSliderState.sliderPosition].link}
+                title={sliderItems[bannerSliderState.sliderPosition].name}
                 onMouseEnter={checkAndClearInterval}
                 onMouseLeave={() => {
                     checkAndClearInterval();
                     startInterval();
                 }}
             >
-                <div className="w-full overflow-hidden">
+                <div className="w-full overflow-hidden rounded-xl vl:rounded-b-none">
                     <div
                         className={twJoin(
                             'flex',
-                            !bannerSliderState.isSliding
-                                ? `translate-x-[calc(-100%)] transform transition-transform duration-${SLIDER_SLIDE_DURATION} ease-in-out`
-                                : bannerSliderState.slideDirection === 'PREV'
-                                  ? 'translate-x-[calc(2*(-100%))] transform'
-                                  : 'translate-x-0 transform',
+                            sliderItems.length > 1 &&
+                                (!bannerSliderState.isSliding
+                                    ? `translate-x-[calc(-100%)] transform transition-transform duration-${SLIDER_SLIDE_DURATION} ease-in-out`
+                                    : bannerSliderState.slideDirection === 'PREV'
+                                      ? 'translate-x-[calc(2*(-100%))] transform'
+                                      : 'translate-x-0 transform'),
                         )}
                     >
-                        {sliderItems.map((item, index) => (
-                            <div
-                                key={index}
-                                className={twJoin(
-                                    'flex flex-[1_0_100%] basis-full',
-                                    getBannerOrderCSSProperty(index, bannerSliderState.sliderPosition, numItems),
-                                )}
-                            >
-                                <BannerImage
-                                    desktopAlt={item.webMainImage.name || item.name}
-                                    desktopSrc={item.webMainImage.url}
-                                    isFirst={index === 0}
-                                    mobileAlt={item.mobileMainImage.name || item.name}
-                                    mobileSrc={item.mobileMainImage.url}
-                                />
-                            </div>
-                        ))}
+                        {sliderItems.map((item, index) => {
+                            return (
+                                <div
+                                    key={index}
+                                    className="flex flex-[1_0_100%] basis-full"
+                                    style={{
+                                        order: getBannerOrderCSSProperty(
+                                            index,
+                                            bannerSliderState.sliderPosition,
+                                            numItems,
+                                        ),
+                                    }}
+                                >
+                                    <BannerImage
+                                        desktopAlt={item.webMainImage.name || item.name}
+                                        desktopSrc={item.webMainImage.url}
+                                        isFirst={index === 0}
+                                        mobileAlt={item.mobileMainImage.name || item.name}
+                                        mobileSrc={item.mobileMainImage.url}
+                                    />
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
-            </div>
-            <div className="flex flex-1 justify-center gap-1 vl:flex-col vl:justify-start vl:gap-4">
-                {sliderItems.map((sliderItem, index) => {
-                    const isActive = index === bannerSliderState.sliderPosition;
+            </a>
+            <div
+                className={twJoin(
+                    'relative',
+                    sliderItems.length > 4 &&
+                        "vl:after:absolute vl:after:right-0 vl:after:top-0 vl:after:block vl:after:h-full vl:after:w-3 vl:after:bg-backgroundDark vl:after:bg-gradient-to-r vl:after:from-background vl:after:to-transparent vl:after:opacity-25 vl:after:content-['']",
+                )}
+            >
+                <div
+                    className={twJoin(
+                        'relative mt-3 flex justify-center gap-5 overflow-hidden',
+                        'vl:mt-0 vl:gap-0',
+                        sliderItems.length > 4 && slidingButtonsTwClass,
+                    )}
+                >
+                    {sliderItems.map((sliderItem, index) => {
+                        const isActive = index === bannerSliderState.sliderPosition;
 
-                    return (
-                        <button
-                            key={sliderItem.uuid}
-                            className={twJoin(
-                                'group relative block h-2 w-3 cursor-pointer rounded-full font-bold outline-none transition vl:rounded',
-                                'border-8 vl:mx-0 vl:h-full vl:w-full vl:border-2 vl:border-solid vl:px-8 vl:text-left',
-                                'border-actionInvertedBorder bg-actionInvertedBackground text-actionInvertedText',
-                                'hover:border-actionInvertedBorderHovered hover:bg-actionInvertedBackgroundHovered hover:text-actionInvertedTextHovered',
-                                isActive &&
-                                    'border-actionInvertedBorderActive bg-actionInvertedBackgroundActive text-actionInvertedTextActive',
-                            )}
-                            onClick={() => moveToSlide(index)}
-                        >
-                            <TriangleIcon
-                                className={twJoin(
-                                    'absolute left-3 top-1/2 hidden w-2 -translate-y-1/2 text-actionInvertedText',
-                                    isActive && 'vl:block',
-                                )}
+                        return (
+                            <BannersDot
+                                key={sliderItem.uuid}
+                                index={index}
+                                isActive={isActive}
+                                moveToSlide={moveToSlide}
+                                slideInterval={SLIDER_AUTOMATIC_SLIDE_INTERVAL}
+                                sliderItem={sliderItem}
                             />
-                            <span className="hidden vl:inline-block">{sliderItem.name}</span>
-                        </button>
-                    );
-                })}
+                        );
+                    })}
+                </div>
             </div>
         </div>
     );

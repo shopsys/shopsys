@@ -1,4 +1,4 @@
-export const isWholeElementVisible = (element: HTMLLIElement) => {
+export const isWholeElementVisible = (element: HTMLLIElement | HTMLButtonElement) => {
     const rect = element.getBoundingClientRect();
     const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
 

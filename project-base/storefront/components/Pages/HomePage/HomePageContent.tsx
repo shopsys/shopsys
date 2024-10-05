@@ -5,6 +5,7 @@ import { PromotedCategories } from 'components/Blocks/Categories/PromotedCategor
 import { DeferredPromotedProducts } from 'components/Blocks/Product/DeferredPromotedProducts';
 import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
 import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
+import { UpsList } from 'components/Blocks/UpsList/UpsList';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
@@ -27,14 +28,16 @@ export const HomePageContent: FC = () => {
             <CommonLayout>
                 <Banners />
 
+                <UpsList />
+
                 <PromotedCategories />
 
                 {isLuigisBoxActive && (
                     <DeferredRecommendedProducts
                         recommendationType={TypeRecommendationType.Personalized}
                         render={(recommendedProductsContent) => (
-                            <Webline className="mb-6">
-                                <h2 className="mb-3">{t('Recommended for you')}</h2> {recommendedProductsContent}
+                            <Webline className="mb-10">
+                                <h3 className="mb-4">{t('Recommended for you')}</h3> {recommendedProductsContent}
                             </Webline>
                         )}
                     />
