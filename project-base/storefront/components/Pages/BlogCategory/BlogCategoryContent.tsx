@@ -26,6 +26,7 @@ export const BlogCategoryContent: FC<BlogCategoryContentProps> = ({ blogCategory
             <BlogLayout activeCategoryUuid={blogCategory.uuid}>
                 <div className="order-2 flex w-full flex-col vl:order-1 vl:flex-1">
                     <BlogCategoryArticlesWrapper
+                        blogCategoryTotalCount={blogCategory.articlesTotalCount}
                         paginationScrollTargetRef={paginationScrollTargetRef}
                         uuid={blogCategory.uuid}
                     />
