@@ -79,8 +79,10 @@ export const RegistrationAddress: FC = () => {
                     render={({ fieldState: { invalid, error }, field }) => (
                         <>
                             <Select
+                                formName={formMeta.formName}
                                 hasError={invalid}
                                 label={formMeta.fields.country.label}
+                                name={formMeta.fields.country.name}
                                 options={countriesAsSelectOptions}
                                 value={countriesAsSelectOptions.find((option) => option.value === field.value.value)}
                                 onChange={field.onChange}

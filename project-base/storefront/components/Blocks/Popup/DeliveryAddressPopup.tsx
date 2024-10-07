@@ -105,7 +105,7 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
     };
 
     return (
-        <Popup className="w-11/12 overflow-x-auto lg:w-4/5 vl:w-auto">
+        <Popup className="w-11/12 overflow-visible lg:w-4/5 vl:w-auto">
             <FormProvider {...formProviderMethods}>
                 <Form onSubmit={formProviderMethods.handleSubmit(deliveryAddressHandler)}>
                     <FormContentWrapper>
@@ -208,8 +208,10 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
                                     render={({ fieldState: { invalid, error }, field }) => (
                                         <>
                                             <Select
+                                                formName={formMeta.formName}
                                                 hasError={invalid}
                                                 label={formMeta.fields.country.label}
+                                                name={formMeta.fields.country.name}
                                                 options={countriesAsSelectOptions}
                                                 value={countriesAsSelectOptions.find(
                                                     (option) => option.value === field.value.value,

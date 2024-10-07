@@ -244,9 +244,10 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                 render={({ fieldState: { invalid, error }, field }) => (
                                                     <>
                                                         <Select
+                                                            formName={formMeta.formName}
                                                             hasError={invalid}
-                                                            id={formMeta.fields.deliveryCountry.name + '-select'}
                                                             label={formMeta.fields.deliveryCountry.label}
+                                                            name={formMeta.fields.deliveryCountry.name}
                                                             options={countriesAsSelectOptions.map((option) => ({
                                                                 ...option,
                                                                 id: option.value + '-my-id',

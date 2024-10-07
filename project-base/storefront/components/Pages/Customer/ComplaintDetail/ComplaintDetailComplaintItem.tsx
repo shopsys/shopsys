@@ -32,7 +32,15 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                     'flex flex-col gap-3 first:border-none first:pt-0 last:pb-0 vl:flex-row vl:items-center vl:gap-5',
                 )}
             >
-                <Image alt={orderItem.name} height={60} src={orderItem.product?.mainImage?.url} width={60} />
+                <div className="flex h-12 w-20 shrink-0">
+                    <Image
+                        alt={orderItem.name}
+                        className="object-contain"
+                        height={48}
+                        src={orderItem.product?.mainImage?.url}
+                        width={80}
+                    />
+                </div>
                 <div className="flex w-full flex-col flex-wrap justify-between gap-3 border-b border-b-borderLess last:border-none vl:flex-row vl:items-center vl:gap-5">
                     <ExtendedNextLink className="w-fit" href={orderItem.product?.slug ?? ''} type="product">
                         {orderItem.name}
