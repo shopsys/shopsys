@@ -22,10 +22,6 @@ services:
             $internalDirectories: '%internal_directories%'
             $publicDirectories: '%public_directories%'
 
-    Shopsys\FrameworkBundle\Command\DownloadPhingCommand:
-        arguments:
-            - '%shopsys.vendor_dir%'
-
     # the command is supposed to be used in DEV environment only so it is configured in services_dev.yaml
     Shopsys\FrameworkBundle\Command\ExtendedClassesAnnotationsCommand:
         autoconfigure: false
@@ -37,14 +33,3 @@ services:
     Shopsys\FrameworkBundle\Command\MigrateUploadedFilesCommand:
         arguments:
             - '%shopsys.uploaded_file_dir%'
-
-
-    Shopsys\FrameworkBundle\Command\ServerRunWithCustomRouterCommand:
-        arguments:
-            - '%kernel.project_dir%/web'
-            - '%kernel.environment%'
-
-    Shopsys\FrameworkBundle\Command\ServerStartWithCustomRouterCommand:
-        arguments:
-            - '%kernel.project_dir%/web'
-            - '%kernel.environment%'
