@@ -73,7 +73,7 @@ export const SearchProducts: FC = () => {
                 <Overlay isActive={isPanelOpen} onClick={handlePanelOpenerClick} />
 
                 <div className="flex flex-1 flex-col" ref={paginationScrollTargetRef}>
-                    <div className="flex flex-col">
+                    <div className="flex flex-col-reverse vl:flex-col">
                         <FilterSelectedParameters filterOptions={searchProductsData.productFilterOptions} />
 
                         <DeferredFilterAndSortingBar

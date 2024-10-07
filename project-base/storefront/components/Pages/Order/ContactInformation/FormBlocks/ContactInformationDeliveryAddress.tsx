@@ -248,8 +248,12 @@ export const ContactInformationDeliveryAddress: FC = () => {
                                                         <>
                                                             <Select
                                                                 hasError={invalid}
-                                                                id={formMeta.fields.deliveryCountry.name + '-select'}
                                                                 label={formMeta.fields.deliveryCountry.label}
+                                                                id={
+                                                                    formMeta.formName +
+                                                                    '-' +
+                                                                    formMeta.fields.deliveryCountry.name
+                                                                }
                                                                 options={countriesAsSelectOptions.map((option) => ({
                                                                     ...option,
                                                                     id: option.value + '-my-id',

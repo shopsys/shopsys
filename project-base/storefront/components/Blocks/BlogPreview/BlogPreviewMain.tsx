@@ -24,7 +24,7 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false
                 >
                     <Image
                         alt={article.mainImage?.name || article.name}
-                        className="aspect-video rounded-xl object-cover"
+                        className="aspect-video size-auto rounded-xl object-cover vl:aspect-16/11"
                         height={220}
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 35vw"
                         src={article.mainImage?.url}
