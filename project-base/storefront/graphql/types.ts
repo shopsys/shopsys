@@ -2742,6 +2742,8 @@ export type TypeRegistrationByOrderInput = {
   orderUrlHash: Scalars['String']['input'];
   /** Customer user password */
   password: Scalars['Password']['input'];
+  /** Uuids of product lists that should be merged to the product lists of the user after registration */
+  productListsUuids: Array<Scalars['Uuid']['input']>;
 };
 
 /** Represents the main input object to register customer user */

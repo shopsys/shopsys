@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Product\ProductList;
 
 use App\DataFixtures\Demo\CustomerUserDataFixture;
+use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\ProductListDataFixture;
 use App\Model\Customer\User\CustomerUser;
 use App\Model\Customer\User\CustomerUserFacade;
+use App\Model\Order\Order;
 use App\Model\Product\Product;
 use Iterator;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -427,6 +429,34 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
         $newRegisteredUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(
             $registerQueryVariables['email'],
             $this->domain->getId(),
+        );
+
+        $this->assertOriginalAnonymousListsDoNotExist();
+
+        $this->assertMergedListsOfCustomerUser(
+            $newRegisteredUser,
+            [33],
+            [3, 2],
+            ProductListDataFixture::PRODUCT_LIST_WISHLIST_NOT_LOGGED_CUSTOMER_UUID,
+            ProductListDataFixture::PRODUCT_LIST_COMPARISON_NOT_LOGGED_CUSTOMER_UUID,
+        );
+    }
+
+    public function testMergeListsAfterRegistrationByOrder(): void
+    {
+        $order = $this->getReference(OrderDataFixture::ORDER_PREFIX . '19', Order::class);
+        $registerQueryVariables = [
+            'orderUrlHash' => $order->getUrlHash(),
+            'password' => 'user123',
+            'productListsUuids' => [
+                ProductListDataFixture::PRODUCT_LIST_WISHLIST_NOT_LOGGED_CUSTOMER_UUID,
+                ProductListDataFixture::PRODUCT_LIST_COMPARISON_NOT_LOGGED_CUSTOMER_UUID,
+            ],
+        ];
+        $this->getResponseContentForGql(__DIR__ . '/../../_graphql/mutation/RegistrationByOrderMutation.graphql', $registerQueryVariables);
+        $newRegisteredUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(
+            $order->getEmail(),
+            $order->getDomainId(),
         );
 
         $this->assertOriginalAnonymousListsDoNotExist();

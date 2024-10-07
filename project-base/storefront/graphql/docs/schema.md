@@ -10878,6 +10878,15 @@ Customer user password
 
 </td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong>productListsUuids</strong></td>
+<td valign="top">[<a href="#uuid">Uuid</a>!]!</td>
+<td>
+
+Uuids of product lists that should be merged to the product lists of the user after registration
+
+</td>
+</tr>
 </tbody>
 </table>
 

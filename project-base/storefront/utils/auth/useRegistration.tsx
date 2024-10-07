@@ -72,12 +72,13 @@ export const useRegistration = () => {
         return undefined;
     }
 
-    const registerByOrder = async (registrationInput: TypeRegistrationByOrderInput) => {
+    const registerByOrder = async (registrationInput: Omit<TypeRegistrationByOrderInput, 'productListsUuids'>) => {
         blurInput();
         const registerResult = await registerByOrderMutation({
             input: {
                 orderUrlHash: registrationInput.orderUrlHash,
                 password: registrationInput.password,
+                productListsUuids: Object.values(productListUuids),
             },
         });
 

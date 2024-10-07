@@ -18,3 +18,7 @@ RegistrationByOrderInputDecorator:
                     -   Length:
                             min: 6
                             minMessage: "Password must be at least {{ limit }} characters long"
+            productListsUuids:
+                type: "[Uuid!]!"
+                description: "Uuids of product lists that should be merged to the product lists of the user after registration"
+                defaultValue: []

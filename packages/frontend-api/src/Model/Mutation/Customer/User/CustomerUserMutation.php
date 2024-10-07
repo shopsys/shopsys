@@ -168,6 +168,7 @@ class CustomerUserMutation extends BaseTokenMutation
     {
         $input = $argument['input'];
         $customerUser = $this->registrationFacade->registerByOrder($input['orderUrlHash'], $input['password']);
+        $this->productListFacade->mergeProductListsToCustomerUser($input['productListsUuids'], $customerUser);
 
         return $this->loginRegisteredCustomerUser($customerUser);
     }

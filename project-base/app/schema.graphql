@@ -2056,6 +2056,8 @@ input RegistrationByOrderInput {
   orderUrlHash: String!
   "Customer user password"
   password: Password!
+  "Uuids of product lists that should be merged to the product lists of the user after registration"
+  productListsUuids: [Uuid!]! = []
 }
 
 "Represents the main input object to register customer user"
