@@ -3,14 +3,13 @@
 declare(strict_types=1);
 
 use Shopsys\Releaser\ReleaseWorker\CheckCorrectReleaseVersionReleaseWorker;
+use Shopsys\Releaser\ReleaseWorker\CheckUncommittedChangesReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckCopyrightYearReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckLatestVersionOfReleaserReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckPackagesGithubActionsBuildsAfterSplitReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckPackagesGithubActionsBuildsReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckProjectBaseBuild;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckReleaseBlogPostReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckShopsysInstallReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CheckUncommittedChangesReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CreateBranchReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\DumpTranslationsReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\ForceYourBranchSplitReleaseWorker;
@@ -27,40 +26,34 @@ use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\UpdateLicenseAcknowledgement
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\UpdateUpgradeReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\ValidateConflictsInComposerJsonReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\ValidateRequireFormatInComposerJsonReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\VerifyInitialBranchReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\VerifyMinorUpgradeReleaseWorker;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Shopsys\Releaser\ReleaseWorker\VerifyInitialBranchReleaseWorker;
 
-/**
- * @param \Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator $containerConfigurator
- */
-return static function (ContainerConfigurator $containerConfigurator): void {
-    $services = $containerConfigurator->services();
-
-    $services->set(CheckCorrectReleaseVersionReleaseWorker::class);
-    $services->set(CheckLatestVersionOfReleaserReleaseWorker::class);
-    $services->set(VerifyInitialBranchReleaseWorker::class);
-    $services->set(CheckUncommittedChangesReleaseWorker::class);
-    $services->set(CheckPackagesGithubActionsBuildsReleaseWorker::class);
-    $services->set(CreateBranchReleaseWorker::class);
-    $services->set(CheckReleaseBlogPostReleaseWorker::class);
-    $services->set(StopMergingReleaseWorker::class);
-    $services->set(ValidateRequireFormatInComposerJsonReleaseWorker::class);
-    $services->set(ValidateConflictsInComposerJsonReleaseWorker::class);
-    $services->set(GenerateApiaryBlueprintReleaseWorker::class);
-    $services->set(DumpTranslationsReleaseWorker::class);
-    $services->set(SetFrameworkBundleVersionReleaseWorker::class);
-    $services->set(ResolveDocsTodoReleaseWorker::class);
-    $services->set(UpdateChangelogReleaseWorker::class);
-    $services->set(UpdateUpgradeReleaseWorker::class);
-    $services->set(UpdateLicenseAcknowledgementsReleaseWorker::class);
-    $services->set(CheckCopyrightYearReleaseWorker::class);
-    $services->set(ReleaseNewNodeModulePackageVersion::class);
-    $services->set(SetMutualDependenciesToVersionReleaseWorker::class);
-    $services->set(TestYourBranchLocallyReleaseWorker::class);
-    $services->set(ForceYourBranchSplitReleaseWorker::class);
-    $services->set(CheckShopsysInstallReleaseWorker::class);
-    $services->set(CheckPackagesGithubActionsBuildsAfterSplitReleaseWorker::class);
-    $services->set(VerifyMinorUpgradeReleaseWorker::class);
-    $services->set(SendBranchForReviewAndTestsReleaseWorker::class);
-};
+return [
+    CheckCorrectReleaseVersionReleaseWorker::class,
+    CheckLatestVersionOfReleaserReleaseWorker::class,
+    VerifyInitialBranchReleaseWorker::class,
+    CheckUncommittedChangesReleaseWorker::class,
+    CheckPackagesGithubActionsBuildsReleaseWorker::class,
+    CreateBranchReleaseWorker::class,
+    CheckReleaseBlogPostReleaseWorker::class,
+    StopMergingReleaseWorker::class,
+    ValidateRequireFormatInComposerJsonReleaseWorker::class,
+    ValidateConflictsInComposerJsonReleaseWorker::class,
+    GenerateApiaryBlueprintReleaseWorker::class,
+    DumpTranslationsReleaseWorker::class,
+    SetFrameworkBundleVersionReleaseWorker::class,
+    ResolveDocsTodoReleaseWorker::class,
+    UpdateChangelogReleaseWorker::class,
+    UpdateUpgradeReleaseWorker::class,
+    UpdateLicenseAcknowledgementsReleaseWorker::class,
+    CheckCopyrightYearReleaseWorker::class,
+    ReleaseNewNodeModulePackageVersion::class,
+    SetMutualDependenciesToVersionReleaseWorker::class,
+    TestYourBranchLocallyReleaseWorker::class,
+    ForceYourBranchSplitReleaseWorker::class,
+    CheckShopsysInstallReleaseWorker::class,
+    CheckPackagesGithubActionsBuildsAfterSplitReleaseWorker::class,
+    VerifyMinorUpgradeReleaseWorker::class,
+    SendBranchForReviewAndTestsReleaseWorker::class,
+];

@@ -6,7 +6,6 @@ namespace Shopsys\Releaser\FileManipulator;
 
 use Nette\Utils\Strings;
 use PharIo\Version\Version;
-use Symfony\Component\Finder\SplFileInfo;
 
 final class VersionUpgradeFileManipulator
 {
@@ -19,14 +18,14 @@ final class VersionUpgradeFileManipulator
     private const string HEADLINE_TEMPLATE = '## [Upgrade from %s to %s](https://github.com/shopsys/shopsys/compare/%s...%s)' . PHP_EOL . PHP_EOL . '$1';
 
     /**
-     * @param \Symfony\Component\Finder\SplFileInfo $splFileInfo
+     * @param string $fileContent
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      * @return string
      */
-    public function processFileToString(SplFileInfo $splFileInfo, Version $version, string $initialBranchName): string
+    public function processFileToString(string $fileContent, Version $version, string $initialBranchName): string
     {
-        $content = $this->updateHeadline($version, $splFileInfo->getContents(), $initialBranchName);
+        $content = $this->updateHeadline($version, $fileContent, $initialBranchName);
 
         return $this->addNewPatchHeadline($version, $content, $initialBranchName);
     }

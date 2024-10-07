@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Shopsys\Releaser\ReleaseWorker\ReleaseCandidate;
 
+use Nette\Utils\Json;
 use PharIo\Version\Version;
 use Shopsys\Releaser\FilesProvider\ComposerJsonFilesProvider;
 use Shopsys\Releaser\IntervalEvaluator;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\Message;
 use Shopsys\Releaser\Stage;
-use Symplify\ComposerJsonManipulator\FileSystem\JsonFileManager;
 
 final class ValidateConflictsInComposerJsonReleaseWorker extends AbstractShopsysReleaseWorker
 {
@@ -25,12 +24,10 @@ final class ValidateConflictsInComposerJsonReleaseWorker extends AbstractShopsys
 
     /**
      * @param \Shopsys\Releaser\FilesProvider\ComposerJsonFilesProvider $composerJsonFilesProvider
-     * @param \Symplify\ComposerJsonManipulator\FileSystem\JsonFileManager $jsonFileManager
      * @param \Shopsys\Releaser\IntervalEvaluator $intervalEvaluator
      */
     public function __construct(
         private readonly ComposerJsonFilesProvider $composerJsonFilesProvider,
-        private readonly JsonFileManager $jsonFileManager,
         private readonly IntervalEvaluator $intervalEvaluator,
     ) {
     }
@@ -58,21 +55,21 @@ final class ValidateConflictsInComposerJsonReleaseWorker extends AbstractShopsys
         $isPassing = true;
 
         foreach ($this->composerJsonFilesProvider->provideAll() as $fileInfo) {
-            $jsonContent = $this->jsonFileManager->loadFromFileInfo($fileInfo);
+            $jsonContent = Json::decode($fileInfo->getContents(), Json::FORCE_ARRAY);
 
             if (!isset($jsonContent[self::CONFLICT_SECTION])) {
                 continue;
             }
 
-            foreach ($jsonContent[self::CONFLICT_SECTION] as $packageName => $version) {
+            foreach ($jsonContent[self::CONFLICT_SECTION] as $packageName => $packageVersion) {
                 if (
                     array_key_exists($packageName, self::IGNORED_CONFLICT_PACKAGES) &&
-                    self::IGNORED_CONFLICT_PACKAGES[$packageName] === $version
+                    self::IGNORED_CONFLICT_PACKAGES[$packageName] === $packageVersion
                 ) {
                     continue;
                 }
 
-                if ($this->intervalEvaluator->isClosedInterval($version)) {
+                if ($this->intervalEvaluator->isClosedInterval($packageVersion)) {
                     continue;
                 }
 
@@ -81,7 +78,7 @@ final class ValidateConflictsInComposerJsonReleaseWorker extends AbstractShopsys
                     self::CONFLICT_SECTION,
                     $fileInfo->getPathname(),
                     $packageName,
-                    $version,
+                    $packageVersion,
                     PHP_EOL,
                 ));
 
@@ -90,17 +87,17 @@ final class ValidateConflictsInComposerJsonReleaseWorker extends AbstractShopsys
         }
 
         if ($isPassing) {
-            $this->symfonyStyle->success(Message::SUCCESS);
+            $this->success();
         } else {
             $this->confirm('Confirm conflict versions are changed to specific versions or closed interval');
         }
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getStage(): string
+    protected function getAllowedStages(): array
     {
-        return Stage::RELEASE_CANDIDATE;
+        return [Stage::RELEASE_CANDIDATE];
     }
 }

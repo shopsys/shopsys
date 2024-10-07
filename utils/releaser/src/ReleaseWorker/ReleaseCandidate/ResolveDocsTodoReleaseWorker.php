@@ -7,7 +7,6 @@ namespace Shopsys\Releaser\ReleaseWorker\ReleaseCandidate;
 use Nette\Utils\Strings;
 use PharIo\Version\Version;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\Message;
 use Shopsys\Releaser\Stage;
 use Symfony\Component\Finder\Finder;
 
@@ -62,7 +61,7 @@ final class ResolveDocsTodoReleaseWorker extends AbstractShopsysReleaseWorker
         }
 
         if ($isPassing) {
-            $this->symfonyStyle->success(Message::SUCCESS);
+            $this->success();
         } else {
             $this->confirm(
                 sprintf(
@@ -74,11 +73,11 @@ final class ResolveDocsTodoReleaseWorker extends AbstractShopsysReleaseWorker
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getStage(): string
+    protected function getAllowedStages(): array
     {
-        return Stage::RELEASE_CANDIDATE;
+        return [Stage::RELEASE_CANDIDATE];
     }
 
     /**

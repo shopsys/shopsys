@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Shopsys\Releaser\ReleaseWorker;
 
 use PharIo\Version\Version;
+use Shopsys\Releaser\Stage;
 
-abstract class AbstractCheckUncommittedChangesReleaseWorker extends AbstractShopsysReleaseWorker
+final class CheckUncommittedChangesReleaseWorker extends AbstractShopsysReleaseWorker
 {
     /**
      * @param \PharIo\Version\Version $version
@@ -34,7 +35,15 @@ abstract class AbstractCheckUncommittedChangesReleaseWorker extends AbstractShop
             );
             $this->confirm('Confirm that you have resolved all uncommitted files and your working tree is empty now.');
         } else {
-            $this->symfonyStyle->success(Message::SUCCESS);
+            $this->success();
         }
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getAllowedStages(): array
+    {
+        return Stage::getAllStages();
     }
 }

@@ -7,13 +7,10 @@ namespace Shopsys\Releaser\ReleaseWorker;
 use Nette\Utils\Strings;
 use PharIo\Version\Version;
 use RuntimeException;
-use Symfony\Component\Console\Helper\QuestionHelper;
-use Symfony\Component\Console\Input\ArgvInput;
-use Symfony\Component\Console\Output\ConsoleOutput;
+use Shopsys\Releaser\Command\SymfonyStyleFactory;
+use Shopsys\Releaser\Process\ProcessRunner;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Process\Process;
-use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
 {
@@ -59,25 +56,21 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
 
     protected ProcessRunner $processRunner;
 
-    private QuestionHelper $questionHelper;
-
     protected string $currentBranchName;
 
     /**
      * @required
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyle
-     * @param \Symplify\MonorepoBuilder\Release\Process\ProcessRunner $processRunner
-     * @param \Symfony\Component\Console\Helper\QuestionHelper $questionHelper
+     * @param \Shopsys\Releaser\Command\SymfonyStyleFactory $symfonyStyleFactory
+     * @param \Shopsys\Releaser\Process\ProcessRunner $processRunner
+     * @throws \Shopsys\Releaser\Exception\ShouldNotHappenException
      */
     public function setup(
-        SymfonyStyle $symfonyStyle,
+        SymfonyStyleFactory $symfonyStyleFactory,
         ProcessRunner $processRunner,
-        QuestionHelper $questionHelper,
     ): void {
-        $this->symfonyStyle = $symfonyStyle;
+        $this->symfonyStyle = $symfonyStyleFactory->getPreviouslyCreatedSymfonyStyle();
         $this->processRunner = $processRunner;
-        $this->questionHelper = $questionHelper;
-        $this->currentBranchName = $this->getProcessResult(['git', 'rev-parse', '--abbrev-ref', 'HEAD']);
+        $this->currentBranchName = $this->processRunner->run('git rev-parse --abbrev-ref HEAD');
     }
 
     /**
@@ -87,11 +80,14 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
      */
     protected function confirm(string $message): void
     {
-        $this->questionHelper->ask(
-            new ArgvInput(),
-            new ConsoleOutput(),
+        $this->symfonyStyle->askQuestion(
             new Question(' <info>' . $message . '</info> [<comment>Enter</comment>]'),
         );
+    }
+
+    protected function success(): void
+    {
+        $this->symfonyStyle->success('All good!');
     }
 
     /**
@@ -101,7 +97,7 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
      */
     protected function commit(string $message): void
     {
-        if ($this->hasChangesToCommit() === false) {
+        if ($this->isGitWorkingTreeEmpty()) {
             return;
         }
 
@@ -114,20 +110,15 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
     /**
      * @return bool
      */
-    private function hasChangesToCommit(): bool
+    protected function isGitWorkingTreeEmpty(): bool
     {
-        $process = new Process(['git', 'status', '-s']);
-        $process->run();
-
-        $output = $process->getOutput();
-
-        return $output !== '';
+        return $this->processRunner->run('git status --porcelain') === '';
     }
 
     private function configureGitIdentityIfMissing(): void
     {
-        $name = $this->getProcessResult(['git', 'config', 'user.name']);
-        $email = $this->getProcessResult(['git', 'config', 'user.email']);
+        $name = $this->processRunner->run('git config user.name');
+        $email = $this->processRunner->run('git config user.email');
 
         if ($name === '' || $email === '') {
             $this->symfonyStyle->warning('Git identity is not configured, unable to create commits...');
@@ -135,7 +126,7 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
 
         if ($name === '') {
             $newName = $this->symfonyStyle->ask('What is your name?');
-            $this->processRunner->run(['git', 'config', 'user.name', $newName]);
+            $this->processRunner->run(sprintf('git config user.name "%s"', addslashes($newName)));
         }
 
         if ($email !== '') {
@@ -143,7 +134,7 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
         }
 
         $newEmail = $this->symfonyStyle->ask('What is your email address?');
-        $this->processRunner->run(['git', 'config', 'user.email', $newEmail]);
+        $this->processRunner->run(sprintf('git config user.email "%s"', addslashes($newEmail)));
     }
 
     /**
@@ -153,28 +144,6 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
     protected function createBranchName(Version $version): string
     {
         return 'rc-' . Strings::webalize($version->getVersionString());
-    }
-
-    /**
-     * @return bool
-     */
-    protected function isGitWorkingTreeEmpty(): bool
-    {
-        $status = $this->getProcessResult(['git', 'status']);
-
-        return Strings::contains($status, 'nothing to commit');
-    }
-
-    /**
-     * @param string[] $commandLine
-     * @return string
-     */
-    protected function getProcessResult(array $commandLine): string
-    {
-        $process = new Process($commandLine);
-        $process->run();
-
-        return trim($process->getOutput());
     }
 
     /**
@@ -228,4 +197,18 @@ abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
 
         return new Version($newVersionString);
     }
+
+    /**
+     * @param string $stage
+     * @return bool
+     */
+    public function belongToStage(string $stage): bool
+    {
+        return in_array($stage, $this->getAllowedStages(), true);
+    }
+
+    /**
+     * @return string[]
+     */
+    abstract protected function getAllowedStages(): array;
 }

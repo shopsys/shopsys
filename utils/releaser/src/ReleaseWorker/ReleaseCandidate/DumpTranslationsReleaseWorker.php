@@ -58,11 +58,11 @@ final class DumpTranslationsReleaseWorker extends AbstractShopsysReleaseWorker
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getStage(): string
+    protected function getAllowedStages(): array
     {
-        return Stage::RELEASE_CANDIDATE;
+        return [Stage::RELEASE_CANDIDATE];
     }
 
     /**
@@ -70,10 +70,10 @@ final class DumpTranslationsReleaseWorker extends AbstractShopsysReleaseWorker
      */
     private function hasOnlyDeletedFiles(): bool
     {
-        $allFilesStatus = $this->getProcessResult(['git', 'status', '-s']);
+        $allFilesStatus = $this->processRunner->run('git status --porcelain');
         $allFilesCount = $this->countFilesInStatus($allFilesStatus);
 
-        $deletedFilesStatus = $this->getProcessResult(['git', 'ls-files', '-d']);
+        $deletedFilesStatus = $this->processRunner->run('git ls-files -d');
         $deletedFilesCount = $this->countFilesInStatus($deletedFilesStatus);
 
         // has only deleted files or has also some modified/added files

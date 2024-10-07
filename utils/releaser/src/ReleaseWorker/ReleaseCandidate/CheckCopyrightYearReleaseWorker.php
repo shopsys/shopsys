@@ -6,7 +6,6 @@ namespace Shopsys\Releaser\ReleaseWorker\ReleaseCandidate;
 
 use PharIo\Version\Version;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\Message;
 use Shopsys\Releaser\Stage;
 
 final class CheckCopyrightYearReleaseWorker extends AbstractShopsysReleaseWorker
@@ -33,14 +32,14 @@ final class CheckCopyrightYearReleaseWorker extends AbstractShopsysReleaseWorker
     ): void {
         $this->symfonyStyle->confirm('Confirm that the year in the LICENSE and other files is set correctly to the current year');
 
-        $this->symfonyStyle->success(Message::SUCCESS);
+        $this->success();
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getStage(): string
+    protected function getAllowedStages(): array
     {
-        return Stage::RELEASE_CANDIDATE;
+        return [Stage::RELEASE_CANDIDATE];
     }
 }

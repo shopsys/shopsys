@@ -5,20 +5,20 @@ declare(strict_types=1);
 namespace Shopsys\Releaser\ReleaseWorker;
 
 use PharIo\Version\Version;
+use Shopsys\Releaser\FileManipulator\ComposerJsonFileManipulator;
 use Shopsys\Releaser\FilesProvider\ComposerJsonFilesProvider;
-use Symplify\MonorepoBuilder\DependencyUpdater;
-use Symplify\MonorepoBuilder\Package\PackageNamesProvider;
+use Shopsys\Releaser\FilesProvider\PackageNamesProvider;
 
 abstract class AbstractSetMutualDependenciesToVersionReleaseWorker extends AbstractShopsysReleaseWorker
 {
     /**
      * @param \Shopsys\Releaser\FilesProvider\ComposerJsonFilesProvider $composerJsonFilesProvider
-     * @param \Symplify\MonorepoBuilder\DependencyUpdater $dependencyUpdater
-     * @param \Symplify\MonorepoBuilder\Package\PackageNamesProvider $packageNamesProvider
+     * @param \Shopsys\Releaser\FileManipulator\ComposerJsonFileManipulator $composerJsonFileManipulator
+     * @param \Shopsys\Releaser\FilesProvider\PackageNamesProvider $packageNamesProvider
      */
     public function __construct(
         protected readonly ComposerJsonFilesProvider $composerJsonFilesProvider,
-        protected readonly DependencyUpdater $dependencyUpdater,
+        protected readonly ComposerJsonFileManipulator $composerJsonFileManipulator,
         protected readonly PackageNamesProvider $packageNamesProvider,
     ) {
     }
@@ -49,7 +49,7 @@ abstract class AbstractSetMutualDependenciesToVersionReleaseWorker extends Abstr
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): void {
-        $this->dependencyUpdater->updateFileInfosWithPackagesAndVersion(
+        $this->composerJsonFileManipulator->setMutualDependenciesToVersion(
             $this->composerJsonFilesProvider->provideExcludingMonorepoComposerJson(),
             $this->packageNamesProvider->provide(),
             $this->getVersionString($version),
@@ -60,6 +60,6 @@ abstract class AbstractSetMutualDependenciesToVersionReleaseWorker extends Abstr
             $this->getVersionString($version),
         ));
 
-        $this->symfonyStyle->success(Message::SUCCESS);
+        $this->success();
     }
 }

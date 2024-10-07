@@ -8,11 +8,9 @@ use Nette\Utils\FileSystem;
 use PharIo\Version\Version;
 use Shopsys\Releaser\FileManipulator\VersionUpgradeFileManipulator;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\Message;
 use Shopsys\Releaser\Stage;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
 {
@@ -56,7 +54,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
 
         $this->updateUpgradeFileWithReleasedVersion($version, $initialBranchName);
 
-        $this->symfonyStyle->success(Message::SUCCESS);
+        $this->success();
         $this->symfonyStyle->note(
             'Review all the upgrading files whether they satisfy our rules and guidelines, see https://docs.shopsys.com/en/latest/contributing/guidelines-for-writing-upgrade/.',
         );
@@ -91,11 +89,11 @@ git log --oneline --format="%%H %%s" | grep "<put_here_commit_message_of_merge_c
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getStage(): string
+    protected function getAllowedStages(): array
     {
-        return Stage::RELEASE_CANDIDATE;
+        return [Stage::RELEASE_CANDIDATE];
     }
 
     /**
@@ -136,10 +134,10 @@ git log --oneline --format="%%H %%s" | grep "<put_here_commit_message_of_merge_c
     private function updateUpgradeFileWithReleasedVersion(Version $version, string $initialBranchName): void
     {
         $upgradeFilePath = $this->getPathToUpgradeFile($initialBranchName);
-        $upgradeFileInfo = new SmartFileInfo($upgradeFilePath);
+        $upgradeFileContent = FileSystem::read($upgradeFilePath);
 
         $newUpgradeContent = $this->versionUpgradeFileManipulator->processFileToString(
-            $upgradeFileInfo,
+            $upgradeFileContent,
             $version,
             $initialBranchName,
         );
@@ -161,7 +159,7 @@ git log --oneline --format="%%H %%s" | grep "<put_here_commit_message_of_merge_c
             throw new FileNotFoundException(path: $pathToUpgradeNotes);
         }
 
-        $fileHandle = fopen($pathToUpgradeNotes, 'r');
+        $fileHandle = fopen($pathToUpgradeNotes, 'rb');
 
         if (!$fileHandle) {
             return;

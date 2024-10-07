@@ -6,7 +6,6 @@ namespace Shopsys\Releaser\FileManipulator;
 
 use Nette\Utils\Strings;
 use PharIo\Version\Version;
-use Symfony\Component\Finder\SplFileInfo;
 
 final class FrameworkBundleVersionFileManipulator
 {
@@ -21,14 +20,14 @@ final class FrameworkBundleVersionFileManipulator
     private const string FRAMEWORK_BUNDLE_VERSION_PATTERN = "/public const VERSION = '(.+)';/";
 
     /**
-     * @param \Symfony\Component\Finder\SplFileInfo $splFileInfo
+     * @param string $content
      * @param \PharIo\Version\Version $version
      * @return string
      */
-    public function updateFrameworkBundleVersion(SplFileInfo $splFileInfo, Version $version): string
+    public function updateFrameworkBundleVersion(string $content, Version $version): string
     {
         return Strings::replace(
-            $splFileInfo->getContents(),
+            $content,
             self::FRAMEWORK_BUNDLE_VERSION_PATTERN,
             function ($match) use ($version) {
                 return str_replace($match[1], $version->getVersionString(), $match[0]);
