@@ -56,7 +56,7 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                     <div>
                         <div className="text-textDisabled">{pickupPlaceDetail.name}</div>
 
-                        <div className="text-textDisabled">
+                        <div className="text-textDisabled lg:min-w-64">
                             {pickupPlaceDetail.street}, {pickupPlaceDetail.postcode} {pickupPlaceDetail.city},{' '}
                             {pickupPlaceDetail.country.name}
                         </div>
@@ -70,10 +70,14 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                         {getDeliveryMessage(daysUntilDelivery, !!pickupPlaceDetail, t)}
                     </div>
                 )}
+
+                {price && isPriceVisible(price.priceWithVat) && (
+                    <div className="block shrink-0 text-sm font-bold lg:hidden ">{formatPrice(price.priceWithVat)}</div>
+                )}
             </div>
 
             {price && isPriceVisible(price.priceWithVat) && (
-                <div className="shrink-0 text-right text-sm font-bold lg:basis-20">
+                <div className="hidden shrink-0 text-right text-sm font-bold lg:block lg:basis-20">
                     {formatPrice(price.priceWithVat)}
                 </div>
             )}

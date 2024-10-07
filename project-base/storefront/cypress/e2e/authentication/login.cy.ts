@@ -14,12 +14,12 @@ import {
 } from 'support';
 import { TIDs } from 'tids';
 
-describe('Login tests', () => {
+describe('Login Tests', () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('should login from login page and then log out', function () {
+    it('[Login Page] login from login page and then log out', function () {
         cy.visitAndWaitForStableAndInteractiveDOM(url.login);
 
         fillInEmailAndPasswordOnLoginPage(customer1.emailRegistered, password);
@@ -40,7 +40,7 @@ describe('Login tests', () => {
         takeSnapshotAndCompare(this.test?.title, 'after logout', { blackout: [{ tid: TIDs.footer_social_links }] });
     });
 
-    it('should login from header and then log out', function () {
+    it('[Header] login from header and then log out', function () {
         cy.visitAndWaitForStableAndInteractiveDOM('/');
 
         loginFromHeader(customer1.emailRegistered, password);

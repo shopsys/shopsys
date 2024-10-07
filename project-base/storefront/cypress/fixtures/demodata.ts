@@ -1,5 +1,6 @@
 export const brandSencor = 'Sencor';
 
+export const openingHours = '09:00 - 11:00, 13:00 - 17:00';
 export const buttonName = {
     login: 'Login',
 };
@@ -126,6 +127,10 @@ export const transport = {
         storeOstrava: {
             uuid: '67ac2c38-7bdd-59fa-b762-0704cee8323e',
             name: 'Ostrava',
+        },
+        storePardubice: {
+            uuid: 'c0b38c80-9755-5030-930b-fa971e03c4bd',
+            name: 'Pardubice',
         },
     },
     czechPost: {

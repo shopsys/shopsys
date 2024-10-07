@@ -3,7 +3,7 @@ import { products } from 'fixtures/demodata';
 import { initializePersistStoreInLocalStorageToDefaultValues, takeSnapshotAndCompare } from 'support';
 import { TIDs } from 'tids';
 
-describe('Cart in header tests', () => {
+describe('Cart In Header Tests', () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
         cy.addProductToCartForTest(products.helloKitty.uuid, 2).then((cart) =>
@@ -13,7 +13,7 @@ describe('Cart in header tests', () => {
         cy.visitAndWaitForStableAndInteractiveDOM('/');
     });
 
-    it('should remove products from cart using cart in header and then display empty cart message', function () {
+    it('[Cart Header Remove] remove products from cart using cart in header and then display empty cart message', function () {
         openHeaderCartByHovering();
         removeFirstProductFromHeaderCart();
         takeSnapshotAndCompare(

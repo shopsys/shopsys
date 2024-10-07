@@ -17,12 +17,12 @@ import {
 } from 'support';
 import { TIDs } from 'tids';
 
-describe('Cart login tests', () => {
+describe('Cart Login Tests', () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('should log in, add product to cart to an already prefilled cart, and empty cart after log out', function () {
+    it('[Prefilled Cart] log in, add product to cart to an already prefilled cart, and empty cart after log out', function () {
         const registrationInput = generateCustomerRegistrationData('commonCustomer');
         cy.registerAsNewUser(registrationInput, false);
         cy.addProductToCartForTest(products.philips32PFL4308.uuid).then((cart) =>
@@ -53,7 +53,7 @@ describe('Cart login tests', () => {
         });
     });
 
-    it('should log in, add product to an empty cart, and empty cart after log out', function () {
+    it('[Empty Cart] log in, add product to an empty cart, and empty cart after log out', function () {
         const registrationInput = generateCustomerRegistrationData('commonCustomer');
         cy.registerAsNewUser(registrationInput, false);
         cy.visitAndWaitForStableAndInteractiveDOM('/');
@@ -77,7 +77,7 @@ describe('Cart login tests', () => {
         });
     });
 
-    it('should repeatedly merge carts when logged in (starting with an empty cart for the registered customer)', function () {
+    it('[Merge Cart] repeatedly merge carts when logged in (starting with an empty cart for the registered customer)', function () {
         const registrationInput = generateCustomerRegistrationData('commonCustomer');
         cy.registerAsNewUser(registrationInput, false);
         cy.visitAndWaitForStableAndInteractiveDOM('/');
@@ -118,7 +118,7 @@ describe('Cart login tests', () => {
         });
     });
 
-    it("should discard user's previous cart after logging in in order 3rd step", function () {
+    it("[Discard Cart] discard user's previous cart after logging in in order 3rd step", function () {
         const email = 'discard-user-cart-after-login-in-order-3rd-step@shopsys.com';
         const registrationInput = generateCustomerRegistrationData('commonCustomer', email);
         cy.registerAsNewUser(registrationInput);

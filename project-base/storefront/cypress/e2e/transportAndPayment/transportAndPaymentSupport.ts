@@ -1,6 +1,7 @@
 import { TypeTransportWithAvailablePaymentsAndStoresFragment } from '../../../graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 import { TypeOpeningHoursOfDay, TypeStoreOpeningStatusEnum } from '../../../graphql/types';
 import { transport } from 'fixtures/demodata';
+import { changeElementText } from 'support';
 import { TIDs } from 'tids';
 
 export const chooseTransportPersonalCollectionAndStore = (storeName: string) => {
@@ -173,4 +174,8 @@ export const removePaymentSelectionUsingButton = () => {
 
 export const removeTransportSelectionUsingButton = () => {
     cy.getByTID([TIDs.reset_transport_button]).click();
+};
+
+export const changeOpeningHoursStatusToEmptyString = () => {
+    changeElementText(TIDs.opening_hours_status, '', false);
 };

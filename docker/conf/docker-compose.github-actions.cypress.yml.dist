@@ -94,6 +94,20 @@ services:
             - ./snapshotDiffs:/app/snapshotDiffs
         network_mode: "host"
 
+    cypress-regenerate:
+        build:
+            context: ./project-base/storefront/cypress
+            dockerfile: ./docker/Dockerfile
+        container_name: shopsys-framework-cypress
+        profiles:
+            - storefront-acceptance-tests
+        volumes:
+            - ./snapshots:/app/snapshots
+        network_mode: "host"
+        environment:
+            - TYPE=base
+            - COMMAND=run
+
     img-proxy:
         image: darthsim/imgproxy:latest
         container_name: shopsys-framework-img-proxy

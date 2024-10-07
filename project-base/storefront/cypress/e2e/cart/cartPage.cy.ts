@@ -27,7 +27,7 @@ import {
 } from 'support';
 import { TIDs } from 'tids';
 
-describe('Cart page tests', () => {
+describe('Cart Page Tests', () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
         cy.addProductToCartForTest(products.helloKitty.uuid, 2).then((cart) =>
@@ -37,7 +37,7 @@ describe('Cart page tests', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.cart);
     });
 
-    it('should increase and decrease product quantity using spinbox in cart (once if clicked fast)', function () {
+    it('[Fast Quantity Clicked] increase and decrease product quantity using spinbox in cart (once if clicked fast)', function () {
         checkNumberOfApiRequestsTriggeredByActions(
             () => {
                 increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
@@ -67,7 +67,7 @@ describe('Cart page tests', () => {
         });
     });
 
-    it('should increase and decrease product quantity using spinbox in cart (multiple times if clicked slowly)', function () {
+    it('[Slow Quantity Clicked] increase and decrease product quantity using spinbox in cart (multiple times if clicked slowly)', function () {
         checkNumberOfApiRequestsTriggeredByActions(
             () => {
                 increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
@@ -101,7 +101,7 @@ describe('Cart page tests', () => {
         });
     });
 
-    it('should remove products from cart', function () {
+    it('[Remove Products] remove products from cart', function () {
         removeProductFromCartPage(products.philips32PFL4308.catnum);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(this.test?.title, 'after first removal', {
@@ -115,7 +115,7 @@ describe('Cart page tests', () => {
         });
     });
 
-    it('spinbox buttons should not be clickable if they cannot be used due to min/max quantity', function () {
+    it('[Min Max Quantity] spinbox buttons should not be clickable if they cannot be used due to min/max quantity', function () {
         checkCartItemSpinboxDecreaseButtonIsDisabled(products.philips32PFL4308.catnum);
         checkCartItemSpinboxIncreaseButtonIsEnabled(products.philips32PFL4308.catnum);
 
@@ -125,7 +125,7 @@ describe('Cart page tests', () => {
         checkCartItemSpinboxIncreaseButtonIsDisabled(products.philips32PFL4308.catnum);
     });
 
-    it('should add promo code to cart, check it, remove promo code from cart, and then add a different one', function () {
+    it('[Add Remove Promo] add promo code to cart, check it, remove promo code from cart, and then add a different one', function () {
         clickOnPromoCodeButton();
         applyPromoCodeOnCartPage('test');
         checkAndHideSuccessToast('Promo code was added to the order.');
@@ -158,7 +158,7 @@ describe('Cart page tests', () => {
         });
     });
 
-    it('should add promo code to cart, remove product that allows it, and see the promo code removed', function () {
+    it('[Add Promo Remove Product] add promo code to cart, remove product that allows it, and see the promo code removed', function () {
         clickOnPromoCodeButton();
 
         applyPromoCodeOnCartPage('test');
@@ -174,7 +174,7 @@ describe('Cart page tests', () => {
         });
     });
 
-    it('transport should not be free if price minus promo code discount is below the free transport limit', function () {
+    it('[No Free Transport] transport should not be free if price minus promo code discount is below the free transport limit', function () {
         cy.addProductToCartForTest(products.helloKitty.uuid, 10);
         cy.reloadAndWaitForStableAndInteractiveDOM();
 

@@ -1,4 +1,5 @@
 import {
+    changeOpeningHoursStatusToEmptyString,
     changeSelectionOfPaymentByName,
     changeSelectionOfTransportByName,
     chooseTransportPersonalCollectionAndStore,
@@ -12,7 +13,7 @@ import {
 } from 'support';
 import { TIDs } from 'tids';
 
-describe('Last order transport and payment select tests', () => {
+describe('Last Order Transport And Payment Select Tests', () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
 
@@ -25,7 +26,7 @@ describe('Last order transport and payment select tests', () => {
         cy.addProductToCartForTest();
     });
 
-    it('should preselect transport and payment from last order for logged-in user', function () {
+    it('[Preselect T&P] preselect transport and payment from last order for logged-in user', function () {
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
         takeSnapshotAndCompare(this.test?.title, 'preselected transport and payment', {
@@ -37,7 +38,7 @@ describe('Last order transport and payment select tests', () => {
         });
     });
 
-    it('should be able to change preselected transport and payment from last order for logged-in user and keep the new selection after refresh', function () {
+    it('[Change T&P And Preserve On Refresh] change preselected transport and payment from last order for logged-in user and keep the new selection after refresh', function () {
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
         changeSelectionOfTransportByName(transport.czechPost.name);
@@ -57,18 +58,18 @@ describe('Last order transport and payment select tests', () => {
 
         changeSelectionOfTransportByName(transport.ppl.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod(500);
-        chooseTransportPersonalCollectionAndStore(transport.personalCollection.storeOstrava.name);
+        chooseTransportPersonalCollectionAndStore(transport.personalCollection.storePardubice.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod(500);
         changeSelectionOfPaymentByName(payment.cash.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod(500);
         cy.reloadAndWaitForStableAndInteractiveDOM();
-        // skip last snapshot because of dynamic data in stores select
-        this.skip();
+        changeOpeningHoursStatusToEmptyString();
         takeSnapshotAndCompare(this.test?.title, 'after second change and refresh', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.order_summary_transport_and_payment_image },
+                { tid: TIDs.opening_hours },
             ],
         });
     });

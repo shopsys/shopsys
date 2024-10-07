@@ -20,13 +20,13 @@ import {
 } from 'support';
 import { TIDs } from 'tids';
 
-describe('Registration tests (basic)', () => {
+describe('Registration Tests (Basic)', () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
         cy.visitAndWaitForStableAndInteractiveDOM('/');
     });
 
-    it('should register as a B2C customer', function () {
+    it('[Register B2C] register as a B2C customer', function () {
         goToRegistrationPageFromHeader();
         const email = 'register-as-b2c@shopsys.com';
         clearAndFillInRegstrationFormEmail(email);
@@ -50,13 +50,13 @@ describe('Registration tests (basic)', () => {
     });
 });
 
-describe('Registration tests (repeated tries)', () => {
+describe('Registration Tests (Repeated Tries)', () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
         cy.visitAndWaitForStableAndInteractiveDOM(url.registration);
     });
 
-    it('should disallow registration with empty registration form, but then allow after filling', function () {
+    it('[Empty Form] disallow registration with empty registration form, but then allow after filling', function () {
         submitRegistrationForm();
         checkRegistrationValidationErrorsPopup();
         checkPopupIsVisible(true);
@@ -79,7 +79,7 @@ describe('Registration tests (repeated tries)', () => {
         });
     });
 
-    it('should disallow registration with invalid info, but then allow after correction', function () {
+    it('[Invalid Info] disallow registration with invalid info, but then allow after correction', function () {
         const email = 'registration-with-existing-email@shopsys.com';
         cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer', email), false);
 

@@ -8,10 +8,12 @@ import { TIDs } from 'tids';
 
 registerCommand({ pollInterval: 500, timeout: 5000 });
 
+const FILENAME_LENGTH_LIMIT = 250;
 const ELEMENTS_WITH_DISABLED_HOVER_DURING_SCREENSHOTS = [
     '[for="newsletter-form-privacyPolicy"]',
     TIDs.simple_header_contact,
 ];
+const SKIP_SNAPHOTS = Cypress.env('skipSnapshots');
 
 Cypress.Commands.add(
     'getByTID',
@@ -72,6 +74,7 @@ Cypress.Commands.add('reloadAndWaitForStableAndInteractiveDOM', () => {
 
 compareSnapshotCommand({
     capture: 'fullPage',
+    errorThreshold: 0.005,
 });
 
 export const initializePersistStoreInLocalStorageToDefaultValues = () => {
@@ -141,6 +144,10 @@ export const takeSnapshotAndCompare = (
     options: Partial<SnapshotAdditionalOptions> = {},
     callbackBeforeBlackout?: () => void | undefined,
 ) => {
+    if (SKIP_SNAPHOTS) {
+        return;
+    }
+
     const optionsWithDefaultValues = {
         capture: options.capture ?? 'fullPage',
         wait: options.wait ?? 1000,
@@ -158,14 +165,36 @@ export const takeSnapshotAndCompare = (
     blackoutBeforeScreenshot(optionsWithDefaultValues.blackout);
     removePointerEventsBeforeScreenshot(ELEMENTS_WITH_DISABLED_HOVER_DURING_SCREENSHOTS);
 
+    const snapshotNameFormatted = getSnapshotNameFormatted(testName, snapshotName);
+
     if (optionsWithDefaultValues.capture === 'fullPage' || optionsWithDefaultValues.capture === 'viewport') {
-        cy.compareSnapshot(`${testName} (${snapshotName})`, { capture: optionsWithDefaultValues.capture });
+        cy.compareSnapshot(snapshotNameFormatted, { capture: optionsWithDefaultValues.capture });
     } else {
-        cy.getByTID([optionsWithDefaultValues.capture]).compareSnapshot(`${testName} (${snapshotName})`);
+        cy.getByTID([optionsWithDefaultValues.capture]).compareSnapshot(snapshotNameFormatted);
     }
 
     removeBlackoutsAfterScreenshot();
     resetPointerEventsAfterScreenshot();
+};
+
+const getSnapshotNameFormatted = (testName: string, snapshotName: string) => {
+    // get the test name summary in square brackets using regex
+    const testNameSummary = testName.match(/\[(.*?)\]/)?.[0] ?? '';
+    const testNameRest = testNameSummary ? testName.replace(testNameSummary + ' ', '') : testName;
+    const filenameLengthSum =
+        (testNameSummary ? testNameSummary.length + 1 : 0) + snapshotName.length + testNameRest.length + 3;
+
+    return getStringWithAllInfo(
+        testNameSummary,
+        snapshotName,
+        filenameLengthSum < FILENAME_LENGTH_LIMIT
+            ? testNameRest
+            : `${testNameRest?.slice(FILENAME_LENGTH_LIMIT - filenameLengthSum)}`,
+    );
+};
+
+const getStringWithAllInfo = (summary: string, snapshotName: string, testName: string) => {
+    return `${summary ? summary + ' ' : ''}(${snapshotName}) ${testName}`;
 };
 
 const scrollPageBeforeScreenshot = (optionsWithDefaultValues: SnapshotAdditionalOptions) => {

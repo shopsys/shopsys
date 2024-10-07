@@ -24,13 +24,13 @@ import {
 } from 'support';
 import { TIDs } from 'tids';
 
-describe('Create order tests', () => {
+describe('Create Order Tests', () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
     });
 
-    it('should create order as unlogged user with a registered email (transport to home, cash on delivery) and check it in order detail', function () {
+    it('[Anon Registered Home Cash] create order as unlogged user with a registered email (transport to home, cash on delivery) and check it in order detail', function () {
         cy.preselectTransportForTest(transport.czechPost.uuid);
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
@@ -60,7 +60,7 @@ describe('Create order tests', () => {
         takeSnapshotAndCompare(this.test?.title, 'order detail', { blackout: [{ tid: TIDs.footer_social_links }] });
     });
 
-    it('should create order as unlogged user (transport to home, cash on delivery) and check it in order detail', function () {
+    it('[Anon Home Cash] create order as unlogged user (transport to home, cash on delivery) and check it in order detail', function () {
         cy.preselectTransportForTest(transport.czechPost.uuid);
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
@@ -90,7 +90,7 @@ describe('Create order tests', () => {
         takeSnapshotAndCompare(this.test?.title, 'order detail', { blackout: [{ tid: TIDs.footer_social_links }] });
     });
 
-    it('should create order as unlogged user (personal collection, cash) and check it in order detail', function () {
+    it('[Anon Collect Cash] create order as unlogged user (personal collection, cash) and check it in order detail', function () {
         cy.preselectTransportForTest(transport.personalCollection.uuid, transport.personalCollection.storeOstrava.uuid);
         cy.preselectPaymentForTest(payment.cash.uuid);
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
@@ -120,7 +120,7 @@ describe('Create order tests', () => {
         takeSnapshotAndCompare(this.test?.title, 'order detail', { blackout: [{ tid: TIDs.footer_social_links }] });
     });
 
-    it('should create order as unlogged user (PPL, credit cart) and check it in order detail', function () {
+    it('[Anon PPL Card] create order as unlogged user (PPL, credit card) and check it in order detail', function () {
         cy.preselectTransportForTest(transport.ppl.uuid);
         cy.preselectPaymentForTest(payment.creditCard.uuid);
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
@@ -150,7 +150,7 @@ describe('Create order tests', () => {
         takeSnapshotAndCompare(this.test?.title, 'order detail', { blackout: [{ tid: TIDs.footer_social_links }] });
     });
 
-    it('should create order with promo code and check it in order detail', function () {
+    it('[Anon Promo Code] create order with promo code and check it in order detail', function () {
         cy.addPromoCodeToCartForTest(promoCode);
         cy.preselectTransportForTest(transport.czechPost.uuid);
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
@@ -181,7 +181,7 @@ describe('Create order tests', () => {
         takeSnapshotAndCompare(this.test?.title, 'order detail', { blackout: [{ tid: TIDs.footer_social_links }] });
     });
 
-    it('should register after order completion, and check that the just created order is in customer orders', function () {
+    it('[Register After Order] register after order completion, and check that the just created order is in customer orders', function () {
         cy.preselectTransportForTest(transport.czechPost.uuid);
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
@@ -221,7 +221,7 @@ describe('Create order tests', () => {
         });
     });
 
-    it('should create order as logged-in user (transport to home, cash on delivery) and check it in order detail', function () {
+    it('[Logged Home Cash] create order as logged-in user (transport to home, cash on delivery) and check it in order detail', function () {
         cy.registerAsNewUser(
             generateCustomerRegistrationData('commonCustomer', 'create-order-as-logged-in-user@shopsys.com'),
         );
