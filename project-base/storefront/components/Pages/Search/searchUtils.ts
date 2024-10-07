@@ -18,8 +18,8 @@ import { useClient, Client } from 'urql';
 import { mapParametersFilter } from 'utils/filterOptions/mapParametersFilter';
 import { calculatePageSize } from 'utils/loadMore/calculatePageSize';
 import { getPageSizeInfo } from 'utils/loadMore/getPageSizeInfo';
-import { hasReadAllProductsFromCache } from 'utils/loadMore/hasReadAllProductsFromCache';
-import { mergeProductEdges } from 'utils/loadMore/mergeProductEdges';
+import { hasReadAllItemsFromCache } from 'utils/loadMore/hasReadAllItemsFromCache';
+import { mergeItemEdges } from 'utils/loadMore/mergeItemEdges';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
 import { useCurrentLoadMoreQuery } from 'utils/queryParams/useCurrentLoadMoreQuery';
 import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
@@ -62,10 +62,10 @@ export const useSearchProductsData = (totalProductCount?: number) => {
             ...searchProductsResponse.data,
             productsSearch: {
                 ...searchProductsResponse.data.productsSearch,
-                edges: mergeProductEdges(
+                edges: mergeItemEdges(
                     previouslyQueriedProductsFromCache,
                     searchProductsResponse.data.productsSearch.edges,
-                ),
+                ) as TypeListedProductConnectionFragment['edges'],
             },
         });
         stopFetching();
@@ -104,12 +104,7 @@ export const useSearchProductsData = (totalProductCount?: number) => {
         );
 
         if (
-            hasReadAllProductsFromCache(
-                previousProductsFromCache?.length,
-                currentLoadMore,
-                currentPage,
-                totalProductCount,
-            )
+            hasReadAllItemsFromCache(previousProductsFromCache?.length, currentLoadMore, currentPage, totalProductCount)
         ) {
             return;
         }
@@ -196,7 +191,10 @@ const getPreviousProductsFromCache = (
 
         if (productsSearchFromCache) {
             if (cachedPartOfProducts) {
-                cachedPartOfProducts = mergeProductEdges(cachedPartOfProducts, productsSearchFromCache.edges);
+                cachedPartOfProducts = mergeItemEdges(
+                    cachedPartOfProducts,
+                    productsSearchFromCache.edges,
+                ) as TypeListedProductConnectionFragment['edges'];
             } else {
                 cachedPartOfProducts = productsSearchFromCache.edges;
             }

@@ -1,17 +1,21 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { Image } from 'components/Basic/Image/Image';
+import { SkeletonModuleArticleBlog } from 'components/Blocks/Skeleton/SkeletonModuleArticleBlog';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
+import { DEFAULT_BLOG_PAGE_SIZE } from 'config/constants';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import { Fragment } from 'react';
 import { twJoin } from 'tailwind-merge';
+import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 
 type BlogArticlesListProps = {
     blogArticles: TypeListedBlogArticleFragment[];
+    isLoadingMoreBlogCategoryArticles: boolean;
 };
 
-export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles }) => {
+export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles, isLoadingMoreBlogCategoryArticles }) => {
     const { defaultLocale } = useDomainConfig();
 
     return (

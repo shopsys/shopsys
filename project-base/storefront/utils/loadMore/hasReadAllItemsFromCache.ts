@@ -1,8 +1,8 @@
 import { calculatePageSize } from './calculatePageSize';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 
-export const hasReadAllProductsFromCache = (
-    productsFromCacheLength: number | undefined,
+export const hasReadAllItemsFromCache = (
+    itemsFromCacheLength: number | undefined,
     currentLoadMore: number,
     currentPage: number,
     totalProductCount: number | undefined,
@@ -13,7 +13,7 @@ export const hasReadAllProductsFromCache = (
     }
 
     return (
-        totalProductCount - (currentPage - 1) * pageSize === productsFromCacheLength ||
-        productsFromCacheLength === calculatePageSize(currentLoadMore, pageSize)
+        totalProductCount - (currentPage - 1) * pageSize === itemsFromCacheLength ||
+        itemsFromCacheLength === calculatePageSize(currentLoadMore, pageSize)
     );
 };
