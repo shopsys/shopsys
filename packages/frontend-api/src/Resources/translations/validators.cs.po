@@ -127,8 +127,11 @@ msgstr "Zadejte staré heslo"
 msgid "Please enter only numbers and the + character"
 msgstr "Prosím, zadávejte pouze čísla a znak +"
 
-msgid "Please enter password"
-msgstr "Vyplňte prosím heslo"
+msgid "Please enter only numbers and the + sign"
+msgstr "Prosím vyplňte čísla a znak +"
+
+msgid "Please enter order URL hash"
+msgstr "Vyplňte prosím URL hash objednávky"
 
 msgid "Please enter quantity"
 msgstr "Zadejte prosím množství"

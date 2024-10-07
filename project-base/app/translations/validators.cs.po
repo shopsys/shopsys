@@ -13,9 +13,6 @@ msgstr "Katalogové číslo nesmí být delší než {{ limit }} znaků"
 msgid "Email cannot be longer than {{ limit }} characters"
 msgstr "E-mail nesmí být delší než {{ limit }} znaků"
 
-msgid "First name cannot be longer than {{ limit }} characters"
-msgstr "Jméno nesmí být delší než {{ limit }} znaků"
-
 msgid "Flag color must be in valid hexadecimal code e.g. #3333ff"
 msgstr "Barva příznaku musí mít správný formát hexadecimálního kódu, např.: #3333ff"
 
@@ -28,9 +25,6 @@ msgstr "Obrázek může být pouze ve formátu JPG nebo PNG"
 msgid "Image can be only in JPG, GIF or PNG format"
 msgstr "Obrázek může být pouze ve formátu JPG, GIF nebo PNG"
 
-msgid "Last name cannot be longer than {{ limit }} characters"
-msgstr "Příjmení nesmí být delší než {{ limit }} znaků"
-
 msgid "Minimal and maximal value are not supported as an input for other than \"slider\" type parameter. Use \"values\" instead."
 msgstr "Minimální a maximalní hodnota nejsou podporovány jako vstup pro parametry jiného typu než \"slider\". Namísto toho použijte \"values\"."
 
@@ -39,9 +33,6 @@ msgstr "Nové heslo musí být alespoň {{ limit }} znaků dlouhé"
 
 msgid "Password has to include uppercase letters, lowercase letters, numbers and must be longer than 10 characters."
 msgstr "Heslo musí obsahovat velká písmena, malá písmena, číslice a musí být delší než 10 znaků."
-
-msgid "Password must be at least {{ limit }} characters long"
-msgstr "Heslo musí být delší alespoň {{ limit }} znaků dlouhé"
 
 msgid "Passwords do not match"
 msgstr "Hesla se neshodují"
@@ -58,17 +49,11 @@ msgstr "Vyplňte prosím e-mail"
 msgid "Please enter email content"
 msgstr "Vyplňte prosím text e-mailu"
 
-msgid "Please enter first name"
-msgstr "Vyplňte prosím křestní jméno"
-
 msgid "Please enter flag color"
 msgstr "Vyplňte prosím barvu příznaku"
 
 msgid "Please enter flag name in all languages"
 msgstr "Prosím zadejte název příznaku ve všech jazycích"
-
-msgid "Please enter last name"
-msgstr "Vyplňte prosím příjmení"
 
 msgid "Please enter new password"
 msgstr "Vyplňte prosím nové heslo"
@@ -76,14 +61,8 @@ msgstr "Vyplňte prosím nové heslo"
 msgid "Please enter notification bar content"
 msgstr "Vyplňte prosím obsah notifikační lišty"
 
-msgid "Please enter only numbers and the + sign"
-msgstr "Prosím vyplňte čísla a znak +"
-
 msgid "Please enter password"
 msgstr "Vyplňte prosím heslo"
-
-msgid "Please enter telephone number"
-msgstr "Vyplňte prosím telefonní číslo"
 
 msgid "Please enter valid email"
 msgstr "Vyplňte prosím platný e-mail"
@@ -105,15 +84,6 @@ msgstr "Produkt s tímto katalogovým číslem již existuje"
 
 msgid "Provided hash is not valid."
 msgstr "Zadaný hash není validní."
-
-msgid "Telephone number cannot be longer than {{ limit }} characters"
-msgstr "Telefonní číslo nesmí být delší než {{ limit }} znaků"
-
-msgid "Telephone number cannot be shorter than {{ limit }} characters"
-msgstr "Telefonní číslo nesmí být kratší než {{ limit }} znaků"
-
-msgid "This email is already registered"
-msgstr "Tento email je již registrován"
 
 msgid "Uploaded image is to large ({{ size }} {{ suffix }}). Maximum size of an image is {{ limit }} {{ suffix }}."
 msgstr "Uploadovaný obrázek je příliš velký ({{ size }} {{ suffix }}). Maximální velikost obrázku je {{ limit }} {{ suffix }}."
