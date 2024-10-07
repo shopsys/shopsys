@@ -38,11 +38,12 @@ export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({
                 {itemImage && (
                     <div className="shrink-0" tid={TIDs.simple_navigation_image}>
                         <Image
+                            priority
                             alt={itemImage.name || listedItem.name}
-                            className="h-auto max-h-14 w-auto max-w-14 mix-blend-multiply"
-                            height={56}
+                            className="size-[60px] object-contain mix-blend-multiply"
+                            height={60}
                             src={itemImage.url}
-                            width={56}
+                            width={60}
                         />
                     </div>
                 )}

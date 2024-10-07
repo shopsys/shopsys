@@ -19,7 +19,7 @@ export const DeferredFilterAndSortingBar: FC<SortingBarProps & { handlePanelOpen
     const shouldRender = useDeferredRender('sorting_bar');
 
     return shouldRender ? (
-        <div className="relative order-1 flex flex-col items-center justify-between gap-2.5 sm:flex-row vl:order-2 vl:border-b vl:border-borderAccentLess">
+        <div className="relative flex flex-col items-center justify-between gap-2.5 sm:flex-row vl:border-b vl:border-borderAccentLess">
             {handlePanelOpenerClick && (
                 <Button
                     className="w-full flex-1 justify-start sm:w-auto vl:hidden"

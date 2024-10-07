@@ -42,7 +42,15 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
             {isDiscount ? (
                 <div className="min-w-[60px]" />
             ) : (
-                <Image alt={orderItem.name} height={60} src={orderItem.product?.mainImage?.url} width={60} />
+                <div className="flex h-12 w-20 shrink-0">
+                    <Image
+                        alt={orderItem.name}
+                        className="object-contain"
+                        height={48}
+                        src={orderItem.product?.mainImage?.url}
+                        width={80}
+                    />
+                </div>
             )}
             <div className="flex w-full flex-wrap items-center justify-between gap-3 border-b border-b-borderLess last:border-none vl:grid vl:grid-cols-[4fr_1fr_2fr_1fr] vl:gap-5">
                 {isDiscount ? (

@@ -34,7 +34,8 @@ const Control = (props: any) => {
     return (
         <LabelWrapper
             {...props.children}
-            htmlFor={props.id}
+            // htmlFor={props.selectProps.inputId}
+            htmlFor={props.inputId}
             inputType="selectbox"
             label={props.selectProps.label}
             required={props.selectProps.required}
