@@ -7,18 +7,9 @@ namespace Shopsys\Releaser\ReleaseWorker\ReleaseCandidate;
 use PharIo\Version\Version;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
 use Shopsys\Releaser\Stage;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 final class GenerateApiaryBlueprintReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyle
-     */
-    public function __construct(SymfonyStyle $symfonyStyle)
-    {
-        $this->symfonyStyle = $symfonyStyle;
-    }
-
     /**
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName

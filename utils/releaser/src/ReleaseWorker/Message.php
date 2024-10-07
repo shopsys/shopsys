@@ -9,5 +9,5 @@ final class Message
     /**
      * @var string
      */
-    public const SUCCESS = 'All good!';
+    public const string SUCCESS = 'All good!';
 }

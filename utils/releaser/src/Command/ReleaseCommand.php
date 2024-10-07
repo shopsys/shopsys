@@ -22,8 +22,8 @@ use Symplify\PackageBuilder\Console\ShellCode;
 
 final class ReleaseCommand extends Command
 {
-    private const RESUME_STEP = 'resume-step';
-    private const INITIAL_BRANCH_NAME = 'initial-branch';
+    private const string RESUME_STEP = 'resume-step';
+    private const string INITIAL_BRANCH_NAME = 'initial-branch';
 
     /**
      * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyle

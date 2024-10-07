@@ -17,9 +17,9 @@ use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 abstract class AbstractShopsysReleaseWorker implements StageWorkerInterface
 {
-    public const MAIN_BRANCH_NAME = 'master';
+    public const string MAIN_BRANCH_NAME = 'master';
 
-    public const PHP_IMAGE_PACKAGE_NAME = 'php-image';
+    public const string PHP_IMAGE_PACKAGE_NAME = 'php-image';
 
     /**
      * If you modify this list, do not forget updating:

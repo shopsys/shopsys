@@ -17,9 +17,9 @@ final class ValidateConflictsInComposerJsonReleaseWorker extends AbstractShopsys
     /**
      * @var string
      */
-    private const CONFLICT_SECTION = 'conflict';
+    private const string CONFLICT_SECTION = 'conflict';
 
-    private const IGNORED_CONFLICT_PACKAGES = [
+    private const array IGNORED_CONFLICT_PACKAGES = [
         'symfony/symfony' => '*',
     ];
 

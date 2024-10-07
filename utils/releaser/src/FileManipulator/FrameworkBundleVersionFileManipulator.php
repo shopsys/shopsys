@@ -13,12 +13,12 @@ final class FrameworkBundleVersionFileManipulator
     /**
      * @var string
      */
-    public const FRAMEWORK_BUNDLE_VERSION_FILE_PATH = '/packages/framework/src/ShopsysFrameworkBundle.php';
+    public const string FRAMEWORK_BUNDLE_VERSION_FILE_PATH = '/packages/framework/src/ShopsysFrameworkBundle.php';
 
     /**
      * @var string
      */
-    private const FRAMEWORK_BUNDLE_VERSION_PATTERN = "/public const VERSION = '(.+)';/";
+    private const string FRAMEWORK_BUNDLE_VERSION_PATTERN = "/public const VERSION = '(.+)';/";
 
     /**
      * @param \Symfony\Component\Finder\SplFileInfo $splFileInfo

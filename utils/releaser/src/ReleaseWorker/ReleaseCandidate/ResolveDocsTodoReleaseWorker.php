@@ -16,7 +16,7 @@ final class ResolveDocsTodoReleaseWorker extends AbstractShopsysReleaseWorker
     /**
      * @var string
      */
-    private const TODO_PLACEHOLDER = '<!--- TODO';
+    private const string TODO_PLACEHOLDER = '<!--- TODO';
 
     /**
      * @param \PharIo\Version\Version $version
