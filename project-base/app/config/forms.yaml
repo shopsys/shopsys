@@ -32,10 +32,6 @@ services:
         tags:
             - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType }
 
-    App\Form\Admin\Product\Parameter\ParameterFormTypeExtension:
-        tags:
-            - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\ParameterFormType }
-
     App\Form\Admin\SliderItemFormTypeExtension:
         tags:
             - { name: form.type_extension, extended_type: Shopsys\FrameworkBundle\Form\Admin\Slider\SliderItemFormType }

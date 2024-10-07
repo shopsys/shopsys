@@ -669,8 +669,54 @@ class ParameterRepository
         return $this->em->createQueryBuilder()
             ->select('pg')
             ->from(ParameterGroup::class, 'pg')
-            ->orderBy('pg.orderingPriority', 'ASC')
+            ->orderBy('pg.position', 'ASC')
             ->getQuery()
             ->execute();
+    }
+
+    /**
+     * @param string $locale
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getOrderedParameterGroupsQueryBuilder(string $locale)
+    {
+        return $this->em->createQueryBuilder()
+            ->select('pg, pgt')
+            ->from(ParameterGroup::class, 'pg')
+            ->join('pg.translations', 'pgt')
+            ->where('pgt.locale = :locale')
+            ->setParameter('locale', $locale)
+            ->orderBy('pg.position', 'ASC');
+    }
+
+    /**
+     * @param string $name
+     * @param string $locale
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup|null $excludeParameterGroup
+     * @return bool
+     */
+    public function existsParameterGroupByName(
+        string $name,
+        string $locale,
+        ?ParameterGroup $excludeParameterGroup = null,
+    ): bool {
+        $queryBuilder = $this->em->createQueryBuilder()
+            ->select('count(pg)')
+            ->from(ParameterGroup::class, 'pg')
+            ->join('pg.translations', 'pgt')
+            ->where('pgt.name = :name')
+            ->andWhere('pgt.locale = :locale')
+            ->setParameter('name', $name)
+            ->setParameter('locale', $locale);
+
+        if ($excludeParameterGroup !== null) {
+            $queryBuilder
+                ->andWhere('pg != :excludeParameterGroup')
+                ->setParameter('excludeParameterGroup', $excludeParameterGroup);
+        }
+
+        return $queryBuilder
+                ->getQuery()
+                ->getSingleScalarResult() > 0;
     }
 }

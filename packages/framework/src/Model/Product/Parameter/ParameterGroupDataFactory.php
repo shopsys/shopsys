@@ -30,7 +30,7 @@ class ParameterGroupDataFactory implements ParameterGroupDataFactoryInterface
      */
     public function fillNew(ParameterGroupData $parameterGroupData): void
     {
-        $parameterGroupData->orderingPriority = 0;
+        $parameterGroupData->position = 0;
     }
 
     /**
@@ -60,8 +60,8 @@ class ParameterGroupDataFactory implements ParameterGroupDataFactoryInterface
         foreach ($translations as $translate) {
             $names[$translate->getLocale()] = $translate->getName();
         }
-        $parameterGroupData->names = $names;
+        $parameterGroupData->name = $names;
 
-        $parameterGroupData->orderingPriority = $parameterGroup->getOrderingPriority();
+        $parameterGroupData->position = $parameterGroup->getPosition();
     }
 }

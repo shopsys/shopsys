@@ -79,7 +79,7 @@ class ParameterGroupDataFixture extends AbstractReferenceFixture
     private function createParameterGroup(array $parameterGroupNameByLocale): ParameterGroup
     {
         $parameterGroupData = $this->parameterGroupDataFactory->create();
-        $parameterGroupData->names = $parameterGroupNameByLocale;
+        $parameterGroupData->name = $parameterGroupNameByLocale;
 
         return $this->parameterGroupFacade->create($parameterGroupData);
     }

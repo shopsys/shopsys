@@ -9,15 +9,15 @@ class ParameterGroupData
     /**
      * @var string[]|null[]
      */
-    public $names;
+    public $name;
 
     /**
      * @var int
      */
-    public $orderingPriority;
+    public $position;
 
     public function __construct()
     {
-        $this->names = [];
+        $this->name = [];
     }
 }
