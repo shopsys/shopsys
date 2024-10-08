@@ -19,12 +19,14 @@ const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((c
     ssr: false,
 });
 
-const AdvancedSeoCategories = dynamic(() =>
-    import('./AdvancedSeoCategories').then((component) => component.AdvancedSeoCategories),
+const AdvancedSeoCategories = dynamic(
+    () => import('./AdvancedSeoCategories').then((component) => component.AdvancedSeoCategories),
+    { suspense: true },
 );
 
-const CategoryBestsellers = dynamic(() =>
-    import('./CategoryBestsellers/CategoryBestsellers').then((component) => component.CategoryBestsellers),
+const CategoryBestsellers = dynamic(
+    () => import('./CategoryBestsellers/CategoryBestsellers').then((component) => component.CategoryBestsellers),
+    { suspense: true },
 );
 
 type CategoryDetailContentProps = {

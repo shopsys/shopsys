@@ -1,6 +1,6 @@
 import getConfig from 'next/config';
 import { NextRouter, useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { startTransition, useEffect, useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { FriendlyPagesDestinations } from 'types/friendlyUrl';
 
@@ -43,9 +43,12 @@ export const useDeferredRender = (place: DeferPlace) => {
 
         if (!shouldRender) {
             const defer = getDeferByPageAndPlace(page as DeferPage, place);
-            timer = setTimeout(() => {
-                setShouldRender(true);
-            }, defer);
+
+            startTransition(() => {
+                timer = setTimeout(() => {
+                    setShouldRender(true);
+                }, defer);
+            });
         }
 
         return () => {
