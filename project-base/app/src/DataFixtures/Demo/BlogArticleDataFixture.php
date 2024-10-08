@@ -28,6 +28,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
     public const string FIRST_DEMO_BLOG_ARTICLE = 'first_demo_blog_article';
     public const string FIRST_DEMO_BLOG_SUBCATEGORY = 'first_demo_blog_subcategory';
     public const string FIRST_DEMO_BLOG_CATEGORY = 'first_demo_blog_category';
+    public const string DEMO_BLOG_ARTICLE_PREFIX = 'demo_blog_article_';
 
     private int $articleCounter = 1;
 
@@ -241,7 +242,8 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
             $blogArticleData->seoH1s[$domainId] = t('Heading', ['%counter%' => $this->articleCounter, '%locale%' => $locale], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        $this->blogArticleFacade->create($blogArticleData);
+        $blogArticle = $this->blogArticleFacade->create($blogArticleData);
+        $this->addReference(self::DEMO_BLOG_ARTICLE_PREFIX . $blogArticle->getId(), $blogArticle);
 
         $this->articleCounter++;
     }
@@ -283,7 +285,8 @@ EOT));
             $blogArticleData->seoH1s[$domainId] = t('Blog article for products testing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
 
-        $this->blogArticleFacade->create($blogArticleData);
+        $blogArticle = $this->blogArticleFacade->create($blogArticleData);
+        $this->addReference(self::DEMO_BLOG_ARTICLE_PREFIX . $blogArticle->getId(), $blogArticle);
 
         $this->articleCounter++;
     }
@@ -343,7 +346,8 @@ EOT));
             ];
         }
 
-        $this->blogArticleFacade->create($blogArticleData);
+        $blogArticle = $this->blogArticleFacade->create($blogArticleData);
+        $this->addReference(self::DEMO_BLOG_ARTICLE_PREFIX . $blogArticle->getId(), $blogArticle);
 
         $this->articleCounter++;
     }
