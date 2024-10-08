@@ -26,3 +26,5 @@ arrange:
     - blackfire-profiling.md
     - monorepo.md
     - faq-and-common-issues.md
+    - phpstorm-settings.md
+    - postman-settings.md
