@@ -12,6 +12,7 @@ use Doctrine\Persistence\ObjectManager;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileDataFactory;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintDataFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData;
@@ -19,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintNumberSequenceRepository;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus;
 use Shopsys\FrontendApiBundle\Model\Complaint\ComplaintApiFacade;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ComplaintDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -31,6 +33,7 @@ class ComplaintDataFixture extends AbstractReferenceFixture implements Dependent
      * @param \Shopsys\FrontendApiBundle\Model\Complaint\ComplaintApiFacade $complaintApiFacade
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintNumberSequenceRepository $complaintNumberSequenceRepository
      * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileDataFactory $customerUploadedFileDataFactory
+     * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
      */
     public function __construct(
         private readonly ComplaintDataFactory $complaintDataFactory,
@@ -38,6 +41,7 @@ class ComplaintDataFixture extends AbstractReferenceFixture implements Dependent
         private readonly ComplaintApiFacade $complaintApiFacade,
         private readonly ComplaintNumberSequenceRepository $complaintNumberSequenceRepository,
         private readonly CustomerUploadedFileDataFactory $customerUploadedFileDataFactory,
+        private readonly FileUpload $fileUpload,
     ) {
     }
 
@@ -50,9 +54,14 @@ class ComplaintDataFixture extends AbstractReferenceFixture implements Dependent
         $customerUser1 = $this->getReference(CustomerUserDataFixture::CUSTOMER_PREFIX . 1);
         /** @var \App\Model\Order\Order $order1 */
         $order1 = $this->getReference(OrderDataFixture::ORDER_PREFIX . 1);
+        $uploadedFile1 = $this->createUploadedFiles(__DIR__ . '/../resources/images/complaint/400.jpg');
+        $uploadedFile2 = $this->createUploadedFiles(__DIR__ . '/../resources/images/complaint/401.jpg');
+        $uploadedFile3 = $this->createUploadedFiles(__DIR__ . '/../resources/images/complaint/402.jpg');
+        $uploadedFile4 = $this->createUploadedFiles(__DIR__ . '/../resources/images/complaint/403.jpg');
+
         $orderItems1 = $order1->getProductItems();
-        $orderItem1 = $this->createComplaintItemData(array_shift($orderItems1), 'Both broken!', 2);
-        $orderItem2 = $this->createComplaintItemData(array_shift($orderItems1), 'Broken!', 1);
+        $orderItem1 = $this->createComplaintItemData(array_shift($orderItems1), 'Both broken!', 2, [$uploadedFile1, $uploadedFile2]);
+        $orderItem2 = $this->createComplaintItemData(array_shift($orderItems1), 'Broken!', 1, [$uploadedFile3]);
         $complaint1 = $this->createComplaint(
             $customerUser1,
             $order1,
@@ -64,7 +73,7 @@ class ComplaintDataFixture extends AbstractReferenceFixture implements Dependent
         /** @var \App\Model\Order\Order $order2 */
         $order2 = $this->getReference(OrderDataFixture::ORDER_PREFIX . 2);
         $orderItems2 = $order2->getProductItems();
-        $orderItem2 = $this->createComplaintItemData(reset($orderItems2), 'Broken!', 1);
+        $orderItem2 = $this->createComplaintItemData(reset($orderItems2), 'Broken!', 1, [$uploadedFile4]);
         $complaint2 = $this->createComplaint(
             $customerUser1,
             $order2,
@@ -124,12 +133,14 @@ class ComplaintDataFixture extends AbstractReferenceFixture implements Dependent
      * @param \App\Model\Order\Item\OrderItem $orderItem
      * @param string $description
      * @param int $quantity
+     * @param \Symfony\Component\HttpFoundation\File\UploadedFile[] $uploadedFiles
      * @return \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData
      */
     private function createComplaintItemData(
         OrderItem $orderItem,
         string $description,
         int $quantity,
+        array $uploadedFiles,
     ): ComplaintItemData {
         $item = $this->complaintItemDataFactory->create();
 
@@ -141,6 +152,23 @@ class ComplaintDataFixture extends AbstractReferenceFixture implements Dependent
         $item->quantity = $quantity;
         $item->files = $this->customerUploadedFileDataFactory->create();
 
+        foreach ($uploadedFiles as $uploadedFile) {
+            $item->files->uploadedFiles[] = $this->fileUpload->upload($uploadedFile);
+            $item->files->uploadedFilenames[] = $uploadedFile->getClientOriginalName();
+        }
+
         return $item;
+    }
+
+    /**
+     * @param string $pathToImage
+     * @return \Symfony\Component\HttpFoundation\File\UploadedFile
+     */
+    protected function createUploadedFiles(string $pathToImage): UploadedFile
+    {
+        $tmpFile = tempnam(sys_get_temp_dir(), 'complaint_demo_data_');
+        copy($pathToImage, $tmpFile);
+
+        return new UploadedFile($tmpFile, basename($pathToImage));
     }
 }
