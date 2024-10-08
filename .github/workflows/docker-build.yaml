@@ -150,7 +150,7 @@ jobs:
                     docker build --tag ${TAG} --no-cache --compress -f ./packages/php-image/Dockerfile ./packages/php-image
             -   name: Create branch specific PHP-FPM image with project files
                 run: |
-                    .github/build-php-fpm-image.sh "${{ needs.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG }}" ci
+                    .github/build-php-fpm-image.sh "${{ needs.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG }}" production
                     docker image push "${{ needs.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG }}"
     build-storefront-image:
         if: |

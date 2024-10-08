@@ -56,22 +56,3 @@ RUN php phing build-deploy-part-1-db-independent clean
 FROM production as production-project
 
 RUN chmod +x ./deploy/deploy-project.sh && ./deploy/deploy-project.sh merge
-
-########################################################################################################################
-
-FROM base as ci
-
-COPY --chown=www-data:www-data / /var/www/html
-
-RUN curl -L \
-      -H "Accept: application/vnd.github+json" \
-      -H "X-GitHub-Api-Version: 2022-11-28" \
-      https://api.github.com/rate_limit
-
-RUN composer install --optimize-autoloader --no-interaction --no-progress --dev -vvv
-
-RUN php phing build-deploy-part-1-db-independent
-
-RUN ./bin/console shopsys:environment:change prod
-
-RUN php phing clean
