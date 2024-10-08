@@ -10,7 +10,6 @@ use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleBlogCategoryDomain;
@@ -88,13 +87,13 @@ class BlogCategoryRepository extends NestedTreeRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $blogCategoryBranch
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]
      */
-    public function getTranslatedAllWithoutBranch(BlogCategory $blogCategoryBranch, DomainConfig $domainConfig): array
+    public function getTranslatedAllWithoutBranch(BlogCategory $blogCategoryBranch, string $locale): array
     {
         $queryBuilder = $this->getAllQueryBuilder();
-        $this->addTranslation($queryBuilder, $domainConfig->getLocale());
+        $this->addTranslation($queryBuilder, $locale);
 
         return $queryBuilder->andWhere('bc.lft < :branchLft OR bc.rgt > :branchRgt')
             ->setParameter('branchLft', $blogCategoryBranch->getLft())

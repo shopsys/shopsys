@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Form\UrlListType;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryData;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade;
+use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -34,11 +35,13 @@ class BlogCategoryFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
+     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
         protected readonly BlogCategoryFacade $blogCategoryFacade,
         protected readonly Domain $domain,
         protected readonly SeoSettingFacade $seoSettingFacade,
+        protected readonly Localization $localization,
     ) {
     }
 
@@ -98,9 +101,9 @@ class BlogCategoryFormType extends AbstractType
     private function createSettingsGroup(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
         if ($options['blogCategory'] !== null) {
-            $parentChoices = $this->blogCategoryFacade->getTranslatedAllWithoutBranch($options['blogCategory'], $this->domain->getCurrentDomainConfig());
+            $parentChoices = $this->blogCategoryFacade->getTranslatedAllWithoutBranch($options['blogCategory'], $this->localization->getAdminLocale());
         } else {
-            $parentChoices = $this->blogCategoryFacade->getTranslatedAll($this->domain->getLocale());
+            $parentChoices = $this->blogCategoryFacade->getTranslatedAll($this->localization->getAdminLocale());
         }
 
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [

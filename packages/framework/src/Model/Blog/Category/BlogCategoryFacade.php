@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Blog\Category;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
@@ -200,12 +199,12 @@ class BlogCategoryFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $blogCategory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]
      */
-    public function getTranslatedAllWithoutBranch(BlogCategory $blogCategory, DomainConfig $domainConfig): array
+    public function getTranslatedAllWithoutBranch(BlogCategory $blogCategory, string $locale): array
     {
-        return $this->blogCategoryRepository->getTranslatedAllWithoutBranch($blogCategory, $domainConfig);
+        return $this->blogCategoryRepository->getTranslatedAllWithoutBranch($blogCategory, $locale);
     }
 
     /**
