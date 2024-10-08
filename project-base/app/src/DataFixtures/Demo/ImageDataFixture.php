@@ -80,7 +80,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         $this->processProductsImages();
         $this->processSliderItemsImages();
         $this->processStoresImages();
-        $this->processMainBlogCategoryImage();
+        $this->processBlogCategoryImages();
         $this->processBlogArticleImages();
 
         $this->syncDatabaseSequences(['images.id']);
@@ -324,18 +324,24 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         }
     }
 
-    private function processMainBlogCategoryImage(): void
+    private function processBlogCategoryImages(): void
     {
-        $mainBlogCategoryImageId = 500;
+        $blogCategoryImagesData = [
+            BlogArticleDataFixture::FIRST_DEMO_BLOG_CATEGORY => 500,
+            BlogArticleDataFixture::FIRST_DEMO_BLOG_SUBCATEGORY => 501,
+        ];
 
-        $mainBlogCategory = $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_CATEGORY, BlogCategory::class);
-        $names = [];
+        foreach ($blogCategoryImagesData as $blogCategoryReferenceName => $imageId) {
+            $blogCategory = $this->getReference($blogCategoryReferenceName, BlogCategory::class);
 
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
-            $names[$locale] = $mainBlogCategory->getName($locale);
+            $names = [];
+
+            foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+                $names[$locale] = $blogCategory->getName($locale);
+            }
+
+            $this->saveImageIntoDb($blogCategory->getId(), 'blogCategory', $imageId, $names);
         }
-
-        $this->saveImageIntoDb($mainBlogCategory->getId(), 'blogCategory', $mainBlogCategoryImageId, $names);
     }
 
     /**

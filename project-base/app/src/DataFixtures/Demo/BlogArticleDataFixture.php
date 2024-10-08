@@ -29,6 +29,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
     public const string FIRST_DEMO_BLOG_SUBCATEGORY = 'first_demo_blog_subcategory';
     public const string FIRST_DEMO_BLOG_CATEGORY = 'first_demo_blog_category';
     public const string DEMO_BLOG_ARTICLE_PREFIX = 'demo_blog_article_';
+    public const string SECOND_DEMO_BLOG_SUBCATEGORY = 'second_demo_blog_subcategory';
 
     private int $articleCounter = 1;
 
@@ -97,6 +98,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
 
         $secondSubcategoryData = $this->createSubcategory($mainPageBlogCategory, 2);
         $secondSubcategory = $this->blogCategoryFacade->create($secondSubcategoryData);
+        $this->addReference(self::SECOND_DEMO_BLOG_SUBCATEGORY, $secondSubcategory);
 
         //in second subcategory
         for ($i = 0; $i < self::PAGES_IN_CATEGORY; $i++) {
