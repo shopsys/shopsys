@@ -17,6 +17,9 @@ class ParameterGroupDataFixture extends AbstractReferenceFixture
     public const string PARAM_GROUP_MAIN_INFORMATION = 'param_group_main_information';
     public const string PARAM_GROUP_CONNECTION_METHOD = 'param_group_connection_method';
     public const string PARAM_GROUP_MAIN_INFORMATION_MOUSE = 'param_group_main_information_mouse';
+    public const string PARAM_GROUP_PROPERTIES = 'param_group_properties';
+    public const string PARAM_GROUP_FUNCTIONS = 'param_group_function';
+    public const string PARAM_GROUP_SIZE_WEIGHT = 'param_group_size_weight';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupFacade $parameterGroupFacade
@@ -38,6 +41,9 @@ class ParameterGroupDataFixture extends AbstractReferenceFixture
             self::PARAM_GROUP_MAIN_INFORMATION => t('Main information', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_GROUP_CONNECTION_METHOD => t('Connection method', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_GROUP_MAIN_INFORMATION_MOUSE => t('Main information mouse', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_GROUP_PROPERTIES => t('Properties', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_GROUP_FUNCTIONS => t('Function', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_GROUP_SIZE_WEIGHT => t('Size and weight', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
         ];
     }
 

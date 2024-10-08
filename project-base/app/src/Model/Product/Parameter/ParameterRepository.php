@@ -183,7 +183,7 @@ class ParameterRepository extends BaseParameterRepository
             pv.numericValue as parameter_value_numeric_value,
             pgt.name as parameter_group,
             pg.position as group_position,
-            put.name as parameter_unit'
+            put.name as parameter_unit',
             )
             ->distinct()
             ->from(ProductParameterValue::class, 'ppv')
@@ -206,7 +206,6 @@ class ParameterRepository extends BaseParameterRepository
             ->getQuery()
             ->execute();
     }
-
 
     /**
      * @param array $productIdsAndParameterNamesAndValues

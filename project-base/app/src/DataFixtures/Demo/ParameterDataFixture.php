@@ -138,6 +138,9 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
         $mainInformationParameterGroup = $this->getReference(ParameterGroupDataFixture::PARAM_GROUP_MAIN_INFORMATION, ParameterGroup::class);
         $connectionMethodParameterGroup = $this->getReference(ParameterGroupDataFixture::PARAM_GROUP_CONNECTION_METHOD, ParameterGroup::class);
         $mouseParameterGroup = $this->getReference(ParameterGroupDataFixture::PARAM_GROUP_MAIN_INFORMATION_MOUSE, ParameterGroup::class);
+        $propertiesGroup = $this->getReference(ParameterGroupDataFixture::PARAM_GROUP_PROPERTIES, ParameterGroup::class);
+        $functionsGroup = $this->getReference(ParameterGroupDataFixture::PARAM_GROUP_FUNCTIONS, ParameterGroup::class);
+        $sizeWeightGroup = $this->getReference(ParameterGroupDataFixture::PARAM_GROUP_FUNCTIONS, ParameterGroup::class);
         $unitInch = $this->getReference(UnitDataFixture::UNIT_INCH, Unit::class);
 
         $data = [
@@ -179,7 +182,10 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
                 Parameter::PARAMETER_TYPE_SLIDER,
             ),
             self::PARAM_NUMBER_OF_PROCESSOR_CORES => t('Number of processor cores', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_BLUETOOTH => t('Bluetooth', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_BLUETOOTH => new ParameterDataFixtureData(
+                t('Bluetooth', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                parameterGroup: $connectionMethodParameterGroup,
+            ),
             self::PARAM_NFC => t('NFC', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_GPS_MODULE => t('GPS module', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_DISPLAY => t('Display', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
@@ -189,10 +195,14 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
             self::PARAM_POWER_SUPPLY => t('Power supply', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_VIEWFINDER_TYPE => t('Viewfinder type', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_SENSITIVITY_ISO => t('Sensitivity (ISO)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_HEIGHT => t('Height', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_HEIGHT => new ParameterDataFixtureData(
+                t('Height', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                parameterGroup: $sizeWeightGroup,
+            ),
             self::PARAM_WEIGHT => new ParameterDataFixtureData(
                 t('Weight', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 Parameter::PARAMETER_TYPE_SLIDER,
+                parameterGroup: $sizeWeightGroup,
                 unit: $this->getReference(UnitDataFixture::UNIT_GRAM, Unit::class),
             ),
             self::PARAM_PRINT_TECHNOLOGY => t('Print technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
@@ -200,14 +210,29 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
             self::PARAM_LCD => t('LCD', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_PRINT_RESOLUTION => t('Print resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_COLOR_PRINTING => t('Color printing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_WIFI => t('WiFi', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_WIFI => new ParameterDataFixtureData(
+                t('WiFi', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                parameterGroup: $connectionMethodParameterGroup,
+            ),
             self::PARAM_MEDIA_TYPE => t('Media type', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_CAPACITY => t('Capacity', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_OVERALL_PERFORMANCE => t('Overall performance', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_PRESSURE => t('Pressure', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_WATER_RESERVOIR_CAPACITY => t('Water reservoir capacity', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_MILK_RESERVOIR_CAPACITY => t('Milk reservoir capacity', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_MAGAZINE_CAPACITY_FOR_BEANS => t('Magazine capacity for beans', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_PRESSURE => new ParameterDataFixtureData(
+                t('Pressure', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                parameterGroup: $propertiesGroup,
+            ),
+            self::PARAM_WATER_RESERVOIR_CAPACITY => new ParameterDataFixtureData(
+                t('Water reservoir capacity', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                parameterGroup: $propertiesGroup,
+            ),
+            self::PARAM_MILK_RESERVOIR_CAPACITY => new ParameterDataFixtureData(
+                t('Milk reservoir capacity', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                parameterGroup: $propertiesGroup,
+            ),
+            self::PARAM_MAGAZINE_CAPACITY_FOR_BEANS => new ParameterDataFixtureData(
+                t('Magazine capacity for beans', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                parameterGroup: $propertiesGroup,
+            ),
             self::PARAM_INTERFACE => t('Interface', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_SYSTEM_TYPE => t('System type', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_ACTIVE_PASSIVE => t('Active/Passive', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
