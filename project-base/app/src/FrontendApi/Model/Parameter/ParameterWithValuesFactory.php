@@ -45,7 +45,6 @@ class ParameterWithValuesFactory extends BaseParameterWithValuesFactory
         return [
             'uuid' => $product['parameter_uuid'],
             'name' => $product['parameter_name'],
-            'visible' => true,
             'group' => $product['parameter_group'],
             'unit' => $product['parameter_unit'] ? ['name' => $product['parameter_unit']] : null,
             'values' => [],

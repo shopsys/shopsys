@@ -1865,7 +1865,6 @@ export type TypeParameter = {
   /** UUID */
   uuid: Scalars['Uuid']['output'];
   values: Array<TypeParameterValue>;
-  visible: Scalars['Boolean']['output'];
 };
 
 /** Parameter filter option */

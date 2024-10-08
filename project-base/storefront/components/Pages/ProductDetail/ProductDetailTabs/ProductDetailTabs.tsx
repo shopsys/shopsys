@@ -30,6 +30,23 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
         return index > 0 ? ' | ' + valueText : valueText;
     };
 
+    const sortedIndividualParameters = parameters
+        .filter(parameter => parameter.group === null)
+        .sort((a, b) => a.name.localeCompare(b.name));
+
+    const groupedParameters = parameters
+        .filter(parameter => parameter.group !== null)
+        .reduce((groupedParametersAccumulator, parameter) => {
+            groupedParametersAccumulator[parameter.group] = groupedParametersAccumulator[parameter.group] || [];
+            groupedParametersAccumulator[parameter.group].push(parameter);
+            return groupedParametersAccumulator;
+        }, {} as Record<string, TypeParameterFragment[]>);
+
+    const sortedGroupParameters = Object.entries(groupedParameters).map(([groupName, groupParameters]) => ({
+        groupName,
+        groupParameters: groupParameters.sort((a, b) => a.name.localeCompare(b.name)),
+    }));
+
     return (
         <Tabs
             className="flex flex-col gap-4 lg:gap-0"
@@ -50,29 +67,61 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                 {description && <UserText htmlContent={description} />}
             </TabsContent>
 
-            {parameters.length && (
+            {!!parameters.length && (
                 <TabsContent headingTextMobile={t('Parameters')} isActive={selectedTab === 1}>
-                    <Table className="mx-auto max-w-screen-lg border-0 p-0">
-                        {parameters.map((parameter) => (
-                            <Row
-                                key={parameter.uuid}
-                                className="border-none bg-tableBackground odd:bg-tableBackgroundContrast"
-                            >
-                                <Cell className="py-2 text-left text-sm font-bold uppercase">{parameter.name}</Cell>
+                    {sortedIndividualParameters.length > 0 && (
+                        <div>
+                            <Table className="border-0 p-0 max-w-screen-lg mx-auto">
+                                {sortedIndividualParameters.map((parameter) => (
+                                    <Row
+                                        key={parameter.uuid}
+                                        className="bg-tableBackground odd:bg-tableBackgroundContrast border-none"
+                                    >
+                                        <Cell className="py-2 text-left text-sm font-bold uppercase leading-5">
+                                            {parameter.name}
+                                        </Cell>
+                                        <Cell className="py-2 text-right text-sm leading-5">
+                                            {parameter.values.map((value, index) =>
+                                                formatParameterValue(
+                                                    value.text + (parameter.unit?.name ? ` (${parameter.unit.name})` : ''),
+                                                    index
+                                                )
+                                            )}
+                                        </Cell>
+                                    </Row>
+                                ))}
+                            </Table>
+                        </div>
+                    )}
 
-                                <Cell className="py-2 text-right text-sm">
-                                    {parameter.values.map((value, index) =>
-                                        formatParameterValue(
-                                            value.text + (parameter.unit?.name ? ` (${parameter.unit.name})` : ''),
-                                            index,
-                                        ),
-                                    )}
-                                </Cell>
-                            </Row>
-                        ))}
-                    </Table>
+                    {sortedGroupParameters.map(({ groupName, groupParameters }) => (
+                        <div key={groupName}>
+                            <h2 className="text-lg font-bold max-w-screen-lg mx-auto my-4">{groupName}</h2>
+                            <Table className="border-0 p-0 max-w-screen-lg mx-auto">
+                                {groupParameters.map((parameter) => (
+                                    <Row
+                                        key={parameter.uuid}
+                                        className="bg-tableBackground odd:bg-tableBackgroundContrast border-none"
+                                    >
+                                        <Cell className="py-2 text-left text-sm font-bold uppercase leading-5">
+                                            {parameter.name}
+                                        </Cell>
+                                        <Cell className="py-2 text-right text-sm leading-5">
+                                            {parameter.values.map((value, index) =>
+                                                formatParameterValue(
+                                                    value.text + (parameter.unit?.name ? ` (${parameter.unit.name})` : ''),
+                                                    index
+                                                )
+                                            )}
+                                        </Cell>
+                                    </Row>
+                                ))}
+                            </Table>
+                        </div>
+                    ))}
                 </TabsContent>
             )}
+
 
             {relatedProducts.length && (
                 <TabsContent headingTextMobile={t('Related Products')} isActive={selectedTab === 2}>

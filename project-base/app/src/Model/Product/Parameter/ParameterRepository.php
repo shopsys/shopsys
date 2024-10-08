@@ -173,16 +173,17 @@ class ParameterRepository extends BaseParameterRepository
         return $this->em->createQueryBuilder()
             ->select(
                 'p.id as parameter_id,
-                p.orderingPriority as ordering_priority,
-                p.parameterType as parameter_type,
-                pv.id as parameter_value_id,
-                p.uuid as parameter_uuid,
-                pt.name as parameter_name,
-                pv.uuid as parameter_value_uuid,
-                pv.text as parameter_value_text,
-                pv.numericValue as parameter_value_numeric_value,
-                pgt.name as parameter_group,
-                put.name as parameter_unit',
+            p.orderingPriority as ordering_priority,
+            p.parameterType as parameter_type,
+            pv.id as parameter_value_id,
+            p.uuid as parameter_uuid,
+            pt.name as parameter_name,
+            pv.uuid as parameter_value_uuid,
+            pv.text as parameter_value_text,
+            pv.numericValue as parameter_value_numeric_value,
+            pgt.name as parameter_group,
+            pg.position as group_position,
+            put.name as parameter_unit'
             )
             ->distinct()
             ->from(ProductParameterValue::class, 'ppv')
@@ -194,8 +195,10 @@ class ParameterRepository extends BaseParameterRepository
             ->leftJoin('pu.translations', 'put', Join::WITH, 'put.locale = :locale AND put.name IS NOT NULL')
             ->join('ppv.value', 'pv', Join::WITH, 'pv.locale = :locale')
             ->where('ppv.product IN (:products)')
-            ->orderBy('ordering_priority', 'DESC')
-            ->addOrderBy('parameter_name')
+            ->orderBy('parameter_id', 'ASC')
+            ->addOrderBy('group_position', 'ASC')
+            ->addOrderBy('ordering_priority', 'DESC')
+            ->addOrderBy('parameter_name', 'ASC')
             ->setParameters([
                 'products' => $products,
                 'locale' => $locale,
@@ -203,6 +206,7 @@ class ParameterRepository extends BaseParameterRepository
             ->getQuery()
             ->execute();
     }
+
 
     /**
      * @param array $productIdsAndParameterNamesAndValues
