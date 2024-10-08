@@ -24,7 +24,7 @@ class DatabaseSearching
     }
 
     /**
-     * @param string|null $string
+     * @param string $string
      * @return string
      */
     public static function getFullTextLikeSearchString($string)
