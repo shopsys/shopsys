@@ -45,7 +45,22 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
                 $domainId,
             );
             $navigationItemData->domainId = $domainId;
-            $this->addCategoriesToNavigationItem($navigationItemData);
+
+            $categoriesForCatalog = [
+                1 => [
+                    CategoryDataFixture::CATEGORY_ELECTRONICS,
+                    CategoryDataFixture::CATEGORY_BOOKS,
+                    CategoryDataFixture::CATEGORY_TOYS,
+                ],
+                2 => [
+                    CategoryDataFixture::CATEGORY_GARDEN_TOOLS,
+                ],
+                3 => [
+                    CategoryDataFixture::CATEGORY_FOOD,
+                ],
+            ];
+            $this->addCategoriesToNavigationItem($navigationItemData, $categoriesForCatalog);
+
             $this->createItem($navigationItemData);
 
             $navigationItemData = $this->navigationItemDataFactory->createNew();
@@ -55,6 +70,23 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
                 $domainId,
             );
             $navigationItemData->domainId = $domainId;
+
+            $categoriesForGadgets = [
+                1 => [
+                    CategoryDataFixture::CATEGORY_PC,
+                    CategoryDataFixture::CATEGORY_TV,
+                ],
+                2 => [
+                    CategoryDataFixture::CATEGORY_PRINTERS,
+                    CategoryDataFixture::CATEGORY_PHOTO,
+                ],
+                3 => [
+                    CategoryDataFixture::CATEGORY_COFFEE,
+                    CategoryDataFixture::CATEGORY_PHONES,
+                ],
+            ];
+            $this->addCategoriesToNavigationItem($navigationItemData, $categoriesForGadgets);
+
             $this->createItem($navigationItemData);
 
             $navigationItemData = $this->navigationItemDataFactory->createNew();
@@ -64,6 +96,17 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
                 $domainId,
             );
             $navigationItemData->domainId = $domainId;
+
+            $categoriesForBookworm = [
+                1 => [
+                    CategoryDataFixture::CATEGORY_BOOKS,
+                ],
+                2 => [
+                    CategoryDataFixture::CATEGORY_PRINTERS,
+                ],
+            ];
+            $this->addCategoriesToNavigationItem($navigationItemData, $categoriesForBookworm);
+
             $this->createItem($navigationItemData);
 
             $navigationItemData = $this->navigationItemDataFactory->createNew();
@@ -82,6 +125,17 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
                 $domainId,
             );
             $navigationItemData->domainId = $domainId;
+
+            $categoriesForSnack = [
+                1 => [
+                    CategoryDataFixture::CATEGORY_FOOD,
+                ],
+                2 => [
+                    CategoryDataFixture::CATEGORY_COFFEE,
+                ],
+            ];
+            $this->addCategoriesToNavigationItem($navigationItemData, $categoriesForSnack);
+
             $this->createItem($navigationItemData);
         }
     }
@@ -106,20 +160,20 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData $navigationItemData
+     * @param array $categoriesByColumn
      */
-    private function addCategoriesToNavigationItem(NavigationItemData $navigationItemData): void
-    {
-        $navigationItemData->categoriesByColumnNumber[1] = [
-            $this->getCategoryReference(CategoryDataFixture::CATEGORY_ELECTRONICS),
-            $this->getCategoryReference(CategoryDataFixture::CATEGORY_BOOKS),
-            $this->getCategoryReference(CategoryDataFixture::CATEGORY_TOYS),
-        ];
-        $navigationItemData->categoriesByColumnNumber[2] = [
-            $this->getCategoryReference(CategoryDataFixture::CATEGORY_GARDEN_TOOLS),
-        ];
-        $navigationItemData->categoriesByColumnNumber[3] = [
-            $this->getCategoryReference(CategoryDataFixture::CATEGORY_FOOD),
-        ];
+    private function addCategoriesToNavigationItem(
+        NavigationItemData $navigationItemData,
+        array $categoriesByColumn,
+    ): void {
+        foreach ($categoriesByColumn as $columnNumber => $categories) {
+            $navigationItemData->categoriesByColumnNumber[$columnNumber] = array_map(
+                function ($category) {
+                    return $this->getCategoryReference($category);
+                },
+                $categories,
+            );
+        }
     }
 
     /**
