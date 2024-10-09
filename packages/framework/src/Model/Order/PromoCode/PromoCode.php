@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order\PromoCode;
 
 use Doctrine\ORM\Mapping as ORM;
-use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\InvalidPromoCodeDiscountTypeException;
 
 /**
  * @ORM\Table(name="promo_codes",
@@ -17,8 +16,6 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\InvalidPromoCodeDisc
  */
 class PromoCode
 {
-    public const int DISCOUNT_TYPE_PERCENT = 1;
-    public const int DISCOUNT_TYPE_NOMINAL = 2;
     public const int MASS_GENERATED_CODE_LENGTH = 6;
 
     /**
@@ -36,8 +33,8 @@ class PromoCode
     protected $code;
 
     /**
-     * @var int
-     * @ORM\Column(type="integer")
+     * @var string
+     * @ORM\Column(type="string", length=20)
      */
     protected $discountType;
 
@@ -139,7 +136,7 @@ class PromoCode
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getDiscountType()
     {
@@ -207,17 +204,5 @@ class PromoCode
     public function getPrefix()
     {
         return $this->prefix;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDiscountTypeString(): string
-    {
-        return match ($this->discountType) {
-            self::DISCOUNT_TYPE_PERCENT => 'percent',
-            self::DISCOUNT_TYPE_NOMINAL => 'nominal',
-            default => throw new InvalidPromoCodeDiscountTypeException($this->discountType),
-        };
     }
 }

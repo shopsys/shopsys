@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeProduct\PromoCodeProductFactory;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeTypeEnum;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 
 class PromoCodeDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
@@ -132,7 +133,7 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
 
         $promoCodeData = $this->promoCodeDataFactory->create();
         $promoCodeData->code = 'test100';
-        $promoCodeData->discountType = PromoCode::DISCOUNT_TYPE_NOMINAL;
+        $promoCodeData->discountType = PromoCodeTypeEnum::NOMINAL;
         $promoCodeData->domainId = $domainId;
         $promoCode = $this->promoCodeFacade->create($promoCodeData);
         $this->setDefaultNominalLimit($promoCode);
@@ -158,7 +159,7 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
 
             $promoCodeData = $this->promoCodeDataFactory->create();
             $promoCodeData->code = 'test100';
-            $promoCodeData->discountType = PromoCode::DISCOUNT_TYPE_NOMINAL;
+            $promoCodeData->discountType = PromoCodeTypeEnum::NOMINAL;
             $promoCodeData->domainId = $domainId;
             $promoCode = $this->promoCodeFacade->create($promoCodeData);
             $this->setDefaultNominalLimit($promoCode);

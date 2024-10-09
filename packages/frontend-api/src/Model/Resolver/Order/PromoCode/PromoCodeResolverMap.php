@@ -20,7 +20,7 @@ class PromoCodeResolverMap extends ResolverMap
                     return $promoCodeWithDiscount->promoCode->getCode();
                 },
                 'type' => function (PromoCodeWithDiscount $promoCodeWithDiscount) {
-                    return $promoCodeWithDiscount->promoCode->getDiscountTypeString();
+                    return $promoCodeWithDiscount->promoCode->getDiscountType();
                 },
             ],
         ];

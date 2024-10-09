@@ -12,9 +12,9 @@ class PromoCodeData
     public $code;
 
     /**
-     * @var int
+     * @var string
      */
-    public $discountType = PromoCode::DISCOUNT_TYPE_PERCENT;
+    public $discountType = PromoCodeTypeEnum::PERCENT;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit[]

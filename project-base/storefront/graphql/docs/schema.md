@@ -151,6 +151,7 @@
     * [PersonalDataAccessRequestTypeEnum](#personaldataaccessrequesttypeenum)
     * [ProductListTypeEnum](#productlisttypeenum)
     * [ProductOrderingModeEnum](#productorderingmodeenum)
+    * [PromoCodeTypeEnum](#promocodetypeenum)
     * [RecommendationType](#recommendationtype)
     * [StoreOpeningStatusEnum](#storeopeningstatusenum)
     * [TransportTypeEnum](#transporttypeenum)
@@ -7612,7 +7613,7 @@ The promo code discount
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>type</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#promocodetypeenum">PromoCodeTypeEnum</a>!</td>
 <td>
 
 The promo code type
@@ -11589,6 +11590,27 @@ Order by priority
 Order by relevance
 
 </td>
+</tr>
+</tbody>
+</table>
+
+### PromoCodeTypeEnum
+
+One of the possible types of the promoo code
+
+<table>
+<thead>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>nominal</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>percent</strong></td>
+<td></td>
 </tr>
 </tbody>
 </table>
