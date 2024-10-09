@@ -15,7 +15,7 @@
     {% if value|length > 1 %}
         {{ 'Scaled promo code'|trans }}
     {% else %}
-        {% if row['pc']['discountType'] == constant('\\Shopsys\\FrameworkBundle\\Model\\Order\\PromoCode\\PromoCode::DISCOUNT_TYPE_PERCENT') %}
+        {% if row['pc']['discountType'] == constant('\\Shopsys\\FrameworkBundle\\Model\\Order\\PromoCode\\PromoCodeTypeEnum::PERCENT') %}
             {{ value[0]|formatPercent }}
         {% else %}
             {{ value[0]|priceFromDecimalStringWithCurrencyAdmin }}

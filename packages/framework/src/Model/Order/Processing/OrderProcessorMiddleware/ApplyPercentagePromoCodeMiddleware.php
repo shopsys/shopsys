@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\DiscountCalculation;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeTypeEnum;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 
@@ -47,7 +48,7 @@ class ApplyPercentagePromoCodeMiddleware extends AbstractPromoCodeMiddleware
     #[Override]
     protected function getSupportedTypes(): array
     {
-        return [PromoCode::DISCOUNT_TYPE_PERCENT];
+        return [PromoCodeTypeEnum::PERCENT];
     }
 
     /**
