@@ -105,7 +105,8 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyNumber = null;
         $inquiryData->companyTaxNumber = null;
         $inquiryData->note = 'Can I order without a company?';
-        $inquiryData->product = $inquiryProduct;
+        $inquiryData->product = null;
+        $inquiryData->productCatnum = 'CAT-9476068';
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 8:51:07');
         $this->inquiryFacade->create($inquiryData);
 
@@ -209,7 +210,8 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyNumber = null;
         $inquiryData->companyTaxNumber = null;
         $inquiryData->note = 'Looking to order as an individual.';
-        $inquiryData->product = $inquiryProduct;
+        $inquiryData->product = null;
+        $inquiryData->productCatnum = 'CAT-7241618';
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 09:42:54');
         $this->inquiryFacade->create($inquiryData);
 
@@ -261,7 +263,8 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyNumber = null;
         $inquiryData->companyTaxNumber = null;
         $inquiryData->note = 'What’s the pricing structure for individual customers?';
-        $inquiryData->product = $inquiryProduct;
+        $inquiryData->product = null;
+        $inquiryData->productCatnum = 'CAT-7334636';
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 09:30:44');
         $this->inquiryFacade->create($inquiryData);
 
@@ -287,7 +290,8 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyNumber = null;
         $inquiryData->companyTaxNumber = null;
         $inquiryData->note = 'I would like to inquire as an individual.';
-        $inquiryData->product = $inquiryProduct;
+        $inquiryData->product = null;
+        $inquiryData->productCatnum = 'CAT-9743326';
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 09:33:58');
         $this->inquiryFacade->create($inquiryData);
 
@@ -430,7 +434,8 @@ class InquiryDataFixture extends AbstractReferenceFixture implements DependentFi
         $inquiryData->companyNumber = null;
         $inquiryData->companyTaxNumber = null;
         $inquiryData->note = 'Do you offer products for individual use?';
-        $inquiryData->product = $inquiryProduct;
+        $inquiryData->product = null;
+        $inquiryData->productCatnum = 'CAT-9564280';
         $inquiryData->createdAt = new DateTimeImmutable('2024-09-02 10:15:41');
         $this->inquiryFacade->create($inquiryData);
 

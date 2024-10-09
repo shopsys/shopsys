@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Inquiry;
 
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use LogicException;
 
 /**
  * @ORM\Table(name="inquiries")
@@ -117,6 +118,14 @@ class Inquiry
      */
     protected function setData(InquiryData $inquiryData): void
     {
+        if ($inquiryData->product === null && $inquiryData->productCatnum === null) {
+            throw new LogicException('Either product or productCatnum must be set to properly create an inquiry.');
+        }
+
+        if ($inquiryData->product !== null && $inquiryData->productCatnum !== null) {
+            throw new LogicException('Only one of product or productCatnum can be set to properly create an inquiry.');
+        }
+
         $this->firstName = $inquiryData->firstName;
         $this->lastName = $inquiryData->lastName;
         $this->email = $inquiryData->email;
@@ -126,7 +135,7 @@ class Inquiry
         $this->companyTaxNumber = $inquiryData->companyTaxNumber;
         $this->note = $inquiryData->note;
         $this->product = $inquiryData->product;
-        $this->productCatnum = $inquiryData->product->getCatnum();
+        $this->productCatnum = $inquiryData->product ? $inquiryData->product->getCatnum() : $inquiryData->productCatnum;
         $this->customerUser = $inquiryData->customerUser;
     }
 

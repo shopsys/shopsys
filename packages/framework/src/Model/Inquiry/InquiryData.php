@@ -57,6 +57,11 @@ class InquiryData
     public $product;
 
     /**
+     * @var string|null
+     */
+    public $productCatnum;
+
+    /**
      * @var \DateTimeImmutable|null
      */
     public $createdAt;
