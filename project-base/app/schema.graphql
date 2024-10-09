@@ -1892,7 +1892,13 @@ type PromoCode {
   "The promo code discount"
   discount: Price!
   "The promo code type"
-  type: String!
+  type: PromoCodeTypeEnum!
+}
+
+"One of the possible types of the promoo code"
+enum PromoCodeTypeEnum {
+  nominal
+  percent
 }
 
 type Query {

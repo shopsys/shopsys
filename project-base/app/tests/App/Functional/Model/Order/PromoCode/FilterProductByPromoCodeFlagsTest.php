@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitFactory;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeTypeEnum;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class FilterProductByPromoCodeFlagsTest extends TransactionFunctionalTestCase
@@ -170,7 +171,7 @@ class FilterProductByPromoCodeFlagsTest extends TransactionFunctionalTestCase
         $promoCodeData->flags = $promoCodeFlags;
         $promoCodeData->domainId = $this->domain->getId();
         $promoCodeData->code = 'present';
-        $promoCodeData->discountType = PromoCode::DISCOUNT_TYPE_NOMINAL;
+        $promoCodeData->discountType = PromoCodeTypeEnum::NOMINAL;
         $promoCodeData->limits = [$promoCodeLimit];
 
         return $this->promoCodeFacade->create($promoCodeData);
