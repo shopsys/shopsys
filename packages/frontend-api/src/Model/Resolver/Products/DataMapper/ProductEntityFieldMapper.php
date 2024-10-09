@@ -198,4 +198,15 @@ class ProductEntityFieldMapper
 
         return $productVisibility->isVisible();
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function getVariants(Product $product): Promise
+    {
+        $variantIds = array_map(static fn (Product $variant) => $variant->getId(), $product->getVariants());
+
+        return $this->productsSellableByIdsBatchLoader->load($variantIds);
+    }
 }
