@@ -44,12 +44,14 @@ services:
             $categoriesBatchLoader: '@categories_batch_loader'
             $flagsBatchLoader: '@flags_batch_loader'
             $brandsBatchLoader: '@brands_batch_loader'
+            $productsSellableCountByIdsBatchLoader: '@products_sellable_count_by_ids_batch_loader'
 
     App\FrontendApi\Resolver\Products\DataMapper\ProductEntityFieldMapper:
         arguments:
             $productsSellableByIdsBatchLoader: '@products_sellable_by_ids_batch_loader'
             $categoriesBatchLoader: '@categories_batch_loader'
             $brandsBatchLoader: '@brands_batch_loader'
+            $productsSellableCountByIdsBatchLoader: '@products_sellable_count_by_ids_batch_loader'
 
     App\FrontendApi\Resolver\Products\ProductsQuery:
         arguments:

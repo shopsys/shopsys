@@ -38,6 +38,9 @@ overblog_dataloader:
         productsSellableByIdsBatchLoader:
             alias: "products_sellable_by_ids_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Product\\BatchLoad\\ProductsBatchLoader:loadSellableByIds"
+        productsSellableCountByIdsBatchLoader:
+            alias: "products_sellable_count_by_ids_batch_loader"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Product\\BatchLoad\\ProductsBatchLoader:loadSellableCountByIds"
         productsVisibleAndSortedByIdsBatchLoader:
             alias: "products_visible_and_sorted_by_ids_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Product\\BatchLoad\\ProductsBatchLoader:loadVisibleAndSortedByIds"

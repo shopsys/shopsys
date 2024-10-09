@@ -137,6 +137,16 @@ services:
         tags:
             - { name: overblog_graphql.resolver_map, schema: default }
 
+    Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper:
+        arguments:
+            $productsSellableByIdsBatchLoader: '@products_sellable_by_ids_batch_loader'
+            $productsSellableCountByIdsBatchLoader: '@products_sellable_count_by_ids_batch_loader'
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFieldMapper:
+        arguments:
+            $productsSellableByIdsBatchLoader: '@products_sellable_by_ids_batch_loader'
+            $productsSellableCountByIdsBatchLoader: '@products_sellable_count_by_ids_batch_loader'
+
     Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductFilesQuery:
         arguments:
             $filesBatchLoader: '@files_batch_loader'

@@ -1049,6 +1049,8 @@ type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   "UUID"
   uuid: Uuid!
   variants: [Variant!]!
+  "Number of sellable variants"
+  variantsCount: Int!
 }
 
 scalar Money
