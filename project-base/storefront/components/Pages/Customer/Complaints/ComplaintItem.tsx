@@ -58,7 +58,7 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
                         />
                         <ComplaintItemColumnInfo
                             title={t('Creation date')}
-                            value={formatDate(complaintItem.createdAt, 'DD. MM. YYYY')}
+                            value={formatDate(complaintItem.createdAt)}
                         />
                         <ComplaintItemColumnInfo
                             title={t('Status')}

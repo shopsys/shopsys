@@ -12,8 +12,7 @@ extend(LocalizedFormat);
 
 export const initDayjsLocale = (defaultLocale: string) => locale(defaultLocale);
 
-export const formatDate = (date?: Dayjs | string, timezone?: string, format?: string): string =>
-    dayjs(date).tz(timezone).format(format);
+export const formatDate = (date?: Dayjs | string, timezone?: string): string => dayjs(date).tz(timezone).format('l');
 
 export const formatDateAndTime = (date?: Dayjs | string, timezone?: string): string =>
     dayjs(date).tz(timezone).format('l LT');

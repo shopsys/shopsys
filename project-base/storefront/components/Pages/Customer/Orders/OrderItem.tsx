@@ -47,10 +47,7 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                                 </ExtendedNextLink>
                             }
                         />
-                        <OrderItemColumnInfo
-                            title={t('Date of order')}
-                            value={formatDate(order.creationDate, 'DD. MM. YYYY')}
-                        />
+                        <OrderItemColumnInfo title={t('Date of order')} value={formatDate(order.creationDate)} />
                         {isPriceVisible(order.totalPrice.priceWithVat) && (
                             <OrderItemColumnInfo
                                 title={t('Price')}

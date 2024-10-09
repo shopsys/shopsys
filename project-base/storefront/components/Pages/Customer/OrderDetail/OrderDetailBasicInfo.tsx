@@ -35,7 +35,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
     return (
         <div className="my-6 flex flex-col gap-4 bg-background vl:mb-8">
             <OrderRowWrapper className="flex items-center justify-between gap-4">
-                <div className="flex  flex-wrap gap-6 gap-y-2 vl:gap-8">
+                <div className="flex flex-wrap gap-6 gap-y-2 vl:gap-8">
                     <OrderItemColumnInfo
                         tid={TIDs.order_detail_number}
                         title={t('Order number')}
@@ -44,7 +44,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                     <OrderItemColumnInfo
                         tid={TIDs.order_detail_creation_date}
                         title={t('Date of order')}
-                        value={formatDate(order.creationDate, 'DD. MM. YYYY')}
+                        value={formatDate(order.creationDate)}
                     />
                     {isPriceVisible(order.totalPrice.priceWithVat) && (
                         <OrderItemColumnInfo
