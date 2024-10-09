@@ -18,7 +18,6 @@ class ParameterGroupTranslation extends AbstractTranslation
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup
      * @Prezent\Translatable(targetEntity="Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup")
-     * @phpcsSuppress SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
     protected $translatable;
 

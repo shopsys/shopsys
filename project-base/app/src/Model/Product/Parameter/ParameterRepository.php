@@ -195,8 +195,7 @@ class ParameterRepository extends BaseParameterRepository
             ->leftJoin('pu.translations', 'put', Join::WITH, 'put.locale = :locale AND put.name IS NOT NULL')
             ->join('ppv.value', 'pv', Join::WITH, 'pv.locale = :locale')
             ->where('ppv.product IN (:products)')
-            ->orderBy('parameter_id', 'ASC')
-            ->addOrderBy('group_position', 'ASC')
+            ->orderBy('group_position', 'ASC')
             ->addOrderBy('ordering_priority', 'DESC')
             ->addOrderBy('parameter_name', 'ASC')
             ->setParameters([

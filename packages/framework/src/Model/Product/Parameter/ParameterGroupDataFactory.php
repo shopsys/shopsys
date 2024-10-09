@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
-class ParameterGroupDataFactory implements ParameterGroupDataFactoryInterface
+class ParameterGroupDataFactory
 {
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupData

@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
+use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\ParameterGroupFormType;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterGroupNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupFacade;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,22 +25,24 @@ class ParameterGroupController extends AdminBaseController
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupFacade $parameterGroupFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupDataFactoryInterface $parameterGroupDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupDataFactory $parameterGroupDataFactory
+     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
         protected readonly ParameterGroupFacade $parameterGroupFacade,
         protected readonly GridFactory $gridFactory,
-        protected readonly ParameterGroupDataFactoryInterface $parameterGroupDataFactory,
+        protected readonly ParameterGroupDataFactory $parameterGroupDataFactory,
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/parameter-group/list/')]
-    public function listAction(Request $request)
+    public function listAction(): Response
     {
-        $grid = $this->getGrid($request);
+        $grid = $this->getGrid();
 
         return $this->render('@ShopsysFramework/Admin/Content/ParameterGroup/list.html.twig', [
             'grid' => $grid->createView(),
@@ -137,37 +143,38 @@ class ParameterGroupController extends AdminBaseController
     /**
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     #[Route(path: '/product/parameter-group/delete/{id}', requirements: ['id' => '\d+'])]
-    public function deleteAction(int $id)
+    public function deleteAction(int $id): RedirectResponse
     {
-        //        try {
-        $fullName = $this->parameterGroupFacade->getById($id)->getName();
-        $this->parameterGroupFacade->deleteById($id);
+        try {
+            $fullName = $this->parameterGroupFacade->getById($id)->getName();
+            $this->parameterGroupFacade->deleteById($id);
 
-        $this->addSuccessFlashTwig(
-            t('Parameter <strong>{{ name }}</strong> deleted'),
-            [
-                'name' => $fullName,
-            ],
-        );
-        //        } catch (ParameterNotFoundException $ex) {
-        //            $this->addErrorFlash(t('Selected parameter doesn\'t exist.'));
-        //        }
+            $this->addSuccessFlashTwig(
+                t('Parameter <strong>{{ name }}</strong> deleted'),
+                [
+                    'name' => $fullName,
+                ],
+            );
+        } catch (ParameterGroupNotFoundException $ex) {
+            $this->addErrorFlash(t('Selected parameter doesn\'t exist.'));
+        }
 
         return $this->redirectToRoute('admin_parametergroup_list');
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    protected function getGrid(Request $request)
+    protected function getGrid(): Grid
     {
-        $queryBuilder = $this->parameterGroupFacade->getOrderedParameterGroupsQueryBuilder($request->getLocale());
+        $domainConfig = $this->adminDomainTabsFacade->getSelectedDomainConfig();
+
+        $queryBuilder = $this->parameterGroupFacade->getOrderedParameterGroupsQueryBuilder($domainConfig->getLocale());
 
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'pg.id');
-        //        dd($dataSource);
 
         $grid = $this->gridFactory->create('parameterGroupsList', $dataSource);
 

@@ -12,13 +12,13 @@ class ParameterGroupFacade
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupFactoryInterface $parameterGroupFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupFactory $parameterGroupFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
-        protected readonly ParameterGroupFactoryInterface $parameterGroupFactory,
+        protected readonly ParameterGroupFactory $parameterGroupFactory,
         protected readonly ParameterRepository $parameterRepository,
         protected readonly EventDispatcherInterface $eventDispatcher,
     ) {
@@ -53,11 +53,11 @@ class ParameterGroupFacade
     }
 
     /**
-     * @param int[][] $rowIds
+     * @param array<int> $rowIds
      */
     public function saveOrdering(array $rowIds): void
     {
-        foreach ($rowIds as $position => $rowId) {
+        foreach ($rowIds as $position) {
             $parameterGroup = $this->parameterRepository->getParameterGroupById($position);
 
             $parameterGroup->setPosition($position);
