@@ -21,12 +21,16 @@ const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((c
 
 const AdvancedSeoCategories = dynamic(
     () => import('./AdvancedSeoCategories').then((component) => component.AdvancedSeoCategories),
-    { suspense: true },
+    {
+        suspense: true,
+    },
 );
 
 const CategoryBestsellers = dynamic(
     () => import('./CategoryBestsellers/CategoryBestsellers').then((component) => component.CategoryBestsellers),
-    { suspense: true },
+    {
+        suspense: true,
+    },
 );
 
 type CategoryDetailContentProps = {
@@ -64,6 +68,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                     <CollapsibleText scrollTargetRef={scrollTargetRef} text={category.description} />
                 )}
                 <Image
+                    priority
                     alt={category.name}
                     className="rounden-lg h-full w-full rounded-lg md:max-w-80"
                     height={150}
@@ -105,7 +110,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                 <div className="flex flex-1 flex-col">
                     {!!category.bestsellers.length && <CategoryBestsellers products={category.bestsellers} />}
 
-                    <div className="flex flex-col">
+                    <div className="flex flex-col-reverse vl:flex-col">
                         <FilterSelectedParameters filterOptions={category.products.productFilterOptions} />
 
                         <DeferredFilterAndSortingBar
