@@ -1,0 +1,13 @@
+query ProductByUuid($uuid: Uuid!)  {
+    product(uuid: $uuid) {
+        uuid
+        name
+        productType
+        price {
+            isPriceFrom
+            priceWithoutVat
+            priceWithVat
+            vatAmount
+        }
+    }
+}
