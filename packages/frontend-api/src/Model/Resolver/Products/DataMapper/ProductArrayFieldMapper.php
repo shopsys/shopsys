@@ -26,6 +26,7 @@ class ProductArrayFieldMapper
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider $productFrontendLimitProvider
      * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableCountByIdsBatchLoader
      */
     public function __construct(
         protected readonly CategoryFacade $categoryFacade,
@@ -36,6 +37,7 @@ class ProductArrayFieldMapper
         protected readonly ProductFrontendLimitProvider $productFrontendLimitProvider,
         protected readonly DataLoaderInterface $productsSellableByIdsBatchLoader,
         protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly DataLoaderInterface $productsSellableCountByIdsBatchLoader,
     ) {
     }
 
@@ -197,6 +199,15 @@ class ProductArrayFieldMapper
     public function getVariants(array $data): array
     {
         return $this->productElasticsearchProvider->getSellableProductArrayByIds($data['variants']);
+    }
+
+    /**
+     * @param array $data
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function getVariantsCount(array $data): Promise
+    {
+        return $this->productsSellableCountByIdsBatchLoader->load($data['variants']);
     }
 
     /**
