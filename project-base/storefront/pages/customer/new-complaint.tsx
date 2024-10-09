@@ -41,6 +41,7 @@ const NewComplaintPage: FC = () => {
     const userIdentifier = useCookiesStore((store) => store.userIdentifier);
     const [searchQueryValue, setSearchQueryValue] = useState('');
     const debouncedSearchQuery = useDebounce(searchQueryValue, 300);
+    const isSearchQueryValid = debouncedSearchQuery.length >= MINIMAL_SEARCH_QUERY_LENGTH;
 
     const breadcrumbs: TypeBreadcrumbFragment[] = [
         { __typename: 'Link', name: t('My complaints'), slug: customerComplaintsUrl },
@@ -60,7 +61,7 @@ const NewComplaintPage: FC = () => {
     const [{ data: searchOrderedItemsData, fetching: searchOrderedItemsDataFetching }] = useSearchOrderedItemsQuery({
         variables: {
             first: DEFAULT_PAGE_SIZE,
-            after: getEndCursor(currentPage),
+            after: isSearchQueryValid ? null : getEndCursor(currentPage),
             filter: DEFAULT_ORDERED_ITEMS_FILTER,
             searchInput: {
                 parameters: [],
@@ -69,17 +70,15 @@ const NewComplaintPage: FC = () => {
                 userIdentifier,
             },
         },
-        pause: debouncedSearchQuery.length < MINIMAL_SEARCH_QUERY_LENGTH,
+        pause: !isSearchQueryValid,
         requestPolicy: 'network-only',
     });
 
     const mappedOrderedItems = mapConnectionEdges<TypeOrderDetailItemFragment>(
-        debouncedSearchQuery.length < MINIMAL_SEARCH_QUERY_LENGTH
-            ? orderedItemsData?.orderItems.edges
-            : searchOrderedItemsData?.orderItemsSearch.edges,
+        isSearchQueryValid ? searchOrderedItemsData?.orderItemsSearch.edges : orderedItemsData?.orderItems.edges,
     );
 
-    const orderedItemsTotalCount = debouncedSearchQuery
+    const orderedItemsTotalCount = isSearchQueryValid
         ? searchOrderedItemsData?.orderItemsSearch.totalCount
         : orderedItemsData?.orderItems.totalCount;
 
