@@ -31,6 +31,7 @@ const getErrorMessageTranslationString = (errorCode: FlashMessageKeys, t: Transl
         'cannot-remove-own-customer-user': t('Cannot delete own user'),
         'access-denied': t('Access denied'),
         'invalid-quantity': t('Complaint item quantity exceeds the order item quantity.'),
+        'register-by-order-is-not-possible': t('It was not possible to create register new user from the order'),
     };
 
     return ERROR_MESSAGES[errorCode];

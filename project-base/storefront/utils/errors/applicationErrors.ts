@@ -37,6 +37,7 @@ const ApplicationErrors = {
     'cannot-remove-own-customer-user': 'flash-message',
     'access-denied': 'flash-message',
     'invalid-quantity': 'flash-message',
+    'register-by-order-is-not-possible': 'flash-message',
 } as const;
 
 type KeysMatching<T, V extends ApplicationErrorVerbosityLevel> = {

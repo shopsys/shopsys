@@ -178,6 +178,7 @@
     "Invalid Packetery address id.": "Neplatné id adresy Zásielkovne.",
     "Invalid refresh token.": "Neplatný refresh token.",
     "Invalid request type.": "Neplatný typ požiadavky.",
+    "It was not possible to create register new user from the order": "Nebolo možné vytvoriť registráciu nového používateľa z objednávky",
     "Item {{ itemName }} can no longer be bought.": "Item {{ itemName }} can no longer be bought.",
     "Item {{ itemName }} has been sold out.": "Item {{ itemName }} has been sold out.",
     "Last name": "Priezvisko",
