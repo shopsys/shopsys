@@ -24,7 +24,7 @@ export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeI
                     <div
                         className={twJoin(
                             'group relative mb-0 font-secondary font-bold vl:pointer-events-none vl:font-semibold',
-                            'max-vl:flex max-vl:justify-between max-vl:rounded-lg max-vl:px-3 max-vl:py-[10px] max-vl:text-textAccent max-vl:outline-none max-vl:outline-2 max-vl:outline-offset-[-2px] max-vl:outline-actionInvertedBorder max-vl:transition-all',
+                            'max-vl:flex max-vl:justify-between max-vl:rounded-lg max-vl:px-3 max-vl:py-2.5 max-vl:text-textAccent max-vl:outline-none max-vl:outline-2 max-vl:outline-offset-[-2px] max-vl:outline-actionInvertedBorder max-vl:transition-all',
                             'max-vl:bg-background max-vl:hover:text-actionInvertedTextHovered max-vl:hover:outline-actionInvertedBorderHovered',
                             'max-vl:active:text-actionInvertedTextActive max-vl:active:outline-actionInvertedBorderActive',
                             isBlogSignpostOpen && 'max-vl:z-aboveOverlay',

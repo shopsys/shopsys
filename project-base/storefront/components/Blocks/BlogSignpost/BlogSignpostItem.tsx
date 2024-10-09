@@ -13,7 +13,7 @@ export const BlogSignpostItem: FC<BlogSignpostItemProps> = ({ children, href, is
         style={itemLevel !== undefined ? { marginLeft: `calc(12px*${itemLevel})` } : {}}
         type="blogCategory"
         className={twMergeCustom(
-            'relative flex items-center gap-x-3 rounded-xl bg-backgroundMore px-3 py-[13px] font-secondary text-[14px] font-semibold leading-4 no-underline transition-all hover:no-underline',
+            'relative flex items-center gap-x-3 rounded-xl bg-backgroundMore px-3 py-3 font-secondary text-[14px] font-semibold leading-4 no-underline transition-all hover:no-underline',
             isActive
                 ? 'bg-backgroundAccent  text-textInverted no-underline hover:bg-backgroundAccentMore hover:text-textInverted'
                 : 'text-text hover:bg-backgroundMost hover:text-text',
