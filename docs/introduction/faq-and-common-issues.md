@@ -194,3 +194,13 @@ Therefore, you can see e.g. `ProductListTypeEnum` which is a class with constant
 Moreover, the class extends `AbstractEnum` that provides `getAllCases()` method.
 The method uses reflection to return all the public constants of the class which simulates the behavior of `cases()` method of the PHP enums.
 The key factor here is that the method is not static, and therefore it would include also the constants of the child class when the "enum" class is extended on a project.
+
+## I am not able to clone the repository because of the error "Filename too long"
+
+If you are using Windows, you can encounter the error "Filename too long" when cloning the repository.
+This is because the repository contains files with long paths (e.g. Cypress tests screenshots).
+To resolve this issue, you can modify your Git configuration to allow long paths by running the following command:
+
+```bash
+git config --system core.longpaths true
+```
