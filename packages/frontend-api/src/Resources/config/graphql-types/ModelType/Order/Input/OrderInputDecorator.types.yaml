@@ -33,16 +33,19 @@ OrderInputDecorator:
                             max: 100
                             maxMessage: "Last name cannot be longer than {{ limit }} characters"
             email:
-                type: "String!"
+                type: "String"
                 description: "The customer's email address"
                 validation:
                     -   NotBlank:
                             message: "Please enter email"
+                            groups: "anonymousUser"
                     -   Email:
                             message: "Please enter valid email"
+                            groups: "anonymousUser"
                     -   Length:
                             max: 255
                             maxMessage: "Email cannot be longer than {{ limit }} characters"
+                            groups: "anonymousUser"
             telephone:
                 type: "String!"
                 description: "The customer's phone number"

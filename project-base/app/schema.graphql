@@ -1352,7 +1352,7 @@ input OrderInput {
   "Contact telephone number for delivery"
   deliveryTelephone: String
   "The customer's email address"
-  email: String!
+  email: String
   "The customer's first name"
   firstName: String!
   "Determines whether the customer agrees with sending satisfaction questionnaires within the Verified by Customers Heureka program"
