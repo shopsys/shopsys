@@ -33,7 +33,7 @@ export const CollapsibleText: FC<CollapsibleTextProps> = ({ text, scrollTargetRe
     };
 
     return (
-        <div>
+        <div className="flex w-full flex-col items-start gap-2">
             <div className={twJoin('relative max-w-2xl', showFullDescription ? '' : 'line-clamp-4')} ref={textRef}>
                 <div
                     dangerouslySetInnerHTML={{ __html: cleanHtml }}
