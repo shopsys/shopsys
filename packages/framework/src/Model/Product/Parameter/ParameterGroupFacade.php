@@ -57,10 +57,10 @@ class ParameterGroupFacade
      */
     public function saveOrdering(array $rowIds): void
     {
-        foreach ($rowIds as $position) {
-            $parameterGroup = $this->parameterRepository->getParameterGroupById($position);
+        foreach ($rowIds as $rowId) {
+            $parameterGroup = $this->parameterRepository->getParameterGroupById($rowId);
 
-            $parameterGroup->setPosition($position);
+            $parameterGroup->setPosition($rowId);
         }
 
         $this->em->flush();
