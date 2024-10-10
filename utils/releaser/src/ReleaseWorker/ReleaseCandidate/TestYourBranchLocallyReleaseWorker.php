@@ -6,7 +6,6 @@ namespace Shopsys\Releaser\ReleaseWorker\ReleaseCandidate;
 
 use PharIo\Version\Version;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\Message;
 use Shopsys\Releaser\Stage;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
@@ -45,14 +44,14 @@ final class TestYourBranchLocallyReleaseWorker extends AbstractShopsysReleaseWor
                 $this->work($version);
             }
         }
-        $this->symfonyStyle->success(Message::SUCCESS);
+        $this->success();
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getStage(): string
+    protected function getAllowedStages(): array
     {
-        return Stage::RELEASE_CANDIDATE;
+        return [Stage::RELEASE_CANDIDATE];
     }
 }

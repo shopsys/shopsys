@@ -8,9 +8,9 @@ use Nette\Utils\FileSystem;
 use PharIo\Version\Version;
 use Shopsys\Releaser\FileManipulator\VersionUpgradeFileManipulator;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\Message;
 use Shopsys\Releaser\Stage;
-use Symplify\SmartFileSystem\SmartFileInfo;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
 {
@@ -44,7 +44,7 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
     ): void {
         $this->updateUpgradeFileWithReleasedVersion($version, $initialBranchName);
 
-        $this->symfonyStyle->success(Message::SUCCESS);
+        $this->success();
         $this->symfonyStyle->note(
             'Review all the upgrading files whether they satisfy our rules and guidelines, see https://docs.shopsys.com/en/latest/contributing/guidelines-for-writing-upgrade/.',
         );
@@ -70,11 +70,11 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getStage(): string
+    protected function getAllowedStages(): array
     {
-        return Stage::RELEASE_CANDIDATE;
+        return [Stage::RELEASE_CANDIDATE];
     }
 
     /**
@@ -84,10 +84,10 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
     private function updateUpgradeFileWithReleasedVersion(Version $version, string $initialBranchName): void
     {
         $upgradeFilePath = getcwd() . '/UPGRADE-' . $initialBranchName . '.md';
-        $upgradeFileInfo = new SmartFileInfo($upgradeFilePath);
+        $upgradeFileContent = FileSystem::read($upgradeFilePath);
 
         $newUpgradeContent = $this->versionUpgradeFileManipulator->processFileToString(
-            $upgradeFileInfo,
+            $upgradeFileContent,
             $version,
             $initialBranchName,
         );
@@ -95,5 +95,296 @@ final class UpdateUpgradeReleaseWorker extends AbstractShopsysReleaseWorker
         FileSystem::write($upgradeFilePath, $newUpgradeContent);
 
         $this->processRunner->run('git add .');
+    }
+
+    /**
+     * @param string $initialBranchName
+     * @param string $pathToUpgradeNotes
+     */
+    private function updateUpgradeNotesWithProjectBaseDiffLinks(
+        string $initialBranchName,
+        string $pathToUpgradeNotes,
+    ): void {
+        if (!file_exists($pathToUpgradeNotes)) {
+            throw new FileNotFoundException(path: $pathToUpgradeNotes);
+        }
+
+        $fileHandle = fopen($pathToUpgradeNotes, 'rb');
+
+        if (!$fileHandle) {
+            return;
+        }
+
+        [$fileLines, $headlineLines] = $this->parseFileToLines($fileHandle);
+
+        $this->cloneProjectBaseToTemporaryFolder($initialBranchName);
+
+        $this->findAndReplaceProjectBaseDiffHashWithLinks($headlineLines, $fileLines);
+        $this->findMissingProjectBaseDiffHashAndFillLinks($headlineLines, $fileLines);
+
+        fclose($fileHandle);
+        file_put_contents($pathToUpgradeNotes, $fileLines);
+
+        $this->clearTemporaryFolder();
+    }
+
+    /**
+     * @param $fileHandle
+     * @return array
+     */
+    private function parseFileToLines($fileHandle): array
+    {
+        $lineNumber = 0;
+        $fileLines = [];
+        $headlineLines = [];
+
+        while (($line = fgets($fileHandle)) !== false) {
+            $line = trim($line, '"');
+
+            if (str_starts_with($line, '####') && preg_match(self::REGEX_PATTERN_PR_LINK, $line) === 1) {
+                $headlineLines[$lineNumber] = $line;
+            }
+
+            $fileLines[$lineNumber] = $line;
+            $lineNumber++;
+        }
+
+        return [$fileLines, $headlineLines];
+    }
+
+    /**
+     * @param array $lines
+     * @param int $firstHeadlineNumber
+     * @param int|null $secondHeadlineNumber
+     * @return array
+     */
+    private function getLinesBetweenTwoHeadlines(
+        array $lines,
+        int $firstHeadlineNumber,
+        ?int $secondHeadlineNumber,
+    ): array {
+        $lineNumbers = array_keys($lines);
+        $startIndex = array_search($firstHeadlineNumber, $lineNumbers, true);
+
+        if ($secondHeadlineNumber === null) {
+            $endIndex = array_key_last($lines);
+        } else {
+            $endIndex = array_search($secondHeadlineNumber, $lineNumbers, true);
+        }
+
+        if ($startIndex === false || $endIndex === false) {
+            return [];
+        }
+
+        $length = $endIndex - $startIndex + 1;
+
+        return array_slice($lines, $startIndex, $length, true);
+    }
+
+    /**
+     * @param string $line
+     * @return array
+     */
+    private function parseCommitLinesByPrNumbers(string $line): array
+    {
+        $pattern = self::REGEX_PATTERN_PR_LINK;
+
+        preg_match_all($pattern, $line, $prNumbersMatches);
+
+        $commitLinesByPrNumber = [];
+
+        foreach ($prNumbersMatches[1] as $prNumber) {
+            try {
+                $commitLinesRaw = $this->processRunner->run('cd ' . $this->temporaryDirectoryPath . ' && git log --oneline --format="%H %s" | grep -E "\(#' . $prNumber . '\)$"');
+                $commitLines = explode(
+                    PHP_EOL,
+                    $commitLinesRaw,
+                );
+
+                array_pop($commitLines);
+
+                $commitLinesByPrNumber[$prNumber] = $commitLines;
+            } catch (ProcessFailedException) {
+                $commitLinesByPrNumber[$prNumber] = null;
+
+                continue;
+            }
+        }
+
+        return $commitLinesByPrNumber;
+    }
+
+    /**
+     * @param array $headlineLines
+     * @param array $fileLines
+     */
+    private function findAndReplaceProjectBaseDiffHashWithLinks(array $headlineLines, array &$fileLines): void
+    {
+        foreach ($headlineLines as $headlineLineNumber => $headlineLine) {
+            $commitLinesByPrNumber = $this->parseCommitLinesByPrNumbers($headlineLine);
+            $nextHeadlineLineNumber = $this->getNextHeadlineLineNumber($headlineLines, $headlineLineNumber);
+            $linesOfCurrentUpgradeNote = $this->getLinesBetweenTwoHeadlines($fileLines, $headlineLineNumber, $nextHeadlineLineNumber);
+            $currentUpgradeNoteLineNumber = $headlineLineNumber;
+
+            foreach ($linesOfCurrentUpgradeNote as $lineOfCurrentUpgradeNote) {
+                if (str_contains($lineOfCurrentUpgradeNote, self::SEE_PROJECT_BASE_DIFF_LINE)) {
+                    $this->replaceProjectBaseDiffHashWithLinks($fileLines, $currentUpgradeNoteLineNumber, $lineOfCurrentUpgradeNote, $commitLinesByPrNumber, $headlineLine);
+
+                    continue;
+                }
+
+                $currentUpgradeNoteLineNumber++;
+            }
+        }
+    }
+
+    /**
+     * @param array $headlineLines
+     * @param array $fileLines
+     */
+    private function findMissingProjectBaseDiffHashAndFillLinks(array $headlineLines, array &$fileLines): void
+    {
+        $headlineLines = $this->addLastLineAsHeadlineToEnsureLastUpgradeNoteIsProcessed($fileLines, $headlineLines);
+
+        foreach (array_reverse($headlineLines, true) as $headlineLineNumber => $headlineLine) {
+            $previousHeadlineLineNumber = $this->getPreviousHeadlineLineNumber($headlineLines, $headlineLineNumber);
+
+            if ($previousHeadlineLineNumber === null) {
+                continue;
+            }
+
+            $currentHeadlineLine = $headlineLines[$previousHeadlineLineNumber];
+            $revertedCommitLinesByPrNumber = array_reverse($this->parseCommitLinesByPrNumbers($currentHeadlineLine), true);
+            $linesOfCurrentUpgradeNote = $this->getLinesBetweenTwoHeadlines($fileLines, $previousHeadlineLineNumber, $headlineLineNumber);
+            $projectBaseDiffHashFound = false;
+
+            foreach ($linesOfCurrentUpgradeNote as $lineOfCurrentUpgradeNote) {
+                if (str_contains($lineOfCurrentUpgradeNote, self::PROJECT_BASE_DIFF_LINK_TEXT) || str_contains($lineOfCurrentUpgradeNote, self::SEE_PROJECT_BASE_DIFF_LINE)) {
+                    $projectBaseDiffHashFound = true;
+                }
+            }
+
+            if ($projectBaseDiffHashFound) {
+                continue;
+            }
+
+            foreach ($revertedCommitLinesByPrNumber as $commitLines) {
+                if ($commitLines !== null) {
+                    foreach (array_reverse($linesOfCurrentUpgradeNote, true) as $lineNumber => $lineOfCurrentUpgradeNote) {
+                        if (str_starts_with(PHP_EOL, $lineOfCurrentUpgradeNote)) {
+                            $this->increaseLineNumberFrom($fileLines, $lineNumber);
+
+                            $fileLines[$lineNumber] = '-   ' . self::SEE_PROJECT_BASE_DIFF_LINE . PHP_EOL;
+                            $this->replaceProjectBaseDiffHashWithLinks($fileLines, $lineNumber, $fileLines[$lineNumber], $revertedCommitLinesByPrNumber, $currentHeadlineLine);
+
+                            continue 2;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * @param array $fileLines
+     * @param int $lineNumber
+     * @param string $line
+     * @param array $commitLinesByPrNumber
+     * @param string $headlineLine
+     */
+    private function replaceProjectBaseDiffHashWithLinks(
+        array &$fileLines,
+        int $lineNumber,
+        string $line,
+        array $commitLinesByPrNumber,
+        string $headlineLine,
+    ): void {
+        $links = [];
+
+        if (count($commitLinesByPrNumber) === 0) {
+            $this->symfonyStyle->warning('Headline ' . $headlineLine . ' has incorrect format please fix it.');
+
+            return;
+        }
+
+        foreach ($commitLinesByPrNumber as $prNumber => $commitLines) {
+            if ($commitLines === null) {
+                $this->symfonyStyle->warning('For PR #' . $prNumber . ' has been found #project-base-diff hash but no corresponding commit.');
+
+                $commitSha = $this->symfonyStyle->ask('Enter commit SHA1 from project-base repository for PR #' . $prNumber);
+            } elseif (count($commitLines) === 1) {
+                $commitSha = explode(' ', $commitLines[0])[0];
+            } else {
+                $this->symfonyStyle->warning('For PR #' . $prNumber . ' has been found multiple possible commits:');
+
+                foreach ($commitLines as $commitLine) {
+                    $this->symfonyStyle->note($commitLine);
+                }
+
+                $commitSha = $this->symfonyStyle->ask('Enter commit SHA1 from project-base repository for PR #' . $prNumber);
+            }
+
+            $links[] = self::PROJECT_BASE_DIFF_LINK_TEXT . '(https://www.github.com/shopsys/project-base/commit/' . $commitSha . ')';
+        }
+
+        if (count($links) > 0) {
+            $fileLines[$lineNumber] = str_replace('#project-base-diff', implode(' and ', $links), $line);
+        } else {
+            $this->symfonyStyle->warning('For PR ' . implode(' and ', array_keys($commitLinesByPrNumber)) . ' has been found #project-base-diff tag but no relevant commit.');
+        }
+    }
+
+    /**
+     * @param array $fileLines
+     * @param int $fromLineNumber
+     */
+    private function increaseLineNumberFrom(array &$fileLines, int $fromLineNumber): void
+    {
+        foreach ($fileLines as $lineNumber => $line) {
+            if ($lineNumber >= $fromLineNumber) {
+                $fileLines[$lineNumber + 1] = $line;
+            }
+        }
+    }
+
+    /**
+     * @param array $headlineLines
+     * @param int $headlineLineNumber
+     * @return int|null
+     */
+    private function getNextHeadlineLineNumber(array $headlineLines, int $headlineLineNumber): int|null
+    {
+        $headlineLineNumbers = array_keys($headlineLines);
+        $indexOfCurrentHeadlineLine = array_search($headlineLineNumber, $headlineLineNumbers, true);
+
+        return $headlineLineNumbers[$indexOfCurrentHeadlineLine + 1] ?? null;
+    }
+
+    /**
+     * @param array $headlineLines
+     * @param int $headlineLineNumber
+     * @return int|null
+     */
+    private function getPreviousHeadlineLineNumber(array $headlineLines, int $headlineLineNumber): int|null
+    {
+        $headlineLineNumbers = array_keys($headlineLines);
+        $indexOfCurrentHeadlineLine = array_search($headlineLineNumber, $headlineLineNumbers, true);
+
+        return $headlineLineNumbers[$indexOfCurrentHeadlineLine - 1] ?? null;
+    }
+
+    /**
+     * @param array $fileLines
+     * @param array $headlineLines
+     * @return array
+     */
+    private function addLastLineAsHeadlineToEnsureLastUpgradeNoteIsProcessed(
+        array $fileLines,
+        array $headlineLines,
+    ): array {
+        $lastLineNumber = array_key_last($fileLines);
+        $headlineLines[$lastLineNumber] = $fileLines[$lastLineNumber];
+
+        return $headlineLines;
     }
 }

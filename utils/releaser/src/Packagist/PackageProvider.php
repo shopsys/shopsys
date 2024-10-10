@@ -13,7 +13,7 @@ final class PackageProvider
     /**
      * @var string
      */
-    private const PACKAGE_NAMES = 'packageNames';
+    private const string PACKAGE_NAMES = 'packageNames';
 
     /**
      * @param string $organization
@@ -52,7 +52,7 @@ final class PackageProvider
      * @param array $json
      * @param string $url
      */
-    private function ensureIsValidResponse(array $json, string $url)
+    private function ensureIsValidResponse(array $json, string $url): void
     {
         if (isset($json[self::PACKAGE_NAMES])) {
             return;

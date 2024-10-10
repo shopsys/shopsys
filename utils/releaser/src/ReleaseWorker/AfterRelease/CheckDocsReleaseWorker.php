@@ -39,10 +39,10 @@ final class CheckDocsReleaseWorker extends AbstractShopsysReleaseWorker
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getStage(): string
+    protected function getAllowedStages(): array
     {
-        return Stage::AFTER_RELEASE;
+        return [Stage::AFTER_RELEASE];
     }
 }

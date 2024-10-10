@@ -11,9 +11,7 @@ final class IntervalEvaluator
     /**
      * @var string
      */
-    private const EXACT_VERSION_PATTERN = '#^(v|[0-9])#';
-
-    private bool $isClosedInterval = true;
+    private const string EXACT_VERSION_PATTERN = '#^(v|[0-9])#';
 
     /**
      * @param string $version
@@ -26,7 +24,7 @@ final class IntervalEvaluator
         // e.g. "3.4.15|3.4.16"
         $intervals = Strings::split($version, '#\|{1,2}#');
 
-        $this->isClosedInterval = true;
+        $isClosedInterval = true;
 
         foreach ($intervals as $singleInterval) {
             $singleInterval = trim($singleInterval);
@@ -39,16 +37,16 @@ final class IntervalEvaluator
             } else {
                 if (Strings::match($singleInterval, '#>(.*?),<(.*?)#')) {
                     // is closed probably
-                    $this->isClosedInterval = true;
+                    $isClosedInterval = true;
                 }
 
                 if (Strings::match($singleInterval, '#<(.*?),>(.*?)#')) {
-                    $this->isClosedInterval = false;
+                    $isClosedInterval = false;
                 }
             }
         }
 
-        return $this->isClosedInterval;
+        return $isClosedInterval;
     }
 
     /**

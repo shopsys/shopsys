@@ -7,7 +7,6 @@ namespace Shopsys\Releaser\ReleaseWorker\AfterRelease;
 use PharIo\Version\Version;
 use Shopsys\Releaser\Packagist\PackageProvider;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\Message;
 use Shopsys\Releaser\Stage;
 
 final class CheckPackagesOnPackagistReleaseWorker extends AbstractShopsysReleaseWorker
@@ -20,11 +19,11 @@ final class CheckPackagesOnPackagistReleaseWorker extends AbstractShopsysRelease
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getStage(): string
+    protected function getAllowedStages(): array
     {
-        return Stage::AFTER_RELEASE;
+        return [Stage::AFTER_RELEASE];
     }
 
     /**
@@ -68,7 +67,7 @@ final class CheckPackagesOnPackagistReleaseWorker extends AbstractShopsysRelease
 
             $this->confirm('Confirm the missing versions are fixed');
         } else {
-            $this->symfonyStyle->success(Message::SUCCESS);
+            $this->success();
         }
     }
 }

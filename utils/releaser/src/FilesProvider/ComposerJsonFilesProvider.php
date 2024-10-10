@@ -5,49 +5,38 @@ declare(strict_types=1);
 namespace Shopsys\Releaser\FilesProvider;
 
 use Symfony\Component\Finder\Finder;
-use Symplify\SmartFileSystem\Finder\FinderSanitizer;
-use Symplify\SmartFileSystem\SmartFileInfo;
+use Symfony\Component\Finder\SplFileInfo;
 
-/**
- * Most of the functionality is inspired and copy-pasted from two classes from symplify/monorepo-builder package.
- * We need to include project-base/app/ folder when looking for composer.json files in monorepo,
- * however, project-base/app/var folder needs to be excluded from search due to permissions problem.
- *
- * @see \Symplify\MonorepoBuilder\FileSystem\ComposerJsonProvider
- * @see \Symplify\MonorepoBuilder\PackageComposerFinder
- */
 class ComposerJsonFilesProvider
 {
     /**
-     * @var string[]
-     */
-    protected array $packageDirectories;
-
-    /**
      * @param string[] $packageDirectories
-     * @param \Symplify\SmartFileSystem\Finder\FinderSanitizer $finderSanitizer
      */
-    public function __construct($packageDirectories, protected readonly FinderSanitizer $finderSanitizer)
-    {
-        $this->packageDirectories = $packageDirectories;
+    public function __construct(
+        protected array $packageDirectories,
+    ) {
     }
 
     /**
-     * @return \Symplify\SmartFileSystem\SmartFileInfo[]
+     * @return \Symfony\Component\Finder\SplFileInfo[]
      */
     public function provideAll(): array
     {
-        return array_merge($this->provideExcludingMonorepoComposerJson(), [new SmartFileInfo('composer.json')]);
+        return [
+            ...$this->provideExcludingMonorepoComposerJson(),
+            new SplFileInfo(dirname(__DIR__, 4) . '/composer.json', '', 'composer.json'),
+        ];
     }
 
     /**
-     * @return \Symplify\SmartFileSystem\SmartFileInfo[]
+     * @return \Symfony\Component\Finder\SplFileInfo[]
      */
     public function provideExcludingMonorepoComposerJson(): array
     {
         $finder = Finder::create()
             ->files()
             ->ignoreUnreadableDirs()
+            ->depth(1)
             ->in($this->packageDirectories)
             ->exclude([
                 'vendor',
@@ -56,6 +45,6 @@ class ComposerJsonFilesProvider
             ])
             ->name('composer.json');
 
-        return $this->finderSanitizer->sanitize($finder);
+        return iterator_to_array($finder->getIterator());
     }
 }

@@ -11,11 +11,11 @@ use Shopsys\Releaser\Stage;
 final class CheckoutToReleaseCandidateBranchReleaseWorker extends AbstractShopsysReleaseWorker
 {
     /**
-     * @return string
+     * @return string[]
      */
-    public function getStage(): string
+    protected function getAllowedStages(): array
     {
-        return Stage::RELEASE;
+        return [Stage::RELEASE];
     }
 
     /**
