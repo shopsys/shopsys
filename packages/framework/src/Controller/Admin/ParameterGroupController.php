@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
@@ -26,13 +26,13 @@ class ParameterGroupController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupFacade $parameterGroupFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupDataFactory $parameterGroupDataFactory
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         protected readonly ParameterGroupFacade $parameterGroupFacade,
         protected readonly GridFactory $gridFactory,
         protected readonly ParameterGroupDataFactory $parameterGroupDataFactory,
-        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -170,9 +170,7 @@ class ParameterGroupController extends AdminBaseController
      */
     protected function getGrid(): Grid
     {
-        $domainConfig = $this->adminDomainTabsFacade->getSelectedDomainConfig();
-
-        $queryBuilder = $this->parameterGroupFacade->getOrderedParameterGroupsQueryBuilder($domainConfig->getLocale());
+        $queryBuilder = $this->parameterGroupFacade->getOrderedParameterGroupsQueryBuilder($this->domain->getLocale());
 
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'pg.id');
 
