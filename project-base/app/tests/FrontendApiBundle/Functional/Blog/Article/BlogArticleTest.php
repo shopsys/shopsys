@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Blog\Article;
 
 use App\DataFixtures\Demo\BlogArticleDataFixture;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\GrapesJs\GrapesJsParser;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -148,6 +149,56 @@ class BlogArticleTest extends GraphQlTestCase
         $this->assertArrayHasKey(0, $errors);
         $this->assertArrayHasKey('message', $errors[0]);
         $this->assertSame($expectedErrorMessage, $errors[0]['message']);
+    }
+
+    /**
+     * @param string $referenceName
+     * @param string $expectedImage
+     */
+    #[DataProvider('getImagesDataProvider')]
+    public function testGetBlogArticleImages(string $referenceName, string $expectedImage): void
+    {
+        $blogArticle = $this->getReference($referenceName, BlogArticle::class);
+
+        $query = '
+            query {
+                blogArticle(uuid: "' . $blogArticle->getUuid() . '") {
+                    name
+                    images {
+                        url
+                    }
+                }
+            }
+        ';
+
+        $response = $this->getResponseContentForQuery($query);
+        $responseData = $this->getResponseDataForGraphQlType($response, 'blogArticle');
+
+        $this->assertArrayHasKey('images', $responseData);
+        $this->assertCount(1, $responseData['images']);
+        $this->assertArrayHasKey('url', $responseData['images'][0]);
+        $this->assertStringEndsWith($expectedImage, $responseData['images'][0]['url']);
+    }
+
+    /**
+     * @return iterable
+     */
+    public static function getImagesDataProvider(): iterable
+    {
+        yield [
+            'referenceName' => BlogArticleDataFixture::DEMO_BLOG_ARTICLE_PREFIX . '46',
+            'expectedImage' => '600.jpg',
+        ];
+
+        yield [
+            'referenceName' => BlogArticleDataFixture::DEMO_BLOG_ARTICLE_PREFIX . '47',
+            'expectedImage' => '601.jpg',
+        ];
+
+        yield [
+            'referenceName' => BlogArticleDataFixture::DEMO_BLOG_ARTICLE_PREFIX . '48',
+            'expectedImage' => '602.jpg',
+        ];
     }
 
     /**

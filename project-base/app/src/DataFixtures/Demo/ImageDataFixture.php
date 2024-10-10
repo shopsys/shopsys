@@ -17,6 +17,7 @@ use Doctrine\Persistence\ObjectManager;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\Image\Image;
+use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 use Symfony\Component\Filesystem\Filesystem;
@@ -79,7 +80,8 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         $this->processProductsImages();
         $this->processSliderItemsImages();
         $this->processStoresImages();
-        $this->processMainBlogCategoryImage();
+        $this->processBlogCategoryImages();
+        $this->processBlogArticleImages();
 
         $this->syncDatabaseSequences(['images.id']);
     }
@@ -302,18 +304,44 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         }
     }
 
-    private function processMainBlogCategoryImage(): void
+    private function processBlogArticleImages(): void
     {
-        $mainBlogCategoryImageId = 500;
+        $blogArticlesImagesData = [
+            46 => 600,
+            47 => 601,
+            48 => 602,
+        ];
 
-        $mainBlogCategory = $this->getReference(BlogArticleDataFixture::FIRST_DEMO_BLOG_CATEGORY, BlogCategory::class);
-        $names = [];
+        foreach ($blogArticlesImagesData as $blogArticleId => $imageId) {
+            $blogArticle = $this->getReference(BlogArticleDataFixture::DEMO_BLOG_ARTICLE_PREFIX . $blogArticleId, BlogArticle::class);
+            $names = [];
 
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
-            $names[$locale] = $mainBlogCategory->getName($locale);
+            foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+                $names[$locale] = sprintf('%s', $blogArticle->getName($locale));
+            }
+
+            $this->saveImageIntoDb($blogArticle->getId(), 'blogArticle', $imageId, $names);
         }
+    }
 
-        $this->saveImageIntoDb($mainBlogCategory->getId(), 'blogCategory', $mainBlogCategoryImageId, $names);
+    private function processBlogCategoryImages(): void
+    {
+        $blogCategoryImagesData = [
+            BlogArticleDataFixture::FIRST_DEMO_BLOG_CATEGORY => 500,
+            BlogArticleDataFixture::FIRST_DEMO_BLOG_SUBCATEGORY => 501,
+        ];
+
+        foreach ($blogCategoryImagesData as $blogCategoryReferenceName => $imageId) {
+            $blogCategory = $this->getReference($blogCategoryReferenceName, BlogCategory::class);
+
+            $names = [];
+
+            foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+                $names[$locale] = $blogCategory->getName($locale);
+            }
+
+            $this->saveImageIntoDb($blogCategory->getId(), 'blogCategory', $imageId, $names);
+        }
     }
 
     /**
@@ -379,6 +407,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
     public function getDependencies(): array
     {
         return [
+            BlogArticleDataFixture::class,
             BrandDataFixture::class,
             CategoryDataFixture::class,
             PaymentDataFixture::class,

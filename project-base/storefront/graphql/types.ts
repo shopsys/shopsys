@@ -339,6 +339,8 @@ export type TypeBlogCategory = TypeBreadcrumb & TypeHreflang & TypeSlug & {
   hreflangLinks: Array<TypeHreflangLink>;
   /** The blog category absolute URL */
   link: Scalars['String']['output'];
+  /** Blog category image */
+  mainImage: Maybe<TypeImage>;
   /** The blog category name */
   name: Scalars['String']['output'];
   /** The blog category parent */
@@ -362,6 +364,11 @@ export type TypeBlogCategoryBlogArticlesArgs = {
   first: InputMaybe<Scalars['Int']['input']>;
   last: InputMaybe<Scalars['Int']['input']>;
   onlyHomepageArticles?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+export type TypeBlogCategoryMainImageArgs = {
+  type?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Represents a brand */

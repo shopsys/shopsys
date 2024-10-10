@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Blog\Category;
 
 use App\DataFixtures\Demo\BlogArticleDataFixture;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -223,6 +224,52 @@ class BlogCategoryTest extends GraphQlTestCase
         $this->assertArrayHasKey(0, $errors);
         $this->assertArrayHasKey('message', $errors[0]);
         $this->assertSame($expectedErrorMessage, $errors[0]['message']);
+    }
+
+    /**
+     * @param string $referenceName
+     * @param string|null $expectedImage
+     */
+    #[DataProvider('getBlogCategoryImageDataProvider')]
+    public function testGetBlogCategoryImage(string $referenceName, ?string $expectedImage): void
+    {
+        $blogCategory = $this->getReference($referenceName, BlogCategory::class);
+        $query = '
+            query {
+                blogCategory(uuid: "' . $blogCategory->getUuid() . '") {
+                    mainImage {
+                        url
+                    }
+                }
+            }
+        ';
+
+        $response = $this->getResponseContentForQuery($query);
+        $data = $this->getResponseDataForGraphQlType($response, 'blogCategory');
+
+        $this->assertArrayHasKey('mainImage', $data);
+
+        if ($expectedImage === null) {
+            $this->assertNull($data['mainImage']);
+        } else {
+            $this->assertStringEndsWith($expectedImage, $data['mainImage']['url']);
+        }
+    }
+
+    /**
+     * @return iterable
+     */
+    public static function getBlogCategoryImageDataProvider(): iterable
+    {
+        yield [
+            'referenceName' => BlogArticleDataFixture::FIRST_DEMO_BLOG_SUBCATEGORY,
+            'expectedImage' => '501.jpg',
+        ];
+
+        yield [
+            'referenceName' => BlogArticleDataFixture::SECOND_DEMO_BLOG_SUBCATEGORY,
+            'expectedImage' => null,
+        ];
     }
 
     /**
