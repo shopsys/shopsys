@@ -65,9 +65,6 @@
     "composer/metadata-minifier": {
         "version": "1.0.0"
     },
-    "composer/package-versions-deprecated": {
-        "version": "1.11.99.5"
-    },
     "composer/pcre": {
         "version": "1.0.1"
     },
@@ -329,9 +326,6 @@
     },
     "myclabs/deep-copy": {
         "version": "1.9.3"
-    },
-    "nette/finder": {
-        "version": "v2.5.1"
     },
     "nette/utils": {
         "version": "v2.5.3"
@@ -983,29 +977,8 @@
     "symfony/yaml": {
         "version": "v3.4.32"
     },
-    "symplify/autowire-array-parameter": {
-        "version": "v7.2.3"
-    },
-    "symplify/composer-json-manipulator": {
-        "version": "v7.3.18"
-    },
     "symplify/easy-coding-standard": {
         "version": "v5.4.13"
-    },
-    "symplify/monorepo-builder": {
-        "version": "v5.4.16"
-    },
-    "symplify/package-builder": {
-        "version": "v5.4.16"
-    },
-    "symplify/set-config-resolver": {
-        "version": "v7.2.3"
-    },
-    "symplify/smart-file-system": {
-        "version": "v7.2.3"
-    },
-    "symplify/symplify-kernel": {
-        "version": "8.3.48"
     },
     "theseer/tokenizer": {
         "version": "1.1.3"

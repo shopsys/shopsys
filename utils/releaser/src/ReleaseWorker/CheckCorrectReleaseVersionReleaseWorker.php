@@ -23,11 +23,11 @@ final class CheckCorrectReleaseVersionReleaseWorker extends AbstractShopsysRelea
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getStage(): string
+    protected function getAllowedStages(): array
     {
-        return Stage::RELEASE_CANDIDATE;
+        return Stage::getAllStages();
     }
 
     /**

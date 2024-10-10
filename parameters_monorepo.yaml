@@ -1,3 +1,6 @@
+imports:
+    - { resource: 'utils/releaser/config/services.php', ignore_errors: true }
+
 parameters:
     shopsys.framework.root_dir: '%kernel.project_dir%/../../packages/framework'
     shopsys.vendor_dir: '%kernel.project_dir%/../../vendor'

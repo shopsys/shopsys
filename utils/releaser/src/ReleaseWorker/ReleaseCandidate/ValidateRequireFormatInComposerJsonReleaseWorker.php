@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace Shopsys\Releaser\ReleaseWorker\ReleaseCandidate;
 
+use Nette\Utils\Json;
 use Nette\Utils\Strings;
 use PharIo\Version\Version;
 use Shopsys\Releaser\FilesProvider\ComposerJsonFilesProvider;
+use Shopsys\Releaser\FilesProvider\PackageNamesProvider;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\Message;
 use Shopsys\Releaser\Stage;
 use Symfony\Component\Finder\SplFileInfo;
-use Symplify\ComposerJsonManipulator\FileSystem\JsonFileManager;
-use Symplify\MonorepoBuilder\Package\PackageNamesProvider;
 
 final class ValidateRequireFormatInComposerJsonReleaseWorker extends AbstractShopsysReleaseWorker
 {
@@ -20,12 +19,10 @@ final class ValidateRequireFormatInComposerJsonReleaseWorker extends AbstractSho
 
     /**
      * @param \Shopsys\Releaser\FilesProvider\ComposerJsonFilesProvider $composerJsonFilesProvider
-     * @param \Symplify\ComposerJsonManipulator\FileSystem\JsonFileManager $jsonFileManager
-     * @param \Symplify\MonorepoBuilder\Package\PackageNamesProvider $packageNamesProvider
+     * @param \Shopsys\Releaser\FilesProvider\PackageNamesProvider $packageNamesProvider
      */
     public function __construct(
         private readonly ComposerJsonFilesProvider $composerJsonFilesProvider,
-        private readonly JsonFileManager $jsonFileManager,
         private readonly PackageNamesProvider $packageNamesProvider,
     ) {
     }
@@ -50,15 +47,15 @@ final class ValidateRequireFormatInComposerJsonReleaseWorker extends AbstractSho
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
     ): void {
-        foreach ($this->composerJsonFilesProvider->provideAll() as $smartFileInfo) {
-            $jsonContent = $this->jsonFileManager->loadFromFileInfo($smartFileInfo);
+        foreach ($this->composerJsonFilesProvider->provideAll() as $splFileInfo) {
+            $jsonContent = Json::decode($splFileInfo->getContents(), Json::FORCE_ARRAY);
 
-            $this->validateVersions($jsonContent, 'require', $smartFileInfo);
-            $this->validateVersions($jsonContent, 'require-dev', $smartFileInfo);
+            $this->validateVersions($jsonContent, 'require', $splFileInfo);
+            $this->validateVersions($jsonContent, 'require-dev', $splFileInfo);
         }
 
         if ($this->isSuccessful) {
-            $this->symfonyStyle->success(Message::SUCCESS);
+            $this->success();
         } else {
             $this->confirm('Confirm all the requires are in the valid format');
         }
@@ -111,10 +108,10 @@ final class ValidateRequireFormatInComposerJsonReleaseWorker extends AbstractSho
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getStage(): string
+    protected function getAllowedStages(): array
     {
-        return Stage::RELEASE_CANDIDATE;
+        return [Stage::RELEASE_CANDIDATE];
     }
 }

@@ -40,10 +40,10 @@ final class StopMergingReleaseWorker extends AbstractShopsysReleaseWorker
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getStage(): string
+    protected function getAllowedStages(): array
     {
-        return Stage::RELEASE_CANDIDATE;
+        return [Stage::RELEASE_CANDIDATE];
     }
 }

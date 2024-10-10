@@ -9,15 +9,27 @@ final class Stage
     /**
      * @var string
      */
-    public const RELEASE_CANDIDATE = 'release-candidate';
+    public const string RELEASE_CANDIDATE = 'release-candidate';
 
     /**
      * @var string
      */
-    public const RELEASE = 'release';
+    public const string RELEASE = 'release';
 
     /**
      * @var string
      */
-    public const AFTER_RELEASE = 'after-release';
+    public const string AFTER_RELEASE = 'after-release';
+
+    /**
+     * @return string[]
+     */
+    public static function getAllStages(): array
+    {
+        return [
+            self::RELEASE_CANDIDATE,
+            self::RELEASE,
+            self::AFTER_RELEASE,
+        ];
+    }
 }

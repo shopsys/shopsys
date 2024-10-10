@@ -9,7 +9,6 @@ use PharIo\Version\Version;
 use Shopsys\Releaser\FileManipulator\FrameworkBundleVersionFileManipulator;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
 use Shopsys\Releaser\Stage;
-use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class SetFrameworkBundleVersionToDevReleaseWorker extends AbstractShopsysReleaseWorker
 {
@@ -54,11 +53,11 @@ final class SetFrameworkBundleVersionToDevReleaseWorker extends AbstractShopsysR
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getStage(): string
+    protected function getAllowedStages(): array
     {
-        return Stage::AFTER_RELEASE;
+        return [Stage::AFTER_RELEASE];
     }
 
     /**
@@ -67,10 +66,10 @@ final class SetFrameworkBundleVersionToDevReleaseWorker extends AbstractShopsysR
     private function updateFrameworkBundleVersion(Version $version): void
     {
         $upgradeFilePath = getcwd() . FrameworkBundleVersionFileManipulator::FRAMEWORK_BUNDLE_VERSION_FILE_PATH;
-        $upgradeFileInfo = new SmartFileInfo($upgradeFilePath);
+        $upgradeFileContent = FileSystem::read($upgradeFilePath);
 
         $newUpgradeContent = $this->frameworkBundleVersionFileManipulator->updateFrameworkBundleVersion(
-            $upgradeFileInfo,
+            $upgradeFileContent,
             $version,
         );
 

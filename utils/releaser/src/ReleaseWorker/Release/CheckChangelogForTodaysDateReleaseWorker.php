@@ -5,16 +5,14 @@ declare(strict_types=1);
 namespace Shopsys\Releaser\ReleaseWorker\Release;
 
 use LogicException;
+use Nette\IOException;
 use Nette\Utils\DateTime;
 use Nette\Utils\FileSystem;
 use Nette\Utils\Strings;
 use PharIo\Version\Version;
 use Shopsys\Releaser\FileManipulator\ChangelogFileManipulator;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\Message;
 use Shopsys\Releaser\Stage;
-use Symplify\SmartFileSystem\Exception\FileNotFoundException;
-use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysReleaseWorker
 {
@@ -55,22 +53,20 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
         $todayInString = $this->getTodayAsString();
 
 
-
         /**
          * @see https://regex101.com/r/izBgtv/6
          */
         $pattern = '#\#\# \[' . preg_quote($version->getOriginalString(), '#') . '\]\(.*\) \((\d+-\d+-\d+)\)#';
 
         try {
-            $smartFileInfo = new SmartFileInfo($changelogFilePath);
-            $fileContent = $smartFileInfo->getContents();
+            $fileContent = FileSystem::read($changelogFilePath);
 
             $match = Strings::match($fileContent, $pattern);
 
             if ($match === null) {
                 throw new LogicException('Release headline not found in file');
             }
-        } catch (FileNotFoundException) {
+        } catch (IOException) {
             $this->symfonyStyle->error(sprintf('Unable to find file "%s".', $changelogFilePath));
             $this->renderCommonError();
 
@@ -94,7 +90,7 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
             FileSystem::write($changelogFilePath, $newChangelogContent);
 
             $infoMessage = sprintf(
-                $smartFileInfo->getFilename() . ' date for "%s" version was updated to "%s".',
+                basename($changelogFilePath) . ' date for "%s" version was updated to "%s".',
                 $version->getVersionString(),
                 $todayInString,
             );
@@ -103,7 +99,7 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
             $this->commit($infoMessage);
         }
 
-        $this->symfonyStyle->success(Message::SUCCESS);
+        $this->success();
     }
 
     /**
@@ -120,14 +116,14 @@ final class CheckChangelogForTodaysDateReleaseWorker extends AbstractShopsysRele
 
         $this->confirm('Confirm you have manually checked the release date in the appropriate changelog file');
 
-        $this->symfonyStyle->success(Message::SUCCESS);
+        $this->success();
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getStage(): string
+    protected function getAllowedStages(): array
     {
-        return Stage::RELEASE;
+        return [Stage::RELEASE];
     }
 }
