@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\Releaser\ReleaseWorker;
 
 use PharIo\Version\Version;
-use Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\StageAwareInterface;
 
-interface StageWorkerInterface extends StageAwareInterface
+interface StageWorkerInterface
 {
     /**
      * 1 line description of what this worker does, in a commanding form! e.g.:
@@ -34,10 +33,8 @@ interface StageWorkerInterface extends StageAwareInterface
     ): void;
 
     /**
-     * Set name of the stage, so workers can be filtered by --stage option:
-     * e.g "vendor/bin/monorepo-builder release v5.0.0 --stage <name>"
-     *
-     * @return string
+     * @param string $stage
+     * @return bool
      */
-    public function getStage(): string;
+    public function belongToStage(string $stage): bool;
 }

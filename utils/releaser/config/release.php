@@ -2,36 +2,30 @@
 
 declare(strict_types=1);
 
-use Shopsys\Releaser\ReleaseWorker\CheckCorrectReleaseVersionReleaseWorker;
+use Shopsys\Releaser\ReleaseWorker\CheckUncommittedChangesReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\Release\CheckChangelogForTodaysDateReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\Release\CheckoutToReleaseCandidateBranchReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\Release\CheckReleaseDraftAndReleaseItReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\Release\CheckUncommittedChangesReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\Release\CreateAndCommitLockFilesReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\Release\CreateAndPushGitTagReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\Release\CreateAndPushGitTagsExceptProjectBaseReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\Release\MergeReleaseCandidateBranchReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\Release\SetMutualDependenciesToVersionReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\Release\TagPhpImageReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\Release\VerifyInitialBranchReleaseWorker;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Shopsys\Releaser\ReleaseWorker\CheckCorrectReleaseVersionReleaseWorker;
+use Shopsys\Releaser\ReleaseWorker\VerifyInitialBranchReleaseWorker;
 
-/**
- * @param \Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator $containerConfigurator
- */
-return static function (ContainerConfigurator $containerConfigurator): void {
-    $services = $containerConfigurator->services();
-
-    $services->set(CheckCorrectReleaseVersionReleaseWorker::class);
-    $services->set(VerifyInitialBranchReleaseWorker::class);
-    $services->set(CheckUncommittedChangesReleaseWorker::class);
-    $services->set(CheckoutToReleaseCandidateBranchReleaseWorker::class);
-    $services->set(CheckChangelogForTodaysDateReleaseWorker::class);
-    $services->set(SetMutualDependenciesToVersionReleaseWorker::class);
-    $services->set(MergeReleaseCandidateBranchReleaseWorker::class);
-    $services->set(CreateAndPushGitTagsExceptProjectBaseReleaseWorker::class);
-    $services->set(CreateAndCommitLockFilesReleaseWorker::class);
-    $services->set(TagPhpImageReleaseWorker::class);
-    $services->set(CreateAndPushGitTagReleaseWorker::class);
-    $services->set(CheckReleaseDraftAndReleaseItReleaseWorker::class);
-};
+return [
+    CheckCorrectReleaseVersionReleaseWorker::class,
+    VerifyInitialBranchReleaseWorker::class,
+    CheckUncommittedChangesReleaseWorker::class,
+    CheckoutToReleaseCandidateBranchReleaseWorker::class,
+    CheckChangelogForTodaysDateReleaseWorker::class,
+    SetMutualDependenciesToVersionReleaseWorker::class,
+    MergeReleaseCandidateBranchReleaseWorker::class,
+    CreateAndPushGitTagsExceptProjectBaseReleaseWorker::class,
+    CreateAndCommitLockFilesReleaseWorker::class,
+    TagPhpImageReleaseWorker::class,
+    CreateAndPushGitTagReleaseWorker::class,
+    CheckReleaseDraftAndReleaseItReleaseWorker::class,
+];
