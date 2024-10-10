@@ -72,10 +72,10 @@ final class CreateAndCommitLockFilesReleaseWorker extends AbstractShopsysRelease
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getStage(): string
+    protected function getAllowedStages(): array
     {
-        return Stage::RELEASE;
+        return [Stage::RELEASE];
     }
 }

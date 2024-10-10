@@ -15,7 +15,7 @@ abstract class AbstractCheckPackagesGithubActionsBuildsReleaseWorker extends Abs
     /**
      * @var string
      */
-    private const STATUS_SUCCESS = 'success';
+    private const string STATUS_SUCCESS = 'success';
 
     /**
      * @param \Shopsys\Releaser\GithubActions\GithubActionsStatusReporter $githubActionsStatusReporter

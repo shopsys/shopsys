@@ -7,18 +7,9 @@ namespace Shopsys\Releaser\ReleaseWorker\ReleaseCandidate;
 use PharIo\Version\Version;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
 use Shopsys\Releaser\Stage;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 final class DumpTranslationsReleaseWorker extends AbstractShopsysReleaseWorker
 {
-    /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyle
-     */
-    public function __construct(SymfonyStyle $symfonyStyle)
-    {
-        $this->symfonyStyle = $symfonyStyle;
-    }
-
     /**
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
@@ -67,11 +58,11 @@ final class DumpTranslationsReleaseWorker extends AbstractShopsysReleaseWorker
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getStage(): string
+    protected function getAllowedStages(): array
     {
-        return Stage::RELEASE_CANDIDATE;
+        return [Stage::RELEASE_CANDIDATE];
     }
 
     /**
@@ -79,10 +70,10 @@ final class DumpTranslationsReleaseWorker extends AbstractShopsysReleaseWorker
      */
     private function hasOnlyDeletedFiles(): bool
     {
-        $allFilesStatus = $this->getProcessResult(['git', 'status', '-s']);
+        $allFilesStatus = $this->processRunner->run('git status --porcelain');
         $allFilesCount = $this->countFilesInStatus($allFilesStatus);
 
-        $deletedFilesStatus = $this->getProcessResult(['git', 'ls-files', '-d']);
+        $deletedFilesStatus = $this->processRunner->run('git ls-files -d');
         $deletedFilesCount = $this->countFilesInStatus($deletedFilesStatus);
 
         // has only deleted files or has also some modified/added files

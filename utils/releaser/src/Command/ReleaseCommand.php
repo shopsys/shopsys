@@ -5,60 +5,57 @@ declare(strict_types=1);
 namespace Shopsys\Releaser\Command;
 
 use InvalidArgumentException;
+use PharIo\Version\Version;
 use Shopsys\Releaser\ReleaseWorker\ReleaseWorkerProvider;
 use Shopsys\Releaser\ReleaseWorker\StageWorkerInterface;
+use Shopsys\Releaser\Stage;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symplify\MonorepoBuilder\Release\Guard\ReleaseGuard;
-use Symplify\MonorepoBuilder\Release\ValueObject\SemVersion;
-use Symplify\MonorepoBuilder\Release\Version\VersionFactory;
-use Symplify\MonorepoBuilder\ValueObject\Option;
-use Symplify\PackageBuilder\Console\Command\CommandNaming;
-use Symplify\PackageBuilder\Console\ShellCode;
 
+#[AsCommand(
+    name: 'monorepo:release',
+    description: 'Perform release process with set Release Workers.',
+)]
 final class ReleaseCommand extends Command
 {
-    private const RESUME_STEP = 'resume-step';
-    private const INITIAL_BRANCH_NAME = 'initial-branch';
+    private const string RESUME_STEP = 'resume-step';
+    private const string INITIAL_BRANCH_NAME = 'initial-branch';
+    private const string VERSION = 'version';
+    private const string DRY_RUN = 'dry-run';
+    private const string STAGE = 'stage';
 
     /**
-     * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyle
      * @param \Shopsys\Releaser\ReleaseWorker\ReleaseWorkerProvider $releaseWorkerProvider
-     * @param \Symplify\MonorepoBuilder\Release\Guard\ReleaseGuard $releaseGuard
-     * @param \Symplify\MonorepoBuilder\Release\Version\VersionFactory $versionFactory
+     * @param \Shopsys\Releaser\Command\SymfonyStyleFactory $symfonyStyleFactory
      */
     public function __construct(
-        private readonly SymfonyStyle $symfonyStyle,
         private readonly ReleaseWorkerProvider $releaseWorkerProvider,
-        private readonly ReleaseGuard $releaseGuard,
-        private readonly VersionFactory $versionFactory,
+        private readonly SymfonyStyleFactory $symfonyStyleFactory,
     ) {
         parent::__construct();
     }
 
     protected function configure(): void
     {
-        $this->setName(CommandNaming::classToName(self::class));
-        $this->setDescription('Perform release process with set Release Workers.');
-
         $description = sprintf(
             'Release version, in format "<major>.<minor>.<patch>" or "v<major>.<minor>.<patch> or one of keywords: "%s"',
-            implode('", "', SemVersion::ALL),
+            implode('", "', ['major', 'minor', 'patch']),
         );
-        $this->addArgument(Option::VERSION, InputArgument::REQUIRED, $description);
+        $this->addArgument(self::VERSION, InputArgument::REQUIRED, $description);
 
         $this->addOption(
-            Option::DRY_RUN,
+            self::DRY_RUN,
             null,
             InputOption::VALUE_NONE,
             'Do not perform operations, just their preview',
         );
 
-        $this->addOption(Option::STAGE, null, InputOption::VALUE_REQUIRED, 'Name of stage to perform');
+        $this->addOption(self::STAGE, null, InputOption::VALUE_REQUIRED, 'Name of stage to perform');
         $this->addOption(self::RESUME_STEP, null, InputOption::VALUE_REQUIRED, 'Number of step to start from');
         $this->addOption(self::INITIAL_BRANCH_NAME, null, InputOption::VALUE_REQUIRED, 'Name of branch you are releasing version on');
     }
@@ -70,26 +67,29 @@ final class ReleaseCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $symfonyStyle = $this->symfonyStyleFactory->createAndStoreSymfonyStyle($input, $output);
+
         // validation phase
         $stage = $this->resolveStage($input);
         $step = $this->resolveStep($input);
         $initialBranchName = $this->resolveInitialBranchName($input);
 
-        $this->releaseGuard->guardStage($stage);
+        $this->checkStage($stage);
 
         /** @var string $versionArgument */
-        $versionArgument = $input->getArgument(Option::VERSION);
-        $version = $this->versionFactory->createValidVersion($versionArgument, $stage);
+        $versionArgument = $input->getArgument(self::VERSION);
+
+        $version = new Version($versionArgument);
 
         $activeReleaseWorkers = $this->releaseWorkerProvider->provideByStage($stage, $step);
 
         $totalWorkerCount = count($activeReleaseWorkers) + $step;
-        $isDryRun = (bool)$input->getOption(Option::DRY_RUN);
+        $isDryRun = (bool)$input->getOption(self::DRY_RUN);
 
         foreach ($activeReleaseWorkers as $releaseWorker) {
             $title = sprintf('%d/%d) %s', ++$step, $totalWorkerCount, $releaseWorker->getDescription($version, $initialBranchName));
-            $this->symfonyStyle->title($title);
-            $this->printReleaseWorkerMetadata($releaseWorker);
+            $symfonyStyle->title($title);
+            $this->printReleaseWorkerMetadata($releaseWorker, $symfonyStyle);
 
             if (!$isDryRun) {
                 $releaseWorker->work($version, $initialBranchName);
@@ -97,16 +97,16 @@ final class ReleaseCommand extends Command
         }
 
         if ($isDryRun) {
-            $this->symfonyStyle->note('Running in dry mode, nothing is changed');
+            $symfonyStyle->note('Running in dry mode, nothing is changed');
         } elseif ($stage === null) {
-            $this->symfonyStyle->success(sprintf('Version "%s" is now released!', $version->getVersionString()));
+            $symfonyStyle->success(sprintf('Version "%s" is now released!', $version->getVersionString()));
         } else {
-            $this->symfonyStyle->success(
+            $symfonyStyle->success(
                 sprintf('Stage "%s" for version "%s" is now finished!', $stage, $version->getVersionString()),
             );
         }
 
-        return ShellCode::SUCCESS;
+        return Command::SUCCESS;
     }
 
     /**
@@ -115,9 +115,25 @@ final class ReleaseCommand extends Command
      */
     private function resolveStage(InputInterface $input): ?string
     {
-        $stage = $input->getOption(Option::STAGE);
+        $stage = $input->getOption(self::STAGE);
 
         return $stage !== null ? (string)$stage : $stage;
+    }
+
+    /**
+     * @param string|null $stage
+     */
+    private function checkStage(?string $stage): void
+    {
+        if (in_array($stage, Stage::getAllStages(), true)) {
+            return;
+        }
+
+        throw new InvalidArgumentException(sprintf(
+            'Stage "%s" was not found. Pick one of: "%s"',
+            $stage,
+            implode('", "', Stage::getAllStages()),
+        ));
     }
 
     /**
@@ -148,15 +164,18 @@ final class ReleaseCommand extends Command
 
     /**
      * @param \Shopsys\Releaser\ReleaseWorker\StageWorkerInterface $releaseWorker
+     * @param \Symfony\Component\Console\Style\SymfonyStyle $symfonyStyle
      */
-    private function printReleaseWorkerMetadata(StageWorkerInterface $releaseWorker): void
-    {
-        if (!$this->symfonyStyle->isVerbose()) {
+    private function printReleaseWorkerMetadata(
+        StageWorkerInterface $releaseWorker,
+        SymfonyStyle $symfonyStyle,
+    ): void {
+        if (!$symfonyStyle->isVerbose()) {
             return;
         }
 
         // show class on -v/--verbose/--debug
-        $this->symfonyStyle->writeln('class: ' . get_class($releaseWorker));
-        $this->symfonyStyle->newLine();
+        $symfonyStyle->writeln('class: ' . get_class($releaseWorker));
+        $symfonyStyle->newLine();
     }
 }
