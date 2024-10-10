@@ -6,7 +6,10 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 export const useCartPageNavigation = () => {
     const { url } = useDomainConfig();
     const router = useRouter();
-    const [transportAndPaymentUrl] = getInternationalizedStaticUrls(['/order/transport-and-payment'], url);
+    const [transportAndPaymentUrl, convertim] = getInternationalizedStaticUrls(
+        ['/order/transport-and-payment', '/order/convertim'],
+        url,
+    );
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
 
     const goToPreviousStepFromCartPage = () => {
@@ -16,8 +19,14 @@ export const useCartPageNavigation = () => {
 
     const goToNextStepFromCartPage = () => {
         updatePageLoadingState({ isPageLoading: true, redirectPageType: 'transport-and-payment' });
+        if (getIsConvertimActive()) {
+            router.push(convertim);
+            return;
+        }
         router.push(transportAndPaymentUrl);
     };
 
     return { goToPreviousStepFromCartPage, goToNextStepFromCartPage };
 };
+
+export const getIsConvertimActive = () => true;
