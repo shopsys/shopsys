@@ -99,7 +99,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.2.2",
         "doctrine/migrations": "^3.4.1",
         "doctrine/orm": "^2.11.2",
-        "doctrine/persistence": "^2.4",
+        "doctrine/persistence": "^3.3.3",
         "elasticsearch/elasticsearch": "^7.6.1",
         "endroid/qr-code": "^5.1.0",
         "enlightn/security-checker": "^1.3",

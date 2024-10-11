@@ -27,7 +27,7 @@
         "doctrine/dbal": "^3.8.5",
         "doctrine/doctrine-bundle": "^2.5.7",
         "doctrine/orm": "^2.11.2",
-        "doctrine/persistence": "^2.4",
+        "doctrine/persistence": "^3.3.3",
         "shopsys/form-types-bundle": "16.0.x-dev",
         "shopsys/framework": "16.0.x-dev",
         "shopsys/migrations": "16.0.x-dev",
