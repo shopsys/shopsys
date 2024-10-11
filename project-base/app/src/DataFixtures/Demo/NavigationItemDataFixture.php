@@ -160,18 +160,18 @@ class NavigationItemDataFixture extends AbstractReferenceFixture implements Depe
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData $navigationItemData
-     * @param array $categoriesByColumn
+     * @param array<int, string[]> $categoryReferenceNamesByColumn
      */
     private function addCategoriesToNavigationItem(
         NavigationItemData $navigationItemData,
-        array $categoriesByColumn,
+        array $categoryReferenceNamesByColumn,
     ): void {
-        foreach ($categoriesByColumn as $columnNumber => $categories) {
+        foreach ($categoryReferenceNamesByColumn as $columnNumber => $categoryReferenceNames) {
             $navigationItemData->categoriesByColumnNumber[$columnNumber] = array_map(
-                function ($category) {
+                function (string $category) {
                     return $this->getCategoryReference($category);
                 },
-                $categories,
+                $categoryReferenceNames,
             );
         }
     }
