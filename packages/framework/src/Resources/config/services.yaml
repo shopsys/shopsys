@@ -63,8 +63,6 @@ services:
             - [seed, ['%faker.seed%']]
         factory: [Faker\Factory, create]
 
-    Ivory\OrderedForm\Orderer\FormOrderer: ~
-
     Metadata\MetadataFactory:
         alias: prezent_doctrine_translatable.metadata_factory
 
@@ -1045,11 +1043,6 @@ services:
         tags:
             - { name: 'kernel.event_subscriber' }
             - { name: 'monolog.logger', channel: 'request' }
-
-    form.resolved_type_factory:
-        arguments:
-            - '@Ivory\OrderedForm\Orderer\FormOrderer'
-        class: Ivory\OrderedForm\OrderedResolvedFormTypeFactory
 
     fragment.handler:
         arguments:
