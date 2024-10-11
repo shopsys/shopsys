@@ -13,6 +13,7 @@ describe('Simple page visit tests with screenshots', () => {
 
     it('[Homepage] homepage visit with screenshot', function () {
         cy.visitAndWaitForStableAndInteractiveDOM('/');
+        changeBlogArticleDynamicPartsToStaticDemodata();
         takeSnapshotAndCompare(this.test?.title, 'homepage', {
             blackout: [
                 { tid: TIDs.product_list_item_image },

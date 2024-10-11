@@ -9,7 +9,6 @@ import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFr
 import { TypeRecommendationType } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
 import { useSessionStore } from 'store/useSessionStore';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
@@ -25,20 +24,11 @@ type AddToCartPopupProps = {
 export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { product, quantity } }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
-    const router = useRouter();
     const { url, isLuigisBoxActive } = useDomainConfig();
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     const productUrl = (product.__typename === 'Variant' && product.mainVariant?.slug) || product.slug;
-
-    const navigateToCart = () => {
-        if (router.asPath === cartUrl) {
-            updatePortalContent(null);
-        } else {
-            router.push(cartUrl);
-        }
-    };
 
     return (
         <Popup key={key} hideCloseButton className="w-11/12 max-w-5xl" contentClassName="overflow-y-auto">
@@ -100,9 +90,11 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
                     {t('Back to shop')}
                 </Button>
 
-                <Button className="mt-2 w-full md:w-auto" tid={TIDs.popup_go_to_cart_button} onClick={navigateToCart}>
-                    {t('To cart')}
-                </Button>
+                <ExtendedNextLink className="mt-2 w-full md:w-auto" href={cartUrl} skeletonType="cart">
+                    <Button className="mt-2 w-full md:w-auto" tid={TIDs.popup_go_to_cart_button}>
+                        {t('To cart')}
+                    </Button>
+                </ExtendedNextLink>
             </div>
         </Popup>
     );

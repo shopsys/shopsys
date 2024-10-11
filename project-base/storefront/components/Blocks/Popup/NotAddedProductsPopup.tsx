@@ -1,8 +1,8 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import useTranslation from 'next-translate/useTranslation';
-import { useRouter } from 'next/router';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 type NotAddedProductsPopupProps = {
@@ -11,7 +11,6 @@ type NotAddedProductsPopupProps = {
 
 export const NotAddedProductsPopup: FC<NotAddedProductsPopupProps> = ({ notAddedProductNames }) => {
     const { t } = useTranslation();
-    const router = useRouter();
     const { url } = useDomainConfig();
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
 
@@ -26,13 +25,9 @@ export const NotAddedProductsPopup: FC<NotAddedProductsPopupProps> = ({ notAdded
                 ))}
             </ul>
             <div className="mt-4 flex justify-end">
-                <Button
-                    onClick={() => {
-                        router.push(cartUrl);
-                    }}
-                >
-                    {t('Go to cart')}
-                </Button>
+                <ExtendedNextLink className="mt-2 w-full md:w-auto" href={cartUrl} skeletonType="cart">
+                    <Button>{t('Go to cart')}</Button>
+                </ExtendedNextLink>
             </div>
         </Popup>
     );

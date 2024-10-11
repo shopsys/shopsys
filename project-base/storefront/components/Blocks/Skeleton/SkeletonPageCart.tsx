@@ -7,7 +7,7 @@ export const SkeletonPageCart: FC = () => (
     <Webline>
         <Skeleton className="mb-6 h-10 w-full lg:mb-3" />
         <div className="mb-6 lg:mb-8">
-            {createEmptyArray(4).map((index) => (
+            {createEmptyArray(4).map((_, index) => (
                 <Skeleton key={index} className="h-[101px] w-full" />
             ))}
         </div>
