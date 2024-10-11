@@ -1,5 +1,6 @@
 import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { TypeSimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
+import { TypePromoCode } from 'graphql/types';
 import { GtmEventType } from 'gtm/enums/GtmEventType';
 import { mapGtmCartItemType } from 'gtm/mappers/mapGtmCartItemType';
 import { GtmCreateOrderEventOrderPartType, GtmCreateOrderEventType } from 'gtm/types/events';
@@ -29,7 +30,7 @@ export const getGtmCreateOrderEvent = (
 export const getGtmCreateOrderEventOrderPart = (
     cart: TypeCartFragment,
     payment: TypeSimplePaymentFragment,
-    promoCode: string | null,
+    promoCodes: TypePromoCode[],
     orderNumber: string,
     reviewConsents: GtmReviewConsentsType,
     domainConfig: DomainConfigType,
@@ -41,7 +42,7 @@ export const getGtmCreateOrderEventOrderPart = (
     vatAmount: parseFloat(cart.totalPrice.vatAmount),
     paymentPriceWithoutVat: getGtmPriceBasedOnVisibility(payment.price.priceWithoutVat),
     paymentPriceWithVat: getGtmPriceBasedOnVisibility(payment.price.priceWithVat),
-    promoCodes: promoCode !== null ? [promoCode] : undefined,
+    promoCodes: promoCodes.map(({ code }) => code),
     paymentType: payment.name,
     reviewConsents,
     products: cart.items.map((cartItem, index) => mapGtmCartItemType(cartItem, domainConfig.url, index)),

@@ -22,6 +22,7 @@ export type DomainConfigType = {
     gtmId?: string;
     isLuigisBoxActive: boolean;
     type: CustomerUserAreaEnum;
+    shouldUseConvertim: boolean;
 };
 
 export function getDomainConfig(domainUrl: string): DomainConfigType {
