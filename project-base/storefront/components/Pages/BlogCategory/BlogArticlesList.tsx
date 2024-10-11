@@ -2,6 +2,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { Flag } from 'components/Basic/Flag/Flag';
 import { Image } from 'components/Basic/Image/Image';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { TIDs } from 'cypress/tids';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
 import { Fragment } from 'react';
 import { twJoin } from 'tailwind-merge';
@@ -53,7 +54,7 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles }) =>
 
                             {!!blogArticle.perex && <p className="mb-3 text-base">{blogArticle.perex}</p>}
 
-                            <p className="text-sm font-bold">
+                            <p className="text-sm font-bold" tid={TIDs.blog_article_publication_date}>
                                 {new Date(blogArticle.publishDate).toLocaleDateString(defaultLocale)}
                             </p>
                         </div>
