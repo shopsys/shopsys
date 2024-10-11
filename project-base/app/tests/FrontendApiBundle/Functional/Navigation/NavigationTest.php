@@ -71,12 +71,63 @@ class NavigationTest extends GraphQlTestCase
                     {
                         "name": "' . t('Gadgets', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '",
                         "link": "' . $this->getLink(CategoryDataFixture::CATEGORY_ELECTRONICS) . '",
-                        "categoriesByColumns": []
+                        "categoriesByColumns": [
+                            {
+                                "columnNumber": 1,
+                                "categories": [
+                                    {
+                                        "name": "' . t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
+                                    },
+                                    {
+                                        "name": "' . t('TV, audio', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
+                                    }
+                                ]
+                            },
+                            {
+                                "columnNumber": 2,
+                                "categories": [
+                                    {
+                                        "name": "' . t('Printers', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
+                                    },
+                                    {
+                                        "name": "' . t('Cameras & Photo', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
+                                    }
+                                ]
+                            },
+                            {
+                                "columnNumber": 3,
+                                "categories": [
+                                    {
+                                        "name": "' . t('Coffee Machines', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
+                                    },
+                                    {
+                                        "name": "' . t('Mobile Phones', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
+                                    }
+                                ]
+                            }
+                        ]
                     },
                     {
                         "name": "' . t('Bookworm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '",
                         "link": "' . $this->getLink(CategoryDataFixture::CATEGORY_BOOKS) . '",
-                        "categoriesByColumns": []
+                        "categoriesByColumns": [
+                            {
+                                "columnNumber": 1,
+                                "categories": [
+                                    {
+                                        "name": "' . t('Books', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
+                                    }
+                                ]
+                            },
+                            {
+                                "columnNumber": 2,
+                                "categories": [
+                                    {
+                                        "name": "' . t('Printers', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
+                                    }
+                                ]
+                            }
+                        ]
                     },
                     {
                         "name": "' . t('Growing', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '",
@@ -86,7 +137,23 @@ class NavigationTest extends GraphQlTestCase
                     {
                         "name": "' . t('Snack', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '",
                         "link": "' . $this->getLink(CategoryDataFixture::CATEGORY_FOOD) . '",
-                        "categoriesByColumns": []
+                        "categoriesByColumns": [
+                            {
+                                "columnNumber": 1,
+                                "categories": [
+                                    {
+                                        "name": "' . t('Food', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
+                                    }
+                                ]
+                            },
+                            {
+                                "columnNumber": 2,
+                                "categories": [
+                                    {
+                                        "name": "' . t('Coffee Machines', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
+                                    }
+                                ]
+                            }]
                     }
                 ]
             }
