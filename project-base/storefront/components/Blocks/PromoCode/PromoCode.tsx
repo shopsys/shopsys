@@ -19,7 +19,7 @@ import { useRemovePromoCodeFromCart } from 'utils/cart/useRemovePromoCodeFromCar
 import { useErrorPopup } from 'utils/forms/useErrorPopup';
 
 export const PromoCode: FC = () => {
-    const { promoCode } = useCurrentCart();
+    const { promoCodes } = useCurrentCart();
     const [formProviderMethods, defaultValues] = usePromoCodeForm();
     const formMeta = usePromoCodeFormMeta(formProviderMethods);
     const { t } = useTranslation();
@@ -37,13 +37,16 @@ export const PromoCode: FC = () => {
 
     return (
         <div>
-            {promoCode !== null ? (
+            {promoCodes.length ? (
                 <>
                     {isRemovingPromoCodeFromCart && <LoaderWithOverlay className="w-5" />}
-                    <PromoCodeInfo
-                        promoCode={promoCode}
-                        onRemovePromoCodeCallback={() => removePromoCodeFromCart(promoCode)}
-                    />
+                    {promoCodes.map(({ code }) => (
+                        <PromoCodeInfo
+                            key={code}
+                            promoCode={code}
+                            onRemovePromoCodeCallback={() => removePromoCodeFromCart(code)}
+                        />
+                    ))}
                 </>
             ) : (
                 <>

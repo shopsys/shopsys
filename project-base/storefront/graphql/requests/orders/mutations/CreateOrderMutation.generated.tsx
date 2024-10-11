@@ -112,7 +112,7 @@ export type TypeCreateOrderMutation = { __typename?: 'Mutation', CreateOrder: { 
   }
 };
       export default result;
-    
+
 
 export const CreateOrderMutationDocument = gql`
     mutation CreateOrderMutation($firstName: String!, $lastName: String!, $email: String!, $telephone: String!, $onCompanyBehalf: Boolean!, $companyName: String, $companyNumber: String, $companyTaxNumber: String, $street: String!, $city: String!, $postcode: String!, $country: String!, $isDeliveryAddressDifferentFromBilling: Boolean!, $deliveryFirstName: String, $deliveryLastName: String, $deliveryCompanyName: String, $deliveryTelephone: String, $deliveryStreet: String, $deliveryCity: String, $deliveryPostcode: String, $deliveryCountry: String, $deliveryAddressUuid: Uuid, $note: String, $cartUuid: Uuid, $newsletterSubscription: Boolean, $heurekaAgreement: Boolean!) {

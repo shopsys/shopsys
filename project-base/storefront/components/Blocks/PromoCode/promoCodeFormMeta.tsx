@@ -9,14 +9,14 @@ import * as Yup from 'yup';
 
 export const usePromoCodeForm = (): [UseFormReturn<PromoCodeFormType>, PromoCodeFormType] => {
     const { t } = useTranslation();
-    const { promoCode } = useCurrentCart();
+    const { promoCodes } = useCurrentCart();
 
     const resolver = yupResolver(
         Yup.object().shape<Record<keyof PromoCodeFormType, any>>({
             promoCode: Yup.string().required(t('This field is required')),
         }),
     );
-    const defaultValues = { promoCode: promoCode ?? '' };
+    const defaultValues = { promoCode: promoCodes[0]?.code ?? '' };
 
     return [useShopsysForm(resolver, defaultValues), defaultValues];
 };
