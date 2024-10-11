@@ -87,7 +87,7 @@ export type TypeRemovePromoCodeFromCartMutation = { __typename?: 'Mutation', Rem
   }
 };
       export default result;
-    
+
 
 export const RemovePromoCodeFromCartMutationDocument = gql`
     mutation RemovePromoCodeFromCartMutation($input: RemovePromoCodeFromCartInput!) {
