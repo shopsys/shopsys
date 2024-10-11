@@ -93,7 +93,7 @@ export type TypeRemoveFromCartMutation = { __typename?: 'Mutation', RemoveFromCa
   }
 };
       export default result;
-    
+
 
 export const RemoveFromCartMutationDocument = gql`
     mutation RemoveFromCartMutation($input: RemoveFromCartInput!) {

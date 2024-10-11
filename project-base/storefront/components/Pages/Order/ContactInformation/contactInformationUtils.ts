@@ -212,7 +212,7 @@ const useHandleEventsAfterOrderCreation = () => {
     const user = useCurrentCustomerData();
     const domainConfig = useDomainConfig();
     const userContactInformation = useCurrentUserContactInformation();
-    const { cart, payment, promoCode } = useCurrentCart();
+    const { cart, payment, promoCodes } = useCurrentCart();
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const resetContactInformation = usePersistStore((store) => store.resetContactInformation);
     const { canSeePrices } = useAuthorization();
@@ -222,7 +222,7 @@ const useHandleEventsAfterOrderCreation = () => {
             const gtmCreateOrderEventOrderPart = getGtmCreateOrderEventOrderPart(
                 cart,
                 payment,
-                promoCode?.code ?? null,
+                promoCodes,
                 orderNumber,
                 getGtmReviewConsents(),
                 domainConfig,

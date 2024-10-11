@@ -93,7 +93,7 @@ export type TypeChangeTransportInCartMutation = { __typename?: 'Mutation', Chang
   }
 };
       export default result;
-    
+
 
 export const ChangeTransportInCartMutationDocument = gql`
     mutation ChangeTransportInCartMutation($input: ChangeTransportInCartInput!) {

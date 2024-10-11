@@ -1,5 +1,8 @@
 import { CartList } from './CartList/CartList';
 import { CartSummary } from './CartSummary';
+import { Convertim } from './Convertim';
+import { useCartPageNavigation } from './cartUtils';
+import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { CartSteps } from 'components/Blocks/CartSteps/CartSteps';
 import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -14,8 +17,8 @@ type CartContentProps = {
 
 export const CartContent: FC<CartContentProps> = ({ cart }) => {
     const { t } = useTranslation();
-    const { url, isLuigisBoxActive } = useDomainConfig();
-
+    const { url, isLuigisBoxActive, convertimUuid } = useDomainConfig();
+    const { goToPreviousStepFromCartPage, goToNextStepFromCartPage } = useCartPageNavigation();
     return (
         <Webline>
             <CartSteps activeStep={1} domainUrl={url} />
@@ -23,6 +26,17 @@ export const CartContent: FC<CartContentProps> = ({ cart }) => {
             <CartList items={cart.items} />
 
             <CartSummary />
+
+            <OrderAction
+                withGapBottom
+                backStepClickHandler={goToPreviousStepFromCartPage}
+                buttonBack={t('Back')}
+                buttonNext={t('Transport and payment')}
+                hasDisabledLook={false}
+                nextStepClickHandler={goToNextStepFromCartPage}
+                shouldUseConvertim={convertimUuid !== undefined}
+                withGapTop={false}
+            />
 
             {isLuigisBoxActive && (
                 <DeferredRecommendedProducts
@@ -35,6 +49,8 @@ export const CartContent: FC<CartContentProps> = ({ cart }) => {
                     )}
                 />
             )}
+
+            {convertimUuid && <Convertim cart={cart} convertimUuid={convertimUuid} />}
         </Webline>
     );
 };

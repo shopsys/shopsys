@@ -86,7 +86,7 @@ export type TypeCartItemModificationsFragment = { __typename: 'CartItemModificat
   }
 };
       export default result;
-    
+
 export const CartItemModificationsFragment = gql`
     fragment CartItemModificationsFragment on CartItemModificationsResult {
   __typename

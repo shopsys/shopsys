@@ -89,7 +89,7 @@ export type TypeCartModificationsFragment = { __typename: 'CartModificationsResu
   }
 };
       export default result;
-    
+
 export const CartModificationsFragment = gql`
     fragment CartModificationsFragment on CartModificationsResult {
   __typename

@@ -93,7 +93,7 @@ export type TypeAddOrderItemsToCartMutation = { __typename?: 'Mutation', AddOrde
   }
 };
       export default result;
-    
+
 
 export const AddOrderItemsToCartMutationDocument = gql`
     mutation AddOrderItemsToCartMutation($input: AddOrderItemsToCartInput!) {

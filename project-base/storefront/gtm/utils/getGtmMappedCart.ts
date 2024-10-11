@@ -9,7 +9,7 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 
 export const getGtmMappedCart = (
     cart: TypeCartFragment,
-    promoCode: TypePromoCode | null,
+    promoCodes: TypePromoCode[],
     isUserLoggedIn: boolean,
     domain: DomainConfigType,
     cartUuid: string | null,
@@ -28,9 +28,7 @@ export const getGtmMappedCart = (
         products,
     };
 
-    if (promoCode) {
-        mappedCart.promoCodes = [promoCode.code];
-    }
+    mappedCart.promoCodes = promoCodes.map(({ code }) => code);
 
     return mappedCart;
 };

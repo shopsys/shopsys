@@ -91,7 +91,7 @@ export type TypeCartFragment = { __typename: 'Cart', uuid: string | null, remain
   }
 };
       export default result;
-    
+
 export const CartFragment = gql`
     fragment CartFragment on Cart {
   __typename

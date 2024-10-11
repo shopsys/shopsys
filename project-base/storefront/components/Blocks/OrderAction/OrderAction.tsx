@@ -14,6 +14,7 @@ type OrderActionProps = {
     backStepClickHandler?: () => void;
     nextStepClickHandler?: () => void;
     shouldShowSpinnerOnNextStepButton?: boolean;
+    shouldUseConvertim?: boolean;
 };
 
 export const OrderAction: FC<OrderActionProps> = ({
@@ -25,6 +26,7 @@ export const OrderAction: FC<OrderActionProps> = ({
     withGapBottom,
     withGapTop,
     shouldShowSpinnerOnNextStepButton,
+    shouldUseConvertim = false,
 }) => {
     return (
         <div
@@ -41,7 +43,11 @@ export const OrderAction: FC<OrderActionProps> = ({
                 </Button>
             </div>
             <div className="order-1 mb-8 ml-auto w-auto lg:order-2 lg:mb-0" tid={TIDs.blocks_orderaction_next}>
-                <SubmitButton isWithDisabledLook={hasDisabledLook} onClick={nextStepClickHandler}>
+                <SubmitButton
+                    data-convertim-toggle={shouldUseConvertim}
+                    isWithDisabledLook={hasDisabledLook}
+                    onClick={shouldUseConvertim ? undefined : nextStepClickHandler}
+                >
                     {shouldShowSpinnerOnNextStepButton && <SpinnerIcon className="w-5" />}
                     <span>{buttonNext}</span>
                     <ArrowIcon className="relative top-0 ml-1 size-4 -rotate-90" />

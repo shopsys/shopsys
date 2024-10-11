@@ -93,7 +93,7 @@ export type TypeApplyPromoCodeToCartMutation = { __typename?: 'Mutation', ApplyP
   }
 };
       export default result;
-    
+
 
 export const ApplyPromoCodeToCartMutationDocument = gql`
     mutation ApplyPromoCodeToCartMutation($input: ApplyPromoCodeToCartInput!) {
