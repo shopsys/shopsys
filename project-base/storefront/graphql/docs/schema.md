@@ -1163,6 +1163,15 @@ For type 'category' provide one category UUID, for other types provide product U
 <td></td>
 </tr>
 <tr>
+<td colspan="2" align="right" valign="top">recommenderClientIdentifier</td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Arbitrary identifier for analytics purposes. See https://docs.luigisbox.com/recommendations/concepts.html#basic-concepts-placement-and-model-reuse
+
+</td>
+</tr>
+<tr>
 <td colspan="2" align="right" valign="top">userIdentifier</td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td></td>

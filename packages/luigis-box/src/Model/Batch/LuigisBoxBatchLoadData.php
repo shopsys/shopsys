@@ -10,13 +10,13 @@ abstract class LuigisBoxBatchLoadData
      * @param string $type
      * @param string $endpoint
      * @param string $userIdentifier
-     * @param int|null $limit
+     * @param int $limit
      */
     public function __construct(
         protected readonly string $type,
         protected readonly string $endpoint,
         protected readonly string $userIdentifier,
-        protected readonly ?int $limit,
+        protected readonly int $limit,
     ) {
     }
 

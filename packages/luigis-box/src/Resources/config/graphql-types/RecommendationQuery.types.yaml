@@ -16,5 +16,8 @@ RecommendationQueryDecorator:
                     itemUuids:
                         type: '[Uuid!]'
                         description: "For type 'category' provide one category UUID, for other types provide product UUIDs"
+                    recommenderClientIdentifier:
+                        type: 'String'
+                        description: "Arbitrary identifier for analytics purposes. See https://docs.luigisbox.com/recommendations/concepts.html#basic-concepts-placement-and-model-reuse"
                 resolve: "@=query('recommendationQuery', args)"
                 description: "Return recommended products from Luigi's Box by provided arguments"

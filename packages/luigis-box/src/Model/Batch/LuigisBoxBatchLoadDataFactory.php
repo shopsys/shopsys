@@ -73,6 +73,7 @@ class LuigisBoxBatchLoadDataFactory
      * @param int $limit
      * @param array $itemIds
      * @param string $userIdentifier
+     * @param string $recommenderClientIdentifier
      * @return \Shopsys\LuigisBoxBundle\Model\Batch\LuigisBoxBatchLoadData
      */
     public function createForRecommendation(
@@ -80,6 +81,7 @@ class LuigisBoxBatchLoadDataFactory
         int $limit,
         array $itemIds,
         string $userIdentifier,
+        string $recommenderClientIdentifier,
     ): LuigisBoxBatchLoadData {
         $this->recommendationTypeEnum->validateCase($type);
 
@@ -90,6 +92,7 @@ class LuigisBoxBatchLoadDataFactory
             $endpoint,
             $userIdentifier,
             $limit,
+            $recommenderClientIdentifier,
             $itemIds,
         );
     }

@@ -2671,6 +2671,7 @@ export type TypeQueryRecommendedProductsArgs = {
   itemUuids: InputMaybe<Array<Scalars['Uuid']['input']>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   recommendationType: TypeRecommendationType;
+  recommenderClientIdentifier: InputMaybe<Scalars['String']['input']>;
   userIdentifier: Scalars['Uuid']['input'];
 };
 

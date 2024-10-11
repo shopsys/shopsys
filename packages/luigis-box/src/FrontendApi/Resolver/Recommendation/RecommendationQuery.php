@@ -46,6 +46,7 @@ class RecommendationQuery extends AbstractQuery
         $type = $argument['recommendationType'];
         $limit = min($argument['limit'], $this->productFrontendLimitProvider->getProductsFrontendLimit());
         $userIdentifier = $argument['userIdentifier'];
+        $recommenderClientIdentifier = $argument['recommenderClientIdentifier'];
         $itemIds = [];
 
         if (isset($argument['itemUuids']) && count($argument['itemUuids']) > 0) {
@@ -63,7 +64,7 @@ class RecommendationQuery extends AbstractQuery
             }
         }
 
-        $luigisBoxRecommendationBatchLoadData = $this->luigisBoxBatchLoadDataFactory->createForRecommendation($type, $limit, $itemIds, $userIdentifier);
+        $luigisBoxRecommendationBatchLoadData = $this->luigisBoxBatchLoadDataFactory->createForRecommendation($type, $limit, $itemIds, $userIdentifier, $recommenderClientIdentifier);
 
         $luigisBoxResult = $this->luigisBoxClient->getData(
             $luigisBoxRecommendationBatchLoadData,

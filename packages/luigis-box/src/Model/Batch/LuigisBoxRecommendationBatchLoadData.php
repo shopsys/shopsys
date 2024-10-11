@@ -10,14 +10,16 @@ class LuigisBoxRecommendationBatchLoadData extends LuigisBoxBatchLoadData
      * @param string $type
      * @param string $endpoint
      * @param string $userIdentifier
-     * @param int|null $limit
+     * @param int $limit
+     * @param string $recommenderClientIdentifier
      * @param string[] $itemIds
      */
     public function __construct(
         string $type,
         string $endpoint,
         string $userIdentifier,
-        ?int $limit,
+        int $limit,
+        protected readonly string $recommenderClientIdentifier,
         protected readonly array $itemIds = [],
     ) {
         parent::__construct($type, $endpoint, $userIdentifier, $limit);
@@ -29,5 +31,13 @@ class LuigisBoxRecommendationBatchLoadData extends LuigisBoxBatchLoadData
     public function getItemIds(): array
     {
         return $this->itemIds;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRecommenderClientIdentifier(): string
+    {
+        return $this->recommenderClientIdentifier;
     }
 }

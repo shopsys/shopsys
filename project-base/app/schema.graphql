@@ -2004,6 +2004,8 @@ type Query {
     itemUuids: [Uuid!]
     limit: Int = 10
     recommendationType: RecommendationType!
+    "Arbitrary identifier for analytics purposes. See https://docs.luigisbox.com/recommendations/concepts.html#basic-concepts-placement-and-model-reuse"
+    recommenderClientIdentifier: String
     userIdentifier: Uuid!
   ): [Product!]!
   RegularCustomerUser: RegularCustomerUser

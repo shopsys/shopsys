@@ -284,6 +284,7 @@ class LuigisBoxClient
             $body['user_id'] = $luigisBoxBatchLoadData->getUserIdentifier();
             $body['size'] = $luigisBoxBatchLoadData->getLimit();
             $body['hit_fields'] = ['url'];
+            $body['recommender_client_identifier'] = $luigisBoxBatchLoadData->getRecommenderClientIdentifier();
 
             if (count($luigisBoxBatchLoadData->getItemIds()) > 0) {
                 $body['item_ids'] = $luigisBoxBatchLoadData->getItemIds();
