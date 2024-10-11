@@ -61,9 +61,6 @@ msgstr "Základní informace"
 msgid "Brand overview"
 msgstr "Přehled značek"
 
-msgid "But at other addresses we have a lot for you..."
-msgstr "Ale na jiných adresách toho pro Vás máme spousty..."
-
 msgid "By flag"
 msgstr "Dle příznaku"
 
@@ -484,9 +481,6 @@ msgstr "Přístup k osobním údajům"
 msgid "Please check the correctness of all data filled."
 msgstr "Prosím zkontrolujte si správnost vyplnění všech údajů."
 
-msgid "Please excuse this error, we are working on fixing it. If needed, contact us on e-mail or by phone."
-msgstr "Omluvte tuto chybu, pracujeme na tom, aby se chyba opravila co nejdříve. Případně nás kontaktujte na e-mail nebo telefonicky."
-
 msgid "Position of image"
 msgstr "Pozice obrázku"
 
@@ -613,9 +607,6 @@ msgstr "Nastavení URL"
 msgid "URL addresses"
 msgstr "URL adresy"
 
-msgid "Uh-oh, uh-oh. And specially <strong>\"%status_code% %status_text%\"</strong>, as if it was on purpose!"
-msgstr "To je nemilé, to je nemilé. A zrovna <strong>\"%status_code% %status_text%\"</strong>, to je jak naschvál!"
-
 msgid "Unable to load list of language constants"
 msgstr "Nepodařilo se načíst přehled jazykových konstant"
 
@@ -672,9 +663,6 @@ msgstr "Nastavení skladů"
 
 msgid "Warehouses"
 msgstr "Sklady"
-
-msgid "We have nothing to show you at this url."
-msgstr "Na téhle url adrese nemáme nic, co bychom Vám ukázali."
 
 msgid "XML Feeds"
 msgstr "XML Feedy"

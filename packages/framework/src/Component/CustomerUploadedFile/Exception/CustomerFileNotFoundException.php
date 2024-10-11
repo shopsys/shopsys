@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Exception;
 
+use App\Environment;
 use Exception;
+use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CustomerFileNotFoundException extends CustomerFileException
 {
@@ -14,6 +17,12 @@ class CustomerFileNotFoundException extends CustomerFileException
      */
     public function __construct($message = '', ?Exception $previous = null)
     {
-        parent::__construct($message, $previous);
+        $isDev = Environment::getEnvironment() === EnvironmentType::DEVELOPMENT;
+
+        if (!$isDev) {
+            throw new NotFoundHttpException($message, $previous, 0, ['X-Accel-Redirect' => '@storefront']);
+        }
+
+        parent::__construct($message, $previous, 404);
     }
 }
