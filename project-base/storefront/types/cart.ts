@@ -13,7 +13,7 @@ export type CurrentCartType = {
     pickupPlace: Maybe<StoreOrPacketeryPoint>;
     payment: Maybe<TypeSimplePaymentFragment>;
     paymentGoPayBankSwift: Maybe<string>;
-    promoCode: Maybe<TypePromoCode>;
+    promoCodes: TypePromoCode[];
     isCartFetchingOrUnavailable: boolean;
     modifications: Maybe<TypeCartModificationsFragment>;
     roundingPrice: Maybe<TypePriceFragment>;

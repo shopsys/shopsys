@@ -87,7 +87,7 @@ export type TypeCartQuery = { __typename?: 'Query', cart: { __typename: 'Cart', 
   }
 };
       export default result;
-    
+
 
 export const CartQueryDocument = gql`
     query CartQuery($cartUuid: Uuid) {
