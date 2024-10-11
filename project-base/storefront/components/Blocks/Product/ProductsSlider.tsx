@@ -16,7 +16,9 @@ import { wait } from 'utils/wait';
 export const VISIBLE_SLIDER_ITEMS = 5;
 export const VISIBLE_SLIDER_ITEMS_LAST_VISITED = 8;
 export const VISIBLE_SLIDER_ITEMS_BLOG = 3;
+export const VISIBLE_SLIDER_ITEMS_AUTOCOMPLETE = 5;
 
+type ProductsSliderVariant = 'default' | 'blog' | 'lastVisited' | 'autocomplete';
 export type ProductsSliderProps = {
     products: TypeListedProductFragment[];
     gtmProductListName: GtmProductListNameType;
@@ -25,9 +27,8 @@ export type ProductsSliderProps = {
     wrapperClassName?: string;
     productItemProps?: Partial<ProductItemProps>;
     visibleSliderItems?: number;
+    variant?: ProductsSliderVariant;
 };
-
-const productTwClass = 'snap-center md:snap-start mx-1.5 first:ml-0 last:mr-0';
 
 export const ProductsSlider: FC<ProductsSliderProps> = ({
     products,
@@ -38,6 +39,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     isWithArrows = true,
     productItemProps,
     visibleSliderItems = VISIBLE_SLIDER_ITEMS,
+    variant = 'default',
 }) => {
     const { t } = useTranslation();
     const sliderRef = useRef<HTMLDivElement>(null);
@@ -105,14 +107,16 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
         trackMouse: true,
     });
 
-    const productSliderTwClass = (visibleSliderItems: number) => {
-        switch (visibleSliderItems) {
-            case VISIBLE_SLIDER_ITEMS:
+    const productSliderTwClass = (variant: ProductsSliderVariant) => {
+        switch (variant) {
+            case 'default':
                 return 'auto-cols-[225px] sm:auto-cols-[60%]  md:auto-cols-[45%] lg:auto-cols-[30%] vl:auto-cols-[25%] xl:auto-cols-[20%]';
-            case VISIBLE_SLIDER_ITEMS_BLOG:
+            case 'blog':
                 return 'auto-cols-[80%] lg:auto-cols-[45%] xl:auto-cols-[33.33%]';
-            case VISIBLE_SLIDER_ITEMS_LAST_VISITED:
-                return 'auto-cols-[45%] sm:auto-cols-[30%] lg:auto-cols-[16.5%] vl:auto-cols-[14%] xl:auto-cols-[12.5%]';
+            case 'lastVisited':
+                return 'auto-cols-[140px] sm:auto-cols-[30%] lg:auto-cols-[19.5%] vl:auto-cols-[14.5%] xl:auto-cols-[12.5%]';
+            case 'autocomplete':
+                return 'auto-cols-[140px] sm:auto-cols-[32%] md:auto-cols-[24%] lg:auto-cols-[20%]';
             default:
                 return '';
         }
@@ -123,7 +127,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
             {isWithControls && (
                 <div
                     className={twMergeCustom(
-                        'absolute -top-10 right-0 hidden items-center justify-center  gap-2',
+                        'absolute -top-10 right-0 hidden items-center justify-center gap-2',
                         visibleSliderItems === VISIBLE_SLIDER_ITEMS_BLOG ? 'xl:flex' : 'vl:flex',
                     )}
                 >
@@ -141,11 +145,14 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
                     swipeHandlers={handlers}
                     className={twMergeCustom([
                         "grid snap-x snap-mandatory grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] [&::-webkit-scrollbar]:hidden",
-                        productSliderTwClass(visibleSliderItems),
+                        productSliderTwClass(variant),
                         wrapperClassName,
                     ])}
                     productItemProps={{
-                        className: twMergeCustom(productTwClass, productItemProps?.className),
+                        className: twMergeCustom(
+                            'snap-center md:snap-start mx-1 md:mx-2 first:ml-0 last:mr-0',
+                            productItemProps?.className,
+                        ),
                         ...productItemProps,
                     }}
                 />

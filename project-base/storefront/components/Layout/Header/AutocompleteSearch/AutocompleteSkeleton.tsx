@@ -9,7 +9,7 @@ export const AutocompleteSkeleton: FC = () => {
                 <Skeleton className="mb-2 h-5 w-[100px]" />
                 <div className="flex gap-4 overflow-hidden lg:grid lg:grid-cols-5 lg:gap-5">
                     {createEmptyArray(4).map((_, index) => (
-                        <Skeleton key={index} className="h-full min-h-[218px] min-w-[138px]" />
+                        <Skeleton key={index} className="h-full min-h-[250px] min-w-[138px]" />
                     ))}
                 </div>
             </div>

@@ -60,6 +60,7 @@ export const GrapesJsProducts: FC<GrapesJsProps> = ({
                 gtmMessageOrigin={GtmMessageOriginType.other}
                 gtmProductListName={GtmProductListNameType.other}
                 products={products}
+                variant="blog"
                 visibleSliderItems={visibleSliderItems}
             />
         </div>

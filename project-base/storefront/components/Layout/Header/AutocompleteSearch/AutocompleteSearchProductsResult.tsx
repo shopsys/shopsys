@@ -1,6 +1,6 @@
 import { SearchResultSectionTitle } from './AutocompleteSearchPopup';
 import { AUTOCOMPLETE_PRODUCT_LIMIT } from './constants';
-import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
+import { ProductsSlider, VISIBLE_SLIDER_ITEMS_AUTOCOMPLETE } from 'components/Blocks/Product/ProductsSlider';
 import { TIDs } from 'cypress/tids';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { TypeSimpleProductFragment } from 'graphql/requests/products/fragments/SimpleProductFragment.generated';
@@ -53,7 +53,8 @@ export const AutocompleteSearchProductsResult: FC<AutocompleteSearchProductsResu
                 gtmProductListName={GtmProductListNameType.autocomplete_search_results}
                 isWithArrows={false}
                 products={mappedProductSearchResults.slice(0, AUTOCOMPLETE_PRODUCT_LIMIT)}
-                wrapperClassName="auto-cols-[45%] md:auto-cols-[30%] lg:auto-cols-[20%] vl:auto-cols-[20%]"
+                variant="autocomplete"
+                visibleSliderItems={VISIBLE_SLIDER_ITEMS_AUTOCOMPLETE}
                 productItemProps={{
                     size: 'small',
                     visibleItemsConfig: { price: true },

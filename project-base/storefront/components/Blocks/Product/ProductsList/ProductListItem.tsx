@@ -1,6 +1,7 @@
 import { ProductListItemImage } from './ProductListItemImage';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { RemoveBoldIcon } from 'components/Basic/Icon/RemoveBoldIcon';
+import { VariantIcon } from 'components/Basic/Icon/VariantIcon';
 import { ProductCompareButton } from 'components/Blocks/Product/ButtonsAction/ProductCompareButton';
 import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
 import { ProductAction } from 'components/Blocks/Product/ProductAction';
@@ -70,7 +71,8 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 ref={ref}
                 tid={TIDs.blocks_product_list_listeditem_ + product.catalogNumber}
                 className={twMergeCustom(
-                    'group relative flex select-none flex-col justify-between gap-2.5 rounded-xl border border-backgroundMore bg-backgroundMore px-2.5 py-5 text-left transition sm:px-5',
+                    'group relative flex select-none flex-col gap-2.5 rounded-xl border border-backgroundMore bg-backgroundMore px-2.5 py-5 text-left transition sm:px-5',
+                    size === 'small' && 'p-5',
                     'hover:border-borderAccentLess hover:bg-background',
                     className,
                 )}
@@ -90,7 +92,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 )}
 
                 <ExtendedNextLink
-                    className="flex h-full select-none flex-col justify-between gap-2.5 text-text no-underline hover:text-link hover:no-underline"
+                    className="flex select-none flex-col gap-2.5 text-text no-underline hover:text-link hover:no-underline"
                     draggable={false}
                     href={product.slug}
                     type={product.isMainVariant ? 'productMainVariant' : 'product'}
@@ -152,6 +154,12 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                         </>
                     )}
                 </div>
+                {product.__typename === 'MainVariant' && (
+                    <div className="flex w-fit items-center gap-1.5 whitespace-nowrap rounded-md bg-background px-2.5 py-1.5 font-secondary text-xs">
+                        <VariantIcon className="size-3 text-textAccent" />
+                        {product.variantsCount} {t('variants count', { count: product.variantsCount })}
+                    </div>
+                )}
             </li>
         );
     },
