@@ -21,11 +21,13 @@ export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ 
     return (
         <div
             className={twJoin(
-                'mr-1 flex cursor-pointer items-center font-secondary text-sm',
+                'mr-1 flex items-center font-secondary text-sm',
                 product.availability.status === TypeAvailabilityStatusEnum.InStock && 'text-availabilityInStock',
                 product.availability.status === TypeAvailabilityStatusEnum.OutOfStock && 'text-availabilityOutOfStock',
+                !product.isInquiryType && 'cursor-pointer',
             )}
             onClick={() =>
+                !product.isInquiryType &&
                 updatePortalContent(
                     <Popup>
                         <ProductDetailAvailabilityList storeAvailabilities={product.storeAvailabilities} />

@@ -1,0 +1,3 @@
+mutation CreateInquiryMutation($input: CreateInquiryInput!) {
+    CreateInquiry(input: $input)
+}
