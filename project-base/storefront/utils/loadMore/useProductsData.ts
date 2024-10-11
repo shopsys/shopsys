@@ -1,8 +1,8 @@
 import { calculatePageSize } from './calculatePageSize';
 import { getPageSizeInfo } from './getPageSizeInfo';
 import { getPreviousProductsFromCache } from './getPreviousProductsFromCache';
-import { hasReadAllProductsFromCache } from './hasReadAllProductsFromCache';
-import { mergeProductEdges } from './mergeProductEdges';
+import { hasReadAllItemsFromCache } from './hasReadAllItemsFromCache';
+import { mergeItemEdges } from './mergeItemEdges';
 import { readProductsFromCache } from './readProductsFromCache';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
@@ -87,7 +87,10 @@ export const useProductsData = (
         }
 
         setProductsData({
-            products: mergeProductEdges(previouslyQueriedProductsFromCache, productsResponse.data.products.edges),
+            products: mergeItemEdges(
+                previouslyQueriedProductsFromCache,
+                productsResponse.data.products.edges,
+            ) as TypeListedProductConnectionFragment['edges'],
             hasNextPage: productsResponse.data.products.pageInfo.hasNextPage,
         });
         stopFetching();
@@ -133,12 +136,7 @@ export const useProductsData = (
         );
 
         if (
-            hasReadAllProductsFromCache(
-                previousProductsFromCache?.length,
-                currentLoadMore,
-                currentPage,
-                totalProductCount,
-            )
+            hasReadAllItemsFromCache(previousProductsFromCache?.length, currentLoadMore, currentPage, totalProductCount)
         ) {
             return;
         }

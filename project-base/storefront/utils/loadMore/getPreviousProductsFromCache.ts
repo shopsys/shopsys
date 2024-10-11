@@ -1,4 +1,4 @@
-import { mergeProductEdges } from './mergeProductEdges';
+import { mergeItemEdges } from './mergeItemEdges';
 import { readProductsFromCache } from './readProductsFromCache';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { DocumentNode } from 'graphql';
@@ -55,7 +55,10 @@ export const getPreviousProductsFromCache = (
 
         if (currentCacheSlice) {
             if (cachedPartOfProducts) {
-                cachedPartOfProducts = mergeProductEdges(cachedPartOfProducts, currentCacheSlice);
+                cachedPartOfProducts = mergeItemEdges(
+                    cachedPartOfProducts,
+                    currentCacheSlice,
+                ) as TypeListedProductConnectionFragment['edges'];
             } else {
                 cachedPartOfProducts = currentCacheSlice;
             }

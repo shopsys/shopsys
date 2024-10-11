@@ -17,6 +17,8 @@ type PaginationProps = {
     paginationScrollTargetRef: RefObject<HTMLDivElement> | null;
     hasNextPage?: boolean;
     isWithLoadMore?: boolean;
+    pageSize?: number;
+    type?: 'default' | 'blog';
 };
 
 export const Pagination: FC<PaginationProps> = ({
@@ -24,6 +26,8 @@ export const Pagination: FC<PaginationProps> = ({
     paginationScrollTargetRef,
     hasNextPage,
     isWithLoadMore,
+    pageSize = DEFAULT_PAGE_SIZE,
+    type = 'defualt',
 }) => {
     const router = useRouter();
     const isDesktop = useMediaMin('sm');
@@ -31,8 +35,8 @@ export const Pagination: FC<PaginationProps> = ({
     const currentLoadMore = useCurrentLoadMoreQuery();
     const updatePagination = useUpdatePaginationQuery();
     const loadMore = useUpdateLoadMoreQuery();
-    const currentPageWithLoadMore = Math.min(currentPage + currentLoadMore, Math.ceil(totalCount / DEFAULT_PAGE_SIZE));
-    const paginationButtons = usePagination(totalCount, currentPageWithLoadMore, !isDesktop, DEFAULT_PAGE_SIZE);
+    const currentPageWithLoadMore = Math.min(currentPage + currentLoadMore, Math.ceil(totalCount / pageSize));
+    const paginationButtons = usePagination(totalCount, currentPageWithLoadMore, !isDesktop, pageSize);
     const { t } = useTranslation();
 
     if (!paginationButtons || paginationButtons.length === 1) {
@@ -49,15 +53,23 @@ export const Pagination: FC<PaginationProps> = ({
         updatePagination(pageNumber);
     };
 
-    const seenProducts = currentPageWithLoadMore * DEFAULT_PAGE_SIZE;
+    const seenProducts = currentPageWithLoadMore * pageSize;
     const remainingProducts = totalCount - seenProducts;
-    const loadMoreCount = remainingProducts > DEFAULT_PAGE_SIZE ? DEFAULT_PAGE_SIZE : remainingProducts;
+    const loadMoreCount = remainingProducts > pageSize ? pageSize : remainingProducts;
 
     return (
         <div className="flex flex-col items-center justify-between gap-5 vl:flex-row">
             {isWithLoadMore && hasNextPage && (
                 <Button className="px-3" variant="inverted" onClick={loadMore}>
-                    {t('Load more')} {loadMoreCount} {t('products count', { count: loadMoreCount })}
+                    {type === 'blog' ? (
+                        <>
+                            {t('Load more')} {loadMoreCount} {t('articles count', { count: loadMoreCount })}
+                        </>
+                    ) : (
+                        <>
+                            {t('Load more')} {loadMoreCount} {t('products count', { count: loadMoreCount })}
+                        </>
+                    )}
                 </Button>
             )}
 
