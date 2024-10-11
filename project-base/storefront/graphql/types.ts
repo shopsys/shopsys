@@ -457,7 +457,7 @@ export type TypeCart = {
   /** Selected bank swift code of goPay payment bank transfer */
   paymentGoPayBankSwift: Maybe<Scalars['String']['output']>;
   /** Applied promo code if provided */
-  promoCode: Maybe<Scalars['String']['output']>;
+  promoCodes: Array<TypePromoCode>;
   /** Remaining amount for free transport and payment; null = transport cannot be free */
   remainingAmountWithVatForFreeTransport: Maybe<Scalars['Money']['output']>;
   /** Rounding amount if payment has rounding allowed */
@@ -485,12 +485,25 @@ export type TypeCartInput = {
 /** Represent one item in the cart */
 export type TypeCartItem = {
   __typename?: 'CartItem';
+  /** Discounts applied to the cart item */
+  discounts: Array<TypeCartItemDiscount>;
   /** Product in the cart */
   product: TypeProduct;
   /** Quantity of items in the cart */
   quantity: Scalars['Int']['output'];
   /** Cart item UUID */
   uuid: Scalars['Uuid']['output'];
+};
+
+/** Represent discount of item in the cart */
+export type TypeCartItemDiscount = {
+  __typename?: 'CartItemDiscount';
+  /** Code of the promo code */
+  promoCode: Scalars['String']['output'];
+  /** Total discount */
+  totalDiscount: TypePrice;
+  /** Discount per unit */
+  unitDiscount: TypePrice;
 };
 
 export type TypeCartItemModificationsResult = {
@@ -2312,6 +2325,22 @@ export type TypeProductPrice = {
   /** Total value of VAT */
   vatAmount: Scalars['Money']['output'];
 };
+
+export type TypePromoCode = {
+  __typename?: 'PromoCode';
+  /** The promo code code */
+  code: Scalars['String']['output'];
+  /** The promo code discount */
+  discount: TypePrice;
+  /** The promo code type */
+  type: TypePromoCodeTypeEnum;
+};
+
+/** One of the possible types of the promoo code */
+export enum TypePromoCodeTypeEnum {
+  Nominal = 'nominal',
+  Percent = 'percent'
+}
 
 export type TypeQuery = {
   __typename?: 'Query';

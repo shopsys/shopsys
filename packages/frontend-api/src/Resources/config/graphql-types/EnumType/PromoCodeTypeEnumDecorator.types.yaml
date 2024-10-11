@@ -1,0 +1,10 @@
+PromoCodeTypeEnumDecorator:
+    type: enum
+    decorator: true
+    config:
+        description: "One of the possible types of the promoo code"
+        values:
+            percent:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Order\\PromoCode\\PromoCodeTypeEnum::PERCENT")'
+            nominal:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Order\\PromoCode\\PromoCodeTypeEnum::NOMINAL")'

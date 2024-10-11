@@ -1,0 +1,4 @@
+PromoCode:
+    type: object
+    inherits:
+        - 'PromoCodeDecorator'
