@@ -30,6 +30,7 @@
         "@urql/devtools": "~2.0.3",
         "@urql/exchange-auth": "~2.1.6",
         "@urql/exchange-graphcache": "~6.4.1",
+        "convertim-react-lib": "^0.0.4",
         "cookies-next": "~4.1.1",
         "crypto-js": "~4.2.0",
         "dayjs": "~1.11.10",

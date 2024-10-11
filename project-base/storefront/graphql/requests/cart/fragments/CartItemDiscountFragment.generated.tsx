@@ -2,7 +2,7 @@ import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
 import { PriceFragment } from '../../prices/fragments/PriceFragment.generated';
-export type TypeCartItemDiscountFragment = { __typename?: 'CartItemDiscount', promoCode: string, totalDiscount: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, unitDiscount: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } };
+export type TypeCartItemDiscountFragment = { __typename: 'CartItemDiscount', promoCode: string, totalDiscount: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, unitDiscount: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } };
 
 
       export interface PossibleTypesResultData {
@@ -83,6 +83,7 @@ export type TypeCartItemDiscountFragment = { __typename?: 'CartItemDiscount', pr
     
 export const CartItemDiscountFragment = gql`
     fragment CartItemDiscountFragment on CartItemDiscount {
+  __typename
   promoCode
   totalDiscount {
     ...PriceFragment

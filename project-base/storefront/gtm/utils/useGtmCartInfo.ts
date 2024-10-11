@@ -7,7 +7,7 @@ import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 
 export const useGtmCartInfo = (): { gtmCartInfo: GtmCartInfoType | null; isCartLoaded: boolean } => {
-    const { cart, promoCode, isCartFetchingOrUnavailable } = useCurrentCart();
+    const { cart, promoCodes, isCartFetchingOrUnavailable } = useCurrentCart();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const isUserLoggedIn = useIsUserLoggedIn();
     const domainConfig = useDomainConfig();
@@ -18,8 +18,8 @@ export const useGtmCartInfo = (): { gtmCartInfo: GtmCartInfoType | null; isCartL
         }
 
         return {
-            gtmCartInfo: getGtmMappedCart(cart, promoCode, isUserLoggedIn, domainConfig, cartUuid),
+            gtmCartInfo: getGtmMappedCart(cart, promoCodes, isUserLoggedIn, domainConfig, cartUuid),
             isCartLoaded: !isCartFetchingOrUnavailable,
         };
-    }, [cart, cartUuid, domainConfig, isCartFetchingOrUnavailable, isUserLoggedIn, promoCode]);
+    }, [cart, cartUuid, domainConfig, isCartFetchingOrUnavailable, isUserLoggedIn, promoCodes]);
 };

@@ -5,6 +5,7 @@ import { SimpleFlagFragment } from '../../flags/fragments/SimpleFlagFragment.gen
 import { ImageFragment } from '../../images/fragments/ImageFragment.generated';
 import { AvailabilityFragment } from '../../availabilities/fragments/AvailabilityFragment.generated';
 import { ProductPriceFragment } from '../../products/fragments/ProductPriceFragment.generated';
+import { StoreAvailabilityFragment } from '../../storeAvailabilities/fragments/StoreAvailabilityFragment.generated';
 import { SimpleBrandFragment } from '../../brands/fragments/SimpleBrandFragment.generated';
 import { CartItemDiscountFragment } from './CartItemDiscountFragment.generated';
 export type TypeCartItemFragment = { __typename: 'CartItem', uuid: string, quantity: number, product: { __typename: 'MainVariant', id: number, uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum }, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, unit: { __typename?: 'Unit', name: string }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename?: 'Category', name: string }> } | { __typename: 'RegularProduct', id: number, uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum }, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, unit: { __typename?: 'Unit', name: string }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename?: 'Category', name: string }> } | { __typename: 'Variant', id: number, uuid: string, slug: string, fullName: string, catalogNumber: string, stockQuantity: number, availableStoresCount: number, mainVariant: { __typename?: 'MainVariant', slug: string } | null, flags: Array<{ __typename: 'Flag', uuid: string, name: string, rgbColor: string }>, mainImage: { __typename: 'Image', name: string | null, url: string } | null, availability: { __typename: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum }, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean }, unit: { __typename?: 'Unit', name: string }, brand: { __typename: 'Brand', name: string, slug: string } | null, categories: Array<{ __typename?: 'Category', name: string }> }, discounts: Array<{ __typename?: 'CartItemDiscount', promoCode: string, totalDiscount: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, unitDiscount: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }> };
@@ -85,7 +86,7 @@ export type TypeCartItemFragment = { __typename: 'CartItem', uuid: string, quant
   }
 };
       export default result;
-    
+
 export const CartItemFragment = gql`
     fragment CartItemFragment on CartItem {
   __typename
@@ -118,6 +119,9 @@ export const CartItemFragment = gql`
       ...ProductPriceFragment
     }
     availableStoresCount
+    storeAvailabilities {
+      ...StoreAvailabilityFragment
+    }
     unit {
       name
     }
@@ -136,5 +140,6 @@ export const CartItemFragment = gql`
 ${ImageFragment}
 ${AvailabilityFragment}
 ${ProductPriceFragment}
+${StoreAvailabilityFragment}
 ${SimpleBrandFragment}
 ${CartItemDiscountFragment}`;

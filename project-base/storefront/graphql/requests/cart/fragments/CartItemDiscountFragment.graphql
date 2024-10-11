@@ -1,4 +1,5 @@
 fragment CartItemDiscountFragment on CartItemDiscount {
+    __typename
     promoCode
     totalDiscount {
         ...PriceFragment
