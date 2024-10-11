@@ -61,9 +61,6 @@ msgstr ""
 msgid "Brand overview"
 msgstr ""
 
-msgid "But at other addresses we have a lot for you..."
-msgstr ""
-
 msgid "By flag"
 msgstr ""
 
@@ -484,9 +481,6 @@ msgstr ""
 msgid "Please check the correctness of all data filled."
 msgstr ""
 
-msgid "Please excuse this error, we are working on fixing it. If needed, contact us on e-mail or by phone."
-msgstr ""
-
 msgid "Position of image"
 msgstr ""
 
@@ -613,9 +607,6 @@ msgstr ""
 msgid "URL addresses"
 msgstr ""
 
-msgid "Uh-oh, uh-oh. And specially <strong>\"%status_code% %status_text%\"</strong>, as if it was on purpose!"
-msgstr ""
-
 msgid "Unable to load list of language constants"
 msgstr ""
 
@@ -671,9 +662,6 @@ msgid "Warehouse settings"
 msgstr ""
 
 msgid "Warehouses"
-msgstr ""
-
-msgid "We have nothing to show you at this url."
 msgstr ""
 
 msgid "XML Feeds"
