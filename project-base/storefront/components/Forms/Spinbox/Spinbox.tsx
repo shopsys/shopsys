@@ -136,7 +136,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
         return (
             <div
                 className={twJoin(
-                    'inline-flex h-12 items-center overflow-hidden rounded-md border-2 border-inputBorder',
+                    'inline-flex h-12 shrink-0 items-center overflow-hidden rounded-md border-2 border-inputBorder',
                     'bg-inputBackground',
                     'border-inputBorder',
                     size === 'small' ? 'w-20' : 'w-28',

@@ -1,5 +1,5 @@
 import { Image } from 'components/Basic/Image/Image';
-import { AddToCart } from 'components/Blocks/Product/AddToCart';
+import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductAvailableStoresCount } from 'components/Blocks/Product/ProductAvailableStoresCount';
 import { TIDs } from 'cypress/tids';
 import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
@@ -23,10 +23,9 @@ const ProductVariantsAvailabilityPopup = dynamic(
 
 type ProductVariantsTableProps = {
     variants: TypeMainVariantDetailFragment['variants'];
-    isSellingDenied: boolean;
 };
 
-export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ isSellingDenied, variants }) => {
+export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ variants }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
@@ -40,7 +39,7 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ isSellingD
             {variants.map((variant, index) => (
                 <li
                     key={variant.uuid}
-                    className="mx-auto flex w-full max-w-sm flex-col items-center gap-2 border border-borderAccent p-2 md:max-w-none lg:flex-row lg:border-0 "
+                    className="mx-auto flex w-full max-w-sm flex-col items-center justify-between gap-2 border border-borderAccent p-2 md:max-w-none lg:flex-row lg:border-0 "
                     tid={TIDs.pages_productdetail_variant_ + variant.catalogNumber}
                 >
                     <div className="relative h-48 w-full lg:h-16 lg:w-16" tid={TIDs.product_detail_main_image}>
@@ -54,10 +53,12 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ isSellingD
                         />
                     </div>
 
-                    <div className="flex-1 text-center lg:text-left">{variant.fullName}</div>
+                    <div className="line-clamp-2 min-h-[2.5rem] text-center font-secondary text-sm font-semibold group-hover:text-link group-hover:underline lg:line-clamp-none lg:min-h-fit lg:w-80 lg:text-left">
+                        {variant.fullName}
+                    </div>
 
                     <div
-                        className="flex-1 cursor-pointer text-center lg:text-left"
+                        className="min-w-40 cursor-pointer text-center lg:text-left"
                         onClick={() => {
                             updatePortalContent(
                                 <ProductVariantsAvailabilityPopup storeAvailabilities={variant.storeAvailabilities} />,
@@ -71,24 +72,19 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ isSellingD
                         />
                     </div>
 
-                    {isPriceVisible(variant.price.priceWithVat) && (
-                        <div className="lg:w-40 lg:text-right">{formatPrice(variant.price.priceWithVat)}</div>
-                    )}
+                    <div className="flex flex-col items-center justify-end gap-2.5 lg:ml-auto lg:min-w-80 lg:max-w-96 lg:flex-row">
+                        <div className="min-h-8  lg:min-h-full lg:text-right">
+                            {isPriceVisible(variant.price.priceWithVat) && formatPrice(variant.price.priceWithVat)}
+                        </div>
 
-                    <div className="text-right max-lg:clear-both">
-                        {isSellingDenied ? (
-                            t('This item can no longer be purchased')
-                        ) : (
-                            <AddToCart
-                                buttonSize="large"
-                                gtmMessageOrigin={GtmMessageOriginType.product_detail_page}
-                                gtmProductListName={GtmProductListNameType.product_detail_variants_table}
-                                listIndex={index}
-                                maxQuantity={variant.stockQuantity}
-                                minQuantity={1}
-                                productUuid={variant.uuid}
-                            />
-                        )}
+                        <ProductAction
+                            isWithSpinbox
+                            buttonSize="large"
+                            gtmMessageOrigin={GtmMessageOriginType.product_detail_page}
+                            gtmProductListName={GtmProductListNameType.product_detail_variants_table}
+                            listIndex={index}
+                            product={variant}
+                        />
                     </div>
                 </li>
             ))}
