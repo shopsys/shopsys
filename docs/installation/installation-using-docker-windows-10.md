@@ -64,6 +64,12 @@ In `Debian` application run these commands:
 
 ### 1. Create new project from Shopsys Platform sources
 
+Enable long paths in your Git configuration:
+
+```bash
+git config --system core.longpaths true
+```
+
 Open `Debian` application.
 
 Change your current directory to your home directory (`/home/<your-linux-user-name>/`)
