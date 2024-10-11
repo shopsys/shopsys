@@ -4,3 +4,5 @@ arrange:
     - grid.md
     - grid-rendering-customization.md
     - grid-data-sources.md
+    - admin-rights.md
+    - disabling-form-fields.md
