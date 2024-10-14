@@ -40,12 +40,12 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                 >
                     <div className="relative">
                         <UserIcon className="size-6" />
-                        <div className="absolute -right-1 -top-1 h-[10px] w-[10px] rounded-full bg-actionPrimaryBackground" />
+                        <div className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full bg-actionPrimaryBackground" />
                     </div>
                     {t('My account')}
                 </MenuIconicItemLink>
 
-                <div className="order-2 flex cursor-pointer items-center justify-center text-lg outline-none lg:hidden">
+                <div className="order-2 flex w-10 cursor-pointer items-center justify-center text-lg outline-none sm:w-12 lg:hidden">
                     <div
                         className="relative flex items-center justify-center text-textInverted transition-colors"
                         onClick={() => {
@@ -54,7 +54,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                         }}
                     >
                         <UserIcon className="size-6 text-textInverted" />
-                        <div className="absolute -right-1 -top-1 h-[10px] w-[10px] rounded-full bg-actionPrimaryBackground" />
+                        <div className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full bg-actionPrimaryBackground" />
                     </div>
                 </div>
 
