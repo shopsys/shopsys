@@ -1,0 +1,23 @@
+mutation CreateInquiryMutation(
+    $telephone: String!
+    $firstName: String!
+    $lastName: String!
+    $email: String!
+    $companyName: String
+    $companyNumber: String
+    $companyTaxNumber: String
+    $note: String
+    $productUuid: Uuid!
+) {
+    CreateInquiry(input: {
+        firstName: $firstName,
+        lastName: $lastName,
+        email: $email,
+        telephone: $telephone,
+        companyName: $companyName,
+        companyNumber: $companyNumber,
+        companyTaxNumber: $companyTaxNumber,
+        note: $note,
+        productUuid: $productUuid
+    })
+}

@@ -43,6 +43,8 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @method int getOrderingPriority(\App\Model\Product\Product $product)
  * @method \GraphQL\Executor\Promise\Promise getAccessoriesPromise(\App\Model\Product\Product $product)
  * @method bool isVisible(\App\Model\Product\Product $product)
+ * @method bool isInquiryType(\App\Model\Product\Product $product)
+ * @method string getProductType(\App\Model\Product\Product $product)
  */
 class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 {

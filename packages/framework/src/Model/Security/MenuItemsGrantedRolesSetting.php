@@ -28,6 +28,9 @@ class MenuItemsGrantedRolesSetting
             'orders' => [
                 Roles::ROLE_ORDER_VIEW,
             ],
+            'inquiries' => [
+                Roles::ROLE_INQUIRY_VIEW,
+            ],
             'customers' . static::MENU_ITEM_PATH_SEPARATOR . 'customers_overview' => [
                 Roles::ROLE_CUSTOMER_VIEW,
             ],
@@ -182,6 +185,7 @@ class MenuItemsGrantedRolesSetting
     protected function getSectionsGrantedRoles(array $pagesGrantedRoles): array
     {
         $sectionsGrantedRoles = [
+            'inquiries' => [],
             'customers' => [],
             'products' => [],
             'pricing' => [],

@@ -1,0 +1,32 @@
+{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+
+{% block grid_value_cell_id_productName %}
+    {% if value %}
+        {{ value }}
+    {% else %}
+        {{ row.i.productCatnum }}
+        <span title="{{ 'The product is no longer in the catalog. This was the catalog number at the time of the inquiry.'|trans }}"
+              class="js-tooltip cursor-help in-icon in-icon--info"
+              data-toggle="tooltip"
+              data-placement="right"
+        >
+            {{ icon('info') }}
+        </span>
+    {% endif %}
+    {% if row.productId %}
+        <a href="{{ url('admin_product_edit', { id: row.productId }) }}">{{ icon('forward-page') }}</a>
+    {% endif %}
+{% endblock %}
+
+{% block grid_value_cell_id_createdAt %}
+    {{ value|formatDateTime }}
+{% endblock %}
+
+{% block grid_no_data %}
+    {{ 'No inquiries found.'|trans }}
+{% endblock %}
+
+{% block grid_pager_totalcount %}
+    {% set entityName = 'inquiries'|trans %}
+    {{ parent() }}
+{% endblock %}

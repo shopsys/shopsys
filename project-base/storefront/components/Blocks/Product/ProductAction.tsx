@@ -5,6 +5,15 @@ import { TypeListedProductFragment } from 'graphql/requests/products/fragments/L
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import useTranslation from 'next-translate/useTranslation';
+import dynamic from 'next/dynamic';
+import { useSessionStore } from 'store/useSessionStore';
+
+const InquiryPopup = dynamic(
+    () => import('components/Blocks/Popup/InquiryPopup').then((component) => component.InquiryPopup),
+    {
+        ssr: false,
+    },
+);
 
 type ProductActionProps = {
     product: TypeListedProductFragment;
@@ -15,6 +24,20 @@ type ProductActionProps = {
 
 export const ProductAction: FC<ProductActionProps> = ({ product, gtmProductListName, gtmMessageOrigin, listIndex }) => {
     const { t } = useTranslation();
+    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+
+    if (product.isSellingDenied) {
+        return <div className="text-center">{t('This item can no longer be purchased')}</div>;
+    }
+
+    if (product.isInquiryType) {
+        const openInquiryPopup = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+            e.stopPropagation();
+            updatePortalContent(<InquiryPopup productUuid={product.uuid} />);
+        };
+
+        return <Button onClick={openInquiryPopup}>{t('Inquire')}</Button>;
+    }
 
     if (product.isMainVariant) {
         return (
@@ -22,10 +45,6 @@ export const ProductAction: FC<ProductActionProps> = ({ product, gtmProductListN
                 <Button>{t('Choose')}</Button>
             </ExtendedNextLink>
         );
-    }
-
-    if (product.isSellingDenied) {
-        return <div className="text-center">{t('This item can no longer be purchased')}</div>;
     }
 
     return (

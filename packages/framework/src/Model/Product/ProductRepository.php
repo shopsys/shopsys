@@ -116,6 +116,20 @@ class ProductRepository
     }
 
     /**
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    public function getAllVisibleWithoutInquiriesQueryBuilder(int $domainId, PricingGroup $pricingGroup): QueryBuilder
+    {
+        $queryBuilder = $this->getAllVisibleQueryBuilder($domainId, $pricingGroup);
+        $queryBuilder->andWhere('p.productType != :inquiryProductType')
+            ->setParameter('inquiryProductType', ProductTypeEnum::TYPE_INQUIRY);
+
+        return $queryBuilder;
+    }
+
+    /**
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param string $locale
      */

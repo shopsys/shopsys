@@ -212,9 +212,9 @@ abstract class GraphQlTestCase extends ApplicationTestCase
     /**
      * @param array $response
      * @param string $graphQlType
-     * @return array
+     * @return array|bool
      */
-    protected function getResponseDataForGraphQlType(array $response, string $graphQlType): array
+    protected function getResponseDataForGraphQlType(array $response, string $graphQlType): array|bool
     {
         if (!array_key_exists('data', $response)) {
             $this->fail('Invalid GraphQL response: ' . Json::encode($response));

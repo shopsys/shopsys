@@ -163,6 +163,8 @@ class Roles
     public const string ROLE_COMPLAINT_STATUS_FULL = 'ROLE_COMPLAINT_STATUS_FULL';
     public const string ROLE_COMPLAINT_STATUS_VIEW = 'ROLE_COMPLAINT_STATUS_VIEW';
 
+    public const string ROLE_INQUIRY_VIEW = 'ROLE_INQUIRY_VIEW';
+
     /**
      * @return array<string, string>
      */
@@ -382,6 +384,9 @@ class Roles
             [
                 static::ROLE_COMPLAINT_STATUS_FULL => t('Complaint statuses - full'),
                 static::ROLE_COMPLAINT_STATUS_VIEW => t('Complaint statuses - view'),
+            ],
+            [
+                static::ROLE_INQUIRY_VIEW => t('Inquiries - view'),
             ],
         ];
     }

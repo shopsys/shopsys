@@ -54,7 +54,7 @@ export const getButtonClassName = (
         'outline-2 outline-offset-[-2px]',
         size === 'small' && 'px-4 py-2 text-xs',
         size === 'medium' && 'p-2 text-xs sm:px-4 sm:text-sm',
-        size === 'large' && 'px-3 py-2 sm:px-8 sm:py-4 text-sm sm:text-lg',
+        size === 'large' && 'px-5 py-3 text-lg',
         variant === 'primary' && [
             'outline-actionPrimaryBorder bg-actionPrimaryBackground text-actionPrimaryText',
             !isDisabled &&

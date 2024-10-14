@@ -19,6 +19,7 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 
 class ProductDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -1380,6 +1381,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $productData = $this->productDemoDataFactory->createDefaultData('9178302');
 
+        $productData->productType = ProductTypeEnum::TYPE_INQUIRY;
         $productData->partno = '4002M4';
         $productData->ean = '8845781245931';
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '577.7');

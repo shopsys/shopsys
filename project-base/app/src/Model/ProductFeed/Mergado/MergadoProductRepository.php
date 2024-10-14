@@ -31,7 +31,7 @@ class MergadoProductRepository
         ?int $lastSeekId,
         int $maxResults,
     ): array {
-        $queryBuilder = $this->productRepository->getAllVisibleQueryBuilder($domainConfig->getId(), $pricingGroup)
+        $queryBuilder = $this->productRepository->getAllVisibleWithoutInquiriesQueryBuilder($domainConfig->getId(), $pricingGroup)
             ->addSelect('b')->leftJoin('p.brand', 'b')
             ->andWhere('p.variantType != :variantTypeMain')->setParameter('variantTypeMain', Product::VARIANT_TYPE_MAIN)
             ->orderBy('p.id', 'asc')
