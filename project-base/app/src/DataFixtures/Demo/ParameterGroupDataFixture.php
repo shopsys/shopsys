@@ -42,7 +42,7 @@ class ParameterGroupDataFixture extends AbstractReferenceFixture
             self::PARAM_GROUP_CONNECTION_METHOD => t('Connection method', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_GROUP_MAIN_INFORMATION_MOUSE => t('Main information mouse', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_GROUP_PROPERTIES => t('Properties', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-            self::PARAM_GROUP_FUNCTIONS => t('Function', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            self::PARAM_GROUP_FUNCTIONS => t('Functions', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             self::PARAM_GROUP_SIZE_WEIGHT => t('Size and weight', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
         ];
     }
