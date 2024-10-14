@@ -8,8 +8,8 @@ export const useCurrentCustomerUserPermissions = () => {
         requestPolicy: 'network-only',
     });
     const currentCustomerUser = currentCustomerUserData?.currentCustomerUser;
-    const isCompanyUser = type === 'B2B';
-    const canManageUsers = isCompanyUser && currentCustomerUser?.roles.includes(CustomerUserRoleEnum.ROLE_API_ALL);
+    const isCompanyUser = type === 'B2B' && currentCustomerUser?.__typename === 'CompanyCustomerUser';
+    const canManageUsers = isCompanyUser && currentCustomerUser.roles.includes(CustomerUserRoleEnum.ROLE_API_ALL);
     const canManageProfile =
         !currentCustomerUser || !isCompanyUser || currentCustomerUser.roles.includes(CustomerUserRoleEnum.ROLE_API_ALL);
 
