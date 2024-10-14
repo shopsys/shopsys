@@ -13,7 +13,7 @@ export const LoginPopup: FC<LoginFormProps> = ({ defaultEmail, shouldOverwriteCu
     const [registrationUrl] = getInternationalizedStaticUrls(['/registration'], url);
 
     return (
-        <Popup className="w-11/12 max-w-3xl">
+        <Popup className="w-11/12 max-w-3xl" contentClassName="overflow-y-auto">
             <div className="h2 mb-3">{t('Login')}</div>
             <div className="flex w-full flex-col lg:flex-row">
                 <div className="w-full border-b border-borderAccent lg:w-1/2 lg:border-b-0 lg:border-r lg:pr-5">

@@ -34,7 +34,7 @@ export const Popup: FC<PopupProps> = ({ children, hideCloseButton, className, co
                     tid={TIDs.layout_popup}
                     transition={{ duration: 0.2 }}
                     className={twMergeCustom(
-                        'fixed left-1/2 top-1/2 z-aboveOverlay flex max-h-full max-w-screen-lg cursor-auto flex-col rounded bg-background p-1 shadow-2xl',
+                        'fixed left-1/2 top-1/2 z-aboveOverlay flex max-h-[80vh] max-w-screen-lg cursor-auto flex-col rounded bg-background p-1 shadow-2xl',
                         className,
                     )}
                     onMouseDown={(event) => {

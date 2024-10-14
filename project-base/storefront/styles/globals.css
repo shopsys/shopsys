@@ -139,11 +139,11 @@ input[type='number'] {
 }
 
 .select__menu {
-    @apply !z-[3] !m-0 !overflow-hidden !rounded-b-md !border-2 !border-t-0 !border-inputBorder !shadow-none hover:!border-inputBorderHovered active:!border-inputBorderActive disabled:!border-inputBorderDisabled animate-fadeIn;
+    @apply !z-[3] !m-0 animate-fadeIn !overflow-hidden !rounded-b-md !border-2 !border-t-0 !border-inputBorder !shadow-none hover:!border-inputBorderHovered active:!border-inputBorderActive disabled:!border-inputBorderDisabled;
 }
 
 .select__menu-list {
-    @apply [&::-webkit-scrollbar-thumb]:bg-backgroundMore [&::-webkit-scrollbar-thumb]:hover:bg-backgroundMost [&::-webkit-scrollbar-track]:bg-background [&::-webkit-scrollbar]:h-[0px] [&::-webkit-scrollbar]:w-[5px];
+    @apply !max-h-[130px] overflow-y-scroll !p-0 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-inputPlaceholder [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:h-[0px] [&::-webkit-scrollbar]:w-2;
 }
 
 .select__option {
