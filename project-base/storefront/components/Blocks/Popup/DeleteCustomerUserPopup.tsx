@@ -12,7 +12,7 @@ export const DeleteCustomerUserPopup: FC<DeleteCustomerUserPopupProps> = ({ dele
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     return (
-        <Popup className="w-11/12 lg:w-4/5 vl:w-auto">
+        <Popup className="w-11/12 lg:w-4/5 vl:w-auto" contentClassName="overflow-y-auto">
             <div className="flex flex-col">
                 {t('Do you really want to delete this user?')}
                 <div className="mt-4 flex flex-row flex-nowrap justify-between">
