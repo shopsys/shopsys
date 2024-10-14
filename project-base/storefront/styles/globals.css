@@ -143,7 +143,7 @@ input[type='number'] {
 }
 
 .select__menu-list {
-    @apply [&::-webkit-scrollbar-thumb]:bg-backgroundMore [&::-webkit-scrollbar-thumb]:hover:bg-backgroundMost [&::-webkit-scrollbar-track]:bg-background [&::-webkit-scrollbar]:h-[0px] [&::-webkit-scrollbar]:w-[5px];
+    @apply !max-h-[140px] !p-0 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-inputPlaceholder [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:h-[0px] [&::-webkit-scrollbar]:w-2;
 }
 
 .select__option {
