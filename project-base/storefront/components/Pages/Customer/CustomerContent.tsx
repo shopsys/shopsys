@@ -1,4 +1,5 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { ComplaintsIcon } from 'components/Basic/Icon/ComplaintsIcon';
 import { EditIcon } from 'components/Basic/Icon/EditIcon';
 import { ExitIcon } from 'components/Basic/Icon/ExitIcon';
 import { SearchListIcon } from 'components/Basic/Icon/SearchListIcon';
@@ -42,7 +43,7 @@ export const CustomerContent: FC = () => {
 
                     <CustomerListItem>
                         <ExtendedNextLink href={customerComplaintsUrl} type="complaintList">
-                            <SearchListIcon className="mr-5 size-6" />
+                            <ComplaintsIcon className="mr-5 size-6" />
                             {t('My complaints')}
                         </ExtendedNextLink>
                     </CustomerListItem>
@@ -79,8 +80,7 @@ const CustomerListItem: FC = ({ children }) => (
     <li
         className={twJoin(
             'block flex-1 cursor-pointer rounded-xl text-lg transition [&_a]:block [&_a]:h-full [&_a]:w-full [&_a]:p-5 [&_a]:text-text [&_a]:no-underline hover:[&_a]:no-underline',
-            'bg-backgroundAccentLess',
-            'hover:bg-backgroundMost',
+            'border border-background bg-backgroundMore hover:border-borderAccentLess hover:bg-background',
         )}
     >
         {children}
