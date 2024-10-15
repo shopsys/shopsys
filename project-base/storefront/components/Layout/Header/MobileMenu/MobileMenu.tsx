@@ -1,5 +1,6 @@
 import { MobileMenuContent } from './MobileMenuContent';
 import { HamburgerMenu } from 'components/Layout/Header/HamburgerMenu/HamburgerMenu';
+import { AnimatePresence, m } from 'framer-motion';
 import { useNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
 import { useEffect, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
@@ -33,19 +34,24 @@ export const MobileMenu: FC = () => {
         <>
             <HamburgerMenu onClick={handleMenuToggle} />
 
-            <div
-                className={twJoin(
-                    'fixed inset-0 z-maximum flex max-h-screen flex-col gap-5 overflow-y-auto bg-background p-8 shadow-md transition-all',
-                    isMenuOpened ? 'translate-x-0' : 'translate-x-full',
-                )}
-            >
+            <AnimatePresence initial={false}>
                 {isMenuOpened && (
-                    <MobileMenuContent
-                        navigationItems={navigationData.navigation}
-                        onMenuToggleHandler={handleMenuToggle}
-                    />
+                    <m.div
+                        animate={{ translateX: '0%' }}
+                        exit={{ translateX: '100%' }}
+                        initial={{ translateX: '100%' }}
+                        transition={{ duration: 0.2, type: 'tween' }}
+                        className={twJoin(
+                            'fixed inset-0 z-maximum flex max-h-screen flex-col gap-5 overflow-y-auto bg-background p-8 shadow-md',
+                        )}
+                    >
+                        <MobileMenuContent
+                            navigationItems={navigationData.navigation}
+                            onMenuToggleHandler={handleMenuToggle}
+                        />
+                    </m.div>
                 )}
-            </div>
+            </AnimatePresence>
         </>
     );
 };

@@ -4,7 +4,8 @@ import { useState } from 'react';
 type ImageProps = {
     src: NextImageProps['src'] | undefined | null;
     hash?: string;
-} & Omit<NextImageProps, 'src'>;
+} & Omit<NextImageProps, 'src'> &
+    React.RefAttributes<HTMLImageElement | null>;
 
 export const Image: FC<ImageProps> = ({ src, hash, ...props }) => {
     const [imageUrl, setImageUrl] = useState(src ?? '/images/optimized-noimage.webp');

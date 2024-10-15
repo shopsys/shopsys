@@ -1,5 +1,8 @@
+import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
+import { AnimateRotateDiv } from 'components/Basic/Animations/AnimateRotateDiv';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
-import React, { useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
 import {
     Tab,
     TabList,
@@ -11,6 +14,7 @@ import {
     Tabs as TabsReact,
 } from 'react-tabs';
 import { twJoin } from 'tailwind-merge';
+import { useMediaMin } from 'utils/ui/useMediaMin';
 
 /**
  * In background of styled tab parts we are using - react-tabs components
@@ -18,6 +22,7 @@ import { twJoin } from 'tailwind-merge';
  */
 type TabsContentProps = {
     headingTextMobile: string;
+    isActive: boolean;
 };
 
 type TabFC<T = unknown> = FC<T> & { tabsRole: string };
@@ -52,10 +57,12 @@ export const TabsListItem: TabFC<Partial<PropsWithRef<TabProps>>> = ({ children,
 export const TabsContent: TabFC<TabsContentProps & Partial<PropsWithRef<TabPanelProps>>> = ({
     children,
     headingTextMobile,
+    isActive,
     ...props
 }) => {
     const [isActiveOnMobile, setIsActiveOnMobile] = useState<boolean | undefined>(false);
     const mobileTab = () => setIsActiveOnMobile(!isActiveOnMobile);
+    const isLg = useMediaMin('lg');
 
     return (
         <TabPanel
@@ -69,11 +76,21 @@ export const TabsContent: TabFC<TabsContentProps & Partial<PropsWithRef<TabPanel
                 onClick={mobileTab}
             >
                 {headingTextMobile}
-                <ArrowIcon
-                    className={twJoin('w-4 rotate-0 text-text transition', isActiveOnMobile && '-rotate-180 ')}
-                />
+                <AnimateRotateDiv className="flex items-start" condition={isActiveOnMobile}>
+                    <ArrowIcon className={twJoin('w-4 rotate-0 text-text transition')} />
+                </AnimateRotateDiv>
             </h3>
-            <div className={twJoin('w-full py-5', isActiveOnMobile ? 'block' : 'hidden lg:block')}>{children}</div>
+
+            <AnimatePresence initial={false}>
+                {(isActiveOnMobile || (isActive && isLg)) && (
+                    <AnimateCollapseDiv
+                        className="relative !block w-full"
+                        keyName={`tabs-content-${headingTextMobile}`}
+                    >
+                        {children}
+                    </AnimateCollapseDiv>
+                )}
+            </AnimatePresence>
         </TabPanel>
     );
 };

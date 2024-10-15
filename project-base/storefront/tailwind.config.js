@@ -185,6 +185,18 @@ module.exports = {
             borderRadius: {
                 DEFAULT: '0.1875rem',
             },
+            keyframes: {
+                fadeIn: {
+                    '0%': { opacity: 0.25 },
+                    '100%': { opacity: 1 },
+                },
+            },
+            animation: {
+                fadeIn: 'fadeIn 0.2s ease-in-out',
+            },
+            spacing: {
+                5.5: '1.375rem',
+            },
         },
         plugins: [],
     },

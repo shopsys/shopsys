@@ -1,4 +1,3 @@
-import { DeferredProductDetailRelatedProductsTab } from './DeferredProductDetailRelatedProductsTab';
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { Cell, Row, Table } from 'components/Basic/Table/Table';
 import { Tabs, TabsContent, TabsList, TabsListItem } from 'components/Basic/Tabs/Tabs';
@@ -7,7 +6,15 @@ import { TypeFileFragment } from 'graphql/requests/files/fragments/FileFragment.
 import { TypeParameterFragment } from 'graphql/requests/parameters/fragments/ParameterFragment.generated';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
+import dynamic from 'next/dynamic';
+import { useState } from 'react';
 
+const ProductDetailRelatedProductsTab = dynamic(
+    () => import('./ProductDetailRelatedProductsTab').then((component) => component.ProductDetailRelatedProductsTab),
+    {
+        ssr: false,
+    },
+);
 export type ProductDetailTabsProps = {
     description: string | null;
     parameters: TypeParameterFragment[];
@@ -17,13 +24,18 @@ export type ProductDetailTabsProps = {
 
 export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, parameters, relatedProducts, files }) => {
     const { t } = useTranslation();
+    const [selectedTab, setSelectedTab] = useState(0);
 
     const formatParameterValue = (valueText: string, index: number) => {
         return index > 0 ? ' | ' + valueText : valueText;
     };
 
     return (
-        <Tabs className="flex flex-col gap-4 lg:gap-0">
+        <Tabs
+            className="flex flex-col gap-4 lg:gap-0"
+            selectedIndex={selectedTab}
+            onSelect={(index) => setSelectedTab(index)}
+        >
             <TabsList>
                 <TabsListItem>{t('Overview')}</TabsListItem>
 
@@ -34,12 +46,12 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                 {!!files.length && <TabsListItem>{t('Files')}</TabsListItem>}
             </TabsList>
 
-            <TabsContent headingTextMobile={t('Overview')}>
+            <TabsContent headingTextMobile={t('Overview')} isActive={selectedTab === 0}>
                 {description && <UserText htmlContent={description} />}
             </TabsContent>
 
-            {!!parameters.length && (
-                <TabsContent headingTextMobile={t('Parameters')}>
+            {parameters.length && (
+                <TabsContent headingTextMobile={t('Parameters')} isActive={selectedTab === 1}>
                     <Table className="mx-auto max-w-screen-lg border-0 p-0">
                         {parameters.map((parameter) => (
                             <Row
@@ -62,14 +74,14 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                 </TabsContent>
             )}
 
-            {!!relatedProducts.length && (
-                <TabsContent headingTextMobile={t('Related Products')}>
-                    <DeferredProductDetailRelatedProductsTab relatedProducts={relatedProducts} />{' '}
+            {relatedProducts.length && (
+                <TabsContent headingTextMobile={t('Related Products')} isActive={selectedTab === 2}>
+                    <ProductDetailRelatedProductsTab relatedProducts={relatedProducts} />{' '}
                 </TabsContent>
             )}
 
-            {!!files.length && (
-                <TabsContent headingTextMobile={t('Files')}>
+            {files.length && (
+                <TabsContent headingTextMobile={t('Files')} isActive={selectedTab === 3}>
                     <ul>
                         {files.map((file) => (
                             <li key={file.url}>

@@ -1,5 +1,6 @@
 import { FilterGroupContent, FilterGroupTitle, FilterGroupWrapper } from './FilterElements';
 import { RangeSlider } from 'components/Basic/RangeSlider/RangeSlider';
+import { AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { getPriceRounded } from 'utils/mappers/price';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
@@ -42,18 +43,20 @@ export const FilterGroupPrice: FC<FilterGroupPriceProps> = ({ title, initialMinP
                 title={title}
                 onClick={() => setIsGroupOpen(!isGroupOpen)}
             />
-            {isGroupOpen && (
-                <FilterGroupContent>
-                    <RangeSlider
-                        max={maxPriceOption}
-                        maxValue={maximalPrice || maxPriceOption}
-                        min={minPriceOption}
-                        minValue={minimalPrice || minPriceOption}
-                        setMaxValueCallback={setMaximalPrice}
-                        setMinValueCallback={setMinimalPrice}
-                    />
-                </FilterGroupContent>
-            )}
+            <AnimatePresence initial={false}>
+                {isGroupOpen && (
+                    <FilterGroupContent>
+                        <RangeSlider
+                            max={maxPriceOption}
+                            maxValue={maximalPrice || maxPriceOption}
+                            min={minPriceOption}
+                            minValue={minimalPrice || minPriceOption}
+                            setMaxValueCallback={setMaximalPrice}
+                            setMinValueCallback={setMinimalPrice}
+                        />
+                    </FilterGroupContent>
+                )}
+            </AnimatePresence>
         </FilterGroupWrapper>
     );
 };

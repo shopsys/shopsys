@@ -1,5 +1,6 @@
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { TIDs } from 'cypress/tids';
+import { m } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import { RemoveScroll } from 'react-remove-scroll';
 import { useSessionStore } from 'store/useSessionStore';
@@ -23,12 +24,17 @@ export const Popup: FC<PopupProps> = ({ children, hideCloseButton, className, co
         <div key={key}>
             <RemoveScroll>
                 <Overlay isActive onClick={() => updatePortalContent(null)} />
-                <div
+                <m.div
+                    key="popup"
                     aria-modal
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.75 }}
+                    initial={{ opacity: 0, scale: 0.75, translateX: '-50%', translateY: '-50%' }}
                     role="dialog"
                     tid={TIDs.layout_popup}
+                    transition={{ duration: 0.2 }}
                     className={twMergeCustom(
-                        'fixed left-1/2 top-1/2 z-aboveOverlay flex max-h-full max-w-screen-lg -translate-x-1/2 -translate-y-1/2 cursor-auto flex-col rounded bg-background p-1 shadow-2xl transition-opacity',
+                        'fixed left-1/2 top-1/2 z-aboveOverlay flex max-h-full max-w-screen-lg cursor-auto flex-col rounded bg-background p-1 shadow-2xl',
                         className,
                     )}
                     onMouseDown={(event) => {
@@ -49,7 +55,7 @@ export const Popup: FC<PopupProps> = ({ children, hideCloseButton, className, co
                         </div>
                     )}
                     <div className={twMergeCustom('p-4', contentClassName)}>{children}</div>
-                </div>
+                </m.div>
             </RemoveScroll>
         </div>
     );

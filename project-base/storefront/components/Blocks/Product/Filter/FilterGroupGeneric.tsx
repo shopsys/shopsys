@@ -8,6 +8,7 @@ import {
 import { useFilterShowLess } from './utils/useFilterShowLess';
 import { ProductFlag } from 'components/Blocks/Product/ProductFlag';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
+import { AnimatePresence } from 'framer-motion';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
@@ -66,47 +67,54 @@ export const FilterGroupGeneric: FC<FilterGroupGenericProps> = ({
                 title={title}
                 onClick={() => setIsGroupOpen(!isGroupOpen)}
             />
-            {isGroupOpen && (
-                <FilterGroupContent>
-                    {defaultOptions && (
-                        <>
-                            {defaultOptions.map((option, index) => {
-                                const isFlagAndSelectedByDefault =
-                                    filterField === 'flags' && defaultSelectedFlags.has(option.uuid);
-                                const isChecked = !!selectedItems?.includes(option.uuid) || isFlagAndSelectedByDefault;
-                                const isDisabled = option.count === 0 && !isChecked;
+            <AnimatePresence initial={false}>
+                {isGroupOpen && (
+                    <FilterGroupContent>
+                        {defaultOptions && (
+                            <AnimatePresence initial={false}>
+                                {defaultOptions.map((option, index) => {
+                                    const isFlagAndSelectedByDefault =
+                                        filterField === 'flags' && defaultSelectedFlags.has(option.uuid);
+                                    const isChecked =
+                                        !!selectedItems?.includes(option.uuid) || isFlagAndSelectedByDefault;
+                                    const isDisabled = option.count === 0 && !isChecked;
 
-                                const optionLabel =
-                                    filterField === 'flags' ? (
-                                        <ProductFlag name={option.name} rgbColor={option.rgbColor ?? ''} />
-                                    ) : (
-                                        option.name
+                                    const optionLabel =
+                                        filterField === 'flags' ? (
+                                            <ProductFlag name={option.name} rgbColor={option.rgbColor ?? ''} />
+                                        ) : (
+                                            option.name
+                                        );
+
+                                    return (
+                                        <FilterGroupContentItem
+                                            key={option.uuid}
+                                            isDisabled={isDisabled}
+                                            keyName={option.uuid}
+                                        >
+                                            <Checkbox
+                                                count={option.count}
+                                                disabled={isDisabled}
+                                                id={`${filterField}.${index}.checked`}
+                                                label={optionLabel}
+                                                name={`${filterField}.${index}.checked`}
+                                                value={isChecked}
+                                                onChange={() => handleCheck(option.uuid)}
+                                            />
+                                        </FilterGroupContentItem>
                                     );
+                                })}
 
-                                return (
-                                    <FilterGroupContentItem key={option.uuid} isDisabled={isDisabled}>
-                                        <Checkbox
-                                            count={option.count}
-                                            disabled={isDisabled}
-                                            id={`${filterField}.${index}.checked`}
-                                            label={optionLabel}
-                                            name={`${filterField}.${index}.checked`}
-                                            value={isChecked}
-                                            onChange={() => handleCheck(option.uuid)}
-                                        />
-                                    </FilterGroupContentItem>
-                                );
-                            })}
-
-                            {isShowLessMoreShown && (
-                                <ShowAllButton onClick={() => setAreAllItemsShown((prev) => !prev)}>
-                                    {isWithAllItemsShown ? t('Show less') : t('Show more')}
-                                </ShowAllButton>
-                            )}
-                        </>
-                    )}
-                </FilterGroupContent>
-            )}
+                                {isShowLessMoreShown && (
+                                    <ShowAllButton onClick={() => setAreAllItemsShown((prev) => !prev)}>
+                                        {isWithAllItemsShown ? t('Show less') : t('Show more')}
+                                    </ShowAllButton>
+                                )}
+                            </AnimatePresence>
+                        )}
+                    </FilterGroupContent>
+                )}
+            </AnimatePresence>
         </FilterGroupWrapper>
     );
 };
