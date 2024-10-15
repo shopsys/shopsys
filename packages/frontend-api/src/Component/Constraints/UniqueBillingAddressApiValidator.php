@@ -42,6 +42,7 @@ class UniqueBillingAddressApiValidator extends ConstraintValidator
             $this->context->buildViolation($constraint->message, [
                 '{{ company_number }}' => $this->formatValue($value->companyNumber),
             ])
+                ->setCode($constraint::DUPLICATE_BILLING_ADDRESS)
                 ->addViolation();
         }
     }
