@@ -7,6 +7,7 @@ import { Button } from 'components/Forms/Button/Button';
 import { TypeProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
+import { useSessionStore } from 'store/useSessionStore';
 import { ParametersType } from 'types/productFilter';
 import { isPriceVisible } from 'utils/mappers/price';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';
@@ -18,7 +19,6 @@ export type FilterPanelProps = {
     orderingMode: TypeProductOrderingModeEnum | null;
     originalSlug: string | null;
     slug: string;
-    panelCloseHandler?: () => void;
     totalCount: number;
 };
 
@@ -26,23 +26,20 @@ const DEFAULT_NUMBER_OF_SHOWN_FLAGS = 5;
 const DEFAULT_NUMBER_OF_SHOWN_BRANDS = 5;
 const DEFAULT_NUMBER_OF_SHOWN_PARAMETERS = 5;
 
-export const FilterPanel: FC<FilterPanelProps> = ({
-    productFilterOptions: filterOptions,
-    panelCloseHandler,
-    totalCount,
-}) => {
+export const FilterPanel: FC<FilterPanelProps> = ({ productFilterOptions: filterOptions, totalCount }) => {
     const { t } = useTranslation();
     const { resetAllFilterQueries } = useUpdateFilterQuery();
     const currentFilter = useCurrentFilterQuery();
     const activePriceFilter = currentFilter?.minimalPrice !== undefined || currentFilter?.maximalPrice !== undefined;
     const activeFlagFilter = !!currentFilter?.flags?.length;
     const activeBrandFilter = !!currentFilter?.brands?.length;
+    const setIsFilterPanelOpen = useSessionStore((s) => s.setIsFilterPanelOpen);
 
     return (
         <div className="z-aboveOverlay flex h-full flex-col bg-background pb-1 vl:z-above">
             <div className="flex items-center justify-between p-5 vl:hidden">
                 <h5>{t('Product filter')}</h5>
-                <span className="inline-flex size-4 cursor-pointer" onClick={panelCloseHandler}>
+                <span className="inline-flex size-4 cursor-pointer" onClick={() => setIsFilterPanelOpen(false)}>
                     <RemoveIcon className="w-6 text-inputPlaceholder hover:text-inputPlaceholderHovered" />
                 </span>
             </div>
@@ -100,7 +97,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
             </div>
 
             <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-2 bg-backgroundMore p-5 vl:hidden">
-                <Button className="ml:auto" size="small" onClick={panelCloseHandler}>
+                <Button className="ml:auto" size="small" onClick={() => setIsFilterPanelOpen(false)}>
                     {t('Show')} {totalCount} {t('products count', { count: totalCount })}
                 </Button>
                 {currentFilter !== null && (

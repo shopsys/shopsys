@@ -31,15 +31,15 @@ export const SkeletonModuleProductsList: FC<SkeletonModuleProductsListProps> = (
             </div>
         )}
 
-        <div className="flex flex-row items-stretch gap-5">
-            <Skeleton className="h-[1000px] w-[227px]" containerClassName="hidden vl:block" />
+        <div className="flex flex-row items-stretch vl:gap-5">
+            <Skeleton className="hidden h-[1000px] w-[227px] vl:block" />
 
             <div className="w-full">
                 <div className="flex">
                     <div className="flex w-full flex-col">
                         {!isWithoutBestsellers && <Skeleton className="mb-5 h-96 w-full" />}
 
-                        <div className="mb-10 flex flex-col justify-between gap-2 sm:flex-row vl:hidden">
+                        <div className="flex flex-col justify-between gap-2 sm:flex-row vl:hidden">
                             <Skeleton className="h-8 w-full sm:w-40" />
                             <Skeleton className="h-8 w-full sm:w-40" />
                         </div>

@@ -21,7 +21,9 @@ const getDeferPage = (router: NextRouter): DeferPage | 'non_deferred' => {
         return 'product';
     } else if (
         router.pathname === FriendlyPagesDestinations.category ||
-        router.pathname === FriendlyPagesDestinations.seo_category
+        router.pathname === FriendlyPagesDestinations.seo_category ||
+        router.pathname === FriendlyPagesDestinations.brand ||
+        router.pathname === FriendlyPagesDestinations.flag
     ) {
         return 'category';
     } else if (router.pathname === '/') {

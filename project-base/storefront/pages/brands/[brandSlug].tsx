@@ -75,6 +75,7 @@ const BrandDetailPage: NextPage = () => {
 
             <CommonLayout
                 breadcrumbs={brandDetailData?.brand?.breadcrumb}
+                breadcrumbsType="brandsOverview"
                 description={brandDetailData?.brand?.seoMetaDescription}
                 hreflangLinks={brandDetailData?.brand?.hreflangLinks}
                 isFetchingData={!currentFilter && isBrandFetching && !brandDetailData}
@@ -91,8 +92,8 @@ export const getServerSideProps = getServerSidePropsWrapper(
     ({ redisClient, domainConfig, ssrExchange, t }) =>
         async (context) => {
             const urlSlug = getSlugFromServerSideUrl(context.req.url ?? '');
-            const page = getNumberFromUrlQuery(context.query[PAGE_QUERY_PARAMETER_NAME], 0);
-            const loadMore = getNumberFromUrlQuery(context.query[LOAD_MORE_QUERY_PARAMETER_NAME], 1);
+            const page = getNumberFromUrlQuery(context.query[PAGE_QUERY_PARAMETER_NAME], 1);
+            const loadMore = getNumberFromUrlQuery(context.query[LOAD_MORE_QUERY_PARAMETER_NAME], 0);
             const redirect = getRedirectWithOffsetPage(page, loadMore, urlSlug, context.query);
 
             if (redirect) {
