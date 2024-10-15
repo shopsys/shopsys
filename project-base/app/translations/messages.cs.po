@@ -577,6 +577,9 @@ msgstr "Prodejny"
 msgid "TOP"
 msgstr "TOP"
 
+msgid "Table"
+msgstr "Tabulka"
+
 msgid "Terms and Conditions"
 msgstr "Obchodní podmínky"
 
