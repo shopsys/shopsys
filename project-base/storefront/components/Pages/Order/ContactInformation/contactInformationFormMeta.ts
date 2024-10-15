@@ -102,6 +102,8 @@ export const useContactInformationForm = (): [UseFormReturn<ContactInformation>,
                         isDeliveryAddressDifferentFromBilling,
                         deliveryAddressUuid,
                         !!pickupPlace,
+                        false,
+                        true,
                     ),
                 then: () => validateStreet(t),
                 otherwise: (schema) => schema,
@@ -113,6 +115,8 @@ export const useContactInformationForm = (): [UseFormReturn<ContactInformation>,
                         isDeliveryAddressDifferentFromBilling,
                         deliveryAddressUuid,
                         !!pickupPlace,
+                        false,
+                        true,
                     ),
                 then: () => validateCity(t),
                 otherwise: (schema) => schema,
@@ -124,6 +128,8 @@ export const useContactInformationForm = (): [UseFormReturn<ContactInformation>,
                         isDeliveryAddressDifferentFromBilling,
                         deliveryAddressUuid,
                         !!pickupPlace,
+                        false,
+                        true,
                     ),
                 then: () => validatePostcode(t),
                 otherwise: (schema) => schema,
@@ -159,7 +165,12 @@ const shouldValidateDeliveryAddressField = (
     deliveryAddressUuid: string,
     isPickupPlaceSelected?: boolean,
     isRelevantForPickupPlace?: boolean,
+    isRelevantForDeliveryAddress?: boolean,
 ) => {
+    if (isRelevantForDeliveryAddress && !isPickupPlaceSelected && isDeliveryAddressDifferentFromBilling) {
+        return true;
+    }
+
     if (!isDeliveryAddressDifferentFromBilling || !isRelevantForPickupPlace) {
         return false;
     }
