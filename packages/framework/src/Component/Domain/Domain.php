@@ -215,4 +215,18 @@ class Domain implements DomainIdsProviderInterface
     {
         return $this->getCurrentDomainConfig()->isB2b();
     }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig|null
+     */
+    public function findFirstB2bDomain(): ?DomainConfig
+    {
+        foreach ($this->getAll() as $domainConfig) {
+            if ($domainConfig->isB2b()) {
+                return $domainConfig;
+            }
+        }
+
+        return null;
+    }
 }
