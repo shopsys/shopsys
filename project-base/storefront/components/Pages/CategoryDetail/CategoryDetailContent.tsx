@@ -57,17 +57,19 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
     return (
         <Webline>
             <h1 ref={scrollTargetRef}>{title}</h1>
-            <div className="mb-7 flex flex-col-reverse justify-between gap-5 lg:flex-row">
+            <div className="mb-7 flex w-full flex-col-reverse justify-between gap-5 vl:flex-row">
                 {!!category.description && currentPage === 1 && (
                     <CollapsibleText scrollTargetRef={scrollTargetRef} text={category.description} />
                 )}
-                <Image
-                    alt={category.name}
-                    className="rounden-lg h-full w-full rounded-lg md:max-w-80"
-                    height={150}
-                    src={category.images[0]?.url}
-                    width={300}
-                />
+                <div className="h-full flex-shrink-0 sm:h-32">
+                    <Image
+                        alt={category.name}
+                        className="h-full w-auto rounded-lg"
+                        height={500}
+                        src={category.images[0]?.url}
+                        width={500}
+                    />
+                </div>
             </div>
 
             <SimpleNavigation

@@ -73,7 +73,7 @@ export const CartInHeader: FC = ({ className }) => {
                     skeletonType="cart"
                     tid={TIDs.header_cart_link}
                     className={twJoin(
-                        'hidden h-11 cursor-pointer items-center gap-x-2 rounded-lg border px-3 no-underline transition-all hover:no-underline group-hover:shadow-lg lg:flex',
+                        'hidden h-11 cursor-pointer items-center justify-center gap-x-2 rounded-lg border px-3 no-underline transition-all hover:no-underline group-hover:shadow-lg lg:flex',
                         cart?.items.length ? nonEmptyCartTwClassName : emptyCartTwClassName,
                         !isPriceVisible(cart?.totalItemsPrice.priceWithVat) && cart?.items.length
                             ? 'min-w-14'
@@ -89,12 +89,7 @@ export const CartInHeader: FC = ({ className }) => {
                         {!!cart?.items.length && <CartCount>{cart.items.length}</CartCount>}
                     </span>
                     {isPriceVisibleOrEmtpyCart && (
-                        <span
-                            className={twJoin(
-                                'hidden font-secondary text-sm font-bold lg:block',
-                                !cart?.items.length && 'lg:w-full',
-                            )}
-                        >
+                        <span className={twJoin('hidden font-secondary text-sm font-bold lg:block')}>
                             {cart?.items.length
                                 ? formatPrice(cart.totalItemsPrice.priceWithVat, {
                                       explicitZero: true,
