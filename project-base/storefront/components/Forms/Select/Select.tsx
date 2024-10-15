@@ -12,9 +12,11 @@ type NativeProps = ExtractNativePropsFromDefault<
     'defaultValue' | 'value' | 'isDisabled' | 'id' | 'required'
 >;
 
-type SelectProps = NativeProps & {
+type SelectProps = Omit<NativeProps, 'id'> & {
     hasError: boolean;
     label: ReactNode;
+    name: string;
+    formName: string;
 };
 
 const DropdownIndicator = (props: any) => {
@@ -44,13 +46,25 @@ const Control = (props: any) => {
     );
 };
 
-export const Select: FC<SelectProps> = ({ hasError, onChange, options, defaultValue, isDisabled, value, ...props }) => {
+export const Select: FC<SelectProps> = ({
+    hasError,
+    onChange,
+    options,
+    defaultValue,
+    isDisabled,
+    value,
+    formName,
+    name,
+    ...props
+}) => {
+    const selectId = formName + '-' + name;
+
     return (
         <SelectReact
             classNamePrefix="select"
             components={{ Control, DropdownIndicator }}
             defaultValue={defaultValue}
-            inputId={props.id}
+            inputId={selectId}
             isDisabled={isDisabled}
             isSearchable={false}
             options={options}

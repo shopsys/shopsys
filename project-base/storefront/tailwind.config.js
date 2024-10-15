@@ -92,19 +92,6 @@ module.exports = {
             actionInvertedBorderDisabled: '#A3ACBD',
             actionInvertedBorderHovered: '#7892BC',
 
-            secondaryText: '#FFFFFF',
-            secondaryTextActive: '#FFFFFF',
-            secondaryTextDisabled: '#B6C3D8',
-            secondaryTextHovered: '#004EB6',
-            secondaryBackground: '#004EB6',
-            secondaryBackgroundActive: '#004EB6',
-            secondaryBackgroundDisabled: '#FAFAFA',
-            secondaryBackgroundHovered: '#FFFFFF',
-            secondaryBorder: '#004EB6',
-            secondaryBorderActive: '#004EB6',
-            secondaryBorderDisabled: '#B6C3D8',
-            secondaryBorderHovered: '#004EB6',
-
             activeIconFull: '#EC5353',
 
             availabilityInStock: '#00CDBE',
@@ -184,6 +171,9 @@ module.exports = {
             },
             borderRadius: {
                 DEFAULT: '0.1875rem',
+            },
+            aspectRatio: {
+                '16/11': '16 / 11',
             },
         },
         plugins: [],

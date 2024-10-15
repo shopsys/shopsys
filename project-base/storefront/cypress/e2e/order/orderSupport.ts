@@ -82,7 +82,7 @@ export const clearAndFillDeliveryAdressInThirdStep = (deliveryAddress: {
         .clear({ force: true })
         .type(deliveryAddress.postCode, { force: true });
 
-    cy.get('#deliveryCountry-select').realClick();
+    cy.get('#contact-information-form-deliveryCountry').realClick();
     // we cannot clear the select value, so we press downarrow
     // each time, which always changes the current selection
     cy.realPress('{downarrow}');

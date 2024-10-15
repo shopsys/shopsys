@@ -39,7 +39,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
     const checkedFlags = getCheckedFlags(defaultProductFiltersMap, filterOptions.flags, currentFilter?.flags);
 
     return (
-        <div className="order-2 mt-5 vl:order-1 vl:mb-5 vl:mt-0">
+        <div className="mt-5 vl:mb-5 vl:mt-0">
             <h6 className="mb-5 vl:mb-2">{t('Selected filters')}</h6>
 
             <div className="flex flex-wrap items-center gap-y-2">

@@ -1,3 +1,6 @@
 import Skeleton from 'react-loading-skeleton';
+import { twMergeCustom } from 'utils/twMerge';
 
-export const SkeletonModulePromotedProducts: FC = () => <Skeleton className="mb-5 h-[438px] w-full" />;
+export const SkeletonModulePromotedProducts: FC = ({ className }) => (
+    <Skeleton className={twMergeCustom('h-[425px] w-full', className)} />
+);

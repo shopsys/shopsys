@@ -18,7 +18,7 @@ export const SkeletonModuleProductsList: FC<SkeletonModuleProductsListProps> = (
     <div>
         {!isWithoutDescription && (
             <div className="flex w-full flex-col">
-                <Skeleton className="mb-5 h-11 w-1/4" />
+                <Skeleton className="mb-5 h-10 w-1/4" />
                 <Skeleton className="mb-7 h-32 w-full" />
             </div>
         )}
