@@ -43,6 +43,17 @@ class RegisterTest extends GraphQlTestCase
         $this->assertSuccessfulRegistration($response);
     }
 
+    public function testCompanyUserRegistration(): void
+    {
+        $registerQueryVariables = self::getRegisterQueryVariables();
+        $registerQueryVariables['companyCustomer'] = true;
+        $registerQueryVariables['companyNumber'] = '999';
+        $registerQueryVariables['companyName'] = 'Company name';
+        $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/mutation/RegistrationMutation.graphql', $registerQueryVariables);
+
+        $this->assertSuccessfulRegistration($response);
+    }
+
     public function testRegisterAlreadyRegisteredCustomerUser(): void
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/mutation/RegistrationMutation.graphql', self::getRegisterQueryVariables('no-reply@shopsys.com'));
