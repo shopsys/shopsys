@@ -1,13 +1,13 @@
 front_error_page:
     defaults:
-        _controller: App\Controller\Admin\ErrorController::errorPagePreviewAction
+        _controller: Shopsys\FrameworkBundle\Component\Error\ErrorController::errorPagePreviewAction
     path: /_error/{code}/
     requirements:
         code: \d+
 
 front_error_page_format:
     defaults:
-        _controller: App\Controller\Admin\ErrorController::errorPagePreviewAction
+        _controller: Shopsys\FrameworkBundle\Component\Error\ErrorController::errorPagePreviewAction
     path: /_error/{code}/{_format}/
     requirements:
         _format: css|html|js|json|txt|xml
