@@ -52,7 +52,7 @@
         "doctrine/doctrine-bundle": "^2.5.7",
         "doctrine/doctrine-fixtures-bundle": "^3.0.2",
         "doctrine/orm": "^2.11.2",
-        "doctrine/persistence": "^2.4",
+        "doctrine/persistence": "^3.3.3",
         "elasticsearch/elasticsearch": "^7.6.1",
         "endroid/qr-code": "^5.1.0",
         "fakerphp/faker": "^1.19.0",
