@@ -49,6 +49,7 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
     private const string KEY_ADDRESS_LAST_NAME = 'lastName';
     private const string KEY_CUSTOMER_USER_REFERENCE = 'customerUserReference';
     private const string KEY_CUSTOMER_ROLE_GROUP = 'roleGroup';
+    public const string B2B_COMPANY_OWNER_EMAIL = 'jozef.novotny@shopsys.com';
 
     /**
      * @param \Faker\Generator $faker
@@ -197,7 +198,7 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
                 self::KEY_CUSTOMER_USER_DATA => [
                     self::KEY_CUSTOMER_USER_DATA_FIRST_NAME => 'Jozef',
                     self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Novotný',
-                    self::KEY_CUSTOMER_USER_DATA_EMAIL => 'jozef.novotny@shopsys.com',
+                    self::KEY_CUSTOMER_USER_DATA_EMAIL => self::B2B_COMPANY_OWNER_EMAIL,
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'user123',
                     self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '606060605',
                     self::KEY_CUSTOMER_USER_REFERENCE => self::COMPANY_USER_JOZEF_NOVOTNY,
