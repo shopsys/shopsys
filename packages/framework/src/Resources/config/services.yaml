@@ -713,9 +713,6 @@ services:
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFactory
 
-    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory
-
     Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole: ~
 
     Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupSetting: ~

@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 
-class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInterface
+class CustomerUserUpdateDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory
@@ -51,6 +51,30 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
             $this->deliveryAddressDataFactory->create(),
             $this->customerUserDataFactory->create(),
         );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param string $password
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData
+     */
+    public function createFromOrder(Order $order, string $password): CustomerUserUpdateData
+    {
+        $customerUserUpdateData = $this->create();
+
+        $customerUserUpdateData->customerUserData = $this->getCustomerUserDataByOrder($order, $password);
+        $this->fillBillingAddressDataFromOrder($order, $customerUserUpdateData->billingAddressData);
+
+        $transport = $order->getTransport();
+
+        if (
+            !$transport->isPersonalPickup() &&
+            !$transport->isPacketery()
+        ) {
+            $customerUserUpdateData->deliveryAddressData = $this->getAmendedDeliveryAddressDataByOrder($order);
+        }
+
+        return $customerUserUpdateData;
     }
 
     /**
@@ -140,13 +164,7 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
         $billingAddressData = $this->billingAddressDataFactory->createFromBillingAddress($billingAddress);
 
         if ($billingAddress->getStreet() === null) {
-            $billingAddressData->companyName = $order->getCompanyName();
-            $billingAddressData->companyNumber = $order->getCompanyNumber();
-            $billingAddressData->companyTaxNumber = $order->getCompanyTaxNumber();
-            $billingAddressData->street = $order->getStreet();
-            $billingAddressData->city = $order->getCity();
-            $billingAddressData->postcode = $order->getPostcode();
-            $billingAddressData->country = $order->getCountry();
+            $this->fillBillingAddressDataFromOrder($order, $billingAddressData);
         }
 
         return $billingAddressData;
@@ -179,5 +197,40 @@ class CustomerUserUpdateDataFactory implements CustomerUserUpdateDataFactoryInte
         }
 
         return $deliveryAddressData;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData $billingAddressData
+     */
+    protected function fillBillingAddressDataFromOrder(
+        Order $order,
+        BillingAddressData $billingAddressData,
+    ): void {
+        $billingAddressData->companyCustomer = $order->isCompanyCustomer();
+        $billingAddressData->companyName = $order->getCompanyName();
+        $billingAddressData->companyNumber = $order->getCompanyNumber();
+        $billingAddressData->companyTaxNumber = $order->getCompanyTaxNumber();
+        $billingAddressData->street = $order->getStreet();
+        $billingAddressData->city = $order->getCity();
+        $billingAddressData->postcode = $order->getPostcode();
+        $billingAddressData->country = $order->getCountry();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param string $password
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData
+     */
+    protected function getCustomerUserDataByOrder(Order $order, string $password): CustomerUserData
+    {
+        $customerUserData = $this->customerUserDataFactory->createForDomainId($order->getDomainId());
+        $customerUserData->firstName = $order->getFirstName();
+        $customerUserData->lastName = $order->getLastName();
+        $customerUserData->telephone = $order->getTelephone();
+        $customerUserData->email = $order->getEmail();
+        $customerUserData->password = $password;
+
+        return $customerUserData;
     }
 }

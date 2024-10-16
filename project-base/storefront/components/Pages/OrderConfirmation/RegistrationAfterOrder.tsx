@@ -14,7 +14,6 @@ import { useRouter } from 'next/router';
 import { OrderConfirmationUrlQuery } from 'pages/order-confirmation';
 import { useRef } from 'react';
 import { FormProvider } from 'react-hook-form';
-import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { RegistrationAfterOrderFormType } from 'types/form';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useRegistration } from 'utils/auth/useRegistration';
@@ -27,14 +26,11 @@ export const RegistrationAfterOrder: FC = () => {
     const { t } = useTranslation();
     const [formProviderMethods] = useRegistrationAfterOrderForm();
     const formMeta = useRegistrationAfterOrderFormMeta(formProviderMethods);
-    const register = useRegistration();
+    const { registerByOrder } = useRegistration();
     const isInvalidRegistrationRef = useRef(false);
     const { query } = useRouter();
-    const { orderUuid, orderEmail, registrationData } = query as OrderConfirmationUrlQuery;
+    const { orderUuid, orderEmail, orderUrlHash } = query as OrderConfirmationUrlQuery;
     const isUserLoggedIn = useIsUserLoggedIn();
-    const parsedRegistrationData = useRef<ContactInformation | undefined>(
-        registrationData ? (JSON.parse(registrationData) as ContactInformation) : undefined,
-    );
 
     useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.order_confirmation_page);
 
@@ -47,19 +43,14 @@ export const RegistrationAfterOrder: FC = () => {
         });
 
     const onRegistrationHandler = async (registrationAfterOrderFormData: RegistrationAfterOrderFormType) => {
-        if (!parsedRegistrationData.current || !orderUuid) {
+        if (!orderUrlHash || !orderUuid) {
             return;
         }
 
         blurInput();
-        const registrationError = await register({
+        const registrationError = await registerByOrder({
             ...registrationAfterOrderFormData,
-            ...parsedRegistrationData.current,
-            country: parsedRegistrationData.current.country.value,
-            companyCustomer: parsedRegistrationData.current.customer === 'companyCustomer',
-            cartUuid: null,
-            lastOrderUuid: orderUuid,
-            billingAddressUuid: null,
+            orderUrlHash,
         });
 
         if (registrationError) {
@@ -77,7 +68,7 @@ export const RegistrationAfterOrder: FC = () => {
     };
 
     if (
-        !parsedRegistrationData.current ||
+        !orderUrlHash ||
         isUserLoggedIn ||
         !orderUuid ||
         isInformationAboutUserRegistrationFetching ||

@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Customer\User;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver;
+use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginInfoFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\Exception\MissingCustomerUserLoginTypeException;
@@ -17,11 +18,13 @@ class CustomerUserResolverMap extends ResolverMap
      * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade $customerUserLoginTypeFacade
      * @param \Shopsys\FrontendApiBundle\Model\Customer\User\LoginInfoFactory $loginInfoFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver $customerUserRoleResolver
+     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      */
     public function __construct(
         protected readonly CustomerUserLoginTypeFacade $customerUserLoginTypeFacade,
         protected readonly LoginInfoFactory $loginInfoFactory,
         protected readonly CustomerUserRoleResolver $customerUserRoleResolver,
+        protected readonly NewsletterFacade $newsletterFacade,
     ) {
     }
 
@@ -66,6 +69,9 @@ class CustomerUserResolverMap extends ResolverMap
             },
             'roles' => function (CustomerUser $customerUser) {
                 return $this->customerUserRoleResolver->getRolesForCustomerUser($customerUser);
+            },
+            'newsletterSubscription' => function (CustomerUser $customerUser) {
+                return $this->newsletterFacade->isSubscribed($customerUser);
             },
         ];
 

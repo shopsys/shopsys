@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures\Demo;
 
 use App\Model\Customer\User\CustomerUser;
+use App\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -18,7 +19,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative;
 
 class CustomerUserDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
@@ -70,7 +70,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
         private readonly Generator $faker,
         private readonly EntityManagerInterface $em,
         private readonly HashGenerator $hashGenerator,
-        private readonly CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
+        private readonly CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
         private readonly CustomerUserDataFactoryInterface $customerUserDataFactory,
     ) {
     }

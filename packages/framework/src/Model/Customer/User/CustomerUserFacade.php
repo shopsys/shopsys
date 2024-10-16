@@ -26,7 +26,7 @@ class CustomerUserFacade
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade $customerMailFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactoryInterface $customerUserFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
@@ -41,7 +41,7 @@ class CustomerUserFacade
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly CustomerUserRepository $customerUserRepository,
-        protected readonly CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
+        protected readonly CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
         protected readonly CustomerMailFacade $customerMailFacade,
         protected readonly CustomerUserFactoryInterface $customerUserFactory,
         protected readonly CustomerUserPasswordFacade $customerUserPasswordFacade,
@@ -150,6 +150,10 @@ class CustomerUserFacade
         $this->em->persist($customerUser);
         $this->em->flush();
 
+        if ($customerUserData->newsletterSubscription) {
+            $this->newsletterFacade->addSubscribedEmailIfNotExists($customerUser->getEmail(), $customerUser->getDomainId());
+        }
+
         return $customerUser;
     }
 
@@ -194,7 +198,7 @@ class CustomerUserFacade
             $customerUserUpdateData->billingAddressData,
         );
 
-        if ($customerUser->isNewsletterSubscription()) {
+        if ($customerUserUpdateData->customerUserData->newsletterSubscription) {
             $this->newsletterFacade->addSubscribedEmailIfNotExists($customerUser->getEmail(), $customerUser->getDomainId());
         } else {
             $this->newsletterFacade->deleteSubscribedEmailIfExists($customerUser->getEmail(), $customerUser->getDomainId());

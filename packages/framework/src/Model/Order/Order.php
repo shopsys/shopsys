@@ -1234,4 +1234,12 @@ class Order
     {
         $this->orderPaymentStatusPageValidityHash = Uuid::uuid4()->toString();
     }
+
+    /**
+     * @return bool
+     */
+    public function isCompanyCustomer(): bool
+    {
+        return $this->getCompanyName() !== null && $this->getCompanyNumber() !== null;
+    }
 }

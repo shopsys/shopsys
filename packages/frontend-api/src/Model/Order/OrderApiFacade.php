@@ -4,28 +4,22 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Order;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
-use Shopsys\FrontendApiBundle\Model\Order\Exception\OrderCannotBePairedException;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderNotFoundUserError;
 
 class OrderApiFacade
 {
-    protected const int ONE_HOUR_REGISTRATION_WINDOW = 3600;
-
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Order\OrderRepository $orderRepository
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
-     * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
         protected readonly OrderRepository $orderRepository,
         protected readonly OrderFacade $orderFacade,
-        protected readonly EntityManagerInterface $em,
     ) {
     }
 
@@ -101,30 +95,6 @@ class OrderApiFacade
         }
 
         return $orderList[0];
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param string $orderUuid
-     */
-    public function pairCustomerUserWithOrderByOrderUuid(CustomerUser $customerUser, string $orderUuid): void
-    {
-        $order = $this->getByUuid($orderUuid);
-
-        if ($order->getCustomerUser() !== null) {
-            throw new OrderCannotBePairedException('Order is owned by another customer.');
-        }
-
-        if ($order->getEmail() !== $customerUser->getEmail()) {
-            throw new OrderCannotBePairedException('Emails used in order and registration do not match.');
-        }
-
-        if ($order->getCreatedAt()->getTimestamp() < (time() - self::ONE_HOUR_REGISTRATION_WINDOW)) {
-            throw new OrderCannotBePairedException('Registration for a established order is possible only within an hour of establishment of an order.');
-        }
-
-        $order->setCustomerUser($customerUser);
-        $this->em->flush();
     }
 
     /**

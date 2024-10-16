@@ -1,0 +1,18 @@
+mutation RegistrationMutation(
+    $orderUrlHash: String!
+    $password: Password!,
+    $productListsUuids: [Uuid!]! = []
+) {
+    RegisterByOrder(
+        input: {
+            orderUrlHash: $orderUrlHash
+            password: $password
+            productListsUuids: $productListsUuids
+        }
+    ) {
+        tokens {
+            accessToken
+            refreshToken
+        }
+    }
+}

@@ -20,6 +20,7 @@ use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\CustomerUserMutation 
  * @method \App\Model\Customer\User\CustomerUser addNewCustomerUserMutation(\Overblog\GraphQLBundle\Definition\Argument $argument, \Overblog\GraphQLBundle\Validator\InputValidator $validator)
  * @method \App\Model\Customer\User\CustomerUser editCustomerUserPersonalDataMutation(\Overblog\GraphQLBundle\Definition\Argument $argument, \Overblog\GraphQLBundle\Validator\InputValidator $validator)
  * @method checkCustomerUserCanBeDeleted(\App\Model\Customer\User\CustomerUser $customerUserToDelete, \App\Model\Customer\User\CustomerUser $currentCustomer)
+ * @method \Shopsys\FrontendApiBundle\Model\Security\LoginResultData loginRegisteredCustomerUser(\App\Model\Customer\User\CustomerUser $customerUser)
  */
 class CustomerUserMutation extends BaseCustomerUserMutation
 {

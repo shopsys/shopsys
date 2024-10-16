@@ -314,9 +314,6 @@ services:
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory:
         alias: App\Model\Customer\User\CustomerUserUpdateDataFactory
 
-    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface:
-        alias: App\Model\Customer\User\CustomerUserUpdateDataFactory
-
     Shopsys\FrameworkBundle\Model\Feed\FeedFacade:
         alias: App\Model\Feed\FeedFacade
 

@@ -9,17 +9,17 @@ use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory as FrameworkCustomerUserDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory as FrameworkCustomerUserUpdateDataFactory;
 
 class CustomerUserUpdateDataFactory
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory $billingAddressDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
      */
     public function __construct(
-        protected readonly CustomerUserUpdateDataFactoryInterface $customerUserUpdateDataFactory,
+        protected readonly FrameworkCustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
         protected readonly BillingAddressDataFactory $billingAddressDataFactory,
         protected readonly FrameworkCustomerUserDataFactory $customerUserDataFactory,
     ) {

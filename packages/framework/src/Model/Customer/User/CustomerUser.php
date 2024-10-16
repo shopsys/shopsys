@@ -135,12 +135,6 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     protected $refreshTokenChain;
 
     /**
-     * @var bool
-     * @ORM\Column(type="boolean")
-     */
-    protected $newsletterSubscription;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup
      * @ORM\ManyToOne(targetEntity="\Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup")
      * @ORM\JoinColumn(name="role_group_id", referencedColumnName="id", nullable=false)
@@ -191,7 +185,6 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
         $this->salesRepresentative = $customerUserData->salesRepresentative;
         $this->telephone = $customerUserData->telephone;
         $this->defaultDeliveryAddress = $customerUserData->defaultDeliveryAddress;
-        $this->newsletterSubscription = $customerUserData->newsletterSubscription;
         $this->roleGroup = $customerUserData->roleGroup;
     }
 
@@ -471,14 +464,6 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
     public function addRefreshTokenChain(CustomerUserRefreshTokenChain $customerUserRefreshTokenChain): void
     {
         $this->refreshTokenChain->add($customerUserRefreshTokenChain);
-    }
-
-    /**
-     * @return bool
-     */
-    public function isNewsletterSubscription()
-    {
-        return $this->newsletterSubscription;
     }
 
     /**

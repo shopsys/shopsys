@@ -13,9 +13,6 @@ msgstr ""
 msgid "Email cannot be longer than {{ limit }} characters"
 msgstr ""
 
-msgid "First name cannot be longer than {{ limit }} characters"
-msgstr ""
-
 msgid "Flag color must be in valid hexadecimal code e.g. #3333ff"
 msgstr ""
 
@@ -28,9 +25,6 @@ msgstr ""
 msgid "Image can be only in JPG, GIF or PNG format"
 msgstr ""
 
-msgid "Last name cannot be longer than {{ limit }} characters"
-msgstr ""
-
 msgid "Minimal and maximal value are not supported as an input for other than \"slider\" type parameter. Use \"values\" instead."
 msgstr ""
 
@@ -38,9 +32,6 @@ msgid "New password must be at least {{ limit }} characters long"
 msgstr ""
 
 msgid "Password has to include uppercase letters, lowercase letters, numbers and must be longer than 10 characters."
-msgstr ""
-
-msgid "Password must be at least {{ limit }} characters long"
 msgstr ""
 
 msgid "Passwords do not match"
@@ -58,16 +49,10 @@ msgstr ""
 msgid "Please enter email content"
 msgstr ""
 
-msgid "Please enter first name"
-msgstr ""
-
 msgid "Please enter flag color"
 msgstr ""
 
 msgid "Please enter flag name in all languages"
-msgstr ""
-
-msgid "Please enter last name"
 msgstr ""
 
 msgid "Please enter new password"
@@ -76,13 +61,7 @@ msgstr ""
 msgid "Please enter notification bar content"
 msgstr ""
 
-msgid "Please enter only numbers and the + sign"
-msgstr ""
-
 msgid "Please enter password"
-msgstr ""
-
-msgid "Please enter telephone number"
 msgstr ""
 
 msgid "Please enter valid email"
@@ -104,15 +83,6 @@ msgid "Product with entered catalog number already exists"
 msgstr ""
 
 msgid "Provided hash is not valid."
-msgstr ""
-
-msgid "Telephone number cannot be longer than {{ limit }} characters"
-msgstr ""
-
-msgid "Telephone number cannot be shorter than {{ limit }} characters"
-msgstr ""
-
-msgid "This email is already registered"
 msgstr ""
 
 msgid "Uploaded image is to large ({{ size }} {{ suffix }}). Maximum size of an image is {{ limit }} {{ suffix }}."

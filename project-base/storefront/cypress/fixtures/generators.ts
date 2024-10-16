@@ -53,7 +53,6 @@ export const generateCustomerRegistrationData = (
         companyName: null,
         companyNumber: null,
         companyTaxNumber: null,
-        lastOrderUuid: null,
         billingAddressUuid: null,
     };
 

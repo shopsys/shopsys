@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerRepository;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade;
+use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 
 class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
@@ -15,11 +16,13 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade $customerUserRoleGroupFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerRepository $customerRepository
+     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      */
     public function __construct(
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         protected readonly CustomerUserRoleGroupFacade $customerUserRoleGroupFacade,
         protected readonly CustomerRepository $customerRepository,
+        protected readonly NewsletterFacade $newsletterFacade,
     ) {
     }
 
@@ -123,7 +126,7 @@ class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
         $customerUserData->telephone = $customerUser->getTelephone();
         $customerUserData->customer = $customerUser->getCustomer();
         $customerUserData->defaultDeliveryAddress = $customerUser->getDefaultDeliveryAddress();
-        $customerUserData->newsletterSubscription = $customerUser->isNewsletterSubscription();
+        $customerUserData->newsletterSubscription = $this->newsletterFacade->isSubscribed($customerUser);
         $customerUserData->roleGroup = $customerUser->getRoleGroup();
     }
 }

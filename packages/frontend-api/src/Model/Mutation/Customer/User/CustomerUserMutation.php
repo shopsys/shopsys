@@ -155,26 +155,22 @@ class CustomerUserMutation extends BaseTokenMutation
             $this->mergeCartFacade->mergeCartByUuidToCustomerCart($argument['input']['cartUuid'], $customerUser);
         }
 
-        if ($argument['input']['lastOrderUuid'] !== null) {
-            $this->orderFacade->pairCustomerUserWithOrderByOrderUuid($customerUser, $argument['input']['lastOrderUuid']);
-        }
-
         $this->productListFacade->mergeProductListsToCustomerUser($argument['input']['productListsUuids'], $customerUser);
 
-        $deviceId = Uuid::uuid4()->toString();
+        return $this->loginRegisteredCustomerUser($customerUser);
+    }
 
-        $this->customerUserLoginTypeFacade->updateCustomerUserLoginTypes(
-            $this->customerUserLoginTypeDataFactory->create($customerUser, LoginTypeEnum::WEB),
-        );
+    /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @return \Shopsys\FrontendApiBundle\Model\Security\LoginResultData
+     */
+    public function registerByOrderMutation(Argument $argument): LoginResultData
+    {
+        $input = $argument['input'];
+        $customerUser = $this->registrationFacade->registerByOrder($input['orderUrlHash'], $input['password']);
+        $this->productListFacade->mergeProductListsToCustomerUser($input['productListsUuids'], $customerUser);
 
-        return $this->loginResultDataFactory->create(
-            $this->tokensDataFactory->create(
-                $this->tokenFacade->createAccessTokenAsString($customerUser, $deviceId),
-                $this->tokenFacade->createRefreshTokenAsString($customerUser, $deviceId),
-            ),
-            $this->mergeCartFacade->shouldShowCartMergeInfo(),
-            true,
-        );
+        return $this->loginRegisteredCustomerUser($customerUser);
     }
 
     /**
@@ -294,5 +290,27 @@ class CustomerUserMutation extends BaseTokenMutation
                 'Customer user with uuid ' . $customerUserToDelete->getUuid() . ' is the last customer user with default role group.',
             );
         }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @return \Shopsys\FrontendApiBundle\Model\Security\LoginResultData
+     */
+    protected function loginRegisteredCustomerUser(CustomerUser $customerUser): LoginResultData
+    {
+        $deviceId = Uuid::uuid4()->toString();
+
+        $this->customerUserLoginTypeFacade->updateCustomerUserLoginTypes(
+            $this->customerUserLoginTypeDataFactory->create($customerUser, LoginTypeEnum::WEB),
+        );
+
+        return $this->loginResultDataFactory->create(
+            $this->tokensDataFactory->create(
+                $this->tokenFacade->createAccessTokenAsString($customerUser, $deviceId),
+                $this->tokenFacade->createRefreshTokenAsString($customerUser, $deviceId),
+            ),
+            $this->mergeCartFacade->shouldShowCartMergeInfo(),
+            true,
+        );
     }
 }

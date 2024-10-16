@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade;
+use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Tests\FrameworkBundle\Test\Provider\TestOrderProvider;
@@ -184,6 +185,7 @@ class CustomerUserUpdateDataFactoryTest extends TestCase
                 $this->createMock(PricingGroupSettingFacade::class),
                 $this->createMock(CustomerUserRoleGroupFacade::class),
                 $this->createMock(CustomerRepository::class),
+                $this->createMock(NewsletterFacade::class),
             ),
         );
     }

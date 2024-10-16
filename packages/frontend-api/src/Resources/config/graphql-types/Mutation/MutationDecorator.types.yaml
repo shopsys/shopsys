@@ -47,13 +47,21 @@ MutationDecorator:
                 access: "@=isGranted('ROLE_API_ALL')"
                 resolve: "@=mutation('changePersonalDataMutation', args, validator)"
             Register:
-                type: Token!
+                type: 'LoginResult!'
                 description: "Register new customer user"
                 args:
                     input:
                         type: RegistrationDataInput!
                         validation: cascade
                 resolve: "@=mutation('registerMutation', args, validator)"
+            RegisterByOrder:
+                type: 'LoginResult!'
+                description: "Register new customer user using an order data"
+                args:
+                    input:
+                        type: RegistrationByOrderInput!
+                        validation: cascade
+                resolve: "@=mutation('registerByOrderMutation', args)"
             NewsletterSubscribe:
                 type: Boolean!
                 description: "Subscribe for e-mail newsletter"

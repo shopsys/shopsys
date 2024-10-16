@@ -127,7 +127,10 @@ msgstr ""
 msgid "Please enter only numbers and the + character"
 msgstr ""
 
-msgid "Please enter password"
+msgid "Please enter only numbers and the + sign"
+msgstr ""
+
+msgid "Please enter order URL hash"
 msgstr ""
 
 msgid "Please enter quantity"

@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Newsletter;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
 class NewsletterFacade
 {
@@ -107,5 +108,14 @@ class NewsletterFacade
         }
 
         $this->delete($newsletterSubscriber);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @return bool
+     */
+    public function isSubscribed(CustomerUser $customerUser): bool
+    {
+        return $this->findNewsletterSubscriberByEmailAndDomainId($customerUser->getEmail(), $customerUser->getDomainId()) !== null;
     }
 }
