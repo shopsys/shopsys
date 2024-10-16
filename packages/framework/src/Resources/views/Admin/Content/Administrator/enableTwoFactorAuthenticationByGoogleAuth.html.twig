@@ -7,17 +7,23 @@
 {% block h1 %}{{ 'Enable two factor authentication by Google Authenticator'|trans }}{% endblock %}
 
 {% block main_content %}
-    <div class="wrap-divider">
-        <img src="{{ qrCodeDataUri }}" />
-
-        {{ form_start(form) }}
-        {{ form_errors(form) }}
-        {{ form_end(form) }}
+    <div class="flex-row form-bg-color">
+        <div class="width-50-percent">
+            <div class="form-line">
+                <h3>1. {{ 'Scan QR code'|trans }}</h3>
+                <p>{{ 'Please scan the QR code below using a one-time passcode generator application (such as Google Authenticator).'|trans }}</p>
+                <p><img src="{{ qrCodeDataUri }}" /></p>
+                <p class="bottom-1">{{ 'If you cannot scan the QR code, you can manually enter the following secret key:'| trans }}</p>
+                <p class="input input--auto-size">{{ googleAuthenticatorSecret }}</p>
+            </div>
+        </div>
+        <div class="width-50-percent">
+            <div class="form-line">
+                <h3>2. {{ 'Confirm one-time passcode'|trans }}</h3>
+                {{ form_start(form) }}
+                {{ form_errors(form) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
     </div>
-
-    <div class="wrap-divider">
-        {{ 'Authenticator key'|trans }}
-        <p>{{ googleAuthenticatorSecret }}</p>
-    </div>
-
 {% endblock %}

@@ -355,9 +355,6 @@ msgstr ""
 msgid "Authentication code"
 msgstr ""
 
-msgid "Authenticator key"
-msgstr ""
-
 msgid "Available"
 msgstr ""
 
@@ -721,7 +718,10 @@ msgstr ""
 msgid "Complement to title will be set as suffix to all titles e.g. if complement is set “ | My shop” and product name is “iPhone 7” the result title for this products page will be “iPhone 7 | My shop”."
 msgstr ""
 
-msgid "Confirm authentication code"
+msgid "Confirm code and enable two-factor authentication"
+msgstr ""
+
+msgid "Confirm one-time passcode"
 msgstr ""
 
 msgid "Contact form"
@@ -1594,6 +1594,9 @@ msgstr ""
 msgid "Enable two factor authentication by email"
 msgstr ""
 
+msgid "Enable two-factor authentication"
+msgstr ""
+
 msgid "Enable whitelist"
 msgstr ""
 
@@ -1988,6 +1991,9 @@ msgid "IP address"
 msgstr ""
 
 msgid "Icon"
+msgstr ""
+
+msgid "If you cannot scan the QR code, you can manually enter the following secret key:"
 msgstr ""
 
 msgid "If you change currency settings, prices of all products will be recalculated"
@@ -2881,6 +2887,12 @@ msgstr ""
 msgid "Please fill all default values before creating a product"
 msgstr ""
 
+msgid "Please scan the QR code below using a one-time passcode generator application (such as Google Authenticator)."
+msgstr ""
+
+msgid "Please use the button below to send the one-time passcode to your email address."
+msgstr ""
+
 msgid "Please wait until all files are uploaded and try again."
 msgstr ""
 
@@ -3088,6 +3100,9 @@ msgstr ""
 msgid "Replace file"
 msgstr ""
 
+msgid "Request a one-time passcode by email"
+msgstr ""
+
 msgid "Reset filter"
 msgstr ""
 
@@ -3218,6 +3233,9 @@ msgid "Save warehouse settings"
 msgstr ""
 
 msgid "Scaled promo code"
+msgstr ""
+
+msgid "Scan QR code"
 msgstr ""
 
 msgid "Schedule"

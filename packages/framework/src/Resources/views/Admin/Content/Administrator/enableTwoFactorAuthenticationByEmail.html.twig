@@ -7,15 +7,25 @@
 {% block h1 %}{{ 'Enable two factor authentication by email'|trans }}{% endblock %}
 
 {% block main_content %}
-    <div class="wrap-divider">
-        {{ form_start(formVerification) }}
-        {{ form_errors(formVerification) }}
-        {{ form_end(formVerification) }}
+    <div class="flex-row form-bg-color">
+        <div class="width-50-percent">
+            <div class="form-line">
+                <h3>1. {{ 'Request a one-time passcode by email '|trans }}</h3>
+                <p>{{ 'Please use the button below to send the one-time passcode to your email address.'|trans }}</p>
+                <div class="form-line">
+                    {{ form_start(formSendEmail) }}
+                    {{ form_errors(formSendEmail) }}
+                    {{ form_end(formSendEmail) }}
+                </div>
+            </div>
+        </div>
+        <div class="width-50-percent">
+            <div class="form-line">
+                <h3>2. {{ 'Confirm one-time passcode'|trans }}</h3>
+                {{ form_start(formVerification) }}
+                {{ form_errors(formVerification) }}
+                {{ form_end(formVerification) }}
+            </div>
+        </div>
     </div>
-    <div class="wrap-divider">
-        {{ form_start(formSendEmail) }}
-        {{ form_errors(formSendEmail) }}
-        {{ form_end(formSendEmail) }}
-    </div>
-
 {% endblock %}
