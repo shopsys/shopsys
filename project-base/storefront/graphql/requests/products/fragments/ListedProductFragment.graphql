@@ -35,4 +35,8 @@ fragment ListedProductFragment on Product {
             slug
         }
     }
+
+    ... on MainVariant {
+        variantsCount
+    }
 }

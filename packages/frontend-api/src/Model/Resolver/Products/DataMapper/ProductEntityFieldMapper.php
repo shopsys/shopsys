@@ -30,6 +30,7 @@ class ProductEntityFieldMapper
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider $productFrontendLimitProvider
      * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
+     * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableCountByIdsBatchLoader
      */
     public function __construct(
         protected readonly Domain $domain,
@@ -42,6 +43,7 @@ class ProductEntityFieldMapper
         protected readonly ProductFrontendLimitProvider $productFrontendLimitProvider,
         protected readonly DataLoaderInterface $productsSellableByIdsBatchLoader,
         protected readonly ProductVisibilityFacade $productVisibilityFacade,
+        protected readonly DataLoaderInterface $productsSellableCountByIdsBatchLoader,
     ) {
     }
 
@@ -197,5 +199,27 @@ class ProductEntityFieldMapper
         );
 
         return $productVisibility->isVisible();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function getVariants(Product $product): Promise
+    {
+        $variantIds = array_map(static fn (Product $variant) => $variant->getId(), $product->getVariants());
+
+        return $this->productsSellableByIdsBatchLoader->load($variantIds);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function getVariantsCount(Product $product): Promise
+    {
+        $variantIds = array_map(static fn (Product $variant) => $variant->getId(), $product->getVariants());
+
+        return $this->productsSellableCountByIdsBatchLoader->load($variantIds);
     }
 }

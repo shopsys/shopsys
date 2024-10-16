@@ -5,6 +5,9 @@ MainVariantDecorator:
         - 'Product'
     config:
         fields:
+            variantsCount:
+                type: "Int!"
+                description: "Number of sellable variants"
             variants:
                 type: '[Variant!]!'
         interfaces:
