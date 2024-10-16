@@ -7,7 +7,7 @@ framework:
             - '%env(CDN_DOMAIN)%'
     csrf_protection: ~
 
-    error_controller: 'App\Controller\Admin\ErrorController::showAction'
+    error_controller: 'Shopsys\FrameworkBundle\Component\Error\ErrorController::showAction'
     form:
         legacy_error_messages: false
     fragments: ~
