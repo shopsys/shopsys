@@ -5,6 +5,9 @@
     "barryvdh/elfinder-flysystem-driver": {
         "version": "v0.2.1"
     },
+    "becklyn/ordered-form-bundle": {
+        "version": "1.4.0"
+    },
     "behat/gherkin": {
         "version": "v4.6.0"
     },
@@ -572,9 +575,6 @@
     },
     "shopsys/jsformvalidator-bundle": {
         "version": "1.7.0"
-    },
-    "shopsys/ordered-form": {
-        "version": "4.0.0"
     },
     "slevomat/coding-standard": {
         "version": "4.8.7"

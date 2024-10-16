@@ -4,14 +4,6 @@ services:
         autowire: true
         public: false
 
-    Ivory\OrderedForm\Extension\OrderedButtonExtension:
-        tags:
-            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\ButtonType }
-
-    Ivory\OrderedForm\Extension\OrderedFormExtension:
-        tags:
-            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
-
     Shopsys\FrameworkBundle\Component\Form\TimedFormTypeExtension:
         tags:
             - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
