@@ -17,4 +17,23 @@ class ImageSitemapDumper extends SitemapDumper
 
         $this->dispatcher->dispatch($event);
     }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapIndex
+     */
+    protected function getRoot(): ImageSitemapIndex
+    {
+        if ($this->root === null) {
+            $this->root = new ImageSitemapIndex();
+
+            foreach ($this->urlsets as $urlset) {
+                $this->root->addSitemap($urlset);
+            }
+        }
+
+        /** @var \Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapIndex $root */
+        $root = $this->root;
+
+        return $root;
+    }
 }

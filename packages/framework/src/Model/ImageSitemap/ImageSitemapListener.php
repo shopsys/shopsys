@@ -69,13 +69,7 @@ class ImageSitemapListener implements EventSubscriberInterface
             $decoratedUrl = new GoogleImageUrlDecorator($urlConcrete);
 
             foreach ($imageSitemapItem->images as $imageSitemapItemImage) {
-                $googleImage = new GoogleImage(
-                    $imageSitemapItemImage->loc,
-                    $imageSitemapItemImage->caption,
-                    $imageSitemapItemImage->geoLocation,
-                    $imageSitemapItemImage->title,
-                    $imageSitemapItemImage->license,
-                );
+                $googleImage = new GoogleImage($imageSitemapItemImage->loc);
                 $decoratedUrl->addImage($googleImage);
             }
 

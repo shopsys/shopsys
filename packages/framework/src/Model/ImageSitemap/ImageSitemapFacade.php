@@ -72,12 +72,6 @@ class ImageSitemapFacade
             $products = $this->productRepository->getAllOfferedProductsPaginated($domainId, $pricingGroup, $offset, self::PRODUCTS_BATCH_SIZE);
 
             foreach ($products as $product) {
-                $productName = $product->getName($domainConfig->getLocale());
-
-                if ($productName === null) {
-                    continue;
-                }
-
                 try {
                     $imageUrl = $this->imageFacade->getImageUrl($domainConfig, $product);
                     $imageSitemapItem = new ImageSitemapItem();
@@ -85,7 +79,6 @@ class ImageSitemapFacade
 
                     $sitemapImage = new ImageSitemapItemImage();
                     $sitemapImage->loc = $imageUrl;
-                    $sitemapImage->title = $productName;
                     $imageSitemapItem->images[] = $sitemapImage;
 
                     $imageSitemapItems[] = $imageSitemapItem;
