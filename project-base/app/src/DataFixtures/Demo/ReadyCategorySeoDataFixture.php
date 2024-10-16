@@ -9,7 +9,6 @@ use App\Model\CategorySeo\ChoseCategorySeoMixCombination;
 use App\Model\CategorySeo\ReadyCategorySeoMixDataFactory;
 use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use App\Model\Product\Flag\Flag;
-use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterFacade;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -17,6 +16,7 @@ use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 
 class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {

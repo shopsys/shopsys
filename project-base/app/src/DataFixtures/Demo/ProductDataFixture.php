@@ -7,7 +7,6 @@ namespace App\DataFixtures\Demo;
 use App\DataFixtures\Demo\DataSetter\ProductDemoDataSetter;
 use App\DataFixtures\Demo\DemoDataFactory\ProductDemoDataFactory;
 use App\Model\Category\Category;
-use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductFacade;
@@ -19,6 +18,7 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 
 class ProductDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -525,6 +525,10 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
                 ParameterDataFixture::PARAM_WATER_RESERVOIR_CAPACITY => t('2 l', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_MILK_RESERVOIR_CAPACITY => t('600 ml', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
                 ParameterDataFixture::PARAM_MAGAZINE_CAPACITY_FOR_BEANS => t('400 g', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WEIGHT => t('9000', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_HEIGHT => t('36 cm', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+                ParameterDataFixture::PARAM_WARRANTY_IN_YEARS => '3',
+                ParameterDataFixture::PARAM_MATERIAL => t('plastic', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
             ]);
         }
 

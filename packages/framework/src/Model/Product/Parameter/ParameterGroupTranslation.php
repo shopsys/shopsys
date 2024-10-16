@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Product\Parameter;
+namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 use Doctrine\ORM\Mapping as ORM;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
+use Shopsys\FrameworkBundle\Component\String\TransformString;
 
 /**
  * @ORM\Table(name="parameter_groups_translations")
@@ -15,7 +16,8 @@ use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 class ParameterGroupTranslation extends AbstractTranslation
 {
     /**
-     * @Prezent\Translatable(targetEntity="App\Model\Product\Parameter\ParameterGroup")
+     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup
+     * @Prezent\Translatable(targetEntity="Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup")
      */
     protected $translatable;
 
@@ -28,7 +30,7 @@ class ParameterGroupTranslation extends AbstractTranslation
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
@@ -36,8 +38,8 @@ class ParameterGroupTranslation extends AbstractTranslation
     /**
      * @param string $name
      */
-    public function setName($name): void
+    public function setName($name)
     {
-        $this->name = $name;
+        $this->name = TransformString::getTrimmedStringOrNullOnEmpty($name);
     }
 }

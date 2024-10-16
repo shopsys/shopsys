@@ -11,8 +11,8 @@ use App\DataFixtures\Demo\ParameterDataFixture;
 use App\Model\Category\Category;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Flag\Flag;
-use App\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 
 class ProductsFilteringTest extends ProductsGraphQlTestCase

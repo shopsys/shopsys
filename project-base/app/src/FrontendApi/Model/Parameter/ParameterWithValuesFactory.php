@@ -7,7 +7,7 @@ namespace App\FrontendApi\Model\Parameter;
 use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory as BaseParameterWithValuesFactory;
 
 /**
- * @method \Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValues create(\App\Model\Product\Parameter\Parameter $parameter, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] $parameterValues)
+ * @method \Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValues create(\Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter, \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] $parameterValues)
  * @method \Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValues[] createMultipleForProduct(\App\Model\Product\Product $product)
  */
 class ParameterWithValuesFactory extends BaseParameterWithValuesFactory
@@ -45,7 +45,6 @@ class ParameterWithValuesFactory extends BaseParameterWithValuesFactory
         return [
             'uuid' => $product['parameter_uuid'],
             'name' => $product['parameter_name'],
-            'visible' => true,
             'group' => $product['parameter_group'],
             'unit' => $product['parameter_unit'] ? ['name' => $product['parameter_unit']] : null,
             'values' => [],

@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Product\Parameter;
+namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 class ParameterGroupData
 {
     /**
      * @var string[]|null[]
      */
-    public $names;
+    public $name;
 
     /**
      * @var int
      */
-    public $orderingPriority;
+    public $position;
 
     public function __construct()
     {
-        $this->names = [];
+        $this->name = [];
     }
 }

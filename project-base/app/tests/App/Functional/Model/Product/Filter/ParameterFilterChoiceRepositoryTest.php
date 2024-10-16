@@ -8,10 +8,10 @@ use App\DataFixtures\Demo\CategoryDataFixture;
 use App\DataFixtures\Demo\ParameterDataFixture;
 use App\DataFixtures\Demo\PricingGroupDataFixture;
 use App\Model\Category\Category;
-use App\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoiceRepository;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Tests\App\Test\ParameterTransactionFunctionalTestCase;
 
 class ParameterFilterChoiceRepositoryTest extends ParameterTransactionFunctionalTestCase

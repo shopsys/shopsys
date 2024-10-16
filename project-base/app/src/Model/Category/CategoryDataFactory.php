@@ -88,7 +88,6 @@ class CategoryDataFactory extends BaseCategoryDataFactory
     {
         parent::fillFromCategory($categoryData, $category);
 
-        /** @var \App\Model\Product\Parameter\Parameter[] $parameters */
         $parameters = $this->categoryParameterRepository->getParametersCollapsedByCategory($category);
         $categoryData->parametersCollapsed = $parameters;
         $categoryData->parametersPosition = $this->getParametersSortedByPositionFilteredByCategory($category);
