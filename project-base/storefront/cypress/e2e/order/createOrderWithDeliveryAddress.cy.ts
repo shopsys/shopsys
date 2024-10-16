@@ -97,7 +97,7 @@ describe('Create Order With Delivery Address Tests', () => {
     });
 });
 
-describe('Delivery Address In Order Tests (Logged-in User)', () => {
+describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMode: 0 } }, () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
@@ -345,7 +345,7 @@ describe('Delivery Address In Order Tests (Pickup Point)', () => {
     });
 });
 
-describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', () => {
+describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', { retries: { runMode: 0 } }, () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });

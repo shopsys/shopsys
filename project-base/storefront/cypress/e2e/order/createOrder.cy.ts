@@ -221,34 +221,38 @@ describe('Create Order Tests', () => {
         });
     });
 
-    it('[Logged Home Cash] create order as logged-in user (transport to home, cash on delivery) and check it in order detail', function () {
-        cy.registerAsNewUser(
-            generateCustomerRegistrationData('commonCustomer', 'create-order-as-logged-in-user@shopsys.com'),
-        );
-        cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
-        cy.preselectTransportForTest(transport.czechPost.uuid);
-        cy.preselectPaymentForTest(payment.onDelivery.uuid);
-        cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
+    it(
+        '[Logged Home Cash] create order as logged-in user (transport to home, cash on delivery) and check it in order detail',
+        { retries: { runMode: 0 } },
+        function () {
+            cy.registerAsNewUser(
+                generateCustomerRegistrationData('commonCustomer', 'create-order-as-logged-in-user@shopsys.com'),
+            );
+            cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
+            cy.preselectTransportForTest(transport.czechPost.uuid);
+            cy.preselectPaymentForTest(payment.onDelivery.uuid);
+            cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
-        fillInNoteInThirdStep(orderNote);
-        loseFocus();
-        takeSnapshotAndCompare(this.test?.title, 'filled contact information form', {
-            blackout: [
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.order_summary_cart_item_image },
-            ],
-        });
+            fillInNoteInThirdStep(orderNote);
+            loseFocus();
+            takeSnapshotAndCompare(this.test?.title, 'filled contact information form', {
+                blackout: [
+                    { tid: TIDs.order_summary_transport_and_payment_image },
+                    { tid: TIDs.order_summary_cart_item_image },
+                ],
+            });
 
-        clickOnSendOrderButton();
-        cy.waitForStableAndInteractiveDOM();
-        changeOrderConfirmationDynamicPartsToStaticDemodata();
-        mouseOverUserMenuButton();
-        takeSnapshotAndCompare(this.test?.title, 'order confirmation', {
-            blackout: [{ tid: TIDs.footer_social_links }],
-        });
+            clickOnSendOrderButton();
+            cy.waitForStableAndInteractiveDOM();
+            changeOrderConfirmationDynamicPartsToStaticDemodata();
+            mouseOverUserMenuButton();
+            takeSnapshotAndCompare(this.test?.title, 'order confirmation', {
+                blackout: [{ tid: TIDs.footer_social_links }],
+            });
 
-        clickOnOrderDetailButtonOnThankYouPage();
-        changeOrderDetailDynamicPartsToStaticDemodata();
-        takeSnapshotAndCompare(this.test?.title, 'order detail', { blackout: [{ tid: TIDs.footer_social_links }] });
-    });
+            clickOnOrderDetailButtonOnThankYouPage();
+            changeOrderDetailDynamicPartsToStaticDemodata();
+            takeSnapshotAndCompare(this.test?.title, 'order detail', { blackout: [{ tid: TIDs.footer_social_links }] });
+        },
+    );
 });

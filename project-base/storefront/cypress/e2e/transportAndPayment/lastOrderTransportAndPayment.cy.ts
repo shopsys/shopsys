@@ -13,7 +13,7 @@ import {
 } from 'support';
 import { TIDs } from 'tids';
 
-describe('Last Order Transport And Payment Select Tests', () => {
+describe('Last Order Transport And Payment Select Tests', { retries: { runMode: 0 } }, () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
 

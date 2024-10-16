@@ -20,7 +20,7 @@ import {
 } from 'support';
 import { TIDs } from 'tids';
 
-describe('Registration Tests (Basic)', () => {
+describe('Registration Tests (Basic)', { retries: { runMode: 0 } }, () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
         cy.visitAndWaitForStableAndInteractiveDOM('/');
@@ -50,7 +50,7 @@ describe('Registration Tests (Basic)', () => {
     });
 });
 
-describe('Registration Tests (Repeated Tries)', () => {
+describe('Registration Tests (Repeated Tries)', { retries: { runMode: 0 } }, () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
         cy.visitAndWaitForStableAndInteractiveDOM(url.registration);

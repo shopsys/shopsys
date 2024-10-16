@@ -52,31 +52,41 @@ describe('Contact Information Page Tests', () => {
         });
     });
 
-    it('[Logged Empty Cart] redirect to cart page and not display contact information form if cart is empty and user is logged in', function () {
-        cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer'));
-        cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
+    it(
+        '[Logged Empty Cart] redirect to cart page and not display contact information form if cart is empty and user is logged in',
+        { retries: { runMode: 0 } },
+        function () {
+            cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer'));
+            cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
-        checkTransportSelectionIsNotVisible();
-        checkEmptyCartTextIsVisible();
-        checkUrl(url.cart);
-        takeSnapshotAndCompare(this.test?.title, 'empty cart page', { blackout: [{ tid: TIDs.footer_social_links }] });
-    });
+            checkTransportSelectionIsNotVisible();
+            checkEmptyCartTextIsVisible();
+            checkUrl(url.cart);
+            takeSnapshotAndCompare(this.test?.title, 'empty cart page', {
+                blackout: [{ tid: TIDs.footer_social_links }],
+            });
+        },
+    );
 
-    it('[Logged Transport & Payment] redirect to transport and payment select page and not display contact information form if transport and payment are not selected and user is logged in', function () {
-        cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer'));
-        cy.addProductToCartForTest();
-        cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
+    it(
+        '[Logged Transport & Payment] redirect to transport and payment select page and not display contact information form if transport and payment are not selected and user is logged in',
+        { retries: { runMode: 0 } },
+        function () {
+            cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer'));
+            cy.addProductToCartForTest();
+            cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
-        checkContactInformationFormIsNotVisible();
-        checkTransportSelectionIsVisible();
-        checkUrl(url.order.transportAndPayment);
-        takeSnapshotAndCompare(this.test?.title, 'transport and payment page', {
-            blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image },
-                { tid: TIDs.order_summary_cart_item_image },
-            ],
-        });
-    });
+            checkContactInformationFormIsNotVisible();
+            checkTransportSelectionIsVisible();
+            checkUrl(url.order.transportAndPayment);
+            takeSnapshotAndCompare(this.test?.title, 'transport and payment page', {
+                blackout: [
+                    { tid: TIDs.transport_and_payment_list_item_image },
+                    { tid: TIDs.order_summary_cart_item_image },
+                ],
+            });
+        },
+    );
 
     it('[Preserve Contact Form] keep filled contact information after page refresh', function () {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
@@ -98,31 +108,35 @@ describe('Contact Information Page Tests', () => {
         });
     });
 
-    it('[Logged Preserve Contact Form] keep changed contact information after page refresh for logged-in user', function () {
-        cy.registerAsNewUser(
-            generateCustomerRegistrationData('commonCustomer', 'refresh-page-contact-information@shopsys.com'),
-        );
-        cy.addProductToCartForTest();
-        cy.preselectTransportForTest(transport.czechPost.uuid);
-        cy.preselectPaymentForTest(payment.onDelivery.uuid);
-        cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
+    it(
+        '[Logged Preserve Contact Form] keep changed contact information after page refresh for logged-in user',
+        { retries: { runMode: 0 } },
+        function () {
+            cy.registerAsNewUser(
+                generateCustomerRegistrationData('commonCustomer', 'refresh-page-contact-information@shopsys.com'),
+            );
+            cy.addProductToCartForTest();
+            cy.preselectTransportForTest(transport.czechPost.uuid);
+            cy.preselectPaymentForTest(payment.onDelivery.uuid);
+            cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
-        clearEmailInThirdStep();
-        fillEmailInThirdStep('refresh-page-contact-information-changed@shopsys.com');
-        fillCustomerInformationInThirdStep('123', ' changed', ' changed');
-        clearPostcodeInThirdStep();
-        fillBillingAdressInThirdStep(' changed', ' changed', '29292');
-        fillInNoteInThirdStep(orderNote);
-        loseFocus();
-        takeSnapshotAndCompare(this.test?.title, 'contact information page after reload', {
-            blackout: [
-                { tid: TIDs.order_summary_transport_and_payment_image },
-                { tid: TIDs.order_summary_cart_item_image },
-            ],
-        });
-    });
+            clearEmailInThirdStep();
+            fillEmailInThirdStep('refresh-page-contact-information-changed@shopsys.com');
+            fillCustomerInformationInThirdStep('123', ' changed', ' changed');
+            clearPostcodeInThirdStep();
+            fillBillingAdressInThirdStep(' changed', ' changed', '29292');
+            fillInNoteInThirdStep(orderNote);
+            loseFocus();
+            takeSnapshotAndCompare(this.test?.title, 'contact information page after reload', {
+                blackout: [
+                    { tid: TIDs.order_summary_transport_and_payment_image },
+                    { tid: TIDs.order_summary_cart_item_image },
+                ],
+            });
+        },
+    );
 
-    it('[Logout Clear Form] remove contact information after logout', function () {
+    it('[Logout Clear Form] remove contact information after logout', { retries: { runMode: 0 } }, function () {
         cy.registerAsNewUser(
             generateCustomerRegistrationData('commonCustomer', 'remove-contact-information-after-logout@shopsys.com'),
         );
