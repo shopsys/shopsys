@@ -69,7 +69,7 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                 {description && <UserText htmlContent={description} />}
             </TabsContent>
 
-            {!!parameters.length && (
+            {parameters.length && (
                 <TabsContent headingTextMobile={t('Parameters')} isActive={selectedTab === 1}>
                     {sortedIndividualParameters.length > 0 && (
                         <div>
@@ -124,13 +124,13 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                 </TabsContent>
             )}
 
-            {!!relatedProducts.length && (
+            {relatedProducts.length && (
                 <TabsContent headingTextMobile={t('Related Products')} isActive={selectedTab === 2}>
                     <ProductDetailRelatedProductsTab relatedProducts={relatedProducts} />{' '}
                 </TabsContent>
             )}
 
-            {!!files.length > 0 && (
+            {files.length > 0 && (
                 <TabsContent headingTextMobile={t('Files')} isActive={selectedTab === 3}>
                     <ul>
                         {files.map((file) => (
