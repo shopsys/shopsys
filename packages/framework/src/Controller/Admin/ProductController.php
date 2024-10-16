@@ -355,7 +355,7 @@ class ProductController extends AdminBaseController
 
         return $this->render('@ShopsysFramework/Admin/Content/Product/visibility.html.twig', [
             'product' => $product,
-            'domains' => $this->domain->getAll(),
+            'domains' => $this->domain->getAdminEnabledDomains(),
         ]);
     }
 

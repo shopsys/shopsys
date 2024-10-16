@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Unit;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
+use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\Exception\InvalidFormDataException;
 use Shopsys\FrameworkBundle\Form\Admin\Product\Unit\UnitFormType;
 use Symfony\Component\Form\FormFactoryInterface;
 
@@ -15,12 +17,14 @@ class UnitInlineEdit extends AbstractGridInlineEdit
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactoryInterface $unitDataFactory
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         UnitGridFactory $unitGridFactory,
         protected readonly UnitFacade $unitFacade,
         protected readonly FormFactoryInterface $formFactory,
         protected readonly UnitDataFactoryInterface $unitDataFactory,
+        protected readonly Domain $domain,
     ) {
         parent::__construct($unitGridFactory);
     }
@@ -31,6 +35,12 @@ class UnitInlineEdit extends AbstractGridInlineEdit
      */
     protected function createEntityAndGetId($unitData)
     {
+        if (!$this->domain->hasAdminAllDomainsEnabled()) {
+            throw new InvalidFormDataException([
+                t('Creating a record requires all domains to be enabled as domain-specific fields cannot be empty. If you want to proceed, select all domains in the Domain filter in the header first.'),
+            ]);
+        }
+
         $unit = $this->unitFacade->create($unitData);
 
         return $unit->getId();

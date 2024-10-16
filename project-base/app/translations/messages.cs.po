@@ -127,6 +127,9 @@ msgstr "Vytvořit nový banner"
 msgid "Create notification bar"
 msgstr "Vytvořit notifikační lištu"
 
+msgid "Creating a record requires all domains to be enabled as domain-specific fields cannot be empty. If you want to proceed, select all domains in the Domain filter in the header first."
+msgstr "Vytvoření záznamu vyžaduje, aby byly povoleny všechny domény, protože pole specifická pro doménu nemohou být prázdná. Pokud chcete pokračovat, nejprve vyberte všechny domény ve filtru domény v záhlaví."
+
 msgid "Delete category with SEO mix"
 msgstr "Smazat kategorii i seo mix"
 

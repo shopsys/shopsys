@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSelfException;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSuperadminException;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DuplicateUserNameException;
 use Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFacade;
+use Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\AdministratorIsNotLoggedException;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -199,5 +200,19 @@ class AdministratorFacade
     public function findByUuid(string $uuid): ?Administrator
     {
         return $this->administratorRepository->findByUuid($uuid);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
+     */
+    public function getCurrentlyLoggedAdministrator(): Administrator
+    {
+        $administrator = $this->tokenStorage->getToken()?->getUser();
+
+        if (!$administrator instanceof Administrator) {
+            throw new AdministratorIsNotLoggedException('Administrator is not logged.');
+        }
+
+        return $administrator;
     }
 }

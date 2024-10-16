@@ -19,8 +19,10 @@ class Localization
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param string $adminLocale
      */
-    public function __construct(protected readonly Domain $domain, protected readonly string $adminLocale)
-    {
+    public function __construct(
+        protected readonly Domain $domain,
+        protected readonly string $adminLocale,
+    ) {
     }
 
     /**
@@ -73,5 +75,19 @@ class Localization
     public function getCollationByLocale(string $locale): string
     {
         return $locale . '-x-icu';
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAdminEnabledLocales(): array
+    {
+        $enabledLocales = [];
+
+        foreach ($this->domain->getAdminEnabledDomains() as $domainConfig) {
+            $enabledLocales[] = $domainConfig->getLocale();
+        }
+
+        return $enabledLocales;
     }
 }

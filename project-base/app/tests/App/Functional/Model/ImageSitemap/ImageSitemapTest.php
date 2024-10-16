@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\ImageSitemap;
 
+use Shopsys\FrameworkBundle\Component\DataFixture\DomainsForDataFixtureProvider;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -23,12 +24,17 @@ class ImageSitemapTest extends ApplicationTestCase
      */
     private ParameterBagInterface $parameterBag;
 
+    /**
+     * @inject
+     */
+    private DomainsForDataFixtureProvider $domainsForDataFixtureProvider;
+
     public function testCreateImageSitemapXml(): void
     {
         $this->imageSitemapFacade->generateForAllDomains();
         $sitemapDir = $this->parameterBag->get('kernel.project_dir') . $this->parameterBag->get('shopsys.sitemaps_dir');
 
-        foreach ($this->domain->getAll() as $domainConfig) {
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $domainId = $domainConfig->getId();
             $filename = $sitemapDir . '/domain_' . $domainId . '_sitemap_image.products.xml';
             $xml = simplexml_load_file($filename);

@@ -4,21 +4,18 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Article;
 
-use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 
-class ArticleDataFactory implements ArticleDataFactoryInterface
+class ArticleDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly Domain $domain,
-        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
     }
 
@@ -43,12 +40,13 @@ class ArticleDataFactory implements ArticleDataFactoryInterface
     }
 
     /**
+     * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Article\ArticleData
      */
-    public function create(): ArticleData
+    public function create(int $domainId): ArticleData
     {
         $articleData = $this->createInstance();
-        $this->fillNew($articleData);
+        $this->fillNew($articleData, $domainId);
 
         return $articleData;
     }
@@ -84,9 +82,10 @@ class ArticleDataFactory implements ArticleDataFactoryInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleData $articleData
+     * @param int $domainId
      */
-    protected function fillNew(ArticleData $articleData)
+    protected function fillNew(ArticleData $articleData, int $domainId)
     {
-        $articleData->domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
+        $articleData->domainId = $domainId;
     }
 }

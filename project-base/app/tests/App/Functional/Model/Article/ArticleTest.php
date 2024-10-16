@@ -6,7 +6,8 @@ namespace Tests\App\Functional\Model\Article;
 
 use App\Model\Article\Article;
 use DateTime;
-use Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Article\ArticleDataFactory;
 use Shopsys\FrameworkBundle\Model\Article\ArticleFactoryInterface;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
@@ -15,7 +16,7 @@ class ArticleTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    private ArticleDataFactoryInterface $articleDataFactory;
+    private ArticleDataFactory $articleDataFactory;
 
     /**
      * @inject
@@ -24,7 +25,7 @@ class ArticleTest extends TransactionFunctionalTestCase
 
     public function testArticleIsCorrectlyRestoredFromDatabase()
     {
-        $articleData = $this->articleDataFactory->create();
+        $articleData = $this->articleDataFactory->create(Domain::FIRST_DOMAIN_ID);
 
         $articleData->name = 'Demonstrative name';
         $articleData->placement = Article::PLACEMENT_FOOTER_1;

@@ -9,6 +9,7 @@ use App\Model\Product\Flag\FlagDataFactory;
 use App\Model\Product\Flag\FlagFacade;
 use App\Model\Product\Flag\FlagGridFactory;
 use Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Controller\Admin\FlagController as BaseFlagController;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
@@ -31,14 +32,16 @@ class FlagController extends BaseFlagController
      * @param \App\Model\Product\Flag\FlagGridFactory $flagGridFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Component\ConfirmDelete\ConfirmDeleteResponseFactory $confirmDeleteResponseFactory
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         FlagFacade $flagFacade,
         FlagInlineEdit $flagInlineEdit,
-        private FlagDataFactory $flagDataFactory,
-        private FlagGridFactory $flagGridFactory,
-        private BreadcrumbOverrider $breadcrumbOverrider,
-        private ConfirmDeleteResponseFactory $confirmDeleteResponseFactory,
+        private readonly FlagDataFactory $flagDataFactory,
+        private readonly FlagGridFactory $flagGridFactory,
+        private readonly BreadcrumbOverrider $breadcrumbOverrider,
+        private readonly ConfirmDeleteResponseFactory $confirmDeleteResponseFactory,
+        private readonly Domain $domain,
     ) {
         parent::__construct($flagFacade, $flagInlineEdit);
     }
@@ -179,6 +182,12 @@ class FlagController extends BaseFlagController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            if (!$this->domain->hasAdminAllDomainsEnabled()) {
+                $this->addErrorFlash(t('Creating a record requires all domains to be enabled as domain-specific fields cannot be empty. If you want to proceed, select all domains in the Domain filter in the header first.'));
+
+                return $this->redirectToRoute('admin_flag_new');
+            }
+
             $flag = $this->flagFacade->create($flagData);
 
             $this

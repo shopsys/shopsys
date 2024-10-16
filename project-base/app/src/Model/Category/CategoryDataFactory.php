@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryParameterRepository;
 /**
  * @method fillNew(\App\Model\Category\CategoryData $categoryData)
  * @method int[] getParametersSortedByPositionFilteredByCategory(\App\Model\Category\Category $category)
+ * @method \App\Model\Category\CategoryData create()
  */
 class CategoryDataFactory extends BaseCategoryDataFactory
 {
@@ -54,17 +55,6 @@ class CategoryDataFactory extends BaseCategoryDataFactory
     {
         $categoryData = $this->createInstance();
         $this->fillFromCategory($categoryData, $category);
-
-        return $categoryData;
-    }
-
-    /**
-     * @return \App\Model\Category\CategoryData
-     */
-    public function create(): BaseCategoryData
-    {
-        $categoryData = $this->createInstance();
-        $this->fillNew($categoryData);
 
         return $categoryData;
     }

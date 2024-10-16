@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouter;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Symfony\Component\Routing\RouteCollection;
 
 class CurrentDomainRouterTest extends TestCase
@@ -21,7 +22,8 @@ class CurrentDomainRouterTest extends TestCase
         $defaultTimeZone = new DateTimeZone('Europe/Prague');
         $domainConfigs = new DomainConfig(Domain::FIRST_DOMAIN_ID, 'http://example.com:8080', 'example', 'en', $defaultTimeZone);
         $settingMock = $this->createMock(Setting::class);
-        $domain = new Domain([$domainConfigs], $settingMock);
+        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $domain = new Domain([$domainConfigs], $settingMock, $administratorFacadeMock);
         $domain->switchDomainById(Domain::FIRST_DOMAIN_ID);
 
         $generateResult = 'generateResult';
