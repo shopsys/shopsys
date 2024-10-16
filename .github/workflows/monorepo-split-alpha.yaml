@@ -20,8 +20,12 @@ jobs:
                     sed -r -i 's_("shopsys/[a-zA-Z0-9-]+")\s*:\s*"([0-9\.]+\.x-dev)"_\1: "dev-${{ github.ref_name }} as \2"_' project-base/app/composer.json
                     git config --global user.name 'ShopsysBot'
                     git config --global user.email 'shopsysbot@users.noreply.github.com'
-                    git commit -am "Ensure ${{ github.ref_name }} branch dependencies in project-base/app/composer.json"
-                    git push
+                    if [[ -n $(git status --porcelain) ]]; then
+                        git commit -am "Ensure ${{ github.ref_name }} branch dependencies in project-base/app/composer.json"
+                        git push
+                    else
+                        echo "No changes to commit."
+                    fi
             -   name: Force split ${{ github.ref_name }} branch
                 env:
                     GH_TOKEN: ${{ github.token }}
