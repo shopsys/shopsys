@@ -311,6 +311,10 @@ deploy:alpha:
         url: https://${DOMAIN_HOSTNAME_1}
         kubernetes:
             namespace: ${PROJECT_NAME}
+    after_script:
+        -   sleep 20
+        -   RUNNING_WEBSERVER_PHP_FPM_POD=$(kubectl get pods --namespace=${PROJECT_NAME} --field-selector=status.phase=Running -l app=webserver-php-fpm -o=jsonpath='{.items[0].metadata.name}')
+        -   kubectl exec ${RUNNING_WEBSERVER_PHP_FPM_POD} --namespace=${PROJECT_NAME} -- php ./bin/console doctrine:query:sql "UPDATE setting_values SET value='Db4tLxuck2' WHERE name='feedHash'"
 
 test:gatling:
     stage: test
