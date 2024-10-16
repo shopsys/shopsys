@@ -3,6 +3,7 @@ import { FormBlockWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
+import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TIDs } from 'cypress/tids';
 import { useIsCustomerUserRegisteredQuery } from 'graphql/requests/customer/queries/IsCustomerUserRegisteredQuery.generated';
 import useTranslation from 'next-translate/useTranslation';
@@ -24,6 +25,7 @@ export const ContactInformationEmail: FC = () => {
     const { t } = useTranslation();
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
     const isUserLoggedIn = useIsUserLoggedIn();
+    const user = useCurrentCustomerData();
 
     const formProviderMethods = useFormContext<ContactInformation>();
     const { formState } = formProviderMethods;
@@ -54,6 +56,7 @@ export const ContactInformationEmail: FC = () => {
                 textInputProps={{
                     label: formMeta.fields.email.label,
                     required: true,
+                    disabled: user !== undefined,
                     type: 'email',
                     autoComplete: 'email',
                     onChange: (event) => updateContactInformation({ email: event.currentTarget.value }),

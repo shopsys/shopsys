@@ -10401,7 +10401,7 @@ Contact telephone number for delivery
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>email</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 The customer's email address

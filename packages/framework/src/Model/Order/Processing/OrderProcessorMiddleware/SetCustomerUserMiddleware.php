@@ -19,7 +19,12 @@ class SetCustomerUserMiddleware implements OrderProcessorMiddlewareInterface
         OrderProcessingStack $orderProcessingStack,
     ): OrderProcessingData {
         $orderData = $orderProcessingData->orderData;
-        $orderData->customerUser = $orderProcessingData->orderInput->getCustomerUser();
+        $customerUser = $orderProcessingData->orderInput->getCustomerUser();
+        $orderData->customerUser = $customerUser;
+
+        if ($customerUser !== null) {
+            $orderData->email = $customerUser->getEmail();
+        }
 
         return $orderProcessingStack->processNext($orderProcessingData);
     }

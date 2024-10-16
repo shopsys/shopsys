@@ -1732,7 +1732,7 @@ export type TypeOrderInput = {
   /** Contact telephone number for delivery */
   deliveryTelephone: InputMaybe<Scalars['String']['input']>;
   /** The customer's email address */
-  email: Scalars['String']['input'];
+  email: InputMaybe<Scalars['String']['input']>;
   /** The customer's first name */
   firstName: Scalars['String']['input'];
   /** Determines whether the customer agrees with sending satisfaction questionnaires within the Verified by Customers Heureka program */

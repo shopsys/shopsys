@@ -50,7 +50,7 @@ class MinimalOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCa
                 'items' => $expectedOrderItems,
                 'firstName' => 'firstName',
                 'lastName' => 'lastName',
-                'email' => 'user@example.com',
+                'email' => self::DEFAULT_USER_EMAIL,
                 'telephone' => '+53 123456789',
                 'companyName' => null,
                 'companyNumber' => null,

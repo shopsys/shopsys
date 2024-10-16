@@ -26,6 +26,7 @@ class SetCustomerUserMiddlewareTest extends MiddlewareTestCase
         $actualOrderData = $result->orderData;
 
         $this->assertSame($expectedCustomerUser, $actualOrderData->customerUser);
+        $this->assertSame($expectedCustomerUser->getEmail(), $actualOrderData->email);
     }
 
     public function testCustomerUserIsIgnoredIfMissing(): void
