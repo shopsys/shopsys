@@ -11,7 +11,8 @@ export const MenuIconicItem: FC<{ title?: string }> = ({ children, className, ti
 
 type MenuIconicItemLinkProps = { onClick?: () => void; href?: string; title?: string; type?: PageType };
 
-const menuIconicSubItemLinkTwClass = 'flex items-center h-14 px-5 py-3 text-sm text-text no-underline font-semibold';
+const menuIconicSubItemLinkTwClass =
+    'flex items-center px-3 py-4 text-sm text-text no-underline font-semibold hover:no-underline gap-5 hover:text-text';
 
 export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({ children, href, onClick, type, tid }) => {
     if (href) {
