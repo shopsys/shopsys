@@ -6,7 +6,6 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Products\Search;
 
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory;
-use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
@@ -45,11 +44,11 @@ class ProductSearchResultsProvider implements ProductSearchResultsProviderInterf
         );
 
         return $this->productConnectionFactory->createConnectionForAll(
-            function ($offset, $limit) use ($search, $productFilterData) {
+            function ($offset, $limit) use ($search, $productFilterData, $argument) {
                 return $this->productFacade->getFilteredProductsOnCurrentDomain(
                     $limit,
                     $offset,
-                    ProductListOrderingConfig::ORDER_BY_RELEVANCE,
+                    $this->productOrderingModeProvider->getOrderingModeFromArgument($argument),
                     $productFilterData,
                     $search,
                 );
