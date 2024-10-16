@@ -31,18 +31,21 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
     };
 
     const sortedIndividualParameters = parameters
-        .filter(parameter => parameter.group === null)
+        .filter((parameter) => parameter.group === null)
         .sort((a, b) => a.name.localeCompare(b.name));
 
     const groupedParameters = parameters
-        .filter(parameter => parameter.group !== null)
-        .reduce((groupedParametersAccumulator, parameter) => {
-            const group = parameter.group as string;
-            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-            groupedParametersAccumulator[group] = groupedParametersAccumulator[group] || [];
-            groupedParametersAccumulator[group].push(parameter);
-            return groupedParametersAccumulator;
-        }, {} as Record<string, TypeParameterFragment[]>);
+        .filter((parameter) => parameter.group !== null)
+        .reduce(
+            (groupedParametersAccumulator, parameter) => {
+                const group = parameter.group as string;
+                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                groupedParametersAccumulator[group] = groupedParametersAccumulator[group] || [];
+                groupedParametersAccumulator[group].push(parameter);
+                return groupedParametersAccumulator;
+            },
+            {} as Record<string, TypeParameterFragment[]>,
+        );
 
     const sortedGroupParameters = Object.entries(groupedParameters).map(([groupName, groupParameters]) => ({
         groupName,
@@ -73,11 +76,11 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                 <TabsContent headingTextMobile={t('Parameters')} isActive={selectedTab === 1}>
                     {sortedIndividualParameters.length > 0 && (
                         <div>
-                            <Table className="border-0 p-0 max-w-screen-lg mx-auto">
+                            <Table className="mx-auto max-w-screen-lg border-0 p-0">
                                 {sortedIndividualParameters.map((parameter) => (
                                     <Row
                                         key={parameter.uuid}
-                                        className="bg-tableBackground odd:bg-tableBackgroundContrast border-none"
+                                        className="border-none bg-tableBackground odd:bg-tableBackgroundContrast"
                                     >
                                         <Cell className="py-2 text-left text-sm font-bold uppercase leading-5">
                                             {parameter.name}
@@ -85,9 +88,10 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                                         <Cell className="py-2 text-right text-sm leading-5">
                                             {parameter.values.map((value, index) =>
                                                 formatParameterValue(
-                                                    value.text + (parameter.unit?.name ? ` (${parameter.unit.name})` : ''),
-                                                    index
-                                                )
+                                                    value.text +
+                                                        (parameter.unit?.name ? ` (${parameter.unit.name})` : ''),
+                                                    index,
+                                                ),
                                             )}
                                         </Cell>
                                     </Row>
@@ -98,12 +102,12 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
 
                     {sortedGroupParameters.map(({ groupName, groupParameters }) => (
                         <div key={groupName}>
-                            <h2 className="text-lg font-bold max-w-screen-lg mx-auto my-4">{groupName}</h2>
-                            <Table className="border-0 p-0 max-w-screen-lg mx-auto">
+                            <h2 className="mx-auto my-4 max-w-screen-lg text-lg font-bold">{groupName}</h2>
+                            <Table className="mx-auto max-w-screen-lg border-0 p-0">
                                 {groupParameters.map((parameter) => (
                                     <Row
                                         key={parameter.uuid}
-                                        className="bg-tableBackground odd:bg-tableBackgroundContrast border-none"
+                                        className="border-none bg-tableBackground odd:bg-tableBackgroundContrast"
                                     >
                                         <Cell className="py-2 text-left text-sm font-bold uppercase leading-5">
                                             {parameter.name}
@@ -111,9 +115,10 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                                         <Cell className="py-2 text-right text-sm leading-5">
                                             {parameter.values.map((value, index) =>
                                                 formatParameterValue(
-                                                    value.text + (parameter.unit?.name ? ` (${parameter.unit.name})` : ''),
-                                                    index
-                                                )
+                                                    value.text +
+                                                        (parameter.unit?.name ? ` (${parameter.unit.name})` : ''),
+                                                    index,
+                                                ),
                                             )}
                                         </Cell>
                                     </Row>
