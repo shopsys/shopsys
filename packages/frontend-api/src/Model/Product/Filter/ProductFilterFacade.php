@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterDataFactory;
+use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrontendApiBundle\Model\Resolver\Customer\Error\CustomerUserAccessDeniedUserError;
 
 class ProductFilterFacade
@@ -178,6 +179,41 @@ class ProductFilterFacade
                 $this->domain->getId(),
                 $this->domain->getLocale(),
                 $searchText,
+            );
+        }
+
+        return $this->productFilterConfigCache[$cacheKey];
+    }
+
+    /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData
+     */
+    public function getValidatedProductFilterDataForFlag(Argument $argument, Flag $flag): ProductFilterData
+    {
+        if ($argument['filter'] === null) {
+            return $this->productFilterDataFactory->create();
+        }
+
+        $productFilterConfig = $this->getProductFilterConfigForFlag($flag);
+
+        return $this->getValidatedProductFilterData($argument, $productFilterConfig);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
+     */
+    public function getProductFilterConfigForFlag(Flag $flag): ProductFilterConfig
+    {
+        $locale = $this->domain->getLocale();
+        $cacheKey = sprintf('flag_%s_%s', $locale, $flag->getId());
+
+        if (!array_key_exists($cacheKey, $this->productFilterConfigCache)) {
+            $this->productFilterConfigCache[$cacheKey] = $this->productFilterConfigFactory->createForFlag(
+                $flag,
+                $locale,
             );
         }
 

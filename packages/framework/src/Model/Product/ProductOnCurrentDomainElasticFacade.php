@@ -136,4 +136,13 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
             $filterQuery,
         );
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @return int[]
+     */
+    public function getCategoryIdsForFilterData(ProductFilterData $productFilterData): array
+    {
+        return $this->productElasticsearchRepository->getCategoryIdsForFilterData($productFilterData);
+    }
 }

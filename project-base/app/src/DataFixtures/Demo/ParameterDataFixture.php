@@ -6,9 +6,7 @@ namespace App\DataFixtures\Demo;
 
 use App\DataFixtures\Demo\DataObject\ParameterDataFixtureData;
 use App\Model\Category\Category;
-use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterDataFactory;
-use App\Model\Product\Parameter\ParameterFacade;
 use App\Model\Product\Parameter\ParameterGroup;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -19,6 +17,8 @@ use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Category\CategoryParameter;
 use Shopsys\FrameworkBundle\Model\Category\CategoryParameterFactory;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 
 class ParameterDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface

@@ -13,9 +13,6 @@ msgstr ""
 msgid "<strong><a href=\"{{ url }}\">Notification bar</a></strong> has been successfuly updated"
 msgstr ""
 
-msgid "<strong><a href=\"{{ url }}\">SEO category</a></strong> has been saved"
-msgstr ""
-
 msgid "Action"
 msgstr ""
 
@@ -31,19 +28,7 @@ msgstr ""
 msgid "Administrator"
 msgstr ""
 
-msgid "Advanced SEO categories"
-msgstr ""
-
-msgid "Back to category selection"
-msgstr ""
-
 msgid "Back to overview"
-msgstr ""
-
-msgid "Back to overview of available combinations"
-msgstr ""
-
-msgid "Back to parameter selection"
 msgstr ""
 
 msgid "Background color"
@@ -64,9 +49,6 @@ msgstr ""
 msgid "But at other addresses we have a lot for you..."
 msgstr ""
 
-msgid "By flag"
-msgstr ""
-
 msgid "CMS"
 msgstr ""
 
@@ -79,25 +61,13 @@ msgstr ""
 msgid "Catalog numbers"
 msgstr ""
 
-msgid "Category description"
-msgstr ""
-
-msgid "Category name"
-msgstr ""
-
 msgid "Center"
-msgstr ""
-
-msgid "Choose this category and continue"
 msgstr ""
 
 msgid "Clean Storefront Query Cache"
 msgstr ""
 
 msgid "Color"
-msgstr ""
-
-msgid "Combination of parameters and their values"
 msgstr ""
 
 msgid "Contact"
@@ -115,9 +85,6 @@ msgstr ""
 msgid "Content-Security-Policy header setting"
 msgstr ""
 
-msgid "Create"
-msgstr ""
-
 msgid "Create flag"
 msgstr ""
 
@@ -125,9 +92,6 @@ msgid "Create new banner"
 msgstr ""
 
 msgid "Create notification bar"
-msgstr ""
-
-msgid "Delete category with SEO mix"
 msgstr ""
 
 msgid "Description"
@@ -143,9 +107,6 @@ msgid "Display date FROM"
 msgstr ""
 
 msgid "Display date TO"
-msgstr ""
-
-msgid "Do you really want to remove this category even with their SEO mixes?"
 msgstr ""
 
 msgid "Do you really want to remove this flag?"
@@ -208,37 +169,10 @@ msgstr ""
 msgid "Extended SEO categories"
 msgstr ""
 
-msgid "Extended SEO category %categoryName% - combinations"
-msgstr ""
-
-msgid "Extended SEO category %categoryName% - filters"
-msgstr ""
-
-msgid "Extended SEO category - category selection"
-msgstr ""
-
-msgid "Extended SEO category - combinations"
-msgstr ""
-
-msgid "Extended SEO category - editing the combination with SEO values"
-msgstr ""
-
-msgid "Extended SEO category - filters"
-msgstr ""
-
-msgid "Extended SEO category - set combinations with SEO values"
-msgstr ""
-
 msgid "File"
 msgstr ""
 
 msgid "File not found in main filesystem. Please try again later."
-msgstr ""
-
-msgid "Fill URL also for selected domain"
-msgstr ""
-
-msgid "Fill URL only for selected domain"
 msgstr ""
 
 msgid "Flag"
@@ -268,9 +202,6 @@ msgstr ""
 msgid "Groups"
 msgstr ""
 
-msgid "Heading (H1)"
-msgstr ""
-
 msgid "Heureka"
 msgstr ""
 
@@ -287,9 +218,6 @@ msgid "Home page"
 msgstr ""
 
 msgid "Image"
-msgstr ""
-
-msgid "In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains"
 msgstr ""
 
 msgid "In stock"
@@ -361,16 +289,10 @@ msgstr ""
 msgid "Made in SK"
 msgstr ""
 
-msgid "Main URL"
-msgstr ""
-
 msgid "Measurement units"
 msgstr ""
 
 msgid "Measurement units overview"
-msgstr ""
-
-msgid "Meta description"
 msgstr ""
 
 msgid "Name"
@@ -409,9 +331,6 @@ msgstr ""
 msgid "New warehouse"
 msgstr ""
 
-msgid "No combinations of SEO categories found."
-msgstr ""
-
 msgid "No flags found. You have to create some first."
 msgstr ""
 
@@ -445,9 +364,6 @@ msgstr ""
 msgid "Order detail"
 msgstr ""
 
-msgid "Ordering"
-msgstr ""
-
 msgid "Orders"
 msgstr ""
 
@@ -458,9 +374,6 @@ msgid "Outside layout"
 msgstr ""
 
 msgid "Page not found"
-msgstr ""
-
-msgid "Page title"
 msgstr ""
 
 msgid "Parameter"
@@ -502,9 +415,6 @@ msgstr ""
 msgid "Privacy Policy settings"
 msgstr ""
 
-msgid "Products parameters of selected category"
-msgstr ""
-
 msgid "Promo code"
 msgstr ""
 
@@ -524,12 +434,6 @@ msgid "Related products"
 msgstr ""
 
 msgid "Right"
-msgstr ""
-
-msgid "SEO combination of category with ID {{ ReadyCategorySeoMixId }} has been removed"
-msgstr ""
-
-msgid "SEO combination of category with ID {{ ReadyCategorySeoMixId }} has not been removed, because it was not found"
 msgstr ""
 
 msgid "Sale"
@@ -557,15 +461,6 @@ msgid "Seo"
 msgstr ""
 
 msgid "Settings"
-msgstr ""
-
-msgid "Short description of category"
-msgstr ""
-
-msgid "Show combinations"
-msgstr ""
-
-msgid "Show in the category"
 msgstr ""
 
 msgid "Stocking"
@@ -605,9 +500,6 @@ msgid "Type"
 msgstr ""
 
 msgid "Type of image"
-msgstr ""
-
-msgid "URL Settings"
 msgstr ""
 
 msgid "URL addresses"
@@ -701,9 +593,6 @@ msgid "from most expensive"
 msgstr ""
 
 msgid "from the cheapest"
-msgstr ""
-
-msgid "ready category seo mixes"
 msgstr ""
 
 msgid "relevance"

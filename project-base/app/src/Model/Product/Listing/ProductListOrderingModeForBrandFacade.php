@@ -8,8 +8,8 @@ use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForBrandFacade as BaseProductListOrderingModeForBrandFacade;
 
 /**
- * @property \App\Model\Product\Listing\RequestToOrderingModeIdConverter $requestToOrderingModeIdConverter
- * @method __construct(\App\Model\Product\Listing\RequestToOrderingModeIdConverter $requestToOrderingModeIdConverter)
+ * @property \Shopsys\FrameworkBundle\Model\Product\Listing\RequestToOrderingModeIdConverter $requestToOrderingModeIdConverter
+ * @method __construct(\Shopsys\FrameworkBundle\Model\Product\Listing\RequestToOrderingModeIdConverter $requestToOrderingModeIdConverter)
  */
 class ProductListOrderingModeForBrandFacade extends BaseProductListOrderingModeForBrandFacade
 {

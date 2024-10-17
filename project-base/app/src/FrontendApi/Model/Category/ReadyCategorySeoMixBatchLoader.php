@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Category;
 
-use App\Model\CategorySeo\ReadyCategorySeoMix;
-use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use GraphQL\Executor\Promise\Promise;
 use GraphQL\Executor\Promise\PromiseAdapter;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
+use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade;
 
 class ReadyCategorySeoMixBatchLoader
 {
     /**
      * @param \GraphQL\Executor\Promise\PromiseAdapter $promiseAdapter
-     * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
+     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
