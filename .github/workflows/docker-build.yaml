@@ -125,8 +125,7 @@ jobs:
             (
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
                 github.ref_protected == true
-            ) &&
-            !contains(github.event.pull_request.labels.*.name, 'regenerate screenshots')
+            )
         name: Build PHP-FPM image
         runs-on: ubuntu-22.04
         needs: variables
@@ -158,8 +157,7 @@ jobs:
             (
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
                 github.ref_protected == true
-            ) &&
-            !contains(github.event.pull_request.labels.*.name, 'regenerate screenshots')
+            )
         name: Build storefront image
         runs-on: ubuntu-22.04
         needs: variables
@@ -216,8 +214,7 @@ jobs:
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
                 github.ref_protected == true
             ) &&
-            needs.variables.outputs.DOCKER_ELASTICSEARCH_IMAGE_EXISTS == 0 &&
-            !contains(github.event.pull_request.labels.*.name, 'regenerate screenshots')
+            needs.variables.outputs.DOCKER_ELASTICSEARCH_IMAGE_EXISTS == 0
         name: Build Elasticsearch image
         runs-on: ubuntu-22.04
         needs: variables
@@ -793,8 +790,7 @@ jobs:
             ) &&
             (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped') &&
             (needs.build-storefront-image.result == 'success' || needs.build-storefront-image.result == 'skipped') &&
-            (needs.build-elasticsearch-image.result == 'success' || needs.build-elasticsearch-image.result == 'skipped') &&
-            !contains(github.event.pull_request.labels.*.name, 'regenerate screenshots')
+            (needs.build-elasticsearch-image.result == 'success' || needs.build-elasticsearch-image.result == 'skipped')
         runs-on: [self-hosted, linux, review-stage]
         timeout-minutes: 10
         env:
@@ -870,9 +866,7 @@ jobs:
                           - https://cz.${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}
                     delete-previous-comment: false
     build-successful:
-        if: | 
-            ${{ always() }} &&
-            !contains(github.event.pull_request.labels.*.name, 'regenerate screenshots')
+        if: ${{ always() }}
         name: Build successful
         needs: [tests-acceptance, standards, tests-unit-functional-smoke, standards-storefront, translations-dump-check, review, build-fork-docker-images, check-console-commands, tests-storefront-acceptance, tests-storefront-acceptance-regenerate, unit-test-storefront]
         runs-on: ubuntu-22.04
