@@ -11,3 +11,13 @@ services:
     Shopsys\ConvertimBundle\Controller\:
         resource: '../../Controller/'
         tags: ['controller.service_arguments']
+
+    Shopsys\ConvertimBundle\Model\Convertim\ConvertimConfigProvider:
+        calls:
+            -   method: setConfigs
+                arguments:
+                    - '%convertim.config%'
+
+    Shopsys\ConvertimBundle\Model\Convertim\ConvertimLogger:
+        arguments:
+            - '@monolog.logger.cron'

@@ -1,0 +1,2 @@
+parameters:
+    convertim.config: '%env(json:CONVERTIM_CONFIG)%'

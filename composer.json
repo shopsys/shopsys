@@ -87,6 +87,7 @@
         "becklyn/ordered-form-bundle": "^1.4",
         "commerceguys/intl": "^2.0.0",
         "composer/composer": "^2.2.12",
+        "convertim/convertim-php": "^2.0.19",
         "defuse/php-encryption": "^2.2.1",
         "doctrine/annotations": "^1.6.0",
         "doctrine/cache": "^1.7",

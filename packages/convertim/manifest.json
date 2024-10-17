@@ -1,0 +1,32 @@
+{
+    "bundles": {
+        "Shopsys\\ConvertimBundle\\ShopsysConvertimBundle": ["all"]
+    },
+    "copy-from-recipe": {
+        "config/": "%CONFIG_DIR%/"
+    },
+    "env": {
+        "CONVERTIM_CONFIG": {
+            "1": {
+                "enabled": false,
+                "url": "",
+                "authorizationHeader": "",
+                "ab_test_type": "disabled",
+                "projectName": "shopsys",
+                "isDebug": true,
+                "clientId": "",
+                "clientSecret": ""
+            },
+            "2": {
+                "enabled": false,
+                "url": "",
+                "authorizationHeader": "",
+                "ab_test_type": "disabled",
+                "projectName": "shopsys",
+                "isDebug": true,
+                "clientId": "",
+                "clientSecret": ""
+            }
+        }
+    }
+}

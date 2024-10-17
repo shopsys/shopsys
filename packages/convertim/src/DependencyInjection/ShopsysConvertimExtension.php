@@ -19,6 +19,7 @@ class ShopsysConvertimExtension extends Extension implements PrependExtensionInt
     {
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yaml');
+        $loader->load('parameters.yaml');
     }
 
     /**

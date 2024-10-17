@@ -22,6 +22,7 @@
     },
     "require": {
         "php": "^8.3",
+        "convertim/convertim-php": "^2.0.19",
         "shopsys/form-types-bundle": "16.0.x-dev",
         "shopsys/framework": "16.0.x-dev",
         "shopsys/migrations": "16.0.x-dev",

@@ -24,6 +24,23 @@ First, you download the package using [Composer](https://getcomposer.org/):
 composer require shopsys/convertim
 ```
 
+### Set environment variable
+
+For setting Convertim configuration, you need to set the `CONVERTIM_CONFIG` environment variable with provided configuration from Convertim for each domain separately like in the example:
+
+```
+CONVERTIM_CONFIG='{
+    "1": {
+        "enabled": true,
+        "authorizationHeader": "HEADER"
+    },
+    "2": {
+        "enabled": false,
+        "authorizationHeader": "HEADER"
+    }
+}'
+```
+
 ## Contributing
 
 Thank you for your contributions to Shopsys Convertim Bundle.
