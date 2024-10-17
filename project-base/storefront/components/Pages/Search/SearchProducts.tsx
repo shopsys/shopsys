@@ -81,7 +81,7 @@ export const SearchProducts: FC = () => {
                             sorting={searchProductsData.orderingMode}
                             totalCount={searchProductsData.totalCount}
                             customSortOptions={[
-                                TypeProductOrderingModeEnum.Relevance,
+                                TypeProductOrderingModeEnum.Priority,
                                 TypeProductOrderingModeEnum.PriceAsc,
                                 TypeProductOrderingModeEnum.PriceDesc,
                             ]}
