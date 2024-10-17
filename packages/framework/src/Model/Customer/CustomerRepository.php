@@ -77,6 +77,7 @@ class CustomerRepository
         return
             $this->getCustomerUsersQueryBuilder($customer)
             ->select('cu')
+            ->addOrderBy('cu.lastName, cu.firstName', 'ASC')
             ->getQuery()
             ->getResult();
     }
