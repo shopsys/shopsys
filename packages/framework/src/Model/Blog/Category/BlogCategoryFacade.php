@@ -264,6 +264,16 @@ class BlogCategoryFacade
     }
 
     /**
+     * @param int $domainId
+     * @param int[] $blogCategoryIds
+     * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]
+     */
+    public function getVisibleByIds(int $domainId, array $blogCategoryIds): array
+    {
+        return $this->blogCategoryRepository->getVisibleByIds($domainId, $blogCategoryIds);
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $blogCategory
      */
     protected function scheduleArticlesToExportByCategory(BlogCategory $blogCategory): void
