@@ -93,6 +93,8 @@ services:
             - ./screenshots:/app/screenshots
             - ./snapshotDiffs:/app/snapshotDiffs
         network_mode: "host"
+        environment:
+            - GROUP=${GROUP}
 
     cypress-regenerate:
         build:
