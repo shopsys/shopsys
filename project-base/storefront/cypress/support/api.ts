@@ -1,5 +1,5 @@
 import { TypeCreateOrderMutationVariables } from '../../graphql/requests/orders/mutations/CreateOrderMutation.generated';
-import { TypeRegistrationDataInput } from '../../graphql/types';
+import { TypePromoCode, TypeRegistrationDataInput } from '../../graphql/types';
 import 'cypress-real-events';
 import { PERSIST_STORE_NAME, products } from 'fixtures/demodata';
 
@@ -61,11 +61,13 @@ Cypress.Commands.add('addPromoCodeToCartForTest', (promoCode: string) => {
                 url: 'graphql/',
                 body: JSON.stringify({
                     operationName: 'ApplyPromoCodeToCartMutation',
-                    query: `mutation ApplyPromoCodeToCartMutation($input: ApplyPromoCodeToCartInput!) { 
-                    ApplyPromoCodeToCart(input: $input) { 
-                        uuid 
-                        promoCode
-                    } 
+                    query: `mutation ApplyPromoCodeToCartMutation($input: ApplyPromoCodeToCartInput!) {
+                    ApplyPromoCodeToCart(input: $input) {
+                        uuid
+                        promoCodes {
+                            code
+                        }
+                    }
                 }`,
                     variables: {
                         input: {
@@ -82,7 +84,10 @@ Cypress.Commands.add('addPromoCodeToCartForTest', (promoCode: string) => {
             .its('body.data.ApplyPromoCodeToCart')
             .then((cart) => {
                 expect(cart.uuid).equal(cartUuid);
-                expect(cart.promoCode).equal(promoCode);
+                const responsePromoCode = cart.promoCodes.find(
+                    (promoCodeLocal: TypePromoCode) => promoCodeLocal.code === promoCode,
+                )?.code;
+                expect(responsePromoCode).equal(promoCode);
             });
     });
 });
