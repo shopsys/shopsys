@@ -421,14 +421,8 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository:
         alias: App\Model\Product\Flag\FlagRepository
 
-    Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForBrandFacade:
-        alias: App\Model\Product\Listing\ProductListOrderingModeForBrandFacade
-
     Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade:
         alias: App\Model\Product\Listing\ProductListOrderingModeForListFacade
-
-    Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForSearchFacade:
-        alias: App\Model\Product\Listing\ProductListOrderingModeForSearchFacade
 
     Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactoryInterface:
         alias: App\Model\Product\Parameter\ParameterDataFactory

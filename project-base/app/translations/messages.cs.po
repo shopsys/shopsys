@@ -574,9 +574,6 @@ msgstr "od nejdražšího"
 msgid "from the cheapest"
 msgstr "od nejlevnějšího"
 
-msgid "relevance"
-msgstr "relevance"
-
 msgid "unknown catalog number (product will not be displayed)"
 msgstr "neznámé katalogové číslo (produkt se nezobrazí)"
 

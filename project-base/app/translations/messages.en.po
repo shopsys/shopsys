@@ -574,9 +574,6 @@ msgstr ""
 msgid "from the cheapest"
 msgstr ""
 
-msgid "relevance"
-msgstr ""
-
 msgid "unknown catalog number (product will not be displayed)"
 msgstr ""
 

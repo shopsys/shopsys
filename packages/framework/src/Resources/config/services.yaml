@@ -888,8 +888,6 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Flag\FlagFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Product\Flag\FlagFactory
 
-    Shopsys\FrameworkBundle\Model\Product\Listing\RequestToOrderingModeIdConverter: ~
-
     Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactory
 
