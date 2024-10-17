@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Component\Router\FriendlyUrl\FriendlyUrlRepository;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -21,13 +21,10 @@ class CheckUnusedFriendlyUrlRouteNameListCommand extends Command
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
-    public function __construct(private FriendlyUrlFacade $friendlyUrlFacade)
-    {
+    public function __construct(
+        private readonly FriendlyUrlFacade $friendlyUrlFacade,
+    ) {
         parent::__construct();
-    }
-
-    protected function configure()
-    {
     }
 
     /**

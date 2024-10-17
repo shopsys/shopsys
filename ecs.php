@@ -123,6 +123,7 @@ return ECSConfig::configure()
                 __DIR__ . '/project-base',
             ],
             FunctionLengthSniff::class => [
+                __DIR__ . '/packages/framework/src/Controller/Admin/CategorySeoController.php',
                 __DIR__ . '/packages/framework/src/Migrations/Version*.php',
                 __DIR__ . '/packages/framework/src/Form/Admin/*/*FormType.php',
                 __DIR__ . '/packages/framework/src/Model/AdminNavigation/SideMenuBuilder.php',

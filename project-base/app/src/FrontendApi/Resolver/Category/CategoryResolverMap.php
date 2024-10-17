@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\FrontendApi\Resolver\Category;
 
 use App\Model\Category\Category;
-use App\Model\CategorySeo\ReadyCategorySeoMix;
 use ArrayObject;
 use GraphQL\Type\Definition\ResolveInfo;
 use InvalidArgumentException;
@@ -14,6 +13,7 @@ use Overblog\GraphQLBundle\Definition\ArgumentInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolverMap as BaseCategoryResolverMap;
 
@@ -125,11 +125,12 @@ class CategoryResolverMap extends BaseCategoryResolverMap
 
     /**
      * @param string $fieldName
-     * @param \App\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix
+     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix $readyCategorySeoMix
      * @return mixed
      */
     private function mapByReadyCategorySeoMix(string $fieldName, ReadyCategorySeoMix $readyCategorySeoMix): mixed
     {
+        /** @var \App\Model\Category\Category $category */
         $category = $readyCategorySeoMix->getCategory();
 
         return match ($fieldName) {

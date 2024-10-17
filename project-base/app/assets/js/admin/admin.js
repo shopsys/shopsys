@@ -6,8 +6,6 @@ import './validation';
 import './advert/advert';
 import './../common/validation/customizeFpValidator';
 
-import './category/categoryDeleteConfirm';
-
 import './grapesjs/initGrapesJs';
 
 import './product/product';

@@ -75,13 +75,6 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $settingsMenu->removeChild('legal');
         $settingsMenu->getChild('communication')->removeChild('order_confirmation');
 
-        $seoMenu = $settingsMenu->getChild('seo');
-        $categorySeoMenu = $seoMenu->addChild('categorySeo', ['route' => 'admin_categoryseo_list', 'label' => t('Extended SEO categories')]);
-        $categorySeoMenu->addChild('new_category', ['route' => 'admin_categoryseo_newcategory', 'label' => t('Extended SEO category - category selection'), 'display' => false]);
-        $categorySeoMenu->addChild('new_filters', ['route' => 'admin_categoryseo_newfilters', 'label' => t('Extended SEO category - filters'), 'display' => false]);
-        $categorySeoMenu->addChild('new_combinations', ['route' => 'admin_categoryseo_newcombinations', 'label' => t('Extended SEO category - combinations'), 'display' => false]);
-        $categorySeoMenu->addChild('new_combination', ['route' => 'admin_categoryseo_readycombination', 'label' => t('Extended SEO category - set combinations with SEO values'), 'display' => false]);
-
         $listMenu = $settingsMenu->getChild('lists');
         $listMenu->removeChild('availabilities');
         $listMenu->getChild('units')->setLabel(t('Measurement units'));

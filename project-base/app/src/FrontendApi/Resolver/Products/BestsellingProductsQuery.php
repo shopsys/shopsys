@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Products;
 
-use App\Model\CategorySeo\ReadyCategorySeoMix;
 use GraphQL\Executor\Promise\Promise;
 use Shopsys\FrameworkBundle\Model\Category\Category;
+use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\BestsellingProductsQuery as BaseBestsellingProductsQuery;
 
 /**
@@ -16,7 +16,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\BestsellingProductsQuery a
 class BestsellingProductsQuery extends BaseBestsellingProductsQuery
 {
     /**
-     * @param \App\Model\Category\Category|\App\Model\CategorySeo\ReadyCategorySeoMix $categoryOrReadyCategorySeoMix
+     * @param \App\Model\Category\Category|\Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix $categoryOrReadyCategorySeoMix
      * @return \GraphQL\Executor\Promise\Promise
      */
     public function bestSellingProductsByCategoryQuery(

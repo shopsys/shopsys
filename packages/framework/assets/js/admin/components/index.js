@@ -3,6 +3,7 @@ import './AdvancedSearch';
 import './AjaxConfirm';
 import './Article';
 import './CategoryDeleteConfirm';
+import './CategoryWithSeoMixDeleteConfirm';
 import './CategoryTreeForm';
 import './CategoryTreeSorting';
 import './CharactersCounter';

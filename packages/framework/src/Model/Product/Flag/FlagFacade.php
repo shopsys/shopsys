@@ -131,4 +131,13 @@ class FlagFacade
     {
         return $this->flagRepository->getVisibleFlagsByIds($flagsIds, $locale);
     }
+
+    /**
+     * @param string[] $flagUuids
+     * @return int[]
+     */
+    public function getFlagIdsByUuids(array $flagUuids): array
+    {
+        return $this->flagRepository->getFlagIdsByUuids($flagUuids);
+    }
 }
