@@ -457,23 +457,15 @@ jobs:
                     docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick error-pages-generate elasticsearch-index-recreate elasticsearch-export
             -   name: Run Cypress tests
                 run: |
-                    case ${{ matrix.group }} in
-                        authentication)
-                            docker compose run cypress --spec "e2e/authentication/*.cy.ts"
-                            ;;
-                        cart)
-                            docker compose run cypress --spec "e2e/cart/*.cy.ts"
-                            ;;
-                        order)
-                            docker compose run cypress --spec "e2e/order/*.cy.ts"
-                            ;;
-                        transportAndPayment)
-                            docker compose run cypress --spec "e2e/transportAndPayment/*.cy.ts"
-                            ;;
-                        visits)
-                            docker compose run cypress --spec "e2e/visits/*.cy.ts"
-                            ;;
-                    esac
+                    if [ "${{ matrix.group }}" == "authentication" ]; then
+                        docker compose run cypress --spec "e2e/authentication/*.cy.ts"
+                    elif [ "${{ matrix.group }}" == "cart-order-transportAndPayment" ]; then
+                        docker compose run cypress --spec "e2e/cart/*.cy.ts"
+                        docker compose run cypress --spec "e2e/order/*.cy.ts"
+                        docker compose run cypress --spec "e2e/transportAndPayment/*.cy.ts"
+                    elif [ "${{ matrix.group }}" == "visits" ]; then
+                        docker compose run cypress --spec "e2e/visits/*.cy.ts"
+                    fi
             -   name: Upload Cypress videos to artifacts
                 if: ${{ failure() }}
                 uses: actions/upload-artifact@v4
