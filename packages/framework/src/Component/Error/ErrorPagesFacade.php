@@ -111,7 +111,7 @@ class ErrorPagesFacade
     {
         $domainRouter = $this->domainRouterFactory->getRouter($domainId);
         $errorPageUrl = $domainRouter->generate(
-            'front_error_page_format',
+            'admin_error_page_format',
             [
                 '_format' => 'html',
                 'code' => $statusCode,
