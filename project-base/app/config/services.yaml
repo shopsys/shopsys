@@ -237,9 +237,6 @@ services:
     Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFacade:
         alias: App\Model\Administrator\Role\AdministratorRoleFacade
 
-    Shopsys\FrameworkBundle\Model\Breadcrumb\ErrorPageBreadcrumbGenerator:
-        alias: App\Model\Breadcrumb\ErrorPageBreadcrumbGenerator
-
     Shopsys\FrameworkBundle\Model\Breadcrumb\SimpleBreadcrumbGenerator:
         alias: App\Model\Breadcrumb\SimpleBreadcrumbGenerator
 
