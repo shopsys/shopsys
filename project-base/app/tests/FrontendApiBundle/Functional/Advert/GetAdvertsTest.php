@@ -226,7 +226,7 @@ class GetAdvertsTest extends GraphQlTestCase
                     [
                         'url' => sprintf(
                             '%s/content-test/images/noticer/web/%s.png',
-                            $this->firstDomainUrl,
+                            $this->currentDomainUrl,
                             $testImage->getId(),
                         ),
                         'name' => 'Test image',
