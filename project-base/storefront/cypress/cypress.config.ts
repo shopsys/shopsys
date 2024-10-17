@@ -19,20 +19,14 @@ export default defineConfig({
         setupNodeEvents(on, config) {
             getCompareSnapshotsPlugin(on, config);
 
-            const group = (Cypress as any).env('GROUP');
+            const group = Cypress.env('GROUP') || 'default-group';
 
-            if (!group) {
-                config.specPattern = [
-                    'e2e/**/*.cy.ts',
-                ];
+            if (group === 'default-group') {
+                config.specPattern = ['e2e/**/*.cy.ts'];
             } else if (group === 'auth') {
                 config.specPattern = 'e2e/authentication/*.cy.ts';
             } else if (group === 'cart-order-payment') {
-                config.specPattern = [
-                    'e2e/cart/*.cy.ts',
-                    'e2e/order/*.cy.ts',
-                    'e2e/transportAndPayment/*.cy.ts',
-                ];
+                config.specPattern = ['e2e/cart/*.cy.ts', 'e2e/order/*.cy.ts', 'e2e/transportAndPayment/*.cy.ts'];
             } else if (group === 'visits') {
                 config.specPattern = 'e2e/visits/*.cy.ts';
             }
