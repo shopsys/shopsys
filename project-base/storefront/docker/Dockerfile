@@ -26,6 +26,8 @@ ENV NEXT_TELEMETRY_DISABLED 1
 ENV SENTRY_RELEASE $SENTRY_RELEASE
 ENV GROUP $GROUP
 
+RUN echo "GROUP environment variable: $GROUP"
+
 RUN pnpm run build
 RUN pnpm prune --prod
 RUN rm -rf ./.next/cache
