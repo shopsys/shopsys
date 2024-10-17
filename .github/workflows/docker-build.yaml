@@ -133,6 +133,13 @@ jobs:
             contents: read
             packages: write
         steps:
+            -   name: Cache Docker layers
+                uses: actions/cache@v3
+                with:
+                    path: /tmp/.buildx-cache
+                    key: ${{ runner.os }}-docker-${{ github.sha }}
+                    restore-keys: |
+                        ${{ runner.os }}-docker-
             -   name: GIT checkout branch - ${{ github.ref }}
                 uses: actions/checkout@v4
                 with:
@@ -147,7 +154,7 @@ jobs:
                 if: "contains(github.event.pull_request.labels.*.name, 'Use PHP Dockerfile instead of built image')"
                 run: |
                     TAG=`grep -m1 -E '^FROM [^ ]+' project-base/app/docker/php-fpm/Dockerfile | awk '{print $2}' | cut -d ':' -f 1,2`
-                    docker build --tag ${TAG} --no-cache --compress -f ./packages/php-image/Dockerfile ./packages/php-image
+                    docker build --cache-from=type=local,src=/tmp/.buildx-cache --cache-to=type=local,dest=/tmp/.buildx-cache,mode=max -t myimage . --tag ${TAG} --no-cache --compress -f ./packages/php-image/Dockerfile ./packages/php-image
             -   name: Create branch specific PHP-FPM image with project files
                 run: |
                     .github/build-php-fpm-image.sh "${{ needs.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG }}" ci
@@ -165,6 +172,13 @@ jobs:
             contents: read
             packages: write
         steps:
+            -   name: Cache Docker layers
+                uses: actions/cache@v3
+                with:
+                    path: /tmp/.buildx-cache
+                    key: ${{ runner.os }}-docker-storefront-${{ github.sha }}
+                    restore-keys: |
+                        ${{ runner.os }}-docker-`
             -   name: GIT checkout branch - ${{ github.ref }}
                 uses: actions/checkout@v4
                 with:
@@ -177,7 +191,7 @@ jobs:
                     password: ${{ secrets.GITHUB_TOKEN }}
             -   name: Build Storefront image and push it to GitHub Container Registry
                 run: |
-                    .github/build-storefront-image.sh ${{ needs.variables.outputs.DOCKER_STOREFRONT_REPOSITORY_TAG }}
+                    docker build --cache-from=type=local,src=/tmp/.buildx-cache --cache-to=type=local,dest=/tmp/.buildx-cache,mode=max -t myimage .
                     docker image push ${{ needs.variables.outputs.DOCKER_STOREFRONT_REPOSITORY_TAG }}
     build-storefront-ci-image:
         if: |
@@ -221,6 +235,13 @@ jobs:
             contents: read
             packages: write
         steps:
+            -   name: Cache Docker layers
+                uses: actions/cache@v3
+                with:
+                    path: /tmp/.buildx-cache
+                    key: ${{ runner.os }}-docker-elasticsearch-${{ github.sha }}
+                    restore-keys: |
+                        ${{ runner.os }}-docker-
             -   name: GIT checkout branch - ${{ github.ref }}
                 uses: actions/checkout@v4
                 with:
@@ -233,7 +254,7 @@ jobs:
                     password: ${{ secrets.GITHUB_TOKEN }}
             -   name: Build Elasticsearch image and push it to GitHub Container Registry
                 run: |
-                    .github/build-elasticsearch-image.sh ${{ needs.variables.outputs.DOCKER_ELASTICSEARCH_REPOSITORY_TAG }}
+                    docker build --cache-from=type=local,src=/tmp/.buildx-cache --cache-to=type=local,dest=/tmp/.buildx-cache,mode=max -t myimage .
                     docker image push ${{ needs.variables.outputs.DOCKER_ELASTICSEARCH_REPOSITORY_TAG }}
     standards:
         name: Check standards
@@ -350,6 +371,8 @@ jobs:
                 uses: actions/checkout@v4
                 with:
                     ref: ${{ github.ref }}
+            -   name: Pull Docker images
+                run: docker-compose pull --parallel postgres webserver elasticsearch redis php-fpm storefront
             -   name: Download docker-compose.yml from artifacts
                 uses: actions/download-artifact@v4
                 with:
@@ -387,6 +410,8 @@ jobs:
                 uses: actions/checkout@v4
                 with:
                     ref: ${{ github.ref }}
+            -   name: Pull Docker images
+                run: docker-compose pull --parallel webserver postgres elasticsearch redis php-fpm storefront selenium-server
             -   name: Download docker-compose.yml from artifacts
                 uses: actions/download-artifact@v4
                 with:
@@ -436,6 +461,8 @@ jobs:
                 uses: actions/checkout@v4
                 with:
                     ref: ${{ github.ref }}
+            -   name: Pull Docker images
+                run: docker-compose pull --parallel webserver postgres elasticsearch redis php-fpm storefront selenium-server
             -   name: Download docker-compose.cypress.yml from artifacts
                 uses: actions/download-artifact@v4
                 with:
@@ -446,7 +473,8 @@ jobs:
                     docker compose up -d --wait
                     docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick error-pages-generate elasticsearch-index-recreate elasticsearch-export
             -   name: Run Cypress tests
-                run: docker compose run cypress
+                run: |
+                    npx cypress-parallel -s cypress/integration -t 8 "docker compose run cypress run --headless --browser chrome"
             -   name: Upload Cypress videos to artifacts
                 if: ${{ failure() }}
                 uses: actions/upload-artifact@v4
