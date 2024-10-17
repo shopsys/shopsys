@@ -61,7 +61,7 @@ class FeedFacade
      */
     public function getFeedsInfo(bool $onlyForCurrentTime = false): array
     {
-        $feedConfigs = $onlyForCurrentTime ? $this->feedRegistry->getAllFeedConfigs() : $this->feedRegistry->getFeedConfigsForCurrentTime();
+        $feedConfigs = $onlyForCurrentTime ? $this->feedRegistry->getFeedConfigsForCurrentTime() : $this->feedRegistry->getAllFeedConfigs();
 
         $feedsInfo = [];
 
