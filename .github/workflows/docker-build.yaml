@@ -172,13 +172,6 @@ jobs:
             contents: read
             packages: write
         steps:
-            -   name: Cache Docker layers
-                uses: actions/cache@v3
-                with:
-                    path: /tmp/.buildx-cache
-                    key: ${{ runner.os }}-docker-storefront-${{ github.sha }}
-                    restore-keys: |
-                        ${{ runner.os }}-docker-`
             -   name: GIT checkout branch - ${{ github.ref }}
                 uses: actions/checkout@v4
                 with:
@@ -191,7 +184,7 @@ jobs:
                     password: ${{ secrets.GITHUB_TOKEN }}
             -   name: Build Storefront image and push it to GitHub Container Registry
                 run: |
-                    docker build --cache-from=type=local,src=/tmp/.buildx-cache --cache-to=type=local,dest=/tmp/.buildx-cache,mode=max -t myimage .
+                    .github/build-storefront-image.sh ${{ needs.variables.outputs.DOCKER_STOREFRONT_REPOSITORY_TAG }}
                     docker image push ${{ needs.variables.outputs.DOCKER_STOREFRONT_REPOSITORY_TAG }}
     build-storefront-ci-image:
         if: |
