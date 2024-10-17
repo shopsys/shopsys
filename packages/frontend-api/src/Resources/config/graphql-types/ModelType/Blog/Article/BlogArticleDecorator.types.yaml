@@ -43,7 +43,7 @@ BlogArticleDecorator:
                 description: "The blog article SEO H1 heading"
             blogCategories:
                 type: "[BlogCategory!]!"
-                description: "The list of the blog article blog categories"
+                description: "The list of the blog article visible categories"
             mainBlogCategoryUuid:
                 type: "Uuid!"
                 description: "The UUID of the main blog category of the blog article"
