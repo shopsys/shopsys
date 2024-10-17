@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
 class ComplaintRepository
 {
@@ -79,5 +80,31 @@ class ComplaintRepository
     public function findById(int $id): ?Complaint
     {
         return $this->getComplaintRepository()->find($id);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @param int $domainId
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint[]
+     */
+    public function getComplaintsByCustomerUserAndDomainIdAndLocale(
+        CustomerUser $customerUser,
+        int $domainId,
+        string $locale,
+    ): array {
+        return $this->getComplaintRepository()->createQueryBuilder('c')
+            ->addSelect('cdc, cdct, ci, cs, cst')
+            ->leftJoin('c.deliveryCountry', 'cdc')
+            ->leftJoin('cdc.translations', 'cdct', Join::WITH, 'cdct.locale = :locale')
+            ->join('c.items', 'ci')
+            ->join('c.status', 'cs')
+            ->join('cs.translations', 'cst', Join::WITH, 'cst.locale = :locale')
+            ->where('c.customerUser = :customerUser')
+            ->andWhere('c.domainId = :domainId')
+            ->setParameter('customerUser', $customerUser)
+            ->setParameter('domainId', $domainId)
+            ->setParameter('locale', $locale)
+            ->getQuery()->getResult();
     }
 }

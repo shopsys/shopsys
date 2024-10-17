@@ -14,3 +14,6 @@ PersonalData:
             exportLink:
                 type: "String!"
                 description: "A link for downloading the personal data in an XML file"
+            complaints:
+                type: "[Complaint!]!"
+                description: "Customer complaints"

@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouter;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting as BaseSetting;
+use Shopsys\FrameworkBundle\Model\Complaint\ComplaintFacade;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest;
 use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade;
@@ -32,6 +33,7 @@ class PersonalDataQuery extends AbstractQuery
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade $personalDataAccessRequestFacade
      * @param \App\Model\PersonalData\PersonalDataExportFacade $personalDataExportFacade
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintFacade $complaintFacade
      */
     public function __construct(
         private readonly Setting $setting,
@@ -42,6 +44,7 @@ class PersonalDataQuery extends AbstractQuery
         private readonly NewsletterFacade $newsletterFacade,
         private readonly PersonalDataAccessRequestFacade $personalDataAccessRequestFacade,
         private readonly PersonalDataExportFacade $personalDataExportFacade,
+        private readonly ComplaintFacade $complaintFacade,
     ) {
         $this->router = $domainRouterFactory->getRouter($this->domain->getId());
     }
@@ -79,12 +82,18 @@ class PersonalDataQuery extends AbstractQuery
         $customerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain($email, $domainId);
         $orders = $this->orderFacade->getOrderListForEmailByDomainId($email, $domainId);
         $newsletterSubscriber = $this->newsletterFacade->findNewsletterSubscriberByEmailAndDomainId($email, $domainId);
+        $complaints = [];
+
+        if ($customerUser !== null) {
+            $complaints = $this->complaintFacade->getComplaintsByCustomerUserAndDomainIdAndLocale($customerUser, $domainId, $this->domain->getLocale());
+        }
 
         return [
             'orders' => $orders,
             'customerUser' => $customerUser,
             'newsletterSubscriber' => $newsletterSubscriber,
             'exportLink' => $this->personalDataExportFacade->generateExportRequestAndGetLink($email),
+            'complaints' => $complaints,
         ];
     }
 }

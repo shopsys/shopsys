@@ -1,0 +1,39 @@
+<customer_complaints>
+    {# @var complaints \Shopsys\FrameworkBundle\Model\Complaint\Complaint[] #}
+    {% for complaint in complaints %}
+        <complaint>
+            <complaint_number>{{ complaint.number }}</complaint_number>
+            <complaint_create_date>{{ complaint.createdAt|date('c') }}</complaint_create_date>
+            <complaint_addresses>
+                <address>
+                    <firstname><![CDATA[{{ complaint.deliveryFirstName }}]]></firstname>
+                    <lastname><![CDATA[{{ complaint.deliveryLastName }}]]></lastname>
+                    <company_name><![CDATA[{{ complaint.deliveryCompanyName }}]]></company_name>
+                    <street><![CDATA[{{ complaint.deliveryStreet }}]]></street>
+                    <city><![CDATA[{{ complaint.deliveryCity }}]]></city>
+                    <postal_code><![CDATA[{{ complaint.deliveryPostcode }}]]></postal_code>
+                    <telephone><![CDATA[{{ complaint.deliveryTelephone }}]]></telephone>
+                    {% if complaint.deliveryCountry is not null %}
+                        <country_code><![CDATA[{{ complaint.deliveryCountry.code }}]]></country_code>
+                    {% endif %}
+                </address>
+            </complaint_addresses>
+
+            <complaint_items>
+                {% for item in complaint.items %}
+                    {# @var item \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItem #}
+                    <item>
+                        <item_name><![CDATA[{{ item.productName }}]]></item_name>
+                        <item_quantity>{{ item.quantity }}</item_quantity>
+                        <item_catnum><![CDATA[{{ item.catnum }}]]></item_catnum>
+                        <item_description><![CDATA[{{ item.description }}]]></item_description>
+                    </item>
+                {% endfor %}
+            </complaint_items>
+
+            <complaint_other_data>
+                <complaint_status>{{ complaint.status.name }}</complaint_status>
+            </complaint_other_data>
+        </complaint>
+    {% endfor %}
+</customer_complaints>

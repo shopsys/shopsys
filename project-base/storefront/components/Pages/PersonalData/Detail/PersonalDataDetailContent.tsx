@@ -20,12 +20,13 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
     const orders = personalDataDetail.accessPersonalData.orders;
     const newsLetterSubscriber = personalDataDetail.accessPersonalData.newsletterSubscriber;
     const exportLink = personalDataDetail.accessPersonalData.exportLink;
+    const complaints = personalDataDetail.accessPersonalData.complaints;
 
     return (
         <>
             <div className="text-center">
                 <h1>{t('Personal data')}</h1>
-                <Link isButton href={exportLink} size="small">
+                <Link isButton isExternal href={exportLink} size="small">
                     {t('Download as XML')}
                 </Link>
             </div>
@@ -216,6 +217,90 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                     </div>
                 ) : (
                     <p>{t('You have no orders')}</p>
+                )}
+            </Webline>
+
+            <Webline className="mt-6">
+                <h2 className="mb-3">{t('My complaints')}</h2>
+
+                {complaints.length ? (
+                    <div className="flex flex-col gap-4">
+                        {complaints.map((complaint) => (
+                            <Table key={complaint.uuid}>
+                                <Row className="flex flex-col md:flex-row">
+                                    <Cell className="flex-1">
+                                        <Table className="border-0 p-0">
+                                            <Row>
+                                                <CellMinor>{t('Complaint number')}</CellMinor>
+                                                <Cell>{complaint.number}</Cell>
+                                            </Row>
+                                            <Row>
+                                                <CellMinor>{t('Creation date')}</CellMinor>
+                                                <Cell>{formatDate(complaint.createdAt, 'l')}</Cell>
+                                            </Row>
+                                            <Row>
+                                                <CellMinor>{t('Status')}</CellMinor>
+                                                <Cell>{complaint.status}</Cell>
+                                            </Row>
+                                            <Row>
+                                                <CellMinor>{t('First name')}</CellMinor>
+                                                <Cell>{complaint.deliveryFirstName}</Cell>
+                                            </Row>
+                                            <Row>
+                                                <CellMinor>{t('Last name')}</CellMinor>
+                                                <Cell>{complaint.deliveryLastName}</Cell>
+                                            </Row>
+                                            {!!complaint.deliveryCompanyName && (
+                                                <Row>
+                                                    <CellMinor>{t('Company')}</CellMinor>
+                                                    <Cell>{complaint.deliveryCompanyName}</Cell>
+                                                </Row>
+                                            )}
+                                            <Row>
+                                                <CellMinor>{t('Phone')}</CellMinor>
+                                                <Cell>{complaint.deliveryTelephone}</Cell>
+                                            </Row>
+                                            <Row>
+                                                <CellMinor>{t('Delivery address')}</CellMinor>
+                                                <Cell>
+                                                    {complaint.deliveryFirstName} {complaint.deliveryLastName}
+                                                    {complaint.deliveryCompanyName
+                                                        ? ` (${complaint.deliveryCompanyName})`
+                                                        : ''}
+                                                    , {complaint.deliveryStreet}, {complaint.deliveryPostcode}{' '}
+                                                    {complaint.deliveryCity}, {complaint.deliveryCountry.name}
+                                                    {complaint.deliveryTelephone
+                                                        ? `, ${t('Phone')}: ${complaint.deliveryTelephone}`
+                                                        : ''}
+                                                </Cell>
+                                            </Row>
+                                        </Table>
+                                    </Cell>
+
+                                    <Cell className="flex-1">
+                                        {complaint.items.map((item) => (
+                                            <Table key={item.orderItem?.uuid} className="border-0 p-0">
+                                                <Row>
+                                                    <CellMinor>{t('Product name')}</CellMinor>
+                                                    <Cell>{item.productName}</Cell>
+                                                </Row>
+                                                <Row>
+                                                    <CellMinor>{t('Quantity')}</CellMinor>
+                                                    <Cell>{item.quantity}</Cell>
+                                                </Row>
+                                                <Row>
+                                                    <CellMinor>{t('Description')}</CellMinor>
+                                                    <Cell>{item.description}</Cell>
+                                                </Row>
+                                            </Table>
+                                        ))}
+                                    </Cell>
+                                </Row>
+                            </Table>
+                        ))}
+                    </div>
+                ) : (
+                    <p>{t('You have no complaints')}</p>
                 )}
             </Webline>
 

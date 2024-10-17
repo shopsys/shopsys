@@ -51,5 +51,31 @@ query PersonalDataDetailQuery($hash: String!) {
             createdAt
         }
         exportLink
+        complaints {
+            __typename
+            uuid
+            number
+            createdAt
+            status
+            deliveryFirstName
+            deliveryLastName
+            deliveryCompanyName
+            deliveryCity
+            deliveryPostcode
+            deliveryStreet
+            deliveryTelephone
+            deliveryCountry {
+                name
+            }
+            items {
+                __typename
+                productName
+                quantity
+                description
+                orderItem {
+                    uuid
+                }
+            }
+        }
     }
 }

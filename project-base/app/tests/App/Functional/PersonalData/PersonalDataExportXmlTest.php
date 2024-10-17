@@ -14,6 +14,12 @@ use DateTime;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Xml\XmlNormalizer;
+use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
+use Shopsys\FrameworkBundle\Model\Complaint\ComplaintData;
+use Shopsys\FrameworkBundle\Model\Complaint\ComplaintItem;
+use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus;
+use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusData;
+use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusTypeEnum;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Country\CountryData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
@@ -72,12 +78,15 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $order->addItem($orderItem);
         $order->setStatus($status);
 
+        $complaint = $this->createComplaint($country, $order, $customerUser);
+
         $generatedXml = $this->twigEnvironment->render('@ShopsysFramework/Front/Content/PersonalData/export.xml.twig', [
             'customerUser' => $customerUser,
             'orders' => [
                 0 => $order,
             ],
             'newsletterSubscriber' => null,
+            'complaints' => [$complaint],
         ]);
 
         $generatedXml = XmlNormalizer::normalizeXml($generatedXml);
@@ -190,5 +199,37 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
         $orderData->country = $country;
 
         return new Order($orderData, '1523596513', 'hash');
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Country\Country $country
+     * @param \App\Model\Order\Order $order
+     * @param \App\Model\Customer\User\CustomerUser $customerUser
+     * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint
+     */
+    private function createComplaint(Country $country, Order $order, CustomerUser $customerUser): Complaint
+    {
+        $complaintStatusData = new ComplaintStatusData();
+        $complaintStatusData->name = ['cs' => 'name'];
+        $complaintStatus = new ComplaintStatus($complaintStatusData, ComplaintStatusTypeEnum::STATUS_TYPE_NEW);
+
+        $complaintData = new ComplaintData();
+        $complaintData->domainId = self::DOMAIN_ID_FIRST;
+        $complaintData->number = '1523596513';
+        $complaintData->order = $order;
+        $complaintData->customerUser = $customerUser;
+        $complaintData->deliveryFirstName = 'Adam';
+        $complaintData->deliveryLastName = 'Bořič';
+        $complaintData->deliveryCompanyName = 'Shopsys';
+        $complaintData->deliveryTelephone = '+420987654321';
+        $complaintData->deliveryStreet = 'Cihelní 5';
+        $complaintData->deliveryCity = 'Liberec';
+        $complaintData->deliveryPostcode = '65421';
+        $complaintData->deliveryCountry = $country;
+        $complaintData->status = $complaintStatus;
+
+        $complaintItem = $this->createMock(ComplaintItem::class);
+
+        return new Complaint($complaintData, [$complaintItem]);
     }
 }
