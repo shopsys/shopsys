@@ -15,6 +15,34 @@ export default grapesjs.plugins.add('custom-blocks', (editor, options) => {
         }
     });
 
+    editor.Components.addType('custom-code', {
+        isComponent: (element) => element.classList && element.classList.contains('gjs-custom-code'),
+        model: {
+            defaults: {
+                attributes: {
+                    class: ['gjs-custom-code'],
+                    'data-gjs-type': 'custom-code'
+                }
+            }
+        },
+        view: {
+            onRender: ({ el, model }) => {
+                model.set('custom-code-plugin__code', model.getInnerHTML());
+            }
+        }
+    });
+
+    editor.on('component:update', (component) => {
+        if (component.attributes.type === 'custom-code') {
+            component.onAll((childComponent) => {
+                if (childComponent.attributes.type !== 'custom-code') {
+                    childComponent.on('change:editable', childComponent.set('editable', false));
+                    childComponent.on('change:draggable', childComponent.set('draggable', false));
+                }
+            });
+        }
+    });
+
     editor.Blocks.add('column1', {
         label: 'Column 1',
         category: 'Basic',
