@@ -7,11 +7,11 @@ namespace App\FrontendApi\Resolver\Slug;
 use App\FrontendApi\Resolver\Slug\Exception\NoResultFoundForSlugUserError;
 use App\Model\Article\Article;
 use App\Model\Category\Category;
-use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Flag\Flag;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
+use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 
 class SlugResolverMap extends ResolverMap

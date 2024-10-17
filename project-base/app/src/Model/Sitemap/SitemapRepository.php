@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Model\Sitemap;
 
-use App\Model\CategorySeo\ReadyCategorySeoMix;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
+use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\Sitemap\SitemapRepository as BaseSitemapRepository;
 
 /**

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\FrontendApi\Resolver\Image;
 
 use App\Model\Category\Category;
-use App\Model\CategorySeo\ReadyCategorySeoMix;
 use GraphQL\Executor\Promise\Promise;
 use InvalidArgumentException;
+use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrontendApiBundle\Component\Image\ImageBatchLoadData;
 use Shopsys\FrontendApiBundle\Model\Resolver\Image\ImagesQuery;
 
@@ -16,7 +16,7 @@ class CategoryOrReadyCategorySeoMixImagesQuery extends ImagesQuery
     private const CATEGORY_ENTITY_NAME = 'category';
 
     /**
-     * @param \App\Model\Category\Category|\App\Model\CategorySeo\ReadyCategorySeoMix $categoryOrReadyCategorySeoMix
+     * @param \App\Model\Category\Category|\Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix $categoryOrReadyCategorySeoMix
      * @param string|null $type
      * @return \GraphQL\Executor\Promise\Promise
      */
@@ -42,7 +42,7 @@ class CategoryOrReadyCategorySeoMixImagesQuery extends ImagesQuery
     }
 
     /**
-     * @param \App\Model\Category\Category|\App\Model\CategorySeo\ReadyCategorySeoMix $categoryOrReadyCategorySeoMix
+     * @param \App\Model\Category\Category|\Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix $categoryOrReadyCategorySeoMix
      * @param string|null $type
      * @return \GraphQL\Executor\Promise\Promise
      */

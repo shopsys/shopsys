@@ -1,34 +1,21 @@
 {% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
 {% import _self as self %}
 
-{% block title %}- {{ 'Categories'|trans }}{% endblock %}
-{% block h1 %}{{ 'Categories'|trans }}{% endblock %}
-{% block btn %}
-    <div class="wrap-bar__buttons">
-        <a href="{{ url('admin_category_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
-            <i class="btn__icon">+</i>
-            {{ 'Create new category'|trans }}
-        </a>
-    </div>
-{% endblock %}
-
 {% block main_content %}
     {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainFilterController::domainFilterTabsAction', { namespace: domainFilterNamespace })) }}
 
-    {% macro categoryTreeItem(categoriesWithPreloadedChildren, isFirstLevel) %}
+    {% macro categoryTreeItem(categoriesWithPreloadedChildren, isFirstLevel, disabledFormFields, getAllCategoryIdsInSeoMixes) %}
         {% import _self as self %}
-        <ul class="js-category-tree-items js-category-tree-form-children-container {{ isFirstLevel ? 'form-tree__content' : '' }}">
+        <ul class="{{ disabledFormFields ? '' : 'js-category-tree-items' }} {{ isFirstLevel ? 'form-tree__content' : '' }}">
             {% for categoryWithPreloadedChildren in categoriesWithPreloadedChildren %}
-                <li class="js-category-tree-item form-tree__item js-category-tree-form-item"
-                    id="js-category-tree-{{ categoryWithPreloadedChildren.category.id }}"
-                    data-has-children="{{ categoryWithPreloadedChildren.children|length ? 'true' }}">
-                    <div class="js-category-tree-item-line form-tree__item__drag form-tree__item__click">
-                        <span class="js-category-tree-form-item-icon form-tree__item__icon form-tree__item__icon--level sprite sprite-level"></span>
+                {% set categoryHasSeoMix = categoryWithPreloadedChildren.category.id in getAllCategoryIdsInSeoMixes ? true : false %}
+                <li class="js-category-tree-item form-tree__item" id="js-category-tree-{{ categoryWithPreloadedChildren.category.id }}">
+                    <div class="{{ disabledFormFields ? '' : 'js-category-tree-item-line' }} form-tree__item__drag">
                         <img src="{{ asset('public/admin/images/icons/level.png') }}" class="form-tree__item__icon form-tree__item__icon--level" />
                         <span class="js-category-tree-item-line  js-category-tree-item-handle form-tree__item__name">{{ categoryWithPreloadedChildren.category.name }}</span>
                         <span class="js-category-tree-item-icons form-tree__item__controls">
                             <a href="{{ url('admin_category_edit', {id: categoryWithPreloadedChildren.category.id}) }}" class="form-tree__item__control">
-                                <i class="svg svg-pencil"></i>
+                                {{ icon('pencil') }}
                             </a>
                             {% set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_category_delete' %}
                             {% set categoryDeleteUrl = url('admin_category_delete', {
@@ -36,14 +23,14 @@
                                 (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
                             }) %}
                             <a
-                                class="form-tree__item__control js-category-delete-confirm"
+                                class="form-tree__item__control {{ categoryHasSeoMix ? 'js-category-with-seomix-delete-confirm' : 'js-category-delete-confirm' }}"
                                 data-delete-url="{{categoryDeleteUrl}}"
                             >
-                                <i class="svg svg-trash"></i>
+                                {{ icon('trash') }}
                             </a>
                         </span>
                     </div>
-                    {{ self.categoryTreeItem(categoryWithPreloadedChildren.children, false) }}
+                    {{ self.categoryTreeItem(categoryWithPreloadedChildren.children, false, disabledFormFields, getAllCategoryIdsInSeoMixes) }}
                 </li>
             {% endfor %}
         </ul>
@@ -52,8 +39,8 @@
     {% if isForAllDomains %}
         <div class="wrap-divider">
             <div class="form-line">
-                <div id="js-category-tree-sorting" class="js-category-tree-form form-tree form-tree--open form-tree--dragable">
-                    {{ self.categoryTreeItem(categoriesWithPreloadedChildren, true) }}
+                <div id="js-category-tree-sorting" class="form-tree form-tree--open form-tree--dragable">
+                    {{ self.categoryTreeItem(categoriesWithPreloadedChildren, true, disabledFormFields, getAllCategoryIdsInSeoMixes) }}
                 </div>
             </div>
         </div>
@@ -71,13 +58,16 @@
             {% endblock %}
         {% endembed %}
     {% else %}
-        <div class="in-message in-message--info margin-bottom-20">
-            {{ 'In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains'|trans }}
-        </div>
+        {% if disabledFormFields == false %}
+            <div class="in-message in-message--info">
+                {{ 'In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains'|trans }}
+                <i class="in-message__icon svg svg-remove js-message-close"></i>
+            </div>
+        {% endif %}
         <div class="wrap-divider">
             <div class="form-line">
-                <div class="js-category-tree-form form-tree form-tree--open form-tree--dragable">
-                    {{ self.categoryTreeItem(categoriesWithPreloadedChildren, true) }}
+                <div class="form-tree form-tree--open form-tree--dragable">
+                    {{ self.categoryTreeItem(categoriesWithPreloadedChildren, true, disabledFormFields, getAllCategoryIdsInSeoMixes) }}
                 </div>
             </div>
         </div>

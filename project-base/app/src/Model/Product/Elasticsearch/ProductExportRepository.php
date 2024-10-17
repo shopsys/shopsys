@@ -35,7 +35,6 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 /**
  * @property \App\Model\Product\Parameter\ParameterRepository $parameterRepository
  * @property \App\Model\Product\ProductFacade $productFacade
- * @property \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
  * @property \App\Model\Category\CategoryFacade $categoryFacade
  * @property \App\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider $productExportFieldProvider
  * @property \App\Model\Product\ProductRepository $productRepository
@@ -56,7 +55,7 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \App\Model\Product\ProductFacade $productFacade
-     * @param \App\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\Model\Category\CategoryFacade $categoryFacade

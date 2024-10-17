@@ -9,12 +9,12 @@ use App\DataFixtures\Demo\FlagDataFixture;
 use App\DataFixtures\Demo\ParameterDataFixture;
 use App\DataFixtures\Demo\ReadyCategorySeoDataFixture;
 use App\Model\Category\Category;
-use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Product\Flag\Flag;
 use App\Model\Product\Parameter\Parameter;
 use App\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorter;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -30,7 +30,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
      */
     private ParameterFacade $parameterFacade;
 
-    public function testGetReadyCategorySeoMixDataBySlug()
+    public function testGetReadyCategorySeoMixDataBySlug(): void
     {
         $readyCategorySeoMix = $this->getReferenceForDomain(ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_ELECTRONICS_WITHOUT_HDMI_PROMOTION, 1, ReadyCategorySeoMix::class);
         $query = '
@@ -122,7 +122,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
         $this->assertQueryWithExpectedArray($query, $arrayExpected);
     }
 
-    public function testReadyCategorySeoMixProductsOrdering()
+    public function testReadyCategorySeoMixProductsOrdering(): void
     {
         $readyCategorySeoMix = $this->getReferenceForDomain(ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_TV_FROM_CHEAPEST, 1, ReadyCategorySeoMix::class);
         $urlSlug = $this->urlGenerator->generate('front_category_seo', ['id' => $readyCategorySeoMix->getId()]);
@@ -161,7 +161,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
         $this->assertQueryWithExpectedArray($query, $arrayExpected);
     }
 
-    public function testReadyCategorySeoMixProductsWithFlag()
+    public function testReadyCategorySeoMixProductsWithFlag(): void
     {
         $readyCategorySeoMix = $this->getReferenceForDomain(ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_TV_IN_SALE, 1, ReadyCategorySeoMix::class);
         $urlSlug = $this->urlGenerator->generate('front_category_seo', ['id' => $readyCategorySeoMix->getId()]);
@@ -184,7 +184,7 @@ class ReadyCategorySeoMixTest extends GraphQlTestCase
         $this->assertQueryWithExpectedArray($query, $arrayExpected);
     }
 
-    public function testReadyCategorySeoMixProductsWithParameters()
+    public function testReadyCategorySeoMixProductsWithParameters(): void
     {
         $readyCategorySeoMix = $this->getReferenceForDomain(ReadyCategorySeoDataFixture::READY_CATEGORY_SEO_TV_PLASMA_WITH_HDMI, 1, ReadyCategorySeoMix::class);
         $urlSlug = $this->urlGenerator->generate('front_category_seo', ['id' => $readyCategorySeoMix->getId()]);

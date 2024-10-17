@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
-use App\FrontendApi\Model\Product\BatchLoad\ProductBatchLoadByEntityData;
 use App\Model\Category\Category;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Flag\Flag;
 use App\Model\Product\Search\FilterQuery;
 use InvalidArgumentException;
+use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider as BaseProductElasticsearchProvider;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
+use Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductBatchLoadByEntityData;
 use Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductElasticsearchBatchRepository;
 
 /**
@@ -25,17 +26,19 @@ class ProductElasticsearchProvider extends BaseProductElasticsearchProvider
      * @param \App\Model\Product\Search\ProductElasticsearchRepository $productElasticsearchRepository
      * @param \App\Model\Product\Search\FilterQueryFactory $filterQueryFactory
      * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductElasticsearchBatchRepository $productElasticsearchBatchRepository
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
      */
     public function __construct(
         ProductElasticsearchRepository $productElasticsearchRepository,
         FilterQueryFactory $filterQueryFactory,
         private readonly ProductElasticsearchBatchRepository $productElasticsearchBatchRepository,
+        private readonly EntityNameResolver $entityNameResolver,
     ) {
         parent::__construct($productElasticsearchRepository, $filterQueryFactory);
     }
 
     /**
-     * @param \App\FrontendApi\Model\Product\BatchLoad\ProductBatchLoadByEntityData[] $productBatchLoadByEntitiesData
+     * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductBatchLoadByEntityData[] $productBatchLoadByEntitiesData
      * @return array
      */
     public function getBatchedByEntities(array $productBatchLoadByEntitiesData): array
@@ -50,12 +53,14 @@ class ProductElasticsearchProvider extends BaseProductElasticsearchProvider
     }
 
     /**
-     * @param \App\FrontendApi\Model\Product\BatchLoad\ProductBatchLoadByEntityData $productBatchLoadByEntityData
+     * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductBatchLoadByEntityData $productBatchLoadByEntityData
      * @return \App\Model\Product\Search\FilterQuery
      */
     private function getFilterQuery(ProductBatchLoadByEntityData $productBatchLoadByEntityData): FilterQuery
     {
         $entityClass = $productBatchLoadByEntityData->getEntityClass();
+
+        $entityClass = $this->entityNameResolver->resolve($entityClass);
 
         switch ($entityClass) {
             case Category::class:
@@ -84,7 +89,7 @@ class ProductElasticsearchProvider extends BaseProductElasticsearchProvider
     }
 
     /**
-     * @param \App\FrontendApi\Model\Product\BatchLoad\ProductBatchLoadByEntityData $productBatchLoadByEntityData
+     * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductBatchLoadByEntityData $productBatchLoadByEntityData
      * @return \App\Model\Product\Search\FilterQuery
      */
     private function getFilterQueryForCategory(ProductBatchLoadByEntityData $productBatchLoadByEntityData): FilterQuery
@@ -99,7 +104,7 @@ class ProductElasticsearchProvider extends BaseProductElasticsearchProvider
     }
 
     /**
-     * @param \App\FrontendApi\Model\Product\BatchLoad\ProductBatchLoadByEntityData $productBatchLoadByEntityData
+     * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductBatchLoadByEntityData $productBatchLoadByEntityData
      * @return \App\Model\Product\Search\FilterQuery
      */
     private function getFilterQueryForFilterData(
@@ -114,7 +119,7 @@ class ProductElasticsearchProvider extends BaseProductElasticsearchProvider
     }
 
     /**
-     * @param \App\FrontendApi\Model\Product\BatchLoad\ProductBatchLoadByEntityData $productBatchLoadByEntityData
+     * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductBatchLoadByEntityData $productBatchLoadByEntityData
      * @return \App\Model\Product\Search\FilterQuery
      */
     private function getFilterQueryForBrand(ProductBatchLoadByEntityData $productBatchLoadByEntityData): FilterQuery

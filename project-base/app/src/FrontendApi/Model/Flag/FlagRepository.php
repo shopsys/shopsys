@@ -54,21 +54,6 @@ class FlagRepository
     }
 
     /**
-     * @param string[] $flagUuids
-     * @return int[]
-     */
-    public function getFlagIdsByUuids(array $flagUuids): array
-    {
-        $queryBuilder = $this->entityManager->createQueryBuilder()
-            ->select('f.id')
-            ->from(Flag::class, 'f')
-            ->where('f.uuid IN (:uuids)')
-            ->setParameter('uuids', $flagUuids);
-
-        return array_column($queryBuilder->getQuery()->getArrayResult(), 'id');
-    }
-
-    /**
      * @param \App\Model\Product\Flag\Flag[][] $flagsIndexedByKeyAndId
      * @return \App\Model\Product\Flag\Flag[][]
      */

@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Shopsys\FrameworkBundle\Model\Category\Category;
+use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -281,6 +282,7 @@ class FriendlyUrlRepository
             'front_stores_detail' => $this->entityNameResolver->resolve(Store::class),
             'front_flag_detail' => $this->entityNameResolver->resolve(Flag::class),
             'front_page_seo' => $this->entityNameResolver->resolve(SeoPage::class),
+            'front_category_seo' => $this->entityNameResolver->resolve(ReadyCategorySeoMix::class),
         ];
     }
 }

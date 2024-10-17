@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
+use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 
@@ -162,5 +163,25 @@ class ProductFilterConfigFactory
         }
 
         return $sortedParameterFilterChoices;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
+     */
+    public function createForFlag(Flag $flag, string $locale): ProductFilterConfig
+    {
+        $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataInFlag(
+            $flag->getId(),
+            $this->currentCustomerUser->getPricingGroup(),
+        );
+
+        return new ProductFilterConfig(
+            [],
+            $this->flagFacade->getVisibleFlagsByIds($productFilterConfigIdsData->getFlagIds(), $locale),
+            $this->brandFacade->getBrandsByIds($productFilterConfigIdsData->getBrandIds()),
+            $productFilterConfigIdsData->getPriceRange(),
+        );
     }
 }

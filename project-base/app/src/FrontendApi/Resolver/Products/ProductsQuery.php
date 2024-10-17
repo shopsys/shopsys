@@ -5,40 +5,37 @@ declare(strict_types=1);
 namespace App\FrontendApi\Resolver\Products;
 
 use App\Component\Deprecation\DeprecatedMethodException;
-use App\FrontendApi\Model\Product\BatchLoad\ProductBatchLoadByEntityData;
-use App\FrontendApi\Resolver\Category\CategoryQuery;
 use App\FrontendApi\Resolver\Products\Flag\FlagQuery;
-use App\Model\Category\Category;
-use App\Model\CategorySeo\ReadyCategorySeoMix;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Filter\ProductFilterDataFactory;
 use App\Model\Product\Flag\Flag;
 use GraphQL\Executor\Promise\Promise;
 use GraphQL\Type\Definition\ResolveInfo;
-use InvalidArgumentException;
 use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Ramsey\Uuid\Uuid;
-use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand as BaseBrand;
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrontendApiBundle\Component\Validation\PageSizeValidator;
+use Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductBatchLoadByEntityData;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
 use Shopsys\FrontendApiBundle\Model\Product\ProductFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandQuery;
+use Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductOrderingModeProvider;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsQuery as BaseProductsQuery;
 
 /**
- * @property \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainFacade
  * @property \App\FrontendApi\Model\Product\Filter\ProductFilterFacade $productFilterFacade
  * @property \App\FrontendApi\Model\Product\Connection\ProductConnectionFactory $productConnectionFactory
  * @method setProductFilterFacade(\App\FrontendApi\Model\Product\Filter\ProductFilterFacade $productFilterFacade)
  * @method setProductConnectionFactory(\App\FrontendApi\Model\Product\Connection\ProductConnectionFactory $productConnectionFactory)
  * @property \App\Model\Product\ProductRepository $productRepository
+ * @property \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
+ * @method \GraphQL\Executor\Promise\Promise productsByCategoryOrReadyCategorySeoMixQuery(\Overblog\GraphQLBundle\Definition\Argument $argument, \App\Model\Category\Category|\Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix $categoryOrReadyCategorySeoMix)
+ * @method \GraphQL\Executor\Promise\Promise getPromiseByCategory(\Overblog\GraphQLBundle\Definition\Argument $argument, \App\Model\Category\Category $category, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingMode, string $defaultOrderingMode, \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix)
  */
 class ProductsQuery extends BaseProductsQuery
 {
@@ -52,7 +49,7 @@ class ProductsQuery extends BaseProductsQuery
      * @param \Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductOrderingModeProvider $productOrderingModeProvider
      * @param \App\Model\Product\Filter\ProductFilterDataFactory $productFilterDataFactory
      * @param \Overblog\DataLoader\DataLoaderInterface $productsByEntitiesBatchLoader
-     * @param \App\FrontendApi\Resolver\Category\CategoryQuery $categoryQuery
+     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryQuery $categoryQuery
      * @param \Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandQuery $brandQuery
      * @param \App\FrontendApi\Resolver\Products\Flag\FlagQuery $flagQuery
      */
@@ -64,8 +61,8 @@ class ProductsQuery extends BaseProductsQuery
         DataLoaderInterface $productsVisibleAndSortedByIdsBatchLoader,
         ProductRepository $productRepository,
         ProductOrderingModeProvider $productOrderingModeProvider,
-        private readonly ProductFilterDataFactory $productFilterDataFactory,
-        private readonly DataLoaderInterface $productsByEntitiesBatchLoader,
+        ProductFilterDataFactory $productFilterDataFactory,
+        DataLoaderInterface $productsByEntitiesBatchLoader,
         private readonly CategoryQuery $categoryQuery,
         private readonly BrandQuery $brandQuery,
         private readonly FlagQuery $flagQuery,
@@ -78,53 +75,9 @@ class ProductsQuery extends BaseProductsQuery
             $productListFacade,
             $productRepository,
             $productOrderingModeProvider,
+            $productFilterDataFactory,
+            $productsByEntitiesBatchLoader,
         );
-    }
-
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \App\Model\Category\Category|\App\Model\CategorySeo\ReadyCategorySeoMix $categoryOrReadyCategorySeoMix
-     * @return \GraphQL\Executor\Promise\Promise
-     */
-    public function productsByCategoryOrReadyCategorySeoMixQuery(
-        Argument $argument,
-        BaseCategory|ReadyCategorySeoMix $categoryOrReadyCategorySeoMix,
-    ): Promise {
-        PageSizeValidator::checkMaxPageSize($argument);
-
-        if ($categoryOrReadyCategorySeoMix instanceof Category) {
-            $category = $categoryOrReadyCategorySeoMix;
-            $readyCategorySeoMix = null;
-            $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForCategory(
-                $argument,
-                $category,
-            );
-            $orderingMode = $this->productOrderingModeProvider->getOrderingModeFromArgument($argument);
-            $defaultOrderingMode = $this->productOrderingModeProvider->getDefaultOrderingMode($argument);
-        } elseif ($categoryOrReadyCategorySeoMix instanceof ReadyCategorySeoMix) {
-            $category = $categoryOrReadyCategorySeoMix->getCategory();
-            $readyCategorySeoMix = $categoryOrReadyCategorySeoMix;
-
-            $productFilterData = $this->productFilterFacade->getValidatedProductFilterDataForCategory(
-                $argument,
-                $category,
-            );
-
-            $this->productFilterDataFactory->updateProductFilterDataFromReadyCategorySeoMix($categoryOrReadyCategorySeoMix, $productFilterData);
-
-            $orderingMode = $categoryOrReadyCategorySeoMix->getOrdering();
-            $defaultOrderingMode = $orderingMode;
-        } else {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'The "$categoryOrReadyCategorySeoMix" argument must be an instance of "%s" or "%s".',
-                    Category::class,
-                    ReadyCategorySeoMix::class,
-                ),
-            );
-        }
-
-        return $this->getPromiseByCategory($argument, $category, $productFilterData, $orderingMode, $defaultOrderingMode, $readyCategorySeoMix);
     }
 
     /**
@@ -239,17 +192,6 @@ class ProductsQuery extends BaseProductsQuery
 
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \App\Model\Category\Category $category
-     * @return \GraphQL\Executor\Promise\Promise
-     * @deprecated Method is deprecated. Use "productsByCategoryOrReadyCategorySeoMixQuery()" instead.
-     */
-    public function productsByCategoryQuery(Argument $argument, BaseCategory $category)
-    {
-        throw new DeprecatedMethodException();
-    }
-
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param \App\Model\Product\Brand\Brand $brand
      * @return \GraphQL\Executor\Promise\Promise
      */
@@ -285,51 +227,6 @@ class ProductsQuery extends BaseProductsQuery
             $this->productOrderingModeProvider->getOrderingModeFromArgument($argument),
             $this->productOrderingModeProvider->getDefaultOrderingMode($argument),
             $batchLoadDataId,
-        );
-    }
-
-    /**
-     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
-     * @param \App\Model\Category\Category $category
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param string $orderingMode
-     * @param string $defaultOrderingMode
-     * @param \App\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
-     * @return \GraphQL\Executor\Promise\Promise
-     */
-    private function getPromiseByCategory(
-        Argument $argument,
-        Category $category,
-        ProductFilterData $productFilterData,
-        string $orderingMode,
-        string $defaultOrderingMode,
-        ?ReadyCategorySeoMix $readyCategorySeoMix,
-    ): Promise {
-        $this->setDefaultFirstOffsetIfNecessary($argument);
-        $batchLoadDataId = Uuid::uuid4()->toString();
-
-        return $this->productConnectionFactory->createConnectionPromiseForCategory(
-            $category,
-            function ($offset, $limit) use ($argument, $category, $productFilterData, $orderingMode, $batchLoadDataId) {
-                return $this->productsByEntitiesBatchLoader->load(
-                    new ProductBatchLoadByEntityData(
-                        $batchLoadDataId,
-                        $category->getId(),
-                        Category::class,
-                        $limit,
-                        $offset,
-                        $orderingMode,
-                        $productFilterData,
-                        $argument['search'] ?? '',
-                    ),
-                );
-            },
-            $argument,
-            $productFilterData,
-            $orderingMode,
-            $defaultOrderingMode,
-            $batchLoadDataId,
-            $readyCategorySeoMix,
         );
     }
 }
