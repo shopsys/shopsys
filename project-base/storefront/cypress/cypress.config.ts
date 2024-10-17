@@ -1,4 +1,5 @@
 import { defineConfig } from 'cypress';
+import { Cypress } from 'cypress';
 import getCompareSnapshotsPlugin from 'cypress-visual-regression/dist/plugin';
 
 export default defineConfig({
@@ -17,8 +18,8 @@ export default defineConfig({
     e2e: {
         setupNodeEvents(on, config) {
             getCompareSnapshotsPlugin(on, config);
-            // Dynamické načtení testovacích skupin
-            const group = Cypress.env('GROUP');
+
+            const group = (Cypress as any).env('GROUP');
 
             if (!group) {
                 config.specPattern = [
