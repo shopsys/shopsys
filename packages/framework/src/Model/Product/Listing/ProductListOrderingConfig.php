@@ -6,38 +6,27 @@ namespace Shopsys\FrameworkBundle\Model\Product\Listing;
 
 class ProductListOrderingConfig
 {
-    public const ORDER_BY_PRIORITY = 'priority';
-    public const ORDER_BY_PRICE_DESC = 'price_desc';
-    public const ORDER_BY_PRICE_ASC = 'price_asc';
-    public const ORDER_BY_NAME_DESC = 'name_desc';
-    public const ORDER_BY_RELEVANCE = 'relevance';
-    public const ORDER_BY_NAME_ASC = 'name_asc';
-
-    /**
-     * @var string[]
-     */
-    protected array $supportedOrderingModesNamesById;
-
-    protected string $defaultOrderingModeId;
-
-    protected string $cookieName;
+    public const string ORDER_BY_PRIORITY = 'priority';
+    public const string ORDER_BY_PRICE_DESC = 'price_desc';
+    public const string ORDER_BY_PRICE_ASC = 'price_asc';
+    public const string ORDER_BY_NAME_DESC = 'name_desc';
+    public const string ORDER_BY_RELEVANCE = 'relevance';
+    public const string ORDER_BY_NAME_ASC = 'name_asc';
 
     /**
      * @param string[] $supportedOrderingModesNamesById
      * @param string $defaultOrderingModeId
-     * @param string $cookieName
      */
-    public function __construct($supportedOrderingModesNamesById, $defaultOrderingModeId, $cookieName)
-    {
-        $this->supportedOrderingModesNamesById = $supportedOrderingModesNamesById;
-        $this->defaultOrderingModeId = $defaultOrderingModeId;
-        $this->cookieName = $cookieName;
+    public function __construct(
+        protected readonly array $supportedOrderingModesNamesById,
+        protected readonly string $defaultOrderingModeId,
+    ) {
     }
 
     /**
      * @return string[]
      */
-    public function getSupportedOrderingModesNamesIndexedById()
+    public function getSupportedOrderingModesNamesIndexedById(): array
     {
         return $this->supportedOrderingModesNamesById;
     }
@@ -45,15 +34,7 @@ class ProductListOrderingConfig
     /**
      * @return string
      */
-    public function getCookieName()
-    {
-        return $this->cookieName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDefaultOrderingModeId()
+    public function getDefaultOrderingModeId(): string
     {
         return $this->defaultOrderingModeId;
     }
@@ -61,7 +42,7 @@ class ProductListOrderingConfig
     /**
      * @return string[]
      */
-    public function getSupportedOrderingModeIds()
+    public function getSupportedOrderingModeIds(): array
     {
         return array_keys($this->supportedOrderingModesNamesById);
     }

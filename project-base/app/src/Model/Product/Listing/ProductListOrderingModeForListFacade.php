@@ -7,10 +7,6 @@ namespace App\Model\Product\Listing;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade as BaseProductListOrderingModeForListFacade;
 
-/**
- * @property \Shopsys\FrameworkBundle\Model\Product\Listing\RequestToOrderingModeIdConverter $requestToOrderingModeIdConverter
- * @method __construct(\Shopsys\FrameworkBundle\Model\Product\Listing\RequestToOrderingModeIdConverter $requestToOrderingModeIdConverter)
- */
 class ProductListOrderingModeForListFacade extends BaseProductListOrderingModeForListFacade
 {
     /**
