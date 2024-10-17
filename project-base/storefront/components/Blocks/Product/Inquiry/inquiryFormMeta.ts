@@ -26,7 +26,11 @@ export const useInquiryForm = (
             lastName: validateLastName(t),
             telephone: validateTelephoneRequired(t),
             companyName: Yup.string().nullable(),
-            companyNumber: validateCompanyNumber(t),
+            companyNumber: Yup.string().when('companyName', {
+                is: (companyName: string) => companyName.length > 0,
+                then: () => validateCompanyNumber(t),
+                otherwise: (schema) => schema,
+            }),
             companyTaxNumber: validateCompanyTaxNumber(t),
             note: Yup.string().optional().nullable(),
             productUuid: Yup.string().required(),
