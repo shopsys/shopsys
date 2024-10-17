@@ -16,10 +16,24 @@ export default defineConfig({
     },
     e2e: {
         setupNodeEvents(on, config) {
+            console.log(`Running tests for group: ${config.env.GROUP || 'default-group'}`);
             getCompareSnapshotsPlugin(on, config);
+
+            const group = config.env.GROUP || 'default-group';
+
+            if (group === 'default-group') {
+                config.specPattern = ['e2e/**/*.cy.ts'];
+            } else if (group === 'auth') {
+                config.specPattern = 'e2e/authentication/*.cy.ts';
+            } else if (group === 'cart-order-payment') {
+                config.specPattern = ['e2e/cart/*.cy.ts', 'e2e/order/*.cy.ts', 'e2e/transportAndPayment/*.cy.ts'];
+            } else if (group === 'visits') {
+                config.specPattern = 'e2e/visits/*.cy.ts';
+            }
+
+            return config;
         },
         baseUrl: 'http://127.0.0.1:8000/',
-        specPattern: 'e2e/**/*.cy.ts',
         supportFile: 'support/index.ts',
     },
     retries: {
