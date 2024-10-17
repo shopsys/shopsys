@@ -2373,7 +2373,7 @@ Availability status in a format suitable for usage in the code
 <td valign="top">[<a href="#blogcategory">BlogCategory</a>!]!</td>
 <td>
 
-The list of the blog article blog categories
+The list of the blog article visible categories
 
 </td>
 </tr>

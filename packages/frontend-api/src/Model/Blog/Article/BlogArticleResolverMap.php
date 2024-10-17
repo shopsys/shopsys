@@ -6,15 +6,18 @@ namespace Shopsys\FrontendApiBundle\Model\Blog\Article;
 
 use DateTime;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade;
 
 class BlogArticleResolverMap extends ResolverMap
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         protected readonly BlogCategoryFacade $blogCategoryFacade,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -26,7 +29,7 @@ class BlogArticleResolverMap extends ResolverMap
         return [
             'BlogArticle' => [
                 'blogCategories' => function (array $blogArticleData) {
-                    return $this->blogCategoryFacade->getByIds($blogArticleData['categories']);
+                    return $this->blogCategoryFacade->getVisibleByIds($this->domain->getId(), $blogArticleData['categories']);
                 },
                 'publishDate' => static function (array $blogArticleData) {
                     return new DateTime($blogArticleData['publishDate']);

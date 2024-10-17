@@ -326,6 +326,20 @@ class BlogCategoryRepository extends NestedTreeRepository
 
     /**
      * @param int $domainId
+     * @param int[] $blogCategoryIds
+     * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]
+     */
+    public function getVisibleByIds(int $domainId, array $blogCategoryIds): array
+    {
+        return $this->getAllVisibleByDomainIdQueryBuilder($domainId)
+            ->andWhere('bc.id IN (:blogCategoryIds)')
+            ->setParameter('blogCategoryIds', $blogCategoryIds)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param int $domainId
      * @return int|null
      */
     public function findVisibleMainBlogCategoryIdOnDomain(int $domainId): ?int

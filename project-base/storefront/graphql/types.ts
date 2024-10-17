@@ -251,7 +251,7 @@ export enum TypeAvailabilityStatusEnum {
 
 export type TypeBlogArticle = TypeArticleInterface & TypeBreadcrumb & TypeHreflang & TypeSlug & {
   __typename?: 'BlogArticle';
-  /** The list of the blog article blog categories */
+  /** The list of the blog article visible categories */
   blogCategories: Array<TypeBlogCategory>;
   /** Hierarchy of the current element in relation to the structure */
   breadcrumb: Array<TypeLink>;
