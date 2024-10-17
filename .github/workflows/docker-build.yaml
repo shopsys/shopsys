@@ -185,7 +185,8 @@ jobs:
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
                 github.ref_protected == true
             ) &&
-            needs.variables.outputs.DOCKER_STOREFRONT_CI_IMAGE_EXISTS == 0
+            needs.variables.outputs.DOCKER_STOREFRONT_CI_IMAGE_EXISTS == 0 &&
+            !contains(github.event.pull_request.labels.*.name, 'regenerate screenshots')
         name: Build storefront CI image
         runs-on: ubuntu-22.04
         needs: variables
@@ -244,7 +245,8 @@ jobs:
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
                 github.ref_protected == true
             ) &&
-            (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped')
+            (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped') &&
+            !contains(github.event.pull_request.labels.*.name, 'regenerate screenshots')
         runs-on: ubuntu-22.04
         steps:
             -   name: Download docker-compose.yml from artifacts
@@ -269,7 +271,8 @@ jobs:
                 github.ref_protected == true
             ) &&
             (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped') &&
-            (needs.build-storefront-ci-image.result == 'success' || needs.build-storefront-ci-image.result == 'skipped')
+            (needs.build-storefront-ci-image.result == 'success' || needs.build-storefront-ci-image.result == 'skipped') &&
+            !contains(github.event.pull_request.labels.*.name, 'regenerate screenshots')
         runs-on: ubuntu-22.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
@@ -314,7 +317,8 @@ jobs:
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
                 github.ref_protected == true
             ) &&
-            (needs.build-storefront-ci-image.result == 'success' || needs.build-storefront-ci-image.result == 'skipped')
+            (needs.build-storefront-ci-image.result == 'success' || needs.build-storefront-ci-image.result == 'skipped') &&
+            !contains(github.event.pull_request.labels.*.name, 'regenerate screenshots')
         runs-on: ubuntu-22.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
@@ -342,7 +346,8 @@ jobs:
                 github.ref_protected == true
             ) &&
             (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped') &&
-            (needs.build-elasticsearch-image.result == 'success' || needs.build-elasticsearch-image.result == 'skipped')
+            (needs.build-elasticsearch-image.result == 'success' || needs.build-elasticsearch-image.result == 'skipped') &&
+            !contains(github.event.pull_request.labels.*.name, 'regenerate screenshots')
         runs-on: ubuntu-22.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
@@ -376,7 +381,8 @@ jobs:
                 github.ref_protected == true
             ) &&
             (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped') &&
-            (needs.build-elasticsearch-image.result == 'success' || needs.build-elasticsearch-image.result == 'skipped')
+            (needs.build-elasticsearch-image.result == 'success' || needs.build-elasticsearch-image.result == 'skipped') &&
+            !contains(github.event.pull_request.labels.*.name, 'regenerate screenshots')
         runs-on: ubuntu-22.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
@@ -417,8 +423,12 @@ jobs:
             ) &&
             (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped') &&
             (needs.build-storefront-image.result == 'success' || needs.build-storefront-image.result == 'skipped') &&
-            (needs.build-elasticsearch-image.result == 'success' || needs.build-elasticsearch-image.result == 'skipped')
+            (needs.build-elasticsearch-image.result == 'success' || needs.build-elasticsearch-image.result == 'skipped') &&
+            !contains(github.event.pull_request.labels.*.name, 'regenerate screenshots')
         runs-on: ubuntu-22.04
+        strategy:
+            matrix:
+                group: [ authentication, cartOrderTransportAndPayment, visits, others ]
         env:
             GH_TOKEN: ${{ github.token }}
         steps:
@@ -441,8 +451,10 @@ jobs:
                     mv docker-compose.cypress.yml docker-compose.yml
                     docker compose up -d --wait
                     docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick error-pages-generate elasticsearch-index-recreate elasticsearch-export
-            -   name: Run Cypress tests
+            -   name: Run Cypress tests for ${{ matrix.group }}
                 run: docker compose run cypress
+                env:
+                    GROUP: ${{ matrix.group }}
             -   name: Upload Cypress videos to artifacts
                 if: ${{ failure() }}
                 uses: actions/upload-artifact@v4
@@ -484,17 +496,15 @@ jobs:
             ) &&
             (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped') &&
             (needs.build-storefront-image.result == 'success' || needs.build-storefront-image.result == 'skipped') &&
-            (needs.build-elasticsearch-image.result == 'success' || needs.build-elasticsearch-image.result == 'skipped')
+            (needs.build-elasticsearch-image.result == 'success' || needs.build-elasticsearch-image.result == 'skipped') &&
+            contains(github.event.pull_request.labels.*.name, 'regenerate screenshots')
         runs-on: ubuntu-22.04
+        strategy:
+            matrix:
+                group: [ authentication, cartOrderTransportAndPayment, visits, others ]
         env:
             GH_TOKEN: ${{ github.token }}
         steps:
-            -   name: Check pull request labels
-                run: |
-                    PULL_REQUEST_LABELS=`gh api -H "Accept: application/vnd.github+json" /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels | jq '[.[].name]'`
-                    if ! echo "$PULL_REQUEST_LABELS" | jq -e '. | index("regenerate screenshots")' >/dev/null; then
-                        exit 1;
-                    fi
             -   name: GIT checkout branch - ${{ github.head_ref }}
                 uses: actions/checkout@v4
                 with:
@@ -508,27 +518,31 @@ jobs:
                     mv docker-compose.cypress.yml docker-compose.yml
                     docker compose up -d --wait
                     docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick error-pages-generate elasticsearch-index-recreate elasticsearch-export
-            -   name: Run Cypress tests
+            -   name: Run regenerate Cypress tests for ${{ matrix.group }}
                 run: |
                     docker compose run cypress-regenerate
-            -   name: Commit generated snapshots
+                env:
+                    GROUP: ${{ matrix.group }}
+            -   name: Commit generated snapshots for ${{ matrix.group }}
+                id: commit-snapshots
                 run: |
                     cp -rf snapshots/* project-base/storefront/cypress/snapshots/
                     git config --global user.name 'ShopsysBot'
                     git config --global user.email 'shopsysbot@users.noreply.github.com'
                     git add project-base/storefront/cypress/snapshots
-                    git commit -m "regenerate screenshots"
-            -   name: Remove "regenerate screenshots" label
+                    if ! git diff --cached --quiet; then
+                        git commit -m "regenerate screenshots for ${{ matrix.group }}"
+                    else
+                        echo "No changes to commit."
+                    fi
+            -   name: Push changes for ${{ matrix.group }}
+                if: steps.commit-snapshots.outcome == 'success'
                 run: |
-                    gh api \
-                        --method DELETE \
-                        -H "Accept: application/vnd.github+json" \
-                        -H "X-GitHub-Api-Version: 2022-11-28" \
-                        /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels/regenerate%20screenshots
-            -   name: Push changes
-                uses: ad-m/github-push-action@master
-                with:
-                    branch: ${{ github.head_ref }}
+                    git config --global user.name 'ShopsysBot'
+                    git config --global user.email 'shopsysbot@users.noreply.github.com'
+                    git fetch origin
+                    git rebase origin/${{ github.head_ref }}
+                    git push origin ${{ github.head_ref }} --force-with-lease
             -   name: PHP-FPM container logs
                 if: ${{ failure() }}
                 run: docker compose logs php-fpm
@@ -541,6 +555,25 @@ jobs:
             -   name: Cypress container logs
                 if: ${{ failure() }}
                 run: docker compose logs cypress
+    tests-storefront-acceptance-regenerate-remove-label:
+        name: Remove "regenerate screenshots" label
+        needs: tests-storefront-acceptance-regenerate
+        if: |
+            always() && 
+            !failure() && 
+            !cancelled() && 
+            needs.tests-storefront-acceptance-regenerate.result == 'success'
+        runs-on: ubuntu-22.04
+        env:
+            GH_TOKEN: ${{ github.token }}
+        steps:
+            -   name: Remove "regenerate screenshots" label
+                run: |
+                    gh api \
+                        --method DELETE \
+                        -H "Accept: application/vnd.github+json" \
+                        -H "X-GitHub-Api-Version: 2022-11-28" \
+                        /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels/regenerate%20screenshots
     translations-dump-check:
         name: Check all translations are dumped
         needs: build-php-fpm-image
@@ -550,7 +583,8 @@ jobs:
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
                 github.ref_protected == true
             ) &&
-            (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped')
+            (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped') &&
+            !contains(github.event.pull_request.labels.*.name, 'regenerate screenshots')
         runs-on: ubuntu-22.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
@@ -588,7 +622,8 @@ jobs:
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
                 github.ref_protected == true
             ) &&
-            (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped')
+            (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped') &&
+            !contains(github.event.pull_request.labels.*.name, 'regenerate screenshots')
         runs-on: ubuntu-22.04
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
@@ -854,10 +889,26 @@ jobs:
                           - https://${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}
                           - https://cz.${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}
                     delete-previous-comment: false
+    regenerate-successful:
+        if: |
+            always() && 
+            contains(github.event.pull_request.labels.*.name, 'regenerate screenshots') &&
+            needs.tests-storefront-acceptance-regenerate.result == 'success'
+        name: Regenerate successful
+        needs: [ tests-storefront-acceptance-regenerate ]
+        runs-on: ubuntu-22.04
+        steps:
+            -   name: GIT checkout branch - ${{ github.ref }}
+                uses: actions/checkout@v4
+                with:
+                    ref: ${{ github.ref }}
+            -   name: Regenerate successful
+                run: echo "Regenerate successful"
     build-successful:
-        if: ${{ always() }}
+        if: |
+            always() && !contains(github.event.pull_request.labels.*.name, 'regenerate screenshots')
         name: Build successful
-        needs: [tests-acceptance, standards, tests-unit-functional-smoke, standards-storefront, translations-dump-check, review, build-fork-docker-images, check-console-commands, tests-storefront-acceptance, tests-storefront-acceptance-regenerate, unit-test-storefront]
+        needs: [tests-acceptance, standards, tests-unit-functional-smoke, standards-storefront, translations-dump-check, review, build-fork-docker-images, check-console-commands, tests-storefront-acceptance, unit-test-storefront]
         runs-on: ubuntu-22.04
         env:
             BUILD_FORK_RESULT: ${{ needs.build-fork-docker-images.result }}
@@ -869,7 +920,6 @@ jobs:
             REVIEW_RESULT: ${{ needs.review.result }}
             CHECK_CONSOLE_COMMANDS_RESULT: ${{ needs.check-console-commands.result }}
             TESTS_STOREFRONT_ACCEPTANCE_RESULT: ${{ needs.tests-storefront-acceptance.result }}
-            TESTS_STOREFRONT_REGENERATE_RESULT: ${{ needs.tests-storefront-acceptance-regenerate.result }}
             UNIT_TESTS_STOREFRONT_RESULT: ${{ needs.unit-test-storefront.result }}
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
@@ -878,5 +928,5 @@ jobs:
                     ref: ${{ github.ref }}
             -   name: Build successful
                 run: |
-                    EXIT_CODE=`. .github/get-build-exit-code.sh && getBuildExitCodeBasedOnJobResults ${BUILD_FORK_RESULT} ${STANDARDS_RESULT} ${TESTS_RESULT} ${TESTS_ACCEPTANCE_RESULT} ${STANDARDS_STOREFRONT_RESULT} ${TRANSLATIONS_DUMP_RESULT} ${REVIEW_RESULT} ${CHECK_CONSOLE_COMMANDS_RESULT} ${TESTS_STOREFRONT_ACCEPTANCE_RESULT} ${TESTS_STOREFRONT_REGENERATE_RESULT} ${UNIT_TESTS_STOREFRONT_RESULT} > /dev/null ; echo $?`
+                    EXIT_CODE=`. .github/get-build-exit-code.sh && getBuildExitCodeBasedOnJobResults ${BUILD_FORK_RESULT} ${STANDARDS_RESULT} ${TESTS_RESULT} ${TESTS_ACCEPTANCE_RESULT} ${STANDARDS_STOREFRONT_RESULT} ${TRANSLATIONS_DUMP_RESULT} ${REVIEW_RESULT} ${CHECK_CONSOLE_COMMANDS_RESULT} ${TESTS_STOREFRONT_ACCEPTANCE_RESULT} ${UNIT_TESTS_STOREFRONT_RESULT} > /dev/null ; echo $?`
                     exit "${EXIT_CODE}"
