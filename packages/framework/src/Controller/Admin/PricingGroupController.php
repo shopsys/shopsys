@@ -85,6 +85,7 @@ class PricingGroupController extends AdminBaseController
     }
 
     /**
+     * @CsrfProtection
      * @param int $id
      */
     #[Route(path: '/pricing/group/delete-confirm/{id}', requirements: ['id' => '\d+'])]

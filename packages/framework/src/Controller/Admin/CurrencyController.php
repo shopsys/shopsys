@@ -43,6 +43,7 @@ class CurrencyController extends AdminBaseController
     }
 
     /**
+     * @CsrfProtection
      * @param int $id
      */
     #[Route(path: '/currency/delete-confirm/{id}', requirements: ['id' => '\d+'])]

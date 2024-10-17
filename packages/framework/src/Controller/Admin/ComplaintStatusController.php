@@ -89,6 +89,7 @@ class ComplaintStatusController extends AdminBaseController
     }
 
     /**
+     * @CsrfProtection
      * @param int $id
      * @throws \Shopsys\FrameworkBundle\Component\ConfirmDelete\Exception\InvalidEntityPassedException
      * @return \Symfony\Component\HttpFoundation\Response

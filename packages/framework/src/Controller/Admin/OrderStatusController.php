@@ -84,6 +84,7 @@ class OrderStatusController extends AdminBaseController
     }
 
     /**
+     * @CsrfProtection
      * @param int $id
      */
     #[Route(path: '/order-status/delete-confirm/{id}', requirements: ['id' => '\d+'])]
