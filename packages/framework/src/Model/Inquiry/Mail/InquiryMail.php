@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Inquiry\Mail;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
@@ -170,15 +171,21 @@ class InquiryMail
      */
     protected function getProductImageUrl(Inquiry $inquiry): string
     {
+        $domainConfig = $this->domain->getDomainConfigById($inquiry->getDomainId());
+
         if ($inquiry->getProduct() === null) {
-            return '';
+            return $this->imageFacade->getEmptyImageUrl($domainConfig);
         }
 
-        $imageUrl = $this->imageFacade->getImageUrl(
-            $this->domain->getDomainConfigById($inquiry->getDomainId()),
-            $inquiry->getProduct(),
-        );
+        try {
+            $imageUrl = $this->imageFacade->getImageUrl(
+                $domainConfig,
+                $inquiry->getProduct(),
+            );
 
-        return $imageUrl . '?width=100';
+            return $imageUrl . '?width=100';
+        } catch (ImageNotFoundException) {
+            return $this->imageFacade->getEmptyImageUrl($domainConfig);
+        }
     }
 }

@@ -241,6 +241,15 @@ class ImageFacade
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return string
+     */
+    public function getEmptyImageUrl(DomainConfig $domainConfig): string
+    {
+        return $this->cdnFacade->resolveDomainUrlForAssets($domainConfig) . '/public/frontend/images/noimage.png';
+    }
+
+    /**
      * @param object $imageOrEntity
      * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image
