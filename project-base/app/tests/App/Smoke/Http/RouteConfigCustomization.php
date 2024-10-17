@@ -130,7 +130,7 @@ class RouteConfigCustomization
                 }
             })
             ->customize(function (RouteConfig $config, RouteInfo $info) {
-                if (preg_match('~(_delete$)|(_delete_all$)|(^admin_mail_deletetemplate$)|(^admin_(stock|store)_setdefault$)|(^admin_customer_send_reset_password$)~', $info->getRouteName())) {
+                if (preg_match('~(_delete$)|(_delete_all$)|(^admin_mail_deletetemplate$)|(^admin_(stock|store)_setdefault$)|(^admin_customer_send_reset_password$)|(^admin_.*_deleteconfirm$)~', $info->getRouteName())) {
                     $debugNote = 'Add CSRF token for any delete action during test execution. '
                         . '(Routes are protected by RouteCsrfProtector.)';
                     $config->changeDefaultRequestDataSet($debugNote)
@@ -149,8 +149,14 @@ class RouteConfigCustomization
                                 $requestDataSet->setParameter($parameterName, $token->getValue());
                             },
                         );
-                    $config->changeDefaultRequestDataSet('Expect redirect by 302 for any delete action.')
-                        ->setExpectedStatusCode(302);
+
+                    if (preg_match('~(^admin_.*_deleteconfirm$)~', $info->getRouteName())) {
+                        $config->changeDefaultRequestDataSet('Expect redirect by 200 for any delete confirm action.')
+                            ->setExpectedStatusCode(200);
+                    } else {
+                        $config->changeDefaultRequestDataSet('Expect redirect by 302 for any delete action.')
+                            ->setExpectedStatusCode(302);
+                    }
                 }
             });
     }

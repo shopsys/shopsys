@@ -161,6 +161,7 @@ class SalesRepresentativeController extends AdminBaseController
     }
 
     /**
+     * @CsrfProtection
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */

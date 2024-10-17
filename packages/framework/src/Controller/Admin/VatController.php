@@ -42,6 +42,7 @@ class VatController extends AdminBaseController
     }
 
     /**
+     * @CsrfProtection
      * @param int $id
      */
     #[Route(path: '/vat/delete-confirm/{id}', requirements: ['id' => '\d+'])]
