@@ -3,12 +3,20 @@ import { TypeProductListFragment } from 'graphql/requests/productLists/fragments
 import { useAddProductToListMutation } from 'graphql/requests/productLists/mutations/AddProductToListMutation.generated';
 import { useRemoveProductFromListMutation } from 'graphql/requests/productLists/mutations/RemoveProductFromListMutation.generated';
 import { useRemoveProductListMutation } from 'graphql/requests/productLists/mutations/RemoveProductListMutation.generated';
-import { useProductListQuery } from 'graphql/requests/productLists/queries/ProductListQuery.generated';
+import {
+    ProductListQueryDocument,
+    TypeProductListQuery,
+    TypeProductListQueryVariables,
+    useProductListQuery,
+} from 'graphql/requests/productLists/queries/ProductListQuery.generated';
 import { TypeProductListTypeEnum } from 'graphql/types';
+import useTranslation from 'next-translate/useTranslation';
 import { useEffect } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
+import { useClient } from 'urql';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
+import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 
 export const useProductList = (
     productListType: TypeProductListTypeEnum,
@@ -21,6 +29,8 @@ export const useProductList = (
         removeProductError: () => void;
     },
 ) => {
+    const client = useClient();
+    const { t } = useTranslation();
     const isProductListHydrated = useSessionStore((s) => s.isProductListHydrated);
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
     const productListUuids = usePersistStore((s) => s.productListUuids);
@@ -43,6 +53,20 @@ export const useProductList = (
         pause: !isProductListHydrated || (!productListUuid && !isUserLoggedIn) || authLoading !== null,
     });
 
+    const refetchWithNetworkOnly = async () => {
+        const result = await client
+            .query<TypeProductListQuery, TypeProductListQueryVariables>(
+                ProductListQueryDocument,
+                {
+                    input: { type: productListType, uuid: productListUuid },
+                },
+                { requestPolicy: 'network-only' },
+            )
+            .toPromise();
+
+        return result.data;
+    };
+
     useEffect(() => {
         updatePageLoadingState({ isProductListHydrated: true });
     }, []);
@@ -62,7 +86,13 @@ export const useProductList = (
         });
 
         if (removeListResult.error) {
-            callbacks.removeError();
+            const { applicationError } = getUserFriendlyErrors(removeListResult.error, t);
+
+            if (applicationError?.type === `${productListType}-product-list-not-found`) {
+                callbacks.removeSuccess();
+            } else {
+                callbacks.removeError();
+            }
         } else {
             callbacks.removeSuccess();
         }
@@ -80,7 +110,14 @@ export const useProductList = (
         });
 
         if (addProductToListResult.error) {
-            callbacks.addProductError();
+            const { applicationError } = getUserFriendlyErrors(addProductToListResult.error, t);
+
+            if (applicationError?.type === `${productListType}-product-already-in-list`) {
+                const freshProductListData = await refetchWithNetworkOnly();
+                callbacks.addProductSuccess(freshProductListData?.productList);
+            } else {
+                callbacks.addProductError();
+            }
         } else {
             callbacks.addProductSuccess(addProductToListResult.data?.AddProductToList);
         }
@@ -98,7 +135,17 @@ export const useProductList = (
         });
 
         if (removeProductFromListResult.error) {
-            callbacks.removeProductError();
+            const { applicationError } = getUserFriendlyErrors(removeProductFromListResult.error, t);
+
+            if (
+                applicationError?.type === `${productListType}-product-not-in-list` ||
+                applicationError?.type === `${productListType}-product-list-not-found`
+            ) {
+                const freshProductListData = await refetchWithNetworkOnly();
+                callbacks.removeProductSuccess(freshProductListData?.productList);
+            } else {
+                callbacks.removeProductError();
+            }
         } else {
             callbacks.removeProductSuccess(removeProductFromListResult.data?.RemoveProductFromList);
         }
