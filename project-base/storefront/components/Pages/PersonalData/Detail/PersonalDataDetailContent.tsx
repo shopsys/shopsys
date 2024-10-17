@@ -26,7 +26,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
         <>
             <div className="text-center">
                 <h1>{t('Personal data')}</h1>
-                <Link isButton href={exportLink} size="small">
+                <Link isButton isExternal href={exportLink} size="small">
                     {t('Download as XML')}
                 </Link>
             </div>
