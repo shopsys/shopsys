@@ -456,7 +456,24 @@ jobs:
                     docker compose up -d --wait
                     docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick error-pages-generate elasticsearch-index-recreate elasticsearch-export
             -   name: Run Cypress tests
-                run: docker compose run cypress --group ${{ matrix.group }}
+                run: |
+                    case ${{ matrix.group }} in
+                        authentication)
+                            docker compose run cypress --spec "e2e/authentication/*.cy.ts"
+                            ;;
+                        cart)
+                            docker compose run cypress --spec "e2e/cart/*.cy.ts"
+                            ;;
+                        order)
+                            docker compose run cypress --spec "e2e/order/*.cy.ts"
+                            ;;
+                        transportAndPayment)
+                            docker compose run cypress --spec "e2e/transportAndPayment/*.cy.ts"
+                            ;;
+                        visits)
+                            docker compose run cypress --spec "e2e/visits/*.cy.ts"
+                            ;;
+                    esac
             -   name: Upload Cypress videos to artifacts
                 if: ${{ failure() }}
                 uses: actions/upload-artifact@v4
@@ -625,8 +642,7 @@ jobs:
     build-fork-docker-images:
         if: |
             github.event.pull_request.head.repo.full_name != 'shopsys/shopsys' &&
-            github.ref_protected != true &&
-            !contains(github.event.pull_request.labels.*.name, 'regenerate screenshots')
+            github.ref_protected != true
         name: Build application and run standards checks and tests
         runs-on: ubuntu-22.04
         needs: variables
@@ -866,7 +882,8 @@ jobs:
                           - https://cz.${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}
                     delete-previous-comment: false
     build-successful:
-        if: ${{ always() }}
+        if: |
+            always() && !contains(github.event.pull_request.labels.*.name, 'regenerate screenshots')
         name: Build successful
         needs: [tests-acceptance, standards, tests-unit-functional-smoke, standards-storefront, translations-dump-check, review, build-fork-docker-images, check-console-commands, tests-storefront-acceptance, tests-storefront-acceptance-regenerate, unit-test-storefront]
         runs-on: ubuntu-22.04

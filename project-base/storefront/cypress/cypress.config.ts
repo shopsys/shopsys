@@ -19,13 +19,7 @@ export default defineConfig({
             getCompareSnapshotsPlugin(on, config);
         },
         baseUrl: 'http://127.0.0.1:8000/',
-        specPattern: [
-            'e2e/authentication/*.cy.ts',
-            'e2e/cart/*.cy.ts',
-            'e2e/order/*.cy.ts',
-            'e2e/transportAndPayment/*.cy.ts',
-            'e2e/visits/*.cy.ts',
-        ],
+        specPattern: 'e2e/**/*.cy.ts',
         supportFile: 'support/index.ts',
     },
     retries: {
