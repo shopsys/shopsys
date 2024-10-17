@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\DiscountCalculation;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeTypeEnum;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 
@@ -47,7 +48,7 @@ class ApplyPercentagePromoCodeMiddleware extends AbstractPromoCodeMiddleware
     #[Override]
     protected function getSupportedTypes(): array
     {
-        return [PromoCode::DISCOUNT_TYPE_PERCENT];
+        return [PromoCodeTypeEnum::PERCENT];
     }
 
     /**
@@ -100,6 +101,13 @@ class ApplyPercentagePromoCodeMiddleware extends AbstractPromoCodeMiddleware
         $locale = $domainConfig->getLocale();
         $domainId = $domainConfig->getId();
 
+        $unitDiscountPrice = $this->discountCalculation->calculatePercentageDiscountRoundedByCurrency(
+            $productItem->getUnitPrice(),
+            (float)$productItem->vatPercent,
+            (float)$promoCodeLimit->getDiscount(),
+            $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId),
+        );
+
         $discountPrice = $this->discountCalculation->calculatePercentageDiscountRoundedByCurrency(
             $productItem->getTotalPrice(),
             (float)$productItem->vatPercent,
@@ -114,6 +122,7 @@ class ApplyPercentagePromoCodeMiddleware extends AbstractPromoCodeMiddleware
         $discountOrderItemData = $this->orderItemDataFactory->create(OrderItemTypeEnum::TYPE_DISCOUNT);
 
         $discountPrice = $discountPrice->inverse();
+        $unitDiscountPrice = $unitDiscountPrice->inverse();
 
         $name = sprintf(
             '%s -%s - %s',
@@ -124,7 +133,7 @@ class ApplyPercentagePromoCodeMiddleware extends AbstractPromoCodeMiddleware
 
         $discountOrderItemData->name = $name;
         $discountOrderItemData->quantity = 1;
-        $discountOrderItemData->setUnitPrice($discountPrice);
+        $discountOrderItemData->setUnitPrice($unitDiscountPrice);
         $discountOrderItemData->setTotalPrice($discountPrice);
         $discountOrderItemData->vatPercent = $productItem->vatPercent;
         $discountOrderItemData->promoCode = $promoCode;

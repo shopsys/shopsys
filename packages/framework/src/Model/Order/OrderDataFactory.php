@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order;
 
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
@@ -16,11 +20,15 @@ class OrderDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory $paymentTransactionRefundDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum $orderItemTypeEnum
+     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory $orderInputFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor
      */
     public function __construct(
         protected readonly OrderItemDataFactory $orderItemDataFactory,
         protected readonly PaymentTransactionRefundDataFactory $paymentTransactionRefundDataFactory,
         protected readonly OrderItemTypeEnum $orderItemTypeEnum,
+        protected readonly OrderInputFactory $orderInputFactory,
+        protected readonly OrderProcessor $orderProcessor,
     ) {
     }
 
@@ -48,12 +56,23 @@ class OrderDataFactory
      */
     public function createFromOrder(Order $order): OrderData
     {
-        $orderData = $this->createInstance();
-        $orderData = $this->fillZeroPrices($orderData);
+        $orderData = $this->create();
 
         $this->fillFromOrder($orderData, $order);
 
         return $orderData;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return \Shopsys\FrameworkBundle\Model\Order\OrderData
+     */
+    public function createFromCart(Cart $cart, DomainConfig $domainConfig): OrderData
+    {
+        $orderData = $this->create();
+
+        return $this->fillFromCart($orderData, $cart, $domainConfig);
     }
 
     /**
@@ -124,5 +143,21 @@ class OrderDataFactory
         }
 
         return $orderData;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
+     * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return \Shopsys\FrameworkBundle\Model\Order\OrderData
+     */
+    public function fillFromCart(OrderData $orderData, Cart $cart, DomainConfig $domainConfig): OrderData
+    {
+        $orderInput = $this->orderInputFactory->createFromCart($cart, $domainConfig);
+
+        return $this->orderProcessor->process(
+            $orderInput,
+            $orderData,
+        );
     }
 }

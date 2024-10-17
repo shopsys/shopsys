@@ -1,0 +1,4 @@
+PromoCodeTypeEnum:
+    type: enum
+    inherits:
+        - 'PromoCodeTypeEnumDecorator'

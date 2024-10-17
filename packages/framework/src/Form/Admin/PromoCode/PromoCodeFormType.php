@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeTypeEnum;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Symfony\Component\Form\AbstractType;
@@ -46,12 +47,14 @@ class PromoCodeFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeTypeEnum $promoCodeTypeEnum
      */
     public function __construct(
         private readonly PromoCodeFacade $promoCodeFacade,
         private readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         private readonly PricingGroupFacade $pricingGroupFacade,
         private readonly BrandFacade $brandFacade,
+        private readonly PromoCodeTypeEnum $promoCodeTypeEnum,
     ) {
     }
 
@@ -109,10 +112,7 @@ class PromoCodeFormType extends AbstractType
             ->add('discountType', ChoiceType::class, [
                 'expanded' => true,
                 'multiple' => false,
-                'choices' => [
-                    t('Percents') => PromoCode::DISCOUNT_TYPE_PERCENT,
-                    t('Nominal') => PromoCode::DISCOUNT_TYPE_NOMINAL,
-                ],
+                'choices' => $this->promoCodeTypeEnum->getAllIndexedByTranslations(),
                 'label' => t('Discount type'),
             ])
             ->add('remainingUses', IntegerType::class, [
@@ -352,7 +352,7 @@ class PromoCodeFormType extends AbstractType
                     /** @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData $promoCodeData */
                     $promoCodeData = $form->getData();
 
-                    if ($promoCodeData->discountType === PromoCode::DISCOUNT_TYPE_NOMINAL) {
+                    if ($promoCodeData->discountType === PromoCodeTypeEnum::NOMINAL) {
                         $validationGroups[] = self::VALIDATION_GROUP_TYPE_NOMINAL;
                     } else {
                         $validationGroups[] = self::VALIDATION_GROUP_TYPE_PERCENT;

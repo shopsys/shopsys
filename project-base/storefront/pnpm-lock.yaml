@@ -29,6 +29,9 @@ importers:
       '@urql/exchange-graphcache':
         specifier: ~6.4.1
         version: 6.4.1(graphql@16.8.1)
+      convertim-react-lib:
+        specifier: ^0.0.4
+        version: 0.0.4(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       cookies-next:
         specifier: ~4.1.1
         version: 4.1.1
@@ -2195,6 +2198,12 @@ packages:
 
   convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
+
+  convertim-react-lib@0.0.4:
+    resolution: {integrity: sha512-Ws/CBfJnhsS7jzrzsICw2NC9+FQSp8DbXU3F4siTcDNUHJrE5mxePaQv3108FXdwEZhu7xhAevOy3QXNwDrz/g==}
+    peerDependencies:
+      react: ^18.2.0
+      react-dom: ^18.2.0
 
   cookie@0.6.0:
     resolution: {integrity: sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==}
@@ -7390,6 +7399,11 @@ snapshots:
   convert-source-map@1.9.0: {}
 
   convert-source-map@2.0.0: {}
+
+  convertim-react-lib@0.0.4(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+    dependencies:
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
 
   cookie@0.6.0: {}
 

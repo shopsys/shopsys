@@ -92,7 +92,7 @@ abstract class AbstractPromoCodeMiddleware implements OrderProcessorMiddlewareIn
     ): void;
 
     /**
-     * @return int[]
+     * @return string[]
      */
     abstract protected function getSupportedTypes(): array;
 }

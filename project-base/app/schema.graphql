@@ -355,7 +355,7 @@ type Cart {
   "Selected bank swift code of goPay payment bank transfer"
   paymentGoPayBankSwift: String
   "Applied promo code if provided"
-  promoCode: String
+  promoCodes: [PromoCode!]!
   "Remaining amount for free transport and payment; null = transport cannot be free"
   remainingAmountWithVatForFreeTransport: Money
   "Rounding amount if payment has rounding allowed"
@@ -382,12 +382,24 @@ input CartInput {
 
 "Represent one item in the cart"
 type CartItem {
+  "Discounts applied to the cart item"
+  discounts: [CartItemDiscount!]!
   "Product in the cart"
   product: Product!
   "Quantity of items in the cart"
   quantity: Int!
   "Cart item UUID"
   uuid: Uuid!
+}
+
+"Represent discount of item in the cart"
+type CartItemDiscount {
+  "Code of the promo code"
+  promoCode: String!
+  "Total discount"
+  totalDiscount: Price!
+  "Discount per unit"
+  unitDiscount: Price!
 }
 
 type CartItemModificationsResult {
@@ -1874,6 +1886,21 @@ type ProductPrice {
   priceWithVat: Money!
   "Total value of VAT"
   vatAmount: Money!
+}
+
+type PromoCode {
+  "The promo code code"
+  code: String!
+  "The promo code discount"
+  discount: Price!
+  "The promo code type"
+  type: PromoCodeTypeEnum!
+}
+
+"One of the possible types of the promoo code"
+enum PromoCodeTypeEnum {
+  nominal
+  percent
 }
 
 type Query {

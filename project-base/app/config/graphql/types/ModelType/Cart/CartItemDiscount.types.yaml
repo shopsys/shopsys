@@ -1,0 +1,4 @@
+CartItemDiscount:
+    type: object
+    inherits:
+        - 'CartItemDiscountDecorator'
