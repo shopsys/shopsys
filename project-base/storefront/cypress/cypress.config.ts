@@ -1,5 +1,4 @@
 import { defineConfig } from 'cypress';
-import { Cypress } from 'cypress';
 import getCompareSnapshotsPlugin from 'cypress-visual-regression/dist/plugin';
 
 export default defineConfig({
@@ -19,7 +18,7 @@ export default defineConfig({
         setupNodeEvents(on, config) {
             getCompareSnapshotsPlugin(on, config);
 
-            const group = Cypress.env('GROUP') || 'default-group';
+            const group = config.env.GROUP || 'default-group';
 
             if (group === 'default-group') {
                 config.specPattern = ['e2e/**/*.cy.ts'];
