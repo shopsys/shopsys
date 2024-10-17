@@ -6,6 +6,9 @@ RUN corepack prepare --activate pnpm@9.0.5
 ARG APP_DIR=/home/node/app
 WORKDIR $APP_DIR
 
+ARG GROUP
+ENV GROUP=$GROUP
+
 ENV APP_ENV development
 ENV NEXT_TELEMETRY_DISABLED 1
 
