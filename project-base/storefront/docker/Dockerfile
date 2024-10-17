@@ -11,6 +11,7 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /tmp/build
 COPY package.json pnpm-lock.yaml ./
 
+
 RUN pnpm install --frozen-lockfile
 COPY . .
 
@@ -19,10 +20,12 @@ ARG SENTRY_RELEASE
 ARG SENTRY_ORG
 ARG SENTRY_AUTH_TOKEN
 ARG SENTRY_PROJECT
+ARG GROUP
 
 ENV APP_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
 ENV SENTRY_RELEASE $SENTRY_RELEASE
+ENV GROUP $GROUP
 
 RUN pnpm run build
 RUN pnpm prune --prod
