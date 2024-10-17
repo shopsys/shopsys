@@ -16,6 +16,7 @@ export default defineConfig({
     },
     e2e: {
         setupNodeEvents(on, config) {
+            console.log(`Running tests for group: ${config.env.GROUP || 'default-group'}`);
             getCompareSnapshotsPlugin(on, config);
 
             const group = config.env.GROUP || 'default-group';
