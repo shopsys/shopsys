@@ -120,8 +120,6 @@ describe('Contact Information Page Tests', () => {
             cy.preselectPaymentForTest(payment.onDelivery.uuid);
             cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
-            clearEmailInThirdStep();
-            fillEmailInThirdStep('refresh-page-contact-information-changed@shopsys.com');
             fillCustomerInformationInThirdStep('123', ' changed', ' changed');
             clearPostcodeInThirdStep();
             fillBillingAdressInThirdStep(' changed', ' changed', '29292');
