@@ -1,0 +1,22 @@
+{
+    "bundles": {
+        "Shopsys\\ConvertimBundle\\ShopsysConvertimBundle": ["all"]
+    },
+    "copy-from-recipe": {
+        "config/": "%CONFIG_DIR%/"
+    },
+    "env": {
+        "CONVERTIM_CONFIG": {
+            "1": {
+                "enabled": false,
+                "authorizationHeader": "",
+                "projectUuid": ""
+            },
+            "2": {
+                "enabled": false,
+                "authorizationHeader": "",
+                "projectUuid": ""
+            }
+        }
+    }
+}
