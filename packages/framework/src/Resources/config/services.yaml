@@ -649,6 +649,10 @@ services:
 
     Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher: ~
 
+    Shopsys\FrameworkBundle\Model\CategorySeo\CategorySeoFriendlyUrlDataProvider:
+        tags:
+            - {name: shopsys.friendly_url_provider}
+
     Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Category\CategoryDataFactory
 

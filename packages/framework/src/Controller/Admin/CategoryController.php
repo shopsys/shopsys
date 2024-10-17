@@ -7,12 +7,14 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use Nette\Utils\Json;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Form\FormBuilderHelper;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Category\CategoryFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
+use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,6 +27,8 @@ class CategoryController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade
+     * @param \Shopsys\FrameworkBundle\Component\Form\FormBuilderHelper $formBuilderHelper
+     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade $categorySeoMixFacade
      */
     public function __construct(
         protected readonly CategoryFacade $categoryFacade,
@@ -32,6 +36,8 @@ class CategoryController extends AdminBaseController
         protected readonly Domain $domain,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,
+        protected readonly FormBuilderHelper $formBuilderHelper,
+        protected readonly ReadyCategorySeoMixFacade $categorySeoMixFacade,
     ) {
     }
 
@@ -141,15 +147,17 @@ class CategoryController extends AdminBaseController
 
         return $this->render('@ShopsysFramework/Admin/Content/Category/list.html.twig', [
             'categoriesWithPreloadedChildren' => $categoriesWithPreloadedChildren,
-            'domainFilterNamespace' => $domainFilterNamespace,
             'isForAllDomains' => ($selectedDomainId === null),
+            'domainFilterNamespace' => $domainFilterNamespace,
+            'disabledFormFields' => $this->formBuilderHelper->hasFormDisabledFields(),
+            'getAllCategoryIdsInSeoMixes' => $this->categorySeoMixFacade->getAllCategoryIdsInSeoMixes(),
         ]);
     }
 
     /**
-     * @see node_modules/@shopsys/framework/js/admin/components/CategoryTreeSorting.js
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
+     * @see node_modules/@shopsys/framework/js/admin/components/CategoryTreeSorting.js
      */
     #[Route(path: '/category/apply-sorting/', methods: ['post'])]
     public function applySortingAction(Request $request): Response

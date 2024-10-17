@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Resolver;
 
-use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
+use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use Shopsys\FrontendApiBundle\Model\Advert\AdvertFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Advert\AdvertsQuery as BaseAdvertsQuery;
 
@@ -17,7 +17,7 @@ class AdvertsQuery extends BaseAdvertsQuery
      * @param \Shopsys\FrontendApiBundle\Model\Advert\AdvertFacade $advertFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Model\Category\CategoryFacade $categoryFacade
-     * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
+     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      */
     public function __construct(
         AdvertFacade $advertFacade,

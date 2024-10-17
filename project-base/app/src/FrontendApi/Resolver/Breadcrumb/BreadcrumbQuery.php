@@ -6,10 +6,10 @@ namespace App\FrontendApi\Resolver\Breadcrumb;
 
 use App\FrontendApi\Component\Breadcrumb\Exception\UnableToGenerateBreadcrumbItemsUserError;
 use App\Model\Category\Category;
-use App\Model\CategorySeo\ReadyCategorySeoMix;
 use InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\Exception\UnableToGenerateBreadcrumbItemsException;
+use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class BreadcrumbQuery extends AbstractQuery
@@ -40,7 +40,7 @@ class BreadcrumbQuery extends AbstractQuery
     }
 
     /**
-     * @param \App\Model\Category\Category|\App\Model\CategorySeo\ReadyCategorySeoMix $categoryOrReadyCategorySeoMix
+     * @param \App\Model\Category\Category|\Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix $categoryOrReadyCategorySeoMix
      * @return array[]
      */
     public function categoryBreadcrumbQuery($categoryOrReadyCategorySeoMix): array

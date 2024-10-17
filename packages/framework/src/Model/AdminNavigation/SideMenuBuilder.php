@@ -580,6 +580,12 @@ class SideMenuBuilder
         $seoPageMenu->addChild('seoPageNew', ['route' => 'admin_seopage_new', 'label' => t('New SEO page'), 'display' => false]);
         $seoPageMenu->addChild('seoPageEdit', ['route' => 'admin_seopage_edit', 'label' => t('Editing SEO page'), 'display' => false]);
 
+        $categorySeoMenu = $seoMenu->addChild('categorySeo', ['route' => 'admin_categoryseo_list', 'label' => t('Extended SEO categories')]);
+        $categorySeoMenu->addChild('new_category', ['route' => 'admin_categoryseo_newcategory', 'label' => t('Extended SEO category - category selection'), 'display' => false]);
+        $categorySeoMenu->addChild('new_filters', ['route' => 'admin_categoryseo_newfilters', 'label' => t('Extended SEO category - filters'), 'display' => false]);
+        $categorySeoMenu->addChild('new_combinations', ['route' => 'admin_categoryseo_newcombinations', 'label' => t('Extended SEO category - combinations'), 'display' => false]);
+        $categorySeoMenu->addChild('new_combination', ['route' => 'admin_categoryseo_readycombination', 'label' => t('Extended SEO category - set combinations with SEO values'), 'display' => false]);
+
         $contactFormSettingsMenu = $menu->addChild('contact_form_settings', ['label' => t('Contact form')]);
         $contactFormSettingsMenu->addChild(
             'contact_form_settings',

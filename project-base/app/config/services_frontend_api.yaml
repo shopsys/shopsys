@@ -110,10 +110,6 @@ services:
         alias: App\FrontendApi\Resolver\Category\CategoriesQuery
         public: true
 
-    Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryQuery:
-        alias: App\FrontendApi\Resolver\Category\CategoryQuery
-        public: true
-
     Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolverMap:
         alias: App\FrontendApi\Resolver\Category\CategoryResolverMap
 

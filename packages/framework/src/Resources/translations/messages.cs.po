@@ -67,6 +67,9 @@ msgstr "<a href=\"{{ url }}\">Neexistují žádné jednotky, musíte nějakou vy
 msgid "<a href=\"{{ url }}\">User consent policy article for domain {{ domainName }} is not set.</a>"
 msgstr "<a href=\"{{ url }}\">Není nastaven článek správa osobních údajů pro doménu {{ domainName }}.</a>"
 
+msgid "<strong><a href=\"{{ url }}\">SEO category</a></strong> has been saved"
+msgstr "<strong><a href=\"{{ url }}\">SEO kombinace kategorie</a></strong> byla uložena"
+
 msgid "Accessories"
 msgstr "Příslušenství"
 
@@ -376,6 +379,9 @@ msgstr "Prům. trvání (mm:ss)"
 msgid "B2B data and user management"
 msgstr "Správa B2B údajů a uživatelů"
 
+msgid "Back to category selection"
+msgstr "Zpět na volbu kategorie"
+
 msgid "Back to customer {{ name }}"
 msgstr "Zpět k zákazníkovi {{ name }}"
 
@@ -384,6 +390,12 @@ msgstr "Zpět na nástěnku"
 
 msgid "Back to overview"
 msgstr "Zpět na přehled"
+
+msgid "Back to overview of available combinations"
+msgstr "Zpět na přehled možných kombinací"
+
+msgid "Back to parameter selection"
+msgstr "Zpět na volbu parametrů"
 
 msgid "Basic"
 msgstr "Základní"
@@ -517,6 +529,9 @@ msgstr "Hromadná úprava byla provedena"
 msgid "Bulk promo code generation"
 msgstr "Hromadné generování kupónu"
 
+msgid "By flag"
+msgstr "Dle příznaku"
+
 msgid "CSS documentation"
 msgstr "CSS dokumentace"
 
@@ -565,8 +580,14 @@ msgstr "Byla upravena kategorie <strong><a href=\"{{ url }}\">{{ name }}</a></st
 msgid "Category <strong>{{ name }}</strong> deleted"
 msgstr "Kategorie <strong>{{ name }}</strong> byla smazána"
 
+msgid "Category description"
+msgstr "Popis kategorie"
+
 msgid "Category guidepost on main page"
 msgstr "Rozcestník kategorií na titulní stránce"
+
+msgid "Category name"
+msgstr "Název kategorie"
 
 msgid "Category with prefilled filters"
 msgstr "Kategorie s předvyplněnými filtry"
@@ -600,6 +621,9 @@ msgstr "Vyberte náhradu"
 
 msgid "Choose the article that provides information about how user consent is obtained, managed, and withdrawn on this domain."
 msgstr "Vyberte článek, který poskytuje informace o tom, jak je na této doméně získáván, spravován a odvoláván souhlas se správou osobních údajů."
+
+msgid "Choose this category and continue"
+msgstr "Zvolit tuto kategorii a pokračovat"
 
 msgid "Choose type of redirect"
 msgstr "Vyberte typ přesměrování"
@@ -651,6 +675,9 @@ msgstr "Hodnota parametru typu barva - vše"
 
 msgid "Color parameter values - view"
 msgstr "Hodnota parametru typu barva - zobrazení"
+
+msgid "Combination of parameters and their values"
+msgstr "Kombinace parametrů a jejich hodnot parametrů"
 
 msgid "Communication with customer"
 msgstr "Komunikace se zákazníkem"
@@ -822,9 +849,6 @@ msgstr "Vytvořit novou rubriku blogu"
 
 msgid "Create new brand"
 msgstr "Vytvořit novou značku"
-
-msgid "Create new category"
-msgstr "Vytvořit novou kategorii"
 
 msgid "Create new complaint status"
 msgstr "Vytvořit nový stav reklamace"
@@ -1105,6 +1129,9 @@ msgstr "Smazat"
 msgid "Delete and set"
 msgstr "Smazat a nastavit"
 
+msgid "Delete category with SEO mix"
+msgstr "Smazat kategorii i SEO mix"
+
 msgid "Delete file"
 msgstr "Smazat soubor"
 
@@ -1248,6 +1275,9 @@ msgstr "Opravdu chcete odebrat tento článek blogu?"
 
 msgid "Do you really want to remove this brand? If it is used anywhere it will be unset."
 msgstr "Opravdu chcete odstranit tuto značku? Pokud je někde použita, bude odnastavena."
+
+msgid "Do you really want to remove this category even with their SEO mixes?"
+msgstr "Opravdu chcete smazat tuto kategorii i s náležícími SEO mixy?"
 
 msgid "Do you really want to remove this customer user role group?"
 msgstr "Opravdu chcete odstranit tuto skupinu práv"
@@ -1702,6 +1732,30 @@ msgstr "Exportovat seznam e-mailů jako CSV"
 msgid "Ext."
 msgstr "Příp."
 
+msgid "Extended SEO categories"
+msgstr "Rozšířené SEO kategorie"
+
+msgid "Extended SEO category %categoryName% - combinations"
+msgstr "Rozšířená SEO kategorie %categoryName% - kombinace"
+
+msgid "Extended SEO category %categoryName% - filters"
+msgstr "Rozšířená SEO kategorie %categoryName% - filtry"
+
+msgid "Extended SEO category - category selection"
+msgstr "Rozšířená SEO kategorie - volba kategorie"
+
+msgid "Extended SEO category - combinations"
+msgstr "Rozšířená SEO kategorie - kombinace"
+
+msgid "Extended SEO category - editing the combination with SEO values"
+msgstr "Rozšířená SEO kategorie - editace kombinace se SEO hodnotami"
+
+msgid "Extended SEO category - filters"
+msgstr "Rozšířená SEO kategorie - filtry"
+
+msgid "Extended SEO category - set combinations with SEO values"
+msgstr "Rozšířená SEO kategorie - kombinace s nastavenými SEO hodnotami"
+
 msgid "External ID"
 msgstr "Externí ID"
 
@@ -1779,6 +1833,12 @@ msgstr "Přehled souborů"
 
 msgid "Files uploaded:"
 msgstr "Soubory nahrány:"
+
+msgid "Fill URL also for selected domain"
+msgstr "Vyplňte také URL pro zvolenou doménu"
+
+msgid "Fill URL only for selected domain"
+msgstr "Vyplňte pouze URL pro zvolenou doménu"
 
 msgid "Fill missing settings to enable creating products. More information here."
 msgstr "Pro vytvoření produktu doplňte chybějící nastavení. Více informací zde."
@@ -2197,6 +2257,9 @@ msgstr "Šablony e-mailů - vše"
 msgid "Mail templates - view"
 msgstr "Šablony e-mailů - zobrazení"
 
+msgid "Main URL"
+msgstr "Hlavní URL"
+
 msgid "Main URL can't be deleted"
 msgstr "Hlavní URL nelze smazat"
 
@@ -2440,6 +2503,9 @@ msgstr "Nebyly nalezeny žádné články blogu."
 msgid "No brands found. You have to create some first."
 msgstr "Nebyly nalezeny žádné značky. Nejprve musíte nějaké vytvořit."
 
+msgid "No combinations of SEO categories found."
+msgstr "Nebyly nalezeny žádné kombinace SEO kategorií."
+
 msgid "No complaint statuses found."
 msgstr "Nebyly nalezeny žádné stavy reklamací."
 
@@ -2676,6 +2742,9 @@ msgstr "Stránka s potvrzením objednávky - vše"
 
 msgid "Order submitted page setting - view"
 msgstr "Stránka s potvrzením objednávky - zobrazení"
+
+msgid "Ordering"
+msgstr "Řazení"
 
 msgid "Orders"
 msgstr "Objednávky"
@@ -3022,6 +3091,9 @@ msgstr "Zboží vyřazené z prodeje se nezobrazuje ve výpisech ani nelze vyhle
 msgid "Products overview"
 msgstr "Přehled zboží"
 
+msgid "Products parameters of selected category"
+msgstr "Parametry produktů vybrané kategorie"
+
 msgid "Products with this flag"
 msgstr "Produkty s tímto příznakem"
 
@@ -3065,7 +3137,7 @@ msgid "Quick search"
 msgstr "Rychlé vyhledávání"
 
 msgid "RGB Hex"
-msgstr ""
+msgstr "RGB Hex"
 
 msgid "Rate can't be modified. It is necessary to create new rate, remove existing one and replace it with new one."
 msgstr "Výši sazby nelze upravit. Je třeba vytvořit novou sazbu a starou odstranit s nahrazením za novou."
@@ -3183,6 +3255,12 @@ msgstr "Nastavení SEO atributů"
 
 msgid "SEO attributes settings modified"
 msgstr "Natavení SEO atributů bylo upraveno"
+
+msgid "SEO combination of category with ID {{ ReadyCategorySeoMixId }} has been removed"
+msgstr "SEO kombinace kategorie s ID {{ ReadyCategorySeoMixId }} byla smazána"
+
+msgid "SEO combination of category with ID {{ ReadyCategorySeoMixId }} has not been removed, because it was not found"
+msgstr "SEO kombinace kategorie s ID {{ ReadyCategorySeoMixId }} nebyla smazána, protože nebyla nalezena"
 
 msgid "SEO page"
 msgstr "SEO stránka"
@@ -3475,6 +3553,15 @@ msgstr "Krátký popis USP"
 msgid "Short description can be set in the main variant."
 msgstr "Krátký popis se nastavuje u hlavní varianty."
 
+msgid "Short description of category"
+msgstr "Krátký popis kategorie"
+
+msgid "Show combinations"
+msgstr "Zobrazit kombinace"
+
+msgid "Show in the category"
+msgstr "Zobrazit v rozcestníku"
+
 msgid "Site"
 msgstr "Stránka"
 
@@ -3500,7 +3587,7 @@ msgid "Slider pages"
 msgstr "Stránky slideru"
 
 msgid "Slug"
-msgstr ""
+msgstr "Slug"
 
 msgid "Some data may not be localized or serve the technical administrators of the e-shop."
 msgstr "Některé údaje nemusí být lokalizovány nebo slouží technickým správcům e-shopu."
@@ -3801,6 +3888,9 @@ msgstr "Typ"
 
 msgid "URL"
 msgstr "URL"
+
+msgid "URL Settings"
+msgstr "Nastavení URL"
 
 msgid "URL addresses"
 msgstr "URL adresy"
@@ -4239,6 +4329,9 @@ msgstr "zboží"
 
 msgid "promo codes"
 msgstr "slevové kupóny"
+
+msgid "ready category seo mixes"
+msgstr "SEO kombinace kategorií"
 
 msgid "records"
 msgstr "záznamů"

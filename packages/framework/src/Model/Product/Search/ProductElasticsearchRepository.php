@@ -9,6 +9,7 @@ use Elasticsearch\Client;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 
 class ProductElasticsearchRepository
 {
@@ -230,5 +231,33 @@ class ProductElasticsearchRepository
         }
 
         return $ids;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @return int[]
+     */
+    public function getCategoryIdsForFilterData(ProductFilterData $productFilterData): array
+    {
+        $result = $this->client->search(
+            $this->filterQueryFactory->createListableWithProductFilter($productFilterData)->setLimit(0)->getAggregationQueryForProductCountInCategories(),
+        );
+
+        return $this->extractCategoryIdsAggregation($result);
+    }
+
+    /**
+     * @param array $productCountAggregation
+     * @return int[]
+     */
+    protected function extractCategoryIdsAggregation(array $productCountAggregation): array
+    {
+        $result = [];
+
+        foreach ($productCountAggregation['aggregations']['by_categories']['buckets'] as $categoryAggregation) {
+            $result[] = $categoryAggregation['key'];
+        }
+
+        return $result;
     }
 }

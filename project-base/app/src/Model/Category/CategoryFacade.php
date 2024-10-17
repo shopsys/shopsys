@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model\Category;
 
 use App\Model\Category\LinkedCategory\LinkedCategoryFacade;
-use App\Model\Product\ProductOnCurrentDomainElasticFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -21,7 +20,7 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 use Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildrenFactory;
 use Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildrenFactory;
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
+use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -51,8 +50,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  * @method \App\Model\Category\Category[] getByIds(int[] $categoryIds)
  * @method \App\Model\Category\Category getVisibleOnDomainByUuid(int $domainId, string $categoryUuid)
  * @method \App\Model\Category\Category getProductMainCategoryOnCurrentDomain(\App\Model\Product\Product $product)
- * @property \App\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
  * @method dispatchCategoryEvent(\App\Model\Category\Category $category, string $eventType)
+ * @method \App\Model\Category\Category[] getCategoriesOfProductByFilterData(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData)
  */
 class CategoryFacade extends BaseCategoryFacade
 {
@@ -70,8 +69,8 @@ class CategoryFacade extends BaseCategoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterFacade $categoryParameterFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade
      * @param \App\Model\Category\LinkedCategory\LinkedCategoryFacade $linkedCategoryFacade
-     * @param \App\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -87,8 +86,8 @@ class CategoryFacade extends BaseCategoryFacade
         ProductRecalculationDispatcher $productRecalculationDispatcher,
         EventDispatcherInterface $eventDispatcher,
         CategoryParameterFacade $categoryParameterFacade,
+        ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade,
         private readonly LinkedCategoryFacade $linkedCategoryFacade,
-        private readonly ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade,
     ) {
         parent::__construct(
             $em,
@@ -104,6 +103,7 @@ class CategoryFacade extends BaseCategoryFacade
             $productRecalculationDispatcher,
             $eventDispatcher,
             $categoryParameterFacade,
+            $productOnCurrentDomainElasticFacade,
         );
     }
 
@@ -172,33 +172,6 @@ class CategoryFacade extends BaseCategoryFacade
     public function getFullPathsIndexedByIds(string $locale): array
     {
         return $this->categoryRepository->getFullPathsIndexedByIds($locale);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @return array
-     */
-    public function getCategoriesOfProductByFilterData(ProductFilterData $productFilterData): array
-    {
-        $categoryIds = $this->productOnCurrentDomainElasticFacade->getCategoryIdsForFilterData($productFilterData);
-        $categories = $this->categoryRepository->getCategoriesByIds($categoryIds);
-
-        $categoriesIndexedByIds = [];
-
-        foreach ($categories as $category) {
-            $categoriesIndexedByIds[$category->getId()] = $category;
-        }
-
-        $sortedCategories = [];
-
-        foreach ($categoryIds as $categoryId) {
-            if (!array_key_exists($categoryId, $categoriesIndexedByIds)) {
-                continue;
-            }
-            $sortedCategories[] = $categoriesIndexedByIds[$categoryId];
-        }
-
-        return $sortedCategories;
     }
 
     /**

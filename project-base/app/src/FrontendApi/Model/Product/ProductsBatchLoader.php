@@ -27,7 +27,7 @@ class ProductsBatchLoader extends BaseProductsBatchLoader
     }
 
     /**
-     * @param \App\FrontendApi\Model\Product\BatchLoad\ProductBatchLoadByEntityData[] $productBatchLoadByEntitiesData
+     * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductBatchLoadByEntityData[] $productBatchLoadByEntitiesData
      * @return \GraphQL\Executor\Promise\Promise
      */
     public function loadByEntities(array $productBatchLoadByEntitiesData): Promise

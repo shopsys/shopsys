@@ -1,0 +1,60 @@
+{% extends '@!ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% set title = 'Extended SEO category %categoryName% - combinations'|trans({'%categoryName%': category.name(locale)}) %}
+
+{% block title %}- {{ title }}{% endblock %}
+{% block h1 %}{{ title }}{% endblock %}
+
+{% block main_content %}
+
+    <table class="table-main">
+
+        <tr>
+            {% for parameter in categorySeoFiltersData.parameters %}
+                <th>{{ parameter.name }}</th>
+            {% endfor %}
+
+            {% if categorySeoFiltersData.useFlags %}
+                <th>{{ 'Flag'|trans }}</th>
+            {% endif %}
+
+            {% if categorySeoFiltersData.useOrdering %}
+                <th>{{ 'Ordering'|trans }}</th>
+            {% endif %}
+
+            <th>{{ 'Action'|trans }}</th>
+        </tr>
+
+    {% for categorySeoMix in categorySeoMixes %}
+        <tr>
+            {% for parameterValue in categorySeoMix.parameterValues %}
+                <td>{{ parameterValue.text }}</td>
+            {% endfor %}
+
+            {% if categorySeoMix.flag %}
+                <td>{{ categorySeoMix.flag.name }}</td>
+            {% endif %}
+
+            {% if categorySeoMix.ordering %}
+                <td>{{ getOrderingNameByOrderingId(categorySeoMix.ordering) }}</td>
+            {% endif %}
+
+            <td>
+                {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\CategorySeoController::readyCombinationButtonAction', {
+                    categoryId: categoryId,
+                    categorySeoFilterFormTypeAllQueries: categorySeoFilterFormTypeAllQueries,
+                    choseCategorySeoMixCombination: categorySeoMix.choseCategorySeoMixCombination(categorySeoFiltersData.parameters)
+                })) }}
+            </td>
+        </tr>
+    {% endfor %}
+
+    </table>
+
+    {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
+        {% block fixed_bar_content %}
+            <a href="{{ backLink }}" class="btn-link-style">{{ 'Back to parameter selection'|trans }}</a>
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}
