@@ -2,15 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrameworkBundle\Component\Error;
+namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\UnableToResolveDomainException;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
+use Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade;
+use Shopsys\FrameworkBundle\Component\Error\ExceptionListener;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ErrorHandler\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 use Throwable;
 use Tracy\BlueScreen;
 use Tracy\Debugger;
@@ -40,6 +43,8 @@ class ErrorController extends AbstractController
      * @param int $code
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Route(path: '/_error/{code}', requirements: ['code' => '\d+'], name: 'admin_error_page')]
+    #[Route(path: '/_error/{code}/{_format}', requirements: ['code' => '\d+', '_format' => 'css|html|js|json|txt|xml'], name: 'admin_error_page_format')]
     public function errorPagePreviewAction(Request $request, int $code): Response
     {
         return $this->renderTemplate($code, $request->getRequestFormat());
@@ -62,14 +67,15 @@ class ErrorController extends AbstractController
             return $this->createDevelopmentResponse($request, $exception);
         }
 
-        return $this->createProductionResponse($exception->getStatusCode());
+        return $this->createProductionResponse($exception->getStatusCode(), $exception->getHeaders());
     }
 
     /**
      * @param int $statusCode
+     * @param array $additionalHeaders
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function createProductionResponse(int $statusCode): Response
+    protected function createProductionResponse(int $statusCode, array $additionalHeaders = []): Response
     {
         $errorPageStatusCode = $this->errorPagesFacade->getErrorPageStatusCodeByStatusCode($statusCode);
         $errorPageContent = $this->errorPagesFacade->getErrorPageContentByDomainIdAndStatusCode(
@@ -77,7 +83,7 @@ class ErrorController extends AbstractController
             $errorPageStatusCode,
         );
 
-        return new Response($errorPageContent, $errorPageStatusCode);
+        return new Response($errorPageContent, $errorPageStatusCode, $additionalHeaders);
     }
 
     /**
@@ -151,8 +157,12 @@ class ErrorController extends AbstractController
      */
     protected function getTemplatePath(int $code, string $format): string
     {
+        if (preg_match('/4\d\d/', (string)$code)) {
+            $code = '4xx';
+        }
+
         return sprintf(
-            'Front/Content/Error/error%s.%s.twig',
+            '@ShopsysFramework/Admin/Content/Error/error%s.%s.twig',
             $format === 'html' ? $code : '',
             $format,
         );

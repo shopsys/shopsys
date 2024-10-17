@@ -517,6 +517,9 @@ msgstr ""
 msgid "Bulk promo code generation"
 msgstr ""
 
+msgid "But at other addresses we have a lot for you..."
+msgstr ""
+
 msgid "CSS documentation"
 msgstr ""
 
@@ -2578,6 +2581,9 @@ msgstr ""
 msgid "Only checked products"
 msgstr ""
 
+msgid "Oops! Error occurred."
+msgstr ""
+
 msgid "Open Graph description"
 msgstr ""
 
@@ -2882,6 +2888,9 @@ msgid "Please check the correctness of all data filled."
 msgstr ""
 
 msgid "Please check the entered values.<br>"
+msgstr ""
+
+msgid "Please excuse this error, we are working on fixing it. If needed, contact us on e-mail or by phone."
 msgstr ""
 
 msgid "Please fill all default values before creating a product"
@@ -3811,6 +3820,9 @@ msgstr ""
 msgid "URL will be deleted after saving."
 msgstr ""
 
+msgid "Uh-oh, uh-oh. And specially <strong>\"%status_code% %status_text%\"</strong>, as if it was on purpose!"
+msgstr ""
+
 msgid "Unable to add"
 msgstr ""
 
@@ -4025,6 +4037,9 @@ msgid "Warehouses - full"
 msgstr ""
 
 msgid "Warehouses - view"
+msgstr ""
+
+msgid "We have nothing to show you at this url."
 msgstr ""
 
 msgid "Wednesday"
