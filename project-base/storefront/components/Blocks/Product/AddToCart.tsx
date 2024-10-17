@@ -65,7 +65,7 @@ export const AddToCart: FC<AddToCartProps> = ({
     };
 
     return (
-        <div className={twMergeCustom('relative flex items-stretch justify-between gap-2', className)}>
+        <div className={twMergeCustom('flex items-center justify-between gap-2', className)}>
             {isWithSpinbox && (
                 <Spinbox
                     defaultValue={1}
@@ -77,18 +77,22 @@ export const AddToCart: FC<AddToCartProps> = ({
                     step={1}
                 />
             )}
-            {isAddingToCart && (
-                <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded bg-backgroundMore py-2 opacity-50" />
-            )}
-            <Button
-                isDisabled={isAddingToCart}
-                name="add-to-cart"
-                size={buttonSize}
-                tid={TIDs.blocks_product_addtocart}
-                onClick={onAddToCartHandler}
-            >
-                <span>{t('Add to cart')}</span>
-            </Button>
+
+            <div className="relative">
+                {isAddingToCart && (
+                    <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded bg-backgroundMore py-2 opacity-50" />
+                )}
+
+                <Button
+                    isDisabled={isAddingToCart}
+                    name="add-to-cart"
+                    size={buttonSize}
+                    tid={TIDs.blocks_product_addtocart}
+                    onClick={onAddToCartHandler}
+                >
+                    <span>{t('Add to cart')}</span>
+                </Button>
+            </div>
         </div>
     );
 };

@@ -1,5 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
+    validateCompanyNumber,
+    validateCompanyTaxNumber,
     validateEmail,
     validateFirstName,
     validateLastName,
@@ -24,8 +26,8 @@ export const useInquiryForm = (
             lastName: validateLastName(t),
             telephone: validateTelephoneRequired(t),
             companyName: Yup.string().nullable(),
-            companyNumber: Yup.string().nullable(),
-            companyTaxNumber: Yup.string().nullable(),
+            companyNumber: validateCompanyNumber(t),
+            companyTaxNumber: validateCompanyTaxNumber(t),
             note: Yup.string().optional().nullable(),
             productUuid: Yup.string().required(),
         }),
@@ -96,7 +98,7 @@ export const useInquiryFormMeta = (formProviderMethods: UseFormReturn<InquiryFor
                 },
                 note: {
                     name: 'note' as const,
-                    label: t('Note'),
+                    label: t('Question'),
                     errorMessage: errors.note?.message,
                 },
                 productUuid: {

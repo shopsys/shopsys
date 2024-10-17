@@ -73,18 +73,22 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
     }
 
     return (
-        <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
             <Spinbox defaultValue={1} id={product.uuid} max={product.stockQuantity} min={1} ref={spinboxRef} step={1} />
-            <div className="ml-2.5 flex-1">
+
+            <div className="relative">
+                {isAddingToCart && (
+                    <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded bg-backgroundMore py-2 opacity-50" />
+                )}
+
                 <Button
-                    className="w-fit whitespace-nowrap"
+                    className="whitespace-nowrap"
                     isDisabled={isAddingToCart}
                     size="large"
                     tid={TIDs.pages_productdetail_addtocart_button}
                     onClick={onAddToCartHandler}
                 >
-                    {isAddingToCart && <Loader className="w-[18px]" />}
-                    {!isAddingToCart && <CartIcon className="w-[18px]" />}
+                    <CartIcon className="w-[18px]" />
                     {t('Add to cart')}
                 </Button>
             </div>

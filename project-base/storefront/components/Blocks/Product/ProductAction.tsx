@@ -20,9 +20,18 @@ type ProductActionProps = {
     gtmProductListName: GtmProductListNameType;
     gtmMessageOrigin: GtmMessageOriginType;
     listIndex: number;
+    isWithSpinbox?: boolean;
+    buttonSize?: 'small' | 'medium' | 'large';
 };
 
-export const ProductAction: FC<ProductActionProps> = ({ product, gtmProductListName, gtmMessageOrigin, listIndex }) => {
+export const ProductAction: FC<ProductActionProps> = ({
+    product,
+    gtmProductListName,
+    gtmMessageOrigin,
+    listIndex,
+    isWithSpinbox = false,
+    buttonSize,
+}) => {
     const { t } = useTranslation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
@@ -36,7 +45,11 @@ export const ProductAction: FC<ProductActionProps> = ({ product, gtmProductListN
             updatePortalContent(<InquiryPopup productUuid={product.uuid} />);
         };
 
-        return <Button onClick={openInquiryPopup}>{t('Inquire')}</Button>;
+        return (
+            <Button size={buttonSize} onClick={openInquiryPopup}>
+                {t('Inquire')}
+            </Button>
+        );
     }
 
     if (product.isMainVariant) {
@@ -49,9 +62,10 @@ export const ProductAction: FC<ProductActionProps> = ({ product, gtmProductListN
 
     return (
         <AddToCart
+            buttonSize={buttonSize}
             gtmMessageOrigin={gtmMessageOrigin}
             gtmProductListName={gtmProductListName}
-            isWithSpinbox={false}
+            isWithSpinbox={isWithSpinbox}
             listIndex={listIndex}
             maxQuantity={product.stockQuantity}
             minQuantity={1}
