@@ -39,5 +39,9 @@
             {% include('@ShopsysFramework/Front/Content/PersonalData/orders.xml.twig' ) with {'orders': orders} %}
         {% endif %}
 
+        {% if complaints|length > 0 %}
+            {% include('@ShopsysFramework/Front/Content/PersonalData/complaints.xml.twig') %}
+        {% endif %}
+
     </customer>
 </customers>

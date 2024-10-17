@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Controller\Front;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\XmlResponse;
+use Shopsys\FrameworkBundle\Model\Complaint\ComplaintFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
@@ -24,6 +25,7 @@ class PersonalDataController extends AbstractController
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade $personalDataAccessRequestFacade
      * @param \Shopsys\FrameworkBundle\Component\HttpFoundation\XmlResponse $xmlResponse
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintFacade $complaintFacade
      */
     public function __construct(
         protected readonly Domain $domain,
@@ -32,6 +34,7 @@ class PersonalDataController extends AbstractController
         protected readonly NewsletterFacade $newsletterFacade,
         protected readonly PersonalDataAccessRequestFacade $personalDataAccessRequestFacade,
         protected readonly XmlResponse $xmlResponse,
+        protected readonly ComplaintFacade $complaintFacade,
     ) {
     }
 
@@ -65,10 +68,17 @@ class PersonalDataController extends AbstractController
                 $this->domain->getId(),
             );
 
+            $complaints = [];
+
+            if ($customerUser !== null) {
+                $complaints = $this->complaintFacade->getComplaintsByCustomerUserAndDomainIdAndLocale($customerUser, $this->domain->getId(), $this->domain->getLocale());
+            }
+
             $xmlContent = $this->render('@ShopsysFramework/Front/Content/PersonalData/export.xml.twig', [
                 'customerUser' => $customerUser,
                 'newsletterSubscriber' => $newsletterSubscriber,
                 'orders' => $orders,
+                'complaints' => $complaints,
             ])->getContent();
 
             $fileName = $personalDataAccessRequest->getEmail() . '.xml';
