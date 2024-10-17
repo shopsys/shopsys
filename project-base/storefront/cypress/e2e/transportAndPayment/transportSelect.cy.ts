@@ -132,17 +132,21 @@ describe('Transport Select Tests', () => {
         });
     });
 
-    it('[Logged No Transport Empty Cart] redirect to cart page and not display transport options if cart is empty and user is logged in', function () {
-        cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer'));
-        cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
+    it(
+        '[Logged No Transport Empty Cart] redirect to cart page and not display transport options if cart is empty and user is logged in',
+        { retries: { runMode: 0 } },
+        function () {
+            cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer'));
+            cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
-        checkTransportSelectionIsNotVisible();
-        checkEmptyCartTextIsVisible();
-        checkUrl(url.cart);
-        takeSnapshotAndCompare(this.test?.title, 'after redirecting to cart page', {
-            blackout: [{ tid: TIDs.footer_social_links }],
-        });
-    });
+            checkTransportSelectionIsNotVisible();
+            checkEmptyCartTextIsVisible();
+            checkUrl(url.cart);
+            takeSnapshotAndCompare(this.test?.title, 'after redirecting to cart page', {
+                blackout: [{ tid: TIDs.footer_social_links }],
+            });
+        },
+    );
 
     it('[Transport Fee] change price for transport when cart is large enough for transport to be free', function () {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));

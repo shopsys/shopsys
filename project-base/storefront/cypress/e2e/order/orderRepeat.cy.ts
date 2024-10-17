@@ -4,7 +4,7 @@ import { generateCustomerRegistrationData, generateCreateOrderInput } from 'fixt
 import { checkUrl, initializePersistStoreInLocalStorageToDefaultValues, takeSnapshotAndCompare } from 'support';
 import { TIDs } from 'tids';
 
-describe('Order Repeat Tests From Order List (Logged-in User)', () => {
+describe('Order Repeat Tests From Order List (Logged-in User)', { retries: { runMode: 0 } }, () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });

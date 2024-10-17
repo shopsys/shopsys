@@ -17,7 +17,7 @@ import {
 } from 'support';
 import { TIDs } from 'tids';
 
-describe('Cart Login Tests', () => {
+describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
