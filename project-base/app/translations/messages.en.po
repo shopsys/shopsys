@@ -199,9 +199,6 @@ msgstr ""
 msgid "Enable two factor authentication by email"
 msgstr ""
 
-msgid "Error messages"
-msgstr ""
-
 msgid "Extended SEO categories"
 msgstr ""
 
@@ -430,9 +427,6 @@ msgstr ""
 msgid "Notification bar has been successfuly deleted"
 msgstr ""
 
-msgid "Oops! Error occurred."
-msgstr ""
-
 msgid "Open in new window"
 msgstr ""
 
@@ -452,9 +446,6 @@ msgid "Original translation"
 msgstr ""
 
 msgid "Outside layout"
-msgstr ""
-
-msgid "Page not found"
 msgstr ""
 
 msgid "Page title"

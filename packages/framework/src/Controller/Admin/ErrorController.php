@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\FrameworkBundle\Component\Error;
+namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\UnableToResolveDomainException;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
+use Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade;
+use Shopsys\FrameworkBundle\Component\Error\ExceptionListener;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ErrorHandler\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Request;

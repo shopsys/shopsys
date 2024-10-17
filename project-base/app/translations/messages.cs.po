@@ -199,9 +199,6 @@ msgstr "Zapnout dvoufaktorové ověřování pomocí Google Autentikátoru"
 msgid "Enable two factor authentication by email"
 msgstr "Zapnout dvoufaktorové ověřování pomocí e-mailu"
 
-msgid "Error messages"
-msgstr "Chybové hlášky"
-
 msgid "Extended SEO categories"
 msgstr "Rozšířené SEO kategorie"
 
@@ -430,9 +427,6 @@ msgstr "Notifikační lišta byla úspěšně vytvořena"
 msgid "Notification bar has been successfuly deleted"
 msgstr "Notifikační lišta byla úspěšně smazána"
 
-msgid "Oops! Error occurred."
-msgstr "Jejda! Nastala chyba."
-
 msgid "Open in new window"
 msgstr "Otevírat v novém okně"
 
@@ -453,9 +447,6 @@ msgstr "Původní překlad"
 
 msgid "Outside layout"
 msgstr "Rozložení vně"
-
-msgid "Page not found"
-msgstr "Stránka nenalazena"
 
 msgid "Page title"
 msgstr "Titulek stránky"
