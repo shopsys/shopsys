@@ -70,7 +70,7 @@ class Parameter extends AbstractTranslatableEntity
     /**
      * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup|null
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup")
-     * @ORM\JoinColumn(nullable=true, name="group_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\JoinColumn(nullable=true, name="group_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $group;
 

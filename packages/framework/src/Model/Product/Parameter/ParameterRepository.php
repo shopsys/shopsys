@@ -249,7 +249,9 @@ class ParameterRepository
         return $this->em->createQueryBuilder()
             ->select('ppv')
             ->from(ProductParameterValue::class, 'ppv')
+            ->join(ParameterGroup::class, 'pg')
             ->where('ppv.product = :product_id')
+            ->orderBy('pg.position', 'ASC')
             ->setParameter('product_id', $product->getId());
     }
 
