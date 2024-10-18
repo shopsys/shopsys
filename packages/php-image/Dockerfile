@@ -12,7 +12,7 @@ FROM php:${PHP_VERSION}-fpm-${LINUX_VERSION} AS base
 
 
 # Build dependencies needed for installation and cleanup
-RUN apk add --no-cache --virtual .build-deps \
+RUN apk add --no-cache \
     autoconf \
     g++ \
     make \
@@ -20,20 +20,24 @@ RUN apk add --no-cache --virtual .build-deps \
     icu-dev \
     libpq-dev \
     libzip-dev \
-    openssl-dev && \
-    pecl install redis-5.3.7 && \
-    docker-php-ext-enable redis && \
-    pecl install amqp && \
-    docker-php-ext-enable amqp && \
-    docker-php-ext-install \
-        zip \
-        pdo_pgsql \
-        pgsql \
-        bcmath \
-        intl \
-        opcache \
-    apk del .build-deps && \
-    apk add --no-cache \
+    openssl-dev
+
+RUN pecl install redis-5.3.7 && \
+    docker-php-ext-enable redis
+
+RUN pecl install amqp && \
+    docker-php-ext-enable amqp
+
+RUN docker-php-ext-install zip
+
+RUN docker-php-ext-install pdo_pgsql
+RUN docker-php-ext-install pgsql
+RUN docker-php-ext-install bcmath
+RUN docker-php-ext-install intl
+RUN docker-php-ext-install opcache
+# RUN apk del .build-deps
+
+RUN apk add --no-cache \
         bash \
         coreutils \
         icu-libs \
