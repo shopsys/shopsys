@@ -42,6 +42,19 @@ services:
 
 Replace `your_client_id`, `your_client_token`, `your_server_id`, and `your_server_token` with your actual Blackfire credentials.
 
+Last thing, you need to update the `php-fpm` service to build the Blackfire extension.
+
+```diff
+    php-fpm:
+        build:
+            context: ./app
+            dockerfile: docker/php-fpm/Dockerfile
+-            target: development
++            target: development_blackfire
+
+    # ...
+```
+
 After updating the `docker-compose.yml` file, restart your Docker containers to apply the changes.
 
 ```bash
