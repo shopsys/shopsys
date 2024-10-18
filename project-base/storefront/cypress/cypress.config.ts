@@ -16,10 +16,10 @@ export default defineConfig({
     },
     e2e: {
         setupNodeEvents(on, config) {
-            console.log(`Running tests for group: ${config.env.GROUP || 'default-group'}`);
             getCompareSnapshotsPlugin(on, config);
 
-            const group = config.env.GROUP || 'default-group';
+            const group = process.env.GROUP || 'default-group';
+            console.log(`Running tests for group: ${group || 'default-group'}`);
 
             if (group === 'default-group') {
                 config.specPattern = ['e2e/**/*.cy.ts'];
