@@ -41,9 +41,10 @@ class UnitController extends AdminBaseController
     }
 
     /**
+     * @CsrfProtection
      * @param int $id
      */
-    #[Route(path: '/unit/delete-confirm/{id}', requirements: ['id' => '\d+'])]
+    #[Route(path: '/product/unit/delete-confirm/{id}', requirements: ['id' => '\d+'])]
     public function deleteConfirmAction($id)
     {
         try {
