@@ -330,6 +330,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid,
                                                 <>
                                                     <Select
                                                         hasError={invalid}
+                                                        id={formMeta.formName + '-' + formMeta.fields.country.name}
                                                         isDisabled={isSubmitting}
                                                         label={formMeta.fields.country.label}
                                                         options={countriesAsSelectOptions}

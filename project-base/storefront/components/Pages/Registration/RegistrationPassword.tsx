@@ -23,6 +23,7 @@ export const RegistrationPassword: FC = () => {
                     render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
                     passwordInputProps={{
                         label: formMeta.fields.password.label,
+                        autoComplete: 'new-password',
                     }}
                 />
                 <PasswordInputControlled
@@ -32,6 +33,7 @@ export const RegistrationPassword: FC = () => {
                     render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
                     passwordInputProps={{
                         label: formMeta.fields.passwordConfirm.label,
+                        autoComplete: 'new-password-confirm',
                     }}
                 />
             </FormColumn>

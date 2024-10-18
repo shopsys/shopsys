@@ -10,6 +10,7 @@ export const StyleguideSelects: FC = () => {
         <StyleguideSection className="flex flex-col gap-3" title="Selects">
             <Select
                 hasError={false}
+                id="styleguide-selects-basic-select"
                 label="Basic select"
                 options={colourOptions}
                 value={selectedBasicOption}
@@ -18,6 +19,7 @@ export const StyleguideSelects: FC = () => {
 
             <Select
                 hasError={false}
+                id="styleguide-selects-group-select"
                 label="Group select"
                 options={groupedOptions}
                 value={selectedGroupOption}
@@ -27,6 +29,7 @@ export const StyleguideSelects: FC = () => {
             <Select
                 isDisabled
                 hasError={false}
+                id="styleguide-selects-disabled-select"
                 label="Disabled select"
                 options={[]}
                 value={null}

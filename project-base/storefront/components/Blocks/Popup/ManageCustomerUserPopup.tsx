@@ -142,7 +142,7 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
     };
 
     return (
-        <Popup className="w-11/12 overflow-x-auto lg:w-4/5 vl:w-auto">
+        <Popup className="w-11/12 overflow-visible lg:w-4/5 vl:w-auto">
             <FormProvider {...formProviderMethods}>
                 <Form onSubmit={formProviderMethods.handleSubmit(onSubmitCustomerUserManageProfileFormHandler)}>
                     <FormContentWrapper>
@@ -206,6 +206,7 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
                                         <Select
                                             required
                                             hasError={invalid}
+                                            id={formMeta.formName + '-' + formMeta.fields.roleGroup.name}
                                             label={formMeta.fields.roleGroup.label}
                                             options={customerUserRoleGroupsAsSelectOptions}
                                             isDisabled={
@@ -221,9 +222,7 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
                                 )}
                             />
                             <FormButtonWrapper>
-                                <SubmitButton className="mx-auto">
-                                    {mode === 'edit' ? t('Save user') : t('Add user')}
-                                </SubmitButton>
+                                <SubmitButton>{mode === 'edit' ? t('Save user') : t('Add user')}</SubmitButton>
                             </FormButtonWrapper>
                         </FormBlockWrapper>
                     </FormContentWrapper>

@@ -70,7 +70,7 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                                 <>
                                     <Image
                                         alt={order.payment.name}
-                                        className="max-h-[20px] w-8 object-contain object-left"
+                                        className="h-5 w-8 object-contain object-left"
                                         height={20}
                                         src={order.payment.mainImage?.url}
                                         width={32}
@@ -86,7 +86,7 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                                 <>
                                     <Image
                                         alt={order.transport.name}
-                                        className="max-h-[20px] w-8 object-contain object-left"
+                                        className="h-5 w-8 object-contain object-left"
                                         height={20}
                                         src={order.transport.mainImage?.url}
                                         width={32}
