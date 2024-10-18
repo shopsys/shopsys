@@ -1,12 +1,14 @@
 query RecommendedProductsQuery(
     $userIdentifier: Uuid!
     $recommendationType: RecommendationType!
+    $recommenderClientIdentifier: String
     $limit: Int
     $itemUuids: [Uuid!]
 ) {
     recommendedProducts(
         userIdentifier: $userIdentifier
         recommendationType: $recommendationType
+        recommenderClientIdentifier: $recommenderClientIdentifier
         limit: $limit
         itemUuids: $itemUuids
     ) {

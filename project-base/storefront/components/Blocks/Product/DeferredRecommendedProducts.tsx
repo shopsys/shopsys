@@ -6,8 +6,10 @@ import { useRecommendedProductsQuery } from 'graphql/requests/products/queries/R
 import { TypeRecommendationType } from 'graphql/types';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 import { ReactElement } from 'react';
 import { useCookiesStore } from 'store/useCookiesStore';
+import { getRecommenderClientIdentifier } from 'utils/recommender/getRecommenderClientIdentifier';
 import { useDeferredRender } from 'utils/useDeferredRender';
 
 const ProductsSliderPlaceholder = dynamic(() =>
@@ -27,11 +29,13 @@ export const DeferredRecommendedProducts: FC<DeferredRecommendedProductsProps> =
 }) => {
     const userIdentifier = useCookiesStore((store) => store.userIdentifier);
     const { isLuigisBoxActive } = useDomainConfig();
+    const { pathname } = useRouter();
     const [{ data: recommendedProductsData, fetching: areRecommendedProductsFetching }] = useRecommendedProductsQuery({
         variables: {
             itemUuids,
             userIdentifier,
             recommendationType,
+            recommenderClientIdentifier: getRecommenderClientIdentifier(pathname),
             limit: 10,
         },
         pause: !isLuigisBoxActive,

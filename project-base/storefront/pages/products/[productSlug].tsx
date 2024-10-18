@@ -22,6 +22,7 @@ import { createClient } from 'urql/createClient';
 import { handleServerSideErrorResponseForFriendlyUrls } from 'utils/errors/handleServerSideErrorResponseForFriendlyUrls';
 import { getSlugFromServerSideUrl } from 'utils/parsing/getSlugFromServerSideUrl';
 import { getSlugFromUrl } from 'utils/parsing/getSlugFromUrl';
+import { getRecommenderClientIdentifier } from 'utils/recommender/getRecommenderClientIdentifier';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { ServerSidePropsType, initServerSideProps } from 'utils/serverSide/initServerSideProps';
 
@@ -138,6 +139,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                                       itemUuids: [productResponse.data.product.uuid],
                                       userIdentifier: cookiesStoreState.userIdentifier,
                                       recommendationType: TypeRecommendationType.ItemDetail,
+                                      recommenderClientIdentifier: getRecommenderClientIdentifier(context.resolvedUrl),
                                       limit: 10,
                                   },
                               },

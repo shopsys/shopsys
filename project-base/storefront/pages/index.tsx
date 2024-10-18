@@ -14,6 +14,7 @@ import {
 import { SliderItemsQueryDocument } from 'graphql/requests/sliderItems/queries/SliderItemsQuery.generated';
 import { TypeRecommendationType } from 'graphql/types';
 import { NextPage } from 'next';
+import { getRecommenderClientIdentifier } from 'utils/recommender/getRecommenderClientIdentifier';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { ServerSidePropsType, initServerSideProps } from 'utils/serverSide/initServerSideProps';
 
@@ -45,6 +46,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                                       itemUuids: [],
                                       userIdentifier: cookiesStoreState.userIdentifier,
                                       recommendationType: TypeRecommendationType.Personalized,
+                                      recommenderClientIdentifier: getRecommenderClientIdentifier(context.resolvedUrl),
                                       limit: 10,
                                   },
                               },
