@@ -4,6 +4,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TypeSalesRepresentative } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
+import { twJoin } from 'tailwind-merge';
 import { formatPhoneNumber } from 'utils/formaters/formatPhoneNumber';
 
 export const SalesRepresentative: FC = () => {
@@ -22,47 +23,44 @@ export const SalesRepresentative: FC = () => {
     }
 
     return (
-        <div className="flex flex-col font-semibold">
-            <div className="flex w-full items-start gap-4 pt-4">
+        <div className="flex flex-col gap-1 pt-3">
+            <div className="flex items-center gap-2">
                 {salesRepresentative.image && (
                     <Image
                         alt={t('Need advice?')}
-                        className="h-12 w-12 rounded-full object-cover"
+                        className="size-12 rounded-full object-cover"
                         height={100}
                         src={salesRepresentative.image.url}
                         width={100}
                     />
                 )}
-                {fullName && (
-                    <div className="w-full">
-                        <p className="font-secondary text-base">{fullName}</p>
-                        <p className="font-secondary text-xs uppercase tracking-wider text-textSubtle">
-                            {t('Your sales representative')}
-                        </p>
-                    </div>
-                )}
+                <div>
+                    {fullName && <h5>{fullName}</h5>}
+                    <h6 className="text-textSubtle">{t('Your sales representative')}</h6>
+                </div>
             </div>
-            <div className="w-full">
-                {telephone && (
-                    <div className="my-2 flex items-center gap-2">
-                        <PhoneIcon className="h-6 w-6 flex-shrink-0 p-0.5" />
-                        <a className="text-[15px] leading-[22.5px] text-text no-underline" href={`tel:${telephone}`}>
-                            {formatPhoneNumber(telephone)}
-                        </a>
-                    </div>
-                )}
-                {email && (
-                    <div className="mt-1 flex w-full max-w-80 items-center gap-2 overflow-auto lg:max-w-full">
-                        <MailIcon className="h-6 w-6 flex-shrink-0" />
-                        <a
-                            className="max-w-44 text-[15px] leading-[22.5px] text-text no-underline lg:max-w-96"
-                            href={`mailto:${email}`}
-                        >
-                            {email}
-                        </a>
-                    </div>
-                )}
-            </div>
+            {telephone && (
+                <div className="mt-2 flex items-center gap-2">
+                    <PhoneIcon className="size-6" />
+                    <a className="text-sm font-semibold text-text no-underline" href={`tel:${telephone}`}>
+                        {formatPhoneNumber(telephone)}
+                    </a>
+                </div>
+            )}
+            {email && (
+                <div className="flex items-center gap-2">
+                    <MailIcon className="size-6" />
+                    <a
+                        href={`mailto:${email}`}
+                        className={twJoin(
+                            'max-w-64 overflow-x-auto whitespace-nowrap text-sm font-semibold text-text no-underline',
+                            '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-backgroundMost [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:h-1',
+                        )}
+                    >
+                        {email}
+                    </a>
+                </div>
+            )}
         </div>
     );
 };
