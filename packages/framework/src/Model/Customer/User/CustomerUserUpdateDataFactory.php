@@ -163,7 +163,7 @@ class CustomerUserUpdateDataFactory
     {
         $billingAddressData = $this->billingAddressDataFactory->createFromBillingAddress($billingAddress);
 
-        if ($billingAddress->getStreet() === null) {
+        if (!$billingAddress->isBillingAddressFilled()) {
             $this->fillBillingAddressDataFromOrder($order, $billingAddressData);
         }
 
