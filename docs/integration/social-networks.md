@@ -17,13 +17,19 @@ For every social network, you need `app_id` and `app_secret`. Below you have inf
 ### Google
 
 -   log into Google account and create [OAuth 2.0 Client IDs](https://console.cloud.google.com/apis/credentials)
+    -   first, you need to create a project,
+    -   then you have to need to click on "+ create credentials" and select "OAuth client ID",
+    -   then, click on "configure consent screen" and fill in the required fields (choose an "internal" user type).
+    -   After you configure the consent screen, once again click on "+ create credentials" and select "OAuth client ID".
+    -   As an application type, choose "web application" and fill in the required fields.
+    -   You need to add an authorized redirect URI here, which is `{eshop_domain}/social-network/login/google`
 -   in detail, you will find `Client ID` and `Client secret`
--   in Client ID settings, you need to add an authorized redirect URI, which is `{eshop_domain}/social-network/login/google`
 
 ### Seznam
 
 -   log to your Seznam account and go to page https://vyvojari.seznam.cz/oauth/admin
 -   create service and first data are `app_id` and `app_secret`
+-   you need to add redirect URI, which is `{eshop_domain}/social-network/login/seznam`
 
 Every social network require URL for backward redirect to you app.
 In Shopsys platform, you have to add url `{eshop_domain}/social-network/login/{type}` where `{eshop_domain}` is your domain and `{type}` is social network name, e.g.: `google`, `facebook`, `seznam`, etc.
