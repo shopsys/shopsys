@@ -886,7 +886,7 @@ jobs:
                 run: echo "Regenerate successful"
     build-successful:
         if: |
-            always() && !contains(github.event.pull_request.labels.*.name, ' job ')
+            always() && !contains(github.event.pull_request.labels.*.name, 'regenerate screenshots')
         name: Build successful
         needs: [tests-acceptance, standards, tests-unit-functional-smoke, standards-storefront, translations-dump-check, review, build-fork-docker-images, check-console-commands, tests-storefront-acceptance, unit-test-storefront]
         runs-on: ubuntu-22.04
