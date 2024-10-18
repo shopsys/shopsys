@@ -26,6 +26,40 @@
             @apply w-full;
         }
 
+        table {
+            @apply w-full;
+
+            tr {
+                @apply odd:bg-tableBackgroundContrast;
+            }
+
+            td,
+            th {
+                @apply p-[10px] text-base leading-6;
+            }
+
+            th {
+                @apply text-left font-bold leading-[26px] text-tableText;
+                @apply lg:text-xl;
+            }
+
+            td {
+                @apply text-right;
+            }
+
+            &.secondary {
+                @apply border border-tableBackground;
+
+                tr {
+                    @apply bg-[transparent] first:bg-tableBackgroundContrast first:[&_td]:font-bold;
+                }
+
+                td {
+                    @apply border border-tableBackground text-left;
+                }
+            }
+        }
+
         .row {
             @apply block w-full gap-3 py-3 lg:flex lg:flex-wrap;
 
