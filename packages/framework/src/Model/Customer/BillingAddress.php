@@ -230,4 +230,12 @@ class BillingAddress
     {
         return $this->uuid;
     }
+
+    /**
+     * @return bool
+     */
+    public function isBillingAddressFilled(): bool
+    {
+        return $this->street !== null && $this->city !== null && $this->postcode !== null && $this->country !== null;
+    }
 }

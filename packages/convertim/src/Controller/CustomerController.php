@@ -48,4 +48,24 @@ class CustomerController extends AbstractConvertimController
             return $this->convertimLogger->logGenericException($e);
         }
     }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    #[Route('/get-customer-details-by-order/{orderUuid}')]
+    public function getCustomerDetailByOrderUuid(Request $request): Response
+    {
+        if ($this->isProtectedRequest($request) === false) {
+            return $this->invalidAuthorizationResponse();
+        }
+
+        try {
+            return new JsonResponse($this->customerDetailFactory->createCustomerDetailByOrderUuid($request->attributes->get('orderUuid')));
+        } catch (ConvertimException $e) {
+            return $this->convertimLogger->logConvertimException($e);
+        } catch (Exception $e) {
+            return $this->convertimLogger->logGenericException($e);
+        }
+    }
 }

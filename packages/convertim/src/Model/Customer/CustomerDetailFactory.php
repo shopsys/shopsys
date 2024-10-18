@@ -13,8 +13,10 @@ use Shopsys\ConvertimBundle\Model\Customer\Exception\CustomerDetailsNotFoundExce
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade as FrameworkCustomerUserFacade;
+use Shopsys\FrameworkBundle\Model\Order\Exception\OrderNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportTypeEnum;
@@ -39,41 +41,48 @@ class CustomerDetailFactory
      */
     public function createCustomerDetail(string $userUuid): CustomerDetail
     {
-        $customerUser = $this->customerUserFacade->getByUuid($userUuid);
-        $telephone = $customerUser->getTelephone();
-        $lastOrders = $this->orderFacade->getLastCustomerOrdersByLimit($customerUser->getCustomer(), 1, $this->domain->getLocale());
-        /** @var \Shopsys\FrameworkBundle\Model\Order\Order|null $lastOrder */
-        $lastOrder = count($lastOrders) > 0 ? reset($lastOrders) : null;
+        try {
+            $customerUser = $this->customerUserFacade->getByUuid($userUuid);
+            $telephone = $customerUser->getTelephone();
+            $lastOrders = $this->orderFacade->getLastCustomerOrdersByLimit($customerUser->getCustomer(), 1, $this->domain->getLocale());
+            /** @var \Shopsys\FrameworkBundle\Model\Order\Order|null $lastOrder */
+            $lastOrder = count($lastOrders) > 0 ? reset($lastOrders) : null;
 
-        $billingAddress = $customerUser->getCustomer()->getBillingAddress();
-        $deliveryAddresses = $customerUser->getCustomer()->getDeliveryAddresses();
+            $billingAddress = $customerUser->getCustomer()->getBillingAddress();
+            $deliveryAddresses = $customerUser->getCustomer()->getDeliveryAddresses();
 
-        if (count($deliveryAddresses) > 0) {
-            /** @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress $lastDeliveryAddress */
-            $lastDeliveryAddress = end($deliveryAddresses);
+            if (count($deliveryAddresses) > 0) {
+                /** @var \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress $lastDeliveryAddress */
+                $lastDeliveryAddress = end($deliveryAddresses);
 
-            $deliveryAddress = $this->createDeliveryAddressFromDeliveryAddress($lastDeliveryAddress, $customerUser);
+                $convertimDeliveryAddress = $this->createConvertimDeliveryAddressFromDeliveryAddress($lastDeliveryAddress, $customerUser);
 
-            if ($telephone === null) {
-                $telephone = $lastDeliveryAddress->getTelephone();
+                if ($telephone === null) {
+                    $telephone = $lastDeliveryAddress->getTelephone();
+                }
+            } else {
+                if (!$billingAddress->isBillingAddressFilled()) {
+                    throw new CustomerDetailsNotFoundException([
+                        'customerUserUuid' => $userUuid,
+                        'additionalInfo' => 'Customer user billing address is empty',
+                    ]);
+                }
+
+                $convertimDeliveryAddress = $this->createConvertimDeliveryAddressFromBillingAddress($billingAddress, $customerUser);
             }
-        } else {
-            if ($billingAddress->getStreet() === null) {
-                throw new CustomerDetailsNotFoundException(['customerUserUuid' => $userUuid]);
-            }
 
-            $deliveryAddress = $this->createDeliveryAddressFromBillingAddress($billingAddress, $customerUser);
+            return new CustomerDetail(
+                $customerUser->getEmail(),
+                $telephone ?: '',
+                $convertimDeliveryAddress,
+                $this->createConvertimBillingAddress($billingAddress, $customerUser),
+                $lastOrder?->getPayment()->getUuid(),
+                $lastOrder?->getTransport()->getUuid(),
+                $this->createLastSelectedPickupPoint($lastOrder),
+            );
+        } catch (CustomerUserNotFoundException) {
+            throw new CustomerDetailsNotFoundException(['customerUserUuid' => $userUuid]);
         }
-
-        return new CustomerDetail(
-            $customerUser->getEmail(),
-            $telephone ?: '',
-            $deliveryAddress,
-            $this->createBillingAddress($billingAddress, $customerUser),
-            $lastOrder?->getPayment()->getUuid(),
-            $lastOrder?->getTransport()->getUuid(),
-            $this->createLastSelectedPickupPoint($lastOrder),
-        );
     }
 
     /**
@@ -108,16 +117,16 @@ class CustomerDetailFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @return \Convertim\Customer\BillingAddress|null
      */
-    protected function createBillingAddress(
+    protected function createConvertimBillingAddress(
         ?BillingAddress $billingAddress,
         CustomerUser $customerUser,
     ): ?ConvertimBillingAddress {
-        if ($billingAddress === null || $billingAddress->getStreet() === null) {
+        if ($billingAddress === null || !$billingAddress->isBillingAddressFilled()) {
             return null;
         }
 
         return new ConvertimBillingAddress(
-            (string)$billingAddress->getId(),
+            $billingAddress->getUuid(),
             $customerUser->getFirstName(),
             $customerUser->getLastName(),
             $billingAddress->getStreet(),
@@ -135,12 +144,12 @@ class CustomerDetailFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @return \Convertim\Customer\DeliveryAddress
      */
-    protected function createDeliveryAddressFromDeliveryAddress(
+    protected function createConvertimDeliveryAddressFromDeliveryAddress(
         DeliveryAddress $lastDeliveryAddress,
         CustomerUser $customerUser,
     ): ConvertimDeliveryAddress {
         return new ConvertimDeliveryAddress(
-            (string)$lastDeliveryAddress->getId(),
+            $lastDeliveryAddress->getUuid(),
             $customerUser->getFirstName(),
             $customerUser->getLastName(),
             $lastDeliveryAddress->getStreet(),
@@ -156,12 +165,12 @@ class CustomerDetailFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @return \Convertim\Customer\DeliveryAddress
      */
-    protected function createDeliveryAddressFromBillingAddress(
+    protected function createConvertimDeliveryAddressFromBillingAddress(
         BillingAddress $billingAddress,
         CustomerUser $customerUser,
     ): ConvertimDeliveryAddress {
         return new ConvertimDeliveryAddress(
-            (string)$billingAddress->getId(),
+            $billingAddress->getUuid(),
             $customerUser->getFirstName(),
             $customerUser->getLastName(),
             $billingAddress->getStreet(),
@@ -169,6 +178,108 @@ class CustomerDetailFactory
             $billingAddress->getPostcode(),
             $billingAddress->getCountry()?->getCode(),
             $billingAddress->getCompanyName(),
+        );
+    }
+
+    /**
+     * @param string $orderUuid
+     * @return \Convertim\Customer\CustomerDetail
+     */
+    public function createCustomerDetailByOrderUuid(string $orderUuid): CustomerDetail
+    {
+        try {
+            $order = $this->orderFacade->getByUuid($orderUuid);
+
+            $convertimBillingAddress = null;
+
+            if ($order->isDeliveryAddressSameAsBillingAddress()) {
+                $convertimDeliveryAddress = $this->createConvertimDeliveryAddressFromOrderBillingAddress($order);
+            } else {
+                $convertimDeliveryAddress = $this->createConvertimDeliveryAddressFromOrderDeliveryAddress($order);
+                $convertimBillingAddress = $this->createConvertimBillingAddressFromOrder($order);
+            }
+
+            return new CustomerDetail(
+                $order->getEmail(),
+                $order->getTelephone(),
+                $convertimDeliveryAddress,
+                $convertimBillingAddress,
+                $order->getPayment()->getUuid(),
+                $order->getTransport()->getUuid(),
+                $this->createLastSelectedPickupPoint($order),
+            );
+        } catch (OrderNotFoundException) {
+            throw new CustomerDetailsNotFoundException(['orderUuid' => $orderUuid]);
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @return bool
+     */
+    protected function isOrderPersonalPickup(Order $order): bool
+    {
+        return in_array($order->getTransport()->getType(), [TransportTypeEnum::TYPE_PERSONAL_PICKUP, TransportTypeEnum::TYPE_PACKETERY], true);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @return \Convertim\Customer\DeliveryAddress
+     */
+    protected function createConvertimDeliveryAddressFromOrderBillingAddress(Order $order): ConvertimDeliveryAddress
+    {
+        $isOrderPersonalPickup = $this->isOrderPersonalPickup($order);
+
+        return new ConvertimDeliveryAddress(
+            '',
+            $order->getFirstName(),
+            $order->getLastName(),
+            $isOrderPersonalPickup ? '' : $order->getStreet(),
+            $isOrderPersonalPickup ? '' : $order->getCity(),
+            $isOrderPersonalPickup ? '' : $order->getPostcode(),
+            $isOrderPersonalPickup ? '' : $order->getCountry()->getCode(),
+            $isOrderPersonalPickup ? '' : $order->getCompanyName(),
+        );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @return \Convertim\Customer\DeliveryAddress
+     */
+    protected function createConvertimDeliveryAddressFromOrderDeliveryAddress(Order $order): ConvertimDeliveryAddress
+    {
+        $isOrderPersonalPickup = $this->isOrderPersonalPickup($order);
+
+        return new ConvertimDeliveryAddress(
+            '',
+            $order->getFirstName(),
+            $order->getLastName(),
+            $isOrderPersonalPickup ? '' : $order->getDeliveryStreet(),
+            $isOrderPersonalPickup ? '' : $order->getDeliveryCity(),
+            $isOrderPersonalPickup ? '' : $order->getDeliveryPostcode(),
+            $isOrderPersonalPickup ? '' : $order->getDeliveryCountry()?->getCode(),
+            $isOrderPersonalPickup ? '' : $order->getDeliveryCompanyName(),
+            $order->getDeliveryTelephone(),
+        );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @return \Convertim\Customer\BillingAddress
+     */
+    private function createConvertimBillingAddressFromOrder(Order $order): ConvertimBillingAddress
+    {
+        return new ConvertimBillingAddress(
+            '',
+            $order->getFirstName(),
+            $order->getLastName(),
+            $order->getStreet(),
+            $order->getCity(),
+            $order->getPostcode(),
+            $order->getCountry()->getCode(),
+            $order->getCompanyName(),
+            $order->getCompanyNumber(),
+            $order->getCompanyTaxNumber(),
         );
     }
 }
