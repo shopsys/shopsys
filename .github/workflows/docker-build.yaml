@@ -432,7 +432,7 @@ jobs:
         runs-on: ubuntu-22.04
         strategy:
             matrix:
-                group: [ authentication, cart-order-transportAndPayment, visits, others ]
+                group: [ authentication, cartOrderTransportAndPayment, visits, others ]
         env:
             GH_TOKEN: ${{ github.token }}
         steps:
@@ -505,7 +505,7 @@ jobs:
         runs-on: ubuntu-22.04
         strategy:
             matrix:
-                group: [ authentication, cart-order-transportAndPayment, visits, others ]
+                group: [ authentication, cartOrderTransportAndPayment, visits, others ]
         env:
             GH_TOKEN: ${{ github.token }}
         steps:
