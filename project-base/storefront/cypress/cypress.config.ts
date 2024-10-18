@@ -18,16 +18,33 @@ export default defineConfig({
         setupNodeEvents(on, config) {
             getCompareSnapshotsPlugin(on, config);
 
+            const glob = require('glob');
             const group = process.env.GROUP || 'default-group';
+
+            const assignedPatterns: string[] = [];
 
             if (group === 'default-group') {
                 config.specPattern = ['e2e/**/*.cy.ts'];
             } else if (group === 'authentication') {
-                config.specPattern = 'e2e/authentication/*.cy.ts';
+                assignedPatterns.push('e2e/authentication/*.cy.ts');
+                config.specPattern = assignedPatterns;
             } else if (group === 'cart-order-transportAndPayment') {
-                config.specPattern = ['e2e/cart/*.cy.ts', 'e2e/order/*.cy.ts', 'e2e/transportAndPayment/*.cy.ts'];
+                assignedPatterns.push('e2e/cart/*.cy.ts', 'e2e/order/*.cy.ts', 'e2e/transportAndPayment/*.cy.ts');
+                config.specPattern = assignedPatterns;
             } else if (group === 'visits') {
-                config.specPattern = 'e2e/visits/*.cy.ts';
+                assignedPatterns.push('e2e/visits/*.cy.ts');
+                config.specPattern = assignedPatterns;
+            } else if (group === 'others') {
+                const allFiles = glob.sync('e2e/**/*.cy.ts');
+
+                config.specPattern = allFiles.filter(
+                    (file: string) =>
+                        !assignedPatterns.some((pattern) => new RegExp(pattern.replace('*', '.*')).test(file)),
+                );
+            }
+
+            if (group !== 'others' && group !== 'default-group') {
+                config.specPattern = assignedPatterns;
             }
 
             return config;
