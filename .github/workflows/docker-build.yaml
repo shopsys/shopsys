@@ -503,6 +503,9 @@ jobs:
             (needs.build-elasticsearch-image.result == 'success' || needs.build-elasticsearch-image.result == 'skipped') &&
             contains(github.event.pull_request.labels.*.name, 'regenerate screenshots')
         runs-on: ubuntu-22.04
+        strategy:
+            matrix:
+                group: [ authentication, cart-order-transportAndPayment, visits ]
         env:
             GH_TOKEN: ${{ github.token }}
         steps:
@@ -519,9 +522,11 @@ jobs:
                     mv docker-compose.cypress.yml docker-compose.yml
                     docker compose up -d --wait
                     docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick error-pages-generate elasticsearch-index-recreate elasticsearch-export
-            -   name: Run Cypress tests
+            -   name: Run Cypress tests for ${{ matrix.group }}
                 run: |
                     docker compose run cypress-regenerate
+                env:
+                    GROUP: ${{ matrix.group }}
             -   name: Commit generated snapshots
                 run: |
                     cp -rf snapshots/* project-base/storefront/cypress/snapshots/
