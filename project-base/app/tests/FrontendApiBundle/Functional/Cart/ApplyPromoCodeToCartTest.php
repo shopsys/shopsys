@@ -8,9 +8,6 @@ use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\PromoCodeDataFixture;
 use App\Model\Cart\CartFacade;
-use App\Model\Order\PromoCode\PromoCode as AppPromoCode;
-use App\Model\Order\PromoCode\PromoCodeDataFactory;
-use App\Model\Order\PromoCode\PromoCodeFacade;
 use App\Model\Product\Product;
 use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
@@ -18,7 +15,10 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\FrontendCustomerUserProvider;
-use Shopsys\FrontendApiBundle\Component\Constraints\PromoCode;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
+use Shopsys\FrontendApiBundle\Component\Constraints\PromoCode as PromoCodeConstraint;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ApplyPromoCodeToCartTest extends GraphQlTestCase
@@ -58,9 +58,9 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
      */
     private CustomerUserIdentifierFactory $customerUserIdentifierFactory;
 
-    public function testApplyPromoCode(): void
+    public function testApplyPercentagePromoCode(): void
     {
-        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, AppPromoCode::class);
+        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, PromoCode::class);
 
         $applyPromoCodeMutation = 'mutation {
             ApplyPromoCodeToCart(input: {
@@ -68,7 +68,15 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
                 promoCode: "' . $promoCode->getCode() . '"
             }) {
                 uuid
-                promoCode
+                promoCodes {
+                    code
+                    type
+                    discount {
+                        priceWithVat
+                        priceWithoutVat
+                        vatAmount
+                    }
+                }
             }
         }';
 
@@ -76,12 +84,63 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
         $data = $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
 
         self::assertEquals(CartDataFixture::CART_UUID, $data['uuid']);
-        self::assertEquals($promoCode->getCode(), $data['promoCode']);
+        self::assertEquals(
+            [
+                'code' => $promoCode->getCode(),
+                'type' => 'percent',
+                'discount' => [
+                    'priceWithVat' => $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('250.000000'),
+                    'priceWithoutVat' => $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('250.000000'),
+                    'vatAmount' => '0.000000',
+                ],
+            ],
+            $data['promoCodes'][0],
+        );
+    }
+
+    public function testApplyNominalPromoCode(): void
+    {
+        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE_NOMINAL, 1, PromoCode::class);
+
+        $applyPromoCodeMutation = 'mutation {
+            ApplyPromoCodeToCart(input: {
+                cartUuid: "' . CartDataFixture::CART_UUID . '"
+                promoCode: "' . $promoCode->getCode() . '"
+            }) {
+                uuid
+                promoCodes {
+                    code
+                    type
+                    discount {
+                        priceWithVat
+                        priceWithoutVat
+                        vatAmount
+                    }
+                }
+            }
+        }';
+
+        $response = $this->getResponseContentForQuery($applyPromoCodeMutation);
+        $data = $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
+
+        self::assertEquals(CartDataFixture::CART_UUID, $data['uuid']);
+        self::assertEquals(
+            [
+                'code' => $promoCode->getCode(),
+                'type' => 'nominal',
+                'discount' => [
+                    'priceWithVat' => $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('-2500.000000'),
+                    'priceWithoutVat' => $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('-2066.000000'),
+                    'vatAmount' => $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('-434.000000'),
+                ],
+            ],
+            $data['promoCodes'][0],
+        );
     }
 
     public function testApplyPromoCodeMultipleTimes(): void
     {
-        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, AppPromoCode::class);
+        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, PromoCode::class);
 
         $applyPromoCodeMutation = 'mutation {
             ApplyPromoCodeToCart(input: {
@@ -89,7 +148,9 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
                 promoCode: "' . $promoCode->getCode() . '"
             }) {
                 uuid
-                promoCode
+                promoCodes {
+                    code
+                }
             }
         }';
 
@@ -97,7 +158,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
         $data = $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
 
         self::assertEquals(CartDataFixture::CART_UUID, $data['uuid']);
-        self::assertEquals($promoCode->getCode(), $data['promoCode']);
+        self::assertEquals($promoCode->getCode(), $data['promoCodes'][0]['code']);
 
         // apply promo code again
         $response = $this->getResponseContentForQuery($applyPromoCodeMutation);
@@ -105,7 +166,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
         $violations = $this->getErrorsExtensionValidationFromResponse($response);
 
-        self::assertEquals(PromoCode::ALREADY_APPLIED_PROMO_CODE_ERROR, $violations['input.promoCode'][0]['code']);
+        self::assertEquals(PromoCodeConstraint::ALREADY_APPLIED_PROMO_CODE_ERROR, $violations['input.promoCode'][0]['code']);
 
         // test promo code is applied only once in DB
         $cart = $this->cartFacade->findCartByCartIdentifier(CartDataFixture::CART_UUID);
@@ -116,7 +177,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
     {
         $invalidCartUuid = '24c11eca-a3f8-45cb-b843-861bcde847c6';
 
-        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, AppPromoCode::class);
+        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, PromoCode::class);
 
         $applyPromoCodeMutation = 'mutation {
             ApplyPromoCodeToCart(input: {
@@ -124,7 +185,9 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
                 promoCode: "' . $promoCode->getCode() . '"
             }) {
                 uuid
-                promoCode
+                promoCodes {
+                    code
+                }
             }
         }';
 
@@ -138,14 +201,16 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
 
     public function testApplyPromoCodeWithoutCart(): void
     {
-        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, AppPromoCode::class);
+        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, PromoCode::class);
 
         $applyPromoCodeMutation = 'mutation {
             ApplyPromoCodeToCart(input: {
                 promoCode: "' . $promoCode->getCode() . '"
             }) {
                 uuid
-                promoCode
+                promoCodes {
+                    code
+                }
             }
         }';
 
@@ -159,7 +224,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
 
     public function testModificationAfterProductIsRemoved(): void
     {
-        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, AppPromoCode::class);
+        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, PromoCode::class);
         $productInCart = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
 
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/mutation/AddToCartMutation.graphql', [
@@ -175,13 +240,15 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
                 promoCode: "' . $promoCode->getCode() . '"
             }) {
                 uuid
-                promoCode
+                promoCodes {
+                    code
+                }
             }
         }';
 
         $response = $this->getResponseContentForQuery($applyPromoCodeMutation);
         $data = $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
-        self::assertEquals($promoCode->getCode(), $data['promoCode']);
+        self::assertEquals($promoCode->getCode(), $data['promoCodes'][0]['code']);
 
         // product has to be re-fetched due to identity map clearing to prevent "A new entity was found through the relationship" error
         $productInCart = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
@@ -190,7 +257,9 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
 
         $getCartQuery = '{
             cart(cartInput: {cartUuid: "' . $cartUuid . '"}) {
-                promoCode
+                promoCodes {
+                    code
+                }
                 modifications {
                     itemModifications {
                         noLongerListableCartItems {
@@ -211,7 +280,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
         $itemModifications = $data['modifications']['itemModifications'];
         $promoCodeModifications = $data['modifications']['promoCodeModifications'];
 
-        self::assertNull($data['promoCode']);
+        self::assertCount(0, $data['promoCodes']);
 
         self::assertNotEmpty($itemModifications['noLongerListableCartItems']);
         self::assertEquals($productInCart->getUuid(), $itemModifications['noLongerListableCartItems'][0]['product']['uuid']);
@@ -222,7 +291,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
 
     public function testModificationAfterPromoCodeEdited(): void
     {
-        $validPromoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, AppPromoCode::class);
+        $validPromoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, PromoCode::class);
 
         $applyPromoCodeMutation = 'mutation {
             ApplyPromoCodeToCart(input: {
@@ -230,14 +299,16 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
                 promoCode: "' . $validPromoCode->getCode() . '"
             }) {
                 uuid
-                promoCode
+                promoCodes {
+                    code
+                }
             }
         }';
 
         $response = $this->getResponseContentForQuery($applyPromoCodeMutation);
         $data = $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
 
-        self::assertEquals($validPromoCode->getCode(), $data['promoCode']);
+        self::assertEquals($validPromoCode->getCode(), $data['promoCodes'][0]['code']);
 
         $promoCodeData = $this->promoCodeDataFactory->createFromPromoCode($validPromoCode);
         $promoCodeData->remainingUses = 0;
@@ -245,7 +316,9 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
 
         $getCartQuery = '{
             cart(cartInput: {cartUuid: "' . CartDataFixture::CART_UUID . '"}) {
-                promoCode
+                promoCodes {
+                    code
+                }
                 modifications {
                     itemModifications {
                         noLongerListableCartItems {
@@ -266,7 +339,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
 
         $promoCodeModifications = $data['modifications']['promoCodeModifications'];
 
-        self::assertNull($data['promoCode']);
+        self::assertCount(0, $data['promoCodes']);
 
         self::assertNotEmpty($promoCodeModifications['noLongerApplicablePromoCode']);
         self::assertEquals($validPromoCode->getCode(), $promoCodeModifications['noLongerApplicablePromoCode'][0]);
@@ -276,7 +349,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
     {
         $testCartUuid = CartDataFixture::CART_UUID;
 
-        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, AppPromoCode::class);
+        $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, PromoCode::class);
 
         $applyPromoCodeMutation = 'mutation {
             ApplyPromoCodeToCart(input: {
@@ -284,7 +357,9 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
                 promoCode: "' . $promoCode->getCode() . '"
             }) {
                 uuid
-                promoCode
+                promoCodes {
+                    code
+                }
             }
         }';
         $this->getResponseContentForQuery($applyPromoCodeMutation);
@@ -321,7 +396,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
         $promoCodeCode = 'non-existing-promo-code';
 
         if ($promoCodeReferenceName !== null) {
-            $promoCode = $this->getReferenceForDomain($promoCodeReferenceName, 1, AppPromoCode::class);
+            $promoCode = $this->getReferenceForDomain($promoCodeReferenceName, 1, PromoCode::class);
             $promoCodeCode = $promoCode->getCode();
         }
 
@@ -331,7 +406,9 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
                 promoCode: "' . $promoCodeCode . '"
             }) {
                 uuid
-                promoCode
+                promoCodes {
+                    code
+                }
             }
         }';
 
@@ -350,17 +427,17 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
      */
     public static function getInvalidPromoCodesDataProvider(): iterable
     {
-        yield [null, PromoCode::INVALID_ERROR];
+        yield [null, PromoCodeConstraint::INVALID_ERROR];
 
-        yield [PromoCodeDataFixture::PROMO_CODE_FOR_PRODUCT_ID_2, PromoCode::NO_RELATION_TO_PRODUCTS_IN_CART_ERROR];
+        yield [PromoCodeDataFixture::PROMO_CODE_FOR_PRODUCT_ID_2, PromoCodeConstraint::NO_RELATION_TO_PRODUCTS_IN_CART_ERROR];
 
-        yield [PromoCodeDataFixture::NOT_YET_VALID_PROMO_CODE, PromoCode::NOT_YET_VALID_ERROR];
+        yield [PromoCodeDataFixture::NOT_YET_VALID_PROMO_CODE, PromoCodeConstraint::NOT_YET_VALID_ERROR];
 
-        yield [PromoCodeDataFixture::NO_LONGER_VALID_PROMO_CODE, PromoCode::NO_LONGER_VALID_ERROR];
+        yield [PromoCodeDataFixture::NO_LONGER_VALID_PROMO_CODE, PromoCodeConstraint::NO_LONGER_VALID_ERROR];
 
-        yield [PromoCodeDataFixture::PROMO_CODE_FOR_REGISTERED_ONLY, PromoCode::FOR_REGISTERED_CUSTOMER_USERS_ONLY_ERROR];
+        yield [PromoCodeDataFixture::PROMO_CODE_FOR_REGISTERED_ONLY, PromoCodeConstraint::FOR_REGISTERED_CUSTOMER_USERS_ONLY_ERROR];
 
-        yield [PromoCodeDataFixture::PROMO_CODE_FOR_VIP_PRICING_GROUP, PromoCode::NOT_AVAILABLE_FOR_CUSTOMER_USER_PRICING_GROUP_ERROR];
+        yield [PromoCodeDataFixture::PROMO_CODE_FOR_VIP_PRICING_GROUP, PromoCodeConstraint::NOT_AVAILABLE_FOR_CUSTOMER_USER_PRICING_GROUP_ERROR];
     }
 
     /**

@@ -16,9 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class PromoCode
 {
-    public const int DISCOUNT_TYPE_PERCENT = 1;
-    public const int DISCOUNT_TYPE_NOMINAL = 2;
-    public const MASS_GENERATED_CODE_LENGTH = 6;
+    public const int MASS_GENERATED_CODE_LENGTH = 6;
 
     /**
      * @var int
@@ -35,8 +33,8 @@ class PromoCode
     protected $code;
 
     /**
-     * @var int
-     * @ORM\Column(type="integer")
+     * @var string
+     * @ORM\Column(type="string", length=20)
      */
     protected $discountType;
 
@@ -138,7 +136,7 @@ class PromoCode
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getDiscountType()
     {

@@ -11,8 +11,10 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInput;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
+use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\OrderProcessorMiddlewareInterface;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
@@ -45,11 +47,15 @@ class MiddlewareTestCase extends TestCase
         $orderItemTypeEnum = new OrderItemTypeEnum();
         $paymentTransactionRefundDataFactory = $this->createMock(PaymentTransactionRefundDataFactory::class);
         $orderItemDataFactory = $this->createMock(OrderItemDataFactory::class);
+        $orderInputFactory = $this->createMock(OrderInputFactory::class);
+        $orderProcessor = $this->createMock(OrderProcessor::class);
 
         $orderDataFactory = new OrderDataFactory(
             $orderItemDataFactory,
             $paymentTransactionRefundDataFactory,
             $orderItemTypeEnum,
+            $orderInputFactory,
+            $orderProcessor,
         );
         $orderData = $orderDataFactory->create();
 

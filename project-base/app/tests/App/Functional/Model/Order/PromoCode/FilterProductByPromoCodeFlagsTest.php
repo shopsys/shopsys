@@ -6,15 +6,16 @@ namespace Tests\App\Functional\Model\Order\PromoCode;
 
 use App\DataFixtures\Demo\FlagDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
-use App\Model\Order\PromoCode\PromoCode;
-use App\Model\Order\PromoCode\PromoCodeDataFactory;
-use App\Model\Order\PromoCode\PromoCodeFacade;
 use App\Model\Product\Flag\Flag;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\ProductPromoCodeFiller;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitFactory;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeTypeEnum;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class FilterProductByPromoCodeFlagsTest extends TransactionFunctionalTestCase
@@ -159,8 +160,8 @@ class FilterProductByPromoCodeFlagsTest extends TransactionFunctionalTestCase
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag[] $promoCodeFlags
-     * @return \App\Model\Order\PromoCode\PromoCode
+     * @param array $promoCodeFlags
+     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
      */
     private function createPromoCodeWithFlags(array $promoCodeFlags): PromoCode
     {
@@ -170,7 +171,7 @@ class FilterProductByPromoCodeFlagsTest extends TransactionFunctionalTestCase
         $promoCodeData->flags = $promoCodeFlags;
         $promoCodeData->domainId = $this->domain->getId();
         $promoCodeData->code = 'present';
-        $promoCodeData->discountType = PromoCode::DISCOUNT_TYPE_NOMINAL;
+        $promoCodeData->discountType = PromoCodeTypeEnum::NOMINAL;
         $promoCodeData->limits = [$promoCodeLimit];
 
         return $this->promoCodeFacade->create($promoCodeData);
