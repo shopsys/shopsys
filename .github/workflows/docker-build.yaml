@@ -3,6 +3,7 @@ on:
         branches:
             - 'master'
             - '[0-9]+.[0-9]+'
+            - 'rv-build-fix-cypress'
         tags:
             - '**'
     pull_request:
@@ -428,9 +429,11 @@ jobs:
         steps:
             -   name: Check pull request labels
                 run: |
-                    PULL_REQUEST_LABELS=`gh api -H "Accept: application/vnd.github+json" /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels | jq '[.[].name]'`
-                    if echo "$PULL_REQUEST_LABELS" | jq -e '. | index("regenerate screenshots")' >/dev/null; then
-                        exit 1;
+                    if [ -n "${{ github.event.pull_request.number }}" ]; then
+                        PULL_REQUEST_LABELS=`gh api -H "Accept: application/vnd.github+json" /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels | jq '[.[].name]'`
+                        if echo "$PULL_REQUEST_LABELS" | jq -e '. | index("regenerate screenshots")' >/dev/null; then
+                            exit 1;
+                        fi
                     fi
             -   name: GIT checkout branch - ${{ github.ref }}
                 uses: actions/checkout@v4
