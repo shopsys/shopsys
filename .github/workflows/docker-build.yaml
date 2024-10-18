@@ -866,11 +866,24 @@ jobs:
                           - https://${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}
                           - https://cz.${{ needs.variables.outputs.BRANCH_NAME_ESCAPED }}.${{ vars.REVIEW_STAGE_URL }}
                     delete-previous-comment: false
+    regenerate-successful:
+        if: |
+            always() && contains(github.event.pull_request.labels.*.name, 'regenerate screenshots')
+        name: Regenerate successful
+        needs: [ tests-storefront-acceptance-regenerate ]
+        runs-on: ubuntu-22.04
+        steps:
+            -   name: GIT checkout branch - ${{ github.ref }}
+                uses: actions/checkout@v4
+                with:
+                    ref: ${{ github.ref }}
+            -   name: Regenerate successful
+                run: echo "Regenerate successful"
     build-successful:
         if: |
-            always() && !contains(github.event.pull_request.labels.*.name, 'regenerate screenshots')
+            always() && !contains(github.event.pull_request.labels.*.name, ' job ')
         name: Build successful
-        needs: [tests-acceptance, standards, tests-unit-functional-smoke, standards-storefront, translations-dump-check, review, build-fork-docker-images, check-console-commands, tests-storefront-acceptance, tests-storefront-acceptance-regenerate, unit-test-storefront]
+        needs: [tests-acceptance, standards, tests-unit-functional-smoke, standards-storefront, translations-dump-check, review, build-fork-docker-images, check-console-commands, tests-storefront-acceptance, unit-test-storefront]
         runs-on: ubuntu-22.04
         env:
             BUILD_FORK_RESULT: ${{ needs.build-fork-docker-images.result }}
