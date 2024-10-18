@@ -19,13 +19,12 @@ export default defineConfig({
             getCompareSnapshotsPlugin(on, config);
 
             const group = process.env.GROUP || 'default-group';
-            console.log(`Running tests for group: ${group || 'default-group'}`);
 
             if (group === 'default-group') {
                 config.specPattern = ['e2e/**/*.cy.ts'];
-            } else if (group === 'auth') {
+            } else if (group === 'authentication') {
                 config.specPattern = 'e2e/authentication/*.cy.ts';
-            } else if (group === 'cart-order-payment') {
+            } else if (group === 'cart-order-transportAndPayment') {
                 config.specPattern = ['e2e/cart/*.cy.ts', 'e2e/order/*.cy.ts', 'e2e/transportAndPayment/*.cy.ts'];
             } else if (group === 'visits') {
                 config.specPattern = 'e2e/visits/*.cy.ts';
