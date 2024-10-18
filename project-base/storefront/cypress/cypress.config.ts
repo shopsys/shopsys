@@ -40,10 +40,11 @@ export default defineConfig({
             } else if (group === 'others') {
                 const allFiles = glob.sync('e2e/**/*.cy.ts');
 
-                config.specPattern = allFiles.filter(
-                    (file: string) =>
-                        !usedPatterns.some((pattern) => new RegExp(pattern.replace('*', '.*')).test(file)),
+                const filteredFiles = allFiles.filter((file: string) =>
+                    !usedPatterns.some((pattern) => new RegExp(pattern.replace('*', '.*')).test(file))
                 );
+
+                config.specPattern = filteredFiles.length > 0 ? filteredFiles : ['e2e/dummy/dummyTest.cy.ts'];
             }
 
             return config;

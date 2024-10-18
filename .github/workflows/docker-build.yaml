@@ -522,7 +522,7 @@ jobs:
                     mv docker-compose.cypress.yml docker-compose.yml
                     docker compose up -d --wait
                     docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick error-pages-generate elasticsearch-index-recreate elasticsearch-export
-            -   name: Run Cypress tests for ${{ matrix.group }}
+            -   name: Run regenerate Cypress tests for ${{ matrix.group }}
                 run: |
                     docker compose run cypress-regenerate
                 env:
@@ -873,7 +873,9 @@ jobs:
                     delete-previous-comment: false
     regenerate-successful:
         if: |
-            always() && contains(github.event.pull_request.labels.*.name, 'regenerate screenshots')
+            always() && 
+            contains(github.event.pull_request.labels.*.name, 'regenerate screenshots') &&
+            needs.tests-storefront-acceptance-regenerate.result == 'success'
         name: Regenerate successful
         needs: [ tests-storefront-acceptance-regenerate ]
         runs-on: ubuntu-22.04
