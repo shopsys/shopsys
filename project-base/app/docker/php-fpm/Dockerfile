@@ -9,69 +9,100 @@ COPY ${project_root}/docker/php-fpm/php-ini-overrides.ini /usr/local/etc/php/php
 
 ########################################################################################################################
 
-FROM base as development
+FROM base AS production_builder
+USER root
+
+# Copy project source code
+COPY / /var/www/html
+RUN chown -R www-data:www-data /var/www/html
+
+USER www-data
+RUN composer install --optimize-autoloader --no-interaction --no-progress --no-dev \
+    && php phing build-deploy-part-1-db-independent clean
+
+#RUN chmod +x ${project_root}/deploy/deploy-project.sh && ${project_root}/deploy/deploy-project.sh merge
 
 USER root
 
-# install Blackfire probe
-RUN version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION.(PHP_ZTS ? '-zts' : '');") \
-    && architecture=$(uname -m) \
-    && curl -A "Docker" -o /tmp/blackfire-probe.tar.gz -D - -L -s "https://blackfire.io/api/v1/releases/probe/php/linux/$architecture/$version" \
-    && mkdir -p /tmp/blackfire \
-    && tar zxpf /tmp/blackfire-probe.tar.gz -C /tmp/blackfire \
-    && mv /tmp/blackfire/blackfire-*.so $(php -r "echo ini_get ('extension_dir');")/blackfire.so \
-    && printf "extension=blackfire.so\nblackfire.agent_socket=tcp://blackfire:8307\n" > "$PHP_INI_DIR/conf.d/blackfire.ini" \
-    && curl -A "Docker" -L "https://blackfire.io/api/v1/releases/cli/linux/$architecture" | tar zxp -C /tmp/blackfire \
-    && mv /tmp/blackfire/blackfire /usr/bin/blackfire \
-    && rm -rf /tmp/blackfire /tmp/blackfire-probe.tar.gz
-
-# allow overwriting UID and GID o the user "www-data" to help solve issues with permissions in mounted volumes
-# if the GID is already in use, we will assign GID 33 instead (33 is the standard uid/gid for "www-data" in Debian)
-ARG www_data_uid
-ARG www_data_gid
-RUN if [ -n "$www_data_uid" ]; then deluser www-data && (addgroup --gid $www_data_gid www-data || addgroup --gid 33 www-data) && adduser --system --home /home/www-data --uid $www_data_uid --disabled-password --group www-data; fi;
-
-# as the UID and GID might have changed, change the ownership of the home directory workdir again
-RUN chown -R www-data:www-data /home/www-data /var/www/html
+RUN rm -rf /var/www/html/node_modules \
+    /var/www/html/tests \
+    /var/www/html/content-test \
+    && chown -R www-data:www-data /var/www/html/
 
 USER www-data
 
 ########################################################################################################################
+##################################### Production stage #################################################################
+########################################################################################################################
+FROM base AS production
 
-FROM base as production
-
-ARG project_root=.
-
-# copy custom FPM pool configuration
+# Copy PHP-FPM configuration
 COPY ${project_root}/docker/php-fpm/production-www.conf /usr/local/etc/php-fpm.d/www.conf
 
-COPY --chown=www-data:www-data / /var/www/html
-
-RUN composer install --optimize-autoloader --no-interaction --no-progress --no-dev
-
-RUN php phing build-deploy-part-1-db-independent clean
+USER www-data
+COPY --from=production_builder /var/www/html/ /var/www/html/
 
 ########################################################################################################################
+##################################### Development stage ################################################################
+########################################################################################################################
+FROM base AS development
+USER root
+ARG www_data_uid
+ARG www_data_gid
 
-FROM production as production-project
+RUN apk add --no-cache \
+    nodejs npm \
+    htop \
+    vim \
+    nano \
+    bash-completion \
+    linux-headers \
+    git \
+    shadow
 
-RUN chmod +x ./deploy/deploy-project.sh && ./deploy/deploy-project.sh merge
+RUN if [ -n "${www_data_gid}" ] && ! getent group ${www_data_gid} >/dev/null; then \
+        if getent group www-data >/dev/null; then groupmod -g ${www_data_gid} www-data; fi; \
+    fi && \
+    if [ -n "${www_data_uid}" ] && ! id -u ${www_data_uid} >/dev/null; then \
+        if id -u www-data >/dev/null; then usermod -u ${www_data_uid} www-data; fi; \
+    fi
+
+COPY ${project_root}/docker/php-fpm/phing-completion /etc/bash_completion.d/phing
+
+RUN echo "source /etc/profile.d/bash_completion.sh" >> ~/.bash_profile && \
+    chown -R www-data:www-data /home/www-data /var/www/html
+
+USER www-data
+######################################################################################################################## \
+##################################### Development with x debug stage ########################################################################
+########################################################################################################################
+FROM development AS development_x_debug
+USER root
+RUN pecl install xdebug-3.2.2 \
+    && docker-php-ext-enable xdebug
+USER www-data
 
 ########################################################################################################################
+##################################### Development with blackfire ##########################
+########################################################################################################################
+FROM development AS development_blackfire
+USER root
+RUN version=$(php -r "echo PHP_MAJOR_VERSION.PHP_MINOR_VERSION;") \
+&& architecture=$(uname -m) \
+&& curl -A "Docker" -o /tmp/blackfire-probe.tar.gz -D - -L -s https://blackfire.io/api/v1/releases/probe/php/alpine/$architecture/$version \
+&& mkdir -p /tmp/blackfire \
+&& tar zxpf /tmp/blackfire-probe.tar.gz -C /tmp/blackfire \
+&& mv /tmp/blackfire/blackfire-*.so $(php -r "echo ini_get ('extension_dir');")/blackfire.so \
+&& printf "extension=blackfire.so\nblackfire.agent_socket=tcp://blackfire:8307\n" > $PHP_INI_DIR/conf.d/blackfire.ini \
+&& rm -rf /tmp/blackfire /tmp/blackfire-probe.tar.gz
 
-FROM base as ci
+RUN mkdir -p /tmp/blackfire \
+    && architecture=$(uname -m) \
+    && curl -A "Docker" -L https://blackfire.io/api/v1/releases/cli/linux/$architecture | tar zxp -C /tmp/blackfire \
+    && mv /tmp/blackfire/blackfire /usr/bin/blackfire \
+    && rm -Rf /tmp/blackfire
 
-COPY --chown=www-data:www-data / /var/www/html
 
-RUN curl -L \
-      -H "Accept: application/vnd.github+json" \
-      -H "X-GitHub-Api-Version: 2022-11-28" \
-      https://api.github.com/rate_limit
-
-RUN composer install --optimize-autoloader --no-interaction --no-progress --dev -vvv
-
-RUN php phing build-deploy-part-1-db-independent
-
-RUN ./bin/console shopsys:environment:change prod
-
-RUN php phing clean
+# Please note that the Blackfire Probe is dependent on the session module.
+# If it isn't present in your install, you will need to enable it yourself.
+USER www-data
