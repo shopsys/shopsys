@@ -20,15 +20,11 @@ RUN apk add --no-cache --virtual .build-deps \
     icu-dev \
     libpq-dev \
     libzip-dev \
-    libpng-dev \
-    freetype-dev \
-    jpeg-dev \
     openssl-dev && \
     pecl install redis-5.3.7 && \
     docker-php-ext-enable redis && \
     pecl install amqp && \
     docker-php-ext-enable amqp && \
-    docker-php-ext-configure gd --with-freetype --with-jpeg && \
     docker-php-ext-install \
         zip \
         pdo_pgsql \
@@ -36,7 +32,6 @@ RUN apk add --no-cache --virtual .build-deps \
         bcmath \
         intl \
         opcache \
-        gd && \
     apk del .build-deps && \
     apk add --no-cache \
         bash \
@@ -44,9 +39,6 @@ RUN apk add --no-cache --virtual .build-deps \
         icu-libs \
         icu-data-full \
         libzip \
-        libpng \
-        freetype \
-        jpeg \
         openssl \
         ca-certificates \
         postgresql-client \
