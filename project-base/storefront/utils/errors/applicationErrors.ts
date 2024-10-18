@@ -38,6 +38,8 @@ const ApplicationErrors = {
     'access-denied': 'flash-message',
     'invalid-quantity': 'flash-message',
     'register-by-order-is-not-possible': 'flash-message',
+    'invalid-account-or-password': 'no-flash-message',
+    'too-many-login-attempts': 'flash-message',
 } as const;
 
 type KeysMatching<T, V extends ApplicationErrorVerbosityLevel> = {
