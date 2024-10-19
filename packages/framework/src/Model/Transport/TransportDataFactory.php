@@ -54,7 +54,7 @@ class TransportDataFactory implements TransportDataFactoryInterface
         $transportData->daysUntilDelivery = 0;
 
         foreach ($this->domain->getAllIds() as $domainId) {
-            $transportData->enabled[$domainId] = true;
+            $transportData->enabled[$domainId] = false;
             $transportData->inputPricesByDomain[$domainId] = $this->transportInputPricesDataFactory->create($domainId);
         }
 

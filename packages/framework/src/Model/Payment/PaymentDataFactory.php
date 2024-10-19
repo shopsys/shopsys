@@ -48,7 +48,7 @@ class PaymentDataFactory implements PaymentDataFactoryInterface
     protected function fillNew(PaymentData $paymentData): void
     {
         foreach ($this->domain->getAllIds() as $domainId) {
-            $paymentData->enabled[$domainId] = true;
+            $paymentData->enabled[$domainId] = false;
             $paymentData->pricesIndexedByDomainId[$domainId] = Money::zero();
             $paymentData->vatsIndexedByDomainId[$domainId] = $this->vatFacade->getDefaultVatForDomain($domainId);
             $paymentData->goPayPaymentMethodByDomainId[$domainId] = null;

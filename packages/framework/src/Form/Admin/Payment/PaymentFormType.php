@@ -68,10 +68,9 @@ class PaymentFormType extends AbstractType
 
         $builderBasicInformationGroup
             ->add('name', LocalizedType::class, [
-                'main_constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter name']),
-                ],
+                'required' => false,
                 'entry_options' => [
+                    'required' => false,
                     'constraints' => [
                         new Constraints\Length(
                             ['max' => 255, 'maxMessage' => 'Name cannot be longer than {{ limit }} characters'],
