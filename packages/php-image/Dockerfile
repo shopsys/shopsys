@@ -71,6 +71,7 @@ RUN if [ -e "/usr/local/bin/npm" ]; then rm /usr/local/bin/npm; fi && ln -s /usr
 
 COPY ./docker-php-entrypoint /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-php-entrypoint
+RUN chown -R www-data:www-data /var/www/html
 
 USER www-data
 

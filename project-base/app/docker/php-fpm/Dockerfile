@@ -13,23 +13,16 @@ FROM base AS production_builder
 USER root
 
 # Copy project source code
-COPY / /var/www/html
-RUN chown -R www-data:www-data /var/www/html
+COPY --chown=www-data:www-data / /var/www/html
+
+RUN rm -rf /var/www/html/node_modules \
+    /var/www/html/tests
 
 USER www-data
 RUN composer install --optimize-autoloader --no-interaction --no-progress --no-dev \
     && php phing build-deploy-part-1-db-independent clean
 
 #RUN chmod +x ${project_root}/deploy/deploy-project.sh && ${project_root}/deploy/deploy-project.sh merge
-
-USER root
-
-RUN rm -rf /var/www/html/node_modules \
-    /var/www/html/tests \
-    /var/www/html/content-test \
-    && chown -R www-data:www-data /var/www/html/
-
-USER www-data
 
 ########################################################################################################################
 ##################################### Production stage #################################################################
