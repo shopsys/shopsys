@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Article\ArticleFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Article\Article;
-use Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Article\ArticleDataFactory;
 use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
 use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade;
@@ -26,7 +26,7 @@ class ArticleController extends AdminBaseController
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface $articleDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleDataFactory $articleDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
@@ -36,7 +36,7 @@ class ArticleController extends AdminBaseController
      */
     public function __construct(
         protected readonly ArticleFacade $articleFacade,
-        protected readonly ArticleDataFactoryInterface $articleDataFactory,
+        protected readonly ArticleDataFactory $articleDataFactory,
         protected readonly GridFactory $gridFactory,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
@@ -120,11 +120,12 @@ class ArticleController extends AdminBaseController
     #[Route(path: '/article/new/')]
     public function newAction(Request $request): Response
     {
-        $articleData = $this->articleDataFactory->create();
+        $selectedDomainId = $this->adminDomainTabsFacade->getSelectedDomainId();
+        $articleData = $this->articleDataFactory->create($selectedDomainId);
 
         $form = $this->createForm(ArticleFormType::class, $articleData, [
             'article' => null,
-            'domain_id' => $this->adminDomainTabsFacade->getSelectedDomainId(),
+            'domain_id' => $selectedDomainId,
         ]);
         $form->handleRequest($request);
 

@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProvider;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\DateTimeType;
+use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
 
@@ -74,7 +75,8 @@ class DateTimeTypeTest extends TypeTestCase
             ->getMock();
         $dateTimeZone = new DateTimeZone($dateTimeZoneString);
         $domainConfig = new DomainConfig(1, 'http://example.com', 'name', 'en', $dateTimeZone);
+        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
 
-        return new Domain([$domainConfig], $settingMock);
+        return new Domain([$domainConfig], $settingMock, $administratorFacadeMock);
     }
 }

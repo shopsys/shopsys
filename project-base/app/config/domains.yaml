@@ -14,3 +14,269 @@ domains:
         styles_directory: domain2
         timezone: Europe/Prague
         type: b2b
+
+    -   id: 3
+        load_demo_data: false
+        locale: en
+        name: 3.shopsys
+        styles_directory: domain3
+        timezone: Europe/Prague
+
+    -   id: 4
+        load_demo_data: false
+        locale: cs
+        name: 4.shopsys
+        styles_directory: domain4
+        timezone: Europe/Prague
+
+    -   id: 5
+        load_demo_data: false
+        locale: en
+        name: 5.shopsys
+        styles_directory: domain5
+        timezone: Europe/Prague
+
+    -   id: 6
+        load_demo_data: false
+        locale: cs
+        name: 6.shopsys
+        styles_directory: domain6
+        timezone: Europe/Prague
+
+    -   id: 7
+        load_demo_data: false
+        locale: en
+        name: 7.shopsys
+        styles_directory: domain7
+        timezone: Europe/Prague
+
+    -   id: 8
+        load_demo_data: false
+        locale: cs
+        name: 8.shopsys
+        styles_directory: domain8
+        timezone: Europe/Prague
+
+    -   id: 9
+        load_demo_data: false
+        locale: en
+        name: 9.shopsys
+        styles_directory: domain9
+        timezone: Europe/Prague
+
+    -   id: 10
+        load_demo_data: false
+        locale: cs
+        name: 10.shopsys
+        styles_directory: domain10
+        timezone: Europe/Prague
+
+    -   id: 11
+        load_demo_data: false
+        locale: en
+        name: 11.shopsys
+        styles_directory: domain11
+        timezone: Europe/Prague
+
+    -   id: 12
+        load_demo_data: false
+        locale: cs
+        name: 12.shopsys
+        styles_directory: domain12
+        timezone: Europe/Prague
+
+    -   id: 13
+        load_demo_data: false
+        locale: en
+        name: 13.shopsys
+        styles_directory: domain13
+        timezone: Europe/Prague
+
+    -   id: 14
+        load_demo_data: false
+        locale: cs
+        name: 14.shopsys
+        styles_directory: domain14
+        timezone: Europe/Prague
+
+    -   id: 15
+        load_demo_data: false
+        locale: en
+        name: 15.shopsys
+        styles_directory: domain15
+        timezone: Europe/Prague
+
+    -   id: 16
+        load_demo_data: false
+        locale: cs
+        name: 16.shopsys
+        styles_directory: domain16
+        timezone: Europe/Prague
+
+    -   id: 17
+        load_demo_data: false
+        locale: en
+        name: 17.shopsys
+        styles_directory: domain17
+        timezone: Europe/Prague
+
+    -   id: 18
+        load_demo_data: false
+        locale: cs
+        name: 18.shopsys
+        styles_directory: domain18
+        timezone: Europe/Prague
+
+    -   id: 19
+        load_demo_data: false
+        locale: en
+        name: 19.shopsys
+        styles_directory: domain19
+        timezone: Europe/Prague
+
+    -   id: 20
+        load_demo_data: false
+        locale: cs
+        name: 20.shopsys
+        styles_directory: domain20
+        timezone: Europe/Prague
+
+    -   id: 21
+        load_demo_data: false
+        locale: en
+        name: 21.shopsys
+        styles_directory: domain21
+        timezone: Europe/Prague
+
+    -   id: 22
+        load_demo_data: false
+        locale: cs
+        name: 22.shopsys
+        styles_directory: domain22
+        timezone: Europe/Prague
+
+    -   id: 23
+        load_demo_data: false
+        locale: en
+        name: 23.shopsys
+        styles_directory: domain23
+        timezone: Europe/Prague
+
+    -   id: 24
+        load_demo_data: false
+        locale: cs
+        name: 24.shopsys
+        styles_directory: domain24
+        timezone: Europe/Prague
+
+    -   id: 25
+        load_demo_data: false
+        locale: en
+        name: 25.shopsys
+        styles_directory: domain25
+        timezone: Europe/Prague
+
+    -   id: 26
+        load_demo_data: false
+        locale: cs
+        name: 26.shopsys
+        styles_directory: domain26
+        timezone: Europe/Prague
+
+    -   id: 27
+        load_demo_data: false
+        locale: en
+        name: 27.shopsys
+        styles_directory: domain27
+        timezone: Europe/Prague
+
+    -   id: 28
+        load_demo_data: false
+        locale: cs
+        name: 28.shopsys
+        styles_directory: domain28
+        timezone: Europe/Prague
+
+    -   id: 29
+        load_demo_data: false
+        locale: en
+        name: 29.shopsys
+        styles_directory: domain29
+        timezone: Europe/Prague
+
+    -   id: 30
+        load_demo_data: false
+        locale: cs
+        name: 30.shopsys
+        styles_directory: domain30
+        timezone: Europe/Prague
+
+    -   id: 31
+        load_demo_data: false
+        locale: en
+        name: 31.shopsys
+        styles_directory: domain31
+        timezone: Europe/Prague
+
+    -   id: 32
+        load_demo_data: false
+        locale: cs
+        name: 32.shopsys
+        styles_directory: domain32
+        timezone: Europe/Prague
+
+    -   id: 33
+        load_demo_data: false
+        locale: en
+        name: 33.shopsys
+        styles_directory: domain33
+        timezone: Europe/Prague
+
+    -   id: 34
+        load_demo_data: false
+        locale: cs
+        name: 34.shopsys
+        styles_directory: domain34
+        timezone: Europe/Prague
+
+    -   id: 35
+        load_demo_data: false
+        locale: en
+        name: 35.shopsys
+        styles_directory: domain35
+        timezone: Europe/Prague
+
+    -   id: 36
+        load_demo_data: false
+        locale: cs
+        name: 36.shopsys
+        styles_directory: domain36
+        timezone: Europe/Prague
+
+    -   id: 37
+        load_demo_data: false
+        locale: en
+        name: 37.shopsys
+        styles_directory: domain37
+        timezone: Europe/Prague
+
+    -   id: 38
+        load_demo_data: false
+        locale: cs
+        name: 38.shopsys
+        styles_directory: domain38
+        timezone: Europe/Prague
+
+    -   id: 39
+        load_demo_data: false
+        locale: en
+        name: 39.shopsys
+        styles_directory: domain39
+        timezone: Europe/Prague
+
+    -   id: 40
+        load_demo_data: false
+        locale: cs
+        name: 40.shopsys
+        styles_directory: domain40
+        timezone: Europe/Prague

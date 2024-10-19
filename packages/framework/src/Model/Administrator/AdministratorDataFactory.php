@@ -4,8 +4,18 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Administrator;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+
 class AdministratorDataFactory implements AdministratorDataFactoryInterface
 {
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     */
+    public function __construct(
+        protected readonly Domain $domain,
+    ) {
+    }
+
     /**
      * @return \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData
      */
@@ -19,7 +29,11 @@ class AdministratorDataFactory implements AdministratorDataFactoryInterface
      */
     public function create(): AdministratorData
     {
-        return $this->createInstance();
+        $administratorData = $this->createInstance();
+
+        $administratorData->displayOnlyDomainIds = $this->domain->getAllIds();
+
+        return $administratorData;
     }
 
     /**
@@ -46,6 +60,7 @@ class AdministratorDataFactory implements AdministratorDataFactoryInterface
         $administratorData->roles = $administrator->getRoles();
         $administratorData->transferIssuesLastSeenDateTime = $administrator->getTransferIssuesLastSeenDateTime();
         $administratorData->roleGroup = $administrator->getRoleGroup();
+        $administratorData->displayOnlyDomainIds = $administrator->getDisplayOnlyDomainIds();
 
         if ($administrator->getRoleGroup() !== null) {
             $administratorData->roles = [];

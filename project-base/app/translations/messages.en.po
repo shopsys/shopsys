@@ -127,6 +127,9 @@ msgstr ""
 msgid "Create notification bar"
 msgstr ""
 
+msgid "Creating a record requires all domains to be enabled as domain-specific fields cannot be empty. If you want to proceed, select all domains in the Domain filter in the header first."
+msgstr ""
+
 msgid "Delete category with SEO mix"
 msgstr ""
 

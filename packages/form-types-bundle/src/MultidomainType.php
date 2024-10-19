@@ -30,7 +30,7 @@ class MultidomainType extends AbstractType
         $entryOptions['required'] = ($options['required'] ?? false) && ($entryOptions['required'] ?? false);
         $entryOptions['constraints'] = $entryOptions['constraints'] ?? [];
 
-        $domainIds = $this->domainIdsProvider->getAllIds();
+        $domainIds = $this->domainIdsProvider->getAdminEnabledDomainIds();
 
         foreach ($domainIds as $domainId) {
             if (array_key_exists($domainId, $options['options_by_domain_id'])) {

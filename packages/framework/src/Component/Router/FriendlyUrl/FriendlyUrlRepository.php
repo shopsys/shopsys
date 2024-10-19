@@ -140,6 +140,29 @@ class FriendlyUrlRepository
     /**
      * @param string $routeName
      * @param int $entityId
+     * @param int[] $domainIds
+     * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[]
+     */
+    public function getAllByRouteNameDomainIdsAndEntityIds(string $routeName, int $entityId, array $domainIds): array
+    {
+        $criteria = [
+            'routeName' => $routeName,
+            'entityId' => $entityId,
+            'domainId' => $domainIds,
+        ];
+
+        return $this->getFriendlyUrlRepository()->findBy(
+            $criteria,
+            [
+                'domainId' => 'ASC',
+                'slug' => 'ASC',
+            ],
+        );
+    }
+
+    /**
+     * @param string $routeName
+     * @param int $entityId
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl[]
      */

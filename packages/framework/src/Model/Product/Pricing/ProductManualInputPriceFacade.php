@@ -53,6 +53,10 @@ class ProductManualInputPriceFacade
     public function refreshProductManualInputPrices(Product $product, array $productInputPriceDataByDomain): void
     {
         foreach ($this->pricingGroupRepository->getAll() as $pricingGroup) {
+            if (!array_key_exists($pricingGroup->getId(), $productInputPriceDataByDomain[$pricingGroup->getDomainId()]->manualInputPricesByPricingGroupId)) {
+                continue;
+            }
+
             $this->refresh(
                 $product,
                 $pricingGroup,

@@ -416,7 +416,9 @@ class DefaultController extends AdminBaseController
 
     protected function checkMandatoryArticlesExist(): void
     {
-        foreach ($this->domain->getAll() as $domainConfig) {
+        foreach ($this->domain->getAdminEnabledDomainIds() as $domainId) {
+            $domainConfig = $this->domain->getDomainConfigById($domainId);
+
             if ($this->setting->getForDomain(Setting::TERMS_AND_CONDITIONS_ARTICLE_ID, $domainConfig->getId()) === null) {
                 $this->addErrorFlashTwig(
                     t('<a href="{{ url }}">Terms and conditions article for domain {{ domainName }} is not set.</a>'),
