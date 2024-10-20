@@ -334,7 +334,7 @@ jobs:
                 run: docker compose logs storefront
     tests-unit-functional-smoke:
         name: Run unit, functional and smoke tests
-        needs: [build-php-fpm-image, build-storefront-image, build-elasticsearch-image]
+        needs: [build-php-fpm-image, build-elasticsearch-image]
         if: |
             always() && !failure() && !cancelled() &&
             (
@@ -342,7 +342,6 @@ jobs:
                 github.ref_protected == true
             ) &&
             (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped') &&
-            (needs.build-storefront-image.result == 'success' || needs.build-storefront-image.result == 'skipped') &&
             (needs.build-elasticsearch-image.result == 'success' || needs.build-elasticsearch-image.result == 'skipped')
         runs-on: ubuntu-22.04
         steps:
@@ -356,17 +355,14 @@ jobs:
                     name: docker-compose
             -   name: Build application
                 run: |
-                    docker compose pull --parallel postgres webserver elasticsearch redis php-fpm storefront
-                    docker compose up -d postgres webserver elasticsearch redis php-fpm storefront
-                    docker compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change test-dirs-create db-create test-db-create db-demo elasticsearch-index-recreate elasticsearch-export error-pages-generate
+                    docker compose pull --parallel postgres webserver elasticsearch redis php-fpm
+                    docker compose up -d postgres webserver elasticsearch redis php-fpm
+                    docker compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change test-dirs-create test-db-create frontend-api-generate-new-keys
             -   name: Run tests
                 run: docker compose exec -T php-fpm php phing -D production.confirm.action=y tests
             -   name: PHP-FPM container logs
                 if: ${{ failure() }}
                 run: docker compose logs php-fpm
-            -   name: Storefront container logs
-                if: ${{ failure() }}
-                run: docker compose logs storefront
             -   name: Nginx container logs
                 if: ${{ failure() }}
                 run: docker compose logs webserver
@@ -393,9 +389,9 @@ jobs:
                     name: docker-compose
             -   name: Build application
                 run: |
-                    docker compose pull --parallel webserver postgres elasticsearch redis php-fpm storefront selenium-server
-                    docker compose up -d
-                    docker compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change dirs-create test-dirs-create db-create test-db-create db-demo error-pages-generate test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export tests-acceptance-build
+                    docker compose pull --parallel webserver postgres elasticsearch redis php-fpm selenium-server
+                    docker compose up -d webserver postgres elasticsearch redis php-fpm selenium-server
+                    docker compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change test-dirs-create test-db-create frontend-api-generate-new-keys test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export test-error-pages-generate tests-acceptance-build
             -   name: Run acceptance tests
                 run: docker compose exec -T php-fpm php phing -D production.confirm.action=y tests-acceptance
             -   name: PHP-FPM container logs
