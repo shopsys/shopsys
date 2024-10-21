@@ -1,0 +1,42 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
+
+msgid "Item {{ name }} can no longer be bought."
+msgstr "Položku {{ itemName }} již nelze zakoupit."
+
+msgid "Item {{ name }} has been sold out."
+msgstr "Položka {{ name }} byla vyprodána."
+
+msgid "The payment you selected is no longer available."
+msgstr "Platba, kterou jste si zvolili, již není dostupná."
+
+msgid "The price of item {{ name }} has changed."
+msgstr "Cena položky {{ name }} se změnila."
+
+msgid "The price of the payment you selected has changed."
+msgstr "Cena platby, kterou jste si zvolili, se změnila."
+
+msgid "The price of the transport you selected has changed."
+msgstr "Cena dopravy, kterou jste si zvolili, se změnila."
+
+msgid "The product {{ name }} is not available."
+msgstr "Produkt {{ name }} není dostupný."
+
+msgid "The promo code {{ code }} is no longer applicable."
+msgstr "Slevový kupón {{ code }} již nelze uplatnit."
+
+msgid "The quantity of item {{ name }} has changed."
+msgstr "Množství položky {{ name }} se změnilo."
+
+msgid "The store you selected is no longer available."
+msgstr "Prodjena, kterou jste zvolili, již není dostupná."
+
+msgid "The transport you selected is no longer available."
+msgstr "Doprava, kterou jste si zvolili, již není dostupná."
+
+msgid "You have exceeded the weight limit of the selected transport."
+msgstr "Přesáhli jste váhový limit vámi zvolené dopravy."
+
