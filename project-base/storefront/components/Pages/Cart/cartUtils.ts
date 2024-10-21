@@ -4,7 +4,7 @@ import { useSessionStore } from 'store/useSessionStore';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 export const useCartPageNavigation = () => {
-    const { url, shouldUseConvertim } = useDomainConfig();
+    const { url, convertimUuid } = useDomainConfig();
     const router = useRouter();
     const [transportAndPaymentUrl, convertim] = getInternationalizedStaticUrls(
         ['/order/transport-and-payment', '/order/convertim'],
@@ -19,7 +19,7 @@ export const useCartPageNavigation = () => {
 
     const goToNextStepFromCartPage = () => {
         updatePageLoadingState({ isPageLoading: true, redirectPageType: 'transport-and-payment' });
-        if (shouldUseConvertim) {
+        if (convertimUuid) {
             router.push(convertim);
             return;
         }

@@ -59,7 +59,7 @@ const nextConfig = {
                 gtmId: process.env.GTM_ID,
                 isLuigisBoxActive: (process.env.LUIGIS_BOX_ENABLED_DOMAIN_IDS ?? '').split(',').includes('1'),
                 type: 'B2C',
-                shouldUseConvertim: (process.env.CONVERTIM_ENABLED_DOMAIN_IDS ?? '').split(',').includes('1'),
+                convertimUuid: process.env.CONVERTIM_UUID_DOMAIN_1,
             },
             {
                 publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_2,
@@ -76,7 +76,7 @@ const nextConfig = {
                 gtmId: process.env.GTM_ID,
                 isLuigisBoxActive: (process.env.LUIGIS_BOX_ENABLED_DOMAIN_IDS ?? '').split(',').includes('2'),
                 type: 'B2B',
-                shouldUseConvertim: (process.env.CONVERTIM_ENABLED_DOMAIN_IDS ?? '').split(',').includes('2'),
+                convertimUuid: process.env.CONVERTIM_UUID_DOMAIN_2,
             },
         ],
     },

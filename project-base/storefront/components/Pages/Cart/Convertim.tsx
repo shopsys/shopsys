@@ -4,9 +4,9 @@ import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.g
 import { useTransportsWithStoresQuery } from 'graphql/requests/transports/queries/TransportsWithStoresQuery.generated';
 import useTranslation from 'next-translate/useTranslation';
 
-type ConvertimProps = { cart: TypeCartFragment };
+type ConvertimProps = { cart: TypeCartFragment; convertimUuid: string };
 
-export const Convertim: FC<ConvertimProps> = ({ cart }) => {
+export const Convertim: FC<ConvertimProps> = ({ cart, convertimUuid }) => {
     const { t } = useTranslation();
     const [{ data: transportsData, fetching: isTransportsFetching }] = useTransportsWithStoresQuery({
         variables: { cartUuid: cart.uuid },
@@ -29,7 +29,7 @@ export const Convertim: FC<ConvertimProps> = ({ cart }) => {
 
     return (
         <ConvertimComponent
-            convertimUuid="dev"
+            convertimUuid={convertimUuid}
             getCart={getCart(cart)}
             getPayments={getPayments(transportsData?.transports)}
             getStores={getStores(dayNames, cart, transportsData?.transports)}
