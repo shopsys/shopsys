@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace App\Model\Product\Parameter;
 
 use App\Model\Product\Parameter\Exception\ParameterGroupNotFoundException;
-use App\Model\Product\Parameter\Exception\ParameterValueNotFoundException;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Model\Category\Category;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterValueNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository as BaseParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData;
@@ -37,54 +36,11 @@ use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
  * @method int getCountOfParameterValuesWithoutTheirsNumericValueFilledQueryBuilder(\App\Model\Product\Parameter\Parameter $parameter)
  * @method \App\Model\Product\Product[] getProductsByParameterValues(\Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] $parameterValues)
  * @method bool existsParameterByName(string $name, string $locale, \App\Model\Product\Parameter\Parameter|null $excludeParameter = null)
+ * @method \App\Model\Product\Parameter\Parameter[] getParametersUsedByProductsInCategoryWithoutSlider(\App\Model\Category\Category $category, int $domainId)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[] getParameterValuesUsedByProductsInCategoryByParameter(\App\Model\Category\Category $category, \App\Model\Product\Parameter\Parameter $parameter, int $domainId, string $locale)
  */
 class ParameterRepository extends BaseParameterRepository
 {
-    /**
-     * @param \App\Model\Category\Category $category
-     * @param int $domainId
-     * @return \App\Model\Product\Parameter\Parameter[]
-     */
-    public function getParametersUsedByProductsInCategoryWithoutSlider(Category $category, int $domainId): array
-    {
-        $queryBuilder = $this->getParameterRepository()->createQueryBuilder('p')
-            ->select('p')
-            ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'p = ppv.parameter')
-            ->where('p.parameterType != :parameterType')
-            ->setParameter('parameterType', Parameter::PARAMETER_TYPE_SLIDER)
-            ->orderBy('p.orderingPriority', 'DESC');
-
-        $this->applyCategorySeoConditions($queryBuilder, $category, $domainId);
-
-        return $queryBuilder->getQuery()->execute();
-    }
-
-    /**
-     * @param \App\Model\Category\Category $category
-     * @param \App\Model\Product\Parameter\Parameter $parameter
-     * @param int $domainId
-     * @param string $locale
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
-     */
-    public function getParameterValuesUsedByProductsInCategoryByParameter(
-        Category $category,
-        Parameter $parameter,
-        int $domainId,
-        string $locale,
-    ): array {
-        $queryBuilder = $this->getParameterValueRepository()->createQueryBuilder('pv')
-            ->select('pv')
-            ->andWhere('ppv.parameter = :parameter')
-            ->setParameter('parameter', $parameter)
-            ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'pv = ppv.value and pv.locale = :locale')
-            ->setParameter(':locale', $locale)
-            ->groupBy('pv');
-
-        $this->applyCategorySeoConditions($queryBuilder, $category, $domainId);
-
-        return $queryBuilder->getQuery()->execute();
-    }
-
     /**
      * @param int $parameterValueId
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue

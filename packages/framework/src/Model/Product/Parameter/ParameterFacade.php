@@ -5,12 +5,15 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NoResultException;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryParameterRepository;
+use Shopsys\FrameworkBundle\Model\CategorySeo\DeleteReadyCategorySeoMixFacade;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterValueNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -26,6 +29,7 @@ class ParameterFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactory $parameterValueFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
+     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\DeleteReadyCategorySeoMixFacade $deleteReadyCategorySeoMixFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -37,6 +41,7 @@ class ParameterFacade
         protected readonly ParameterValueDataFactory $parameterValueDataFactory,
         protected readonly ParameterValueFactory $parameterValueFactory,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
+        protected readonly DeleteReadyCategorySeoMixFacade $deleteReadyCategorySeoMixFacade,
     ) {
     }
 
@@ -141,6 +146,8 @@ class ParameterFacade
     public function deleteById($parameterId)
     {
         $parameter = $this->parameterRepository->getById($parameterId);
+
+        $this->deleteReadyCategorySeoMixFacade->deleteAllWithParameter($parameter);
 
         $this->em->remove($parameter);
 
@@ -327,5 +334,55 @@ class ParameterFacade
     public function getCountOfParameterValuesWithoutTheirsNumericValueFilledQueryBuilder(Parameter $parameter): int
     {
         return $this->parameterRepository->getCountOfParameterValuesWithoutTheirsNumericValueFilledQueryBuilder($parameter);
+    }
+
+    /**
+     * @param int[] $parameterValueIdsByParameterId
+     * @return string[]
+     */
+    public function getParameterValueNamesIndexedByParameterNames(array $parameterValueIdsByParameterId): array
+    {
+        $parameterValueNamesIndexedByParameterNames = [];
+
+        foreach ($parameterValueIdsByParameterId as $parameterId => $parameterValueId) {
+            $parameter = $this->getById((int)$parameterId);
+            $parameterValue = $this->parameterRepository->getParameterValueById((int)$parameterValueId);
+
+            $parameterValueNamesIndexedByParameterNames[$parameter->getName()] = $parameterValue->getText();
+        }
+
+        return $parameterValueNamesIndexedByParameterNames;
+    }
+
+    /**
+     * @param string[] $parameterUuids
+     * @return array<string, int>
+     */
+    public function getParameterIdsIndexedByUuids(array $parameterUuids): array
+    {
+        return $this->parameterRepository->getParameterIdsIndexedByUuids($parameterUuids);
+    }
+
+    /**
+     * @param string[] $parameterValueUuids
+     * @return array<string, int>
+     */
+    public function getParameterValueIdsIndexedByUuids(array $parameterValueUuids): array
+    {
+        return $this->parameterRepository->getParameterValueIdsIndexedByUuids($parameterValueUuids);
+    }
+
+    /**
+     * @param string $text
+     * @param string $locale
+     * @return int
+     */
+    public function getParameterValueIdByText(string $text, string $locale): int
+    {
+        try {
+            return $this->parameterRepository->getParameterValueIdByText($text, $locale);
+        } catch (NoResultException) {
+            throw new ParameterValueNotFoundException();
+        }
     }
 }

@@ -67,6 +67,9 @@ msgstr ""
 msgid "<a href=\"{{ url }}\">User consent policy article for domain {{ domainName }} is not set.</a>"
 msgstr ""
 
+msgid "<strong><a href=\"{{ url }}\">SEO category</a></strong> has been saved"
+msgstr ""
+
 msgid "Accessories"
 msgstr ""
 
@@ -376,6 +379,9 @@ msgstr ""
 msgid "B2B data and user management"
 msgstr ""
 
+msgid "Back to category selection"
+msgstr ""
+
 msgid "Back to customer {{ name }}"
 msgstr ""
 
@@ -383,6 +389,12 @@ msgid "Back to dashboard"
 msgstr ""
 
 msgid "Back to overview"
+msgstr ""
+
+msgid "Back to overview of available combinations"
+msgstr ""
+
+msgid "Back to parameter selection"
 msgstr ""
 
 msgid "Basic"
@@ -517,6 +529,9 @@ msgstr ""
 msgid "Bulk promo code generation"
 msgstr ""
 
+msgid "By flag"
+msgstr ""
+
 msgid "CSS documentation"
 msgstr ""
 
@@ -565,7 +580,13 @@ msgstr ""
 msgid "Category <strong>{{ name }}</strong> deleted"
 msgstr ""
 
+msgid "Category description"
+msgstr ""
+
 msgid "Category guidepost on main page"
+msgstr ""
+
+msgid "Category name"
 msgstr ""
 
 msgid "Category with prefilled filters"
@@ -599,6 +620,9 @@ msgid "Choose replacement"
 msgstr ""
 
 msgid "Choose the article that provides information about how user consent is obtained, managed, and withdrawn on this domain."
+msgstr ""
+
+msgid "Choose this category and continue"
 msgstr ""
 
 msgid "Choose type of redirect"
@@ -650,6 +674,9 @@ msgid "Color parameter values - full"
 msgstr ""
 
 msgid "Color parameter values - view"
+msgstr ""
+
+msgid "Combination of parameters and their values"
 msgstr ""
 
 msgid "Communication with customer"
@@ -821,9 +848,6 @@ msgid "Create new blog category"
 msgstr ""
 
 msgid "Create new brand"
-msgstr ""
-
-msgid "Create new category"
 msgstr ""
 
 msgid "Create new complaint status"
@@ -1105,6 +1129,9 @@ msgstr ""
 msgid "Delete and set"
 msgstr ""
 
+msgid "Delete category with SEO mix"
+msgstr ""
+
 msgid "Delete file"
 msgstr ""
 
@@ -1247,6 +1274,9 @@ msgid "Do you really want to remove this blog article?"
 msgstr ""
 
 msgid "Do you really want to remove this brand? If it is used anywhere it will be unset."
+msgstr ""
+
+msgid "Do you really want to remove this category even with their SEO mixes?"
 msgstr ""
 
 msgid "Do you really want to remove this customer user role group?"
@@ -1702,6 +1732,30 @@ msgstr ""
 msgid "Ext."
 msgstr ""
 
+msgid "Extended SEO categories"
+msgstr ""
+
+msgid "Extended SEO category %categoryName% - combinations"
+msgstr ""
+
+msgid "Extended SEO category %categoryName% - filters"
+msgstr ""
+
+msgid "Extended SEO category - category selection"
+msgstr ""
+
+msgid "Extended SEO category - combinations"
+msgstr ""
+
+msgid "Extended SEO category - editing the combination with SEO values"
+msgstr ""
+
+msgid "Extended SEO category - filters"
+msgstr ""
+
+msgid "Extended SEO category - set combinations with SEO values"
+msgstr ""
+
 msgid "External ID"
 msgstr ""
 
@@ -1778,6 +1832,12 @@ msgid "Files overview"
 msgstr ""
 
 msgid "Files uploaded:"
+msgstr ""
+
+msgid "Fill URL also for selected domain"
+msgstr ""
+
+msgid "Fill URL only for selected domain"
 msgstr ""
 
 msgid "Fill missing settings to enable creating products. More information here."
@@ -2197,6 +2257,9 @@ msgstr ""
 msgid "Mail templates - view"
 msgstr ""
 
+msgid "Main URL"
+msgstr ""
+
 msgid "Main URL can't be deleted"
 msgstr ""
 
@@ -2440,6 +2503,9 @@ msgstr ""
 msgid "No brands found. You have to create some first."
 msgstr ""
 
+msgid "No combinations of SEO categories found."
+msgstr ""
+
 msgid "No complaint statuses found."
 msgstr ""
 
@@ -2675,6 +2741,9 @@ msgid "Order submitted page setting - full"
 msgstr ""
 
 msgid "Order submitted page setting - view"
+msgstr ""
+
+msgid "Ordering"
 msgstr ""
 
 msgid "Orders"
@@ -3022,6 +3091,9 @@ msgstr ""
 msgid "Products overview"
 msgstr ""
 
+msgid "Products parameters of selected category"
+msgstr ""
+
 msgid "Products with this flag"
 msgstr ""
 
@@ -3182,6 +3254,12 @@ msgid "SEO attributes settings"
 msgstr ""
 
 msgid "SEO attributes settings modified"
+msgstr ""
+
+msgid "SEO combination of category with ID {{ ReadyCategorySeoMixId }} has been removed"
+msgstr ""
+
+msgid "SEO combination of category with ID {{ ReadyCategorySeoMixId }} has not been removed, because it was not found"
 msgstr ""
 
 msgid "SEO page"
@@ -3473,6 +3551,15 @@ msgid "Short description USP"
 msgstr ""
 
 msgid "Short description can be set in the main variant."
+msgstr ""
+
+msgid "Short description of category"
+msgstr ""
+
+msgid "Show combinations"
+msgstr ""
+
+msgid "Show in the category"
 msgstr ""
 
 msgid "Site"
@@ -3800,6 +3887,9 @@ msgid "Type"
 msgstr ""
 
 msgid "URL"
+msgstr ""
+
+msgid "URL Settings"
 msgstr ""
 
 msgid "URL addresses"
@@ -4238,6 +4328,9 @@ msgid "products"
 msgstr ""
 
 msgid "promo codes"
+msgstr ""
+
+msgid "ready category seo mixes"
 msgstr ""
 
 msgid "records"

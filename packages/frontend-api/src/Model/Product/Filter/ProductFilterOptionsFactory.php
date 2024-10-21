@@ -5,15 +5,19 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Product\Filter;
 
 use Shopsys\FrameworkBundle\Model\Category\Category;
+use Shopsys\FrameworkBundle\Model\Category\CategoryParameterFacade;
+use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue as BaseParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade;
 
 class ProductFilterOptionsFactory
@@ -21,10 +25,12 @@ class ProductFilterOptionsFactory
     /**
      * @param \Shopsys\FrameworkBundle\Model\Module\ModuleFacade $moduleFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade
+     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterFacade $categoryParameterFacade
      */
     public function __construct(
         protected readonly ModuleFacade $moduleFacade,
         protected readonly ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade,
+        protected readonly CategoryParameterFacade $categoryParameterFacade,
     ) {
     }
 
@@ -101,12 +107,14 @@ class ProductFilterOptionsFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
      * @return \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions
      */
     public function createProductFilterOptions(
         ProductFilterConfig $productFilterConfig,
         ProductFilterCountData $productFilterCountData,
         ProductFilterData $productFilterData,
+        ?ReadyCategorySeoMix $readyCategorySeoMix = null,
     ): ProductFilterOptions {
         $productFilterOptions = $this->createProductFilterOptionsInstance();
         $productFilterOptions->minimalPrice = $productFilterConfig->getPriceRange()->getMinimalPrice();
@@ -114,7 +122,7 @@ class ProductFilterOptionsFactory
 
         $productFilterOptions->inStock = $productFilterCountData->countInStock ?? 0;
 
-        $this->fillFlags($productFilterOptions, $productFilterConfig, $productFilterCountData, $productFilterData);
+        $this->fillFlags($productFilterOptions, $productFilterConfig, $productFilterCountData, $productFilterData, $readyCategorySeoMix);
 
         return $productFilterOptions;
     }
@@ -183,12 +191,14 @@ class ProductFilterOptionsFactory
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
      * @return \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions
      */
     public function createProductFilterOptionsForCategory(
         Category $category,
         ProductFilterConfig $productFilterConfig,
         ProductFilterData $productFilterData,
+        ?ReadyCategorySeoMix $readyCategorySeoMix = null,
     ): ProductFilterOptions {
         if (!$this->moduleFacade->isEnabled(ModuleList::PRODUCT_FILTER_COUNTS)) {
             return $this->createProductFilterOptionsInstance();
@@ -204,6 +214,7 @@ class ProductFilterOptionsFactory
             $productFilterConfig,
             $productFilterCountData,
             $productFilterData,
+            $readyCategorySeoMix,
         );
         $this->fillBrands(
             $productFilterOptions,
@@ -211,14 +222,127 @@ class ProductFilterOptionsFactory
             $productFilterCountData,
             $productFilterData,
         );
-        $this->fillParameters(
+        $this->fillParametersForCategory(
             $productFilterOptions,
             $productFilterConfig,
             $productFilterCountData,
             $productFilterData,
+            $category,
+            $readyCategorySeoMix,
         );
 
         return $productFilterOptions;
+    }
+
+    /**
+     * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptions $productFilterOptions
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
+     */
+    protected function fillParametersForCategory(
+        ProductFilterOptions $productFilterOptions,
+        ProductFilterConfig $productFilterConfig,
+        ProductFilterCountData $productFilterCountData,
+        ProductFilterData $productFilterData,
+        Category $category,
+        ?ReadyCategorySeoMix $readyCategorySeoMix = null,
+    ): void {
+        $collapsedParameters = $this->categoryParameterFacade->getParametersCollapsedByCategory($category);
+
+        foreach ($productFilterConfig->getParameterChoices() as $parameterFilterChoice) {
+            $parameter = $parameterFilterChoice->getParameter();
+            $isAbsolute = !$this->isParameterFiltered($parameter, $productFilterData);
+
+            $parameterValueFilterOptions = [];
+
+            $isSliderSelectable = false;
+
+            foreach ($parameterFilterChoice->getValues() as $parameterValue) {
+                $parameterValueCount = $this->getParameterValueCount(
+                    $parameter,
+                    $parameterValue,
+                    $productFilterData,
+                    $productFilterCountData,
+                );
+
+                if ($parameterValueCount > 0 && $parameter->isSlider()) {
+                    $isSliderSelectable = true;
+                }
+
+                $parameterValueFilterOptions[] = $this->createParameterValueFilterOption(
+                    $parameterValue,
+                    $parameterValueCount,
+                    $isAbsolute,
+                    $this->isParameterValueSelected($readyCategorySeoMix, $parameter, $parameterValue),
+                );
+            }
+
+            $parameterFilterOption = $this->createParameterFilterOption(
+                $parameter,
+                $parameterValueFilterOptions,
+                in_array($parameter, $collapsedParameters, true),
+                $isSliderSelectable,
+                $this->getParameterSelectedValue($readyCategorySeoMix, $parameterFilterChoice),
+            );
+
+            if ($parameterFilterOption->parameter->isSlider() !== false && $parameterFilterOption->minimalValue === 0.0 && $parameterFilterOption->maximalValue === 0.0) {
+                continue;
+            }
+
+            $productFilterOptions->parameters[] = $parameterFilterOption;
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $parameterValue
+     * @return bool
+     */
+    protected function isParameterValueSelected(
+        ?ReadyCategorySeoMix $readyCategorySeoMix,
+        Parameter $parameter,
+        BaseParameterValue $parameterValue,
+    ): bool {
+        if ($readyCategorySeoMix === null) {
+            return false;
+        }
+
+        foreach ($readyCategorySeoMix->getReadyCategorySeoMixParameterParameterValues() as $categorySeoMixParameterParameterValue) {
+            if ($categorySeoMixParameterParameterValue->getParameter() === $parameter && $categorySeoMixParameterParameterValue->getParameterValue() === $parameterValue) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice $parameterFilterChoice
+     * @return float|null
+     */
+    protected function getParameterSelectedValue(
+        ?ReadyCategorySeoMix $readyCategorySeoMix,
+        ParameterFilterChoice $parameterFilterChoice,
+    ): ?float {
+        if ($readyCategorySeoMix === null) {
+            return null;
+        }
+
+        foreach ($readyCategorySeoMix->getReadyCategorySeoMixParameterParameterValues() as $categorySeoMixParameterParameterValue) {
+            if ($categorySeoMixParameterParameterValue->getParameter()->isSlider()
+                && $categorySeoMixParameterParameterValue->getParameter() === $parameterFilterChoice->getParameter()
+                && in_array($categorySeoMixParameterParameterValue->getParameterValue(), $parameterFilterChoice->getValues(), true)
+            ) {
+                return (float)$categorySeoMixParameterParameterValue->getParameterValue()->getText();
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -253,12 +377,14 @@ class ProductFilterOptionsFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig $productFilterConfig
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $productFilterCountData
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix|null $readyCategorySeoMix
      */
     protected function fillFlags(
         ProductFilterOptions $productFilterOptions,
         ProductFilterConfig $productFilterConfig,
         ProductFilterCountData $productFilterCountData,
         ProductFilterData $productFilterData,
+        ?ReadyCategorySeoMix $readyCategorySeoMix,
     ): void {
         $isAbsolute = count($productFilterData->flags) === 0;
 
@@ -267,6 +393,7 @@ class ProductFilterOptionsFactory
                 $flag,
                 $productFilterCountData->countByFlagId[$flag->getId()] ?? 0,
                 $isAbsolute,
+                $readyCategorySeoMix !== null && $readyCategorySeoMix->getFlag() === $flag,
             );
         }
     }

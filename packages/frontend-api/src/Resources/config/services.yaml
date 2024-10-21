@@ -79,6 +79,14 @@ services:
         arguments:
             $brandSearchResultsProviders: !tagged 'shopsys.frontend_api.brands_search_results_provider'
 
+    Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolverMap:
+        arguments:
+            $readyCategorySeoMixesBatchLoader: '@ready_category_seo_mixes_batch_loader'
+            $categoryChildrenBatchLoader: '@category_children_batch_loader'
+            $linkedCategoriesBatchLoader: '@linked_categories_batch_loader'
+        tags:
+            - { name: overblog_graphql.resolver_map, schema: default }
+
     Shopsys\FrontendApiBundle\Model\Resolver\Category\Search\CategoriesSearchResultsProvider:
         tags:
             - { name: 'shopsys.frontend_api.categories_search_results_provider', priority: 1 }
@@ -102,6 +110,11 @@ services:
             $firstImageBatchLoader: '@first_image_batch_loader'
 
     Shopsys\FrontendApiBundle\Model\Resolver\Image\BlogCategoryImagesQuery:
+        arguments:
+            $imagesBatchLoader: '@images_batch_loader'
+            $firstImageBatchLoader: '@first_image_batch_loader'
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Image\CategoryOrReadyCategorySeoMixImagesQuery:
         arguments:
             $imagesBatchLoader: '@images_batch_loader'
             $firstImageBatchLoader: '@first_image_batch_loader'
@@ -136,6 +149,10 @@ services:
             $firstImageBatchLoader: '@first_image_batch_loader'
         tags:
             - { name: overblog_graphql.resolver_map, schema: default }
+
+    Shopsys\FrontendApiBundle\Model\Resolver\Products\BestsellingProductsQuery:
+        arguments:
+            $productsSellableByIdsBatchLoader: '@products_sellable_by_ids_batch_loader'
 
     Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductFilesQuery:
         arguments:

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Brand;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
@@ -166,5 +167,24 @@ class BrandFacade
     public function getBrandsBySearchText(string $searchText): array
     {
         return $this->brandRepository->getBrandsBySearchText($searchText);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
+     */
+    public function getAllWithDomainsAndTranslations(DomainConfig $domainConfig): array
+    {
+        return $this->brandRepository->getAllWithDomainsAndTranslations($domainConfig);
+    }
+
+    /**
+     * @param int[] $brandIds
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|null>
+     */
+    public function getByIds(array $brandIds, DomainConfig $domainConfig): array
+    {
+        return $this->brandRepository->getByIds($brandIds, $domainConfig);
     }
 }

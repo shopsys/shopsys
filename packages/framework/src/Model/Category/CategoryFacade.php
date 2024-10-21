@@ -14,13 +14,15 @@ use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class CategoryFacade
 {
-    protected const INCREMENT_DUE_TO_MISSING_ROOT_CATEGORY = 1;
+    protected const int INCREMENT_DUE_TO_MISSING_ROOT_CATEGORY = 1;
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
@@ -36,6 +38,7 @@ class CategoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterFacade $categoryParameterFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -51,6 +54,7 @@ class CategoryFacade
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
         protected readonly EventDispatcherInterface $eventDispatcher,
         protected readonly CategoryParameterFacade $categoryParameterFacade,
+        protected readonly ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade,
     ) {
     }
 
@@ -506,5 +510,32 @@ class CategoryFacade
     protected function dispatchCategoryEvent(Category $category, string $eventType): void
     {
         $this->eventDispatcher->dispatch(new CategoryEvent($category), $eventType);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
+     */
+    public function getCategoriesOfProductByFilterData(ProductFilterData $productFilterData): array
+    {
+        $categoryIds = $this->productOnCurrentDomainElasticFacade->getCategoryIdsForFilterData($productFilterData);
+        $categories = $this->categoryRepository->getCategoriesByIds($categoryIds);
+
+        $categoriesIndexedByIds = [];
+
+        foreach ($categories as $category) {
+            $categoriesIndexedByIds[$category->getId()] = $category;
+        }
+
+        $sortedCategories = [];
+
+        foreach ($categoryIds as $categoryId) {
+            if (!array_key_exists($categoryId, $categoriesIndexedByIds)) {
+                continue;
+            }
+            $sortedCategories[] = $categoriesIndexedByIds[$categoryId];
+        }
+
+        return $sortedCategories;
     }
 }

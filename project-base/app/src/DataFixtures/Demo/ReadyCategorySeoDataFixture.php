@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace App\DataFixtures\Demo;
 
 use App\Model\Category\Category;
-use App\Model\CategorySeo\ChoseCategorySeoMixCombination;
-use App\Model\CategorySeo\ReadyCategorySeoMixDataFactory;
-use App\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use App\Model\Product\Flag\Flag;
 use App\Model\Product\Parameter\Parameter;
-use App\Model\Product\Parameter\ParameterFacade;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\CategorySeo\ChoseCategorySeoMixCombination;
+use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixDataFactory;
+use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 
 class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -28,8 +28,8 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
     public const string READY_CATEGORY_SEO_BLACK_ELECTRONICS = 'ready_category_seo_black_electronics';
 
     /**
-     * @param \App\Model\CategorySeo\ReadyCategorySeoMixDataFactory $readyCategorySeoMixDataFactory
-     * @param \App\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
+     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixDataFactory $readyCategorySeoMixDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      */
     public function __construct(
@@ -256,7 +256,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
     }
 
     /**
-     * @param \App\Model\CategorySeo\ChoseCategorySeoMixCombination $choseCategorySeoMixCombination
+     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ChoseCategorySeoMixCombination $choseCategorySeoMixCombination
      * @param string $h1
      * @param string[] $slugs
      * @param int $domainId
