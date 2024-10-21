@@ -18,7 +18,6 @@ class FlagData extends BaseFlagData
     {
         parent::__construct();
 
-        $this->rgbColor = '';
         $this->urls = new UrlListData();
     }
 }

@@ -2,26 +2,26 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\Products\Flag;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\Flag;
 
-use App\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class FlagsQuery extends AbstractQuery
 {
     /**
-     * @param \App\Model\Product\Flag\FlagFacade $flagFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        private readonly FlagFacade $flagFacade,
-        private readonly Domain $domain,
+        protected readonly FlagFacade $flagFacade,
+        protected readonly Domain $domain,
     ) {
     }
 
     /**
-     * @return \App\Model\Product\Flag\Flag[]
+     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
     public function flagsQuery(): array
     {

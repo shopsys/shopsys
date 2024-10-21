@@ -2,36 +2,36 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\Products\Flag;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\Flag;
 
-use App\FrontendApi\Resolver\Products\Flag\Exception\FlagNotFoundUserError;
-use App\Model\Product\Flag\Flag;
-use App\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagNotFoundException;
+use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
+use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
 use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
+use Shopsys\FrontendApiBundle\Model\Resolver\Flag\Exception\FlagNotFoundUserError;
 
 class FlagQuery extends AbstractQuery
 {
     /**
-     * @param \App\Model\Product\Flag\FlagFacade $flagFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
     public function __construct(
-        private readonly FlagFacade $flagFacade,
-        private readonly Domain $domain,
-        private readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly FlagFacade $flagFacade,
+        protected readonly Domain $domain,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
     ) {
     }
 
     /**
      * @param string|null $uuid
      * @param string|null $urlSlug
-     * @return \App\Model\Product\Flag\Flag
+     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
      */
     public function flagByUuidOrUrlSlugQuery(?string $uuid = null, ?string $urlSlug = null): Flag
     {
@@ -52,7 +52,7 @@ class FlagQuery extends AbstractQuery
 
     /**
      * @param string $urlSlug
-     * @return \App\Model\Product\Flag\Flag
+     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
      */
     protected function getVisibleOnDomainBySlug(string $urlSlug): Flag
     {

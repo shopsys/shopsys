@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\Products\Flag\Exception;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\Flag\Exception;
 
 use Shopsys\FrontendApiBundle\Model\Error\EntityNotFoundUserError;
 use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 
 class FlagNotFoundUserError extends EntityNotFoundUserError implements UserErrorWithCodeInterface
 {
-    private const CODE = 'flag-not-found';
+    protected const string CODE = 'flag-not-found';
 
     /**
      * {@inheritdoc}

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\FrontendApi\Resolver\Products;
 
 use App\Component\Deprecation\DeprecatedMethodException;
-use App\FrontendApi\Resolver\Products\Flag\FlagQuery;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Filter\ProductFilterDataFactory;
 use App\Model\Product\Flag\Flag;
@@ -24,6 +23,7 @@ use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
 use Shopsys\FrontendApiBundle\Model\Product\ProductFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryQuery;
+use Shopsys\FrontendApiBundle\Model\Resolver\Flag\FlagQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductOrderingModeProvider;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsQuery as BaseProductsQuery;
 
@@ -51,7 +51,7 @@ class ProductsQuery extends BaseProductsQuery
      * @param \Overblog\DataLoader\DataLoaderInterface $productsByEntitiesBatchLoader
      * @param \Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryQuery $categoryQuery
      * @param \Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandQuery $brandQuery
-     * @param \App\FrontendApi\Resolver\Products\Flag\FlagQuery $flagQuery
+     * @param \Shopsys\FrontendApiBundle\Model\Resolver\Flag\FlagQuery $flagQuery
      */
     public function __construct(
         ProductFacade $productFacade,
@@ -162,6 +162,7 @@ class ProductsQuery extends BaseProductsQuery
         }
 
         if ($argument['flagSlug'] !== null) {
+            /** @var \App\Model\Product\Flag\Flag $flag */
             $flag = $this->flagQuery->flagByUuidOrUrlSlugQuery(null, $argument['flagSlug']);
 
             return $this->productsByFlagQuery(

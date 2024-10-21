@@ -308,3 +308,16 @@ QueryDecorator:
                 resolve: "@=query('complaintsQuery', args)"
                 complexity: "@=dynamicPaginationComplexity(args)"
                 description: "Returns list of complaints that can be paginated using `first`, `last`, `before` and `after` keywords"
+            flags:
+                type: '[Flag!]'
+                resolve: "@=query('flagsQuery')"
+                description: "Returns a complete list of the flags"
+            flag:
+                type: 'Flag'
+                resolve: "@=query('flagByUuidOrUrlSlugQuery', args['uuid'], args['urlSlug'])"
+                args:
+                    uuid:
+                        type: "Uuid"
+                    urlSlug:
+                        type: "String"
+                description: "Returns a flag by uuid or url slug"

@@ -6,7 +6,6 @@ Query:
         - 'CategoryQuery'
         - 'StoreQuery'
         - 'SliderQuery'
-        - 'FlagQuery'
         - 'OrderQuery'
         - 'PersonalDataQuery'
         - 'ProductQuery'

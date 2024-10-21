@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace App\Model\Product\Flag;
 
 use Doctrine\ORM\Query\Expr\Join;
-use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag;
-use Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository as BaseFlagRepository;
 
 /**
@@ -19,71 +17,10 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository as BaseFlagReposit
  * @method \App\Model\Product\Flag\Flag getByUuid(string $uuid)
  * @method \App\Model\Product\Flag\Flag[] getByUuids(string[] $uuids)
  * @method \App\Model\Product\Flag\Flag[] getVisibleFlagsByIds(int[] $flagsIds, string $locale)
+ * @method \App\Model\Product\Flag\Flag getVisibleFlagById(int $flagId, string $locale)
  */
 class FlagRepository extends BaseFlagRepository
 {
-    /**
-     * @param int $flagId
-     * @param string $locale
-     * @return \App\Model\Product\Flag\Flag
-     */
-    public function getVisibleFlagById(int $flagId, string $locale): Flag
-    {
-        $flagsQueryBuilder = $this->getVisibleQueryBuilder()
-            ->addSelect('ft')
-            ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
-            ->where('f.id = :flagId')
-            ->orderBy(OrderByCollationHelper::createOrderByForLocale('ft.name', $locale), 'asc')
-            ->setParameter('flagId', $flagId)
-            ->setParameter('locale', $locale);
-
-        $flag = $flagsQueryBuilder->getQuery()->getOneOrNullResult();
-
-        if ($flag === null) {
-            throw new FlagNotFoundException(sprintf('Flag with ID "%s" does not exist.', $flagId));
-        }
-
-        return $flag;
-    }
-
-    /**
-     * @param string $locale
-     * @return \App\Model\Product\Flag\Flag[]
-     */
-    public function getAllVisibleFlags(string $locale): array
-    {
-        $flagsQueryBuilder = $this->getVisibleQueryBuilder()
-            ->addSelect('f')
-            ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
-            ->orderBy(OrderByCollationHelper::createOrderByForLocale('ft.name', $locale), 'asc')
-            ->setParameter('locale', $locale);
-
-        return $flagsQueryBuilder->getQuery()->getResult();
-    }
-
-    /**
-     * @param string $uuid
-     * @param string $locale
-     * @return \App\Model\Product\Flag\Flag
-     */
-    public function getVisibleByUuid(string $uuid, string $locale): Flag
-    {
-        $flagsQueryBuilder = $this->getVisibleQueryBuilder()
-            ->addSelect('ft')
-            ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
-            ->setParameter('locale', $locale)
-            ->andWhere('f.uuid = :uuid')
-            ->setParameter('uuid', $uuid);
-
-        $flag = $flagsQueryBuilder->getQuery()->getOneOrNullResult();
-
-        if ($flag === null) {
-            throw new FlagNotFoundException(sprintf('Flag with UUID "%s" does not exist.', $uuid));
-        }
-
-        return $flag;
-    }
-
     /**
      * @param int $flagId
      * @return \App\Model\Product\Flag\FlagDependenciesData

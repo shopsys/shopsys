@@ -15,6 +15,8 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactory as BaseFlagDataFa
  * @property \App\Model\Product\Flag\Flag $flag
  * @property \App\Model\Product\Flag\FlagData $flagData
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+ * @method \App\Model\Product\Flag\FlagData create()
+ * @method \App\Model\Product\Flag\FlagData createFromFlag(\App\Model\Product\Flag\Flag $flag)
  */
 class FlagDataFactory extends BaseFlagDataFactory
 {
@@ -22,8 +24,10 @@ class FlagDataFactory extends BaseFlagDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
-    public function __construct(Domain $domain, private FriendlyUrlFacade $friendlyUrlFacade)
-    {
+    public function __construct(
+        Domain $domain,
+        private readonly FriendlyUrlFacade $friendlyUrlFacade,
+    ) {
         parent::__construct($domain);
     }
 
@@ -47,28 +51,5 @@ class FlagDataFactory extends BaseFlagDataFactory
             $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl($domainId, 'front_flag_detail', $flag->getId());
             $flagData->urls->mainFriendlyUrlsByDomainId[$domainId] = $mainFriendlyUrl;
         }
-    }
-
-    /**
-     * @param \App\Model\Product\Flag\Flag $flag
-     * @return \App\Model\Product\Flag\FlagData
-     */
-    public function createFromFlag(Flag $flag): BaseFlagData
-    {
-        $flagData = new FlagData();
-        $this->fillFromFlag($flagData, $flag);
-
-        return $flagData;
-    }
-
-    /**
-     * @return \App\Model\Product\Flag\FlagData
-     */
-    public function create(): BaseFlagData
-    {
-        $flagData = new FlagData();
-        $this->fillNew($flagData);
-
-        return $flagData;
     }
 }
