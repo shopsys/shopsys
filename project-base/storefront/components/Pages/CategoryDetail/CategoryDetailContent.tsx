@@ -105,7 +105,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                 <div className="flex flex-1 flex-col">
                     {!!category.bestsellers.length && <CategoryBestsellers products={category.bestsellers} />}
 
-                    <div className="flex flex-col">
+                    <div className="flex flex-col-reverse vl:flex-col">
                         <FilterSelectedParameters filterOptions={category.products.productFilterOptions} />
 
                         <DeferredFilterAndSortingBar

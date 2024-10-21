@@ -81,6 +81,7 @@ export const ContactInformationAddress: FC = () => {
                         <>
                             <Select
                                 hasError={invalid}
+                                id={formMeta.formName + '-' + formMeta.fields.country.name}
                                 isDisabled={!canManageProfile}
                                 label={formMeta.fields.country.label}
                                 options={countriesAsSelectOptions}

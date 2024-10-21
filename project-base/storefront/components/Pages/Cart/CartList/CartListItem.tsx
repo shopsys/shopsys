@@ -65,7 +65,7 @@ export const CartListItem: FC<CartListItemProps> = ({
                     >
                         <Image
                             alt={product.mainImage?.name || product.fullName}
-                            className="mx-auto h-12 w-auto"
+                            className="mx-auto h-12 object-contain"
                             height={48}
                             src={product.mainImage?.url}
                             width={84}

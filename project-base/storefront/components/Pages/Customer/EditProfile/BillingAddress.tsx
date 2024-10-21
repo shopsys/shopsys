@@ -4,29 +4,35 @@ import { FormLine } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { Select } from 'components/Forms/Select/Select';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
-import { useRegistrationFormMeta } from 'components/Pages/Registration/registrationFormMeta';
+import { useCustomerChangeProfileFormMeta } from 'components/Pages/Customer/customerChangeProfileFormMeta';
 import useTranslation from 'next-translate/useTranslation';
 import { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
-import { RegistrationFormType } from 'types/form';
+import { CustomerChangeProfileFormType } from 'types/form';
+import { useCurrentCustomerUserPermissions } from 'utils/auth/useCurrentCustomerUserPermissions';
 import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
 
-export const RegistrationAddress: FC = () => {
+export const BillingAddress: FC = () => {
     const { t } = useTranslation();
-    const formProviderMethods = useFormContext<RegistrationFormType>();
+    const { canManageProfile } = useCurrentCustomerUserPermissions();
+
+    const formProviderMethods = useFormContext<CustomerChangeProfileFormType>();
+    const formMeta = useCustomerChangeProfileFormMeta(formProviderMethods);
     const { setValue } = formProviderMethods;
-    const formMeta = useRegistrationFormMeta(formProviderMethods);
+
     const countriesAsSelectOptions = useCountriesAsSelectOptions();
 
     useEffect(() => {
         if (countriesAsSelectOptions.length > 0) {
-            setValue(formMeta.fields.country.name, countriesAsSelectOptions[0], { shouldValidate: true });
+            const userCountryValue = formProviderMethods.getValues(formMeta.fields.country.name);
+            const selectedCountry = countriesAsSelectOptions.find(
+                (country) => country.value === userCountryValue.value,
+            );
+            setValue(formMeta.fields.country.name, selectedCountry ?? countriesAsSelectOptions[0], {
+                shouldValidate: true,
+            });
         }
     }, [countriesAsSelectOptions, formMeta.fields.country.name, setValue]);
-
-    if (countriesAsSelectOptions.length === 0) {
-        return null;
-    }
 
     return (
         <FormBlockWrapper>
@@ -41,6 +47,7 @@ export const RegistrationAddress: FC = () => {
                     required: true,
                     type: 'text',
                     autoComplete: 'street-address',
+                    disabled: !canManageProfile,
                 }}
             />
             <FormColumn>
@@ -54,6 +61,7 @@ export const RegistrationAddress: FC = () => {
                         required: true,
                         type: 'text',
                         autoComplete: 'address-level2',
+                        disabled: !canManageProfile,
                     }}
                 />
                 <TextInputControlled
@@ -70,20 +78,23 @@ export const RegistrationAddress: FC = () => {
                         required: true,
                         type: 'text',
                         autoComplete: 'postal-code',
+                        disabled: !canManageProfile,
                     }}
                 />
             </FormColumn>
-            <FormLine>
+            <FormLine bottomGap>
                 <Controller
                     name={formMeta.fields.country.name}
                     render={({ fieldState: { invalid, error }, field }) => (
                         <>
                             <Select
+                                required
                                 hasError={invalid}
                                 id={formMeta.formName + '-' + formMeta.fields.country.name}
+                                isDisabled={!canManageProfile}
                                 label={formMeta.fields.country.label}
                                 options={countriesAsSelectOptions}
-                                value={countriesAsSelectOptions.find((option) => option.value === field.value.value)}
+                                value={field.value}
                                 onChange={field.onChange}
                             />
                             <FormLineError error={error} inputType="select" />

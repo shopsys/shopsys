@@ -35,7 +35,7 @@ export const ProductListItemImage: FC<ProductListItemImageProps> = ({ product, v
         <div className="flex items-center justify-center" tid={tid || TIDs.product_list_item_image}>
             <Image
                 alt={product.mainImage?.name || product.fullName}
-                className={twJoin('max-h-full object-contain mix-blend-multiply', imageSizeClassName)}
+                className={twJoin('object-contain mix-blend-multiply', imageSizeClassName)}
                 draggable={false}
                 height={imageSize}
                 src={product.mainImage?.url}

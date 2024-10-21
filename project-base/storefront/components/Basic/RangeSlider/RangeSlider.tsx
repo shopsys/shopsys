@@ -158,7 +158,6 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                     aria-label={t('from')}
                     className="pr-4"
                     disabled={isDisabled}
-                    isActive={minValueThumb !== min}
                     max={max}
                     min={min}
                     step={step}
@@ -172,7 +171,6 @@ export const RangeSlider: FC<RangeSliderProps> = ({
                     aria-label={t('to')}
                     className="pl-4"
                     disabled={isDisabled}
-                    isActive={maxValueThumb !== max}
                     max={max}
                     min={min}
                     step={step}
@@ -219,9 +217,7 @@ export const RangeSlider: FC<RangeSliderProps> = ({
     );
 };
 
-type RangeSliderThumbProps = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> & {
-    isActive: boolean;
-};
+type RangeSliderThumbProps = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
 
 const RangeSliderThumb: FC<RangeSliderThumbProps> = ({ disabled, className, ...props }) => {
     const webkitTwClass =
