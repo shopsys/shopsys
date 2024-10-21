@@ -6,7 +6,7 @@ services:
 
     Shopsys\ConvertimBundle\:
         exclude: '../../{Command,Controller,DependencyInjection,Form,Migrations,Resources,Twig}'
-        resource: '../../**/*{Enum,Facade,Factory,Repository,Transformer}.php'
+        resource: '../../**/*{Enum,Facade,Factory,Mapper,Repository,Transformer,Validator}.php'
 
     Shopsys\ConvertimBundle\Controller\:
         resource: '../../Controller/'

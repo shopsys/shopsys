@@ -1,0 +1,42 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+
+msgid "Item {{ name }} can no longer be bought."
+msgstr ""
+
+msgid "Item {{ name }} has been sold out."
+msgstr ""
+
+msgid "The payment you selected is no longer available."
+msgstr ""
+
+msgid "The price of item {{ name }} has changed."
+msgstr ""
+
+msgid "The price of the payment you selected has changed."
+msgstr ""
+
+msgid "The price of the transport you selected has changed."
+msgstr ""
+
+msgid "The product {{ name }} is not available."
+msgstr ""
+
+msgid "The promo code {{ code }} is no longer applicable."
+msgstr ""
+
+msgid "The quantity of item {{ name }} has changed."
+msgstr ""
+
+msgid "The store you selected is no longer available."
+msgstr ""
+
+msgid "The transport you selected is no longer available."
+msgstr ""
+
+msgid "You have exceeded the weight limit of the selected transport."
+msgstr ""
+
