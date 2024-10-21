@@ -256,6 +256,25 @@ abstract class GraphQlTestCase extends ApplicationTestCase
     /**
      * @param array $response
      */
+    protected function assertResponseContainsArrayOfWarnings(array $response): void
+    {
+        $this->assertArrayHasKey('extensions', $response);
+        $this->assertArrayHasKey('warnings', $response['extensions']);
+        $this->assertIsArray($response['extensions']['warnings']);
+    }
+
+    /**
+     * @param array $response
+     * @return array
+     */
+    public function getWarningsFromResponse(array $response): array
+    {
+        return $response['extensions']['warnings'];
+    }
+
+    /**
+     * @param array $response
+     */
     protected function assertResponseContainsArrayOfExtensionValidationErrors(array $response): void
     {
         $this->assertResponseContainsArrayOfErrors($response);

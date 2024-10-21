@@ -1,0 +1,23 @@
+mutation EditCustomerUserPersonalDataMutation(
+    $customerUserUuid: Uuid!,
+    $firstName: String! = "",
+    $lastName: String! = "",
+    $roleGroupUuid: Uuid! = "00000000-0000-0000-0000-000000000000",
+    $telephone: String = ""
+) {
+    EditCustomerUserPersonalData(input: {
+        customerUserUuid: $customerUserUuid,
+        firstName: $firstName,
+        lastName: $lastName,
+        roleGroupUuid: $roleGroupUuid,
+        telephone: $telephone
+    }) {
+        uuid
+        firstName
+        lastName
+        roleGroup {
+            uuid
+        }
+        telephone
+    }
+}

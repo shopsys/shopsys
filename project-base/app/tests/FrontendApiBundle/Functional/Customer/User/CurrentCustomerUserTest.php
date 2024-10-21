@@ -163,7 +163,7 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
     }
 
     /**
-     * @see \Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\CurrentCustomerUserTest::testUniqueBillingAddressIsValidatedInEditCustomerCompany()
+     * @see \Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\CustomerUserOwnerTest::testUniqueBillingAddressIsValidatedInEditCustomerCompany()
      */
     public function testUniqueBillingAddressIsNotValidatedInEditCustomerCompanyB2c(): void
     {
