@@ -117,6 +117,7 @@ services:
             REDIS_PREFIX: "${BRANCH_NAME_ESCAPED}"
             PACKETERY_API_KEY: "${PACKETERY_API_KEY_VALUE}"
             GOOGLE_MAP_API_KEY: "${GOOGLE_MAP_API_KEY_VALUE}"
+            GTM_ID: "${GTM_ID_VALUE}"
         networks:
             - default
             - services-network
