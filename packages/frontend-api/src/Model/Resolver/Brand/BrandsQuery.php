@@ -21,10 +21,10 @@ class BrandsQuery extends AbstractQuery
     }
 
     /**
-     * @return array
+     * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
      */
     public function brandsQuery(): array
     {
-        return $this->brandFacade->getAll();
+        return $this->brandFacade->getAllWithDomainsAndTranslations($this->domain->getCurrentDomainConfig());
     }
 }
