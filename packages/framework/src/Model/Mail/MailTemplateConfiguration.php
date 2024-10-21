@@ -10,6 +10,8 @@ use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerActivationMail;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\RegistrationMail;
 use Shopsys\FrameworkBundle\Model\Customer\Mail\ResetPasswordMail;
+use Shopsys\FrameworkBundle\Model\Inquiry\Mail\InquiryMail;
+use Shopsys\FrameworkBundle\Model\Inquiry\Mail\InquiryMailTemplateVariablesProvider;
 use Shopsys\FrameworkBundle\Model\Mail\Exception\InvalidMailTemplateVariablesConfigurationException;
 use Shopsys\FrameworkBundle\Model\Mail\Exception\MailTemplateNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail;
@@ -34,16 +36,19 @@ class MailTemplateConfiguration
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade $complaintStatusFacade
+     * @param \Shopsys\FrameworkBundle\Model\Inquiry\Mail\InquiryMailTemplateVariablesProvider $inquiryMailTemplateVariablesProvider
      */
     public function __construct(
         protected readonly OrderStatusFacade $orderStatusFacade,
         protected readonly ComplaintStatusFacade $complaintStatusFacade,
+        protected readonly InquiryMailTemplateVariablesProvider $inquiryMailTemplateVariablesProvider,
     ) {
         $this->registerStaticMailTemplates();
         $this->registerOrderStatusMailTemplates();
         $this->registerComplaintStatusMailTemplates();
         $this->registerTwoFactorAuthenticationCodeMailTemplate();
         $this->registerCustomerActivationMailTemplate();
+        $this->registerInquiryMailTemplates();
     }
 
     /**
@@ -322,5 +327,14 @@ class MailTemplateConfiguration
         $mailTemplateVariables = $this->createCustomerActivationMailTemplateVariables();
 
         $this->addMailTemplateVariables(CustomerActivationMail::CUSTOMER_ACTIVATION_NAME, $mailTemplateVariables);
+    }
+
+    protected function registerInquiryMailTemplates(): void
+    {
+        $inquiryMailTemplateVariables = $this->inquiryMailTemplateVariablesProvider->create(InquiryMail::CUSTOMER_MAIL_TEMPLATE_NAME);
+        $this->addMailTemplateVariables(InquiryMail::CUSTOMER_MAIL_TEMPLATE_NAME, $inquiryMailTemplateVariables);
+
+        $inquiryMailTemplateVariables = $this->inquiryMailTemplateVariablesProvider->create(InquiryMail::ADMIN_MAIL_TEMPLATE_NAME);
+        $this->addMailTemplateVariables(InquiryMail::ADMIN_MAIL_TEMPLATE_NAME, $inquiryMailTemplateVariables);
     }
 }

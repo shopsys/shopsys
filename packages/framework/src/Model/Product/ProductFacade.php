@@ -149,6 +149,7 @@ class ProductFacade
         string $priority = ProductRecalculationPriorityEnum::REGULAR,
     ): Product {
         $product = $this->productRepository->getById($productId);
+        $originalNames = $product->getFullnames();
 
         $productCategoryDomains = $this->productCategoryDomainFactory->createMultiple(
             $product,
@@ -174,7 +175,7 @@ class ProductFacade
         $this->uploadedFileFacade->manageFiles($product, $productData->files);
 
         $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);
-        $this->createFriendlyUrlsWhenRenamed($product, $product->getFullnames());
+        $this->createFriendlyUrlsWhenRenamed($product, $originalNames);
 
         $this->pluginCrudExtensionFacade->saveAllData('product', $product->getId(), $productData->pluginData);
 

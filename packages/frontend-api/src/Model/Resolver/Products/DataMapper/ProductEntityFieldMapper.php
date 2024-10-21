@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider;
+use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory;
@@ -197,5 +198,23 @@ class ProductEntityFieldMapper
         );
 
         return $productVisibility->isVisible();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return bool
+     */
+    public function isInquiryType(Product $product): bool
+    {
+        return $product->getProductType() === ProductTypeEnum::TYPE_INQUIRY;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return string
+     */
+    public function getProductType(Product $product): string
+    {
+        return $product->getProductType();
     }
 }

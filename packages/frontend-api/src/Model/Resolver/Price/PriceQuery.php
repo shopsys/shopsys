@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceProvider;
@@ -61,6 +62,10 @@ class PriceQuery extends AbstractQuery
      */
     public function priceByProductQuery(Product|array $data): ProductPrice
     {
+        if ($this->isProductUponInquiry($data)) {
+            return ProductPrice::createHiddenProductPrice();
+        }
+
         if ($data instanceof Product) {
             $productPrice = $this->productCachedAttributesFacade->getProductSellingPrice($data);
         } else {
@@ -72,6 +77,17 @@ class PriceQuery extends AbstractQuery
         }
 
         return $productPrice;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product|array $data
+     * @return bool
+     */
+    protected function isProductUponInquiry(Product|array $data): bool
+    {
+        $productType = $data instanceof Product ? $data->getProductType() : $data['product_type'];
+
+        return $productType === ProductTypeEnum::TYPE_INQUIRY;
     }
 
     /**

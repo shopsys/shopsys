@@ -862,6 +862,27 @@ export type TypeCountry = {
   name: Scalars['String']['output'];
 };
 
+export type TypeCreateInquiryInput = {
+  /** The customer’s company name */
+  companyName: InputMaybe<Scalars['String']['input']>;
+  /** The customer’s company identification number */
+  companyNumber: InputMaybe<Scalars['String']['input']>;
+  /** The customer’s company tax number */
+  companyTaxNumber: InputMaybe<Scalars['String']['input']>;
+  /** The customer's email address */
+  email: Scalars['String']['input'];
+  /** Customer user first name */
+  firstName: Scalars['String']['input'];
+  /** Customer user last name */
+  lastName: Scalars['String']['input'];
+  /** Customer's question or note to the inquiry product */
+  note: InputMaybe<Scalars['String']['input']>;
+  /** Product UUID */
+  productUuid: Scalars['Uuid']['input'];
+  /** The customer's telephone number */
+  telephone: Scalars['String']['input'];
+};
+
 export type TypeCreateOrderResult = {
   __typename?: 'CreateOrderResult';
   cart: Maybe<TypeCart>;
@@ -1188,6 +1209,7 @@ export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & Type
   id: Scalars['Int']['output'];
   /** Product images */
   images: Array<TypeImage>;
+  isInquiryType: Scalars['Boolean']['output'];
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
   isVisible: Scalars['Boolean']['output'];
@@ -1207,6 +1229,7 @@ export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & Type
   partNumber: Maybe<Scalars['String']['output']>;
   /** Product price */
   price: TypeProductPrice;
+  productType: TypeProductTypeEnum;
   productVideos: Array<TypeVideoToken>;
   /** List of related products */
   relatedProducts: Array<TypeProduct>;
@@ -1272,6 +1295,8 @@ export type TypeMutation = {
   CreateComplaint: TypeComplaint;
   /** Create a new delivery address */
   CreateDeliveryAddress: Array<TypeDeliveryAddress>;
+  /** Send the inquiry for the product */
+  CreateInquiry: Scalars['Boolean']['output'];
   /** Creates complete order with products and addresses */
   CreateOrder: TypeCreateOrderResult;
   /** Delete delivery address by Uuid */
@@ -1379,6 +1404,11 @@ export type TypeMutationCreateComplaintArgs = {
 
 export type TypeMutationCreateDeliveryAddressArgs = {
   input: TypeDeliveryAddressInput;
+};
+
+
+export type TypeMutationCreateInquiryArgs = {
+  input: TypeCreateInquiryInput;
 };
 
 
@@ -2129,6 +2159,7 @@ export type TypeProduct = {
   id: Scalars['Int']['output'];
   /** Product images */
   images: Array<TypeImage>;
+  isInquiryType: Scalars['Boolean']['output'];
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
   isVisible: Scalars['Boolean']['output'];
@@ -2148,6 +2179,7 @@ export type TypeProduct = {
   partNumber: Maybe<Scalars['String']['output']>;
   /** Product price */
   price: TypeProductPrice;
+  productType: TypeProductTypeEnum;
   productVideos: Array<TypeVideoToken>;
   /** List of related products */
   relatedProducts: Array<TypeProduct>;
@@ -2319,6 +2351,14 @@ export type TypeProductPrice = {
   /** Total value of VAT */
   vatAmount: Scalars['Money']['output'];
 };
+
+/** One of possible product types */
+export enum TypeProductTypeEnum {
+  /** Basic product */
+  Basic = 'BASIC',
+  /** Product with inquiry form instead of add to cart button */
+  Inquiry = 'INQUIRY'
+}
 
 export type TypeQuery = {
   __typename?: 'Query';
@@ -2855,6 +2895,7 @@ export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & T
   id: Scalars['Int']['output'];
   /** Product images */
   images: Array<TypeImage>;
+  isInquiryType: Scalars['Boolean']['output'];
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
   isVisible: Scalars['Boolean']['output'];
@@ -2874,6 +2915,7 @@ export type TypeRegularProduct = TypeBreadcrumb & TypeHreflang & TypeProduct & T
   partNumber: Maybe<Scalars['String']['output']>;
   /** Product price */
   price: TypeProductPrice;
+  productType: TypeProductTypeEnum;
   productVideos: Array<TypeVideoToken>;
   /** List of related products */
   relatedProducts: Array<TypeProduct>;
@@ -3248,6 +3290,7 @@ export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug
   id: Scalars['Int']['output'];
   /** Product images */
   images: Array<TypeImage>;
+  isInquiryType: Scalars['Boolean']['output'];
   isMainVariant: Scalars['Boolean']['output'];
   isSellingDenied: Scalars['Boolean']['output'];
   isVisible: Scalars['Boolean']['output'];
@@ -3268,6 +3311,7 @@ export type TypeVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & TypeSlug
   partNumber: Maybe<Scalars['String']['output']>;
   /** Product price */
   price: TypeProductPrice;
+  productType: TypeProductTypeEnum;
   productVideos: Array<TypeVideoToken>;
   /** List of related products */
   relatedProducts: Array<TypeProduct>;

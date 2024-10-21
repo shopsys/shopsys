@@ -111,3 +111,15 @@ export type ComplaintFormType = {
     postcode: string;
     country: SelectOptionType;
 };
+
+export type InquiryFormType = {
+    email: string;
+    telephone: string;
+    firstName: string;
+    lastName: string;
+    companyName: string;
+    companyNumber: string;
+    companyTaxNumber: string;
+    note: string;
+    productUuid: string;
+};

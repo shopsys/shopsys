@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider;
+use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory;
 
 class ProductArrayFieldMapper
@@ -232,5 +233,23 @@ class ProductArrayFieldMapper
         }
 
         return false;
+    }
+
+    /**
+     * @param array $data
+     * @return bool
+     */
+    public function isInquiryType(array $data): bool
+    {
+        return $data['product_type'] === ProductTypeEnum::TYPE_INQUIRY;
+    }
+
+    /**
+     * @param array $data
+     * @return string
+     */
+    public function getProductType(array $data): string
+    {
+        return $data['product_type'];
     }
 }

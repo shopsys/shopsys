@@ -185,6 +185,7 @@ class ProductExportRepository
             ProductExportFieldProvider::SEO_META_DESCRIPTION => $product->getSeoMetaDescription($domainId),
             ProductExportFieldProvider::ACCESSORIES => $this->extractAccessoriesIds($product),
             ProductExportFieldProvider::HREFLANG_LINKS => $this->hreflangLinksFacade->getForProduct($product, $domainId),
+            ProductExportFieldProvider::PRODUCT_TYPE => $product->getProductType(),
             default => throw new InvalidArgumentException(sprintf('There is no definition for exporting "%s" field to Elasticsearch', $field)),
         };
     }

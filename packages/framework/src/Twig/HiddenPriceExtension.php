@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Twig;
 
+use Shopsys\FrameworkBundle\Component\Money\HiddenMoney;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver;
 use Twig\Extension\AbstractExtension;
@@ -11,8 +12,6 @@ use Twig\TwigFilter;
 
 class HiddenPriceExtension extends AbstractExtension
 {
-    protected const string HIDDEN_FORMAT = '***';
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver $customerUserRoleResolver
      */
@@ -42,7 +41,7 @@ class HiddenPriceExtension extends AbstractExtension
     public function hidePriceFilter(string $price, ?CustomerUser $customerUser): string
     {
         if (!$this->customerUserRoleResolver->canCustomerUserSeePrices($customerUser)) {
-            return static::HIDDEN_FORMAT;
+            return HiddenMoney::HIDDEN_FORMAT;
         }
 
         return $price;

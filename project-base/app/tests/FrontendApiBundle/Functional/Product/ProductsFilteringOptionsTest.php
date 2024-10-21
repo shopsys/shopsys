@@ -687,7 +687,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
           }
         }';
 
-        $minimalPrice = $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('699');
+        $minimalPrice = $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('3499');
         $maximalPrice = $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('3499');
 
         $expectedResult = '{

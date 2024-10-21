@@ -75,6 +75,8 @@ class ProductSellingDeniedRecalculator
                         pd.domain_hidden = TRUE
                         OR (
                             p.variant_type != :variantTypeMain
+                            AND 
+                            p.product_type != :inquiryProductType
                             AND
                             NOT EXISTS(
                                 SELECT 1
@@ -102,6 +104,7 @@ class ProductSellingDeniedRecalculator
         $params = [];
         $params['productIds'] = $productIds;
         $params['variantTypeMain'] = Product::VARIANT_TYPE_MAIN;
+        $params['inquiryProductType'] = ProductTypeEnum::TYPE_INQUIRY;
 
         foreach ($this->domain->getAll() as $domain) {
             $params['domainId'] = $domain->getId();
@@ -112,6 +115,7 @@ class ProductSellingDeniedRecalculator
                 [
                     'productIds' => ArrayParameterType::INTEGER,
                     'variantTypeMain' => Types::STRING,
+                    'inquiryProductType' => Types::STRING,
                     'domainId' => Types::INTEGER,
                 ],
             );
