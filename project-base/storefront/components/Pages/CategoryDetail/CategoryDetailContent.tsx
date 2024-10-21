@@ -61,15 +61,17 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                 {!!category.description && currentPage === 1 && (
                     <CollapsibleText scrollTargetRef={scrollTargetRef} text={category.description} />
                 )}
-                <div className="h-full flex-shrink-0 sm:h-32">
-                    <Image
-                        alt={category.name}
-                        className="h-full w-auto rounded-lg"
-                        height={500}
-                        src={category.images[0]?.url}
-                        width={500}
-                    />
-                </div>
+                {currentPage === 1 && (
+                    <div className="h-full flex-shrink-0 sm:h-32">
+                        <Image
+                            alt={category.name}
+                            className="h-full w-auto rounded-lg"
+                            height={500}
+                            src={category.images[0]?.url}
+                            width={500}
+                        />
+                    </div>
+                )}
             </div>
 
             <SimpleNavigation
