@@ -10,7 +10,7 @@ export const ProductVariantsAvailabilityPopup: FC<ProductVariantsAvailabilityPop
     storeAvailabilities,
 }) => {
     return (
-        <Popup className="w-11/12 max-w-2xl">
+        <Popup className="w-11/12 max-w-2xl" contentClassName="overflow-y-auto">
             <ProductDetailAvailabilityList storeAvailabilities={storeAvailabilities} />
         </Popup>
     );

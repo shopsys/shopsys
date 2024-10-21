@@ -123,7 +123,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid,
     };
 
     return (
-        <Popup className="w-11/12 overflow-x-auto lg:w-4/5">
+        <Popup className="w-11/12 lg:w-4/5" contentClassName="overflow-y-auto">
             <FormProvider {...formProviderMethods}>
                 <Form onSubmit={formProviderMethods.handleSubmit(createComplaintHandler)}>
                     <FormContentWrapper>

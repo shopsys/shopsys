@@ -5,6 +5,7 @@ import { ReactNode, useState } from 'react';
 import SelectReact, { components, Props } from 'react-select';
 import { twJoin } from 'tailwind-merge';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
+import { isClient } from 'utils/isClient';
 
 type NativeProps = ExtractNativePropsFromDefault<
     Props,
@@ -69,10 +70,12 @@ export const Select: FC<SelectProps> = ({ hasError, onChange, options, defaultVa
             isDisabled={isDisabled}
             isSearchable={false}
             menuIsOpen={isMenuOpen}
+            menuPortalTarget={isClient ? document.body : undefined}
             options={options}
             placeholder={props.label}
             value={value}
             styles={{
+                menuPortal: (base) => ({ ...base, zIndex: 10001 }),
                 indicatorSeparator: () => ({}),
                 control: (styles) => {
                     if (isDisabled) {
