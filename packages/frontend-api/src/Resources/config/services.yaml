@@ -158,6 +158,11 @@ services:
         arguments:
             $filesBatchLoader: '@files_batch_loader'
 
+    Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsQuery:
+        arguments:
+            $productsVisibleAndSortedByIdsBatchLoader: '@products_visible_and_sorted_by_ids_batch_loader'
+            $productsByEntitiesBatchLoader: '@products_by_entities_batch_loader'
+
     Shopsys\FrontendApiBundle\Model\Resolver\Products\Search\ProductSearchResultsProvider:
         tags:
             - { name: 'shopsys.frontend_api.products_search_results_provider', priority: 1 }

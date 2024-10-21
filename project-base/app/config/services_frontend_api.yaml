@@ -34,11 +34,6 @@ services:
             $categoriesBatchLoader: '@categories_batch_loader'
             $brandsBatchLoader: '@brands_batch_loader'
 
-    App\FrontendApi\Resolver\Products\ProductsQuery:
-        arguments:
-            $productsVisibleAndSortedByIdsBatchLoader: '@products_visible_and_sorted_by_ids_batch_loader'
-            $productsByEntitiesBatchLoader: '@products_by_entities_batch_loader'
-
     App\FrontendApi\Resolver\Store\StoreAvailabilityResolverMap:
         arguments:
             $storesBatchLoader: '@stores_batch_loader'
@@ -76,9 +71,6 @@ services:
     Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory:
         alias: App\FrontendApi\Model\Parameter\ParameterWithValuesFactory
 
-    Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory:
-        alias: App\FrontendApi\Model\Product\Connection\ProductConnectionFactory
-
     Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade:
         alias: App\FrontendApi\Model\Product\Filter\ProductFilterFacade
 
@@ -109,7 +101,3 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductResolverMap:
         alias: App\FrontendApi\Resolver\Products\ProductResolverMap
-
-    Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsQuery:
-        alias: App\FrontendApi\Resolver\Products\ProductsQuery
-        public: true

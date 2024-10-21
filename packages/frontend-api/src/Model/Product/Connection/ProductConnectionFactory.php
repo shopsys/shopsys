@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
+use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductsBatchLoader;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
@@ -254,5 +255,65 @@ class ProductConnectionFactory
                 );
             }),
         );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\Flag $flag
+     * @param \Closure $retrieveProductClosure
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param string $orderingMode
+     * @param string $defaultOrderingMode
+     * @param string $batchLoadDataId
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function createConnectionPromiseForFlag(
+        Flag $flag,
+        Closure $retrieveProductClosure,
+        Argument $argument,
+        ProductFilterData $productFilterData,
+        string $orderingMode,
+        string $defaultOrderingMode,
+        string $batchLoadDataId,
+    ): Promise {
+        $productFilterOptionsClosure = function () use ($flag, $productFilterData) {
+            return $this->productFilterOptionsFactory->createProductFilterOptionsForFlag(
+                $flag,
+                $this->productFilterFacade->getProductFilterConfigForFlag($flag),
+                $productFilterData,
+            );
+        };
+
+        return $this->getConnectionPromise($retrieveProductClosure, $productFilterOptionsClosure, $argument, $batchLoadDataId, $orderingMode, $defaultOrderingMode);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
+     * @param \Closure $retrieveProductClosure
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @param string $orderingMode
+     * @param string $defaultOrderingMode
+     * @param string $batchLoadDataId
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function createConnectionPromiseForBrand(
+        Brand $brand,
+        Closure $retrieveProductClosure,
+        Argument $argument,
+        ProductFilterData $productFilterData,
+        string $orderingMode,
+        string $defaultOrderingMode,
+        string $batchLoadDataId,
+    ): Promise {
+        $productFilterOptionsClosure = function () use ($brand, $productFilterData) {
+            return $this->productFilterOptionsFactory->createProductFilterOptionsForBrand(
+                $brand,
+                $this->productFilterFacade->getProductFilterConfigForBrand($brand),
+                $productFilterData,
+            );
+        };
+
+        return $this->getConnectionPromise($retrieveProductClosure, $productFilterOptionsClosure, $argument, $batchLoadDataId, $orderingMode, $defaultOrderingMode);
     }
 }
