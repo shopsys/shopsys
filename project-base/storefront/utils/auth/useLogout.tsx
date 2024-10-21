@@ -8,7 +8,8 @@ import { dispatchBroadcastChannel } from 'utils/useBroadcastChannel';
 export const useLogout = () => {
     const [, logoutMutation] = useLogoutMutation();
 
-    const updateAuthLoadingState = usePersistStore((store) => store.updateAuthLoadingState);
+    const resetContactInformation = usePersistStore((s) => s.resetContactInformation);
+    const updateAuthLoadingState = usePersistStore((s) => s.updateAuthLoadingState);
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
     const updateProductListUuids = usePersistStore((s) => s.updateProductListUuids);
 
@@ -18,6 +19,7 @@ export const useLogout = () => {
         const logoutResult = await logoutMutation({});
 
         if (logoutResult.data?.Logout) {
+            resetContactInformation();
             updateProductListUuids({});
             removeTokensFromCookies();
             updatePageLoadingState({ isPageLoading: true, redirectPageType: 'homepage' });
