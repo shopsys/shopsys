@@ -27,9 +27,9 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
     private const string UUID_NAMESPACE_CUSTOMER = '0e331caa-43a5-11ef-95db-325096b39f47';
 
     public const string SHOPSYS_COMPANY = 'shopsys_company';
-    public const string COMPANY_USER_JOZEF_NOVOTNY = 'company_user_jozef_novotny';
-    public const string COMPANY_USER_PETER_KOVAC = 'company_user_peter_kovac';
-    public const string COMPANY_USER_MAREK_HORVATH = 'company_user_marek_horvath';
+    public const string B2B_COMPANY_OWNER_EMAIL = 'jozef.novotny@shopsys.com';
+    public const string B2B_COMPANY_SELF_MANAGE_USER_EMAIL = 'marek.horvat@shopsys.com';
+    public const string B2B_COMPANY_LIMITED_USER_EMAIL = 'peter.kovac@shopsys.com';
 
     private const string KEY_CUSTOMER_USER_DATA = 'customerUserData';
     private const string KEY_DELIVERY_ADDRESS = 'deliveryAddress';
@@ -197,10 +197,10 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
                 self::KEY_CUSTOMER_USER_DATA => [
                     self::KEY_CUSTOMER_USER_DATA_FIRST_NAME => 'Jozef',
                     self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Novotný',
-                    self::KEY_CUSTOMER_USER_DATA_EMAIL => 'jozef.novotny@shopsys.com',
+                    self::KEY_CUSTOMER_USER_DATA_EMAIL => self::B2B_COMPANY_OWNER_EMAIL,
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'user123',
                     self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '606060605',
-                    self::KEY_CUSTOMER_USER_REFERENCE => self::COMPANY_USER_JOZEF_NOVOTNY,
+                    self::KEY_CUSTOMER_USER_REFERENCE => self::B2B_COMPANY_OWNER_EMAIL,
                     self::KEY_CUSTOMER_ROLE_GROUP => $this->getReference(CustomerUserRoleGroupDataFixture::ROLE_GROUP_OWNER, CustomerUserRoleGroup::class),
                 ],
                 self::KEY_DELIVERY_ADDRESS => [
@@ -217,10 +217,10 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
                 self::KEY_CUSTOMER_USER_DATA => [
                     self::KEY_CUSTOMER_USER_DATA_FIRST_NAME => 'Peter',
                     self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Kováč',
-                    self::KEY_CUSTOMER_USER_DATA_EMAIL => 'peter.kovac@shopsys.com',
+                    self::KEY_CUSTOMER_USER_DATA_EMAIL => self::B2B_COMPANY_LIMITED_USER_EMAIL,
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'user123',
                     self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '606060606',
-                    self::KEY_CUSTOMER_USER_REFERENCE => self::COMPANY_USER_PETER_KOVAC,
+                    self::KEY_CUSTOMER_USER_REFERENCE => self::B2B_COMPANY_LIMITED_USER_EMAIL,
                     self::KEY_CUSTOMER_ROLE_GROUP => $this->getReference(CustomerUserRoleGroupDataFixture::ROLE_GROUP_LIMITED_USER, CustomerUserRoleGroup::class),
                 ],
                 self::KEY_DELIVERY_ADDRESS => [
@@ -237,10 +237,10 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
                 self::KEY_CUSTOMER_USER_DATA => [
                     self::KEY_CUSTOMER_USER_DATA_FIRST_NAME => 'Marek',
                     self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Horváth',
-                    self::KEY_CUSTOMER_USER_DATA_EMAIL => 'marek.horvat@shopsys.com',
+                    self::KEY_CUSTOMER_USER_DATA_EMAIL => self::B2B_COMPANY_SELF_MANAGE_USER_EMAIL,
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'user123',
                     self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '606060607',
-                    self::KEY_CUSTOMER_USER_REFERENCE => self::COMPANY_USER_MAREK_HORVATH,
+                    self::KEY_CUSTOMER_USER_REFERENCE => self::B2B_COMPANY_SELF_MANAGE_USER_EMAIL,
                     self::KEY_CUSTOMER_ROLE_GROUP => $this->getReference(CustomerUserRoleGroupDataFixture::ROLE_GROUP_USER, CustomerUserRoleGroup::class),
                 ],
                 self::KEY_DELIVERY_ADDRESS => [

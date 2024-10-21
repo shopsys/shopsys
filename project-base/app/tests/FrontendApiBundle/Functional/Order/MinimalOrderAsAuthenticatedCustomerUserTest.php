@@ -11,7 +11,7 @@ use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class MinimalOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
 {
-    public const DEFAULT_USER_EMAIL = CustomerUserDataFixture::USER_WITH_DELIVERY_ADDRESS_PERSISTENT_REFERENCE_EMAIL;
+    public const string DEFAULT_USER_EMAIL = CustomerUserDataFixture::USER_WITH_DELIVERY_ADDRESS_PERSISTENT_REFERENCE_EMAIL;
 
     private const array DEFAULT_INPUT_VALUES = [
         'firstName' => 'firstName',

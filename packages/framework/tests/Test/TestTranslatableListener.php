@@ -6,6 +6,7 @@ namespace Tests\FrameworkBundle\Test;
 
 use Metadata\MetadataFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException;
 use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
 use Shopsys\FrameworkBundle\Model\Localization\TranslatableListener;
 
@@ -35,7 +36,11 @@ class TestTranslatableListener extends TranslatableListener
             return $this->adminLocale;
         }
 
-        return $this->getFirstDomainLocale();
+        try {
+            return $this->domain->getLocale();
+        } catch (NoDomainSelectedException) {
+            return $this->getFirstDomainLocale();
+        }
     }
 
     /**

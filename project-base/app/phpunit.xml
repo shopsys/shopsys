@@ -29,6 +29,9 @@
     <testsuite name="FrontendApiFunctional">
       <directory>tests/FrontendApiBundle/Functional</directory>
     </testsuite>
+    <testsuite name="FrontendApiFunctionalB2b">
+      <directory>tests/FrontendApiBundle/FunctionalB2b</directory>
+    </testsuite>
     <testsuite name="Smoke">
       <directory>tests/App/Smoke</directory>
     </testsuite>
