@@ -59,11 +59,7 @@ export const MenuIconic: FC = () => {
             </MenuIconicItem>
 
             <MenuIconicItem>
-                {isUserLoggedIn ? (
-                    <MenuIconicItemUserAuthenticated className="relative" />
-                ) : (
-                    <MenuIconicItemUserUnauthenticated />
-                )}
+                {isUserLoggedIn ? <MenuIconicItemUserAuthenticated /> : <MenuIconicItemUserUnauthenticated />}
             </MenuIconicItem>
         </ul>
     );

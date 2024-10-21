@@ -1,30 +1,68 @@
-import { MenuIconicItemLink } from './MenuIconicElements';
+import { MenuIconicItemLink, MenuIconicItemUserPopover } from './MenuIconicElements';
+import { MenuIconicItemUserUnauthenticatedContent } from './MenuIconicItemUserUnauthenticatedContent';
+import { Drawer } from 'components/Basic/Drawer/Drawer';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
+import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
-import dynamic from 'next/dynamic';
-import { useSessionStore } from 'store/useSessionStore';
+import { useState, MouseEvent as ReactMouseEvent } from 'react';
+import { desktopFirstSizes } from 'utils/mediaQueries';
+import { twMergeCustom } from 'utils/twMerge';
+import { useGetWindowSize } from 'utils/ui/useGetWindowSize';
+import { useDebounce } from 'utils/useDebounce';
 
-const LoginPopup = dynamic(() =>
-    import('components/Blocks/Popup/LoginPopup').then((component) => component.LoginPopup),
-);
-
+const isBrowserPasswordManagerHovered = (e: ReactMouseEvent<HTMLDivElement, MouseEvent>) => e.relatedTarget === window;
 export const MenuIconicItemUserUnauthenticated: FC = () => {
     const { t } = useTranslation();
-    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const [isClicked, setIsClicked] = useState(false);
+    const [isHovered, setIsHovered] = useState(false);
+    const isHoveredDelayed = useDebounce(isHovered, 200);
 
-    const handleLogin = () => {
-        updatePortalContent(<LoginPopup />);
-    };
+    const { width } = useGetWindowSize();
+    const isDesktop = width > desktopFirstSizes.tablet;
 
     return (
-        <MenuIconicItemLink
-            className="cursor-pointer lg:w-[72px]"
-            tid={TIDs.layout_header_menuiconic_login_link_popup}
-            onClick={handleLogin}
-        >
-            <UserIcon className="size-6" />
-            <span className="hidden lg:inline-block">{t('Login')}</span>
-        </MenuIconicItemLink>
+        <>
+            <div
+                className={twMergeCustom('group lg:relative lg:flex', (isClicked || isHovered) && 'z-aboveOverlay')}
+                tid={TIDs.my_account_link}
+                onMouseEnter={() => isDesktop && setIsHovered(true)}
+                onMouseLeave={(e) => isDesktop && !isBrowserPasswordManagerHovered(e) && setIsHovered(false)}
+            >
+                <MenuIconicItemLink
+                    className="cursor-pointer lg:w-[72px]"
+                    tid={TIDs.layout_header_menuiconic_login_link_popup}
+                    onClick={() => {
+                        setIsClicked(!isClicked);
+                        setIsClicked(!isHovered);
+                    }}
+                >
+                    <UserIcon className="size-6" />
+                    <span className="hidden lg:inline-block">{t('Login')}</span>
+                </MenuIconicItemLink>
+
+                <Drawer className="lg:hidden" isClicked={isClicked} setIsClicked={setIsClicked} title={t('My account')}>
+                    <MenuIconicItemUserUnauthenticatedContent
+                        isClicked={isClicked}
+                        isHoveredDelayed={isHoveredDelayed}
+                    />
+                </Drawer>
+
+                <MenuIconicItemUserPopover isAuthenticated={false} isHovered={isHoveredDelayed}>
+                    <MenuIconicItemUserUnauthenticatedContent
+                        isClicked={isClicked}
+                        isHoveredDelayed={isHoveredDelayed}
+                    />
+                </MenuIconicItemUserPopover>
+            </div>
+
+            <Overlay
+                isActive={isClicked || isHoveredDelayed}
+                onClick={() => {
+                    setIsClicked(false);
+                    setIsHovered(false);
+                }}
+            />
+        </>
     );
 };
