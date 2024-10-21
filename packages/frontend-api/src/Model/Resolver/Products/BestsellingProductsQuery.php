@@ -8,6 +8,7 @@ use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\Category;
+use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider;
@@ -32,12 +33,16 @@ class BestsellingProductsQuery extends AbstractQuery
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category|\Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix $categoryOrReadyCategorySeoMix
      * @return \GraphQL\Executor\Promise\Promise
      */
     public function bestSellingProductsByCategoryQuery(
-        Category $category,
+        Category|ReadyCategorySeoMix $categoryOrReadyCategorySeoMix,
     ): Promise {
+        $category = $categoryOrReadyCategorySeoMix instanceof ReadyCategorySeoMix
+            ? $categoryOrReadyCategorySeoMix->getCategory()
+            : $categoryOrReadyCategorySeoMix;
+
         $bestsellingProductsIds = $this->cachedBestsellingProductFacade->getOfferedBestsellingProductIds(
             $this->domain->getId(),
             $category,
