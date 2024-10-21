@@ -4,7 +4,7 @@ This article describes how to work with directories and how to create your own d
 
 ## Config
 
-Default directories that need to be created in order to app to be able to run properly are defined in framework's [`/Resources/config/directories.yml`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Resources/config/directories.yml) and are created by symfony command `shopsys:create-directories`.
+Default directories that need to be created in order to app to be able to run properly are defined in framework's [`/Resources/config/directories.yaml`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Resources/config/directories.yaml) and are created by symfony command `shopsys:create-directories`.
 
 ## Directories type
 
