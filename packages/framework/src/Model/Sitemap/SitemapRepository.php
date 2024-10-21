@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
 use Shopsys\FrameworkBundle\Model\Article\ArticleRepository;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleRepository;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
+use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -212,6 +213,31 @@ class SitemapRepository
                 AND fu.main = TRUE',
             )
             ->setParameter('flagDetailRouteName', 'front_flag_detail')
+            ->setParameter('domainId', $domainConfig->getId());
+
+        return $this->getSitemapItemsFromQueryBuilderWithSlugField($queryBuilder);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return \Shopsys\FrameworkBundle\Model\Sitemap\SitemapItem[]
+     */
+    public function getSitemapItemsForVisibleCategorySeoMix(DomainConfig $domainConfig): array
+    {
+        $queryBuilder = $this->categoryRepository->getAllVisibleByDomainIdQueryBuilder($domainConfig->getId());
+        $queryBuilder
+            ->select('fu.slug, fu.entityId')
+            ->join(ReadyCategorySeoMix::class, 'rcsm', Join::WITH, 'rcsm.category = c AND rcsm.domainId = :domainId')
+            ->join(
+                FriendlyUrl::class,
+                'fu',
+                Join::WITH,
+                'fu.routeName = :categorySeoMixRouteName
+                AND fu.entityId = rcsm
+                AND fu.domainId = :domainId
+                AND fu.main = TRUE',
+            )
+            ->setParameter('categorySeoMixRouteName', 'front_category_seo')
             ->setParameter('domainId', $domainConfig->getId());
 
         return $this->getSitemapItemsFromQueryBuilderWithSlugField($queryBuilder);

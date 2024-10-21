@@ -120,10 +120,6 @@ services:
             - '%shopsys.sitemaps_dir%'
             - '%shopsys.sitemaps_url_prefix%'
 
-    App\Model\Sitemap\SitemapListener:
-        tags:
-            - { name: 'kernel.event_subscriber', priority: 100 }
-
     App\ProductFeed\MergadoFeed\MergadoFeed:
         tags:
             - { name: shopsys.feed, hours: 5, minutes: 0 }
@@ -474,15 +470,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterDataToQueryTransformer:
         alias: App\Model\Product\Search\ProductFilterDataToQueryTransformer
-
-    Shopsys\FrameworkBundle\Model\Sitemap\SitemapFacade:
-        alias: App\Model\Sitemap\SitemapFacade
-
-    Shopsys\FrameworkBundle\Model\Sitemap\SitemapListener:
-        alias: App\Model\Sitemap\SitemapListener
-
-    Shopsys\FrameworkBundle\Model\Sitemap\SitemapRepository:
-        alias: App\Model\Sitemap\SitemapRepository
 
     Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory:
         alias: App\Model\Slider\SliderItemDataFactory
