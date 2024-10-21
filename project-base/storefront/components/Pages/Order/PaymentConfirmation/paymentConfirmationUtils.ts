@@ -1,5 +1,4 @@
 import { useUpdatePaymentStatusMutation } from 'graphql/requests/orders/mutations/UpdatePaymentStatusMutation.generated';
-import { onGtmCreateOrderEventHandler } from 'gtm/handlers/onGtmCreateOrderEventHandler';
 import {
     getGtmCreateOrderEventFromLocalStorage,
     removeGtmCreateOrderEventFromLocalStorage,
@@ -40,11 +39,6 @@ export const useUpdatePaymentStatus = (orderUuid: string, orderPaymentStatusPage
             return;
         }
 
-        onGtmCreateOrderEventHandler(
-            gtmCreateOrderEventOrderPart,
-            gtmCreateOrderEventUserPart,
-            updatePaymentStatusActionResult.data.UpdatePaymentStatus.isPaid,
-        );
         removeGtmCreateOrderEventFromLocalStorage();
     };
 
