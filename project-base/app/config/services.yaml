@@ -517,9 +517,6 @@ services:
     Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductsBatchLoader:
         alias: App\FrontendApi\Model\Product\ProductsBatchLoader
 
-    Shopsys\FrontendApiBundle\Model\Resolver\Advert\AdvertsQuery:
-        alias: App\FrontendApi\Model\Resolver\Advert\AdvertsQuery
-
     Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator:
         alias: App\FrontendApi\Model\Token\TokenAuthenticator
 
