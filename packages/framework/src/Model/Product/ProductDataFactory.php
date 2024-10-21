@@ -210,7 +210,7 @@ class ProductDataFactory
     protected function getParametersData(Product $product)
     {
         $productParameterValuesData = [];
-        $productParameterValues = $this->parameterRepository->getProductParameterValuesByProduct($product);
+        $productParameterValues = $this->parameterRepository->getProductParameterValuesByProduct($product, $this->domain->getLocale());
 
         foreach ($productParameterValues as $productParameterValue) {
             $productParameterValuesData[] = $this->productParameterValueDataFactory->createFromProductParameterValue(

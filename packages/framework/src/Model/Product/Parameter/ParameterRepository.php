@@ -242,17 +242,36 @@ class ParameterRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param string|null $locale
      * @return \Doctrine\ORM\QueryBuilder
      */
-    protected function getProductParameterValuesByProductQueryBuilder(Product $product)
-    {
-        return $this->em->createQueryBuilder()
+    protected function getProductParameterValuesByProductQueryBuilder(
+        Product $product,
+        ?string $locale = null,
+    ): QueryBuilder {
+        $queryBuild = $this->em->createQueryBuilder()
             ->select('ppv')
             ->from(ProductParameterValue::class, 'ppv')
-            ->join(ParameterGroup::class, 'pg')
+            ->join('ppv.parameter', 'p')
+            ->join('ppv.value', 'pv')
+            ->leftJoin(ParameterGroup::class, 'pg', Join::WITH, 'p.group = pg.id')
             ->where('ppv.product = :product_id')
-            ->orderBy('pg.position', 'ASC')
+            ->orderBy('CASE WHEN pg.position IS NULL THEN 1 ELSE 0 END', 'DESC')
+            ->addOrderBy('pg.position', 'ASC');
+
+        if ($locale) {
+            $queryBuild
+                ->join('p.translations', 'pt')
+                ->addOrderBy('pt.name', 'ASC')
+                ->setParameter('locale', $locale);
+        }
+
+        $queryBuild
+            ->addOrderBy('pv.locale')
+            ->addOrderBy('IDENTITY(p.group)')
             ->setParameter('product_id', $product->getId());
+
+        return $queryBuild;
     }
 
     /**
@@ -281,11 +300,12 @@ class ParameterRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param string|null $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[]
      */
-    public function getProductParameterValuesByProduct(Product $product)
+    public function getProductParameterValuesByProduct(Product $product, ?string $locale = null)
     {
-        $queryBuilder = $this->getProductParameterValuesByProductQueryBuilder($product);
+        $queryBuilder = $this->getProductParameterValuesByProductQueryBuilder($product, $locale);
 
         return $queryBuilder->getQuery()->execute();
     }
