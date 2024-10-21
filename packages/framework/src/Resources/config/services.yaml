@@ -256,12 +256,6 @@ services:
         arguments:
             $environmentFileDirectory: '%kernel.project_dir%'
 
-    Shopsys\FrameworkBundle\Component\Error\ErrorController:
-        arguments:
-            $debug: '%kernel.debug%'
-            $environment: '%kernel.environment%'
-            $overwriteDomainUrl: '%env(default::OVERWRITE_DOMAIN_URL)%'
-
     Shopsys\FrameworkBundle\Component\Error\ErrorPagesFacade:
         arguments:
             $errorPagesDir: '%shopsys.error_pages_dir%'
@@ -535,6 +529,12 @@ services:
     Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator:
         arguments:
             - '%shopsys.uploaded_file_dir%'
+
+    Shopsys\FrameworkBundle\Controller\Admin\ErrorController:
+        arguments:
+            $debug: '%kernel.debug%'
+            $environment: '%kernel.environment%'
+            $overwriteDomainUrl: '%env(default::OVERWRITE_DOMAIN_URL)%'
 
     Shopsys\FrameworkBundle\Controller\ElFinder\ElfinderController: ~
 
