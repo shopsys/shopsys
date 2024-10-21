@@ -1,5 +1,6 @@
 import { getGtmPriceBasedOnVisibility } from './getGtmPriceBasedOnVisibility';
 import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
+import { TypePromoCode } from 'graphql/types';
 import { mapGtmCartItemType } from 'gtm/mappers/mapGtmCartItemType';
 import { GtmCartInfoType } from 'gtm/types/objects';
 import { DomainConfigType } from 'utils/domain/domainConfig';
@@ -8,7 +9,7 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 
 export const getGtmMappedCart = (
     cart: TypeCartFragment,
-    promoCode: string | null,
+    promoCodes: TypePromoCode[],
     isUserLoggedIn: boolean,
     domain: DomainConfigType,
     cartUuid: string | null,
@@ -27,9 +28,7 @@ export const getGtmMappedCart = (
         products,
     };
 
-    if (promoCode) {
-        mappedCart.promoCodes = [promoCode];
-    }
+    mappedCart.promoCodes = promoCodes.map(({ code }) => code);
 
     return mappedCart;
 };

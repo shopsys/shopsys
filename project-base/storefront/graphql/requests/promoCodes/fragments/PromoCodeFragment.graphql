@@ -1,0 +1,7 @@
+fragment PromoCodeFragment on PromoCode {
+    code
+    discount {
+        ...PriceFragment
+    }
+    type
+}

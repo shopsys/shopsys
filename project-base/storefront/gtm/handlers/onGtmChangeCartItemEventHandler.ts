@@ -44,7 +44,7 @@ export const onGtmChangeCartItemEventHandler = (
         arePricesHidden,
         getGtmMappedCart(
             addToCartResult.cart,
-            addToCartResult.cart.promoCode,
+            addToCartResult.cart.promoCodes,
             isUserLoggedIn,
             domainConfig,
             addToCartResult.cart.uuid,
