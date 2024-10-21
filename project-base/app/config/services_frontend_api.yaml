@@ -21,14 +21,6 @@ services:
         arguments:
             $loginRateLimiter: '@security.login_throttling.frontend_api.limiter'
 
-    App\FrontendApi\Resolver\Category\CategoryResolverMap:
-        arguments:
-            $readyCategorySeoMixesBatchLoader: '@ready_category_seo_mixes_batch_loader'
-            $categoryChildrenBatchLoader: '@category_children_batch_loader'
-            $linkedCategoriesBatchLoader: '@linked_categories_batch_loader'
-        tags:
-            - { name: overblog_graphql.resolver_map, schema: default }
-
     App\FrontendApi\Resolver\Products\BestsellingProductsQuery:
         arguments:
             $productsSellableByIdsBatchLoader: '@products_sellable_by_ids_batch_loader'
@@ -104,9 +96,6 @@ services:
     Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoriesQuery:
         alias: App\FrontendApi\Resolver\Category\CategoriesQuery
         public: true
-
-    Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolverMap:
-        alias: App\FrontendApi\Resolver\Category\CategoryResolverMap
 
     Shopsys\FrontendApiBundle\Model\Resolver\Customer\User\CurrentCustomerUserQuery:
         alias: App\FrontendApi\Resolver\Customer\User\CurrentCustomerUserQuery
