@@ -63,7 +63,7 @@
         "presta/sitemap-bundle": "^3.3",
         "prezent/doctrine-translatable-bundle": "^1.4",
         "sentry/sentry-symfony": "^4.2.8",
-        "shopsys/deployment": "^3.2.4",
+        "shopsys/deployment": "^3.2.7",
         "shopsys/form-types-bundle": "16.0.x-dev",
         "shopsys/framework": "16.0.x-dev",
         "shopsys/frontend-api": "16.0.x-dev",
