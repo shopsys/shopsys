@@ -85,10 +85,6 @@ services:
     Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory:
         alias: App\FrontendApi\Model\Product\Filter\ProductFilterOptionsFactory
 
-    Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandsQuery:
-        alias: App\FrontendApi\Resolver\Brand\BrandsQuery
-        public: true
-
     Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoriesQuery:
         alias: App\FrontendApi\Resolver\Category\CategoriesQuery
         public: true

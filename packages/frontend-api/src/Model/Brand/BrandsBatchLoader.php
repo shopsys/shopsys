@@ -2,23 +2,24 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Model\Brand;
+namespace Shopsys\FrontendApiBundle\Model\Brand;
 
 use GraphQL\Executor\Promise\Promise;
 use GraphQL\Executor\Promise\PromiseAdapter;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 
 class BrandsBatchLoader
 {
     /**
      * @param \GraphQL\Executor\Promise\PromiseAdapter $promiseAdapter
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\FrontendApi\Model\Brand\BrandFacade $brandFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
      */
     public function __construct(
-        private PromiseAdapter $promiseAdapter,
-        private Domain $domain,
-        private BrandFacade $brandFacade,
+        protected readonly PromiseAdapter $promiseAdapter,
+        protected readonly Domain $domain,
+        protected readonly BrandFacade $brandFacade,
     ) {
     }
 
