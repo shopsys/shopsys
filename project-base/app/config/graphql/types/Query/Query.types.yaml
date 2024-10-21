@@ -10,7 +10,6 @@ Query:
         - 'OrderQuery'
         - 'PersonalDataQuery'
         - 'ProductQuery'
-        - 'SlugQuery'
         - 'NotificationBarQuery'
         - 'LanguageConstantQuery'
         - 'SeoPageQuery'

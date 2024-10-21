@@ -2440,8 +2440,6 @@ export type TypeQuery = {
   settings: Maybe<TypeSettings>;
   /** Returns a complete list of the slider items */
   sliderItems: Array<TypeSliderItem>;
-  /** Returns entity by slug */
-  slug: Maybe<TypeSlug>;
   /** Returns store filtered using UUID or URL slug */
   store: Maybe<TypeStore>;
   /** Returns list of stores that can be paginated using `first`, `last`, `before` and `after` keywords */
@@ -2684,11 +2682,6 @@ export type TypeQueryRecommendedProductsArgs = {
 
 export type TypeQuerySeoPageArgs = {
   pageSlug: Scalars['String']['input'];
-};
-
-
-export type TypeQuerySlugArgs = {
-  slug: Scalars['String']['input'];
 };
 
 

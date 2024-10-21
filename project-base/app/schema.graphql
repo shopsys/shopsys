@@ -2016,8 +2016,6 @@ type Query {
   settings: Settings
   "Returns a complete list of the slider items"
   sliderItems: [SliderItem!]!
-  "Returns entity by slug"
-  slug(slug: String!): Slug
   "Returns store filtered using UUID or URL slug"
   store(urlSlug: String, uuid: Uuid): Store
   "Returns list of stores that can be paginated using `first`, `last`, `before` and `after` keywords"

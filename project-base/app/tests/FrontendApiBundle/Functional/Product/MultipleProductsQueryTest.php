@@ -15,59 +15,40 @@ class MultipleProductsQueryTest extends GraphQlTestCase
         $translatedName = t('TV, audio', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
         $slug = TransformString::stringToFriendlyUrlSlug($translatedName);
 
-        $query = 'query slug {
-  slug(slug: "' . $slug . '") {
-    ... on Category {
-      name
-      products(first: 2, orderingMode: PRICE_DESC) {
-        edges {
-          node {
-            name
-          }
-        }
-      }      
-      productsStatic: products(first: 2, filter: {minimalPrice: "6000"}, orderingMode: PRICE_ASC) {
-        edges {
-          node {
-            name
-          }
-        }
-      }
-    }
-  }
-}';
-        $firstDomainLocale = $this->getFirstDomainLocale();
-        $expectedResult = '{
-  "data": {
-    "slug": {
-      "name": "' . $translatedName . '",
-      "products": {
-        "edges": [
-          {
-            "node": {
-              "name": "' . t('Samsung UE75HU7500 (UHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale) . '"
-            }
-          },
-          {
-            "node": {
-              "name": "' . t('LG 47LA790W (FHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale) . '"
-            }
-          }
-        ]
-      },
-      "productsStatic": {
-        "edges": [
-          {
-            "node": {
-              "name": "' . t('Samsung UE75HU7500 (UHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale) . '"
-            }
-          }
-        ]
-      }
-    }
-  }
-}';
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/multipleProductsQuery.graphql', [
+            'urlSlug' => $slug,
+        ]);
+        $data = $this->getResponseDataForGraphQlType($response, 'category');
 
-        $this->assertQueryWithExpectedJson($query, $expectedResult);
+        $firstDomainLocale = $this->getFirstDomainLocale();
+
+        $expectedData = [
+            'name' => $translatedName,
+            'products' => [
+                'edges' => [
+                    [
+                        'node' => [
+                            'name' => t('Samsung UE75HU7500 (UHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        ],
+                    ],
+                    [
+                        'node' => [
+                            'name' => t('LG 47LA790W (FHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        ],
+                    ],
+                ],
+            ],
+            'productsStatic' => [
+                'edges' => [
+                    [
+                        'node' => [
+                            'name' => t('Samsung UE75HU7500 (UHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        $this->assertEquals($expectedData, $data);
     }
 }
