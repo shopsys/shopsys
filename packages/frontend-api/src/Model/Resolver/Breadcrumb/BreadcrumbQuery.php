@@ -2,15 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\Breadcrumb;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\Breadcrumb;
 
-use App\FrontendApi\Component\Breadcrumb\Exception\UnableToGenerateBreadcrumbItemsUserError;
-use App\Model\Category\Category;
-use InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\Exception\UnableToGenerateBreadcrumbItemsException;
+use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
+use Shopsys\FrontendApiBundle\Model\Resolver\Breadcrumb\Exception\UnableToGenerateBreadcrumbItemsUserError;
 
 class BreadcrumbQuery extends AbstractQuery
 {
@@ -18,7 +17,7 @@ class BreadcrumbQuery extends AbstractQuery
      * @param \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
      */
     public function __construct(
-        private readonly BreadcrumbFacade $breadcrumbFacade,
+        protected readonly BreadcrumbFacade $breadcrumbFacade,
     ) {
     }
 
@@ -40,23 +39,15 @@ class BreadcrumbQuery extends AbstractQuery
     }
 
     /**
-     * @param \App\Model\Category\Category|\Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix $categoryOrReadyCategorySeoMix
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category|\Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix $categoryOrReadyCategorySeoMix
      * @return array[]
      */
-    public function categoryBreadcrumbQuery($categoryOrReadyCategorySeoMix): array
+    public function categoryBreadcrumbQuery(Category|ReadyCategorySeoMix $categoryOrReadyCategorySeoMix): array
     {
         if ($categoryOrReadyCategorySeoMix instanceof Category) {
             $categoryId = $categoryOrReadyCategorySeoMix->getId();
-        } elseif ($categoryOrReadyCategorySeoMix instanceof ReadyCategorySeoMix) {
-            $categoryId = $categoryOrReadyCategorySeoMix->getCategory()->getId();
         } else {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'The "$categoryOrReadyCategorySeoMix" argument must be an instance of "%s" or "%s".',
-                    Category::class,
-                    ReadyCategorySeoMix::class,
-                ),
-            );
+            $categoryId = $categoryOrReadyCategorySeoMix->getCategory()->getId();
         }
 
         return $this->breadcrumbQuery($categoryId, 'front_product_list');
