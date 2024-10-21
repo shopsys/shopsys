@@ -29,11 +29,6 @@ services:
         tags:
             - { name: overblog_graphql.resolver_map, schema: default }
 
-    App\FrontendApi\Resolver\Image\CategoryOrReadyCategorySeoMixImagesQuery:
-        arguments:
-            $imagesBatchLoader: '@images_batch_loader'
-            $firstImageBatchLoader: '@first_image_batch_loader'
-
     App\FrontendApi\Resolver\Products\BestsellingProductsQuery:
         arguments:
             $productsSellableByIdsBatchLoader: '@products_sellable_by_ids_batch_loader'

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\Category\CategorySeo;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\CategorySeo;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
@@ -21,9 +21,9 @@ class ReadyCategorySeoMixQuery extends AbstractQuery
      * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      */
     public function __construct(
-        private readonly FriendlyUrlFacade $friendlyUrlFacade,
-        private readonly Domain $domain,
-        private readonly ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly Domain $domain,
+        protected readonly ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
     ) {
     }
 
