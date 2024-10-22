@@ -44,11 +44,17 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
     ) => {
         event?.preventDefault();
 
-        onChangeProfileHandler(customerChangeProfileFormData);
-        onChangePasswordHandler(customerChangeProfileFormData);
+        const postponedProfileChangeAction = await onChangeProfileHandler(customerChangeProfileFormData);
+        const passwordChangeResponse = await onChangePasswordHandler(customerChangeProfileFormData);
+
+        if (!passwordChangeResponse.error) {
+            postponedProfileChangeAction();
+        }
     };
 
-    const onChangeProfileHandler = async (customerChangeProfileFormData: CustomerChangeProfileFormType) => {
+    const onChangeProfileHandler = async (
+        customerChangeProfileFormData: CustomerChangeProfileFormType,
+    ): Promise<() => void> => {
         const changeProfileResult = await customerEditProfile({
             input: {
                 billingAddressUuid: currentCustomerUser.billingAddressUuid,
@@ -68,18 +74,20 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
         });
 
         if (changeProfileResult.data?.ChangePersonalData !== undefined) {
-            showSuccessMessage(formMeta.messages.success);
+            return () => showSuccessMessage(formMeta.messages.success);
         }
 
-        handleFormErrors(changeProfileResult.error, formProviderMethods, t, formMeta.messages.error);
+        return () => handleFormErrors(changeProfileResult.error, formProviderMethods, t, formMeta.messages.error);
     };
 
-    const onChangePasswordHandler = async (customerChangeProfileFormData: CustomerChangeProfileFormType) => {
+    const onChangePasswordHandler = async (
+        customerChangeProfileFormData: CustomerChangeProfileFormType,
+    ): Promise<{ error: boolean }> => {
         if (
             customerChangeProfileFormData.newPassword === '' ||
             customerChangeProfileFormData.newPasswordConfirm === ''
         ) {
-            return;
+            return { error: false };
         }
 
         const changePasswordResult = await changePassword({
@@ -90,6 +98,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
 
         if (changePasswordResult.data?.ChangePassword !== undefined) {
             showSuccessMessage(t('Your password has been changed.'));
+            return { error: false };
         }
 
         handleFormErrors(
@@ -98,6 +107,10 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
             t,
             t('There was an error while changing your password'),
         );
+
+        return {
+            error: !!changePasswordResult.error,
+        };
     };
 
     useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.other);
