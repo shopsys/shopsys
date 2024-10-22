@@ -9,7 +9,7 @@ You can set up which social network logins are enabled on which domain in `socia
 For every social network, you need `app_id` and `app_secret`. Below you have information on where and how to get them. The credentials then need to be set to the corresponding environment variables.
 
 Every social network require URL for backward redirect to the eshop.
-In Shopsys platform, you have to add url `{eshop_domain}/social-network/login/{type}` where `{eshop_domain}` is your domain and `{type}` is social network name, e.g.: `google`, `facebook`, `seznam`, etc.
+In Shopsys Platform, you have to add URL `{eshop_domain}/social-network/login/{type}` where `{eshop_domain}` is your domain and `{type}` is the social network name, e.g.: `google`, `facebook`, `seznam`, etc.
 For local development, social networks usually require https.
 
 ### Facebook
