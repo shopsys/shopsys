@@ -26,6 +26,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     public const string USER_WITH_RESET_PASSWORD_HASH = 'user_with_reset_password_hash';
     public const string USER_WITH_DELIVERY_ADDRESS_PERSISTENT_REFERENCE_EMAIL = 'vitek@shopsys.com';
     public const string DELIVERY_ADDRESS_PERSISTENT_REFERENCE = 'delivery_address_persistent_reference';
+    public const string BILLING_ADDRESS_PERSISTENT_REFERENCE = 'billing_address_persistent_reference';
 
     public const string CUSTOMER_PREFIX = 'customer_';
 
@@ -56,6 +57,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
     private const string KEY_ADDRESS_LAST_NAME = 'lastName';
     private const string KEY_ADDRESS_UUID = 'uuid';
     public const string DELIVERY_ADDRESS_PERSISTENT_REFERENCE_UUID = 'd5595a22-cb85-4c05-846e-8475f09229ef';
+    public const string COMPANY_BILLING_ADDRESS_UUID = '13dde196-f607-4edb-8c01-d81d90adfd05';
 
     /**
      * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
@@ -98,6 +100,10 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
 
                 if ($customerUser->getDefaultDeliveryAddress()?->getUuid() === self::DELIVERY_ADDRESS_PERSISTENT_REFERENCE_UUID) {
                     $this->addReference(self::DELIVERY_ADDRESS_PERSISTENT_REFERENCE, $customerUser->getDefaultDeliveryAddress());
+                }
+
+                if ($customerUser->getCustomer()->getBillingAddress()->getUuid() === self::COMPANY_BILLING_ADDRESS_UUID) {
+                    $this->addReference(self::BILLING_ADDRESS_PERSISTENT_REFERENCE, $customerUser->getCustomer()->getBillingAddress());
                 }
 
                 if ($customerUser->getId() !== 1) {
@@ -166,6 +172,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                     self::KEY_ADDRESS_CITY => 'Ostrava',
                     self::KEY_ADDRESS_POSTCODE => '70200',
                     self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class),
+                    self::KEY_ADDRESS_UUID => self::COMPANY_BILLING_ADDRESS_UUID,
                 ],
                 self::KEY_DELIVERY_ADDRESS => [
                     self::KEY_ADDRESS_ADDRESS_FILLED => true,
@@ -528,6 +535,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
         $billingAddressData->street = $billingAddressInputData[self::KEY_ADDRESS_STREET] ?? null;
         $billingAddressData->postcode = $billingAddressInputData[self::KEY_ADDRESS_POSTCODE] ?? null;
         $billingAddressData->country = $billingAddressInputData[self::KEY_ADDRESS_COUNTRY];
+        $billingAddressData->uuid = $billingAddressInputData[self::KEY_ADDRESS_UUID] ?? null;
     }
 
     /**

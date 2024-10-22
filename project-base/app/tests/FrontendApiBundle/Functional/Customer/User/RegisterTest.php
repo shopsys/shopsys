@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Customer\User;
 
+use App\DataFixtures\Demo\CustomerUserDataFixture;
+use App\Model\Customer\BillingAddress;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -16,17 +18,40 @@ class RegisterTest extends GraphQlTestCase
 
     public function testRegister(): void
     {
-        $graphQlType = 'Register';
         $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/mutation/RegistrationMutation.graphql', self::getRegisterQueryVariables());
 
-        $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
-        $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
+        $this->assertSuccessfulRegistration($response);
+    }
 
-        $this->assertArrayHasKey('tokens', $responseData);
-        $this->assertIsString($responseData['tokens']['accessToken']);
+    /**
+     * @see \Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\RegisterTest::testUniqueBillingAddressIsValidatedInRegistration()
+     */
+    public function testUniqueBillingAddressIsNotValidatedInB2cRegistration(): void
+    {
+        if ($this->domain->isB2b()) {
+            $this->markTestSkipped('This test is only for B2C domains');
+        }
 
-        $this->assertArrayHasKey('tokens', $responseData);
-        $this->assertIsString($responseData['tokens']['refreshToken']);
+        $existingBillingAddress = $this->getReference(CustomerUserDataFixture::BILLING_ADDRESS_PERSISTENT_REFERENCE, BillingAddress::class);
+
+        $registerQueryVariables = self::getRegisterQueryVariables();
+        $registerQueryVariables['companyCustomer'] = true;
+        $registerQueryVariables['companyNumber'] = $existingBillingAddress->getCompanyNumber();
+        $registerQueryVariables['companyName'] = 'Company name';
+        $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/mutation/RegistrationMutation.graphql', $registerQueryVariables);
+
+        $this->assertSuccessfulRegistration($response);
+    }
+
+    public function testCompanyUserRegistration(): void
+    {
+        $registerQueryVariables = self::getRegisterQueryVariables();
+        $registerQueryVariables['companyCustomer'] = true;
+        $registerQueryVariables['companyNumber'] = '999';
+        $registerQueryVariables['companyName'] = 'Company name';
+        $response = $this->getResponseContentForGql(__DIR__ . '/../../_graphql/mutation/RegistrationMutation.graphql', $registerQueryVariables);
+
+        $this->assertSuccessfulRegistration($response);
     }
 
     public function testRegisterAlreadyRegisteredCustomerUser(): void
@@ -132,5 +157,21 @@ class RegisterTest extends GraphQlTestCase
             'companyCustomer' => false,
             'country' => 'CZ',
         ];
+    }
+
+    /**
+     * @param array $response
+     */
+    private function assertSuccessfulRegistration(array $response): void
+    {
+        $graphQlType = 'Register';
+        $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
+        $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
+
+        $this->assertArrayHasKey('tokens', $responseData);
+        $this->assertIsString($responseData['tokens']['accessToken']);
+
+        $this->assertArrayHasKey('tokens', $responseData);
+        $this->assertIsString($responseData['tokens']['refreshToken']);
     }
 }

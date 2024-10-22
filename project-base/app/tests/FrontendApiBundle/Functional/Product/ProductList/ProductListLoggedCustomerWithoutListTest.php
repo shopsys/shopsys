@@ -13,8 +13,8 @@ use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class ProductListLoggedCustomerWithoutListTest extends GraphQlWithLoginTestCase
 {
-    public const DEFAULT_USER_EMAIL = 'no-reply.3@shopsys.com';
-    public const DEFAULT_USER_PASSWORD = 'no-reply.3';
+    public const string DEFAULT_USER_EMAIL = 'no-reply.3@shopsys.com';
+    public const string DEFAULT_USER_PASSWORD = 'no-reply.3';
 
     /**
      * @param string $productListType

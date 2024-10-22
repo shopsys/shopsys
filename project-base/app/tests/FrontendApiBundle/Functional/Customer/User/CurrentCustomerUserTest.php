@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Customer\User;
 
+use App\DataFixtures\Demo\CustomerUserDataFixture;
+use App\Model\Customer\BillingAddress;
 use App\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\LoginTypeEnum;
 use Symfony\Component\Validator\Constraints\Length;
@@ -157,6 +159,44 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
         $this->assertJohnDoeBaseData($data);
         $this->assertSame('AirLocks inc.', $data['companyName']);
         $this->assertSame('98765432', $data['companyNumber']);
+        $this->assertSame('AL987654321', $data['companyTaxNumber']);
+    }
+
+    /**
+     * @see \Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\CustomerUserOwnerTest::testUniqueBillingAddressIsValidatedInEditCustomerCompany()
+     */
+    public function testUniqueBillingAddressIsNotValidatedInEditCustomerCompanyB2c(): void
+    {
+        if ($this->domain->isB2b()) {
+            $this->markTestSkipped('This test is only for B2C domains');
+        }
+
+        $existingBillingAddress = $this->getReference(CustomerUserDataFixture::BILLING_ADDRESS_PERSISTENT_REFERENCE, BillingAddress::class);
+        $companyNumber = $existingBillingAddress->getCompanyNumber();
+
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/ChangePersonalDataMutation.graphql',
+            [
+                ...$this->getJohnDoeBaseData(),
+                'companyCustomer' => true,
+                'companyName' => 'AirLocks inc.',
+                'companyNumber' => $companyNumber,
+                'companyTaxNumber' => 'AL987654321',
+            ],
+        );
+        $data = $this->getResponseDataForGraphQlType($response, 'ChangePersonalData');
+
+        $this->assertJohnDoeBaseData($data);
+        $this->assertSame('AirLocks inc.', $data['companyName']);
+        $this->assertSame($companyNumber, $data['companyNumber']);
+        $this->assertSame('AL987654321', $data['companyTaxNumber']);
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CurrentCustomerUserQuery.graphql');
+        $data = $this->getResponseDataForGraphQlType($response, 'currentCustomerUser');
+
+        $this->assertJohnDoeBaseData($data);
+        $this->assertSame('AirLocks inc.', $data['companyName']);
+        $this->assertSame($companyNumber, $data['companyNumber']);
         $this->assertSame('AL987654321', $data['companyTaxNumber']);
     }
 
