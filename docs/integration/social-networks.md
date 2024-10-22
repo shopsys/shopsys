@@ -10,7 +10,7 @@ For every social network, you need `app_id` and `app_secret`. Below you have inf
 
 Every social network require URL for backward redirect to the eshop.
 In Shopsys Platform, you have to add URL `{eshop_domain}/social-network/login/{type}` where `{eshop_domain}` is your domain and `{type}` is the social network name, e.g.: `google`, `facebook`, `seznam`, etc.
-For local development, social networks usually require https.
+For local development, login via social networks usually requires https.
 
 ### Facebook
 
