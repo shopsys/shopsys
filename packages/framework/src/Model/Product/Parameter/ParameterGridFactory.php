@@ -64,7 +64,6 @@ class ParameterGridFactory implements GridFactoryInterface
 
         $grid->addColumn('parameterType', 'p.parameterType', t('Type'));
         $grid->addColumn('parameterUnit', 'ut.name', t('Unit'));
-        $grid->addColumn('visible', 'p.visible', t('Filter by'), true);
 
         $grid->addEditActionColumn('admin_parameter_edit', ['id' => 'p.id']);
 
