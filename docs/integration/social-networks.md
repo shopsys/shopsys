@@ -25,12 +25,12 @@ For local development, login via social networks usually requires https.
 ### Google
 
 -   log into Google account and create [OAuth 2.0 Client IDs](https://console.cloud.google.com/apis/credentials)
-    1. Create a project.
-    1. Click on "+ create credentials" and select "OAuth client ID".
-    1. Click on "configure consent screen" and fill in the required fields (choose an "internal" user type).
-    1. After you configure the consent screen, once again click on "+ create credentials" and select "OAuth client ID".
-    1. As an application type, choose "web application" and fill in the required fields.
-    1. You need to add an authorized redirect URI here, which is `{eshop_domain}/social-network/login/google`.
+    -   Create a project.
+    -   Click on "+ create credentials" and select "OAuth client ID".
+    -   Click on "configure consent screen" and fill in the required fields (choose an "internal" user type).
+    -   After you configure the consent screen, once again click on "+ create credentials" and select "OAuth client ID".
+    -   As an application type, choose "web application" and fill in the required fields.
+    -   You need to add an authorized redirect URI here, which is `{eshop_domain}/social-network/login/google`.
 -   in detail, you will find `Client ID` and `Client secret`
 
 ### Seznam
