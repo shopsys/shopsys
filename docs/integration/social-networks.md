@@ -18,7 +18,9 @@ For local development, login via social networks usually requires https.
 -   create [application](https://developers.facebook.com/apps)
 -   in that application, in `App settings` → `Basic` you will find `app_id` and `app_secret`
 
-P.S.: If you are owner of the Facebook application, and you log in with this owner account, email will not come after login, more info: https://github.com/hybridauth/hybridauth/issues/1372#issuecomment-1542447803
+!!! warning
+
+    If you are owner of the Facebook application, and you log in with this owner account, email will not be provided in the `user_profile` data returned from Facebook, more info: https://github.com/hybridauth/hybridauth/issues/1372#issuecomment-1542447803
 
 ### Google
 
