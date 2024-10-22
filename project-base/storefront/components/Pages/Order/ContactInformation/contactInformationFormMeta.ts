@@ -20,6 +20,7 @@ import { FieldError, UseFormReturn, useWatch } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { CustomerTypeEnum } from 'types/customer';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
+import { useUserPermissions } from 'utils/auth/useUserPermissions';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useShopsysForm } from 'utils/forms/useShopsysForm';
 import { useCurrentUserContactInformation } from 'utils/user/useCurrentUserContactInformation';
@@ -195,6 +196,7 @@ export type ContactInformationFormMetaType = {
         [key in keyof ContactInformation]: {
             name: key;
             label: string;
+            disabled?: boolean;
             errorMessage: string | undefined;
         };
     };
@@ -205,6 +207,9 @@ export const useContactInformationFormMeta = (
 ): ContactInformationFormMetaType => {
     const { t } = useTranslation();
     const { pickupPlace } = useCurrentCart();
+    const isUserLoggedIn = useIsUserLoggedIn();
+    const { isB2B, isCompanyUser } = useUserPermissions();
+
     const isEmailValid = formProviderMethods.formState.errors.email === undefined;
 
     const isDeliveryAddressDifferentFromBillingFieldName = 'isDeliveryAddressDifferentFromBilling' as const;
@@ -227,11 +232,13 @@ export const useContactInformationFormMeta = (
                 email: {
                     name: 'email' as const,
                     label: t('Your email'),
+                    disabled: isUserLoggedIn,
                     errorMessage: errors.email?.message,
                 },
                 [customerFieldName]: {
                     name: customerFieldName,
                     label: t('You will shop with us as'),
+                    disabled: isB2B && isUserLoggedIn,
                     errorMessage: isEmailValid ? errors.customer?.message : undefined,
                 },
                 telephone: {
@@ -252,18 +259,21 @@ export const useContactInformationFormMeta = (
                 companyName: {
                     name: 'companyName' as const,
                     label: t('Company name'),
+                    disabled: isCompanyUser,
                     errorMessage:
                         customerValue === CustomerTypeEnum.CompanyCustomer ? errors.companyName?.message : undefined,
                 },
                 companyNumber: {
                     name: 'companyNumber' as const,
                     label: t('Company number'),
+                    disabled: isCompanyUser,
                     errorMessage:
                         customerValue === CustomerTypeEnum.CompanyCustomer ? errors.companyNumber?.message : undefined,
                 },
                 companyTaxNumber: {
                     name: 'companyTaxNumber' as const,
                     label: t('Tax number'),
+                    disabled: isCompanyUser,
                     errorMessage:
                         customerValue === CustomerTypeEnum.CompanyCustomer
                             ? errors.companyTaxNumber?.message

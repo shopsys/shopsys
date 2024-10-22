@@ -28,10 +28,12 @@ export const ContactInformationCustomer: FC = () => {
                         {
                             label: t('Private person'),
                             value: CustomerTypeEnum.CommonCustomer,
+                            disabled: formMeta.fields.customer.disabled,
                         },
                         {
                             label: t('Company'),
                             value: CustomerTypeEnum.CompanyCustomer,
+                            disabled: formMeta.fields.customer.disabled,
                         },
                     ]}
                     onChange={(event) =>

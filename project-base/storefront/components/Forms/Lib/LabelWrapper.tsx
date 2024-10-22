@@ -47,7 +47,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                         checked
                             ? 'text-inputTextActive hover:text-inputTextActive'
                             : 'text-inputText hover:text-inputTextHovered',
-                        disabled && 'cursor-no-drop text-inputTextDisabled opacity-60',
+                        disabled && 'cursor-no-drop text-inputTextDisabled opacity-60 hover:text-inputTextDisabled',
                     ],
                     inputType === 'checkbox' && [
                         '[&>a]:text-link [&>a]:hover:text-linkHovered [&>a]:focus:text-linkHovered [&>a]:active:text-linkHovered',

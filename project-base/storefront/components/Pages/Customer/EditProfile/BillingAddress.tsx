@@ -9,12 +9,12 @@ import useTranslation from 'next-translate/useTranslation';
 import { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { CustomerChangeProfileFormType } from 'types/form';
-import { useCurrentCustomerUserPermissions } from 'utils/auth/useCurrentCustomerUserPermissions';
+import { useUserPermissions } from 'utils/auth/useUserPermissions';
 import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
 
 export const BillingAddress: FC = () => {
     const { t } = useTranslation();
-    const { canManageProfile } = useCurrentCustomerUserPermissions();
+    const { canManageProfile } = useUserPermissions();
 
     const formProviderMethods = useFormContext<CustomerChangeProfileFormType>();
     const formMeta = useCustomerChangeProfileFormMeta(formProviderMethods);

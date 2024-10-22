@@ -10,7 +10,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
 import { SelectOptionType } from 'types/selectOptions';
-import { useCurrentCustomerUserPermissions } from 'utils/auth/useCurrentCustomerUserPermissions';
+import { useUserPermissions } from 'utils/auth/useUserPermissions';
 import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
 
 export const ContactInformationAddress: FC = () => {
@@ -19,7 +19,7 @@ export const ContactInformationAddress: FC = () => {
     const formProviderMethods = useFormContext<ContactInformation>();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const countriesAsSelectOptions = useCountriesAsSelectOptions();
-    const { canManageProfile } = useCurrentCustomerUserPermissions();
+    const { canManageProfile } = useUserPermissions();
 
     return (
         <FormBlockWrapper>
