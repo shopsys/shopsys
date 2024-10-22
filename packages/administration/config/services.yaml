@@ -7,4 +7,17 @@ services:
     Shopsys\AdministrationBundle\:
         exclude:
             - '../src/DependencyInjection/'
+            - '../src/Controller/'
         resource: '../src/'
+
+    Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry:
+        arguments:
+            - '@Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver'
+            - '@service_container'
+            - '%shopsys.admin.crud_controllers%'
+
+    Shopsys\AdministrationBundle\Component\Router\CrudControllerRouteLoader:
+        arguments:
+            - '@Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry'
+        tags:
+            - { name: routing.loader }

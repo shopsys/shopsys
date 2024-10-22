@@ -1,5 +1,6 @@
 # Administration
 
+- [Crud Controller](./crud-controller/index.md)
 - [Administration Menu](./administration-menu.md)
 - [Grid](./grid.md)
     - [Grid Rendering Customization](./grid-rendering-customization.md)
