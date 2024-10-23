@@ -263,7 +263,7 @@ class ProductsTest extends ProductsGraphQlTestCase
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         $productName = t(
-            'ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue',
+            'Sencor SDB 4002M4',
             [],
             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
             $firstDomainLocale,
