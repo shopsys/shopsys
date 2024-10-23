@@ -10,4 +10,5 @@ export const useShopsysForm = <T extends FieldValues>(
         criteriaMode: 'firstError',
         resolver: resolver,
         defaultValues: defaultValues,
+        delayError: 500,
     });
