@@ -7,7 +7,7 @@ export const SkeletonModuleCustomerOrderDetail: FC = () => (
         <div className="w-full">
             <div className="flex">
                 <div className="flex w-full flex-col gap-4">
-                    <Skeleton className="mb-5 h-11 w-96" />
+                    <Skeleton className="mb-5 h-11 w-80" />
                     <Skeleton className="h-14 w-full" />
                     <Skeleton className="h-24 w-full" />
                     <Skeleton className="h-14 w-full" />
