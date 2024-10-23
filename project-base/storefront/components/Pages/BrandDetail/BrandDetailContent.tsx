@@ -18,6 +18,8 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
     const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
     const currentPage = useCurrentPageQuery();
 
+    brand.products.productFilterOptions.brands = null;
+
     return (
         <Webline>
             <h1>{brand.seoH1 || brand.name}</h1>

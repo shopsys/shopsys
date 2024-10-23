@@ -14,6 +14,8 @@ type FlagDetailContentProps = {
 export const FlagDetailContent: FC<FlagDetailContentProps> = ({ flag }) => {
     const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
 
+    flag.products.productFilterOptions.flags = null;
+
     return (
         <Webline>
             <h1>{flag.name}</h1>
