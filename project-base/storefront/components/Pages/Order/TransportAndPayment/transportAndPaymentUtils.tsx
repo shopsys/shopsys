@@ -35,14 +35,18 @@ import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 const PickupPlacePopup = dynamic(
-    () => import('components/Blocks/Popup/PickupPlacePopup').then((component) => component.PickupPlacePopup),
+    () => import('components/Blocks/Popup/PickupPlacePopup').then((component) => ({
+        default: component.PickupPlacePopup
+    })),
     {
         ssr: false,
     },
 );
 
 const ErrorPopup = dynamic(
-    () => import('components/Blocks/Popup/ErrorPopup').then((component) => component.ErrorPopup),
+    () => import('components/Blocks/Popup/ErrorPopup').then((component) => ({
+        default: component.ErrorPopup
+    })),
     {
         ssr: false,
     },

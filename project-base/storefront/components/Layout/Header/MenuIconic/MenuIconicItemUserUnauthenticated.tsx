@@ -6,7 +6,9 @@ import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
 
 const LoginPopup = dynamic(() =>
-    import('components/Blocks/Popup/LoginPopup').then((component) => component.LoginPopup),
+    import('components/Blocks/Popup/LoginPopup').then((component) => ({
+        default: component.LoginPopup
+    })),
 );
 
 export const MenuIconicItemUserUnauthenticated: FC = () => {

@@ -4,7 +4,9 @@ import dynamic from 'next/dynamic';
 import { useDeferredRender } from 'utils/useDeferredRender';
 
 const ProductDetailRelatedProductsTab = dynamic(
-    () => import('./ProductDetailRelatedProductsTab').then((component) => component.ProductDetailRelatedProductsTab),
+    () => import('./ProductDetailRelatedProductsTab').then((component) => ({
+        default: component.ProductDetailRelatedProductsTab
+    })),
     {
         ssr: false,
     },

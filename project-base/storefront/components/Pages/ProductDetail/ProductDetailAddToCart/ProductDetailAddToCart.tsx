@@ -17,7 +17,9 @@ export type ProductDetailAddToCartProps = {
 };
 
 const AddToCartPopup = dynamic(
-    () => import('components/Blocks/Popup/AddToCartPopup').then((component) => component.AddToCartPopup),
+    () => import('components/Blocks/Popup/AddToCartPopup').then((component) => ({
+        default: component.AddToCartPopup
+    })),
     { ssr: false },
 );
 

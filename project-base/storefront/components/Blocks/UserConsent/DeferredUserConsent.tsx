@@ -4,7 +4,9 @@ import dynamic from 'next/dynamic';
 import { useDeferredRender } from 'utils/useDeferredRender';
 
 const UserConsent = dynamic(
-    () => import('components/Blocks/UserConsent/UserConsent').then((component) => component.UserConsent),
+    () => import('components/Blocks/UserConsent/UserConsent').then((component) => ({
+        default: component.UserConsent
+    })),
     {
         ssr: false,
     },

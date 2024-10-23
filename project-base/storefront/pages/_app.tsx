@@ -33,18 +33,26 @@ process.on('uncaughtException', (error: Error, origin: unknown) =>
     }),
 );
 
-const UrqlWrapper = dynamic(() => import('components/Layout/UrqlWrapper').then((component) => component.UrqlWrapper));
+const UrqlWrapper = dynamic(() => import('components/Layout/UrqlWrapper').then((component) => ({
+    default: component.UrqlWrapper
+})));
 
 const AppPageContent = dynamic(() =>
-    import('components/Pages/App/AppPageContent').then((component) => component.AppPageContent),
+    import('components/Pages/App/AppPageContent').then((component) => ({
+        default: component.AppPageContent
+    })),
 );
 
-const ErrorBoundary = dynamic(() => import('react-error-boundary').then((component) => component.ErrorBoundary));
+const ErrorBoundary = dynamic(() => import('react-error-boundary').then((component) => ({
+    default: component.ErrorBoundary
+})));
 
 const Error500ContentWithBoundary = dynamic(
     () =>
         import('components/Pages/ErrorPage/Error500ContentWithBoundary').then(
-            (component) => component.Error500ContentWithBoundary,
+            (component) => ({
+                default: component.Error500ContentWithBoundary
+            }),
         ),
     { ssr: false },
 );

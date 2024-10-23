@@ -3,7 +3,9 @@ import { SkeletonModuleFilterPanel } from 'components/Blocks/Skeleton/SkeletonMo
 import dynamic from 'next/dynamic';
 import { useDeferredRender } from 'utils/useDeferredRender';
 
-const FilterPanel = dynamic(() => import('./FilterPanel').then((component) => component.FilterPanel), {
+const FilterPanel = dynamic(() => import('./FilterPanel').then((component) => ({
+    default: component.FilterPanel
+})), {
     ssr: false,
     loading: () => <SkeletonModuleFilterPanel />,
 });

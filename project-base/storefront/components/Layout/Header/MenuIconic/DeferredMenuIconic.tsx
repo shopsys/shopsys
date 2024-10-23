@@ -2,10 +2,14 @@ import dynamic from 'next/dynamic';
 import { useDeferredRender } from 'utils/useDeferredRender';
 
 const MenuIconicPlaceholder = dynamic(() =>
-    import('./MenuIconicPlaceholder').then((component) => component.MenuIconicPlaceholder),
+    import('./MenuIconicPlaceholder').then((component) => ({
+        default: component.MenuIconicPlaceholder
+    })),
 );
 
-const MenuIconic = dynamic(() => import('./MenuIconic').then((component) => component.MenuIconic), {
+const MenuIconic = dynamic(() => import('./MenuIconic').then((component) => ({
+    default: component.MenuIconic
+})), {
     ssr: false,
     loading: () => <MenuIconicPlaceholder />,
 });

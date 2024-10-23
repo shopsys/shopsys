@@ -17,7 +17,9 @@ import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 const DeleteDeliveryAddressPopup = dynamic(
     () =>
         import('components/Blocks/Popup/DeleteDeliveryAddressPopup').then(
-            (component) => component.DeleteDeliveryAddressPopup,
+            (component) => ({
+                default: component.DeleteDeliveryAddressPopup
+            }),
         ),
     {
         ssr: false,

@@ -11,7 +11,9 @@ import { useCookiesStore } from 'store/useCookiesStore';
 import { useDeferredRender } from 'utils/useDeferredRender';
 
 const ProductsSliderPlaceholder = dynamic(() =>
-    import('./ProductsSliderPlaceholder').then((component) => component.ProductsSliderPlaceholder),
+    import('./ProductsSliderPlaceholder').then((component) => ({
+        default: component.ProductsSliderPlaceholder
+    })),
 );
 
 export type DeferredRecommendedProductsProps = {

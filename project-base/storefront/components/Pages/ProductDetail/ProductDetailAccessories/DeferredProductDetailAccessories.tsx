@@ -8,7 +8,9 @@ import { useDeferredRender } from 'utils/useDeferredRender';
 
 const ProductsSliderPlaceholder = dynamic(() =>
     import('components/Blocks/Product/ProductsSliderPlaceholder').then(
-        (component) => component.ProductsSliderPlaceholder,
+        (component) => ({
+            default: component.ProductsSliderPlaceholder
+        }),
     ),
 );
 

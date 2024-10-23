@@ -13,7 +13,9 @@ interface SymfonyDebugToolbarProps {
 const RequestsTable = dynamic(
     () =>
         import('components/Basic/SymfonyDebugToolbar/SymfonyDebugToolbarRequestsTable').then(
-            (component) => component.RequestsTable,
+            (component) => ({
+                default: component.RequestsTable
+            }),
         ),
     { ssr: false },
 );

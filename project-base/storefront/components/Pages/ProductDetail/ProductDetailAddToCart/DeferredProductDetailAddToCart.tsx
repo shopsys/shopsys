@@ -4,7 +4,9 @@ import dynamic from 'next/dynamic';
 import { useDeferredRender } from 'utils/useDeferredRender';
 
 const ProductDetailAddToCart = dynamic(
-    () => import('./ProductDetailAddToCart').then((component) => component.ProductDetailAddToCart),
+    () => import('./ProductDetailAddToCart').then((component) => ({
+        default: component.ProductDetailAddToCart
+    })),
     {
         ssr: false,
         loading: () => <SkeletonModuleProductDetailAddToCart />,

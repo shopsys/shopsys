@@ -9,7 +9,9 @@ import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 import { dispatchBroadcastChannel } from 'utils/useBroadcastChannel';
 
 const ProductComparePopup = dynamic(() =>
-    import('components/Blocks/Popup/ProductComparePopup').then((component) => component.ProductComparePopup),
+    import('components/Blocks/Popup/ProductComparePopup').then((component) => ({
+        default: component.ProductComparePopup
+    })),
 );
 
 export const useComparison = () => {

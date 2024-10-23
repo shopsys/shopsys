@@ -3,7 +3,9 @@ import dynamic from 'next/dynamic';
 import { useDeferredRender } from 'utils/useDeferredRender';
 
 const LastVisitedProducts = dynamic(
-    () => import('./LastVisitedProducts').then((component) => component.LastVisitedProducts),
+    () => import('./LastVisitedProducts').then((component) => ({
+        default: component.LastVisitedProducts
+    })),
     {
         ssr: false,
     },

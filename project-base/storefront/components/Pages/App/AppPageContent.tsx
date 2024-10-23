@@ -12,14 +12,18 @@ import { useCookiesStoreSync } from 'utils/cookies/cookiesStore';
 import { ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 
 const Error503Content = dynamic(
-    () => import('components/Pages/ErrorPage/Error503Content').then((component) => component.Error503Content),
+    () => import('components/Pages/ErrorPage/Error503Content').then((component) => ({
+        default: component.Error503Content
+    })),
     {
         ssr: false,
     },
 );
 
 const Error403Content = dynamic(
-    () => import('components/Pages/ErrorPage/Error403Content').then((component) => component.Error403Content),
+    () => import('components/Pages/ErrorPage/Error403Content').then((component) => ({
+        default: component.Error403Content
+    })),
     {
         ssr: false,
     },

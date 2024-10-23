@@ -15,16 +15,22 @@ import { twJoin } from 'tailwind-merge';
 import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
 import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
 
-const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay), {
+const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => ({
+    default: component.Overlay
+})), {
     ssr: false,
 });
 
 const AdvancedSeoCategories = dynamic(() =>
-    import('./AdvancedSeoCategories').then((component) => component.AdvancedSeoCategories),
+    import('./AdvancedSeoCategories').then((component) => ({
+        default: component.AdvancedSeoCategories
+    })),
 );
 
 const CategoryBestsellers = dynamic(() =>
-    import('./CategoryBestsellers/CategoryBestsellers').then((component) => component.CategoryBestsellers),
+    import('./CategoryBestsellers/CategoryBestsellers').then((component) => ({
+        default: component.CategoryBestsellers
+    })),
 );
 
 type CategoryDetailContentProps = {

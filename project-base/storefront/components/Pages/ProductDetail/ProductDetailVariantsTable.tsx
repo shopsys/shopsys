@@ -14,7 +14,9 @@ import { isPriceVisible } from 'utils/mappers/price';
 const ProductVariantsAvailabilityPopup = dynamic(
     () =>
         import('components/Blocks/Popup/ProductVariantsAvailabilityPopup').then(
-            (component) => component.ProductVariantsAvailabilityPopup,
+            (component) => ({
+                default: component.ProductVariantsAvailabilityPopup
+            }),
         ),
     {
         ssr: false,

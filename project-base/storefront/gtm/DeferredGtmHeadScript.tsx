@@ -1,7 +1,9 @@
 import dynamic from 'next/dynamic';
 import { useDeferredRender } from 'utils/useDeferredRender';
 
-const GtmHeadScript = dynamic(() => import('gtm/GtmHeadScript').then((component) => component.GtmHeadScript), {
+const GtmHeadScript = dynamic(() => import('gtm/GtmHeadScript').then((component) => ({
+    default: component.GtmHeadScript
+})), {
     ssr: false,
 });
 

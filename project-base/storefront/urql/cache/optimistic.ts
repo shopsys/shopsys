@@ -69,7 +69,7 @@ const getOptimisticChangeTransportInCartResult = (
     transportsQueryResult: TypeTransportsQuery | null,
     input: TypeChangeTransportInCartInput,
 ) =>
-    ({
+    (({
         __typename: 'Cart',
         items: cartQueryResult.cart?.items ?? null,
         modifications: cartQueryResult.cart?.modifications ?? null,
@@ -82,9 +82,10 @@ const getOptimisticChangeTransportInCartResult = (
         totalItemsPrice: cartQueryResult.cart?.totalItemsPrice ?? null,
         totalPrice: cartQueryResult.cart?.totalPrice ?? null,
         uuid: cartQueryResult.cart?.uuid ?? null,
+
         transport:
-            transportsQueryResult?.transports.find((transport) => transport.uuid === input.transportUuid) ?? null,
-    }) as TypeChangeTransportInCartMutation['ChangeTransportInCart'];
+            transportsQueryResult?.transports.find((transport) => transport.uuid === input.transportUuid) ?? null
+    }) as TypeChangeTransportInCartMutation['ChangeTransportInCart']);
 
 const getOptimisticChangePaymentInCartResult = (
     cartQueryResult: TypeCartQuery,

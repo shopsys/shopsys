@@ -8,7 +8,9 @@ import { useSessionStore } from 'store/useSessionStore';
 import { DeliveryAddressType } from 'types/customer';
 
 const DeliveryAddressPopup = dynamic(
-    () => import('components/Blocks/Popup/DeliveryAddressPopup').then((component) => component.DeliveryAddressPopup),
+    () => import('components/Blocks/Popup/DeliveryAddressPopup').then((component) => ({
+        default: component.DeliveryAddressPopup
+    })),
     {
         ssr: false,
     },

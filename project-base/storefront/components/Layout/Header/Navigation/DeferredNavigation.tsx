@@ -5,7 +5,9 @@ import dynamic from 'next/dynamic';
 import { useDeferredRender } from 'utils/useDeferredRender';
 
 const NavigationPlaceholder = dynamic(() =>
-    import('./NavigationPlaceholder').then((component) => component.NavigationPlaceholder),
+    import('./NavigationPlaceholder').then((component) => ({
+        default: component.NavigationPlaceholder
+    })),
 );
 
 export const DeferredNavigation: FC = () => {

@@ -6,7 +6,9 @@ import { DeferredMobileMenu } from './MobileMenu/DeferredMobileMenu';
 import { TIDs } from 'cypress/tids';
 import dynamic from 'next/dynamic';
 
-const HeaderContact = dynamic(() => import('./Contact/HeaderContact').then((component) => component.HeaderContact));
+const HeaderContact = dynamic(() => import('./Contact/HeaderContact').then((component) => ({
+    default: component.HeaderContact
+})));
 
 type HeaderProps = {
     simpleHeader?: boolean;

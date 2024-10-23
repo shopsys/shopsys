@@ -10,7 +10,9 @@ import dynamic from 'next/dynamic';
 import { useState } from 'react';
 
 const ProductDetailRelatedProductsTab = dynamic(
-    () => import('./ProductDetailRelatedProductsTab').then((component) => component.ProductDetailRelatedProductsTab),
+    () => import('./ProductDetailRelatedProductsTab').then((component) => ({
+        default: component.ProductDetailRelatedProductsTab
+    })),
     {
         ssr: false,
     },

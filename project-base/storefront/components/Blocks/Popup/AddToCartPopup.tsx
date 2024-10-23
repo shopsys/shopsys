@@ -14,7 +14,9 @@ import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
-const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
+const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => ({
+    default: component.Popup
+})));
 
 type AddToCartPopupProps = {
     addedCartItem: TypeCartItemFragment;

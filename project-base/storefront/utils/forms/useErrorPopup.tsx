@@ -5,7 +5,9 @@ import { FieldValues, UseFormReturn } from 'react-hook-form';
 import { useSessionStore } from 'store/useSessionStore';
 
 const ErrorPopup = dynamic(() =>
-    import('components/Blocks/Popup/ErrorPopup').then((component) => component.ErrorPopup),
+    import('components/Blocks/Popup/ErrorPopup').then((component) => ({
+        default: component.ErrorPopup
+    })),
 );
 
 export const useErrorPopup = <T extends FieldValues>(

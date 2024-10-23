@@ -17,10 +17,14 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 import { useDebounce } from 'utils/useDebounce';
 
 const AutocompleteSearchPopup = dynamic(() =>
-    import('./AutocompleteSearchPopup').then((component) => component.AutocompleteSearchPopup),
+    import('./AutocompleteSearchPopup').then((component) => ({
+        default: component.AutocompleteSearchPopup
+    })),
 );
 
-const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay));
+const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => ({
+    default: component.Overlay
+})));
 
 export const AutocompleteSearch: FC = () => {
     const { t } = useTranslation();

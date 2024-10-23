@@ -3,7 +3,9 @@ import dynamic from 'next/dynamic';
 import { useDeferredRender } from 'utils/useDeferredRender';
 
 const AutocompleteSearch = dynamic(
-    () => import('./AutocompleteSearch').then((component) => component.AutocompleteSearch),
+    () => import('./AutocompleteSearch').then((component) => ({
+        default: component.AutocompleteSearch
+    })),
     {
         ssr: false,
         loading: () => <SkeletonModuleAutocompleteSearch />,

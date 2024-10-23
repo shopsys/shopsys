@@ -21,7 +21,9 @@ import { useRedirectOnPermissionsChange } from 'utils/user/useRedirectOnPermissi
 const ManageCustomerUserPopup = dynamic(
     () =>
         import('components/Blocks/Popup/ManageCustomerUserPopup').then(
-            (component) => component.ManageCustomerUserPopup,
+            (component) => ({
+                default: component.ManageCustomerUserPopup
+            }),
         ),
     {
         ssr: false,

@@ -2,7 +2,9 @@ import { SkeletonModuleCartInHeader } from 'components/Blocks/Skeleton/SkeletonM
 import dynamic from 'next/dynamic';
 import { useDeferredRender } from 'utils/useDeferredRender';
 
-const CartInHeader = dynamic(() => import('./CartInHeader').then((component) => component.CartInHeader), {
+const CartInHeader = dynamic(() => import('./CartInHeader').then((component) => ({
+    default: component.CartInHeader
+})), {
     ssr: false,
     loading: () => <SkeletonModuleCartInHeader />,
 });

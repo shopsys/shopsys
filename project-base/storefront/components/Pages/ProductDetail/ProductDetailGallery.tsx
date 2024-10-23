@@ -10,7 +10,9 @@ import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 
 const ModalGallery = dynamic(() =>
-    import('components/Basic/ModalGallery/ModalGallery').then((component) => component.ModalGallery),
+    import('components/Basic/ModalGallery/ModalGallery').then((component) => ({
+        default: component.ModalGallery
+    })),
 );
 
 type ProductDetailGalleryProps = {

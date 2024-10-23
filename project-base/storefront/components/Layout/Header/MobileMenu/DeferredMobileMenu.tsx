@@ -4,7 +4,9 @@ import { desktopFirstSizes } from 'utils/mediaQueries';
 import { useGetWindowSize } from 'utils/ui/useGetWindowSize';
 import { useDeferredRender } from 'utils/useDeferredRender';
 
-const MobileMenu = dynamic(() => import('./MobileMenu').then((component) => component.MobileMenu), {
+const MobileMenu = dynamic(() => import('./MobileMenu').then((component) => ({
+    default: component.MobileMenu
+})), {
     ssr: false,
     loading: () => <HamburgerMenu onClick={undefined} />,
 });

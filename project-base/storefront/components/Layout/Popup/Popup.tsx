@@ -9,7 +9,9 @@ import { twMergeCustom } from 'utils/twMerge';
 import { useKeypress } from 'utils/useKeyPress';
 import useWindowDimensions from 'utils/useWindowDimensions';
 
-const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay));
+const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => ({
+    default: component.Overlay
+})));
 
 type PopupProps = {
     hideCloseButton?: boolean;

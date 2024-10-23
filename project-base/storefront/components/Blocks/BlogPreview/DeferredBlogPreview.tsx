@@ -6,12 +6,16 @@ import dynamic from 'next/dynamic';
 import { twJoin } from 'tailwind-merge';
 import { useDeferredRender } from 'utils/useDeferredRender';
 
-const BlogPreview = dynamic(() => import('./BlogPreview').then((component) => component.BlogPreview), {
+const BlogPreview = dynamic(() => import('./BlogPreview').then((component) => ({
+    default: component.BlogPreview
+})), {
     ssr: false,
 });
 
 const BlogPreviewPlaceholder = dynamic(() =>
-    import('./BlogPreviewPlaceholder').then((component) => component.BlogPreviewPlaceholder),
+    import('./BlogPreviewPlaceholder').then((component) => ({
+        default: component.BlogPreviewPlaceholder
+    })),
 );
 
 export const DeferredBlogPreview: FC = () => {

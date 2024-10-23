@@ -14,7 +14,9 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 import { twMergeCustom } from 'utils/twMerge';
 
 const CreateComplaintPopup = dynamic(
-    () => import('components/Blocks/Popup/CreateComplaintPopup').then((component) => component.CreateComplaintPopup),
+    () => import('components/Blocks/Popup/CreateComplaintPopup').then((component) => ({
+        default: component.CreateComplaintPopup
+    })),
     {
         ssr: false,
     },

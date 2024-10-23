@@ -6,7 +6,9 @@ import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useDeferredRender } from 'utils/useDeferredRender';
 
-const SortingBar = dynamic(() => import('./SortingBar').then((component) => component.SortingBar), {
+const SortingBar = dynamic(() => import('./SortingBar').then((component) => ({
+    default: component.SortingBar
+})), {
     ssr: false,
     loading: () => <SkeletonModuleFilterAndSortingBar />,
 });

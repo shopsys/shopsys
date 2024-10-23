@@ -1,7 +1,9 @@
 import dynamic from 'next/dynamic';
 import { useDeferredRender } from 'utils/useDeferredRender';
 
-const NewsletterForm = dynamic(() => import('./NewsletterForm').then((component) => component.NewsletterForm), {
+const NewsletterForm = dynamic(() => import('./NewsletterForm').then((component) => ({
+    default: component.NewsletterForm
+})), {
     ssr: false,
 });
 

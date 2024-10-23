@@ -14,7 +14,9 @@ import { twJoin } from 'tailwind-merge';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 const ModalGallery = dynamic(() =>
-    import('components/Basic/ModalGallery/ModalGallery').then((component) => component.ModalGallery),
+    import('components/Basic/ModalGallery/ModalGallery').then((component) => ({
+        default: component.ModalGallery
+    })),
 );
 
 type StoreDetailContentProps = {

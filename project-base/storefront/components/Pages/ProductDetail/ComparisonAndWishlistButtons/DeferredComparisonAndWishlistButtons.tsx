@@ -4,7 +4,9 @@ import dynamic from 'next/dynamic';
 import { useDeferredRender } from 'utils/useDeferredRender';
 
 const ComparisonAndWishlistButtons = dynamic(
-    () => import('./ComparisonAndWishlistButtons').then((component) => component.ComparisonAndWishlistButtons),
+    () => import('./ComparisonAndWishlistButtons').then((component) => ({
+        default: component.ComparisonAndWishlistButtons
+    })),
     {
         ssr: false,
         loading: () => <SkeletonModuleComparisonAndWishlistButtons />,

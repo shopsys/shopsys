@@ -12,7 +12,9 @@ const SymfonyDebugToolbar =
     dynamic(
         () =>
             import('components/Basic/SymfonyDebugToolbar/SymfonyDebugToolbar').then(
-                (component) => component.SymfonyDebugToolbar,
+                (component) => ({
+                    default: component.SymfonyDebugToolbar
+                }),
             ),
         {
             ssr: true,

@@ -28,7 +28,9 @@ import { ServerSidePropsType, initServerSideProps } from 'utils/serverSide/initS
 const ProductDetailContent = dynamic(
     () =>
         import('components/Pages/ProductDetail/ProductDetailContent').then(
-            (component) => component.ProductDetailContent,
+            (component) => ({
+                default: component.ProductDetailContent
+            }),
         ),
     {
         loading: () => <SkeletonPageProductDetail />,
@@ -38,7 +40,9 @@ const ProductDetailContent = dynamic(
 const ProductDetailMainVariantContent = dynamic(
     () =>
         import('components/Pages/ProductDetail/ProductDetailMainVariantContent').then(
-            (component) => component.ProductDetailMainVariantContent,
+            (component) => ({
+                default: component.ProductDetailMainVariantContent
+            }),
         ),
     {
         loading: () => <SkeletonPageProductDetailMainVariant />,

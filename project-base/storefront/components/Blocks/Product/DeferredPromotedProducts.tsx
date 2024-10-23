@@ -9,12 +9,16 @@ import { useDeferredRender } from 'utils/useDeferredRender';
 
 const SkeletonModulePromotedProducts = dynamic(() =>
     import('components/Blocks/Skeleton/SkeletonModulePromotedProducts').then(
-        (component) => component.SkeletonModulePromotedProducts,
+        (component) => ({
+            default: component.SkeletonModulePromotedProducts
+        }),
     ),
 );
 
 const ProductsSliderPlaceholder = dynamic(() =>
-    import('./ProductsSliderPlaceholder').then((component) => component.ProductsSliderPlaceholder),
+    import('./ProductsSliderPlaceholder').then((component) => ({
+        default: component.ProductsSliderPlaceholder
+    })),
 );
 
 export const DeferredPromotedProducts: FC = () => {

@@ -13,7 +13,9 @@ import Skeleton from 'react-loading-skeleton';
 import { twJoin } from 'tailwind-merge';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
-const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay));
+const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => ({
+    default: component.Overlay
+})));
 
 export const SearchProducts: FC = () => {
     const { t } = useTranslation();

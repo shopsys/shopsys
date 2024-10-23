@@ -11,10 +11,14 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 
 const NotAddedProductsPopup = dynamic(() =>
-    import('components/Blocks/Popup/NotAddedProductsPopup').then((component) => component.NotAddedProductsPopup),
+    import('components/Blocks/Popup/NotAddedProductsPopup').then((component) => ({
+        default: component.NotAddedProductsPopup
+    })),
 );
 const MergeCartsPopup = dynamic(() =>
-    import('components/Blocks/Popup/MergeCartsPopup').then((component) => component.MergeCartsPopup),
+    import('components/Blocks/Popup/MergeCartsPopup').then((component) => ({
+        default: component.MergeCartsPopup
+    })),
 );
 
 export const useAddOrderItemsToCart = () => {
