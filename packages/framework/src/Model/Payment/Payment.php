@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentPriceNotFoundException;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 /**
@@ -505,5 +506,14 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     public function isGatewayPayment(): bool
     {
         return in_array($this->type, $this->getGatewayPayments(), true);
+    }
+
+    /**
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
+     */
+    public function getVatForDomain(int $domainId): Vat
+    {
+        return $this->getPaymentDomain($domainId)->getVat();
     }
 }

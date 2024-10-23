@@ -32,7 +32,7 @@ class OrderItemFactory
     ): OrderItem {
         $entityClassName = $this->entityNameResolver->resolve(OrderItem::class);
 
-        return new $entityClassName(
+        $orderItem = new $entityClassName(
             $order,
             $orderItemData->name,
             new Price($orderItemData->unitPriceWithoutVat, $orderItemData->unitPriceWithVat),
@@ -42,6 +42,12 @@ class OrderItemFactory
             $orderItemData->unitName,
             $orderItemData->catnum,
         );
+
+        if ($orderItemData->usePriceCalculation === false && $orderItemData->totalPriceWithVat !== null) {
+            $orderItem->setTotalPrice(new Price($orderItemData->totalPriceWithoutVat, $orderItemData->totalPriceWithVat));
+        }
+
+        return $orderItem;
     }
 
     /**
