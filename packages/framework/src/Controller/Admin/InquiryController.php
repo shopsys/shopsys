@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\Inquiry\InquiryFacade;
@@ -19,11 +20,13 @@ class InquiryController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Inquiry\InquiryGridFactory $inquiryGridFactory
      * @param \Shopsys\FrameworkBundle\Model\Inquiry\InquiryFacade $inquiryFacade
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
+     * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade
      */
     public function __construct(
         protected readonly InquiryGridFactory $inquiryGridFactory,
         protected readonly InquiryFacade $inquiryFacade,
         protected readonly Localization $localization,
+        protected readonly AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,
     ) {
     }
 
@@ -34,6 +37,8 @@ class InquiryController extends AdminBaseController
     #[Route(path: '/inquiry/list/')]
     public function listAction(Request $request): Response
     {
+        $domainFilterNamespace = 'inquiries';
+
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
         $quickSearchForm->handleRequest($request);
 
@@ -42,8 +47,17 @@ class InquiryController extends AdminBaseController
             $this->localization->getAdminLocale(),
         );
 
+        $selectedDomainId = $this->adminDomainFilterTabsFacade->getSelectedDomainId($domainFilterNamespace);
+
+        if ($selectedDomainId !== null) {
+            $queryBuilder
+                ->andWhere('i.domainId = :selectedDomainId')
+                ->setParameter('selectedDomainId', $selectedDomainId);
+        }
+
         return $this->render('@ShopsysFramework/Admin/Content/Inquiry/list.html.twig', [
             'gridView' => $this->inquiryGridFactory->createView($queryBuilder, $this->getCurrentAdministrator()),
+            'domainFilterNamespace' => $domainFilterNamespace,
             'quickSearchForm' => $quickSearchForm->createView(),
         ]);
     }

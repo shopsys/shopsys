@@ -20,5 +20,7 @@
         </div>
     </div>
 
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainFilterController::domainFilterTabsAction', { namespace: domainFilterNamespace })) }}
+
     {{ gridView.render() }}
 {% endblock %}
