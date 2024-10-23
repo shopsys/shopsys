@@ -1,6 +1,6 @@
 import { Checkbox, CheckboxProps } from './Checkbox';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
-import { ChangeEventHandler, ReactElement } from 'react';
+import { ChangeEventHandler, JSX, ReactElement } from 'react';
 import { Control, useController } from 'react-hook-form';
 
 type CheckboxControlledProps = {

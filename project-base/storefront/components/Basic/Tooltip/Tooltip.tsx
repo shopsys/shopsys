@@ -11,7 +11,7 @@ import {
     useInteractions,
     useRole,
 } from '@floating-ui/react';
-import { cloneElement, useMemo, useState } from 'react';
+import { cloneElement, JSX, useMemo, useState } from 'react';
 import { mergeRefs } from 'react-merge-refs';
 
 type TooltipProps = {

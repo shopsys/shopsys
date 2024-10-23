@@ -1,6 +1,6 @@
 import { TextInput, TextInputProps } from './TextInput';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
-import { ChangeEventHandler, FocusEventHandler, ReactElement } from 'react';
+import { ChangeEventHandler, FocusEventHandler, JSX, ReactElement } from 'react';
 import { Control, useController } from 'react-hook-form';
 
 type TextInputControlledProps = {

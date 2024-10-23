@@ -6,13 +6,13 @@ import { useRecommendedProductsQuery } from 'graphql/requests/products/queries/R
 import { TypeRecommendationType } from 'graphql/types';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import dynamic from 'next/dynamic';
-import { ReactElement } from 'react';
+import { JSX, ReactElement } from 'react';
 import { useCookiesStore } from 'store/useCookiesStore';
 import { useDeferredRender } from 'utils/useDeferredRender';
 
 const ProductsSliderPlaceholder = dynamic(() =>
     import('./ProductsSliderPlaceholder').then((component) => ({
-        default: component.ProductsSliderPlaceholder
+        default: component.ProductsSliderPlaceholder,
     })),
 );
 

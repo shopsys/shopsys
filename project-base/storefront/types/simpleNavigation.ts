@@ -1,4 +1,5 @@
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
+import { JSX } from 'react';
 
 export type ListedItemPropTypeTypename = 'ArticleSite' | 'BlogArticle' | 'Category' | 'Brand' | 'Link';
 

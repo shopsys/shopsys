@@ -4,7 +4,7 @@ import { validatePassword, validatePrivacyPolicy } from 'components/Forms/valida
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
-import { useMemo } from 'react';
+import { JSX, useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { RegistrationAfterOrderFormType } from 'types/form';
 import { useShopsysForm } from 'utils/forms/useShopsysForm';

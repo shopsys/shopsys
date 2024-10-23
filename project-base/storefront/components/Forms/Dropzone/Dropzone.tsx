@@ -1,7 +1,7 @@
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
-import { useState } from 'react';
+import { JSX, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Controller, Control, useController, FieldError } from 'react-hook-form';
 import { formatBytes } from 'utils/formaters/formatBytes';

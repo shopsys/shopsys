@@ -1,3 +1,4 @@
+import { JSX } from 'react';
 import { StateCreator } from 'zustand';
 
 export type PortalSlice = {
