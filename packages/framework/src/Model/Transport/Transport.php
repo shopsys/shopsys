@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportPriceNotFoundException;
 
@@ -451,5 +452,14 @@ class Transport extends AbstractTranslatableEntity implements OrderableEntityInt
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
+     */
+    public function getVatForDomain(int $domainId): Vat
+    {
+        return $this->getTransportDomain($domainId)->getVat();
     }
 }

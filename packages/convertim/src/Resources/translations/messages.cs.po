@@ -10,6 +10,9 @@ msgstr "Položku {{ itemName }} již nelze zakoupit."
 msgid "Item {{ name }} has been sold out."
 msgstr "Položka {{ name }} byla vyprodána."
 
+msgid "Promo code"
+msgstr "Slevový kupón"
+
 msgid "The payment you selected is no longer available."
 msgstr "Platba, kterou jste si zvolili, již není dostupná."
 
