@@ -95,6 +95,8 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
 export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, domainConfig, t }) => async (context) => {
     const orderUuid = getStringFromUrlQuery(context.query.orderIdentifier);
 
+    console.log(orderUuid);
+
     if (orderUuid === '') {
         return {
             redirect: {

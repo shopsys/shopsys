@@ -125,4 +125,17 @@ class OrderItemData
     {
         return new Price($this->unitPriceWithoutVat, $this->unitPriceWithVat);
     }
+
+    /**
+     * @return string|null
+     */
+    public function getItemUuid(): ?string
+    {
+        return match ($this->type) {
+            OrderItemTypeEnum::TYPE_PRODUCT => $this->product->getUuid(),
+            OrderItemTypeEnum::TYPE_TRANSPORT => $this->transport->getUuid(),
+            OrderItemTypeEnum::TYPE_PAYMENT => $this->payment->getUuid(),
+            default => null,
+        };
+    }
 }

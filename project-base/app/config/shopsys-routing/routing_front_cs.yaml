@@ -14,6 +14,9 @@ front_logout:
 front_order_paid:
     path: /potvrzeni-platby-objednavky
 
+front_order_sent:
+    path: /potvrzeni-objednavky
+
 front_order_payment_status_notify:
     path: /order/payment-status-notify
     methods: [GET]
