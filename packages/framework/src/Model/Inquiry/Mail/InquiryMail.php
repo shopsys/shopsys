@@ -127,7 +127,7 @@ class InquiryMail
     {
         return [
             ...$this->getBodyVariablesReplacements($inquiry),
-            self::VARIABLE_ADMIN_INQUIRY_DETAIL_URL => $this->domainRouterFactory->getRouter($inquiry->getDomainId())->generate(
+            self::VARIABLE_ADMIN_INQUIRY_DETAIL_URL => $this->domainRouterFactory->getRouter(Domain::MAIN_ADMIN_DOMAIN_ID)->generate(
                 'admin_inquiry_detail',
                 ['id' => $inquiry->getId()],
                 UrlGeneratorInterface::ABSOLUTE_URL,
