@@ -129,6 +129,13 @@ class Complaint
     protected $items;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Customer\Customer|null
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Customer\Customer")
+     * @ORM\JoinColumn(nullable=true, name="customer_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    protected $customer;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintData $complaintData
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItem[] $complaintItems
      */
@@ -140,6 +147,7 @@ class Complaint
         $this->domainId = $complaintData->domainId;
         $this->order = $complaintData->order;
         $this->customerUser = $complaintData->customerUser;
+        $this->setCustomerUser($complaintData->customerUser);
 
         $this->setData($complaintData);
 
@@ -316,5 +324,22 @@ class Complaint
         foreach ($items as $item) {
             $item->setComplaint($this);
         }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
+     */
+    public function setCustomerUser($customerUser): void
+    {
+        $this->customerUser = $customerUser;
+        $this->customer = $customerUser?->getCustomer();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Customer\Customer|null
+     */
+    public function getCustomer()
+    {
+        return $this->customer;
     }
 }

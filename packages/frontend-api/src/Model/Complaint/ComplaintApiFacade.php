@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Complaint\ComplaintFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemFactory;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintNumberSequenceRepository;
 use Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMailFacade;
+use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
@@ -195,6 +196,22 @@ class ComplaintApiFacade
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @param int $limit
+     * @param int $offset
+     * @param string|null $search
+     * @return array
+     */
+    public function getCustomerComplaintsLimitedList(
+        Customer $customer,
+        int $limit,
+        int $offset,
+        ?string $search = null,
+    ): array {
+        return $this->complaintRepository->getCustomerComplaintsLimitedList($customer, $limit, $offset, $search);
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param string|null $search
      * @return int
@@ -207,6 +224,18 @@ class ComplaintApiFacade
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @param string|null $search
+     * @return int
+     */
+    public function getCustomerComplaintsLimitedListCount(
+        Customer $customer,
+        ?string $search = null,
+    ): int {
+        return $this->complaintRepository->getCustomerComplaintsListCount($customer, $search);
+    }
+
+    /**
      * @param string $complaintNumber
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint|null
@@ -216,5 +245,17 @@ class ComplaintApiFacade
         CustomerUser $customerUser,
     ): ?Complaint {
         return $this->complaintRepository->findByComplaintNumberAndCustomerUser($complaintNumber, $customerUser);
+    }
+
+    /**
+     * @param string $complaintNumber
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint|null
+     */
+    public function findByComplaintNumberAndCustomer(
+        string $complaintNumber,
+        Customer $customer,
+    ): ?Complaint {
+        return $this->complaintRepository->findByComplaintNumberAndCustomer($complaintNumber, $customer);
     }
 }

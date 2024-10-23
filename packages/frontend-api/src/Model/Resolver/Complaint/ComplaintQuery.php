@@ -7,10 +7,12 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Complaint;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
 use Shopsys\FrontendApiBundle\Model\Complaint\ComplaintApiFacade;
 use Shopsys\FrontendApiBundle\Model\Complaint\Exception\ComplaintNotFoundUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
+use Symfony\Component\Security\Core\Security;
 
 class ComplaintQuery extends AbstractQuery
 {
@@ -21,6 +23,7 @@ class ComplaintQuery extends AbstractQuery
     public function __construct(
         protected readonly ComplaintApiFacade $complaintApiFacade,
         protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly Security $security,
     ) {
     }
 
@@ -37,7 +40,18 @@ class ComplaintQuery extends AbstractQuery
         }
 
         $complaintNumber = $argument['number'];
-        $complaint = $this->complaintApiFacade->findByComplaintNumberAndCustomerUser($complaintNumber, $customerUser);
+
+        if ($this->security->isGranted(CustomerUserRole::ROLE_API_ALL)) {
+            $complaint = $this->complaintApiFacade->findByComplaintNumberAndCustomer(
+                $complaintNumber,
+                $customerUser->getCustomer()
+            );
+        } else {
+            $complaint = $this->complaintApiFacade->findByComplaintNumberAndCustomerUser(
+                $complaintNumber,
+                $customerUser
+            );
+        }
 
         if (!$complaint) {
             throw new ComplaintNotFoundUserError(sprintf('Complaint with number %s not found.', $complaintNumber));

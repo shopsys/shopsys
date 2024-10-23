@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
+use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 
 class ComplaintRepository
@@ -46,6 +47,30 @@ class ComplaintRepository
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @param int $limit
+     * @param int $offset
+     * @param string|null $search
+     * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint[]
+     */
+    public function getCustomerComplaintsLimitedList(
+        Customer $customer,
+        int $limit,
+        int $offset,
+        ?string $search = null,
+    ): array {
+        $queryBuilder = $this->createCustomerComplaintsQueryBuilder($customer)
+            ->orderBy('c.createdAt', 'DESC')
+            ->addOrderBy('c.id', 'DESC')
+            ->setMaxResults($limit)
+            ->setFirstResult($offset);
+
+        return $this->applySearchToQueryBuilder($queryBuilder, $search)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param string|null $search
      * @return int
@@ -55,6 +80,23 @@ class ComplaintRepository
         ?string $search = null,
     ): int {
         $queryBuilder = $this->createCustomerUserComplaintsQueryBuilder($customerUser)
+            ->select('COUNT(c)');
+
+        return $this->applySearchToQueryBuilder($queryBuilder, $search)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @param string|null $search
+     * @return int
+     */
+    public function getCustomerComplaintsListCount(
+        Customer $customer,
+        ?string $search = null,
+    ): int {
+        $queryBuilder = $this->createCustomerComplaintsQueryBuilder($customer)
             ->select('COUNT(c)');
 
         return $this->applySearchToQueryBuilder($queryBuilder, $search)
@@ -75,6 +117,18 @@ class ComplaintRepository
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function createCustomerComplaintsQueryBuilder(
+        Customer $customer,
+    ): QueryBuilder {
+        return $this->createQueryBuilder()
+            ->andWhere('c.customer = :customer')
+            ->setParameter('customer', $customer);
+    }
+
+    /**
      * @param string $complaintNumber
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint|null
@@ -86,6 +140,22 @@ class ComplaintRepository
         return $this->createQueryBuilder()
             ->andWhere('c.number = :complaintNumber')->setParameter('complaintNumber', $complaintNumber)
             ->andWhere('c.customerUser = :customerUser')->setParameter('customerUser', $customerUser)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    /**
+     * @param string $complaintNumber
+     * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
+     * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint|null
+     */
+    public function findByComplaintNumberAndCustomer(
+        string $complaintNumber,
+        Customer $customer,
+    ): ?Complaint {
+        return $this->createQueryBuilder()
+            ->andWhere('c.number = :complaintNumber')->setParameter('complaintNumber', $complaintNumber)
+            ->andWhere('c.customer = :customerUser')->setParameter('customerUser', $customer)
             ->getQuery()
             ->getOneOrNullResult();
     }
