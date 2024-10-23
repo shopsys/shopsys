@@ -52,9 +52,9 @@ class CustomerUserRefreshTokenChainRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
-     * @param string|null $deviceId
+     * @param string|null $excludedDeviceId
      */
-    public function removeAllCustomerUserRefreshTokenChains(CustomerUser $customerUser, ?string $deviceId = null): void
+    public function removeAllCustomerUserRefreshTokenChains(CustomerUser $customerUser, ?string $excludedDeviceId = null): void
     {
         if ($customerUser->getId() !== null) {
             $queryBuilder = $this->em->createQueryBuilder()
@@ -62,10 +62,10 @@ class CustomerUserRefreshTokenChainRepository
                 ->where('curtc.customerUser = :customerUser')
                 ->setParameter('customerUser', $customerUser);
 
-            if ($deviceId !== null) {
+            if ($excludedDeviceId !== null) {
                 $queryBuilder
                     ->andWhere('curtc.deviceId != :deviceId')
-                    ->setParameter('deviceId', $deviceId);
+                    ->setParameter('deviceId', $excludedDeviceId);
             }
 
             $queryBuilder
