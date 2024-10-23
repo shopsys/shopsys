@@ -57,20 +57,24 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ variants }
                         {variant.fullName}
                     </div>
 
-                    <div
-                        className="min-w-40 cursor-pointer text-center lg:text-left"
-                        onClick={() => {
-                            updatePortalContent(
-                                <ProductVariantsAvailabilityPopup storeAvailabilities={variant.storeAvailabilities} />,
-                            );
-                        }}
-                    >
-                        <ProductAvailableStoresCount
-                            availableStoresCount={variant.availableStoresCount}
-                            isMainVariant={false}
-                            name={variant.availability.name}
-                        />
-                    </div>
+                    {!variant.isInquiryType && (
+                        <div
+                            className="min-w-40 cursor-pointer text-center lg:text-left"
+                            onClick={() => {
+                                updatePortalContent(
+                                    <ProductVariantsAvailabilityPopup
+                                        storeAvailabilities={variant.storeAvailabilities}
+                                    />,
+                                );
+                            }}
+                        >
+                            <ProductAvailableStoresCount
+                                availableStoresCount={variant.availableStoresCount}
+                                isMainVariant={false}
+                                name={variant.availability.name}
+                            />
+                        </div>
+                    )}
 
                     <div className="flex flex-col items-center justify-end gap-2.5 lg:ml-auto lg:min-w-80 lg:max-w-96 lg:flex-row">
                         <div className="min-h-8  lg:min-h-full lg:text-right">

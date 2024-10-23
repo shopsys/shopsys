@@ -14,7 +14,7 @@ export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ 
     const { t } = useTranslation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
-    if (!product.availableStoresCount) {
+    if (!product.availableStoresCount || product.isInquiryType) {
         return null;
     }
 
@@ -24,10 +24,9 @@ export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ 
                 'mr-1 flex items-center font-secondary text-sm',
                 product.availability.status === TypeAvailabilityStatusEnum.InStock && 'text-availabilityInStock',
                 product.availability.status === TypeAvailabilityStatusEnum.OutOfStock && 'text-availabilityOutOfStock',
-                !product.isInquiryType && 'cursor-pointer',
+                'cursor-pointer',
             )}
             onClick={() =>
-                !product.isInquiryType &&
                 updatePortalContent(
                     <Popup>
                         <ProductDetailAvailabilityList storeAvailabilities={product.storeAvailabilities} />

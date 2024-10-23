@@ -43,7 +43,7 @@ export const ProductListItemPlaceholder: FC<ProductListItemPlaceholderProps> = (
                 <div>
                     {visibleItemsConfig.price && <ProductPrice productPrice={product.price} />}
 
-                    {visibleItemsConfig.storeAvailability && (
+                    {visibleItemsConfig.storeAvailability && !product.isInquiryType && (
                         <div className="min-h-10">
                             <ProductAvailableStoresCount
                                 availableStoresCount={product.availableStoresCount}
