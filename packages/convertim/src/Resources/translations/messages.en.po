@@ -10,6 +10,9 @@ msgstr ""
 msgid "Item {{ name }} has been sold out."
 msgstr ""
 
+msgid "Promo code"
+msgstr ""
+
 msgid "The payment you selected is no longer available."
 msgstr ""
 
