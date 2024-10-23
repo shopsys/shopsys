@@ -60,6 +60,12 @@ class InquiryFacade
         if ($quickSearchData->text !== null && $quickSearchData->text !== '') {
             $queryBuilder
                 ->andWhere('(
+                    NORMALIZED(i.productCatnum) LIKE NORMALIZED(:text)
+                    OR
+                    NORMALIZED(p.catnum) LIKE NORMALIZED(:text)
+                    OR
+                    NORMALIZED(pt.name) LIKE NORMALIZED(:text)
+                    OR
                     i.companyNumber LIKE :text
                     OR
                     NORMALIZED(i.lastName) LIKE NORMALIZED(:text)

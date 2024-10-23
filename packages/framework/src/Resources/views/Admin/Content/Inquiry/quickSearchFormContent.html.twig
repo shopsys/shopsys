@@ -4,7 +4,7 @@
             {{ form_widget(quickSearchForm.text) }}
             <i class="svg svg-info cursor-help js-tooltip box-quick-search__icon in-icon in-icon--info"
                data-toggle="tooltip" data-placement="top"
-               title="{{ 'Searching searches in company number, company name, customer last name, and customer email. It is possible to use wildcards * and ?.'|trans }}"
+               title="{{ 'Searching searches in product name, product catalog number, company number, company name, customer last name, and customer email. It is possible to use wildcards * and ?.'|trans }}"
             ></i>
         </div>
         {{ form_widget(quickSearchForm.submit, { label: 'Search [verb]'|trans, attr: { class: 'box-quick-search__btn'}, full_name: '' }) }}

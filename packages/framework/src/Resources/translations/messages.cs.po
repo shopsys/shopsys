@@ -3325,9 +3325,6 @@ msgstr "Vyhledávání ve nahraných souborech podle názvu souboru, přípony n
 msgid "Searching in all currencies"
 msgstr "Vyhledává se ve všech měnách"
 
-msgid "Searching searches in company number, company name, customer last name, and customer email. It is possible to use wildcards * and ?."
-msgstr "Vyhledávání hledá v IČ, názvu firmy, příjmení zákazníka, a e-mailu zákazníka. Je možné používat operátory * a ?."
-
 msgid "Searching searches in complaint number, order number, delivery last name, delivery company name, last name from order, email from order, complaint author last name, complaint author company name. It is possible to use wildcards * and ?."
 msgstr "Vyhledávání hledá v čísle reklamace, čísle objednávky, příjmení pro doručení, názvu firmy pro doručení, příjmení z objednávky, e-mailu objednávky, příjmení zadavatele reklamace a názvu firmy zadavatele reklamace. Je možné používat operátory * a ?."
 
@@ -3342,6 +3339,9 @@ msgstr "Vyhledávání hledá v názvu. Je možné používat operátory * a ?."
 
 msgid "Searching searches in order number, registered customer email, customer's email in order, customer's last name and company name. It is possible to use wildcards * and ?."
 msgstr "Vyhledávání hledá v číslu objednávky, e-mailu registrovaného zákazníka, e-mailu zákazníka v objednávce, příjmení zákazníka a názvu firmy. Je možné používat operátory * a ?."
+
+msgid "Searching searches in product name, product catalog number, company number, company name, customer last name, and customer email. It is possible to use wildcards * and ?."
+msgstr "Vyhledávání hledá v názvu produktu, katalogovém čísle produktu, IČ, názvu firmy, příjmení zákazníka, a e-mailu zákazníka. Je možné používat operátory * a ?."
 
 msgid "Searching searches in slugs. It is possible to use wildcards * and ?."
 msgstr "Vyhledávání hledá ve sluzích. Je možné používat operátory * a ?."

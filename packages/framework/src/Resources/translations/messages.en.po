@@ -3325,9 +3325,6 @@ msgstr ""
 msgid "Searching in all currencies"
 msgstr ""
 
-msgid "Searching searches in company number, company name, customer last name, and customer email. It is possible to use wildcards * and ?."
-msgstr ""
-
 msgid "Searching searches in complaint number, order number, delivery last name, delivery company name, last name from order, email from order, complaint author last name, complaint author company name. It is possible to use wildcards * and ?."
 msgstr ""
 
@@ -3341,6 +3338,9 @@ msgid "Searching searches in name. It is possible to use wildcards * and ?."
 msgstr ""
 
 msgid "Searching searches in order number, registered customer email, customer's email in order, customer's last name and company name. It is possible to use wildcards * and ?."
+msgstr ""
+
+msgid "Searching searches in product name, product catalog number, company number, company name, customer last name, and customer email. It is possible to use wildcards * and ?."
 msgstr ""
 
 msgid "Searching searches in slugs. It is possible to use wildcards * and ?."
