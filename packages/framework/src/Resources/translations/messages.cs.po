@@ -29,7 +29,7 @@ msgid "-- Choose brand --"
 msgstr "-- Vyberte značku --"
 
 msgid "-- Choose group --"
-msgstr ""
+msgstr "-- Vyberte skupinu parametrů --"
 
 msgid "-- Choose unit --"
 msgstr "-- Vyberte jednotku --"
@@ -860,7 +860,7 @@ msgid "Create new parameter"
 msgstr "Vytvořit nový parametr"
 
 msgid "Create new parameter group"
-msgstr ""
+msgstr "Vytvořit novou skupinu parametrů"
 
 msgid "Create new product"
 msgstr "Vytvořit nové zboží"
@@ -1280,13 +1280,13 @@ msgid "Do you really want to remove this page?"
 msgstr "Opravdu chcete odstranit tuto stránku?"
 
 msgid "Do you really want to remove this parameter groups? By deleting this parameter group you will unset all groups by associated parameters. This step is irreversible!"
-msgstr ""
+msgstr "Opravdu chcete odstranit tuto skupinu parametrů? Odstraněním této skupiny parametrů zrušíte přiřazení všech parametrů k související skupině. Tento krok je nevratný!"
 
 msgid "Do you really want to remove this parameter? By deleting this parameter you will remove this parameter from a product where the parameter is assigned. This step is irreversible!"
 msgstr "Opravdu chcete odstranit tento parametr? Smazáním parametru dojde k odstranění tohoto parametru u zboží, kde je parametr přiřazen. Tento krok je nevratný!"
 
 msgid "Do you really want to remove this parameter? Deleting the parameter will remove this parameter from the products and the possible landing page of the extended SEO category where the parameter is assigned. This step is irreversible!"
-msgstr ""
+msgstr "Opravdu chcete odstranit tento parametr? Smazáním parametru dojde k odstranění tohoto parametru u produktů a případné vstupní stránky rozšířené SEO kategorie, kde je parametr přiřazen. Tento krok je nevratný!"
 
 msgid "Do you really want to remove this payment?"
 msgstr "Opravdu chcete odstranit tuto platbu?"
@@ -1394,7 +1394,7 @@ msgid "Edit parameter"
 msgstr "Upravit parametr"
 
 msgid "Edit parameter group"
-msgstr ""
+msgstr "Upravit skupinu parametrů"
 
 msgid "Edit store"
 msgstr "Upravit prodejnu"
@@ -1520,7 +1520,7 @@ msgid "Editing parameter"
 msgstr "Editace parametru"
 
 msgid "Editing parameter group"
-msgstr ""
+msgstr "Editace skupiny paramtrů"
 
 msgid "Editing parameter of type color"
 msgstr "Editace parametru typu barva"
@@ -2396,7 +2396,7 @@ msgid "New parameter"
 msgstr "Nový parametr"
 
 msgid "New parameter group"
-msgstr ""
+msgstr "Nová skupina parametrů"
 
 msgid "New password settings URL address"
 msgstr "URL adresa pro nastavení nového hesla"
@@ -2753,13 +2753,13 @@ msgid "Parameter <strong>{{ name }}</strong> deleted"
 msgstr "Parametr <strong>{{ name }}</strong> byl smazán"
 
 msgid "Parameter group"
-msgstr ""
+msgstr "Skupina parametrů"
 
 msgid "Parameter group <strong><a href=\"{{ url }}\">{{ name }}</a></strong> edited"
-msgstr ""
+msgstr "Skupina parametrů <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla upravena"
 
 msgid "Parameter groups"
-msgstr ""
+msgstr "Skupiny parametrů"
 
 msgid "Parameter groups - full"
 msgstr "Skupiny parametrů - vše"
@@ -2768,7 +2768,7 @@ msgid "Parameter groups - view"
 msgstr "Skupiny parametrů - zobrazení"
 
 msgid "Parameter groups overview"
-msgstr ""
+msgstr "Přehled skupin parametrů"
 
 msgid "Parameter value"
 msgstr "Hodnota parameteru"
@@ -3671,7 +3671,7 @@ msgid "There are no parameter values of type color yet."
 msgstr "Žádná hodnota parametru typu barva zatím nebyla vytvořena."
 
 msgid "There is no parameter group yet."
-msgstr ""
+msgstr "Nejsou zatím vytvořeny žádné skupiny parametrů."
 
 msgid "There is no warehouse on this domain yet."
 msgstr "Žádný sklad na této doméně zatím nebyl vytvořen."
@@ -4323,4 +4323,3 @@ msgstr "{1} Byl vytvořen <strong>%count%</strong> slevový kupón|[2,4] Byly vy
 
 msgid "{1}Sales representative \"%label%\" is assigned to %count% customer and will be removed if you proceed.<br><br> Customer:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[2,10]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[11,Inf]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br> +%extraCount% more<br><br> Do you really want to remove sales representative \"%label%\" permanently?"
 msgstr "{1}Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkovi a bude odstraněn, pokud budete pokračovat.<br><br>Zákazník:<br>%customersEnumeration%<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?|[2,10]Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkům a bude odstraněn, pokud budete pokračovat.<br><br>Zákazníci:<br>%customersEnumeration%<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?|[11,14]Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkům a bude odstraněn, pokud budete pokračovat.<br><br>Zákazníci:<br>%customersEnumeration%<br>+%extraCount% další<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?|[15,Inf]Obchodní zástupce \"%label%\" je přiřazen k %count% zákazníkům a bude odstraněn, pokud budete pokračovat.<br><br>Zákazníci:<br>%customersEnumeration%<br>+%extraCount% dalších<br><br>Opravdu chcete obchodního zástupce \"%label%\" trvale odstranit?"
-

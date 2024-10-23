@@ -184,16 +184,6 @@ class ProductsTest extends ProductsGraphQlTestCase
                         ],
                     ],
                     [
-                        'name' => t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                        'group' => t('Connection method', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                        'unit' => null,
-                        'values' => [
-                            [
-                                'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                            ],
-                        ],
-                    ],
-                    [
                         'name' => t('Resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         'group' => t('Main information', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         'unit' => null,
@@ -212,6 +202,16 @@ class ProductsTest extends ProductsGraphQlTestCase
                         'values' => [
                             [
                                 'text' => t('30"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            ],
+                        ],
+                    ],
+                    [
+                        'name' => t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        'group' => t('Connection method', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                        'unit' => null,
+                        'values' => [
+                            [
+                                'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                             ],
                         ],
                     ],

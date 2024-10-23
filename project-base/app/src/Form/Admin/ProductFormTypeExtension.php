@@ -65,6 +65,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         ]);
 
         $catnumAttributes = $builder->get('basicInformationGroup')->get('catnum')->getAttributes();
+
         $builder->get('basicInformationGroup')->remove('catnum');
         $builder->get('basicInformationGroup')->add('catnum', TextType::class, [
             'required' => true,
