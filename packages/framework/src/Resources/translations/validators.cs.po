@@ -567,3 +567,4 @@ msgstr "Musíte vybrat nějakou doménu."
 
 msgid "Zip code cannot be longer than {{ limit }} characters"
 msgstr "PSČ nesmí být delší než {{ limit }} znaků"
+
