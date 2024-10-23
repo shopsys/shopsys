@@ -72,9 +72,6 @@
                         <td>
                             {{ 'Catalog number'|trans }}: <strong>{{ inquiry.product.catnum }}</strong>
                         </td>
-                        <td>
-                            {{ inquiry.product.shortDescription(getDomain().id) }}
-                        </td>
                     {% else %}
                         <td>
                             {{ 'Catalog number'|trans }}: <strong>{{ inquiry.productCatnum }}</strong>
