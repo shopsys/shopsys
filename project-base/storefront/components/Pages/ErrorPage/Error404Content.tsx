@@ -1,5 +1,4 @@
 import { ErrorPage, ErrorPageTextHeading, ErrorPageTextMain, ErrorPageButtonLink } from './ErrorPageElements';
-import image404 from '/public/images/404_m.png';
 import { Image } from 'components/Basic/Image/Image';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -7,6 +6,7 @@ import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import useTranslation from 'next-translate/useTranslation';
+import image404 from 'public/images/404_m.png';
 
 export const Error404Content: FC = () => {
     const { t } = useTranslation();

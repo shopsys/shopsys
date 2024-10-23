@@ -1,6 +1,6 @@
-import sentCartImage from '/public/images/sent-cart.svg';
 import { Image } from 'components/Basic/Image/Image';
 import { TIDs } from 'cypress/tids';
+import sentCartImage from 'public/images/sent-cart.svg';
 import { ReactElement } from 'react';
 
 type ConfirmationPageContentProps = {

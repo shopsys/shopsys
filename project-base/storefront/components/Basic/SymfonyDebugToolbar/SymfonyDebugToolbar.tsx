@@ -1,8 +1,8 @@
 import { useRequests } from './symfonyDebugToolbarUtils';
-import symfonyImage from '/public/images/symfony.svg';
 import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
 import dynamic from 'next/dynamic';
+import symfonyImage from 'public/images/symfony.svg';
 import { useState } from 'react';
 
 interface SymfonyDebugToolbarProps {
@@ -12,11 +12,9 @@ interface SymfonyDebugToolbarProps {
 
 const RequestsTable = dynamic(
     () =>
-        import('components/Basic/SymfonyDebugToolbar/SymfonyDebugToolbarRequestsTable').then(
-            (component) => ({
-                default: component.RequestsTable
-            }),
-        ),
+        import('components/Basic/SymfonyDebugToolbar/SymfonyDebugToolbarRequestsTable').then((component) => ({
+            default: component.RequestsTable,
+        })),
     { ssr: false },
 );
 

@@ -1,6 +1,6 @@
-import imageLogo from '/public/images/logo.svg';
 import { Image } from 'components/Basic/Image/Image';
 import useTranslation from 'next-translate/useTranslation';
+import imageLogo from 'public/images/logo.svg';
 
 export const FooterCopyright: FC = () => {
     const { t } = useTranslation();
