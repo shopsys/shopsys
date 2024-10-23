@@ -23,6 +23,7 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
+use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
@@ -185,7 +186,7 @@ class ProductExportRepository
             ProductExportFieldProvider::SEO_META_DESCRIPTION => $product->getSeoMetaDescription($domainId),
             ProductExportFieldProvider::ACCESSORIES => $this->extractAccessoriesIds($product),
             ProductExportFieldProvider::HREFLANG_LINKS => $this->hreflangLinksFacade->getForProduct($product, $domainId),
-            ProductExportFieldProvider::PRODUCT_TYPE => $product->getProductType(),
+            ProductExportFieldProvider::PRODUCT_TYPE => $this->extractProductType($product),
             default => throw new InvalidArgumentException(sprintf('There is no definition for exporting "%s" field to Elasticsearch', $field)),
         };
     }
@@ -308,6 +309,25 @@ class ProductExportRepository
         }
 
         return $parameters;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return string
+     */
+    protected function extractProductType(Product $product): string
+    {
+        if ($product->isMainVariant()) {
+            foreach ($product->getVariants() as $variant) {
+                if ($variant->getProductType() === ProductTypeEnum::TYPE_BASIC) {
+                    return ProductTypeEnum::TYPE_BASIC;
+                }
+            }
+
+            return ProductTypeEnum::TYPE_INQUIRY;
+        }
+
+        return $product->getProductType();
     }
 
     /**
