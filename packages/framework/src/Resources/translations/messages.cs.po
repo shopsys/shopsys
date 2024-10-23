@@ -517,6 +517,9 @@ msgstr "Hromadná úprava byla provedena"
 msgid "Bulk promo code generation"
 msgstr "Hromadné generování kupónu"
 
+msgid "But at other addresses we have a lot for you..."
+msgstr "Ale na jiných adresách toho pro Vás máme spousty..."
+
 msgid "CSS documentation"
 msgstr "CSS dokumentace"
 
@@ -2578,6 +2581,9 @@ msgstr "Stejná doména nemůže být použita ve dvou skupinách"
 msgid "Only checked products"
 msgstr "Pouze zaškrtnuté zboží"
 
+msgid "Oops! Error occurred."
+msgstr "Jejda! Nastala chyba."
+
 msgid "Open Graph description"
 msgstr "Open Graph popis"
 
@@ -2883,6 +2889,9 @@ msgstr "Prosím zkontrolujte si správnost vyplnění všech údajů."
 
 msgid "Please check the entered values.<br>"
 msgstr "Překontrolujte prosím zadané hodnoty.<br>"
+
+msgid "Please excuse this error, we are working on fixing it. If needed, contact us on e-mail or by phone."
+msgstr "Omluvte tuto chybu, pracujeme na tom, aby se chyba opravila co nejdříve. Případně nás kontaktujte na e-mail nebo telefonicky."
 
 msgid "Please fill all default values before creating a product"
 msgstr "Prosím vyplňte všechny výchozí hodnoty před vytvořením produktu"
@@ -3811,6 +3820,9 @@ msgstr "Nastavení URL"
 msgid "URL will be deleted after saving."
 msgstr "Po uložení bude url smazána"
 
+msgid "Uh-oh, uh-oh. And specially <strong>\"%status_code% %status_text%\"</strong>, as if it was on purpose!"
+msgstr "To je nemilé, to je nemilé. A zrovna <strong>\"%status_code% %status_text%\"</strong>, to je jak naschvál!"
+
 msgid "Unable to add"
 msgstr "Nelze přidat"
 
@@ -4026,6 +4038,9 @@ msgstr "Sklady - vše"
 
 msgid "Warehouses - view"
 msgstr "Sklady - zobrazení"
+
+msgid "We have nothing to show you at this url."
+msgstr "Na téhle url adrese nemáme nic, co bychom Vám ukázali."
 
 msgid "Wednesday"
 msgstr "Středa"

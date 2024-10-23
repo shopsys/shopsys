@@ -49,12 +49,6 @@ services:
         resource: '../src/Controller/'
         tags: ['controller.service_arguments']
 
-    App\Controller\Admin\ErrorController:
-        arguments:
-            $debug: '%kernel.debug%'
-            $environment: '%kernel.environment%'
-            $overwriteDomainUrl: '%env(default::OVERWRITE_DOMAIN_URL)%'
-
     App\DataFixtures\:
         resource: '../src/DataFixtures/**/*DataFixture.php'
         tags: [ 'doctrine.fixture.orm' ]
@@ -242,9 +236,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFacade:
         alias: App\Model\Administrator\Role\AdministratorRoleFacade
-
-    Shopsys\FrameworkBundle\Model\Breadcrumb\ErrorPageBreadcrumbGenerator:
-        alias: App\Model\Breadcrumb\ErrorPageBreadcrumbGenerator
 
     Shopsys\FrameworkBundle\Model\Breadcrumb\SimpleBreadcrumbGenerator:
         alias: App\Model\Breadcrumb\SimpleBreadcrumbGenerator
