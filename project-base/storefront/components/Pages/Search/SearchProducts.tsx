@@ -2,14 +2,12 @@ import { SearchProductsContent } from './SearchProductsContent';
 import { useSearchProductsData } from './searchUtils';
 import { FilterPanel } from 'components/Blocks/Product/Filter/FilterPanel';
 import { FilterSelectedParameters } from 'components/Blocks/Product/Filter/FilterSelectedParameters';
-import { SkeletonModuleProductsList } from 'components/Blocks/Skeleton/SkeletonModuleProductsList';
 import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/DeferredFilterAndSortingBar';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useRef, useState } from 'react';
-import Skeleton from 'react-loading-skeleton';
 import { twJoin } from 'tailwind-merge';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
@@ -34,15 +32,6 @@ export const SearchProducts: FC = () => {
             return newValue;
         });
     };
-
-    if (areSearchProductsFetching) {
-        return (
-            <>
-                <Skeleton className="mb-5 h-11 w-1/4" />
-                <SkeletonModuleProductsList isWithoutBestsellers isWithoutDescription isWithoutNavigation />;
-            </>
-        );
-    }
 
     if (!searchProductsData) {
         return null;
