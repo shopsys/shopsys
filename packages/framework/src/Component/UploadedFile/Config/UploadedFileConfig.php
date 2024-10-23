@@ -69,7 +69,7 @@ class UploadedFileConfig implements UploadedFileConfigInterface
     public function getUploadedFileEntityConfigByClass(string $entityClass): UploadedFileEntityConfig
     {
         foreach ($this->uploadedFileEntityConfigsByClass as $className => $entityConfig) {
-            if ($entityClass === $className) {
+            if (is_a($entityClass, $className, true)) {
                 return $entityConfig;
             }
         }
