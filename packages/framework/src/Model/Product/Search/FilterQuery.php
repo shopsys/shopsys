@@ -75,6 +75,7 @@ class FilterQuery
         ];
 
         if ($orderingModeId === ProductListOrderingConfig::ORDER_BY_PRIORITY) {
+            $clone->sorting['product_type'] = 'asc';
             $clone->sorting['ordering_priority'] = 'desc';
             $clone->sorting['name.keyword'] = 'asc';
 
