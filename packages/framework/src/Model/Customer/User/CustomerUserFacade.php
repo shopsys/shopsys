@@ -161,12 +161,14 @@ class CustomerUserFacade
      * @param int $customerUserId
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress|null $deliveryAddress
+     * @param string|null $deviceId
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
     public function edit(
         int $customerUserId,
         CustomerUserUpdateData $customerUserUpdateData,
         ?DeliveryAddress $deliveryAddress = null,
+        ?string $deviceId = null,
     ) {
         $customerUser = $this->getCustomerUserById($customerUserId);
         $customerUserOriginalRoles = $customerUser->getRoles();
@@ -190,6 +192,7 @@ class CustomerUserFacade
             $this->customerUserPasswordFacade->changePassword(
                 $customerUser,
                 $customerUserUpdateData->customerUserData->password,
+                $deviceId,
             );
         }
 
@@ -230,11 +233,15 @@ class CustomerUserFacade
     /**
      * @param int $customerUserId
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData $customerUserUpdateData
+     * @param string|null $deviceId
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
-    public function editByCustomerUser(int $customerUserId, CustomerUserUpdateData $customerUserUpdateData)
-    {
-        $customerUser = $this->edit($customerUserId, $customerUserUpdateData);
+    public function editByCustomerUser(
+        int $customerUserId,
+        CustomerUserUpdateData $customerUserUpdateData,
+        string $deviceId = null,
+    ) {
+        $customerUser = $this->edit($customerUserId, $customerUserUpdateData, null, $deviceId);
 
         $this->em->flush();
 

@@ -88,12 +88,13 @@ class CustomerUserPasswordFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
      * @param string $password
+     * @param string|null $deviceId
      */
-    public function changePassword(CustomerUser $customerUser, string $password): void
+    public function changePassword(CustomerUser $customerUser, string $password, ?string $deviceId = null): void
     {
         $this->setPassword($customerUser, $password);
 
-        $this->customerUserRefreshTokenChainFacade->removeAllCustomerUserRefreshTokenChains($customerUser);
+        $this->customerUserRefreshTokenChainFacade->removeAllCustomerUserRefreshTokenChains($customerUser, $deviceId);
     }
 
     /**
