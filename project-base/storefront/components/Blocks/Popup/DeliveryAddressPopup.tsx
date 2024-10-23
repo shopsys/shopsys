@@ -105,7 +105,7 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
     };
 
     return (
-        <Popup className="w-11/12 overflow-visible lg:w-4/5 vl:w-auto">
+        <Popup className="w-11/12 lg:w-4/5 vl:w-auto" contentClassName="overflow-y-auto">
             <FormProvider {...formProviderMethods}>
                 <Form onSubmit={formProviderMethods.handleSubmit(deliveryAddressHandler)}>
                     <FormContentWrapper>

@@ -50,7 +50,7 @@ export const ErrorPopup: FC<ErrorPopupProps> = ({ fields, gtmMessageOrigin = Gtm
     }, [fields]);
 
     return (
-        <Popup className="w-11/12 max-w-lg">
+        <Popup className="w-11/12 max-w-lg" contentClassName="overflow-y-auto">
             <div className="h2 mb-3">{t('Please check inserted details')}</div>
             <ul className="max-h-[50vh] overflow-y-auto">{mappedErrors}</ul>
         </Popup>
