@@ -279,36 +279,6 @@ class ProductTest extends GraphQlTestCase
                             ],
                         ],
                         [
-                            'name' => t('Color', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                            'group' => null,
-                            'unit' => null,
-                            'values' => [
-                                [
-                                    'text' => t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                                ],
-                            ],
-                        ],
-                        [
-                            'name' => t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                            'group' => t('Connection method', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                            'unit' => null,
-                            'values' => [
-                                [
-                                    'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                                ],
-                            ],
-                        ],
-                        [
-                            'name' => t('Material', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                            'group' => null,
-                            'unit' => null,
-                            'values' => [
-                                [
-                                    'text' => t('metal', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                                ],
-                            ],
-                        ],
-                        [
                             'name' => t('Resolution', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                             'group' => t('Main information', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                             'unit' => null,
@@ -331,12 +301,42 @@ class ProductTest extends GraphQlTestCase
                             ],
                         ],
                         [
+                            'name' => t('HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'group' => t('Connection method', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'unit' => null,
+                            'values' => [
+                                [
+                                    'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                                ],
+                            ],
+                        ],
+                        [
                             'name' => t('USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                             'group' => t('Connection method', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                             'unit' => null,
                             'values' => [
                                 [
                                     'text' => t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                                ],
+                            ],
+                        ],
+                        [
+                            'name' => t('Color', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'group' => null,
+                            'unit' => null,
+                            'values' => [
+                                [
+                                    'text' => t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                                ],
+                            ],
+                        ],
+                        [
+                            'name' => t('Material', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'group' => null,
+                            'unit' => null,
+                            'values' => [
+                                [
+                                    'text' => t('metal', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                                 ],
                             ],
                         ],

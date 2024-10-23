@@ -156,17 +156,17 @@ class ParameterRepository extends BaseParameterRepository
         return $this->em->createQueryBuilder()
             ->select(
                 'p.id as parameter_id,
-            p.orderingPriority as ordering_priority,
-            p.parameterType as parameter_type,
-            pv.id as parameter_value_id,
-            p.uuid as parameter_uuid,
-            pt.name as parameter_name,
-            pv.uuid as parameter_value_uuid,
-            pv.text as parameter_value_text,
-            pv.numericValue as parameter_value_numeric_value,
-            pgt.name as parameter_group,
-            pg.position as group_position,
-            put.name as parameter_unit',
+                p.orderingPriority as ordering_priority,
+                p.parameterType as parameter_type,
+                pv.id as parameter_value_id,
+                p.uuid as parameter_uuid,
+                pt.name as parameter_name,
+                pv.uuid as parameter_value_uuid,
+                pv.text as parameter_value_text,
+                pv.numericValue as parameter_value_numeric_value,
+                pgt.name as parameter_group,
+                pg.position as group_position,
+                put.name as parameter_unit',
             )
             ->distinct()
             ->from(ProductParameterValue::class, 'ppv')
