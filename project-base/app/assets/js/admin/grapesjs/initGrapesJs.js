@@ -13,6 +13,7 @@ import './plugins/grapesjs-custom-image-plugin';
 import './plugins/grapesjs-custom-link-plugin';
 import './plugins/grapesjs-custom-image-file-plugin';
 import './plugins/grapesjs-custom-iframe-plugin';
+import './plugins/grapesjs-table-custom-plugin';
 import 'magnific-popup';
 import { Buffer } from 'buffer';
 global.Buffer = Buffer;
@@ -66,6 +67,7 @@ export default class InitGrapesJs {
             'customButtons',
             'text-with-image',
             'custom-blocks',
+            'table-custom',
             'custom-image',
             'custom-link',
             'custom-image-file',
@@ -108,7 +110,7 @@ export default class InitGrapesJs {
                     }
                 },
                 [webPagePlugin]: {
-                    blocks: [''],
+                    blocks: [],
                     useCustomTheme: false
                 },
                 customButtons: {
@@ -117,13 +119,10 @@ export default class InitGrapesJs {
             },
             styleManager: {
                 clearProperties: true,
-                appendTo: document.createElement('div'), // disable rendering a styleManager
-                sectors: []
+                appendTo: document.querySelector('#panels')
             },
             selectorManager: {
-                componentFirst: true,
-                // eslint-disable-next-line no-useless-escape
-                escapeName: name => name.trim().replace(/([^a-z0-9\w\#\!\:\[\]&-]+)/gi, '-')
+                componentFirst: true
             },
             assetManager: {
                 custom: {
@@ -169,9 +168,7 @@ export default class InitGrapesJs {
             editor.Panels.getButton('options', 'sw-visibility').set('active', 1);
 
             const editableContent = $('#' + textareaId).val();
-            const wrapper = editor.getWrapper();
-            const myComponent = wrapper.find('.gjs-editable')[0];
-            myComponent.append(editableContent);
+            editor.getWrapper().find('.gjs-editable')[0].append(editableContent);
         });
     }
 

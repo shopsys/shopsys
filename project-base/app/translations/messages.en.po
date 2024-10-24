@@ -562,6 +562,9 @@ msgstr ""
 msgid "TOP"
 msgstr ""
 
+msgid "Table"
+msgstr ""
+
 msgid "Terms and Conditions"
 msgstr ""
 
