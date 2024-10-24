@@ -262,7 +262,7 @@ jobs:
             -   name: Check standards
                 run: |
                     docker compose exec -T php-fpm touch ./project-base/app/DEVELOPMENT
-                    docker compose exec -T php-fpm php phing -D production.confirm.action=y composer-dev npm-install-dependencies standards
+                    docker compose exec -T php-fpm php phing -D production.confirm.action=y composer-dev frontend-api-generate-new-keys npm-install-dependencies standards
             -   name: Check GraphQl schema
                 run: docker compose exec -T php-fpm project-base/app/check-schema.sh
     standards-storefront:
