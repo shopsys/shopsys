@@ -36,6 +36,10 @@ class LoginController extends AbstractConvertimController
     #[Route('/get-login-details/{email}')]
     public function getLoginDetail(Request $request): Response
     {
+        if (!$this->isConvertimEnabled()) {
+            return $this->convertimNotEnabledResponse();
+        }
+
         if ($this->isProtectedRequest($request) === false) {
             return $this->invalidAuthorizationResponse();
         }
