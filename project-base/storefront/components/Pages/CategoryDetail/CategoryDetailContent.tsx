@@ -56,7 +56,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                 listedItems={[...category.children, ...category.linkedCategories]}
             />
 
-            <FilteredProductsWrapper ref={paginationScrollTargetRef}>
+            <FilteredProductsWrapper paginationScrollTargetRef={paginationScrollTargetRef}>
                 <DeferredFilterPanel
                     defaultOrderingMode={category.products.defaultOrderingMode}
                     orderingMode={category.products.orderingMode}

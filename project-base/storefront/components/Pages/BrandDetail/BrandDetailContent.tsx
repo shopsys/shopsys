@@ -32,7 +32,7 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
                 scrollTargetRef={scrollTargetRef}
             />
 
-            <FilteredProductsWrapper ref={paginationScrollTargetRef}>
+            <FilteredProductsWrapper paginationScrollTargetRef={paginationScrollTargetRef}>
                 <DeferredFilterPanel
                     defaultOrderingMode={brand.products.defaultOrderingMode}
                     orderingMode={brand.products.orderingMode}
@@ -43,7 +43,7 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
                 />
 
                 <div className="flex flex-1 flex-col">
-                    <div className="flex flex-col">
+                    <div className="flex flex-col-reverse vl:flex-col">
                         <FilterSelectedParameters filterOptions={brand.products.productFilterOptions} />
 
                         <DeferredFilterAndSortingBar
