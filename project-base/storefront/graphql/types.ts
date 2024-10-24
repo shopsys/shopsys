@@ -1230,6 +1230,8 @@ export type TypeMainVariant = TypeBreadcrumb & TypeHreflang & TypeProduct & Type
   /** UUID */
   uuid: Scalars['Uuid']['output'];
   variants: Array<TypeVariant>;
+  /** Number of sellable variants */
+  variantsCount: Scalars['Int']['output'];
 };
 
 

@@ -43,6 +43,8 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @method int getOrderingPriority(\App\Model\Product\Product $product)
  * @method \GraphQL\Executor\Promise\Promise getAccessoriesPromise(\App\Model\Product\Product $product)
  * @method bool isVisible(\App\Model\Product\Product $product)
+ * @method \GraphQL\Executor\Promise\Promise getVariants(\App\Model\Product\Product $product)
+ * @method \GraphQL\Executor\Promise\Promise getVariantsCount(\App\Model\Product\Product $product)
  */
 class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 {
@@ -57,6 +59,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider $productFrontendLimitProvider
      * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
+     * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableCountByIdsBatchLoader
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
@@ -77,6 +80,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         ProductFrontendLimitProvider $productFrontendLimitProvider,
         DataLoaderInterface $productsSellableByIdsBatchLoader,
         ProductVisibilityFacade $productVisibilityFacade,
+        DataLoaderInterface $productsSellableCountByIdsBatchLoader,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly ProductRepository $productRepository,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
@@ -97,6 +101,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
             $productFrontendLimitProvider,
             $productsSellableByIdsBatchLoader,
             $productVisibilityFacade,
+            $productsSellableCountByIdsBatchLoader,
         );
     }
 

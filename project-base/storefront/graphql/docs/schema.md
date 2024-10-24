@@ -5450,6 +5450,15 @@ UUID
 <td valign="top">[<a href="#variant">Variant</a>!]!</td>
 <td></td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong>variantsCount</strong></td>
+<td valign="top"><a href="#int">Int</a>!</td>
+<td>
+
+Number of sellable variants
+
+</td>
+</tr>
 </tbody>
 </table>
 

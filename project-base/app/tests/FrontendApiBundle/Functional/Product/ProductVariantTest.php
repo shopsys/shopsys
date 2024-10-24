@@ -35,6 +35,7 @@ class ProductVariantTest extends GraphQlTestCase
                       variants {
                         name
                       }
+                      variantsCount
                     }
                 }
             }
@@ -58,6 +59,7 @@ class ProductVariantTest extends GraphQlTestCase
                             'name' => t('60" Hyundai 22HD44D', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         ],
                     ],
+                    'variantsCount' => 1,
                 ],
             ],
         ];

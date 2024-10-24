@@ -449,6 +449,8 @@
     "User profile has been changed successfully": "User profile has been changed successfully",
     "User with this email is already registered": "User with this email is already registered",
     "userConsentPolicyLink": "To learn more, you can read our <link>consent and tracking policy</link>",
+    "variants count_one": "variant",
+    "variants count_other": "variants",
     "View all results": "View all results",
     "We have 98% of all goods in stock": "We have 98% of all goods in stock",
     "We have nothing to show you at this url.": "We have nothing to show you at this url.",

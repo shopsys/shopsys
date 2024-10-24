@@ -59,6 +59,15 @@ class ProductsBatchLoader
     }
 
     /**
+     * @param array $productsIds
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function loadSellableCountByIds(array $productsIds): Promise
+    {
+        return $this->promiseAdapter->all($this->productElasticsearchBatchProvider->getBatchedSellableByProductIds($productsIds)[ProductElasticsearchBatchRepository::TOTALS_KEY]);
+    }
+
+    /**
      * @param string $batchLoadDataId
      * @return int
      */

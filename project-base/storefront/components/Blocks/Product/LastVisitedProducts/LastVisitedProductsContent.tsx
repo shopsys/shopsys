@@ -29,6 +29,7 @@ export const LastVisitedProductsContent: FC<LastVisitedProductsProps> = ({ produ
                 <ProductsSlider
                     gtmProductListName={GtmProductListNameType.last_visited_products}
                     products={lastVisitedProducts}
+                    variant="lastVisited"
                     visibleSliderItems={VISIBLE_SLIDER_ITEMS_LAST_VISITED}
                     productItemProps={{
                         visibleItemsConfig: productItemStyleProps.visibleItemsConfig,
