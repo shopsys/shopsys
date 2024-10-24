@@ -7,8 +7,6 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Category;
 use GraphQL\Type\Definition\ResolveInfo;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Model\Category\Category;
@@ -22,7 +20,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterNotFoundE
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterValueNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrontendApiBundle\Model\Error\InvalidArgumentUserError;
-use Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade as ApiFriendlyUrlFacade;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\Exception\CategoryNotFoundUserError;
@@ -35,42 +32,20 @@ class CategoryQuery extends AbstractQuery
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlFacade $apiFriendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade $productFilterFacade
      * @param \Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductOrderingModeProvider $productOrderingModeProvider
-     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
      */
     public function __construct(
         protected readonly CategoryFacade $categoryFacade,
         protected readonly Domain $domain,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
-        protected readonly ApiFriendlyUrlFacade $apiFriendlyUrlFacade,
         protected readonly ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
         protected readonly ParameterFacade $parameterFacade,
         protected readonly ProductFilterFacade $productFilterFacade,
         protected readonly ProductOrderingModeProvider $productOrderingModeProvider,
-        protected readonly EntityNameResolver $entityNameResolver,
     ) {
-    }
-
-    /**
-     * @param string|null $uuid
-     * @param string|null $urlSlug
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category
-     */
-    public function categoryByUuidOrUrlSlugQuery(?string $uuid = null, ?string $urlSlug = null): Category
-    {
-        if ($uuid !== null) {
-            return $this->getByUuid($uuid);
-        }
-
-        if ($urlSlug !== null) {
-            return $this->getVisibleOnDomainAndSlug($urlSlug);
-        }
-
-        throw new InvalidArgumentUserError('You need to provide argument \'uuid\' or \'urlSlug\'.');
     }
 
     /**
@@ -83,25 +58,6 @@ class CategoryQuery extends AbstractQuery
             return $this->categoryFacade->getByUuid($uuid);
         } catch (CategoryNotFoundException $categoryNotFoundException) {
             throw new CategoryNotFoundUserError($categoryNotFoundException->getMessage());
-        }
-    }
-
-    /**
-     * @param string $urlSlug
-     * @return \Shopsys\FrameworkBundle\Model\Category\Category
-     */
-    protected function getVisibleOnDomainAndSlug(string $urlSlug): Category
-    {
-        try {
-            $friendlyUrl = $this->apiFriendlyUrlFacade->getFriendlyUrlByRouteNameAndSlug(
-                $this->domain->getId(),
-                'front_product_list',
-                $urlSlug,
-            );
-
-            return $this->categoryFacade->getVisibleOnDomainById($this->domain->getId(), $friendlyUrl->getEntityId());
-        } catch (FriendlyUrlNotFoundException | CategoryNotFoundException) {
-            throw new CategoryNotFoundUserError('Category with URL slug `' . $urlSlug . '` does not exist.');
         }
     }
 
@@ -161,7 +117,7 @@ class CategoryQuery extends AbstractQuery
 
             $entityClass = $this->friendlyUrlFacade->getEntityClassByRouteName($friendlyUrl->getRouteName());
 
-            if ($entityClass === $this->entityNameResolver->resolve(Category::class)) {
+            if (is_a($entityClass, Category::class, true)) {
                 try {
                     $category = $this->categoryFacade->getVisibleOnDomainById($this->domain->getId(), $friendlyUrl->getEntityId());
                 } catch (CategoryNotFoundException) {
@@ -173,7 +129,7 @@ class CategoryQuery extends AbstractQuery
                 return $matchingReadyCategorySeoMix ?? $category;
             }
 
-            if ($entityClass === $this->entityNameResolver->resolve(ReadyCategorySeoMix::class)) {
+            if (is_a($entityClass, ReadyCategorySeoMix::class, true)) {
                 try {
                     $readyCategorySeoMix = $this->readyCategorySeoMixFacade->getById($friendlyUrl->getEntityId());
                 } catch (ReadyCategorySeoMixNotFoundException) {
@@ -214,7 +170,7 @@ class CategoryQuery extends AbstractQuery
                 $variableValues['filter']['flags'] ?? [],
                 $variableValues['orderingMode'] ?? $this->productOrderingModeProvider->getDefaultOrderingModeForListing(),
             );
-        } catch (ParameterValueNotFoundException | ParameterNotFoundException) {
+        } catch (ParameterValueNotFoundException|ParameterNotFoundException) {
             return null;
         }
     }

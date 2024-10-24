@@ -15,9 +15,10 @@ QueryDecorator:
                 resolve: "@=query('categoriesQuery')"
                 description: "Returns complete list of categories"
             categoriesSearch:
-                type: "CategoryConnection"
+                type: "CategoryConnection!"
                 argsBuilder: "Relay::Connection"
                 resolve: "@=query('categoriesSearchQuery', args)"
+                complexity: "@=dynamicPaginationComplexity(args)"
                 args:
                     searchInput:
                         type: "SearchInput!"
@@ -60,12 +61,16 @@ QueryDecorator:
                 type: 'Variant'
             category:
                 type: 'Category'
-                resolve: "@=query('categoryByUuidOrUrlSlugQuery', args['uuid'], args['urlSlug'])"
+                resolve: "@=query('categoryOrSeoMixByUuidOrUrlSlugQuery', info, args['uuid'], args['urlSlug'])"
                 args:
                     uuid:
                         type: "Uuid"
                     urlSlug:
                         type: "String"
+                    orderingMode:
+                        type: "ProductOrderingModeEnum"
+                    filter:
+                        type: "ProductFilter"
                 description: "Returns category filtered using UUID or URL slug"
             payments:
                 type: '[Payment!]!'
