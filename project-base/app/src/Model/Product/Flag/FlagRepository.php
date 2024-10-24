@@ -18,6 +18,8 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository as BaseFlagReposit
  * @method \App\Model\Product\Flag\Flag[] getByUuids(string[] $uuids)
  * @method \App\Model\Product\Flag\Flag[] getVisibleFlagsByIds(int[] $flagsIds, string $locale)
  * @method \App\Model\Product\Flag\Flag getVisibleFlagById(int $flagId, string $locale)
+ * @method \App\Model\Product\Flag\Flag[] getAllVisibleFlags(string $locale)
+ * @method \App\Model\Product\Flag\Flag getVisibleByUuid(string $uuid, string $locale)
  */
 class FlagRepository extends BaseFlagRepository
 {
