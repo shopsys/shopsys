@@ -35,7 +35,7 @@ const Control = (props: any) => {
     return (
         <LabelWrapper
             {...props.children}
-            // htmlFor={props.selectProps.inputId}
+            disabled={props.isDisabled}
             htmlFor={props.inputId}
             inputType="selectbox"
             label={props.selectProps.label}
@@ -78,30 +78,12 @@ export const Select: FC<SelectProps> = ({ hasError, onChange, options, defaultVa
                 menuPortal: (base) => ({ ...base, zIndex: 10001 }),
                 indicatorSeparator: () => ({}),
                 control: (styles) => {
-                    if (isDisabled) {
-                        return {
-                            ...styles,
-                            backgroundColor: '#E3E3E3 !important',
-                            borderColor: '#AFBBCF !important',
-                            color: '#727588 !important',
-                        };
-                    }
                     if (hasError) {
                         return {
                             ...styles,
                             boxShadow: 'none',
                             backgroundColor: 'white',
                             borderColor: '#ec5353',
-                        };
-                    }
-
-                    return styles;
-                },
-                singleValue: (styles) => {
-                    if (isDisabled) {
-                        return {
-                            ...styles,
-                            color: '#727588 !important',
                         };
                     }
 

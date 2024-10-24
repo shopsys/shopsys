@@ -8,15 +8,17 @@ import { useFormContext } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
 import { CustomerTypeEnum } from 'types/customer';
+import { useUserPermissions } from 'utils/auth/useUserPermissions';
 
 export const ContactInformationCustomer: FC = () => {
     const { t } = useTranslation();
     const formProviderMethods = useFormContext<ContactInformation>();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
+    const { isCompanyUser } = useUserPermissions();
 
     return (
-        <FormBlockWrapper>
+        <FormBlockWrapper className={isCompanyUser ? 'hidden' : ''}>
             <FormHeading>{formMeta.fields.customer.label}</FormHeading>
             <FormColumn className="gap-2 vl:gap-0">
                 <RadiobuttonGroup
