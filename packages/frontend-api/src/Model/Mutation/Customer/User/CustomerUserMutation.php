@@ -96,7 +96,7 @@ class CustomerUserMutation extends BaseTokenMutation
      */
     public function changePasswordMutation(Argument $argument, InputValidator $validator): CustomerUser
     {
-        $this->runCheckUserIsLogged();
+        $user = $this->runCheckUserIsLogged();
 
         $validator->validate();
         $input = $argument['input'];
@@ -111,7 +111,7 @@ class CustomerUserMutation extends BaseTokenMutation
             throw new InvalidAccountOrPasswordUserError('This account doesn\'t exist or password is incorrect');
         }
 
-        $this->customerUserPasswordFacade->changePassword($customerUser, $input['newPassword']);
+        $this->customerUserPasswordFacade->changePassword($customerUser, $input['newPassword'], $user->getDeviceId());
 
         return $customerUser;
     }
@@ -133,7 +133,7 @@ class CustomerUserMutation extends BaseTokenMutation
             $customerUser,
             $argument,
         );
-        $this->customerUserFacade->editByCustomerUser($customerUser->getId(), $customerUserUpdateData);
+        $this->customerUserFacade->editByCustomerUser($customerUser->getId(), $customerUserUpdateData, $user->getDeviceId());
 
         return $customerUser;
     }

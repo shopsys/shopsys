@@ -87,10 +87,13 @@ class CustomerUserRefreshTokenChainFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $customerUser
+     * @param string|null $excludedDeviceId
      */
-    public function removeAllCustomerUserRefreshTokenChains(CustomerUser $customerUser): void
-    {
-        $this->customerUserRefreshTokenChainRepository->removeAllCustomerUserRefreshTokenChains($customerUser);
+    public function removeAllCustomerUserRefreshTokenChains(
+        CustomerUser $customerUser,
+        ?string $excludedDeviceId = null,
+    ): void {
+        $this->customerUserRefreshTokenChainRepository->removeAllCustomerUserRefreshTokenChains($customerUser, $excludedDeviceId);
     }
 
     /**
