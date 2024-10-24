@@ -29,6 +29,9 @@ fragment CartItemFragment on CartItem {
             ...ProductPriceFragment
         }
         availableStoresCount
+        storeAvailabilities {
+            ...StoreAvailabilityFragment
+        }
         unit {
             name
         }
@@ -38,5 +41,8 @@ fragment CartItemFragment on CartItem {
         categories {
             name
         }
+    }
+    discounts {
+        ...CartItemDiscountFragment
     }
 }

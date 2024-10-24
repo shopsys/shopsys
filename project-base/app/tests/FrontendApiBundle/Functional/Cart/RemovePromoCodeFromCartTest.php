@@ -6,7 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Cart;
 
 use App\DataFixtures\Demo\CartDataFixture;
 use App\DataFixtures\Demo\PromoCodeDataFixture;
-use App\Model\Order\PromoCode\PromoCode;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class RemovePromoCodeFromCartTest extends GraphQlTestCase
@@ -21,14 +21,16 @@ class RemovePromoCodeFromCartTest extends GraphQlTestCase
                 promoCode: "' . $promoCode->getCode() . '"
             }) {
                 uuid
-                promoCode
+                promoCodes {
+                    code
+                }
             }
         }';
 
         $response = $this->getResponseContentForQuery($removeFromCartMutation);
         $data = $this->getResponseDataForGraphQlType($response, 'RemovePromoCodeFromCart');
 
-        self::assertNull($data['promoCode']);
+        self::assertCount(0, $data['promoCodes']);
     }
 
     public function testPromoCodeIsRemovedFromCartAfterDeletion(): void
@@ -40,7 +42,9 @@ class RemovePromoCodeFromCartTest extends GraphQlTestCase
 
         $getCartQuery = '{
             cart(cartInput: {cartUuid: "' . CartDataFixture::CART_UUID . '"}) {
-                promoCode
+                promoCodes {
+                    code
+                }
                 modifications {
                     promoCodeModifications {
                         noLongerApplicablePromoCode
@@ -52,14 +56,14 @@ class RemovePromoCodeFromCartTest extends GraphQlTestCase
         $response = $this->getResponseContentForQuery($getCartQuery);
         $data = $this->getResponseDataForGraphQlType($response, 'cart');
 
-        self::assertNull($data['promoCode']);
+        self::assertCount(0, $data['promoCodes']);
 
         // if promo code is deleted, CartWatcher cannot possibly know about it and report modification
         self::assertEmpty($data['modifications']['promoCodeModifications']['noLongerApplicablePromoCode']);
     }
 
     /**
-     * @return \App\Model\Order\PromoCode\PromoCode
+     * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
      */
     public function applyValidPromoCodeToDefaultCart(): PromoCode
     {
@@ -71,14 +75,16 @@ class RemovePromoCodeFromCartTest extends GraphQlTestCase
                 promoCode: "' . $promoCode->getCode() . '"
             }) {
                 uuid
-                promoCode
+                promoCodes {
+                    code
+                }
             }
         }';
 
         $response = $this->getResponseContentForQuery($applyPromoCodeMutation);
         $data = $this->getResponseDataForGraphQlType($response, 'ApplyPromoCodeToCart');
 
-        self::assertEquals($promoCode->getCode(), $data['promoCode']);
+        self::assertEquals($promoCode->getCode(), $data['promoCodes'][0]['code']);
 
         return $promoCode;
     }

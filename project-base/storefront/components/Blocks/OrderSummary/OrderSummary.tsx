@@ -1,3 +1,10 @@
+import {
+    OrderSummaryContent,
+    OrderSummaryPrice,
+    OrderSummaryRow,
+    OrderSummaryRowWrapper,
+    OrderSummaryTextAndImage,
+} from './OrderSummaryElements';
 import { PromoCode } from './PromoCode';
 import { SingleProduct } from './SingleProduct';
 import { TotalPrice } from './TotalPrice';
@@ -9,6 +16,7 @@ import { CartLoading } from 'components/Pages/Cart/CartLoading';
 import { AnimatePresence } from 'framer-motion';
 import useTranslation from 'next-translate/useTranslation';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 
 type OrderSummaryProps = {
     isTransportOrPaymentLoading?: boolean;
@@ -16,7 +24,8 @@ type OrderSummaryProps = {
 
 export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoading }) => {
     const { t } = useTranslation();
-    const { cart, transport, payment, promoCode, roundingPrice, isCartFetchingOrUnavailable } = useCurrentCart();
+    const { cart, transport, payment, promoCodes, roundingPrice, isCartFetchingOrUnavailable } = useCurrentCart();
+    const formatPrice = useFormatPrice();
 
     if (isCartFetchingOrUnavailable) {
         return <CartLoading />;
@@ -58,7 +67,27 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoadin
                                 )}
                             </AnimatePresence>
 
-                            {promoCode && <PromoCode discount={cart.totalDiscountPrice} promoCode={promoCode} />}
+                            {promoCodes.length > 0 && (
+                                <>
+                                    {promoCodes.map((promoCode) => (
+                                        <PromoCode key={promoCode.code} promoCode={promoCode} />
+                                    ))}
+                                    <OrderSummaryRowWrapper>
+                                        <OrderSummaryContent>
+                                            <OrderSummaryRow>
+                                                <OrderSummaryTextAndImage>
+                                                    {t('Total discount')}
+                                                </OrderSummaryTextAndImage>
+                                                <OrderSummaryPrice>
+                                                    <p className="text-sm font-bold">
+                                                        -{formatPrice(cart.totalDiscountPrice.priceWithVat)}
+                                                    </p>
+                                                </OrderSummaryPrice>
+                                            </OrderSummaryRow>
+                                        </OrderSummaryContent>
+                                    </OrderSummaryRowWrapper>
+                                </>
+                            )}
                         </div>
 
                         <TotalPrice totalPrice={cart.totalPrice} />

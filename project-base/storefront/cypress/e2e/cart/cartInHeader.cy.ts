@@ -24,7 +24,7 @@ describe('Cart In Header Tests', () => {
                 blackout: [
                     { tid: TIDs.banners_slider, zIndex: 5999 },
                     { tid: TIDs.simple_navigation_image },
-                    { tid: TIDs.header_cart_list_item_image },
+                    { tid: TIDs.header_cart_list_item_image, zIndex: 10001 },
                 ],
             },
             () => {
