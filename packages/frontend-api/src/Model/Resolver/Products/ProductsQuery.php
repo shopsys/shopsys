@@ -269,7 +269,6 @@ class ProductsQuery extends AbstractQuery
         }
 
         if ($argument['brandSlug'] !== null) {
-            /** @var \App\Model\Product\Brand\Brand $brand */
             $brand = $this->brandQuery->brandByUuidOrUrlSlugQuery(null, $argument['brandSlug']);
 
             return $this->productsByBrandQuery(
@@ -279,7 +278,6 @@ class ProductsQuery extends AbstractQuery
         }
 
         if ($argument['flagSlug'] !== null) {
-            /** @var \App\Model\Product\Flag\Flag $flag */
             $flag = $this->flagQuery->flagByUuidOrUrlSlugQuery(null, $argument['flagSlug']);
 
             return $this->productsByFlagQuery(
