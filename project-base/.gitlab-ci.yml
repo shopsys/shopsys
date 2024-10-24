@@ -68,7 +68,7 @@ test:standards-with-graphql-schema-check:
     variables:
         GIT_STRATEGY: none
     script:
-        - docker run -i ${TAG} /bin/bash -c "mv PRODUCTION DEVELOPMENT; ./check-schema.sh && php phing composer-dev standards"
+        - docker run -i ${TAG} /bin/bash -c "mv PRODUCTION DEVELOPMENT; ./check-schema.sh && php phing composer-dev frontend-api-generate-new-keys standards"
     interruptible: true
 
 test:storefront-standards-with-codegen:

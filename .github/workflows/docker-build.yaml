@@ -256,7 +256,7 @@ jobs:
             -   name: Check standards
                 run: |
                     docker compose exec -T php-fpm touch ./project-base/app/DEVELOPMENT
-                    docker compose exec -T php-fpm php phing -D production.confirm.action=y composer-dev standards
+                    docker compose exec -T php-fpm php phing -D production.confirm.action=y composer-dev frontend-api-generate-new-keys standards
             -   name: Check GraphQl schema
                 run: docker compose exec -T php-fpm project-base/app/check-schema.sh
     standards-storefront:
@@ -290,7 +290,7 @@ jobs:
                     docker compose exec storefront sh check-next-public-variable.sh
             -   name: Check graphql schema files are up to date
                 run: |
-                    docker compose exec php-fpm php phing frontend-api-generate-graphql-schema
+                    docker compose exec php-fpm php phing frontend-api-generate-new-keys frontend-api-generate-graphql-schema
                     docker compose cp php-fpm:/var/www/html/project-base/app/schema.graphql /tmp/schema.graphql
                     docker compose cp /tmp/schema.graphql storefront:/home/node/app/schema.graphql
                     docker compose exec storefront sh check-code-gen.sh
