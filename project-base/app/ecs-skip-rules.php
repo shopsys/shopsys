@@ -26,7 +26,6 @@ return [
     ],
     FunctionLengthSniff::class => [
         __DIR__ . '/src/Component/DataBridge/Transfer/AbstractBridgeImportTransfer.php',
-        __DIR__ . '/src/Controller/Admin/CategorySeoController.php',
         __DIR__ . '/src/DataFixtures/*/*DataFixture.php',
         __DIR__ . '/src/Form/Admin/FriendlyUrlFormType.php',
         __DIR__ . '/src/Form/Admin/NotificationBarFormType.php',

@@ -131,4 +131,42 @@ class FlagFacade
     {
         return $this->flagRepository->getVisibleFlagsByIds($flagsIds, $locale);
     }
+
+    /**
+     * @param string[] $flagUuids
+     * @return int[]
+     */
+    public function getFlagIdsByUuids(array $flagUuids): array
+    {
+        return $this->flagRepository->getFlagIdsByUuids($flagUuids);
+    }
+
+    /**
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
+     */
+    public function getAllVisibleFlags(string $locale): array
+    {
+        return $this->flagRepository->getAllVisibleFlags($locale);
+    }
+
+    /**
+     * @param string $uuid
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
+     */
+    public function getVisibleByUuid(string $uuid, string $locale): Flag
+    {
+        return $this->flagRepository->getVisibleByUuid($uuid, $locale);
+    }
+
+    /**
+     * @param int $flagId
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
+     */
+    public function getVisibleFlagById(int $flagId, string $locale): Flag
+    {
+        return $this->flagRepository->getVisibleFlagById($flagId, $locale);
+    }
 }

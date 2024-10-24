@@ -4,40 +4,16 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Listing;
 
-use Symfony\Component\HttpFoundation\Request;
-
 abstract class ProductListOrderingModeForListFacade
 {
-    protected const COOKIE_NAME = 'productListOrderingMode';
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Listing\RequestToOrderingModeIdConverter $requestToOrderingModeIdConverter
-     */
-    public function __construct(protected readonly RequestToOrderingModeIdConverter $requestToOrderingModeIdConverter)
-    {
-    }
-
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig
      */
-    public function getProductListOrderingConfig()
+    public function getProductListOrderingConfig(): ProductListOrderingConfig
     {
         return new ProductListOrderingConfig(
             $this->getSupportedOrderingModesNamesById(),
             $this->getDefaultOrderingModeId(),
-            static::COOKIE_NAME,
-        );
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return string
-     */
-    public function getOrderingModeIdFromRequest(Request $request)
-    {
-        return $this->requestToOrderingModeIdConverter->getOrderingModeIdFromRequest(
-            $request,
-            $this->getProductListOrderingConfig(),
         );
     }
 

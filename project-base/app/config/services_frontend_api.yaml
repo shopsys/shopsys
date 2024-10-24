@@ -21,23 +21,6 @@ services:
         arguments:
             $loginRateLimiter: '@security.login_throttling.frontend_api.limiter'
 
-    App\FrontendApi\Resolver\Category\CategoryResolverMap:
-        arguments:
-            $readyCategorySeoMixesBatchLoader: '@ready_category_seo_mixes_batch_loader'
-            $categoryChildrenBatchLoader: '@category_children_batch_loader'
-            $linkedCategoriesBatchLoader: '@linked_categories_batch_loader'
-        tags:
-            - { name: overblog_graphql.resolver_map, schema: default }
-
-    App\FrontendApi\Resolver\Image\CategoryOrReadyCategorySeoMixImagesQuery:
-        arguments:
-            $imagesBatchLoader: '@images_batch_loader'
-            $firstImageBatchLoader: '@first_image_batch_loader'
-
-    App\FrontendApi\Resolver\Products\BestsellingProductsQuery:
-        arguments:
-            $productsSellableByIdsBatchLoader: '@products_sellable_by_ids_batch_loader'
-
     App\FrontendApi\Resolver\Products\DataMapper\ProductArrayFieldMapper:
         arguments:
             $productsSellableByIdsBatchLoader: '@products_sellable_by_ids_batch_loader'
@@ -50,11 +33,6 @@ services:
             $productsSellableByIdsBatchLoader: '@products_sellable_by_ids_batch_loader'
             $categoriesBatchLoader: '@categories_batch_loader'
             $brandsBatchLoader: '@brands_batch_loader'
-
-    App\FrontendApi\Resolver\Products\ProductsQuery:
-        arguments:
-            $productsVisibleAndSortedByIdsBatchLoader: '@products_visible_and_sorted_by_ids_batch_loader'
-            $productsByEntitiesBatchLoader: '@products_by_entities_batch_loader'
 
     App\FrontendApi\Resolver\Store\StoreAvailabilityResolverMap:
         arguments:
@@ -93,29 +71,15 @@ services:
     Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory:
         alias: App\FrontendApi\Model\Parameter\ParameterWithValuesFactory
 
-    Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory:
-        alias: App\FrontendApi\Model\Product\Connection\ProductConnectionFactory
-
     Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade:
         alias: App\FrontendApi\Model\Product\Filter\ProductFilterFacade
 
     Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterOptionsFactory:
         alias: App\FrontendApi\Model\Product\Filter\ProductFilterOptionsFactory
 
-    Shopsys\FrontendApiBundle\Model\Resolver\Brand\BrandsQuery:
-        alias: App\FrontendApi\Resolver\Brand\BrandsQuery
-        public: true
-
     Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoriesQuery:
         alias: App\FrontendApi\Resolver\Category\CategoriesQuery
         public: true
-
-    Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryQuery:
-        alias: App\FrontendApi\Resolver\Category\CategoryQuery
-        public: true
-
-    Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoryResolverMap:
-        alias: App\FrontendApi\Resolver\Category\CategoryResolverMap
 
     Shopsys\FrontendApiBundle\Model\Resolver\Customer\User\CurrentCustomerUserQuery:
         alias: App\FrontendApi\Resolver\Customer\User\CurrentCustomerUserQuery
@@ -129,10 +93,6 @@ services:
         alias: App\FrontendApi\Resolver\Order\OrdersQuery
         public: true
 
-    Shopsys\FrontendApiBundle\Model\Resolver\Products\BestsellingProductsQuery:
-        alias: App\FrontendApi\Resolver\Products\BestsellingProductsQuery
-        public: true
-
     Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper:
         alias: App\FrontendApi\Resolver\Products\DataMapper\ProductArrayFieldMapper
 
@@ -141,7 +101,3 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductResolverMap:
         alias: App\FrontendApi\Resolver\Products\ProductResolverMap
-
-    Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductsQuery:
-        alias: App\FrontendApi\Resolver\Products\ProductsQuery
-        public: true

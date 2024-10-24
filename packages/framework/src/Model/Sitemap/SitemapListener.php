@@ -113,6 +113,14 @@ class SitemapListener implements EventSubscriberInterface
             'front_flag_detail',
             $this->sitemapFacade->getSitemapItemsForVisibleFlags(...),
         );
+
+        $categorySeoMixSitemapItems = $this->sitemapFacade->getSitemapItemsForVisibleCategorySeoMix($domainConfig);
+        $this->addUrlsForSitemapItems(
+            $categorySeoMixSitemapItems,
+            $generator,
+            $domainConfig,
+            'filtersCategories',
+        );
     }
 
     /**

@@ -1211,20 +1211,6 @@ Returns a complete list of the slider items
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>slug</strong></td>
-<td valign="top"><a href="#slug">Slug</a></td>
-<td>
-
-Returns entity by slug
-
-</td>
-</tr>
-<tr>
-<td colspan="2" align="right" valign="top">slug</td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>store</strong></td>
 <td valign="top"><a href="#store">Store</a></td>
 <td>

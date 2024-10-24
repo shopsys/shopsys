@@ -1,0 +1,23 @@
+query CategorySeoWithLinks($urlSlug: String!) {
+    category(urlSlug: $urlSlug){
+        name
+        slug
+        seoH1
+        seoTitle
+        seoMetaDescription
+        bestsellers {
+            name
+        }
+        breadcrumb {
+            name
+            slug
+        }
+        readyCategorySeoMixLinks {
+            name
+            slug
+        }
+        linkedCategories {
+            name
+        }
+    }
+}

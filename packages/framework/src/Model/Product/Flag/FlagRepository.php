@@ -122,4 +122,80 @@ class FlagRepository
             ->select('f')
             ->where('f.visible = true');
     }
+
+    /**
+     * @param string[] $flagUuids
+     * @return int[]
+     */
+    public function getFlagIdsByUuids(array $flagUuids): array
+    {
+        $queryBuilder = $this->em->createQueryBuilder()
+            ->select('f.id')
+            ->from(Flag::class, 'f')
+            ->where('f.uuid IN (:uuids)')
+            ->setParameter('uuids', $flagUuids);
+
+        return array_column($queryBuilder->getQuery()->getArrayResult(), 'id');
+    }
+
+    /**
+     * @param int $flagId
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
+     */
+    public function getVisibleFlagById(int $flagId, string $locale): Flag
+    {
+        $flagsQueryBuilder = $this->getVisibleQueryBuilder()
+            ->addSelect('ft')
+            ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
+            ->where('f.id = :flagId')
+            ->setParameter('flagId', $flagId)
+            ->setParameter('locale', $locale);
+
+        $flag = $flagsQueryBuilder->getQuery()->getOneOrNullResult();
+
+        if ($flag === null) {
+            throw new FlagNotFoundException(sprintf('Flag with ID "%s" does not exist.', $flagId));
+        }
+
+        return $flag;
+    }
+
+    /**
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
+     */
+    public function getAllVisibleFlags(string $locale): array
+    {
+        $flagsQueryBuilder = $this->getVisibleQueryBuilder()
+            ->addSelect('f')
+            ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
+            ->orderBy(OrderByCollationHelper::createOrderByForLocale('ft.name', $locale), 'asc')
+            ->setParameter('locale', $locale);
+
+        return $flagsQueryBuilder->getQuery()->getResult();
+    }
+
+    /**
+     * @param string $uuid
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
+     */
+    public function getVisibleByUuid(string $uuid, string $locale): Flag
+    {
+        $flagsQueryBuilder = $this->getVisibleQueryBuilder()
+            ->addSelect('ft')
+            ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
+            ->setParameter('locale', $locale)
+            ->andWhere('f.uuid = :uuid')
+            ->setParameter('uuid', $uuid);
+
+        $flag = $flagsQueryBuilder->getQuery()->getOneOrNullResult();
+
+        if ($flag === null) {
+            throw new FlagNotFoundException(sprintf('Flag with UUID "%s" does not exist.', $uuid));
+        }
+
+        return $flag;
+    }
 }

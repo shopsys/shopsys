@@ -13,9 +13,6 @@ msgstr "-- Vybrat skupinu --"
 msgid "<strong><a href=\"{{ url }}\">Notification bar</a></strong> has been successfuly updated"
 msgstr "<strong><a href=\"{{ url }}\">Notifikační lišta</a></strong> byla úspěšně upravena"
 
-msgid "<strong><a href=\"{{ url }}\">SEO category</a></strong> has been saved"
-msgstr "<strong><a href=\"{{ url }}\">SEO kombinace kategorie</a></strong> byla uložena"
-
 msgid "Action"
 msgstr "Akce"
 
@@ -31,20 +28,8 @@ msgstr "Přidat parametr"
 msgid "Administrator"
 msgstr "Administrátor"
 
-msgid "Advanced SEO categories"
-msgstr "Extended SEO categories"
-
-msgid "Back to category selection"
-msgstr "Zpět na volbu kategorie"
-
 msgid "Back to overview"
 msgstr "Zpět na přehled"
-
-msgid "Back to overview of available combinations"
-msgstr "Zpět na přehled možných kombinací"
-
-msgid "Back to parameter selection"
-msgstr "Zpět na volbu parametrů"
 
 msgid "Background color"
 msgstr "Barva pozadí"
@@ -61,9 +46,6 @@ msgstr "Základní informace"
 msgid "Brand overview"
 msgstr "Přehled značek"
 
-msgid "By flag"
-msgstr "Dle příznaku"
-
 msgid "CMS"
 msgstr "CMS"
 
@@ -76,26 +58,14 @@ msgstr "Katalogové číslo"
 msgid "Catalog numbers"
 msgstr "Katalogová čísla"
 
-msgid "Category description"
-msgstr "Popis kategorie"
-
-msgid "Category name"
-msgstr "Název kategorie"
-
 msgid "Center"
 msgstr "Na střed"
-
-msgid "Choose this category and continue"
-msgstr "Zvolit tuto kategorii a pokračovat"
 
 msgid "Clean Storefront Query Cache"
 msgstr "Vymazat cache s graphql dotazy na FE"
 
 msgid "Color"
 msgstr "Barva"
-
-msgid "Combination of parameters and their values"
-msgstr "Kombinace parametrů a jejich hodnot parametrů"
 
 msgid "Contact"
 msgstr "Kontakt"
@@ -112,9 +82,6 @@ msgstr "Hlavička Content-Security-Policy byla nastavena."
 msgid "Content-Security-Policy header setting"
 msgstr "Nastavení hlavičky Content-Security-Policy"
 
-msgid "Create"
-msgstr "Vytvořit"
-
 msgid "Create flag"
 msgstr "Vytvořit příznak"
 
@@ -123,9 +90,6 @@ msgstr "Vytvořit nový banner"
 
 msgid "Create notification bar"
 msgstr "Vytvořit notifikační lištu"
-
-msgid "Delete category with SEO mix"
-msgstr "Smazat kategorii i seo mix"
 
 msgid "Description"
 msgstr "Popis"
@@ -141,9 +105,6 @@ msgstr "Datum zobrazení OD"
 
 msgid "Display date TO"
 msgstr "Datum zobrazení DO"
-
-msgid "Do you really want to remove this category even with their SEO mixes?"
-msgstr "Opravdu chcete smazat tuto kategorii i s jejich SEO mixy?"
 
 msgid "Do you really want to remove this flag?"
 msgstr "Opravdu chcete odstranit tento příznak?"
@@ -202,38 +163,11 @@ msgstr "Zapnout dvoufaktorové ověřování pomocí e-mailu"
 msgid "Extended SEO categories"
 msgstr "Rozšířené SEO kategorie"
 
-msgid "Extended SEO category %categoryName% - combinations"
-msgstr "Rozšířená SEO kategorie %categoryName% - kombinace"
-
-msgid "Extended SEO category %categoryName% - filters"
-msgstr "Rozšířená SEO kategorie %categoryName% - filtry"
-
-msgid "Extended SEO category - category selection"
-msgstr "Rozšířená SEO kategorie - volba kategorie"
-
-msgid "Extended SEO category - combinations"
-msgstr "Rozšířená SEO kategorie - kombinace"
-
-msgid "Extended SEO category - editing the combination with SEO values"
-msgstr "Rozšířená SEO kategorie - editace kombinace se SEO hodnotami"
-
-msgid "Extended SEO category - filters"
-msgstr "Rozšířená SEO kategorie - filtry"
-
-msgid "Extended SEO category - set combinations with SEO values"
-msgstr "Rozšířená SEO kategorie - kombinace s nastavenými SEO hodnotami"
-
 msgid "File"
 msgstr "Soubor"
 
 msgid "File not found in main filesystem. Please try again later."
 msgstr "Soubor se nepodařilo nalézt na hlavním uložišti. Zkuste to, prosím znovu později."
-
-msgid "Fill URL also for selected domain"
-msgstr "Vyplňte také URL pro zvolenou doménu"
-
-msgid "Fill URL only for selected domain"
-msgstr "Vyplňte pouze URL pro zvolenou doménu"
 
 msgid "Flag"
 msgstr "Příznak"
@@ -262,9 +196,6 @@ msgstr "Skupina"
 msgid "Groups"
 msgstr "Skupiny"
 
-msgid "Heading (H1)"
-msgstr "Nadpis (H1)"
-
 msgid "Heureka"
 msgstr "Heureka"
 
@@ -282,9 +213,6 @@ msgstr "Domovská stránka"
 
 msgid "Image"
 msgstr "Obrázek"
-
-msgid "In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains"
-msgstr "Na záložce konkrétní domény není možné upravovat pořadí a zanoření kategorií. Prosím přejděte na kartu kategorie nebo na přehled kategorií všech domén."
 
 msgid "In stock"
 msgstr "Skladem"
@@ -355,17 +283,11 @@ msgstr "Vyrobeno v DE"
 msgid "Made in SK"
 msgstr "Vyrobeno v SK"
 
-msgid "Main URL"
-msgstr "Hlavní URL"
-
 msgid "Measurement units"
 msgstr "Měrné jednotky"
 
 msgid "Measurement units overview"
 msgstr "Přehled měrných jednotek"
-
-msgid "Meta description"
-msgstr "Meta popis"
 
 msgid "Name"
 msgstr "Název"
@@ -403,9 +325,6 @@ msgstr "Nová prodejna"
 msgid "New warehouse"
 msgstr "Nový sklad"
 
-msgid "No combinations of SEO categories found."
-msgstr "Nebyly nalezeny žádné kombinace SEO kategorií."
-
 msgid "No flags found. You have to create some first."
 msgstr "Nebyly nalezeny žádné příznaky. Musíte prvně nějaký vytvořit."
 
@@ -436,9 +355,6 @@ msgstr "Stránka s potvrzením objednávky"
 msgid "Order detail"
 msgstr "Detail objednávky"
 
-msgid "Ordering"
-msgstr "Řazení"
-
 msgid "Orders"
 msgstr "Objednávky"
 
@@ -447,9 +363,6 @@ msgstr "Původní překlad"
 
 msgid "Outside layout"
 msgstr "Rozložení vně"
-
-msgid "Page title"
-msgstr "Titulek stránky"
 
 msgid "Parameter"
 msgstr "Parametr"
@@ -487,9 +400,6 @@ msgstr "Zásady ochrany osobních údajů"
 msgid "Privacy Policy settings"
 msgstr "Nastavení zásad ochrany osobních údajů"
 
-msgid "Products parameters of selected category"
-msgstr "Parametry produktů vybrané kategorie"
-
 msgid "Promo code"
 msgstr "Slevový kupón"
 
@@ -510,12 +420,6 @@ msgstr "Související produkty"
 
 msgid "Right"
 msgstr "Vpravo"
-
-msgid "SEO combination of category with ID {{ ReadyCategorySeoMixId }} has been removed"
-msgstr "SEO kombinace kategorie s ID {{ ReadyCategorySeoMixId }} byla smazána"
-
-msgid "SEO combination of category with ID {{ ReadyCategorySeoMixId }} has not been removed, because it was not found"
-msgstr "SEO kombinace kategorie s ID {{ ReadyCategorySeoMixId }} nebyla smazána, protože nebyla nalezena"
 
 msgid "Sale"
 msgstr "Výprodej"
@@ -543,15 +447,6 @@ msgstr "Seo"
 
 msgid "Settings"
 msgstr "Nastavení"
-
-msgid "Short description of category"
-msgstr "Krátký popis kategorie"
-
-msgid "Show combinations"
-msgstr "Zobrazit kombinace"
-
-msgid "Show in the category"
-msgstr "Zobrazit v rozcestníku"
 
 msgid "Stocking"
 msgstr "Skladovost"
@@ -591,9 +486,6 @@ msgstr "Typ"
 
 msgid "Type of image"
 msgstr "Typ obrázku"
-
-msgid "URL Settings"
-msgstr "Nastavení URL"
 
 msgid "URL addresses"
 msgstr "URL adresy"
@@ -681,12 +573,6 @@ msgstr "od nejdražšího"
 
 msgid "from the cheapest"
 msgstr "od nejlevnějšího"
-
-msgid "ready category seo mixes"
-msgstr "SEO kombinace kategorií"
-
-msgid "relevance"
-msgstr "relevance"
 
 msgid "unknown catalog number (product will not be displayed)"
 msgstr "neznámé katalogové číslo (produkt se nezobrazí)"

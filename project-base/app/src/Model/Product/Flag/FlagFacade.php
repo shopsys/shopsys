@@ -21,6 +21,9 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  * @method \App\Model\Product\Flag\Flag getByUuid(string $uuid)
  * @method \App\Model\Product\Flag\Flag[] getByUuids(string[] $uuids)
  * @method \App\Model\Product\Flag\Flag[] getVisibleFlagsByIds(int[] $flagsIds, string $locale)
+ * @method \App\Model\Product\Flag\Flag[] getAllVisibleFlags(string $locale)
+ * @method \App\Model\Product\Flag\Flag getVisibleByUuid(string $uuid, string $locale)
+ * @method \App\Model\Product\Flag\Flag getVisibleFlagById(int $flagId, string $locale)
  */
 class FlagFacade extends BaseFlagFacade
 {
@@ -69,35 +72,6 @@ class FlagFacade extends BaseFlagFacade
         $this->friendlyUrlFacade->createFriendlyUrls('front_flag_detail', $flag->getId(), $flag->getNames());
 
         return $flag;
-    }
-
-    /**
-     * @param string $locale
-     * @return \App\Model\Product\Flag\Flag[]
-     */
-    public function getAllVisibleFlags(string $locale): array
-    {
-        return $this->flagRepository->getAllVisibleFlags($locale);
-    }
-
-    /**
-     * @param string $uuid
-     * @param string $locale
-     * @return \App\Model\Product\Flag\Flag
-     */
-    public function getVisibleByUuid(string $uuid, string $locale): Flag
-    {
-        return $this->flagRepository->getVisibleByUuid($uuid, $locale);
-    }
-
-    /**
-     * @param int $flagId
-     * @param string $locale
-     * @return \App\Model\Product\Flag\Flag
-     */
-    public function getVisibleFlagById(int $flagId, string $locale): Flag
-    {
-        return $this->flagRepository->getVisibleFlagById($flagId, $locale);
     }
 
     /**

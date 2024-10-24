@@ -123,6 +123,7 @@ return ECSConfig::configure()
                 __DIR__ . '/project-base',
             ],
             FunctionLengthSniff::class => [
+                __DIR__ . '/packages/framework/src/Controller/Admin/CategorySeoController.php',
                 __DIR__ . '/packages/framework/src/Migrations/Version*.php',
                 __DIR__ . '/packages/framework/src/Form/Admin/*/*FormType.php',
                 __DIR__ . '/packages/framework/src/Model/AdminNavigation/SideMenuBuilder.php',
@@ -133,6 +134,7 @@ return ECSConfig::configure()
                 __DIR__ . '/packages/framework/src/Model/Product/ProductVisibilityRepository.php',
                 __DIR__ . '/packages/framework/src/Model/Security/MenuItemsGrantedRolesSetting.php',
                 __DIR__ . '/packages/framework/src/Model/Security/Roles.php',
+                __DIR__ . '/packages/framework/src/Model/Sitemap/SitemapListener.php',
                 __DIR__ . '/packages/framework/tests/Unit/Component/Domain/DomainDataCreatorTest.php',
                 __DIR__ . '/packages/framework/tests/Unit/Model/Category/CategoryNestedSetCalculatorTest.php',
                 __DIR__ . '/packages/framework/tests/Unit/Model/Mail/EnvelopeListenerTest.php',

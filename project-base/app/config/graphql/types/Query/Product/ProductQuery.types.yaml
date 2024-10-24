@@ -2,15 +2,6 @@ ProductQuery:
     type: object
     config:
         fields:
-            products:
-                type: "ProductConnection!"
-                argsBuilder:
-                    builder: "ProductPaginatorArgumentsBuilder"
-                    config:
-                        orderingModeType: 'ProductOrderingModeEnum'
-                resolve: "@=query('productsWithOverlyingEntityQuery', args, info)"
-                complexity: "@=dynamicPaginationComplexity(args)"
-                description: "Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords"
             ParameterSliderFilterOption:
                 type: "ParameterSliderFilterOption"
             ParameterCheckboxFilterOption:

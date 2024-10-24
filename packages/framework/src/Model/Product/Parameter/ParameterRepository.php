@@ -633,7 +633,115 @@ class ParameterRepository
         }
 
         return $queryBuilder
-            ->getQuery()
-            ->getSingleScalarResult() > 0;
+                ->getQuery()
+                ->getSingleScalarResult() > 0;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
+     */
+    public function getParametersUsedByProductsInCategoryWithoutSlider(Category $category, int $domainId): array
+    {
+        $queryBuilder = $this->getParameterRepository()->createQueryBuilder('p')
+            ->select('p')
+            ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'p = ppv.parameter')
+            ->where('p.parameterType != :parameterType')
+            ->setParameter('parameterType', Parameter::PARAMETER_TYPE_SLIDER)
+            ->orderBy('p.orderingPriority', 'DESC');
+
+        $this->applyCategorySeoConditions($queryBuilder, $category, $domainId);
+
+        return $queryBuilder->getQuery()->execute();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
+     * @param int $domainId
+     * @param string $locale
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
+     */
+    public function getParameterValuesUsedByProductsInCategoryByParameter(
+        Category $category,
+        Parameter $parameter,
+        int $domainId,
+        string $locale,
+    ): array {
+        $queryBuilder = $this->getParameterValueRepository()->createQueryBuilder('pv')
+            ->select('pv')
+            ->andWhere('ppv.parameter = :parameter')
+            ->setParameter('parameter', $parameter)
+            ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'pv = ppv.value and pv.locale = :locale')
+            ->setParameter(':locale', $locale)
+            ->groupBy('pv');
+
+        $this->applyCategorySeoConditions($queryBuilder, $category, $domainId);
+
+        return $queryBuilder->getQuery()->execute();
+    }
+
+    /**
+     * @param string[] $parameterUuids
+     * @return array<string, int>
+     */
+    public function getParameterIdsIndexedByUuids(array $parameterUuids): array
+    {
+        return $this->getIdsIndexedByUuids($parameterUuids, Parameter::class);
+    }
+
+    /**
+     * @param string[] $parameterValueUuids
+     * @return array<string, int>
+     */
+    public function getParameterValueIdsIndexedByUuids(array $parameterValueUuids): array
+    {
+        return $this->getIdsIndexedByUuids($parameterValueUuids, ParameterValue::class);
+    }
+
+    /**
+     * @param string $text
+     * @param string $locale
+     * @return int
+     */
+    public function getParameterValueIdByText(string $text, string $locale): int
+    {
+        return $this->em->createQueryBuilder()
+            ->select('pv.id')
+            ->from(ParameterValue::class, 'pv')
+            ->where('pv.text = :text')
+            ->andWhere('pv.locale = :locale')
+            ->setParameters([
+                'text' => $text,
+                'locale' => $locale,
+            ])
+            ->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * @param string[] $uuids
+     * @param string $entityName
+     * @return array<string, int>
+     */
+    protected function getIdsIndexedByUuids(array $uuids, string $entityName): array
+    {
+        $queryBuilder = $this->em->createQueryBuilder()
+            ->select('p.id, p.uuid')
+            ->from($entityName, 'p')
+            ->where('p.uuid IN (:uuids)')
+            ->setParameter('uuids', $uuids);
+
+        if ($entityName === Parameter::class) {
+            $queryBuilder->orderBy('p.orderingPriority', 'DESC');
+        }
+
+        $idsIndexedByUuids = [];
+
+        foreach ($queryBuilder->getQuery()->getArrayResult() as $idAndUuid) {
+            $idsIndexedByUuids[$idAndUuid['uuid']] = $idAndUuid['id'];
+        }
+
+        return $idsIndexedByUuids;
     }
 }

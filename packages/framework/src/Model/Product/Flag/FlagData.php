@@ -30,5 +30,6 @@ class FlagData
     {
         $this->name = [];
         $this->visible = false;
+        $this->rgbColor = '';
     }
 }

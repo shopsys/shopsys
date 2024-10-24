@@ -4,7 +4,7 @@ overblog_dataloader:
     loaders:
         brandsBatchLoader:
             alias: "brands_batch_loader"
-            batch_load_fn: "@App\\FrontendApi\\Model\\Brand\\BrandsBatchLoader:loadByIds"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Brand\\BrandsBatchLoader:loadByIds"
         categoriesBatchLoader:
             alias: "categories_batch_loader"
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Category\\CategoriesBatchLoader:loadByIds"
@@ -46,7 +46,7 @@ overblog_dataloader:
             batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Product\\BatchLoad\\ProductsBatchLoader:loadVisibleByIds"
         readyCategorySeoMixesBatchLoader:
             alias: "ready_category_seo_mixes_batch_loader"
-            batch_load_fn: "@App\\FrontendApi\\Model\\Category\\ReadyCategorySeoMixBatchLoader:loadByCategoryIds"
+            batch_load_fn: "@Shopsys\\FrontendApiBundle\\Model\\Category\\ReadyCategorySeoMixBatchLoader:loadByCategoryIds"
         storesBatchLoader:
             alias: "stores_batch_loader"
             batch_load_fn: "@App\\FrontendApi\\Model\\Store\\StoresBatchLoader:loadByIds"

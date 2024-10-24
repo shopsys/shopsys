@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model\Product\Search;
 
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository as BaseProductElasticsearchRepository;
 
 /**
@@ -42,33 +41,5 @@ class ProductElasticsearchRepository extends BaseProductElasticsearchRepository
         } else {
             $productQueryBuilder->andWhere('TRUE = FALSE');
         }
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @return int[]
-     */
-    public function getCategoryIdsForFilterData(ProductFilterData $productFilterData): array
-    {
-        $result = $this->client->search(
-            $this->filterQueryFactory->createListableWithProductFilter($productFilterData)->setLimit(0)->getAggregationQueryForProductCountInCategories(),
-        );
-
-        return $this->extractCategoryIdsAggregation($result);
-    }
-
-    /**
-     * @param array $productCountAggregation
-     * @return int[]
-     */
-    private function extractCategoryIdsAggregation(array $productCountAggregation): array
-    {
-        $result = [];
-
-        foreach ($productCountAggregation['aggregations']['by_categories']['buckets'] as $categoryAggregation) {
-            $result[] = $categoryAggregation['key'];
-        }
-
-        return $result;
     }
 }

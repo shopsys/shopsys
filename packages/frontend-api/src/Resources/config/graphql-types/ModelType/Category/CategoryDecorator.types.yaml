@@ -3,35 +3,64 @@ CategoryDecorator:
     decorator: true
     config:
         description: "Represents a category"
+        interfaces:
+            - 'Breadcrumb'
+            - 'Slug'
+            - 'ProductListable'
         fields:
+            id:
+                type: "Int!"
+                description: "ID of category"
             uuid:
                 type: "Uuid!"
                 description: "UUID"
             name:
-                type: "String"
+                type: "String!"
                 description: "Localized category name (domain dependent)"
+            description:
+                type: "String"
+                description: "Localized category description (domain dependent)"
             children:
-                type: "[Category!]"
+                type: "[Category!]!"
                 description: "Descendant categories"
             parent:
                 type: "Category"
                 description: "Ancestor category"
+            slug:
+                type: "String!"
+                description: "Category URL slug"
+            breadcrumb:
+                type: "[Link!]!"
+                description: "Hierarchy of the current element in relation to the structure"
+                resolve: '@=query("categoryBreadcrumbQuery", value)'
             images:
                 type: "[Image!]!"
                 description: "Category images"
-                resolve: '@=query("imagesByEntityPromiseQuery", value, args["type"])'
+                resolve: '@=query("imagesByCategoryOrReadyCategorySeoMixPromiseQuery", value, args["type"])'
+                args:
+                    type:
+                        type: "String"
+                        defaultValue: null
+            mainImage:
+                type: "Image"
+                description: "Category image by params"
+                resolve: '@=query("mainImageByCategoryOrReadyCategorySeoMixPromiseQuery", value, args["type"])'
                 args:
                     type:
                         type: "String"
                         defaultValue: null
             products:
-                type: "ProductConnection"
+                type: "ProductConnection!"
                 description: "Paginated and ordered products of category"
                 argsBuilder:
                     builder: "ProductPaginatorArgumentsBuilder"
                     config:
                         orderingModeType: 'ProductOrderingModeEnum'
-                resolve: '@=query("productsByCategoryQuery", args, value)'
+                resolve: '@=query("productsByCategoryOrReadyCategorySeoMixQuery", args, value)'
+            bestsellers:
+                type: "[Product!]!"
+                description: "Best selling products"
+                resolve: '@=query("bestSellingProductsByCategoryQuery", value)'
             seoH1:
                 type: "String"
                 description: "Seo first level heading of category"
@@ -47,3 +76,12 @@ CategoryDecorator:
             hreflangLinks:
                 type: "[HreflangLink!]!"
                 description: "Alternate links for hreflang meta tags"
+            originalCategorySlug:
+                type: "String"
+                description: "Original category URL slug (for CategorySeoMixes slug of assigned category is returned, null is returned for regular category)"
+            readyCategorySeoMixLinks:
+                type: "[Link!]!"
+                description: "An array of links of prepared category SEO mixes of a given category"
+            linkedCategories:
+                type: "[Category!]!"
+                description: "A list of categories linked to the given category"

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Component\Constraints;
 
-use App\Model\Product\Parameter\ParameterFacade;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -14,8 +14,9 @@ class ParameterFilterValidator extends ConstraintValidator
     /**
      * @param \App\Model\Product\Parameter\ParameterFacade $parameterFacade
      */
-    public function __construct(private ParameterFacade $parameterFacade)
-    {
+    public function __construct(
+        private readonly ParameterFacade $parameterFacade,
+    ) {
     }
 
     /**
