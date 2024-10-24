@@ -5,8 +5,12 @@ fragment BlogCategoryDetailFragment on BlogCategory {
     breadcrumb {
         ...BreadcrumbFragment
     }
+    mainImage {
+        ...ImageFragment
+    }
     seoTitle
     seoMetaDescription
+    description
     hreflangLinks {
         ...HreflangLinksFragment
     }

@@ -7,7 +7,7 @@ const interFont = Inter({
 });
 
 export const ralewayFont = Raleway({
-    weight: ['500', '600', '700'],
+    weight: ['400', '500', '600', '700'],
     subsets: ['latin-ext', 'latin'],
     variable: '--font-raleway',
 });
