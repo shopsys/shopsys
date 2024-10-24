@@ -72,7 +72,7 @@ export const ContactInformationEmail: FC = () => {
                         type="button"
                         onClick={openLoginPopup}
                     >
-                        {t('Sign in')}
+                        {t('Sign in and continue with order')}
                     </Button>
                 </div>
             )}
