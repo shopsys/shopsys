@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomains;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainsValidator;
+use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
@@ -29,7 +30,8 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
             new DomainConfig(Domain::SECOND_DOMAIN_ID, 'http://example.com', 'name2', 'en', $defaultTimeZone),
         ];
         $settingMock = $this->createMock(Setting::class);
-        $domain = new Domain($domainConfigs, $settingMock);
+        $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
+        $domain = new Domain($domainConfigs, $settingMock, $administratorFacadeMock);
 
         $routerMock = $this->getMockBuilder(RouterInterface::class)->getMock();
         $routerMock->method('match')->willReturnCallback(function ($path) {

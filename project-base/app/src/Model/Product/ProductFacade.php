@@ -25,7 +25,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
-use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum;
@@ -56,7 +55,6 @@ class ProductFacade extends BaseProductFacade
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \App\Model\Product\ProductRepository $productRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \App\Component\Image\ImageFacade $imageFacade
@@ -80,7 +78,6 @@ class ProductFacade extends BaseProductFacade
     public function __construct(
         EntityManagerInterface $em,
         ProductRepository $productRepository,
-        ProductVisibilityFacade $productVisibilityFacade,
         ParameterRepository $parameterRepository,
         Domain $domain,
         ImageFacade $imageFacade,
@@ -104,7 +101,6 @@ class ProductFacade extends BaseProductFacade
         parent::__construct(
             $em,
             $productRepository,
-            $productVisibilityFacade,
             $parameterRepository,
             $domain,
             $imageFacade,

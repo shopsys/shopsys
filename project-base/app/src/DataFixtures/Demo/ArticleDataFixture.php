@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Article\Article;
 use Shopsys\FrameworkBundle\Model\Article\ArticleData;
-use Shopsys\FrameworkBundle\Model\Article\ArticleDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Article\ArticleDataFactory;
 use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
 
 class ArticleDataFixture extends AbstractReferenceFixture
@@ -37,7 +37,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
      */
     public function __construct(
         private readonly ArticleFacade $articleFacade,
-        private readonly ArticleDataFactoryInterface $articleDataFactory,
+        private readonly ArticleDataFactory $articleDataFactory,
     ) {
     }
 
@@ -185,8 +185,7 @@ class ArticleDataFixture extends AbstractReferenceFixture
      */
     private function createArticleFromArray(array $data, int $domainId): void
     {
-        $articleData = $this->articleDataFactory->create();
-        $articleData->domainId = $domainId;
+        $articleData = $this->articleDataFactory->create($domainId);
         $articleData->name = $data[self::ATTRIBUTE_NAME_KEY];
         $articleData->text = '<div class="gjs-text-ckeditor">' . $data[self::ATTRIBUTE_TEXT_KEY] . '</div>';
         $articleData->placement = $data[self::ATTRIBUTE_PLACEMENT_KEY];

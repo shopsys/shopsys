@@ -44,10 +44,16 @@ class AdministratorData
      */
     public $roleGroup;
 
+    /**
+     * @var int[]|null
+     */
+    public $displayOnlyDomainIds;
+
     public function __construct()
     {
         $this->roles[] = Roles::ROLE_ADMIN;
         $this->transferIssuesLastSeenDateTime = new DateTime('1970-01-01 00:00:00');
         $this->roleGroup = null;
+        $this->displayOnlyDomainIds = [1];
     }
 }

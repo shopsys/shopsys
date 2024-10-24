@@ -286,6 +286,9 @@ msgstr "Použitelné proměnné pro obsah"
 msgid "Applicable variables for Subject"
 msgstr "Použitelné proměnné pro předmět"
 
+msgid "Apply"
+msgstr "Použít"
+
 msgid "Apply according to customer"
 msgstr "Aplikovat podle zákazníka"
 
@@ -904,6 +907,9 @@ msgstr "Vytvořeno administrátorem"
 msgid "Created on"
 msgstr "Vytvořeno dne"
 
+msgid "Creating a record requires all domains to be enabled as domain-specific fields cannot be empty. If you want to proceed, select all domains in the Domain filter in the header first."
+msgstr "Vytvoření záznamu vyžaduje, aby byly povoleny všechny domény, protože pole specifická pro doménu nemohou být prázdná. Pokud chcete pokračovat, nejprve vyberte všechny domény ve filtru domény v záhlaví."
+
 msgid "Creation date"
 msgstr "Datum vytvoření"
 
@@ -1311,6 +1317,9 @@ msgstr "Doména %domainName%"
 
 msgid "Domain <strong>{{ name }}</strong> modified. Try clearing your browser cache (CTRL+F5) if you can't see the new icon."
 msgstr "Byla upravena doména <strong>{{ name }}</strong>. Nevidíte-li novou ikonu, zkuste smazat cache vašeho prohlížeče (CTRL+F5)."
+
+msgid "Domain filter"
+msgstr "Filtr domén"
 
 msgid "Domain name"
 msgstr "Název domény"
@@ -2899,6 +2908,9 @@ msgstr "Prosím vyplňte všechny výchozí hodnoty před vytvořením produktu"
 msgid "Please scan the QR code below using a one-time passcode generator application (such as Google Authenticator)."
 msgstr "Naskenujte prosím níže uvedený QR kód pomocí aplikace pro generování jednorázových přístupových kódů (jako je Google Authenticator)."
 
+msgid "Please select at least one domain."
+msgstr "Vyberte prosím alespoň jednu doménu."
+
 msgid "Please use the button below to send the one-time passcode to your email address."
 msgstr "Použijte prosím tlačítko níže k odeslání jednorázového přístupového kódu na vaši e-mailovou adresu."
 
@@ -3298,8 +3310,14 @@ msgstr "Vyhledávání hledá v číslu objednávky, e-mailu registrovaného zá
 msgid "Searching searches in slugs. It is possible to use wildcards * and ?."
 msgstr "Vyhledávání hledá ve sluzích. Je možné používat operátory * a ?."
 
+msgid "Select all"
+msgstr "Vybrat vše"
+
 msgid "Select new value"
 msgstr "Zvolte novou hodnotu"
+
+msgid "Select none"
+msgstr "Nevybrat nic"
 
 msgid "Selected SEO page cannot be deleted"
 msgstr "Vybraná SEO stránka nemůže být smazána"

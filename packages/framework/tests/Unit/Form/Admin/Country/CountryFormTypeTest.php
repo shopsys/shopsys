@@ -62,13 +62,13 @@ class CountryFormTypeTest extends TypeTestCase
 
         $countryForm = $this->createCountryForm();
         $countryForm->submit($countryFormData);
-        $this->assertTrue($countryForm->isValid());
+        $this->assertTrue($countryForm->isValid(), 'Valid form');
 
         $countryFormData['names']['cs'] = '';
 
         $countryForm = $this->createCountryForm();
         $countryForm->submit($countryFormData);
-        $this->assertFalse($countryForm->isValid());
+        $this->assertFalse($countryForm->isValid(), 'Invalid form - missing czech translation');
     }
 
     public function testPriorityIsNumber(): void
@@ -120,18 +120,22 @@ class CountryFormTypeTest extends TypeTestCase
 
         $this->localization = $this->createMock(Localization::class);
         $this->localization->method('getLocalesOfAllDomains')->willReturn(['cs', 'en']);
+        $this->localization->method('getAdminEnabledLocales')->willReturn(['cs', 'en']);
         $this->localization->method('getAdminLocale')->willReturn('en');
 
         $this->domain = $this->createMock(Domain::class);
 
         $defaultTimeZone = new DateTimeZone('Europe/Prague');
 
-        $this->domain->method('getAll')
-            ->willReturn([
-                new DomainConfig(Domain::FIRST_DOMAIN_ID, '', '', 'cs', $defaultTimeZone),
-                new DomainConfig(Domain::SECOND_DOMAIN_ID, '', '', 'en', $defaultTimeZone),
-            ]);
+        $domainConfigs = [
+            new DomainConfig(Domain::FIRST_DOMAIN_ID, '', '', 'cs', $defaultTimeZone),
+            new DomainConfig(Domain::SECOND_DOMAIN_ID, '', '', 'en', $defaultTimeZone),
+        ];
+
+        $this->domain->method('getAll')->willReturn($domainConfigs);
         $this->domain->method('getAllIds')->willReturn([1, 2]);
+        $this->domain->method('getAdminEnabledDomainIds')->willReturn([1, 2]);
+        $this->domain->method('getAdminEnabledDomains')->willReturn($domainConfigs);
 
         $countryData = new CountryData();
         $countryData->code = 'UZ';

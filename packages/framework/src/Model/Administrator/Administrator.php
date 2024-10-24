@@ -163,6 +163,12 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     protected $roleGroup;
 
     /**
+     * @var int[]
+     * @ORM\Column(type="simple_array", nullable=false)
+     */
+    protected $displayOnlyDomainIds;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData $administratorData
      */
     public function __construct(AdministratorData $administratorData)
@@ -175,6 +181,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
         $this->roles = new ArrayCollection();
         $this->transferIssuesLastSeenDateTime = $administratorData->transferIssuesLastSeenDateTime;
         $this->uuid = Uuid::uuid4()->toString();
+        $this->displayOnlyDomainIds = [];
         $this->setData($administratorData);
     }
 
@@ -195,6 +202,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
         $this->realName = $administratorData->realName;
         $this->username = $administratorData->username;
         $this->roleGroup = $administratorData->roleGroup;
+        $this->displayOnlyDomainIds = $administratorData->displayOnlyDomainIds;
     }
 
     /**
@@ -625,5 +633,13 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     public function getRoleGroup()
     {
         return $this->roleGroup;
+    }
+
+    /**
+     * @return int[]
+     */
+    public function getDisplayOnlyDomainIds()
+    {
+        return array_map('intval', $this->displayOnlyDomainIds);
     }
 }

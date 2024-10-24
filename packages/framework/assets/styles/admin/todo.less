@@ -4,34 +4,59 @@
 */
 
 .list-files__item .form-line__side {
-  margin-left: 0;
+    margin-left: 0;
 }
 
 .table-fixed {
-  table-layout: fixed;
+    table-layout: fixed;
 }
 
 .edit-uuid {
-  font-size: 45%;
-  color: grey;
-  margin-left: 1em;
+    font-size: 45%;
+    color: grey;
+    margin-left: 1em;
 }
 
 .opening-hours-widget {
-  display: flex;
-  align-items: baseline;
-  .form-line {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-  }
+    display: flex;
+    align-items: baseline;
+
+    .form-line {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
 }
 
 .js-promo-code-group-unpack {
-  float: right;
+    float: right;
+}
+
+.multi-column-list {
+    .form-choice {
+        padding: 10px 10px 10px 18px;
+    }
+
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 0;
+    background-color: white;
+    padding: 0;
+}
+
+.multi-column-list .box-dropdown__options__item {
+    &:first-child {
+        border-top: 1px solid @bg-page;
+    }
+    box-sizing: border-box;
+    break-inside: avoid;
+}
+
+.box-dropdown__options__item label {
+    color: @color-base;
 }
 
 .table-form-cell-short {
-  width: 335px;
+    width: 335px;
 }
 
 .administrator_customer_list .table-grid__cell--actions {
@@ -39,7 +64,13 @@
 }
 
 .form-bg-color {
-  background-color: @color-f;
+    background-color: @color-f;
+}
+
+.select-domain-buttons {
+    background-color: @color-f;
+    padding-bottom: 1em;
+    padding-right: 1em;
 }
 
 .table-col-200px{

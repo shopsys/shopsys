@@ -78,7 +78,6 @@ class BrandController extends AdminBaseController
         return $this->render('@ShopsysFramework/Admin/Content/Brand/edit.html.twig', [
             'form' => $form->createView(),
             'brand' => $brand,
-            'domains' => $this->domain->getAll(),
         ]);
     }
 
@@ -107,7 +106,7 @@ class BrandController extends AdminBaseController
 
         return $this->render('@ShopsysFramework/Admin/Content/Brand/list.html.twig', [
             'gridView' => $grid->createView(),
-            'domains' => $this->domain->getAll(),
+            'domains' => $this->domain->getAdminEnabledDomains(),
         ]);
     }
 

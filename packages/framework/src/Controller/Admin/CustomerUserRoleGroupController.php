@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Customer\RoleGroup\CustomerUserRoleGroupFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
@@ -21,12 +22,14 @@ class CustomerUserRoleGroupController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupDataFactory $customerUserRoleGroupDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade $customerUserRoleGroupFacade
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         protected readonly CustomerUserRoleGroupGridFactory $gridFactory,
         protected readonly CustomerUserRoleGroupDataFactory $customerUserRoleGroupDataFactory,
         protected readonly CustomerUserRoleGroupFacade $customerUserRoleGroupFacade,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
+        protected readonly Domain $domain,
     ) {
     }
 
@@ -51,11 +54,17 @@ class CustomerUserRoleGroupController extends AdminBaseController
     public function newAction(Request $request): Response
     {
         $roleGroupData = $this->customerUserRoleGroupDataFactory->create();
-        $form = $this->createForm(CustomerUserRoleGroupFormType::class, $roleGroupData, []);
+        $form = $this->createForm(CustomerUserRoleGroupFormType::class, $roleGroupData);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $customerUserRoleGroup = $this->customerUserRoleGroupFacade->create($roleGroupData);
+
+            if (!$this->domain->hasAdminAllDomainsEnabled()) {
+                $this->addErrorFlash(t('Creating a record requires all domains to be enabled as domain-specific fields cannot be empty. If you want to proceed, select all domains in the Domain filter in the header first.'));
+
+                return $this->redirectToRoute('admin_superadmin_customer_user_role_group_new');
+            }
 
             $this->addSuccessFlashTwig(
                 t('Customer user role group <strong><a href="{{ url }}">{{ name }}</a></strong> was created'),

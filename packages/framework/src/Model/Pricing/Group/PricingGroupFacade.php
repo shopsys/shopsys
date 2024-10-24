@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Pricing\Group;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -15,7 +15,6 @@ class PricingGroupFacade
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
@@ -25,7 +24,6 @@ class PricingGroupFacade
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly PricingGroupRepository $pricingGroupRepository,
-        protected readonly Domain $domain,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         protected readonly ProductVisibilityFacade $productVisibilityFacade,
         protected readonly CustomerUserRepository $customerUserRepository,
@@ -85,9 +83,13 @@ class PricingGroupFacade
     /**
      * @param int $oldPricingGroupId
      * @param int|null $newPricingGroupId
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig|null $selectedDomain
      */
-    public function delete($oldPricingGroupId, $newPricingGroupId = null)
-    {
+    public function delete(
+        int $oldPricingGroupId,
+        ?int $newPricingGroupId = null,
+        ?DomainConfig $selectedDomain = null,
+    ): void {
         $oldPricingGroup = $this->pricingGroupRepository->getById($oldPricingGroupId);
 
         if ($newPricingGroupId !== null) {
@@ -99,9 +101,10 @@ class PricingGroupFacade
 
         if (
             $newPricingGroup !== null
-            && $this->pricingGroupSettingFacade->isPricingGroupDefaultOnSelectedDomain($oldPricingGroup)
+            && $selectedDomain !== null
+            && $this->pricingGroupSettingFacade->isPricingGroupDefaultOnDomain($oldPricingGroup, $selectedDomain)
         ) {
-            $this->pricingGroupSettingFacade->setDefaultPricingGroupForSelectedDomain($newPricingGroup);
+            $this->pricingGroupSettingFacade->setDefaultPricingGroupForDomain($newPricingGroup, $selectedDomain);
         }
 
         $this->em->remove($oldPricingGroup);
@@ -136,21 +139,6 @@ class PricingGroupFacade
     public function getAllExceptIdByDomainId($id, $domainId)
     {
         return $this->pricingGroupRepository->getAllExceptIdByDomainId($id, $domainId);
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup[][]
-     */
-    public function getAllIndexedByDomainId()
-    {
-        $pricingGroupsByDomainId = [];
-
-        foreach ($this->domain->getAll() as $domain) {
-            $domainId = $domain->getId();
-            $pricingGroupsByDomainId[$domainId] = $this->pricingGroupRepository->getPricingGroupsByDomainId($domainId);
-        }
-
-        return $pricingGroupsByDomainId;
     }
 
     /**

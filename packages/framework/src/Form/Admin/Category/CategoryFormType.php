@@ -65,7 +65,7 @@ class CategoryFormType extends AbstractType
         $seoMetaDescriptionsOptionsByDomainId = [];
         $seoH1OptionsByDomainId = [];
 
-        foreach ($this->domain->getAll() as $domainConfig) {
+        foreach ($this->domain->getAdminEnabledDomains() as $domainConfig) {
             $domainId = $domainConfig->getId();
 
             $seoTitlesOptionsByDomainId[$domainId] = [

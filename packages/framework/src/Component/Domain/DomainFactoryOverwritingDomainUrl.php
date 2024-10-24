@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainsConfigLoader;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 
 class DomainFactoryOverwritingDomainUrl
 {
@@ -16,11 +17,13 @@ class DomainFactoryOverwritingDomainUrl
      * @param string|null $overwriteDomainUrl
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainsConfigLoader $domainsConfigLoader
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
      */
     public function __construct(
         $overwriteDomainUrl,
         protected readonly DomainsConfigLoader $domainsConfigLoader,
         protected readonly Setting $setting,
+        protected readonly AdministratorFacade $administratorFacade,
     ) {
         $this->overwriteDomainUrl = $overwriteDomainUrl;
     }
@@ -41,7 +44,7 @@ class DomainFactoryOverwritingDomainUrl
             $domainConfigs = $this->overwriteDomainUrl($domainConfigs);
         }
 
-        $domain = new Domain($domainConfigs, $this->setting);
+        $domain = new Domain($domainConfigs, $this->setting, $this->administratorFacade);
 
         $domainId = getenv('DOMAIN');
 
