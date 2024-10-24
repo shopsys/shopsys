@@ -14,15 +14,12 @@ import { getCustomerUser } from 'connectors/customer/CustomerUser';
 import { TypeSimpleCustomerUserFragment } from 'graphql/requests/customer/fragments/SimpleCustomerUserFragment.generated';
 import { useAddNewCustomerUserMutation } from 'graphql/requests/customer/mutations/AddNewCustomerUserMutation.generated';
 import { useEditCustomerUserPersonalDataMutation } from 'graphql/requests/customer/mutations/EditCustomerUserPersonalDataMutation.generated';
-import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import useTranslation from 'next-translate/useTranslation';
-import { Controller, FormProvider, Path, SubmitHandler, UseFormReturn } from 'react-hook-form';
+import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { useSessionStore } from 'store/useSessionStore';
 import { CustomerUserManageProfileFormType } from 'types/form';
-import { CombinedError } from 'urql';
 import { useCurrentCustomerUserPermissions } from 'utils/auth/useCurrentCustomerUserPermissions';
-import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
-import { showErrorMessage } from 'utils/toasts/showErrorMessage';
+import { handleFormErrors } from 'utils/forms/handleFormErrors';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 import { useCustomerUserGroupsAsSelectOptions } from 'utils/user/useCustomerUserGroupsAsSelectOptions';
 
@@ -72,12 +69,15 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
                 },
             });
 
-            handleUpdateResult(
-                editUserResult.data?.EditCustomerUserPersonalData !== undefined,
-                editUserResult.error,
-                formProviderMethods,
-                formMeta.messages,
-            );
+            updatePortalContent(null);
+
+            if (editUserResult.data?.EditCustomerUserPersonalData !== undefined) {
+                showSuccessMessage(formMeta.messages.success);
+                updatePortalContent(null);
+            }
+
+            handleFormErrors(editUserResult.error, formProviderMethods, t, formMeta.messages.error);
+
             return;
         }
 
@@ -91,54 +91,12 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
             },
         });
 
-        handleUpdateResult(
-            addUserResult.data?.AddNewCustomerUser !== undefined,
-            addUserResult.error,
-            formProviderMethods,
-            formMeta.messages,
-        );
-    };
-
-    const handleUpdateResult = (
-        isResultOk: boolean,
-        error: CombinedError | undefined,
-        formProviderMethods: UseFormReturn<CustomerUserManageProfileFormType>,
-        messages: { success?: string; error?: string },
-        callbacks?: { success?: () => void; error?: () => void },
-    ) => {
-        if (isResultOk) {
-            if (messages.success !== undefined) {
-                showSuccessMessage(messages.success);
-            }
-            if (callbacks?.success !== undefined) {
-                callbacks.success();
-            }
-        }
-
-        if (error === undefined) {
+        if (addUserResult.data?.AddNewCustomerUser !== undefined) {
+            showSuccessMessage(formMeta.messages.success);
             updatePortalContent(null);
-            return;
         }
 
-        const { userError, applicationError } = getUserFriendlyErrors(error, t);
-
-        if (applicationError !== undefined) {
-            if (messages.error !== undefined) {
-                showErrorMessage(applicationError.message || messages.error, GtmMessageOriginType.other);
-            }
-            if (callbacks?.error !== undefined) {
-                callbacks.error();
-            }
-        }
-
-        if (userError?.validation !== undefined) {
-            for (const fieldName in userError.validation) {
-                formProviderMethods.setError(
-                    fieldName as Path<CustomerUserManageProfileFormType>,
-                    userError.validation[fieldName],
-                );
-            }
-        }
+        handleFormErrors(addUserResult.error, formProviderMethods, t, formMeta.messages.error);
     };
 
     return (
