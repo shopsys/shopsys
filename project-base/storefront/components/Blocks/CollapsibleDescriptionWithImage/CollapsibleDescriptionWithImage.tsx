@@ -22,7 +22,7 @@ export const CollapsibleDescriptionWithImage: FC<CollapsibleDescriptionWithImage
                 <CollapsibleText scrollTargetRef={scrollTargetRef} text={description} />
             )}
 
-            {imageUrl && (
+            {imageUrl && currentPage === 1 && (
                 <div className="h-full flex-shrink-0 sm:h-32">
                     <Image
                         alt={imageName}
