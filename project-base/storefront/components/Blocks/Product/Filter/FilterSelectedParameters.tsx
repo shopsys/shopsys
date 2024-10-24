@@ -39,10 +39,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
     return (
         <AnimatePresence initial={false}>
             {!currentFilter && !getHasDefaultFilters(defaultProductFiltersMap) ? null : (
-                <AnimateCollapseDiv
-                    className="order-2 mt-5 !block vl:order-1 vl:mb-5 vl:mt-0"
-                    keyName="selected-parameters"
-                >
+                <AnimateCollapseDiv className="mt-5 !block vl:mb-5 vl:mt-0" keyName="selected-parameters">
                     <h6 className="mb-5 vl:mb-2">{t('Selected filters')}</h6>
 
                     <div className="flex flex-wrap items-center gap-y-2">
