@@ -49,11 +49,6 @@ class Parameter extends AbstractTranslatableEntity
     protected $translations;
 
     /**
-     * @ORM\Column(type="boolean")
-     */
-    protected $visible;
-
-    /**
      * @var string
      * @ORM\Column(type="string", length=100, nullable=false)
      */
@@ -71,6 +66,13 @@ class Parameter extends AbstractTranslatableEntity
      * @ORM\JoinColumn(nullable=true, name="unit_id", referencedColumnName="id")
      */
     protected $unit;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup|null
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup")
+     * @ORM\JoinColumn(nullable=true, name="group_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    protected $group;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterData $parameterData
@@ -96,10 +98,10 @@ class Parameter extends AbstractTranslatableEntity
     protected function setData(ParameterData $parameterData): void
     {
         $this->setTranslations($parameterData);
-        $this->visible = $parameterData->visible;
         $this->orderingPriority = $parameterData->orderingPriority;
         $this->parameterType = $parameterData->parameterType;
         $this->unit = $parameterData->unit;
+        $this->group = $parameterData->group;
     }
 
     /**
@@ -125,14 +127,6 @@ class Parameter extends AbstractTranslatableEntity
     public function getName($locale = null)
     {
         return $this->translation($locale)->getName();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isVisible()
-    {
-        return $this->visible;
     }
 
     /**
@@ -183,5 +177,13 @@ class Parameter extends AbstractTranslatableEntity
     public function getUnit()
     {
         return $this->unit;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup|null
+     */
+    public function getGroup()
+    {
+        return $this->group;
     }
 }

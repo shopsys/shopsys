@@ -6532,11 +6532,6 @@ UUID
 <td valign="top">[<a href="#parametervalue">ParameterValue</a>!]!</td>
 <td></td>
 </tr>
-<tr>
-<td colspan="2" valign="top"><strong>visible</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a>!</td>
-<td></td>
-</tr>
 </tbody>
 </table>
 

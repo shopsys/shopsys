@@ -127,6 +127,9 @@ class MenuItemsGrantedRolesSetting
             'settings' . static::MENU_ITEM_PATH_SEPARATOR . 'lists' . static::MENU_ITEM_PATH_SEPARATOR . 'parameters' => [
                 Roles::ROLE_PARAMETER_VIEW,
             ],
+            'settings' . static::MENU_ITEM_PATH_SEPARATOR . 'lists' . static::MENU_ITEM_PATH_SEPARATOR . 'parameter_groups' => [
+                Roles::ROLE_PARAMETER_GROUP_VIEW,
+            ],
             'settings' . static::MENU_ITEM_PATH_SEPARATOR . 'lists' . static::MENU_ITEM_PATH_SEPARATOR . 'order_statuses' => [
                 Roles::ROLE_ORDER_STATUS_VIEW,
             ],

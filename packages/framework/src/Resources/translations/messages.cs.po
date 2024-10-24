@@ -28,6 +28,9 @@ msgstr "-- Vyberte umístění článku --"
 msgid "-- Choose brand --"
 msgstr "-- Vyberte značku --"
 
+msgid "-- Choose group --"
+msgstr "-- Vyberte skupinu parametrů --"
+
 msgid "-- Choose unit --"
 msgstr "-- Vyberte jednotku --"
 
@@ -859,6 +862,9 @@ msgstr "Vytvořit novou stránku"
 msgid "Create new parameter"
 msgstr "Vytvořit nový parametr"
 
+msgid "Create new parameter group"
+msgstr "Vytvořit novou skupinu parametrů"
+
 msgid "Create new product"
 msgstr "Vytvořit nové zboží"
 
@@ -1276,8 +1282,14 @@ msgstr "Opravdu si přejete odstranit tuto položku navigace?"
 msgid "Do you really want to remove this page?"
 msgstr "Opravdu chcete odstranit tuto stránku?"
 
+msgid "Do you really want to remove this parameter groups? By deleting this parameter group you will unset all groups by associated parameters. This step is irreversible!"
+msgstr "Opravdu chcete odstranit tuto skupinu parametrů? Odstraněním této skupiny parametrů zrušíte přiřazení všech parametrů k související skupině. Tento krok je nevratný!"
+
 msgid "Do you really want to remove this parameter? By deleting this parameter you will remove this parameter from a product where the parameter is assigned. This step is irreversible!"
 msgstr "Opravdu chcete odstranit tento parametr? Smazáním parametru dojde k odstranění tohoto parametru u zboží, kde je parametr přiřazen. Tento krok je nevratný!"
+
+msgid "Do you really want to remove this parameter? Deleting the parameter will remove this parameter from the products and the possible landing page of the extended SEO category where the parameter is assigned. This step is irreversible!"
+msgstr "Opravdu chcete odstranit tento parametr? Smazáním parametru dojde k odstranění tohoto parametru u produktů a případné vstupní stránky rozšířené SEO kategorie, kde je parametr přiřazen. Tento krok je nevratný!"
 
 msgid "Do you really want to remove this payment?"
 msgstr "Opravdu chcete odstranit tuto platbu?"
@@ -1383,6 +1395,9 @@ msgstr "Změnit ikonu domény"
 
 msgid "Edit parameter"
 msgstr "Upravit parametr"
+
+msgid "Edit parameter group"
+msgstr "Upravit skupinu parametrů"
 
 msgid "Edit store"
 msgstr "Upravit prodejnu"
@@ -1506,6 +1521,9 @@ msgstr "Editace stránky"
 
 msgid "Editing parameter"
 msgstr "Editace parametru"
+
+msgid "Editing parameter group"
+msgstr "Editace skupiny paramtrů"
 
 msgid "Editing parameter of type color"
 msgstr "Editace parametru typu barva"
@@ -2380,6 +2398,9 @@ msgstr "Nová stránka"
 msgid "New parameter"
 msgstr "Nový parametr"
 
+msgid "New parameter group"
+msgstr "Nová skupina parametrů"
+
 msgid "New password settings URL address"
 msgstr "URL adresa pro nastavení nového hesla"
 
@@ -2736,6 +2757,24 @@ msgstr "Parametr <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl uprav
 
 msgid "Parameter <strong>{{ name }}</strong> deleted"
 msgstr "Parametr <strong>{{ name }}</strong> byl smazán"
+
+msgid "Parameter group"
+msgstr "Skupina parametrů"
+
+msgid "Parameter group <strong><a href=\"{{ url }}\">{{ name }}</a></strong> edited"
+msgstr "Skupina parametrů <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byla upravena"
+
+msgid "Parameter groups"
+msgstr "Skupiny parametrů"
+
+msgid "Parameter groups - full"
+msgstr "Skupiny parametrů - vše"
+
+msgid "Parameter groups - view"
+msgstr "Skupiny parametrů - zobrazení"
+
+msgid "Parameter groups overview"
+msgstr "Přehled skupin parametrů"
 
 msgid "Parameter value"
 msgstr "Hodnota parameteru"
@@ -3639,6 +3678,9 @@ msgstr "Optimální velikost ikony je 46x26 px. Je povolen pouze PNG formát."
 
 msgid "There are no parameter values of type color yet."
 msgstr "Žádná hodnota parametru typu barva zatím nebyla vytvořena."
+
+msgid "There is no parameter group yet."
+msgstr "Nejsou zatím vytvořeny žádné skupiny parametrů."
 
 msgid "There is no warehouse on this domain yet."
 msgstr "Žádný sklad na této doméně zatím nebyl vytvořen."

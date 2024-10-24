@@ -10,9 +10,6 @@ ParameterFilterOptionDecorator:
             name:
                 type: "String!"
                 description: "Parameter name"
-            visible:
-                type: "Boolean!"
-                description: "Is parameter visible for customers"
             values:
                 type: "[ParameterValueFilterOption!]!"
                 description: "Filter options of parameter values"

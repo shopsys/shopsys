@@ -41,14 +41,6 @@ class ParameterWithValues
     }
 
     /**
-     * @return bool
-     */
-    public function isVisible(): bool
-    {
-        return $this->getParameter()->isVisible();
-    }
-
-    /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */
     public function getValues(): array
