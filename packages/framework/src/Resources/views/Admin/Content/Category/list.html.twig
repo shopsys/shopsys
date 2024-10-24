@@ -4,11 +4,11 @@
 {% block main_content %}
     {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainFilterController::domainFilterTabsAction', { namespace: domainFilterNamespace })) }}
 
-    {% macro categoryTreeItem(categoriesWithPreloadedChildren, isFirstLevel, disabledFormFields, getAllCategoryIdsInSeoMixes) %}
+    {% macro categoryTreeItem(categoriesWithPreloadedChildren, isFirstLevel, disabledFormFields, allCategoryIdsInSeoMixes) %}
         {% import _self as self %}
         <ul class="{{ disabledFormFields ? '' : 'js-category-tree-items' }} {{ isFirstLevel ? 'form-tree__content' : '' }}">
             {% for categoryWithPreloadedChildren in categoriesWithPreloadedChildren %}
-                {% set categoryHasSeoMix = categoryWithPreloadedChildren.category.id in getAllCategoryIdsInSeoMixes ? true : false %}
+                {% set categoryHasSeoMix = categoryWithPreloadedChildren.category.id in allCategoryIdsInSeoMixes ? true : false %}
                 <li class="js-category-tree-item form-tree__item" id="js-category-tree-{{ categoryWithPreloadedChildren.category.id }}">
                     <div class="{{ disabledFormFields ? '' : 'js-category-tree-item-line' }} form-tree__item__drag">
                         <img src="{{ asset('public/admin/images/icons/level.png') }}" class="form-tree__item__icon form-tree__item__icon--level" />
@@ -30,7 +30,7 @@
                             </a>
                         </span>
                     </div>
-                    {{ self.categoryTreeItem(categoryWithPreloadedChildren.children, false, disabledFormFields, getAllCategoryIdsInSeoMixes) }}
+                    {{ self.categoryTreeItem(categoryWithPreloadedChildren.children, false, disabledFormFields, allCategoryIdsInSeoMixes) }}
                 </li>
             {% endfor %}
         </ul>
@@ -40,7 +40,7 @@
         <div class="wrap-divider">
             <div class="form-line">
                 <div id="js-category-tree-sorting" class="form-tree form-tree--open form-tree--dragable">
-                    {{ self.categoryTreeItem(categoriesWithPreloadedChildren, true, disabledFormFields, getAllCategoryIdsInSeoMixes) }}
+                    {{ self.categoryTreeItem(categoriesWithPreloadedChildren, true, disabledFormFields, allCategoryIdsInSeoMixes) }}
                 </div>
             </div>
         </div>
@@ -67,7 +67,7 @@
         <div class="wrap-divider">
             <div class="form-line">
                 <div class="form-tree form-tree--open form-tree--dragable">
-                    {{ self.categoryTreeItem(categoriesWithPreloadedChildren, true, disabledFormFields, getAllCategoryIdsInSeoMixes) }}
+                    {{ self.categoryTreeItem(categoriesWithPreloadedChildren, true, disabledFormFields, allCategoryIdsInSeoMixes) }}
                 </div>
             </div>
         </div>

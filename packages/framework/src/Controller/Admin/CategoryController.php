@@ -150,7 +150,7 @@ class CategoryController extends AdminBaseController
             'isForAllDomains' => ($selectedDomainId === null),
             'domainFilterNamespace' => $domainFilterNamespace,
             'disabledFormFields' => $this->formBuilderHelper->hasFormDisabledFields(),
-            'getAllCategoryIdsInSeoMixes' => $this->categorySeoMixFacade->getAllCategoryIdsInSeoMixes(),
+            'allCategoryIdsInSeoMixes' => $this->categorySeoMixFacade->getAllCategoryIdsInSeoMixes(),
         ]);
     }
 
