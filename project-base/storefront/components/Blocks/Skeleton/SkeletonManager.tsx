@@ -1,6 +1,8 @@
 import { SkeletonPageArticle } from './SkeletonPageArticle';
 import { SkeletonPageBlogArticle } from './SkeletonPageBlogArticle';
 import { SkeletonPageBlogCategory } from './SkeletonPageBlogCategory';
+import { SkeletonPageBrand } from './SkeletonPageBrand';
+import { SkeletonPageBrandsOverview } from './SkeletonPageBrandsOverview';
 import { SkeletonPageCart } from './SkeletonPageCart';
 import { SkeletonPageComparison } from './SkeletonPageComparison';
 import { SkeletonPageConfirmation } from './SkeletonPageConfirmation';
@@ -14,11 +16,11 @@ import { SkeletonPageCustomerEditProfile } from './SkeletonPageCustomerEditProfi
 import { SkeletonPageCustomerOrderDetail } from './SkeletonPageCustomerOrderDetail';
 import { SkeletonPageCustomerOrderList } from './SkeletonPageCustomerOrderList';
 import { SkeletonPageCustomerUsers } from './SkeletonPageCustomerUsers';
+import { SkeletonPageFlag } from './SkeletonPageFlag';
 import { SkeletonPageHome } from './SkeletonPageHome';
 import { SkeletonPageProductDetail } from './SkeletonPageProductDetail';
 import { SkeletonPageProductDetailMainVariant } from './SkeletonPageProductDetailMainVariant';
 import { SkeletonPageProductsList } from './SkeletonPageProductsList';
-import { SkeletonPageProductsListSimple } from './SkeletonPageProductsListSimple';
 import { SkeletonPageRegistration } from './SkeletonPageRegistration';
 import { SkeletonPageStore } from './SkeletonPageStore';
 import { SkeletonPageStores } from './SkeletonPageStores';
@@ -68,7 +70,9 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({
         case 'blogCategory':
             return <SkeletonPageBlogCategory />;
         case 'brand':
-            return <SkeletonPageProductsListSimple />;
+            return <SkeletonPageBrand />;
+        case 'brandsOverview':
+            return <SkeletonPageBrandsOverview />;
         case 'cart':
             return <SkeletonPageCart />;
         case 'category':
@@ -96,7 +100,7 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({
         case 'editProfile':
             return <SkeletonPageCustomerEditProfile />;
         case 'flag':
-            return <SkeletonPageProductsListSimple />;
+            return <SkeletonPageFlag />;
         case 'homepage':
             return <SkeletonPageHome />;
         case 'order-confirmation':
