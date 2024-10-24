@@ -1,6 +1,17 @@
 {% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
 {% import _self as self %}
 
+{% block title %}- {{ 'Categories'|trans }}{% endblock %}
+{% block h1 %}{{ 'Categories'|trans }}{% endblock %}
+{% block btn %}
+    <div class="wrap-bar__buttons">
+        <a href="{{ url('admin_category_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>
+            {{ 'Create new category'|trans }}
+        </a>
+    </div>
+{% endblock %}
+
 {% block main_content %}
     {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainFilterController::domainFilterTabsAction', { namespace: domainFilterNamespace })) }}
 
