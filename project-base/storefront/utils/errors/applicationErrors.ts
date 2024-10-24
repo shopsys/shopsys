@@ -11,7 +11,6 @@ const ApplicationErrors = {
     'order-empty-cart': 'flash-message',
     'personal-data-request-type-invalid': 'flash-message',
     'blog-category-not-found': 'flash-message',
-    'image-type-invalid': 'flash-message',
     'order-not-found': 'flash-message',
     'complaint-not-found': 'flash-message',
     'personal-data-hash-invalid': 'flash-message',
