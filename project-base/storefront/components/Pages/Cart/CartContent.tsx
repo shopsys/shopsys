@@ -34,7 +34,7 @@ export const CartContent: FC<CartContentProps> = ({ cart }) => {
                 buttonNext={t('Transport and payment')}
                 hasDisabledLook={false}
                 nextStepClickHandler={goToNextStepFromCartPage}
-                shouldUseConvertim={convertimUuid !== undefined}
+                shouldUseConvertim={!!convertimUuid}
                 withGapTop={false}
             />
 
