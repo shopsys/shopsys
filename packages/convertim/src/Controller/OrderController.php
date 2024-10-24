@@ -47,6 +47,10 @@ class OrderController extends AbstractConvertimController
     #[Route('/get-last-order-details/{email}')]
     public function getLastOrderDetail(Request $request): Response
     {
+        if (!$this->isConvertimEnabled()) {
+            return $this->convertimNotEnabledResponse();
+        }
+
         if ($this->isProtectedRequest($request) === false) {
             return $this->invalidAuthorizationResponse();
         }
@@ -67,6 +71,10 @@ class OrderController extends AbstractConvertimController
     #[Route('/check-order')]
     public function checkOrder(Request $request): Response
     {
+        if (!$this->isConvertimEnabled()) {
+            return $this->convertimNotEnabledResponse();
+        }
+
         if ($this->isProtectedRequest($request) === false) {
             return $this->invalidAuthorizationResponse();
         }
@@ -90,6 +98,10 @@ class OrderController extends AbstractConvertimController
     #[Route('/save-order')]
     public function saveOrder(Request $request): Response
     {
+        if (!$this->isConvertimEnabled()) {
+            return $this->convertimNotEnabledResponse();
+        }
+
         if ($this->isProtectedRequest($request) === false) {
             return $this->invalidAuthorizationResponse();
         }
