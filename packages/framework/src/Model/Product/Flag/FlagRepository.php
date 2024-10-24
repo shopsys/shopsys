@@ -163,7 +163,7 @@ class FlagRepository
 
     /**
      * @param string $locale
-     * @return \App\Model\Product\Flag\Flag[]
+     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
     public function getAllVisibleFlags(string $locale): array
     {
@@ -179,7 +179,7 @@ class FlagRepository
     /**
      * @param string $uuid
      * @param string $locale
-     * @return \App\Model\Product\Flag\Flag
+     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
      */
     public function getVisibleByUuid(string $uuid, string $locale): Flag
     {
