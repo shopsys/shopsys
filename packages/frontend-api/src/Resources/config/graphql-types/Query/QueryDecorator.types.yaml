@@ -23,12 +23,13 @@ QueryDecorator:
                         type: "SearchInput!"
                 description: "Returns list of searched categories that can be paginated using `first`, `last`, `before` and `after` keywords"
             products:
-                type: "ProductConnection"
+                type: "ProductConnection!"
                 argsBuilder:
                     builder: "ProductPaginatorArgumentsBuilder"
                     config:
                         orderingModeType: 'ProductOrderingModeEnum'
-                resolve: "@=query('productsQuery', args)"
+                resolve: "@=query('productsWithOverlyingEntityQuery', args, info)"
+                complexity: "@=dynamicPaginationComplexity(args)"
                 description: "Returns list of ordered products that can be paginated using `first`, `last`, `before` and `after` keywords"
             product:
                 type: 'Product'
