@@ -88,6 +88,8 @@ services:
         container_name: shopsys-framework-cypress
         profiles:
             - storefront-acceptance-tests
+        environment:
+            - GROUP=${GROUP}
         volumes:
             - ./videos:/app/videos
             - ./screenshots:/app/screenshots
@@ -107,6 +109,7 @@ services:
         environment:
             - TYPE=base
             - COMMAND=run
+            - GROUP=${GROUP}
 
     img-proxy:
         image: darthsim/imgproxy:latest
