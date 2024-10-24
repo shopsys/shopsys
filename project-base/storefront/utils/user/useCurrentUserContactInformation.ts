@@ -35,24 +35,24 @@ const mergeContactInformation = (
     contactInformationFromStore: ContactInformation,
     countriesAsSelectOptions: SelectOptionType[],
 ): ContactInformation => {
-    const filteredContactInformationFromStore: ContactInformation = {
-        ...contactInformationFromStore,
+    const filteredContactInformationFromApi: Partial<ContactInformation> = {
+        ...contactInformationFromApi,
     };
 
-    for (const key in filteredContactInformationFromStore) {
-        const filteredProperty = filteredContactInformationFromStore[key as keyof ContactInformation];
+    for (const key in filteredContactInformationFromApi) {
+        const filteredProperty = filteredContactInformationFromApi[key as keyof ContactInformation];
 
+        const isUndefined = filteredProperty === undefined;
         const isEmptyString = typeof filteredProperty === 'string' && filteredProperty.length === 0;
-        const isEmptyObject = typeof filteredProperty === 'object' && filteredProperty.value === '';
 
-        if ((isEmptyString || filteredProperty === undefined || isEmptyObject) && key in contactInformationFromApi) {
-            delete filteredContactInformationFromStore[key as keyof ContactInformation];
+        if ((isUndefined || isEmptyString) && key in contactInformationFromApi) {
+            delete filteredContactInformationFromApi[key as keyof ContactInformation];
         }
     }
 
     const contactInformation = {
-        ...contactInformationFromApi,
-        ...filteredContactInformationFromStore,
+        ...contactInformationFromStore,
+        ...filteredContactInformationFromApi,
     };
     assertCountries(contactInformation, countriesAsSelectOptions);
     assertCustomer(contactInformation);
