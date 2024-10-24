@@ -9,7 +9,7 @@ import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
-import { useCurrentCustomerUserPermissions } from 'utils/auth/useCurrentCustomerUserPermissions';
+import { useUserPermissions } from 'utils/auth/useUserPermissions';
 import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
@@ -40,7 +40,7 @@ export const CustomerUsersTable: FC = () => {
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const [, removeCustomerUser] = useRemoveCustomerUserMutation();
     const { customerUsers, customerUsersIsFetching } = useCurrentCustomerUsers();
-    const { currentCustomerUserUuid } = useCurrentCustomerUserPermissions();
+    const { currentCustomerUserUuid } = useUserPermissions();
 
     const deleteItemHandler = async (customerUserUuid: string | undefined) => {
         if (customerUserUuid === undefined) {

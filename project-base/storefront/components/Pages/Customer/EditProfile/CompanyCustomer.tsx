@@ -5,13 +5,13 @@ import { useCustomerChangeProfileFormMeta } from 'components/Pages/Customer/cust
 import useTranslation from 'next-translate/useTranslation';
 import { useFormContext } from 'react-hook-form';
 import { CustomerChangeProfileFormType } from 'types/form';
-import { useCurrentCustomerUserPermissions } from 'utils/auth/useCurrentCustomerUserPermissions';
+import { useUserPermissions } from 'utils/auth/useUserPermissions';
 
 export const CompanyCustomer: FC = () => {
     const { t } = useTranslation();
     const formProviderMethods = useFormContext<CustomerChangeProfileFormType>();
     const formMeta = useCustomerChangeProfileFormMeta(formProviderMethods);
-    const { canManageProfile } = useCurrentCustomerUserPermissions();
+    const { canManageProfile } = useUserPermissions();
 
     return (
         <FormBlockWrapper>

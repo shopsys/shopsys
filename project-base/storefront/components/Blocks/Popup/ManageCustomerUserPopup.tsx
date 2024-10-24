@@ -18,7 +18,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { useSessionStore } from 'store/useSessionStore';
 import { CustomerUserManageProfileFormType } from 'types/form';
-import { useCurrentCustomerUserPermissions } from 'utils/auth/useCurrentCustomerUserPermissions';
+import { useUserPermissions } from 'utils/auth/useUserPermissions';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 import { useCustomerUserGroupsAsSelectOptions } from 'utils/user/useCustomerUserGroupsAsSelectOptions';
@@ -33,7 +33,7 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
     const [, customerEditUser] = useEditCustomerUserPersonalDataMutation();
     const [, customerAddUser] = useAddNewCustomerUserMutation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
-    const { canManageProfile, currentCustomerUserUuid: uuid } = useCurrentCustomerUserPermissions();
+    const { canManageProfile, currentCustomerUserUuid: uuid } = useUserPermissions();
     const customerUserRoleGroupsAsSelectOptions = useCustomerUserGroupsAsSelectOptions();
     const customerUserData = getCustomerUser(customerUser);
 

@@ -1,7 +1,7 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import useTranslation from 'next-translate/useTranslation';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
-import { useCurrentCustomerUserPermissions } from 'utils/auth/useCurrentCustomerUserPermissions';
+import { useUserPermissions } from 'utils/auth/useUserPermissions';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
 import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
@@ -18,7 +18,7 @@ export const useUserMenuItems = (): UserMenuItemType[] => {
     const { url } = useDomainConfig();
     const { comparison } = useComparison();
     const { wishlist } = useWishlist();
-    const { canManageUsers } = useCurrentCustomerUserPermissions();
+    const { canManageUsers } = useUserPermissions();
     const [
         customerOrdersUrl,
         customerComplaintsUrl,

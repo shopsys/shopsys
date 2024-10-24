@@ -12,7 +12,7 @@ import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
 import { CustomerUserAreaEnum, CustomerUserRoleEnum } from 'types/customer';
-import { useCurrentCustomerUserPermissions } from 'utils/auth/useCurrentCustomerUserPermissions';
+import { useUserPermissions } from 'utils/auth/useUserPermissions';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
@@ -36,7 +36,7 @@ const UsersPage: FC = () => {
     const breadcrumbs: TypeBreadcrumbFragment[] = [
         { __typename: 'Link', name: t('Customer users'), slug: customerUsersUrl },
     ];
-    const { canManageUsers } = useCurrentCustomerUserPermissions();
+    const { canManageUsers } = useUserPermissions();
     const { redirect } = useRedirectOnPermissionsChange();
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.other, breadcrumbs);
     useGtmPageViewEvent(gtmStaticPageViewEvent);

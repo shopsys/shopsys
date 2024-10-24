@@ -47,7 +47,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                         checked
                             ? 'text-inputTextActive hover:text-inputTextActive'
                             : 'text-inputText hover:text-inputTextHovered',
-                        disabled && 'cursor-no-drop text-inputTextDisabled opacity-60',
+                        disabled && 'cursor-no-drop text-inputTextDisabled opacity-60 hover:text-inputTextDisabled',
                     ],
                     inputType === 'checkbox' && [
                         '[&>a]:text-link [&>a]:hover:text-linkHovered [&>a]:focus:text-linkHovered [&>a]:active:text-linkHovered',
@@ -55,6 +55,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                     inputType === 'selectbox' && [
                         'top-1/2 -translate-y-1/2',
                         selectBoxLabelIsFloated && 'top-[9px] text-sm',
+                        disabled && '!text-inputPlaceholderDisabled',
                     ],
                     inputType === 'textarea' &&
                         'top-1 pr-1 text-sm peer-placeholder-shown:top-6 peer-placeholder-shown:text-base peer-placeholder-shown:font-semibold peer-focus:top-1 peer-focus:text-sm peer-focus:font-normal',

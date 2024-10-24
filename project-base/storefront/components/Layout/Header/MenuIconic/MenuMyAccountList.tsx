@@ -10,15 +10,15 @@ import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
-import { useCurrentCustomerUserPermissions } from 'utils/auth/useCurrentCustomerUserPermissions';
 import { useLogout } from 'utils/auth/useLogout';
+import { useUserPermissions } from 'utils/auth/useUserPermissions';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 export const MenuMyAccountList: FC = () => {
     const { t } = useTranslation();
     const logout = useLogout();
     const user = useCurrentCustomerData();
-    const { canManageUsers } = useCurrentCustomerUserPermissions();
+    const { canManageUsers } = useUserPermissions();
     const { url } = useDomainConfig();
     const [customerOrdersUrl, customerComplaintsUrl, customerEditProfileUrl, customerUsersUrl] =
         getInternationalizedStaticUrls(

@@ -130,8 +130,16 @@ input[type='number'] {
     @apply !text-text;
 }
 
+.select__single-value--is-disabled {
+    @apply !text-inputTextDisabled;
+}
+
 .select__control {
     @apply !z-[2] !min-h-[56px] !cursor-pointer !items-end !self-end !rounded-md !border-2 !border-inputBorder !shadow-none  hover:!border-2 hover:!border-inputBorderHovered active:!border-inputBorderActive;
+}
+
+.select__control--is-disabled {
+    @apply !border-inputBorderDisabled !bg-inputBackgroundDisabled !text-textSuccess;
 }
 
 .select__indicator {
@@ -139,7 +147,7 @@ input[type='number'] {
 }
 
 .select__menu {
-    @apply !z-[3] !m-0 animate-fadeIn !overflow-hidden !rounded-b-md !border-2 !border-t-0 !border-inputBorder !shadow-none hover:!border-inputBorderHovered active:!border-inputBorderActive disabled:!border-inputBorderDisabled;
+    @apply !z-[3] !m-0 animate-fadeIn !overflow-hidden !rounded-b-md !border-2 !border-t-0 !border-inputBorder !shadow-none hover:!border-inputBorderHovered active:!border-inputBorderActive;
 }
 
 .select__menu-list {
@@ -147,14 +155,19 @@ input[type='number'] {
 }
 
 .select__option {
-    @apply !cursor-pointer !p-3 font-semibold;
+    @apply !cursor-pointer !p-3 !font-semibold !text-inputText;
 }
 
 .select__option--is-selected {
     @apply !bg-inputBackground !text-inputTextActive hover:!text-inputTextActive;
 }
+
 .select__option--is-focused {
     @apply !bg-inputBackgroundHovered !text-inputTextHovered;
+}
+
+.select__option--is-disabled {
+    @apply !text-inputTextDisabled;
 }
 
 .select__control--menu-is-open {
