@@ -1,0 +1,16 @@
+query CategorySeoQuery(
+    $urlSlug: String!
+    $first: Int = 10
+) {
+    category(urlSlug: $urlSlug) {
+        products(first: $first) {
+            orderingMode
+            defaultOrderingMode
+            edges {
+                node {
+                    name
+                }
+            }
+        }
+    }
+}
