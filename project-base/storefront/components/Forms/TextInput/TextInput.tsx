@@ -69,7 +69,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
                     '[&:-webkit-autofill]:focus:!bg-inputBackgroundActive [&:-webkit-autofill]:focus:!shadow-inner',
                     inputSize === 'small' ? 'text-small h-12' : 'h-14',
                     hasError && 'border-inputError bg-inputBackground shadow-none',
-                    type === 'password' && 'text-2xl text-inputText focus-visible:text-inputTextHovered',
+                    type === 'password' && 'text-inputText focus-visible:text-inputTextHovered',
                     className,
                 )}
                 onBlur={onBlur}

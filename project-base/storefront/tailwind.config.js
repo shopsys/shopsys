@@ -39,7 +39,7 @@ module.exports = {
             background: '#FFFFFF',
             backgroundMore: '#FAFAFA',
             backgroundMost: '#ECECEC',
-            backgroundBrand: '#0F00A0',
+            backgroundBrand: '#004EB6',
             backgroundBrandLess: '#065FDB',
             backgroundAccent: '#009AFF',
             backgroundAccentLess: '#F4FAFF',
@@ -91,6 +91,19 @@ module.exports = {
             actionInvertedBorderActive: '#25283D',
             actionInvertedBorderDisabled: '#A3ACBD',
             actionInvertedBorderHovered: '#7892BC',
+
+            actionTransparentText: '#FFFFFF',
+            actionTransparentTextActive: '#FFFFFF',
+            actionTransparentTextDisabled: '#FFFFFF66',
+            actionTransparentTextHovered: '#FFFFFF',
+            actionTransparentBackground: 'transparent',
+            actionTransparentBackgroundActive: '#FFFFFF33',
+            actionTransparentBackgroundDisabled: 'transparent',
+            actionTransparentBackgroundHovered: '#FFFFFF66',
+            actionTransparentBorder: '#FFFFFF',
+            actionTransparentBorderActive: '#FFFFFF',
+            actionTransparentBorderDisabled: '#FFFFFF66',
+            actionTransparentBorderHovered: '#FFFFFF',
 
             activeIconFull: '#EC5353',
 

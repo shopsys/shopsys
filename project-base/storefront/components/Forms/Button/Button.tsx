@@ -9,7 +9,7 @@ export type ButtonBaseProps = {
     isDisabled?: boolean;
     isWithDisabledLook?: boolean;
     size?: 'small' | 'medium' | 'large';
-    variant?: 'primary' | 'secondary' | 'inverted';
+    variant?: 'primary' | 'secondary' | 'inverted' | 'transparent';
 };
 
 export type ButtonProps = ButtonBaseProps & NativeButtonProps;
@@ -54,7 +54,7 @@ export const getButtonClassName = (
         'outline-2 outline-offset-[-2px]',
         size === 'small' && 'px-4 py-2 text-xs',
         size === 'medium' && 'p-2 text-xs sm:px-4 sm:text-sm',
-        size === 'large' && 'px-3 py-2 sm:px-8 sm:py-4 text-sm sm:text-lg',
+        size === 'large' && 'px-3 py-2 sm:px-5 sm:py-3.5 text-sm sm:text-lg',
         variant === 'primary' && [
             'outline-actionPrimaryBorder bg-actionPrimaryBackground text-actionPrimaryText',
             !isDisabled &&
@@ -81,6 +81,15 @@ export const getButtonClassName = (
                 'active:outline-actionInvertedBorderActive active:bg-actionInvertedBackgroundActive active:text-actionInvertedTextActive',
             isDisabled &&
                 'outline-actionInvertedBorderDisabled bg-actionInvertedBackgroundDisabled text-actionInvertedTextDisabled',
+        ],
+        variant === 'transparent' && [
+            'outline-1 outline-offset-[-1px] outline-actionTransparentBorder bg-actionTransparentBackground text-actionTransparentText',
+            !isDisabled &&
+                'hover:outline-actionTransparentBorderHovered hover:bg-actionTransparentBackgroundHovered hover:text-actionTransparentTextHovered',
+            !isDisabled &&
+                'active:outline-actionTransparentBorderActive active:bg-actionTransparentBackgroundActive active:text-actionTransparentTextActive',
+            isDisabled &&
+                'outline-actionTransparentBorderDisabled bg-actionTransparentBackgroundDisabled text-actionTransparentTextDisabled',
         ],
         (isDisabled || isWithDisabledLook) && 'cursor-no-drop',
     );
