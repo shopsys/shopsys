@@ -1,12 +1,11 @@
-import { BlogSignpostIcon } from './BlogSignpostIcon';
 import { BlogSignpostItem } from './BlogSignpostItem';
-import { Children } from './Children';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import useTranslation from 'next-translate/useTranslation';
 import { Fragment, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { ListedBlogCategoryRecursiveType } from 'types/blogCategory';
+import { findActiveBlogCategoryPath } from 'utils/blogCategory/findActiveBlogCategoryPath';
 
 type BlogSingpostProps = {
     activeItem: string;
@@ -16,6 +15,7 @@ type BlogSingpostProps = {
 export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeItem }) => {
     const { t } = useTranslation();
     const [isBlogSignpostOpen, setIsBlogSignpostOpen] = useState(false);
+    const activeArticleCategoryPathUuids = findActiveBlogCategoryPath(blogCategoryItems, activeItem);
 
     return (
         <>
@@ -51,18 +51,16 @@ export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeI
                         )}
                     >
                         {blogCategoryItems.map((blogCategory) => {
-                            const isActive = activeItem === blogCategory.uuid;
+                            const isActive = activeArticleCategoryPathUuids.includes(blogCategory.uuid);
 
                             return (
-                                <Fragment key={blogCategory.uuid}>
-                                    <BlogSignpostItem href={blogCategory.link} isActive={isActive}>
-                                        <BlogSignpostIcon isActive={isActive} />
-                                        {blogCategory.name}
-                                    </BlogSignpostItem>
-                                    {!!blogCategory.children?.length && (
-                                        <Children activeItem={activeItem} blogCategory={blogCategory} itemLevel={1} />
-                                    )}
-                                </Fragment>
+                                <BlogSignpostItem
+                                    key={blogCategory.uuid}
+                                    activeArticleCategoryPathUuids={activeArticleCategoryPathUuids}
+                                    activeItem={activeItem}
+                                    blogCategory={blogCategory}
+                                    isActive={isActive}
+                                />
                             );
                         })}
                     </div>
