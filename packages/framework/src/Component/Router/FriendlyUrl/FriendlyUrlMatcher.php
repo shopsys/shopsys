@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\CategorySeo\Exception\ReadyCategorySeoMixNotFoundException;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\RouteCollection;
 
@@ -41,7 +42,7 @@ class FriendlyUrlMatcher
 
         if ($friendlyUrl->getRedirectTo() !== null) {
             $matchedParameters['_route'] = $friendlyUrl->getRouteName();
-            $matchedParameters['_controller'] = 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction';
+            $matchedParameters['_controller'] = RedirectController::class . '::urlRedirectAction';
             $matchedParameters['path'] = $friendlyUrl->getRedirectTo();
             $matchedParameters['permanent'] = $friendlyUrl->getRedirectCode() !== 302;
             $matchedParameters['id'] = $friendlyUrl->getEntityId();
@@ -69,7 +70,7 @@ class FriendlyUrlMatcher
         $matchedParameters['id'] = $friendlyUrl->getEntityId();
 
         if (!$friendlyUrl->isMain()) {
-            $matchedParameters['_controller'] = 'Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction';
+            $matchedParameters['_controller'] = RedirectController::class . '::urlRedirectAction';
             $matchedParameters['route'] = $friendlyUrl->getRouteName();
             $matchedParameters['permanent'] = true;
         }
