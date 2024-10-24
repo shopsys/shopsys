@@ -21,6 +21,22 @@ abstract class AbstractConvertimController
     }
 
     /**
+     * @return bool
+     */
+    protected function isConvertimEnabled(): bool
+    {
+        return $this->convertimConfigProvider->getConfigForCurrentDomain()->isEnabled();
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function convertimNotEnabledResponse(): Response
+    {
+        return new JsonResponse(['error' => 'Convertim is not enabled'], Response::HTTP_BAD_REQUEST);
+    }
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return bool
      */

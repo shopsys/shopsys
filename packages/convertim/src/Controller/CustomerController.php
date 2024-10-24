@@ -36,6 +36,10 @@ class CustomerController extends AbstractConvertimController
     #[Route('/get-customer-details/{customerUuid}')]
     public function getCustomerDetail(Request $request): Response
     {
+        if (!$this->isConvertimEnabled()) {
+            return $this->convertimNotEnabledResponse();
+        }
+
         if ($this->isProtectedRequest($request) === false) {
             return $this->invalidAuthorizationResponse();
         }
@@ -56,6 +60,10 @@ class CustomerController extends AbstractConvertimController
     #[Route('/get-customer-details-by-order/{orderUuid}')]
     public function getCustomerDetailByOrderUuid(Request $request): Response
     {
+        if (!$this->isConvertimEnabled()) {
+            return $this->convertimNotEnabledResponse();
+        }
+
         if ($this->isProtectedRequest($request) === false) {
             return $this->invalidAuthorizationResponse();
         }
