@@ -1,0 +1,42 @@
+query CategorySeo(
+    $urlSlug: String!
+    $orderingMode: ProductOrderingModeEnum
+    $filter: ProductFilter
+    $first: Int = 10
+) {
+    category(urlSlug: $urlSlug) {
+        slug
+        originalCategorySlug
+        products(orderingMode: $orderingMode, filter: $filter, first: $first) {
+            totalCount
+            productFilterOptions {
+                parameters {
+                    uuid
+                    __typename
+                    ...on ParameterCheckboxFilterOption {
+                        values {
+                            text
+                            isSelected
+                        }
+                    }
+                    ...on ParameterSliderFilterOption {
+                        selectedValue
+                    }
+                    ... on ParameterColorFilterOption {
+                        name
+                        values {
+                            text
+                            isSelected
+                        }
+                    }
+                }
+                flags {
+                    flag {
+                        uuid
+                    }
+                    isSelected
+                }
+            }
+        }
+    }
+}

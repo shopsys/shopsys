@@ -1,0 +1,96 @@
+query SlugQuery($slug: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter) {
+  slug(slug: $slug) {
+    ... on Category {
+      ...TestCategoryDetailFragment
+    }
+  }
+}
+
+fragment TestBreadcrumbFragment on Breadcrumb {
+  breadcrumb {
+    name
+    slug
+  }
+}
+
+fragment TestCategoryDetailFragment on Category {
+  uuid
+  slug
+  originalCategorySlug
+  name
+  seoH1
+  ...TestBreadcrumbFragment
+  children {
+    ...TestCategoryPreviewFragment
+  }
+  linkedCategories {
+    ...TestCategoryPreviewFragment
+  }
+  ...TestListedProductsFragment
+  readyCategorySeoMixLinks {
+    name
+    slug
+  }
+  seoTitle
+  seoMetaDescription
+}
+
+fragment TestCategoryPreviewFragment on Category {
+  uuid
+  name
+  slug
+  products {
+    totalCount
+  }
+}
+
+fragment TestListedProductsFragment on ProductListable {
+  products(
+    orderingMode: $orderingMode
+    filter: $filter
+  ) {
+    ...TestListedProductConnectionFragment
+  }
+}
+
+fragment TestListedProductConnectionFragment on ProductConnection {
+  totalCount
+  productFilterOptions {
+    ...TestProductFilterOptionsFragment
+  }
+  edges {
+    node {
+      uuid
+    }
+  }
+}
+
+fragment TestProductFilterOptionsFragment on ProductFilterOptions {
+  minimalPrice
+  maximalPrice
+  brands {
+    count
+    brand {
+      uuid
+    }
+  }
+  inStock
+  flags {
+    count
+    flag {
+      uuid
+    }
+  }
+  parameters {
+    uuid
+    ... on ParameterSliderFilterOption {
+      minimalValue
+      maximalValue
+    }
+    ...on ParameterCheckboxFilterOption {
+      values {
+        uuid
+      }
+    }
+  }
+}
