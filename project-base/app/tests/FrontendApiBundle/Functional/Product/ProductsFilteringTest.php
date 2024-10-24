@@ -101,7 +101,7 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
 
         $query = '
             query {
-                products (last: 1, filter: { maximalPrice: "' . $maximalPrice . '" }) {
+                products (last: 2, filter: { maximalPrice: "' . $maximalPrice . '" }) {
                     edges {
                         node {
                             name
@@ -114,6 +114,12 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
         $productsExpected = [
             ['name' => t(
                 'ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue',
+                [],
+                Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+                $this->firstDomainLocale,
+            )],
+            ['name' => t(
+                'Sencor SDB 4002M4',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                 $this->firstDomainLocale,

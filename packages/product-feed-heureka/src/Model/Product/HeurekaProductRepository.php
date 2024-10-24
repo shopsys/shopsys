@@ -31,7 +31,7 @@ class HeurekaProductRepository
         ?int $lastSeekId,
         int $maxResults,
     ): iterable {
-        $queryBuilder = $this->productRepository->getAllVisibleQueryBuilder($domainConfig->getId(), $pricingGroup)
+        $queryBuilder = $this->productRepository->getAllVisibleWithoutInquiriesQueryBuilder($domainConfig->getId(), $pricingGroup)
             ->addSelect('b')->leftJoin('p.brand', 'b')
             ->andWhere('p.variantType != :variantTypeMain')->setParameter(
                 'variantTypeMain',

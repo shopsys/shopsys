@@ -4,9 +4,21 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
+msgid "<div class=\"gjs-text-ckeditor\"><div style=\"font-family: Arial, sans-serif; line-height: 1.6; color: #333;\"><p>A new product inquiry has just been received from <strong>{fullName}</strong>.</p><p>Please find the details below:</p><ul style=\"list-style-type: none; padding: 0;\"><li><strong>Customer name:</strong> {fullName}</li><li><strong>Customer email:</strong> <a href=\"mailto:{email}\">{email}</a></li><li><strong>Customer telephone:</strong> <a href=\"tel:{telephone}\">{telephone}</a></li><li><strong>Company name:</strong> {companyName}</li><li><strong>Company number:</strong> {companyNumber}</li><li><strong>Company tax number:</strong> {companyTaxNumber}</li></ul><p><strong>Note from customer:</strong></p><blockquote style=\"border-left: 4px solid #ccc; margin: 0 0 1em; padding: 0.5em; font-style: italic; background-color: #f9f9f9;\">{note}</blockquote><p><strong>Inquired product:</strong></p><p><a href=\"{productUrl}\" style=\"color: #1a73e8; text-decoration: none;\">{productName}</a> (Catalog number: {productCatnum})</p><p><img src=\"{productImageUrl}\" alt=\"{productName}\" style=\"max-width: 200px; height: auto; border: 1px solid #ddd; padding: 4px;\"></p><p>Please review the inquiry and take the necessary steps to follow up.</p><p><a href=\"{adminInquiryDetailUrl}\" style=\"background-color: #1a73e8; color: #fff; padding: 10px 15px; text-decoration: none; border-radius: 5px;\">Review Inquiry</a></p></div></div>"
+msgstr ""
+
+msgid "<div class=\"gjs-text-ckeditor\"><p>Dear {fullName},</p><p>Thank you for your interest in <a data-cke-saved-href=\"{productUrl}\" href=\"{productUrl}\">{productName}</a>.</p><p>We have received your inquiry and will be reaching out to you shortly with further information.</p><p>If you need immediate assistance or have additional questions, feel free to reply to this email or contact us.</p><p>Best regards</p></div>"
+msgstr ""
+
 msgid "<p> Payment for order number {number} has been successful. <br /><br /> <a href=\"{order_detail_url}\">Track</a> the status of your order. <br /> {transport_instructions} </p>"
 msgstr ""
 
 msgid "<p> Payment for order number {number} has failed. <br /><br /> Please contact us to resolve the issue. </p>"
+msgstr ""
+
+msgid "New product inquiry received"
+msgstr ""
+
+msgid "Thank you for your product inquiry"
 msgstr ""
 

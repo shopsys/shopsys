@@ -32,7 +32,7 @@ class ZboziProductRepository
         ?int $lastSeekId,
         int $maxResults,
     ): iterable {
-        $queryBuilder = $this->productRepository->getAllVisibleQueryBuilder($domainConfig->getId(), $pricingGroup)
+        $queryBuilder = $this->productRepository->getAllVisibleWithoutInquiriesQueryBuilder($domainConfig->getId(), $pricingGroup)
             ->addSelect('b')->leftJoin('p.brand', 'b')
             ->leftJoin(ZboziProductDomain::class, 'zpd', Join::WITH, 'zpd.product = p AND zpd.domainId = :domainId')
             ->andWhere('p.variantType != :variantTypeMain')->setParameter(

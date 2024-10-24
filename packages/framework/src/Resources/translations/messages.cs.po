@@ -166,6 +166,9 @@ msgstr "Doplňující informace k přihlášení"
 msgid "Address"
 msgstr "Adresa"
 
+msgid "Admin inquiry detail URL"
+msgstr "URL detailu poptávky v administraci"
+
 msgid "Administration"
 msgstr "Administrace"
 
@@ -660,6 +663,12 @@ msgstr "Komunikace se zákazníkem"
 
 msgid "Company"
 msgstr "Firma"
+
+msgid "Company (Company number)"
+msgstr "Firma (IČ)"
+
+msgid "Company Tax number"
+msgstr "DIČ firmy"
 
 msgid "Company data"
 msgstr "Firemní údaje"
@@ -1897,6 +1906,9 @@ msgstr "Vygenerované dávky"
 msgid "Go to Frontend"
 msgstr "Přejít na Frontend"
 
+msgid "Go to associated customer user"
+msgstr "Přejít na přiřazeného zákazníka"
+
 msgid "Go to page:"
 msgstr "Přejít na stránku:"
 
@@ -2043,6 +2055,30 @@ msgstr "Vstupní cena s DPH"
 
 msgid "Input price without VAT"
 msgstr "Vstupní cena bez DPH"
+
+msgid "Inquired product"
+msgstr "Poptávaný produkt"
+
+msgid "Inquiries"
+msgstr "Poptávky"
+
+msgid "Inquiries - view"
+msgstr "Poptávky - zobrazení"
+
+msgid "Inquiries overview"
+msgstr "Přehled poptávek"
+
+msgid "Inquiry by"
+msgstr "Poptávka od"
+
+msgid "Inquiry detail"
+msgstr "Detail poptávky"
+
+msgid "Inquiry info sent to administrator"
+msgstr "Informace o poptávce odesílaná administrátorovi"
+
+msgid "Inquiry info sent to customer"
+msgstr "Informace o poptávce odesílaná zákazníkovi"
 
 msgid "Instagram URL"
 msgstr "Instagram URL"
@@ -2475,6 +2511,9 @@ msgstr "Žádné soubory nebyly nalezeny."
 
 msgid "No flags found. You have to create some first."
 msgstr "Nebyly nalezeny žádné příznaky. Nejprve musíte nějaké vytvořit."
+
+msgid "No inquiries found."
+msgstr "Nebyly nalezeny žádné poptávky."
 
 msgid "No logs created so far."
 msgstr "Žádné protokoly nejsou zatím vytvořeny."
@@ -2986,8 +3025,20 @@ msgstr "Bylo upraveno zboží <strong><a href=\"{{ url }}\">{{ product|productDi
 msgid "Product <strong>{{ product|productDisplayName }}</strong> deleted"
 msgstr "Produkt <strong>{{ product|productDisplayName }}</strong> byl smazán"
 
+msgid "Product associated with this inquiry is no longer available in the catalog."
+msgstr "Produkt v této poptávce není již dostupný v katalogu."
+
+msgid "Product catnum"
+msgstr "Katalogové číslo produktu"
+
+msgid "Product detail URL"
+msgstr "URL detailu produktu"
+
 msgid "Product excluded from sale"
 msgstr "Zboží je vyřazeno z prodeje"
+
+msgid "Product image URL"
+msgstr "URL obrázku produktu"
 
 msgid "Product in order"
 msgstr "Zboží v objednávce"
@@ -3015,6 +3066,9 @@ msgstr "Zboží bylo uloženo do objednávky"
 
 msgid "Product settings on the main page successfully changed"
 msgstr "Nastavení zboží na titulce bylo úspěšně změněno."
+
+msgid "Product type"
+msgstr "Typ produktu"
 
 msgid "Products"
 msgstr "Zboží"
@@ -3295,6 +3349,9 @@ msgstr "Vyhledávání hledá v názvu. Je možné používat operátory * a ?."
 msgid "Searching searches in order number, registered customer email, customer's email in order, customer's last name and company name. It is possible to use wildcards * and ?."
 msgstr "Vyhledávání hledá v číslu objednávky, e-mailu registrovaného zákazníka, e-mailu zákazníka v objednávce, příjmení zákazníka a názvu firmy. Je možné používat operátory * a ?."
 
+msgid "Searching searches in product name, product catalog number, company number, company name, customer last name, and customer email. It is possible to use wildcards * and ?."
+msgstr "Vyhledávání hledá v názvu produktu, katalogovém čísle produktu, IČ, názvu firmy, příjmení zákazníka, a e-mailu zákazníka. Je možné používat operátory * a ?."
+
 msgid "Searching searches in slugs. It is possible to use wildcards * and ?."
 msgstr "Vyhledávání hledá ve sluzích. Je možné používat operátory * a ?."
 
@@ -3484,6 +3541,9 @@ msgstr "Krátký popis USP"
 msgid "Short description can be set in the main variant."
 msgstr "Krátký popis se nastavuje u hlavní varianty."
 
+msgid "Show detail"
+msgstr "Zobrazit detail"
+
 msgid "Site"
 msgstr "Stránka"
 
@@ -3636,6 +3696,9 @@ msgstr "Čím vyšší priorita, tím bude stát zobrazen výše v seznamech. St
 
 msgid "The optimal size of the icon is 46x26 px. Only PNG format is allowed."
 msgstr "Optimální velikost ikony je 46x26 px. Je povolen pouze PNG formát."
+
+msgid "The product is no longer in the catalog. This was the catalog number at the time of the inquiry."
+msgstr "Produkt již není v katalogu. Toto bylo katalogové číslo v době vytvoření poptávky."
 
 msgid "There are no parameter values of type color yet."
 msgstr "Žádná hodnota parametru typu barva zatím nebyla vytvořena."
@@ -3903,6 +3966,9 @@ msgstr "Soubor <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl upraven
 
 msgid "Uploading..."
 msgstr "Nahrávám..."
+
+msgid "Upon inquiry"
+msgstr "Na poptávku"
 
 msgid "Url address"
 msgstr "Url adresa"
@@ -4203,6 +4269,9 @@ msgstr "v kategorii (mezi prvním a druhým řádkem produktů)"
 
 msgid "include"
 msgstr "obsahuje"
+
+msgid "inquiries"
+msgstr "poptávky"
 
 msgid "is"
 msgstr "je"

@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Search;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
+use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use stdClass;
 
 class FilterQuery
@@ -74,6 +75,7 @@ class FilterQuery
         ];
 
         if ($orderingModeId === ProductListOrderingConfig::ORDER_BY_PRIORITY) {
+            $clone->sorting['product_type'] = 'asc';
             $clone->sorting['ordering_priority'] = 'desc';
             $clone->sorting['name.keyword'] = 'asc';
 
@@ -93,6 +95,15 @@ class FilterQuery
         }
 
         if ($orderingModeId === ProductListOrderingConfig::ORDER_BY_PRICE_ASC) {
+            $clone->sorting['_script'] = [
+                'type' => 'number',
+                'script' => [
+                    'lang' => 'painless',
+                    'source' => 'doc[\'product_type\'].value == \'inquiry\' ? 1 : 0',
+                ],
+                'order' => 'asc',
+            ];
+
             $clone->sorting['prices.price_with_vat'] = [
                 'order' => 'asc',
                 'nested' => [
@@ -111,6 +122,15 @@ class FilterQuery
         }
 
         if ($orderingModeId === ProductListOrderingConfig::ORDER_BY_PRICE_DESC) {
+            $clone->sorting['_script'] = [
+                'type' => 'number',
+                'script' => [
+                    'lang' => 'painless',
+                    'source' => 'doc[\'product_type\'].value == \'inquiry\' ? 1 : 0',
+                ],
+                'order' => 'asc',
+            ];
+
             $clone->sorting['prices.price_with_vat'] = [
                 'order' => 'desc',
                 'nested' => [
@@ -241,40 +261,48 @@ class FilterQuery
         }
 
         $clone->filters[] = [
-            'nested' => [
-                'path' => 'prices',
-                'query' => [
-                    'bool' => [
-                        'must' => [
-                            'match_all' => new stdClass(),
-                        ],
-                        'filter' => [
-                            'bool' => [
-                                'must' => [
-                                    [
-                                        'range' => [
-                                            'prices.filtering_minimal_price' => [
-                                                'gte' => $priceGte,
+            'bool' => [
+                'should' => [
+                    [
+                        'nested' => [
+                            'path' => 'prices',
+                            'query' => [
+                                'bool' => [
+                                    'must' => [
+                                        'match_all' => new stdClass(),
+                                    ],
+                                    'filter' => [
+                                        [
+                                            'range' => [
+                                                'prices.filtering_minimal_price' => [
+                                                    'gte' => $priceGte,
+                                                ],
                                             ],
                                         ],
-                                    ],
-                                    [
-                                        'range' => [
-                                            'prices.filtering_maximal_price' => [
-                                                'lte' => $priceLte,
+                                        [
+                                            'range' => [
+                                                'prices.filtering_maximal_price' => [
+                                                    'lte' => $priceLte,
+                                                ],
                                             ],
                                         ],
-                                    ],
-                                    [
-                                        'term' => [
-                                            'prices.pricing_group_id' => $pricingGroup->getId(),
+                                        [
+                                            'term' => [
+                                                'prices.pricing_group_id' => $pricingGroup->getId(),
+                                            ],
                                         ],
                                     ],
                                 ],
                             ],
                         ],
                     ],
+                    [
+                        'term' => [
+                            'product_type' => ProductTypeEnum::TYPE_INQUIRY,
+                        ],
+                    ],
                 ],
+                'minimum_should_match' => 1,
             ],
         ];
 
@@ -806,31 +834,43 @@ class FilterQuery
         $query = $this->getAbsoluteNumbersWithParametersQuery();
 
         $query['body']['aggs']['prices'] = [
-            'nested' => [
-                'path' => 'prices',
-            ],
-            'aggs' => [
-                'filter_pricing_group' => [
-                    'filter' => [
+            'filter' => [
+                'bool' => [
+                    'must_not' => [
                         'term' => [
-                            'prices.pricing_group_id' => $pricingGroupId,
+                            'product_type' => ProductTypeEnum::TYPE_INQUIRY,
                         ],
                     ],
+                ],
+            ],
+            'aggs' => [
+                'nested_prices' => [
+                    'nested' => [
+                        'path' => 'prices',
+                    ],
                     'aggs' => [
-                        'min_price' => [
-                            'min' => [
-                                'field' => 'prices.price_with_vat',
+                        'filter_pricing_group' => [
+                            'filter' => [
+                                'term' => [
+                                    'prices.pricing_group_id' => $pricingGroupId,
+                                ],
                             ],
-                        ],
-                        'max_price' => [
-                            'max' => [
-                                'field' => 'prices.price_with_vat',
+                            'aggs' => [
+                                'min_price' => [
+                                    'min' => [
+                                        'field' => 'prices.price_with_vat',
+                                    ],
+                                ],
+                                'max_price' => [
+                                    'max' => [
+                                        'field' => 'prices.price_with_vat',
+                                    ],
+                                ],
                             ],
                         ],
                     ],
                 ],
             ],
-
         ];
 
         return $query;

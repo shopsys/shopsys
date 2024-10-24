@@ -198,6 +198,11 @@ class ProductData
      */
     public $excludedTransports;
 
+    /**
+     * @var string|null
+     */
+    public $productType;
+
     public function __construct()
     {
         $this->name = [];
@@ -227,5 +232,6 @@ class ProductData
         $this->saleExclusion = [];
         $this->domainHidden = [];
         $this->excludedTransports = [];
+        $this->productType = ProductTypeEnum::TYPE_BASIC;
     }
 }

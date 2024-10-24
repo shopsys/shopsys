@@ -12,14 +12,21 @@ import { useRef } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { useAddToCart } from 'utils/cart/useAddToCart';
 
-export type ProductDetailAddToCartProps = {
-    product: TypeProductDetailFragment;
-};
-
 const AddToCartPopup = dynamic(
     () => import('components/Blocks/Popup/AddToCartPopup').then((component) => component.AddToCartPopup),
     { ssr: false },
 );
+
+const InquiryPopup = dynamic(
+    () => import('components/Blocks/Popup/InquiryPopup').then((component) => component.InquiryPopup),
+    {
+        ssr: false,
+    },
+);
+
+export type ProductDetailAddToCartProps = {
+    product: TypeProductDetailFragment;
+};
 
 export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ product }) => {
     const spinboxRef = useRef<HTMLInputElement | null>(null);
@@ -48,35 +55,43 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
         }
     };
 
+    if (product.isSellingDenied) {
+        return <p className="text-textError">{t('This item can no longer be purchased')}</p>;
+    }
+
+    if (product.isInquiryType) {
+        const openInquiryPopup = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+            e.stopPropagation();
+            updatePortalContent(<InquiryPopup productUuid={product.uuid} />);
+        };
+
+        return (
+            <Button className="w-fit" size="large" onClick={openInquiryPopup}>
+                {t('Inquire')}
+            </Button>
+        );
+    }
+
     return (
-        <>
-            {product.isSellingDenied ? (
-                <p className="text-textError">{t('This item can no longer be purchased')}</p>
-            ) : (
-                <div className="text-sm vl:text-base">
-                    <div className="flex items-center justify-between">
-                        <Spinbox
-                            defaultValue={1}
-                            id={product.uuid}
-                            max={product.stockQuantity}
-                            min={1}
-                            ref={spinboxRef}
-                            step={1}
-                        />
-                        <div className="ml-2 flex-1">
-                            <Button
-                                className="h-12 w-fit whitespace-nowrap px-4 sm:px-8"
-                                isDisabled={isAddingToCart}
-                                tid={TIDs.pages_productdetail_addtocart_button}
-                                onClick={onAddToCartHandler}
-                            >
-                                {isAddingToCart ? <Loader className="w-[18px]" /> : <CartIcon className="w-[18px]" />}
-                                {t('Add to cart')}
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-            )}
-        </>
+        <div className="flex items-center gap-2">
+            <Spinbox defaultValue={1} id={product.uuid} max={product.stockQuantity} min={1} ref={spinboxRef} step={1} />
+
+            <div className="relative">
+                {isAddingToCart && (
+                    <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded bg-backgroundMore py-2 opacity-50" />
+                )}
+
+                <Button
+                    className="whitespace-nowrap"
+                    isDisabled={isAddingToCart}
+                    size="large"
+                    tid={TIDs.pages_productdetail_addtocart_button}
+                    onClick={onAddToCartHandler}
+                >
+                    <CartIcon className="w-[18px]" />
+                    {t('Add to cart')}
+                </Button>
+            </div>
+        </div>
     );
 };

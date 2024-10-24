@@ -14,16 +14,17 @@ export const ProductDetailAvailability: FC<ProductDetailAvailabilityProps> = ({ 
     const { t } = useTranslation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
-    if (!product.availableStoresCount) {
+    if (!product.availableStoresCount || product.isInquiryType) {
         return null;
     }
 
     return (
         <div
             className={twJoin(
-                'mr-1 flex cursor-pointer items-center font-secondary text-sm',
+                'mr-1 flex items-center font-secondary text-sm',
                 product.availability.status === TypeAvailabilityStatusEnum.InStock && 'text-availabilityInStock',
                 product.availability.status === TypeAvailabilityStatusEnum.OutOfStock && 'text-availabilityOutOfStock',
+                'cursor-pointer',
             )}
             onClick={() =>
                 updatePortalContent(

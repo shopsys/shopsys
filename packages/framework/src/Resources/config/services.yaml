@@ -738,7 +738,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Heureka\HeurekaShopCertificationLocaleHelper: ~
 
-
     Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapDumperFactory:
         arguments:
             - '@event_dispatcher'
@@ -753,6 +752,8 @@ services:
     Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapListener:
         tags:
             - { name: 'kernel.event_subscriber', priority: 100 }
+
+    Shopsys\FrameworkBundle\Model\Inquiry\Mail\InquiryMail: ~
 
     Shopsys\FrameworkBundle\Model\Localization\Localization:
         arguments:

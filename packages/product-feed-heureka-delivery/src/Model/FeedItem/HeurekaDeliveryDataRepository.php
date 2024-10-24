@@ -8,6 +8,7 @@ use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
+use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStock;
 
 class HeurekaDeliveryDataRepository
@@ -33,6 +34,9 @@ class HeurekaDeliveryDataRepository
         int $maxResults,
     ): array {
         $queryBuilder = $this->productRepository->getAllSellableQueryBuilder($domainConfig->getId(), $pricingGroup);
+        $queryBuilder
+            ->andWhere('p.productType != :inquiryProductType')
+            ->setParameter('inquiryProductType', ProductTypeEnum::TYPE_INQUIRY);
         $queryBuilder->leftJoin(ProductStock::class, 'ps', Join::WITH, 'ps.product = p');
         $queryBuilder->having('SUM(ps.productQuantity) > 0');
 

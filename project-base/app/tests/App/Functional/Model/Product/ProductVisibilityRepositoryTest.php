@@ -23,6 +23,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductInputPriceDataFactory;
+use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityRepository;
 use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
@@ -219,6 +220,17 @@ class ProductVisibilityRepositoryTest extends TransactionFunctionalTestCase
         $productVisibility = $this->createProductAndGetVisibility($productData);
 
         $this->assertFalse($productVisibility->isVisible());
+    }
+
+    public function testIsVisibleWhenProductIsInquiryWithoutPrice(): void
+    {
+        $productData = $this->getDefaultProductData();
+        $productData->productType = ProductTypeEnum::TYPE_INQUIRY;
+        $this->setPriceAndVatForAllDomains($productData, null);
+
+        $productVisibility = $this->createProductAndGetVisibility($productData);
+
+        $this->assertTrue($productVisibility->isVisible());
     }
 
     public function testIsVisibleOnAnyDomainWhenSellingInPast(): void

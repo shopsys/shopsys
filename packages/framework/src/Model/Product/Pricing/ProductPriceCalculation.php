@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
+use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 
 class ProductPriceCalculation
 {
@@ -59,6 +60,11 @@ class ProductPriceCalculation
             $mainVariant,
             $domainId,
             $pricingGroup,
+        );
+
+        $variants = array_filter(
+            $variants,
+            static fn (Product $variant) => $variant->getProductType() !== ProductTypeEnum::TYPE_INQUIRY,
         );
 
         if (count($variants) === 0) {

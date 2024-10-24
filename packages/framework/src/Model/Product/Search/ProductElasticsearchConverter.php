@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Search;
 
+use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
+
 class ProductElasticsearchConverter
 {
     /**
@@ -52,6 +54,7 @@ class ProductElasticsearchConverter
         $result['seo_title'] = $product['seo_title'] ?? null;
         $result['seo_meta_description'] = $product['seo_meta_description'] ?? null;
         $result['hreflang_links'] = $product['hreflang_links'] ?? [];
+        $result['product_type'] = $product['product_type'] ?? ProductTypeEnum::TYPE_BASIC;
 
         return $result;
     }

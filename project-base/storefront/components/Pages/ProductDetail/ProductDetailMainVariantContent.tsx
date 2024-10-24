@@ -68,7 +68,7 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
                     </div>
                 </div>
 
-                <ProductVariantsTable isSellingDenied={product.isSellingDenied} variants={product.variants} />
+                <ProductVariantsTable variants={product.variants} />
 
                 <ProductDetailTabs
                     description={product.description}

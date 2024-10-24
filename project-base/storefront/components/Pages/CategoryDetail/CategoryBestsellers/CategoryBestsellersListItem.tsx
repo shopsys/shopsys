@@ -60,19 +60,19 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
                     {product.fullName}
                 </span>
 
-                <div className="max-w-48">
-                    <ProductAvailableStoresCount
-                        availableStoresCount={product.availableStoresCount}
-                        isMainVariant={product.isMainVariant}
-                        name={product.availability.name}
-                    />
-                </div>
-
-                {isPriceVisible(product.price.priceWithVat) && (
-                    <div className="basis-2/6 font-bold leading-5 text-price md:basis-2/12 md:text-right">
-                        {formatPrice(product.price.priceWithVat)}
+                {!product.isInquiryType && (
+                    <div className="max-w-48">
+                        <ProductAvailableStoresCount
+                            availableStoresCount={product.availableStoresCount}
+                            isMainVariant={product.isMainVariant}
+                            name={product.availability.name}
+                        />
                     </div>
                 )}
+
+                <div className="basis-2/6 font-bold leading-5 text-price md:basis-2/12 md:text-right">
+                    {isPriceVisible(product.price.priceWithVat) && formatPrice(product.price.priceWithVat)}
+                </div>
             </div>
         </ExtendedNextLink>
     );

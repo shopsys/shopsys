@@ -172,6 +172,12 @@ class Product extends AbstractTranslatableEntity
     protected $excludedTransports;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", length=32, nullable=false)
+     */
+    protected $productType;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[]|null $variants
      */
@@ -234,6 +240,7 @@ class Product extends AbstractTranslatableEntity
         $this->brand = $productData->brand;
         $this->unit = $productData->unit;
         $this->weight = $productData->weight;
+        $this->productType = $productData->productType;
         $this->setTranslations($productData);
         $this->setExcludedTransports($productData->excludedTransports);
     }
@@ -747,6 +754,14 @@ class Product extends AbstractTranslatableEntity
     public function getSaleExclusion(int $domainId)
     {
         return $this->getProductDomain($domainId)->getSaleExclusion();
+    }
+
+    /**
+     * @return string
+     */
+    public function getProductType()
+    {
+        return $this->productType;
     }
 
     /**

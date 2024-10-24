@@ -712,6 +712,27 @@ type Country {
   name: String!
 }
 
+input CreateInquiryInput {
+  "The customer’s company name"
+  companyName: String
+  "The customer’s company identification number"
+  companyNumber: String
+  "The customer’s company tax number"
+  companyTaxNumber: String
+  "The customer's email address"
+  email: String!
+  "Customer user first name"
+  firstName: String!
+  "Customer user last name"
+  lastName: String!
+  "Customer's question or note to the inquiry product"
+  note: String
+  "Product UUID"
+  productUuid: Uuid!
+  "The customer's telephone number"
+  telephone: String!
+}
+
 type CreateOrderResult {
   cart: Cart
   order: Order
@@ -1007,6 +1028,7 @@ type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   id: Int!
   "Product images"
   images(type: String = null): [Image!]!
+  isInquiryType: Boolean!
   isMainVariant: Boolean!
   isSellingDenied: Boolean!
   isVisible: Boolean!
@@ -1026,6 +1048,7 @@ type MainVariant implements Product & Hreflang & Breadcrumb & Slug {
   partNumber: String
   "Product price"
   price: ProductPrice!
+  productType: ProductTypeEnum!
   productVideos: [VideoToken!]!
   "List of related products"
   relatedProducts: [Product!]!
@@ -1080,6 +1103,8 @@ type Mutation {
   CreateComplaint(input: ComplaintInput!): Complaint!
   "Create a new delivery address"
   CreateDeliveryAddress(input: DeliveryAddressInput!): [DeliveryAddress!]!
+  "Send the inquiry for the product"
+  CreateInquiry(input: CreateInquiryInput!): Boolean!
   "Creates complete order with products and addresses"
   CreateOrder(input: OrderInput!): CreateOrderResult!
   "Delete delivery address by Uuid"
@@ -1716,6 +1741,7 @@ interface Product {
   id: Int!
   "Product images"
   images(type: String = null): [Image!]!
+  isInquiryType: Boolean!
   isMainVariant: Boolean!
   isSellingDenied: Boolean!
   isVisible: Boolean!
@@ -1735,6 +1761,7 @@ interface Product {
   partNumber: String
   "Product price"
   price: ProductPrice!
+  productType: ProductTypeEnum!
   productVideos: [VideoToken!]!
   "List of related products"
   relatedProducts: [Product!]!
@@ -1874,6 +1901,14 @@ type ProductPrice {
   priceWithVat: Money!
   "Total value of VAT"
   vatAmount: Money!
+}
+
+"One of possible product types"
+enum ProductTypeEnum {
+  "Basic product"
+  BASIC
+  "Product with inquiry form instead of add to cart button"
+  INQUIRY
 }
 
 type Query {
@@ -2167,6 +2202,7 @@ type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   id: Int!
   "Product images"
   images(type: String = null): [Image!]!
+  isInquiryType: Boolean!
   isMainVariant: Boolean!
   isSellingDenied: Boolean!
   isVisible: Boolean!
@@ -2186,6 +2222,7 @@ type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   partNumber: String
   "Product price"
   price: ProductPrice!
+  productType: ProductTypeEnum!
   productVideos: [VideoToken!]!
   "List of related products"
   relatedProducts: [Product!]!
@@ -2496,6 +2533,7 @@ type Variant implements Product & Hreflang & Breadcrumb & Slug {
   id: Int!
   "Product images"
   images(type: String = null): [Image!]!
+  isInquiryType: Boolean!
   isMainVariant: Boolean!
   isSellingDenied: Boolean!
   isVisible: Boolean!
@@ -2516,6 +2554,7 @@ type Variant implements Product & Hreflang & Breadcrumb & Slug {
   partNumber: String
   "Product price"
   price: ProductPrice!
+  productType: ProductTypeEnum!
   productVideos: [VideoToken!]!
   "List of related products"
   relatedProducts: [Product!]!

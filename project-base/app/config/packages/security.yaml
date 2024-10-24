@@ -59,6 +59,7 @@ security:
             - ROLE_FILES_FULL
             - ROLE_COMPLAINT_FULL
             - ROLE_COMPLAINT_STATUS_FULL
+            - ROLE_INQUIRY_VIEW
         ROLE_ALL_VIEW:
             - ROLE_ORDER_VIEW
             - ROLE_CUSTOMER_VIEW
@@ -111,6 +112,7 @@ security:
             - ROLE_FILES_VIEW
             - ROLE_COMPLAINT_VIEW
             - ROLE_COMPLAINT_STATUS_VIEW
+            - ROLE_INQUIRY_VIEW
         ROLE_ORDER_FULL: [ROLE_ORDER_VIEW]
         ROLE_CUSTOMER_FULL: [ROLE_CUSTOMER_VIEW]
         ROLE_NEWSLETTER_FULL: [ROLE_NEWSLETTER_VIEW]
@@ -232,6 +234,8 @@ security:
         - { path: ^/%admin_url%/order/delete, roles: ROLE_ORDER_FULL }
         - { path: ^/%admin_url%/order/add-product/, roles: ROLE_ORDER_FULL }
         - { path: ^/%admin_url%/order/, roles: ROLE_ORDER_VIEW }
+        # inquiries
+        - { path: ^/%admin_url%/inquiry/, roles: ROLE_INQUIRY_VIEW }
         # customers
         - { path: ^/%admin_url%/customer/new, roles: ROLE_CUSTOMER_FULL }
         - { path: ^/%admin_url%/customer/edit, roles: ROLE_CUSTOMER_FULL, methods: [POST] }
