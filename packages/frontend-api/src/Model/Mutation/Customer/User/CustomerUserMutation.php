@@ -98,8 +98,6 @@ class CustomerUserMutation extends BaseTokenMutation
     {
         $user = $this->runCheckUserIsLogged();
 
-        $this->runCheckUserIsLogged();
-
         $validator->validate();
         $input = $argument['input'];
 
