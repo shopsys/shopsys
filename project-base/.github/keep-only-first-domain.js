@@ -10,7 +10,7 @@ const domainConfigs = fileContent.match(
 );
 
 const firstDomain = domainConfigs[0].replace(
-    /(domains\s*:\s*\[\s*\{\s*publicGraphqlEndpoint\s*:\s*process\.env\.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_1[\s\S]*},\s)\s*{\s*publicGraphqlEndpoint\s*:\s*process\.env\.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_2[\s\S]*},\s( +])/gm,
+    /(domains\s*:\s*\[\s*\{\s*publicGraphqlEndpoint\s*:\s*process\.env\.NEXT_PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_1[\s\S]*},\s)\s*{\s*publicGraphqlEndpoint\s*:\s*process\.env\.NEXT_PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_2[\s\S]*},\s( +])/gm,
     '$1$2'
 );
 
