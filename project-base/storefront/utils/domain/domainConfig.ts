@@ -1,11 +1,5 @@
-import getConfig from 'next/config';
+import domainsConfig from 'domains-config';
 import { CustomerUserAreaEnum } from 'types/customer';
-
-type PublicRuntimeConfig = { publicRuntimeConfig: { domains: DomainConfigType[]; cdnDomain: string } };
-
-const {
-    publicRuntimeConfig: { domains: domainsConfig, cdnDomain },
-} = getConfig() as PublicRuntimeConfig;
 
 export type DomainConfigType = {
     url: string;
@@ -26,6 +20,7 @@ export type DomainConfigType = {
 
 export function getDomainConfig(domainUrl: string): DomainConfigType {
     const replacedDomain = domainUrl.replace(':3000', ':8000');
+    const cdnDomain = process.env.CDN_DOMAIN ?? '';
 
     for (const domain of domainsConfig) {
         const publicDomainUrl = new URL(domain.url || '').host;
