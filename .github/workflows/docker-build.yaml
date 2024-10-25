@@ -125,7 +125,8 @@ jobs:
             (
                 github.event.pull_request.head.repo.full_name == 'shopsys/shopsys' ||
                 github.ref_protected == true
-            )
+            ) &&
+            needs.variables.outputs.DOCKER_PHP_FPM_REPOSITORY_TAG != ''
         name: Build PHP-FPM image
         runs-on: ubuntu-22.04
         needs: variables
@@ -358,6 +359,8 @@ jobs:
                 uses: actions/download-artifact@v4
                 with:
                     name: docker-compose
+            -   name: Pull Docker images
+                run: docker compose pull --parallel postgres webserver elasticsearch redis php-fpm
             -   name: Build application
                 run: |
                     docker compose pull --parallel postgres webserver elasticsearch redis php-fpm
@@ -423,8 +426,7 @@ jobs:
             ) &&
             (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped') &&
             (needs.build-storefront-image.result == 'success' || needs.build-storefront-image.result == 'skipped') &&
-            (needs.build-elasticsearch-image.result == 'success' || needs.build-elasticsearch-image.result == 'skipped') &&
-            !contains(github.event.pull_request.labels.*.name, 'regenerate screenshots')
+            (needs.build-elasticsearch-image.result == 'success' || needs.build-elasticsearch-image.result == 'skipped')
         runs-on: ubuntu-22.04
         strategy:
             matrix:
@@ -498,8 +500,7 @@ jobs:
             ) &&
             (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped') &&
             (needs.build-storefront-image.result == 'success' || needs.build-storefront-image.result == 'skipped') &&
-            (needs.build-elasticsearch-image.result == 'success' || needs.build-elasticsearch-image.result == 'skipped') &&
-            contains(github.event.pull_request.labels.*.name, 'regenerate screenshots')
+            (needs.build-elasticsearch-image.result == 'success' || needs.build-elasticsearch-image.result == 'skipped')
         runs-on: ubuntu-22.04
         strategy:
             matrix:
@@ -507,6 +508,12 @@ jobs:
         env:
             GH_TOKEN: ${{ github.token }}
         steps:
+            -   name: Check pull request labels
+                run: |
+                    PULL_REQUEST_LABELS=`gh api -H "Accept: application/vnd.github+json" /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels | jq '[.[].name]'`
+                    if ! echo "$PULL_REQUEST_LABELS" | jq -e '. | index("regenerate screenshots")' >/dev/null; then
+                        exit 1;
+                    fi
             -   name: GIT checkout branch - ${{ github.head_ref }}
                 uses: actions/checkout@v4
                 with:
@@ -815,8 +822,7 @@ jobs:
             ) &&
             (needs.build-php-fpm-image.result == 'success' || needs.build-php-fpm-image.result == 'skipped') &&
             (needs.build-storefront-image.result == 'success' || needs.build-storefront-image.result == 'skipped') &&
-            (needs.build-elasticsearch-image.result == 'success' || needs.build-elasticsearch-image.result == 'skipped') &&
-            !contains(github.event.pull_request.labels.*.name, 'regenerate screenshots')
+            (needs.build-elasticsearch-image.result == 'success' || needs.build-elasticsearch-image.result == 'skipped')
         runs-on: [self-hosted, linux, review-stage]
         timeout-minutes: 10
         env:
@@ -835,6 +841,12 @@ jobs:
             SEZNAM_CLIENTSECRET: ${{ secrets.SEZNAM_CLIENTSECRET }}
             GOOGLE_MAP_API_KEY_VALUE: ${{ secrets.GOOGLE_MAP_API_KEY }}
         steps:
+            -   name: Check pull request labels
+                run: |
+                    PULL_REQUEST_LABELS=`gh api -H "Accept: application/vnd.github+json" /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels | jq '[.[].name]'`
+                    if echo "$PULL_REQUEST_LABELS" | jq -e '. | index("regenerate screenshots")' >/dev/null; then
+                        exit 1;
+                    fi
             -   name: Create branch directory
                 run: |
                     rm -rf ${BRANCH_NAME}
@@ -894,13 +906,18 @@ jobs:
                     delete-previous-comment: false
     regenerate-successful:
         if: |
-            always() && 
-            contains(github.event.pull_request.labels.*.name, 'regenerate screenshots') &&
+            always() &&
             needs.tests-storefront-acceptance-regenerate.result == 'success'
         name: Regenerate successful
         needs: [ tests-storefront-acceptance-regenerate ]
         runs-on: ubuntu-22.04
         steps:
+            -   name: Check pull request labels
+                run: |
+                    PULL_REQUEST_LABELS=`gh api -H "Accept: application/vnd.github+json" /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels | jq '[.[].name]'`
+                    if ! echo "$PULL_REQUEST_LABELS" | jq -e '. | index("regenerate screenshots")' >/dev/null; then
+                        exit 1;
+                    fi
             -   name: GIT checkout branch - ${{ github.ref }}
                 uses: actions/checkout@v4
                 with:
@@ -909,7 +926,7 @@ jobs:
                 run: echo "Regenerate successful"
     build-successful:
         if: |
-            always() && !contains(github.event.pull_request.labels.*.name, 'regenerate screenshots')
+            always()
         name: Build successful
         needs: [tests-acceptance, standards, tests-unit-functional-smoke, standards-storefront, translations-dump-check, review, build-fork-docker-images, check-console-commands, tests-storefront-acceptance, unit-test-storefront]
         runs-on: ubuntu-22.04
@@ -925,6 +942,12 @@ jobs:
             TESTS_STOREFRONT_ACCEPTANCE_RESULT: ${{ needs.tests-storefront-acceptance.result }}
             UNIT_TESTS_STOREFRONT_RESULT: ${{ needs.unit-test-storefront.result }}
         steps:
+            -   name: Check pull request labels
+                run: |
+                    PULL_REQUEST_LABELS=`gh api -H "Accept: application/vnd.github+json" /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels | jq '[.[].name]'`
+                    if echo "$PULL_REQUEST_LABELS" | jq -e '. | index("regenerate screenshots")' >/dev/null; then
+                        exit 1;
+                    fi
             -   name: GIT checkout branch - ${{ github.ref }}
                 uses: actions/checkout@v4
                 with:
