@@ -22,10 +22,10 @@ const nextConfig = {
         loader: 'custom',
         remotePatterns: [
             {
-                hostname: process.env.DOMAIN_HOSTNAME_1,
+                hostname: process.env.NEXT_PUBLIC_DOMAIN_HOSTNAME_1,
             },
             {
-                hostname: process.env.DOMAIN_HOSTNAME_2,
+                hostname: process.env.NEXT_PUBLIC_DOMAIN_HOSTNAME_2,
             },
         ],
     },
@@ -45,8 +45,8 @@ const nextConfig = {
         userSnapEnabledDefaultValue: process.env.USERSNAP_STOREFRONT_ENABLED_BY_DEFAULT === '1',
         domains: [
             {
-                publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_1,
-                url: process.env.DOMAIN_HOSTNAME_1,
+                publicGraphqlEndpoint: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_1,
+                url: process.env.NEXT_PUBLIC_DOMAIN_HOSTNAME_1,
                 defaultLocale: 'en',
                 currencyCode: 'EUR',
                 fallbackTimezone: 'Europe/Prague',
@@ -61,8 +61,8 @@ const nextConfig = {
                 type: 'B2C',
             },
             {
-                publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_2,
-                url: process.env.DOMAIN_HOSTNAME_2,
+                publicGraphqlEndpoint: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_2,
+                url: process.env.NEXT_PUBLIC_DOMAIN_HOSTNAME_2,
                 defaultLocale: 'cs',
                 currencyCode: 'CZK',
                 fallbackTimezone: 'Europe/Prague',
