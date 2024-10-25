@@ -9,7 +9,7 @@ export const getDomainIdFromHostname = (hostname: string): number => {
         }
 
         const domainId = index + 1;
-        const domainHostname = process.env[`DOMAIN_HOSTNAME_${domainId}`];
+        const domainHostname = process.env[`NEXT_PUBLIC_DOMAIN_HOSTNAME_${domainId}`];
         if (domainHostname) {
             const { host } = new URL(domainHostname);
 
