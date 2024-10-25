@@ -3,7 +3,8 @@ import getConfig from 'next/config';
 const nextConfig = getConfig();
 
 export const STATIC_REWRITE_PATHS = {
-    [(nextConfig?.publicRuntimeConfig?.domains?.[0]?.url || process.env.DOMAIN_HOSTNAME_1) as string]: {
+    [(nextConfig?.publicRuntimeConfig?.domains?.[0]?.url || process.env.NEXT_PUBLIC_DOMAIN_HOSTNAME_1) as string]: {
+        '/about': '/about',
         '/search': '/search',
         '/cart': '/cart',
         '/contact': '/contact',
@@ -40,7 +41,8 @@ export const STATIC_REWRITE_PATHS = {
         '/social-login': '/social-login',
         '/_feedback': '/_feedback',
     },
-    [(nextConfig?.publicRuntimeConfig?.domains?.[1]?.url || process.env.DOMAIN_HOSTNAME_2) as string]: {
+    [(nextConfig?.publicRuntimeConfig?.domains?.[1]?.url || process.env.NEXT_PUBLIC_DOMAIN_HOSTNAME_2) as string]: {
+        '/about': '/about',
         '/search': '/hledani',
         '/cart': '/kosik',
         '/contact': '/kontakt',
