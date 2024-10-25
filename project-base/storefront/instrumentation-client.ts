@@ -7,8 +7,8 @@ const enableFeedback = getPublicConfigProperty('sentryFeedbackEnable', false);
 const enableReplays = getPublicConfigProperty('sentryReplaysEnable', false);
 
 Sentry.init({
-    dsn: dsn,
-    environment: environment,
+    dsn: process.env.SENTRY_DSN ?? '',
+    environment: process.env.SENTRY_ENVIRONMENT ?? '',
     tracesSampleRate: 0.1,
     integrations: [],
     replaysSessionSampleRate: enableReplays ? 0.1 : 0,
