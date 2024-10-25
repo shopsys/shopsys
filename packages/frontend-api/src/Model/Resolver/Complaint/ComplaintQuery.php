@@ -19,6 +19,7 @@ class ComplaintQuery extends AbstractQuery
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Complaint\ComplaintApiFacade $complaintApiFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \Symfony\Component\Security\Core\Security $security
      */
     public function __construct(
         protected readonly ComplaintApiFacade $complaintApiFacade,
@@ -44,12 +45,12 @@ class ComplaintQuery extends AbstractQuery
         if ($this->security->isGranted(CustomerUserRole::ROLE_API_ALL)) {
             $complaint = $this->complaintApiFacade->findByComplaintNumberAndCustomer(
                 $complaintNumber,
-                $customerUser->getCustomer()
+                $customerUser->getCustomer(),
             );
         } else {
             $complaint = $this->complaintApiFacade->findByComplaintNumberAndCustomerUser(
                 $complaintNumber,
-                $customerUser
+                $customerUser,
             );
         }
 
