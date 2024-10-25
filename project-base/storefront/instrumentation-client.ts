@@ -1,14 +1,8 @@
 import * as Sentry from '@sentry/nextjs';
-import getConfig from 'next/config';
-
-const { publicRuntimeConfig } = getConfig();
-
-const dsn: string = publicRuntimeConfig.sentryDsn;
-const environment: string = publicRuntimeConfig.sentryEnvironment;
 
 Sentry.init({
-    dsn: dsn,
-    environment: environment,
+    dsn: process.env.SENTRY_DSN ?? '',
+    environment: process.env.SENTRY_ENVIRONMENT ?? '',
     tracesSampleRate: 0.1,
 
     // remove, if you don't want replays
