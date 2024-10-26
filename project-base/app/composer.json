@@ -62,7 +62,7 @@
         "overblog/dataloader-bundle": "^0.6.0",
         "presta/sitemap-bundle": "^3.3",
         "prezent/doctrine-translatable-bundle": "^1.4",
-        "sentry/sentry-symfony": "^4.2.8",
+        "sentry/sentry-symfony": "^5.0.1",
         "shopsys/deployment": "^3.2.7",
         "shopsys/form-types-bundle": "16.0.x-dev",
         "shopsys/framework": "16.0.x-dev",
