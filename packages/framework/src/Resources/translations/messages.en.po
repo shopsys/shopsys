@@ -1930,6 +1930,9 @@ msgstr ""
 msgid "GoPay payment status"
 msgstr ""
 
+msgid "Group"
+msgstr ""
+
 msgid "HTML code"
 msgstr ""
 
