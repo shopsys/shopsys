@@ -1,8 +1,8 @@
 import { Image } from 'components/Basic/Image/Image';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
+import { getDeliveryMessage } from 'components/Pages/Order/TransportAndPayment/transportAndPaymentUtils';
 import { TIDs } from 'cypress/tids';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
-import { Translate } from 'next-translate';
 import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
@@ -83,33 +83,4 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
             )}
         </div>
     );
-};
-
-const getDeliveryMessage = (daysUntilDelivery: number, isPersonalPickup: boolean, t: Translate) => {
-    if (isPersonalPickup) {
-        if (daysUntilDelivery === 0) {
-            return t('Personal pickup today');
-        }
-
-        if (daysUntilDelivery < 7) {
-            return t('Personal pickup in {{ count }} days', { count: daysUntilDelivery });
-        }
-
-        return t('Personal pickup in {{count}} weeks', {
-            count: Math.ceil(daysUntilDelivery / 7),
-        });
-    }
-    if (daysUntilDelivery === 0) {
-        return t('Delivery today');
-    }
-
-    if (daysUntilDelivery < 7) {
-        return t('Delivery in {{count}} days', {
-            count: daysUntilDelivery,
-        });
-    }
-
-    return t('Delivery in {{count}} weeks', {
-        count: Math.ceil(daysUntilDelivery / 7),
-    });
 };
