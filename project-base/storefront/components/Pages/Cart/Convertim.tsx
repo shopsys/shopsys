@@ -13,9 +13,9 @@ import useTranslation from 'next-translate/useTranslation';
 import { useCallback } from 'react';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 
-type ConvertimProps = { cart: TypeCartFragment; convertimUuid: string };
+type ConvertimProps = { cart: TypeCartFragment; convertimProjectUuid: string };
 
-export const Convertim: FC<ConvertimProps> = ({ cart, convertimUuid }) => {
+export const Convertim: FC<ConvertimProps> = ({ cart, convertimProjectUuid }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const [{ data: transportsData, fetching: isTransportsFetching }] = useTransportsWithStoresQuery({
@@ -52,7 +52,7 @@ export const Convertim: FC<ConvertimProps> = ({ cart, convertimUuid }) => {
 
     return (
         <ConvertimComponent
-            convertimUuid={convertimUuid}
+            convertimUuid={convertimProjectUuid}
             getCart={getCart}
             getPayments={getPayments}
             getStores={getStores}
