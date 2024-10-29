@@ -1,6 +1,5 @@
 import { CartList } from './CartList/CartList';
 import { CartSummary } from './CartSummary';
-import { Convertim } from './Convertim';
 import { useCartPageNavigation } from './cartUtils';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { CartSteps } from 'components/Blocks/CartSteps/CartSteps';
@@ -49,8 +48,6 @@ export const CartContent: FC<CartContentProps> = ({ cart }) => {
                     )}
                 />
             )}
-
-            {convertimProjectUuid && <Convertim cart={cart} convertimProjectUuid={convertimProjectUuid} />}
         </Webline>
     );
 };
