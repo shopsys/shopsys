@@ -373,3 +373,33 @@ export const useTransportAndPaymentPageNavigation = (validationMessages: Partial
 
 export const getIsGoPayBankTransferPayment = (payment: Maybe<TypeSimplePaymentFragment>) =>
     payment?.goPayPaymentMethod?.identifier === 'BANK_ACCOUNT';
+
+export const getDeliveryMessage = (daysUntilDelivery: number, isPersonalPickup: boolean, t: Translate) => {
+    if (isPersonalPickup) {
+        if (daysUntilDelivery === 0) {
+            return t('Personal pickup today');
+        }
+
+        if (daysUntilDelivery < 7) {
+            return t('Personal pickup in {{ count }} days', { count: daysUntilDelivery });
+        }
+
+        return t('Personal pickup in {{count}} weeks', {
+            count: Math.ceil(daysUntilDelivery / 7),
+        });
+    }
+
+    if (daysUntilDelivery === 0) {
+        return t('Delivery today');
+    }
+
+    if (daysUntilDelivery < 7) {
+        return t('Delivery in {{count}} days', {
+            count: daysUntilDelivery,
+        });
+    }
+
+    return t('Delivery in {{count}} weeks', {
+        count: Math.ceil(daysUntilDelivery / 7),
+    });
+};
