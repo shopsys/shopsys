@@ -63,6 +63,7 @@ class ParameterGridFactory implements GridFactoryInterface
         }
 
         $grid->addColumn('parameterType', 'p.parameterType', t('Type'));
+        $grid->addColumn('parameterGroup', 'pgt.name', t('Group'));
         $grid->addColumn('parameterUnit', 'ut.name', t('Unit'));
 
         $grid->addEditActionColumn('admin_parameter_edit', ['id' => 'p.id']);
