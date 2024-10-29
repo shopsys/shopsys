@@ -5,6 +5,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { CartIcon } from 'components/Basic/Icon/CartIcon';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
+import { Convertim } from 'components/Pages/Cart/Convertim';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
@@ -34,7 +35,7 @@ export const CartInHeader: FC = ({ className }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const { cart, isCartFetchingOrUnavailable } = useCurrentCart();
-    const { url } = useDomainConfig();
+    const { url, convertimProjectUuid } = useDomainConfig();
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
 
     const [isActive, setIsActive] = useState(false);
@@ -121,6 +122,10 @@ export const CartInHeader: FC = ({ className }) => {
             </div>
 
             <Overlay isActive={isActiveDelayed} onClick={() => setIsActive(false)} />
+
+            {convertimProjectUuid && !!cart?.items.length && (
+                <Convertim cart={cart} convertimProjectUuid={convertimProjectUuid} />
+            )}
         </>
     );
 };
