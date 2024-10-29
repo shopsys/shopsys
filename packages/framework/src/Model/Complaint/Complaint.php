@@ -146,7 +146,6 @@ class Complaint
         $this->number = $complaintData->number;
         $this->domainId = $complaintData->domainId;
         $this->order = $complaintData->order;
-        $this->customerUser = $complaintData->customerUser;
         $this->setCustomerUser($complaintData->customerUser);
 
         $this->setData($complaintData);
@@ -329,7 +328,7 @@ class Complaint
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      */
-    public function setCustomerUser($customerUser): void
+    protected function setCustomerUser($customerUser): void
     {
         $this->customerUser = $customerUser;
         $this->customer = $customerUser?->getCustomer();

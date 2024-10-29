@@ -155,7 +155,7 @@ class ComplaintRepository
     ): ?Complaint {
         return $this->createQueryBuilder()
             ->andWhere('c.number = :complaintNumber')->setParameter('complaintNumber', $complaintNumber)
-            ->andWhere('c.customer = :customerUser')->setParameter('customerUser', $customer)
+            ->andWhere('c.customer = :customer')->setParameter('customer', $customer)
             ->getQuery()
             ->getOneOrNullResult();
     }
