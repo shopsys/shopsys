@@ -17,7 +17,7 @@ type CartContentProps = {
 
 export const CartContent: FC<CartContentProps> = ({ cart }) => {
     const { t } = useTranslation();
-    const { url, isLuigisBoxActive, convertimUuid } = useDomainConfig();
+    const { url, isLuigisBoxActive, convertimProjectUuid } = useDomainConfig();
     const { goToPreviousStepFromCartPage, goToNextStepFromCartPage } = useCartPageNavigation();
     return (
         <Webline>
@@ -34,7 +34,7 @@ export const CartContent: FC<CartContentProps> = ({ cart }) => {
                 buttonNext={t('Transport and payment')}
                 hasDisabledLook={false}
                 nextStepClickHandler={goToNextStepFromCartPage}
-                shouldUseConvertim={!!convertimUuid}
+                shouldUseConvertim={!!convertimProjectUuid}
                 withGapTop={false}
             />
 
@@ -50,7 +50,7 @@ export const CartContent: FC<CartContentProps> = ({ cart }) => {
                 />
             )}
 
-            {convertimUuid && <Convertim cart={cart} convertimUuid={convertimUuid} />}
+            {convertimProjectUuid && <Convertim cart={cart} convertimProjectUuid={convertimProjectUuid} />}
         </Webline>
     );
 };
