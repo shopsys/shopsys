@@ -20,7 +20,7 @@ const MOCKED_DOMAIN_CONFIG: DomainConfigType = {
     },
     publicGraphqlEndpoint: '',
     type: CustomerUserAreaEnum.B2C,
-    convertimUuid: null,
+    convertimProjectUuid: null,
 };
 
 describe('ExtendedNextLink snapshot tests', () => {
