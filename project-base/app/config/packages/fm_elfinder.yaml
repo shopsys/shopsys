@@ -1,5 +1,5 @@
 fm_elfinder:
-    assets_path: /components
+    assets_path: false
     instances:
         default:
             editor: ckeditor
