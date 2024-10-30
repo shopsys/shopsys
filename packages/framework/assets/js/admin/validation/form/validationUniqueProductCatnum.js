@@ -1,8 +1,5 @@
-import 'framework/common/components';
-
 (function ($, window) {
-
-    window.AppFormConstraintsUniqueProductCatnum = function () {
+    window.ShopsysFrameworkBundleFormConstraintsUniqueProductCatnum = function () {
         this.message = null;
 
         this.validate = (value, element) => {

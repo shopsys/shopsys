@@ -457,6 +457,9 @@ msgstr ""
 msgid "Product parameters are duplicate."
 msgstr ""
 
+msgid "Product with entered catalog number already exists"
+msgstr ""
+
 msgid "Promo code \"%invalidPromoCode%\" is not available for pricing group ID \"%pricingGroupId%\"."
 msgstr ""
 

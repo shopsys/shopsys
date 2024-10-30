@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\ProductParameterValueFo
 use Shopsys\FrameworkBundle\Form\Admin\Product\Price\ProductPricesWithVatSelectType;
 use Shopsys\FrameworkBundle\Form\Admin\Stock\ProductStockFormType;
 use Shopsys\FrameworkBundle\Form\CategoriesType;
+use Shopsys\FrameworkBundle\Form\Constraints\UniqueProductCatnum;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueProductParameters;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
@@ -48,6 +49,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Constraints;
 
 class ProductFormType extends AbstractType
@@ -66,6 +68,7 @@ class ProductFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Form\Transformers\ProductParameterValueToProductParameterValuesLocalizedTransformer $productParameterValueToProductParameterValuesLocalizedTransformer
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
+     * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
      */
     public function __construct(
         private readonly BrandFacade $brandFacade,
@@ -79,6 +82,7 @@ class ProductFormType extends AbstractType
         private readonly ProductParameterValueToProductParameterValuesLocalizedTransformer $productParameterValueToProductParameterValuesLocalizedTransformer,
         private readonly ProductFacade $productFacade,
         private readonly TransportFacade $transportFacade,
+        private readonly UrlGeneratorInterface $urlGenerator,
     ) {
     }
 
@@ -164,14 +168,20 @@ class ProductFormType extends AbstractType
         ]);
 
         $builderBasicInformationGroup->add('catnum', TextType::class, [
-            'required' => false,
+            'required' => true,
             'constraints' => [
-                new Constraints\Length(
-                    ['max' => 100, 'maxMessage' => 'Catalog number cannot be longer than {{ limit }} characters'],
-                ),
+                new Constraints\NotBlank(),
+                new Constraints\Length(['max' => 100, 'maxMessage' => 'Catalog number cannot be longer than {{ limit }} characters']),
+                new UniqueProductCatnum(['product' => $product]),
             ],
             'disabled' => $this->isProductMainVariant($product),
-            'attr' => $disabledItemInMainVariantAttr,
+            'attr' => array_merge(
+                $disabledItemInMainVariantAttr,
+                [
+                    'data-unique-catnum-url' => $this->urlGenerator->generate('admin_product_catnumexists'),
+                    'data-current-product-catnum' => $product !== null ? $product->getCatnum() : '',
+                ],
+            ),
             'label' => t('Catalog number'),
         ])
             ->add('partno', TextType::class, [

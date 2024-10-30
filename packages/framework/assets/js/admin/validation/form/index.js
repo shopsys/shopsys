@@ -11,3 +11,4 @@ import './validationPromoCode';
 import './validationHreflangSetting';
 import './validationStore';
 import './validationTransportPrices';
+import './validationUniqueProductCatnum';

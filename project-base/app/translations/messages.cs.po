@@ -67,9 +67,6 @@ msgstr "CMS"
 msgid "Cancel"
 msgstr "Zrušit"
 
-msgid "Catalog number"
-msgstr "Katalogové číslo"
-
 msgid "Catalog numbers"
 msgstr "Katalogová čísla"
 

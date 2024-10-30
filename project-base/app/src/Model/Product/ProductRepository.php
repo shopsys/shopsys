@@ -26,8 +26,6 @@ use Shopsys\FrameworkBundle\Model\Stock\ProductStock;
  * @method \App\Model\Product\Product[] getAllByIds(int[] $ids)
  * @method \App\Model\Product\Product getVisible(int $id, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
  * @method \App\Model\Product\Product getSellableById(int $id, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
- * @method \Doctrine\ORM\Internal\Hydration\IterableResult|\App\Model\Product\Product[][] getProductsForPriceRecalculationIterator()
- * @method \Doctrine\ORM\Internal\Hydration\IterableResult|\App\Model\Product\Product[][] getProductsForAvailabilityRecalculationIterator()
  * @method \App\Model\Product\Product[] getOfferedByIds(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int[] $sortedProductIds)
  * @method \App\Model\Product\Product[] getListableByIds(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int[] $sortedProductIds)
  * @method \App\Model\Product\Product getOneByCatnumExcludeMainVariants(string $productCatnum)
@@ -35,6 +33,7 @@ use Shopsys\FrameworkBundle\Model\Stock\ProductStock;
  * @method \App\Model\Product\Product[] getAllSellableVariantsByMainVariant(\App\Model\Product\Product $mainVariant, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
  * @method \App\Model\Product\Product[] getAllOfferedProductsPaginated(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int $offset, int $limit)
  * @property \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
+ * @method \App\Model\Product\Product|null findByCatnum(string $catnum)
  */
 class ProductRepository extends BaseProductRepository
 {
@@ -73,20 +72,6 @@ class ProductRepository extends BaseProductRepository
             ->having('SUM(ps.productQuantity) > 0');
 
         $queryBuilder->andWhere('(EXISTS(' . $subquery->getDQL() . ')) AND pd.saleExclusion = false AND p.calculatedSellingDenied = false');
-    }
-
-    /**
-     * @param string $catnum
-     * @return \App\Model\Product\Product|null
-     */
-    public function findByCatnum(string $catnum): ?Product
-    {
-        $queryBuilder = $this->getProductRepository()
-            ->createQueryBuilder('p')
-            ->andWhere('p.catnum = :catnum')
-            ->setParameter('catnum', $catnum);
-
-        return $queryBuilder->getQuery()->getOneOrNullResult();
     }
 
     /**

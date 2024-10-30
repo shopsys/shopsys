@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Form\Constraints;
+namespace Shopsys\FrameworkBundle\Form\Constraints;
 
-use App\Model\Product\Product;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 use Symfony\Component\Validator\Constraint;
 
 class UniqueProductCatnum extends Constraint

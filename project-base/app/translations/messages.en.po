@@ -67,9 +67,6 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-msgid "Catalog number"
-msgstr ""
-
 msgid "Catalog numbers"
 msgstr ""
 

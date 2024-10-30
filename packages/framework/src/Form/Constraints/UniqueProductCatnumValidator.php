@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Form\Constraints;
+namespace Shopsys\FrameworkBundle\Form\Constraints;
 
-use App\Model\Product\ProductFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -12,10 +12,11 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class UniqueProductCatnumValidator extends ConstraintValidator
 {
     /**
-     * @param \App\Model\Product\ProductFacade $productFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      */
-    public function __construct(private ProductFacade $productFacade)
-    {
+    public function __construct(
+        protected readonly ProductFacade $productFacade,
+    ) {
     }
 
     /**

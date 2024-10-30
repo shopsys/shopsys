@@ -7,9 +7,6 @@ msgstr ""
 msgid "An array of values is not supported as an input for \"slider\" type parameter. Use \"minimalValue\" and \"maximalValue\" instead."
 msgstr "Pole hodnot (\"values\") není podporováno jako vstup pro parametry typu \"slider\". Namísto toho použijte \"minimalValue\" and \"maximalValue\"."
 
-msgid "Catalog number cannot be longer than {{ limit }} characters"
-msgstr "Katalogové číslo nesmí být delší než {{ limit }} znaků"
-
 msgid "Email cannot be longer than {{ limit }} characters"
 msgstr "E-mail nesmí být delší než {{ limit }} znaků"
 
@@ -78,9 +75,6 @@ msgstr "Prefix produktu nesmí být delší než {{ limit }} znaků"
 
 msgid "Product suffix name cannot be longer than {{ limit }} characters"
 msgstr "Suffix produktu nesmí být delší než {{ limit }} znaků"
-
-msgid "Product with entered catalog number already exists"
-msgstr "Produkt s tímto katalogovým číslem již existuje"
 
 msgid "Provided hash is not valid."
 msgstr "Zadaný hash není validní."

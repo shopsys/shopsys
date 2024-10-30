@@ -41,7 +41,6 @@ use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
  * @method \App\Model\Product\Product getById(int $productId)
  * @method \App\Model\Product\Product create(\App\Model\Product\ProductData $productData, string $priority = \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum::REGULAR)
  * @method setAdditionalDataAfterCreate(\App\Model\Product\Product $product, \App\Model\Product\ProductData $productData)
- * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[][] getAllProductSellingPricesIndexedByDomainId(\App\Model\Product\Product $product)
  * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[] getAllProductSellingPricesByDomainId(\App\Model\Product\Product $product, int $domainId)
  * @method createProductVisibilities(\App\Model\Product\Product $product)
  * @method \App\Model\Product\Product getOneByCatnumExcludeMainVariants(string $productCatnum)
@@ -50,6 +49,8 @@ use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
  * @method \App\Model\Product\Product[] getAllByIds(int[] $ids)
  * @method createFriendlyUrlsWhenRenamed(\App\Model\Product\Product $product, array $originalNames)
  * @method array getChangedNamesByLocale(\App\Model\Product\Product $product, array $originalNames)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[][] getAllProductSellingPricesIndexedByDomainId(\App\Model\Product\Product $product)
+ * @method \App\Model\Product\Product|null findByCatnum(string $catnum)
  */
 class ProductFacade extends BaseProductFacade
 {
@@ -200,15 +201,6 @@ class ProductFacade extends BaseProductFacade
         if (count($toFlush) > 0) {
             $this->em->flush();
         }
-    }
-
-    /**
-     * @param string $catnum
-     * @return \App\Model\Product\Product|null
-     */
-    public function findByCatnum(string $catnum): ?BaseProduct
-    {
-        return $this->productRepository->findByCatnum($catnum);
     }
 
     /**

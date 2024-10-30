@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Form\Admin;
 
-use App\Form\Constraints\UniqueProductCatnum;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Form\FormBuilderHelper;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
@@ -13,9 +12,7 @@ use Shopsys\FrameworkBundle\Form\LocalizedFullWidthType;
 use Shopsys\FrameworkBundle\Form\ProductsType;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Constraints;
 
 class ProductFormTypeExtension extends AbstractTypeExtension
@@ -24,11 +21,9 @@ class ProductFormTypeExtension extends AbstractTypeExtension
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Form\FormBuilderHelper $formBuilderHelper
-     * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
      */
     public function __construct(
         private readonly FormBuilderHelper $formBuilderHelper,
-        private readonly UrlGeneratorInterface $urlGenerator,
     ) {
     }
 
@@ -64,43 +59,12 @@ class ProductFormTypeExtension extends AbstractTypeExtension
             'position' => ['after' => 'name'],
         ]);
 
-        $catnumAttributes = $builder->get('basicInformationGroup')->get('catnum')->getAttributes();
-
-        $builder->get('basicInformationGroup')->remove('catnum');
-        $builder->get('basicInformationGroup')->add('catnum', TextType::class, [
-            'required' => true,
-            'constraints' => [
-                new Constraints\NotBlank(),
-                new Constraints\Length(['max' => 100, 'maxMessage' => 'Catalog number cannot be longer than {{ limit }} characters']),
-                new UniqueProductCatnum(['product' => $product]),
-            ],
-            'disabled' => $this->isProductMainVariant($product),
-            'attr' => array_merge(
-                $catnumAttributes,
-                [
-                    'data-unique-catnum-url' => $this->urlGenerator->generate('admin_product_catnumexists'),
-                    'data-current-product-catnum' => $product !== null ? $product->getCatnum() : '',
-                ],
-            ),
-            'label' => t('Catalog number'),
-            'position' => ['before' => 'partno'],
-        ]);
-
         $this->setSeoGroup($builder);
-        $this->setDisplayAvailabilityGroup($builder);
         $this->setPricesGroup($builder, $product);
         $this->setRelatedProductsGroup($builder, $product);
         $this->setVideoGroup($builder);
 
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     */
-    private function setDisplayAvailabilityGroup(FormBuilderInterface $builder): void
-    {
-        $groupBuilder = $builder->get('displayAvailabilityGroup');
     }
 
     /**

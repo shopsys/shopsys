@@ -1,2 +1,1 @@
 import './promoCodeValidator';
-import './uniqueProductCatnumValidator';

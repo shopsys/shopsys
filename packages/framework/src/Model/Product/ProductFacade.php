@@ -428,4 +428,13 @@ class ProductFacade
 
         return $changedProductNames;
     }
+
+    /**
+     * @param string $catnum
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product|null
+     */
+    public function findByCatnum(string $catnum): ?Product
+    {
+        return $this->productRepository->findByCatnum($catnum);
+    }
 }

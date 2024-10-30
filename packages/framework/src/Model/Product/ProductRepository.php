@@ -515,4 +515,18 @@ class ProductRepository
 
         return $sortedProductIds;
     }
+
+    /**
+     * @param string $catnum
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product|null
+     */
+    public function findByCatnum(string $catnum): ?Product
+    {
+        $queryBuilder = $this->getProductRepository()
+            ->createQueryBuilder('p')
+            ->andWhere('p.catnum = :catnum')
+            ->setParameter('catnum', $catnum);
+
+        return $queryBuilder->getQuery()->getOneOrNullResult();
+    }
 }
