@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup;
 use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 
 class AffectedProductsFacade
@@ -54,6 +55,15 @@ class AffectedProductsFacade
     public function getProductIdsWithParameter(Parameter $parameter): array
     {
         return $this->affectedProductsRepository->getProductIdsWithParameter($parameter);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup $parameterGroup
+     * @return int[]
+     */
+    public function getProductIdsWithParameterGroup(ParameterGroup $parameterGroup): array
+    {
+        return $this->affectedProductsRepository->getProductIdsWithParameterGroup($parameterGroup);
     }
 
     /**

@@ -428,13 +428,4 @@ class ProductFacade
 
         return $changedProductNames;
     }
-
-    /**
-     * @param int $parameterGroupId
-     * @return int[]
-     */
-    public function getIdsByParameterGroupId(int $parameterGroupId): array
-    {
-        return $this->productRepository->getIdsByParameterGroupId($parameterGroupId);
-    }
 }

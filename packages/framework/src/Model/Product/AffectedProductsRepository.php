@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 
@@ -84,6 +85,21 @@ class AffectedProductsRepository
             ->innerJoin(ProductParameterValue::class, 'ppv', 'WITH', 'ppv.product = p')
             ->where('ppv.parameter = :parameter')
             ->setParameter('parameter', $parameter);
+
+        return $this->getSingleColumnResultFromQueryBuilder($queryBuilder);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup $parameterGroup
+     * @return int[]
+     */
+    public function getProductIdsWithParameterGroup(ParameterGroup $parameterGroup): array
+    {
+        $queryBuilder = $this->createQueryBuilder()
+            ->join(ProductParameterValue::class, 'ppv', 'WITH', 'ppv.product = p')
+            ->join('ppv.parameter', 'parameter')
+            ->where('parameter.group = :parameterGroupId')
+            ->setParameter('parameterGroupId', $parameterGroup->getId());
 
         return $this->getSingleColumnResultFromQueryBuilder($queryBuilder);
     }

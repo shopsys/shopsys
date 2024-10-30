@@ -6,10 +6,8 @@ namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
-use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ParameterGroupFacade
@@ -57,8 +55,7 @@ class ParameterGroupFacade
 
         $this->em->flush();
 
-        $affectedProductIds = $this->productFacade->getIdsByParameterGroupId($parameterGroupId);
-        $this->productRecalculationDispatcher->dispatchProductIds($affectedProductIds, ProductRecalculationPriorityEnum::REGULAR, [ProductExportScopeConfig::SCOPE_PARAMETERS]);
+        $this->dispatchParameterGroupEvent($parameterGroup, ParameterGroupEvent::UPDATE);
 
         return $parameterGroup;
     }
@@ -128,9 +125,6 @@ class ParameterGroupFacade
         $this->em->remove($parameterGroup);
 
         $this->dispatchParameterGroupEvent($parameterGroup, ParameterGroupEvent::DELETE);
-
-        $affectedProductIds = $this->productFacade->getIdsByParameterGroupId($parameterGroupId);
-        $this->productRecalculationDispatcher->dispatchProductIds($affectedProductIds, ProductRecalculationPriorityEnum::REGULAR, [ProductExportScopeConfig::SCOPE_PARAMETERS]);
 
         $this->em->flush();
     }

@@ -12,7 +12,6 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
 
 class ProductRepository
@@ -515,22 +514,5 @@ class ProductRepository
         }
 
         return $sortedProductIds;
-    }
-
-    /**
-     * @param int $parameterGroupId
-     * @return int[]
-     */
-    public function getIdsByParameterGroupId(int $parameterGroupId): array
-    {
-        $queryBuilder = $this->getProductRepository()->createQueryBuilder('p')
-            ->select('p.id')
-            ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'ppv.product = p.id')
-            ->join('ppv.parameter', 'param')
-            ->where('param.group = :parameterGroupId')
-            ->setParameter('parameterGroupId', $parameterGroupId)
-            ->groupBy('p.id');
-
-        return array_map('intval', $queryBuilder->getQuery()->getSingleColumnResult());
     }
 }
