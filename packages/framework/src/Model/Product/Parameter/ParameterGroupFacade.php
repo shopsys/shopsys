@@ -61,20 +61,6 @@ class ParameterGroupFacade
     }
 
     /**
-     * @param array<int> $rowIds
-     */
-    public function saveOrdering(array $rowIds): void
-    {
-        foreach ($rowIds as $rowId) {
-            $parameterGroup = $this->parameterRepository->getParameterGroupById($rowId);
-
-            $parameterGroup->setPosition($rowId);
-        }
-
-        $this->em->flush();
-    }
-
-    /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup[]
      */
     public function getAll(): array

@@ -14,7 +14,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterGroupNotF
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupFacade;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -47,20 +46,6 @@ class ParameterGroupController extends AdminBaseController
         return $this->render('@ShopsysFramework/Admin/Content/ParameterGroup/list.html.twig', [
             'grid' => $grid->createView(),
         ]);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
-    #[Route(path: '/product/parameter-group/save-ordering/', condition: 'request.isXmlHttpRequest()')]
-    public function saveOrderingAction(Request $request): JsonResponse
-    {
-        $this->parameterGroupFacade->saveOrdering($request->get('rowIds'));
-
-        $responseData = ['success' => true];
-
-        return new JsonResponse($responseData);
     }
 
     /**

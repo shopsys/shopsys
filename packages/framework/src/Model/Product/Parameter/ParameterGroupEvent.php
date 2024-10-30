@@ -11,19 +11,19 @@ class ParameterGroupEvent extends Event
     /**
      * The CREATE event occurs once a parameter group was created.
      *
-     * This event allows you to run jobs dependent on the parameter creation.
+     * This event allows you to run jobs dependent on the parameter group creation.
      */
     public const CREATE = 'parameterGroup.create';
     /**
      * The UPDATE event occurs once a parameter group was changed.
      *
-     * This event allows you to run jobs dependent on the parameter change.
+     * This event allows you to run jobs dependent on the parameter group change.
      */
     public const UPDATE = 'parameterGroup.update';
     /**
      * The DELETE event occurs once a parameter group was deleted.
      *
-     * This event allows you to run jobs dependent on the parameter deletion.
+     * This event allows you to run jobs dependent on the parameter group deletion.
      */
     public const DELETE = 'parameterGroup.delete';
 

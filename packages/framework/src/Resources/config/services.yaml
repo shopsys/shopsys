@@ -310,6 +310,10 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
 
+    Shopsys\FrameworkBundle\Component\Grid\DispatchAffectedEntityOnSaveOrderingListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+
     Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditRegistry:
         arguments: [!tagged shopsys.grid_inline_edit]
 
