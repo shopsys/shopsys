@@ -21,3 +21,7 @@ services:
             - '@Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry'
         tags:
             - { name: routing.loader }
+
+    Shopsys\AdministrationBundle\Component\Menu\CrudMenuSubscriber:
+        tags:
+            - { name: kernel.event_subscriber }
