@@ -4,6 +4,7 @@ import { Drawer } from 'components/Basic/Drawer/Drawer';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { TIDs } from 'cypress/tids';
+import { useCurrentCustomerUserQuery } from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { twMergeCustom } from 'utils/twMerge';
@@ -15,11 +16,14 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
     const [isActive, setIsActive] = useState(false);
     const isActiveDelayed = useDebounce(isActive, 200);
     const isDesktop = useMediaMin('vl');
+    const [{ data: currentCustomerUserData }] = useCurrentCustomerUserQuery();
+    const currentCustomerUserUuid = currentCustomerUserData?.currentCustomerUser?.uuid;
 
     return (
         <>
             <div
                 className={twMergeCustom('group lg:relative lg:flex', isActive && 'z-aboveOverlay')}
+                data-convertim-eshop-customer-uuid={currentCustomerUserUuid}
                 tid={TIDs.my_account_link}
                 onMouseEnter={() => isDesktop && setIsActive(true)}
                 onMouseLeave={() => isDesktop && setIsActive(false)}
