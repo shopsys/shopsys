@@ -258,6 +258,11 @@ class OrderData
      */
     public $freeTransportAndPaymentApplied;
 
+    /**
+     * @var string|null
+     */
+    public $convertimUuid;
+
     public function __construct()
     {
         $this->deliveryAddressSameAsBillingAddress = false;

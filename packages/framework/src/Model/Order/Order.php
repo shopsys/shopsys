@@ -365,6 +365,12 @@ class Order
     protected $freeTransportAndPaymentApplied;
 
     /**
+     * @var string
+     * @ORM\Column(type="guid", unique=true, nullable=true)
+     */
+    protected $convertimUuid;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      * @param string $orderNumber
      * @param string $urlHash
@@ -405,6 +411,7 @@ class Order
         $this->paymentTransactions = new ArrayCollection();
         $this->goPayBankSwift = $orderData->goPayBankSwift;
         $this->pickupPlaceIdentifier = $orderData->pickupPlaceIdentifier;
+        $this->convertimUuid = $orderData->convertimUuid;
     }
 
     /**
@@ -1290,5 +1297,13 @@ class Order
         }
 
         return $totalWeight;
+    }
+
+    /**
+     * @return string
+     */
+    public function getConvertimUuid()
+    {
+        return $this->convertimUuid;
     }
 }

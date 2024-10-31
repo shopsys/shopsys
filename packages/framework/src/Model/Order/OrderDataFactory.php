@@ -131,6 +131,7 @@ class OrderDataFactory
         $orderData->trackingNumber = $order->getTrackingNumber();
         $orderData->promoCode = $order->getPromoCode();
         $orderData->freeTransportAndPaymentApplied = $order->isFreeTransportAndPaymentApplied();
+        $orderData->convertimUuid = $order->getConvertimUuid();
     }
 
     /**
