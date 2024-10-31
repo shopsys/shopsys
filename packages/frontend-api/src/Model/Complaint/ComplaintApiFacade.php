@@ -184,7 +184,7 @@ class ComplaintApiFacade
      * @param int $limit
      * @param int $offset
      * @param string|null $search
-     * @return array
+     * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint[]
      */
     public function getCustomerUserComplaintsLimitedList(
         CustomerUser $customerUser,
