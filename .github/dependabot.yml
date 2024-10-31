@@ -9,3 +9,6 @@ updates:
         directory: "/project-base/storefront" # Location of package manifests
         schedule:
             interval: "weekly"
+        ignore:
+            -   dependency-name: "*"
+                update-types: [ "version-update:semver-major" ]
