@@ -41,3 +41,5 @@ TransportDecorator:
             transportTypeCode:
                 type: "TransportTypeEnum!"
                 description: "Code of transport type"
+            vat:
+                type: "Vat!"

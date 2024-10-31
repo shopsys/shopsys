@@ -25,5 +25,8 @@ query TransportsQuery($cartUuid: Uuid) {
                 }
             }
         }
+        vat {
+            percent
+        }
     }
 }

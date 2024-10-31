@@ -3,7 +3,8 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import { PriceFragment } from '../../prices/fragments/PriceFragment.generated';
 import { ImageFragment } from '../../images/fragments/ImageFragment.generated';
-export type TypeSimplePaymentFragment = { __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null };
+import { VatFragment } from '../../vat/fragments/VatFragment.generated';
+export type TypeSimplePaymentFragment = { __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null, vat: { __typename: 'Vat', percent: string } };
 
 
       export interface PossibleTypesResultData {
@@ -102,6 +103,10 @@ export const SimplePaymentFragment = gql`
     name
     paymentGroup
   }
+  vat {
+    ...VatFragment
+  }
 }
     ${PriceFragment}
-${ImageFragment}`;
+${ImageFragment}
+${VatFragment}`;

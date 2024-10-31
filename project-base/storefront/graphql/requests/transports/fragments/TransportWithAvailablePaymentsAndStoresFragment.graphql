@@ -18,4 +18,7 @@ fragment TransportWithAvailablePaymentsAndStoresFragment on Transport {
     }
     transportTypeCode
     isPersonalPickup
+    vat {
+        ...VatFragment
+    }
 }

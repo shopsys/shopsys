@@ -52,3 +52,5 @@ PaymentDecorator:
             type:
                 type: "String!"
                 description: "Type of payment"
+            vat:
+                type: "Vat!"

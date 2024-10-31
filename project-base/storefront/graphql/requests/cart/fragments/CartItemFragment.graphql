@@ -39,6 +39,9 @@ fragment CartItemFragment on CartItem {
         categories {
             name
         }
+        vat {
+            ...VatFragment
+        }
     }
     discounts {
         ...CartItemDiscountFragment

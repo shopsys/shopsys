@@ -8,6 +8,7 @@ use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade;
@@ -315,5 +316,14 @@ class ProductEntityFieldMapper
             $product,
             $this->domain->getId(),
         );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
+     */
+    public function getVat(Product $product): Vat
+    {
+        return $product->getVatForDomain($this->domain->getId());
     }
 }

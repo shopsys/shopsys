@@ -93,3 +93,5 @@ ProductDecorator:
             storeAvailabilities:
                 type: "[StoreAvailability!]!"
                 description: "List of availabilities in individual stores (empty for main variants)"
+            vat:
+                type: "Vat!"

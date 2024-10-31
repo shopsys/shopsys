@@ -24,5 +24,8 @@ query PaymentsQuery {
             imageLargeUrl
             paymentGroup
         }
+        vat {
+            percent
+        }
     }
 }

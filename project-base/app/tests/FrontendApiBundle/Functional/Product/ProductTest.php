@@ -128,6 +128,9 @@ class ProductTest extends GraphQlTestCase
                         name
                         slug
                     }
+                    vat {
+                        percent
+                    }
                 }
             }
         ';
@@ -447,6 +450,9 @@ class ProductTest extends GraphQlTestCase
                             'name' => $fullName,
                             'slug' => $this->urlGenerator->generate('front_product_detail', ['id' => $this->product->getId()]),
                         ],
+                    ],
+                    'vat' => [
+                        'percent' => '21.000000',
                     ],
                 ],
             ],

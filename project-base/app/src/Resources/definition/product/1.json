@@ -440,6 +440,14 @@
                         "type": "keyword"
                     }
                 }
+            },
+            "vat": {
+                "type": "nested",
+                "properties": {
+                    "percent": {
+                        "type": "text"
+                    }
+                }
             }
         }
     }

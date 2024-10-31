@@ -1,0 +1,12 @@
+VatDecorator:
+    type: object
+    decorator: true
+    config:
+        description: "Represents a vat"
+        fields:
+            name:
+                type: "String!"
+                description: "Vat name"
+            percent:
+                type: "String!"
+                description: "Vat percent"

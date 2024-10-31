@@ -192,7 +192,7 @@ class ProductExportRepository
             ProductExportFieldProvider::AVAILABLE_STORES_COUNT => $this->productAvailabilityFacade->getAvailableStoresCount($product, $domainId),
             ProductExportFieldProvider::STORE_AVAILABILITIES_INFORMATION => $this->extractStoreAvailabilitiesInformation($product, $domainId),
             ProductExportFieldProvider::AVAILABILITY_STATUS => $this->productAvailabilityFacade->getProductAvailabilityStatusByDomainId($product, $domainId),
-
+            ProductExportFieldProvider::VAT => $this->extractVat($product, $domainId),
             default => throw new InvalidArgumentException(sprintf('There is no definition for exporting "%s" field to Elasticsearch', $field)),
         };
     }
@@ -512,5 +512,17 @@ class ProductExportRepository
         }
 
         return $result;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param int $domainId
+     * @return array
+     */
+    protected function extractVat(Product $product, int $domainId): array
+    {
+        return [
+            'percent' => $product->getVatForDomain($domainId)->getPercent(),
+        ];
     }
 }

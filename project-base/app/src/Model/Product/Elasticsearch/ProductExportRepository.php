@@ -51,6 +51,7 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
  * @method string extractProductType(\App\Model\Product\Product $product, int $domainId)
  * @method int extractPriorityByProductType(\App\Model\Product\Product $product, int $domainId)
  * @method array extractStoreAvailabilitiesInformation(\App\Model\Product\Product $product, int $domainId)
+ * @method array extractVat(\App\Model\Product\Product $product, int $domainId)
  */
 class ProductExportRepository extends BaseProductExportRepository
 {

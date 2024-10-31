@@ -53,6 +53,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @method int|null getStockQuantity(\App\Model\Product\Product $product)
  * @method array getStoreAvailabilities(\App\Model\Product\Product $product)
  * @method int|null getAvailableStoresCount(\App\Model\Product\Product $product)
+ * @method \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat getVat(\App\Model\Product\Product $product)
  */
 class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 {
