@@ -38,4 +38,15 @@ class OrderRepository
             'domainId' => $domainId,
         ]);
     }
+
+    /**
+     * @param string $convertimUuid
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
+     */
+    public function findByConvertimUuid(string $convertimUuid): ?Order
+    {
+        return $this->getOrderRepository()->findOneBy([
+            'convertimUuid' => $convertimUuid,
+        ]);
+    }
 }
