@@ -138,6 +138,7 @@ class ConvertimOrderDataToOrderDataMapper
         $orderData->note = $convertimOrderData->getNote();
         $orderData->heurekaAgreement = !$convertimOrderData->isDisallowHeurekaVerifiedByCustomers();
         $orderData->origin = 'Convertim';
+        $orderData->convertimUuid = $convertimOrderData->getUuid();
 
         $this->mapProducts($convertimOrderData, $orderData);
         $this->mapConvertimTransportDataToOrderItem($convertimOrderData->getTransportData(), $orderData);
