@@ -45,7 +45,7 @@ class ComplaintHelper
      * @param \App\Model\Customer\User\CustomerUser $customerUser
      * @param \App\Model\Order\Order $order
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus $status
-     * @param array $items
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData[] $items
      * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint
      */
     public function createComplaint(
@@ -80,7 +80,7 @@ class ComplaintHelper
      * @param \App\Model\Order\Item\OrderItem $orderItem
      * @param string $description
      * @param int $quantity
-     * @param array $uploadedFiles
+     * @param \Symfony\Component\HttpFoundation\File\UploadedFile[] $uploadedFiles
      * @return \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData
      */
     public function createComplaintItemData(
@@ -111,7 +111,7 @@ class ComplaintHelper
      * @param string $pathToImage
      * @return \Symfony\Component\HttpFoundation\File\UploadedFile
      */
-    public function createUploadedFiles(string $pathToImage): UploadedFile
+    public function createUploadedFile(string $pathToImage): UploadedFile
     {
         $tmpFile = tempnam(sys_get_temp_dir(), 'complaint_demo_data_');
         copy($pathToImage, $tmpFile);

@@ -31,31 +31,31 @@ class ComplaintDataFixture extends AbstractReferenceFixture implements Dependent
         $customerUser1 = $this->getReference(CustomerUserDataFixture::CUSTOMER_PREFIX . 1);
         /** @var \App\Model\Order\Order $order1 */
         $order1 = $this->getReference(OrderDataFixture::ORDER_PREFIX . 1);
-        $uploadedFile1 = $this->complaintHelper->createUploadedFiles(__DIR__ . '/../resources/images/complaint/400.jpg');
-        $uploadedFile2 = $this->complaintHelper->createUploadedFiles(__DIR__ . '/../resources/images/complaint/401.jpg');
-        $uploadedFile3 = $this->complaintHelper->createUploadedFiles(__DIR__ . '/../resources/images/complaint/402.jpg');
-        $uploadedFile4 = $this->complaintHelper->createUploadedFiles(__DIR__ . '/../resources/images/complaint/403.jpg');
+        $uploadedFile1 = $this->complaintHelper->createUploadedFile(__DIR__ . '/../resources/images/complaint/400.jpg');
+        $uploadedFile2 = $this->complaintHelper->createUploadedFile(__DIR__ . '/../resources/images/complaint/401.jpg');
+        $uploadedFile3 = $this->complaintHelper->createUploadedFile(__DIR__ . '/../resources/images/complaint/402.jpg');
+        $uploadedFile4 = $this->complaintHelper->createUploadedFile(__DIR__ . '/../resources/images/complaint/403.jpg');
 
         $orderItems1 = $order1->getProductItems();
-        $orderItem1 = $this->complaintHelper->createComplaintItemData(array_shift($orderItems1), 'Both broken!', 2, [$uploadedFile1, $uploadedFile2]);
-        $orderItem2 = $this->complaintHelper->createComplaintItemData(array_shift($orderItems1), 'Broken!', 1, [$uploadedFile3]);
+        $complaintItem1 = $this->complaintHelper->createComplaintItemData(array_shift($orderItems1), 'Both broken!', 2, [$uploadedFile1, $uploadedFile2]);
+        $complaintItem2 = $this->complaintHelper->createComplaintItemData(array_shift($orderItems1), 'Broken!', 1, [$uploadedFile3]);
         $complaint1 = $this->complaintHelper->createComplaint(
             $customerUser1,
             $order1,
             $this->getReference(ComplaintStatusDataFixture::COMPLAINT_STATUS_NEW, ComplaintStatus::class),
-            [$orderItem1, $orderItem2],
+            [$complaintItem1, $complaintItem2],
         );
         $this->addReference(self::COMPLAINT_PREFIX . 1, $complaint1);
 
         /** @var \App\Model\Order\Order $order2 */
         $order2 = $this->getReference(OrderDataFixture::ORDER_PREFIX . 2);
         $orderItems2 = $order2->getProductItems();
-        $orderItem2 = $this->complaintHelper->createComplaintItemData(reset($orderItems2), 'Broken!', 1, [$uploadedFile4]);
+        $complaintItem2 = $this->complaintHelper->createComplaintItemData(reset($orderItems2), 'Broken!', 1, [$uploadedFile4]);
         $complaint2 = $this->complaintHelper->createComplaint(
             $customerUser1,
             $order2,
             $this->getReference(ComplaintStatusDataFixture::COMPLAINT_STATUS_RESOLVED, ComplaintStatus::class),
-            [$orderItem2],
+            [$complaintItem2],
         );
         $this->addReference(self::COMPLAINT_PREFIX . 2, $complaint2);
     }
