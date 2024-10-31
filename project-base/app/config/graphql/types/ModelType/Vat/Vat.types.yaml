@@ -1,0 +1,4 @@
+Vat:
+    type: object
+    inherits:
+        - 'VatDecorator'

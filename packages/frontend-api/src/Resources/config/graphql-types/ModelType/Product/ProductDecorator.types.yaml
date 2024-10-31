@@ -95,3 +95,5 @@ ProductDecorator:
                 description: "List of availabilities in individual stores (empty for main variants)"
             productVideos:
                 type: "[VideoToken!]!"
+            vat:
+                type: "Vat!"

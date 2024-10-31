@@ -17,4 +17,7 @@ fragment SimplePaymentFragment on Payment {
         name
         paymentGroup
     }
+    vat {
+        ...VatFragment
+    }
 }

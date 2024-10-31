@@ -110,6 +110,7 @@
     * [Transport](#transport)
     * [Unit](#unit)
     * [Variant](#variant)
+    * [Vat](#vat)
     * [VideoToken](#videotoken)
   * [Inputs](#inputs)
     * [AddNewCustomerUserDataInput](#addnewcustomeruserdatainput)
@@ -6075,6 +6076,11 @@ Number of visible variants
 
 </td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong id="mainvariant.vat">vat</strong></td>
+<td valign="top"><a href="#vat">Vat</a>!</td>
+<td></td>
+</tr>
 </tbody>
 </table>
 
@@ -7705,6 +7711,11 @@ UUID
 
 </td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong id="payment.vat">vat</strong></td>
+<td valign="top"><a href="#vat">Vat</a>!</td>
+<td></td>
+</tr>
 </tbody>
 </table>
 
@@ -8784,6 +8795,11 @@ UUID
 
 </td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong id="regularproduct.vat">vat</strong></td>
+<td valign="top"><a href="#vat">Vat</a>!</td>
+<td></td>
+</tr>
 </tbody>
 </table>
 
@@ -9722,6 +9738,11 @@ UUID
 
 </td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong id="transport.vat">vat</strong></td>
+<td valign="top"><a href="#vat">Vat</a>!</td>
+<td></td>
+</tr>
 </tbody>
 </table>
 
@@ -10094,6 +10115,46 @@ List of product's unique selling propositions
 <td>
 
 UUID
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="variant.vat">vat</strong></td>
+<td valign="top"><a href="#vat">Vat</a>!</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+### Vat
+
+Represents a vat
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong id="vat.name">name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Vat name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="vat.percent">percent</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Vat percent
 
 </td>
 </tr>
@@ -13860,6 +13921,11 @@ List of product's unique selling propositions
 UUID
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong id="product.vat">vat</strong></td>
+<td valign="top"><a href="#vat">Vat</a>!</td>
+<td></td>
 </tr>
 </tbody>
 </table>

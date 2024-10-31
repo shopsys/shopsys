@@ -76,6 +76,8 @@ class ProductElasticsearchConverter
 
         $result[ProductExportFieldProvider::PRODUCT_VIDEOS] = $product[ProductExportFieldProvider::PRODUCT_VIDEOS] ?? [];
 
+        $result[ProductExportFieldProvider::VAT] = $product[ProductExportFieldProvider::VAT] ?? ['percent' => '0'];
+
         return $result;
     }
 

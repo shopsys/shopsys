@@ -13,7 +13,7 @@ class OrderDetailNotFoundException extends ConvertimException
      * @param string $email
      * @param \Throwable|null $previous
      */
-    public function __construct(string $email, Throwable $previous = null)
+    public function __construct(string $email, ?Throwable $previous = null)
     {
         parent::__construct('Order detail not found', ['email' => $email], 404, $previous);
     }

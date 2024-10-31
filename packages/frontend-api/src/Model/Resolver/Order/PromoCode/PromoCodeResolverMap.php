@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Order\PromoCode;
 
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
+use Override;
 use Shopsys\FrontendApiBundle\Model\Order\PromoCode\PromoCodeWithDiscount;
 
 class PromoCodeResolverMap extends ResolverMap
@@ -12,6 +13,7 @@ class PromoCodeResolverMap extends ResolverMap
     /**
      * @return array
      */
+    #[Override]
     protected function map(): array
     {
         return [

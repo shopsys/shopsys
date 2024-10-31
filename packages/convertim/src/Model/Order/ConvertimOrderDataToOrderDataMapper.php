@@ -28,7 +28,6 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
-use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Store\Exception\StoreByUuidNotFoundException;
 use Shopsys\FrameworkBundle\Model\Store\StoreFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
@@ -197,7 +196,7 @@ class ConvertimOrderDataToOrderDataMapper
         $paymentOrderItemData->totalPriceWithoutVat = Money::create($convertimOrderPaymentData->getPriceWithoutVat());
         $paymentOrderItemData->unitPriceWithVat = Money::create($convertimOrderPaymentData->getPriceWithVat());
         $paymentOrderItemData->unitPriceWithoutVat = Money::create($convertimOrderPaymentData->getPriceWithoutVat());
-        $paymentOrderItemData->vatPercent = $payment->getVatForDomain($this->domain->getId())->getPercent();
+        $paymentOrderItemData->vatPercent = (string)($convertimOrderPaymentData->getVatRate() ?? 0);
         $paymentOrderItemData->usePriceCalculation = false;
 
         $orderData->addItem($paymentOrderItemData);
@@ -239,7 +238,7 @@ class ConvertimOrderDataToOrderDataMapper
         $transportOrderItemData->totalPriceWithoutVat = Money::create($convertimOrderTransportData->getPriceWithoutVat());
         $transportOrderItemData->unitPriceWithVat = Money::create($convertimOrderTransportData->getPriceWithVat());
         $transportOrderItemData->unitPriceWithoutVat = Money::create($convertimOrderTransportData->getPriceWithoutVat());
-        $transportOrderItemData->vatPercent = $transport->getVatForDomain($this->domain->getId())->getPercent();
+        $transportOrderItemData->vatPercent = (string)($convertimOrderTransportData->getVatRate() ?? 0);
         $transportOrderItemData->usePriceCalculation = false;
 
         $orderData->addItem($transportOrderItemData);
@@ -281,12 +280,12 @@ class ConvertimOrderDataToOrderDataMapper
             $orderItemData->quantity = $convertimOrderItemData->getQuantity();
             $orderItemData->unitPriceWithVat = Money::create($convertimOrderItemData->getPriceWithVat());
             $orderItemData->unitPriceWithoutVat = Money::create($convertimOrderItemData->getPriceWithoutVat());
-            $orderItemData->vatPercent = $product->getVatForDomain($this->domain->getId())->getPercent();
+            $orderItemData->vatPercent = (string)($convertimOrderItemData->getVatRate() ?? 0);
             $orderItemData->usePriceCalculation = false;
 
             $orderData->addItem($orderItemData);
             $orderData->addTotalPrice(new Price($orderItemData->totalPriceWithoutVat, $orderItemData->totalPriceWithVat), OrderItemTypeEnum::TYPE_PRODUCT);
-            $this->mapDiscounts($convertimOrderItemData, $product, $orderItemData, $orderData);
+            $this->mapDiscounts($convertimOrderItemData, $orderItemData, $orderData);
         }
     }
 
@@ -305,13 +304,11 @@ class ConvertimOrderDataToOrderDataMapper
 
     /**
      * @param \Convertim\Order\ConvertimOrderItemData $convertimOrderItemData
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
      */
     protected function mapDiscounts(
         ConvertimOrderItemData $convertimOrderItemData,
-        Product $product,
         OrderItemData $orderItemData,
         OrderData $orderData,
     ): void {
