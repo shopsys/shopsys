@@ -41,18 +41,19 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
  * @method int[] extractFlags(int $domainId, \App\Model\Product\Product $product)
  * @method int[] extractCategories(int $domainId, \App\Model\Product\Product $product)
  * @method array extractParameters(string $locale, \App\Model\Product\Product $product)
+ * @method string extractProductType(\App\Model\Product\Product $product, int $domainId)
+ * @method int extractPriorityByProductType(\App\Model\Product\Product $product, int $domainId)
+ * @method array extractPrices(int $domainId, \App\Model\Product\Product $product)
+ * @method array extractSpecialPrices(int $domainId, \App\Model\Product\Product $product)
  * @method array extractVisibility(int $domainId, \App\Model\Product\Product $product)
  * @method string getBrandUrlForDomainByProduct(\App\Model\Product\Product $product, int $domainId)
  * @method array extractAccessoriesIds(\App\Model\Product\Product $product)
  * @method \App\Model\Product\Product[] getVariantsForDefaultPricingGroup(\App\Model\Product\Product $mainVariant, int $domainId)
- * @method string extractProductType(\App\Model\Product\Product $product, int $domainId)
- * @method int extractPriorityByProductType(\App\Model\Product\Product $product, int $domainId)
  * @method array extractStoreAvailabilitiesInformation(\App\Model\Product\Product $product, int $domainId)
- * @method array extractSpecialPrices(int $domainId, \App\Model\Product\Product $product)
- * @method array extractPrices(int $domainId, \App\Model\Product\Product $product)
  * @method \Shopsys\FrameworkBundle\Component\Money\Money getMaximalVariantPriceForFilteringMinimalPrice(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int $domainId)
  * @method \Shopsys\FrameworkBundle\Component\Money\Money getMinimalVariantPriceForFilteringMaximalPrice(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int $domainId)
  * @method array getVariantPrices(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int $domainId)
+ * @method array extractVat(\App\Model\Product\Product $product, int $domainId)
  */
 class ProductExportRepository extends BaseProductExportRepository
 {

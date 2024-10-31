@@ -4,7 +4,8 @@ import gql from 'graphql-tag';
 import { PriceFragment } from '../../prices/fragments/PriceFragment.generated';
 import { ImageFragment } from '../../images/fragments/ImageFragment.generated';
 import { SimplePaymentFragment } from '../../payments/fragments/SimplePaymentFragment.generated';
-export type TypeTransportWithAvailablePaymentsFragment = { __typename: 'Transport', uuid: string, name: string, description: string | null, daysUntilDelivery: number, transportTypeCode: Types.TypeTransportTypeEnum, isPersonalPickup: boolean, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, payments: Array<{ __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null }> };
+import { VatFragment } from '../../vat/fragments/VatFragment.generated';
+export type TypeTransportWithAvailablePaymentsFragment = { __typename: 'Transport', uuid: string, name: string, description: string | null, daysUntilDelivery: number, transportTypeCode: Types.TypeTransportTypeEnum, isPersonalPickup: boolean, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, payments: Array<{ __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null, vat: { __typename: 'Vat', percent: string } }>, vat: { __typename: 'Vat', percent: string } };
 
 
       export interface PossibleTypesResultData {
@@ -101,7 +102,11 @@ export const TransportWithAvailablePaymentsFragment = gql`
   daysUntilDelivery
   transportTypeCode
   isPersonalPickup
+  vat {
+    ...VatFragment
+  }
 }
     ${PriceFragment}
 ${ImageFragment}
-${SimplePaymentFragment}`;
+${SimplePaymentFragment}
+${VatFragment}`;

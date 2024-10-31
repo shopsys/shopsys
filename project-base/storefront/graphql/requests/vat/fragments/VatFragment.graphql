@@ -1,0 +1,4 @@
+fragment VatFragment on Vat {
+    __typename
+    percent
+}

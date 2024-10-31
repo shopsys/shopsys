@@ -91,6 +91,7 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'product_videos',
             'hreflang_links',
             'selling_from',
+            'vat',
         ];
     }
 }

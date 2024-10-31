@@ -65,7 +65,7 @@ export const mapTransportsData = (
             type: mapTransportType(transport.transportTypeCode),
             priceWithVat: parseFloat(transport.price.priceWithVat),
             priceWithoutVat: parseFloat(transport.price.priceWithoutVat),
-            vat: parseFloat(transport.price.vatAmount),
+            vat: parseFloat(transport.vat.percent),
             services: [],
             image: transport.mainImage?.url ?? null,
             groupDescription: null,
@@ -103,7 +103,7 @@ export const mapPaymentsData = (transports?: TypeTransportWithAvailablePaymentsF
                     name: payment.name,
                     priceWithVat: parseFloat(payment.price.priceWithVat),
                     priceWithoutVat: parseFloat(payment.price.priceWithoutVat),
-                    vat: parseFloat(payment.price.vatAmount),
+                    vat: parseFloat(payment.vat.percent),
                     image: payment.mainImage?.url ?? '',
                     gopay: payment.goPayPaymentMethod
                         ? {
@@ -134,7 +134,7 @@ export const mapCartData = (cart: TypeCartFragment, formatPrice: FormatPriceFunc
             quantity,
             priceWithoutVat: product.price.priceWithoutVat,
             priceWithVat: product.price.priceWithVat,
-            vat: product.price.vatAmount,
+            vat: product.vat.percent,
             image: product.mainImage?.url ?? null,
             gtm: {},
             labels: product.flags.map(({ name }) => name),

@@ -494,6 +494,14 @@
             "selling_from": {
                 "type": "date",
                 "format": "yyyy-MM-dd HH:mm:ss"
+            },
+            "vat": {
+                "type": "nested",
+                "properties": {
+                    "percent": {
+                        "type": "text"
+                    }
+                }
             }
         }
     }

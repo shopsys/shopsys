@@ -212,6 +212,7 @@ class ProductExportRepository
                     'description' => ($this->productVideoTranslationsRepository->findByProductVideoIdAndLocale($productVideo->getId(), $locale))->getDescription(),
                 ];
             }, $product->getProductVideos()),
+            ProductExportFieldProvider::VAT => $this->extractVat($product, $domainId),
 
             default => throw new InvalidArgumentException(sprintf('There is no definition for exporting "%s" field to Elasticsearch', $field)),
         };
@@ -682,5 +683,17 @@ class ProductExportRepository
         }
 
         return $variantPrices;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param int $domainId
+     * @return array
+     */
+    protected function extractVat(Product $product, int $domainId): array
+    {
+        return [
+            'percent' => $product->getVatForDomain($domainId)->getPercent(),
+        ];
     }
 }
