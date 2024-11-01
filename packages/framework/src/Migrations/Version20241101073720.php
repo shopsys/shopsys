@@ -25,8 +25,7 @@ class Version20241101073720 extends AbstractMigration
             $this->sql('ALTER TABLE parameters ADD group_id INT DEFAULT NULL');
             $this->sql('ALTER TABLE parameters ADD akeneo_code VARCHAR(100) DEFAULT NULL');
             $this->sql('ALTER TABLE parameters ADD akeneo_type VARCHAR(100) DEFAULT NULL');
-            $this->sql('ALTER TABLE parameters ADD ordering_priority INT DEFAULT 0 NOT NULL');
-            $this->sql('ALTER TABLE parameters ALTER ordering_priority DROP DEFAULT');
+
             $this->sql('
             ALTER TABLE
                 parameters
@@ -54,11 +53,9 @@ class Version20241101073720 extends AbstractMigration
             $this->sql('ALTER TABLE parameter_groups ADD ordering_priority INT NOT NULL');
         }
 
-        if ($this->isAppMigrationNotInstalled('Version20240702065648')) {
-            $this->sql('ALTER TABLE parameter_groups DROP akeneo_code');
-            $this->sql('ALTER TABLE parameters DROP akeneo_code');
-            $this->sql('ALTER TABLE parameters DROP akeneo_type');
-        }
+        $this->sql('ALTER TABLE parameter_groups DROP COLUMN IF EXISTS akeneo_code');
+        $this->sql('ALTER TABLE parameters DROP COLUMN IF EXISTS akeneo_code');
+        $this->sql('ALTER TABLE parameters DROP COLUMN IF EXISTS akeneo_type');
     }
 
     /**
