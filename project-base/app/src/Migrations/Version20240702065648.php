@@ -22,9 +22,6 @@ class Version20240702065648 extends AbstractMigration implements ContainerAwareI
         $this->sql('ALTER TABLE flags DROP akeneo_code');
         $this->sql('ALTER TABLE images DROP akeneo_code');
         $this->sql('ALTER TABLE images DROP akeneo_image_type');
-        $this->sql('ALTER TABLE parameter_groups DROP akeneo_code');
-        $this->sql('ALTER TABLE parameters DROP akeneo_code');
-        $this->sql('ALTER TABLE parameters DROP akeneo_type');
         $this->sql('ALTER TABLE units DROP akeneo_code');
         $this->sql('DELETE FROM setting_values WHERE name=\'akeneoTransferProductsLastUpdatedDatetime\'');
     }
