@@ -282,7 +282,7 @@ class ParameterRepository
                 'product_id' => $product->getId(),
                 'locale' => $locale,
             ])
-            ->orderBy('p.orderingPriority', 'DESC')
+            ->orderBy('p.position', 'ASC')
             ->addOrderBy('pt.name');
     }
 
