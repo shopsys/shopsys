@@ -41,7 +41,7 @@ class ReleaseNewNodeModulePackageVersion extends AbstractShopsysReleaseWorker
 # go to packages/framework/assets
 
 npm login
-# pass your credentials (login, password, email) (these credentials are available in BitWarden)
+# pass your credentials (login, password, email) (these credentials are available in 1Password)
 
 npm publish
 
