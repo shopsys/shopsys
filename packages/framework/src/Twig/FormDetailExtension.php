@@ -35,7 +35,7 @@ class FormDetailExtension extends AbstractExtension
      */
     public function formId($object)
     {
-        if ($object === null) {
+        if ($object === null || method_exists($object, 'getId') === false) {
             return '';
         }
 
