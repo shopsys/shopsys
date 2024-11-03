@@ -10,13 +10,11 @@ use App\Model\Order\Order;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus;
 
 class CompanyComplaintDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    public const string COMPLAINT_PREFIX = 'complaint_';
-
     /**
      * @param \App\DataFixtures\Demo\Helper\ComplaintHelper $complaintHelper
      */
@@ -30,33 +28,51 @@ class CompanyComplaintDataFixture extends AbstractReferenceFixture implements De
      */
     public function load(ObjectManager $manager): void
     {
-        $customerUserNovotny = $this->getReferenceForDomain(CompanyDataFixture::B2B_COMPANY_OWNER_EMAIL, Domain::SECOND_DOMAIN_ID, CustomerUser::class);
-        $customerUserKovac = $this->getReferenceForDomain(CompanyDataFixture::B2B_COMPANY_LIMITED_USER_EMAIL, Domain::SECOND_DOMAIN_ID, CustomerUser::class);
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
+            if (!$domainConfig->isB2b()) {
+                continue;
+            }
 
-        $uploadedFile1 = $this->complaintHelper->createUploadedFile(__DIR__ . '/../resources/images/complaint/404.jpg');
-        $uploadedFile2 = $this->complaintHelper->createUploadedFile(__DIR__ . '/../resources/images/complaint/405.jpg');
+            $domainId = $domainConfig->getId();
+            $this->importCompanyComplaints($domainId);
+        }
+    }
 
-        $order27 = $this->getReference(CompanyOrderDataFixture::ORDER_PREFIX . 27, Order::class);
-        $orderItems1 = $order27->getProductItems();
-        $complaintItem1 = $this->complaintHelper->createComplaintItemData(array_shift($orderItems1), 'Broken!', 1, [$uploadedFile2]);
-        $complaint1 = $this->complaintHelper->createComplaint(
-            $customerUserNovotny,
-            $order27,
-            $this->getReference(ComplaintStatusDataFixture::COMPLAINT_STATUS_NEW, ComplaintStatus::class),
-            [$complaintItem1],
+    /**
+     * @param int $domainId
+     */
+    private function importCompanyComplaints(int $domainId): void
+    {
+        $this->createComplaint(
+            $this->getReference(CompanyOrderDataFixture::COMPANY_ORDER_1, Order::class),
+            $this->getReferenceForDomain(CompanyDataFixture::B2B_COMPANY_OWNER_EMAIL, $domainId, CustomerUser::class),
+            [$this->complaintHelper->createUploadedFile(__DIR__ . '/../resources/images/complaint/404.jpg')],
         );
-        $this->addReference(self::COMPLAINT_PREFIX . 3, $complaint1);
 
-        $order28 = $this->getReference(CompanyOrderDataFixture::ORDER_PREFIX . 28, Order::class);
-        $orderItems1 = $order28->getProductItems();
-        $complaintItem1 = $this->complaintHelper->createComplaintItemData(array_shift($orderItems1), 'Broken!', 1, [$uploadedFile1]);
-        $complaint2 = $this->complaintHelper->createComplaint(
-            $customerUserKovac,
-            $order28,
-            $this->getReference(ComplaintStatusDataFixture::COMPLAINT_STATUS_NEW, ComplaintStatus::class),
-            [$complaintItem1],
+        $this->createComplaint(
+            $this->getReference(CompanyOrderDataFixture::COMPANY_ORDER_2, Order::class),
+            $this->getReferenceForDomain(CompanyDataFixture::B2B_COMPANY_LIMITED_USER_EMAIL, $domainId, CustomerUser::class),
+            [$this->complaintHelper->createUploadedFile(__DIR__ . '/../resources/images/complaint/405.jpg')],
         );
-        $this->addReference(self::COMPLAINT_PREFIX . 4, $complaint2);
+    }
+
+    /**
+     * @param \App\Model\Order\Order $order
+     * @param \App\Model\Customer\User\CustomerUser $customer
+     * @param \Symfony\Component\HttpFoundation\File\UploadedFile[] $uploadedFiles
+     * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint
+     */
+    private function createComplaint(Order $order, CustomerUser $customer, array $uploadedFiles): Complaint
+    {
+        $orderItems = $order->getProductItems();
+        $complaintItem = $this->complaintHelper->createComplaintItemData(array_shift($orderItems), 'Broken!', 1, $uploadedFiles);
+
+        return $this->complaintHelper->createComplaint(
+            $customer,
+            $order,
+            $this->getReference(ComplaintStatusDataFixture::COMPLAINT_STATUS_NEW, ComplaintStatus::class),
+            [$complaintItem],
+        );
     }
 
     /**

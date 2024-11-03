@@ -28,6 +28,8 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
 {
     private const string UUID_NAMESPACE = '0338e624-c961-4475-a29d-c90080d02d1f';
     public const string ORDER_PREFIX = 'order_';
+    public const string COMPANY_ORDER_1 = 'company_order_1';
+    public const string COMPANY_ORDER_2 = 'company_order_2';
 
     /**
      * @param \App\Model\Order\PlaceOrderFacade $placeOrderFacade
@@ -120,7 +122,7 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -3 day'))->setTime(18, 27, 36);
-        $this->createOrder(
+        $order = $this->createOrder(
             $orderData,
             [
                 ProductDataFixture::PRODUCT_PREFIX . '4' => 6,
@@ -131,6 +133,8 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
             $customerUser,
         );
 
+        $this->addReference(self::COMPANY_ORDER_1, $order);
+
         $orderData = $this->orderDataFactory->create();
         $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW, OrderStatus::class);
         $this->mapCustomerUserDataToOrderData($orderData, $customerUser);
@@ -139,7 +143,7 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
         $orderData->domainId = $domainId;
         $orderData->currency = $domainDefaultCurrency;
         $orderData->createdAt = (new DateTime('now -1 day'))->setTime(18, 30, 01);
-        $this->createOrder(
+        $order = $this->createOrder(
             $orderData,
             [
                 ProductDataFixture::PRODUCT_PREFIX . '1' => 1,
@@ -148,6 +152,8 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
             PaymentDataFixture::PAYMENT_CARD,
             $customerUser,
         );
+
+        $this->addReference(self::COMPANY_ORDER_2, $order);
 
         $orderData = $this->orderDataFactory->create();
         $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW, OrderStatus::class);
