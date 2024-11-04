@@ -22,8 +22,8 @@ export const MenuIconicItemUserUnauthenticatedContent: FC<MenuUnauthenticatedPro
     const [registrationUrl] = getInternationalizedStaticUrls(['/registration'], url);
 
     return (
-        <div className="flex w-full flex-col gap-8 lg:flex-row lg:p-5">
-            <div className="order-2 mb-auto rounded-xl bg-backgroundBrandLess p-5 text-textInverted lg:order-1 lg:w-1/2 lg:p-9">
+        <div className="flex w-full flex-col gap-8 vl:flex-row vl:p-5">
+            <div className="order-2 mb-auto rounded-xl bg-backgroundBrandLess p-5 text-textInverted vl:order-1 vl:w-1/2 vl:p-9">
                 <h4>{t('Benefits of registration')}</h4>
                 <div className="my-4">
                     <p className="text-textInverted">
@@ -51,7 +51,7 @@ export const MenuIconicItemUserUnauthenticatedContent: FC<MenuUnauthenticatedPro
                     </Button>
                 </ExtendedNextLink>
             </div>
-            <div className="order-1 w-full lg:order-2 lg:w-[364px]">
+            <div className="order-1 w-full vl:order-2 vl:w-[364px]">
                 <LoginForm
                     formContentWrapperClassName={isHoveredDelayed || isClicked ? '-hidden' : 'hidden'}
                     formHeading={t('Log in')}

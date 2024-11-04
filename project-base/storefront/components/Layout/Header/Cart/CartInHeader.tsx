@@ -13,7 +13,7 @@ import { twJoin } from 'tailwind-merge';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { isPriceVisible } from 'utils/mappers/price';
-import { desktopFirstSizes } from 'utils/mediaQueries';
+import { mobileFirstSizes } from 'utils/mediaQueries';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { twMergeCustom } from 'utils/twMerge';
 import { useGetWindowSize } from 'utils/ui/useGetWindowSize';
@@ -43,7 +43,7 @@ export const CartInHeader: FC = ({ className }) => {
 
     const isPriceVisibleOrEmtpyCart = isPriceVisible(cart?.totalItemsPrice.priceWithVat) || !cart?.items.length;
     const { width } = useGetWindowSize();
-    const isDesktop = width > desktopFirstSizes.tablet;
+    const isDesktop = width > mobileFirstSizes.vl;
 
     return (
         <>

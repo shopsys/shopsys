@@ -6,7 +6,7 @@ import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
 import { useState, MouseEvent as ReactMouseEvent } from 'react';
-import { desktopFirstSizes } from 'utils/mediaQueries';
+import { mobileFirstSizes } from 'utils/mediaQueries';
 import { twMergeCustom } from 'utils/twMerge';
 import { useGetWindowSize } from 'utils/ui/useGetWindowSize';
 import { useDebounce } from 'utils/useDebounce';
@@ -19,7 +19,7 @@ export const MenuIconicItemUserUnauthenticated: FC = () => {
     const isHoveredDelayed = useDebounce(isHovered, 200);
 
     const { width } = useGetWindowSize();
-    const isDesktop = width > desktopFirstSizes.tablet;
+    const isDesktop = width > mobileFirstSizes.vl;
 
     return (
         <>
@@ -41,7 +41,7 @@ export const MenuIconicItemUserUnauthenticated: FC = () => {
                     <span className="hidden lg:inline-block">{t('Login')}</span>
                 </MenuIconicItemLink>
 
-                <Drawer className="lg:hidden" isClicked={isClicked} setIsClicked={setIsClicked} title={t('My account')}>
+                <Drawer className="vl:hidden" isClicked={isClicked} setIsClicked={setIsClicked} title={t('My account')}>
                     <MenuIconicItemUserUnauthenticatedContent
                         isClicked={isClicked}
                         isHoveredDelayed={isHoveredDelayed}

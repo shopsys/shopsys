@@ -7,7 +7,7 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
-import { desktopFirstSizes } from 'utils/mediaQueries';
+import { mobileFirstSizes } from 'utils/mediaQueries';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { twMergeCustom } from 'utils/twMerge';
 import { useGetWindowSize } from 'utils/ui/useGetWindowSize';
@@ -22,7 +22,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
     const isHoveredDelayed = useDebounce(isHovered, 200);
 
     const { width } = useGetWindowSize();
-    const isDesktop = width > desktopFirstSizes.tablet;
+    const isDesktop = width > mobileFirstSizes.vl;
 
     return (
         <>
@@ -33,31 +33,24 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                 onMouseLeave={() => isDesktop && setIsHovered(false)}
             >
                 <MenuIconicItemLink
-                    className="text-nowrap rounded-t transition-all max-lg:hidden"
-                    href={customerUrl}
+                    className="cursor-pointer text-nowrap rounded-t transition-all"
+                    href={isDesktop ? customerUrl : undefined}
                     type="account"
+                    onClick={() => {
+                        if (!isDesktop) {
+                            setIsClicked(!isClicked);
+                            setIsClicked(!isHovered);
+                        }
+                    }}
                 >
                     <div className="relative">
                         <UserIcon className="size-6" />
                         <div className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full bg-actionPrimaryBackground" />
                     </div>
-                    {t('My account')}
+                    <span className="hidden lg:inline-block">{t('My account')}</span>
                 </MenuIconicItemLink>
 
-                <div className="order-2 flex w-10 cursor-pointer items-center justify-center text-lg outline-none sm:w-12 lg:hidden">
-                    <div
-                        className="relative flex items-center justify-center text-textInverted transition-colors"
-                        onClick={() => {
-                            setIsClicked(!isClicked);
-                            setIsClicked(!isHovered);
-                        }}
-                    >
-                        <UserIcon className="size-6 text-textInverted" />
-                        <div className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full bg-actionPrimaryBackground" />
-                    </div>
-                </div>
-
-                <Drawer className="lg:hidden" isClicked={isClicked} setIsClicked={setIsClicked} title={t('My account')}>
+                <Drawer className="vl:hidden" isClicked={isClicked} setIsClicked={setIsClicked} title={t('My account')}>
                     <MenuIconicItemUserAuthenticatedContent />
                 </Drawer>
 
