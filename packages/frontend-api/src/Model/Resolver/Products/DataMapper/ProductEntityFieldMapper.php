@@ -169,4 +169,13 @@ class ProductEntityFieldMapper
     {
         return $this->hreflangLinksFacade->getForProduct($product, $this->domain->getId());
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return \Shopsys\FrameworkBundle\Model\Product\Flag[]
+     */
+    public function getFlags(Product $product): array
+    {
+        return $product->getFlags(domainId: $this->domain->getId());
+    }
 }
