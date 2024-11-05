@@ -7,10 +7,12 @@ export default grapesjs.plugins.add('custom-link', (editor) => {
     editor.Blocks.add('link-block', {
         id: 'link-block',
         label: Translator.trans('Link Block'),
-        category: 'Basic',
-        content: `
-          <a data-gjs-type="link-block" class="gjs-link-block"></a>
-        `,
+        category: Translator.trans('Basic objects'),
+        content:
+            `
+          <a data-gjs-type="link-block" class="gjs-link-block">`
+            + Translator.trans('Insert your text here')
+            + `</a>`,
         attributes: { class: 'fa fa-link' }
     });
 
@@ -22,7 +24,10 @@ export default grapesjs.plugins.add('custom-link', (editor) => {
             },
 
             handleLinkPositionChange (element) {
-                element.setClass(['gjs-link-block', `image-position-${this.getAttributes()[linkPositionDataAttribute]}`]);
+                element.setClass([
+                    'gjs-link-block',
+                    `image-position-${this.getAttributes()[linkPositionDataAttribute]}`
+                ]);
             },
 
             defaults: {
@@ -34,12 +39,12 @@ export default grapesjs.plugins.add('custom-link', (editor) => {
                     {
                         type: 'input',
                         name: 'href',
-                        label: 'Href'
+                        label: Translator.trans('Href')
                     },
                     {
                         type: 'input',
                         name: 'title',
-                        label: 'Title'
+                        label: Translator.trans('Title')
                     },
                     {
                         type: 'checkbox',

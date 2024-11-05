@@ -25,6 +25,9 @@ msgstr ""
 msgid "Administrator"
 msgstr ""
 
+msgid "Alt"
+msgstr ""
+
 msgid "Back to overview"
 msgstr ""
 
@@ -38,6 +41,9 @@ msgid "Banners"
 msgstr ""
 
 msgid "Basic information"
+msgstr ""
+
+msgid "Basic objects"
 msgstr ""
 
 msgid "Brand overview"
@@ -58,7 +64,19 @@ msgstr ""
 msgid "Clean Storefront Query Cache"
 msgstr ""
 
+msgid "Close"
+msgstr ""
+
 msgid "Color"
+msgstr ""
+
+msgid "Column 1"
+msgstr ""
+
+msgid "Column 2"
+msgstr ""
+
+msgid "Columns"
 msgstr ""
 
 msgid "Contact"
@@ -86,6 +104,9 @@ msgid "Create notification bar"
 msgstr ""
 
 msgid "Creating a record requires all domains to be enabled as domain-specific fields cannot be empty. If you want to proceed, select all domains in the Domain filter in the header first."
+msgstr ""
+
+msgid "Default"
 msgstr ""
 
 msgid "Description"
@@ -184,6 +205,9 @@ msgstr ""
 msgid "Groups"
 msgstr ""
 
+msgid "Height"
+msgstr ""
+
 msgid "Heureka"
 msgstr ""
 
@@ -199,10 +223,16 @@ msgstr ""
 msgid "Home page"
 msgstr ""
 
+msgid "Href"
+msgstr ""
+
 msgid "Image"
 msgstr ""
 
 msgid "In stock"
+msgstr ""
+
+msgid "Insert your text here"
 msgstr ""
 
 msgid "Inside layout"
@@ -244,6 +274,9 @@ msgstr ""
 msgid "Legal conditions settings modified."
 msgstr ""
 
+msgid "Link"
+msgstr ""
+
 msgid "Link Block"
 msgstr ""
 
@@ -266,6 +299,9 @@ msgid "Made in DE"
 msgstr ""
 
 msgid "Made in SK"
+msgstr ""
+
+msgid "Map"
 msgstr ""
 
 msgid "Measurement units"
@@ -403,6 +439,9 @@ msgstr ""
 msgid "Right"
 msgstr ""
 
+msgid "Rows"
+msgstr ""
+
 msgid "Sale"
 msgstr ""
 
@@ -418,6 +457,9 @@ msgstr ""
 msgid "Search [verb]"
 msgstr "Search"
 
+msgid "Secondary"
+msgstr ""
+
 msgid "Selected flag doesn't exist."
 msgstr ""
 
@@ -430,6 +472,9 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
+msgid "Src"
+msgstr ""
+
 msgid "Stocking"
 msgstr ""
 
@@ -437,6 +482,9 @@ msgid "Stores"
 msgstr ""
 
 msgid "TOP"
+msgstr ""
+
+msgid "Table"
 msgstr ""
 
 msgid "Terms and Conditions"
@@ -458,6 +506,9 @@ msgid "The selected flag cannot be deleted."
 msgstr ""
 
 msgid "This flag can not be deleted as it is used in definition of"
+msgstr ""
+
+msgid "Title"
 msgstr ""
 
 msgid "Type of image"
@@ -502,6 +553,12 @@ msgstr ""
 msgid "Value"
 msgstr ""
 
+msgid "Variant"
+msgstr ""
+
+msgid "Video"
+msgstr ""
+
 msgid "Videos"
 msgstr ""
 
@@ -518,6 +575,9 @@ msgid "Warehouse settings"
 msgstr ""
 
 msgid "Warehouses"
+msgstr ""
+
+msgid "Width"
 msgstr ""
 
 msgid "XML Feeds"

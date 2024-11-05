@@ -1,4 +1,5 @@
 import grapesjs from 'grapesjs';
+import Translator from 'bazinga-translator';
 
 export default grapesjs.plugins.add('mail-template', editor => {
     editor.DomComponents.addType('wrapper', {
@@ -53,9 +54,9 @@ export default grapesjs.plugins.add('mail-template', editor => {
 
     editor.Blocks.add('text-ckeditor', {
         label: 'Text',
-        category: 'Basic',
+        category: Translator.trans('Basic objects'),
         attributes: { class: 'gjs-fonts gjs-f-text' },
-        content: { type: 'text-ckeditor', content: 'Insert your text here', activeOnRender: 1 }
+        content: { type: 'text-ckeditor', content: Translator.trans('Insert your text here'), activeOnRender: 1 }
     });
 
     // add style to default image block

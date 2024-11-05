@@ -9,7 +9,7 @@ export default grapesjs.plugins.add('custom-image', (editor) => {
         select: true,
         activate: true,
         label: Translator.trans('Image'),
-        category: 'Basic',
+        category: Translator.trans('Basic objects'),
         attributes: { class: 'gjs-fonts gjs-f-image' },
         content: {
             type: 'image'
@@ -27,7 +27,9 @@ export default grapesjs.plugins.add('custom-image', (editor) => {
             handleImagePositionChange (element) {
                 element.setClass([`image-position-${this.getAttributes()[imagePositionDataAttribute]}`]);
                 if (element.collection.parent.attributes.tagName === 'a') {
-                    element.collection.parent.setAttributes({ [linkPositionDataAttribute]: this.getAttributes()[imagePositionDataAttribute] });
+                    element.collection.parent.setAttributes({
+                        [linkPositionDataAttribute]: this.getAttributes()[imagePositionDataAttribute]
+                    });
                 }
             },
 
@@ -60,7 +62,7 @@ export default grapesjs.plugins.add('custom-image', (editor) => {
                     {
                         type: 'input',
                         name: 'alt',
-                        label: 'Alt'
+                        label: Translator.trans('Alt')
                     }
                 ]
             }

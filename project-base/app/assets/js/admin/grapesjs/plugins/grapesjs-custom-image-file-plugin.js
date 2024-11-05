@@ -7,7 +7,7 @@ export default grapesjs.plugins.add('custom-image-file', (editor) => {
         select: true,
         activate: true,
         label: Translator.trans('File'),
-        category: 'Basic',
+        category: Translator.trans('Basic objects'),
         attributes: { class: 'fa fa-regular fa-file' },
         content: {
             type: 'image-file',

@@ -1,8 +1,9 @@
 import grapesjs from 'grapesjs';
 import FormChangeInfo from 'framework/admin/components/FormChangeInfo';
+import Translator from 'bazinga-translator';
 
-const BUTTON_CLOSE = 'close';
-const BUTTON_SAVE = 'save';
+const BUTTON_CLOSE = Translator.trans('Close');
+const BUTTON_SAVE = Translator.trans('Save');
 
 const resetBody = (editor) => {
     if ($('body').hasClass('grapes-js-editor-opened')) {
@@ -39,8 +40,8 @@ export default grapesjs.plugins.add('customButtons', (editor, options) => {
             const template = editor.runCommand('export-inlined-html');
             $('#' + textareaId).val(template);
 
-            resetBody(editor);
             FormChangeInfo.showInfo();
+            resetBody(editor);
         }
     });
 

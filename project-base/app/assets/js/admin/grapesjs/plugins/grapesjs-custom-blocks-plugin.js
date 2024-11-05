@@ -1,4 +1,5 @@
 import grapesjs from 'grapesjs';
+import Translator from 'bazinga-translator';
 
 export default grapesjs.plugins.add('custom-blocks', (editor, options) => {
 
@@ -16,8 +17,8 @@ export default grapesjs.plugins.add('custom-blocks', (editor, options) => {
     });
 
     editor.Blocks.add('column1', {
-        label: 'Column 1',
-        category: 'Basic',
+        label: Translator.trans('Column 1'),
+        category: Translator.trans('Basic objects'),
         attributes: { class: 'gjs-fonts gjs-f-b1' },
         content: `
             <div class="row" data-gjs-droppable=".column">
@@ -27,8 +28,8 @@ export default grapesjs.plugins.add('custom-blocks', (editor, options) => {
     });
 
     editor.Blocks.add('column2', {
-        label: 'Column 2',
-        category: 'Basic',
+        label: Translator.trans('Column 2'),
+        category: Translator.trans('Basic objects'),
         attributes: { class: 'gjs-fonts gjs-f-b2' },
         content: `
             <div class="row" data-gjs-droppable=".column">
@@ -39,15 +40,15 @@ export default grapesjs.plugins.add('custom-blocks', (editor, options) => {
     });
 
     editor.Blocks.add('text-ckeditor', {
-        label: 'Text',
-        category: 'Basic',
+        label: Translator.trans('Text'),
+        category: Translator.trans('Basic objects'),
         attributes: { class: 'gjs-fonts gjs-f-text' },
         content: { type: 'text-ckeditor', content: 'Insert your text here', activeOnRender: 1 }
     });
 
     editor.Blocks.add('video', {
-        label: 'Video',
-        category: 'Basic',
+        label: Translator.trans('Video'),
+        category: Translator.trans('Basic objects'),
         attributes: { class: 'fa fa-youtube-play' },
         content: {
             type: 'video'
@@ -56,8 +57,8 @@ export default grapesjs.plugins.add('custom-blocks', (editor, options) => {
 
     editor.Blocks.add('map', {
         select: true,
-        label: 'Map',
-        category: 'Basic',
+        label: Translator.trans('Map'),
+        category: Translator.trans('Basic objects'),
         attributes: { class: 'fa fa-map-o' },
         content: {
             type: 'map',

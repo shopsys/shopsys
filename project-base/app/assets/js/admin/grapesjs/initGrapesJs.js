@@ -15,6 +15,9 @@ import './plugins/grapesjs-custom-image-file-plugin';
 import './plugins/grapesjs-custom-iframe-plugin';
 import './plugins/grapesjs-table-custom-plugin';
 import 'magnific-popup';
+import { en } from './locales/en';
+import Translator from 'bazinga-translator';
+
 import { Buffer } from 'buffer';
 global.Buffer = Buffer;
 
@@ -111,6 +114,13 @@ export default class InitGrapesJs {
                 },
                 [webPagePlugin]: {
                     blocks: [],
+                    block: () => {
+                        return {
+                            label: Translator.trans('Link'),
+                            category: Translator.trans('Basic objects'),
+                            attributes: { class: 'fa fa-link' }
+                        };
+                    },
                     useCustomTheme: false
                 },
                 customButtons: {
@@ -162,6 +172,10 @@ export default class InitGrapesJs {
         });
         editor.on('rte:enable', (event) => {
             editor.RichTextEditor.updatePosition();
+        });
+
+        editor.I18n.setMessages({
+            en
         });
 
         editor.once('load', () => {
@@ -252,6 +266,10 @@ export default class InitGrapesJs {
                     }
                 }
             }
+        });
+
+        editor.I18n.addMessages({
+            en
         });
 
         editor.Panels.getButton('options', 'sw-visibility').set('active', 1);
