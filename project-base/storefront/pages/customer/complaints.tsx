@@ -81,7 +81,7 @@ const ComplaintsPage: FC = () => {
                         pathname: customerComplaintsNewUrl,
                     }}
                 >
-                    {t('New complaint')}
+                    + {t('New complaint')}
                 </LinkButton>
                 <div className="my-5">
                     <SearchInput
