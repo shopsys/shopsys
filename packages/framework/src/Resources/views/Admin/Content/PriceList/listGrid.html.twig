@@ -1,0 +1,14 @@
+{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+
+{% block grid_no_data %}
+    {{ 'No product list found.'|trans }}
+{% endblock %}
+
+{% block grid_pager_totalcount %}
+    {% set entityName = 'product lists'|trans %}
+    {{ parent() }}
+{% endblock %}
+
+{% block grid_value_cell_id_domain_id %}
+    {{ domainIcon(value, 'small') }}
+{% endblock %}

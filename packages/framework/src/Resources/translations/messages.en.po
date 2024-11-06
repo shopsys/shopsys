@@ -925,6 +925,9 @@ msgstr ""
 msgid "Create new parameter group"
 msgstr ""
 
+msgid "Create new price list"
+msgstr ""
+
 msgid "Create new product"
 msgstr ""
 
@@ -1625,6 +1628,12 @@ msgid "Editing payment"
 msgstr ""
 
 msgid "Editing payment - %name%"
+msgstr ""
+
+msgid "Editing price list"
+msgstr ""
+
+msgid "Editing price list - %name%"
 msgstr ""
 
 msgid "Editing product"
@@ -2581,6 +2590,9 @@ msgstr ""
 msgid "New payment"
 msgstr ""
 
+msgid "New price list"
+msgstr ""
+
 msgid "New product"
 msgstr ""
 
@@ -2699,6 +2711,9 @@ msgid "No pricing groups found. You have to create some first."
 msgstr ""
 
 msgid "No product found."
+msgstr ""
+
+msgid "No product list found."
 msgstr ""
 
 msgid "No promo codes found. You have to create some first."
@@ -3173,6 +3188,30 @@ msgid "Price including VAT"
 msgstr ""
 
 msgid "Price including VAT rounding"
+msgstr ""
+
+msgid "Price list"
+msgstr ""
+
+msgid "Price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr ""
+
+msgid "Price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr ""
+
+msgid "Price list name"
+msgstr ""
+
+msgid "Price list overview"
+msgstr ""
+
+msgid "Price lists"
+msgstr ""
+
+msgid "Price lists - full"
+msgstr ""
+
+msgid "Price lists - view"
 msgstr ""
 
 msgid "Prices"
@@ -4631,6 +4670,9 @@ msgid "parameter values"
 msgstr ""
 
 msgid "parameters"
+msgstr ""
+
+msgid "product lists"
 msgstr ""
 
 msgid "products"

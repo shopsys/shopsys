@@ -394,6 +394,9 @@ msgstr ""
 msgid "Please enter pricing group name"
 msgstr ""
 
+msgid "Please enter product list name"
+msgstr ""
+
 msgid "Please enter promo code"
 msgstr ""
 
@@ -473,6 +476,9 @@ msgid "Previously selected main URL dos not exist any more"
 msgstr ""
 
 msgid "Price must be greater or equal to zero"
+msgstr ""
+
+msgid "Product list name cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Product name cannot be longer than {{ limit }} characters"

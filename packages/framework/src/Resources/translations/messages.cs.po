@@ -925,6 +925,9 @@ msgstr "Vytvořit nový parametr"
 msgid "Create new parameter group"
 msgstr "Vytvořit novou skupinu parametrů"
 
+msgid "Create new price list"
+msgstr "Vytvořit nový ceník"
+
 msgid "Create new product"
 msgstr "Vytvořit nové zboží"
 
@@ -1626,6 +1629,12 @@ msgstr "Editace platby"
 
 msgid "Editing payment - %name%"
 msgstr "Editace platby - %name%"
+
+msgid "Editing price list"
+msgstr "Editace ceníku"
+
+msgid "Editing price list - %name%"
+msgstr "Editace ceníku - %name%"
 
 msgid "Editing product"
 msgstr "Editace zboží"
@@ -2581,6 +2590,9 @@ msgstr "URL adresa pro nastavení nového hesla"
 msgid "New payment"
 msgstr "Nová platba"
 
+msgid "New price list"
+msgstr "Nový ceník"
+
 msgid "New product"
 msgstr "Nové zboží"
 
@@ -2700,6 +2712,9 @@ msgstr "Nebyly nalezeny žádné cenové skupiny. Nejprve musíte nějakou vytvo
 
 msgid "No product found."
 msgstr "Nebylo nalezeno žádné zboží."
+
+msgid "No product list found."
+msgstr "Nebyl nalezen žádný ceník."
 
 msgid "No promo codes found. You have to create some first."
 msgstr "Nebyly nalezeny žádné slevové kupóny. Nejprve musíte nějaký vytvořit."
@@ -3174,6 +3189,30 @@ msgstr "Cena s DPH"
 
 msgid "Price including VAT rounding"
 msgstr "Zaokrouhlení ceny s DPH"
+
+msgid "Price list"
+msgstr "Ceník"
+
+msgid "Price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr "Byl vytvořen ceník <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
+
+msgid "Price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "Byl upraven ceník <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
+
+msgid "Price list name"
+msgstr "Název ceníku"
+
+msgid "Price list overview"
+msgstr "Přehled ceníků"
+
+msgid "Price lists"
+msgstr "Ceníky"
+
+msgid "Price lists - full"
+msgstr "Ceníky - vše"
+
+msgid "Price lists - view"
+msgstr "Ceníky - zobrazení"
 
 msgid "Prices"
 msgstr "Ceny"
@@ -4632,6 +4671,9 @@ msgstr "hodnoty parametru"
 
 msgid "parameters"
 msgstr "parametry"
+
+msgid "product lists"
+msgstr "ceníky"
 
 msgid "products"
 msgstr "zboží"

@@ -62,6 +62,7 @@ security:
             - ROLE_COMPLAINT_STATUS_FULL
             - ROLE_INQUIRY_VIEW
             - ROLE_WATCHDOG_FULL
+            - ROLE_PRICE_LIST_FULL
         ROLE_ALL_VIEW:
             - ROLE_ORDER_VIEW
             - ROLE_CUSTOMER_VIEW
@@ -117,6 +118,7 @@ security:
             - ROLE_COMPLAINT_STATUS_VIEW
             - ROLE_INQUIRY_VIEW
             - ROLE_WATCHDOG_VIEW
+            - ROLE_PRICE_LIST_FULL
         ROLE_ORDER_FULL: [ROLE_ORDER_VIEW]
         ROLE_CUSTOMER_FULL: [ROLE_CUSTOMER_VIEW]
         ROLE_NEWSLETTER_FULL: [ROLE_NEWSLETTER_VIEW]
@@ -168,6 +170,7 @@ security:
         ROLE_COMPLAINT_FULL: [ROLE_COMPLAINT_VIEW]
         ROLE_COMPLAINT_STATUS_FULL: [ROLE_COMPLAINT_STATUS_VIEW]
         ROLE_WATCHDOG_FULL: [ROLE_WATCHDOG_VIEW]
+        ROLE_PRICE_LIST_FULL: [ROLE_PRICE_LIST_VIEW]
         # FE API ROLES
         ROLE_API_ALL:
             - ROLE_API_CUSTOMER_SELF_MANAGE
@@ -308,6 +311,11 @@ security:
         - { path: ^/%admin_url%/pricing/group/delete, roles: ROLE_PRICING_GROUP_FULL }
         - { path: ^/%admin_url%/pricing/group/list, roles: ROLE_PRICING_GROUP_FULL, methods: [POST] }
         - { path: ^/%admin_url%/pricing/group/, roles: ROLE_PRICING_GROUP_VIEW }
+        # price lists
+        - { path: ^/%admin_url%/pricing/price-list/new, roles: ROLE_PRICE_LIST_FULL }
+        - { path: ^/%admin_url%/pricing/price-list/edit, roles: ROLE_PRICE_LIST_FULL, methods: [ POST ] }
+        - { path: ^/%admin_url%/pricing/price-list/delete, roles: ROLE_PRICE_LIST_FULL }
+        - { path: ^/%admin_url%/pricing/price-list/, roles: ROLE_PRICE_LIST_VIEW }
         # vats
         - { path: ^/%admin_url%/vat/delete, roles: ROLE_VAT_FULL }
         - { path: ^/%admin_url%/vat/list, roles: ROLE_VAT_FULL, methods: [POST] }

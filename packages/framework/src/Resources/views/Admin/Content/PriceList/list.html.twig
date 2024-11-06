@@ -1,0 +1,18 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Price list overview'|trans }}{% endblock %}
+{% block h1 %}{{ 'Price list overview'|trans }}{% endblock %}
+
+{% block btn %}
+    <div class="wrap-bar__buttons">
+        <a href="{{ url('admin_pricelist_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
+            <i class="btn__icon">+</i>{{ 'Create new price list'|trans }}
+        </a>
+    </div>
+{% endblock %}
+
+{% block main_content %}
+    {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainFilterController::domainFilterTabsAction', { namespace: domainFilterNamespace })) }}
+
+    {{ gridView.render() }}
+{% endblock %}
