@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\HttpSmokeTesting\RouterAdapter\SymfonyRouterAdapter;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 
 abstract class HttpSmokeTestCase extends KernelTestCase
@@ -47,14 +48,16 @@ abstract class HttpSmokeTestCase extends KernelTestCase
     #[DataProvider('httpResponseTestDataProvider')]
     final public function testHttpResponse(RequestDataSet $requestDataSet)
     {
-        $requestDataSet->executeCallsDuringTestExecution(static::$kernel->getContainer());
-
         if ($requestDataSet->isSkipped()) {
             $message = sprintf('Test for route "%s" was skipped.', $requestDataSet->getRouteName());
             $this->markTestSkipped($this->getMessageWithDebugNotes($requestDataSet, $message));
         }
 
         $request = $this->createRequest($requestDataSet);
+
+        $requestDataSet->executeCallsDuringTestExecution(static::$kernel->getContainer());
+
+        $request->attributes->add($requestDataSet->getParameters());
 
         $response = $this->handleRequest($request);
 
@@ -131,9 +134,18 @@ abstract class HttpSmokeTestCase extends KernelTestCase
         $uri = static::getRouterAdapter()->generateUri($requestDataSet);
 
         $request = Request::create($uri);
+        /** @var \Symfony\Component\HttpFoundation\Session\SessionFactory $sessionFactory */
+        $sessionFactory = static::$kernel->getContainer()->get('test.service_container')->get('session.factory');
+        /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
+        $requestStack = static::$kernel->getContainer()->get(RequestStack::class);
+
+        $session = $sessionFactory->createSession();
+        $request->setSession($session);
 
         $requestDataSet->getAuth()
             ->authenticateRequest($request);
+
+        $requestStack->push($request);
 
         return $request;
     }
