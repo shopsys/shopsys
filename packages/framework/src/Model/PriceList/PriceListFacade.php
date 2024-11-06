@@ -63,4 +63,15 @@ class PriceListFacade
 
         $this->em->flush();
     }
+
+    /**
+     * @param int $priceListId
+     */
+    public function delete(int $priceListId): void
+    {
+        $priceList = $this->getById($priceListId);
+
+        $this->em->remove($priceList);
+        $this->em->flush();
+    }
 }

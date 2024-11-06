@@ -49,6 +49,10 @@ class PriceListGridFactory
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_pricelist_edit', ['id' => 'pl.id']);
+        $grid->addDeleteActionColumn('admin_pricelist_delete', ['id' => 'pl.id'])
+            ->setConfirmMessage(
+                t('Do you really want to remove this product list? Special prices for products in this list will be removed.'),
+            );
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/PriceList/listGrid.html.twig');
 

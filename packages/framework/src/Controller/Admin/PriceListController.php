@@ -6,11 +6,14 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\PriceList\PriceListFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
+use Shopsys\FrameworkBundle\Model\PriceList\Exception\PriceListNotFoundException;
 use Shopsys\FrameworkBundle\Model\PriceList\PriceListDataFactory;
 use Shopsys\FrameworkBundle\Model\PriceList\PriceListFacade;
 use Shopsys\FrameworkBundle\Model\PriceList\PriceListGridFactory;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -140,5 +143,31 @@ class PriceListController extends AdminBaseController
             'form' => $form->createView(),
             'priceList' => $priceList,
         ]);
+    }
+
+    /**
+     * @CsrfProtection
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    #[Route(path: '/pricing/price-list/delete/{id}', requirements: ['id' => '\d+'])]
+    public function deleteAction(int $id): RedirectResponse
+    {
+        try {
+            $priceList = $this->priceListFacade->getById($id);
+
+            $this->priceListFacade->delete($id);
+
+            $this->addSuccessFlashTwig(
+                t('Price list <strong>{{ name }}</strong> deleted'),
+                [
+                    'name' => $priceList->getName(),
+                ],
+            );
+        } catch (PriceListNotFoundException) {
+            $this->addErrorFlash(t('Selected price list does not exist.'));
+        }
+
+        return $this->redirectToRoute('admin_pricelist_list');
     }
 }
