@@ -125,44 +125,49 @@ export const mapPaymentsData = (transports?: TypeTransportWithAvailablePaymentsF
     return Array.from(payments.values());
 };
 
-export const mapCartData = (cart: TypeCartFragment, formatPrice: FormatPriceFunctionType): CartData => {
+export const mapCartData = (
+    cart: TypeCartFragment | undefined | null,
+    formatPrice: FormatPriceFunctionType,
+): CartData => {
     return {
-        items: cart.items.map(({ product, discounts, quantity }) => ({
-            id: product.uuid,
-            availability: product.availability.name,
-            name: product.fullName,
-            quantity,
-            priceWithoutVat: product.price.priceWithoutVat,
-            priceWithVat: product.price.priceWithVat,
-            vat: product.vat.percent,
-            image: product.mainImage?.url ?? null,
-            gtm: {},
-            labels: product.flags.map(({ name }) => name),
-            discounts: discounts.reduce(
-                (acc, { promoCode, totalDiscount }) => {
-                    acc[promoCode] = {
-                        withVat: Math.abs(parseFloat(totalDiscount.priceWithVat)),
-                        withoutVat: Math.abs(parseFloat(totalDiscount.priceWithoutVat)),
-                    };
-                    return acc;
-                },
-                {} as {
-                    [_key: string]: CartItemPromoCodeFullPrice | number;
-                },
-            ),
-        })),
-        promoCodes: cart.promoCodes.map(({ code, discount, type }) => ({
-            code,
-            uuid: code,
-            discount:
-                type === TypePromoCodeTypeEnum.Nominal
-                    ? formatPrice(discount.priceWithVat)
-                    : formatPercent(discount.priceWithVat) ?? '',
-            discountWithoutVat:
-                type === TypePromoCodeTypeEnum.Nominal
-                    ? formatPrice(discount.priceWithoutVat)
-                    : formatPercent(discount.priceWithoutVat) ?? '',
-        })),
+        items:
+            cart?.items.map(({ product, discounts, quantity }) => ({
+                id: product.uuid,
+                availability: product.availability.name,
+                name: product.fullName,
+                quantity,
+                priceWithoutVat: product.price.priceWithoutVat,
+                priceWithVat: product.price.priceWithVat,
+                vat: product.vat.percent,
+                image: product.mainImage?.url ?? null,
+                gtm: {},
+                labels: product.flags.map(({ name }) => name),
+                discounts: discounts.reduce(
+                    (acc, { promoCode, totalDiscount }) => {
+                        acc[promoCode] = {
+                            withVat: Math.abs(parseFloat(totalDiscount.priceWithVat)),
+                            withoutVat: Math.abs(parseFloat(totalDiscount.priceWithoutVat)),
+                        };
+                        return acc;
+                    },
+                    {} as {
+                        [_key: string]: CartItemPromoCodeFullPrice | number;
+                    },
+                ),
+            })) ?? [],
+        promoCodes:
+            cart?.promoCodes.map(({ code, discount, type }) => ({
+                code,
+                uuid: code,
+                discount:
+                    type === TypePromoCodeTypeEnum.Nominal
+                        ? formatPrice(discount.priceWithVat)
+                        : formatPercent(discount.priceWithVat) ?? '',
+                discountWithoutVat:
+                    type === TypePromoCodeTypeEnum.Nominal
+                        ? formatPrice(discount.priceWithoutVat)
+                        : formatPercent(discount.priceWithoutVat) ?? '',
+            })) ?? [],
     };
 };
 
@@ -185,10 +190,10 @@ const mapOpeningHours = (dayNames: string[], openingHours?: TypeOpeningHours): S
 
 export const mapStoresData = (
     dayNames: string[],
-    cart: TypeCartFragment,
+    cart: TypeCartFragment | undefined | null,
     transports?: TypeTransportWithAvailablePaymentsAndStoresFragment[],
 ): StoreData[] => {
-    const cartItemsAvailabilityByStoreUuid = cart.items
+    const cartItemsAvailabilityByStoreUuid = cart?.items
         .flatMap(getProductOnStoreAvailability)
         .reduce(
             groupByStoreUuid<StoreDataProductOnStoreAvailability>,
@@ -210,7 +215,7 @@ export const mapStoresData = (
                     source: 'stores',
                     hours: mapOpeningHours(dayNames, store?.node?.openingHours),
                     availability: store?.node?.openingHours.status ?? '',
-                    productOnStoreAvailability: cartItemsAvailabilityByStoreUuid.get(store?.node?.identifier ?? ''),
+                    productOnStoreAvailability: cartItemsAvailabilityByStoreUuid?.get(store?.node?.identifier ?? ''),
                 })) ?? [],
         ) ?? []
     );
