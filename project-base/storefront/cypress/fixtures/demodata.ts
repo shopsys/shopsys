@@ -104,7 +104,7 @@ export const products = {
     },
     philips32PFL4308: {
         uuid: '7de699f8-bc41-5642-9ad8-3924a9d49f47',
-        url: '/32-philips-32pfl4308',
+        url: '/television-philips-m',
         catnum: '9176508',
     },
     a4techMouse: {
