@@ -113,7 +113,7 @@ export const products = {
     },
     philips54CRT: {
         uuid: 'eff2bd27-7a46-5ccf-879c-915095bfb8fb	',
-        name: '54" Philips CRT 32PFL4308',
+        name: '54" Philips CRT 32PFL4308 [V]',
         catnum: '9176588',
     },
 } as const;
