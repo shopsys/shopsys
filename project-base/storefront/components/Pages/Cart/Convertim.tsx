@@ -11,15 +11,17 @@ import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.g
 import { useTransportsWithStoresQuery } from 'graphql/requests/transports/queries/TransportsWithStoresQuery.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useCallback } from 'react';
+import { usePersistStore } from 'store/usePersistStore';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 
-type ConvertimProps = { cart: TypeCartFragment; convertimProjectUuid: string };
+type ConvertimProps = { cart?: TypeCartFragment | null; convertimProjectUuid: string };
 
 export const Convertim: FC<ConvertimProps> = ({ cart, convertimProjectUuid }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
+    const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const [{ data: transportsData, fetching: isTransportsFetching }] = useTransportsWithStoresQuery({
-        variables: { cartUuid: cart.uuid },
+        variables: { cartUuid: cart?.uuid ?? null },
     });
 
     const dayNames = [
@@ -46,6 +48,12 @@ export const Convertim: FC<ConvertimProps> = ({ cart, convertimProjectUuid }) =>
         [transportsData],
     );
 
+    const handleEventsAfterOrderCreation = () => {
+        if (cart?.uuid) {
+            updateCartUuid(null);
+        }
+    };
+
     if (isTransportsFetching) {
         return null;
     }
@@ -61,6 +69,7 @@ export const Convertim: FC<ConvertimProps> = ({ cart, convertimProjectUuid }) =>
             isProduction={false}
             callbacks={{
                 afterSaveOrder: (orderObject: ConvertimOrderObject, continueFunction) => {
+                    handleEventsAfterOrderCreation();
                     continueFunction();
                 },
                 beforeOpenConvertim: (continueFunction) => {
