@@ -42,6 +42,7 @@ class DeliveryAddressDataFactory implements DeliveryAddressDataFactoryInterface
     {
         $deliveryAddressData = $this->createInstance();
         $deliveryAddressData->customer = $customer;
+        $deliveryAddressData->country = $customer->getBillingAddress()->getCountry();
 
         return $deliveryAddressData;
     }
