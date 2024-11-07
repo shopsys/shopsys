@@ -687,8 +687,8 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
           }
         }';
 
-        $minimalPrice = $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('3499');
-        $maximalPrice = $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('3499');
+        $minimalPrice = $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('699');
+        $maximalPrice = $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('7258.79');
 
         $expectedResult = '{
           "data": {
@@ -696,7 +696,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
               "productFilterOptions": {
                 "minimalPrice": "' . $minimalPrice . '",
                 "maximalPrice": "' . $maximalPrice . '",
-                "inStock": 2,
+                "inStock": 3,
                 "flags": [
                   {
                     "count": 2,
@@ -707,7 +707,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
                 ],
                 "brands": [
                   {
-                    "count": 2,
+                    "count": 3,
                     "brand": {
                       "name": "Sencor"
                     }

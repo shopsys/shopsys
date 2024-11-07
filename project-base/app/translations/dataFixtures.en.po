@@ -82,10 +82,10 @@ msgstr ""
 msgid "24\""
 msgstr ""
 
-msgid "24\" Philips 32PFL4308"
+msgid "24\" Philips 32PFL4308 [V]"
 msgstr ""
 
-msgid "24\" Philips CRT 32PFL4308"
+msgid "24\" Philips CRT 32PFL4308 [V]"
 msgstr ""
 
 msgid "240 x 205 x 15 mm"
@@ -106,10 +106,13 @@ msgstr ""
 msgid "27\""
 msgstr ""
 
-msgid "27\" Hyundai PLASMA T27D590EY"
+msgid "27\" Hyundai PLASMA T27D590EY [V]"
 msgstr ""
 
 msgid "27\" Hyundai T27D590EY"
+msgstr ""
+
+msgid "27\" Hyundai T27D590EY [V]"
 msgstr ""
 
 msgid "27\" Hyundai T27D590EZ"
@@ -139,9 +142,6 @@ msgstr ""
 msgid "310 x 480 x 10"
 msgstr ""
 
-msgid "32\" Hyundai 32PFL4400"
-msgstr ""
-
 msgid "32\" Philips 32PFL4308"
 msgstr ""
 
@@ -157,13 +157,13 @@ msgstr ""
 msgid "36\" Hyundai 32PFL4308"
 msgstr ""
 
-msgid "36\" Hyundai PLASMA 32PFL4308"
+msgid "36\" Hyundai PLASMA 32PFL4308 [V]"
 msgstr ""
 
-msgid "36\" Philips 32PFL4308"
+msgid "36\" Philips 32PFL4308 [V]"
 msgstr ""
 
-msgid "36\" Philips CRT 32PFL4308"
+msgid "36\" Philips CRT 32PFL4308 [V]"
 msgstr ""
 
 msgid "3“"
@@ -229,16 +229,16 @@ msgstr ""
 msgid "51,5\""
 msgstr ""
 
-msgid "51,5\" Hyundai 22HD44D"
+msgid "51,5\" Sencor 22HD44D [V]"
 msgstr ""
 
 msgid "54\""
 msgstr ""
 
-msgid "54\" Philips 32PFL4308"
+msgid "54\" Philips 32PFL4308 [V]"
 msgstr ""
 
-msgid "54\" Philips CRT 32PFL4308"
+msgid "54\" Philips CRT 32PFL4308 [V]"
 msgstr ""
 
 msgid "55"
@@ -250,7 +250,7 @@ msgstr ""
 msgid "60\""
 msgstr ""
 
-msgid "60\" Hyundai 22HD44D"
+msgid "60\" Sencor 22HD44D [V]"
 msgstr ""
 
 msgid "600 ml"
@@ -1048,9 +1048,6 @@ msgstr ""
 msgid "Hose VP-9310"
 msgstr ""
 
-msgid "Hyundai 22HD44D"
-msgstr ""
-
 msgid "Iconic Design"
 msgstr ""
 
@@ -1388,9 +1385,6 @@ msgid "Personal information export - {domain}"
 msgstr ""
 
 msgid "Personal information overview - {domain}"
-msgstr ""
-
-msgid "Philips 32PFL4308"
 msgstr ""
 
 msgid "Photographer's dream. Main camera with 13-megapixel front camera and a 5 megapixel guarantee photos in high definition on each side. Thanks to the built-in tools for editing and sharing can capture moving images in HD and combine the results to show from multiple angles."
@@ -1732,6 +1726,9 @@ msgstr ""
 msgid "Television"
 msgstr ""
 
+msgid "Television Hyundai [M]"
+msgstr ""
+
 msgid "Television LED, 55 cm diagonal, 1920x1080 Full HD, DVB-T MPEG4 tuner with USB recording and playback"
 msgstr ""
 
@@ -1747,10 +1744,16 @@ msgstr ""
 msgid "Television LED, diagonal 82 cm, 1366x768, DVB-T/C MPEG4 tuner, 2x HDMI, USB, SCART, VGA, headphone jack, USB/HDD recording, hotel mode, Energ. Class A"
 msgstr ""
 
+msgid "Television Philips [M]"
+msgstr ""
+
 msgid "Television SMART 3D LED, 189 cm diagonal, CMR 1000 4K Ultra HD 3840x2160, DVB-S2 / T2 / C, 4x HDMI, 3x USB, CI +, LAN, WiFi, DLNA, MHL, HbbTV, Tizen OS, energ. Class A"
 msgstr ""
 
 msgid "Television SMART 3D LED, 189 cm diagonal."
+msgstr ""
+
+msgid "Television Sencor [M]"
 msgstr ""
 
 msgid "Television monitor IPS, 16: 9, 5M: 1, 200cd/m2, 5ms GTG, FullHD 1920x1080"

@@ -132,7 +132,7 @@ class CategorySeoTest extends GraphQlTestCase
             'orderingMode' => 'PRIORITY',
             'defaultOrderingMode' => 'PRIORITY',
             'edges' => [
-                ['node' => ['name' => t('Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())]],
+                ['node' => ['name' => t('Television Philips [M]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())]],
             ],
         ];
 
@@ -154,7 +154,7 @@ class CategorySeoTest extends GraphQlTestCase
             'orderingMode' => 'PRIORITY',
             'defaultOrderingMode' => 'PRIORITY',
             'edges' => [
-                ['node' => ['name' => t('32" Hyundai 32PFL4400', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())]],
+                ['node' => ['name' => t('Television Hyundai [M]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())]],
             ],
         ];
 
