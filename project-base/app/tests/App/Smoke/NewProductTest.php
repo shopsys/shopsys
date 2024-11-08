@@ -7,9 +7,7 @@ namespace Tests\App\Smoke;
 use App\DataFixtures\Demo\UnitDataFixture;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
 use Symfony\Component\DomCrawler\Form;
-use Symfony\Component\Security\Csrf\CsrfToken;
 use Tests\App\Test\ApplicationTestCase;
 
 class NewProductTest extends ApplicationTestCase
@@ -38,31 +36,24 @@ class NewProductTest extends ApplicationTestCase
             'HTTPS' => $isDomainSecured,
         ];
 
-        $client1 = $this->createNewClient('admin', 'admin123');
-        $crawler = $client1->request('GET', $relativeUrl, [], [], $server);
+        $client = $this->createNewClient('admin', 'admin123');
+
+        $crawler = $client->request('GET', $relativeUrl, [], [], $server);
 
         $form = $crawler->filter('form[name=product_form]')->form();
         $this->fillForm($form);
 
-        $client2 = $this->createNewClient('admin', 'admin123');
-        /** @var \Doctrine\ORM\EntityManager $em2 */
-        $em2 = $client2->getContainer()->get('doctrine.orm.entity_manager');
+        /** @var \Doctrine\ORM\EntityManager $em */
+        $em = $client->getContainer()->get('doctrine.orm.entity_manager');
 
-        $em2->beginTransaction();
+        $em->beginTransaction();
 
-        /** @var \Symfony\Component\Security\Csrf\CsrfTokenManager $tokenManager */
-        $tokenManager = $client2->getContainer()->get('security.csrf.token_manager');
-        // if domain is on HTTPS, previously created token is prefixed with https-
-        $tokenId = ($isDomainSecured ? 'https-' : '') . ProductFormType::CSRF_TOKEN_ID;
-        $token = $tokenManager->getToken($tokenId);
-        $this->setFormCsrfToken($form, $token);
+        $client->submit($form);
 
-        $client2->submit($form);
+        $em->rollback();
 
-        $em2->rollback();
-
-        $this->assertSame(302, $client2->getResponse()->getStatusCode());
-        $this->assertStringStartsWith($domainUrl . '/admin/product/list', $client2->followRedirect()->getUri());
+        $this->assertSame(302, $client->getResponse()->getStatusCode());
+        $this->assertStringStartsWith($domainUrl . '/admin/product/list', $client->followRedirect()->getUri());
     }
 
     /**
@@ -93,14 +84,5 @@ class NewProductTest extends ApplicationTestCase
         $form['product_form[stocksGroup][productStockData][5][productQuantity]'] = '5';
         $form['product_form[stocksGroup][productStockData][6][productQuantity]'] = '6';
         $form['product_form[stocksGroup][productStockData][7][productQuantity]'] = '7';
-    }
-
-    /**
-     * @param \Symfony\Component\DomCrawler\Form $form
-     * @param \Symfony\Component\Security\Csrf\CsrfToken $token
-     */
-    private function setFormCsrfToken(Form $form, CsrfToken $token)
-    {
-        $form['product_form[_token]'] = $token->getValue();
     }
 }
