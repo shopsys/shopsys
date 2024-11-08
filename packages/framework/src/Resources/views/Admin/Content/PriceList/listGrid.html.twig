@@ -12,3 +12,15 @@
 {% block grid_value_cell_id_domain_id %}
     {{ domainIcon(value, 'small') }}
 {% endblock %}
+
+{% block grid_value_cell_id_validityStatus %}
+    {% set statusMap = {
+        '0': { 'class': 'success', 'label': 'Active'|trans },
+        '1': { 'class': 'warning', 'label': 'Future'|trans },
+        '-1': { 'class': 'error', 'label': 'Expired'|trans }
+    } %}
+
+    <span class="in-message--{{ statusMap[value].class }} in-message--small">
+        {{ statusMap[value].label }}
+    </span>
+{% endblock %}

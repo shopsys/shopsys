@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\PriceList;
 
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -49,6 +50,11 @@ class PriceListRepository
     {
         return $this->getPriceListRepository()
             ->createQueryBuilder('pl')
-            ->addSelect('pl.name');
+            ->addSelect('CASE
+                    WHEN :now BETWEEN pl.validFrom AND pl.validTo THEN 0
+                    WHEN :now < pl.validFrom THEN 1
+                    ELSE -1
+                END AS validityStatus')
+            ->setParameter('now', new DateTimeImmutable());
     }
 }

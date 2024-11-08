@@ -4,6 +4,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
 
+msgid "\"Valid to\" must be greater than \"Valid from\""
+msgstr "\"Platnost do\" musí být větší než \"Platnost od\""
+
 msgid "Address {{ url }} already exists."
 msgstr "Adresa {{ url }} již existuje."
 
@@ -456,6 +459,12 @@ msgstr "Prosím zadejte platný třímístný kód měny podle standardu ISO 421
 
 msgid "Please enter valid email"
 msgstr "Vyplňte prosím platný e-mail"
+
+msgid "Please enter valid from date"
+msgstr "Vyplňte prosím platné datum od"
+
+msgid "Please enter valid to date"
+msgstr "Vyplňte prosím platné datum do"
 
 msgid "Please enter warehouse name"
 msgstr "Vyplňte prosím název skladu"

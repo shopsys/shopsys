@@ -15,4 +15,14 @@ class PriceListData
      * @var int
      */
     public $domainId;
+
+    /**
+     * @var \DateTimeImmutable
+     */
+    public $validFrom;
+
+    /**
+     * @var \DateTimeImmutable
+     */
+    public $validTo;
 }

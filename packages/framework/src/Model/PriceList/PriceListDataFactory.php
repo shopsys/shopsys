@@ -52,5 +52,7 @@ class PriceListDataFactory
     {
         $priceListData->name = $priceList->getName();
         $priceListData->domainId = $priceList->getDomainId();
+        $priceListData->validFrom = $priceList->getValidFrom();
+        $priceListData->validTo = $priceList->getValidTo();
     }
 }

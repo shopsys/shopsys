@@ -1381,6 +1381,9 @@ msgstr ""
 msgid "Do you really want to remove this payment?"
 msgstr ""
 
+msgid "Do you really want to remove this product list? Special prices for products in this list will be removed."
+msgstr ""
+
 msgid "Do you really want to remove this product?"
 msgstr ""
 
@@ -1813,6 +1816,9 @@ msgstr ""
 msgid "Expected maximum duration"
 msgstr ""
 
+msgid "Expired"
+msgstr ""
+
 msgid "Export email list in CSV format"
 msgstr ""
 
@@ -2033,6 +2039,9 @@ msgid "Frontend"
 msgstr ""
 
 msgid "Full name"
+msgstr ""
+
+msgid "Future"
 msgstr ""
 
 msgid "Generate"
@@ -2291,6 +2300,9 @@ msgid "Last order"
 msgstr ""
 
 msgid "Last started at"
+msgstr ""
+
+msgid "Last update"
 msgstr ""
 
 msgid "Legal conditions"
@@ -3196,6 +3208,9 @@ msgstr ""
 msgid "Price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
 msgstr ""
 
+msgid "Price list <strong>{{ name }}</strong> deleted"
+msgstr ""
+
 msgid "Price list name"
 msgstr ""
 
@@ -3698,6 +3713,9 @@ msgid "Selected parameter doesn't exist."
 msgstr ""
 
 msgid "Selected payment doesn't exist."
+msgstr ""
+
+msgid "Selected price list does not exist."
 msgstr ""
 
 msgid "Selected pricing group doesn't exist."

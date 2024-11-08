@@ -4,6 +4,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
+msgid "\"Valid to\" must be greater than \"Valid from\""
+msgstr ""
+
 msgid "Address {{ url }} already exists."
 msgstr ""
 
@@ -455,6 +458,12 @@ msgid "Please enter valid 3-digit currency code according to ISO 4217 standard (
 msgstr ""
 
 msgid "Please enter valid email"
+msgstr ""
+
+msgid "Please enter valid from date"
+msgstr ""
+
+msgid "Please enter valid to date"
 msgstr ""
 
 msgid "Please enter warehouse name"

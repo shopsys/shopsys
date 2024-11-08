@@ -19,8 +19,15 @@ class Version20241104151802 extends AbstractMigration
                 id SERIAL NOT NULL,
                 domain_id INT NOT NULL,
                 name VARCHAR(100) NOT NULL,
+                last_update TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
+                valid_from TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
+                valid_to TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
                 PRIMARY KEY(id)
             )');
+
+        $this->sql('COMMENT ON COLUMN price_lists.last_update IS \'(DC2Type:datetime_immutable)\'');
+        $this->sql('COMMENT ON COLUMN price_lists.valid_from IS \'(DC2Type:datetime_immutable)\'');
+        $this->sql('COMMENT ON COLUMN price_lists.valid_to IS \'(DC2Type:datetime_immutable)\'');
     }
 
     /**

@@ -1381,6 +1381,9 @@ msgstr "Opravdu chcete odstranit tento parametr? Smazáním parametru dojde k od
 msgid "Do you really want to remove this payment?"
 msgstr "Opravdu chcete odstranit tuto platbu?"
 
+msgid "Do you really want to remove this product list? Special prices for products in this list will be removed."
+msgstr "Opravdu chcete odstranit tento ceník? Speciální ceny pro produkty v tomto ceníku budou odstraněny."
+
 msgid "Do you really want to remove this product?"
 msgstr "Opravdu chcete odstranit toto zboží?"
 
@@ -1813,6 +1816,9 @@ msgstr "Rozbalit"
 msgid "Expected maximum duration"
 msgstr "Očekávané maximální trvání"
 
+msgid "Expired"
+msgstr "Vypršelý"
+
 msgid "Export email list in CSV format"
 msgstr "Exportovat seznam e-mailů jako CSV"
 
@@ -2034,6 +2040,9 @@ msgstr "Frontend"
 
 msgid "Full name"
 msgstr "Celé jméno"
+
+msgid "Future"
+msgstr "Budoucí"
 
 msgid "Generate"
 msgstr "Vygenerovat"
@@ -2292,6 +2301,9 @@ msgstr "Poslední objednávka"
 
 msgid "Last started at"
 msgstr "Poslední spuštění"
+
+msgid "Last update"
+msgstr "Poslední aktualizace"
 
 msgid "Legal conditions"
 msgstr "Právní podmínky"
@@ -3196,6 +3208,9 @@ msgstr "Byl vytvořen ceník <strong><a href=\"{{ url }}\">{{ name }}</a></stron
 msgid "Price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
 msgstr "Byl upraven ceník <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
 
+msgid "Price list <strong>{{ name }}</strong> deleted"
+msgstr "Byl smazán ceník <strong>{{ name }}</strong>"
+
 msgid "Price list name"
 msgstr "Název ceníku"
 
@@ -3699,6 +3714,9 @@ msgstr "Zvolený parametr neexistuje."
 
 msgid "Selected payment doesn't exist."
 msgstr "Zvolená platba neexistuje."
+
+msgid "Selected price list does not exist."
+msgstr "Zvolený ceník neexistuje."
 
 msgid "Selected pricing group doesn't exist."
 msgstr "Zvolená cenová skupina neexistuje."

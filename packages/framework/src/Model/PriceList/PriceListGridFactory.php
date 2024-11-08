@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\PriceList;
 
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridView;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
@@ -40,12 +41,18 @@ class PriceListGridFactory
         $grid = $this->gridFactory->create('priceList', $dataSource);
 
         $grid->enablePaging();
+        $grid->setDefaultOrder('lastUpdate', DataSourceInterface::ORDER_DESC);
 
         $grid->addColumn('name', 'pl.name', t('Price list name'), true);
 
         if ($this->domain->isMultidomain()) {
             $grid->addColumn('domain_id', 'pl.domainId', t('Domain'), true);
         }
+
+        $grid->addColumn('lastUpdate', 'pl.lastUpdate', t('Last update'), true);
+        $grid->addColumn('validFrom', 'pl.validFrom', t('Valid from'), true);
+        $grid->addColumn('validTo', 'pl.validTo', t('Valid to'), true);
+        $grid->addColumn('validityStatus', 'validityStatus', t('Status'), true);
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_pricelist_edit', ['id' => 'pl.id']);
