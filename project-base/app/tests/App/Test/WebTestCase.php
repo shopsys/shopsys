@@ -19,6 +19,7 @@ use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationMess
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -240,5 +241,26 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
     {
         $injector = new Injector(new TestCaseContainerFactory($this), new DefaultExtractorFactory([TestCase::class, Assert::class]));
         $injector->inject($this);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    protected function createRequest(): Request
+    {
+        $uri = $this->getLocalizedPathOnFirstDomainByRouteName('admin_login');
+
+        $request = Request::create($uri);
+        /** @var \Symfony\Component\HttpFoundation\Session\SessionFactory $sessionFactory */
+        $sessionFactory = static::$kernel->getContainer()->get('test.service_container')->get('session.factory');
+        /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
+        $requestStack = static::$kernel->getContainer()->get(RequestStack::class);
+
+        $session = $sessionFactory->createSession();
+        $request->setSession($session);
+
+        $requestStack->push($request);
+
+        return $request;
     }
 }

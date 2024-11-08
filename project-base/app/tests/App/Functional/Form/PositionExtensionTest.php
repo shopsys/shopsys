@@ -13,6 +13,7 @@ class PositionExtensionTest extends FunctionalTestCase
 {
     public function testFormFieldsPosition(): void
     {
+        $this->createRequest();
         $form = $this->getForm();
         $this->assertPositions($form->createView(), ['a', 'b', 'c', 'd', 'e', 'f', 'g']);
     }
