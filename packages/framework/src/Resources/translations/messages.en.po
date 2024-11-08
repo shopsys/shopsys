@@ -1729,10 +1729,7 @@ msgstr ""
 msgid "Enter in the store local time"
 msgstr ""
 
-msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2023 00:00:00)"
-msgstr ""
-
-msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2024 23:59:59)"
+msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2023 10:12:00)"
 msgstr ""
 
 msgid "Entered code is not valid"

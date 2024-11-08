@@ -1729,11 +1729,8 @@ msgstr "Vložte 6 místný ověřovací kód z mobilní aplikace pro dvoufaktoro
 msgid "Enter in the store local time"
 msgstr "Zadejte v lokálním čase prodejny"
 
-msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2023 00:00:00)"
-msgstr "Zadejte datum a čas ve formátu dd.mm.yyyy hh:mm (např. 31.12.2023 00:00:00)"
-
-msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2024 23:59:59)"
-msgstr "Zadejte datum a čas ve formátu dd.mm.yyyy hh:mm (např. 31.12.2024 23:59:59)"
+msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2023 10:12:00)"
+msgstr "Zadejte datum a čas ve formátu dd.mm.yyyy hh:mm (např. 31.12.2023 10:12:00)"
 
 msgid "Entered code is not valid"
 msgstr "Zadaný kód není platný"
