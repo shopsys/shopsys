@@ -82,10 +82,10 @@ msgstr ""
 msgid "24\""
 msgstr ""
 
-msgid "24\" Philips 32PFL4308 [V]"
+msgid "24\" Philips CRT [V]"
 msgstr ""
 
-msgid "24\" Philips CRT 32PFL4308 [V]"
+msgid "24\" Philips [V]"
 msgstr ""
 
 msgid "240 x 205 x 15 mm"
@@ -106,16 +106,16 @@ msgstr ""
 msgid "27\""
 msgstr ""
 
-msgid "27\" Hyundai PLASMA T27D590EY [V]"
+msgid "27\" Hyundai PLASMA [V]"
 msgstr ""
 
 msgid "27\" Hyundai T27D590EY"
 msgstr ""
 
-msgid "27\" Hyundai T27D590EY [V]"
+msgid "27\" Hyundai T27D590EZ"
 msgstr ""
 
-msgid "27\" Hyundai T27D590EZ"
+msgid "27\" Hyundai [V]"
 msgstr ""
 
 msgid "275 kWh/year"
@@ -154,16 +154,16 @@ msgstr ""
 msgid "36\""
 msgstr ""
 
-msgid "36\" Hyundai 32PFL4308"
+msgid "36\" Hyundai PLASMA [V]"
 msgstr ""
 
-msgid "36\" Hyundai PLASMA 32PFL4308 [V]"
+msgid "36\" Hyundai [V]"
 msgstr ""
 
-msgid "36\" Philips 32PFL4308 [V]"
+msgid "36\" Philips CRT [V]"
 msgstr ""
 
-msgid "36\" Philips CRT 32PFL4308 [V]"
+msgid "36\" Philips [V]"
 msgstr ""
 
 msgid "3“"
@@ -229,16 +229,16 @@ msgstr ""
 msgid "51,5\""
 msgstr ""
 
-msgid "51,5\" Sencor 22HD44D [V]"
+msgid "51,5\" Sencor [V]"
 msgstr ""
 
 msgid "54\""
 msgstr ""
 
-msgid "54\" Philips 32PFL4308 [V]"
+msgid "54\" Philips CRT [V]"
 msgstr ""
 
-msgid "54\" Philips CRT 32PFL4308 [V]"
+msgid "54\" Philips [V]"
 msgstr ""
 
 msgid "55"
@@ -250,7 +250,7 @@ msgstr ""
 msgid "60\""
 msgstr ""
 
-msgid "60\" Sencor 22HD44D [V]"
+msgid "60\" Sencor [V]"
 msgstr ""
 
 msgid "600 ml"

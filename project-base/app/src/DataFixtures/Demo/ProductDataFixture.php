@@ -1590,7 +1590,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
             $locale = $domain->getLocale();
-            $productData->name[$locale] = t('36" Philips 32PFL4308 [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->name[$locale] = t('36" Philips [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->namePrefix[$locale] = t('Default variant - prefix', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->nameSufix[$locale] = t('Default variant - suffix', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
@@ -1625,7 +1625,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
             $locale = $domain->getLocale();
-            $productData->name[$locale] = t('54" Philips CRT 32PFL4308 [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->name[$locale] = t('54" Philips CRT [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
@@ -2134,7 +2134,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
             $locale = $domain->getLocale();
-            $productData->name[$locale] = t('36" Hyundai 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->name[$locale] = t('36" Hyundai [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
@@ -2167,7 +2167,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
             $locale = $domain->getLocale();
-            $productData->name[$locale] = t('27" Hyundai T27D590EY [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->name[$locale] = t('27" Hyundai [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
@@ -2263,7 +2263,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
             $locale = $domain->getLocale();
-            $productData->name[$locale] = t('51,5" Sencor 22HD44D [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->name[$locale] = t('51,5" Sencor [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('Television monitor IPS, 16: 9, 5M: 1, 200cd/m2, 5ms GTG, FullHD 1920x1080, DVB-S2/T2/C, 2x HDMI, USB, SCART, 2 x 5W speakers, energ. Class A', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('Television monitor IPS, 16: 9, 5M: 1, 200cd/m2, 5ms GTG, FullHD 1920x1080', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
@@ -2290,7 +2290,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
             $locale = $domain->getLocale();
-            $productData->name[$locale] = t('60" Sencor 22HD44D [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->name[$locale] = t('60" Sencor [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('Television monitor IPS, 16: 9, 5M: 1, 200cd/m2, 5ms GTG, FullHD 1920x1080, DVB-S2/T2/C, 2x HDMI, USB, SCART, 2 x 5W speakers, energ. Class A ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('Television monitor IPS, 16: 9, 5M: 1, 200cd/m2, 5ms GTG, FullHD 1920x1080', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
@@ -3743,7 +3743,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
             $locale = $domain->getLocale();
-            $productData->name[$locale] = t('24" Philips 32PFL4308 [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->name[$locale] = t('24" Philips [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
@@ -3776,7 +3776,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
             $locale = $domain->getLocale();
-            $productData->name[$locale] = t('36" Philips CRT 32PFL4308 [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->name[$locale] = t('36" Philips CRT [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
@@ -3809,7 +3809,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
             $locale = $domain->getLocale();
-            $productData->name[$locale] = t('54" Philips 32PFL4308 [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->name[$locale] = t('54" Philips [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('TV LED, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
@@ -3842,7 +3842,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
             $locale = $domain->getLocale();
-            $productData->name[$locale] = t('24" Philips CRT 32PFL4308 [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->name[$locale] = t('24" Philips CRT [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('TV CRT, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
@@ -3875,7 +3875,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
             $locale = $domain->getLocale();
-            $productData->name[$locale] = t('36" Hyundai PLASMA 32PFL4308 [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->name[$locale] = t('36" Hyundai PLASMA [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('TV PLASMA, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('TV PLASMA, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 
@@ -3907,7 +3907,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domain) {
             $locale = $domain->getLocale();
-            $productData->name[$locale] = t('27" Hyundai PLASMA T27D590EY [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $productData->name[$locale] = t('27" Hyundai PLASMA [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $productData->descriptions[$domain->getId()] = t('TV PLASMA, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
             $productData->shortDescriptions[$domain->getId()] = t('TV PLASMA, 100Hz, diagonal 80cm 100Hz, Full HD 1920 x 1080, DVB-T / C, 2x HDMI, USB, CI +, VGA, SCART, speakers 16W, energy. Class A + ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domain->getLocale());
 

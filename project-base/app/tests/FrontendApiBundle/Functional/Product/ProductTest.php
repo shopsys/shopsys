@@ -256,7 +256,7 @@ class ProductTest extends GraphQlTestCase
                             'name' => t('Defender 2.0 SPK-480', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         ],
                         [
-                            'name' => t('24" Philips 32PFL4308 [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                            'name' => t('24" Philips [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                         ],
                     ],
                     'isSellingDenied' => false,

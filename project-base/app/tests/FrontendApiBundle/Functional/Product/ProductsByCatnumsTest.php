@@ -38,7 +38,7 @@ class ProductsByCatnumsTest extends ProductsGraphQlTestCase
                 'name' => t('Television Philips [M]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'catalogNumber' => '9176544M',
             ], [
-                'name' => t('24" Philips 32PFL4308 [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'name' => t('24" Philips [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'catalogNumber' => '9176522',
             ],
         ];

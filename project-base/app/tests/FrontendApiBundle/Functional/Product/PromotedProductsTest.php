@@ -31,7 +31,7 @@ class PromotedProductsTest extends GraphQlTestCase
             ['name' => t('Canon EOS 700D', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
             ['name' => t('Canon MG3550', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
             ['name' => t('Genius repro SP-M120 black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            ['name' => t('24" Philips 32PFL4308 [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('24" Philips [V]', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
         ];
 
         $graphQlType = 'promotedProducts';

@@ -127,18 +127,6 @@ class FlagTest extends GraphQlTestCase
             [
                 'name' => t('Book Computer for Dummies Digital Photography II', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
             ],
-            [
-                'name' => t('Book of procedures for dealing with traffic accidents', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-            ],
-            [
-                'name' => t('Canon MG3550', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-            ],
-            [
-                'name' => t('Defender 2.0 SPK-480', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-            ],
-            [
-                'name' => t('DeLonghi ECAM 44.660 B Eletta Plus', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-            ],
         ];
 
         ArraySorter::sortArrayAlphabeticallyByValue('name', $products, $this->getLocaleForFirstDomain());
