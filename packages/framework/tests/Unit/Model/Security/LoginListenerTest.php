@@ -11,8 +11,6 @@ use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\OrderFlowFacade;
 use Shopsys\FrameworkBundle\Model\Security\LoginListener;
-use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
-use Shopsys\FrameworkBundle\Model\Security\UniqueLoginInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
@@ -27,7 +25,7 @@ class LoginListenerTest extends TestCase
             ->getMock();
         $emMock->expects($this->once())->method('flush');
 
-        $userMock = $this->createMock(UniqueLoginInterface::class);
+        $userMock = $this->createMock(Administrator::class);
         $userMock->expects($this->once())->method('setLoginToken');
 
         $tokenMock = $this->createMock(TokenInterface::class);
@@ -52,7 +50,7 @@ class LoginListenerTest extends TestCase
             ->getMock();
         $emMock->expects($this->atLeastOnce())->method('flush');
 
-        $userMock = $this->createMock(TimelimitLoginInterface::class);
+        $userMock = $this->createMock(Administrator::class);
         $userMock->expects($this->once())->method('setLastActivity');
 
         $tokenMock = $this->createMock(TokenInterface::class);
