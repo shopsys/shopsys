@@ -24,6 +24,7 @@ module.exports = {
         '../helpers/**/*.{ts,tsx}',
         '../hooks/**/*.{ts,tsx}',
         '../pages/**/*.{ts,tsx}',
+        '../app/**/*.{ts,tsx}',
         '../typeHelpers/**/*.{ts,tsx}',
         '../utils/**/*.{ts,tsx}',
     ],
