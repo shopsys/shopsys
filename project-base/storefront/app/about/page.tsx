@@ -1,14 +1,13 @@
-'use client';
+import { getServerT } from 'utils/getServerTranslation';
 
-import useTranslation from 'next-translate/useTranslation';
-
-export default function AboutPage() {
-    console.log('✅ client');
-    const { t } = useTranslation();
+export default async function IndexPage() {
+    const t = await getServerT();
 
     return (
-        <main>
-            <h3>{t('Shop by category')}</h3>
-        </main>
+        <div>
+            <div>
+                <p>This text is rendered on the server: {t('Delivery in {{count}} days', { count: 1 })}</p>
+            </div>
+        </div>
     );
 }
