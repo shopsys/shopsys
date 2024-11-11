@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\HttpFoundation;
 
+use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\Response;
 
 class DownloadFileResponse extends Response
@@ -13,6 +14,6 @@ class DownloadFileResponse extends Response
         parent::__construct($fileContent);
 
         $this->headers->set('Content-type', $mimeType);
-        $this->headers->set('Content-Disposition', 'attachment; filename=' . $filename);
+        $this->headers->set('Content-Disposition', HeaderUtils::makeDisposition(HeaderUtils::DISPOSITION_ATTACHMENT, $filename));
     }
 }
