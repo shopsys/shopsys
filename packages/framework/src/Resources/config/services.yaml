@@ -501,7 +501,7 @@ services:
 
     Shopsys\FrameworkBundle\Model\Security\LoginListener:
         tags:
-            - { name: kernel.event_listener, event: security.interactive_login, method: onSecurityInteractiveLogin }
+            - { name: kernel.event_listener, event: Symfony\Component\Security\Http\Event\LoginSuccessEvent, method: onSecurityInteractiveLogin }
 
     translation.loader.po:
         class: Shopsys\FrameworkBundle\Component\Translation\PoFileLoader
