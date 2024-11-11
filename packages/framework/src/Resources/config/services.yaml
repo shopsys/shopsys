@@ -1007,6 +1007,12 @@ services:
             $environment: '%kernel.environment%'
             $forceElasticLimit: '%env(FORCE_ELASTIC_LIMITS)%'
 
+    Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
+        arguments:
+            - '@Redis'
+            - { 'prefix': '%env(REDIS_PREFIX)%session:', ttl: 604800 }
+        lazy: true
+
     Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope\DelayedEnvelopesCollector: ~
 
     Shopsys\FrameworkBundle\Component\Messenger\MessageDispatcherDependency:

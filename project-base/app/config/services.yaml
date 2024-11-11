@@ -97,11 +97,6 @@ services:
             -   connect:
                     - '%env(REDIS_HOST)%'
 
-    Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
-        arguments:
-            - '@Redis'
-            - { 'prefix': '%env(REDIS_PREFIX)%session:', ttl: 604800 }
-
     Shopsys\FrameworkBundle\Component\HttpFoundation\TransactionalMasterRequestListener:
         class: App\Component\HttpFoundation\TransactionalMasterRequestListener
         tags:
