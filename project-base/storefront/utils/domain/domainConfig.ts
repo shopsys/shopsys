@@ -1,10 +1,11 @@
 import domainsConfig from 'domains-config';
+import { Locale } from 'i18n-config';
 import { CustomerUserAreaEnum } from 'types/customer';
 
 export type DomainConfigType = {
     url: string;
     publicGraphqlEndpoint: string;
-    defaultLocale: string;
+    defaultLocale: Locale;
     currencyCode: string;
     fallbackTimezone: string;
     domainId: number;
