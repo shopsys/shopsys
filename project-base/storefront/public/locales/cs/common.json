@@ -185,6 +185,7 @@
     "Last name must be at most {{ max }} characters": "Příjmení nesmí být delší než {{ max }} znaků",
     "Last visited products": "Naposledy navštívené produkty",
     "Load more": "Načíst další",
+    "Loading": "Načítání",
     "Log in": "Přihlaste se",
     "Log in and continue with order": "Přihlaste se a pokračujte v objednávce",
     "Login": "Přihlásit se",
