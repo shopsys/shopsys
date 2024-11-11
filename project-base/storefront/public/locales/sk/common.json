@@ -239,6 +239,8 @@
     "Load {{ count }} more {{ items }}_few": "Načítať ďalšie {{ count }} {{ items }}",
     "Load {{ count }} more {{ items }}_many": "Načítať ďalšie {{ count }} {{ items }}",
     "Load {{ count }} more {{ items }}_other": "Načítať ďalšie {{ count }} {{ items }}",
+    "Loading": "Načítanie",
+    "Loading search results": "Načítanie výsledkov hľadania",
     "Log in": "Prihláste sa",
     "Log in and continue with order": "Prihlaste sa a pokračujte v tejto",
     "Login": "Prihlásiť sa",

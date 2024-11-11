@@ -9,7 +9,7 @@ import { describe, expect, test } from 'vitest';
 const MOCKED_DOMAIN_CONFIG: DomainConfigType = {
     url: '',
     currencyCode: '',
-    defaultLocale: '',
+    defaultLocale: 'en',
     domainId: 0,
     fallbackTimezone: '',
     isLuigisBoxActive: false,

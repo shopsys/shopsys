@@ -31,7 +31,9 @@ const logException = async (e) => {
 
 module.exports = {
     pages: {
-        '*': ['common', 'accessibility'],
+        '*': ['common'],
+        '/[lang]': ['common'],
+        '/[lang]/about': ['common'],
     },
     locales: ['default', 'en', 'cs', 'sk'],
     defaultLocale: 'default',

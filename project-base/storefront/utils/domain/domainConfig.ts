@@ -1,4 +1,5 @@
 import { getBaseUrlWithLocale } from './domainUtils';
+import { Locale } from 'i18n-config';
 import { GetServerSidePropsContext, NextPageContext } from 'next';
 import { CustomerUserAreaEnum } from 'types/customer';
 import { getPublicConfigProperty } from 'utils/config/getNextConfig';
@@ -9,7 +10,7 @@ const cdnDomain: string = getPublicConfigProperty('cdnDomain', '') as string;
 export type DomainConfigType = {
     url: string;
     publicGraphqlEndpoint: string;
-    defaultLocale: string;
+    defaultLocale: Locale;
     currencyCode: string;
     fallbackTimezone: string;
     domainId: number;

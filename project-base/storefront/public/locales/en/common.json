@@ -227,6 +227,8 @@
     "Last visited products": "Last visited products",
     "Load {{ count }} more {{ items }}_one": "Load {{ count }} more {{ items }}",
     "Load {{ count }} more {{ items }}_other": "Load {{ count }} more {{ items }}",
+    "Loading search results": "Loading search results",
+    "Loading": "Loading",
     "Log in": "Log in",
     "Log in and continue with order": "Log in and continue with order",
     "Login": "Login",
