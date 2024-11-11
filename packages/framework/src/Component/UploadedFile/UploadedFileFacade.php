@@ -26,6 +26,8 @@ use Shopsys\FrameworkBundle\Model\UploadedFile\UploadedFileFormData;
  */
 class UploadedFileFacade extends AbstractUploadedFileFacade
 {
+    protected const array VIEWABLE_EXTENSIONS = ['pdf', 'jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp'];
+
     public function __construct(
         FilesystemOperator $filesystem,
         EntityManagerInterface $em,
@@ -240,6 +242,10 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
 
     public function getUploadedFileUrl(DomainConfig $domainConfig, UploadedFile $uploadedFile): string
     {
+        if ($this->isUploadedFileViewableInBrowser($uploadedFile)) {
+            return $this->uploadedFileLocator->getUploadedFileViewUrl($domainConfig, $uploadedFile);
+        }
+
         return $this->uploadedFileLocator->getUploadedFileUrl($domainConfig, $uploadedFile);
     }
 
@@ -539,5 +545,10 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         string $type = UploadedFileTypeConfig::DEFAULT_TYPE_NAME,
     ): array {
         return $this->uploadedFileRepository->getAllFilesIndexedByEntityId($entityIds, $entityName, $requiredLocale, $type);
+    }
+
+    protected function isUploadedFileViewableInBrowser(UploadedFile $uploadedFile): bool
+    {
+        return in_array(strtolower($uploadedFile->getExtension()), static::VIEWABLE_EXTENSIONS, true);
     }
 }

@@ -15,6 +15,7 @@ front_customer_uploaded_file_view:
 front_download_uploaded_file:
     defaults:
         _controller: Shopsys\FrameworkBundle\Controller\Front\UploadedFileController::downloadAction
+    methods: [GET]
     path: /file/{uploadedFileId}/{uploadedFilename}
     requirements:
         uploadedFileId: \d+
@@ -34,3 +35,10 @@ front_social_network_login:
 
 front_social_network_login_page:
     path: /social-login
+
+front_view_uploaded_file:
+    defaults: { _controller: Shopsys\FrameworkBundle\Controller\Front\UploadedFileController::viewAction }
+    methods: [GET]
+    path: /file/view/{uploadedFileId}/{uploadedFilename}
+    requirements:
+        uploadedFileId: \d+

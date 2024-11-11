@@ -14,10 +14,23 @@ class UploadedFileLocator extends AbstractUploadedFileLocator
 {
     public function getUploadedFileUrl(DomainConfig $domainConfig, UploadedFile $uploadedFile): string
     {
+        return $this->generateRouteUrl($domainConfig, $uploadedFile, 'front_download_uploaded_file');
+    }
+
+    public function getUploadedFileViewUrl(DomainConfig $domainConfig, UploadedFile $uploadedFile): string
+    {
+        return $this->generateRouteUrl($domainConfig, $uploadedFile, 'front_view_uploaded_file');
+    }
+
+    protected function generateRouteUrl(
+        DomainConfig $domainConfig,
+        UploadedFile $uploadedFile,
+        string $routeName,
+    ): string {
         if ($this->fileExists($uploadedFile)) {
             $domainRouter = $this->domainRouterFactory->getRouter($domainConfig->getId());
 
-            return $domainRouter->generate('front_download_uploaded_file', [
+            return $domainRouter->generate($routeName, [
                 'uploadedFileId' => $uploadedFile->getId(),
                 'uploadedFilename' => $uploadedFile->getSlugWithExtension(),
             ]);
