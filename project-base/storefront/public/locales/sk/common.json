@@ -185,6 +185,7 @@
     "Last name must be at most {{ max }} characters": "Priezvisko nesmie byť dlhšie ako {{ max }} znakov",
     "Last visited products": "Naposledy navštívené produkty",
     "Load more": "Načítať viac",
+    "Loading": "Načítanie",
     "Log in": "Prihláste sa",
     "Log in and continue with order": "Prihlaste sa a pokračujte v tejto",
     "Login": "Prihlásiť sa",

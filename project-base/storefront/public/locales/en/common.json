@@ -181,6 +181,7 @@
     "Last name must be at most {{ max }} characters": "Last name must be at most {{ max }} characters",
     "Last visited products": "Last visited products",
     "Load more": "Load more",
+    "Loading": "Loading",
     "Log in": "Log in",
     "Log in and continue with order": "Log in and continue with order",
     "Login": "Login",
