@@ -212,6 +212,7 @@
     "Load {{ count }} more {{ items }}_few": "",
     "Load {{ count }} more {{ items }}_many": "",
     "Load {{ count }} more {{ items }}_other": "",
+    "Loading": "Načítanie",
     "Log in": "Prihláste sa",
     "Log in and continue with order": "Prihlaste sa a pokračujte v tejto",
     "Login": "Prihlásiť sa",

@@ -1,10 +1,11 @@
+import { Locale } from 'i18n-config';
 import { CustomerUserAreaEnum } from 'types/customer';
 
 const domainsConfig = [
     {
         publicGraphqlEndpoint: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_1 ?? '',
         url: process.env.NEXT_PUBLIC_DOMAIN_HOSTNAME_1 ?? '',
-        defaultLocale: 'en',
+        defaultLocale: 'en' as Locale,
         currencyCode: 'EUR',
         fallbackTimezone: 'Europe/Prague',
         domainId: 1,
@@ -20,7 +21,7 @@ const domainsConfig = [
     {
         publicGraphqlEndpoint: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_2 ?? '',
         url: process.env.NEXT_PUBLIC_DOMAIN_HOSTNAME_2 ?? '',
-        defaultLocale: 'cs',
+        defaultLocale: 'cs' as Locale,
         currencyCode: 'CZK',
         fallbackTimezone: 'Europe/Prague',
         domainId: 2,
