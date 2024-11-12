@@ -47,3 +47,14 @@ export const getIsHttps = (protocol?: string) => {
 
     return protocol === 'https';
 };
+
+export const getProtocolFromServer = (host: string): Protocol => {
+    const domainConfig = getDomainConfig(host);
+    const protocol = domainConfig.url.split('://')[0];
+
+    if (protocol !== 'http' && protocol !== 'https') {
+        throw new Error('protocol must be http or https');
+    }
+
+    return protocol;
+};
