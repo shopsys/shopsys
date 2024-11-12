@@ -18,6 +18,7 @@ export type ExtendedNextLinkProps = Omit<ComponentPropsWithoutRef<'a'>, keyof Li
         queryParams?: Record<string, string>;
         type?: PageType;
         skeletonType?: PageType;
+        onClickExtended?: MouseEventHandler<HTMLAnchorElement>;
     };
 
 export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
@@ -26,6 +27,7 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
     queryParams,
     as,
     onClick,
+    onClickExtended,
     type,
     skeletonType,
     ...props
@@ -65,7 +67,7 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
                       }
                     : href
             }
-            onClick={handleOnClick}
+            onClick={onClickExtended ?? handleOnClick}
             {...props}
         >
             {children}

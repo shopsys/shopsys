@@ -8,9 +8,9 @@ import { TIDs } from 'cypress/tids';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { onGtmProductClickEventHandler } from 'gtm/handlers/onGtmProductClickEventHandler';
-import { twJoin } from 'tailwind-merge';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { isPriceVisible } from 'utils/mappers/price';
+import { disableClickWhenTextSelected } from 'utils/ui/disableClickWhenTextSelected';
 
 type CategoryBestsellersListItemProps = {
     product: TypeListedProductFragment;
@@ -31,11 +31,11 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
 
     return (
         <ExtendedNextLink
+            className="flex items-center justify-between gap-5 gap-y-4 p-3 no-underline transition-colors hover:bg-background hover:no-underline"
+            draggable={false}
             href={productUrl}
             type={product.__typename === 'RegularProduct' ? 'product' : 'productMainVariant'}
-            className={twJoin(
-                'group flex items-center justify-between gap-5 gap-y-4 p-3 no-underline transition-colors hover:bg-background hover:no-underline',
-            )}
+            onClickExtended={disableClickWhenTextSelected}
             onClick={() =>
                 onGtmProductClickEventHandler(
                     product,
