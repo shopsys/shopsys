@@ -85,7 +85,7 @@ export type TypeCurrentCustomerUserQuery = { __typename?: 'Query', currentCustom
   }
 };
       export default result;
-    
+
 
 export const CurrentCustomerUserQueryDocument = gql`
     query CurrentCustomerUserQuery {
@@ -95,6 +95,6 @@ export const CurrentCustomerUserQueryDocument = gql`
 }
     ${CustomerUserFragment}`;
 
-export function useCurrentCustomerUserQuery(options?: Omit<Urql.UseQueryArgs<TypeCurrentCustomerUserQueryVariables>, 'query'>) {
+/* export function useCurrentCustomerUserQuery(options?: Omit<Urql.UseQueryArgs<TypeCurrentCustomerUserQueryVariables>, 'query'>) {
   return Urql.useQuery<TypeCurrentCustomerUserQuery, TypeCurrentCustomerUserQueryVariables>({ query: CurrentCustomerUserQueryDocument, ...options });
-};
+}; */
