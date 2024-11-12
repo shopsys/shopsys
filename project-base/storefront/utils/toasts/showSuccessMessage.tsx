@@ -1,3 +1,5 @@
+"use client";
+
 import { showMessage } from './showMessage';
 import { isClient } from 'utils/isClient';
 
