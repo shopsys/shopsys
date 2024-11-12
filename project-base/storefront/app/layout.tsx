@@ -11,9 +11,7 @@ import { getDictionary } from 'utils/getDictionary';
 import { getServerT } from 'utils/getServerTranslation';
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-    const headersList = await headers();
-    const host = headersList.get('host');
-    const domainConfig = getDomainConfig(host!);
+    const domainConfig = getDomainConfig(headers().get('host')!);
     const { defaultLocale: lang } = domainConfig;
     const dictionary = await getDictionary(lang);
     const t = await getServerT({ defaultLang: lang, defaultDictionary: dictionary });
