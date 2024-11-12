@@ -32,7 +32,7 @@
                                 id: blogCategoryWithPreloadedChildren.blogCategory.id,
                                 (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
                             }) %}
-                            {% if blogCategoryWithPreloadedChildren.blogCategory.level is not same as(1) %}
+                            {% if blogCategoryWithPreloadedChildren.blogCategory.level is not same as(0) %}
                                 <a
                                     data-delete-url="{{ blogCategoryDeleteUrl }}"
                                     class="form-tree__item__control js-category-delete-confirm"

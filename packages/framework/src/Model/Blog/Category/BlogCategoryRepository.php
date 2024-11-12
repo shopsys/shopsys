@@ -45,7 +45,6 @@ class BlogCategoryRepository extends NestedTreeRepository
     {
         return $this->getBlogCategoryRepository()
             ->createQueryBuilder('bc')
-            ->where('bc.parent IS NOT NULL')
             ->orderBy('bc.lft');
     }
 
@@ -111,10 +110,6 @@ class BlogCategoryRepository extends NestedTreeRepository
         /** @var \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory $blogCategory */
         $blogCategory = $this->getBlogCategoryRepository()->find($blogCategoryId);
 
-        if ($blogCategory !== null && $blogCategory->getParent() === null) {
-            return null;
-        }
-
         return $blogCategory;
     }
 
@@ -173,7 +168,6 @@ class BlogCategoryRepository extends NestedTreeRepository
         $this->addTranslation($queryBuilder, $locale);
 
         $queryBuilder
-            ->andWhere('bc.level >= 1')
             ->orderBy('bc.lft');
 
         return $queryBuilder;
@@ -205,6 +199,21 @@ class BlogCategoryRepository extends NestedTreeRepository
         $queryBuilder->setParameter('domainId', $domainId);
 
         return $queryBuilder;
+    }
+
+    /**
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]
+     */
+    public function getAllVisibleChildrenWithRootByDomainId(int $domainId): array
+    {
+        $queryBuilder = $this->getAllVisibleByDomainIdQueryBuilder($domainId)
+            ->andWhere('bc.parent IS NULL');
+
+        $locale = $this->domain->getDomainConfigById($domainId)->getLocale();
+        $this->addTranslation($queryBuilder, $locale);
+
+        return $queryBuilder->getQuery()->execute();
     }
 
     /**

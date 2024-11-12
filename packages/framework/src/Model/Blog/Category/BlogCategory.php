@@ -20,8 +20,6 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
  */
 class BlogCategory extends AbstractTranslatableEntity
 {
-    public const BLOG_MAIN_PAGE_CATEGORY_ID = 2;
-
     /**
      * @var int
      * @ORM\Column(type="integer")
@@ -336,7 +334,7 @@ class BlogCategory extends AbstractTranslatableEntity
      */
     public function isMainPage()
     {
-        return $this->id === self::BLOG_MAIN_PAGE_CATEGORY_ID;
+        return $this->parent === null;
     }
 
     /**

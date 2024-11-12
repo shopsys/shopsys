@@ -55,7 +55,7 @@ class BlogCategoryWithPreloadedChildrenFactory
         $firstLevelBlogCategories = [];
 
         foreach ($blogCategories as $blogCategory) {
-            if ($blogCategory->getLevel() === 1) {
+            if ($blogCategory->getLevel() === 0) {
                 $firstLevelBlogCategories[] = $blogCategory;
             }
         }

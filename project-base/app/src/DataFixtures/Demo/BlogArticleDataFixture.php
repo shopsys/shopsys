@@ -54,7 +54,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
      */
     public function load(ObjectManager $manager): void
     {
-        $mainPageBlogCategory = $this->blogCategoryFacade->getById(BlogCategory::BLOG_MAIN_PAGE_CATEGORY_ID);
+        $mainPageBlogCategory = $this->blogCategoryFacade->getRootBlogCategory();
         $mainPageBlogCategoryData = $this->blogCategoryDataFactory->createFromBlogCategory($mainPageBlogCategory);
         $mainPageBlogCategoryData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, 'Main blog page')->toString();
 

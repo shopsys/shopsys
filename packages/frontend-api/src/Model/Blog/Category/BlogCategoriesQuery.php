@@ -25,8 +25,7 @@ class BlogCategoriesQuery extends AbstractQuery
      */
     public function blogCategoriesQuery(): array
     {
-        return $this->blogCategoryFacade->getAllVisibleChildrenByBlogCategoryAndDomainId(
-            $this->blogCategoryFacade->getRootBlogCategory(),
+        return $this->blogCategoryFacade->getAllVisibleChildrenWithRootByDomainId(
             $this->domain->getId(),
         );
     }

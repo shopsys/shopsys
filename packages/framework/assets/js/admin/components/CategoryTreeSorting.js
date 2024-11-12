@@ -34,6 +34,7 @@ export default class CategoryTreeSorting {
             helper: 'clone',
             opacity: 0.6,
             revert: 100,
+            protectRoot: this.$rootTree.hasClass('js-protect-root'),
             change: () => _this.onChange()
         });
 

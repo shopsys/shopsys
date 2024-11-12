@@ -47,9 +47,7 @@ class BlogCategoryResolverMap extends ResolverMap
                     return $blogCategory->getSeoMetaDescription($this->domain->getId());
                 },
                 'parent' => function (BlogCategory $blogCategory) {
-                    $parent = $blogCategory->getParent();
-
-                    return $parent !== null && $parent->getParent() !== null ? $parent : null;
+                    return $blogCategory->getParent();
                 },
                 'slug' => function (BlogCategory $blogCategory) {
                     return '/' . $this->friendlyUrlFacade->getMainFriendlyUrlSlug($this->domain->getId(), 'front_blogcategory_detail', $blogCategory->getId());
@@ -64,8 +62,7 @@ class BlogCategoryResolverMap extends ResolverMap
                     );
                 },
                 'blogCategoriesTree' => function () {
-                    return $this->blogCategoryFacade->getAllVisibleChildrenByBlogCategoryAndDomainId(
-                        $this->blogCategoryFacade->getRootBlogCategory(),
+                    return $this->blogCategoryFacade->getAllVisibleChildrenWithRootByDomainId(
                         $this->domain->getId(),
                     );
                 },

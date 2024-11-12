@@ -135,7 +135,7 @@ class BlogCategoryFormType extends AbstractType
                 'required' => true,
                 'choices' => $parentChoices,
                 'choice_label' => function (BlogCategory $blogCategory) {
-                    $padding = str_repeat("\u{00a0}", ($blogCategory->getLevel() - 1) * 2);
+                    $padding = str_repeat("\u{00a0}", $blogCategory->getLevel() * 2);
 
                     return $padding . $blogCategory->getName();
                 },

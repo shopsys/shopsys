@@ -14,11 +14,10 @@ use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticleFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleExportQueueFacade;
 use Shopsys\FrameworkBundle\Model\Blog\BlogVisibilityRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Blog\Category\Exception\BlogCategoryNotFoundException;
+use Shopsys\FrameworkBundle\Model\Blog\Category\Exception\RootLevelBlogCategoryAlreadyExistsException;
 
 class BlogCategoryFacade
 {
-    protected const INCREMENT_DUE_TO_MISSING_ROOT_CATEGORY = 1;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryRepository $blogCategoryRepository
@@ -65,6 +64,10 @@ class BlogCategoryFacade
         $rootCategory = $this->getRootBlogCategory();
         $blogCategory = $this->blogCategoryFactory->create($blogCategoryData, $rootCategory);
 
+        if ($blogCategory->getParent() === null) {
+            throw new RootLevelBlogCategoryAlreadyExistsException($rootCategory->getId());
+        }
+
         $this->em->persist($blogCategory);
         $this->em->flush();
 
@@ -93,7 +96,7 @@ class BlogCategoryFacade
         $blogCategory = $this->blogCategoryRepository->getById($blogCategoryId);
         $blogCategory->edit($blogCategoryData);
 
-        if ($blogCategory->getParent() === null) {
+        if ($blogCategory->getParent() === null && $rootCategory !== $blogCategory) {
             $blogCategory->setParent($rootCategory);
         }
 
@@ -185,6 +188,15 @@ class BlogCategoryFacade
     public function getVisibleBlogCategoriesInPathFromRootOnDomain(BlogCategory $blogCategory, int $domainId): array
     {
         return $this->blogCategoryRepository->getVisibleBlogCategoriesInPathFromRootOnDomain($blogCategory, $domainId);
+    }
+
+    /**
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory[]
+     */
+    public function getAllVisibleChildrenWithRootByDomainId(int $domainId): array
+    {
+        return $this->blogCategoryRepository->getAllVisibleChildrenWithRootByDomainId($domainId);
     }
 
     /**
@@ -307,10 +319,10 @@ class BlogCategoryFacade
         foreach ($blogCategoriesOrderingData as $categoryOrderingData) {
             $query->execute([
                 'id' => (int)$categoryOrderingData['id'],
-                'parent' => $categoryOrderingData['parent_id'] ? (int)$categoryOrderingData['parent_id'] : $rootCategoryId,
-                'level' => $categoryOrderingData['depth'] + static::INCREMENT_DUE_TO_MISSING_ROOT_CATEGORY,
-                'lft' => $categoryOrderingData['left'] + static::INCREMENT_DUE_TO_MISSING_ROOT_CATEGORY,
-                'rgt' => $categoryOrderingData['right'] + static::INCREMENT_DUE_TO_MISSING_ROOT_CATEGORY,
+                'parent' => (int)$categoryOrderingData['id'] === $rootCategoryId ? null : ($categoryOrderingData['parent_id'] ? (int)$categoryOrderingData['parent_id'] : $rootCategoryId),
+                'level' => $categoryOrderingData['depth'],
+                'lft' => $categoryOrderingData['left'],
+                'rgt' => $categoryOrderingData['right'],
             ]);
         }
 
