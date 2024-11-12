@@ -1,12 +1,18 @@
+import { getUrqlExchanges } from 'app/_urql/exchanges';
 import {
+    BlogArticleDetailQueryDocument,
     TypeBlogArticleDetailQuery,
     TypeBlogArticleDetailQueryVariables,
-    BlogArticleDetailQueryDocument,
 } from 'graphql/requests/articlesInterface/blogArticles/queries/BlogArticleDetailQuery.generated';
+import {
+    CurrentCustomerUserQueryDocument,
+    TypeCurrentCustomerUserQuery,
+    TypeCurrentCustomerUserQueryVariables,
+} from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
 import getConfig from 'next/config';
 import { headers } from 'next/headers';
 // eslint-disable-next-line no-restricted-imports
-import { cacheExchange, createClient, fetchExchange, OperationResult } from 'urql';
+import { createClient, OperationResult, ssrExchange } from 'urql';
 import { fetcher } from 'urql/fetcher';
 import { getDomainConfig } from 'utils/domain/domainConfig';
 import { getServerT } from 'utils/getServerTranslation';
@@ -25,6 +31,7 @@ async function getRedis() {
 }
 
 async function getClient() {
+    const t = await getServerT();
     const { serverRuntimeConfig } = getConfig();
     const internalGraphqlEndpoint = serverRuntimeConfig?.internalGraphqlEndpoint ?? undefined;
 
@@ -39,8 +46,7 @@ async function getClient() {
 
     const client = createClient({
         url: internalGraphqlEndpoint ?? publicGraphqlEndpoint,
-        // exchanges: getUrqlExchanges(ssrExchange, t, context),
-        exchanges: [cacheExchange, fetchExchange],
+        exchanges: await getUrqlExchanges(ssrExchange({ isClient: false }), t),
         fetchOptions: {
             headers: {
                 OriginalHost: publicGraphqlEndpointObject.host,
@@ -67,15 +73,31 @@ async function getArticle() {
     return blogArticleResponse;
 }
 
+async function getCustomerUser() {
+    const client = await getClient();
+
+    const customerUserResponse: OperationResult<TypeCurrentCustomerUserQuery, TypeCurrentCustomerUserQueryVariables> =
+        await client.query(CurrentCustomerUserQueryDocument, {});
+
+    return customerUserResponse;
+}
+
 export default async function IndexPage() {
     const t = await getServerT();
     const { data } = await getArticle();
+    const { data: customerUserData } = await getCustomerUser();
 
     return (
         <div>
             <h1>{data?.blogArticle?.name}</h1>
             <div>
                 <p>This text is rendered on the server: {t('Delivery in {{count}} days', { count: 1 })}</p>
+                {customerUserData?.currentCustomerUser && (
+                    <p>
+                        Logged in user:{' '}
+                        {`${customerUserData.currentCustomerUser.firstName} ${customerUserData.currentCustomerUser.lastName}`}
+                    </p>
+                )}
             </div>
         </div>
     );
