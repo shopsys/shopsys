@@ -1,3 +1,5 @@
+"use client";
+
 import { CopyTextBlock } from 'components/Basic/CopyTextBlock/CopyTextBlock';
 import { TIDs } from 'cypress/tids';
 import { toast } from 'react-toastify';
