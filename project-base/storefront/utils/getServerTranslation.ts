@@ -14,9 +14,7 @@ export const getServerT = async (props?: {
     let dictionary = props?.defaultDictionary;
 
     if (!lang) {
-        const headersList = await headers();
-        const host = headersList.get('host');
-        const domainConfig = getDomainConfig(host!);
+        const domainConfig = getDomainConfig(headers().get('host')!);
         lang = domainConfig.defaultLocale;
     }
 
