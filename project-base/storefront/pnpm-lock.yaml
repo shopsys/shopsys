@@ -30,8 +30,8 @@ importers:
         specifier: ~6.4.1
         version: 6.4.1(graphql@16.8.2)
       convertim-react-lib:
-        specifier: ^0.0.10
-        version: 0.0.10(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: ^0.0.15
+        version: 0.0.15(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       cookies-next:
         specifier: ~4.3.0
         version: 4.3.0
@@ -2498,8 +2498,8 @@ packages:
   convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
 
-  convertim-react-lib@0.0.10:
-    resolution: {integrity: sha512-6RM+7mgedB0XRensWK/Bp9OwT/HacBxAS+y+lUc2MwLQ430qocnqD/kDoEa0BE97gLl+HBtuZUws2NKNU0Izkw==}
+  convertim-react-lib@0.0.15:
+    resolution: {integrity: sha512-tsTDYswwouZyde8Rh8ZT45Yc97V9ePB4KSwdg4JvbWycmW6INq1CQSSgGTHr09lPqR2M9KNDqCG23QLqzoV74Q==}
     peerDependencies:
       react: ^18.2.0
       react-dom: ^18.2.0
@@ -8247,8 +8247,9 @@ snapshots:
 
   convert-source-map@2.0.0: {}
 
-  convertim-react-lib@0.0.10(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  convertim-react-lib@0.0.15(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
+      lodash: 4.17.21
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
