@@ -11,6 +11,7 @@ mutation AddNewCustomerUserMutation(
         email: $email,
         roleGroupUuid: $roleGroupUuid,
         telephone: $telephone
+        newsletterSubscription: false
     }) {
         billingAddressUuid
         firstName

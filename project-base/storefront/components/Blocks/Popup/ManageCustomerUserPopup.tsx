@@ -66,6 +66,7 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
                     lastName: customerUserManageProfileFormData.lastName,
                     telephone: customerUserManageProfileFormData.telephone,
                     roleGroupUuid: customerUserManageProfileFormData.roleGroup.value,
+                    newsletterSubscription: false,
                 },
             });
 
@@ -88,6 +89,7 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
                 lastName: customerUserManageProfileFormData.lastName,
                 telephone: customerUserManageProfileFormData.telephone,
                 roleGroupUuid: customerUserManageProfileFormData.roleGroup.value,
+                newsletterSubscription: false,
             },
         });
 

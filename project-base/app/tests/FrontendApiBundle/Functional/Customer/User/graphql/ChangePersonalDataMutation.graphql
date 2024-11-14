@@ -17,6 +17,15 @@ mutation ChangePersonalDataMutation(
         firstName: $firstName
         lastName: $lastName
         newsletterSubscription: $newsletterSubscription
+    }) {
+        firstName
+        lastName,
+        telephone,
+        email
+        newsletterSubscription
+    }
+
+    ChangeCompanyData(input: {
         street: $street
         city: $city
         country: $country
@@ -26,17 +35,12 @@ mutation ChangePersonalDataMutation(
         companyNumber: $companyNumber
         companyTaxNumber: $companyTaxNumber
     }) {
-        firstName
-        lastName,
-        telephone,
-        email
         street
         city
         country {
             code
         }
         postcode
-        newsletterSubscription
         ...on CompanyCustomerUser {
             companyName
             companyNumber

@@ -1,0 +1,6 @@
+ChangeCompanyDataInputDecorator:
+    type: input-object
+    decorator: true
+    inherits:
+        - 'BillingAddressInputObjectDecorator'
+        - 'CompanyInputObjectDecorator'

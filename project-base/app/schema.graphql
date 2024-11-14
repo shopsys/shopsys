@@ -5,6 +5,8 @@ input AddNewCustomerUserDataInput {
   firstName: String!
   "Customer user last name"
   lastName: String!
+  "Whether customer user should receive newsletters or not"
+  newsletterSubscription: Boolean!
   "Customer user role group uuid."
   roleGroupUuid: Uuid!
   "The customer's telephone number"
@@ -497,6 +499,27 @@ type CategoryHierarchyItem {
   uuid: Uuid!
 }
 
+input ChangeCompanyDataInput {
+  "UUID"
+  billingAddressUuid: Uuid = null
+  "Billing address city name (will be on the tax invoice)"
+  city: String!
+  "Determines whether the customer is a company or not."
+  companyCustomer: Boolean = false
+  "The customer’s company name (required when companyCustomer is true)"
+  companyName: String
+  "The customer’s company identification number (required when companyCustomer is true)"
+  companyNumber: String
+  "The customer’s company tax number (required when companyCustomer is true)"
+  companyTaxNumber: String
+  "Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax invoice)"
+  country: String!
+  "Billing address zip code (will be on the tax invoice)"
+  postcode: String!
+  "Billing address street name (will be on the tax invoice)"
+  street: String!
+}
+
 input ChangePasswordInput {
   "Customer user email."
   email: String!
@@ -525,30 +548,12 @@ input ChangePaymentInOrderInput {
 }
 
 input ChangePersonalDataInput {
-  "UUID"
-  billingAddressUuid: Uuid = null
-  "Billing address city name (will be on the tax invoice)"
-  city: String!
-  "Determines whether the customer is a company or not."
-  companyCustomer: Boolean = false
-  "The customer’s company name (required when companyCustomer is true)"
-  companyName: String
-  "The customer’s company identification number (required when companyCustomer is true)"
-  companyNumber: String
-  "The customer’s company tax number (required when companyCustomer is true)"
-  companyTaxNumber: String
-  "Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax invoice)"
-  country: String!
   "Customer user first name"
   firstName: String!
   "Customer user last name"
   lastName: String!
   "Whether customer user should receive newsletters or not"
   newsletterSubscription: Boolean!
-  "Billing address zip code (will be on the tax invoice)"
-  postcode: String!
-  "Billing address street name (will be on the tax invoice)"
-  street: String!
   "The customer's telephone number"
   telephone: String!
 }
@@ -839,6 +844,8 @@ input EditCustomerUserPersonalDataInput {
   firstName: String!
   "Customer user last name"
   lastName: String!
+  "Whether customer user should receive newsletters or not"
+  newsletterSubscription: Boolean!
   "Customer user role group uuid."
   roleGroupUuid: Uuid!
   "The customer's telephone number"
@@ -1089,6 +1096,8 @@ type Mutation {
   AddToCart(input: AddToCartInput!): AddToCartResult!
   "Apply new promo code for the future checkout"
   ApplyPromoCodeToCart(input: ApplyPromoCodeToCartInput!): Cart!
+  "Changes customer user company data"
+  ChangeCompanyData(input: ChangeCompanyDataInput!): CustomerUser!
   "Changes customer user password"
   ChangePassword(input: ChangePasswordInput!): CustomerUser!
   "Add a payment to the cart, or remove a payment from the cart"

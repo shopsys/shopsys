@@ -30,6 +30,8 @@ export type TypeAddNewCustomerUserDataInput = {
   firstName: Scalars['String']['input'];
   /** Customer user last name */
   lastName: Scalars['String']['input'];
+  /** Whether customer user should receive newsletters or not */
+  newsletterSubscription: Scalars['Boolean']['input'];
   /** Customer user role group uuid. */
   roleGroupUuid: Scalars['Uuid']['input'];
   /** The customer's telephone number */
@@ -636,6 +638,27 @@ export type TypeCategoryHierarchyItem = {
   uuid: Scalars['Uuid']['output'];
 };
 
+export type TypeChangeCompanyDataInput = {
+  /** UUID */
+  billingAddressUuid: InputMaybe<Scalars['Uuid']['input']>;
+  /** Billing address city name (will be on the tax invoice) */
+  city: Scalars['String']['input'];
+  /** Determines whether the customer is a company or not. */
+  companyCustomer: InputMaybe<Scalars['Boolean']['input']>;
+  /** The customer’s company name (required when companyCustomer is true) */
+  companyName: InputMaybe<Scalars['String']['input']>;
+  /** The customer’s company identification number (required when companyCustomer is true) */
+  companyNumber: InputMaybe<Scalars['String']['input']>;
+  /** The customer’s company tax number (required when companyCustomer is true) */
+  companyTaxNumber: InputMaybe<Scalars['String']['input']>;
+  /** Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax invoice) */
+  country: Scalars['String']['input'];
+  /** Billing address zip code (will be on the tax invoice) */
+  postcode: Scalars['String']['input'];
+  /** Billing address street name (will be on the tax invoice) */
+  street: Scalars['String']['input'];
+};
+
 export type TypeChangePasswordInput = {
   /** Customer user email. */
   email: Scalars['String']['input'];
@@ -664,30 +687,12 @@ export type TypeChangePaymentInOrderInput = {
 };
 
 export type TypeChangePersonalDataInput = {
-  /** UUID */
-  billingAddressUuid: InputMaybe<Scalars['Uuid']['input']>;
-  /** Billing address city name (will be on the tax invoice) */
-  city: Scalars['String']['input'];
-  /** Determines whether the customer is a company or not. */
-  companyCustomer: InputMaybe<Scalars['Boolean']['input']>;
-  /** The customer’s company name (required when companyCustomer is true) */
-  companyName: InputMaybe<Scalars['String']['input']>;
-  /** The customer’s company identification number (required when companyCustomer is true) */
-  companyNumber: InputMaybe<Scalars['String']['input']>;
-  /** The customer’s company tax number (required when companyCustomer is true) */
-  companyTaxNumber: InputMaybe<Scalars['String']['input']>;
-  /** Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax invoice) */
-  country: Scalars['String']['input'];
   /** Customer user first name */
   firstName: Scalars['String']['input'];
   /** Customer user last name */
   lastName: Scalars['String']['input'];
   /** Whether customer user should receive newsletters or not */
   newsletterSubscription: Scalars['Boolean']['input'];
-  /** Billing address zip code (will be on the tax invoice) */
-  postcode: Scalars['String']['input'];
-  /** Billing address street name (will be on the tax invoice) */
-  street: Scalars['String']['input'];
   /** The customer's telephone number */
   telephone: Scalars['String']['input'];
 };
@@ -989,6 +994,8 @@ export type TypeEditCustomerUserPersonalDataInput = {
   firstName: Scalars['String']['input'];
   /** Customer user last name */
   lastName: Scalars['String']['input'];
+  /** Whether customer user should receive newsletters or not */
+  newsletterSubscription: Scalars['Boolean']['input'];
   /** Customer user role group uuid. */
   roleGroupUuid: Scalars['Uuid']['input'];
   /** The customer's telephone number */
@@ -1281,6 +1288,8 @@ export type TypeMutation = {
   AddToCart: TypeAddToCartResult;
   /** Apply new promo code for the future checkout */
   ApplyPromoCodeToCart: TypeCart;
+  /** Changes customer user company data */
+  ChangeCompanyData: TypeCustomerUser;
   /** Changes customer user password */
   ChangePassword: TypeCustomerUser;
   /** Add a payment to the cart, or remove a payment from the cart */
@@ -1366,6 +1375,11 @@ export type TypeMutationAddToCartArgs = {
 
 export type TypeMutationApplyPromoCodeToCartArgs = {
   input: TypeApplyPromoCodeToCartInput;
+};
+
+
+export type TypeMutationChangeCompanyDataArgs = {
+  input: TypeChangeCompanyDataInput;
 };
 
 

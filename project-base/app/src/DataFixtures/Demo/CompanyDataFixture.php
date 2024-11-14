@@ -123,7 +123,7 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
         $billingAddressData->companyCustomer = true;
         $billingAddressData->companyName = 'Shopsys Slovakia';
         $billingAddressData->companyNumber = '44633599';
-        $billingAddressData->companyTaxNumber = '2022779044';
+        $billingAddressData->companyTaxNumber = 'SK2022779044';
         $billingAddressData->street = 'Kráľov Brod 377';
         $billingAddressData->city = 'Kráľov Brod';
         $billingAddressData->postcode = '92541';

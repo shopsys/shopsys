@@ -1,0 +1,4 @@
+ChangeCompanyDataInput:
+    type: input-object
+    inherits:
+        - 'ChangeCompanyDataInputDecorator'

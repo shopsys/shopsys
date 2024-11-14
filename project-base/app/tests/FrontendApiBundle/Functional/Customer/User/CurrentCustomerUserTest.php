@@ -129,7 +129,10 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
             __DIR__ . '/graphql/ChangePersonalDataMutation.graphql',
             $this->getJohnDoeBaseData(),
         );
-        $data = $this->getResponseDataForGraphQlType($response, 'ChangePersonalData');
+        $data = [
+            ...$this->getResponseDataForGraphQlType($response, 'ChangePersonalData'),
+            ...$this->getResponseDataForGraphQlType($response, 'ChangeCompanyData'),
+        ];
 
         $this->assertJohnDoeBaseData($data);
     }
@@ -146,7 +149,10 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
                 'companyTaxNumber' => 'AL987654321',
             ],
         );
-        $data = $this->getResponseDataForGraphQlType($response, 'ChangePersonalData');
+        $data = [
+            ...$this->getResponseDataForGraphQlType($response, 'ChangePersonalData'),
+            ...$this->getResponseDataForGraphQlType($response, 'ChangeCompanyData'),
+        ];
 
         $this->assertJohnDoeBaseData($data);
         $this->assertSame('AirLocks inc.', $data['companyName']);
@@ -184,7 +190,10 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
                 'companyTaxNumber' => 'AL987654321',
             ],
         );
-        $data = $this->getResponseDataForGraphQlType($response, 'ChangePersonalData');
+        $data = [
+            ...$this->getResponseDataForGraphQlType($response, 'ChangePersonalData'),
+            ...$this->getResponseDataForGraphQlType($response, 'ChangeCompanyData'),
+        ];
 
         $this->assertJohnDoeBaseData($data);
         $this->assertSame('AirLocks inc.', $data['companyName']);

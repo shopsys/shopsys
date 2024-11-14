@@ -112,6 +112,7 @@
     * [AddToCartInput](#addtocartinput)
     * [ApplyPromoCodeToCartInput](#applypromocodetocartinput)
     * [CartInput](#cartinput)
+    * [ChangeCompanyDataInput](#changecompanydatainput)
     * [ChangePasswordInput](#changepasswordinput)
     * [ChangePaymentInCartInput](#changepaymentincartinput)
     * [ChangePaymentInOrderInput](#changepaymentinorderinput)
@@ -1403,6 +1404,20 @@ Apply new promo code for the future checkout
 <tr>
 <td colspan="2" align="right" valign="top">input</td>
 <td valign="top"><a href="#applypromocodetocartinput">ApplyPromoCodeToCartInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>ChangeCompanyData</strong></td>
+<td valign="top"><a href="#customeruser">CustomerUser</a>!</td>
+<td>
+
+Changes customer user company data
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#changecompanydatainput">ChangeCompanyDataInput</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -9445,6 +9460,15 @@ Customer user last name
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>newsletterSubscription</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether customer user should receive newsletters or not
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>roleGroupUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
@@ -9611,6 +9635,101 @@ Cart identifier, new cart will be created if not provided and customer is not lo
 </tbody>
 </table>
 
+### ChangeCompanyDataInput
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>billingAddressUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+UUID
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>city</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Billing address city name (will be on the tax invoice)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>companyCustomer</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a></td>
+<td>
+
+Determines whether the customer is a company or not.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>companyName</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+The customer’s company name (required when companyCustomer is true)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>companyNumber</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+The customer’s company identification number (required when companyCustomer is true)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>companyTaxNumber</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+The customer’s company tax number (required when companyCustomer is true)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>country</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax invoice)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>postcode</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Billing address zip code (will be on the tax invoice)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>street</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Billing address street name (will be on the tax invoice)
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### ChangePasswordInput
 
 <table>
@@ -9746,69 +9865,6 @@ UUID of a payment that should be assigned to the order.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>billingAddressUuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a></td>
-<td>
-
-UUID
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>city</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Billing address city name (will be on the tax invoice)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>companyCustomer</strong></td>
-<td valign="top"><a href="#boolean">Boolean</a></td>
-<td>
-
-Determines whether the customer is a company or not.
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>companyName</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-The customer’s company name (required when companyCustomer is true)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>companyNumber</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-The customer’s company identification number (required when companyCustomer is true)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>companyTaxNumber</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td>
-
-The customer’s company tax number (required when companyCustomer is true)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>country</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax invoice)
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>firstName</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -9832,24 +9888,6 @@ Customer user last name
 <td>
 
 Whether customer user should receive newsletters or not
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>postcode</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Billing address zip code (will be on the tax invoice)
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>street</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
-<td>
-
-Billing address street name (will be on the tax invoice)
 
 </td>
 </tr>
@@ -10263,6 +10301,15 @@ Customer user first name
 <td>
 
 Customer user last name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>newsletterSubscription</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether customer user should receive newsletters or not
 
 </td>
 </tr>

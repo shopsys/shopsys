@@ -55,7 +55,10 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
             __DIR__ . '/../../Functional/Customer/User/graphql/ChangePersonalDataMutation.graphql',
             $personalData,
         );
-        $responseData = $this->getResponseDataForGraphQlType($response, 'ChangePersonalData');
+        $responseData = [
+            ...$this->getResponseDataForGraphQlType($response, 'ChangePersonalData'),
+            ...$this->getResponseDataForGraphQlType($response, 'ChangeCompanyData'),
+        ];
 
         $this->assertSame($personalData['telephone'], $responseData['telephone']);
         $this->assertSame($personalData['firstName'], $responseData['firstName']);

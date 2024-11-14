@@ -125,14 +125,37 @@ class CustomerUserMutation extends BaseTokenMutation
     {
         $user = $this->runCheckUserIsLogged();
 
-        $validationGroups = $this->computeValidationGroups($argument);
-        $validator->validate($validationGroups);
+        $validator->validate();
 
         $customerUser = $this->customerUserFacade->getByUuid($user->getUuid());
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->createFromCustomerUserWithArgument(
             $customerUser,
             $argument,
         );
+
+        $this->customerUserFacade->editByCustomerUser($customerUser->getId(), $customerUserUpdateData, $user->getDeviceId());
+
+        return $customerUser;
+    }
+
+    /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
+     */
+    public function changeCompanyDataMutation(Argument $argument, InputValidator $validator): CustomerUser
+    {
+        $user = $this->runCheckUserIsLogged();
+
+        $validationGroups = $this->computeValidationGroups($argument);
+        $validator->validate($validationGroups);
+
+        $customerUser = $this->customerUserFacade->getByUuid($user->getUuid());
+        $customerUserUpdateData = $this->customerUserUpdateDataFactory->createCompanyFromCustomerUserWithArgument(
+            $customerUser,
+            $argument,
+        );
+
         $this->customerUserFacade->editByCustomerUser($customerUser->getId(), $customerUserUpdateData, $user->getDeviceId());
 
         return $customerUser;

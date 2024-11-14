@@ -44,8 +44,16 @@ MutationDecorator:
                     input:
                         type: ChangePersonalDataInput!
                         validation: cascade
-                access: "@=isGranted('ROLE_API_ALL')"
                 resolve: "@=mutation('changePersonalDataMutation', args, validator)"
+            ChangeCompanyData:
+                type: 'CustomerUser!'
+                description: "Changes customer user company data"
+                args:
+                    input:
+                        type: ChangeCompanyDataInput!
+                        validation: cascade
+                access: "@=isGranted('ROLE_API_ALL')"
+                resolve: "@=mutation('changeCompanyDataMutation', args, validator)"
             Register:
                 type: 'LoginResult!'
                 description: "Register new customer user"
