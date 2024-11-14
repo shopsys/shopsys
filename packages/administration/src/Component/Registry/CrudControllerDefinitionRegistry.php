@@ -6,6 +6,7 @@ namespace Shopsys\AdministrationBundle\Component\Registry;
 
 use ReflectionClass;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
+use Webmozart\Assert\Assert;
 
 final class CrudControllerDefinitionRegistry
 {
@@ -53,5 +54,16 @@ final class CrudControllerDefinitionRegistry
     public function getItems(): array
     {
         return $this->items;
+    }
+
+    /**
+     * @param string $controllerClass
+     * @return \Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionItem
+     */
+    public function getItem(string $controllerClass): CrudControllerDefinitionItem
+    {
+        Assert::keyExists($this->items, $controllerClass, 'Crud controller class is not registered.');
+
+        return $this->items[$controllerClass];
     }
 }
