@@ -17,7 +17,7 @@ final class CrudConfigData
 
     public ?string $menuTitle = null;
 
-    public array $defaultActions = [PageType::LIST];
+    public array $defaultActions = [PageType::LIST, PageType::CREATE, PageType::EDIT, PageType::DELETE];
 
     public string $menuSection = 'root';
 

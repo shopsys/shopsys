@@ -22,29 +22,36 @@ class ActionsConfig
      */
     public function __construct(string $controllerClass, array $defaultActions)
     {
-        $this->actions[PageType::LIST->value][PageType::CREATE->value] = ActionBuilder::createGlobal(PageType::CREATE->value, t('New'))
+        $this->add(PageType::LIST, ActionBuilder::createGlobal(PageType::CREATE->value, t('New'))
             ->linkToCrud($controllerClass, PageType::CREATE)
             ->displayIf(function () use ($defaultActions): bool {
                 return in_array(PageType::CREATE, $defaultActions, true);
-            });
+            }));
 
-        $this->actions[PageType::LIST->value][PageType::DETAIL->value] = ActionBuilder::createEntity(PageType::DETAIL->value, t('Detail'))
+        $this->add(PageType::LIST, ActionBuilder::createEntity(PageType::DETAIL->value, t('Detail'))
             ->linkToCrud($controllerClass, PageType::DETAIL, fn(object $entity) => $entity->getId())
             ->displayIf(function () use ($defaultActions): bool {
                 return in_array(PageType::DETAIL, $defaultActions, true);
-            });
+            }));
 
-        $this->actions[PageType::LIST->value][PageType::EDIT->value] = ActionBuilder::createEntity(PageType::EDIT->value, t('Edit'))
+        $this->add(PageType::LIST, ActionBuilder::createEntity(PageType::EDIT->value, t('Edit'))
             ->linkToCrud($controllerClass, PageType::EDIT, fn (object $entity) => $entity->getId())
             ->displayIf(function () use ($defaultActions): bool {
                 return in_array(PageType::EDIT, $defaultActions, true);
-            });
+            }));
 
-        $this->actions[PageType::LIST->value][PageType::DELETE->value] = ActionBuilder::createEntity(PageType::DELETE->value, t('Delete'))
+        $this->add(PageType::LIST, ActionBuilder::createEntity(PageType::DELETE->value, t('Delete'))
             ->linkToCrud($controllerClass, PageType::DELETE, fn (object $entity) => $entity->getId())
             ->displayIf(function () use ($defaultActions): bool {
                 return in_array(PageType::DELETE, $defaultActions, true);
-            });
+            }));
+
+        $backToListAction = ActionBuilder::createGlobal('backToList', t('Back to list'))
+            ->linkToCrud($controllerClass, PageType::LIST);
+
+        $this->add(PageType::EDIT, $backToListAction);
+        $this->add(PageType::DETAIL, $backToListAction);
+        $this->add(PageType::CREATE, $backToListAction);
     }
 
     /**

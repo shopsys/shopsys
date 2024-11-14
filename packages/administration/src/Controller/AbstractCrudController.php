@@ -54,6 +54,27 @@ abstract class AbstractCrudController extends AbstractController
         ]);
     }
 
+    public function editAction(int $id): Response
+    {
+        return $this->render('@ShopsysAdministration/crud/edit.html.twig', [
+            'title' => $this->getConfig()->getTitle(PageType::EDIT),
+            'globalActions' => $this->actionsFactory->processActions($this->getConfiguredActions(PageType::EDIT), ActionType::GLOBAL),
+        ]);
+    }
+
+    public function createAction(): Response
+    {
+        return $this->render('@ShopsysAdministration/crud/new.html.twig', [
+            'title' => $this->getConfig()->getTitle(PageType::CREATE),
+            'globalActions' => $this->actionsFactory->processActions($this->getConfiguredActions(PageType::CREATE), ActionType::GLOBAL),
+        ]);
+    }
+
+    public function deleteAction(): Response
+    {
+        return $this->redirect($this->generateUrl('admin_default_dashboard'));
+    }
+
     /**
      * @return \Shopsys\AdministrationBundle\Component\Config\Action\ActionBuilder[]
      */

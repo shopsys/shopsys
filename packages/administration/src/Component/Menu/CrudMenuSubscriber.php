@@ -60,16 +60,35 @@ final class CrudMenuSubscriber implements EventSubscriberInterface
 
             // TODO: Generate routes for other pages and maybe for custom actions as well
             $route = $this->crudRouteProvider->generate($item, PageType::LIST);
+            if (in_array(PageType::LIST, $config->getDefaultActions(), true) === false) {
+                continue;
+            }
+
+            $route = $this->crudRouteProvider->generate($item, PageType::LIST);
 
             if ($submenuSection !== null) {
                 $menu = $menu->getChild($submenuSection);
             }
 
-            $menu->addChild($route->getRouteName(), [
+            $parent = $menu->addChild($route->getRouteName(), [
                 'route' => $route->getRouteName(),
                 'display' => $config->isVisibleInMenu(),
                 'label' => $config->getMenuTitle(),
             ]);
+
+            foreach ($config->getDefaultActions() as $defaultAction) {
+                if (in_array($defaultAction, [PageType::LIST, PageType::DELETE], true)) {
+                    continue;
+                }
+
+                $route = $this->crudRouteProvider->generate($item, $defaultAction);
+
+                $parent->addChild($route->getRouteName(), [
+                    'route' => $route->getRouteName(),
+                    'display' => false,
+                    'label' => $config->getTitle($defaultAction),
+                ]);
+            }
         }
     }
 }
