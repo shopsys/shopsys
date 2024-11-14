@@ -3,6 +3,21 @@
 {% block title %}- {{ title }}{% endblock %}
 {% block h1 %}{{ title }}{% endblock %}
 
+{% block btn %}
+    <div class="wrap-bar__buttons">
+        {% for action in globalActions %}
+            <a href="{{ action.linkUrl }}" class="btn btn--plus wrap-bar__btn {{ action.cssClass }}">
+                {% if action.icon is not null %}
+                    {# TODO: Replace by defined icon #}
+                    <i class="btn__icon">+</i>
+                {% endif %}
+                {{ action.label }}
+            </a>
+        {% endfor %}
+
+    </div>
+{% endblock %}
+
 {% block main_content %}
     asd
 {% endblock %}

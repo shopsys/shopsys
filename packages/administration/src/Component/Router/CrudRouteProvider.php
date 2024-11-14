@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Route;
 
 final class CrudRouteProvider
 {
-    private const PAGES_WITH_ID = [PageType::EDIT, PageType::DELETE, PageType::DETAIL];
+    public const PAGES_WITH_ID = [PageType::EDIT, PageType::DELETE, PageType::DETAIL];
 
     /**
      * @param \Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionItem $item

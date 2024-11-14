@@ -7,7 +7,7 @@ namespace Shopsys\AdministrationBundle\Component\Menu;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfigProvider;
 use Shopsys\AdministrationBundle\Component\Config\PageType;
 use Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry;
-use Shopsys\AdministrationBundle\Component\Router\CrudRouteHelper;
+use Shopsys\AdministrationBundle\Component\Router\CrudRouteProvider;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -15,12 +15,12 @@ final class CrudMenuSubscriber implements EventSubscriberInterface
 {
     /**
      * @param \Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry $crudControllerDefinitionRegistry
-     * @param \Shopsys\AdministrationBundle\Component\Router\CrudRouteHelper $crudRouteHelper
+     * @param \Shopsys\AdministrationBundle\Component\Router\CrudRouteProvider $crudRouteProvider
      * @param \Shopsys\AdministrationBundle\Component\Config\CrudConfigProvider $crudConfigProvider
      */
     public function __construct(
         public readonly CrudControllerDefinitionRegistry $crudControllerDefinitionRegistry,
-        public readonly CrudRouteHelper $crudRouteHelper,
+        public readonly CrudRouteProvider $crudRouteProvider,
         public readonly CrudConfigProvider $crudConfigProvider,
     ) {
     }
@@ -59,7 +59,7 @@ final class CrudMenuSubscriber implements EventSubscriberInterface
             }
 
             // TODO: Generate routes for other pages and maybe for custom actions as well
-            $route = $this->crudRouteHelper->generate($item, PageType::LIST);
+            $route = $this->crudRouteProvider->generate($item, PageType::LIST);
 
             if ($submenuSection !== null) {
                 $menu = $menu->getChild($submenuSection);
