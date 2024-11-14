@@ -6,6 +6,8 @@ namespace Shopsys\AdministrationBundle\Component\Config;
 
 final class CrudConfigData
 {
+    public string $entityName;
+
     public array $customPageTitles = [
         PageType::CREATE->value => null,
         PageType::EDIT->value => null,
@@ -23,25 +25,43 @@ final class CrudConfigData
 
     public bool $visibleInMenu = true;
 
-    /**
-     * @param \Shopsys\AdministrationBundle\Component\Config\PageType $pageType
-     * @return string|null
-     */
-    public function getTitle(PageType $pageType): ?string
+    public function __construct(string $entityName)
     {
-        return $this->customPageTitles[$pageType->value] ?? 'test'; // TODO: hotfix for menu, rewrite to generate page titles based on entity class
+        $this->entityName = $entityName;
+
+        $this->customPageTitles = [
+            PageType::CREATE->value => t('Creating new %entity_name%', ['%entity_name%' => $entityName]),
+            PageType::EDIT->value => t('Editing %entity_name%', ['%entity_name%' => $entityName]),
+            PageType::LIST->value => t('%entity_name% Overview', ['%entity_name%' => $entityName]),
+            PageType::DETAIL->value => t('Viewing %entity_name%', ['%entity_name%' => $entityName]),
+        ];
+
+        $this->menuTitle = t('%entity_name% Overview', ['%entity_name%' => $entityName]);
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getMenuTitle(): ?string
+    public function getEntityName(): string
     {
-        if ($this->menuTitle !== null) {
-            return $this->menuTitle;
-        }
+        return $this->entityName;
+    }
 
-        return $this->getTitle(PageType::LIST);
+    /**
+     * @param \Shopsys\AdministrationBundle\Component\Config\PageType $pageType
+     * @return string
+     */
+    public function getTitle(PageType $pageType): string
+    {
+        return $this->customPageTitles[$pageType->value];
+    }
+
+    /**
+     * @return string
+     */
+    public function getMenuTitle(): string
+    {
+        return $this->menuTitle;
     }
 
     /**

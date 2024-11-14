@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Menu;
 
+use Shopsys\AdministrationBundle\Component\Config\CrudConfigProvider;
 use Shopsys\AdministrationBundle\Component\Config\PageType;
 use Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry;
 use Shopsys\AdministrationBundle\Component\Router\CrudRouteHelper;
@@ -15,10 +16,12 @@ final class CrudMenuSubscriber implements EventSubscriberInterface
     /**
      * @param \Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry $crudControllerDefinitionRegistry
      * @param \Shopsys\AdministrationBundle\Component\Router\CrudRouteHelper $crudRouteHelper
+     * @param \Shopsys\AdministrationBundle\Component\Config\CrudConfigProvider $crudConfigProvider
      */
     public function __construct(
         public readonly CrudControllerDefinitionRegistry $crudControllerDefinitionRegistry,
         public readonly CrudRouteHelper $crudRouteHelper,
+        public readonly CrudConfigProvider $crudConfigProvider,
     ) {
     }
 
@@ -46,8 +49,10 @@ final class CrudMenuSubscriber implements EventSubscriberInterface
         $menu = $event->getMenu();
 
         foreach ($this->crudControllerDefinitionRegistry->getItems() as $item) {
-            $sectionMenu = $item->config->getMenuSection();
-            $submenuSection = $item->config->getSubmenuSection();
+            $config = $this->crudConfigProvider->getConfig($item);
+
+            $sectionMenu = $config->getMenuSection();
+            $submenuSection = $config->getSubmenuSection();
 
             if ($menu->getName() !== $sectionMenu) {
                 continue;
@@ -60,10 +65,10 @@ final class CrudMenuSubscriber implements EventSubscriberInterface
                 $menu = $menu->getChild($submenuSection);
             }
 
-            $menu->addChild($item->config->getMenuTitle(), [
+            $menu->addChild($route->getRouteName(), [
                 'route' => $route->getRouteName(),
-                'display' => $item->config->isVisibleInMenu(),
-                'label' => $item->config->getMenuTitle(),
+                'display' => $config->isVisibleInMenu(),
+                'label' => $config->getMenuTitle(),
             ]);
         }
     }

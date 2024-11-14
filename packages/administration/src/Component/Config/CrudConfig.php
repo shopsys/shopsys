@@ -10,9 +10,12 @@ final class CrudConfig
 {
     private CrudConfigData $crudConfigData;
 
-    public function __construct()
+    /**
+     * @param string $entityName
+     */
+    public function __construct(string $entityName)
     {
-        $this->crudConfigData = new CrudConfigData();
+        $this->crudConfigData = new CrudConfigData($entityName);
     }
 
     /**
