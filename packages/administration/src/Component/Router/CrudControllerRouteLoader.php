@@ -18,10 +18,12 @@ final class CrudControllerRouteLoader implements LoaderInterface
     /**
      * @param \Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry $registry
      * @param \Shopsys\AdministrationBundle\Component\Router\CrudRouteProvider $crudRouteProvider
+     * @param \Shopsys\AdministrationBundle\Component\Config\CrudConfigProvider $crudConfigProvider
      */
     public function __construct(
         private readonly CrudControllerDefinitionRegistry $registry,
         private readonly CrudRouteProvider $crudRouteProvider,
+        private readonly CrudConfigProvider $crudConfigProvider,
     ) {
     }
 

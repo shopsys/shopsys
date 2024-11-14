@@ -13,7 +13,6 @@ services:
     Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry:
         arguments:
             - '@Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver'
-            - '@service_container'
             - '%shopsys.admin.crud_controllers%'
 
     Shopsys\AdministrationBundle\Component\Router\CrudControllerRouteLoader:

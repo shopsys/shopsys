@@ -6,7 +6,6 @@ namespace Shopsys\AdministrationBundle\Component\Registry;
 
 use ReflectionClass;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 final class CrudControllerDefinitionRegistry
 {
@@ -19,12 +18,10 @@ final class CrudControllerDefinitionRegistry
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      * @param array $crudControllers ['class' => string, 'entityClass' => string]|null
      */
     public function __construct(
         private readonly EntityNameResolver $entityNameResolver,
-        private readonly ContainerInterface $container,
         private readonly array $crudControllers,
     ) {
         foreach ($this->crudControllers as $crudController) {
@@ -39,16 +36,12 @@ final class CrudControllerDefinitionRegistry
     private function addItem(string $controllerClass, string $entityClass): void
     {
         $resolverEntityClass = $this->entityNameResolver->resolve($entityClass);
-
-        /** @var \Shopsys\AdministrationBundle\Controller\AbstractCrudController $controllerService */
-        $controllerService = $this->container->get($controllerClass);
         $shortEntityClass = (new ReflectionClass($entityClass))->getShortName();
 
         $item = new CrudControllerDefinitionItem(
             $controllerClass,
             $resolverEntityClass,
             $shortEntityClass,
-            $controllerService->getConfig(),
         );
 
         $this->items[$controllerClass] = $item;
