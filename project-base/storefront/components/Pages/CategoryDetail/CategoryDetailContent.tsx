@@ -44,8 +44,8 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
             <CollapsibleDescriptionWithImage
                 currentPage={currentPage}
                 description={category.description}
-                imageName={category.images[0].name || category.name}
-                imageUrl={category.images[0].url}
+                imageName={category.images[0]?.name || category.name}
+                imageUrl={category.images[0]?.url}
                 scrollTargetRef={scrollTargetRef}
             />
 
