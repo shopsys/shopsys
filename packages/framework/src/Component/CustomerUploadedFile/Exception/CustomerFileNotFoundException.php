@@ -17,7 +17,7 @@ class CustomerFileNotFoundException extends CustomerFileException
      */
     public function __construct($message = '', ?Exception $previous = null)
     {
-        $isDev = Environment::getEnvironment() === EnvironmentType::DEVELOPMENT;
+        $isDev = class_exists('App\Environment') && Environment::getEnvironment() === EnvironmentType::DEVELOPMENT;
 
         if (!$isDev) {
             throw new NotFoundHttpException($message, $previous, 0, ['X-Accel-Redirect' => '@storefront']);
