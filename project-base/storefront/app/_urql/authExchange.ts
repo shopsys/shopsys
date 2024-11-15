@@ -3,7 +3,7 @@ import {
     RefreshTokensDocument,
     TypeRefreshTokens,
     TypeRefreshTokensVariables,
-} from 'graphql/requests/auth/mutations/RefreshTokensMutation.generated';
+} from 'graphql/requests/auth/mutations/RefreshTokensMutation.ssr';
 import { CombinedError, makeOperation, Operation } from 'urql';
 import { getTokensFromCookiesServer } from 'utils/auth/getTokensFromCookiesServer';
 import { removeTokensFromCookiesServer } from 'utils/auth/removeTokensFromCookiesServer';
