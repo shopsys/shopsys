@@ -3,7 +3,6 @@ import { NearOperationFileConfig } from '@graphql-codegen/near-operation-file-pr
 
 const codegenTypescriptConfig = {
     typesPrefix: 'Type',
-    withHooks: true,
     withHOC: false,
     withComponent: false,
     scalars: {
@@ -20,23 +19,45 @@ const config: CodegenConfig = {
     schema: 'schema.graphql',
     documents: './graphql/requests/**/*.graphql',
     generates: {
+        // 1. schema
         'schema.graphql.json': {
             plugins: ['introspection'],
             config: {
                 minify: true,
             },
         },
+
+        // 2. types
         './graphql/types.ts': {
             config: codegenTypescriptConfig,
             plugins: ['typescript'],
         },
-        './graphql/': {
+
+        // 3. generated
+        './graphql': {
             preset: 'near-operation-file',
             presetConfig: {
                 baseTypesPath: 'types',
                 extension: '.generated.tsx',
             } as NearOperationFileConfig,
-            config: codegenTypescriptConfig,
+            config: {
+                ...codegenTypescriptConfig,
+                withHooks: true,
+            },
+            plugins: ['typescript-operations', 'fragment-matcher', 'typescript-urql'],
+        },
+
+        // 4. ssr
+        './graphql/requests': {
+            preset: 'near-operation-file',
+            presetConfig: {
+                baseTypesPath: '../types',
+                extension: '.ssr.tsx',
+            } as NearOperationFileConfig,
+            config: {
+                ...codegenTypescriptConfig,
+                withHooks: false,
+            },
             plugins: ['typescript-operations', 'fragment-matcher', 'typescript-urql'],
         },
     },
