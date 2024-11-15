@@ -22,7 +22,10 @@ export type DomainConfigType = {
     gtmId?: string;
     isLuigisBoxActive: boolean;
     type: CustomerUserAreaEnum;
-    convertimProjectUuid: string | null;
+    convertimSetting: {
+        isEnabled: boolean;
+        convertimProjectUuid: string | null;
+    }
 };
 
 export function getDomainConfig(domainUrl: string): DomainConfigType {

@@ -35,7 +35,10 @@ export const CartInHeader: FC = ({ className }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const { cart, isCartFetchingOrUnavailable } = useCurrentCart();
-    const { url, convertimProjectUuid } = useDomainConfig();
+    const {
+        url,
+        convertimSetting: { convertimProjectUuid, isEnabled: isConvertimEnabled },
+    } = useDomainConfig();
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
 
     const [isActive, setIsActive] = useState(false);
@@ -123,7 +126,7 @@ export const CartInHeader: FC = ({ className }) => {
 
             <Overlay isActive={isActiveDelayed} onClick={() => setIsActive(false)} />
 
-            {convertimProjectUuid && !!cart?.items.length && (
+            {isConvertimEnabled && convertimProjectUuid && (
                 <Convertim cart={cart} convertimProjectUuid={convertimProjectUuid} />
             )}
         </>
