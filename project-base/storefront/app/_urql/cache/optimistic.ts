@@ -2,22 +2,18 @@ import { OptimisticMutationConfig } from '@urql/exchange-graphcache';
 import {
     TypeChangePaymentInCartMutationVariables,
     TypeChangePaymentInCartMutation,
-} from 'graphql/requests/cart/mutations/ChangePaymentInCartMutation.generated';
+} from 'graphql/requests/cart/mutations/ChangePaymentInCartMutation.ssr';
 import {
     TypeChangeTransportInCartMutationVariables,
     TypeChangeTransportInCartMutation,
-} from 'graphql/requests/cart/mutations/ChangeTransportInCartMutation.generated';
-import {
-    TypeCartQuery,
-    TypeCartQueryVariables,
-    CartQueryDocument,
-} from 'graphql/requests/cart/queries/CartQuery.generated';
-import { TypeTransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
+} from 'graphql/requests/cart/mutations/ChangeTransportInCartMutation.ssr';
+import { TypeCartQuery, TypeCartQueryVariables, CartQueryDocument } from 'graphql/requests/cart/queries/CartQuery.ssr';
+import { TypeTransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.ssr';
 import {
     TypeTransportsQuery,
     TypeTransportsQueryVariables,
     TransportsQueryDocument,
-} from 'graphql/requests/transports/queries/TransportsQuery.generated';
+} from 'graphql/requests/transports/queries/TransportsQuery.ssr';
 import { TypeChangeTransportInCartInput, TypeChangePaymentInCartInput } from 'graphql/types';
 
 export const optimisticUpdates: OptimisticMutationConfig = {

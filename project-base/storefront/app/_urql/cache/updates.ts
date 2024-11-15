@@ -1,70 +1,63 @@
 import { invalidateFields } from './cacheUtils';
 import { Cache, UpdatesConfig } from '@urql/exchange-graphcache';
-import { TypeLoginMutation, TypeLoginMutationVariables } from 'graphql/requests/auth/mutations/LoginMutation.generated';
-import {
-    TypeLogoutMutation,
-    TypeLogoutMutationVariables,
-} from 'graphql/requests/auth/mutations/LogoutMutation.generated';
-import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
+import { TypeLoginMutation, TypeLoginMutationVariables } from 'graphql/requests/auth/mutations/LoginMutation.ssr';
+import { TypeLogoutMutation, TypeLogoutMutationVariables } from 'graphql/requests/auth/mutations/LogoutMutation.ssr';
+import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.ssr';
 import {
     TypeAddOrderItemsToCartMutation,
     TypeAddOrderItemsToCartMutationVariables,
-} from 'graphql/requests/cart/mutations/AddOrderItemsToCartMutation.generated';
+} from 'graphql/requests/cart/mutations/AddOrderItemsToCartMutation.ssr';
 import {
     TypeAddToCartMutation,
     TypeAddToCartMutationVariables,
-} from 'graphql/requests/cart/mutations/AddToCartMutation.generated';
+} from 'graphql/requests/cart/mutations/AddToCartMutation.ssr';
 import {
     TypeApplyPromoCodeToCartMutation,
     TypeApplyPromoCodeToCartMutationVariables,
-} from 'graphql/requests/cart/mutations/ApplyPromoCodeToCartMutation.generated';
+} from 'graphql/requests/cart/mutations/ApplyPromoCodeToCartMutation.ssr';
 import {
     TypeChangePaymentInCartMutation,
     TypeChangePaymentInCartMutationVariables,
-} from 'graphql/requests/cart/mutations/ChangePaymentInCartMutation.generated';
+} from 'graphql/requests/cart/mutations/ChangePaymentInCartMutation.ssr';
 import {
     TypeChangeTransportInCartMutation,
     TypeChangeTransportInCartMutationVariables,
-} from 'graphql/requests/cart/mutations/ChangeTransportInCartMutation.generated';
+} from 'graphql/requests/cart/mutations/ChangeTransportInCartMutation.ssr';
 import {
     TypeRemoveFromCartMutation,
     TypeRemoveFromCartMutationVariables,
-} from 'graphql/requests/cart/mutations/RemoveFromCartMutation.generated';
+} from 'graphql/requests/cart/mutations/RemoveFromCartMutation.ssr';
 import {
     TypeRemovePromoCodeFromCartMutation,
     TypeRemovePromoCodeFromCartMutationVariables,
-} from 'graphql/requests/cart/mutations/RemovePromoCodeFromCartMutation.generated';
-import {
-    TypeCartQuery,
-    TypeCartQueryVariables,
-    CartQueryDocument,
-} from 'graphql/requests/cart/queries/CartQuery.generated';
+} from 'graphql/requests/cart/mutations/RemovePromoCodeFromCartMutation.ssr';
+import { TypeCartQuery, TypeCartQueryVariables, CartQueryDocument } from 'graphql/requests/cart/queries/CartQuery.ssr';
 import {
     TypeDeleteDeliveryAddressMutation,
     TypeDeleteDeliveryAddressMutationVariables,
-} from 'graphql/requests/customer/mutations/DeleteDeliveryAddressMutation.generated';
+} from 'graphql/requests/customer/mutations/DeleteDeliveryAddressMutation.ssr';
 import {
     TypeCreateOrderMutation,
     TypeCreateOrderMutationVariables,
-} from 'graphql/requests/orders/mutations/CreateOrderMutation.generated';
-import { TypeProductListFragment } from 'graphql/requests/productLists/fragments/ProductListFragment.generated';
+} from 'graphql/requests/orders/mutations/CreateOrderMutation.ssr';
+import { TypeProductListFragment } from 'graphql/requests/productLists/fragments/ProductListFragment.ssr';
 import {
     TypeAddProductToListMutation,
     TypeAddProductToListMutationVariables,
-} from 'graphql/requests/productLists/mutations/AddProductToListMutation.generated';
+} from 'graphql/requests/productLists/mutations/AddProductToListMutation.ssr';
 import {
     TypeRemoveProductFromListMutation,
     TypeRemoveProductFromListMutationVariables,
-} from 'graphql/requests/productLists/mutations/RemoveProductFromListMutation.generated';
+} from 'graphql/requests/productLists/mutations/RemoveProductFromListMutation.ssr';
 import {
     TypeRemoveProductListMutation,
     TypeRemoveProductListMutationVariables,
-} from 'graphql/requests/productLists/mutations/RemoveProductListMutation.generated';
+} from 'graphql/requests/productLists/mutations/RemoveProductListMutation.ssr';
 import {
     TypeProductListQuery,
     TypeProductListQueryVariables,
     ProductListQueryDocument,
-} from 'graphql/requests/productLists/queries/ProductListQuery.generated';
+} from 'graphql/requests/productLists/queries/ProductListQuery.ssr';
 import { MakeMaybe, TypeProductListInput } from 'graphql/types';
 
 export const cacheUpdates: UpdatesConfig = {
