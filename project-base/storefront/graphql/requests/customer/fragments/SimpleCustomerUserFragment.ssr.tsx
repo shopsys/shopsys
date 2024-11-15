@@ -1,15 +1,12 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { TokenFragments } from '../fragments/TokensFragment.generated';
-import * as Urql from 'urql';
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type TypeRefreshTokensVariables = Types.Exact<{
-  refreshToken: Types.Scalars['String']['input'];
-}>;
+import { CustomerUserRoleGroupFragment } from './CustomerUserRoleGroupGragment.ssr';
+export type TypeSimpleCustomerUserFragment_CompanyCustomerUser_ = { __typename: 'CompanyCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<string>, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } };
 
+export type TypeSimpleCustomerUserFragment_RegularCustomerUser_ = { __typename: 'RegularCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<string>, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } };
 
-export type TypeRefreshTokens = { __typename?: 'Mutation', RefreshTokens: { __typename?: 'Token', accessToken: string, refreshToken: string } };
+export type TypeSimpleCustomerUserFragment = TypeSimpleCustomerUserFragment_CompanyCustomerUser_ | TypeSimpleCustomerUserFragment_RegularCustomerUser_;
 
 
       export interface PossibleTypesResultData {
@@ -27,12 +24,6 @@ export type TypeRefreshTokens = { __typename?: 'Mutation', RefreshTokens: { __ty
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -45,9 +36,9 @@ export type TypeRefreshTokens = { __typename?: 'Mutation', RefreshTokens: { __ty
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -94,15 +85,17 @@ export type TypeRefreshTokens = { __typename?: 'Mutation', RefreshTokens: { __ty
 };
       export default result;
     
-
-export const RefreshTokensDocument = gql`
-    mutation RefreshTokens($refreshToken: String!) {
-  RefreshTokens(input: {refreshToken: $refreshToken}) {
-    ...TokenFragments
+export const SimpleCustomerUserFragment = gql`
+    fragment SimpleCustomerUserFragment on CustomerUser {
+  __typename
+  uuid
+  firstName
+  lastName
+  email
+  telephone
+  roles
+  roleGroup {
+    ...CustomerUserRoleGroupFragment
   }
 }
-    ${TokenFragments}`;
-
-export function useRefreshTokens() {
-  return Urql.useMutation<TypeRefreshTokens, TypeRefreshTokensVariables>(RefreshTokensDocument);
-};
+    ${CustomerUserRoleGroupFragment}`;

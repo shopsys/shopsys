@@ -1,15 +1,14 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { TokenFragments } from '../fragments/TokensFragment.generated';
-import * as Urql from 'urql';
+import { SeoPageFragment } from '../fragments/SeoPageFragment.ssr';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type TypeRefreshTokensVariables = Types.Exact<{
-  refreshToken: Types.Scalars['String']['input'];
+export type TypeSeoPageQueryVariables = Types.Exact<{
+  pageSlug: Types.Scalars['String']['input'];
 }>;
 
 
-export type TypeRefreshTokens = { __typename?: 'Mutation', RefreshTokens: { __typename?: 'Token', accessToken: string, refreshToken: string } };
+export type TypeSeoPageQuery = { __typename?: 'Query', seoPage: { __typename: 'SeoPage', title: string | null, metaDescription: string | null, canonicalUrl: string | null, ogTitle: string | null, ogDescription: string | null, ogImage: { __typename: 'Image', name: string | null, url: string } | null, hreflangLinks: Array<{ __typename?: 'HreflangLink', hreflang: string, href: string }> } | null };
 
 
       export interface PossibleTypesResultData {
@@ -27,12 +26,6 @@ export type TypeRefreshTokens = { __typename?: 'Mutation', RefreshTokens: { __ty
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -45,9 +38,9 @@ export type TypeRefreshTokens = { __typename?: 'Mutation', RefreshTokens: { __ty
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -95,14 +88,10 @@ export type TypeRefreshTokens = { __typename?: 'Mutation', RefreshTokens: { __ty
       export default result;
     
 
-export const RefreshTokensDocument = gql`
-    mutation RefreshTokens($refreshToken: String!) {
-  RefreshTokens(input: {refreshToken: $refreshToken}) {
-    ...TokenFragments
+export const SeoPageQueryDocument = gql`
+    query SeoPageQuery($pageSlug: String!) {
+  seoPage(pageSlug: $pageSlug) {
+    ...SeoPageFragment
   }
 }
-    ${TokenFragments}`;
-
-export function useRefreshTokens() {
-  return Urql.useMutation<TypeRefreshTokens, TypeRefreshTokensVariables>(RefreshTokensDocument);
-};
+    ${SeoPageFragment}`;

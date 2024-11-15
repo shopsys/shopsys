@@ -1,15 +1,11 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { TokenFragments } from '../fragments/TokensFragment.generated';
-import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type TypeRefreshTokensVariables = Types.Exact<{
-  refreshToken: Types.Scalars['String']['input'];
-}>;
+export type TypeLogoutMutationVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type TypeRefreshTokens = { __typename?: 'Mutation', RefreshTokens: { __typename?: 'Token', accessToken: string, refreshToken: string } };
+export type TypeLogoutMutation = { __typename?: 'Mutation', Logout: boolean };
 
 
       export interface PossibleTypesResultData {
@@ -27,12 +23,6 @@ export type TypeRefreshTokens = { __typename?: 'Mutation', RefreshTokens: { __ty
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -45,9 +35,9 @@ export type TypeRefreshTokens = { __typename?: 'Mutation', RefreshTokens: { __ty
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -95,14 +85,8 @@ export type TypeRefreshTokens = { __typename?: 'Mutation', RefreshTokens: { __ty
       export default result;
     
 
-export const RefreshTokensDocument = gql`
-    mutation RefreshTokens($refreshToken: String!) {
-  RefreshTokens(input: {refreshToken: $refreshToken}) {
-    ...TokenFragments
-  }
+export const LogoutMutationDocument = gql`
+    mutation LogoutMutation {
+  Logout
 }
-    ${TokenFragments}`;
-
-export function useRefreshTokens() {
-  return Urql.useMutation<TypeRefreshTokens, TypeRefreshTokensVariables>(RefreshTokensDocument);
-};
+    `;

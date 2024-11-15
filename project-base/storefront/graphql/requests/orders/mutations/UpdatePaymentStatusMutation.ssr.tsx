@@ -1,15 +1,14 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { TokenFragments } from '../fragments/TokensFragment.generated';
-import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type TypeRefreshTokensVariables = Types.Exact<{
-  refreshToken: Types.Scalars['String']['input'];
+export type TypeUpdatePaymentStatusMutationVariables = Types.Exact<{
+  orderUuid: Types.Scalars['Uuid']['input'];
+  orderPaymentStatusPageValidityHash?: Types.InputMaybe<Types.Scalars['String']['input']>;
 }>;
 
 
-export type TypeRefreshTokens = { __typename?: 'Mutation', RefreshTokens: { __typename?: 'Token', accessToken: string, refreshToken: string } };
+export type TypeUpdatePaymentStatusMutation = { __typename?: 'Mutation', UpdatePaymentStatus: { __typename?: 'Order', isPaid: boolean, paymentTransactionsCount: number, payment: { __typename?: 'Payment', type: string } } };
 
 
       export interface PossibleTypesResultData {
@@ -27,12 +26,6 @@ export type TypeRefreshTokens = { __typename?: 'Mutation', RefreshTokens: { __ty
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -45,9 +38,9 @@ export type TypeRefreshTokens = { __typename?: 'Mutation', RefreshTokens: { __ty
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -95,14 +88,17 @@ export type TypeRefreshTokens = { __typename?: 'Mutation', RefreshTokens: { __ty
       export default result;
     
 
-export const RefreshTokensDocument = gql`
-    mutation RefreshTokens($refreshToken: String!) {
-  RefreshTokens(input: {refreshToken: $refreshToken}) {
-    ...TokenFragments
+export const UpdatePaymentStatusMutationDocument = gql`
+    mutation UpdatePaymentStatusMutation($orderUuid: Uuid!, $orderPaymentStatusPageValidityHash: String = null) {
+  UpdatePaymentStatus(
+    orderUuid: $orderUuid
+    orderPaymentStatusPageValidityHash: $orderPaymentStatusPageValidityHash
+  ) {
+    isPaid
+    paymentTransactionsCount
+    payment {
+      type
+    }
   }
 }
-    ${TokenFragments}`;
-
-export function useRefreshTokens() {
-  return Urql.useMutation<TypeRefreshTokens, TypeRefreshTokensVariables>(RefreshTokensDocument);
-};
+    `;

@@ -1,15 +1,16 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { TokenFragments } from '../fragments/TokensFragment.generated';
-import * as Urql from 'urql';
+import { TokenFragments } from '../../auth/fragments/TokensFragment.ssr';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type TypeRefreshTokensVariables = Types.Exact<{
-  refreshToken: Types.Scalars['String']['input'];
+export type TypeRecoverPasswordMutationVariables = Types.Exact<{
+  email: Types.Scalars['String']['input'];
+  hash: Types.Scalars['String']['input'];
+  newPassword: Types.Scalars['Password']['input'];
 }>;
 
 
-export type TypeRefreshTokens = { __typename?: 'Mutation', RefreshTokens: { __typename?: 'Token', accessToken: string, refreshToken: string } };
+export type TypeRecoverPasswordMutation = { __typename?: 'Mutation', RecoverPassword: { __typename?: 'LoginResult', tokens: { __typename?: 'Token', accessToken: string, refreshToken: string } } };
 
 
       export interface PossibleTypesResultData {
@@ -27,12 +28,6 @@ export type TypeRefreshTokens = { __typename?: 'Mutation', RefreshTokens: { __ty
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -45,9 +40,9 @@ export type TypeRefreshTokens = { __typename?: 'Mutation', RefreshTokens: { __ty
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -95,14 +90,12 @@ export type TypeRefreshTokens = { __typename?: 'Mutation', RefreshTokens: { __ty
       export default result;
     
 
-export const RefreshTokensDocument = gql`
-    mutation RefreshTokens($refreshToken: String!) {
-  RefreshTokens(input: {refreshToken: $refreshToken}) {
-    ...TokenFragments
+export const RecoverPasswordMutationDocument = gql`
+    mutation RecoverPasswordMutation($email: String!, $hash: String!, $newPassword: Password!) {
+  RecoverPassword(input: {email: $email, hash: $hash, newPassword: $newPassword}) {
+    tokens {
+      ...TokenFragments
+    }
   }
 }
     ${TokenFragments}`;
-
-export function useRefreshTokens() {
-  return Urql.useMutation<TypeRefreshTokens, TypeRefreshTokensVariables>(RefreshTokensDocument);
-};

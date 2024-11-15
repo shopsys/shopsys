@@ -34,6 +34,7 @@ generate-schema: ## Generates GraphQL schema and frontend types (in Docker)
 	docker compose cp /tmp/schema.graphql storefront:/home/node/app/schema.graphql
 	docker compose exec -u root storefront chown node:node schema.graphql
 	find project-base/storefront/graphql/requests -type f -name "*.generated.tsx" -exec rm {} \;
+	find project-base/storefront/graphql/requests -type f -name "*.ssr.tsx" -exec rm {} \;
 	docker compose exec storefront pnpm run gql
 	docker compose exec storefront rm -rf /home/node/app/schema.graphql
 
@@ -42,6 +43,7 @@ generate-schema-native: ## Generates GraphQL schema and frontend types (natively
 	php phing frontend-api-generate-graphql-schema
 	cp project-base/app/schema.graphql project-base/storefront/schema.graphql
 	find project-base/storefront/graphql/requests -type f -name "*.generated.tsx" -exec rm {} \;
+	find project-base/storefront/graphql/requests -type f -name "*.ssr.tsx" -exec rm {} \;
 	cd project-base/storefront; pnpm run gql
 	rm -rf project-base/storefront/schema.graphql
 
