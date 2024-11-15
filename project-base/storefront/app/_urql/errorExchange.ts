@@ -1,5 +1,5 @@
 import { Kind } from 'graphql';
-import { CartQueryDocument } from 'graphql/requests/cart/queries/CartQuery.generated';
+import { CartQueryDocument } from 'graphql/requests/cart/queries/CartQuery.ssr';
 import { Translate } from 'next-translate';
 import { ParsedErrors } from 'types/error';
 import { CombinedError, Exchange, Operation } from 'urql';
@@ -62,7 +62,7 @@ const handleErrorMessagesForDevelopment = (error: CombinedError) => {
         location: 'getErrorExchange.handleErrorMessagesForDevelopment',
     });
 
-   /*  if (isWithToastAndConsoleErrorDebugging) {
+    /*  if (isWithToastAndConsoleErrorDebugging) {
         error.graphQLErrors
             .map((graphqlError) => mapGraphqlErrorForDevelopment(graphqlError))
             .forEach((simplifiedGraphqlError) => showErrorMessage(JSON.stringify(simplifiedGraphqlError)));
