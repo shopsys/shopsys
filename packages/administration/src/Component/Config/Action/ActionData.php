@@ -8,28 +8,23 @@ use Shopsys\AdministrationBundle\Component\Config\PageType;
 
 class ActionData
 {
-    /**
-     * @var callable|null
-     */
-    public $displayIf = null;
-
-    /**
-     * @var callable|null
-     */
-    public $pageId = null;
-
-    /**
-     * @var callable|string|null
-     */
-    public $url = null;
-
-    /**
-     * @var array|callable
-     */
-    public $routeParameters = [];
-
     public string $linkUrl = 'javascript:void(0)';
 
+    /**
+     * @param string $name
+     * @param string $label
+     * @param string|null $icon
+     * @param \Shopsys\AdministrationBundle\Component\Config\Action\ActionType $actionType
+     * @param string $cssClass
+     * @param \Shopsys\AdministrationBundle\Component\Config\Action\ActionRouteType $routeType
+     * @param string|null $route
+     * @param string|null $crudController
+     * @param \Shopsys\AdministrationBundle\Component\Config\PageType|null $pageType
+     * @param mixed|null $pageId
+     * @param mixed|null $url
+     * @param mixed $routeParameters
+     * @param mixed|null $displayIf
+     */
     public function __construct(
         public readonly string $name,
         public readonly string $label,
@@ -40,20 +35,15 @@ class ActionData
         public readonly ?string $route,
         public readonly ?string $crudController,
         public readonly ?PageType $pageType,
-        $pageId,
-        $url,
-        $routeParameters,
-        $displayIf,
+        public $pageId = null,
+        public $url = null,
+        public $routeParameters = [],
+        public $displayIf = null,
     ) {
-        $this->pageId = $pageId;
-        $this->url = $url;
-        $this->routeParameters = $routeParameters;
-        $this->displayIf = $displayIf;
     }
 
     /**
      * @param string $url
-     * @return void
      */
     public function setLinkUrl(string $url): void
     {

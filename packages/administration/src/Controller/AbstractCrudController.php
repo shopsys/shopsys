@@ -8,7 +8,6 @@ use ReflectionClass;
 use Shopsys\AdministrationBundle\Component\Attributes\CrudController;
 use Shopsys\AdministrationBundle\Component\Config\Action\ActionsConfig;
 use Shopsys\AdministrationBundle\Component\Config\Action\ActionsFactory;
-use Shopsys\AdministrationBundle\Component\Config\Action\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfigData;
 use Shopsys\AdministrationBundle\Component\Config\PageType;
@@ -50,7 +49,7 @@ abstract class AbstractCrudController extends AbstractController
     {
         return $this->render('@ShopsysAdministration/crud/list.html.twig', [
             'title' => $this->getConfig()->getTitle(PageType::LIST),
-            'globalActions' => $this->actionsFactory->processActions($this->getConfiguredActions(PageType::LIST), ActionType::GLOBAL),
+            'globalActions' => $this->actionsFactory->processGlobalActions($this->getConfiguredActions(PageType::LIST)),
         ]);
     }
 
@@ -58,7 +57,7 @@ abstract class AbstractCrudController extends AbstractController
     {
         return $this->render('@ShopsysAdministration/crud/edit.html.twig', [
             'title' => $this->getConfig()->getTitle(PageType::EDIT),
-            'globalActions' => $this->actionsFactory->processActions($this->getConfiguredActions(PageType::EDIT), ActionType::GLOBAL),
+            'globalActions' => $this->actionsFactory->processGlobalActions($this->getConfiguredActions(PageType::EDIT)),
         ]);
     }
 
@@ -66,7 +65,7 @@ abstract class AbstractCrudController extends AbstractController
     {
         return $this->render('@ShopsysAdministration/crud/new.html.twig', [
             'title' => $this->getConfig()->getTitle(PageType::CREATE),
-            'globalActions' => $this->actionsFactory->processActions($this->getConfiguredActions(PageType::CREATE), ActionType::GLOBAL),
+            'globalActions' => $this->actionsFactory->processGlobalActions($this->getConfiguredActions(PageType::CREATE)),
         ]);
     }
 
@@ -76,12 +75,13 @@ abstract class AbstractCrudController extends AbstractController
     }
 
     /**
-     * @return \Shopsys\AdministrationBundle\Component\Config\Action\ActionBuilder[]
+     * @param \Shopsys\AdministrationBundle\Component\Config\PageType $pageType
+     * @return \Shopsys\AdministrationBundle\Component\Config\Action\Builder\AbstractActionBuilder[]
      */
     private function getConfiguredActions(PageType $pageType): array
     {
         if ($this->actions === null) {
-            $this->actions = $this->configureActions(new ActionsConfig(get_class($this), $this->getConfig()->getDefaultActions()));
+            $this->actions = $this->configureActions(new ActionsConfig(static::class, $this->getConfig()->getDefaultActions()));
         }
 
         return $this->actions->getActions($pageType);
@@ -97,13 +97,11 @@ abstract class AbstractCrudController extends AbstractController
             $attributes = $reflectionClass->getAttributes(CrudController::class);
 
             if (count($attributes) === 0) {
-                throw new \RuntimeException(sprintf('Class %s must have @%s attribute.', $reflectionClass->getName(), CrudController::class));
+                throw new RuntimeException(sprintf('Class %s must have @%s attribute.', $reflectionClass->getName(), CrudController::class));
             }
 
             $entityClass = $attributes[0]->newInstance()->entityClass;
-            $entityName = (new ReflectionClass($entityClass))->getShortName();
-
-            $this->config = $this->configure(new CrudConfig($entityName))->getConfig();
+            $this->config = $this->configure(new CrudConfig($entityClass))->getConfig();
         }
 
         return $this->config;

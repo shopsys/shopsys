@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Config;
 
+use ReflectionClass;
+
 final class CrudConfigData
 {
     public string $entityName;
@@ -25,18 +27,21 @@ final class CrudConfigData
 
     public bool $visibleInMenu = true;
 
-    public function __construct(string $entityName)
+    /**
+     * @param class-string $entityClass
+     */
+    public function __construct(private string $entityClass)
     {
-        $this->entityName = $entityName;
+        $this->entityName = (new ReflectionClass($entityClass))->getShortName();
 
         $this->customPageTitles = [
-            PageType::CREATE->value => t('Creating new %entity_name%', ['%entity_name%' => $entityName]),
-            PageType::EDIT->value => t('Editing %entity_name%', ['%entity_name%' => $entityName]),
-            PageType::LIST->value => t('%entity_name% Overview', ['%entity_name%' => $entityName]),
-            PageType::DETAIL->value => t('Viewing %entity_name%', ['%entity_name%' => $entityName]),
+            PageType::CREATE->value => t('Creating new %entity_name%', ['%entity_name%' => $this->entityName]),
+            PageType::EDIT->value => t('Editing %entity_name%', ['%entity_name%' => $this->entityName]),
+            PageType::LIST->value => t('%entity_name% Overview', ['%entity_name%' => $this->entityName]),
+            PageType::DETAIL->value => t('Viewing %entity_name%', ['%entity_name%' => $this->entityName]),
         ];
 
-        $this->menuTitle = t('%entity_name% Overview', ['%entity_name%' => $entityName]);
+        $this->menuTitle = t('%entity_name% Overview', ['%entity_name%' => $this->entityName]);
     }
 
     /**
@@ -45,6 +50,14 @@ final class CrudConfigData
     public function getEntityName(): string
     {
         return $this->entityName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEntityClass(): string
+    {
+        return $this->entityClass;
     }
 
     /**
