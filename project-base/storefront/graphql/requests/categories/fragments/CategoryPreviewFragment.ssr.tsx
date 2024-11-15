@@ -20,12 +20,6 @@ export type TypeCategoryPreviewFragment = { __typename: 'Category', uuid: string
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -38,9 +32,9 @@ export type TypeCategoryPreviewFragment = { __typename: 'Category', uuid: string
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -86,7 +80,7 @@ export type TypeCategoryPreviewFragment = { __typename: 'Category', uuid: string
   }
 };
       export default result;
-    
+
 export const CategoryPreviewFragment = gql`
     fragment CategoryPreviewFragment on Category {
   __typename

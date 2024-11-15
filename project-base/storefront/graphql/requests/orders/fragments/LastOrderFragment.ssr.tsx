@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { SimpleTransportFragment } from '../../transports/fragments/SimpleTransportFragment.ssr';
 import { SimplePaymentFragment } from '../../payments/fragments/SimplePaymentFragment.ssr';
 import { CountryFragment } from '../../countries/fragments/CountryFragment.ssr';
-export type TypeLastOrderFragment = { __typename: 'Order', pickupPlaceIdentifier: string | null, deliveryStreet: string | null, deliveryCity: string | null, deliveryPostcode: string | null, transport: { __typename: 'Transport', uuid: string, name: string, description: string | null, transportTypeCode: Types.TypeTransportTypeEnum }, payment: { __typename: 'Payment', uuid: string, name: string, description: string | null, instructions: string | null, type: Types.TypePaymentTypeEnum, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null }, deliveryCountry: { __typename: 'Country', name: string, code: string } | null };
+export type TypeLastOrderFragment = { __typename: 'Order', pickupPlaceIdentifier: string | null, deliveryStreet: string | null, deliveryCity: string | null, deliveryPostcode: string | null, transport: { __typename: 'Transport', uuid: string, name: string, description: string | null, transportTypeCode: Types.TypeTransportTypeEnum }, payment: { __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null }, deliveryCountry: { __typename: 'Country', name: string, code: string } | null };
 
 
       export interface PossibleTypesResultData {
@@ -22,12 +22,6 @@ export type TypeLastOrderFragment = { __typename: 'Order', pickupPlaceIdentifier
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -40,9 +34,9 @@ export type TypeLastOrderFragment = { __typename: 'Order', pickupPlaceIdentifier
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -88,7 +82,7 @@ export type TypeLastOrderFragment = { __typename: 'Order', pickupPlaceIdentifier
   }
 };
       export default result;
-    
+
 export const LastOrderFragment = gql`
     fragment LastOrderFragment on Order {
   __typename

@@ -5,7 +5,7 @@ import { CountryFragment } from '../../countries/fragments/CountryFragment.ssr';
 import { OpeningHoursFragment } from './OpeningHoursFragment.ssr';
 import { BreadcrumbFragment } from '../../breadcrumbs/fragments/BreadcrumbFragment.ssr';
 import { ImageFragment } from '../../images/fragments/ImageFragment.ssr';
-export type TypeStoreDetailFragment = { __typename: 'Store', uuid: string, slug: string, description: string | null, street: string, city: string, postcode: string, email: string | null, phone: string | null, directions: string | null, specialMessage: string | null, latitude: string | null, longitude: string | null, storeName: string, country: { __typename: 'Country', name: string, code: string }, openingHours: { __typename?: 'OpeningHours', status: Types.TypeStoreOpeningStatusEnum, dayOfWeek: number, openingHoursOfDays: Array<{ __typename?: 'OpeningHoursOfDay', date: any, dayOfWeek: number, openingHoursRanges: Array<{ __typename?: 'OpeningHoursRange', openingTime: string, closingTime: string }> }> }, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, storeImages: Array<{ __typename: 'Image', name: string | null, url: string }> };
+export type TypeStoreDetailFragment = { __typename: 'Store', uuid: string, slug: string, description: string | null, street: string, city: string, postcode: string, contactInfo: string | null, specialMessage: string | null, latitude: string | null, longitude: string | null, storeName: string, country: { __typename: 'Country', name: string, code: string }, openingHours: { __typename?: 'OpeningHours', status: Types.TypeStoreOpeningStatusEnum, dayOfWeek: number, openingHoursOfDays: Array<{ __typename?: 'OpeningHoursOfDay', date: any, dayOfWeek: number, openingHoursRanges: Array<{ __typename?: 'OpeningHoursRange', openingTime: string, closingTime: string }> }> }, breadcrumb: Array<{ __typename: 'Link', name: string, slug: string }>, storeImages: Array<{ __typename: 'Image', name: string | null, url: string }> };
 
 
       export interface PossibleTypesResultData {
@@ -23,12 +23,6 @@ export type TypeStoreDetailFragment = { __typename: 'Store', uuid: string, slug:
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -41,9 +35,9 @@ export type TypeStoreDetailFragment = { __typename: 'Store', uuid: string, slug:
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -89,7 +83,7 @@ export type TypeStoreDetailFragment = { __typename: 'Store', uuid: string, slug:
   }
 };
       export default result;
-    
+
 export const StoreDetailFragment = gql`
     fragment StoreDetailFragment on Store {
   __typename
@@ -106,9 +100,7 @@ export const StoreDetailFragment = gql`
   openingHours {
     ...OpeningHoursFragment
   }
-  email
-  phone
-  directions
+  contactInfo
   specialMessage
   latitude
   longitude

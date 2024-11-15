@@ -25,12 +25,6 @@ export type TypeRemoveProductListMutation = { __typename?: 'Mutation', RemovePro
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -43,9 +37,9 @@ export type TypeRemoveProductListMutation = { __typename?: 'Mutation', RemovePro
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -91,7 +85,7 @@ export type TypeRemoveProductListMutation = { __typename?: 'Mutation', RemovePro
   }
 };
       export default result;
-    
+
 
 export const RemoveProductListMutationDocument = gql`
     mutation RemoveProductListMutation($input: ProductListInput!) {

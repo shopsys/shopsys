@@ -19,12 +19,6 @@ export type TypeProductFilterOptionsParametersColorFragment = { __typename: 'Par
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -37,9 +31,9 @@ export type TypeProductFilterOptionsParametersColorFragment = { __typename: 'Par
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -85,7 +79,7 @@ export type TypeProductFilterOptionsParametersColorFragment = { __typename: 'Par
   }
 };
       export default result;
-    
+
 export const ProductFilterOptionsParametersColorFragment = gql`
     fragment ProductFilterOptionsParametersColorFragment on ParameterColorFilterOption {
   name

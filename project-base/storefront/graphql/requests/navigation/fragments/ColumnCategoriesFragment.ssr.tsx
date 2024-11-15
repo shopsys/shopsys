@@ -20,12 +20,6 @@ export type TypeColumnCategoriesFragment = { __typename: 'NavigationItemCategori
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -38,9 +32,9 @@ export type TypeColumnCategoriesFragment = { __typename: 'NavigationItemCategori
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -86,7 +80,7 @@ export type TypeColumnCategoriesFragment = { __typename: 'NavigationItemCategori
   }
 };
       export default result;
-    
+
 export const ColumnCategoriesFragment = gql`
     fragment ColumnCategoriesFragment on NavigationItemCategoriesByColumns {
   __typename

@@ -4,8 +4,8 @@ import gql from 'graphql-tag';
 import { SimpleNotBlogArticleFragment } from '../fragments/SimpleNotBlogArticleFragment.ssr';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeArticlesQueryVariables = Types.Exact<{
-  placement?: Types.InputMaybe<Array<Types.TypeArticlePlacementTypeEnum> | Types.TypeArticlePlacementTypeEnum>;
-  first?: Types.InputMaybe<Types.Scalars['Int']['input']>;
+  placement: Types.InputMaybe<Array<Types.TypeArticlePlacementTypeEnum> | Types.TypeArticlePlacementTypeEnum>;
+  first: Types.InputMaybe<Types.Scalars['Int']['input']>;
 }>;
 
 
@@ -27,12 +27,6 @@ export type TypeArticlesQuery = { __typename?: 'Query', articles: { __typename?:
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -45,9 +39,9 @@ export type TypeArticlesQuery = { __typename?: 'Query', articles: { __typename?:
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -93,7 +87,7 @@ export type TypeArticlesQuery = { __typename?: 'Query', articles: { __typename?:
   }
 };
       export default result;
-    
+
 
 export const ArticlesQueryDocument = gql`
     query ArticlesQuery($placement: [ArticlePlacementTypeEnum!], $first: Int) @redisCache(ttl: 3600) {

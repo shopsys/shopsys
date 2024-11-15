@@ -19,12 +19,6 @@ export type TypeTokenFragments = { __typename?: 'Token', accessToken: string, re
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -37,9 +31,9 @@ export type TypeTokenFragments = { __typename?: 'Token', accessToken: string, re
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -85,7 +79,7 @@ export type TypeTokenFragments = { __typename?: 'Token', accessToken: string, re
   }
 };
       export default result;
-    
+
 export const TokenFragments = gql`
     fragment TokenFragments on Token {
   accessToken

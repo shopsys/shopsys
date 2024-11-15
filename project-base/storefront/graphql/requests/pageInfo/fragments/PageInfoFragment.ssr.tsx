@@ -19,12 +19,6 @@ export type TypePageInfoFragment = { __typename: 'PageInfo', hasNextPage: boolea
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -37,9 +31,9 @@ export type TypePageInfoFragment = { __typename: 'PageInfo', hasNextPage: boolea
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -85,7 +79,7 @@ export type TypePageInfoFragment = { __typename: 'PageInfo', hasNextPage: boolea
   }
 };
       export default result;
-    
+
 export const PageInfoFragment = gql`
     fragment PageInfoFragment on PageInfo {
   __typename

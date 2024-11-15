@@ -28,12 +28,6 @@ export type TypeRecoverPasswordMutation = { __typename?: 'Mutation', RecoverPass
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -46,9 +40,9 @@ export type TypeRecoverPasswordMutation = { __typename?: 'Mutation', RecoverPass
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -94,7 +88,7 @@ export type TypeRecoverPasswordMutation = { __typename?: 'Mutation', RecoverPass
   }
 };
       export default result;
-    
+
 
 export const RecoverPasswordMutationDocument = gql`
     mutation RecoverPasswordMutation($email: String!, $hash: String!, $newPassword: Password!) {

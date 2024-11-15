@@ -24,12 +24,6 @@ export type TypeCustomerUserRoleGroupsQuery = { __typename?: 'Query', customerUs
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -42,9 +36,9 @@ export type TypeCustomerUserRoleGroupsQuery = { __typename?: 'Query', customerUs
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -90,7 +84,7 @@ export type TypeCustomerUserRoleGroupsQuery = { __typename?: 'Query', customerUs
   }
 };
       export default result;
-    
+
 
 export const CustomerUserRoleGroupsQueryDocument = gql`
     query CustomerUserRoleGroupsQuery {

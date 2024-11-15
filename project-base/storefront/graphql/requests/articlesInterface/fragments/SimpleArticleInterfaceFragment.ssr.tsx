@@ -25,12 +25,6 @@ export type TypeSimpleArticleInterfaceFragment = TypeSimpleArticleInterfaceFragm
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -43,9 +37,9 @@ export type TypeSimpleArticleInterfaceFragment = TypeSimpleArticleInterfaceFragm
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -91,7 +85,7 @@ export type TypeSimpleArticleInterfaceFragment = TypeSimpleArticleInterfaceFragm
   }
 };
       export default result;
-    
+
 export const SimpleArticleInterfaceFragment = gql`
     fragment SimpleArticleInterfaceFragment on ArticleInterface {
   __typename

@@ -26,12 +26,6 @@ export type TypeRegistrationByOrderMutation = { __typename?: 'Mutation', Registe
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -44,9 +38,9 @@ export type TypeRegistrationByOrderMutation = { __typename?: 'Mutation', Registe
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -92,7 +86,7 @@ export type TypeRegistrationByOrderMutation = { __typename?: 'Mutation', Registe
   }
 };
       export default result;
-    
+
 
 export const RegistrationByOrderMutationDocument = gql`
     mutation RegistrationByOrderMutation($input: RegistrationByOrderInput!) {

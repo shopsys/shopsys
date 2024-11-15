@@ -19,12 +19,6 @@ export type TypeFileFragment = { __typename: 'File', anchorText: string, url: st
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -37,9 +31,9 @@ export type TypeFileFragment = { __typename: 'File', anchorText: string, url: st
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -85,7 +79,7 @@ export type TypeFileFragment = { __typename: 'File', anchorText: string, url: st
   }
 };
       export default result;
-    
+
 export const FileFragment = gql`
     fragment FileFragment on File {
   __typename

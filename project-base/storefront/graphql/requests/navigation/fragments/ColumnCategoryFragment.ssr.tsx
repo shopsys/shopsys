@@ -21,12 +21,6 @@ export type TypeColumnCategoryFragment = { __typename: 'Category', uuid: string,
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -39,9 +33,9 @@ export type TypeColumnCategoryFragment = { __typename: 'Category', uuid: string,
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -87,7 +81,7 @@ export type TypeColumnCategoryFragment = { __typename: 'Category', uuid: string,
   }
 };
       export default result;
-    
+
 export const ColumnCategoryFragment = gql`
     fragment ColumnCategoryFragment on Category {
   __typename

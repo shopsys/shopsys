@@ -19,12 +19,6 @@ export type TypeProductFilterOptionsParametersSliderFragment = { __typename: 'Pa
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -37,9 +31,9 @@ export type TypeProductFilterOptionsParametersSliderFragment = { __typename: 'Pa
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -85,7 +79,7 @@ export type TypeProductFilterOptionsParametersSliderFragment = { __typename: 'Pa
   }
 };
       export default result;
-    
+
 export const ProductFilterOptionsParametersSliderFragment = gql`
     fragment ProductFilterOptionsParametersSliderFragment on ParameterSliderFilterOption {
   name

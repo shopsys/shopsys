@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { OpeningHoursFragment } from './OpeningHoursFragment.ssr';
 import { CountryFragment } from '../../countries/fragments/CountryFragment.ssr';
 import { ImageFragment } from '../../images/fragments/ImageFragment.ssr';
-export type TypeListedStoreFragment = { __typename: 'Store', slug: string, name: string, description: string | null, latitude: string | null, longitude: string | null, street: string, postcode: string, city: string, distance: number | null, email: string | null, phone: string | null, specialMessage: string | null, identifier: string, openingHours: { __typename?: 'OpeningHours', status: Types.TypeStoreOpeningStatusEnum, dayOfWeek: number, openingHoursOfDays: Array<{ __typename?: 'OpeningHoursOfDay', date: any, dayOfWeek: number, openingHoursRanges: Array<{ __typename?: 'OpeningHoursRange', openingTime: string, closingTime: string }> }> }, country: { __typename: 'Country', name: string, code: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null };
+export type TypeListedStoreFragment = { __typename: 'Store', slug: string, name: string, description: string | null, latitude: string | null, longitude: string | null, street: string, postcode: string, city: string, identifier: string, openingHours: { __typename?: 'OpeningHours', status: Types.TypeStoreOpeningStatusEnum, dayOfWeek: number, openingHoursOfDays: Array<{ __typename?: 'OpeningHoursOfDay', date: any, dayOfWeek: number, openingHoursRanges: Array<{ __typename?: 'OpeningHoursRange', openingTime: string, closingTime: string }> }> }, country: { __typename: 'Country', name: string, code: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null };
 
 
       export interface PossibleTypesResultData {
@@ -22,12 +22,6 @@ export type TypeListedStoreFragment = { __typename: 'Store', slug: string, name:
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -40,9 +34,9 @@ export type TypeListedStoreFragment = { __typename: 'Store', slug: string, name:
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -88,7 +82,7 @@ export type TypeListedStoreFragment = { __typename: 'Store', slug: string, name:
   }
 };
       export default result;
-    
+
 export const ListedStoreFragment = gql`
     fragment ListedStoreFragment on Store {
   __typename
@@ -104,10 +98,6 @@ export const ListedStoreFragment = gql`
   street
   postcode
   city
-  distance
-  email
-  phone
-  specialMessage
   country {
     ...CountryFragment
   }

@@ -25,12 +25,6 @@ export type TypeNewsletterSubscribeMutation = { __typename?: 'Mutation', Newslet
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -43,9 +37,9 @@ export type TypeNewsletterSubscribeMutation = { __typename?: 'Mutation', Newslet
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -91,7 +85,7 @@ export type TypeNewsletterSubscribeMutation = { __typename?: 'Mutation', Newslet
   }
 };
       export default result;
-    
+
 
 export const NewsletterSubscribeMutationDocument = gql`
     mutation NewsletterSubscribeMutation($email: String!) {

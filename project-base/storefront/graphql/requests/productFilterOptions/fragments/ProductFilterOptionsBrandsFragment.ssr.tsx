@@ -19,12 +19,6 @@ export type TypeProductFilterOptionsBrandsFragment = { __typename: 'BrandFilterO
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -37,9 +31,9 @@ export type TypeProductFilterOptionsBrandsFragment = { __typename: 'BrandFilterO
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -85,7 +79,7 @@ export type TypeProductFilterOptionsBrandsFragment = { __typename: 'BrandFilterO
   }
 };
       export default result;
-    
+
 export const ProductFilterOptionsBrandsFragment = gql`
     fragment ProductFilterOptionsBrandsFragment on BrandFilterOption {
   __typename

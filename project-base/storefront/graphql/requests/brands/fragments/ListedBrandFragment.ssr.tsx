@@ -20,12 +20,6 @@ export type TypeListedBrandFragment = { __typename: 'Brand', uuid: string, name:
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -38,9 +32,9 @@ export type TypeListedBrandFragment = { __typename: 'Brand', uuid: string, name:
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -86,7 +80,7 @@ export type TypeListedBrandFragment = { __typename: 'Brand', uuid: string, name:
   }
 };
       export default result;
-    
+
 export const ListedBrandFragment = gql`
     fragment ListedBrandFragment on Brand {
   __typename

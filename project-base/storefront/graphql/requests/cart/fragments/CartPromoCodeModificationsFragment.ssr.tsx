@@ -19,12 +19,6 @@ export type TypeCartPromoCodeModificationsFragment = { __typename: 'CartPromoCod
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -37,9 +31,9 @@ export type TypeCartPromoCodeModificationsFragment = { __typename: 'CartPromoCod
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -85,7 +79,7 @@ export type TypeCartPromoCodeModificationsFragment = { __typename: 'CartPromoCod
   }
 };
       export default result;
-    
+
 export const CartPromoCodeModificationsFragment = gql`
     fragment CartPromoCodeModificationsFragment on CartPromoCodeModificationsResult {
   __typename

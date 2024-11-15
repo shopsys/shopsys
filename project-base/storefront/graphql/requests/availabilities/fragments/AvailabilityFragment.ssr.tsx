@@ -19,12 +19,6 @@ export type TypeAvailabilityFragment = { __typename: 'Availability', name: strin
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -37,9 +31,9 @@ export type TypeAvailabilityFragment = { __typename: 'Availability', name: strin
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -85,7 +79,7 @@ export type TypeAvailabilityFragment = { __typename: 'Availability', name: strin
   }
 };
       export default result;
-    
+
 export const AvailabilityFragment = gql`
     fragment AvailabilityFragment on Availability {
   __typename

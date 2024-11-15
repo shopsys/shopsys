@@ -4,8 +4,8 @@ import gql from 'graphql-tag';
 import { AdvertsFragment } from '../fragments/AdvertsFragment.ssr';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeAdvertsQueryVariables = Types.Exact<{
-  categoryUuid?: Types.InputMaybe<Types.Scalars['Uuid']['input']>;
-  positionNames?: Types.InputMaybe<Array<Types.Scalars['String']['input']> | Types.Scalars['String']['input']>;
+  categoryUuid: Types.InputMaybe<Types.Scalars['Uuid']['input']>;
+  positionNames: Types.InputMaybe<Array<Types.Scalars['String']['input']> | Types.Scalars['String']['input']>;
 }>;
 
 
@@ -27,12 +27,6 @@ export type TypeAdvertsQuery = { __typename?: 'Query', adverts: Array<{ __typena
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -45,9 +39,9 @@ export type TypeAdvertsQuery = { __typename?: 'Query', adverts: Array<{ __typena
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -93,7 +87,7 @@ export type TypeAdvertsQuery = { __typename?: 'Query', adverts: Array<{ __typena
   }
 };
       export default result;
-    
+
 
 export const AdvertsQueryDocument = gql`
     query AdvertsQuery($categoryUuid: Uuid, $positionNames: [String!]) {
