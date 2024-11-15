@@ -3,12 +3,12 @@ import {
     BlogArticleDetailQueryDocument,
     TypeBlogArticleDetailQuery,
     TypeBlogArticleDetailQueryVariables,
-} from 'graphql/requests/articlesInterface/blogArticles/queries/BlogArticleDetailQuery.generated';
+} from 'graphql/requests/articlesInterface/blogArticles/queries/BlogArticleDetailQuery.ssr';
 import {
     CurrentCustomerUserQueryDocument,
     TypeCurrentCustomerUserQuery,
     TypeCurrentCustomerUserQueryVariables,
-} from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
+} from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.ssr';
 import getConfig from 'next/config';
 import { headers } from 'next/headers';
 // eslint-disable-next-line no-restricted-imports
