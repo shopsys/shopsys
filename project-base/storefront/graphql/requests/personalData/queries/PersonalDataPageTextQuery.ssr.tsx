@@ -5,7 +5,7 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypePersonalDataPageTextQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type TypePersonalDataPageTextQuery = { __typename?: 'Query', personalDataPage: { __typename?: 'PersonalDataPage', displaySiteContent: string | null, exportSiteContent: string | null } | null };
+export type TypePersonalDataPageTextQuery = { __typename?: 'Query', personalDataPage: { __typename?: 'PersonalDataPage', displaySiteContent: string, exportSiteContent: string } | null };
 
 
       export interface PossibleTypesResultData {
@@ -23,12 +23,6 @@ export type TypePersonalDataPageTextQuery = { __typename?: 'Query', personalData
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -41,9 +35,9 @@ export type TypePersonalDataPageTextQuery = { __typename?: 'Query', personalData
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -89,7 +83,7 @@ export type TypePersonalDataPageTextQuery = { __typename?: 'Query', personalData
   }
 };
       export default result;
-    
+
 
 export const PersonalDataPageTextQueryDocument = gql`
     query PersonalDataPageTextQuery {

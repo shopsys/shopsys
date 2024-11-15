@@ -19,12 +19,6 @@ export type TypeSimpleBrandFragment = { __typename: 'Brand', name: string, slug:
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -37,9 +31,9 @@ export type TypeSimpleBrandFragment = { __typename: 'Brand', name: string, slug:
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -85,7 +79,7 @@ export type TypeSimpleBrandFragment = { __typename: 'Brand', name: string, slug:
   }
 };
       export default result;
-    
+
 export const SimpleBrandFragment = gql`
     fragment SimpleBrandFragment on Brand {
   __typename

@@ -19,12 +19,6 @@ export type TypeCustomerUserRoleGroupFragment = { __typename: 'CustomerUserRoleG
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -37,9 +31,9 @@ export type TypeCustomerUserRoleGroupFragment = { __typename: 'CustomerUserRoleG
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -85,7 +79,7 @@ export type TypeCustomerUserRoleGroupFragment = { __typename: 'CustomerUserRoleG
   }
 };
       export default result;
-    
+
 export const CustomerUserRoleGroupFragment = gql`
     fragment CustomerUserRoleGroupFragment on CustomerUserRoleGroup {
   __typename

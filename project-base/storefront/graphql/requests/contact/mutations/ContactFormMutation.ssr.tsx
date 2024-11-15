@@ -25,12 +25,6 @@ export type TypeContactFormMutation = { __typename?: 'Mutation', ContactForm: bo
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -43,9 +37,9 @@ export type TypeContactFormMutation = { __typename?: 'Mutation', ContactForm: bo
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -91,7 +85,7 @@ export type TypeContactFormMutation = { __typename?: 'Mutation', ContactForm: bo
   }
 };
       export default result;
-    
+
 
 export const ContactFormMutationDocument = gql`
     mutation ContactFormMutation($input: ContactFormInput!) {

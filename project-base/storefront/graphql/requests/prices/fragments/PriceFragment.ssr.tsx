@@ -19,12 +19,6 @@ export type TypePriceFragment = { __typename: 'Price', priceWithVat: string, pri
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -37,9 +31,9 @@ export type TypePriceFragment = { __typename: 'Price', priceWithVat: string, pri
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -85,7 +79,7 @@ export type TypePriceFragment = { __typename: 'Price', priceWithVat: string, pri
   }
 };
       export default result;
-    
+
 export const PriceFragment = gql`
     fragment PriceFragment on Price {
   __typename

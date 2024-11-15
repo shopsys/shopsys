@@ -25,12 +25,6 @@ export type TypeIsCustomerUserRegisteredQuery = { __typename?: 'Query', isCustom
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -43,9 +37,9 @@ export type TypeIsCustomerUserRegisteredQuery = { __typename?: 'Query', isCustom
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -91,7 +85,7 @@ export type TypeIsCustomerUserRegisteredQuery = { __typename?: 'Query', isCustom
   }
 };
       export default result;
-    
+
 
 export const IsCustomerUserRegisteredQueryDocument = gql`
     query IsCustomerUserRegisteredQuery($email: String!) {

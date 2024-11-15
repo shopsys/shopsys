@@ -19,12 +19,6 @@ export type TypeParameterFragment = { __typename: 'Parameter', uuid: string, nam
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -37,9 +31,9 @@ export type TypeParameterFragment = { __typename: 'Parameter', uuid: string, nam
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -85,7 +79,7 @@ export type TypeParameterFragment = { __typename: 'Parameter', uuid: string, nam
   }
 };
       export default result;
-    
+
 export const ParameterFragment = gql`
     fragment ParameterFragment on Parameter {
   __typename

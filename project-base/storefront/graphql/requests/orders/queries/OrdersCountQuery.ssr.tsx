@@ -3,8 +3,8 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeOrdersCountQueryVariables = Types.Exact<{
-  after?: Types.InputMaybe<Types.Scalars['String']['input']>;
-  first?: Types.InputMaybe<Types.Scalars['Int']['input']>;
+  after: Types.InputMaybe<Types.Scalars['String']['input']>;
+  first: Types.InputMaybe<Types.Scalars['Int']['input']>;
 }>;
 
 
@@ -26,12 +26,6 @@ export type TypeOrdersCountQuery = { __typename?: 'Query', orders: { __typename?
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -44,9 +38,9 @@ export type TypeOrdersCountQuery = { __typename?: 'Query', orders: { __typename?
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -92,7 +86,7 @@ export type TypeOrdersCountQuery = { __typename?: 'Query', orders: { __typename?
   }
 };
       export default result;
-    
+
 
 export const OrdersCountQueryDocument = gql`
     query OrdersCountQuery($after: String, $first: Int) {

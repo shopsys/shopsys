@@ -6,7 +6,7 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeBlogCategoryArticlesVariables = Types.Exact<{
   uuid: Types.Scalars['Uuid']['input'];
   endCursor: Types.Scalars['String']['input'];
-  pageSize?: Types.InputMaybe<Types.Scalars['Int']['input']>;
+  pageSize: Types.InputMaybe<Types.Scalars['Int']['input']>;
 }>;
 
 
@@ -28,12 +28,6 @@ export type TypeBlogCategoryArticles = { __typename?: 'Query', blogCategory: { _
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -46,9 +40,9 @@ export type TypeBlogCategoryArticles = { __typename?: 'Query', blogCategory: { _
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -94,7 +88,7 @@ export type TypeBlogCategoryArticles = { __typename?: 'Query', blogCategory: { _
   }
 };
       export default result;
-    
+
 
 export const BlogCategoryArticlesDocument = gql`
     query BlogCategoryArticles($uuid: Uuid!, $endCursor: String!, $pageSize: Int) {

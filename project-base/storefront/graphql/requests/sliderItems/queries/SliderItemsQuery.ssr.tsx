@@ -6,7 +6,7 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeSliderItemsQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type TypeSliderItemsQuery = { __typename?: 'Query', sliderItems: Array<{ __typename: 'SliderItem', uuid: string, name: string, link: string, description: string | null, rgbBackgroundColor: string, opacity: number, webMainImage: { __typename: 'Image', name: string | null, url: string }, mobileMainImage: { __typename: 'Image', name: string | null, url: string } }> };
+export type TypeSliderItemsQuery = { __typename?: 'Query', sliderItems: Array<{ __typename: 'SliderItem', uuid: string, name: string, link: string, extendedText: string | null, extendedTextLink: string | null, webMainImage: { __typename: 'Image', name: string | null, url: string }, mobileMainImage: { __typename: 'Image', name: string | null, url: string } }> };
 
 
       export interface PossibleTypesResultData {
@@ -24,12 +24,6 @@ export type TypeSliderItemsQuery = { __typename?: 'Query', sliderItems: Array<{ 
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -42,9 +36,9 @@ export type TypeSliderItemsQuery = { __typename?: 'Query', sliderItems: Array<{ 
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -90,7 +84,7 @@ export type TypeSliderItemsQuery = { __typename?: 'Query', sliderItems: Array<{ 
   }
 };
       export default result;
-    
+
 
 export const SliderItemsQueryDocument = gql`
     query SliderItemsQuery @redisCache(ttl: 3600) {

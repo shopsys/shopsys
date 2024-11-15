@@ -26,12 +26,6 @@ export type TypeRegistrationMutation = { __typename?: 'Mutation', Register: { __
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -44,9 +38,9 @@ export type TypeRegistrationMutation = { __typename?: 'Mutation', Register: { __
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -92,7 +86,7 @@ export type TypeRegistrationMutation = { __typename?: 'Mutation', Register: { __
   }
 };
       export default result;
-    
+
 
 export const RegistrationMutationDocument = gql`
     mutation RegistrationMutation($input: RegistrationDataInput!) {

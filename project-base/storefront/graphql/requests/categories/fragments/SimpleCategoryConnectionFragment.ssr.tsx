@@ -20,12 +20,6 @@ export type TypeSimpleCategoryConnectionFragment = { __typename: 'CategoryConnec
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -38,9 +32,9 @@ export type TypeSimpleCategoryConnectionFragment = { __typename: 'CategoryConnec
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -86,7 +80,7 @@ export type TypeSimpleCategoryConnectionFragment = { __typename: 'CategoryConnec
   }
 };
       export default result;
-    
+
 export const SimpleCategoryConnectionFragment = gql`
     fragment SimpleCategoryConnectionFragment on CategoryConnection {
   __typename

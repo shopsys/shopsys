@@ -1,12 +1,13 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { ListedCategoryFragment } from '../fragments/ListedCategoryFragment.ssr';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type TypePromotedCategoriesQueryVariables = Types.Exact<{ [key: string]: never; }>;
+export type TypeOrderPaymentSuccessfulContentQueryVariables = Types.Exact<{
+  orderUuid: Types.Scalars['Uuid']['input'];
+}>;
 
 
-export type TypePromotedCategoriesQuery = { __typename?: 'Query', promotedCategories: Array<{ __typename: 'Category', uuid: string, name: string, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, products: { __typename: 'ProductConnection', totalCount: number } }> };
+export type TypeOrderPaymentSuccessfulContentQuery = { __typename?: 'Query', orderPaymentSuccessfulContent: string };
 
 
       export interface PossibleTypesResultData {
@@ -84,12 +85,10 @@ export type TypePromotedCategoriesQuery = { __typename?: 'Query', promotedCatego
   }
 };
       export default result;
+    
 
-
-export const PromotedCategoriesQueryDocument = gql`
-    query PromotedCategoriesQuery @redisCache(ttl: 3600) {
-  promotedCategories {
-    ...ListedCategoryFragment
-  }
+export const OrderPaymentSuccessfulContentQueryDocument = gql`
+    query OrderPaymentSuccessfulContentQuery($orderUuid: Uuid!) {
+  orderPaymentSuccessfulContent(orderUuid: $orderUuid)
 }
-    ${ListedCategoryFragment}`;
+    `;

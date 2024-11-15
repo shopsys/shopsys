@@ -19,12 +19,6 @@ export type TypeOpeningHoursFragment = { __typename?: 'OpeningHours', status: Ty
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -37,9 +31,9 @@ export type TypeOpeningHoursFragment = { __typename?: 'OpeningHours', status: Ty
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -85,7 +79,7 @@ export type TypeOpeningHoursFragment = { __typename?: 'OpeningHours', status: Ty
   }
 };
       export default result;
-    
+
 export const OpeningHoursFragment = gql`
     fragment OpeningHoursFragment on OpeningHours {
   status

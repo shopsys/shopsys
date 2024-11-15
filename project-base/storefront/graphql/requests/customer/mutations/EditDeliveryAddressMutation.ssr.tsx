@@ -26,12 +26,6 @@ export type TypeEditDeliveryAddressMutation = { __typename?: 'Mutation', EditDel
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -44,9 +38,9 @@ export type TypeEditDeliveryAddressMutation = { __typename?: 'Mutation', EditDel
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -92,7 +86,7 @@ export type TypeEditDeliveryAddressMutation = { __typename?: 'Mutation', EditDel
   }
 };
       export default result;
-    
+
 
 export const EditDeliveryAddressMutationDocument = gql`
     mutation EditDeliveryAddressMutation($input: DeliveryAddressInput!) {

@@ -1,7 +1,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type TypeVideoTokenFragment = { __typename: 'VideoToken', description: string | null, token: string };
+export type TypeVideoTokenFragment = { __typename: 'VideoToken', description: string, token: string };
 
 
       export interface PossibleTypesResultData {
@@ -19,12 +19,6 @@ export type TypeVideoTokenFragment = { __typename: 'VideoToken', description: st
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -37,9 +31,9 @@ export type TypeVideoTokenFragment = { __typename: 'VideoToken', description: st
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -85,7 +79,7 @@ export type TypeVideoTokenFragment = { __typename: 'VideoToken', description: st
   }
 };
       export default result;
-    
+
 export const VideoTokenFragment = gql`
     fragment VideoTokenFragment on VideoToken {
   __typename

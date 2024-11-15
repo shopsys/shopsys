@@ -26,12 +26,6 @@ export type TypeDeleteDeliveryAddressMutation = { __typename?: 'Mutation', Delet
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -44,9 +38,9 @@ export type TypeDeleteDeliveryAddressMutation = { __typename?: 'Mutation', Delet
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -92,7 +86,7 @@ export type TypeDeleteDeliveryAddressMutation = { __typename?: 'Mutation', Delet
   }
 };
       export default result;
-    
+
 
 export const DeleteDeliveryAddressMutationDocument = gql`
     mutation DeleteDeliveryAddressMutation($deliveryAddressUuid: Uuid!) {

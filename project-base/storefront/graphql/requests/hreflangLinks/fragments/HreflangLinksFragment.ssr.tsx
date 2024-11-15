@@ -19,12 +19,6 @@ export type TypeHreflangLinksFragment = { __typename?: 'HreflangLink', hreflang:
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -37,9 +31,9 @@ export type TypeHreflangLinksFragment = { __typename?: 'HreflangLink', hreflang:
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -85,7 +79,7 @@ export type TypeHreflangLinksFragment = { __typename?: 'HreflangLink', hreflang:
   }
 };
       export default result;
-    
+
 export const HreflangLinksFragment = gql`
     fragment HreflangLinksFragment on HreflangLink {
   hreflang

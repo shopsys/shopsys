@@ -1,7 +1,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type TypeSeoSettingFragment = { __typename: 'SeoSetting', title: string, titleAddOn: string | null, metaDescription: string };
+export type TypeSeoSettingFragment = { __typename: 'SeoSetting', title: string, titleAddOn: string, metaDescription: string };
 
 
       export interface PossibleTypesResultData {
@@ -19,12 +19,6 @@ export type TypeSeoSettingFragment = { __typename: 'SeoSetting', title: string, 
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -37,9 +31,9 @@ export type TypeSeoSettingFragment = { __typename: 'SeoSetting', title: string, 
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -85,7 +79,7 @@ export type TypeSeoSettingFragment = { __typename: 'SeoSetting', title: string, 
   }
 };
       export default result;
-    
+
 export const SeoSettingFragment = gql`
     fragment SeoSettingFragment on SeoSetting {
   __typename

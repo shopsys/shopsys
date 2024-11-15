@@ -1,7 +1,6 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { UpdatePaymentStatusFragment } from '../fragments/UpdatePaymentStatusFragment.ssr';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeUpdatePaymentStatusMutationVariables = Types.Exact<{
   orderUuid: Types.Scalars['Uuid']['input'];
@@ -9,7 +8,7 @@ export type TypeUpdatePaymentStatusMutationVariables = Types.Exact<{
 }>;
 
 
-export type TypeUpdatePaymentStatusMutation = { __typename?: 'Mutation', UpdatePaymentStatus: { __typename: 'Order', isPaid: boolean, number: string, hasPaymentInProcess: boolean, urlHash: string, payment: { __typename?: 'Payment', name: string, type: Types.TypePaymentTypeEnum } } };
+export type TypeUpdatePaymentStatusMutation = { __typename?: 'Mutation', UpdatePaymentStatus: { __typename?: 'Order', isPaid: boolean, paymentTransactionsCount: number, payment: { __typename?: 'Payment', type: string } } };
 
 
       export interface PossibleTypesResultData {
@@ -27,12 +26,6 @@ export type TypeUpdatePaymentStatusMutation = { __typename?: 'Mutation', UpdateP
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -45,9 +38,9 @@ export type TypeUpdatePaymentStatusMutation = { __typename?: 'Mutation', UpdateP
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -93,7 +86,7 @@ export type TypeUpdatePaymentStatusMutation = { __typename?: 'Mutation', UpdateP
   }
 };
       export default result;
-    
+
 
 export const UpdatePaymentStatusMutationDocument = gql`
     mutation UpdatePaymentStatusMutation($orderUuid: Uuid!, $orderPaymentStatusPageValidityHash: String = null) {
@@ -101,7 +94,11 @@ export const UpdatePaymentStatusMutationDocument = gql`
     orderUuid: $orderUuid
     orderPaymentStatusPageValidityHash: $orderPaymentStatusPageValidityHash
   ) {
-    ...UpdatePaymentStatusFragment
+    isPaid
+    paymentTransactionsCount
+    payment {
+      type
+    }
   }
 }
-    ${UpdatePaymentStatusFragment}`;
+    `;

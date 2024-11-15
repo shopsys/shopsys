@@ -25,12 +25,6 @@ export type TypePasswordRecoveryMutation = { __typename?: 'Mutation', RequestPas
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -43,9 +37,9 @@ export type TypePasswordRecoveryMutation = { __typename?: 'Mutation', RequestPas
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -91,7 +85,7 @@ export type TypePasswordRecoveryMutation = { __typename?: 'Mutation', RequestPas
   }
 };
       export default result;
-    
+
 
 export const PasswordRecoveryMutationDocument = gql`
     mutation PasswordRecoveryMutation($email: String!) {

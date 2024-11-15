@@ -19,12 +19,6 @@ export type TypeSimpleTransportFragment = { __typename: 'Transport', uuid: strin
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -37,9 +31,9 @@ export type TypeSimpleTransportFragment = { __typename: 'Transport', uuid: strin
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -85,7 +79,7 @@ export type TypeSimpleTransportFragment = { __typename: 'Transport', uuid: strin
   }
 };
       export default result;
-    
+
 export const SimpleTransportFragment = gql`
     fragment SimpleTransportFragment on Transport {
   __typename

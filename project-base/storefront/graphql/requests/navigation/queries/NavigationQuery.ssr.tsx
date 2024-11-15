@@ -6,7 +6,7 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeNavigationQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type TypeNavigationQuery = { __typename?: 'Query', navigation: Array<{ __typename: 'NavigationItem', name: string, link: string, routeName: Types.TypeFriendlyUrlRouteEnum | null, categoriesByColumns: Array<{ __typename: 'NavigationItemCategoriesByColumns', columnNumber: number, categories: Array<{ __typename: 'Category', uuid: string, name: string, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, children: Array<{ __typename: 'Category', name: string, slug: string }> }> }> }> };
+export type TypeNavigationQuery = { __typename?: 'Query', navigation: Array<{ __typename: 'NavigationItem', name: string, link: string, categoriesByColumns: Array<{ __typename: 'NavigationItemCategoriesByColumns', columnNumber: number, categories: Array<{ __typename: 'Category', uuid: string, name: string, slug: string, mainImage: { __typename: 'Image', name: string | null, url: string } | null, children: Array<{ __typename: 'Category', name: string, slug: string }> }> }> }> };
 
 
       export interface PossibleTypesResultData {
@@ -24,12 +24,6 @@ export type TypeNavigationQuery = { __typename?: 'Query', navigation: Array<{ __
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -42,9 +36,9 @@ export type TypeNavigationQuery = { __typename?: 'Query', navigation: Array<{ __
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -90,7 +84,7 @@ export type TypeNavigationQuery = { __typename?: 'Query', navigation: Array<{ __
   }
 };
       export default result;
-    
+
 
 export const NavigationQueryDocument = gql`
     query NavigationQuery @redisCache(ttl: 3600) {

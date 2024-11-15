@@ -20,12 +20,6 @@ export type TypeBlogCategoriesFragment = { __typename: 'BlogCategory', uuid: str
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -38,9 +32,9 @@ export type TypeBlogCategoriesFragment = { __typename: 'BlogCategory', uuid: str
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -86,7 +80,7 @@ export type TypeBlogCategoriesFragment = { __typename: 'BlogCategory', uuid: str
   }
 };
       export default result;
-    
+
 export const BlogCategoriesFragment = gql`
     fragment BlogCategoriesFragment on BlogCategory {
   ...SimpleBlogCategoryFragment

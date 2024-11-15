@@ -25,12 +25,6 @@ export type TypeAdvertsFragment = TypeAdvertsFragment_AdvertCode_ | TypeAdvertsF
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -43,9 +37,9 @@ export type TypeAdvertsFragment = TypeAdvertsFragment_AdvertCode_ | TypeAdvertsF
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -91,7 +85,7 @@ export type TypeAdvertsFragment = TypeAdvertsFragment_AdvertCode_ | TypeAdvertsF
   }
 };
       export default result;
-    
+
 export const AdvertsFragment = gql`
     fragment AdvertsFragment on Advert {
   __typename

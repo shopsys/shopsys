@@ -19,12 +19,6 @@ export type TypeCountryFragment = { __typename: 'Country', name: string, code: s
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -37,9 +31,9 @@ export type TypeCountryFragment = { __typename: 'Country', name: string, code: s
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -85,7 +79,7 @@ export type TypeCountryFragment = { __typename: 'Country', name: string, code: s
   }
 };
       export default result;
-    
+
 export const CountryFragment = gql`
     fragment CountryFragment on Country {
   __typename

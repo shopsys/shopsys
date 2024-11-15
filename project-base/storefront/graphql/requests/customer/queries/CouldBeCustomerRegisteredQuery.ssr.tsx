@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeCouldBeCustomerRegisteredQueryVariables = Types.Exact<{
   email: Types.Scalars['String']['input'];
-  companyNumber?: Types.InputMaybe<Types.Scalars['String']['input']>;
+  companyNumber: Types.InputMaybe<Types.Scalars['String']['input']>;
 }>;
 
 
@@ -26,12 +26,6 @@ export type TypeCouldBeCustomerRegisteredQuery = { __typename?: 'Query', couldBe
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -44,9 +38,9 @@ export type TypeCouldBeCustomerRegisteredQuery = { __typename?: 'Query', couldBe
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -92,7 +86,7 @@ export type TypeCouldBeCustomerRegisteredQuery = { __typename?: 'Query', couldBe
   }
 };
       export default result;
-    
+
 
 export const CouldBeCustomerRegisteredQueryDocument = gql`
     query CouldBeCustomerRegisteredQuery($email: String!, $companyNumber: String) {

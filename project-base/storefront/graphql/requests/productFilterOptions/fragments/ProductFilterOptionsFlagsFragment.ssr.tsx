@@ -20,12 +20,6 @@ export type TypeProductFilterOptionsFlagsFragment = { __typename: 'FlagFilterOpt
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -38,9 +32,9 @@ export type TypeProductFilterOptionsFlagsFragment = { __typename: 'FlagFilterOpt
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -86,7 +80,7 @@ export type TypeProductFilterOptionsFlagsFragment = { __typename: 'FlagFilterOpt
   }
 };
       export default result;
-    
+
 export const ProductFilterOptionsFlagsFragment = gql`
     fragment ProductFilterOptionsFlagsFragment on FlagFilterOption {
   __typename

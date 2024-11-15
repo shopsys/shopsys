@@ -6,7 +6,7 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeLoginMutationVariables = Types.Exact<{
   email: Types.Scalars['String']['input'];
   password: Types.Scalars['Password']['input'];
-  previousCartUuid?: Types.InputMaybe<Types.Scalars['Uuid']['input']>;
+  previousCartUuid: Types.InputMaybe<Types.Scalars['Uuid']['input']>;
   productListsUuids: Array<Types.Scalars['Uuid']['input']> | Types.Scalars['Uuid']['input'];
   shouldOverwriteCustomerUserCart?: Types.InputMaybe<Types.Scalars['Boolean']['input']>;
 }>;
@@ -30,12 +30,6 @@ export type TypeLoginMutation = { __typename?: 'Mutation', Login: { __typename?:
       "ArticleSite",
       "BlogArticle"
     ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -48,9 +42,9 @@ export type TypeLoginMutation = { __typename?: 'Mutation', Login: { __typename?:
       "Store",
       "Variant"
     ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -96,7 +90,7 @@ export type TypeLoginMutation = { __typename?: 'Mutation', Login: { __typename?:
   }
 };
       export default result;
-    
+
 
 export const LoginMutationDocument = gql`
     mutation LoginMutation($email: String!, $password: Password!, $previousCartUuid: Uuid, $productListsUuids: [Uuid!]!, $shouldOverwriteCustomerUserCart: Boolean = false) {
