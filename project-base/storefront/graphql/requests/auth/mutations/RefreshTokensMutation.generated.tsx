@@ -87,7 +87,7 @@ export type TypeRefreshTokens = { __typename?: 'Mutation', RefreshTokens: { __ty
   }
 };
       export default result;
-
+    
 
 export const RefreshTokensDocument = gql`
     mutation RefreshTokens($refreshToken: String!) {
@@ -97,6 +97,6 @@ export const RefreshTokensDocument = gql`
 }
     ${TokenFragments}`;
 
-/* export function useRefreshTokens() {
+export function useRefreshTokens() {
   return Urql.useMutation<TypeRefreshTokens, TypeRefreshTokensVariables>(RefreshTokensDocument);
-}; */
+};
