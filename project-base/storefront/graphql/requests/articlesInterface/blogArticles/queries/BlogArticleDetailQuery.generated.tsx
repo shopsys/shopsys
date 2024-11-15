@@ -97,6 +97,6 @@ export const BlogArticleDetailQueryDocument = gql`
 }
     ${BlogArticleDetailFragment}`;
 
-// export function useBlogArticleDetailQuery(options?: Omit<Urql.UseQueryArgs<TypeBlogArticleDetailQueryVariables>, 'query'>) {
-//   return Urql.useQuery<TypeBlogArticleDetailQuery, TypeBlogArticleDetailQueryVariables>({ query: BlogArticleDetailQueryDocument, ...options });
-// };
+export function useBlogArticleDetailQuery(options?: Omit<Urql.UseQueryArgs<TypeBlogArticleDetailQueryVariables>, 'query'>) {
+  return Urql.useQuery<TypeBlogArticleDetailQuery, TypeBlogArticleDetailQueryVariables>({ query: BlogArticleDetailQueryDocument, ...options });
+};
