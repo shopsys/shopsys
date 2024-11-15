@@ -8,4 +8,5 @@ enum ActionType: string
 {
     case ENTITY = 'entity';
     case GLOBAL = 'global';
+    case DATAGRID = 'datagrid';
 }

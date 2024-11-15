@@ -61,6 +61,7 @@ final class CrudControllerRouteLoader implements LoaderInterface
      */
     public function getResolver()
     {
+        /* @phpstan-ignore-next-line */
         return null;
     }
 

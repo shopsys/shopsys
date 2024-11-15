@@ -11,11 +11,11 @@ final class CrudConfig
     private CrudConfigData $crudConfigData;
 
     /**
-     * @param string $entityName
+     * @param string $entityClass
      */
-    public function __construct(string $entityName)
+    public function __construct(string $entityClass)
     {
-        $this->crudConfigData = new CrudConfigData($entityName);
+        $this->crudConfigData = new CrudConfigData($entityClass);
     }
 
     /**
@@ -53,7 +53,7 @@ final class CrudConfig
      */
     public function setActions(array $actions): self
     {
-        Assert::allIsInstanceOfAny($actions, PageType::cases(), 'The given action is not a valid page type');
+        Assert::allIsInstanceOf($actions, PageType::class, 'The given action is not a valid page type');
         $this->crudConfigData->defaultActions = $actions;
 
         return $this;
