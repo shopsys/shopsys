@@ -1,0 +1,96 @@
+import * as Types from '../../../../types';
+
+import gql from 'graphql-tag';
+import { SimpleArticleSiteFragment } from './SimpleArticleSiteFragment.ssr';
+import { SimpleArticleLinkFragment } from './SimpleArticleLinkFragment.ssr';
+export type TypeSimpleNotBlogArticleFragment_ArticleLink_ = { __typename: 'ArticleLink', uuid: string, name: string, url: string, placement: string, external: boolean };
+
+export type TypeSimpleNotBlogArticleFragment_ArticleSite_ = { __typename: 'ArticleSite', uuid: string, name: string, slug: string, placement: string, external: boolean };
+
+export type TypeSimpleNotBlogArticleFragment = TypeSimpleNotBlogArticleFragment_ArticleLink_ | TypeSimpleNotBlogArticleFragment_ArticleSite_;
+
+
+      export interface PossibleTypesResultData {
+        possibleTypes: {
+          [key: string]: string[]
+        }
+      }
+      const result: PossibleTypesResultData = {
+  "possibleTypes": {
+    "Advert": [
+      "AdvertCode",
+      "AdvertImage"
+    ],
+    "ArticleInterface": [
+      "ArticleSite",
+      "BlogArticle"
+    ],
+    "Breadcrumb": [
+      "ArticleSite",
+      "BlogArticle",
+      "BlogCategory",
+      "Brand",
+      "Category",
+      "Flag",
+      "MainVariant",
+      "RegularProduct",
+      "Store",
+      "Variant"
+    ],
+    "CustomerUser": [
+      "CompanyCustomerUser",
+      "RegularCustomerUser"
+    ],
+    "Hreflang": [
+      "BlogArticle",
+      "BlogCategory",
+      "Brand",
+      "Flag",
+      "MainVariant",
+      "RegularProduct",
+      "SeoPage",
+      "Variant"
+    ],
+    "NotBlogArticleInterface": [
+      "ArticleLink",
+      "ArticleSite"
+    ],
+    "ParameterFilterOptionInterface": [
+      "ParameterCheckboxFilterOption",
+      "ParameterColorFilterOption",
+      "ParameterSliderFilterOption"
+    ],
+    "Product": [
+      "MainVariant",
+      "RegularProduct",
+      "Variant"
+    ],
+    "ProductListable": [
+      "Brand",
+      "Category",
+      "Flag"
+    ],
+    "Slug": [
+      "ArticleSite",
+      "BlogArticle",
+      "BlogCategory",
+      "Brand",
+      "Category",
+      "Flag",
+      "MainVariant",
+      "RegularProduct",
+      "Store",
+      "Variant"
+    ]
+  }
+};
+      export default result;
+    
+export const SimpleNotBlogArticleFragment = gql`
+    fragment SimpleNotBlogArticleFragment on NotBlogArticleInterface {
+  __typename
+  ...SimpleArticleSiteFragment
+  ...SimpleArticleLinkFragment
+}
+    ${SimpleArticleSiteFragment}
+${SimpleArticleLinkFragment}`;

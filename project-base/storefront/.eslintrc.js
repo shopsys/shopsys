@@ -11,6 +11,7 @@ module.exports = {
         '!.prettierrc.js',
         'graphql/types.ts',
         '*.generated.*',
+        '*.ssr.*',
         'config/*',
         '.eslintrc.js',
         'schema.graphql.json',
