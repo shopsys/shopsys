@@ -1954,6 +1954,9 @@ msgstr "Pouze pro registrované zákazníky"
 msgid "For removing pricing group \"%name%\" you have to choose other one to be set everywhere where the existing one is used. Which pricing group you want to set instead?"
 msgstr "Pro odstranění cenové skupiny \"%name%\" musíte zvolit, která se má všude, kde je aktuálně používaná, nastavit. Jakou cenovou skupinu místo ní chcete nastavit?"
 
+msgid "Forgotten administrator password sending"
+msgstr "Zaslání zapomenutého hesla administrátora"
+
 msgid "Forgotten password sending"
 msgstr "Zaslání zapomenutého hesla"
 
@@ -2971,8 +2974,8 @@ msgstr "Heslo"
 msgid "Password again"
 msgstr "Heslo znovu"
 
-msgid "Password must be at least six characters and can't be the same as login name."
-msgstr "Heslo musí obsahovat alespoň šest znaků a nemůže být stejné jako přihlašovací jméno."
+msgid "Password has to include uppercase letters, lowercase letters, numbers and must be longer than 10 characters."
+msgstr "Heslo musí obsahovat velká písmena, malá písmena, číslice a musí být delší než 10 znaků."
 
 msgid "Payment"
 msgstr "Platba"
@@ -3319,8 +3322,14 @@ msgstr "Nahradit soubor"
 msgid "Request a one-time passcode by email"
 msgstr "Požádejte o jednorázový přístupový kód e-mailem"
 
+msgid "Reset administrator password"
+msgstr "Resetovat heslo administrátora"
+
 msgid "Reset filter"
 msgstr "Zrušit filtr"
+
+msgid "Reset password"
+msgstr "Resetovat heslo"
 
 msgid "Reset password request was sent to <strong>{{ email }}</strong>"
 msgstr "Žádost o resetování hesla byla odeslána na adresu <strong>{{ email }}</strong>"
@@ -3648,6 +3657,9 @@ msgstr "Odeslat refundaci a uložit objednávku"
 
 msgid "Send reset password"
 msgstr "Odeslat email pro reset hesla"
+
+msgid "Send reset password email"
+msgstr "Zaslat e-mail pro reset hesla"
 
 msgid "Sending emails off, no email will be sent from the app."
 msgstr "Odesílání e-mailů je vypnuto, z aplikace nebude odeslán žádný e-mail."

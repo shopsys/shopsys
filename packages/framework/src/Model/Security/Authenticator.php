@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Security;
 
 use Exception;
+use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Security\Exception\LoginFailedException;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -63,6 +64,26 @@ class Authenticator
             $customerUser,
             'frontend',
             $customerUser->getRoles(),
+        );
+        $this->tokenStorage->setToken($token);
+
+        // dispatch the login event
+        $event = new InteractiveLoginEvent($request, $token);
+        $this->eventDispatcher->dispatch($event, SecurityEvents::INTERACTIVE_LOGIN);
+
+        $request->getSession()->migrate();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     */
+    public function loginAdministrator(Administrator $administrator, Request $request)
+    {
+        $token = new UsernamePasswordToken(
+            $administrator,
+            'administration',
+            $administrator->getRoles(),
         );
         $this->tokenStorage->setToken($token);
 

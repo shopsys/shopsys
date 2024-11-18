@@ -28,12 +28,6 @@ msgstr ""
 msgid "New password must be at least {{ limit }} characters long"
 msgstr ""
 
-msgid "Password has to include uppercase letters, lowercase letters, numbers and must be longer than 10 characters."
-msgstr ""
-
-msgid "Passwords do not match"
-msgstr ""
-
 msgid "Please choose image"
 msgstr ""
 
@@ -56,9 +50,6 @@ msgid "Please enter new password"
 msgstr ""
 
 msgid "Please enter notification bar content"
-msgstr ""
-
-msgid "Please enter password"
 msgstr ""
 
 msgid "Please enter valid email"

@@ -13,6 +13,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Administrator\Mail\ResetPasswordMail;
 use Shopsys\FrameworkBundle\Model\Administrator\Mail\TwoFactorAuthenticationMail;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactoryInterface;
 
@@ -51,6 +52,8 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
             $this->createCustomerActivationMailTemplate($locale, $manager, $domainId);
 
             $this->createAdminTwoFactorAuthenticationMailTemplate($locale, $manager, $domainId);
+
+            $this->createAdministratorResetPasswordMailTemplate($locale, $manager, $domainId);
         }
     }
 
@@ -207,6 +210,26 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
             . 'You can set a new password following this link: <a href="{new_password_url}">{new_password_url}</a>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
 
         $this->createMailTemplate($manager, MailTemplate::RESET_PASSWORD_NAME, $mailTemplateData, $domainId);
+    }
+
+    /**
+     * @param string $locale
+     * @param \Doctrine\Persistence\ObjectManager $manager
+     * @param int $domainId
+     */
+    private function createAdministratorResetPasswordMailTemplate(
+        string $locale,
+        ObjectManager $manager,
+        int $domainId,
+    ): void {
+        $mailTemplateData = $this->mailTemplateDataFactory->create();
+        $mailTemplateData->sendMail = true;
+
+        $mailTemplateData->subject = t('Administrator reset password request', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->body = t('Dear administrator.<br /><br />'
+            . 'You can set a new password following this link: <a href="{new_password_url}">{new_password_url}</a>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+
+        $this->createMailTemplate($manager, ResetPasswordMail::MAIL_TEMPLATE_NAME, $mailTemplateData, $domainId);
     }
 
     /**

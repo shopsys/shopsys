@@ -37,6 +37,8 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
         self::TWO_FACTOR_AUTHENTICATION_TYPE_GOOGLE_AUTH,
     ];
 
+    public const int RESET_PASSWORD_HASH_VALID_HOURS = 24;
+
     /**
      * @var int
      * @ORM\Column(type="integer")
@@ -58,8 +60,8 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     protected $realName;
 
     /**
-     * @var string
-     * @ORM\Column(type="string", length=100)
+     * @var string|null
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     protected $password;
 
@@ -173,6 +175,18 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
      * @ORM\Column(type="string", length=10)
      */
     protected $selectedLocale;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", length=50, nullable=true)
+     */
+    protected $resetPasswordHash;
+
+    /**
+     * @var \DateTime|null
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $resetPasswordHashValidThrough;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorData $administratorData
@@ -327,6 +341,8 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     public function setPasswordHash(string $passwordHash)
     {
         $this->password = $passwordHash;
+        $this->resetPasswordHash = null;
+        $this->resetPasswordHashValidThrough = null;
     }
 
     /**
@@ -664,5 +680,37 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     public function getSelectedLocale()
     {
         return $this->selectedLocale;
+    }
+
+    /**
+     * @param string $resetPasswordHash
+     */
+    public function setResetPasswordHash($resetPasswordHash): void
+    {
+        $this->resetPasswordHash = $resetPasswordHash;
+        $this->resetPasswordHashValidThrough = new DateTime('+' . self::RESET_PASSWORD_HASH_VALID_HOURS . ' hours');
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getResetPasswordHash()
+    {
+        return $this->resetPasswordHash;
+    }
+
+    /**
+     * @param string|null $hash
+     * @return bool
+     */
+    public function isResetPasswordHashValid(?string $hash): bool
+    {
+        if ($hash === null || $this->resetPasswordHash !== $hash) {
+            return false;
+        }
+
+        $now = new DateTime();
+
+        return $this->resetPasswordHashValidThrough !== null && $this->resetPasswordHashValidThrough >= $now;
     }
 }

@@ -379,15 +379,6 @@ msgstr ""
 msgid "Parameter"
 msgstr ""
 
-msgid "Password"
-msgstr ""
-
-msgid "Password again"
-msgstr ""
-
-msgid "Password has to include uppercase letters, lowercase letters, numbers and must be longer than 10 characters."
-msgstr ""
-
 msgid "Path to file"
 msgstr ""
 

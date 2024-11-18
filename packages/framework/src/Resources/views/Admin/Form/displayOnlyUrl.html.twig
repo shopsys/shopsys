@@ -8,7 +8,7 @@
                 {% set url = url(route, route_params) %}
             {% endif %}
 
-            <a href="{{ url }}" target="_blank">
+            <a href="{{ url }}" target="{{ link_target }}">
                 {% apply spaceless %}
                     <i class="svg svg-forward-page in-icon in-icon--link ml5 mr5"></i>
                     {% if route_label is not empty %}

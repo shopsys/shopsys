@@ -379,15 +379,6 @@ msgstr "Rozložení vně"
 msgid "Parameter"
 msgstr "Parametr"
 
-msgid "Password"
-msgstr "Heslo"
-
-msgid "Password again"
-msgstr "Heslo znovu"
-
-msgid "Password has to include uppercase letters, lowercase letters, numbers and must be longer than 10 characters."
-msgstr "Heslo musí obsahovat velké, malé písmena, číslice a musí být delší než 10 znaků."
-
 msgid "Path to file"
 msgstr "Cesta k souboru"
 

@@ -4,21 +4,19 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Administrator;
 
+use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
-use Shopsys\FrameworkBundle\Form\Constraints\FieldsAreNotIdentical;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
+use Shopsys\FrameworkBundle\Form\DisplayOnlyUrlType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorData;
 use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup;
 use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -35,11 +33,13 @@ class AdministratorFormType extends AbstractType
      * @param \Symfony\Component\Security\Core\Security $security
      * @param \Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupFacade $administratorRoleGroupFacade
      * @param \Shopsys\FrameworkBundle\Model\Security\Roles $roles
+     * @param \Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector $routeCsrfProtector
      */
     public function __construct(
         private readonly Security $security,
         private readonly AdministratorRoleGroupFacade $administratorRoleGroupFacade,
         private readonly Roles $roles,
+        protected readonly RouteCsrfProtector $routeCsrfProtector,
     ) {
     }
 
@@ -90,29 +90,23 @@ class AdministratorFormType extends AbstractType
                     ),
                 ],
                 'label' => t('Email'),
-            ])
-            ->add('password', RepeatedType::class, [
-                'type' => PasswordType::class,
-                'required' => $options['scenario'] === self::SCENARIO_CREATE,
-                'options' => [
-                    'attr' => ['autocomplete' => 'new-password'],
-                ],
-                'first_options' => [
-                    'label' => t('Password'),
-                    'constraints' => $this->getFirstPasswordConstraints($options['scenario']),
-                    'attr' => [
-                        'icon' => true,
-                        'iconTitle' => t(
-                            'Password must be at least six characters and can\'t be the same as login name.',
+            ]);
+
+        if ($options['scenario'] === self::SCENARIO_EDIT) {
+            $builderSettingsGroup->
+                add('resetPassword', DisplayOnlyUrlType::class, [
+                    'route' => 'admin_administrator_send-reset-password',
+                    'route_params' => [
+                        'id' => $options['administrator']->getId(),
+                        RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER => $this->routeCsrfProtector->getCsrfTokenByRoute(
+                            'admin_administrator_send-reset-password',
                         ),
                     ],
-                ],
-                'second_options' => [
-                    'label' => t('Password again'),
-                ],
-                'invalid_message' => 'Passwords do not match',
-                'label' => t('Password'),
-            ]);
+                    'label' => t('Password'),
+                    'route_label' => t('Send reset password email'),
+                    'link_target' => '_self',
+                ]);
+        }
 
         if ($this->security->isGranted(Roles::ROLE_ADMINISTRATOR_FULL)) {
             $builderSettingsGroup->add('roleGroup', ChoiceType::class, [
@@ -169,27 +163,6 @@ class AdministratorFormType extends AbstractType
     }
 
     /**
-     * @param string $scenario
-     * @return \Symfony\Component\Validator\Constraint[]
-     */
-    private function getFirstPasswordConstraints(string $scenario): array
-    {
-        $constraints = [
-            new Constraints\Length(
-                ['min' => CustomerUserPasswordFacade::MINIMUM_PASSWORD_LENGTH, 'minMessage' => 'Password must be at least {{ limit }} characters long'],
-            ),
-        ];
-
-        if ($scenario === self::SCENARIO_CREATE) {
-            $constraints[] = new Constraints\NotBlank([
-                'message' => 'Please enter password',
-            ]);
-        }
-
-        return $constraints;
-    }
-
-    /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
     public function configureOptions(OptionsResolver $resolver): void
@@ -201,14 +174,6 @@ class AdministratorFormType extends AbstractType
             ->setDefaults([
                 'data_class' => AdministratorData::class,
                 'attr' => ['novalidate' => 'novalidate'],
-                'constraints' => [
-                    new FieldsAreNotIdentical([
-                        'field1' => 'username',
-                        'field2' => 'password',
-                        'errorPath' => 'password',
-                        'message' => 'Password cannot be same as username',
-                    ]),
-                ],
             ]);
     }
 }

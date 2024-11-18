@@ -48,7 +48,6 @@ class AdministratorFacade
             throw new DuplicateUserNameException($administratorByUserName->getUsername());
         }
         $administrator = $this->administratorFactory->create($administratorData);
-        $this->setPassword($administrator, $administratorData->password);
 
         $this->em->persist($administrator);
         $this->em->flush();
@@ -68,10 +67,6 @@ class AdministratorFacade
         $administrator = $this->administratorRepository->getById($administratorId);
         $this->checkUsername($administrator, $administratorData->username);
         $administrator->edit($administratorData);
-
-        if ($administratorData->password !== null) {
-            $this->setPassword($administrator, $administratorData->password);
-        }
 
         $this->em->flush();
 
@@ -94,17 +89,6 @@ class AdministratorFacade
         ) {
             throw new DuplicateUserNameException($administrator->getUsername());
         }
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     * @param string $password
-     */
-    protected function setPassword(Administrator $administrator, string $password): void
-    {
-        $passwordHasher = $this->passwordHasherFactory->getPasswordHasher($administrator);
-        $passwordHash = $passwordHasher->hash($password);
-        $administrator->setPasswordHash($passwordHash);
     }
 
     /**
@@ -136,17 +120,6 @@ class AdministratorFacade
         if ($administrator->isSuperadmin()) {
             throw new DeletingSuperadminException();
         }
-    }
-
-    /**
-     * @param string $administratorUsername
-     * @param string $newPassword
-     */
-    public function changePassword(string $administratorUsername, string $newPassword): void
-    {
-        $administrator = $this->administratorRepository->getByUserName($administratorUsername);
-        $this->setPassword($administrator, $newPassword);
-        $this->em->flush();
     }
 
     /**

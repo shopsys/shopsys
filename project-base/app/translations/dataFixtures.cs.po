@@ -442,6 +442,9 @@ msgstr "Aktivní/Pasivní"
 msgid "Adaptive Sync Technology"
 msgstr "Technologie adaptivní synchronizace"
 
+msgid "Administrator reset password request"
+msgstr "Požadavek na resetování hesla administrátora"
+
 msgid "All kind of electronic devices."
 msgstr "Všechny druhy elektroniky."
 
@@ -702,6 +705,9 @@ msgstr "Kompaktní DVB-T přijímač (Set Top Box) Sencor SDB 4002M4 pro pozemn�
 
 msgid "DeLonghi ECAM 44.660 B Eletta Plus"
 msgstr "DeLonghi ECAM 44.660 B Eletta Plus"
+
+msgid "Dear administrator.<br /><br />You can set a new password following this link: <a href=\"{new_password_url}\">{new_password_url}</a>"
+msgstr "Vážený administrátore,<br /><br />Můžete nastavit nové heslo následujícím odkazem: <a href=\"{new_password_url}\">{new_password_url}</a>"
 
 msgid "Dear customer, <br /><br /> based on your email {email}, we are sending you a link to your personal details. By clicking on the link below, you will be taken to a page listing all the<br/> personal details which we have in evidence in our online store {domain}. <br/><br/> To overview your personal information please click here - {url} <br/> The link is valid for next 24 hours.<br/> Best Regards <br/><br/> team of {domain}"
 msgstr "Vážený zákazníku,<br /><br /> na základě vašeho zadaného e-mailu {email}, Vám zasíláme odkaz na zobrazení osobních údajů. Klikem na odkaz níže se dostanete na stránku s <br/> přehledem všech osobních údajů, které k Vašemu e-mailu evidujeme na našem e-shopu {domain}.<br/><br/> Pro zobrazení osobních údajů klikněte zde - {url}<br/> Odkaz je platný 24 hodin.<br/><br/> S pozdravem<br/> tým {domain}"

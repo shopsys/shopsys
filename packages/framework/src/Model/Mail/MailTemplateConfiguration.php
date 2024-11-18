@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Mail;
 
+use Shopsys\FrameworkBundle\Model\Administrator\Mail\ResetPasswordMail as AdministratorResetPasswordMail;
 use Shopsys\FrameworkBundle\Model\Administrator\Mail\TwoFactorAuthenticationMail;
 use Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMail;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade;
@@ -269,6 +270,23 @@ class MailTemplateConfiguration
             );
     }
 
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Mail\MailTemplateVariables
+     */
+    protected function createAdministratorResetPasswordMailTemplateVariables(): MailTemplateVariables
+    {
+        $mailTemplateVariables = new MailTemplateVariables(t('Forgotten administrator password sending'));
+
+        return $mailTemplateVariables
+            ->addVariable(AdministratorResetPasswordMail::VARIABLE_EMAIL, t('Email'))
+            ->addVariable(
+                AdministratorResetPasswordMail::VARIABLE_NEW_PASSWORD_URL,
+                t('New password settings URL address'),
+                MailTemplateVariables::CONTEXT_BOTH,
+                MailTemplateVariables::REQUIRED_BODY,
+            );
+    }
+
     protected function registerStaticMailTemplates(): void
     {
         // registration mail template
@@ -286,6 +304,10 @@ class MailTemplateConfiguration
         // personal data access mail template
         $mailTemplateVariables = $this->createPersonalDataAccessMailTemplateVariables();
         $this->addMailTemplateVariables(MailTemplate::PERSONAL_DATA_ACCESS_NAME, $mailTemplateVariables);
+
+        // reset administrator password mail template
+        $mailTemplateVariables = $this->createAdministratorResetPasswordMailTemplateVariables();
+        $this->addMailTemplateVariables(AdministratorResetPasswordMail::MAIL_TEMPLATE_NAME, $mailTemplateVariables);
     }
 
     /**

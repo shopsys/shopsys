@@ -28,12 +28,6 @@ msgstr "Minimální a maximalní hodnota nejsou podporovány jako vstup pro para
 msgid "New password must be at least {{ limit }} characters long"
 msgstr "Nové heslo musí být alespoň {{ limit }} znaků dlouhé"
 
-msgid "Password has to include uppercase letters, lowercase letters, numbers and must be longer than 10 characters."
-msgstr "Heslo musí obsahovat velká písmena, malá písmena, číslice a musí být delší než 10 znaků."
-
-msgid "Passwords do not match"
-msgstr "Hesla se neshodují"
-
 msgid "Please choose image"
 msgstr "Vyberte prosím obrázek"
 
@@ -57,9 +51,6 @@ msgstr "Vyplňte prosím nové heslo"
 
 msgid "Please enter notification bar content"
 msgstr "Vyplňte prosím obsah notifikační lišty"
-
-msgid "Please enter password"
-msgstr "Vyplňte prosím heslo"
 
 msgid "Please enter valid email"
 msgstr "Vyplňte prosím platný e-mail"

@@ -442,6 +442,9 @@ msgstr ""
 msgid "Adaptive Sync Technology"
 msgstr ""
 
+msgid "Administrator reset password request"
+msgstr ""
+
 msgid "All kind of electronic devices."
 msgstr ""
 
@@ -701,6 +704,9 @@ msgid "DVB-T Receiver HD - MPEG4, MPEG2, USB recording, timeshift, EPG, HDMI 1.3
 msgstr ""
 
 msgid "DeLonghi ECAM 44.660 B Eletta Plus"
+msgstr ""
+
+msgid "Dear administrator.<br /><br />You can set a new password following this link: <a href=\"{new_password_url}\">{new_password_url}</a>"
 msgstr ""
 
 msgid "Dear customer, <br /><br /> based on your email {email}, we are sending you a link to your personal details. By clicking on the link below, you will be taken to a page listing all the<br/> personal details which we have in evidence in our online store {domain}. <br/><br/> To overview your personal information please click here - {url} <br/> The link is valid for next 24 hours.<br/> Best Regards <br/><br/> team of {domain}"

@@ -361,6 +361,7 @@ security:
         - { path: ^/%admin_url%/administrator/new, roles: ROLE_ADMINISTRATOR_FULL }
         - { path: ^/%admin_url%/administrator/delete, roles: ROLE_ADMINISTRATOR_FULL }
         - { path: ^/%admin_url%/administrator/edit/, roles: ROLE_ADMIN } # @see \App\Controller\Admin\AdministratorController::denyAccessUnlessHimselfOrGranted
+        - { path: ^/%admin_url%/administrator/send-reset-password/, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/administrator/my-account/, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/administrator/enable-two-factor-authentication/, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/administrator/disable-two-factor-authentication/, roles: ROLE_ADMIN }
@@ -370,6 +371,7 @@ security:
         - { path: ^/%admin_url%/administrator/groups/new/, roles: ROLE_ADMINISTRATOR_FULL }
         - { path: ^/%admin_url%/administrator/groups/copy/, roles: ROLE_ADMINISTRATOR_FULL }
         - { path: ^/%admin_url%/administrator/groups/delete/, roles: ROLE_ADMINISTRATOR_FULL }
+        - { path: ^/%admin_url%/administrator/set-new-password/, roles: PUBLIC_ACCESS }
         - { path: ^/%admin_url%/administrator/, roles: ROLE_ADMINISTRATOR_VIEW }
         # domains
         - { path: ^/%admin_url%/domain/, roles: ROLE_DOMAIN_VIEW }

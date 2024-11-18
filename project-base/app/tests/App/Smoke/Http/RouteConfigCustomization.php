@@ -111,6 +111,9 @@ class RouteConfigCustomization
             })
             ->customizeByRouteName('admin_flag_delete', function (RouteConfig $config) {
                 $config->skipRoute('Deletion of flag from ShopSys is disabled.');
+            })
+            ->customizeByRouteName('admin_administrator_set-new-password', function (RouteConfig $config) {
+                $config->skipRoute('This route need valid hash for password reset.');
             });
     }
 
@@ -130,7 +133,7 @@ class RouteConfigCustomization
                 }
             })
             ->customize(function (RouteConfig $config, RouteInfo $info) {
-                if (preg_match('~(_delete$)|(_delete_all$)|(^admin_mail_deletetemplate$)|(^admin_(stock|store)_setdefault$)|(^admin_customer_send_reset_password$)|(^admin_.*_deleteconfirm$)~', $info->getRouteName())) {
+                if (preg_match('~(_delete$)|(_delete_all$)|(^admin_mail_deletetemplate$)|(^admin_(stock|store)_setdefault$)|(^admin_customer_send_reset_password$)|(^admin_administrator_send-reset-password$)|(^admin_.*_deleteconfirm$)~', $info->getRouteName())) {
                     $debugNote = 'Add CSRF token for any delete action during test execution. '
                         . '(Routes are protected by RouteCsrfProtector.)';
                     $config->changeDefaultRequestDataSet($debugNote)
@@ -408,6 +411,11 @@ class RouteConfigCustomization
                 $domain = $this->container->get(Domain::class);
                 $config->changeDefaultRequestDataSet()
                     ->setParameter('locale', $domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale())
+                    ->setExpectedStatusCode(302);
+            })
+            ->customizeByRouteName('admin_administrator_send-reset-password', function (RouteConfig $config) {
+                $config->addExtraRequestDataSet('Send reset password action should be OK.')
+                    ->setParameter('id', 2)
                     ->setExpectedStatusCode(302);
             });
     }

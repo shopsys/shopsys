@@ -8,17 +8,23 @@ use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Administrator\AdministratorFormType;
+use Shopsys\FrameworkBundle\Form\Admin\Administrator\AdministratorResetPasswordFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
+use Shopsys\FrameworkBundle\Model\Administrator\AdministratorPasswordFacade;
+use Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorTwoFactorAuthenticationFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\AdministratorNotFoundException;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingLastAdministratorException;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSelfException;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DuplicateUserNameException;
+use Shopsys\FrameworkBundle\Model\Administrator\Exception\InvalidResetPasswordHashAdministratorException;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
+use Shopsys\FrameworkBundle\Model\Security\Authenticator;
+use Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -44,6 +50,10 @@ class AdministratorController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactoryInterface $administratorDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedFacade $administratorRolesChangedFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorTwoFactorAuthenticationFacade $administratorTwoFactorAuthenticationFacade
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorPasswordFacade $administratorPasswordFacade
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository $administratorRepository
+     * @param \Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator $tokenAuthenticator
+     * @param \Shopsys\FrameworkBundle\Model\Security\Authenticator $authenticator
      */
     public function __construct(
         protected readonly AdministratorFacade $administratorFacade,
@@ -53,6 +63,10 @@ class AdministratorController extends AdminBaseController
         protected readonly AdministratorDataFactoryInterface $administratorDataFactory,
         protected readonly AdministratorRolesChangedFacade $administratorRolesChangedFacade,
         protected readonly AdministratorTwoFactorAuthenticationFacade $administratorTwoFactorAuthenticationFacade,
+        protected readonly AdministratorPasswordFacade $administratorPasswordFacade,
+        protected readonly AdministratorRepository $administratorRepository,
+        protected readonly TokenAuthenticator $tokenAuthenticator,
+        protected readonly Authenticator $authenticator,
     ) {
     }
 
@@ -187,6 +201,7 @@ class AdministratorController extends AdminBaseController
 
             try {
                 $administrator = $this->administratorFacade->create($administratorData);
+                $this->administratorPasswordFacade->resetPassword($administrator->getUsername());
 
                 $this->addSuccessFlashTwig(
                     t('Administrator <strong><a href="{{ url }}">{{ name }}</a></strong> created'),
@@ -484,5 +499,68 @@ class AdministratorController extends AdminBaseController
         $formSendEmail->add('send', SubmitType::class, ['label' => t('Send me authentication code')]);
 
         return $formSendEmail;
+    }
+
+    /**
+     * @CsrfProtection
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    #[Route(path: '/administrator/send-reset-password/{id}', name: 'admin_administrator_send-reset-password', requirements: ['id' => '\d+'])]
+    public function sendResetPasswordAction(int $id): Response
+    {
+        $administrator = $this->administratorFacade->getById($id);
+
+        $this->administratorPasswordFacade->resetPassword($administrator->getUsername());
+
+        $this->addSuccessFlashTwig(
+            t('Reset password request was sent to <strong>{{ email }}</strong>'),
+            [
+                'email' => $administrator->getEmail(),
+            ],
+        );
+
+        return $this->redirectToRoute('admin_administrator_edit', ['id' => $id]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    #[Route(path: '/administrator/set-new-password/', name: 'admin_administrator_set-new-password')]
+    public function setNewPasswordAction(Request $request): Response
+    {
+        $username = $request->query->get('username');
+        $hash = $request->query->get('hash');
+
+        if (!$this->administratorPasswordFacade->isResetPasswordHashValid($username, $hash)) {
+            throw new InvalidResetPasswordHashAdministratorException('Reset password hash is not valid');
+        }
+
+        $administrator = $this->administratorRepository->getByUserName($username);
+
+        $administratorData = $this->administratorDataFactory->createFromAdministrator($administrator);
+
+        $form = $this->createForm(AdministratorResetPasswordFormType::class, $administratorData, [
+            'administrator' => $administrator,
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->administratorPasswordFacade->setNewPassword($administrator->getUsername(), $hash, $administratorData->password);
+
+            $this->authenticator->loginAdministrator($administrator, $request);
+
+            return $this->redirectToRoute('admin_default_dashboard');
+        }
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addErrorFlash(t('Please check the correctness of all data filled.'));
+        }
+
+        return $this->render('@ShopsysFramework/Admin/Content/Administrator/resetPassword.html.twig', [
+            'form' => $form->createView(),
+            'administrator' => $administrator,
+        ]);
     }
 }
