@@ -87,6 +87,7 @@ export const cache = cacheExchange({
         ProductList: keyUuid,
         SalesRepresentative: keyUuid,
         OrderPaymentsConfig: keyUuid,
+        Vat: keyUuid,
     },
     updates: cacheUpdates,
     optimistic: optimisticUpdates,
