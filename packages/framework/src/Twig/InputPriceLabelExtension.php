@@ -26,6 +26,7 @@ class InputPriceLabelExtension extends AbstractExtension
     {
         return [
             new TwigFunction('inputPriceLabel', $this->getInputPriceLabel(...)),
+            new TwigFunction('priceVatLabel', $this->getPriceVatLabel(...)),
         ];
     }
 
@@ -48,6 +49,22 @@ class InputPriceLabelExtension extends AbstractExtension
                     'Invalid input price type: ' . $inputPriceType,
                 );
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getPriceVatLabel(): string
+    {
+        $inputPriceType = $this->pricingSetting->getInputPriceType();
+
+        return match ($inputPriceType) {
+            PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT => t('without VAT'),
+            PricingSetting::INPUT_PRICE_TYPE_WITH_VAT => t('with VAT'),
+            default => throw new InvalidInputPriceTypeException(
+                'Invalid input price type: ' . $inputPriceType,
+            ),
+        };
     }
 
     /**

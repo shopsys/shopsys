@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\PriceList;
 
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -52,10 +53,17 @@ class PriceList
     protected $validTo;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\PriceList\ProductWithPrice>
+     * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\PriceList\ProductWithPrice", mappedBy="priceList", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    protected $productsWithPrices;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListData $priceListData
      */
     public function __construct(PriceListData $priceListData)
     {
+        $this->productsWithPrices = new ArrayCollection();
         $this->setData($priceListData);
     }
 
@@ -77,6 +85,17 @@ class PriceList
         $this->validFrom = $priceListData->validFrom;
         $this->validTo = $priceListData->validTo;
         $this->lastUpdate = new DateTimeImmutable();
+
+        // products with prices are not set here, they are set in the PriceListFacade::refreshProductWithPrices method
+        $this->productsWithPrices->clear();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\PriceList\ProductWithPrice[]
+     */
+    public function getProductsWithPrices()
+    {
+        return $this->productsWithPrices->getValues();
     }
 
     /**
@@ -125,5 +144,14 @@ class PriceList
     public function getLastUpdate()
     {
         return $this->lastUpdate;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\PriceList\ProductWithPrice $productWithPrice
+     */
+    public function addProductWithPrice(ProductWithPrice $productWithPrice): void
+    {
+        $this->productsWithPrices->add($productWithPrice);
+        $productWithPrice->setPriceList($this);
     }
 }

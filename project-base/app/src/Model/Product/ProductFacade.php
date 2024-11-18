@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
@@ -50,6 +51,8 @@ use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
  * @method array getChangedNamesByLocale(\App\Model\Product\Product $product, array $originalNames)
  * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[][] getAllProductSellingPricesIndexedByDomainId(\App\Model\Product\Product $product)
  * @method \App\Model\Product\Product|null findByCatnum(string $catnum)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice getProductSellingPriceForDefaultPricingGroup(\App\Model\Product\Product $product, int $domainId)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice getProductSellingPriceForPricingGroup(\App\Model\Product\Product $product, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
  */
 class ProductFacade extends BaseProductFacade
 {
@@ -74,6 +77,7 @@ class ProductFacade extends BaseProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
      * @param \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \App\Model\ProductVideo\ProductVideoFacade $productVideoFacade
      */
     public function __construct(
@@ -97,6 +101,7 @@ class ProductFacade extends BaseProductFacade
         ProductStockFacade $productStockFacade,
         StockFacade $stockFacade,
         UploadedFileFacade $uploadedFileFacade,
+        PricingGroupSettingFacade $pricingGroupSettingFacade,
         private readonly ProductVideoFacade $productVideoFacade,
     ) {
         parent::__construct(
@@ -120,6 +125,7 @@ class ProductFacade extends BaseProductFacade
             $productStockFacade,
             $stockFacade,
             $uploadedFileFacade,
+            $pricingGroupSettingFacade,
         );
     }
 

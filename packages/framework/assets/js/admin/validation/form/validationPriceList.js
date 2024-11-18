@@ -5,6 +5,9 @@ export default function priceListValidator ($container) {
         callbacks: {
             checkDateValidity: function () {
                 // JS validation is not necessary
+            },
+            checkPricesValidity: function () {
+                // JS validation is not necessary
             }
         }
     });

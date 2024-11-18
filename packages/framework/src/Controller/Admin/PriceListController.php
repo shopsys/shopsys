@@ -20,6 +20,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PriceListController extends AdminBaseController
 {
+    protected const string DOMAIN_FILTER_NAMESPACE = 'priceList';
+
     /**
      * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListGridFactory $priceListGridFactory
      * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListFacade $priceListFacade
@@ -44,11 +46,9 @@ class PriceListController extends AdminBaseController
     #[Route(path: '/pricing/price-list/list/')]
     public function listAction(): Response
     {
-        $domainFilterNamespace = 'priceList';
-
         $queryBuilder = $this->priceListFacade->getPriceListGridQueryBuilder();
 
-        $selectedDomainId = $this->adminDomainFilterTabsFacade->getSelectedDomainId($domainFilterNamespace);
+        $selectedDomainId = $this->adminDomainFilterTabsFacade->getSelectedDomainId(static::DOMAIN_FILTER_NAMESPACE);
 
         if ($selectedDomainId !== null) {
             $queryBuilder
@@ -62,7 +62,7 @@ class PriceListController extends AdminBaseController
 
         return $this->render('@ShopsysFramework/Admin/Content/PriceList/list.html.twig', [
             'gridView' => $this->priceListGridFactory->createView($queryBuilder, $this->getCurrentAdministrator()),
-            'domainFilterNamespace' => $domainFilterNamespace,
+            'domainFilterNamespace' => static::DOMAIN_FILTER_NAMESPACE,
         ]);
     }
 
@@ -74,6 +74,10 @@ class PriceListController extends AdminBaseController
     public function newAction(Request $request): Response
     {
         $priceListData = $this->priceListDataFactory->create();
+        $priceListData->domainId = $request->get(
+            'domainId',
+            $this->adminDomainFilterTabsFacade->getSelectedDomainId(static::DOMAIN_FILTER_NAMESPACE) ?? Domain::FIRST_DOMAIN_ID,
+        );
 
         $form = $this->createForm(PriceListFormType::class, $priceListData, [
             'priceList' => null,

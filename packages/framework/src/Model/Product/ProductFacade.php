@@ -10,7 +10,9 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
@@ -50,6 +52,7 @@ class ProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -72,6 +75,7 @@ class ProductFacade
         protected readonly ProductStockFacade $productStockFacade,
         protected readonly StockFacade $stockFacade,
         protected readonly UploadedFileFacade $uploadedFileFacade,
+        protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
     ) {
     }
 
@@ -285,15 +289,45 @@ class ProductFacade
         $productSellingPrices = [];
 
         foreach ($this->pricingGroupRepository->getPricingGroupsByDomainId($domainId) as $pricingGroup) {
-            try {
-                $sellingPrice = $this->productPriceCalculation->calculatePrice($product, $domainId, $pricingGroup);
-            } catch (MainVariantPriceCalculationException $e) {
-                $sellingPrice = new ProductPrice(Price::zero(), false);
-            }
-            $productSellingPrices[$pricingGroup->getId()] = new ProductSellingPrice($pricingGroup, $sellingPrice);
+            $productSellingPrices[$pricingGroup->getId()] = new ProductSellingPrice(
+                $pricingGroup,
+                $this->getProductSellingPriceForPricingGroup($product, $domainId, $pricingGroup),
+            );
         }
 
         return $productSellingPrices;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
+     */
+    public function getProductSellingPriceForDefaultPricingGroup(Product $product, int $domainId): ProductPrice
+    {
+        $pricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId);
+
+        return $this->getProductSellingPriceForPricingGroup($product, $domainId, $pricingGroup);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
+     */
+    protected function getProductSellingPriceForPricingGroup(
+        Product $product,
+        int $domainId,
+        PricingGroup $pricingGroup,
+    ): ProductPrice {
+        try {
+            $sellingPrice = $this->productPriceCalculation->calculatePrice($product, $domainId, $pricingGroup);
+        } catch (MainVariantPriceCalculationException) {
+            $sellingPrice = new ProductPrice(Price::zero(), false);
+        }
+
+        return $sellingPrice;
     }
 
     /**

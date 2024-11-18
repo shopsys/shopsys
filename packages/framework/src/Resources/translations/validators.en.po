@@ -19,6 +19,9 @@ msgstr ""
 msgid "Amount of money should be greater than or equal to zero."
 msgstr ""
 
+msgid "Amount of money should be greater to zero."
+msgstr ""
+
 msgid "At least two domains must be selected"
 msgstr ""
 
@@ -485,6 +488,9 @@ msgid "Previously selected main URL dos not exist any more"
 msgstr ""
 
 msgid "Price must be greater or equal to zero"
+msgstr ""
+
+msgid "Price must be greater to zero"
 msgstr ""
 
 msgid "Product list name cannot be longer than {{ limit }} characters"

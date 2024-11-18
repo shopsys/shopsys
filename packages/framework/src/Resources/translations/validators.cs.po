@@ -19,6 +19,9 @@ msgstr "Aministrátor s uživatelským jménem \"{{ value }}\" je již registrov
 msgid "Amount of money should be greater than or equal to zero."
 msgstr "Tato částka musí být větší nebo rovna nule."
 
+msgid "Amount of money should be greater to zero."
+msgstr "Tato částka musí být větší než nula."
+
 msgid "At least two domains must be selected"
 msgstr "Musí být vybrány alespoň dvě domény"
 
@@ -486,6 +489,9 @@ msgstr "Původně vybraná hlavní URL již neexistuje"
 
 msgid "Price must be greater or equal to zero"
 msgstr "Cena musí být větší nebo rovna nule"
+
+msgid "Price must be greater to zero"
+msgstr "Cena musí být větší než nula"
 
 msgid "Product list name cannot be longer than {{ limit }} characters"
 msgstr "Název ceníku nesmí být delší než {{ limit }} znaků"

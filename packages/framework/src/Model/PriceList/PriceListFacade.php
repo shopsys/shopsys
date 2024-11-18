@@ -13,11 +13,13 @@ class PriceListFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListFactory $priceListFactory
      * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListRepository $priceListRepository
+     * @param \Shopsys\FrameworkBundle\Model\PriceList\ProductWithPriceFactory $productWithPriceFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly PriceListFactory $priceListFactory,
         protected readonly PriceListRepository $priceListRepository,
+        protected readonly ProductWithPriceFactory $productWithPriceFactory,
     ) {
     }
 
@@ -48,6 +50,8 @@ class PriceListFacade
         $this->em->persist($priceList);
         $this->em->flush();
 
+        $this->refreshProductWithPrices($priceList, $priceListData);
+
         return $priceList;
     }
 
@@ -60,6 +64,23 @@ class PriceListFacade
         $priceList = $this->getById($priceListId);
 
         $priceList->edit($priceListData);
+
+        $this->em->flush();
+
+        $this->refreshProductWithPrices($priceList, $priceListData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceList $priceList
+     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListData $priceListData
+     */
+    protected function refreshProductWithPrices(PriceList $priceList, PriceListData $priceListData): void
+    {
+        foreach ($priceListData->productsWithPrices as $productWithPriceData) {
+            $productWithPrice = $this->productWithPriceFactory->create($productWithPriceData);
+            $this->em->persist($productWithPrice);
+            $priceList->addProductWithPrice($productWithPrice);
+        }
 
         $this->em->flush();
     }

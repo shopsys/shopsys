@@ -7,7 +7,7 @@ import './validationAdvert';
 import './validationOrder';
 import './validationParameterName';
 import './validationPayment';
-import './validationPriceList.js';
+import './validationPriceList';
 import './validationPromoCode';
 import './validationHreflangSetting';
 import './validationStore';

@@ -7,6 +7,14 @@ namespace Shopsys\FrameworkBundle\Model\PriceList;
 class PriceListDataFactory
 {
     /**
+     * @param \Shopsys\FrameworkBundle\Model\PriceList\ProductWithPriceDataFactory $productWithPriceDataFactory
+     */
+    public function __construct(
+        protected readonly ProductWithPriceDataFactory $productWithPriceDataFactory,
+    ) {
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\PriceList\PriceListData
      */
     protected function createInstance(): PriceListData
@@ -54,5 +62,9 @@ class PriceListDataFactory
         $priceListData->domainId = $priceList->getDomainId();
         $priceListData->validFrom = $priceList->getValidFrom();
         $priceListData->validTo = $priceList->getValidTo();
+        $priceListData->productsWithPrices = $this->productWithPriceDataFactory->createFromProductsWithPrices(
+            $priceList->getProductsWithPrices(),
+            $priceList->getDomainId(),
+        );
     }
 }

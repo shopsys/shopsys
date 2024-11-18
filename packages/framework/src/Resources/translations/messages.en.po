@@ -433,6 +433,9 @@ msgstr ""
 msgid "Basic information"
 msgstr ""
 
+msgid "Basic price"
+msgstr ""
+
 msgid "Batch ID"
 msgstr ""
 
@@ -629,6 +632,9 @@ msgid "Change for"
 msgstr ""
 
 msgid "Changes"
+msgstr ""
+
+msgid "Changing the domain will cause the loss of unsaved changes. Do you want to continue?"
 msgstr ""
 
 msgid "Choose"
@@ -1250,6 +1256,9 @@ msgid "Discount"
 msgstr ""
 
 msgid "Discount (%)"
+msgstr ""
+
+msgid "Discount against basic price"
 msgstr ""
 
 msgid "Discount type"
@@ -3889,6 +3898,9 @@ msgstr ""
 msgid "Sorting priority"
 msgstr ""
 
+msgid "Special price"
+msgstr ""
+
 msgid "Standard"
 msgstr ""
 
@@ -4606,6 +4618,9 @@ msgstr ""
 msgid "customers"
 msgstr ""
 
+msgid "discount"
+msgstr ""
+
 msgid "doesn't include"
 msgstr ""
 
@@ -4723,6 +4738,12 @@ msgstr ""
 msgid "watchdogs"
 msgstr ""
 
+msgid "with VAT"
+msgstr ""
+
+msgid "without VAT"
+msgstr ""
+
 msgid "without positioning"
 msgstr ""
 
@@ -4740,4 +4761,3 @@ msgstr ""
 
 msgid "{1}Sales representative \"%label%\" is assigned to %count% customer and will be removed if you proceed.<br><br> Customer:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[2,10]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br><br> Do you really want to remove sales representative \"%label%\" permanently? |[11,Inf]Sales representative \"%label%\" is assigned to %count% customers and will be removed if you proceed.<br><br> Customers:<br> %customersEnumeration%<br> +%extraCount% more<br><br> Do you really want to remove sales representative \"%label%\" permanently?"
 msgstr ""
-

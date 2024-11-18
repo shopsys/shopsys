@@ -25,4 +25,9 @@ class PriceListData
      * @var \DateTimeImmutable
      */
     public $validTo;
+
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\PriceList\ProductWithPriceData[]
+     */
+    public $productsWithPrices = [];
 }
