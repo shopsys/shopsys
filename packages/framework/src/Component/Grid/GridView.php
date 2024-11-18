@@ -119,6 +119,12 @@ class GridView
             'form' => $formView,
         ];
 
+        if ($column->getTemplate() !== null) {
+            echo $this->twig->render($column->getTemplate(), $this->twig->mergeGlobals($blockParameters));
+
+            return;
+        }
+
         if ($formView === null) {
             $possibleBlocks = [
                 'grid_value_cell_id_' . $column->getId(),
