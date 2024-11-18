@@ -102,6 +102,15 @@
         {% endif %}
         <a class="in-sort-arrows" href="{{ gridView.url({'order': orderBy}) }}">
             <span class="in-sort-arrows__link {% if grid.orderSourceColumnName == column.id %} active{% endif %}">{{ column.title }}</span>
+            {% if column.help is not null %}
+                <span title="{{ column.help }}"
+                      class="js-tooltip cursor-help in-icon in-icon--in-text in-icon--info"
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                >
+                    {{ ux_icon('info') }}
+                </span>
+            {% endif %}
             {% if grid.orderSourceColumnName == column.id %}
                 {% if grid.orderDirection == 'desc' %}
                     <span class="in-sort-arrows__item in-sort-arrows__item--down"></span>
