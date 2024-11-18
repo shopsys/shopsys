@@ -167,13 +167,6 @@ export default class InitGrapesJs {
             }
         });
 
-        CKEDITOR.on('instanceReady', function (e) {
-            editor.RichTextEditor.updatePosition();
-        });
-        editor.on('rte:enable', (event) => {
-            editor.RichTextEditor.updatePosition();
-        });
-
         editor.I18n.setMessages({
             en
         });
@@ -285,13 +278,6 @@ export default class InitGrapesJs {
         editor.BlockManager.remove('grid-items');
         editor.BlockManager.remove('list-items');
         editor.BlockManager.remove('text');
-
-        CKEDITOR.on('instanceReady', function (e) {
-            editor.RichTextEditor.updatePosition();
-        });
-        editor.on('rte:enable', (event) => {
-            editor.RichTextEditor.updatePosition();
-        });
     }
 
     static setupBodyForGrapesJsEditor () {
