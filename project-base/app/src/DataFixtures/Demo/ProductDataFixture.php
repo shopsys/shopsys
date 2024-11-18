@@ -109,6 +109,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $productData->partno = '32PFL4308H';
         $productData->ean = '8845781245929';
+        $productData->weight = 10500;
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '8173.5');
         $this->productDemoDataSetter->setSellingFrom($productData, '15.1.2000');
         $this->productDemoDataSetter->setStocksQuantity($productData, 200);
@@ -177,6 +178,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $productData->partno = 'X-710BK';
         $productData->ean = '8845781245923';
+        $productData->weight = 200;
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '263.6');
         $this->productDemoDataSetter->setSellingFrom($productData, '9.1.2000');
         $this->productDemoDataSetter->setStocksQuantity($productData, 10);
@@ -216,6 +218,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $productData->partno = 'ME440CS';
         $productData->ean = '8845781245956';
+        $productData->weight = 170;
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '19000');
         $this->productDemoDataSetter->setSellingFrom($productData, '11.2.2014');
         $this->productDemoDataSetter->setStocksQuantity($productData, 10);
@@ -259,6 +262,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $productData->partno = 'PTH300';
         $productData->ean = '8845781245939';
+        $productData->weight = 3000;
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '1295');
         $this->productDemoDataSetter->setSellingFrom($productData, '25.1.2014');
         $this->productDemoDataSetter->setStocksQuantity($productData, 10);
@@ -288,6 +292,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $productData->partno = '6758B001';
         $productData->ean = '8845781245914';
+        $productData->weight = 2500;
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '1110.54896');
         $this->productDemoDataSetter->setSellingFrom($productData, '3.8.1999');
         $this->productDemoDataSetter->setStocksQuantity($productData, 10);
@@ -315,6 +320,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $productData->partno = '8596B047';
         $productData->ean = '8845781245912';
+        $productData->weight = 2470;
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '24990', VatDataFixture::VAT_ZERO);
         $this->productDemoDataSetter->setSellingFrom($productData, '3.2.2013');
         $this->productDemoDataSetter->setStocksQuantity($productData, 100);
@@ -349,6 +355,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $productData->partno = '8331B006';
         $productData->ean = '8845781245938';
+        $productData->weight = 3148;
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '1314.1');
         $this->productDemoDataSetter->setSellingFrom($productData, '24.1.2014');
         $this->productDemoDataSetter->setStocksQuantity($productData, 10);
@@ -388,6 +395,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $productData->partno = '8328B006';
         $productData->ean = '8845781245936';
+        $productData->weight = 3100;
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '818');
         $this->productDemoDataSetter->setSellingFrom($productData, '22.1.2014');
         $this->productDemoDataSetter->setStocksQuantity($productData, 0);
@@ -426,6 +434,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $productData->partno = '43266';
         $productData->ean = '8845781245920';
+        $productData->weight = 50;
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '5');
         $this->productDemoDataSetter->setSellingFrom($productData, '6.1.2000');
         $this->productDemoDataSetter->setStocksQuantity($productData, 10);
@@ -457,6 +466,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $productData->partno = 'DNS-327L';
         $productData->ean = '8845781245918';
+        $productData->weight = 320;
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '2891.7');
         $this->productDemoDataSetter->setSellingFrom($productData, '4.1.2000');
         $this->productDemoDataSetter->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PC]);
@@ -475,6 +485,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $productData->partno = '65480';
         $productData->ean = '8845781245945';
+        $productData->weight = 900;
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '98.3');
         $this->productDemoDataSetter->setSellingFrom($productData, '31.1.2014');
         $this->productDemoDataSetter->setStocksQuantity($productData, 10);

@@ -31,6 +31,7 @@ class ProductDemoDataFactory
 
         $productData->catnum = $catnum;
         $productData->sellingDenied = false;
+        $productData->weight = 500;
 
         $this->productDemoDataSetter->setUnit($productData, UnitDataFixture::UNIT_PIECES);
 

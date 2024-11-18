@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 
 /**
  * @ORM\Table(name="orders")
@@ -1241,5 +1242,24 @@ class Order
     public function isCompanyCustomer(): bool
     {
         return $this->getCompanyName() !== null && $this->getCompanyNumber() !== null;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalWeight(): int
+    {
+        $totalWeight = 0;
+
+        foreach ($this->getProductItems() as $item) {
+            try {
+                $product = $item->getProduct();
+                $totalWeight += $product->getWeight() * $item->getQuantity();
+            } catch (ProductNotFoundException) {
+                continue;
+            }
+        }
+
+        return $totalWeight;
     }
 }
