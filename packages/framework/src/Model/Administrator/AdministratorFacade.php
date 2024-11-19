@@ -132,6 +132,15 @@ class AdministratorFacade
     }
 
     /**
+     * @param string $administratorUserName
+     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
+     */
+    public function getByUserName(string $administratorUserName): Administrator
+    {
+        return $this->administratorRepository->getByUserName($administratorUserName);
+    }
+
+    /**
      * @return \Doctrine\ORM\QueryBuilder
      */
     public function getAllListableQueryBuilder(): QueryBuilder

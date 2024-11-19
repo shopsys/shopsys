@@ -16,10 +16,6 @@ use Symfony\Component\Validator\Constraints;
 
 class AdministratorResetPasswordFormType extends AbstractType
 {
-    public function __construct()
-    {
-    }
-
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
@@ -38,7 +34,7 @@ class AdministratorResetPasswordFormType extends AbstractType
                 'first_options' => [
                     'label' => t('Password'),
                     'constraints' => [
-                        new Constraints\Regex(['pattern' => '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{10,}$/', 'message' => 'Password has to include uppercase letters, lowercase letters, numbers and must be longer than 10 characters.']),
+                        new Constraints\Regex(['pattern' => '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{10,}$/', 'message' => 'Password has to include uppercase letters, lowercase letters, numbers and must be longer than 10 characters.']),
                         new Constraints\NotBlank([
                             'message' => 'Please enter password',
                         ]),

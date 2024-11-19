@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Command;
 
+use App\Model\Administrator\AdministratorFacade;
 use Exception;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorPasswordFacade;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -23,10 +24,13 @@ class ChangeAdminPasswordCommand extends Command
     private const ARG_USERNAME = 'username';
 
     /**
+     * @param \App\Model\Administrator\AdministratorFacade $administratorFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorPasswordFacade $administratorPasswordFacade
      */
-    public function __construct(private readonly AdministratorPasswordFacade $administratorPasswordFacade)
-    {
+    public function __construct(
+        private readonly AdministratorFacade $administratorFacade,
+        private readonly AdministratorPasswordFacade $administratorPasswordFacade,
+    ) {
         parent::__construct();
     }
 
@@ -49,7 +53,8 @@ class ChangeAdminPasswordCommand extends Command
         $adminUsername = $input->getArgument(self::ARG_USERNAME);
         $password = $this->askRepeatedlyForNewPassword($input, $io);
 
-        $this->administratorPasswordFacade->changepassword($adminUsername, $password);
+        $administrator = $this->administratorFacade->getByUserName($adminUsername);
+        $this->administratorPasswordFacade->setPassword($administrator, $password);
 
         $output->writeln(sprintf('Password for administrator "%s" was successfully changed', $adminUsername));
 

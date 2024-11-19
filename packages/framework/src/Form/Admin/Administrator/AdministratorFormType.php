@@ -39,7 +39,7 @@ class AdministratorFormType extends AbstractType
         private readonly Security $security,
         private readonly AdministratorRoleGroupFacade $administratorRoleGroupFacade,
         private readonly Roles $roles,
-        protected readonly RouteCsrfProtector $routeCsrfProtector,
+        private readonly RouteCsrfProtector $routeCsrfProtector,
     ) {
     }
 

@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade as BaseAdmin
  * @method setAdministratorTransferIssuesLastSeenDateTime(\App\Model\Administrator\Administrator $administrator)
  * @method \App\Model\Administrator\Administrator|null findByUuid(string $uuid)
  * @method \App\Model\Administrator\Administrator getCurrentlyLoggedAdministrator()
+ * @method \App\Model\Administrator\Administrator getByUserName(string $administratorUserName)
  */
 class AdministratorFacade extends BaseAdministratorFacade
 {

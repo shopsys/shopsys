@@ -14,7 +14,6 @@ use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorPasswordFacade;
-use Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorTwoFactorAuthenticationFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\AdministratorNotFoundException;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingLastAdministratorException;
@@ -51,7 +50,6 @@ class AdministratorController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedFacade $administratorRolesChangedFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorTwoFactorAuthenticationFacade $administratorTwoFactorAuthenticationFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorPasswordFacade $administratorPasswordFacade
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository $administratorRepository
      * @param \Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator $tokenAuthenticator
      * @param \Shopsys\FrameworkBundle\Model\Security\Authenticator $authenticator
      */
@@ -64,7 +62,6 @@ class AdministratorController extends AdminBaseController
         protected readonly AdministratorRolesChangedFacade $administratorRolesChangedFacade,
         protected readonly AdministratorTwoFactorAuthenticationFacade $administratorTwoFactorAuthenticationFacade,
         protected readonly AdministratorPasswordFacade $administratorPasswordFacade,
-        protected readonly AdministratorRepository $administratorRepository,
         protected readonly TokenAuthenticator $tokenAuthenticator,
         protected readonly Authenticator $authenticator,
     ) {
@@ -533,11 +530,12 @@ class AdministratorController extends AdminBaseController
         $username = $request->query->get('username');
         $hash = $request->query->get('hash');
 
-        if (!$this->administratorPasswordFacade->isResetPasswordHashValid($username, $hash)) {
+
+        $administrator = $this->administratorFacade->getByUserName($username);
+
+        if (!$administrator->isResetPasswordHashValid($hash)) {
             throw new InvalidResetPasswordHashAdministratorException('Reset password hash is not valid');
         }
-
-        $administrator = $this->administratorRepository->getByUserName($username);
 
         $administratorData = $this->administratorDataFactory->createFromAdministrator($administrator);
 

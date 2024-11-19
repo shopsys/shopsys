@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Administrator;
 
 use DateTime;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use LogicException;
@@ -183,7 +184,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     protected $resetPasswordHash;
 
     /**
-     * @var \DateTime|null
+     * @var \DateTimeImmutable|null
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $resetPasswordHashValidThrough;
@@ -688,7 +689,7 @@ class Administrator implements UserInterface, UniqueLoginInterface, TimelimitLog
     public function setResetPasswordHash($resetPasswordHash): void
     {
         $this->resetPasswordHash = $resetPasswordHash;
-        $this->resetPasswordHashValidThrough = new DateTime('+' . self::RESET_PASSWORD_HASH_VALID_HOURS . ' hours');
+        $this->resetPasswordHashValidThrough = new DateTimeImmutable('+' . self::RESET_PASSWORD_HASH_VALID_HOURS . ' hours');
     }
 
     /**

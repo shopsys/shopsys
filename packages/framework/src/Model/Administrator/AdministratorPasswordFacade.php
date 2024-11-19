@@ -47,18 +47,6 @@ class AdministratorPasswordFacade
 
     /**
      * @param string $administratorUserName
-     * @param string|null $hash
-     * @return bool
-     */
-    public function isResetPasswordHashValid(string $administratorUserName, ?string $hash): bool
-    {
-        $administrator = $this->administratorRepository->getByUserName($administratorUserName);
-
-        return $administrator->isResetPasswordHashValid($hash);
-    }
-
-    /**
-     * @param string $administratorUserName
      * @param string|null $resetPasswordHash
      * @param string $newPassword
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
@@ -74,18 +62,9 @@ class AdministratorPasswordFacade
             throw new InvalidResetPasswordHashAdministratorException();
         }
 
-        $this->changePassword($administrator, $newPassword);
+        $this->setPassword($administrator, $newPassword);
 
         return $administrator;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $administrator
-     * @param string $newPassword
-     */
-    public function changePassword(Administrator $administrator, string $newPassword): void
-    {
-        $this->setPassword($administrator, $newPassword);
     }
 
     /**
