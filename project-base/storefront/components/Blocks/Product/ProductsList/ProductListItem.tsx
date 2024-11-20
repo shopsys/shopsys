@@ -95,7 +95,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 )}
 
                 <ExtendedNextLink
-                    className="flex select-text flex-col gap-2.5 px-2.5 py-5 text-text no-underline hover:text-link hover:no-underline sm:px-5 sm:pb-0"
+                    className="flex select-text flex-col py-5 text-text no-underline hover:text-link hover:no-underline sm:pb-0"
                     draggable={false}
                     href={product.slug}
                     type={product.isMainVariant ? 'productMainVariant' : 'product'}
@@ -111,40 +111,42 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                         onClick?.(product, listIndex);
                     }}
                 >
-                    <ProductListItemImage product={product} size={size} visibleItemsConfig={visibleItemsConfig} />
+                    <div className="flex flex-col gap-2.5 px-2.5 sm:px-5">
+                        <ProductListItemImage product={product} size={size} visibleItemsConfig={visibleItemsConfig} />
 
-                    <div
-                        className={twJoin(
-                            'grow overflow-hidden break-words font-secondary font-semibold group-hover:text-link group-hover:underline',
-                            textSize === 'xs' ? 'text-xs' : 'text-sm',
-                        )}
-                    >
-                        {product.fullName}
-                    </div>
-
-                    {product.__typename === 'MainVariant' && (
-                        <div className="flex w-fit items-center gap-1.5 whitespace-nowrap rounded-md bg-background px-2.5 py-1.5 font-secondary text-xs group-hover:text-text">
-                            <VariantIcon className="size-3 text-textAccent" />
-                            {product.variantsCount} {t('variants count', { count: product.variantsCount })}
+                        <div
+                            className={twJoin(
+                                'grow overflow-hidden break-words font-secondary font-semibold group-hover:text-link group-hover:underline',
+                                textSize === 'xs' ? 'text-xs' : 'text-sm',
+                            )}
+                        >
+                            {product.fullName}
                         </div>
-                    )}
 
-                    {visibleItemsConfig.price && !(product.isMainVariant && product.isSellingDenied) && (
-                        <ProductPrice
-                            className="min-h-6 sm:min-h-7"
-                            isPriceFromVisible={visibleItemsConfig.priceFromWord}
-                            productPrice={product.price}
-                        />
-                    )}
+                        {product.__typename === 'MainVariant' && (
+                            <div className="flex w-fit items-center gap-1.5 whitespace-nowrap rounded-md bg-background py-1.5 font-secondary text-xs group-hover:text-text">
+                                <VariantIcon className="size-3 text-textAccent" />
+                                {product.variantsCount} {t('variants count', { count: product.variantsCount })}
+                            </div>
+                        )}
 
-                    {visibleItemsConfig.storeAvailability && (
-                        <ProductAvailability
-                            availability={product.availability}
-                            availableStoresCount={product.availableStoresCount}
-                            className="min-h-10 xs:min-h-[60px] sm:min-h-10"
-                            isInquiryType={product.isInquiryType}
-                        />
-                    )}
+                        {visibleItemsConfig.price && !(product.isMainVariant && product.isSellingDenied) && (
+                            <ProductPrice
+                                className="min-h-6 sm:min-h-7"
+                                isPriceFromVisible={visibleItemsConfig.priceFromWord}
+                                productPrice={product.price}
+                            />
+                        )}
+
+                        {visibleItemsConfig.storeAvailability && (
+                            <ProductAvailability
+                                availability={product.availability}
+                                availableStoresCount={product.availableStoresCount}
+                                className="min-h-10 xs:min-h-[60px] sm:min-h-10"
+                                isInquiryType={product.isInquiryType}
+                            />
+                        )}
+                    </div>
                 </ExtendedNextLink>
 
                 <div className="flex w-full items-center justify-between gap-1 px-2.5 py-5 sm:justify-normal sm:gap-2.5 sm:px-5 sm:py-0">

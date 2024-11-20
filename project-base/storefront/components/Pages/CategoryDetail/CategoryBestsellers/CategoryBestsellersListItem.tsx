@@ -54,7 +54,7 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
                     visibleItemsConfig={{ flags: false }}
                 />
             </div>
-            <div className="flex w-full flex-col justify-between gap-x-4 gap-y-2.5 md:flex-row md:items-center">
+            <div className="flex w-full select-text flex-col justify-between gap-x-4 gap-y-2.5 md:flex-row md:items-center">
                 <span className="line-clamp-5 max-w-80 flex-1 items-center font-secondary text-sm font-semibold text-text">
                     {!!product.flags.length && <ProductFlags flags={product.flags} variant="bestsellers" />}
                     {product.fullName}
