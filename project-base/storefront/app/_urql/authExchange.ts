@@ -1,13 +1,6 @@
-import { AuthConfig, AuthUtilities } from '@urql/exchange-auth';
-import {
-    RefreshTokensDocument,
-    TypeRefreshTokens,
-    TypeRefreshTokensVariables,
-} from 'graphql/requests/auth/mutations/RefreshTokensMutation.ssr';
+import { AuthConfig } from '@urql/exchange-auth';
 import { CombinedError, makeOperation, Operation } from 'urql';
-import { getTokensFromCookiesServer } from 'utils/auth/getTokensFromCookiesServer';
-import { removeTokensFromCookiesServer } from 'utils/auth/removeTokensFromCookiesServer';
-import { setTokensToCookiesServer } from 'utils/auth/setTokensToCookiesServer';
+import { getTokensRSC } from 'utils/auth/getTokensFromRSC';
 
 const isRefreshTokenMutation = (operation: Operation) => {
     return (
@@ -55,51 +48,20 @@ const didAuthError = (error: CombinedError): boolean => {
     return error.response?.status === 401;
 };
 
-const doTryRefreshToken = async (refreshToken: string, mutate: AuthUtilities['mutate']): Promise<void> => {
-    const { data: refreshTokenData } = await mutate<TypeRefreshTokens, TypeRefreshTokensVariables>(
-        RefreshTokensDocument,
-        { refreshToken },
-    );
-
-    if (!refreshTokenData?.RefreshTokens) {
-        removeTokensFromCookiesServer();
-
-        if (typeof window !== 'undefined') {
-            window.location.reload();
-        }
-
-        return;
-    }
-
-    setTokensToCookiesServer(refreshTokenData.RefreshTokens.accessToken, refreshTokenData.RefreshTokens.refreshToken);
+const refreshAuth = async (): Promise<void> => {
+    // cannot write to cookies from server
+    // only from Server Actions or Route Hanlders
+    // https://nextjs.org/docs/14/app/api-reference/functions/cookies
+    // eslint-disable-next-line no-console
+    console.log('skip refreshAuth on server');
 };
 
-const refreshAuth = async (authUtilities: AuthUtilities): Promise<void> => {
-    const { refreshToken } = await getTokensFromCookiesServer();
-    try {
-        if (!refreshToken) {
-            if (typeof window !== 'undefined') {
-                window.location.reload();
-            }
+export const getAuthExchangeOptions = () => async (): Promise<AuthConfig> => {
+    const { accessToken } = await getTokensRSC();
 
-            return;
-        }
-
-        await doTryRefreshToken(refreshToken, authUtilities.mutate);
-    } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error(e);
-    }
-};
-
-export const getAuthExchangeOptions =
-    () =>
-    async (authUtilities: AuthUtilities): Promise<AuthConfig> => {
-        const { accessToken } = await getTokensFromCookiesServer();
-
-        return {
-            addAuthToOperation: (operation) => addAuthToOperation(operation, accessToken),
-            didAuthError,
-            refreshAuth: () => refreshAuth(authUtilities),
-        };
+    return {
+        addAuthToOperation: (operation) => addAuthToOperation(operation, accessToken),
+        didAuthError,
+        refreshAuth,
     };
+};
