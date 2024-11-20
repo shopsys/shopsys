@@ -178,7 +178,7 @@ class ProductController extends AdminBaseController
 
         // Cannot call $form->handleRequest() because the GET forms are not handled in POST request.
         // See: https://github.com/symfony/symfony/issues/12244
-        $quickSearchForm->submit($request->query->get($quickSearchForm->getName()));
+        $quickSearchForm->submit($request->get($quickSearchForm->getName()));
 
         $massActionForm = $this->createForm(ProductMassActionFormType::class);
         $massActionForm->handleRequest($request);
