@@ -1,15 +1,5 @@
-import { Kind } from 'graphql';
-import { CartQueryDocument } from 'graphql/requests/cart/queries/CartQuery.ssr';
-import { Translate } from 'next-translate';
-import { ParsedErrors } from 'types/error';
-import { CombinedError, Exchange, Operation } from 'urql';
-import { removeTokensFromCookiesServer } from 'utils/auth/removeTokensFromCookiesServer';
-import { isNoLogError } from 'utils/errors/applicationErrors';
-import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
-import { isWithErrorDebugging } from 'utils/errors/isWithErrorDebugging';
-import { logException } from 'utils/errors/logException';
-import { mapGraphqlErrorForDevelopment } from 'utils/errors/mapGraphqlErrorForDevelopment';
-import { isClient } from 'utils/isClient';
+import { Translate } from 'types/translation';
+import { Exchange } from 'urql';
 import { pipe, tap } from 'wonka';
 
 export const getErrorExchange =
@@ -19,130 +9,12 @@ export const getErrorExchange =
             return pipe(
                 operations$,
                 forward,
-                tap(({ error, operation }) => {
-                    if ((operation.kind !== 'query' && operation.kind !== 'mutation') || !error) {
-                        return;
-                    }
-
-                    if (isWithErrorDebugging && operation.kind === 'mutation') {
-                        handleErrorMessagesForMutation(error);
-
-                        return;
-                    }
-
-                    if (isClient && hasFriendlyUrlQueryFailedWith500(operation, error)) {
-                        if (isWithErrorDebugging) {
-                            throw new Error(JSON.stringify(mapGraphqlErrorForDevelopment(error.graphQLErrors[0])));
-                        }
-
-                        throw new Error('Internal Server Error');
-                    }
-
-                    const isAuthError = error.response?.status === 401;
-                    if (isAuthError) {
-                        removeTokensFromCookiesServer();
-
-                        return;
-                    }
-
-                    if (isWithErrorDebugging) {
-                        handleErrorMessagesForDevelopment(error);
-                    } else {
-                        handleErrorMessagesForUsers(error, t, operation);
+                tap(({ error }) => {
+                    if (error) {
+                        // eslint-disable-next-line no-console
+                        console.error('🚀 -> file: errorExchange.ts:15 -> tap -> error:', error, t('Unknown error.'));
                     }
                 }),
             );
         };
     };
-
-const handleErrorMessagesForDevelopment = (error: CombinedError) => {
-    logException({
-        message: error.message,
-        originalError: JSON.stringify(error),
-        location: 'getErrorExchange.handleErrorMessagesForDevelopment',
-    });
-
-    /*  if (isWithToastAndConsoleErrorDebugging) {
-        error.graphQLErrors
-            .map((graphqlError) => mapGraphqlErrorForDevelopment(graphqlError))
-            .forEach((simplifiedGraphqlError) => showErrorMessage(JSON.stringify(simplifiedGraphqlError)));
-    } */
-};
-
-const handleErrorMessagesForMutation = (error: CombinedError) => {
-    logException({
-        message: error.message,
-        originalError: JSON.stringify(error),
-        location: 'getErrorExchange.handleErrorMessagesForMutation',
-    });
-
-    /* if (isWithToastAndConsoleErrorDebugging) {
-        error.graphQLErrors
-            .map((graphqlError) => mapGraphqlErrorForDevelopment(graphqlError))
-            .map((simplifiedGraphqlError) => {
-                return simplifiedGraphqlError;
-            })
-            .forEach((simplifiedGraphqlError) => showErrorMessage(JSON.stringify(simplifiedGraphqlError)));
-    } */
-};
-
-const handleErrorMessagesForUsers = (error: CombinedError, t: Translate, operation: Operation) => {
-    const parsedErrors = getUserFriendlyErrors(error, t);
-    const isCartError = operation.query === CartQueryDocument;
-
-    if (parsedErrors.userError) {
-        logException({
-            message: error.message,
-            parsedUserError: parsedErrors.userError,
-            originalError: JSON.stringify(error),
-            location: 'getErrorExchange.handleErrorMessagesForUsers',
-        });
-    }
-
-    if (isCartError) {
-        handleCartErrorMessages(parsedErrors);
-
-        return;
-    }
-
-    if (!parsedErrors.applicationError) {
-        return;
-    }
-
-    if (!isNoLogError(parsedErrors.applicationError.type)) {
-        logException({
-            message: error.message,
-            parsedApplicationError: parsedErrors.applicationError,
-            originalError: JSON.stringify(error),
-            location: 'getErrorExchange.handleErrorMessagesForUsers',
-        });
-    }
-
-    /* if (isFlashMessageError(parsedErrors.applicationError.type)) {
-        showErrorMessage(parsedErrors.applicationError.message);
-    } */
-};
-
-const handleCartErrorMessages = ({ userError, applicationError }: ParsedErrors) => {
-    switch (applicationError?.type) {
-        case 'cart-not-found':
-            break;
-        case 'default':
-            /* showErrorMessage(applicationError.message, GtmMessageOriginType.cart); */
-            break;
-    }
-
-    /* if (userError?.validation) {
-        for (const invalidFieldName in userError.validation) {
-            showErrorMessage(userError.validation[invalidFieldName].message, GtmMessageOriginType.cart);
-        }
-    } */
-};
-
-const hasFriendlyUrlQueryFailedWith500 = (operation: Operation, error: CombinedError) =>
-    error.graphQLErrors.some(({ extensions }) => extensions.code === 500) &&
-    operation.query.definitions.some(
-        (definition) =>
-            definition.kind === Kind.OPERATION_DEFINITION &&
-            definition.directives?.some((directiveDefinition) => directiveDefinition.name.value === 'friendlyUrl'),
-    );
