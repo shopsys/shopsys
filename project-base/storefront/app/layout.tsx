@@ -1,5 +1,7 @@
+import { getUrqlData } from './_urql/urql-dto';
 import { DomainConfigProvider } from 'components/providers/DomainConfigProvider';
 import { TranslationProvider } from 'components/providers/TranslationProvider';
+import { UrqlClientProvider } from 'components/providers/UrqlClientProvider';
 import { headers } from 'next/headers';
 import 'nprogress/nprogress.css';
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -15,23 +17,26 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     const { defaultLocale: lang } = domainConfig;
     const dictionary = await getDictionary(lang);
     const t = await getServerT({ defaultLang: lang, defaultDictionary: dictionary });
+    const { ssrData } = await getUrqlData();
 
     return (
         <DomainConfigProvider domainConfig={domainConfig}>
             <TranslationProvider dictionary={dictionary} lang={lang}>
-                <html lang={lang}>
-                    {/* suppressHydrationWarning for ignoring grammarly extension */}
-                    <body suppressHydrationWarning>
-                        <nav>Navigation</nav>
-                        <div>Language in layout is {lang}</div>
-                        {children}
-                        <footer className="mt-5">
-                            {t('Copyright © {{ currentYear }}, Shopsys s.r.o. All rights reserved.', {
-                                currentYear: new Date().getFullYear(),
-                            })}
-                        </footer>
-                    </body>
-                </html>
+                <UrqlClientProvider urqlState={ssrData}>
+                    <html lang={lang}>
+                        {/* suppressHydrationWarning for ignoring grammarly extension */}
+                        <body suppressHydrationWarning>
+                            <nav>Navigation</nav>
+                            <div>Language in layout is {lang}</div>
+                            {children}
+                            <footer className="mt-5">
+                                {t('Copyright © {{ currentYear }}, Shopsys s.r.o. All rights reserved.', {
+                                    currentYear: new Date().getFullYear(),
+                                })}
+                            </footer>
+                        </body>
+                    </html>
+                </UrqlClientProvider>
             </TranslationProvider>
         </DomainConfigProvider>
     );
