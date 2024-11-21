@@ -354,8 +354,6 @@ jobs:
                 uses: actions/download-artifact@v4
                 with:
                     name: docker-compose
-            -   name: Pull Docker images
-                run: docker compose pull --parallel postgres webserver elasticsearch redis php-fpm
             -   name: Build application
                 run: |
                     docker compose pull --parallel postgres webserver elasticsearch redis php-fpm
