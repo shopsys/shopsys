@@ -1,9 +1,9 @@
 'use client';
 
+import { useDomainConfig } from './DomainConfigProvider';
 import { devtoolsExchange } from '@urql/devtools';
 import { authExchange } from '@urql/exchange-auth';
 import { useMemo } from 'react';
-import { useDomainConfig } from './DomainConfigProvider';
 // eslint-disable-next-line no-restricted-imports
 import { Provider, SSRData, SSRExchange, createClient, ssrExchange as createSsrExchange, fetchExchange } from 'urql';
 import { getAuthExchangeOptions } from 'urql/authExchange';
