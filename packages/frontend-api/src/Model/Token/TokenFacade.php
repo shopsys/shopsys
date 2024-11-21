@@ -10,7 +10,6 @@ use DateTimeImmutable;
 use DateTimeZone;
 use Lcobucci\Clock\SystemClock;
 use Lcobucci\JWT\Builder;
-use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Encoding\ChainedFormatter;
 use Lcobucci\JWT\UnencryptedToken;
 use Lcobucci\JWT\Validation\Constraint\IssuedBy;
@@ -30,21 +29,21 @@ use function date_default_timezone_get;
 
 class TokenFacade
 {
-    protected const SECRET_CHAIN_LENGTH = 128;
+    protected const int SECRET_CHAIN_LENGTH = 128;
 
-    protected const ACCESS_TOKEN_EXPIRATION = 300;
+    protected const int ACCESS_TOKEN_EXPIRATION = 300;
 
-    protected const REFRESH_TOKEN_EXPIRATION = 3600 * 24 * 14;
+    protected const int REFRESH_TOKEN_EXPIRATION = 3600 * 24 * 14;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \Lcobucci\JWT\Configuration $jwtConfiguration
+     * @param \Shopsys\FrontendApiBundle\Model\Token\JwtConfigurationProvider $jwtConfigurationProvider
      */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly CustomerUserFacade $customerUserFacade,
-        protected readonly Configuration $jwtConfiguration,
+        protected readonly JwtConfigurationProvider $jwtConfigurationProvider,
     ) {
     }
 
@@ -70,8 +69,10 @@ class TokenFacade
             $tokenBuilder->withClaim($key, $value);
         }
 
+        $jwtConfiguration = $this->jwtConfigurationProvider->getConfiguration();
+
         return $tokenBuilder
-            ->getToken($this->jwtConfiguration->signer(), $this->jwtConfiguration->signingKey())
+            ->getToken($jwtConfiguration->signer(), $jwtConfiguration->signingKey())
             ->toString();
     }
 
@@ -91,7 +92,9 @@ class TokenFacade
         $tokenBuilder->withClaim(FrontendApiUser::CLAIM_SECRET_CHAIN, $secretChain);
         $tokenBuilder->withClaim(FrontendApiUser::CLAIM_DEVICE_ID, $deviceId);
 
-        return $tokenBuilder->getToken($this->jwtConfiguration->signer(), $this->jwtConfiguration->signingKey());
+        $jwtConfiguration = $this->jwtConfigurationProvider->getConfiguration();
+
+        return $tokenBuilder->getToken($jwtConfiguration->signer(), $jwtConfiguration->signingKey());
     }
 
     /**
@@ -103,7 +106,7 @@ class TokenFacade
         $currentTime = new DateTimeImmutable();
         $expirationTime = $currentTime->add(new DateInterval('PT' . $expiration . 'S'));
 
-        return $this->jwtConfiguration->builder(ChainedFormatter::withUnixTimestampDates())
+        return $this->jwtConfigurationProvider->getConfiguration()->builder(ChainedFormatter::withUnixTimestampDates())
             ->issuedBy($this->domain->getUrl())
             ->permittedFor($this->domain->getUrl())
             ->issuedAt($currentTime)
@@ -118,7 +121,7 @@ class TokenFacade
     public function getTokenByString(string $tokenString): UnencryptedToken
     {
         try {
-            $token = $this->jwtConfiguration->parser()->parse($tokenString);
+            $token = $this->jwtConfigurationProvider->getConfiguration()->parser()->parse($tokenString);
 
             if (!($token instanceof UnencryptedToken)) {
                 throw new InvalidTokenUserMessageException();
@@ -137,13 +140,15 @@ class TokenFacade
      */
     public function validateToken(UnencryptedToken $token): void
     {
-        $validator = $this->jwtConfiguration->validator();
+        $jwtConfiguration = $this->jwtConfigurationProvider->getConfiguration();
+
+        $validator = $jwtConfiguration->validator();
 
         if (!$validator->validate($token, new StrictValidAt(new SystemClock(new DateTimeZone(date_default_timezone_get()))))) {
             throw new ExpiredTokenUserMessageException('Token is expired. Please renew.');
         }
 
-        if (!$validator->validate($token, new SignedWith($this->jwtConfiguration->signer(), $this->jwtConfiguration->verificationKey()))) {
+        if (!$validator->validate($token, new SignedWith($jwtConfiguration->signer(), $jwtConfiguration->verificationKey()))) {
             throw new NotVerifiedTokenUserMessageException('Token could not be verified.');
         }
 

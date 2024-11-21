@@ -22,7 +22,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrontendApiBundle\Model\Token\Exception\ExpiredTokenUserMessageException;
 use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
 use Shopsys\FrontendApiBundle\Model\Token\Exception\NotVerifiedTokenUserMessageException;
-use Shopsys\FrontendApiBundle\Model\Token\JwtConfigurationFactory;
+use Shopsys\FrontendApiBundle\Model\Token\JwtConfigurationProvider;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
@@ -125,13 +125,16 @@ class TokenFacadeTest extends TestCase
         $domain = $this->createDomain();
 
         $customerUserFacade = $this->createMock(CustomerUserFacade::class);
-
-        $jwtConfiguration = $this->createJwtConfiguration();
+        $jwtConfigurationProvider = $this->getMockBuilder(JwtConfigurationProvider::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $jwtConfigurationProvider->method('getConfiguration')
+            ->willReturn($this->createJwtConfiguration());
 
         return new TokenFacade(
             $domain,
             $customerUserFacade,
-            $jwtConfiguration,
+            $jwtConfigurationProvider,
         );
     }
 
@@ -143,7 +146,7 @@ class TokenFacadeTest extends TestCase
         $domain = $this->createDomain();
         $parameterBag = new ParameterBag(['shopsys.frontend_api.keys_filepath' => __DIR__ . '/testKeys']);
 
-        return (new JwtConfigurationFactory($parameterBag, $domain))->create();
+        return (new JwtConfigurationProvider($parameterBag, $domain))->getConfiguration();
     }
 
     /**

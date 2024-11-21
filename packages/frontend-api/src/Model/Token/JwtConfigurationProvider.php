@@ -10,9 +10,11 @@ use Lcobucci\JWT\Signer\Key;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class JwtConfigurationFactory
+class JwtConfigurationProvider
 {
-    protected const FRONTEND_API_KEYS_FILEPATH_PARAMETER = 'shopsys.frontend_api.keys_filepath';
+    protected const string FRONTEND_API_KEYS_FILEPATH_PARAMETER = 'shopsys.frontend_api.keys_filepath';
+
+    protected ?Configuration $configuration = null;
 
     /**
      * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface $parameterBag
@@ -27,17 +29,19 @@ class JwtConfigurationFactory
     /**
      * @return \Lcobucci\JWT\Configuration
      */
-    public function create(): Configuration
+    public function getConfiguration(): Configuration
     {
-        if (!$this->parameterBag->has(static::FRONTEND_API_KEYS_FILEPATH_PARAMETER)) {
-            return Configuration::forUnsecuredSigner();
+        if ($this->configuration !== null) {
+            return $this->configuration;
         }
 
-        return Configuration::forAsymmetricSigner(
+        $this->configuration = Configuration::forAsymmetricSigner(
             $this->getSigner(),
             $this->getPrivateKey(),
             $this->getPublicKey(),
         );
+
+        return $this->configuration;
     }
 
     /**

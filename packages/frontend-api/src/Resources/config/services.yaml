@@ -13,9 +13,6 @@ services:
         tags:
             - { name: overblog_graphql.resolver_map, schema: default }
 
-    Lcobucci\JWT\Configuration:
-        factory: [ '@Shopsys\FrontendApiBundle\Model\Token\JwtConfigurationFactory', create ]
-
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserLoginInformationProvider:
         alias: Shopsys\FrontendApiBundle\Model\Customer\User\CustomerUserLoginInformationProvider
 
