@@ -12,7 +12,7 @@ export const getErrorExchange =
                 tap(({ error }) => {
                     if (error) {
                         // eslint-disable-next-line no-console
-                        console.error('🚀 -> file: errorExchange.ts:15 -> tap -> error:', error, t('Unknown error.'));
+                        //console.error('🚀 -> file: errorExchange.ts:15 -> tap -> error:', error, t('Unknown error.'));
                     }
                 }),
             );
