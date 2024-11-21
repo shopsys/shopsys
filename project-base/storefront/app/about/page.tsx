@@ -33,10 +33,6 @@ export default async function IndexPage() {
     const { client } = await getUrqlData();
     const { data } = await getArticle(client);
     const { data: customerUserData } = await getCustomerUser(client);
-    console.log('🚀 -> file: page.tsx:40 -> IndexPage -> customerUserData:', customerUserData);
-
-    /* const resp = await setTokensToCookiesServer('hello', 'world');
-    console.log("🚀 -> file: page.tsx:44 -> IndexPage -> resp:", resp) */
 
     return (
         <div>

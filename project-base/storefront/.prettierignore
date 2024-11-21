@@ -11,6 +11,7 @@ pnpm-lock.yaml
 .pnpm-store/
 graphql/types.ts
 *.generated.*
+*.ssr.*
 */dist/
 pages/_error.js
 schema.graphql.json
