@@ -1,6 +1,6 @@
 import { AuthConfig } from '@urql/exchange-auth';
+import { cookies } from 'next/headers';
 import { CombinedError, makeOperation, Operation } from 'urql';
-import { getTokensRSC } from 'utils/auth/getTokensFromRSC';
 
 const isRefreshTokenMutation = (operation: Operation) => {
     return (
@@ -19,7 +19,8 @@ const isRefreshTokenMutation = (operation: Operation) => {
  * Add access token to each request if authState is valid
  * Access token is not added to the RefreshTokens mutation (allows refreshing tokens with invalid access token)
  */
-const addAuthToOperation = (operation: Operation, accessToken: string | undefined): Operation => {
+const addAuthToOperation = (operation: Operation): Operation => {
+    const accessToken = cookies().get('accessToken')?.value;
     if (!accessToken || isRefreshTokenMutation(operation)) {
         return operation;
     }
@@ -57,10 +58,8 @@ const refreshAuth = async (): Promise<void> => {
 };
 
 export const getAuthExchangeOptions = () => async (): Promise<AuthConfig> => {
-    const { accessToken } = await getTokensRSC();
-
     return {
-        addAuthToOperation: (operation) => addAuthToOperation(operation, accessToken),
+        addAuthToOperation: (operation) => addAuthToOperation(operation),
         didAuthError,
         refreshAuth,
     };
