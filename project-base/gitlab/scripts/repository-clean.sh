@@ -61,7 +61,7 @@ for REGISTRY_REPOSITORY in $(echo "${REGISTRY_REPOSITORIES}" | jq -rc '.[]'); do
 
     if [ ! -z "${REPOSITORY_NAME_MAP_TO_ENVIRONMENT[${REPOSITORY_NAME%%-*}]}" ]; then
       ENVIRONMENT=${REPOSITORY_NAME_MAP_TO_ENVIRONMENT[${REPOSITORY_NAME%%-*}]}
-      DEPLOYED_TAG=$(curl -L --silent --header "PRIVATE-TOKEN: ${API_TOKEN}" "${API_URL}/deployments?environment=${ENVIRONMENT}&status=success&sort=desc" | jq -r '.[0].sha')
+      DEPLOYED_TAG=$(curl -L --silent --header "PRIVATE-TOKEN: ${API_TOKEN}" "${API_URL}/deployments?environment=${ENVIRONMENT}&status=success&sort=desc" | jq -r '.[0] | "\(.sha)-\(.deployable.pipeline.id)"')
       DEPLOYED_TAG_CREATED_DATE=$(curl -L --silent --header "PRIVATE-TOKEN: ${API_TOKEN}" "${API_URL}/registry/repositories/${REPOSITORY_ID}/tags/${DEPLOYED_TAG}" | jq -r '.created_at')
 
       if [ ! -z "${DEPLOYED_TAG}" ] && [ "${DEPLOYED_TAG_CREATED_DATE}" != "null" ]; then
