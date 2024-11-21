@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { Button } from 'components/Forms/Button/Button';
 import { useState } from 'react';

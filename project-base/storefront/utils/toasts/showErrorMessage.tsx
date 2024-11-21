@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { showMessage } from './showMessage';
 import { GtmMessageDetailType } from 'gtm/enums/GtmMessageDetailType';
