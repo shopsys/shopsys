@@ -489,7 +489,7 @@ jobs:
                 if: ${{ failure() }}
                 run: docker compose logs cypress
     tests-storefront-acceptance-regenerate:
-        name: Regenerate Cypress snapshots
+        name: Reg. Cypress tests
         needs: [variables, build-php-fpm-image, build-storefront-image, build-elasticsearch-image]
         if: |
             always() && !failure() && !cancelled() &&
