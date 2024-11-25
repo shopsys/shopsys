@@ -117,4 +117,4 @@ RUN echo "source /etc/profile.d/bash_completion.sh" >> ~/.bash_profile
 USER www-data
 
 RUN mkdir -p /var/www/html/.npm-global
-ENV NPM_CONFIG_PREFIX /var/www/html/.npm-global
+ENV NPM_CONFIG_PREFIX=/var/www/html/.npm-global

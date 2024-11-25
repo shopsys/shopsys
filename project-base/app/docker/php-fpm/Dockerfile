@@ -19,8 +19,7 @@ USER www-data
 RUN composer install --optimize-autoloader --no-interaction --no-progress --no-dev \
     && php phing build-deploy-part-1-db-independent clean
 
-RUN rm -rf /var/www/html/node_modules \
-    /var/www/html/tests
+RUN rm -rf /var/www/html/node_modules
 
 RUN chmod +x ./deploy/deploy-project.sh && ./deploy/deploy-project.sh merge || true # Hack for monorepo to continue build
 
