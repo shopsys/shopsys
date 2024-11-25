@@ -1,3 +1,4 @@
+"use client";
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 // eslint-disable-next-line no-restricted-imports
 import NextLink, { LinkProps } from 'next/link';
