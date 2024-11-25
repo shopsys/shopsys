@@ -1,38 +1,74 @@
-import { getClient as createClient } from 'app/_urql/createClientRSC';
-import { headers } from 'next/headers';
+import { getErrorExchange } from './errorExchange';
+import { createClient } from 'app/_urql/createClient';
 import 'server-only';
-import { ssrExchange } from 'urql';
-import { getDomainConfig } from 'utils/domain/domainConfig';
-import { getServerT } from 'utils/getServerTranslation';
+import { AnyVariables, Client, DocumentInput, OperationContext, OperationResult, OperationResultSource } from 'urql';
 
-async function getRedis() {
-    const createRedisClient = (await import('redis')).createClient;
+let client: (() => Client) | undefined;
 
-    const redisClient = createRedisClient({
-        url: `redis://${process.env.REDIS_HOST}`,
-        socket: {
-            connectTimeout: 5000,
-        },
-    });
+function createMutex() {
+    let activeLock = Promise.resolve();
 
-    return redisClient;
+    return () => {
+        // Function to release the current lock
+        let releaseLock: () => void;
+        const newLock = new Promise<void>((resolve) => {
+            releaseLock = () => resolve();
+        });
+
+        // Wait for the active lock to resolve before allowing this lock to proceed
+        const waitForLock = activeLock.then(() => releaseLock);
+
+        // Update the active lock to the newly created lock
+        activeLock = newLock;
+
+        // Return a promise that resolves when the caller can proceed
+        return waitForLock;
+    };
 }
 
-export async function getUrqlData() {
-    const domainConfig = getDomainConfig(headers().get('host')!);
+const mutexLock = createMutex();
 
-    const publicGraphqlEndpoint = domainConfig.publicGraphqlEndpoint;
+export async function createQuery<Data = any, Variables extends AnyVariables = AnyVariables>(
+    query: DocumentInput<Data, Variables>,
+    variables: Variables,
+    context?: Partial<OperationContext>,
+): Promise<OperationResultSource<OperationResult<Data, Variables>>> {
+    const client = await getClient();
+    const response = await client.query(query, variables, context);
 
-    const redisClient = await getRedis();
+    const { error, operation } = response;
 
-    await redisClient.connect();
+    getErrorExchange(error, operation);
 
-    const client = createClient({
-        publicGraphqlEndpoint,
-        redisClient,
-    });
+    return response;
+}
 
-    redisClient.disconnect();
+export async function createMutation<Data = any, Variables extends AnyVariables = AnyVariables>(
+    query: DocumentInput<Data, Variables>,
+    variables: Variables,
+    context?: Partial<OperationContext>,
+): Promise<OperationResultSource<OperationResult<Data, Variables>>> {
+    const client = await getClient();
+    const response = await client.mutation(query, variables, context);
+
+    const { error, operation } = response;
+
+    getErrorExchange(error, operation);
+
+    return response;
+}
+
+export async function getClient() {
+    const unlock = await mutexLock();
+
+    if (!client) {
+        const newClient = await createClient();
+        // race condition is prevented by mutex
+        // eslint-disable-next-line require-atomic-updates
+        client = newClient;
+    }
+
+    unlock();
 
     return client();
 }

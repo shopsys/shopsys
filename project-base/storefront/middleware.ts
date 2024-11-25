@@ -251,7 +251,7 @@ const refreshAuthTokensInCookies = async (response: NextResponse, refreshToken: 
     }
 
     const { data } = await refreshTokensReponse.json();
-    if (!data.RefreshTokens) {
+    if (!data?.RefreshTokens) {
         deleteAuthTokensFromCookies(response);
         return;
     }
@@ -259,6 +259,8 @@ const refreshAuthTokensInCookies = async (response: NextResponse, refreshToken: 
     const { accessToken: newAccessToken, refreshToken: newRrefreshToken } = data.RefreshTokens;
     response.cookies.set('accessToken', newAccessToken);
     response.cookies.set('refreshToken', newRrefreshToken);
+    // eslint-disable-next-line no-console
+    console.log('Tokens refreshed');
 };
 
 const gqlQueryFetch = (body: any, accessToken?: string) => {
@@ -276,7 +278,6 @@ const gqlQueryFetch = (body: any, accessToken?: string) => {
         },
         body: JSON.stringify(body),
         method: 'POST',
-        cache: 'no-store',
     });
 };
 

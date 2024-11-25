@@ -1,3 +1,5 @@
+'use client';
+
 import { ButtonHTMLAttributes, forwardRef } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { twMergeCustom } from 'utils/twMerge';
