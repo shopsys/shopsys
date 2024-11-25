@@ -1,4 +1,4 @@
-import { getUrqlData } from './_urql/urql-dto';
+import { createQuery } from './_urql/urql-dto';
 import imageLogo from '/public/images/logo.svg';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
@@ -18,28 +18,19 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'styles/globals.css';
 import 'styles/user-text.css';
 import { twJoin } from 'tailwind-merge';
-import { Client, OperationResult } from 'urql';
 import { getDomainConfig } from 'utils/domain/domainConfig';
 import { getDictionary } from 'utils/getDictionary';
 import { getServerT } from 'utils/getServerTranslation';
 
-async function getNavigationData(client: Client) {
-    const navigationResponse: OperationResult<TypeNavigationQuery, TypeNavigationQueryVariables> = await client.query(
-        NavigationQueryDocument,
-        {},
-    );
-
-    return navigationResponse;
-}
-
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
     const domainConfig = getDomainConfig(headers().get('host')!);
     const { defaultLocale: lang } = domainConfig;
-    const [dictionary, client] = await Promise.all([getDictionary(lang), getUrqlData()]);
-    const [t, { data: navigationData }] = await Promise.all([
+    const dictionary = await getDictionary(lang);
+    const [t, navigationResponse] = await Promise.all([
         getServerT({ defaultLang: lang, defaultDictionary: dictionary }),
-        getNavigationData(client),
+        createQuery<TypeNavigationQuery, TypeNavigationQueryVariables>(NavigationQueryDocument, {}),
     ]);
+    const { data: navigationData } = navigationResponse;
     const currentYear = new Date().getFullYear();
 
     return (
