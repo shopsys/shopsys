@@ -49,10 +49,14 @@ const didAuthError = (error: CombinedError): boolean => {
     return error.response?.status === 401;
 };
 
+/**
+ * @deprecated Refreshing tokens is not supported on the server.
+ * Cannot write to cookies from server
+ * only from Server Actions or Route Hanlders
+ * https://nextjs.org/docs/14/app/api-reference/functions/cookies
+ *
+ */
 const refreshAuth = async (): Promise<void> => {
-    // cannot write to cookies from server
-    // only from Server Actions or Route Hanlders
-    // https://nextjs.org/docs/14/app/api-reference/functions/cookies
     // eslint-disable-next-line no-console
     console.log('skip refreshAuth on server');
 };
