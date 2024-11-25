@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { NavigationItem } from './NavigationItem';
 import { TypeCategoriesByColumnFragment } from 'graphql/requests/navigation/fragments/CategoriesByColumnsFragment.generated';
