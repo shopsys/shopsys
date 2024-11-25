@@ -35,7 +35,7 @@ async function getNavigationData(client: Client) {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
     const domainConfig = getDomainConfig(headers().get('host')!);
     const { defaultLocale: lang } = domainConfig;
-    const [dictionary, { client }] = await Promise.all([getDictionary(lang), getUrqlData()]);
+    const [dictionary, client] = await Promise.all([getDictionary(lang), getUrqlData()]);
     const [t, { data: navigationData }] = await Promise.all([
         getServerT({ defaultLang: lang, defaultDictionary: dictionary }),
         getNavigationData(client),
