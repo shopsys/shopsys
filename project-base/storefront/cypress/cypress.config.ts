@@ -43,7 +43,7 @@ export default defineConfig({
                         !usedPatterns.some((pattern) => new RegExp(pattern.replace('*', '.*')).test(file)),
                 );
 
-                config.specPattern = filteredFiles.length > 0 ? filteredFiles : ['e2e/dummy/dummyTest.cy.ts'];
+                config.specPattern = filteredFiles.length > 0 ? filteredFiles : ['e2e/matrix/matrixTest.cy.ts'];
             }
 
             return config;

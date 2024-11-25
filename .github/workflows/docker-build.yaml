@@ -421,17 +421,21 @@ jobs:
             (needs.build-elasticsearch-image.result == 'success' || needs.build-elasticsearch-image.result == 'skipped')
         runs-on: ubuntu-22.04
         strategy:
+            fail-fast: false
             matrix:
                 group: [ authentication, cart, order, transportAndPayment, visits, others ]
         env:
             GH_TOKEN: ${{ github.token }}
         steps:
             -   name: Check pull request labels
-                id: check-labels
                 run: |
-                    PULL_REQUEST_LABELS=`gh api -H "Accept: application/vnd.github+json" /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels | jq '[.[].name]'`
-                    if echo "$PULL_REQUEST_LABELS" | jq -e '. | index("regenerate screenshots")' >/dev/null; then
-                        echo "SHOULD_RUN_TESTS=false" >> $GITHUB_ENV
+                    if [ -n "${{ github.event.pull_request.number }}" ]; then
+                        PULL_REQUEST_LABELS=`gh api -H "Accept: application/vnd.github+json" /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels | jq '[.[].name]'`
+                        if echo "$PULL_REQUEST_LABELS" | jq -e '. | index("regenerate screenshots")' >/dev/null; then
+                            echo "SHOULD_RUN_TESTS=false" >> $GITHUB_ENV
+                        else
+                            echo "SHOULD_RUN_TESTS=true" >> $GITHUB_ENV
+                        fi
                     else
                         echo "SHOULD_RUN_TESTS=true" >> $GITHUB_ENV
                     fi
@@ -500,44 +504,51 @@ jobs:
             (needs.build-elasticsearch-image.result == 'success' || needs.build-elasticsearch-image.result == 'skipped')
         runs-on: ubuntu-22.04
         strategy:
+            fail-fast: false
             matrix:
                 group: [ authentication, cart, order, transportAndPayment, visits, others ]
         env:
             GH_TOKEN: ${{ github.token }}
+        outputs:
+            SHOULD_RUN_TESTS_REGENERATE: ${{ steps.check-label-tests-regenerate.outputs.SHOULD_RUN_TESTS_REGENERATE }}
         steps:
             -   name: Check pull request labels
-                id: check-labels
+                id: check-label-tests-regenerate
                 run: |
-                    PULL_REQUEST_LABELS=`gh api -H "Accept: application/vnd.github+json" /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels | jq '[.[].name]'`
-                    if ! echo "$PULL_REQUEST_LABELS" | jq -e '. | index("regenerate screenshots")' >/dev/null; then
-                        echo "SHOULD_RUN_TESTS_REGENERATE=false" >> $GITHUB_ENV
+                    if [ -n "${{ github.event.pull_request.number }}" ]; then
+                        PULL_REQUEST_LABELS=`gh api -H "Accept: application/vnd.github+json" /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels | jq '[.[].name]'`
+                        if ! echo "$PULL_REQUEST_LABELS" | jq -e '. | index("regenerate screenshots")' >/dev/null; then
+                            echo "SHOULD_RUN_TESTS_REGENERATE=false" >> $GITHUB_OUTPUT
+                        else
+                            echo "SHOULD_RUN_TESTS_REGENERATE=true" >> $GITHUB_OUTPUT
+                        fi
                     else
-                        echo "SHOULD_RUN_TESTS_REGENERATE=true" >> $GITHUB_ENV
+                        echo "SHOULD_RUN_TESTS_REGENERATE=false" >> $GITHUB_OUTPUT
                     fi
             -   name: GIT checkout branch - ${{ github.head_ref }}
-                if: env.SHOULD_RUN_TESTS_REGENERATE == 'true'
+                if: steps.check-label-tests-regenerate.outputs.SHOULD_RUN_TESTS_REGENERATE == 'true'
                 uses: actions/checkout@v4
                 with:
                     ref: ${{ github.head_ref }}
             -   name: Download docker-compose.cypress.yml from artifacts
-                if: env.SHOULD_RUN_TESTS_REGENERATE == 'true'
+                if: steps.check-label-tests-regenerate.outputs.SHOULD_RUN_TESTS_REGENERATE == 'true'
                 uses: actions/download-artifact@v4
                 with:
                     name: docker-compose-cypress
             -   name: Build application
-                if: env.SHOULD_RUN_TESTS_REGENERATE == 'true'
+                if: steps.check-label-tests-regenerate.outputs.SHOULD_RUN_TESTS_REGENERATE == 'true'
                 run: |
                     mv docker-compose.cypress.yml docker-compose.yml
                     docker compose up -d --wait
                     docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick error-pages-generate elasticsearch-index-recreate elasticsearch-export
             -   name: Run regenerate Cypress tests for ${{ matrix.group }}
-                if: env.SHOULD_RUN_TESTS_REGENERATE == 'true'
+                if: steps.check-label-tests-regenerate.outputs.SHOULD_RUN_TESTS_REGENERATE == 'true'
                 run: |
                     docker compose run cypress-regenerate
                 env:
                     GROUP: ${{ matrix.group }}
             -   name: Commit generated snapshots for ${{ matrix.group }}
-                if: env.SHOULD_RUN_TESTS_REGENERATE == 'true'
+                if: steps.check-label-tests-regenerate.outputs.SHOULD_RUN_TESTS_REGENERATE == 'true'
                 id: commit-snapshots
                 run: |
                     cp -rf snapshots/* project-base/storefront/cypress/snapshots/
@@ -550,7 +561,7 @@ jobs:
                         echo "No changes to commit."
                     fi
             -   name: Push changes for ${{ matrix.group }}
-                if: env.SHOULD_RUN_TESTS_REGENERATE == 'true'
+                if: steps.check-label-tests-regenerate.outputs.SHOULD_RUN_TESTS_REGENERATE == 'true'
                 run: |
                     git config --global user.name 'ShopsysBot'
                     git config --global user.email 'shopsysbot@users.noreply.github.com'
@@ -580,17 +591,8 @@ jobs:
         env:
             GH_TOKEN: ${{ github.token }}
         steps:
-            -   name: Check pull request labels
-                id: check-labels
-                run: |
-                    PULL_REQUEST_LABELS=`gh api -H "Accept: application/vnd.github+json" /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels | jq '[.[].name]'`
-                    if ! echo "$PULL_REQUEST_LABELS" | jq -e '. | index("regenerate screenshots")' >/dev/null; then
-                        echo "SHOULD_RUN_REMOVE_REGENERATE_LABEL=false" >> $GITHUB_ENV
-                    else
-                        echo "SHOULD_RUN_REMOVE_REGENERATE_LABEL=true" >> $GITHUB_ENV
-                    fi
             -   name: Remove "regenerate screenshots" label
-                if: env.SHOULD_RUN_REMOVE_REGENERATE_LABEL == 'true'
+                if: needs.tests-storefront-acceptance-regenerate.outputs.SHOULD_RUN_TESTS_REGENERATE == 'true'
                 run: |
                     gh api \
                         --method DELETE \
@@ -928,6 +930,7 @@ jobs:
             TESTS_STOREFRONT_ACCEPTANCE_RESULT: ${{ needs.tests-storefront-acceptance.result }}
             UNIT_TESTS_STOREFRONT_RESULT: ${{ needs.unit-test-storefront.result }}
             TESTS_STOREFRONT_ACCEPTANCE_REGENERATE_RESULT: ${{ needs.tests-storefront-acceptance-regenerate.result }}
+            REGENERATION_STARTED: ${{ needs.tests-storefront-acceptance-regenerate.outputs.SHOULD_RUN_TESTS_REGENERATE || 'false' }}
         steps:
             -   name: GIT checkout branch - ${{ github.ref }}
                 uses: actions/checkout@v4
@@ -935,5 +938,5 @@ jobs:
                     ref: ${{ github.ref }}
             -   name: Build successful
                 run: |
-                    EXIT_CODE=`. .github/get-build-exit-code.sh && getBuildExitCodeBasedOnJobResults ${BUILD_FORK_RESULT} ${STANDARDS_RESULT} ${TESTS_RESULT} ${TESTS_ACCEPTANCE_RESULT} ${STANDARDS_STOREFRONT_RESULT} ${TRANSLATIONS_DUMP_RESULT} ${REVIEW_RESULT} ${CHECK_CONSOLE_COMMANDS_RESULT} ${TESTS_STOREFRONT_ACCEPTANCE_RESULT} ${UNIT_TESTS_STOREFRONT_RESULT} ${TESTS_STOREFRONT_ACCEPTANCE_REGENERATE_RESULT} > /dev/null ; echo $?`
+                    EXIT_CODE=`. .github/get-build-exit-code.sh && getBuildExitCodeBasedOnJobResults ${BUILD_FORK_RESULT} ${STANDARDS_RESULT} ${TESTS_RESULT} ${TESTS_ACCEPTANCE_RESULT} ${STANDARDS_STOREFRONT_RESULT} ${TRANSLATIONS_DUMP_RESULT} ${REVIEW_RESULT} ${CHECK_CONSOLE_COMMANDS_RESULT} ${TESTS_STOREFRONT_ACCEPTANCE_RESULT} ${UNIT_TESTS_STOREFRONT_RESULT} ${TESTS_STOREFRONT_ACCEPTANCE_REGENERATE_RESULT} ${REGENERATION_STARTED} > /dev/null ; echo $?`
                     exit "${EXIT_CODE}"

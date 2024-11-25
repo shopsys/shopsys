@@ -12,12 +12,13 @@ getBuildExitCodeBasedOnJobResults() {
     TESTS_STOREFRONT_ACCEPTANCE_RESULT=${9}
     UNIT_TESTS_STOREFRONT_RESULT=${10}
     TESTS_STOREFRONT_ACCEPTANCE_REGENERATE_RESULT=${11}
+    REGENERATION_STARTED=${12}
 
     if [[ "$BUILD_FORK_RESULT" == "success" ]]; then
         return 0
     fi
 
-    if [[ "$STANDARDS_RESULT" == "success" && "$TESTS_RESULT" == "success" && "$TESTS_ACCEPTANCE_RESULT" == "success" && "$STANDARDS_STOREFRONT_RESULT" == "success" && "$TRANSLATIONS_DUMP_RESULT" == "success" && "$REVIEW_RESULT" == "success" && "$CHECK_CONSOLE_COMMANDS_RESULT" == "success" && "$TESTS_STOREFRONT_ACCEPTANCE_RESULT" == "success" && "$TESTS_STOREFRONT_ACCEPTANCE_REGENERATE_RESULT" == "success" && "$UNIT_TESTS_STOREFRONT_RESULT" == "success" ]]; then
+    if [[ "$STANDARDS_RESULT" == "success" && "$TESTS_RESULT" == "success" && "$TESTS_ACCEPTANCE_RESULT" == "success" && "$STANDARDS_STOREFRONT_RESULT" == "success" && "$TRANSLATIONS_DUMP_RESULT" == "success" && "$REVIEW_RESULT" == "success" && "$CHECK_CONSOLE_COMMANDS_RESULT" == "success" && (("$TESTS_STOREFRONT_ACCEPTANCE_RESULT" == "success" && "$REGENERATION_STARTED" == "false") || ("$TESTS_STOREFRONT_ACCEPTANCE_REGENERATE_RESULT" == "success" && "$REGENERATION_STARTED" == "true")) && "$UNIT_TESTS_STOREFRONT_RESULT" == "success" ]]; then
         return 0
     else
         return 1
