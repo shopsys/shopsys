@@ -1,3 +1,5 @@
+'use client';
+
 import NextImage, { ImageLoader, ImageProps as NextImageProps } from 'next/image';
 import { memo, SyntheticEvent, useCallback, useEffect, useState } from 'react';
 
