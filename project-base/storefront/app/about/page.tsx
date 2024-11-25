@@ -30,7 +30,7 @@ async function getCustomerUser(client: Client) {
 
 export default async function IndexPage() {
     const t = await getServerT();
-    const { client } = await getUrqlData();
+    const client = await getUrqlData();
     const { data } = await getArticle(client);
     const { data: customerUserData } = await getCustomerUser(client);
 
