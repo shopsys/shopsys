@@ -102,7 +102,7 @@ tests:functional-and-acceptance:
     script:
         - cp -f ./gitlab/docker-compose-ci.yml ./docker-compose.yml
         - docker compose up -d
-        - docker compose exec -T php-fpm /bin/bash -c "mv PRODUCTION DEVELOPMENT; php phing composer-dev test-db-create frontend-api-generate-new-keys tests tests-acceptance-build tests-acceptance"
+        - docker compose exec -T php-fpm /bin/bash -c "mv PRODUCTION DEVELOPMENT; php phing composer-dev npm-install-dependencies test-db-create frontend-api-generate-new-keys tests tests-acceptance-build tests-acceptance"
     after_script:
         - mkdir -p codeception/
         - docker cp shopsys-framework-php-fpm:/var/www/html/var/log/codeception/ ./
