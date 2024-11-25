@@ -19,8 +19,6 @@ async function getRedis() {
 }
 
 export async function getUrqlData() {
-    const t = await getServerT();
-
     const domainConfig = getDomainConfig(headers().get('host')!);
 
     const publicGraphqlEndpoint = domainConfig.publicGraphqlEndpoint;
@@ -29,19 +27,12 @@ export async function getUrqlData() {
 
     await redisClient.connect();
 
-    const currentSsrExchange = ssrExchange({ isClient: false });
-
     const client = createClient({
-        t,
-        ssrExchange: currentSsrExchange,
         publicGraphqlEndpoint,
         redisClient,
     });
 
     redisClient.disconnect();
 
-    return {
-        client: client(),
-        ssrData: currentSsrExchange.extractData(),
-    };
+    return client();
 }
