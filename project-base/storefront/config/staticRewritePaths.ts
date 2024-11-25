@@ -5,7 +5,7 @@ const nextConfig = getConfig();
 export const STATIC_REWRITE_PATHS = {
     [(nextConfig?.publicRuntimeConfig?.domains?.[0]?.url || process.env.NEXT_PUBLIC_DOMAIN_HOSTNAME_1) as string]: {
         '/about': '/about',
-        '/refresh-token': '/refresh-token',
+        '/app': '/app',
         '/search': '/search',
         '/cart': '/cart',
         '/contact': '/contact',
@@ -44,7 +44,7 @@ export const STATIC_REWRITE_PATHS = {
     },
     [(nextConfig?.publicRuntimeConfig?.domains?.[1]?.url || process.env.NEXT_PUBLIC_DOMAIN_HOSTNAME_2) as string]: {
         '/about': '/about',
-        '/refresh-token': '/refresh-token',
+        '/app': '/app',
         '/search': '/hledani',
         '/cart': '/kosik',
         '/contact': '/kontakt',
