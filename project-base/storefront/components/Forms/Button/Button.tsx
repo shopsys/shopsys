@@ -1,3 +1,5 @@
+'use client';
+
 // eslint-disable-next-line no-restricted-imports
 import { ButtonHTMLAttributes, forwardRef } from 'react';
 import { twJoin } from 'tailwind-merge';
