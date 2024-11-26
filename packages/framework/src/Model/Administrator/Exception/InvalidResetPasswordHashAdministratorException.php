@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Administrator\Exception;
 
-use App\Environment;
 use Exception;
-use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class InvalidResetPasswordHashAdministratorException extends Exception
 {
@@ -17,12 +14,6 @@ class InvalidResetPasswordHashAdministratorException extends Exception
      */
     public function __construct($message = '', ?Exception $previous = null)
     {
-        $isDev = class_exists('App\Environment') && Environment::getEnvironment() === EnvironmentType::DEVELOPMENT;
-
-        if (!$isDev) {
-            throw new NotFoundHttpException($message, $previous, 0, ['X-Accel-Redirect' => '@storefront']);
-        }
-
-        parent::__construct($message, 404, $previous);
+        parent::__construct($message, 0, $previous);
     }
 }

@@ -2194,6 +2194,9 @@ msgstr "Pokyny"
 msgid "Internal note"
 msgstr "Interní poznámka"
 
+msgid "Invalid reset password hash for administrator"
+msgstr "Neplatný hash pro resetování hesla administrátora"
+
 msgid "Invalid two-factor authentication code."
 msgstr "Neplatný kód dvoufaktorového ověření."
 

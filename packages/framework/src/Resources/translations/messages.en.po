@@ -2194,6 +2194,9 @@ msgstr ""
 msgid "Internal note"
 msgstr ""
 
+msgid "Invalid reset password hash for administrator"
+msgstr ""
+
 msgid "Invalid two-factor authentication code."
 msgstr ""
 

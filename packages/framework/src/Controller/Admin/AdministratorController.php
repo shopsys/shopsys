@@ -19,10 +19,10 @@ use Shopsys\FrameworkBundle\Model\Administrator\Exception\AdministratorNotFoundE
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingLastAdministratorException;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSelfException;
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DuplicateUserNameException;
-use Shopsys\FrameworkBundle\Model\Administrator\Exception\InvalidResetPasswordHashAdministratorException;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Security\Authenticator;
+use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -530,34 +530,45 @@ class AdministratorController extends AdminBaseController
         $username = $request->query->get('username');
         $hash = $request->query->get('hash');
 
-
         $administrator = $this->administratorFacade->getByUserName($username);
 
+        $invalidResetPasswordHash = false;
+
         if (!$administrator->isResetPasswordHashValid($hash)) {
-            throw new InvalidResetPasswordHashAdministratorException('Reset password hash is not valid');
+            $invalidResetPasswordHash = true;
         }
 
-        $administratorData = $this->administratorDataFactory->createFromAdministrator($administrator);
+        if (!$invalidResetPasswordHash) {
+            $administratorData = $this->administratorDataFactory->createFromAdministrator($administrator);
 
-        $form = $this->createForm(AdministratorResetPasswordFormType::class, $administratorData, [
-            'administrator' => $administrator,
-        ]);
-        $form->handleRequest($request);
+            $form = $this->createForm(AdministratorResetPasswordFormType::class, $administratorData, [
+                'administrator' => $administrator,
+            ]);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->administratorPasswordFacade->setNewPassword($administrator->getUsername(), $hash, $administratorData->password);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->administratorPasswordFacade->setNewPassword(
+                    $administrator->getUsername(),
+                    $hash,
+                    $administratorData->password,
+                );
 
-            $this->authenticator->loginAdministrator($administrator, $request);
+                if (!$this->isGranted(Roles::ROLE_ADMIN)) {
+                    $this->authenticator->loginAdministrator($administrator, $request);
 
-            return $this->redirectToRoute('admin_default_dashboard');
-        }
+                    return $this->redirectToRoute('admin_default_dashboard');
+                }
 
-        if ($form->isSubmitted() && !$form->isValid()) {
-            $this->addErrorFlash(t('Please check the correctness of all data filled.'));
+                return $this->redirectToRoute('admin_administrator_list');
+            }
+
+            if ($form->isSubmitted() && !$form->isValid()) {
+                $this->addErrorFlash(t('Please check the correctness of all data filled.'));
+            }
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/Administrator/resetPassword.html.twig', [
-            'form' => $form->createView(),
+            'form' => isset($form) ? $form->createView() : null,
             'administrator' => $administrator,
         ]);
     }
