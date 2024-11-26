@@ -1,11 +1,13 @@
 import { Banner } from './Banner';
 import { BannersDot } from './BannersDot';
 import { bannersReducer } from './bannersUtils';
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { TIDs } from 'cypress/tids';
 import { TypeSliderItemFragment } from 'graphql/requests/sliderItems/fragments/SliderItemFragment.generated';
 import { useEffect, useReducer, useRef } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { twJoin } from 'tailwind-merge';
+import { disableClickWhenTextSelected } from 'utils/ui/disableClickWhenTextSelected';
 
 const SLIDER_STOP_SLIDE_TIMEOUT = 50 as const;
 const SLIDER_SLIDE_DURATION = 500 as const;
@@ -73,11 +75,13 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
 
     return (
         <div className="flex flex-col" tid={TIDs.banners_slider}>
-            <a
+            <ExtendedNextLink
                 {...handlers}
-                className="!no-underline"
+                className="select-text !no-underline"
+                draggable={false}
                 href={sliderItems[bannerSliderState.sliderPosition].link}
                 title={sliderItems[bannerSliderState.sliderPosition].name}
+                onClick={disableClickWhenTextSelected}
                 onMouseEnter={checkAndClearInterval}
                 onMouseLeave={() => {
                     checkAndClearInterval();
@@ -107,7 +111,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
                         ))}
                     </div>
                 </div>
-            </a>
+            </ExtendedNextLink>
             <div
                 className={twJoin(
                     'relative',
