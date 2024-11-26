@@ -146,7 +146,7 @@ export const useModuleValue = () => {
 
 Before showing different mocking scenarios, there are some common known pitfals with mocking which might be a problem for you as well. Below is a list with a simple solution:
 
--   **If I test function foo and want to mock a function or constant bar from the same module, it will not work as needed** - If this is the case, you should find another way of testing, either by moving one of these files, or by avoiding the mock altogether (for example using IoC and parameters)
+- **If I test function foo and want to mock a function or constant bar from the same module, it will not work as needed** - If this is the case, you should find another way of testing, either by moving one of these files, or by avoiding the mock altogether (for example using IoC and parameters)
 
 #### 1. Default mock of a function
 

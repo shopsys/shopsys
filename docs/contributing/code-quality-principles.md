@@ -19,10 +19,10 @@ The reason has to be discussed with the reviewer and may be written in the commi
 
 ## Principles
 
--   [Dependency injection](#dependency-injection)
--   [Strict types](#strict-types)
--   [Don't repeat yourself](#dont-repeat-yourself)
--   [Dependency inversion](#dependency-inversion)
+- [Dependency injection](#dependency-injection)
+- [Strict types](#strict-types)
+- [Don't repeat yourself](#dont-repeat-yourself)
+- [Dependency inversion](#dependency-inversion)
 
 ## Dependency injection
 

@@ -8,14 +8,14 @@ Shopsys Platform has its own documentation so the project documentation should f
 
 ### Examples of topics
 
--   Changes in the architecture
--   Extra technologies and how they are used (e.g., NoSQL database, JavaScript framework)
--   Customizations of standard features like:
-    -   Custom search functionality (e.g., ElasticSearch)
-    -   Modified checkout process
--   Functionality that was removed or disabled
--   Details about communication with third-party systems (e.g., ERP, CRM, payment gateways)
--   Special requirements for server infrastructure
+- Changes in the architecture
+- Extra technologies and how they are used (e.g., NoSQL database, JavaScript framework)
+- Customizations of standard features like:
+    - Custom search functionality (e.g., ElasticSearch)
+    - Modified checkout process
+- Functionality that was removed or disabled
+- Details about communication with third-party systems (e.g., ERP, CRM, payment gateways)
+- Special requirements for server infrastructure
 
 ## Other rules
 

@@ -116,8 +116,8 @@ Let us have for this example following folder structure.
 
 We can see two files named `main.less` located in two different folders.
 
--   `common/main.less` will import only that type of files which defines common styles for all domains
--   `domain2/main.less` will import files which extend, add or modify styles for _domain2_
+- `common/main.less` will import only that type of files which defines common styles for all domains
+- `domain2/main.less` will import files which extend, add or modify styles for _domain2_
 
 Now we want to extend styles for _domain2_ by changing default colors defined in `core/variables.less` and add styles for a footer.
 Code below shows up how would `domain2/main.less` look like.

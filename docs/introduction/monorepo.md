@@ -26,32 +26,32 @@ If you are interested, you can read more about the monorepo approach here - http
 
 `project-base/`
 
--   [shopsys/project-base](https://github.com/shopsys/project-base)
+- [shopsys/project-base](https://github.com/shopsys/project-base)
 
 `packages/`
 
--   [shopsys/framework](https://github.com/shopsys/framework)
--   [shopsys/brand-feed-luigis-box](https://github.com/shopsys/brand-feed-luigis-box)
--   [shopsys/category-feed-luigis-box](https://github.com/shopsys/category-feed-luigis-box)
--   [shopsys/product-feed-zbozi](https://github.com/shopsys/product-feed-zbozi)
--   [shopsys/product-feed-google](https://github.com/shopsys/product-feed-google)
--   [shopsys/product-feed-heureka](https://github.com/shopsys/product-feed-heureka)
--   [shopsys/product-feed-heureka-delivery](https://github.com/shopsys/product-feed-heureka-delivery)
--   [shopsys/product-feed-luigis-box](https://github.com/shopsys/product-feed-luigis-box)
--   [shopsys/article-feed-luigis-box](https://github.com/shopsys/article-feed-luigis-box)
--   [shopsys/plugin-interface](https://github.com/shopsys/plugin-interface)
--   [shopsys/coding-standards](https://github.com/shopsys/coding-standards)
--   [shopsys/http-smoke-testing](https://github.com/shopsys/http-smoke-testing)
--   [shopsys/form-types-bundle](https://github.com/shopsys/form-types-bundle)
--   [shopsys/migrations](https://github.com/shopsys/migrations)
--   [shopsys/monorepo-tools](https://github.com/shopsys/monorepo-tools)
--   [shopsys/google-cloud-bundle](https://github.com/shopsys/google-cloud-bundle)
--   [shopsys/frontend-api](https://github.com/shopsys/frontend-api)
--   [shopsys/s3-bridge](https://github.com/shopsys/s3-bridge)
--   [shopsys/php-image](https://github.com/shopsys/php-image)
--   [shopsys/luigis-box](https://github.com/shopsys/luigis-box)
--   [shopsys/administration](https://github.com/shopsys/administration)
--   [shopsys/convertim](https://github.com/shopsys/convertim)
+- [shopsys/framework](https://github.com/shopsys/framework)
+- [shopsys/brand-feed-luigis-box](https://github.com/shopsys/brand-feed-luigis-box)
+- [shopsys/category-feed-luigis-box](https://github.com/shopsys/category-feed-luigis-box)
+- [shopsys/product-feed-zbozi](https://github.com/shopsys/product-feed-zbozi)
+- [shopsys/product-feed-google](https://github.com/shopsys/product-feed-google)
+- [shopsys/product-feed-heureka](https://github.com/shopsys/product-feed-heureka)
+- [shopsys/product-feed-heureka-delivery](https://github.com/shopsys/product-feed-heureka-delivery)
+- [shopsys/product-feed-luigis-box](https://github.com/shopsys/product-feed-luigis-box)
+- [shopsys/article-feed-luigis-box](https://github.com/shopsys/article-feed-luigis-box)
+- [shopsys/plugin-interface](https://github.com/shopsys/plugin-interface)
+- [shopsys/coding-standards](https://github.com/shopsys/coding-standards)
+- [shopsys/http-smoke-testing](https://github.com/shopsys/http-smoke-testing)
+- [shopsys/form-types-bundle](https://github.com/shopsys/form-types-bundle)
+- [shopsys/migrations](https://github.com/shopsys/migrations)
+- [shopsys/monorepo-tools](https://github.com/shopsys/monorepo-tools)
+- [shopsys/google-cloud-bundle](https://github.com/shopsys/google-cloud-bundle)
+- [shopsys/frontend-api](https://github.com/shopsys/frontend-api)
+- [shopsys/s3-bridge](https://github.com/shopsys/s3-bridge)
+- [shopsys/php-image](https://github.com/shopsys/php-image)
+- [shopsys/luigis-box](https://github.com/shopsys/luigis-box)
+- [shopsys/administration](https://github.com/shopsys/administration)
+- [shopsys/convertim](https://github.com/shopsys/convertim)
 
 !!! note
 
@@ -62,18 +62,18 @@ If you are interested, you can read more about the monorepo approach here - http
 
 Monorepo can be installed and used as standard application. This requires some additional infrastructure:
 
--   **docker/** - templates for configuration of docker in monorepo.
+- **docker/** - templates for configuration of docker in monorepo.
 
--   **build.xml** - definitions of targets for use in the monorepo, some already defined targets
-    have modified behavior in such a way that their actions are launched over all monorepo packages
+- **build.xml** - definitions of targets for use in the monorepo, some already defined targets
+  have modified behavior in such a way that their actions are launched over all monorepo packages
 
--   **composer.json** - contains the dependencies required by individual packages and by Shopsys Platform.
-    It is not generated automatically, so each change made in the `composer.json` of the specific package must be reflected
-    also in `composer.json` in the root of monorepo. In monorepo, Shopsys packages are used directly from the directory
-    `packages/`, so there are no requirements of those packages in `composer.json`.
+- **composer.json** - contains the dependencies required by individual packages and by Shopsys Platform.
+  It is not generated automatically, so each change made in the `composer.json` of the specific package must be reflected
+  also in `composer.json` in the root of monorepo. In monorepo, Shopsys packages are used directly from the directory
+  `packages/`, so there are no requirements of those packages in `composer.json`.
 
--   **parameters_monorepo.yaml** - overriding of global variables of Shopsys Platform, which makes it possible to run
-    Shopsys Platform in monorepo
+- **parameters_monorepo.yaml** - overriding of global variables of Shopsys Platform, which makes it possible to run
+  Shopsys Platform in monorepo
 
 ## Installation of monorepo
 
@@ -93,5 +93,5 @@ located in the directory `project-base/`.
 
 ## Troubleshooting
 
--   Package is functional in monorepo but broken outside of monorepo - ensure that every parameter required by package
-    is available even outside the monorepo
+- Package is functional in monorepo but broken outside of monorepo - ensure that every parameter required by package
+  is available even outside the monorepo

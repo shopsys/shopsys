@@ -11,9 +11,9 @@ In the Shopsys Platform, Blackfire is preinstalled for local development, allowi
 
 Before you can start using Blackfire in the Shopsys Platform, you need to have the following:
 
--   Blackfire account
-    -   You can create an account on the [Blackfire website](https://blackfire.io/).
--   [Blackfire browser extension](https://docs.blackfire.io/integrations/browsers/index) installed (optional)
+- Blackfire account
+    - You can create an account on the [Blackfire website](https://blackfire.io/).
+- [Blackfire browser extension](https://docs.blackfire.io/integrations/browsers/index) installed (optional)
 
 ## Configuration
 

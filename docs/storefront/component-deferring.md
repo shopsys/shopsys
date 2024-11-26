@@ -261,8 +261,8 @@ The deferring mechanism works the best if you wrap your page in `PageDefer`. Thi
 
 Inside `usDeferredRender.ts` there are two constants which control the strating point and gap of the defer mechanism:
 
--   `DEFER_START` tells the application how many miliseconds after the initial `useEffect` run the first deferred components should be rendered.
--   `DEFER_GAP` tells the application how large the gaps (in miliseconds) between subsequent deferred components should be.
+- `DEFER_START` tells the application how many miliseconds after the initial `useEffect` run the first deferred components should be rendered.
+- `DEFER_GAP` tells the application how large the gaps (in miliseconds) between subsequent deferred components should be.
 
 Later defer means more time for the initial render and hydration, which might result in a less busy CPU thread, but it extends the time when the content is not ready for the user. Larger gaps mean more space for each render task, which might, again, result in a less busy CPU thread, but extends the time until all content is ready for the user.
 

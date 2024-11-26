@@ -170,11 +170,11 @@ When your plugin needs to execute some task periodically, for example downloadin
 
 There are 2 types of CRON module interfaces:
 
--   [`SimpleCronModuleInterface`](./src/Cron/SimpleCronModuleInterface.php)
-    -   for short tasks that do not take too long to execute
--   [`IteratedCronModuleInterface`](./src/Cron/IteratedCronModuleInterface.php)
-    -   for long-running tasks that can be divided into smaller parts
-    -   if the module takes too long to run it will be suspended and will be woken up and re-run during the next opportunity
+- [`SimpleCronModuleInterface`](./src/Cron/SimpleCronModuleInterface.php)
+    - for short tasks that do not take too long to execute
+- [`IteratedCronModuleInterface`](./src/Cron/IteratedCronModuleInterface.php)
+    - for long-running tasks that can be divided into smaller parts
+    - if the module takes too long to run it will be suspended and will be woken up and re-run during the next opportunity
 
 You can implement either one of these interfaces and [tag the service in a DI container](http://symfony.com/doc/current/service_container/tags.html) with `shopsys.cron` tag.
 

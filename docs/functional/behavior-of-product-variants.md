@@ -28,62 +28,62 @@ Specific variants are not displayed in the product list.
 
 ### Administration - main product:
 
--   there is the icon "M" for the main product on the products overview
--   it is possible to add/remove variants on the main product card
--   all attributes (except the catalog number, PartNo, EAN, inventory and price) can be edited on the main product card
+- there is the icon "M" for the main product on the products overview
+- it is possible to add/remove variants on the main product card
+- all attributes (except the catalog number, PartNo, EAN, inventory and price) can be edited on the main product card
 
 ### Administration - variants:
 
--   there is the icon "V" for the variant on the products overview
--   the main product is listed on the card of the variant
--   all attributes (except the short description, description and assignment to the category) can be edited on the card of the variant
--   on the card of variant, it is possible to fill in the alias of the variant which replaces the name of the variant on the Front-end (for example, instead of the name “T-shirt size S” will be displayed only “Size S” in the variants table)
+- there is the icon "V" for the variant on the products overview
+- the main product is listed on the card of the variant
+- all attributes (except the short description, description and assignment to the category) can be edited on the card of the variant
+- on the card of variant, it is possible to fill in the alias of the variant which replaces the name of the variant on the Front-end (for example, instead of the name “T-shirt size S” will be displayed only “Size S” in the variants table)
 
 ### Front-end - product overview:
 
--   only main product is displayed in the product overview
+- only main product is displayed in the product overview
 
 ### Front-end - price:
 
--   for the main product, the customer sees the cheapest price as the price “From” (if the variants have a different price)
+- for the main product, the customer sees the cheapest price as the price “From” (if the variants have a different price)
 
 ### Front-end - add to cart:
 
--   the customer cannot add the main product to the cart
--   the customer can add only individual variants to the cart
--   variant can be added to the cart from the product detail of the main variant
+- the customer cannot add the main product to the cart
+- the customer can add only individual variants to the cart
+- variant can be added to the cart from the product detail of the main variant
 
 ### Front-end - search:
 
--   search functionality and search autocomplete search only for the main products, not variants
--   the results show only the main products, not the individual variants
+- search functionality and search autocomplete search only for the main products, not variants
+- the results show only the main products, not the individual variants
 
 ### Front-end - filtering:
 
--   only the main product parameters are filtered
+- only the main product parameters are filtered
 
 ### Front-end - availability:
 
--   the main product shows the best availability from the assigned variants
+- the main product shows the best availability from the assigned variants
 
 ### Front end - product detail:
 
--   the main product displays the name, image, flag, availability, manufacturer, description, technical parameters and product variants
--   each variant displays the image, name, price, option to enter the number of pieces and button to buy
+- the main product displays the name, image, flag, availability, manufacturer, description, technical parameters and product variants
+- each variant displays the image, name, price, option to enter the number of pieces and button to buy
 
 ### Front-end - visibility of variants:
 
--   conditions are same as for a regular product are applied ([Product Visibility and Exclude from Sale](./product-visibility-and-exclude-from-sale.md)) + these cases:
-    -   if the main product is set as hidden, its variants are hidden, too
-    -   if all product variants are hidden, then the main product is hidden, too
+- conditions are same as for a regular product are applied ([Product Visibility and Exclude from Sale](./product-visibility-and-exclude-from-sale.md)) + these cases:
+    - if the main product is set as hidden, its variants are hidden, too
+    - if all product variants are hidden, then the main product is hidden, too
 
 ### Front-end - exclude from sale:
 
--   conditions are same as for a regular product are applied ([Product Visibility and Exclude from Sale](./product-visibility-and-exclude-from-sale.md)) + these cases:
-    -   if the main product is excluded from sale, then variants are not shown on the detail of the main product either
-    -   if all variants are excluded from the sale, then the behavior is the same as the previous point
+- conditions are same as for a regular product are applied ([Product Visibility and Exclude from Sale](./product-visibility-and-exclude-from-sale.md)) + these cases:
+    - if the main product is excluded from sale, then variants are not shown on the detail of the main product either
+    - if all variants are excluded from the sale, then the behavior is the same as the previous point
 
 ### XML feeds:
 
--   for feeds Heureka.cz and Zboží.cz: variants are generated as separate items with a common tag <ITEMGROUP_ID>
--   feed for Google purchases the variants does not take into account
+- for feeds Heureka.cz and Zboží.cz: variants are generated as separate items with a common tag <ITEMGROUP_ID>
+- feed for Google purchases the variants does not take into account

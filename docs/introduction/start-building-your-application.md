@@ -23,8 +23,8 @@ _Note: Learn more about domain concept fully in [Domain, Multidomain, Multilangu
 
 When you install new project, domains are set like this
 
--   `shopsys` on the URL `http://127.0.0.1:8000`
--   `2.shopsys` on the URL `http://127.0.0.2:8000`
+- `shopsys` on the URL `http://127.0.0.1:8000`
+- `2.shopsys` on the URL `http://127.0.0.2:8000`
 
 Read [settings and working with domain](./how-to-set-up-domains-and-locales.md#settings-and-working-with-domains) to learn how to set your domains correctly. If you have project with only one domain, read [how to create a single domain application](./how-to-set-up-domains-and-locales.md#1-how-to-create-a-single-domain-application). If you have project with more than two domains, read [how to add a new domain](./how-to-set-up-domains-and-locales.md#2-how-to-add-a-new-domain).
 
@@ -42,9 +42,9 @@ Every domain has defined one locale and also administration has defined its loca
 
 When you install new project, locales are set like this
 
--   `shopsys` _(1st domain)_: `en`
--   `2.shopsys` _(2nd domain)_: `cs`
--   administration: `en`
+- `shopsys` _(1st domain)_: `en`
+- `2.shopsys` _(2nd domain)_: `cs`
+- administration: `en`
 
 In case you want to change domain locale read [locale settings](./how-to-set-up-domains-and-locales.md#3-locale-settings) or in case you want to change default administration locale read [locale in administration](./how-to-set-up-domains-and-locales.md#36-locale-in-administration).
 
@@ -112,9 +112,9 @@ _Note: Read more in a dedicated article about [price filters](../model/how-to-wo
 
 When you install new project, default currencies are set like this
 
--   `shopsys` _(1st domain)_: `CZK`
--   `2.shopsys` _(2nd domain)_: `EUR`
--   administration: `CZK`
+- `shopsys` _(1st domain)_: `CZK`
+- `2.shopsys` _(2nd domain)_: `EUR`
+- administration: `CZK`
 
 You can change default currencies in administration `Pricing > Currencies`, but this change will not last after application rebuild (operation that you do often during development).
 

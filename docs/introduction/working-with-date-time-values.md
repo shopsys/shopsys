@@ -17,9 +17,9 @@ Default implementation `DisplayTimeZoneProvider` takes into account domain timez
 
 All date values should be presented to the admin from Twig templates, where are three filters at your hand
 
--   `formatDate`
--   `formatTime`
--   `formatDateTime`
+- `formatDate`
+- `formatTime`
+- `formatDateTime`
 
 All filters are aware of `DisplayTimeZoneProvider` and internally convert the values to the desired admin display timezone when rendering date-times.
 

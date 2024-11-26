@@ -148,9 +148,9 @@ Thanks to the usage of `SCOPE_BRAND` here, no visibility or selling denied recal
 
 There are several methods that allow you to modify the scopes configuration further to suit your project needs.
 
--   `addExportFieldsToExistingScopeRule()`
--   `addNewExportScopeRule()`
--   `overwriteExportScopeRule()`
+- `addExportFieldsToExistingScopeRule()`
+- `addNewExportScopeRule()`
+- `overwriteExportScopeRule()`
 
 You can use the methods in the overridden `App\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig::loadProductExportScopeRules()`.
 

@@ -12,9 +12,9 @@ It also allows you to change or add new types without re-writing whole frontend 
 
 ## Params
 
--   name - first param is name of icon
--   class - optional - adds html attribute class with string inside (you can see above)
--   type - optional - is used type (svg-font (default), image, svg-sprite, svg-inline)
+- name - first param is name of icon
+- class - optional - adds html attribute class with string inside (you can see above)
+- type - optional - is used type (svg-font (default), image, svg-sprite, svg-inline)
 
 ## How to define new type
 

@@ -7,16 +7,16 @@ To customize your grid, you need to create a new template extending the original
 
 ## Blocks that are being overridden at most
 
--   `grid_title_cell_id_<column_id>`
-    -   `<column_id>` stands for the ID of the column that is defined during the grid creation by the first argument of `Grid::addColumn` method
-    -   handy when you need to override a column title in a grid defined in the framework without overriding the grid factory
--   `grid_value_cell_id_<column_id>`
-    -   `<column_id>` stands for the ID of the column that is defined during the grid creation by the first argument of `Grid::addColumn` method
-    -   used when you need to change the appearance of values in a particular column
-    -   the original value is available as `value` variable
--   `grid_no_data`
-    -   the block contains a message that is displayed when there are no data in the grid
-    -   the default (translatable) value is "No records found"
+- `grid_title_cell_id_<column_id>`
+    - `<column_id>` stands for the ID of the column that is defined during the grid creation by the first argument of `Grid::addColumn` method
+    - handy when you need to override a column title in a grid defined in the framework without overriding the grid factory
+- `grid_value_cell_id_<column_id>`
+    - `<column_id>` stands for the ID of the column that is defined during the grid creation by the first argument of `Grid::addColumn` method
+    - used when you need to change the appearance of values in a particular column
+    - the original value is available as `value` variable
+- `grid_no_data`
+    - the block contains a message that is displayed when there are no data in the grid
+    - the default (translatable) value is "No records found"
 
 ## Rendering type Money in administration
 

@@ -365,8 +365,8 @@ Cron job is executed every 5 minutes in `php-fpm` container under `root` user pr
 Since web application is running we can go to administration and change passwords for default administrators.
 With login `superadmin` and password `admin123` we can do it via these urls:
 
--   `/admin/administrator/edit/1`
--   `/admin/administrator/edit/2`
+- `/admin/administrator/edit/1`
+- `/admin/administrator/edit/2`
 
 Now we go to `/admin/dashboard/` and fulfill all requests that are demanding for us by red colored links.
 

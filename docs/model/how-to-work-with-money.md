@@ -5,10 +5,10 @@ In Shopsys Platform, all monetary values (_prices, account balances, discount am
 
 This approach has several advantages:
 
--   it avoids problems with floating point number calculations and comparisons (see [official PHP documentation](http://php.net/manual/en/language.types.float.php) for details)
--   allows easy-to-use interfaces with consistent type-hinting so you can be sure what type of value you should be using
--   prevents accidental conversion to unexpected types (which may be problematic e.g., when using the `===` operator)
--   makes the application design clearer and future changes easier
+- it avoids problems with floating point number calculations and comparisons (see [official PHP documentation](http://php.net/manual/en/language.types.float.php) for details)
+- allows easy-to-use interfaces with consistent type-hinting so you can be sure what type of value you should be using
+- prevents accidental conversion to unexpected types (which may be problematic e.g., when using the `===` operator)
+- makes the application design clearer and future changes easier
 
 **Table of Contents:**
 
@@ -60,10 +60,10 @@ Zero amount of money can be constructed by calling `Money::zero()`.
 
 To compute with monetary values you have to use the object's methods instead of arithmetic operators (`+`, `-`, `*`, `/`):
 
--   `Money::add(Money $addend) : Money`
--   `Money::subtract(Money $subtrahend) : Money`
--   `Money::multiply(int|string $multiplier) : Money`
--   `Money::divide(int|string $divisor, int $scale) : Money`
+- `Money::add(Money $addend) : Money`
+- `Money::subtract(Money $subtrahend) : Money`
+- `Money::multiply(int|string $multiplier) : Money`
+- `Money::divide(int|string $divisor, int $scale) : Money`
 
 !!! note
 
@@ -75,9 +75,9 @@ For multiplication and division, the other parameter has to be an integer or a n
 The scale (number of decimal places) of the result is assigned automatically to all operations except division, keeping the results as precise as possible.
 Results of a division may be inexpressible with a finite decimal (e.g., 1 / 3 = 0.3333...), so it's up to the user to specify the requested scale.
 
--   scale of the result of `add` and `subtract` is the _maximal scale_ of both money values
--   scale of the result of `multiply` is the _sum of scales_ of both money values
--   scale of the result of `divide` must be _explicitly specified_, the last decimal place will be rounded to minimize the error
+- scale of the result of `add` and `subtract` is the _maximal scale_ of both money values
+- scale of the result of `multiply` is the _sum of scales_ of both money values
+- scale of the result of `divide` must be _explicitly specified_, the last decimal place will be rounded to minimize the error
 
 !!! note
 
@@ -94,12 +94,12 @@ The scale of the result will always be equal to the provided `$scale`.
 
 To compare two monetary values you have to use the object's methods instead of [comparison operators](http://php.net/manual/en/language.operators.comparison.php):
 
--   `Money::equals(Money $other) : bool` instead of `===` and `==`
--   `Money::isLessThan(Money $other) : bool` instead of `<`
--   `Money::isGreaterThan(Money $other) : bool` instead of `>`
--   `Money::isLessThanOrEqualTo(Money $other) : bool` instead of `<=`
--   `Money::isGreaterThanOrEqualTo(Money $other) : bool` instead of `>=`
--   `Money::compare(Money $other) : int` instead of the Spaceship operator `<=>`
+- `Money::equals(Money $other) : bool` instead of `===` and `==`
+- `Money::isLessThan(Money $other) : bool` instead of `<`
+- `Money::isGreaterThan(Money $other) : bool` instead of `>`
+- `Money::isLessThanOrEqualTo(Money $other) : bool` instead of `<=`
+- `Money::isGreaterThanOrEqualTo(Money $other) : bool` instead of `>=`
+- `Money::compare(Money $other) : int` instead of the Spaceship operator `<=>`
 
 To compare a value with zero you may use the short-hand methods`isPositive`, `isNegative` or `isZero`.
 A zero is considered neither positive nor negative.
@@ -169,10 +169,10 @@ Similarly to [the Symfony `Range` constraint](https://symfony.com/doc/3.4/refere
 
 It has four options:
 
--   `min` specifies the minimum value, has to be an instance of `Money` or `null`
--   `max` specifies the maximum value, has to be an instance of `Money` or `null`
--   `minMessage` specifies the validation error message in case the entered value is less than the `min` value
--   `maxMessage` specifies the validation error message in case the entered value is greater than the `max` value
+- `min` specifies the minimum value, has to be an instance of `Money` or `null`
+- `max` specifies the maximum value, has to be an instance of `Money` or `null`
+- `minMessage` specifies the validation error message in case the entered value is less than the `min` value
+- `maxMessage` specifies the validation error message in case the entered value is greater than the `max` value
 
 At least one of the `min` and `max` options has to be provided for the constraint to make sense.
 Specifying the validation messages is optional, there are default values.
@@ -264,9 +264,9 @@ Formats the amount of money as a decimal number without any currency symbol.
 
 Three optional parameters can be provided:
 
--   _number of decimal places_ - `null` by default (meaning all), it will [round](#rounding) the value if necessary
--   _decimal point character_ - `"."` by default
--   _separator of thousands_ - `""` by default
+- _number of decimal places_ - `null` by default (meaning all), it will [round](#rounding) the value if necessary
+- _decimal point character_ - `"."` by default
+- _separator of thousands_ - `""` by default
 
 ```twig
 {# the "money" variable contains Money::create('1234.5670') #}
@@ -436,12 +436,12 @@ For a zero price, you can use a short-hand method `Price::zero()`.
 
 The class has three getters you can use to retrieve the prices or the VAT amount:
 
--   `Price::getPriceWithoutVat() : Money`
--   `Price::getPriceWithVat() : Money`
--   `Price::getVatAmount() : Money`
+- `Price::getPriceWithoutVat() : Money`
+- `Price::getPriceWithVat() : Money`
+- `Price::getVatAmount() : Money`
 
 And you can calculate with prices using its methods:
 
--   `Price::add(Price $addend) : Price`
--   `Price::subtract(Price $subtrahend) : Price`
--   `Price::inverse() : Price`
+- `Price::add(Price $addend) : Price`
+- `Price::subtract(Price $subtrahend) : Price`
+- `Price::inverse() : Price`

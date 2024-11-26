@@ -21,22 +21,22 @@ The platform is based on one of the best PHP frameworks on the market - **Symfon
 
 Shopsys Platform is a fully functional e-commerce solution with all the basic functionality all e-commerce sites need:
 
--   Product catalog
--   Registered customers
--   Basic orders management
--   Back-end administration
--   Front-end [full-text search](https://docs.shopsys.com/en/latest/model/front-end-product-searching/) and [product filtering](https://docs.shopsys.com/en/latest/model/front-end-product-filtering/)
--   3-step ordering process
--   Basic CMS
--   Support for several currencies, [languages, and domains](https://docs.shopsys.com/en/latest/introduction/domain-multidomain-multilanguage/)
--   Full friendly URL for main entities and full control over SEO aspects of online presence
--   Performance optimization through Elasticsearch, Redis, PostgreSQL
--   Full core upgradability
--   GDPR compliance
--   Preparation for scalability
--   Manifest for orchestration via [Kubernetes](https://docs.shopsys.com/en/latest/kubernetes/introduction-to-kubernetes/)
--   Support to easier [deployment to Google Cloud via Terraform](https://docs.shopsys.com/en/latest/kubernetes/how-to-deploy-ssfw-to-google-cloud-platform/)
--   Basic GraphQL Front-end API for implementation of own front-end and PWA
+- Product catalog
+- Registered customers
+- Basic orders management
+- Back-end administration
+- Front-end [full-text search](https://docs.shopsys.com/en/latest/model/front-end-product-searching/) and [product filtering](https://docs.shopsys.com/en/latest/model/front-end-product-filtering/)
+- 3-step ordering process
+- Basic CMS
+- Support for several currencies, [languages, and domains](https://docs.shopsys.com/en/latest/introduction/domain-multidomain-multilanguage/)
+- Full friendly URL for main entities and full control over SEO aspects of online presence
+- Performance optimization through Elasticsearch, Redis, PostgreSQL
+- Full core upgradability
+- GDPR compliance
+- Preparation for scalability
+- Manifest for orchestration via [Kubernetes](https://docs.shopsys.com/en/latest/kubernetes/introduction-to-kubernetes/)
+- Support to easier [deployment to Google Cloud via Terraform](https://docs.shopsys.com/en/latest/kubernetes/how-to-deploy-ssfw-to-google-cloud-platform/)
+- Basic GraphQL Front-end API for implementation of own front-end and PWA
 
 ### Plans for next releases
 
@@ -52,9 +52,9 @@ which is fully ready as the base for building your Shopsys Platform project.
 
 For more detailed instructions, follow one of the installation guides:
 
--   [Installation Guide](https://docs.shopsys.com/en/latest/installation/installation-guide/)
--   [Deployment to Google Cloud](https://docs.shopsys.com/en/latest/kubernetes/how-to-deploy-ssfw-to-google-cloud-platform/)
--   [Installation on production server](https://docs.shopsys.com/en/latest/installation/installation-using-docker-on-production-server/)
+- [Installation Guide](https://docs.shopsys.com/en/latest/installation/installation-guide/)
+- [Deployment to Google Cloud](https://docs.shopsys.com/en/latest/kubernetes/how-to-deploy-ssfw-to-google-cloud-platform/)
+- [Installation on production server](https://docs.shopsys.com/en/latest/installation/installation-using-docker-on-production-server/)
 
 ## Documentation
 
@@ -84,8 +84,8 @@ Or ultimately, just [report an issue](https://github.com/shopsys/shopsys/issues/
 
 We distribute the main parts of Shopsys Platform under two different licenses:
 
--   [Community License](./LICENSE) in MIT style for growing small to mid-size e-commerce sites with total online sales less than 12.000.000 EUR / year (3.000.000 EUR / quarter)
--   Commercial License
+- [Community License](./LICENSE) in MIT style for growing small to mid-size e-commerce sites with total online sales less than 12.000.000 EUR / year (3.000.000 EUR / quarter)
+- Commercial License
 
 Learn the principles on which we distribute our product on our website at [Licenses and Pricing section](https://www.shopsys.com/licensing).
 

@@ -5,14 +5,14 @@ Products can be by default filtered by price, flags, brand, parameters and in st
 Filtering can be performed on category list and search results.  
 These two pages are represented by `ProductController` and `SearchController`, where is used the interface (`Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface`) that describes common methods to get a filtered result:
 
--   `getPaginatedProductsInCategory()` to obtain filtered products in category
--   `getPaginatedProductsForSearch()` to obtain filtered products from search results
+- `getPaginatedProductsInCategory()` to obtain filtered products in category
+- `getPaginatedProductsForSearch()` to obtain filtered products from search results
 
 Currently, there is single implementation of `ProductOnCurrentDomainFacadeInterface`:
 
--   `ProductOnCurrentDomainElasticFacade`
-    -   filters data through Elasticsearch
-    -   much faster than filtering through SQL and remains fast independently on the number of selected filters
+- `ProductOnCurrentDomainElasticFacade`
+    - filters data through Elasticsearch
+    - much faster than filtering through SQL and remains fast independently on the number of selected filters
 
 ## Filtering through Elasticsearch
 

@@ -20,7 +20,7 @@ composer require shopsys/google-cloud-bundle
 
 ## Responsibilities
 
--   Bundle allows you to use client and adapter for Google Cloud Storage Bucket
+- Bundle allows you to use client and adapter for Google Cloud Storage Bucket
 
 ## Contributing
 

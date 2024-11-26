@@ -104,8 +104,8 @@ We will also define `pageQueryParameter` variable so it will have a unique name 
 
 There are two important CSS classes that must be used.
 
--   `js-list-with-paginator` - element with this class encapsulates paging component
--   `js-list` - fragment from which new items are pulled during an asynchronous call
+- `js-list-with-paginator` - element with this class encapsulates paging component
+- `js-list` - fragment from which new items are pulled during an asynchronous call
 
 ```twig
 {# templates/Front/Content/Brand/ajaxList.html.twig #}

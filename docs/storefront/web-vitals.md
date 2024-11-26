@@ -54,9 +54,9 @@ We were still using the mindset from a WYSIWYG approach where users used heading
 
 This can be split into several parts:
 
--   **Inputs** - If the input doesn’t have any associated label element, it’s still necessary to explain this input to the screen readers. Either add a label element for this input or put an aria-label prop to the input element with the proper description
--   **Links** and **Buttons** - In case there is no text inside the Link or Button component (usually clickable icons for which is the description icon itself), screen readers need to know about the purpose of the action. Add title prop to those elements.
--   **Images** - add alt description to every img element
+- **Inputs** - If the input doesn’t have any associated label element, it’s still necessary to explain this input to the screen readers. Either add a label element for this input or put an aria-label prop to the input element with the proper description
+- **Links** and **Buttons** - In case there is no text inside the Link or Button component (usually clickable icons for which is the description icon itself), screen readers need to know about the purpose of the action. Add title prop to those elements.
+- **Images** - add alt description to every img element
 
 ## 3. Dynamic imports
 

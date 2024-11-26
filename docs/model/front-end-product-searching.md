@@ -5,19 +5,19 @@ We use the same method for searching and for autocomplete, so results are always
 Understanding Elasticsearch searching is difficult.
 But if we simplify, we can say that the search term is searched in attributes and is prioritized in following order:
 
--   ean - exact match
--   name - match any of words
--   name - match any of words ignoring diacritics
--   catnum - exact match
--   name - match any of words in root form
--   partno - exact match
--   name - match in first couple of letters of any word
--   name - match in first couple of letters of any word ignoring diacritics
--   ean - exact match in first characters
--   catnum - exact match in first characters
--   partno - exact match in first characters
--   short description - match anywhere
--   description - match anywhere
+- ean - exact match
+- name - match any of words
+- name - match any of words ignoring diacritics
+- catnum - exact match
+- name - match any of words in root form
+- partno - exact match
+- name - match in first couple of letters of any word
+- name - match in first couple of letters of any word ignoring diacritics
+- ean - exact match in first characters
+- catnum - exact match in first characters
+- partno - exact match in first characters
+- short description - match anywhere
+- description - match anywhere
 
 If you want to improve searching, you can learn more in [Elasticsearch analysis](https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis.html).
 

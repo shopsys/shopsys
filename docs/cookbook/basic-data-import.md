@@ -5,9 +5,9 @@ e.g., from an information system.
 
 After completing this cookbook, you should know:
 
--   how to implement basic data import
--   what are the best practices for importing data
--   what are the pitfalls of importing data, and how can you deal with them
+- how to implement basic data import
+- what are the best practices for importing data
+- what are the pitfalls of importing data, and how can you deal with them
 
 ## Example: Products import step by step
 
@@ -478,48 +478,48 @@ php bin/console shopsys:cron --module="App\Model\Product\ImportProductsCronModul
 
 ## Best practices
 
--   Validate all incoming data before putting them into data objects.
-    -   You will avoid SQL errors (e.g., when incoming text is longer than the database column allows).
--   Transfer modifications only (if possible).
-    -   Persist the last successful transfer start datetime so next time you can import changes done afterward.
-    -   It means less data to process.
--   Transfer deleted entities too.
-    -   It is often omitted, but it is necessary if you want to keep consistency between your application database and the external source.
--   Use database transactions.
-    -   Use `EntityManager` methods `beginTransaction()`, `commit()` and `rollback()`.
-    -   Do not forget to clear the identity map when doing a rollback (so even entity modifications are reverted).
-    -   [`IteratedCronModuleInterface`](https://github.com/shopsys/shopsys/blob/master/packages/plugin-interface/src/Cron/IteratedCronModuleInterface.php) offers a way to implement longer processes that can span over many iterations.
--   Disable entity manager SQL logging (use [`SqlLoggerFacade::temporarilyDisableLogging()`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Doctrine/SqlLoggerFacade.php)).
-    -   By default, every executed SQL query is logged, and that slows down the process and consumes much memory when there are many iterations.
-    -   Do not forget to re-enable the logging after the processing is done (use [`SqlLoggerFacade::reenableLogging()`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Doctrine/SqlLoggerFacade.php)).
--   Logging of some key functions might be helpful for future debugging
-    , but it is not a good idea to log "everything". Too much information in logs might be counterproductive.
--   Clear entity manager identity map once in a while because `EntityManager::flush()` searches
-    for changes in all mapped entities, and after time, it consumes a huge amount of resources to persist a single entity.
-    -   Call `EntityManager::flush()` with parameter (i.e. entity or array of entities you want to flush) anytime it is possible.  
-         **Warning: Flushing is not a cascade operation, i.e. when you flush an entity that contains any other entities (e.g., translations),
-        these are not flushed automatically. You should not forget to flush them as well.**
-    -   You should load any entity again after clearing the identity map because any attempt to flush the old one will result in an exception.
--   Use streamed input for XML and JSON.
-    -   So you do not load huge files at once (can lead to memory overflow).
--   Store external source credentials in [environment variables](../introduction/setting-environment-variables.md).
-    -   Storing credentials in the local configuration instead of hard-coding them in source code prevents the accidental corrupting of production data.
--   Restrict editing of the transferred fields in administration.
-    -   At least mark them as transferred to avoid confusion when an administrator changes the field value and then data import overrides the value.
--   Transfer overview in administration can be very useful for both the administrator and developer of an e-shop.
-    -   It is handy to know which transfers are currently in progress, which are scheduled, which failed, etc.
--   Be careful with the order of your data transfers.
-    -   For example, products have an association with their categories,
-        so first, you want to transfer products and then their relation to categories.
+- Validate all incoming data before putting them into data objects.
+    - You will avoid SQL errors (e.g., when incoming text is longer than the database column allows).
+- Transfer modifications only (if possible).
+    - Persist the last successful transfer start datetime so next time you can import changes done afterward.
+    - It means less data to process.
+- Transfer deleted entities too.
+    - It is often omitted, but it is necessary if you want to keep consistency between your application database and the external source.
+- Use database transactions.
+    - Use `EntityManager` methods `beginTransaction()`, `commit()` and `rollback()`.
+    - Do not forget to clear the identity map when doing a rollback (so even entity modifications are reverted).
+    - [`IteratedCronModuleInterface`](https://github.com/shopsys/shopsys/blob/master/packages/plugin-interface/src/Cron/IteratedCronModuleInterface.php) offers a way to implement longer processes that can span over many iterations.
+- Disable entity manager SQL logging (use [`SqlLoggerFacade::temporarilyDisableLogging()`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Doctrine/SqlLoggerFacade.php)).
+    - By default, every executed SQL query is logged, and that slows down the process and consumes much memory when there are many iterations.
+    - Do not forget to re-enable the logging after the processing is done (use [`SqlLoggerFacade::reenableLogging()`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Doctrine/SqlLoggerFacade.php)).
+- Logging of some key functions might be helpful for future debugging
+  , but it is not a good idea to log "everything". Too much information in logs might be counterproductive.
+- Clear entity manager identity map once in a while because `EntityManager::flush()` searches
+  for changes in all mapped entities, and after time, it consumes a huge amount of resources to persist a single entity.
+    - Call `EntityManager::flush()` with parameter (i.e. entity or array of entities you want to flush) anytime it is possible.  
+       **Warning: Flushing is not a cascade operation, i.e. when you flush an entity that contains any other entities (e.g., translations),
+      these are not flushed automatically. You should not forget to flush them as well.**
+    - You should load any entity again after clearing the identity map because any attempt to flush the old one will result in an exception.
+- Use streamed input for XML and JSON.
+    - So you do not load huge files at once (can lead to memory overflow).
+- Store external source credentials in [environment variables](../introduction/setting-environment-variables.md).
+    - Storing credentials in the local configuration instead of hard-coding them in source code prevents the accidental corrupting of production data.
+- Restrict editing of the transferred fields in administration.
+    - At least mark them as transferred to avoid confusion when an administrator changes the field value and then data import overrides the value.
+- Transfer overview in administration can be very useful for both the administrator and developer of an e-shop.
+    - It is handy to know which transfers are currently in progress, which are scheduled, which failed, etc.
+- Be careful with the order of your data transfers.
+    - For example, products have an association with their categories,
+      so first, you want to transfer products and then their relation to categories.
 
 ## Pitfalls
 
--   External data source often sends null values as empty strings, so be very careful with validating the incoming data. (`$value !== null` might not be sufficient in that case).
--   When processing a large amount of data, you can use native queries instead of using ORM, which might save you a certain amount of SQL queries.
-    On the other hand, you have to handle all related logic manually then.
--   It is necessary to mark transferred products for recalculations (e.g., price, visibility, etc.).
--   In the current state, e-shop can not handle transferring huge amount (thousands) of categories.
-    -   Categories use the "nested set" structure (`@Gedmo\Tree(type="nested")`) which produces many SQL queries.
+- External data source often sends null values as empty strings, so be very careful with validating the incoming data. (`$value !== null` might not be sufficient in that case).
+- When processing a large amount of data, you can use native queries instead of using ORM, which might save you a certain amount of SQL queries.
+  On the other hand, you have to handle all related logic manually then.
+- It is necessary to mark transferred products for recalculations (e.g., price, visibility, etc.).
+- In the current state, e-shop can not handle transferring huge amount (thousands) of categories.
+    - Categories use the "nested set" structure (`@Gedmo\Tree(type="nested")`) which produces many SQL queries.
 
 ## Conclusion
 

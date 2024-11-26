@@ -8,11 +8,11 @@ Take a look at the article about [Monorepo](../introduction/monorepo.md) for mor
 
 ## Supported systems
 
--   Windows 10 version 2004 and higher
+- Windows 10 version 2004 and higher
 
 ## System requirements
 
--   enabled Virtualization in BIOS
+- enabled Virtualization in BIOS
 
 ## Installation of application requirement
 
@@ -30,31 +30,31 @@ You will be prompted to create new user.
 
 ### Install Docker Desktop
 
--   Download [Docker Desktop](https://docs.docker.com/docker-for-windows/install/) and install it.
+- Download [Docker Desktop](https://docs.docker.com/docker-for-windows/install/) and install it.
 
 ### Enable WSL 2 and Debian integration in Docker Desktop
 
--   Open settings of Docker Desktop.
--   Go to `General` section.
--   Check `Expose daemon on tcp://localhost:2375 without TLS` option.
--   Check `Use the WSL 2 based engine` option.
--   Click `Apply & Restart` button.
--   Go to `Resources` section and then to `WSL INTEGRATION` subsection.
--   Check `Enable integration with my default WSL distro` option.
--   Also turn on `Debian` under `Enable integration with additional distros`.
--   Click `Apply & Restart` button.
+- Open settings of Docker Desktop.
+- Go to `General` section.
+- Check `Expose daemon on tcp://localhost:2375 without TLS` option.
+- Check `Use the WSL 2 based engine` option.
+- Click `Apply & Restart` button.
+- Go to `Resources` section and then to `WSL INTEGRATION` subsection.
+- Check `Enable integration with my default WSL distro` option.
+- Also turn on `Debian` under `Enable integration with additional distros`.
+- Click `Apply & Restart` button.
 
 ### Install dependencies, Docker and docker compose in Debian
 
 We have prepared installation script for Debian dependencies in order to speed up the installation process.
 In `Debian` application run these commands:
 
--   `sudo apt update`
--   `sudo apt install -y --no-install-recommends wget`
--   `wget --no-check-certificate https://raw.githubusercontent.com/shopsys/shopsys/master/project-base/scripts/install-docker-wsl-debian.sh`
--   `sudo bash install-docker-wsl-debian.sh`
--   You can delete the downloaded file at the end of installation using `rm install-docker-wsl-debian.sh` command.
--   To ensure everything is working alright, restart `Docker Desktop` and `Debian` applications.
+- `sudo apt update`
+- `sudo apt install -y --no-install-recommends wget`
+- `wget --no-check-certificate https://raw.githubusercontent.com/shopsys/shopsys/master/project-base/scripts/install-docker-wsl-debian.sh`
+- `sudo bash install-docker-wsl-debian.sh`
+- You can delete the downloaded file at the end of installation using `rm install-docker-wsl-debian.sh` command.
+- To ensure everything is working alright, restart `Docker Desktop` and `Debian` applications.
 
 !!! note
 

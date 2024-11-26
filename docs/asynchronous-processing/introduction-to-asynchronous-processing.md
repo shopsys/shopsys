@@ -17,8 +17,8 @@ You can think about it as a post office: when you put the mail that you want to 
 
 The following environment variables are used to configure Symfony/Messenger:
 
--   `MESSENGER_TRANSPORT_DSN` – the RabbitMQ connection string in the [DSN format](https://symfony.com/doc/5.4/messenger.html#transport-configuration)
--   `MESSENGER_TRANSPORT_VHOST` – the RabbitMQ [virtual host](https://www.rabbitmq.com/vhosts.html)
+- `MESSENGER_TRANSPORT_DSN` – the RabbitMQ connection string in the [DSN format](https://symfony.com/doc/5.4/messenger.html#transport-configuration)
+- `MESSENGER_TRANSPORT_VHOST` – the RabbitMQ [virtual host](https://www.rabbitmq.com/vhosts.html)
 
 The configuration of the Symfony/Messenger is in the `config/packages/messenger.yaml` file.
 

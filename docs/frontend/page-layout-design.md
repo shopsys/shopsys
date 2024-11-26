@@ -2,9 +2,9 @@
 
 Page layout is divided to three main parts
 
--   `.web__header`
--   `.web__main`
--   `.web__footer`
+- `.web__header`
+- `.web__main`
+- `.web__footer`
 
 ## Weblines and containers
 
@@ -15,9 +15,9 @@ Inside every `.web__line` there should be `.web__container` - it has set `web-wi
 
 `.web__main` is divided to rows. We call this row as `.web__line`. If you use design without left panel you can see on homepage these weblines:
 
--   slider
--   popular categories
--   special offers
+- slider
+- popular categories
+- special offers
 
 We use `.web__line` to change background with class modifications. E.g `class="web__line web__line--grey"`.
 

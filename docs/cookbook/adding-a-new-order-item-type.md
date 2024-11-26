@@ -315,10 +315,10 @@ This interface describes the `handle()` method that is the main entrypoint for t
 
 The `handle()` method usually:
 
--   create new order items
--   modify the order data
--   change the total price of the order
--   call the next middleware in the stack.
+- create new order items
+- modify the order data
+- change the total price of the order
+- call the next middleware in the stack.
 
 This may be the naive implementation of the middleware that adds the service to the order:
 

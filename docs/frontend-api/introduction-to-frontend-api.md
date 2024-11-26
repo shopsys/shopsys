@@ -273,13 +273,13 @@ Data for products can be obtained in two ways – from the Elasticsearch (for ex
 For this reason, it's necessary to know how to map fields based on the type of the result.
 When a client requests any Product related field, `ProductResolverMap` checks the type of data returned from the resolver and uses appropriate field mapper from the `Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper` namespace:
 
--   `ProductEntityFieldMapper` if resolver returns the entity `Product`
--   `ProductArrayFieldMapper` if resolver returns array of values
+- `ProductEntityFieldMapper` if resolver returns the entity `Product`
+- `ProductArrayFieldMapper` if resolver returns array of values
 
 Value for the field is resolved by one of the previously mentioned field mapper classes, with one of the methods with the specific name:
 
--   `get<FieldName>` – field `sellingDenied` use the method named `getSellingDenied()`
--   `is<FieldName>` – field `sellingDenied` use the method named `isSellingDenied()`
--   `<fieldName>` – field `sellingDenied` use the method named `sellingDenied()`
+- `get<FieldName>` – field `sellingDenied` use the method named `getSellingDenied()`
+- `is<FieldName>` – field `sellingDenied` use the method named `isSellingDenied()`
+- `<fieldName>` – field `sellingDenied` use the method named `sellingDenied()`
 
 Methods are searched in the order above and if the corresponding method does not exist, resolving falls back to the default (see `Overblog\GraphQLBundle\Resolver\FieldResolver` class).

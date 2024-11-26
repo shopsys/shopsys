@@ -50,8 +50,8 @@ Open [http://127.0.0.1:8000/](http://127.0.0.1:8000/) to see running application
 
 You can also log in into the administration section on [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/) with default credentials:
 
--   Username: `admin` or `superadmin` (the latter has access to advanced options)
--   Password: `admin123`
+- Username: `admin` or `superadmin` (the latter has access to advanced options)
+- Password: `admin123`
 
 You can also manage the application database using [Adminer](https://www.adminer.org) by going to [http://127.0.0.1:1100](http://127.0.0.1:1100)
 and Redis storage using [Redis commander](https://github.com/joeferner/redis-commander) by going to [http://127.0.0.1:1600](http://127.0.0.1:1600).

@@ -10,24 +10,24 @@ Below, we provide a comprehensive guide on how the order processing system works
 
 ## Key components
 
--   `Shopsys\FrameworkBundle\Model\Order\OrderData`
-    -   This object holds all the data related to an order, including customer details, product information, pricing, and more.
--   `Shopsys\FrameworkBundle\Model\Order\Processing\OrderInput`
-    -   This object contains input information provided by the customer such as selected transport, payment methods, promo codes, and other preferences.
--   `Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor`
-    -   The central engine that drives the order processing workflow by passing `Shopsys\FrameworkBundle\Model\Order\OrderData` through configured middleware.
+- `Shopsys\FrameworkBundle\Model\Order\OrderData`
+    - This object holds all the data related to an order, including customer details, product information, pricing, and more.
+- `Shopsys\FrameworkBundle\Model\Order\Processing\OrderInput`
+    - This object contains input information provided by the customer such as selected transport, payment methods, promo codes, and other preferences.
+- `Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor`
+    - The central engine that drives the order processing workflow by passing `Shopsys\FrameworkBundle\Model\Order\OrderData` through configured middleware.
 
 ### Middlewares
 
 Middleware in the Shopsys Platform order processing system plays a crucial role in managing the lifecycle and transformation of an order during processing.
 Each middleware is designed to perform specific tasks that modify the order data as it moves through the processing pipeline and is usually responsible for:
 
--   Creating Order Items
-    -   Middleware may add new items to the order based on the inputs provided.
--   Adjusting Total Price
-    -   Modifications to the order's total price are handled, which could include applying the price of the item, subtracting discounts, or other price adjustments.
--   Adjusting Already Set Data
-    -   Middleware can modify existing data in the `OrderData` object, such as updating the customer's details, changing delivery options, or recalibrating the payment methods.
+- Creating Order Items
+    - Middleware may add new items to the order based on the inputs provided.
+- Adjusting Total Price
+    - Modifications to the order's total price are handled, which could include applying the price of the item, subtracting discounts, or other price adjustments.
+- Adjusting Already Set Data
+    - Middleware can modify existing data in the `OrderData` object, such as updating the customer's details, changing delivery options, or recalibrating the payment methods.
 
 By implementing the middleware pattern, the order processing system can be easily extended and customized to meet specific business requirements.
 
@@ -71,13 +71,13 @@ Each middleware interacts with the `OrderData`, potentially modifying it based o
 
 The following are some middlewares involved in the order processing system (this list is not meant to be exhaustive):
 
--   `SetCustomerUserMiddleware`: Assigns customer user details to the order.
--   `AddProductsMiddleware`: Adds requested products to the order.
--   `ApplyPercentagePromoCodeMiddleware`: Applies percentage-based discounts through promo codes.
--   `AddTransportMiddleware`: Adds transportation details to the order.
--   `AddPaymentMiddleware`: Adds payment details to the order.
--   `PersonalPickupPointMiddleware`: Configures order pickup details if personal pickup is selected.
--   `AddRoundingMiddleware`: Applies rounding rules to the order total price.
+- `SetCustomerUserMiddleware`: Assigns customer user details to the order.
+- `AddProductsMiddleware`: Adds requested products to the order.
+- `ApplyPercentagePromoCodeMiddleware`: Applies percentage-based discounts through promo codes.
+- `AddTransportMiddleware`: Adds transportation details to the order.
+- `AddPaymentMiddleware`: Adds payment details to the order.
+- `PersonalPickupPointMiddleware`: Configures order pickup details if personal pickup is selected.
+- `AddRoundingMiddleware`: Applies rounding rules to the order total price.
 
 ### Configuring the middleware processing stack
 

@@ -6,13 +6,13 @@ Take a look at the article about [Monorepo](../introduction/monorepo.md) for mor
 
 ## Requirements
 
--   [GIT](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
--   [PHP](http://php.net/manual/en/install.unix.php)
-    -   At least version **8.3 or higher**
--   [Composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx)
--   [Docker](https://docs.docker.com/engine/installation/)
-    -   It's necessary to perform [post-installation steps](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user), to be able to run docker commands as non-root user.
--   [Docker Compose](https://docs.docker.com/compose/install/)
+- [GIT](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- [PHP](http://php.net/manual/en/install.unix.php)
+    - At least version **8.3 or higher**
+- [Composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx)
+- [Docker](https://docs.docker.com/engine/installation/)
+    - It's necessary to perform [post-installation steps](https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user), to be able to run docker commands as non-root user.
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
 ## Steps
 

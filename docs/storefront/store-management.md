@@ -31,10 +31,10 @@ Because of that, we suggest that the first thing you do with your persist store 
 
 It is possible that you will need to make a breaking change to your schema. These could be, for example, one of the scenarios below:
 
--   a key is added to the schema
--   a key is removed from the schema
--   a key is renamed
--   a value for a given key changes schematically (e.g. was nullable but is not anymore, could be a number but now can only be a string, etc.)
+- a key is added to the schema
+- a key is removed from the schema
+- a key is renamed
+- a value for a given key changes schematically (e.g. was nullable but is not anymore, could be a number but now can only be a string, etc.)
 
 In such situation, these steps will tell you exactly what to do:
 
@@ -54,9 +54,9 @@ export const usePersistStore = create<PersistStore>()(
 
 Here you have to realize that TypeScript trusts whatever you tell it. Because of that, the type you give your `migratedPersistedState` will either help you, or really complicate your development. Some natural options are:
 
--   `let migratedPersistedState = { ...(persistedState as object) };` (this will enforce property checking for any property you might want to access)
--   `let migratedPersistedState = { ...(persistedState as Record<string, any>) };` (this will allow you to access any property and not check its type)
--   `let migratedPersistedState = { ...(persistedState as PersistStoreVersion2Type) };` (if you are sure the type is the store at version 2, e.g. by checking the version or the properties, you can ease your development by assigning this type)
+- `let migratedPersistedState = { ...(persistedState as object) };` (this will enforce property checking for any property you might want to access)
+- `let migratedPersistedState = { ...(persistedState as Record<string, any>) };` (this will allow you to access any property and not check its type)
+- `let migratedPersistedState = { ...(persistedState as PersistStoreVersion2Type) };` (if you are sure the type is the store at version 2, e.g. by checking the version or the properties, you can ease your development by assigning this type)
 
 Below you can see a version with `Record<string, any>`:
 

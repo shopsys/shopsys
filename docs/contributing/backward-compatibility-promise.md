@@ -8,9 +8,9 @@ After reading this promise, you'll understand backward compatibility, what chang
 
 This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html), which means its release versions are in format `MAJOR.MINOR.PATCH`:
 
--   `MAJOR` version may contain incompatible changes
--   `MINOR` version may add new functionality in a backward-compatible manner
--   `PATCH` version contains only backward-compatible bug fixes
+- `MAJOR` version may contain incompatible changes
+- `MINOR` version may add new functionality in a backward-compatible manner
+- `PATCH` version contains only backward-compatible bug fixes
 
 Even though we keep these rules as best we can, a BC breaking change might be introduced in a `MINOR` or `PATCH` release.
 E.g., for an important security fix or a critical bug fix.
@@ -158,23 +158,23 @@ The behavior of elements with classes prefixed with `.js-` should be changed onl
 
 ### If You Are a User of Shopsys Platform...
 
--   we use [Semantic Versioning](http://semver.org/spec/v2.0.0.html) (`MAJOR.MINOR.PATCH`)
--   all higher `MINOR` and `PATCH` releases should be compatible with your project
--   use [caret version ranges](https://getcomposer.org/doc/articles/versions.md#caret-version-range-) in your `composer.json` (e.g., `^7.0.0`)
--   when upgrading to a new major release, read the [upgrade notes](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md)
--   watch for changes marked as `BC-BREAK` in the [changelog](https://github.com/shopsys/shopsys/blob/master/CHANGELOG.md)
--   don't forget to execute new DB migrations via `./phing db-migrations` during upgrades
--   we recommend to always upgrade to the highest minor version first, fix all deprecation notices, and then upgrade to the next major release
--   read the [section Using Symfony Code](https://symfony.com/doc/3.4/contributing/code/bc.html#using-symfony-code) in their BC Promise for a nice clarification about BC in PHP
--   upgrade often, it will be easier
+- we use [Semantic Versioning](http://semver.org/spec/v2.0.0.html) (`MAJOR.MINOR.PATCH`)
+- all higher `MINOR` and `PATCH` releases should be compatible with your project
+- use [caret version ranges](https://getcomposer.org/doc/articles/versions.md#caret-version-range-) in your `composer.json` (e.g., `^7.0.0`)
+- when upgrading to a new major release, read the [upgrade notes](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md)
+- watch for changes marked as `BC-BREAK` in the [changelog](https://github.com/shopsys/shopsys/blob/master/CHANGELOG.md)
+- don't forget to execute new DB migrations via `./phing db-migrations` during upgrades
+- we recommend to always upgrade to the highest minor version first, fix all deprecation notices, and then upgrade to the next major release
+- read the [section Using Symfony Code](https://symfony.com/doc/3.4/contributing/code/bc.html#using-symfony-code) in their BC Promise for a nice clarification about BC in PHP
+- upgrade often, it will be easier
 
 ### If You Are a Contributor to Shopsys Platform...
 
--   read about [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
--   when making a change, always think about backward compatibility
--   [add a deprecation](https://symfony.com/doc/3.4/contributing/code/conventions.html#deprecations) instead of removing code
--   read the [section Working on Symfony Code](https://symfony.com/doc/3.4/contributing/code/bc.html#working-on-symfony-code) in their BC Promise for a nice clarification about BC in PHP
--   test changes using an older version of `project-base`, it shouldn't cause any issues
--   never change [translation message IDs](#translation-messages) except in `MAJOR` releases
--   take your time when [explaining](./guidelines-for-writing-upgrade.md) how to upgrade to a BC-breaking change in [upgrade notes](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md)
--   test new [database migrations](#database-migrations) thoroughly
+- read about [Semantic Versioning](http://semver.org/spec/v2.0.0.html)
+- when making a change, always think about backward compatibility
+- [add a deprecation](https://symfony.com/doc/3.4/contributing/code/conventions.html#deprecations) instead of removing code
+- read the [section Working on Symfony Code](https://symfony.com/doc/3.4/contributing/code/bc.html#working-on-symfony-code) in their BC Promise for a nice clarification about BC in PHP
+- test changes using an older version of `project-base`, it shouldn't cause any issues
+- never change [translation message IDs](#translation-messages) except in `MAJOR` releases
+- take your time when [explaining](./guidelines-for-writing-upgrade.md) how to upgrade to a BC-breaking change in [upgrade notes](https://github.com/shopsys/shopsys/blob/master/UPGRADE.md)
+- test new [database migrations](#database-migrations) thoroughly

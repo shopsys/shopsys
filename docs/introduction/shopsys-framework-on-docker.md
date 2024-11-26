@@ -35,31 +35,31 @@ into volumes, otherwise, these data will be lost after the container is closed.
 
 Examples of containers that we use:
 
--   **postgres**
--   **webserver**
--   **php-fpm**
--   **adminer**
--   **smtp-server**
+- **postgres**
+- **webserver**
+- **php-fpm**
+- **adminer**
+- **smtp-server**
 
 ##### Options
 
 The definition of container consists of some options:
 
--   **image**: Docker image that will be downloaded from [Docker Hub](https://hub.docker.com/) and used
--   **build**: data used for building the Docker image locally
--   **container_name**: name of created container
--   **working_dir**: file structure of created container
--   **volumes**: location of data storage in which the data will remain even after the container is removed (see [Volumes official docs.](https://docs.docker.com/engine/admin/volumes/volumes/))
--   **ports**: ports mapping, in default configuration is port 8000 mapped on port 8080 inside container
--   **environment**: environment variables, after setting they can be used throughout the container
+- **image**: Docker image that will be downloaded from [Docker Hub](https://hub.docker.com/) and used
+- **build**: data used for building the Docker image locally
+- **container_name**: name of created container
+- **working_dir**: file structure of created container
+- **volumes**: location of data storage in which the data will remain even after the container is removed (see [Volumes official docs.](https://docs.docker.com/engine/admin/volumes/volumes/))
+- **ports**: ports mapping, in default configuration is port 8000 mapped on port 8080 inside container
+- **environment**: environment variables, after setting they can be used throughout the container
 
 ##### Volumes
 
 The definition of volumes, example:
 
--   **shopsys-framework-sync** : name of the volume
--   **external: true** : flag, which indicates, that volume is already defined external
-    (in this case in [docker-sync.yml](https://github.com/shopsys/shopsys/blob/master/project-base/docker-sync.yml))
+- **shopsys-framework-sync** : name of the volume
+- **external: true** : flag, which indicates, that volume is already defined external
+  (in this case in [docker-sync.yml](https://github.com/shopsys/shopsys/blob/master/project-base/docker-sync.yml))
 
 #### 3.2 docker-sync.yml
 
@@ -95,8 +95,8 @@ The official list of Dockerfile commands can be found on [Dockerfile reference](
 
 While running Shopsys Platform on docker we needed to decide which distribution will be our images running on. We use 2 types of distributions for our images.
 
--   Debian
--   Alpine Linux
+- Debian
+- Alpine Linux
 
 Both have their advantages and drawbacks
 

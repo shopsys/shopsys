@@ -7,8 +7,8 @@ More information about Luigi's Box can be found on their [website](https://luigi
 
 ## Differences from the standard search
 
--   autocomplete does not include the number of found entities as Luigi's Box does not provide this information
--   search filter (e.g., price range) is limited by already selected filters
+- autocomplete does not include the number of found entities as Luigi's Box does not provide this information
+- search filter (e.g., price range) is limited by already selected filters
 
 ## Installation
 
@@ -24,10 +24,10 @@ This enables you to use different search providers for different domains, that c
 
 Next, you need to use one of the existing search result provider interfaces:
 
--   `ArticlesSearchResultsProviderInterface`
--   `BrandSearchResultsProviderInterface`
--   `CategoriesSearchResultsProviderInterface`
--   `ProductSearchResultsProviderInterface`
+- `ArticlesSearchResultsProviderInterface`
+- `BrandSearchResultsProviderInterface`
+- `CategoriesSearchResultsProviderInterface`
+- `ProductSearchResultsProviderInterface`
 
 Last you need to define your new provider in `services.yaml` and set priority of the provider.
 
@@ -48,10 +48,10 @@ These provide filtering options and number of results for each option.
 Luigi's Box support needs to set them up for you to make filters work correctly.
 By default, these facets are used:
 
--   `availability_rank_text`
--   `brand`
--   `labels`
--   `price_amount`
+- `availability_rank_text`
+- `brand`
+- `labels`
+- `price_amount`
 
 ### Parametric filter
 

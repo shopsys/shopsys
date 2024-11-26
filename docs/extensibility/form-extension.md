@@ -6,11 +6,11 @@ solution of extending forms is not complete and there will be several tasks that
 At this time, we do not have every single form in our application ready for extension, the list of not prepared
 forms for extensions is below:
 
--   `ProductMassActionFormType`
--   `VariantFormType`
--   `OrderItemFormType`
--   `OrderPaymentFormType`
--   `OrderTransportFormType`
+- `ProductMassActionFormType`
+- `VariantFormType`
+- `OrderItemFormType`
+- `OrderPaymentFormType`
+- `OrderTransportFormType`
 
 If you want to see an example of extending one of these forms, please check this [link](https://github.com/shopsys/shopsys/commit/d6b84bf54c0b47c72eacc82d540987dd8078fa13).
 
@@ -67,16 +67,16 @@ This template is used for custom rendering of forms and form fields and it exten
 There are two `theme.html.twig` files as one is used for [administration](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Resources/views/Admin/Form/theme.html.twig) and the other for [front-end](https://github.com/shopsys/shopsys/blob/master/project-base/templates/Front/Form/theme.html.twig).
 It contains a definition of blocks that are used for rendering forms.
 
--   `form_start` - renders the start tag of the form
--   `form_end` - renders the end tag of the form
--   `form_row` - renders the label, any errors, and the HTML form widget for the given field
-    -   `form_widget` - renders HTML form widget for the given field
-    -   `form_errors` - renders block with a list of validation errors for the given field
-    -   `form_label` - renders label for the given field, including red asterisk if the field is required
+- `form_start` - renders the start tag of the form
+- `form_end` - renders the end tag of the form
+- `form_row` - renders the label, any errors, and the HTML form widget for the given field
+    - `form_widget` - renders HTML form widget for the given field
+    - `form_errors` - renders block with a list of validation errors for the given field
+    - `form_label` - renders label for the given field, including red asterisk if the field is required
 
 and blocks of custom form widgets for various [FormTypes](../introduction/using-form-types.md) e.g.:
 
--   `date_picker_widget` is rendered as `form_widget` for [`DatePickerType`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/DatePickerType.php)
+- `date_picker_widget` is rendered as `form_widget` for [`DatePickerType`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/DatePickerType.php)
 
 ## Changing order of groups and fields
 

@@ -124,7 +124,7 @@ See [Front-end Breadcrumb Navigation](./front-end-breadcrumb-navigation.md) arti
 
 Yes we have, you can easily use [`maildev/maildev`](https://github.com/maildev/maildev) library that provides you web UI where you can see the emails including their headers:
 
--   In your `docker-compose.yml`, change the `smtp-server` service:
+- In your `docker-compose.yml`, change the `smtp-server` service:
 
 ```diff
 smtp-server:
@@ -136,15 +136,15 @@ smtp-server:
 +            - "1025:1025"
 ```
 
--   Run `docker compose up -d`
--   change the port in `MAILER_DSN` environment variable value (you can redefine the value in your `.env.local` file):
+- Run `docker compose up -d`
+- change the port in `MAILER_DSN` environment variable value (you can redefine the value in your `.env.local` file):
 
 ```diff
 - MAILER_DSN=smtp://smtp-server:25?verify_peer=false
 + MAILER_DSN=smtp://smtp-server:1025?verify_peer=false
 ```
 
--   Now you are able to see all the application emails in the inbox on [`http://127.0.0.1:8025`](http://127.0.0.1:8025).
+- Now you are able to see all the application emails in the inbox on [`http://127.0.0.1:8025`](http://127.0.0.1:8025).
 
 _Note: Beware, by using this setting, no emails are delivered to their original recipients.
 See [Outgoing emails](https://github.com/djfarrelly/MailDev#outgoing-email) in the documentation of the library for more information._

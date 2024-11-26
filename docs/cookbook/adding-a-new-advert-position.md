@@ -2,9 +2,9 @@
 
 By default, you can place an advert banner on these predefined positions:
 
--   under the page header
--   above the page footer
--   in a category detail (above the category name)
+- under the page header
+- above the page footer
+- in a category detail (above the category name)
 
 All the positions are defined in `AdvertPositionRegistry` class that provides them for displaying on the adverts list in admin as well as for the options in the selectbox on the advert detail administration page:
 

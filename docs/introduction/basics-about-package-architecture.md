@@ -91,8 +91,8 @@ and writing [understandable commit messages](../contributing/guidelines-for-crea
 
 ## Conclusion
 
--   You learned it is necessary to use composer to initialize development of your own project based on the framework.
--   You understand the open-box concept - you can modify the project base as you wish without any restrictions.
--   You know that the business logic is placed in the [`shopsys/framework`](https://github.com/shopsys/framework).
--   You are familiar with modules that can ease you a development of your project.
--   You know you are able to upgrade the framework and modules using composer thanks to their glass-box design.
+- You learned it is necessary to use composer to initialize development of your own project based on the framework.
+- You understand the open-box concept - you can modify the project base as you wish without any restrictions.
+- You know that the business logic is placed in the [`shopsys/framework`](https://github.com/shopsys/framework).
+- You are familiar with modules that can ease you a development of your project.
+- You know you are able to upgrade the framework and modules using composer thanks to their glass-box design.

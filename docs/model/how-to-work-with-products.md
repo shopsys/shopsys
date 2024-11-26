@@ -11,13 +11,13 @@ Products can be grouped into several groups according to their current status or
 
 The conditions which the product must satisfy to appear as visible:
 
--   the product must not be set as hidden
--   if the attribute "selling start date" is filled in, the value of this attribute must be set to the date in the past
--   if the attribute "selling end date" is filled in, the value of this attribute must be set to the future date
--   the product must have a name for the specific locale
--   if the product is a variant, there must exist calculated price for this variant and for the specific pricing group
--   if the product is a variant, its main variant must not be set as hidden
--   if the product is the main variant, at least one of its variants must be visible
+- the product must not be set as hidden
+- if the attribute "selling start date" is filled in, the value of this attribute must be set to the date in the past
+- if the attribute "selling end date" is filled in, the value of this attribute must be set to the future date
+- the product must have a name for the specific locale
+- if the product is a variant, there must exist calculated price for this variant and for the specific pricing group
+- if the product is a variant, its main variant must not be set as hidden
+- if the product is the main variant, at least one of its variants must be visible
 
 **Offered** - products that satisfied the conditions for **visible** and at the same time they have an attribute `Product->calculatedSellingDenied` set to the value `FALSE`.  
 The `calculatedSellingDenied` attribute shows whether the product is already sold out or if the product is a variant with the main variant that is set up with selling denied on `TRUE`.

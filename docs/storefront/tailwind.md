@@ -34,7 +34,7 @@ Adding these lines to the user settings in your IDE is unnecessary but highly re
 
 This allows you to use Tailwind IntelliSense also in variables (not only in `className` props). The name of the variable needs to consist of the `TwClass` string (like `childrenTwClass`). It is useful for several cases:
 
--   When you have to pass multiple classNames to a component. For example `className` for a wrapper and at the same time `className` for a child component in a loop.
+- When you have to pass multiple classNames to a component. For example `className` for a wrapper and at the same time `className` for a child component in a loop.
 
 ```tsx
 const simpleNavigationItemTwClass = 'lg:justify-center text-center'
@@ -46,7 +46,7 @@ const simpleNavigationItemTwClass = 'lg:justify-center text-center'
 />
 ```
 
--   You have multiple places where you need to use the same `className` or to export the variable.
+- You have multiple places where you need to use the same `className` or to export the variable.
 
 ```tsx
 const sharedTwClass = 'lg:justify-center text-center'

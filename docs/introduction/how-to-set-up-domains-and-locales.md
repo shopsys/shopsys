@@ -89,10 +89,10 @@ php phing domains-data-create
 
 This command performs multiple actions:
 
--   multidomain attributes from the first domain are copied for this new domain, see `FrameworkBundle/Component/Domain/DomainDataCreator.php`, where the `TEMPLATE_DOMAIN_ID` constant is defined.
--   if a new locale is set for the newly added domain, the empty rows with this new locale will be created for multilang attributes
--   pricing group with the name Default is created for every new domain
--   the last step of this command is the start of automatic recalculations of prices, availabilities, and products visibilities.
+- multidomain attributes from the first domain are copied for this new domain, see `FrameworkBundle/Component/Domain/DomainDataCreator.php`, where the `TEMPLATE_DOMAIN_ID` constant is defined.
+- if a new locale is set for the newly added domain, the empty rows with this new locale will be created for multilang attributes
+- pricing group with the name Default is created for every new domain
+- the last step of this command is the start of automatic recalculations of prices, availabilities, and products visibilities.
 
 !!! note
 
@@ -155,9 +155,9 @@ php phing translations-dump
 
 There will be created files for translations of messages for the new locale in `translations` directory, which you'll need to translate:
 
--   `messages.xx.po` for translations of common strings
--   `validators.xx.po` for translations of validation messages
--   `dataFixtures.xx.po` for translations of demo data
+- `messages.xx.po` for translations of common strings
+- `validators.xx.po` for translations of validation messages
+- `dataFixtures.xx.po` for translations of demo data
 
 For more information about translations, see [the separate article](./translations.md).
 

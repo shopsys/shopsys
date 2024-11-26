@@ -140,13 +140,13 @@ JavaScript translations are extracted and translated during compilation of JavaS
 
 ## Possible ways of changing translations
 
--   You want to keep the message ID same as the original English form
-    -   change the text in the code
-    -   run `php phing translations-dump`
-    -   translate text again in `*.po` file(s) for the other languages because the message ID changed
-    -   be careful, this is a [backward compatibility breaking change](../contributing/backward-compatibility-promise.md#translation-messages) because the original message ID does not exist anymore.
--   You do not care about the consistency between message ID and the original English form
-    -   just change the translations in `*.po` file(s) for English and all the other languages
+- You want to keep the message ID same as the original English form
+    - change the text in the code
+    - run `php phing translations-dump`
+    - translate text again in `*.po` file(s) for the other languages because the message ID changed
+    - be careful, this is a [backward compatibility breaking change](../contributing/backward-compatibility-promise.md#translation-messages) because the original message ID does not exist anymore.
+- You do not care about the consistency between message ID and the original English form
+    - just change the translations in `*.po` file(s) for English and all the other languages
 
 ## Localized routes
 

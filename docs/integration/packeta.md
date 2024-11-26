@@ -12,11 +12,11 @@ Packeta is currently part of the Shopsys Platform, so there is no need to instal
 
 Packeta is configurable via ENV variables, the following ENV variables should be set:
 
--   PACKETERY_API_KEY (string)
--   PACKETERY_API_PASSWORD (string)
--   PACKETERY_ENABLED (bool)
--   PACKETERY_SENDER (string)
--   PACKETERY_REST_API_URL (string)
+- PACKETERY_API_KEY (string)
+- PACKETERY_API_PASSWORD (string)
+- PACKETERY_ENABLED (bool)
+- PACKETERY_SENDER (string)
+- PACKETERY_REST_API_URL (string)
 
 ## Mandatory data
 

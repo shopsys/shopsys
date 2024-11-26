@@ -28,9 +28,9 @@ class Salesman
 
 Each salesman entity will have the following properties.
 
--   `id` - unique sequenced value for salesman identification
--   `name` - name of the salesman limited to 100 characters
--   `registeredAt` - registration date of the salesman
+- `id` - unique sequenced value for salesman identification
+- `name` - name of the salesman limited to 100 characters
+- `registeredAt` - registration date of the salesman
 
 ```diff
 namespace App\Model\Salesman;

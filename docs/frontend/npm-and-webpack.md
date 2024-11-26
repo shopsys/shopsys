@@ -93,46 +93,46 @@ How to work with translation you can read [translation](../introduction/translat
 
 ### I want to edit existing javascripts
 
--   you have to run `npm run watch` in the project root. You can run it in docker or locally (when you have installed npm)
--   you can edit files
--   (you may notice changes in the console)
--   you can test changes (after page reload)
+- you have to run `npm run watch` in the project root. You can run it in docker or locally (when you have installed npm)
+- you can edit files
+- (you may notice changes in the console)
+- you can test changes (after page reload)
 
 ### I want to add new javascript file to frontend
 
--   you have to run `npm run watch` in the project root. You can run it in docker or locally (when you have installed npm)
--   you can create new javascript file (path of new file is `assets/js/frontend/myNewFile.js`)
--   you can use this new file in some other file (`import ./frontend/myNewFile.js`)
--   or, when file contains global event listener, import new file in `assets/js/frontend/frontend.js` (`import ./myNewFile.js`)
+- you have to run `npm run watch` in the project root. You can run it in docker or locally (when you have installed npm)
+- you can create new javascript file (path of new file is `assets/js/frontend/myNewFile.js`)
+- you can use this new file in some other file (`import ./frontend/myNewFile.js`)
+- or, when file contains global event listener, import new file in `assets/js/frontend/frontend.js` (`import ./myNewFile.js`)
 
 ### I want to add new javascript file to admin
 
--   you have to run `npm run watch` in the project root. You can run it in docker or locally (when you have installed npm)
--   you can create new javascript file (path of new file is `assets/js/admin/myNewFile.js`)
--   you can use this new file in some other file (`import ./admin/myNewFile.js`)
--   or, when file contains global event listener, import new file in `assets/js/admin/admin.js` (`import ./myNewFile.js`)
+- you have to run `npm run watch` in the project root. You can run it in docker or locally (when you have installed npm)
+- you can create new javascript file (path of new file is `assets/js/admin/myNewFile.js`)
+- you can use this new file in some other file (`import ./admin/myNewFile.js`)
+- or, when file contains global event listener, import new file in `assets/js/admin/admin.js` (`import ./myNewFile.js`)
 
 ### I want to add new package from npm repository
 
--   you have to stop `npm run watch` (if it is running)
--   you can add package via npm `npm install <package-name>`
--   you have to run `npm run watch` in the project root. You can run it in docker or locally (when you have installed npm)
--   you can use new package (`import <package-name>`) in some file
--   you can test changes (after page reload)
+- you have to stop `npm run watch` (if it is running)
+- you can add package via npm `npm install <package-name>`
+- you have to run `npm run watch` in the project root. You can run it in docker or locally (when you have installed npm)
+- you can use new package (`import <package-name>`) in some file
+- you can test changes (after page reload)
 
 ### I want to override function from @shopsys/framework common package
 
 For example, we can override method `showFormErrorsWindowOnFrontend` from `@shopsys/framework/common/validation/customizeBundle.js` on frontend.
 
--   you have to run `npm run watch` in the project root. You can run it in docker or locally (when you have installed npm)
--   you have to import `CustomizeBundle` in `assets/js/frontend/frontend.js`
+- you have to run `npm run watch` in the project root. You can run it in docker or locally (when you have installed npm)
+- you have to import `CustomizeBundle` in `assets/js/frontend/frontend.js`
 
 ```js
 import CustomizeBundle from 'framework/common/validation/customizeBundle';
 // ...
 ```
 
--   you can prepare new function
+- you can prepare new function
 
 ```js
 const myOverridedShowFormErrorsWindow = (container) => {
@@ -140,13 +140,13 @@ const myOverridedShowFormErrorsWindow = (container) => {
 };
 ```
 
--   you have to replace the original method with the new one
+- you have to replace the original method with the new one
 
 ```js
 CustomizeBundle.showFormErrorsWindow = myOverridedShowFormErrorsWindow;
 ```
 
--   you can test changes (after page reload)
+- you can test changes (after page reload)
 
 Full example might look like this:
 

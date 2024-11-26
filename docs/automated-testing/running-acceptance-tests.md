@@ -36,9 +36,9 @@ Shopsys Platform uses `seleniarm/standalone-firefox` image for `selenium-server`
 
 From your local machine, connect to the remote desktop on `vnc://127.0.0.1:5900`
 
--   on Linux, you can use, for example, the _Remmina_ tool that is installed by default in Ubuntu
--   on Mac, you can run `open vnc://127.0.0.1:5900` in your terminal
--   the default password for the connection is `secret`
+- on Linux, you can use, for example, the _Remmina_ tool that is installed by default in Ubuntu
+- on Mac, you can run `open vnc://127.0.0.1:5900` in your terminal
+- the default password for the connection is `secret`
 
 Run acceptance tests as described in [the paragraph above](#running-in-docker)
 
@@ -58,8 +58,8 @@ As the Chrome browser has auto-update enabled by default, this may require you t
 
 When installing Shopsys Platform natively, it is important to update parameters in `.env.acc.local`:
 
--   `OVERWRITE_DOMAIN_URL=` (disables domain URL overwriting in `ACCEPTANCE` environment)
--   `SELENIUM_SERVER_HOST=127.0.0.1`
+- `OVERWRITE_DOMAIN_URL=` (disables domain URL overwriting in `ACCEPTANCE` environment)
+- `SELENIUM_SERVER_HOST=127.0.0.1`
 
 ### Installing Google Chrome browser
 

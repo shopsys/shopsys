@@ -5,10 +5,10 @@ After finishing this cookbook, you will know how to create a grid with inline ed
 
 ## Prerequisites
 
--   you have created a grid for the Salesman entity following [Create Basic Grid](./create-basic-grid.md) cookbook
--   you are aware of Shopsys Platform model concepts like entity data classes and their factories, facades, etc.
-    -   we recommend you to read the [Basics about model architecture](../model/introduction-to-model-architecture.md) article.
--   a basic knowledge of [Symfony forms](https://symfony.com/doc/3.4/forms.html) might be helpful for you
+- you have created a grid for the Salesman entity following [Create Basic Grid](./create-basic-grid.md) cookbook
+- you are aware of Shopsys Platform model concepts like entity data classes and their factories, facades, etc.
+    - we recommend you to read the [Basics about model architecture](../model/introduction-to-model-architecture.md) article.
+- a basic knowledge of [Symfony forms](https://symfony.com/doc/3.4/forms.html) might be helpful for you
 
 ## 1. Allow inline editing
 

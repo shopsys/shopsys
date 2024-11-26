@@ -13,10 +13,10 @@ We use abstract filesystem - [Flysystem](https://github.com/thephpleague/flysyst
 
 In Shopsys Platform we currently use [Flysystem](https://github.com/thephpleague/flysystem) to store:
 
--   uploaded files and images
--   uploaded files and images via WYSIWYG
--   generated feeds
--   generated sitemaps
+- uploaded files and images
+- uploaded files and images via WYSIWYG
+- generated feeds
+- generated sitemaps
 
 ### How to change storage adapter for filesystem
 

@@ -4,11 +4,11 @@ UI component that is a custom wrapper for the [`Next/Image` component](https://n
 
 The required images sizes are served on-the-fly via image proxy, and the whole magic works thanks to the following steps:
 
--   The [`loader`](https://nextjs.org/docs/pages/api-reference/components/image#loader) prop setting for the `Image` component.
--   The `nginx.conf` webserver configuration that forwards the image requests to the `imageResizer.php` script.
--   The `imageResizer` script itself that is responsible for serving the images from the image proxy:
-    -   Locally and on the CI server, there is an [`imgProxy`](https://docs.imgproxy.net/) service running in a Docker container.
-    -   For production, image proxy provided by [VSH CDN](https://support.vshosting.cz/en/CDN/manipulating-images-in-cdn/) is used.
+- The [`loader`](https://nextjs.org/docs/pages/api-reference/components/image#loader) prop setting for the `Image` component.
+- The `nginx.conf` webserver configuration that forwards the image requests to the `imageResizer.php` script.
+- The `imageResizer` script itself that is responsible for serving the images from the image proxy:
+    - Locally and on the CI server, there is an [`imgProxy`](https://docs.imgproxy.net/) service running in a Docker container.
+    - For production, image proxy provided by [VSH CDN](https://support.vshosting.cz/en/CDN/manipulating-images-in-cdn/) is used.
 
 ## Usage
 

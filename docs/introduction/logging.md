@@ -9,8 +9,8 @@ Based on [The Twelve-Factor App](https://12factor.net/logs) principle we decided
 
 By default, there are 2 output streams for logging:
 
--   `STDERR` should be used only for error logs
--   `STDOUT` should be used any other info and debug data
+- `STDERR` should be used only for error logs
+- `STDOUT` should be used any other info and debug data
 
 In the php-fpm container we used a named pipe as a gateway between the application and stdout.
 This approach prevents logs from being output to console during console commands.

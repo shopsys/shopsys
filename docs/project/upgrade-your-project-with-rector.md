@@ -58,11 +58,11 @@ php vendor/bin/rector
 
 ## Tips
 
--   Always run Rector on a clean branch to avoid conflicts with other changes.
--   Run Rector with a small number of rules at a time to make the changes in the code understandable and reviewable.
--   Thoroughly review the changes made by Rector to ensure that they are correct.
--   Run `php phing standards-fix` to make changes made by Rector adhere your code style.
--   Run your tests after running Rector to ensure that the changes did not introduce any regressions.
+- Always run Rector on a clean branch to avoid conflicts with other changes.
+- Run Rector with a small number of rules at a time to make the changes in the code understandable and reviewable.
+- Thoroughly review the changes made by Rector to ensure that they are correct.
+- Run `php phing standards-fix` to make changes made by Rector adhere your code style.
+- Run your tests after running Rector to ensure that the changes did not introduce any regressions.
 
 ## Conclusion
 

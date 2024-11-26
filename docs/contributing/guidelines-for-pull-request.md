@@ -2,16 +2,16 @@
 
 ## Before pull request
 
--   Fork our [monorepo](https://github.com/shopsys/shopsys)
--   Create your branch
+- Fork our [monorepo](https://github.com/shopsys/shopsys)
+- Create your branch
 
 ```sh
 git branch branch-name
 ```
 
--   Make desired changes in code and follow [commit message guidelines](./guidelines-for-creating-commits.md)
+- Make desired changes in code and follow [commit message guidelines](./guidelines-for-creating-commits.md)
 
--   Push to your fork
+- Push to your fork
 
 ```sh
 git push
@@ -19,7 +19,7 @@ git push
 
 ## 1. Create pull request
 
--   Before creating the PR, you have to update the branch on the current master:
+- Before creating the PR, you have to update the branch on the current master:
 
 ```sh
 git fetch
@@ -31,17 +31,17 @@ git rebase origin/master
     If your pull request contains any BC breaks (see [Backward Compatibility Promise](./backward-compatibility-promise.md)), it should not be targeted against the current master but against a branch where the next major release is being prepared.<br>
     E.g., if the latest release is `v7.1.0` and you want to introduce a breaking change, you need to rebase your branch on `8.0` branch and target your PR against it. If no such a branch exists, you need to create one.
 
--   You have to check your change using the command `php phing standards tests tests-acceptance` as it’s mentioned in [contributing](https://github.com/shopsys/shopsys/blob/master/CONTRIBUTING.md).
+- You have to check your change using the command `php phing standards tests tests-acceptance` as it’s mentioned in [contributing](https://github.com/shopsys/shopsys/blob/master/CONTRIBUTING.md).
 
 !!! hint
 
     In this step, you were using multiple Phing targets.<br>
     More information about what Phing targets are and how they work can be found in [Console Commands for Application Management (Phing Targets)](../introduction/console-commands-for-application-management-phing-targets.md)
 
--   Please make sure you sign form to agree with the [license agreement](https://www.shopsys.com/license-agreement/).
--   [Create a PR](https://github.com/shopsys/shopsys/compare?expand=1) with essential information to make our code review easier.
-    -   you do not have to update `CHANGELOG.md` at all as it is generated automatically using [github-changelog-generator/github-changelog-generator](https://github.com/github-changelog-generator/github-changelog-generator) during our release process.
--   Now, just wait for a review of your change.
+- Please make sure you sign form to agree with the [license agreement](https://www.shopsys.com/license-agreement/).
+- [Create a PR](https://github.com/shopsys/shopsys/compare?expand=1) with essential information to make our code review easier.
+    - you do not have to update `CHANGELOG.md` at all as it is generated automatically using [github-changelog-generator/github-changelog-generator](https://github.com/github-changelog-generator/github-changelog-generator) during our release process.
+- Now, just wait for a review of your change.
 
 ### Note about targeting pull requests
 
@@ -49,10 +49,10 @@ As we [support multiple versions](./backward-compatibility-promise.md#current-re
 
 If your pull request:
 
--   **fixes a bug and does not contain any BC break**, it should be targeted to the oldest supported version where the bug occurs.
--   **does not contain any BC break**, it should be targeted to `master`.
--   **contains any BC break**, it should be targeted to a branch where the next major release is being prepared.
-    -   E.g., if the latest release is `v7.1.0` and you want to introduce a breaking change, you must rebase your branch on the `8.0` branch and target your PR against it.
+- **fixes a bug and does not contain any BC break**, it should be targeted to the oldest supported version where the bug occurs.
+- **does not contain any BC break**, it should be targeted to `master`.
+- **contains any BC break**, it should be targeted to a branch where the next major release is being prepared.
+    - E.g., if the latest release is `v7.1.0` and you want to introduce a breaking change, you must rebase your branch on the `8.0` branch and target your PR against it.
 
 !!! note
 
@@ -66,7 +66,7 @@ We use fixup commits for correcting the pull request so the reviewer can see wha
 
 #### Fixup commit usage:
 
--   Changes which you want to add to previous commits commit independently with `git commit --fixup=hash`. Commit messages will be automatically completed.
+- Changes which you want to add to previous commits commit independently with `git commit --fixup=hash`. Commit messages will be automatically completed.
 
 #### Hash commit on GitHub (in right):
 
@@ -80,14 +80,14 @@ We use fixup commits for correcting the pull request so the reviewer can see wha
 
 If the reviewer is satisfied with the changes, squash fixup commits.
 
--   Update the branch on the current master:
+- Update the branch on the current master:
 
 ```sh
 git fetch
 git rebase origin/master
 ```
 
--   Squash fixup commits:
+- Squash fixup commits:
 
 ```sh
 git rebase --interactive --autosquash origin/master

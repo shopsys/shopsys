@@ -7,15 +7,15 @@ It helps to present data to the user, can paginate the results, allows ordering 
 
 ## Features
 
--   Pagination
--   Sorting by columns
--   Drag&Drop (Sortable)
--   Multiple Drag&Drop (Sortable across multiple grid instances)
--   Actions (e.g., deletion of an entity in a row)
--   Bulk Actions
--   Inline editing
--   Extendable template
--   Support for multiple data sources
+- Pagination
+- Sorting by columns
+- Drag&Drop (Sortable)
+- Multiple Drag&Drop (Sortable across multiple grid instances)
+- Actions (e.g., deletion of an entity in a row)
+- Bulk Actions
+- Inline editing
+- Extendable template
+- Support for multiple data sources
 
 ## Philosophy
 
@@ -27,24 +27,24 @@ Read more about various data sources in the [Grid data sources](../administratio
 
 ## Configurations
 
--   **Display only**
-    -   When you just need to display some data to the user.
-    -   e.g., `Marketing > XML Feeds`
--   **Display with action**
-    -   When you need to perform some actions on the grid entries, such as deletion.
-    -   e.g., `Marketing > Email newsletter`
--   **Inline editable**
-    -   When the entities in the grid are simple enough and do not need a separate page for editing, you can edit them directly in the grid via AJAX.
-    -   e.g., `Pricing > Promo codes`
--   **Drag&Drop**
-    -   When you need to set some ordering of your entities manually.
-    -   e.g., `Marketing > Slider pages`
--   **Multiple Drag&Drop**
-    -   When you need to set some ordering of your entities manually among multiple sections.
-    -   e.g., `Marketing > Articles overview`
--   **Selectable**
-    -   when you need to select entries from the grid and apply some bulk actions on them.
-    -   e.g., `Products > Products overview`
+- **Display only**
+    - When you just need to display some data to the user.
+    - e.g., `Marketing > XML Feeds`
+- **Display with action**
+    - When you need to perform some actions on the grid entries, such as deletion.
+    - e.g., `Marketing > Email newsletter`
+- **Inline editable**
+    - When the entities in the grid are simple enough and do not need a separate page for editing, you can edit them directly in the grid via AJAX.
+    - e.g., `Pricing > Promo codes`
+- **Drag&Drop**
+    - When you need to set some ordering of your entities manually.
+    - e.g., `Marketing > Slider pages`
+- **Multiple Drag&Drop**
+    - When you need to set some ordering of your entities manually among multiple sections.
+    - e.g., `Marketing > Articles overview`
+- **Selectable**
+    - when you need to select entries from the grid and apply some bulk actions on them.
+    - e.g., `Products > Products overview`
 
 ## Customization of grid rendering
 
@@ -115,5 +115,5 @@ If any column is missing in the `reorderColumns` method call, it will be rendere
 
 If you want to implement a new grid, you can follow the cookbooks:
 
--   [Create basic grid](../cookbook/create-basic-grid.md)
--   [Create advanced grid](../cookbook/create-advanced-grid.md)
+- [Create basic grid](../cookbook/create-basic-grid.md)
+- [Create advanced grid](../cookbook/create-advanced-grid.md)

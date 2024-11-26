@@ -4,16 +4,16 @@
 
 This bundle provides commands which can be useful for database migrations:
 
--   `shopsys:migrations:check-mapping` checks if ORM mapping is valid.
--   `shopsys:migrations:check-schema` checks if database schema is satisfying ORM.
--   `shopsys:migrations:count` returns count of migrations to execute.
--   `shopsys:migrations:migrate` executes all database migrations in one transaction.
-    -   the command supports installing migrations from multiple sources, so every bundle can have its own migrations
-    -   it creates a `migration-lock.yml` file in the project's root, persisting the order of execution
-    -   migrations can be manually reordered or skipped if necessary
--   `shopsys:migrations:generate` generates database migrations if the schema was changed
-    -   the command does not generate migrations that break backwards compatibility - eg. column dropping
-    -   prompts you to choose the location for migration file if you are developing more than one bundle
+- `shopsys:migrations:check-mapping` checks if ORM mapping is valid.
+- `shopsys:migrations:check-schema` checks if database schema is satisfying ORM.
+- `shopsys:migrations:count` returns count of migrations to execute.
+- `shopsys:migrations:migrate` executes all database migrations in one transaction.
+    - the command supports installing migrations from multiple sources, so every bundle can have its own migrations
+    - it creates a `migration-lock.yml` file in the project's root, persisting the order of execution
+    - migrations can be manually reordered or skipped if necessary
+- `shopsys:migrations:generate` generates database migrations if the schema was changed
+    - the command does not generate migrations that break backwards compatibility - eg. column dropping
+    - prompts you to choose the location for migration file if you are developing more than one bundle
 
 This bundle uses [DoctrineMigrationsBundle](https://symfony.com/doc/current/bundles/DoctrineMigrationsBundle), so you have to install both.
 

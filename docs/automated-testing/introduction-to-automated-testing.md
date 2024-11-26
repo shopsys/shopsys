@@ -3,12 +3,12 @@
 Testing is a crucial part of the development and maintenance of reliable software.  
 For this reason, Shopsys Platform comes with 5 types of automated tests:
 
--   [Unit tests](#unit-tests)
--   [Functional tests](#functional-tests)
--   [Application tests](#application-tests)
--   [HTTP smoke tests](#http-smoke-tests)
--   [Acceptance tests](#acceptance-tests-aka-functional-tests-or-selenium-tests)
--   [Performance tests](#performance-tests)
+- [Unit tests](#unit-tests)
+- [Functional tests](#functional-tests)
+- [Application tests](#application-tests)
+- [HTTP smoke tests](#http-smoke-tests)
+- [Acceptance tests](#acceptance-tests-aka-functional-tests-or-selenium-tests)
+- [Performance tests](#performance-tests)
 
 Software testing, in general, is a very broad topic and requires learning and practice.
 The following paragraphs should help you in your path to answering questions like _"What should I test?"_, _"Which type of tests should I use for this particular functionality?"_ or _"How many tests is enough?"_
@@ -71,19 +71,19 @@ Unit tests in Shopsys Platform are built on [PHPUnit testing framework](https://
 
 #### Advantages:
 
--   execution is really fast
--   precise localization of the problem
+- execution is really fast
+- precise localization of the problem
 
 #### Disadvantages:
 
--   tested code must be designed in a specific way (e.g., using _dependency injection principle_)
--   mocking sometimes leads to unintuitive behavior (e.g., returning `null` when not expected)
+- tested code must be designed in a specific way (e.g., using _dependency injection principle_)
+- mocking sometimes leads to unintuitive behavior (e.g., returning `null` when not expected)
 
 #### Great for:
 
--   testing isolated components with clear responsibilities
--   testing edge cases (using large data sets)
--   test driven development
+- testing isolated components with clear responsibilities
+- testing edge cases (using large data sets)
+- test driven development
 
 #### Example:
 
@@ -103,16 +103,16 @@ These tests use a separate database not to affect your application data, so you 
 
 #### Advantages:
 
--   demo data can be used for testing with [`PersistentReferenceFacade`](https://github.com/shopsys/framework/blob/master/src/Component/DataFixture/PersistentReferenceFacade.php)
+- demo data can be used for testing with [`PersistentReferenceFacade`](https://github.com/shopsys/framework/blob/master/src/Component/DataFixture/PersistentReferenceFacade.php)
 
 #### Disadvantages:
 
--   arranging the testing data is typically more complex than in unit tests
+- arranging the testing data is typically more complex than in unit tests
 
 #### Great for:
 
--   higher level testing of collaboration of units
--   low-level testing of components that are hard to unit-test
+- higher level testing of collaboration of units
+- low-level testing of components that are hard to unit-test
 
 #### Example:
 
@@ -139,11 +139,11 @@ When you need to check your direct response from the application by accessing it
 
 #### Advantages:
 
--   application behavior is tested directly, not via mocked code
+- application behavior is tested directly, not via mocked code
 
 #### Disadvantages:
 
--   tests can be slower than functional or unit tests
+- tests can be slower than functional or unit tests
 
 #### Example:
 
@@ -158,15 +158,15 @@ You will no longer cause _500 Server Error_ on some random page by a seemingly u
 
 #### Advantages:
 
--   all new controller actions are checked automatically (almost maintenance free)
+- all new controller actions are checked automatically (almost maintenance free)
 
 #### Disadvantages:
 
--   validate only HTTP codes, not the actual contents
+- validate only HTTP codes, not the actual contents
 
 #### Great for:
 
--   protection from unhandled exceptions in controller actions
+- protection from unhandled exceptions in controller actions
 
 #### Example:
 
@@ -186,21 +186,21 @@ More information can be found in [Running Acceptance Tests](running-acceptance-t
 
 #### Advantages:
 
--   end-to-end testing
--   cover errors that occur only in the browser
--   can test JavaScript code
--   demo data can be used for testing with [`PersistentReferenceFacade`](https://github.com/shopsys/framework/blob/master/src/Component/DataFixture/PersistentReferenceFacade.php)
+- end-to-end testing
+- cover errors that occur only in the browser
+- can test JavaScript code
+- demo data can be used for testing with [`PersistentReferenceFacade`](https://github.com/shopsys/framework/blob/master/src/Component/DataFixture/PersistentReferenceFacade.php)
 
 #### Disadvantages:
 
--   take a while to execute
--   whole application is switched to _ACCEPTANCE_ environment
--   occasional false negative reports (due to WebDriver brittleness)
--   requires installation of [Google Chrome](https://www.google.com/chrome/browser/desktop/) and [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/)
+- take a while to execute
+- whole application is switched to _ACCEPTANCE_ environment
+- occasional false negative reports (due to WebDriver brittleness)
+- requires installation of [Google Chrome](https://www.google.com/chrome/browser/desktop/) and [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/)
 
 #### Great for:
 
--   validating business-critical scenarios (e.g., order creation)
+- validating business-critical scenarios (e.g., order creation)
 
 #### Example:
 
@@ -216,17 +216,17 @@ It is advised to run these tests on a separate server that is not under load at 
 
 #### Advantages:
 
--   can test performance on large amounts of data
+- can test performance on large amounts of data
 
 #### Disadvantages:
 
--   takes really long time to execute (approx. 1.5 hours including import of performance data)
--   must be running on a server without load for consistent results
+- takes really long time to execute (approx. 1.5 hours including import of performance data)
+- must be running on a server without load for consistent results
 
 #### Great for:
 
--   discovering the performance impact of code modifications
--   preventing application collapse on production data load
+- discovering the performance impact of code modifications
+- preventing application collapse on production data load
 
 #### Example:
 

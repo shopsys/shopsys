@@ -29,12 +29,12 @@ The directory is configured using `%shopsys.elasticsearch.structure_dir%` parame
 
 #### Available elasticsearch phing targets
 
--   elasticsearch-index-create (deprecated from v9.1.1, use elasticsearch-index-migrate instead)
--   elasticsearch-index-delete
--   elasticsearch-index-recreate
--   elasticsearch-index-migrate
--   elasticsearch-export
--   elasticsearch-export-changed
+- elasticsearch-index-create (deprecated from v9.1.1, use elasticsearch-index-migrate instead)
+- elasticsearch-index-delete
+- elasticsearch-index-recreate
+- elasticsearch-index-migrate
+- elasticsearch-export
+- elasticsearch-export-changed
 
 These commands takes action for all registered indexes. You can also define a single index for given action by defining parameter `elasticsearch.index` (e.g., `elasticsearch-index-recreate -D elasticsearch.index=product` will recreate a structure for index `product`).
 
@@ -46,25 +46,25 @@ You have to export data from the database into Elasticsearch actively.
 
 Following product attributes are exported into Elasticsearch (i.e. the search or filtering can be performed on these fields only):
 
--   name
--   catnum
--   partno
--   ean
--   description
--   short description
--   flags (IDs of assigned flags)
--   brand (ID of assigned brand)
--   categories (IDs of assigned categories)
--   prices (all the prices for all pricing groups)
--   in_stock (true/false value whether the product is in stock)
--   parameters (pairs of parameter IDs and parameter value IDs)
--   ordering_priority (priority number)
--   calculated_selling_denied (calculated true/false value whether the product is already sold out)
--   selling_denied (true/false value whether the product can be sold)
--   availability (translation of product availability)
--   main_variant (true/false value whether the product is main variant or not. You can find more about behavior of variants [here](../functional/behavior-of-product-variants.md))
--   detail_url (absolute url to page with products detail)
--   visibility (all visibilities for all pricing groups and domains)
+- name
+- catnum
+- partno
+- ean
+- description
+- short description
+- flags (IDs of assigned flags)
+- brand (ID of assigned brand)
+- categories (IDs of assigned categories)
+- prices (all the prices for all pricing groups)
+- in_stock (true/false value whether the product is in stock)
+- parameters (pairs of parameter IDs and parameter value IDs)
+- ordering_priority (priority number)
+- calculated_selling_denied (calculated true/false value whether the product is already sold out)
+- selling_denied (true/false value whether the product can be sold)
+- availability (translation of product availability)
+- main_variant (true/false value whether the product is main variant or not. You can find more about behavior of variants [here](../functional/behavior-of-product-variants.md))
+- detail_url (absolute url to page with products detail)
+- visibility (all visibilities for all pricing groups and domains)
 
 Data of all products are exported into Elasticsearch by CRON module (`ProductExportCronModule.php`) every 5 minutes.
 Alternatively, you can force the export manually using `elasticsearch-export -D elasticsearch.index=product` Phing target.
@@ -121,11 +121,11 @@ Configurations use the `<index>/<domain_id>.json` naming pattern.
 
 ## Known issues
 
--   When you need to add a new domain, you have to do following steps:
-    -   create elasticsearch definition for the domain
-    -   delete indexes
-    -   create indexes
-    -   export products
+- When you need to add a new domain, you have to do following steps:
+    - create elasticsearch definition for the domain
+    - delete indexes
+    - create indexes
+    - export products
 
 ## Troubleshooting
 

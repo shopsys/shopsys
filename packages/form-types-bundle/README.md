@@ -31,13 +31,13 @@ Compound type that renders one form of given type for each domain.
 
 It can be configured via the following options:
 
--   `entry_type` - The type of the inner form.
-    Defaults to `TextType::class`.
--   `entry_options` - The options of the inner forms.
-    Defaults to `[]`.
--   `options_by_domain_id` - The options of the inner forms based on the domain ID.
-    Provide arrays indexed by the domain ID, values are merged with the `entry_options`.
-    Defaults to `[]`.
+- `entry_type` - The type of the inner form.
+  Defaults to `TextType::class`.
+- `entry_options` - The options of the inner forms.
+  Defaults to `[]`.
+- `options_by_domain_id` - The options of the inner forms based on the domain ID.
+  Provide arrays indexed by the domain ID, values are merged with the `entry_options`.
+  Defaults to `[]`.
 
 The data of the inner forms are returned as an array indexed by the domain ID.
 

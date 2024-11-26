@@ -37,33 +37,33 @@ For example component `list-products` will have following file path `components/
 
 In the root directory for common styles `assets/styles/frontend/common` you will see following files and folders.
 
--   `main.less` - import all `Less` files needed to style its domain design. For more information about importing `Less` files, please see our document [Introduction to less](./introduction-to-less.md)
--   `helpers.less` - imports base configuration located in `core/` and helper classes located in files placed in `helpers/`
--   `todo.less` - serves as file to keep temporary CSS/LESS code for further processing
--   `wysiwyg.less` - import files needed to design wysiwyg editor
--   `components/` - contains all components
-    -   `box/` - contains components that are related to block of complex information (product information, progress bar in order process, promo code,...). **This type of component is the only one which is not reusable.**
-    -   `form/` - contains components related to form elements, wrappers and structures (form line, error messages,...)
-    -   `in/` - contains inline components (product flag, messages, paging,...). Here belong all components that are not related to complex of information.
-    -   `list/` - contains components related to list that are not created by HTML element table (product list, menu, categories,...). Here belong all components that are a list of items and are not created by HTML element table.
-    -   `table/` - contains components related to table HTML element (product parameters, cart,...). Here belong all components that are a list of items and created by HTML element table.
-    -   `window/` - contains components for showing window (popup)
-    -   `wrap/` - contains components that wrap elements
--   `core/` - contains core setting
-    -   `form/` - contains styles related to form elements
-        -   `btn.less` - definition of `.btn` class and its modifications
-        -   `input.less` - definition of base input HTLM element, `.input` class and its modifications
-    -   `mixin/` - contains usefull `Less mixins`
-    -   `animation.less` - used for CSS animation
-    -   `base.less` - set base styles for HTML elements
-    -   `reset.less` - reset CSS attributes of HTML elements
-    -   `typography.less` - set base styles for typography
-    -   `variables.less` - contains variables definition
--   `helpers/` - contains helper classes for setting `display`, `font-size`, `cursor`, `float`, `text-align`, `clear`, `margin`, `padding` attributes
--   `layout/` - contains styles related to web layout
-    -   `header/` - contains all classes related to `.header` class
--   `libs/` - contains styles of third side application
--   `print/` - contains styles intended for print page. Structure of folder `print/` copy folder structure of this root folder. You will find in `print/` only files that were needed to be modified in order to show print page correctly.
+- `main.less` - import all `Less` files needed to style its domain design. For more information about importing `Less` files, please see our document [Introduction to less](./introduction-to-less.md)
+- `helpers.less` - imports base configuration located in `core/` and helper classes located in files placed in `helpers/`
+- `todo.less` - serves as file to keep temporary CSS/LESS code for further processing
+- `wysiwyg.less` - import files needed to design wysiwyg editor
+- `components/` - contains all components
+    - `box/` - contains components that are related to block of complex information (product information, progress bar in order process, promo code,...). **This type of component is the only one which is not reusable.**
+    - `form/` - contains components related to form elements, wrappers and structures (form line, error messages,...)
+    - `in/` - contains inline components (product flag, messages, paging,...). Here belong all components that are not related to complex of information.
+    - `list/` - contains components related to list that are not created by HTML element table (product list, menu, categories,...). Here belong all components that are a list of items and are not created by HTML element table.
+    - `table/` - contains components related to table HTML element (product parameters, cart,...). Here belong all components that are a list of items and created by HTML element table.
+    - `window/` - contains components for showing window (popup)
+    - `wrap/` - contains components that wrap elements
+- `core/` - contains core setting
+    - `form/` - contains styles related to form elements
+        - `btn.less` - definition of `.btn` class and its modifications
+        - `input.less` - definition of base input HTLM element, `.input` class and its modifications
+    - `mixin/` - contains usefull `Less mixins`
+    - `animation.less` - used for CSS animation
+    - `base.less` - set base styles for HTML elements
+    - `reset.less` - reset CSS attributes of HTML elements
+    - `typography.less` - set base styles for typography
+    - `variables.less` - contains variables definition
+- `helpers/` - contains helper classes for setting `display`, `font-size`, `cursor`, `float`, `text-align`, `clear`, `margin`, `padding` attributes
+- `layout/` - contains styles related to web layout
+    - `header/` - contains all classes related to `.header` class
+- `libs/` - contains styles of third side application
+- `print/` - contains styles intended for print page. Structure of folder `print/` copy folder structure of this root folder. You will find in `print/` only files that were needed to be modified in order to show print page correctly.
 
 ## How to create new LESS component
 

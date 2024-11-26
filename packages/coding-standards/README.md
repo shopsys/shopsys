@@ -11,8 +11,8 @@ This repository is maintained by [shopsys/shopsys] monorepo, information about c
 
 Provided tools:
 
--   [PHP-Parallel-Lint](https://github.com/JakubOnderka/PHP-Parallel-Lint)
--   [EasyCodingStandard](https://github.com/Symplify/EasyCodingStandard) that combines [PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) and [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
+- [PHP-Parallel-Lint](https://github.com/JakubOnderka/PHP-Parallel-Lint)
+- [EasyCodingStandard](https://github.com/Symplify/EasyCodingStandard) that combines [PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) and [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer)
 
 For further information see official documentation of those tools.
 

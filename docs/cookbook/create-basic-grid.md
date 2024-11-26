@@ -6,9 +6,9 @@ In the end, we will be able to even sort our grid by column, paginate large resu
 
 ## Prerequisites
 
--   As we are going to list the salesmen, you need to create the Salesman entity and add some entries to the database table following [the cookbook](./adding-a-new-entity.md), first.
--   You should know how to work with controllers, its actions and be familiar with concepts of administration pages in Shopsys Platform.
-    -   We recommend you to read [Adding a New Administration Page](./adding-a-new-administration-page.md) cookbook.
+- As we are going to list the salesmen, you need to create the Salesman entity and add some entries to the database table following [the cookbook](./adding-a-new-entity.md), first.
+- You should know how to work with controllers, its actions and be familiar with concepts of administration pages in Shopsys Platform.
+    - We recommend you to read [Adding a New Administration Page](./adding-a-new-administration-page.md) cookbook.
 
 ## 1. Define the grid
 

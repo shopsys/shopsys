@@ -9,15 +9,15 @@ This solution uses [_Mutagen_](https://mutagen.io) (for relatively fast two-way 
 
 ## Requirements
 
--   [GIT](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
--   [PHP](http://php.net/manual/en/install.macosx.php)
-    -   At least version **8.3 or higher**
--   [Composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx)
--   [Docker Desktop](https://docs.docker.com/engine/install/)
-    -   Enable Docker Compose V2 in General settings
-    -   We recommend to set at least 8 GB RAM, 4 CPUs and 512 MB Swap in `Docker -> Preferences… -> Resources -> ADVANCED`
--   [Mutagen](https://mutagen.io/) (install using [Mutagen installation guide](https://mutagen.io/documentation/introduction/installation))
--   [Mutagen Compose](https://mutagen.io/documentation/orchestration/compose/) (install using [Mutagen Compose installation guide](https://github.com/mutagen-io/mutagen-compose#installation))
+- [GIT](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- [PHP](http://php.net/manual/en/install.macosx.php)
+    - At least version **8.3 or higher**
+- [Composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx)
+- [Docker Desktop](https://docs.docker.com/engine/install/)
+    - Enable Docker Compose V2 in General settings
+    - We recommend to set at least 8 GB RAM, 4 CPUs and 512 MB Swap in `Docker -> Preferences… -> Resources -> ADVANCED`
+- [Mutagen](https://mutagen.io/) (install using [Mutagen installation guide](https://mutagen.io/documentation/introduction/installation))
+- [Mutagen Compose](https://mutagen.io/documentation/orchestration/compose/) (install using [Mutagen Compose installation guide](https://github.com/mutagen-io/mutagen-compose#installation))
 
 ## Steps
 

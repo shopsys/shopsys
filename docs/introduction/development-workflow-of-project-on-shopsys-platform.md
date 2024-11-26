@@ -2,8 +2,8 @@
 
 ## Requirements
 
--   Shopsys Platform [installed](../installation/installation-guide.md)
--   [GIT repository](https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository) created from Shopsys Platform [project-base](https://github.com/shopsys/project-base/)
+- Shopsys Platform [installed](../installation/installation-guide.md)
+- [GIT repository](https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository) created from Shopsys Platform [project-base](https://github.com/shopsys/project-base/)
 
 ## How to develop a new feature
 
