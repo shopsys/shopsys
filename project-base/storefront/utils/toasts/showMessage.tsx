@@ -3,7 +3,8 @@
 import { CopyTextBlock } from 'components/Basic/CopyTextBlock/CopyTextBlock';
 import { TIDs } from 'cypress/tids';
 import { toast } from 'react-toastify';
-import { isWithToastAndConsoleErrorDebugging } from 'utils/errors/isWithErrorDebugging';
+
+const isWithToastAndConsoleErrorDebugging = process.env.NEXT_PUBLIC_ERROR_DEBUGGING_LEVEL === 'toast-and-console';
 
 export const showMessage = (message: string, type: 'info' | 'error' | 'success'): void => {
     if (type === 'error') {
