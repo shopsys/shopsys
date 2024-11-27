@@ -2,3 +2,4 @@ TransportTypeEnum:
     type: enum
     inherits:
         - 'TransportTypeEnumDecorator'
+        - 'ConvertimTransportTypeEnumDecorator'
