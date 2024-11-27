@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
-use App\Model\Payment\Payment;
 use App\Model\Payment\PaymentDataFactory;
 use App\Model\Transport\Transport;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -17,6 +16,7 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethod;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentTypeEnum;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
@@ -28,7 +28,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     public const string PAYMENT_CARD = 'payment_card';
     public const string PAYMENT_CASH_ON_DELIVERY = 'payment_cash_on_delivery';
     public const string PAYMENT_CASH = 'payment_cash';
-    public const string PAYMENT_GOPAY_CARD = 'payment_' . Payment::TYPE_GOPAY;
+    public const string PAYMENT_GOPAY_CARD = 'payment_' . PaymentTypeEnum::TYPE_GOPAY;
     public const string PAYMENT_GOPAY_BANK_ACCOUNT = 'goPay_bank_account_transfer';
     public const string PAYMENT_LATER = 'payment_later';
 
@@ -51,7 +51,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     public function load(ObjectManager $manager): void
     {
         $paymentData = $this->paymentDataFactory->create();
-        $paymentData->type = Payment::TYPE_BASIC;
+        $paymentData->type = PaymentTypeEnum::TYPE_BASIC;
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $locale = $domainConfig->getLocale();
@@ -76,7 +76,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         ]);
 
         $paymentData = $this->paymentDataFactory->create();
-        $paymentData->type = Payment::TYPE_BASIC;
+        $paymentData->type = PaymentTypeEnum::TYPE_BASIC;
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $locale = $domainConfig->getLocale();
@@ -96,7 +96,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         );
 
         $paymentData = $this->paymentDataFactory->create();
-        $paymentData->type = Payment::TYPE_BASIC;
+        $paymentData->type = PaymentTypeEnum::TYPE_BASIC;
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $locale = $domainConfig->getLocale();
@@ -114,7 +114,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->createGoPayBankAccountTransferPaymentOnDomain();
 
         $paymentData = $this->paymentDataFactory->create();
-        $paymentData->type = Payment::TYPE_BASIC;
+        $paymentData->type = PaymentTypeEnum::TYPE_BASIC;
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $locale = $domainConfig->getLocale();
@@ -189,7 +189,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     private function createGoPayBankAccountTransferPaymentOnDomain(): void
     {
         $paymentData = $this->paymentDataFactory->create();
-        $paymentData->type = Payment::TYPE_GOPAY;
+        $paymentData->type = PaymentTypeEnum::TYPE_GOPAY;
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
             $paymentData->enabled[$domainId] = true;
@@ -218,7 +218,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
     private function createGoPayCardPayment(): void
     {
         $paymentData = $this->paymentDataFactory->create();
-        $paymentData->type = Payment::TYPE_GOPAY;
+        $paymentData->type = PaymentTypeEnum::TYPE_GOPAY;
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
             $paymentData->enabled[$domainId] = true;
