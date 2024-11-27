@@ -1,3 +1,5 @@
+'use client';
+
 import { yupResolver } from '@hookform/resolvers/yup';
 import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
@@ -10,12 +12,13 @@ import * as Yup from 'yup';
 export const useLoginForm = (defaultEmail?: string): [UseFormReturn<LoginFormType>, LoginFormType] => {
     const { t } = useTranslation();
 
-    const resolver = yupResolver(
-        Yup.object().shape<Record<keyof LoginFormType, any>>({
-            email: Yup.string().required(t('This field is required')).email(t('This value is not a valid email')),
-            password: Yup.string().required(t('This field is required')),
-        }),
-    );
+    const schema = Yup.object().shape<Record<keyof LoginFormType, any>>({
+        email: Yup.string().required(t('This field is required')).email(t('This value is not a valid email')),
+        password: Yup.string().required(t('This field is required')),
+    });
+
+    const resolver = yupResolver(schema);
+
     const defaultValues = {
         email: defaultEmail ?? '',
         password: '',
