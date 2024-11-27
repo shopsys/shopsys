@@ -1,3 +1,5 @@
+'use client';
+
 import { TextInput } from './TextInput';
 import eyeIcon from '/public/svg/eye.svg';
 import { Image } from 'components/Basic/Image/Image';
