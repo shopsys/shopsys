@@ -32,5 +32,20 @@ class ShopsysConvertimExtension extends Extension implements PrependExtensionInt
                 'Shopsys\ConvertimBundle\Migrations' => __DIR__ . '/../Migrations',
             ],
         ]);
+
+        $config = [
+            'definitions' => [
+                'mappings' => [
+                    'types' => [
+                        [
+                            'type' => 'yaml',
+                            'dir' => __DIR__ . '/../Resources/config/graphql-types',
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        $container->prependExtensionConfig('overblog_graphql', $config);
     }
 }

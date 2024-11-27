@@ -43,6 +43,18 @@ CONVERTIM_CONFIG='{
 }'
 ```
 
+### Add Convertim transport and payment types to GraphQl API:
+
+Update file `app/config/graphql/types/EnumType/TransportTypeEnum.types.yaml` like this:
+
+```diff
+    TransportTypeEnum:
+        type: enum
+        inherits:
+            - 'TransportTypeEnumDecorator'
++           - 'ConvertimTransportTypeEnumDecorator'
+```
+
 ## Contributing
 
 Thank you for your contributions to Shopsys Convertim Bundle.
