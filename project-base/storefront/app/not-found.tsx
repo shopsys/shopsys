@@ -3,6 +3,7 @@ import { getServerT } from 'utils/getServerTranslation';
 
 export default async function NotFound() {
     const t = await getServerT();
+
     return (
         <Error404Headless
             backButtonHref="/app"
