@@ -1,3 +1,5 @@
+'use client';
+
 import { DeepPartial, FieldValues, Resolver, useForm, UseFormReturn } from 'react-hook-form';
 
 export const useShopsysForm = <T extends FieldValues>(
