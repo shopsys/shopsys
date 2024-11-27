@@ -43,3 +43,6 @@ TransportDecorator:
                 description: "Code of transport type"
             vat:
                 type: "Vat!"
+            displayInCart:
+                type: "Boolean!"
+                description: "Should be displayed in cart (is used for transports, that might be needed to return for example to the Convertim, but are not supposed to be displayed in cart)"

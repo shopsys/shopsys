@@ -23,7 +23,7 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
-use Shopsys\FrameworkBundle\Model\Transport\TransportTypeEnum;
+use Shopsys\FrameworkBundle\Model\Transport\TransportTypeProvider;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -41,14 +41,14 @@ class TransportFormType extends AbstractType
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportTypeEnum $transportTypeEnum
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportTypeProvider $transportTypeProvider
      */
     public function __construct(
         private readonly PaymentFacade $paymentFacade,
         private readonly TransportFacade $transportFacade,
-        private readonly TransportTypeEnum $transportTypeEnum,
         private readonly Domain $domain,
+        private readonly TransportTypeProvider $transportTypeProvider,
     ) {
     }
 
@@ -105,7 +105,7 @@ class TransportFormType extends AbstractType
             ])
             ->add('type', ChoiceType::class, [
                 'required' => true,
-                'choices' => $this->transportTypeEnum->getAllIndexedByTranslations(),
+                'choices' => $this->transportTypeProvider->getAllIndexedByTranslations(),
                 'constraints' => [
                     new NotBlank(),
                 ],

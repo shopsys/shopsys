@@ -1,0 +1,14 @@
+ConvertimTransportTypeEnumDecorator:
+    type: enum
+    decorator: true
+    config:
+        description: "One of the possible methods of the transport type"
+        values:
+            convertim_ppl:
+                value: '@=constant("Shopsys\\ConvertimBundle\\Model\\Transport\\TransportTypeEnum::TYPE_PPL")'
+            convertim_dpd_czechia:
+                value: '@=constant("Shopsys\\ConvertimBundle\\Model\\Transport\\TransportTypeEnum::TYPE_DPD_CZECHIA")'
+            convertim_dpd_slovakia:
+                value: '@=constant("Shopsys\\ConvertimBundle\\Model\\Transport\\TransportTypeEnum::TYPE_DPD_SLOVAKIA")'
+            convertim_balikovna:
+                value: '@=constant("Shopsys\\ConvertimBundle\\Model\\Transport\\TransportTypeEnum::TYPE_BALIKOVNA")'
