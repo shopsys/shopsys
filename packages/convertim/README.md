@@ -55,6 +55,16 @@ Update file `app/config/graphql/types/EnumType/TransportTypeEnum.types.yaml` lik
 +           - 'ConvertimTransportTypeEnumDecorator'
 ```
 
+Update file `app/config/graphql/types/EnumType/PaymentTypeEnum.types.yaml` like this:
+
+```diff
+    PaymentTypeEnum:
+        type: enum
+        inherits:
+            - 'PaymentTypeEnumDecorator'
++           - 'ConvertimPaymentTypeEnumDecorator'
+```
+
 ## Contributing
 
 Thank you for your contributions to Shopsys Convertim Bundle.

@@ -20,6 +20,8 @@ use Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentTypeEnum;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentTypeProvider;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\Form\AbstractType;
@@ -39,12 +41,14 @@ class PaymentFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Model\GoPay\PaymentMethod\GoPayPaymentMethodFacade $goPayPaymentMethodFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentTypeProvider $paymentTypeProvider
      */
     public function __construct(
         private readonly TransportFacade $transportFacade,
         private readonly PaymentFacade $paymentFacade,
         private readonly GoPayPaymentMethodFacade $goPayPaymentMethodFacade,
         private readonly Domain $domain,
+        private readonly PaymentTypeProvider $paymentTypeProvider,
     ) {
     }
 
@@ -101,10 +105,7 @@ class PaymentFormType extends AbstractType
             ])
             ->add('type', ChoiceType::class, [
                 'label' => t('Type'),
-                'choices' => [
-                    t('Basic') => Payment::TYPE_BASIC,
-                    t('GoPay') => Payment::TYPE_GOPAY,
-                ],
+                'choices' => $this->paymentTypeProvider->getAllIndexedByTranslations(),
                 'multiple' => false,
                 'expanded' => false,
                 'required' => true,
@@ -260,7 +261,7 @@ class PaymentFormType extends AbstractType
      */
     public function validateGopayPaymentMethod(PaymentData $paymentData, ExecutionContextInterface $context): void
     {
-        if ($paymentData->type !== Payment::TYPE_GOPAY) {
+        if ($paymentData->type !== PaymentTypeEnum::TYPE_GOPAY) {
             return;
         }
 
