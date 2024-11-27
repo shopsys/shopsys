@@ -532,44 +532,37 @@ class AdministratorController extends AdminBaseController
 
         $administrator = $this->administratorFacade->getByUserName($username);
 
-        $invalidResetPasswordHash = false;
-
         if (!$administrator->isResetPasswordHashValid($hash)) {
-            $invalidResetPasswordHash = true;
+            return $this->render('@ShopsysFramework/Admin/Content/Administrator/invalidResetPasswordHash.html.twig');
         }
 
-        if (!$invalidResetPasswordHash) {
-            $administratorData = $this->administratorDataFactory->createFromAdministrator($administrator);
+        $administratorData = $this->administratorDataFactory->createFromAdministrator($administrator);
 
-            $form = $this->createForm(AdministratorResetPasswordFormType::class, $administratorData, [
-                'administrator' => $administrator,
-            ]);
-            $form->handleRequest($request);
+        $form = $this->createForm(AdministratorResetPasswordFormType::class, $administratorData, [
+            'administrator' => $administrator,
+        ]);
+        $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-                $this->administratorPasswordFacade->setNewPassword(
-                    $administrator->getUsername(),
-                    $hash,
-                    $administratorData->password,
-                );
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->administratorPasswordFacade->setNewPassword(
+                $administrator->getUsername(),
+                $hash,
+                $administratorData->password,
+            );
 
-                if (!$this->isGranted(Roles::ROLE_ADMIN)) {
-                    $this->authenticator->loginAdministrator($administrator, $request);
-
-                    return $this->redirectToRoute('admin_default_dashboard');
-                }
-
-                return $this->redirectToRoute('admin_administrator_list');
+            if (!$this->isGranted(Roles::ROLE_ADMIN)) {
+                $this->authenticator->loginAdministrator($administrator);
             }
 
-            if ($form->isSubmitted() && !$form->isValid()) {
-                $this->addErrorFlash(t('Please check the correctness of all data filled.'));
-            }
+            return $this->redirectToRoute('admin_administrator_list');
+        }
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/Administrator/resetPassword.html.twig', [
-            'form' => isset($form) ? $form->createView() : null,
-            'administrator' => $administrator,
+            'form' => $form,
         ]);
     }
 }
