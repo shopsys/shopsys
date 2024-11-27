@@ -43,6 +43,21 @@ export async function createQuery<Data = any, Variables extends AnyVariables = A
     return response;
 }
 
+export async function readQuery<Data = any, Variables extends AnyVariables = AnyVariables>(
+    query: DocumentInput<Data, Variables>,
+    variables: Variables,
+    context?: Partial<OperationContext>,
+): Promise<OperationResultSource<OperationResult<Data, Variables>>> {
+    const client = await getClient();
+    const response = await client.readQuery(query, variables, context);
+
+    if (!response) {
+        return { data: null } as OperationResult<Data, Variables>;
+    }
+
+    return response;
+}
+
 export async function createMutation<Data = any, Variables extends AnyVariables = AnyVariables>(
     query: DocumentInput<Data, Variables>,
     variables: Variables,
