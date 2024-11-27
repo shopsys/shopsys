@@ -15,7 +15,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup;
 use Shopsys\FrameworkBundle\Model\Order\Order;
-use Shopsys\FrameworkBundle\Model\Payment\Payment;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentTypeEnum;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class CustomerUserWithLimitedRoleGroupTest extends GraphQlWithLoginTestCase
@@ -88,7 +88,7 @@ class CustomerUserWithLimitedRoleGroupTest extends GraphQlWithLoginTestCase
         foreach ($payments as $payment) {
             $this->assertSame('***', $payment['price']['priceWithVat']);
             $this->assertSame('***', $payment['price']['priceWithoutVat']);
-            $this->assertSame(Payment::TYPE_BASIC, $payment['type']);
+            $this->assertSame(PaymentTypeEnum::TYPE_BASIC, $payment['type']);
         }
     }
 

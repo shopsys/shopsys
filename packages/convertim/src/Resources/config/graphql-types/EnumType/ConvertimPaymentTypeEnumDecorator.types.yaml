@@ -1,0 +1,22 @@
+ConvertimPaymentTypeEnumDecorator:
+    type: enum
+    decorator: true
+    config:
+        description: "One of the possible methods of the transport type"
+        values:
+            convertim_cash_on_delivery:
+                value: '@=constant("Shopsys\\ConvertimBundle\\Model\\Payment\\PaymentTypeEnum::TYPE_CASH_ON_DELIVERY")'
+            convertim_qr:
+                value: '@=constant("Shopsys\\ConvertimBundle\\Model\\Payment\\PaymentTypeEnum::TYPE_QR")'
+            convertim_adyen:
+                value: '@=constant("Shopsys\\ConvertimBundle\\Model\\Payment\\PaymentTypeEnum::TYPE_ADYEN")'
+            convertim_stripe:
+                value: '@=constant("Shopsys\\ConvertimBundle\\Model\\Payment\\PaymentTypeEnum::TYPE_STRIPE")'
+            convertim_comgate:
+                value: '@=constant("Shopsys\\ConvertimBundle\\Model\\Payment\\PaymentTypeEnum::TYPE_COMGATE")'
+            convertim_trustpay:
+                value: '@=constant("Shopsys\\ConvertimBundle\\Model\\Payment\\PaymentTypeEnum::TYPE_TRUSTPAY")'
+            convertim_paypal:
+                value: '@=constant("Shopsys\\ConvertimBundle\\Model\\Payment\\PaymentTypeEnum::TYPE_PAYPAL")'
+            convertim_essox:
+                value: '@=constant("Shopsys\\ConvertimBundle\\Model\\Payment\\PaymentTypeEnum::TYPE_ESSOX")'

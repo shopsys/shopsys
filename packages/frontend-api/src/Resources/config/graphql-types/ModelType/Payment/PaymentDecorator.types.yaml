@@ -50,7 +50,10 @@ PaymentDecorator:
                 type: "GoPayPaymentMethod"
                 description: "Additional data for GoPay payment"
             type:
-                type: "String!"
+                type: "PaymentTypeEnum!"
                 description: "Type of payment"
             vat:
                 type: "Vat!"
+            displayInCart:
+                type: "Boolean!"
+                description: "Should be displayed in cart (is used for payments, that might be needed to return for example to the Convertim, but are not supposed to be displayed in cart)"
