@@ -15,7 +15,7 @@ import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.g
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { TypeTransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 import { TypeTransportWithAvailablePaymentsFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsFragment.generated';
-import { TypeOpeningHours, TypePromoCodeTypeEnum, TypeTransportTypeEnum } from 'graphql/types';
+import { TypeOpeningHours, TypePaymentTypeEnum, TypePromoCodeTypeEnum, TypeTransportTypeEnum } from 'graphql/types';
 import { Translate } from 'next-translate';
 import { formatPercent } from 'utils/formaters/formatPercent';
 import { FormatPriceFunctionType } from 'utils/formatting/useFormatPrice';
@@ -32,6 +32,14 @@ const mapTransportSource = (type: TypeTransportTypeEnum): TransportSources | nul
             return TransportSources.PACKETA;
         case TypeTransportTypeEnum.PersonalPickup:
             return TransportSources.STORES;
+        case TypeTransportTypeEnum.ConvertimBalikovna:
+            return TransportSources.BALIKOVNA;
+        case TypeTransportTypeEnum.ConvertimPpl:
+            return TransportSources.PPL;
+        case TypeTransportTypeEnum.ConvertimDpdCzechia:
+            return TransportSources.DPD;
+        case TypeTransportTypeEnum.ConvertimDpdSlovakia:
+            return TransportSources.SK_DPD;
         default:
             return null;
     }
@@ -44,6 +52,14 @@ const mapTransportType = (type: TypeTransportTypeEnum): TransportTypes | null =>
         case TypeTransportTypeEnum.Packetery:
             return TransportTypes.PICKUP_PLACE;
         case TypeTransportTypeEnum.PersonalPickup:
+            return TransportTypes.PICKUP_PLACE;
+        case TypeTransportTypeEnum.ConvertimBalikovna:
+            return TransportTypes.PICKUP_PLACE;
+        case TypeTransportTypeEnum.ConvertimPpl:
+            return TransportTypes.PICKUP_PLACE;
+        case TypeTransportTypeEnum.ConvertimDpdCzechia:
+            return TransportTypes.PICKUP_PLACE;
+        case TypeTransportTypeEnum.ConvertimDpdSlovakia:
             return TransportTypes.PICKUP_PLACE;
         default:
             return null;
@@ -79,12 +95,28 @@ export const mapTransportsData = (
     );
 };
 
-const mapPaymentType = (type: string): PaymentTypes => {
+const mapPaymentType = (type: TypePaymentTypeEnum): PaymentTypes => {
     switch (type) {
-        case 'basic':
+        case TypePaymentTypeEnum.Basic:
             return PaymentTypes.CASH_ON_DELIVERY;
-        case 'goPay':
+        case TypePaymentTypeEnum.ConvertimCashOnDelivery:
+            return PaymentTypes.CASH_ON_DELIVERY;
+        case TypePaymentTypeEnum.GoPay:
             return PaymentTypes.GOPAY;
+        case TypePaymentTypeEnum.ConvertimAdyen:
+            return PaymentTypes.ADYEN;
+        case TypePaymentTypeEnum.ConvertimComgate:
+            return PaymentTypes.COMGATE;
+        case TypePaymentTypeEnum.ConvertimQr:
+            return PaymentTypes.BANK_TRANSFER_WITH_QR;
+        case TypePaymentTypeEnum.ConvertimStripe:
+            return PaymentTypes.STRIPE;
+        case TypePaymentTypeEnum.ConvertimTrustpay:
+            return PaymentTypes.TRUST_PAY;
+        case TypePaymentTypeEnum.ConvertimPaypal:
+            return PaymentTypes.PAYPAL;
+        case TypePaymentTypeEnum.ConvertimEssox:
+            return PaymentTypes.ESSOX;
         default:
             return PaymentTypes.CASH_ON_DELIVERY;
     }
