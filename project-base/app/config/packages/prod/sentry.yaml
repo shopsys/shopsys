@@ -6,6 +6,7 @@ sentry:
     options:
         environment: '%env(SENTRY_ENVIRONMENT)%'
         release: '%env(SENTRY_RELEASE)%'
+        traces_sample_rate: 0.1
     register_error_listener: false
 
 services:
