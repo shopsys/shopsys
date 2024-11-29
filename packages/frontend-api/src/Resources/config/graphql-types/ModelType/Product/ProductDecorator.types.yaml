@@ -42,7 +42,7 @@ ProductDecorator:
                 type: "[Flag!]!"
                 description: "List of flags"
             price:
-                type: "ProductPrice"
+                type: "ProductPrice!"
                 description: "Product price"
                 resolve: '@=query("priceByProductQuery", value)'
             images:

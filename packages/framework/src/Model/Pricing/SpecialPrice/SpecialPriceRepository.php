@@ -23,6 +23,19 @@ class SpecialPriceRepository
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
+     * @return array{priceAmount:\Shopsys\FrameworkBundle\Component\Money\Money, validFrom: \DateTimeImmutable, validTo: \DateTimeImmutable, productListId: int}|null
+     */
+    public function getEffectiveSpecialPrice(Product $product, int $domainId): ?array
+    {
+        $queryBuilder = $this->getCurrentAndFutureSpecialPricesQueryBuilder($product, $domainId)
+            ->setMaxResults(1);
+
+        return $queryBuilder->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param int $domainId
      * @param int[] $variantIds
      * @return array<int, array{priceAmount:\Shopsys\FrameworkBundle\Component\Money\Money, validFrom: \DateTimeImmutable, validTo: \DateTimeImmutable, productId: int}>
      */

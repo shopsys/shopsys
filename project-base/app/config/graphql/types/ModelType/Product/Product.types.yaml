@@ -38,10 +38,6 @@ Product:
                     type:
                         type: "String"
                         defaultValue: null
-            price:
-                type: "ProductPrice!"
-                description: "Product price"
-                resolve: '@=query("priceByProductQuery", value)'
             accessories:
                 type: "[Product!]!"
             parameters:

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice;
 
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class SpecialPriceFacade
@@ -16,6 +17,36 @@ class SpecialPriceFacade
         protected readonly SpecialPriceFactory $specialPriceFactory,
         protected readonly SpecialPriceRepository $specialPriceRepository,
     ) {
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $basicPrice
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice|null
+     */
+    public function getEffectiveSpecialPrice(Product $product, int $domainId, Price $basicPrice): ?SpecialPrice
+    {
+        $effectiveSpecialPrice = $this->specialPriceRepository->getEffectiveSpecialPrice($product, $domainId);
+
+        if ($effectiveSpecialPrice === null) {
+            return null;
+        }
+
+        $specialPrice = $this->specialPriceFactory->createWithCalculations(
+            $effectiveSpecialPrice['validFrom'],
+            $effectiveSpecialPrice['validTo'],
+            $effectiveSpecialPrice['priceAmount'],
+            $domainId,
+            $product->getVatForDomain($domainId),
+            $effectiveSpecialPrice['productId'],
+        );
+
+        if ($specialPrice->price->getPriceWithVat()->isGreaterThanOrEqualTo($basicPrice->getPriceWithVat())) {
+            return null;
+        }
+
+        return $specialPrice;
     }
 
     /**

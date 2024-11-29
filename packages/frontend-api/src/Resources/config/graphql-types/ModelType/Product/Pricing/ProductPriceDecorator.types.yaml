@@ -8,3 +8,12 @@ ProductPriceDecorator:
             isPriceFrom:
                 type: "Boolean!"
                 description: "Determines whether it's a final price or starting price"
+            nextPriceChange:
+                type: "DateTime"
+                description: "Date of the next price change, null if no price change is planned"
+            percentageDiscount:
+                type: "Float"
+                description: "Percentage discount on the selling price compared to the base price, null if no discount is applied"
+            basicPrice:
+                type: "Price!"
+                description: "Basic price of the product. If product has no discounts, it's the same as the selling price"
