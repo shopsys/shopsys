@@ -46,7 +46,7 @@ class ProductPriceQuery extends AbstractQuery
         }
 
         if ($data instanceof Product) {
-            $basicProductPrice = $this->productCachedAttributesFacade->getProductSellingPrice($data);
+            $basicProductPrice = $this->productCachedAttributesFacade->getProductBasicPrice($data);
 
             if ($basicProductPrice === null) {
                 throw new ProductPriceMissingUserError('The product price is not set.');

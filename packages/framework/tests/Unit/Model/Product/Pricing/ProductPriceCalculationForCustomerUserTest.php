@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
@@ -54,6 +55,8 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
             $expectedProductPrice,
         );
 
+        $specialPriceFacadeMock = $this->createMock(SpecialPriceFacade::class);
+
         $domainMock = $this->createMock(Domain::class);
 
         $productPriceCalculationForCustomerUser = new ProductPriceCalculationForCustomerUser(
@@ -61,6 +64,7 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
             $currentCustomerUserMock,
             $pricingGroupSettingFacadeMock,
             $domainMock,
+            $specialPriceFacadeMock,
         );
 
         $productPrice = $productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId(
@@ -100,6 +104,8 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
             $expectedProductPrice,
         );
 
+        $specialPriceFacadeMock = $this->createMock(SpecialPriceFacade::class);
+
         $domainMock = $this->createMock(Domain::class);
 
         $productPriceCalculationForCustomerUser = new ProductPriceCalculationForCustomerUser(
@@ -107,6 +113,7 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
             $currentCustomerUserMock,
             $pricingGroupFacadeMock,
             $domainMock,
+            $specialPriceFacadeMock,
         );
 
         $productPrice = $productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId(
