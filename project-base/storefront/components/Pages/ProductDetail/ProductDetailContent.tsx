@@ -27,6 +27,7 @@ import { twJoin } from 'tailwind-merge';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { isPriceVisible } from 'utils/mappers/price';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
+import { twMergeCustom } from 'utils/twMerge';
 
 type ProductDetailContentProps = {
     product: TypeProductDetailFragment;
@@ -89,9 +90,25 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
 
                         <div className="flex flex-col gap-4 rounded-xl bg-backgroundMore p-3 sm:p-6">
                             {isPriceVisible(product.price.priceWithVat) && (
-                                <div className="font-secondary text-2xl font-bold text-price">
-                                    {formatPrice(product.price.priceWithVat)}
-                                </div>
+                                <>
+                                    {!!product.price.percentageDiscount && (
+                                        <>
+                                            <div className="text-3xl font-bold text-textError">
+                                                {formatPrice(product.price.priceWithVat)}
+                                            </div>
+                                            <div>Discount {product.price.percentageDiscount}%</div>
+                                        </>
+                                    )}
+
+                                    <div
+                                        className={twMergeCustom(
+                                            'font-secondary text-2xl font-bold text-price',
+                                            !!product.price.percentageDiscount && 'line-through',
+                                        )}
+                                    >
+                                        {formatPrice(product.price.basicPrice.priceWithVat)}
+                                    </div>
+                                </>
                             )}
 
                             {!product.isSellingDenied && (
