@@ -14,8 +14,8 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProvider
 use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterInterface;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateSender\MailTemplateSenderInterface;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
-use Shopsys\FrameworkBundle\Model\Transport\AbstractTransportTypeEnum;
 use Shopsys\FrameworkBundle\Model\Payment\AbstractPaymentTypeEnum;
+use Shopsys\FrameworkBundle\Model\Transport\AbstractTransportTypeEnum;
 use Shopsys\FrameworkBundle\Twig\NoVarDumperExtension;
 use Shopsys\FrameworkBundle\Twig\VarDumperExtension;
 use Symfony\Component\Config\FileLocator;
