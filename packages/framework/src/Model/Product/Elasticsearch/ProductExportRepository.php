@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade;
@@ -48,6 +49,7 @@ class ProductExportRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade $specialPriceFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -65,6 +67,7 @@ class ProductExportRepository
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         protected readonly ProductRepository $productRepository,
         protected readonly InMemoryCache $inMemoryCache,
+        protected readonly SpecialPriceFacade $specialPriceFacade,
     ) {
     }
 
@@ -168,6 +171,7 @@ class ProductExportRepository
             )->getId(),
             ProductExportFieldProvider::IN_STOCK => $this->productAvailabilityFacade->isProductAvailableOnDomainCached($product, $domainId),
             ProductExportFieldProvider::PRICES => $this->extractPrices($domainId, $product),
+            ProductExportFieldProvider::SPECIAL_PRICES => $this->extractSpecialPrices($domainId, $product),
             ProductExportFieldProvider::PARAMETERS => $this->extractParameters($locale, $product),
             ProductExportFieldProvider::ORDERING_PRIORITY => $product->getOrderingPriority($domainId),
             ProductExportFieldProvider::CALCULATED_SELLING_DENIED => $product->getCalculatedSellingDenied(),
@@ -385,6 +389,30 @@ class ProductExportRepository
         }
 
         return $prices;
+    }
+
+    /**
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return array
+     */
+    protected function extractSpecialPrices(int $domainId, Product $product): array
+    {
+        $specialPrices = $this->specialPriceFacade->getCurrentAndFutureSpecialPrices($product, $domainId);
+
+        $return = [];
+
+        foreach ($specialPrices as $specialPrice) {
+            $return[] = [
+                'price_with_vat' => (float)$specialPrice->price->getPriceWithVat()->getAmount(),
+                'price_without_vat' => (float)$specialPrice->price->getPriceWithoutVat()->getAmount(),
+                'vat' => (float)$specialPrice->price->getVatAmount()->getAmount(),
+                'valid_from' => $specialPrice->validFrom->format('Y-m-d H:i:s'),
+                'valid_to' => $specialPrice->validTo->format('Y-m-d H:i:s'),
+            ];
+        }
+
+        return $return;
     }
 
     /**

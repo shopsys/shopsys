@@ -51,6 +51,7 @@ class ProductExportRepositoryTest extends TransactionFunctionalTestCase
             'main_category_path',
             'in_stock',
             'prices',
+            'special_prices',
             'parameters',
             'ordering_priority',
             'calculated_selling_denied',

@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade;
@@ -51,6 +52,7 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
  * @method string extractProductType(\App\Model\Product\Product $product, int $domainId)
  * @method int extractPriorityByProductType(\App\Model\Product\Product $product, int $domainId)
  * @method array extractStoreAvailabilitiesInformation(\App\Model\Product\Product $product, int $domainId)
+ * @method array extractSpecialPrices(int $domainId, \App\Model\Product\Product $product)
  */
 class ProductExportRepository extends BaseProductExportRepository
 {
@@ -70,6 +72,7 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade $specialPriceFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
      * @param \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
      * @param \App\Model\ProductVideo\ProductVideoTranslationsRepository $productVideoTranslationsRepository
@@ -90,6 +93,7 @@ class ProductExportRepository extends BaseProductExportRepository
         PricingGroupSettingFacade $pricingGroupSettingFacade,
         ProductRepository $productRepository,
         InMemoryCache $inMemoryCache,
+        SpecialPriceFacade $specialPriceFacade,
         private readonly ProductPriceCalculation $productPriceCalculation,
         private readonly BreadcrumbFacade $breadcrumbFacade,
         private readonly ProductVideoTranslationsRepository $productVideoTranslationsRepository,
@@ -110,6 +114,7 @@ class ProductExportRepository extends BaseProductExportRepository
             $pricingGroupSettingFacade,
             $productRepository,
             $inMemoryCache,
+            $specialPriceFacade,
         );
     }
 

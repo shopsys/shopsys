@@ -31,6 +31,7 @@ class ProductElasticsearchConverter
         $result[ProductExportFieldProvider::FLAGS] = $product[ProductExportFieldProvider::FLAGS] ?? [];
         $result[ProductExportFieldProvider::PARAMETERS] = array_key_exists(ProductExportFieldProvider::PARAMETERS, $product) && $product[ProductExportFieldProvider::PARAMETERS] ? $this->fillEmptyParameters($product[ProductExportFieldProvider::PARAMETERS]) : [];
         $result[ProductExportFieldProvider::PRICES] = $product[ProductExportFieldProvider::PRICES] ?? [];
+        $result[ProductExportFieldProvider::SPECIAL_PRICES] = $product[ProductExportFieldProvider::SPECIAL_PRICES] ?? [];
         $result[ProductExportFieldProvider::VISIBILITY] = $product[ProductExportFieldProvider::VISIBILITY] ?? [];
         $result[ProductExportFieldProvider::ACCESSORIES] = $product[ProductExportFieldProvider::ACCESSORIES] ?? [];
 

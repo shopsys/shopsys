@@ -195,6 +195,36 @@
                     }
                 }
             },
+            "special_prices": {
+                "type": "nested",
+                "properties": {
+                    "valid_from": {
+                        "type": "date",
+                        "format": "yyyy-MM-dd HH:mm:ss"
+                    },
+                    "valid_to": {
+                        "type": "date",
+                        "format": "yyyy-MM-dd HH:mm:ss"
+                    },
+                    "prices": {
+                        "type": "nested",
+                        "properties": {
+                            "price_with_vat": {
+                                "type": "float"
+                            },
+                            "price_without_vat": {
+                                "type": "float"
+                            },
+                            "vat": {
+                                "type": "float"
+                            },
+                            "product_id": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                }
+            },
             "parameters": {
                 "type": "nested",
                 "properties": {
