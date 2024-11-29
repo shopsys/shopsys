@@ -38,6 +38,11 @@ TransportDecorator:
             payments:
                 type: "[Payment!]!"
                 description: "List of assigned payments"
+                resolve: '@=query("paymentsOfTransportQuery", value, args["displayInCartOnly"])'
+                args:
+                    displayInCartOnly:
+                        type: "Boolean"
+                        defaultValue: true
             transportTypeCode:
                 type: "TransportTypeEnum!"
                 description: "Code of transport type"
