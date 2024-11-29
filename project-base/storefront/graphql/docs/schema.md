@@ -7590,11 +7590,38 @@ Represents the price of the product
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong>basicPrice</strong></td>
+<td valign="top"><a href="#price">Price</a>!</td>
+<td>
+
+Basic price of the product. If product has no discounts, it's the same as the selling price
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>isPriceFrom</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
 Determines whether it's a final price or starting price
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>nextPriceChange</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
+<td>
+
+Date of the next price change, null if no price change is planned
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>percentageDiscount</strong></td>
+<td valign="top"><a href="#float">Float</a></td>
+<td>
+
+Percentage discount on the selling price compared to the base price, null if no discount is applied
 
 </td>
 </tr>

@@ -1926,8 +1926,14 @@ enum ProductOrderingModeEnum {
 
 "Represents the price of the product"
 type ProductPrice {
+  "Basic price of the product. If product has no discounts, it's the same as the selling price"
+  basicPrice: Price!
   "Determines whether it's a final price or starting price"
   isPriceFrom: Boolean!
+  "Date of the next price change, null if no price change is planned"
+  nextPriceChange: DateTime
+  "Percentage discount on the selling price compared to the base price, null if no discount is applied"
+  percentageDiscount: Float
   "Price without VAT"
   priceWithoutVat: Money!
   "Price with VAT"

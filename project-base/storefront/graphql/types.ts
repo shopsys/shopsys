@@ -2385,8 +2385,14 @@ export enum TypeProductOrderingModeEnum {
 /** Represents the price of the product */
 export type TypeProductPrice = {
   __typename?: 'ProductPrice';
+  /** Basic price of the product. If product has no discounts, it's the same as the selling price */
+  basicPrice: TypePrice;
   /** Determines whether it's a final price or starting price */
   isPriceFrom: Scalars['Boolean']['output'];
+  /** Date of the next price change, null if no price change is planned */
+  nextPriceChange: Maybe<Scalars['DateTime']['output']>;
+  /** Percentage discount on the selling price compared to the base price, null if no discount is applied */
+  percentageDiscount: Maybe<Scalars['Float']['output']>;
   /** Price with VAT */
   priceWithVat: Scalars['Money']['output'];
   /** Price without VAT */
