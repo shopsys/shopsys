@@ -155,6 +155,7 @@
     * [LoginTypeEnum](#logintypeenum)
     * [OrderItemTypeEnum](#orderitemtypeenum)
     * [OrderStatusEnum](#orderstatusenum)
+    * [PaymentTypeEnum](#paymenttypeenum)
     * [PersonalDataAccessRequestTypeEnum](#personaldataaccessrequesttypeenum)
     * [ProductListTypeEnum](#productlisttypeenum)
     * [ProductOrderingModeEnum](#productorderingmodeenum)
@@ -975,6 +976,11 @@ Returns complete list of payment methods
 </td>
 </tr>
 <tr>
+<td colspan="2" align="right" valign="top">displayInCartOnly</td>
+<td valign="top"><a href="#boolean">Boolean</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>personalDataPage</strong></td>
 <td valign="top"><a href="#personaldatapage">PersonalDataPage</a></td>
 <td>
@@ -1341,6 +1347,11 @@ Returns available transport methods based on the current cart state
 <tr>
 <td colspan="2" align="right" valign="top">cartUuid</td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">displayInCartOnly</td>
+<td valign="top"><a href="#boolean">Boolean</a></td>
 <td></td>
 </tr>
 <tr>
@@ -7133,6 +7144,15 @@ Localized payment description (domain dependent)
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>displayInCart</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Should be displayed in cart (is used for payments, that might be needed to return for example to the Convertim, but are not supposed to be displayed in cart)
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>goPayPaymentMethod</strong></td>
 <td valign="top"><a href="#gopaypaymentmethod">GoPayPaymentMethod</a></td>
 <td>
@@ -7220,8 +7240,13 @@ List of assigned transports
 </td>
 </tr>
 <tr>
+<td colspan="2" align="right" valign="top">displayInCartOnly</td>
+<td valign="top"><a href="#boolean">Boolean</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>type</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#paymenttypeenum">PaymentTypeEnum</a>!</td>
 <td>
 
 Type of payment
@@ -9151,6 +9176,15 @@ Localized transport description (domain dependent)
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>displayInCart</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Should be displayed in cart (is used for transports, that might be needed to return for example to the Convertim, but are not supposed to be displayed in cart)
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>images</strong></td>
 <td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
@@ -9213,6 +9247,11 @@ Transport name
 List of assigned payments
 
 </td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">displayInCartOnly</td>
+<td valign="top"><a href="#boolean">Boolean</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>position</strong></td>
@@ -12018,6 +12057,61 @@ New
 </tbody>
 </table>
 
+### PaymentTypeEnum
+
+One of the possible methods of the transport type
+
+<table>
+<thead>
+<tr>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>basic</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>convertim_adyen</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>convertim_cash_on_delivery</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>convertim_comgate</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>convertim_essox</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>convertim_paypal</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>convertim_qr</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>convertim_stripe</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>convertim_trustpay</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>goPay</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
 ### PersonalDataAccessRequestTypeEnum
 
 One of two possible types for personal data access request
@@ -12299,6 +12393,22 @@ One of the possible methods of the transport type
 <tbody>
 <tr>
 <td valign="top"><strong>common</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>convertim_balikovna</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>convertim_dpd_czechia</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>convertim_dpd_slovakia</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>convertim_ppl</strong></td>
 <td></td>
 </tr>
 <tr>

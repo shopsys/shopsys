@@ -74,8 +74,12 @@ QueryDecorator:
                 description: "Returns category filtered using UUID or URL slug"
             payments:
                 type: '[Payment!]!'
-                resolve: "@=query('paymentsQuery')"
+                resolve: "@=query('paymentsQuery', args['displayInCartOnly'])"
                 description: "Returns complete list of payment methods"
+                args:
+                    displayInCartOnly:
+                        type: "Boolean"
+                        defaultValue: true
             payment:
                 type: 'Payment'
                 resolve: "@=query('paymentQuery', args['uuid'])"
@@ -85,10 +89,13 @@ QueryDecorator:
                 description: "Returns payment filtered using UUID"
             transports:
                 type: '[Transport!]!'
-                resolve: "@=query('transportsQuery', args['cartUuid'])"
+                resolve: "@=query('transportsQuery', args['displayInCartOnly'], args['cartUuid'])"
                 args:
                     cartUuid:
                         type: "Uuid"
+                    displayInCartOnly:
+                        type: "Boolean"
+                        defaultValue: true
                 description: "Returns available transport methods based on the current cart state"
             transport:
                 type: 'Transport'

@@ -46,6 +46,11 @@ PaymentDecorator:
             transports:
                 type: "[Transport!]!"
                 description: "List of assigned transports"
+                resolve: '@=query("transportsOfPaymentQuery", value, args["displayInCartOnly"])'
+                args:
+                    displayInCartOnly:
+                        type: "Boolean"
+                        defaultValue: true
             goPayPaymentMethod:
                 type: "GoPayPaymentMethod"
                 description: "Additional data for GoPay payment"

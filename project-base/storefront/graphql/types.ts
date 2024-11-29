@@ -2094,6 +2094,8 @@ export type TypePayment = {
   __typename?: 'Payment';
   /** Localized payment description (domain dependent) */
   description: Maybe<Scalars['String']['output']>;
+  /** Should be displayed in cart (is used for payments, that might be needed to return for example to the Convertim, but are not supposed to be displayed in cart) */
+  displayInCart: Scalars['Boolean']['output'];
   /** Additional data for GoPay payment */
   goPayPaymentMethod: Maybe<TypeGoPayPaymentMethod>;
   /** Payment images */
@@ -2111,7 +2113,7 @@ export type TypePayment = {
   /** List of assigned transports */
   transports: Array<TypeTransport>;
   /** Type of payment */
-  type: Scalars['String']['output'];
+  type: TypePaymentTypeEnum;
   /** UUID */
   uuid: Scalars['Uuid']['output'];
   vat: TypeVat;
@@ -2135,11 +2137,31 @@ export type TypePaymentPriceArgs = {
   cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
 };
 
+
+/** Represents a payment */
+export type TypePaymentTransportsArgs = {
+  displayInCartOnly?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
 export type TypePaymentSetupCreationData = {
   __typename?: 'PaymentSetupCreationData';
   /** Identifiers of GoPay payment method */
   goPayCreatePaymentSetup: Maybe<TypeGoPayCreatePaymentSetup>;
 };
+
+/** One of the possible methods of the transport type */
+export enum TypePaymentTypeEnum {
+  Basic = 'basic',
+  ConvertimAdyen = 'convertim_adyen',
+  ConvertimCashOnDelivery = 'convertim_cash_on_delivery',
+  ConvertimComgate = 'convertim_comgate',
+  ConvertimEssox = 'convertim_essox',
+  ConvertimPaypal = 'convertim_paypal',
+  ConvertimQr = 'convertim_qr',
+  ConvertimStripe = 'convertim_stripe',
+  ConvertimTrustpay = 'convertim_trustpay',
+  GoPay = 'goPay'
+}
 
 export type TypePersonalData = {
   __typename?: 'PersonalData';
@@ -2772,6 +2794,11 @@ export type TypeQueryPaymentArgs = {
 };
 
 
+export type TypeQueryPaymentsArgs = {
+  displayInCartOnly?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
 export type TypeQueryProductArgs = {
   urlSlug: InputMaybe<Scalars['String']['input']>;
   uuid: InputMaybe<Scalars['Uuid']['input']>;
@@ -2855,6 +2882,7 @@ export type TypeQueryTransportArgs = {
 
 export type TypeQueryTransportsArgs = {
   cartUuid: InputMaybe<Scalars['Uuid']['input']>;
+  displayInCartOnly?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export enum TypeRecommendationType {
@@ -3322,6 +3350,8 @@ export type TypeTransport = {
   daysUntilDelivery: Scalars['Int']['output'];
   /** Localized transport description (domain dependent) */
   description: Maybe<Scalars['String']['output']>;
+  /** Should be displayed in cart (is used for transports, that might be needed to return for example to the Convertim, but are not supposed to be displayed in cart) */
+  displayInCart: Scalars['Boolean']['output'];
   /** Transport images */
   images: Array<TypeImage>;
   /** Localized transport instruction (domain dependent) */
@@ -3361,6 +3391,12 @@ export type TypeTransportMainImageArgs = {
 
 
 /** Represents a transport */
+export type TypeTransportPaymentsArgs = {
+  displayInCartOnly?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+/** Represents a transport */
 export type TypeTransportPriceArgs = {
   cartUuid?: InputMaybe<Scalars['Uuid']['input']>;
 };
@@ -3368,6 +3404,10 @@ export type TypeTransportPriceArgs = {
 /** One of the possible methods of the transport type */
 export enum TypeTransportTypeEnum {
   Common = 'common',
+  ConvertimBalikovna = 'convertim_balikovna',
+  ConvertimDpdCzechia = 'convertim_dpd_czechia',
+  ConvertimDpdSlovakia = 'convertim_dpd_slovakia',
+  ConvertimPpl = 'convertim_ppl',
   Packetery = 'packetery',
   PersonalPickup = 'personal_pickup'
 }
