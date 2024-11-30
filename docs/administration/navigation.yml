@@ -1,9 +1,9 @@
 arrange:
     - index.md
     - administration-menu.md
-    - grid.md
-    - grid-rendering-customization.md
-    - grid-data-sources.md
+    - crud-controller
+    - datagrid
+    - internal-grid
     - admin-rights.md
     - disabling-form-fields.md
     - icons.md

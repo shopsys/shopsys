@@ -396,6 +396,10 @@
     {{ value|formatDateTime }}
 {% endblock %}
 
+{% block grid_value_cell_id_domainId %}
+    {{ domainIcon(value, 'small') }}
+{% endblock %}
+
 {% block grid_value_cell_type_Shopsys_FrameworkBundle_Component_Money_Money %}
     {% if 'domainId' in row|keys %}
         {{ value|priceWithCurrencyByDomainId(row.domainId) }}

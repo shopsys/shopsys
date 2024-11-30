@@ -7,8 +7,8 @@ It's designed to speed up the development of the administration interface and pr
 Crud controller is built using known Shopsys components like [Grid](../grid.md) and Symfony components.
 
 ## Getting started
-
 - [Creating a new Crud Controller](getting-started/creating-a-new-crud-controller.md)
+- [Configure List page (Datagrid)](getting-started/configure-list-page.md)
 
 ## Reference
 - [Configuration](reference/crud-controller.md)
