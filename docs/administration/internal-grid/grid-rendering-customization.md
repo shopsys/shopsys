@@ -25,7 +25,7 @@ Money will format to the given domain default currency, and if `domainId` is una
 
 ## Example
 
-Let's say we have a grid of salesmen (in fact, such a grid is created in ["Create basic grid"](../cookbook/create-basic-grid.md) cookbook)
+Let's say we have a grid of salesmen (in fact, such a grid is created in ["Create basic grid"](../../cookbook/create-basic-grid.md) cookbook)
 and we want to display all their names in bold, and also, we want to be more specific when there are no salesmen in our database.
 
 1.  Create a new template that extends to the original one and override the blocks you need:

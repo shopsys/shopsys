@@ -668,6 +668,10 @@ class Grid
      */
     public function getValueFromRowBySourceColumnName(array $row, string $sourceColumnName): mixed
     {
+        if (array_key_exists($sourceColumnName, $row)) {
+            return $row[$sourceColumnName];
+        }
+
         $sourceColumnNameParts = explode('.', $sourceColumnName);
 
         if (count($sourceColumnNameParts) === 1) {

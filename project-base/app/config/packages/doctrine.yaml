@@ -29,6 +29,7 @@ doctrine:
                 field: Shopsys\FrameworkBundle\Component\Doctrine\FieldFunction
         hydrators:
             GroupedScalarHydrator: \Shopsys\FrameworkBundle\Component\Doctrine\GroupedScalarHydrator
+            DatagridHydrator: \Shopsys\AdministrationBundle\Component\Doctrine\DatagridHydrator
         mappings:
             ShopsysFrameworkBundle:
                 type: annotation

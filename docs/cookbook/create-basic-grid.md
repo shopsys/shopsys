@@ -222,7 +222,7 @@ To adjust appearance (e.g., let's say we are in Germany and want to format the d
 
 We create the new twig template `listGrid.html.twig` in `templates/Admin/Content/Salesman`.
 The template has to extend `@ShopsysFramework/Admin/Grid/Grid.html.twig` and override block `grid_value_cell_id_registeredAt` where we apply a Twig filter to the value.
-[You can read more about blocks here](../administration/grid-rendering-customization.md).
+[You can read more about blocks here](../administration/internal-grid/grid-rendering-customization.md).
 
 ```twig
 {% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
