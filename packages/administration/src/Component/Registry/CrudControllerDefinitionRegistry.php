@@ -19,11 +19,11 @@ final class CrudControllerDefinitionRegistry
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
-     * @param array $crudControllers ['class' => string, 'entityClass' => string]|null
+     * @param array<int, array{class: class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController>, entityClass: string}> $crudControllers
      */
     public function __construct(
         private readonly EntityNameResolver $entityNameResolver,
-        private readonly array $crudControllers,
+        private readonly array $crudControllers = [],
     ) {
         foreach ($this->crudControllers as $crudController) {
             $this->addItem($crudController['class'], $crudController['entityClass']);
@@ -31,16 +31,18 @@ final class CrudControllerDefinitionRegistry
     }
 
     /**
-     * @param string $controllerClass
-     * @param string $entityClass
+     * @param class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController> $controllerClass
+     * @param class-string $entityClass
      */
     private function addItem(string $controllerClass, string $entityClass): void
     {
         $resolverEntityClass = $this->entityNameResolver->resolve($entityClass);
         $shortEntityClass = (new ReflectionClass($entityClass))->getShortName();
+        $shortControllerClass = (new ReflectionClass($controllerClass))->getShortName();
 
         $item = new CrudControllerDefinitionItem(
             $controllerClass,
+            $shortControllerClass,
             $resolverEntityClass,
             $shortEntityClass,
         );
