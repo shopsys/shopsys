@@ -27,6 +27,8 @@ final class CrudConfigData
 
     public bool $visibleInMenu = true;
 
+    public ?string $routePrefix = null;
+
     /**
      * @param class-string $entityClass
      */
@@ -107,5 +109,13 @@ final class CrudConfigData
     public function isVisibleInMenu(): bool
     {
         return $this->visibleInMenu;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRoutePrefix(): ?string
+    {
+        return $this->routePrefix;
     }
 }

@@ -66,7 +66,7 @@ final class CrudConfig
      *
      * @param string $menuSection Name of root level menu section
      * @param string|null $submenuSection Name of submenu section
-     * @return self
+     * @return $this
      */
     public function setMenuSection(string $menuSection, ?string $submenuSection = null): self
     {
@@ -84,6 +84,21 @@ final class CrudConfig
     public function hideInMenu(): self
     {
         $this->crudConfigData->visibleInMenu = false;
+
+        return $this;
+    }
+
+    /**
+     * Set custom route prefix for the CRUD controller. This will be used as a prefix for all routes
+     *
+     * Example: You have `RoleGroupsController` and you set route prefix to `/administrators` then the route will be `/admin/administrators/role-groups/`
+     *
+     * @param string|null $routePrefix
+     * @return $this
+     */
+    public function setRoutePrefix(?string $routePrefix): self
+    {
+        $this->crudConfigData->routePrefix = $routePrefix;
 
         return $this;
     }

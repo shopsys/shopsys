@@ -98,7 +98,9 @@ final class EntityAction extends AbstractActionBuilder
      */
     public function linkToCrud(string $crudController, PageType $pageType, ?callable $id = null): self
     {
-        if (in_array($pageType, CrudRouteProvider::PAGES_WITH_ID, true) && $id === null) {
+        $routeConfig = CrudRouteProvider::DEFAULT_ROUTES_CONFIG[$pageType->value];
+
+        if ($routeConfig['entityId'] === true && $id === null) {
             throw new InvalidArgumentException('Page type ' . $pageType->value . ' requires entity ID to be provided');
         }
 
