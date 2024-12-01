@@ -9,9 +9,9 @@ use RuntimeException;
 use Shopsys\AdministrationBundle\Component\Attributes\CrudController;
 use Shopsys\AdministrationBundle\Component\Config\Action\ActionsConfig;
 use Shopsys\AdministrationBundle\Component\Config\Action\ActionsFactory;
+use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfigData;
-use Shopsys\AdministrationBundle\Component\Config\PageType;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\OrmAdapterFactory;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Datagrid\DatagridFactory;
@@ -72,9 +72,9 @@ abstract class AbstractCrudController extends AbstractController
 
 
         return $this->render('@ShopsysAdministration/crud/list.html.twig', [
-            'title' => $this->getConfig()->getTitle(PageType::LIST),
+            'title' => $this->getConfig()->getTitle(ActionType::LIST),
             'grid' => $datagrid->createView(),
-            'globalActions' => $this->actionsFactory->processGlobalActions($this->getConfiguredActions(PageType::LIST)),
+            'topActions' => $this->actionsFactory->processActions($this->getConfiguredActions(ActionType::LIST)),
         ]);
     }
 
@@ -85,8 +85,8 @@ abstract class AbstractCrudController extends AbstractController
     public function editAction(int $id): Response
     {
         return $this->render('@ShopsysAdministration/crud/edit.html.twig', [
-            'title' => $this->getConfig()->getTitle(PageType::EDIT),
-            'globalActions' => $this->actionsFactory->processGlobalActions($this->getConfiguredActions(PageType::EDIT)),
+            'title' => $this->getConfig()->getTitle(ActionType::EDIT),
+            'topActions' => $this->actionsFactory->processActions($this->getConfiguredActions(ActionType::EDIT)),
         ]);
     }
 
@@ -96,8 +96,8 @@ abstract class AbstractCrudController extends AbstractController
     public function createAction(): Response
     {
         return $this->render('@ShopsysAdministration/crud/new.html.twig', [
-            'title' => $this->getConfig()->getTitle(PageType::CREATE),
-            'globalActions' => $this->actionsFactory->processGlobalActions($this->getConfiguredActions(PageType::CREATE)),
+            'title' => $this->getConfig()->getTitle(ActionType::CREATE),
+            'topActions' => $this->actionsFactory->processActions($this->getConfiguredActions(ActionType::CREATE)),
         ]);
     }
 
@@ -110,16 +110,16 @@ abstract class AbstractCrudController extends AbstractController
     }
 
     /**
-     * @param \Shopsys\AdministrationBundle\Component\Config\PageType $pageType
-     * @return \Shopsys\AdministrationBundle\Component\Config\Action\Builder\AbstractActionBuilder[]
+     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $actionType
+     * @return \Shopsys\AdministrationBundle\Component\Config\Action\Builder\AbstractAction[]
      */
-    private function getConfiguredActions(PageType $pageType): array
+    private function getConfiguredActions(ActionType $actionType): array
     {
         if ($this->actions === null) {
-            $this->actions = $this->configureActions(new ActionsConfig(static::class, $this->getConfig()->getDefaultActions()));
+            $this->actions = $this->configureActions(new ActionsConfig(static::class, $this->getConfig()->getActions()));
         }
 
-        return $this->actions->getActions($pageType);
+        return $this->actions->getActions($actionType);
     }
 
     /**

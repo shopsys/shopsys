@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Component\Config\Action;
 
 use InvalidArgumentException;
+use Shopsys\AdministrationBundle\Component\Config\Action\Builder\ActionRoute\ActionRouteInterface;
+use Shopsys\AdministrationBundle\Component\Config\Action\Builder\ActionRoute\CrudActionRouteData;
+use Shopsys\AdministrationBundle\Component\Config\Action\Builder\ActionRoute\RouteActionRouteData;
+use Shopsys\AdministrationBundle\Component\Config\Action\Builder\ActionRoute\UrlActionRouteData;
 use Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry;
 use Shopsys\AdministrationBundle\Component\Router\CrudRouteProvider;
 use Symfony\Component\Routing\RouterInterface;
@@ -24,76 +28,20 @@ final class ActionsFactory
     }
 
     /**
-     * @param \Shopsys\AdministrationBundle\Component\Config\Action\Builder\AbstractActionBuilder[] $actions
+     * @param \Shopsys\AdministrationBundle\Component\Config\Action\Builder\AbstractAction[] $actions
      * @param object $entity
      * @return \Shopsys\AdministrationBundle\Component\Config\Action\ActionData[]
      */
-    public function processEntityActions(array $actions, object $entity): array
+    public function processActions(array $actions, ?object $entity = null): array
     {
         $actionsToReturn = [];
-        $actionType = ActionType::ENTITY;
 
         foreach ($actions as $action) {
-            $actionData = $this->processAction($action->getData(), $actionType);
+            $actionData = $this->processAction($action->getData(), $entity);
 
             if ($actionData !== null) {
                 $actionsToReturn[] = $actionData;
             }
-        }
-
-        return $actionsToReturn;
-    }
-
-    /**
-     * @param \Shopsys\AdministrationBundle\Component\Config\Action\Builder\AbstractActionBuilder[] $actions
-     * @return \Shopsys\AdministrationBundle\Component\Config\Action\ActionData[]
-     */
-    public function processGlobalActions(array $actions): array
-    {
-        $actionsToReturn = [];
-        $actionType = ActionType::GLOBAL;
-
-        foreach ($actions as $action) {
-            $actionData = $this->processAction($action->getData(), $actionType);
-
-            if ($actionData !== null) {
-                $actionsToReturn[] = $actionData;
-            }
-        }
-
-        return $actionsToReturn;
-    }
-
-    /**
-     * @param \Shopsys\AdministrationBundle\Component\Config\Action\Builder\AbstractActionBuilder[] $actions
-     * @return \Shopsys\AdministrationBundle\Component\Config\Action\ActionData[]
-     */
-    public function processDatagridActions(array $actions): array
-    {
-        $actionsToReturn = [];
-
-        foreach ($actions as $action) {
-            $data = $action->getData();
-
-            if ($this->checkActionVisibility($data, ActionType::DATAGRID) === false || $data->routeType === ActionRouteType::NONE) {
-                continue;
-            }
-
-
-            if ($data->routeType === ActionRouteType::URL) {
-                $data->setLinkUrl($data->url);
-            }
-
-            if ($data->routeType === ActionRouteType::CRUD) {
-                $routeItem = $this->crudRouteProvider->generate($this->crudControllerDefinitionRegistry->getItem($data->crudController), $data->pageType);
-                $data->setLinkUrl($routeItem->getRouteName());
-            }
-
-            if ($data->routeType === ActionRouteType::ROUTE) {
-                $data->setLinkUrl($data->route);
-            }
-
-            $actionsToReturn[] = $data;
         }
 
         return $actionsToReturn;
@@ -101,61 +49,64 @@ final class ActionsFactory
 
     /**
      * @param \Shopsys\AdministrationBundle\Component\Config\Action\ActionData $actionData
-     * @param \Shopsys\AdministrationBundle\Component\Config\Action\ActionType $actionType
      * @param object|null $entity
      * @return \Shopsys\AdministrationBundle\Component\Config\Action\ActionData|null
      */
-    private function processAction(ActionData $actionData, ActionType $actionType, ?object $entity = null): ?ActionData
-    {
-        if ($this->checkActionVisibility($actionData, $actionType, $entity) === false) {
+    private function processAction(
+        ActionData $actionData,
+        ?object $entity = null,
+    ): ?ActionData {
+        if ($this->checkActionVisibility($actionData, $entity) === false) {
             return null;
         }
 
-        if ($actionData->routeType === ActionRouteType::NONE) {
+        if ($actionData->actionRoute === null) {
             return $actionData;
         }
 
-        if ($actionData->routeType === ActionRouteType::URL) {
-            if (is_callable($actionData->url)) {
-                $actionData->setLinkUrl(call_user_func($actionData->url, $entity));
-            } else {
-                $actionData->setLinkUrl($actionData->url);
-            }
-        }
-
-        if ($actionData->routeType === ActionRouteType::CRUD) {
-            $routeItem = $this->crudRouteProvider->generate($this->crudControllerDefinitionRegistry->getItem($actionData->crudController), $actionData->pageType);
-            $actionData->setLinkUrl($this->router->generate($routeItem->getRouteName(), $actionData->pageId ? call_user_func($actionData->pageId, $entity) : []));
-        }
-
-        if ($actionData->routeType === ActionRouteType::ROUTE) {
-            $routeParameters = is_callable($actionData->routeParameters) ? call_user_func($actionData->routeParameters, $entity) : $actionData->routeParameters;
-
-            if (is_array($routeParameters) === false) {
-                throw new InvalidArgumentException('Route parameters must be an array or a callable returning an array');
-            }
-
-            $actionData->setLinkUrl($this->router->generate($actionData->route, $routeParameters));
-        }
+        $actionData->setUrl($this->generateUrl($actionData->actionRoute, $entity));
 
         return $actionData;
     }
 
     /**
      * @param \Shopsys\AdministrationBundle\Component\Config\Action\ActionData $actionData
-     * @param \Shopsys\AdministrationBundle\Component\Config\Action\ActionType $actionType
      * @param object|null $entity
      * @return bool
      */
     private function checkActionVisibility(
         ActionData $actionData,
-        ActionType $actionType,
         ?object $entity = null,
     ): bool {
-        if ($actionData->actionType !== $actionType) {
-            return false;
+        return $actionData->displayIf === null || call_user_func($actionData->displayIf, $entity) !== false;
+    }
+
+    /**
+     * @param \Shopsys\AdministrationBundle\Component\Config\Action\Builder\ActionRoute\ActionRouteInterface $actionRoute
+     * @param object|null $entity
+     * @return string
+     */
+    private function generateUrl(ActionRouteInterface $actionRoute, ?object $entity): string
+    {
+        if ($actionRoute instanceof UrlActionRouteData) {
+            return $actionRoute->getUrl($entity);
         }
 
-        return $actionData->displayIf === null || call_user_func($actionData->displayIf, $entity) !== false;
+        if ($actionRoute instanceof CrudActionRouteData) {
+            $routeItem = $this->crudRouteProvider->generate(
+                $this->crudControllerDefinitionRegistry->getItem($actionRoute->getCrudController()),
+                $actionRoute->getActionType(),
+            );
+
+            $parameters = $actionRoute->getId($entity) !== null ? ['entityId' => $actionRoute->getId($entity)] : [];
+
+            return $this->router->generate($routeItem->getRouteName(), $parameters);
+        }
+
+        if ($actionRoute instanceof RouteActionRouteData) {
+            return $this->router->generate($actionRoute->getRouteName(), $actionRoute->getRouteParameters($entity));
+        }
+
+        throw new InvalidArgumentException('Action has invalid route type');
     }
 }

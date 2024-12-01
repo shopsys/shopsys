@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Router;
 
-use Shopsys\AdministrationBundle\Component\Config\PageType;
+use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Symfony\Component\Routing\Route;
 
 final class CrudRouteItem
@@ -13,13 +13,13 @@ final class CrudRouteItem
      * @param string $controller
      * @param \Symfony\Component\Routing\Route $route
      * @param string $routeName
-     * @param \Shopsys\AdministrationBundle\Component\Config\PageType $pageType
+     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $pageType
      */
     public function __construct(
         private readonly string $controller,
         private readonly Route $route,
         private readonly string $routeName,
-        private readonly PageType $pageType,
+        private readonly ActionType $pageType,
     ) {
     }
 
@@ -48,9 +48,9 @@ final class CrudRouteItem
     }
 
     /**
-     * @return \Shopsys\AdministrationBundle\Component\Config\PageType
+     * @return \Shopsys\AdministrationBundle\Component\Config\ActionType
      */
-    public function getPageType(): PageType
+    public function getPageType(): ActionType
     {
         return $this->pageType;
     }

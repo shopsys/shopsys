@@ -1,0 +1,13 @@
+{% macro render(actions) %}
+    <div class="wrap-bar__buttons">
+        {% for action in actions %}
+            <a href="{{ action.url }}" class="btn btn--plus wrap-bar__btn {{ action.cssClass }}">
+                {% if action.icon is not null %}
+                    {# TODO: Replace by defined icon #}
+                    <i class="btn__icon">+</i>
+                {% endif %}
+                {{ action.label }}
+            </a>
+        {% endfor %}
+    </div>
+{% endmacro %}

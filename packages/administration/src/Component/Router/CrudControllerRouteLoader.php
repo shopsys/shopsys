@@ -81,8 +81,12 @@ final class CrudControllerRouteLoader implements LoaderInterface
     {
         $config = $this->crudConfigProvider->getConfig($item);
 
-        foreach ($config->getDefaultActions() as $pageType) {
-            $routeItem = $this->crudRouteProvider->generate($item, $pageType);
+        if ($config->isFullDisabled()) {
+            return;
+        }
+
+        foreach ($config->getActions() as $actionType) {
+            $routeItem = $this->crudRouteProvider->generate($item, $actionType);
 
             $routes->add($routeItem->getRouteName(), $routeItem->getRoute());
         }
