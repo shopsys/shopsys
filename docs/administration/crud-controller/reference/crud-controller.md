@@ -42,7 +42,7 @@ The `CrudConfig` class is used to configure the behavior of the Crud Controller.
 
 ### Methods
 
-#### `setTitle(PageType $pageType, string $title)`
+#### `setTitle(ActionType $actionType, string $title)`
 
 This method allows you to set the title for the given page type. The title is displayed in the page header.
 
@@ -57,15 +57,15 @@ Examples:
 - `$config->setMenuSection('products')` will create Crud controller item under `Products` section
 - `$config->setMenuSection('customers', 'promo_codes')` will create Crud controller under `Customers -> Promo Codes` section
 
-#### `hideInMenu()`
+#### `visibleInMenu(bool $visible)`
 
-It's used if you want to create Crud Controller, but you don't want to be visible in the side menu. This is useful for creating controllers that are not directly accessible by the user or should be accessed from another controller.
+Specify if the Crud Controller should be visible or not in the administration menu. This can be useful if you want to create a controller that is not directly accessible by the user or should be accessed from another controller.
 
-#### `setActions(array $actions)`
+#### `enableAction(ActionType|array $actions)` and `disableAction(ActionType|array $actions)`
 
-This method defines actions that will be created for the given entity.
+Those methods are used to enable or disable actions for the given entity. 
 
-For example, if you call `$config->setActions([PageType::LIST, PageType::EDIT])` the Crud Controller will create routes, buttons, etc. only for list and edit actions.
+If you want for example to disable the `delete` action you can simply call `$config->disableAction(ActionType::DELETE)`.
 
 #### `disable(bool $disabled)`
 

@@ -19,15 +19,15 @@ final class CrudConfig
     }
 
     /**
-     * Sets a custom title for a given page type.
+     * Sets a custom title for a given action type.
      *
-     * @param \Shopsys\AdministrationBundle\Component\Config\PageType $pageType
+     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $actionType
      * @param string $title
      * @return $this
      */
-    public function setTitle(PageType $pageType, string $title): self
+    public function setTitle(ActionType $actionType, string $title): self
     {
-        $this->crudConfigData->customPageTitles[$pageType->value] = $title;
+        $this->crudConfigData->customPageTitles[$actionType->value] = $title;
 
         return $this;
     }
@@ -46,15 +46,43 @@ final class CrudConfig
     }
 
     /**
-     * Sets which default actions are enabled for the crud controller.
+     * Enables a given action(s) for the crud controller.
      *
-     * @param \Shopsys\AdministrationBundle\Component\Config\PageType[] $actions
+     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType|\Shopsys\AdministrationBundle\Component\Config\ActionType[] $actions
      * @return $this
      */
-    public function setActions(array $actions): self
+    public function enableAction(ActionType|array $actions): self
     {
-        Assert::allIsInstanceOf($actions, PageType::class, 'The given action is not a valid page type');
-        $this->crudConfigData->defaultActions = $actions;
+        if (!is_array($actions)) {
+            $actions = [$actions];
+        }
+
+        Assert::allIsInstanceOf($actions, ActionType::class, 'The given action is not a valid action type');
+
+        foreach ($actions as $action) {
+            $this->crudConfigData->enableAction($action);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Disables a given action(s) for the crud controller.
+     *
+     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType|\Shopsys\AdministrationBundle\Component\Config\ActionType[] $actions
+     * @return $this
+     */
+    public function disableAction(ActionType|array $actions): self
+    {
+        if (!is_array($actions)) {
+            $actions = [$actions];
+        }
+
+        Assert::allIsInstanceOf($actions, ActionType::class, 'The given action is not a valid action type');
+
+        foreach ($actions as $action) {
+            $this->crudConfigData->disableAction($action);
+        }
 
         return $this;
     }
@@ -77,13 +105,27 @@ final class CrudConfig
     }
 
     /**
-     * Hides the CRUD controller in the side menu.
+     * Show or hide the crud controller in the side menu.
      *
+     * @param bool $visible
      * @return $this
      */
-    public function hideInMenu(): self
+    public function visibleInMenu(bool $visible): self
     {
-        $this->crudConfigData->visibleInMenu = false;
+        $this->crudConfigData->visibleInMenu = $visible;
+
+        return $this;
+    }
+
+    /**
+     * Disable the CRUD controller with all its actions and pages.
+     *
+     * @param bool $disabled
+     * @return $this
+     */
+    public function disable(bool $disabled): self
+    {
+        $this->crudConfigData->fullDisabled = $disabled;
 
         return $this;
     }

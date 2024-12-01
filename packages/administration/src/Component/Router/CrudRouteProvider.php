@@ -4,42 +4,42 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Router;
 
+use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfigProvider;
-use Shopsys\AdministrationBundle\Component\Config\PageType;
 use Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionItem;
 use Symfony\Component\Routing\Route;
 
 final class CrudRouteProvider
 {
     /**
-     * @var array<value-of<\Shopsys\AdministrationBundle\Component\Config\PageType>, array{
+     * @var array<value-of<\Shopsys\AdministrationBundle\Component\Config\ActionType>, array{
      *     path: string,
      *     routeName: string,
      *     entityId: bool
      * }>
      */
     public const array DEFAULT_ROUTES_CONFIG = [
-        PageType::LIST->value => [
+        ActionType::LIST->value => [
             'path' => '/',
             'routeName' => 'listAction',
             'entityId' => false,
         ],
-        PageType::DETAIL->value => [
+        ActionType::DETAIL->value => [
             'path' => '/{entityId}',
             'routeName' => 'detailAction',
             'entityId' => true,
         ],
-        PageType::CREATE->value => [
+        ActionType::CREATE->value => [
             'path' => '/create',
             'routeName' => 'createAction',
             'entityId' => false,
         ],
-        PageType::EDIT->value => [
+        ActionType::EDIT->value => [
             'path' => '/{entityId}/edit',
             'routeName' => 'editAction',
             'entityId' => true,
         ],
-        PageType::DELETE->value => [
+        ActionType::DELETE->value => [
             'path' => '/{entityId}/delete',
             'routeName' => 'deleteAction',
             'entityId' => true,
@@ -56,10 +56,10 @@ final class CrudRouteProvider
 
     /**
      * @param \Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionItem $item
-     * @param \Shopsys\AdministrationBundle\Component\Config\PageType $pageType
+     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $pageType
      * @return \Shopsys\AdministrationBundle\Component\Router\CrudRouteItem
      */
-    public function generate(CrudControllerDefinitionItem $item, PageType $pageType): CrudRouteItem
+    public function generate(CrudControllerDefinitionItem $item, ActionType $pageType): CrudRouteItem
     {
         $config = $this->crudConfigProvider->getConfig($item);
 
@@ -73,22 +73,25 @@ final class CrudRouteProvider
 
     /**
      * @param string $controllerName
-     * @param \Shopsys\AdministrationBundle\Component\Config\PageType $pageType
+     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $pageType
      * @return string
      */
-    private function generateRouteName(string $controllerName, PageType $pageType): string
+    private function generateRouteName(string $controllerName, ActionType $pageType): string
     {
         return 'admin_crud_' . $this->transformToRouteName($controllerName) . '_' . $pageType->value;
     }
 
     /**
      * @param \Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionItem $item
-     * @param \Shopsys\AdministrationBundle\Component\Config\PageType $pageType
+     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $pageType
      * @param string|null $routePrefix
      * @return \Symfony\Component\Routing\Route
      */
-    private function generateRoute(CrudControllerDefinitionItem $item, PageType $pageType, ?string $routePrefix): Route
-    {
+    private function generateRoute(
+        CrudControllerDefinitionItem $item,
+        ActionType $pageType,
+        ?string $routePrefix,
+    ): Route {
         $routeConfig = self::DEFAULT_ROUTES_CONFIG[$pageType->value];
         $routePath = '/';
 
@@ -108,10 +111,10 @@ final class CrudRouteProvider
 
     /**
      * @param string $controllerClass
-     * @param \Shopsys\AdministrationBundle\Component\Config\PageType $pageType
+     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $pageType
      * @return string
      */
-    private function generateController(string $controllerClass, PageType $pageType): string
+    private function generateController(string $controllerClass, ActionType $pageType): string
     {
         return sprintf('%s::%sAction', $controllerClass, $pageType->value);
     }

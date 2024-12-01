@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Menu;
 
+use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfigProvider;
-use Shopsys\AdministrationBundle\Component\Config\PageType;
 use Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry;
 use Shopsys\AdministrationBundle\Component\Router\CrudRouteProvider;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\ConfigureMenuEvent;
@@ -51,6 +51,10 @@ final class CrudMenuSubscriber implements EventSubscriberInterface
         foreach ($this->crudControllerDefinitionRegistry->getItems() as $item) {
             $config = $this->crudConfigProvider->getConfig($item);
 
+            if ($config->isFullDisabled()) {
+                continue;
+            }
+
             $sectionMenu = $config->getMenuSection();
             $submenuSection = $config->getSubmenuSection();
 
@@ -58,35 +62,28 @@ final class CrudMenuSubscriber implements EventSubscriberInterface
                 continue;
             }
 
-            // TODO: Generate routes for other pages and maybe for custom actions as well
-            $route = $this->crudRouteProvider->generate($item, PageType::LIST);
-            if (in_array(PageType::LIST, $config->getDefaultActions(), true) === false) {
-                continue;
-            }
-
-            $route = $this->crudRouteProvider->generate($item, PageType::LIST);
-
             if ($submenuSection !== null) {
                 $menu = $menu->getChild($submenuSection);
             }
 
+            $route = $this->crudRouteProvider->generate($item, ActionType::LIST);
             $parent = $menu->addChild($route->getRouteName(), [
                 'route' => $route->getRouteName(),
                 'display' => $config->isVisibleInMenu(),
                 'label' => $config->getMenuTitle(),
             ]);
 
-            foreach ($config->getDefaultActions() as $defaultAction) {
-                if (in_array($defaultAction, [PageType::LIST, PageType::DELETE], true)) {
+            foreach ($config->getActions() as $action) {
+                if ($action === ActionType::DELETE) {
                     continue;
                 }
 
-                $route = $this->crudRouteProvider->generate($item, $defaultAction);
+                $route = $this->crudRouteProvider->generate($item, $action);
 
                 $parent->addChild($route->getRouteName(), [
                     'route' => $route->getRouteName(),
                     'display' => false,
-                    'label' => $config->getTitle($defaultAction),
+                    'label' => $config->getTitle($action),
                 ]);
             }
         }

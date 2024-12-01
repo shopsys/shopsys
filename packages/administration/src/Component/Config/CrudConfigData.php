@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Config;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use ReflectionClass;
 
 final class CrudConfigData
@@ -11,15 +12,20 @@ final class CrudConfigData
     public string $entityName;
 
     public array $customPageTitles = [
-        PageType::CREATE->value => null,
-        PageType::EDIT->value => null,
-        PageType::LIST->value => null,
-        PageType::DETAIL->value => null,
+        ActionType::CREATE->value => null,
+        ActionType::EDIT->value => null,
+        ActionType::LIST->value => null,
+        ActionType::DETAIL->value => null,
     ];
 
     public ?string $menuTitle = null;
 
-    public array $defaultActions = [PageType::LIST, PageType::CREATE, PageType::EDIT, PageType::DELETE];
+    public bool $fullDisabled = false;
+
+    /**
+     * @var \Doctrine\Common\Collections\ArrayCollection<\Shopsys\AdministrationBundle\Component\Config\ActionType>
+     */
+    private ArrayCollection $enabledActions;
 
     public string $menuSection = 'root';
 
@@ -35,12 +41,19 @@ final class CrudConfigData
     public function __construct(private string $entityClass)
     {
         $this->entityName = (new ReflectionClass($entityClass))->getShortName();
+        $this->enabledActions = new ArrayCollection([
+            ActionType::LIST,
+            ActionType::CREATE,
+            ActionType::EDIT,
+            ActionType::DETAIL,
+            ActionType::DELETE,
+        ]);
 
         $this->customPageTitles = [
-            PageType::CREATE->value => t('Creating new %entity_name%', ['%entity_name%' => $this->entityName]),
-            PageType::EDIT->value => t('Editing %entity_name%', ['%entity_name%' => $this->entityName]),
-            PageType::LIST->value => t('%entity_name% Overview', ['%entity_name%' => $this->entityName]),
-            PageType::DETAIL->value => t('Viewing %entity_name%', ['%entity_name%' => $this->entityName]),
+            ActionType::CREATE->value => t('Creating new %entity_name%', ['%entity_name%' => $this->entityName]),
+            ActionType::EDIT->value => t('Editing %entity_name%', ['%entity_name%' => $this->entityName]),
+            ActionType::LIST->value => t('%entity_name% Overview', ['%entity_name%' => $this->entityName]),
+            ActionType::DETAIL->value => t('Viewing %entity_name%', ['%entity_name%' => $this->entityName]),
         ];
 
         $this->menuTitle = t('%entity_name% Overview', ['%entity_name%' => $this->entityName]);
@@ -63,10 +76,10 @@ final class CrudConfigData
     }
 
     /**
-     * @param \Shopsys\AdministrationBundle\Component\Config\PageType $pageType
+     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $pageType
      * @return string
      */
-    public function getTitle(PageType $pageType): string
+    public function getTitle(ActionType $pageType): string
     {
         return $this->customPageTitles[$pageType->value];
     }
@@ -80,11 +93,47 @@ final class CrudConfigData
     }
 
     /**
-     * @return \Shopsys\AdministrationBundle\Component\Config\PageType[]
+     * @return \Shopsys\AdministrationBundle\Component\Config\ActionType[]
      */
-    public function getDefaultActions(): array
+    public function getActions(): array
     {
-        return $this->defaultActions;
+        if ($this->fullDisabled === true) {
+            return [];
+        }
+
+        return $this->enabledActions->getValues();
+    }
+
+    /**
+     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $actionType
+     */
+    public function enableAction(ActionType $actionType): void
+    {
+        if ($this->enabledActions->contains($actionType)) {
+            return;
+        }
+
+        $this->enabledActions->add($actionType);
+    }
+
+    /**
+     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $actionType
+     */
+    public function disableAction(ActionType $actionType): void
+    {
+        if (!$this->enabledActions->contains($actionType)) {
+            return;
+        }
+
+        $this->enabledActions->removeElement($actionType);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFullDisabled(): bool
+    {
+        return $this->fullDisabled;
     }
 
     /**
@@ -108,7 +157,7 @@ final class CrudConfigData
      */
     public function isVisibleInMenu(): bool
     {
-        return $this->visibleInMenu;
+        return $this->visibleInMenu && $this->enabledActions->contains(ActionType::LIST);
     }
 
     /**
