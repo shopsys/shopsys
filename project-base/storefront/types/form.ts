@@ -12,7 +12,7 @@ export type RegistrationAfterOrderFormType = {
     privacyPolicy: boolean;
 };
 
-export type PasswordResetFormType = {
+export type ResetPasswordFormType = {
     email: string;
 };
 
