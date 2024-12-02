@@ -19,6 +19,15 @@ export const middleware: NextMiddleware = async (request) => {
             return new NextResponse(null, { status: 404 });
         }
 
+        // redirect to HP when user is logged in
+        const authProtectedPaths = ['/login', '/reset-password'];
+        const accessToken = request.cookies.get('accessToken')?.value;
+
+        if (accessToken && authProtectedPaths.some((path) => request.nextUrl.pathname.startsWith(path))) {
+            return NextResponse.redirect(new URL('/app', request.url));
+        }
+
+        // reset auth tokens if they are invalid
         const response = await validateAuthTokens(request);
 
         const host = getHostFromRequest(request);
