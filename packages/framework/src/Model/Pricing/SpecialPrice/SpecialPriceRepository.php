@@ -23,7 +23,7 @@ class SpecialPriceRepository
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
-     * @return array{priceAmount:\Shopsys\FrameworkBundle\Component\Money\Money, validFrom: \DateTimeImmutable, validTo: \DateTimeImmutable, productListId: int}|null
+     * @return array{priceAmount:\Shopsys\FrameworkBundle\Component\Money\Money, validFrom: \DateTimeImmutable, validTo: \DateTimeImmutable, productListName: string, productListId: int, productId: int}|null
      */
     public function getEffectiveSpecialPrice(Product $product, int $domainId): ?array
     {
@@ -37,7 +37,7 @@ class SpecialPriceRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      * @param int[] $variantIds
-     * @return array<int, array{priceAmount:\Shopsys\FrameworkBundle\Component\Money\Money, validFrom: \DateTimeImmutable, validTo: \DateTimeImmutable, productId: int}>
+     * @return array<int, array{priceAmount:\Shopsys\FrameworkBundle\Component\Money\Money, validFrom: \DateTimeImmutable, validTo: \DateTimeImmutable, productListName: string, productListId: int, productId: int}>
      */
     public function getCurrentAndFutureSpecialPrices(Product $product, int $domainId, array $variantIds = []): array
     {
@@ -60,7 +60,7 @@ class SpecialPriceRepository
         $currentDate = new DateTimeImmutable();
 
         return $this->em->createQueryBuilder()
-            ->select('pwp.priceAmount, pl.validFrom, pl.validTo, IDENTITY(pwp.product) as productId')
+            ->select('pwp.priceAmount, pl.validFrom, pl.validTo, IDENTITY(pwp.product) as productId, pl.name as productListName, pl.id as productListId')
             ->from(ProductWithPrice::class, 'pwp')
             ->join('pwp.priceList', 'pl')
             ->where('pwp.product IN (:productIds)')

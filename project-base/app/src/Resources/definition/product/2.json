@@ -198,6 +198,12 @@
             "special_prices": {
                 "type": "nested",
                 "properties": {
+                    "price_list_id": {
+                        "type": "integer"
+                    },
+                    "price_list_name": {
+                        "type": "text"
+                    },
                     "valid_from": {
                         "type": "date",
                         "format": "yyyy-MM-dd HH:mm:ss"

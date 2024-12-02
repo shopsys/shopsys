@@ -2746,6 +2746,9 @@ msgstr "Doposud nebyli vytvořeny žádní obchodní zástupci."
 msgid "No shipping created so far."
 msgstr "Doposud nebyly vytvořeny žádné dopravy."
 
+msgid "No special price is active or planned."
+msgstr "Žádná speciální cena není aktivní ani plánovaná."
+
 msgid "No store is created. You have to create one first."
 msgstr "Žádná prodejna není vytvořena. Nejdříve musíte nějakou vytvořit."
 

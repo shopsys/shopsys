@@ -18,11 +18,23 @@ class SpecialPrice
 
     public int $productId;
 
+    public int $priceListId;
+
+    public string $priceListName;
+
     /**
      * @return bool
      */
     public function isFuturePrice(): bool
     {
         return $this->validFrom > new DateTimeImmutable();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isNowActive(): bool
+    {
+        return $this->validFrom <= new DateTimeImmutable() && $this->validTo >= new DateTimeImmutable();
     }
 }

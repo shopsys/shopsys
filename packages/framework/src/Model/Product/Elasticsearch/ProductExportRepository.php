@@ -398,21 +398,42 @@ class ProductExportRepository
      */
     protected function extractSpecialPrices(int $domainId, Product $product): array
     {
-        $specialPrices = $this->specialPriceFacade->getCurrentAndFutureSpecialPrices($product, $domainId);
+        $variantIds = array_map(
+            static fn (Product $variant) => $variant->getId(),
+            $this->getVariantsForDefaultPricingGroup($product, $domainId),
+        );
+
+        $specialPrices = $this->specialPriceFacade->getCurrentAndFutureSpecialPrices(
+            $product,
+            $domainId,
+            $variantIds,
+        );
 
         $return = [];
 
         foreach ($specialPrices as $specialPrice) {
-            $return[] = [
+            $priceListId = $specialPrice->priceListId;
+            $priceListName = $specialPrice->priceListName;
+
+            if (!isset($return[$priceListId])) {
+                $return[$priceListId] = [
+                    'price_list_id' => $priceListId,
+                    'price_list_name' => $priceListName,
+                    'valid_from' => $specialPrice->validFrom->format('Y-m-d H:i:s'),
+                    'valid_to' => $specialPrice->validTo->format('Y-m-d H:i:s'),
+                    'prices' => [],
+                ];
+            }
+
+            $return[$priceListId]['prices'][] = [
                 'price_with_vat' => (float)$specialPrice->price->getPriceWithVat()->getAmount(),
                 'price_without_vat' => (float)$specialPrice->price->getPriceWithoutVat()->getAmount(),
                 'vat' => (float)$specialPrice->price->getVatAmount()->getAmount(),
-                'valid_from' => $specialPrice->validFrom->format('Y-m-d H:i:s'),
-                'valid_to' => $specialPrice->validTo->format('Y-m-d H:i:s'),
+                'product_id' => $specialPrice->productId,
             ];
         }
 
-        return $return;
+        return array_values($return);
     }
 
     /**

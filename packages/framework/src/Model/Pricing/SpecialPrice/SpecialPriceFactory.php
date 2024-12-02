@@ -40,6 +40,8 @@ class SpecialPriceFactory
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $specialPriceAmount
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
+     * @param int $priceListId
+     * @param string $priceListName
      * @param int $productId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice
      */
@@ -49,6 +51,8 @@ class SpecialPriceFactory
         Money $specialPriceAmount,
         int $domainId,
         Vat $vat,
+        int $priceListId,
+        string $priceListName,
         int $productId,
     ): SpecialPrice {
         $price = $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
@@ -62,6 +66,8 @@ class SpecialPriceFactory
             $price,
             $validFrom,
             $validTo,
+            $priceListId,
+            $priceListName,
             $productId,
         );
     }
@@ -70,6 +76,8 @@ class SpecialPriceFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
      * @param \DateTimeInterface $validFrom
      * @param \DateTimeInterface $validTo
+     * @param int $priceListId
+     * @param string $priceListName
      * @param int $productId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice
      */
@@ -77,6 +85,8 @@ class SpecialPriceFactory
         Price $price,
         DateTimeInterface $validFrom,
         DateTimeInterface $validTo,
+        int $priceListId,
+        string $priceListName,
         int $productId,
     ): SpecialPrice {
         $specialPrice = $this->createInstance();
@@ -84,6 +94,8 @@ class SpecialPriceFactory
         $specialPrice->price = $price;
         $specialPrice->validFrom = $validFrom;
         $specialPrice->validTo = $validTo;
+        $specialPrice->priceListId = $priceListId;
+        $specialPrice->priceListName = $priceListName;
         $specialPrice->productId = $productId;
 
         return $specialPrice;

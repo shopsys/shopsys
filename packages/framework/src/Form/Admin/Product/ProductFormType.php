@@ -31,6 +31,7 @@ use Shopsys\FrameworkBundle\Form\Transformers\ProductParameterValueToProductPara
 use Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer;
 use Shopsys\FrameworkBundle\Form\UrlListType;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -53,7 +54,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Constraints;
 
-class ProductFormType extends AbstractType
+final class ProductFormType extends AbstractType
 {
     public const string CSRF_TOKEN_ID = 'product_edit_type';
 
@@ -71,6 +72,7 @@ class ProductFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum $productTypeEnum
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade $specialPriceFacade
      */
     public function __construct(
         private readonly BrandFacade $brandFacade,
@@ -86,6 +88,7 @@ class ProductFormType extends AbstractType
         private readonly TransportFacade $transportFacade,
         private readonly UrlGeneratorInterface $urlGenerator,
         private readonly ProductTypeEnum $productTypeEnum,
+        private readonly SpecialPriceFacade $specialPriceFacade,
     ) {
     }
 
@@ -603,6 +606,28 @@ class ProductFormType extends AbstractType
                 'required' => true,
             ],
         );
+
+        if ($product !== null) {
+            $priceListOverviewOptionsByDomainId = [];
+
+            foreach ($this->domain->getAdminEnabledDomainIds() as $domainId) {
+                $priceListOverviewOptionsByDomainId[$domainId] = [
+                    'specialPrices' => $this->specialPriceFacade->getCurrentAndFutureSpecialPrices($product, $domainId),
+                ];
+            }
+
+            $builderPricesGroup->add(
+                'priceListOverview',
+                MultidomainType::class,
+                [
+                    'label' => t('Price list overview'),
+                    'entry_type' => PriceListOverviewType::class,
+                    'required' => false,
+                    'mapped' => false,
+                    'options_by_domain_id' => $priceListOverviewOptionsByDomainId,
+                ],
+            );
+        }
 
         return $builderPricesGroup;
     }

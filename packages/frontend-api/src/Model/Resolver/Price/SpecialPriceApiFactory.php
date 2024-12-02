@@ -80,7 +80,7 @@ class SpecialPriceApiFactory
     }
 
     /**
-     * @param array{valid_from: string, valid_to: string} $specialPriceArray
+     * @param array{valid_from: string, valid_to: string, price_list_id: int, price_list_name: string} $specialPriceArray
      * @param array{price_without_vat: string, price_with_vat: string, product_id: int} $priceArray
      * @return \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice
      */
@@ -90,6 +90,8 @@ class SpecialPriceApiFactory
             $this->priceFactory->createPriceFromArray($priceArray),
             new DateTimeImmutable($specialPriceArray['valid_from']),
             new DateTimeImmutable($specialPriceArray['valid_to']),
+            $specialPriceArray['price_list_id'],
+            $specialPriceArray['price_list_name'],
             $priceArray['product_id'],
         );
     }

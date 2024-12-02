@@ -2746,6 +2746,9 @@ msgstr ""
 msgid "No shipping created so far."
 msgstr ""
 
+msgid "No special price is active or planned."
+msgstr ""
+
 msgid "No store is created. You have to create one first."
 msgstr ""
 

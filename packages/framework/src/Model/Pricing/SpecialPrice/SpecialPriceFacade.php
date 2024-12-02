@@ -39,6 +39,8 @@ class SpecialPriceFacade
             $effectiveSpecialPrice['priceAmount'],
             $domainId,
             $product->getVatForDomain($domainId),
+            $effectiveSpecialPrice['productListId'],
+            $effectiveSpecialPrice['productListName'],
             $effectiveSpecialPrice['productId'],
         );
 
@@ -67,6 +69,8 @@ class SpecialPriceFacade
                     $specialPriceData['priceAmount'],
                     $domainId,
                     $product->getVatForDomain($domainId),
+                    $specialPriceData['productListId'],
+                    $specialPriceData['productListName'],
                     $specialPriceData['productId'],
                 );
             },
