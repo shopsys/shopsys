@@ -52,6 +52,24 @@ services:
         profiles:
             - storefront-acceptance-tests
         network_mode: "host"
+        environment:
+            - GROUP=${GROUP}
+
+    cypress-regenerate-screenshots:
+        build:
+            context: ./storefront/cypress
+            dockerfile: ./docker/Dockerfile
+        container_name: shopsys-framework-cypress-regenerate
+        volumes:
+            - ./storefront/cypress:/app
+            - node_modules:/app/node_modules
+        profiles:
+            - storefront-regenerate-screenshots
+        network_mode: "host"
+        environment:
+            - TYPE=base
+            - COMMAND=run
+            - GROUP=${GROUP}
 
     redis:
         image: redis:5.0-alpine
