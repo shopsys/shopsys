@@ -48,6 +48,7 @@ final class DatagridDataSource extends QueryBuilderWithRowManipulatorDataSource
         }
 
         $queryPaginator = new QueryPaginator($queryBuilder, DatagridHydrator::HYDRATION_MODE);
+        $queryPaginator->includeMetaColumns();
 
         $originalPaginationResult = $queryPaginator->getResult($page, $limit, $this->getTotalRowsCount());
         $results = $originalPaginationResult->getResults();
