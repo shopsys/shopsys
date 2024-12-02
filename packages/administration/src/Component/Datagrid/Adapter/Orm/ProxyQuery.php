@@ -58,20 +58,6 @@ final class ProxyQuery
             return;
         }
 
-        $rootAlias = $this->rootAlias;
-
-        if (str_contains($select, '.') === false) {
-            $classMetadata = $this->entityManager->getClassMetadata($this->entityClass);
-
-            if (!in_array($select, $classMetadata->getFieldNames(), true)) {
-                throw new InvalidArgumentException('Field "' . $select . '" not found in entity ' . $this->entityClass);
-            }
-
-            $this->queryBuilder->addSelect($rootAlias . '.' . $select . ' AS ' . $select);
-
-            return;
-        }
-
         $this->processDotNotation($select);
     }
 
@@ -85,17 +71,23 @@ final class ProxyQuery
 
         $currentClassMetadata = $this->entityManager->getClassMetadata($this->entityClass);
 
-        // dot notation is processed from left to right and each part is joined with left join
+        // dot notation is processed from left to right and each part is joined
         // the last part is added to select
 
         foreach ($parts as $index => $part) {
             $path = implode('.', array_slice($parts, 0, $index + 1));
-            $joinAlias = $part;
-
+            $joinAlias = $part . '_join';
 
             if ($index >= count($parts) - 1) {
                 if ($currentClassMetadata->hasField($part)) {
                     $this->queryBuilder->addSelect("{$alias}.{$part}" . ' AS ' . $this->getAlias($path));
+
+                    continue;
+                }
+
+                if ($currentClassMetadata->hasAssociation($part)) {
+                    $this->joinAssociation($currentClassMetadata, $path, $part, $alias, $joinAlias);
+                    $this->queryBuilder->addSelect("{$joinAlias}" . ' AS ' . $this->getAlias($path));
 
                     continue;
                 }
@@ -113,11 +105,18 @@ final class ProxyQuery
                 throw new InvalidArgumentException('Field "' . $part . '" not found in entity ' . $currentClassMetadata->getName());
             }
 
+            // If next part is last and is primary key, select it as identity without join
+            if ($this->isNextPartLastAndIdentity($parts, $index, $currentClassMetadata)) {
+                $path = implode('.', $parts);
+
+                $this->queryBuilder->addSelect("IDENTITY({$alias}.{$part})" . ' AS ' . $this->getAlias($path));
+
+                break;
+            }
+
             $this->joinAssociation($currentClassMetadata, $path, $part, $alias, $joinAlias);
 
-            $currentClassMetadata = $this->entityManager->getClassMetadata(
-                $currentClassMetadata->getAssociationTargetClass($part),
-            );
+            $currentClassMetadata = $this->getClassMetadataForTarget($part, $currentClassMetadata);
 
             $alias = $joinAlias;
         }
@@ -130,6 +129,36 @@ final class ProxyQuery
     private function getAlias($part): string
     {
         return str_replace('.', '__', $part);
+    }
+
+    /**
+     * @param string[] $parts
+     * @param int $currentIndex
+     * @param \Doctrine\ORM\Mapping\ClassMetadata $classMetadata
+     * @return bool
+     */
+    private function isNextPartLastAndIdentity(array $parts, int $currentIndex, ClassMetadata $classMetadata): bool
+    {
+        // check if next iteration will be last part of dot notation
+        if ($currentIndex >= count($parts) - 1) {
+            return false;
+        }
+
+        // check if next part is primary key
+        $nextPart = $parts[$currentIndex + 1];
+        $associationClassMetadata = $this->getClassMetadataForTarget($parts[$currentIndex], $classMetadata);
+
+        return in_array($nextPart, $associationClassMetadata->getIdentifier(), true) !== false;
+    }
+
+    /**
+     * @param string $part
+     * @param \Doctrine\ORM\Mapping\ClassMetadata $currentClassMetadata
+     * @return \Doctrine\ORM\Mapping\ClassMetadata
+     */
+    private function getClassMetadataForTarget(string $part, ClassMetadata $currentClassMetadata): ClassMetadata
+    {
+        return $this->entityManager->getClassMetadata($currentClassMetadata->getAssociationTargetClass($part));
     }
 
     /**
@@ -160,14 +189,15 @@ final class ProxyQuery
 
         $this->joins[$pathToJoin] = $joinAlias;
 
-        if ($fieldName !== 'translations') {
-            $this->queryBuilder->leftJoin("{$currentAlias}.{$fieldName}", $joinAlias);
+        if ($fieldName === 'translations') {
+            $this->queryBuilder->leftJoin("{$currentAlias}.{$fieldName}", $joinAlias, Join::WITH, "{$joinAlias}.locale = :{$joinAlias}_locale");
+            $this->queryBuilder->setParameter("{$joinAlias}_locale", $this->locale);
 
             return;
         }
 
-        $this->queryBuilder->leftJoin("{$currentAlias}.translations", $joinAlias, Join::WITH, "{$joinAlias}.locale = :{$joinAlias}_locale");
-        $this->queryBuilder->setParameter("{$joinAlias}_locale", $this->locale);
+        $associationMapping = $classMetadata->getAssociationMapping($fieldName);
+        $this->queryBuilder->leftJoin($associationMapping['targetEntity'], $joinAlias, Join::WITH, "{$currentAlias}.{$fieldName} = {$joinAlias}.id");
     }
 
     /**

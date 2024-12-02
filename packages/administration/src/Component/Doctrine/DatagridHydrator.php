@@ -10,17 +10,14 @@ final class DatagridHydrator extends AbstractHydrator
 {
     public const HYDRATION_MODE = 'DatagridHydrator';
 
-    protected function hydrateAllData()
+    /**
+     * {@inheritdoc}
+     */
+    protected function hydrateAllData(): array
     {
         $result = [];
 
-        while (true) {
-            $data = $this->_stmt->fetchAssociative();
-
-            if ($data === false) {
-                break;
-            }
-
+        while ($data = $this->_stmt->fetchAssociative()) {
             $this->hydrateRowData($data, $result);
         }
 
@@ -28,48 +25,113 @@ final class DatagridHydrator extends AbstractHydrator
     }
 
     /**
-     * {@inheritdoc}
+     * @param array $row
+     * @param array $result
      */
-    protected function hydrateRowData(array $data, array &$result): void
-    {
-        $rowData = $this->gatherGroupedScalarRowData($data);
-        $result[] = $rowData;
-    }
-
-    /**
-     * Copies implementation of gatherScalarRowData(), but groups non-scalar columns
-     * as array of columns.
-     *
-     * @param array $data
-     * @return array
-     */
-    protected function gatherGroupedScalarRowData(&$data)
+    protected function hydrateRowData(array $row, array &$result): void
     {
         $rowData = [];
+        $associations = [];
+        $nullableAssociations = [];
 
-        foreach ($data as $key => $value) {
+        foreach ($row as $key => $value) {
             $cacheKeyInfo = $this->hydrateColumnInfo($key);
 
             if ($cacheKeyInfo === null) {
                 continue;
             }
 
-            $fieldName = str_replace('__', '.', $cacheKeyInfo['fieldName']);
+            $transformedValue = $this->transformValue($value, $cacheKeyInfo);
 
-            /** @var \Doctrine\DBAL\Types\Type|null $type */
-            $type = $cacheKeyInfo['type'];
+            if (isset($cacheKeyInfo['dqlAlias'])) {
+                $this->processAssociation(
+                    $cacheKeyInfo,
+                    $transformedValue,
+                    $associations,
+                    $nullableAssociations,
+                );
 
-            if (isset($cacheKeyInfo['isScalar'])) {
-                $value = $type->convertToPHPValue($value, $this->_platform);
-                $rowData[$fieldName] = $value;
-            } else {
-                $dqlAlias = $cacheKeyInfo['dqlAlias'];
-                $value = $type ? $type->convertToPHPValue($value, $this->_platform) : $value;
+                continue;
+            }
 
-                $rowData[$dqlAlias][$fieldName] = $value;
+            if ($cacheKeyInfo['isScalar'] === true) {
+                $rowData[$this->transformFieldNameToDotNotation($cacheKeyInfo['fieldName'])] = $transformedValue;
             }
         }
 
-        return $rowData;
+        $this->finalizeRowData($associations, $nullableAssociations, $rowData);
+
+        $result[] = $rowData;
+    }
+
+    /**
+     * @param array $associations
+     * @param array $nullableAssociations
+     * @param array $rowData
+     */
+    private function finalizeRowData(array $associations, array $nullableAssociations, array &$rowData): void
+    {
+        foreach ($associations as $dqlAlias => $data) {
+            $associationName = $this->transformFieldNameToDotNotation(
+                $this->_rsm->entityMappings[$dqlAlias],
+            );
+
+            $rowData[$associationName] = in_array($dqlAlias, $nullableAssociations, true)
+                ? null
+                : $this->_uow->createEntity($this->_rsm->aliasMap[$dqlAlias], $data, $this->_hints);
+        }
+    }
+
+    /**
+     * Replace __ with . in $fieldname to allow dot notation access for datagrid
+     *
+     * @param string $fieldName
+     * @return string
+     */
+    private function transformFieldNameToDotNotation(string $fieldName): string
+    {
+        return str_replace('__', '.', $fieldName);
+    }
+
+    /**
+     * @param mixed $value
+     * @param array $cacheKeyInfo
+     * @return mixed
+     */
+    private function transformValue(mixed $value, array $cacheKeyInfo): mixed
+    {
+        $type = $cacheKeyInfo['type'] ?? null;
+
+        return $type ? $type->convertToPHPValue($value, $this->_platform) : $value;
+    }
+
+    /**
+     * @param array $cacheKeyInfo
+     * @param mixed $value
+     * @param array $associations
+     * @param array $nullableAssociations
+     */
+    private function processAssociation(
+        array $cacheKeyInfo,
+        mixed $value,
+        array &$associations,
+        array &$nullableAssociations,
+    ): void {
+        $alias = $cacheKeyInfo['dqlAlias'];
+        $fieldName = $cacheKeyInfo['fieldName'];
+
+        if ($cacheKeyInfo['isIdentifier'] === true && $value === null) {
+            $nullableAssociations[] = $alias;
+        }
+
+        $associations[$alias][$fieldName] = $value;
+    }
+
+    protected function cleanup(): void
+    {
+        parent::cleanup();
+
+        $this->_uow->triggerEagerLoads();
+        $this->_uow->hydrationComplete();
     }
 }

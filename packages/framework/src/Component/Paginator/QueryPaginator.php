@@ -13,6 +13,8 @@ use Shopsys\FrameworkBundle\Component\Doctrine\SqlParametersFlattener;
 
 class QueryPaginator implements PaginatorInterface
 {
+    protected bool $includeMetaColumns = false;
+
     /**
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param string|null $hydrationMode
@@ -68,9 +70,18 @@ class QueryPaginator implements PaginatorInterface
             $query->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, $this->hint);
         }
 
+        if ($this->includeMetaColumns) {
+            $query->setHint(Query::HINT_INCLUDE_META_COLUMNS, true);
+        }
+
         $results = $query->execute(null, $this->hydrationMode);
 
         return new PaginationResult($page, $pageSize, $totalCount, $results);
+    }
+
+    public function includeMetaColumns(): void
+    {
+        $this->includeMetaColumns = true;
     }
 
     /**
