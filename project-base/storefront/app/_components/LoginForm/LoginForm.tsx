@@ -1,10 +1,10 @@
 'use client';
 
 import { loginAction } from 'app/_actions/loginAction';
+import { useLoginForm, useLoginFormMeta } from 'app/_components/LoginForm/loginFormMeta';
 import { SocialNetworkLogin } from 'app/_components/SocialNetworkLogin/SocialNetworkLogin';
 import { useHandleActionsAfterLogin } from 'app/_hooks/useHandleActionsAfterLogin';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { useLoginForm, useLoginFormMeta } from 'components/Blocks/Login/loginFormMeta';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
@@ -51,7 +51,7 @@ export const LoginForm: FC<LoginFormProps> = ({
     const onLoginHandler: SubmitHandler<LoginFormType> = async (data) => {
         blurInput();
 
-        const loginResponse = await loginAction({
+        const response = await loginAction({
             email: data.email,
             password: data.password,
             previousCartUuid: cartUuid,
@@ -59,18 +59,20 @@ export const LoginForm: FC<LoginFormProps> = ({
             shouldOverwriteCustomerUserCart,
         });
 
-        if (loginResponse.error === undefined) {
-            handleActionsAfterLogin(loginResponse.showCartMergeInfo, undefined);
+        if (response.error) {
+            handleFormErrors(
+                response.error,
+                formProviderMethods,
+                t,
+                undefined,
+                undefined,
+                GtmMessageOriginType.login_popup,
+            );
+
+            return;
         }
 
-        handleFormErrors(
-            loginResponse.error,
-            formProviderMethods,
-            t,
-            undefined,
-            undefined,
-            GtmMessageOriginType.login_popup,
-        );
+        handleActionsAfterLogin(response.showCartMergeInfo, undefined);
     };
 
     return (
