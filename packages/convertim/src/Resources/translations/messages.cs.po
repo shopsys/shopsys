@@ -4,14 +4,47 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
 
+msgid "Adyen (Convertim only)"
+msgstr "Adyen (pouze Convertim)"
+
+msgid "Balikovna (Convertim only)"
+msgstr "Balíkovna (pouze Convertim)"
+
+msgid "Cash on delivery (Convertim only)"
+msgstr "Dobríka (pouze Convertim)"
+
+msgid "Comgate (Convertim only)"
+msgstr "Comgate (pouze Convertim)"
+
+msgid "DPD (Czechia) (Convertim only)"
+msgstr "DPD (Česko) (pouze Convertim)"
+
+msgid "DPD (Slovakia) (Convertim only)"
+msgstr "DPD (Slovensko) (pouze Convertim)"
+
+msgid "Essox (Convertim only)"
+msgstr "Essox (pouze Convertim)"
+
 msgid "Item {{ name }} can no longer be bought."
 msgstr "Položku {{ itemName }} již nelze zakoupit."
 
 msgid "Item {{ name }} has been sold out."
 msgstr "Položka {{ name }} byla vyprodána."
 
+msgid "PPL (Convertim only)"
+msgstr "PPL (pouze Convertim)"
+
+msgid "PayPal (Convertim only)"
+msgstr "PayPal (pouze Convertim)"
+
 msgid "Promo code"
 msgstr "Slevový kupón"
+
+msgid "QR (Convertim only)"
+msgstr "QR (pouze Convertim)"
+
+msgid "Stripe (Convertim only)"
+msgstr "Stripe (pouze Convertim)"
 
 msgid "The payment you selected is no longer available."
 msgstr "Platba, kterou jste si zvolili, již není dostupná."
@@ -39,6 +72,9 @@ msgstr "Prodjena, kterou jste zvolili, již není dostupná."
 
 msgid "The transport you selected is no longer available."
 msgstr "Doprava, kterou jste si zvolili, již není dostupná."
+
+msgid "TrustPay (Convertim only)"
+msgstr "TrustPay (pouze Convertim)"
 
 msgid "You have exceeded the weight limit of the selected transport."
 msgstr "Přesáhli jste váhový limit vámi zvolené dopravy."

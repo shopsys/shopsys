@@ -4,13 +4,46 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
+msgid "Adyen (Convertim only)"
+msgstr ""
+
+msgid "Balikovna (Convertim only)"
+msgstr ""
+
+msgid "Cash on delivery (Convertim only)"
+msgstr ""
+
+msgid "Comgate (Convertim only)"
+msgstr ""
+
+msgid "DPD (Czechia) (Convertim only)"
+msgstr ""
+
+msgid "DPD (Slovakia) (Convertim only)"
+msgstr ""
+
+msgid "Essox (Convertim only)"
+msgstr ""
+
 msgid "Item {{ name }} can no longer be bought."
 msgstr ""
 
 msgid "Item {{ name }} has been sold out."
 msgstr ""
 
+msgid "PPL (Convertim only)"
+msgstr ""
+
+msgid "PayPal (Convertim only)"
+msgstr ""
+
 msgid "Promo code"
+msgstr ""
+
+msgid "QR (Convertim only)"
+msgstr ""
+
+msgid "Stripe (Convertim only)"
 msgstr ""
 
 msgid "The payment you selected is no longer available."
@@ -38,6 +71,9 @@ msgid "The store you selected is no longer available."
 msgstr ""
 
 msgid "The transport you selected is no longer available."
+msgstr ""
+
+msgid "TrustPay (Convertim only)"
 msgstr ""
 
 msgid "You have exceeded the weight limit of the selected transport."
