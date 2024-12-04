@@ -1,0 +1,24 @@
+fragment TransportsWithPaymentsAndStoresForConvertimFragment on Transport {
+    __typename
+    uuid
+    name
+    description
+    price {
+        ...PriceFragment
+    }
+    mainImage {
+        ...ImageFragment
+    }
+    payments(displayInCartOnly: false) {
+        ...SimplePaymentFragment
+    }
+    daysUntilDelivery
+    stores {
+        ...ListedStoreConnectionFragment
+    }
+    transportTypeCode
+    isPersonalPickup
+    vat {
+        ...VatFragment
+    }
+}

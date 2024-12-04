@@ -1,5 +1,0 @@
-query TransportsWithStoresQuery($cartUuid: Uuid) {
-    transports(cartUuid: $cartUuid) {
-        ...TransportWithAvailablePaymentsAndStoresFragment
-    }
-}

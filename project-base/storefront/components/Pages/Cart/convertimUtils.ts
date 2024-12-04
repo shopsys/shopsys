@@ -122,6 +122,25 @@ const mapPaymentType = (type: TypePaymentTypeEnum): PaymentTypes => {
     }
 };
 
+const getSpecialExtensions = (paymentType: TypePaymentTypeEnum) => {
+    switch (paymentType) {
+        case TypePaymentTypeEnum.ConvertimComgate:
+            return {
+                comgate: {
+                    defaultPaymentInstruction: 'CARD_CZ_CSOB_2',
+                },
+            };
+        case TypePaymentTypeEnum.ConvertimAdyen:
+            return {
+                adyen: {
+                    method: 'card',
+                },
+            };
+        default:
+            return {};
+    }
+};
+
 export const mapPaymentsData = (transports?: TypeTransportWithAvailablePaymentsFragment[]): PaymentData[] => {
     const transportUuids = transports?.map((transport) => transport.uuid) ?? [];
     const payments: Map<string, PaymentData> = new Map();
@@ -145,6 +164,7 @@ export const mapPaymentsData = (transports?: TypeTransportWithAvailablePaymentsF
                     paymentDescription: payment.description ?? '',
                     restrictedTransports: [...transportUuids],
                     paymentInstruction: payment.instruction ?? '',
+                    ...getSpecialExtensions(payment.type),
                 });
             }
 
