@@ -1,9 +1,5 @@
-'use client';
-
-import { useTranslation } from 'components/providers/TranslationProvider';
+import { SkeletonPageHome } from 'components/Blocks/Skeleton/SkeletonPageHome';
 
 export default function Loading() {
-    const { t } = useTranslation();
-
-    return <p>{t('Loading')}</p>;
+    return <SkeletonPageHome />;
 }

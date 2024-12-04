@@ -1,3 +1,5 @@
+'use client';
+
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Button, ButtonBaseProps } from 'components/Forms/Button/Button';
 import { TIDs } from 'cypress/tids';
