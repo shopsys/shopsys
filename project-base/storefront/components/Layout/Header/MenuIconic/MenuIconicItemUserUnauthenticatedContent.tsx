@@ -1,6 +1,6 @@
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
-import { LoginForm } from 'components/Blocks/Login/LoginForm';
+import { Button } from 'components/Forms/Button/Button';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
@@ -15,8 +15,9 @@ export const MenuIconicItemUserUnauthenticatedContent: FC = () => {
     const [registrationUrl] = getInternationalizedStaticUrls(['/registration'], url);
     const contentRef = useRef<HTMLDivElement>(null);
 
-    useFocusTrap(contentRef);
+    useFocusTrap(contentRef); // TODO: ref type
 
+    // TODO: login form with server action
     return (
         <div className="vl:flex-row vl:p-5 flex w-full flex-col gap-8 text-left" ref={contentRef}>
             <div
@@ -51,9 +52,10 @@ export const MenuIconicItemUserUnauthenticatedContent: FC = () => {
                     <ArrowSecondaryIcon className="size-5 -rotate-90 p-1 md:size-6" />
                 </LinkButton>
             </div>
-            <div className="vl:order-2 vl:w-[364px] order-1 w-full">
+
+            {/* <div className="vl:order-2 vl:w-[364px] order-1 w-full">
                 <LoginForm formHeading={t('Log in')} />
-            </div>
+            </div> */}
         </div>
     );
 };

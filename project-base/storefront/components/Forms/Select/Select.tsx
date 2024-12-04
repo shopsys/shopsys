@@ -1,3 +1,5 @@
+'use client';
+
 import { SelectList, SelectListProps } from './SelectList';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
