@@ -1,7 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
-import { LoginForm } from 'components/Blocks/Login/LoginForm';
 import { Button } from 'components/Forms/Button/Button';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
@@ -13,6 +12,7 @@ export const MenuIconicItemUserUnauthenticatedContent: FC = () => {
     const { url } = useDomainConfig();
     const [registrationUrl] = getInternationalizedStaticUrls(['/registration'], url);
 
+    // TODO: login form with server action
     return (
         <div className="flex w-full flex-col gap-8 vl:flex-row vl:p-5">
             <div className="order-2 mb-auto rounded-xl bg-backgroundBrandLess p-5 text-textInverted vl:order-1 vl:w-1/2 vl:p-9">
@@ -43,9 +43,10 @@ export const MenuIconicItemUserUnauthenticatedContent: FC = () => {
                     </Button>
                 </ExtendedNextLink>
             </div>
-            <div className="order-1 w-full vl:order-2 vl:w-[364px]">
+
+            {/* <div className="order-1 w-full vl:order-2 vl:w-[364px]">
                 <LoginForm formHeading={t('Log in')} />
-            </div>
+            </div> */}
         </div>
     );
 };
