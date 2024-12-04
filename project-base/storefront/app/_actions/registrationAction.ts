@@ -3,23 +3,22 @@
 import { createMutation } from 'app/_urql/urql-dto';
 import { setTokensToCookies } from 'app/_utils/setTokensToCookies';
 import {
-    LoginMutationDocument,
-    TypeLoginMutation,
-    TypeLoginMutationVariables,
-} from 'graphql/requests/auth/mutations/LoginMutation.ssr';
+    RegistrationMutationDocument,
+    TypeRegistrationMutation,
+    TypeRegistrationMutationVariables,
+} from 'graphql/requests/registration/mutations/RegistrationMutation.ssr';
 import { CombinedError } from 'urql';
 
-type LoginActionResult = {
+type RegistrationActionResult = {
     error: CombinedError | undefined;
     showCartMergeInfo: boolean;
 };
 
-export async function loginAction(
-    variables: TypeLoginMutationVariables,
-    rewriteUrl?: string,
-): Promise<LoginActionResult> {
-    const response = await createMutation<TypeLoginMutation, TypeLoginMutationVariables>(
-        LoginMutationDocument,
+export async function registrationAction(
+    variables: TypeRegistrationMutationVariables,
+): Promise<RegistrationActionResult> {
+    const response = await createMutation<TypeRegistrationMutation, TypeRegistrationMutationVariables>(
+        RegistrationMutationDocument,
         variables,
     );
 
@@ -35,14 +34,14 @@ export async function loginAction(
     }
 
     if (response.data) {
-        const accessToken = response.data.Login.tokens.accessToken;
-        const refreshToken = response.data.Login.tokens.refreshToken;
+        const accessToken = response.data.Register.tokens.accessToken;
+        const refreshToken = response.data.Register.tokens.refreshToken;
 
         setTokensToCookies(accessToken, refreshToken);
 
         return {
             error: undefined,
-            showCartMergeInfo: response.data.Login.showCartMergeInfo,
+            showCartMergeInfo: response.data.Register.showCartMergeInfo,
         };
     }
 
