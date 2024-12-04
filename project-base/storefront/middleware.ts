@@ -20,7 +20,7 @@ export const middleware: NextMiddleware = async (request) => {
         }
 
         // redirect to HP when user is logged in
-        const authProtectedPaths = ['/login', '/reset-password'];
+        const authProtectedPaths = ['/login', '/reset-password', '/registration'];
         const accessToken = request.cookies.get('accessToken')?.value;
 
         if (accessToken && authProtectedPaths.some((path) => request.nextUrl.pathname.startsWith(path))) {
