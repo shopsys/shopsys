@@ -1,3 +1,5 @@
+'use client';
+
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { ReactNode, useEffect, useRef, useState } from 'react';

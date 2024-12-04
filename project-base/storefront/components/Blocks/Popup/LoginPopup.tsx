@@ -1,4 +1,4 @@
-import { LoginForm, LoginFormProps } from 'components/Blocks/Login/LoginForm';
+import { LoginForm, LoginFormProps } from 'app/_components/LoginForm/LoginForm';
 import { Popup } from 'components/Layout/Popup/Popup';
 
 export const LoginPopup: FC<LoginFormProps> = ({ defaultEmail, shouldOverwriteCustomerUserCart, formHeading }) => {

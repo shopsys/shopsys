@@ -1,7 +1,7 @@
 export default async function AppPage() {
     return (
         <div>
-            <h1>App Page</h1>
+            <h1>APP PAGE</h1>
             <p>This is the app page.</p>
         </div>
     );

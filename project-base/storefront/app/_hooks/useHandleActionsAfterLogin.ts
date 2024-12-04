@@ -22,9 +22,8 @@ export const useHandleActionsAfterLogin = () => {
 
         if (rewriteUrl) {
             router.replace(rewriteUrl);
-            router.refresh();
         } else {
-            router.refresh();
+            router.replace('/');
         }
     };
 
