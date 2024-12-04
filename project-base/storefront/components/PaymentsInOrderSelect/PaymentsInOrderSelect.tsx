@@ -6,9 +6,9 @@ import { Button } from 'components/Forms/Button/Button';
 import { GoPayGateway } from 'components/Pages/Order/PaymentConfirmation/Gateways/GoPayGateway';
 import { useOrderAvailablePaymentsQuery } from 'graphql/requests/orders/queries/OrderAvailablePaymentsQuery.generated';
 import { TypeSimplePaymentFragment } from 'graphql/requests/payments/fragments/SimplePaymentFragment.generated';
+import { TypePaymentTypeEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { useEffect, useState } from 'react';
-import { PaymentTypeEnum } from 'types/payment';
 import { useIsPaymentByCardAvailable } from 'utils/cart/useIsPaymentByCardAvailable';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -40,12 +40,12 @@ export const PaymentsInOrderSelect: FC<PaymentsInOrderSelectProps> = ({
     const currentOrderPayment = orderAvailablePaymentsData?.orderPayments.currentPayment;
     const isSelectedPaymentEqualsToOrderPayment = selectedPaymentForChange?.uuid === currentOrderPayment?.uuid;
     const filteredAvailablePayments = orderAvailablePaymentsData?.orderPayments.availablePayments.filter(
-        (payment) => payment.type !== PaymentTypeEnum.GoPay || isPaymentByCardAvailable,
+        (payment) => payment.type !== TypePaymentTypeEnum.GoPay || isPaymentByCardAvailable,
     );
 
     useEffect(() => {
         setSelectedPaymentForChange(
-            !isPaymentByCardAvailable && currentOrderPayment?.type === PaymentTypeEnum.GoPay
+            !isPaymentByCardAvailable && currentOrderPayment?.type === TypePaymentTypeEnum.GoPay
                 ? undefined
                 : currentOrderPayment,
         );
@@ -57,10 +57,10 @@ export const PaymentsInOrderSelect: FC<PaymentsInOrderSelectProps> = ({
                 orderUuid,
                 selectedPaymentForChange.uuid,
                 selectedPaymentSwiftForChange,
-                selectedPaymentForChange.type !== PaymentTypeEnum.GoPay && withRedirectAfterChanging,
+                selectedPaymentForChange.type !== TypePaymentTypeEnum.GoPay && withRedirectAfterChanging,
             );
             if (
-                selectedPaymentForChange.type === PaymentTypeEnum.GoPay &&
+                selectedPaymentForChange.type === TypePaymentTypeEnum.GoPay &&
                 changePaymentInOrderData?.ChangePaymentInOrder
             ) {
                 setIsGoPayVisible(true);
@@ -72,7 +72,7 @@ export const PaymentsInOrderSelect: FC<PaymentsInOrderSelectProps> = ({
         return <SpinnerIcon className="mx-auto mt-4 block w-12" />;
     }
 
-    if (currentOrderPayment?.type !== PaymentTypeEnum.GoPay || !orderAvailablePaymentsData) {
+    if (currentOrderPayment?.type !== TypePaymentTypeEnum.GoPay || !orderAvailablePaymentsData) {
         return null;
     }
 

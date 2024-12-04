@@ -9,7 +9,7 @@ import {
 } from 'convertim-react-lib';
 import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { useRemoveCartMutation } from 'graphql/requests/cart/mutations/RemoveCartMutation.generated';
-import { useTransportsWithStoresQuery } from 'graphql/requests/transports/queries/TransportsWithStoresQuery.generated';
+import { useTransportsWithPaymentsAndStoresForConvertimQuery } from 'graphql/requests/transports/queries/TransportsWithPaymentsAndStoresForConvertimQuery.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useCallback } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
@@ -22,9 +22,10 @@ export const Convertim: FC<ConvertimProps> = ({ cart, convertimProjectUuid }) =>
     const formatPrice = useFormatPrice();
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const [, removeCartMutation] = useRemoveCartMutation();
-    const [{ data: transportsData, fetching: isTransportsFetching }] = useTransportsWithStoresQuery({
-        variables: { cartUuid: cart?.uuid ?? null },
-    });
+    const [{ data: transportsData, fetching: isTransportsFetching }] =
+        useTransportsWithPaymentsAndStoresForConvertimQuery({
+            variables: { cartUuid: cart?.uuid ?? null, displayInCartOnly: false },
+        });
 
     const dayNames = [
         t('Monday'),
