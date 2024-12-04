@@ -1,3 +1,5 @@
+'use client';
+
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import InfiniteScroll, { Props as InfiniteScrollProps } from 'react-infinite-scroll-component';
