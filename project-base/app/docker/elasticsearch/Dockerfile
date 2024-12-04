@@ -1,4 +1,4 @@
-FROM docker.elastic.co/elasticsearch/elasticsearch-oss:7.10.2
+FROM docker.elastic.co/elasticsearch/elasticsearch:7.16.1
 
 # install ICU Analysis plugin to sort by language properly
 RUN bin/elasticsearch-plugin install analysis-icu
