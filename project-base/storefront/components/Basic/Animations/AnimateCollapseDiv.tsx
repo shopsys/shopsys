@@ -1,3 +1,5 @@
+'use client';
+
 import { TIDs } from 'cypress/tids';
 import { HTMLMotionProps, m } from 'framer-motion';
 import { collapseExpandAnimation } from 'utils/animations/animationVariants';

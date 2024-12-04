@@ -11,8 +11,9 @@ import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useSettings } from 'components/providers/SettingsProvider';
 import { TIDs } from 'cypress/tids';
-import { TypeLoginTypeEnum } from 'graphql/types';
+import { TypeLoginMutationVariables } from 'graphql/requests/auth/mutations/LoginMutation.ssr';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import useTranslation from 'next-translate/useTranslation';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
@@ -27,7 +28,6 @@ export type LoginFormProps = {
     shouldOverwriteCustomerUserCart?: boolean;
     formContentWrapperClassName?: string;
     formHeading: string;
-    socialNetworks: TypeLoginTypeEnum[] | undefined;
 };
 
 export const LoginForm: FC<LoginFormProps> = ({
@@ -35,12 +35,13 @@ export const LoginForm: FC<LoginFormProps> = ({
     shouldOverwriteCustomerUserCart,
     formContentWrapperClassName,
     formHeading,
-    socialNetworks,
 }) => {
     const { t } = useTranslation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const productListUuids = usePersistStore((s) => s.productListUuids);
     const handleActionsAfterLogin = useHandleActionsAfterLogin();
+
+    const { socialNetworkLoginConfig } = useSettings();
 
     const { url } = useDomainConfig();
     const [resetPasswordUrl] = getInternationalizedStaticUrls(['/reset-password'], url);
@@ -48,31 +49,26 @@ export const LoginForm: FC<LoginFormProps> = ({
     const [formProviderMethods] = useLoginForm(defaultEmail);
     const formMeta = useLoginFormMeta(formProviderMethods);
 
-    const onLoginHandler: SubmitHandler<LoginFormType> = async (data) => {
+    const onLoginHandler: SubmitHandler<LoginFormType> = async (formData) => {
         blurInput();
 
-        const response = await loginAction({
-            email: data.email,
-            password: data.password,
+        const loginData: TypeLoginMutationVariables = {
+            email: formData.email,
+            password: formData.password,
             previousCartUuid: cartUuid,
             productListsUuids: Object.values(productListUuids),
             shouldOverwriteCustomerUserCart,
-        });
+        };
 
-        if (response.error) {
-            handleFormErrors(
-                response.error,
-                formProviderMethods,
-                t,
-                undefined,
-                undefined,
-                GtmMessageOriginType.login_popup,
-            );
+        const { error, showCartMergeInfo } = await loginAction(loginData);
+
+        if (error) {
+            handleFormErrors(error, formProviderMethods, t, undefined, undefined, GtmMessageOriginType.login_popup);
 
             return;
         }
 
-        handleActionsAfterLogin(response.showCartMergeInfo, undefined);
+        handleActionsAfterLogin(showCartMergeInfo, undefined);
     };
 
     return (
@@ -117,10 +113,10 @@ export const LoginForm: FC<LoginFormProps> = ({
                                 <ExtendedNextLink href={resetPasswordUrl}>{t('Lost your password?')}</ExtendedNextLink>
                             </div>
 
-                            {socialNetworks && (
+                            {socialNetworkLoginConfig.length > 0 && (
                                 <SocialNetworkLogin
                                     shouldOverwriteCustomerUserCart={shouldOverwriteCustomerUserCart}
-                                    socialNetworks={socialNetworks}
+                                    socialNetworks={socialNetworkLoginConfig}
                                 />
                             )}
                         </FormButtonWrapper>

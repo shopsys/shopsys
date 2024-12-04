@@ -9,6 +9,7 @@ import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
+import { TypePasswordRecoveryMutationVariables } from 'graphql/requests/passwordRecovery/mutations/PasswordRecoveryMutation.ssr';
 import { GtmFormType } from 'gtm/enums/GtmFormType';
 import { onGtmSendFormEventHandler } from 'gtm/handlers/onGtmSendFormEventHandler';
 import useTranslation from 'next-translate/useTranslation';
@@ -28,10 +29,14 @@ export const ResetPasswordForm: FC<ResetPasswordFormProps> = ({ formHeading }) =
     const [formProviderMethods, defaultValues] = useResetPasswordForm();
     const formMeta = useResetPasswordFormMeta(formProviderMethods);
 
-    const onResetPasswordHandler: SubmitHandler<ResetPasswordFormType> = async (data) => {
+    const onResetPasswordHandler: SubmitHandler<ResetPasswordFormType> = async (formData) => {
         blurInput();
 
-        const response = await resetPasswordAction(data);
+        const resetPasswordData: TypePasswordRecoveryMutationVariables = {
+            email: formData.email,
+        };
+
+        const response = await resetPasswordAction(resetPasswordData);
 
         if (response.error) {
             handleFormErrors(response.error, formProviderMethods, t, formMeta.messages.error);
