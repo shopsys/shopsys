@@ -1,0 +1,5 @@
+query TransportsWithPaymentsAndStoresForConvertimQuery($cartUuid: Uuid, $displayInCartOnly: Boolean = true) {
+    transports(cartUuid: $cartUuid, displayInCartOnly: $displayInCartOnly) {
+        ...TransportsWithPaymentsAndStoresForConvertimFragment
+    }
+}

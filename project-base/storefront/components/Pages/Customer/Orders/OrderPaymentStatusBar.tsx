@@ -1,10 +1,10 @@
 import { InfoIconInCircle } from 'components/Basic/Icon/InfoIconInCircle';
+import { TypePaymentTypeEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
-import { PaymentTypeEnum } from 'types/payment';
 import { twMergeCustom } from 'utils/twMerge';
 
 type OrderPaymentStatusBarProps = {
-    orderPaymentType: string;
+    orderPaymentType: TypePaymentTypeEnum;
     orderIsPaid: boolean;
     orderHasPaymentInProcess: boolean;
 };
@@ -39,7 +39,7 @@ export const OrderPaymentStatusBar: FC<OrderPaymentStatusBarProps> = ({
     className,
     orderHasPaymentInProcess,
 }) => {
-    if (orderPaymentType !== PaymentTypeEnum.GoPay) {
+    if (orderPaymentType !== TypePaymentTypeEnum.GoPay) {
         return null;
     }
 

@@ -4,7 +4,7 @@ import { OrderPaymentStatusBar } from 'components/Pages/Customer/Orders/OrderPay
 import { PaymentsInOrderSelect } from 'components/PaymentsInOrderSelect/PaymentsInOrderSelect';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TypeOrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
-import { PaymentTypeEnum } from 'types/payment';
+import { TypePaymentTypeEnum } from 'graphql/types';
 
 type OrderDetailContentProps = {
     order: TypeOrderDetailFragment;
@@ -21,7 +21,7 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                 orderPaymentType={order.payment.type}
             />
             {canCreateOrder &&
-                order.payment.type === PaymentTypeEnum.GoPay &&
+                order.payment.type === TypePaymentTypeEnum.GoPay &&
                 !order.isPaid &&
                 !order.hasPaymentInProcess && (
                     <div>
