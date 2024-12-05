@@ -44,3 +44,6 @@ front_stores:
 
 front_complaint_detail:
     path: /customer/complaint-detail
+
+front_cart:
+    path: /cart
