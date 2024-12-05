@@ -29,6 +29,7 @@ class CustomerUserController extends AdminBaseController
     {
         try {
             return $this->render('@ShopsysFrontendApi/Admin/Content/Login/loginAsCustomerUser.html.twig', [
+                'showCartMergeInfo' => 'false',
                 'tokens' => $this->loginAsUserFacade->loginAdministratorAsCustomerUserAndGetAccessAndRefreshToken($customerUserId),
                 'url' => $this->generateUrl('front_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL),
             ]);

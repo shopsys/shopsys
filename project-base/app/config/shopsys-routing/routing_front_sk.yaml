@@ -44,3 +44,6 @@ front_stores:
 
 front_complaint_detail:
     path: /zakaznik/detail-reklamace
+
+front_cart:
+    path: /kosik
