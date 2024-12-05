@@ -33,12 +33,18 @@ CONVERTIM_CONFIG='{
     "1": {
         "enabled": true,
         "authorizationHeader": "HEADER",
-        "projectUuid": "PROJECT-UUID"
+        "projectUuid": "PROJECT-UUID",
+        "isProductionMode": false,
+        "clientId": "CLIENT-ID",
+        "clientSecret": "CLIENT-SECRET"
     },
     "2": {
         "enabled": false,
         "authorizationHeader": "HEADER",
-        "projectUuid": "PROJECT-UUID"
+        "projectUuid": "PROJECT-UUID",
+        "isProductionMode": false,
+        "clientId": "CLIENT-ID",
+        "clientSecret": "CLIENT-SECRET"
     }
 }'
 ```

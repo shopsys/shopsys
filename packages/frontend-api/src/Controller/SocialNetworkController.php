@@ -60,6 +60,7 @@ class SocialNetworkController extends AbstractController
             $loginResultData = $this->socialNetworkFacade->login($type, $redirectUrl, $request->getSession());
 
             return $this->render('@ShopsysFrontendApi/Admin/Content/Login/loginAsCustomerUser.html.twig', [
+                'showCartMergeInfo' => $loginResultData->showCartMergeInfo ? 'true' : 'false',
                 'tokens' => $loginResultData->tokens,
                 'url' => $this->getRefererUrl(
                     $request,
@@ -68,7 +69,6 @@ class SocialNetworkController extends AbstractController
                     $loginResultData->showCartMergeInfo,
                     $loginResultData->isRegistration,
                 ),
-                'showCartMergeInfo' => $loginResultData->showCartMergeInfo ? 'true' : 'false',
             ]);
         } catch (SocialNetworkLoginException $exception) {
             return $this->redirect($this->getRefererUrl($request, $type, true));

@@ -13,6 +13,7 @@ import { useTransportsWithPaymentsAndStoresForConvertimQuery } from 'graphql/req
 import useTranslation from 'next-translate/useTranslation';
 import { useCallback } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
+import { useLogout } from 'utils/auth/useLogout';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 
 type ConvertimProps = { cart?: TypeCartFragment | null; convertimProjectUuid: string };
@@ -26,6 +27,7 @@ export const Convertim: FC<ConvertimProps> = ({ cart, convertimProjectUuid }) =>
         useTransportsWithPaymentsAndStoresForConvertimQuery({
             variables: { cartUuid: cart?.uuid ?? null, displayInCartOnly: false },
         });
+    const logout = useLogout();
 
     const dayNames = [
         t('Monday'),
@@ -78,6 +80,9 @@ export const Convertim: FC<ConvertimProps> = ({ cart, convertimProjectUuid }) =>
                 },
                 validateCustomZipTransport: (transportId: string, postalCode: string, setResult: () => void) => {
                     setResult();
+                },
+                afterLogout: () => {
+                    logout();
                 },
             }}
         />

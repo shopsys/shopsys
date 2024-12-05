@@ -13,6 +13,9 @@ class ConvertimConfigProvider
     protected const string ENABLED = 'enabled';
     protected const string AUTHORIZATION_HEADER = 'authorizationHeader';
     protected const string PROJECT_UUID = 'projectUuid';
+    protected const string IS_PRODUCTION_MODE = 'isProductionMode';
+    protected const string CLIENT_ID = 'clientId';
+    protected const string CLIENT_SECRET = 'clientSecret';
 
     /**
      * @var \Shopsys\ConvertimBundle\Model\Convertim\ConvertimConfig[]
@@ -39,6 +42,9 @@ class ConvertimConfigProvider
                 $configResolver[static::ENABLED],
                 $configResolver[static::AUTHORIZATION_HEADER],
                 $configResolver[static::PROJECT_UUID],
+                $configResolver[static::IS_PRODUCTION_MODE],
+                $configResolver[static::CLIENT_ID],
+                $configResolver[static::CLIENT_SECRET],
             );
         }
     }
@@ -53,10 +59,16 @@ class ConvertimConfigProvider
                 static::ENABLED,
                 static::AUTHORIZATION_HEADER,
                 static::PROJECT_UUID,
+                static::IS_PRODUCTION_MODE,
+                static::CLIENT_ID,
+                static::CLIENT_SECRET,
             ])
             ->setAllowedTypes(static::ENABLED, ['bool'])
             ->setAllowedTypes(static::AUTHORIZATION_HEADER, ['string'])
-            ->setAllowedTypes(static::PROJECT_UUID, ['string']);
+            ->setAllowedTypes(static::PROJECT_UUID, ['string'])
+            ->setAllowedTypes(static::IS_PRODUCTION_MODE, ['bool'])
+            ->setAllowedTypes(static::CLIENT_ID, ['string'])
+            ->setAllowedTypes(static::CLIENT_SECRET, ['string']);
     }
 
     /**

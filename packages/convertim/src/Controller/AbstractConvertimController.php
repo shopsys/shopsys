@@ -6,11 +6,12 @@ namespace Shopsys\ConvertimBundle\Controller;
 
 use Convertim\ConvertimBackendInterface;
 use Shopsys\ConvertimBundle\Model\Convertim\ConvertimConfigProvider;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-abstract class AbstractConvertimController
+abstract class AbstractConvertimController extends AbstractController
 {
     /**
      * @param \Shopsys\ConvertimBundle\Model\Convertim\ConvertimConfigProvider $convertimConfigProvider

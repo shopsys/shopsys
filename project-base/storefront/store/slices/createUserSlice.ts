@@ -1,6 +1,7 @@
 import { TypeProductListTypeEnum } from 'graphql/types';
 import { UserConsentFormType } from 'types/form';
 import { StateCreator } from 'zustand';
+import { setCookie } from 'cookies-next';
 
 type UserEntryType = 'login' | 'registration';
 
@@ -34,6 +35,7 @@ export const createUserSlice: StateCreator<UserSlice> = (set) => ({
 
     updateCartUuid: (cartUuid) => {
         set({ cartUuid });
+        setCookie('cartUuid', cartUuid);
     },
     updateProductListUuids: (productListUuids) => {
         set({ productListUuids });
