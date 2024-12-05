@@ -184,8 +184,8 @@ msgstr "Administrace byla přepnuta do jazyka \"%locale%\""
 msgid "Administrator"
 msgstr "Administrátor"
 
-msgid "Administrator <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
-msgstr "Byl vytvořen administrátor <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
+msgid "Administrator <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created. A link to set a password has been sent to his email."
+msgstr "Byl vytvořen administrátor <strong><a href=\"{{ url }}\">{{ name }}</a></strong>. Odkaz pro nastavení hesla byl odeslán na jeho e-mail."
 
 msgid "Administrator <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
 msgstr "Byl upraven administrátor <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"

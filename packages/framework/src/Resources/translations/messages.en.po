@@ -184,7 +184,7 @@ msgstr ""
 msgid "Administrator"
 msgstr ""
 
-msgid "Administrator <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgid "Administrator <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created. A link to set a password has been sent to his email."
 msgstr ""
 
 msgid "Administrator <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"

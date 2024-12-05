@@ -201,7 +201,7 @@ class AdministratorController extends AdminBaseController
                 $this->administratorPasswordFacade->resetPassword($administrator->getUsername());
 
                 $this->addSuccessFlashTwig(
-                    t('Administrator <strong><a href="{{ url }}">{{ name }}</a></strong> created'),
+                    t('Administrator <strong><a href="{{ url }}">{{ name }}</a></strong> created. A link to set a password has been sent to his email.'),
                     [
                         'name' => $administrator->getRealName(),
                         'url' => $this->generateUrl('admin_administrator_edit', ['id' => $administrator->getId()]),
