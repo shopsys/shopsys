@@ -196,7 +196,7 @@ regenerate-storefront-screenshots:
                 fi
                 git fetch origin "$CI_COMMIT_REF_NAME"
                 git pull --rebase origin "$CI_COMMIT_REF_NAME"
-                git push https://shopsys_bot:$API_TOKEN@gitlab.shopsys.cz/ss6-projects/project-base.git "$CI_COMMIT_REF_NAME" --force -v || (echo "Failed to push changes" && git log -n 5 && exit 1)
+                git push https://shopsys_bot:$API_TOKEN@gitlab.shopsys.cz/ss6-projects/${CI_PROJECT_NAME}.git "$CI_COMMIT_REF_NAME" --force -v || (echo "Failed to push changes" && git log -n 5 && exit 1)
             else
                 echo "No changes in snapshots, skipping commit."
             fi
