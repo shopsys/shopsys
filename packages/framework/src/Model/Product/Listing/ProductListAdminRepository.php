@@ -33,7 +33,12 @@ class ProductListAdminRepository
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
-            ->select('p, pt, pmip.inputPrice AS priceForProductList')
+            ->select('p.id, 
+            pt.name, 
+            p.calculatedSellingDenied,
+            p.variantType,
+            p.catnum,
+            pmip.inputPrice AS priceForProductList')
             ->from(Product::class, 'p')
             ->leftJoin(
                 ProductManualInputPrice::class,

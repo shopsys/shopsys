@@ -1,58 +1,24 @@
-{% extends '@ShopsysFramework/Admin/Grid/Grid.html.twig' %}
+{% extends '@ShopsysFramework/Admin/Content/Product/listGrid.html.twig' %}
 
-{% block grid_no_data %}
-    {{ 'No product found.'|trans }}
-{% endblock %}
+{% block grid_action_cell_type_edit %}{% endblock %}
 
 {% block grid_value_cell_id_name %}
-    {% if row.p.variantType == VARIANT_TYPE_MAIN %}
+    {% if row.variantType == VARIANT_TYPE_MAIN %}
         <span class="in-letter cursor-help js-tooltip" title="{{ 'Main variant'|trans }}">{{ 'Main variant [abbreviation]'|trans }}</span>
     {% endif %}
-    {% if row.p.variantType == VARIANT_TYPE_VARIANT %}
+    {% if row.variantType == VARIANT_TYPE_VARIANT %}
         <span class="in-letter cursor-help js-tooltip" title="{{ 'Variant'|trans }}">{{ 'Variant [abbreviation]'|trans }}</span>
     {% endif %}
-    {{ row.product|productListDisplayName }}
-{% endblock %}
-
-{% block grid_value_cell_id_visibility %}
-    {% if isMultidomain() %}
-        <span class="js-product-visibility position-relative" data-visibility-url="{{ url('admin_product_visibility', {productId: row.p.id}) }}">
-            <span class="js-product-visibility-icon in-icon svg
-                {% if isVisibleForDefaultPricingGroupOnEachDomain(row.product) %}
-                    svg-visible in-icon--visible
-                {% elseif isVisibleForDefaultPricingGroupOnSomeDomain(row.product) %}
-                    svg-visible in-icon--partially-visible
-                {% else %}
-                    svg-invisible in-icon--invisible
-                {% endif %}"
-            ></span>
-            <span class="js-product-visibility-box">
-                <span class="in-product-visibility js-product-visibility-box-window display-none"></span>
-            </span>
-        </span>
-    {% else %}
-        {% if isVisibleForDefaultPricingGroupOnEachDomain(row.product) %}
-            {% apply spaceless %}
-                <a href="{{ findUrlByDomainId('front_product_detail', { id: row.product.id }, getDomain().id) }}">
-                    <span class="in-icon svg svg-visible in-icon--visible"></span>
-                </a>
-            {% endapply %}
-        {% else %}
-            <span class="in-icon svg svg-invisible in-icon--invisible"></span>
-        {% endif %}
-    {% endif %}
-    {% if row.p.calculatedSellingDenied %}
-        <span class="in-icon in-icon--denied svg svg-cart" title="{{ 'Product excluded from sale'|trans }}"></span>
-    {% endif %}
+    {{ row.name|productListDisplayNameByName }}
 {% endblock %}
 
 {% block grid_value_cell_id_select %}
-    {%- if not allowMainVariants and row.p.variantType == VARIANT_TYPE_MAIN %}
+    {%- if not allowMainVariants and row.variantType == VARIANT_TYPE_MAIN %}
         <i class="in-icon in-icon--info svg svg-info cursor-help js-tooltip"
             data-toggle="tooltip" data-placement="left"
             title="" data-original-title="{{ 'You cannot choose product that is main variant'|trans }}"
         ></i>
-    {% elseif not allowVariants and row.p.variantType == VARIANT_TYPE_VARIANT %}
+    {% elseif not allowVariants and row.variantType == VARIANT_TYPE_VARIANT %}
         <i class="in-icon in-icon--info svg svg-info cursor-help js-tooltip"
             data-toggle="tooltip" data-placement="left" title=""
             data-original-title="{{ 'You cannot choose product that is variant'|trans }}"
@@ -62,8 +28,8 @@
             class="js-products-picker-window-add-product btn btn--light btn--plus btn--small"
             href="#"
             data-product-picker-instance-id="{{ jsInstanceId }}"
-            data-product-picker-product-id="{{ row.p.id }}"
-            data-product-picker-product-name="{{ row.pt.name }}"
+            data-product-picker-product-id="{{ row.id }}"
+            data-product-picker-product-name="{{ row.name }}"
         >
             <i class="js-products-picker-icon btn__icon">+</i>
             <span class="js-products-picker-label">
@@ -75,8 +41,8 @@
             href="#"
             class="btn btn--light btn--plus btn--small js-product-picker-select"
             data-instance-id="{{ parentInstanceId }}"
-            data-product-id="{{ row.p.id }}"
-            data-product-name="{{ row.pt.name }}"
+            data-product-id="{{ row.id }}"
+            data-product-name="{{ row.name }}"
         >
             <i class="js-products-picker-icon btn__icon">+</i>
             <span class="js-products-picker-label">
@@ -84,9 +50,4 @@
             </span>
         </a>
     {% endif %}
-{% endblock %}
-
-{% block grid_pager_totalcount %}
-    {% set entityName = 'products'|trans %}
-    {{ parent() }}
 {% endblock %}

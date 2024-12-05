@@ -51,7 +51,11 @@ class QueryBuilderWithRowManipulatorDataSource extends QueryBuilderDataSource
         string $orderDirection = self::ORDER_ASC,
     ): PaginationResult {
         $originalPaginationResult = parent::getPaginatedRows($limit, $page, $orderSourceColumnName, $orderDirection);
-        $results = array_map($this->manipulateRowCallback, $originalPaginationResult->getResults());
+        $results = $originalPaginationResult->getResults();
+
+        foreach ($results as $key => $result) {
+            $results[$key] = call_user_func($this->manipulateRowCallback, $result, $results);
+        }
 
         return new PaginationResult(
             $originalPaginationResult->getPage(),

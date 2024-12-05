@@ -311,4 +311,31 @@ class ProductVisibilityRepository
             $variableTypes,
         );
     }
+
+    /**
+     * @param int[] $productIds
+     * @param int $pricingGroupId
+     * @param int $domainId
+     * @return bool[]
+     */
+    public function getProductsVisibilitiesByPricingGroupAndDomainIndexedByProductId(
+        array $productIds,
+        int $pricingGroupId,
+        int $domainId,
+    ): array {
+        $productVisibilities = $this
+            ->getProductVisibilityRepository()
+            ->createQueryBuilder('pv')
+            ->select('IDENTITY(pv.product) productId, pv.visible isVisible')
+            ->andWhere('pv.domainId = :domainId')
+            ->andWhere('IDENTITY(pv.product) IN (:productIds)')
+            ->andWhere('pv.pricingGroup = :pricingGroupId')
+            ->setParameter('domainId', $domainId)
+            ->setParameter('productIds', $productIds)
+            ->setParameter('pricingGroupId', $pricingGroupId)
+            ->getQuery()
+            ->getResult();
+
+        return array_column($productVisibilities, 'isVisible', 'productId');
+    }
 }
