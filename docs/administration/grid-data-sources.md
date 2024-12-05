@@ -18,8 +18,12 @@ $queryBuilder = $entityManager->createQueryBuilder();
 $queryBuilder->select('p')
     ->from(Product::class, 'p');
 
-$dataSource = new QueryBuilderDataSource($queryBuilder, 'p.id');
+$dataSource = new QueryBuilderDataSource($queryBuilder, 'p.id', SortableNullsWalker::class);
 ```
+
+QueryBuilderDataSource contains a third default parameter $hint which is pre-set to SortableNullsWalker::class as a way to sort null values to the beginning in the case of ASC sorting, or to the end in the case of DESC sorting.
+This default setting overrides the default behavior of postgreSQL and in the case of large tables can cause the query to slow down.
+For this case and after considering all options, it is possible to set the hint to NULL and thus keep the default behavior of postgreSQL to speed up the query.
 
 ## [`QueryBuilderWithRowManipulatorDataSource`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Grid/QueryBuilderWithRowManipulatorDataSource.php)
 
@@ -40,13 +44,28 @@ $queryBuilder = $transportRepository->getQueryBuilderForAll()
 $dataSource = new QueryBuilderWithRowManipulatorDataSource(
     $queryBuilder,
     't.id',
-    function ($row) {
-        $transport = $transportRepository->findById($row['t']['id']);
+    function ($row, $results) {
+        if ($this->transportsIndexedByIdLocalCache === null) {
+            $this->transportsIndexedByIdLocalCache = $transportRepository->findAllByIdsIndexedById(array_map(fn ($result) => $result['t']['id'], $results));
+        }
+
+        $transport = $this->transportsIndexedByIdLocalCache[$row['t']['id']];
         $row['displayPrice'] = getDisplayPrice($transport);
         return $row;
-    }
+    },
+    SortableNullsWalker::class
 );
 ```
+
+As in the case of QueryBuilderDataSource, it is possible to change the setting of the $hint parameter, see [`QueryBuilderDataSource`](#querybuilderdatasource).
+
+### Tips for optimal usage QueryBuilderDataSource or QueryBuilderWithRowManipulatorDataSource
+
+- The query should return an array of scalar values instead of an entity if the table contains large collections of records.
+- Grid with callback calls the callback for each item separately. To avoid calling SQL queries for each item, use the second parameter of the callback function in which the entire result for the bulk query is stored in the local cache. See. e.g. `Shopsys\FrameworkBundle\Controller\Admin\OrderController::getOrdersGrid()`.
+- For large collections, consider turning off the $hint parameter, it may speed up the query.
+- For large collections, create indexes over columns in conditions.
+- For columns in conditions where the LIKE "%something%" condition is used, use a trigram index instead of default B-tree index. (CREATE INDEX example_trgm_idx ON example USING gin (text_column gin_trgm_ops);)
 
 ## [`ArrayDataSource`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Component/Grid/ArrayDataSource.php)
 
