@@ -189,7 +189,11 @@ regenerate-storefront-screenshots:
         - git status
         - |
             if ! git diff --staged --quiet; then
-                git commit -m "Regenerated Cypress screenshots for ${GROUP} group"
+                if [ -z "$GROUP" ]; then
+                    git commit -m "Regenerated Cypress screenshots"
+                else
+                    git commit -m "Regenerated Cypress screenshots for ${GROUP} group"
+                fi
                 git fetch origin "$CI_COMMIT_REF_NAME"
                 git pull --rebase origin "$CI_COMMIT_REF_NAME"
                 git push https://shopsys_bot:$API_TOKEN@gitlab.shopsys.cz/ss6-projects/project-base.git "$CI_COMMIT_REF_NAME" --force -v || (echo "Failed to push changes" && git log -n 5 && exit 1)
