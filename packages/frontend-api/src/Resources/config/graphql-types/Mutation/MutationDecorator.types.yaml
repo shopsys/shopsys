@@ -146,6 +146,14 @@ MutationDecorator:
                         validation: cascade
                 resolve: "@=mutation('removeFromCartMutation', args, validator)"
                 access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
+            RemoveCart:
+                type: Boolean!
+                description: "Remove cart"
+                args:
+                    input:
+                        type: RemoveCartInput!
+                        validation: cascade
+                resolve: "@=mutation('removeCartMutation', args, validator)"
             AddOrderItemsToCart:
                 type: Cart!
                 description: "Fills cart based on a given order, possibly merging it with the current cart"

@@ -1,0 +1,11 @@
+RemoveCartInputDecorator:
+    type: input-object
+    decorator: true
+    inherits:
+        - CartInputDecorator
+    config:
+        fields:
+            cartUuid:
+                type: "Uuid"
+                defaultValue: null
+                description: "Cart UUID to be removed or null for logged customer user"
