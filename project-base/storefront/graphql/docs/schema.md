@@ -143,6 +143,7 @@
     * [RefreshTokenInput](#refreshtokeninput)
     * [RegistrationByOrderInput](#registrationbyorderinput)
     * [RegistrationDataInput](#registrationdatainput)
+    * [RemoveCartInput](#removecartinput)
     * [RemoveCustomerUserDataInput](#removecustomeruserdatainput)
     * [RemoveFromCartInput](#removefromcartinput)
     * [RemovePromoCodeFromCartInput](#removepromocodefromcartinput)
@@ -1746,6 +1747,20 @@ Register new customer user using an order data
 <tr>
 <td colspan="2" align="right" valign="top">input</td>
 <td valign="top"><a href="#registrationbyorderinput">RegistrationByOrderInput</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>RemoveCart</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Remove cart
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">input</td>
+<td valign="top"><a href="#removecartinput">RemoveCartInput</a>!</td>
 <td></td>
 </tr>
 <tr>
@@ -11611,6 +11626,29 @@ Billing address street name (will be on the tax invoice)
 <td>
 
 The customer's telephone number
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### RemoveCartInput
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>cartUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
+<td>
+
+Cart UUID to be removed or null for logged customer user
 
 </td>
 </tr>
