@@ -139,6 +139,14 @@ MutationDecorator:
                         type: RemoveFromCartInput!
                         validation: cascade
                 resolve: "@=mutation('removeFromCartMutation', args, validator)"
+            RemoveCart:
+                type: Boolean!
+                description: "Remove cart"
+                args:
+                    input:
+                        type: RemoveCartInput!
+                        validation: cascade
+                resolve: "@=mutation('removeCartMutation', args, validator)"
             AddOrderItemsToCart:
                 type: Cart!
                 description: "Fills cart based on a given order, possibly merging it with the current cart"
