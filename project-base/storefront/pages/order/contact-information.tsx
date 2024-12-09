@@ -28,25 +28,31 @@ const ContactInformationPage: FC<ServerSidePropsType> = () => {
     );
 };
 
-export const getServerSideProps = getServerSidePropsWrapper(
-    ({ redisClient, domainConfig, t }) =>
-        async (context) =>
-            initServerSideProps<TypeAdvertsQueryVariables>({
-                context,
-                redisClient,
-                domainConfig,
-                t,
-                prefetchedQueries: [
-                    { query: CountriesQueryDocument },
-                    {
-                        query: AdvertsQueryDocument,
-                        variables: {
-                            positionNames: ['cartPreview'],
-                            categoryUuid: null,
-                        },
-                    },
-                ],
-            }),
-);
+export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, domainConfig, t }) => async (context) => {
+    if (domainConfig.convertimSetting.isEnabled) {
+        return {
+            redirect: {
+                statusCode: 303,
+                destination: '/',
+            },
+        };
+    }
+    return initServerSideProps<TypeAdvertsQueryVariables>({
+        context,
+        redisClient,
+        domainConfig,
+        t,
+        prefetchedQueries: [
+            { query: CountriesQueryDocument },
+            {
+                query: AdvertsQueryDocument,
+                variables: {
+                    positionNames: ['cartPreview'],
+                    categoryUuid: null,
+                },
+            },
+        ],
+    });
+});
 
 export default ContactInformationPage;
