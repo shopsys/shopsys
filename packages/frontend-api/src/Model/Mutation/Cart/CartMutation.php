@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Mutation\Cart;
 
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Validator\InputValidator;
+use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrontendApiBundle\Model\Cart\AddToCartResult;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
@@ -22,12 +23,14 @@ class CartMutation extends AbstractMutation
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrontendApiBundle\Model\Cart\CartWatcherFacade $cartWatcherFacade
      * @param \Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade $orderApiFacade
+     * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
      */
     public function __construct(
         protected readonly CartApiFacade $cartApiFacade,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly CartWatcherFacade $cartWatcherFacade,
         protected readonly OrderApiFacade $orderApiFacade,
+        protected readonly CartFacade $cartFacade,
     ) {
     }
 
@@ -134,5 +137,32 @@ class CartMutation extends AbstractMutation
         $cartWithModificationsResult->addProductsNotAddedByMultipleAddition($notAddedProducts);
 
         return $cartWithModificationsResult;
+    }
+
+    /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @param \Overblog\GraphQLBundle\Validator\InputValidator $validator
+     * @throws \Overblog\GraphQLBundle\Validator\Exception\ArgumentsValidationException
+     * @return array
+     */
+    public function removeCartMutation(Argument $argument, InputValidator $validator): array
+    {
+        $validator->validate();
+        $input = $argument['input'];
+
+        if (array_key_exists('cartUuid', $input) && $input['cartUuid'] !== null) {
+            $cart = $this->cartApiFacade->findCart(null, $input['cartUuid']);
+        } else {
+            $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+            $cart = $this->cartApiFacade->findCart($customerUser, null);
+        }
+
+        if ($cart !== null) {
+            $this->cartFacade->deleteCart($cart);
+        }
+
+        return [
+            true,
+        ];
     }
 }

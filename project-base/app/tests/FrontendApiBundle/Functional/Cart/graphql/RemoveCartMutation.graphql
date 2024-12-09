@@ -1,0 +1,9 @@
+mutation RemoveCart(
+    $cartUuid: Uuid
+) {
+    RemoveCart(
+        input: {
+            cartUuid: $cartUuid
+        }
+    )
+}
