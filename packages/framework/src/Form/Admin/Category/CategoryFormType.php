@@ -261,7 +261,7 @@ class CategoryFormType extends AbstractType
     {
         $domainLocale = $domainConfig->getLocale();
 
-        return $category === null ? '' : $category->getName($domainLocale);
+        return $category === null ? '' : $category->getName($domainLocale) ?? '';
     }
 
     /**
