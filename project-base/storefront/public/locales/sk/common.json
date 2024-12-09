@@ -58,6 +58,7 @@
     "Choose transport": "Vyberte dopravu",
     "City": "Mesto",
     "City must be at most {{ max }} characters": "Mesto nesmí být delší než {{ max }} znaků",
+    "City or postcode": "Mesto alebo PSČ",
     "Clear all": "Zrušiť všetko",
     "Close": "Zatvoriť",
     "Closed": "Zatvorené",
