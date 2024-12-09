@@ -21,6 +21,11 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class PriceListDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
+    public const string ACTIVE_SPECIAL_OFFERS_REFERENCE = 'special_offers';
+    public const string EXPIRED_BLUE_WEDNESDAY_REFERENCE = 'blue_wednesday';
+    public const string ACTIVE_ITEMS_ON_SALE_REFERENCE = 'items_on_sale';
+    public const string FUTURE_PROMOTED_PRODUCTS_REFERENCE = 'promoted_products';
+
     /**
      * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListFacade $priceListFacade
      * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListDataFactory $priceListDataFactory
@@ -54,7 +59,8 @@ class PriceListDataFixture extends AbstractReferenceFixture implements Dependent
                 $this->createProductWithPriceData('27', '42', $domainConfig->getId(), $currencyCzk, $vat),
                 $this->createProductWithPriceData('28', '50', $domainConfig->getId(), $currencyCzk, $vat),
             ];
-            $this->priceListFacade->create($priceListData);
+            $priceList = $this->priceListFacade->create($priceListData);
+            $this->addReferenceForDomain(self::ACTIVE_SPECIAL_OFFERS_REFERENCE, $priceList, $domainConfig->getId());
 
             $priceListData = $this->priceListDataFactory->create();
             $priceListData->name = t('Blue wednesday', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale());
@@ -65,7 +71,8 @@ class PriceListDataFixture extends AbstractReferenceFixture implements Dependent
                 $this->createProductWithPriceData('1', '2800', $domainConfig->getId(), $currencyCzk, $vat),
                 $this->createProductWithPriceData('72', '90', $domainConfig->getId(), $currencyCzk, $vat),
             ];
-            $this->priceListFacade->create($priceListData);
+            $priceList = $this->priceListFacade->create($priceListData);
+            $this->addReferenceForDomain(self::EXPIRED_BLUE_WEDNESDAY_REFERENCE, $priceList, $domainConfig->getId());
 
             $priceListData = $this->priceListDataFactory->create();
             $priceListData->name = t('Items on sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale());
@@ -76,7 +83,8 @@ class PriceListDataFixture extends AbstractReferenceFixture implements Dependent
                 $this->createProductWithPriceData('117', '290', $domainConfig->getId(), $currencyCzk, $vat),
                 $this->createProductWithPriceData('19', '170', $domainConfig->getId(), $currencyCzk, $vat),
             ];
-            $this->priceListFacade->create($priceListData);
+            $priceList = $this->priceListFacade->create($priceListData);
+            $this->addReferenceForDomain(self::ACTIVE_ITEMS_ON_SALE_REFERENCE, $priceList, $domainConfig->getId());
 
             $priceListData = $this->priceListDataFactory->create();
             $priceListData->name = t('Promoted products', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale());
@@ -87,7 +95,8 @@ class PriceListDataFixture extends AbstractReferenceFixture implements Dependent
                 $this->createProductWithPriceData('145', '800', $domainConfig->getId(), $currencyCzk, $vat),
                 $this->createProductWithPriceData('120', '160', $domainConfig->getId(), $currencyCzk, $vat),
             ];
-            $this->priceListFacade->create($priceListData);
+            $priceList = $this->priceListFacade->create($priceListData);
+            $this->addReferenceForDomain(self::FUTURE_PROMOTED_PRODUCTS_REFERENCE, $priceList, $domainConfig->getId());
         }
     }
 
