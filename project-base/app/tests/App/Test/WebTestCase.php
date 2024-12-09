@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
@@ -24,6 +25,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Tests\FrameworkBundle\Test\IsMoneyEqual;
 use Tests\FrameworkBundle\Test\ProductIndexBackupFacade;
 use Zalas\Injector\Factory\DefaultExtractorFactory;
 use Zalas\Injector\PHPUnit\TestCase\ServiceContainerTestCase;
@@ -269,5 +271,19 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
         $requestStack->push($request);
 
         return $request;
+    }
+
+    /**
+     * @param string $expected
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $actual
+     * @param string $message
+     */
+    final public function assertMoney(string $expected, Money $actual, string $message = ''): void
+    {
+        self::assertThat(
+            $actual,
+            new IsMoneyEqual(Money::create($expected)),
+            $message,
+        );
     }
 }
