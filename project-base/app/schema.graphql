@@ -1335,6 +1335,8 @@ type Mutation {
   Register(input: RegistrationDataInput!): LoginResult!
   "Register new customer user using an order data"
   RegisterByOrder(input: RegistrationByOrderInput!): LoginResult!
+  "Remove cart"
+  RemoveCart(input: RemoveCartInput!): Boolean!
   "delete customer user"
   RemoveCustomerUser(input: RemoveCustomerUserDataInput!): Boolean!
   "Remove product from cart"
@@ -2503,6 +2505,11 @@ type RegularProduct implements Product & Hreflang & Breadcrumb & Slug {
   "UUID"
   uuid: Uuid!
   vat: Vat!
+}
+
+input RemoveCartInput {
+  "Cart UUID to be removed or null for logged customer user"
+  cartUuid: Uuid = null
 }
 
 input RemoveCustomerUserDataInput {
