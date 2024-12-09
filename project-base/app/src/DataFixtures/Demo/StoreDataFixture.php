@@ -86,7 +86,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
                 self::ATTR_POSTCODE => '70200',
                 self::ATTR_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class),
                 self::ATTR_CONTACT_INFO => null,
-                self::ATTR_SPECIAL_MESSAGE => null,
+                self::ATTR_SPECIAL_MESSAGE => t('Tomorrow will be 20% discount for all items', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainConfig->getLocale()),
                 self::ATTR_LOCATION_LATITUDE => '49.8574975',
                 self::ATTR_LOCATION_LONGITUDE => '18.2738861',
                 self::ATTR_IMAGE => $this->imageUploadDataFactory->create(),

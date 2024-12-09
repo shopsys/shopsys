@@ -3,6 +3,7 @@ import { StyleguideCheckboxes } from './StyleguideCheckboxes';
 import { StyleguideColors } from './StyleguideColors';
 import { StyleguideForms } from './StyleguideForms';
 import { StyleguideIcons } from './StyleguideIcons';
+import { StyleguideInfobox } from './StyleguideInfobox';
 import { StyleguideNotImplementedYet } from './StyleguideNotImplementedYet';
 import { StyleguidePopups } from './StyleguidePopups';
 import { StyleguideRadiogroup } from './StyleguideRadiogroup';
@@ -25,6 +26,7 @@ export const StyleguideContent: FC<StyleguideContentProps> = ({ iconList, tailwi
             <StyleguidePopups />
             <StyleguideToasts />
             <StyleguideTooltips />
+            <StyleguideInfobox />
             <StyleguideForms />
             <StyleguideSelects />
             <StyleguideRadiogroup />

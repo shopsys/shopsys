@@ -1,5 +1,6 @@
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
+import { Infobox } from 'components/Basic/Infobox/Infobox';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
@@ -76,9 +77,13 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
             <AnimatePresence initial={false}>
                 {isExpanded && (
                     <AnimateCollapseDiv className="mt-2.5 !block" keyName="store-info">
+                        {!!store.specialMessage && (
+                            <InfoItem>
+                                <Infobox message={store.specialMessage} />
+                            </InfoItem>
+                        )}
                         {store.description && (
                             <InfoItem>
-                                <StoreHeading text={t('Store description')} />
                                 <p>{store.description}</p>
                             </InfoItem>
                         )}
@@ -100,4 +105,4 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
 
 const StoreHeading: FC<{ text: string }> = ({ text }) => <h6 className="mb-2">{text}</h6>;
 
-const InfoItem: FC = ({ children }) => <div className="mb-2">{children}</div>;
+const InfoItem: FC = ({ children }) => <div className="mb-5">{children}</div>;

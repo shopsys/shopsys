@@ -399,7 +399,7 @@ class GetStoreTest extends GraphQlTestCase
                     'code' => 'CZ',
                 ],
                 'contactInfo' => null,
-                'specialMessage' => null,
+                'specialMessage' => t('Tomorrow will be 20% discount for all items', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'latitude' => '49.8574975',
                 'longitude' => '18.2738861',
                 'breadcrumb' => [

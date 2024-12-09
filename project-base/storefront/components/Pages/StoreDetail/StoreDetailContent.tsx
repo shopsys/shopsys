@@ -1,6 +1,7 @@
 import { GoogleMap } from 'components/Basic/GoogleMap/GoogleMap';
 import { ChatIcon } from 'components/Basic/Icon/ChatIcon';
 import { Image } from 'components/Basic/Image/Image';
+import { Infobox } from 'components/Basic/Infobox/Infobox';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
@@ -40,6 +41,12 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                         </div>
                     </div>
 
+                    {!!store.specialMessage && (
+                        <InfoItem>
+                            <Infobox message={store.specialMessage} />
+                        </InfoItem>
+                    )}
+
                     {!!store.description && (
                         <InfoItem>
                             <StoreHeading text={t('Store description')} />
@@ -68,13 +75,6 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                         <InfoItem>
                             <StoreHeading text={t('Contact to the department store')} />
                             {store.contactInfo}
-                        </InfoItem>
-                    )}
-
-                    {!!store.specialMessage && (
-                        <InfoItem>
-                            <StoreHeading text={t('Special announcement')} />
-                            {store.specialMessage}
                         </InfoItem>
                     )}
 

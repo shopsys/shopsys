@@ -1867,6 +1867,9 @@ msgstr ""
 msgid "Toilet paper with Euro pictures. Even you can feel rich now!"
 msgstr ""
 
+msgid "Tomorrow will be 20% discount for all items"
+msgstr ""
+
 msgid "Toner for MC861/ 851, 7000 pages"
 msgstr ""
 

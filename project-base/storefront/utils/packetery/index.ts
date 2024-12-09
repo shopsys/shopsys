@@ -38,6 +38,7 @@ export const mapPacketeryExtendedPoint = (packeteryExtendedPoint: PacketeryExten
     openingHours: mapPacketeryOpeningHoursToInternalOpeningHours(packeteryExtendedPoint),
     mainImage: null,
     distance: null,
+    specialMessage: null,
 });
 
 const mapPacketeryOpeningHoursToInternalOpeningHours = (

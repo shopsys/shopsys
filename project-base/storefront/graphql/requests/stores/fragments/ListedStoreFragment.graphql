@@ -13,6 +13,7 @@ fragment ListedStoreFragment on Store {
     postcode
     city
     distance
+    specialMessage
     country {
         ...CountryFragment
     }

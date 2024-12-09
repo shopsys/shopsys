@@ -1867,6 +1867,9 @@ msgstr "Pro sledování Vaši zásilky klikněte na tento odkaz: <a href=\"{trac
 msgid "Toilet paper with Euro pictures. Even you can feel rich now!"
 msgstr "toaleťák s potiskem bankovek EURO, pocit z použití tohoto toaletního papíru dá zapomenout na jakékoliv trable spojené s finanční krizí"
 
+msgid "Tomorrow will be 20% discount for all items"
+msgstr "Zítra bude 20% sleva na všechny produkty"
+
 msgid "Toner for MC861/ 851, 7000 pages"
 msgstr "OKI MC861cdxn+, barevná A3 34/26 ppm ProQ2400 dpi PCL/PS,USB 2.0,LPT,LAN"
 
