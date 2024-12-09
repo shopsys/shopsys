@@ -36,9 +36,12 @@ class StoresQuery extends AbstractQuery
 
         /** @var string|null $searchText */
         $searchText = $argument->offsetGet('searchText');
+        /** @var array{latitude: string, longitude: string}|null $coordinates */
+        $coordinates = $argument->offsetGet('coordinates');
 
         $filterOptions = new StoresFilterOptions(
             searchText: $searchText,
+            coordinates: $coordinates,
         );
 
         $paginator = new Paginator(function ($offset, $limit) use ($domainId, $filterOptions) {

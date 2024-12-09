@@ -80,6 +80,15 @@ class StoreRepository
         $queryBuilder = $this->getBasicFilteredQueryBuilder($domainId, $storesFilterOptions);
         $queryBuilder->orderBy('s.position, s.id', 'ASC');
 
+        if ($storesFilterOptions->getCoordinates() !== null) {
+            $coordinates = $storesFilterOptions->getCoordinates();
+
+            $queryBuilder->addSelect('DISTANCE(s.latitude, s.longitude, :latitude, :longitude) AS distance')
+                ->setParameter('latitude', (float)$coordinates['latitude'])
+                ->setParameter('longitude', (float)$coordinates['longitude'])
+                ->orderBy('distance', 'ASC');
+        }
+
         if ($limit !== null) {
             $queryBuilder->setMaxResults($limit);
         }
@@ -88,6 +97,28 @@ class StoreRepository
             $queryBuilder->setFirstResult($offset);
         }
 
-        return $queryBuilder->getQuery()->getResult();
+        $results = $queryBuilder->getQuery()->getResult();
+
+        if ($storesFilterOptions->getCoordinates() === null) {
+            return $results;
+        }
+
+        $stores = [];
+
+        foreach ($results as $storeArray) {
+            /** @var \Shopsys\FrameworkBundle\Model\Store\Store $store */
+            $store = $storeArray[0];
+
+            /** @var string|null $distance */
+            $distance = $storeArray['distance'] ?? null;
+
+            if ($distance !== null) {
+                $store->setDistance((int)$distance);
+            }
+
+            $stores[$store->getId()] = $store;
+        }
+
+        return $stores;
     }
 }

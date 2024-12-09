@@ -1,5 +1,6 @@
 {
     "404": "404",
+    "{{ distance }} km from you": "{{ distance }} km od vás",
     "24/7 customer support": "Nonstop dostupná zákaznícka podpora",
     "403 Forbidden": "403 Prístup zamietnutý",
     "About shopping": "About shopping",

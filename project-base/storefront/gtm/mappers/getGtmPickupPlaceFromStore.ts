@@ -18,4 +18,5 @@ export const getGtmPickupPlaceFromStore = (store: StoreOrPacketeryPoint): StoreO
     postcode: store.postcode,
     street: store.street,
     mainImage: null,
+    distance: null,
 });

@@ -1,11 +1,18 @@
 import { GoogleMapMarker } from './GoogleMapMarker';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import GoogleMapReact from 'google-map-react';
+import { TypeCoordinates } from 'graphql/types';
 import getConfig from 'next/config';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { PointFeature } from 'supercluster';
 import { MapMarker, MapMarkerNullable } from 'types/map';
 import useSupercluster from 'use-supercluster';
+
+const CLUSTER_RADIUS = 75;
+const CLUSTER_MAX_ZOOM = 20;
+const CLUSTER_MIN_ZOOM = 0;
+const ONE_POINT_ONLY_ZOOM = 15;
+const USER_COORDINATES_ZOOM = 10;
 
 type GoogleMapProps = {
     latitude?: string | null;
@@ -14,6 +21,8 @@ type GoogleMapProps = {
     markers?: MapMarkerNullable[];
     activeMarkerHandler?: (id: string) => void;
     isDetail?: boolean;
+    userCoordinates?: TypeCoordinates | null;
+    shouldCenterToUserCoordinates?: boolean;
 };
 
 type MarkerProperties = {
@@ -44,6 +53,8 @@ export const GoogleMap: FC<GoogleMapProps> = ({
     markers,
     activeMarkerHandler,
     isDetail,
+    userCoordinates = null,
+    shouldCenterToUserCoordinates = true,
 }) => {
     const { publicRuntimeConfig } = getConfig();
     const { mapSetting } = useDomainConfig();
@@ -66,7 +77,7 @@ export const GoogleMap: FC<GoogleMapProps> = ({
         points: markersClusterConfig,
         zoom,
         bounds,
-        options: { radius: 75, minZoom: 0, maxZoom: 20 },
+        options: { radius: CLUSTER_RADIUS, minZoom: CLUSTER_MIN_ZOOM, maxZoom: CLUSTER_MAX_ZOOM },
     });
 
     const selectMarkerHandler = (identifier: string) => {
@@ -81,10 +92,7 @@ export const GoogleMap: FC<GoogleMapProps> = ({
         const { cluster_id, point_count } = cluster.properties;
 
         if (supercluster && cluster_id) {
-            const expansionZoom = Math.min(
-                supercluster.getClusterExpansionZoom(cluster_id),
-                20, // Max zoom level
-            );
+            const expansionZoom = Math.min(supercluster.getClusterExpansionZoom(cluster_id), CLUSTER_MAX_ZOOM);
 
             const markersInCluster = supercluster.getLeaves(cluster_id, point_count); // Get all markers in this cluster
 
@@ -109,6 +117,16 @@ export const GoogleMap: FC<GoogleMapProps> = ({
         if (markersClusterConfig.length > 1 && mapRef.current !== null && google !== undefined) {
             const newBounds = new google.maps.LatLngBounds();
 
+            if (shouldCenterToUserCoordinates && userCoordinates !== null) {
+                mapRef.current.setZoom(USER_COORDINATES_ZOOM);
+                mapRef.current.panTo({
+                    lat: Number(userCoordinates.latitude),
+                    lng: Number(userCoordinates.longitude),
+                });
+
+                return;
+            }
+
             markersClusterConfig.forEach((point) => {
                 newBounds.extend({
                     lat: point.geometry.coordinates[1],
@@ -119,7 +137,7 @@ export const GoogleMap: FC<GoogleMapProps> = ({
             mapRef.current.fitBounds(newBounds);
         } else if (markersClusterConfig.length === 1) {
             if (mapRef.current !== null) {
-                mapRef.current.setZoom(15);
+                mapRef.current.setZoom(ONE_POINT_ONLY_ZOOM);
                 mapRef.current.panTo({
                     lat: markersClusterConfig[0].geometry.coordinates[1],
                     lng: markersClusterConfig[0].geometry.coordinates[0],
@@ -128,7 +146,7 @@ export const GoogleMap: FC<GoogleMapProps> = ({
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [markersClusterConfig, isGoogleApiLoaded]);
+    }, [markersClusterConfig, isGoogleApiLoaded, userCoordinates, shouldCenterToUserCoordinates]);
 
     return (
         <div className="w-full">

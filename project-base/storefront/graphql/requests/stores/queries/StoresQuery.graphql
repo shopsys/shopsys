@@ -1,5 +1,5 @@
-query StoresQuery($searchText: String) {
-    stores(searchText: $searchText) {
+query StoresQuery($searchText: String = null, $coordinates: Coordinates = null) {
+    stores(searchText: $searchText, coordinates: $coordinates) {
         ...ListedStoreConnectionFragment
     }
 }

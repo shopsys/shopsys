@@ -8,9 +8,11 @@ class StoresFilterOptions
 {
     /**
      * @param string|null $searchText
+     * @param array{latitude: string, longitude: string}|null $coordinates
      */
     public function __construct(
         protected readonly ?string $searchText,
+        protected readonly ?array $coordinates = null,
     ) {
     }
 
@@ -20,5 +22,13 @@ class StoresFilterOptions
     public function getSearchText(): ?string
     {
         return $this->searchText;
+    }
+
+    /**
+     * @return array{latitude: string, longitude: string}|null
+     */
+    public function getCoordinates(): ?array
+    {
+        return $this->coordinates;
     }
 }

@@ -132,6 +132,11 @@ class Store implements OrderableEntityInterface
     protected $position;
 
     /**
+     * @var int|null
+     */
+    protected $distance = null;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Store\StoreData $storeData
      */
     public function __construct(StoreData $storeData)
@@ -326,5 +331,21 @@ class Store implements OrderableEntityInterface
     public function getDomainId()
     {
         return $this->domainId;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getDistance()
+    {
+        return $this->distance;
+    }
+
+    /**
+     * @param int $distance
+     */
+    public function setDistance($distance): void
+    {
+        $this->distance = $distance;
     }
 }

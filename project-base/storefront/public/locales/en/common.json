@@ -1,5 +1,6 @@
 {
     "404": "404",
+    "{{ distance }} km from you": "{{ distance }} km from you",
     "24/7 customer support": "24/7 customer support",
     "403 Forbidden": "403 Access denied",
     "About shopping": "About shopping",

@@ -52,6 +52,9 @@ StoreDecorator:
                 type: "[Link!]!"
                 description: "Hierarchy of the current element in relation to the structure"
                 resolve: '@=query("breadcrumbQuery", value.getId(), "front_stores_detail")'
+            distance:
+                type: "Int"
+                description: "Distance from the user in meters"
             images:
                 type: "[Image!]!"
                 description: "Store images"

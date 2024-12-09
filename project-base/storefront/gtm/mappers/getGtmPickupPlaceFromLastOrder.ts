@@ -27,4 +27,5 @@ export const getGtmPickupPlaceFromLastOrder = (
     postcode: lastOrder.deliveryPostcode ?? '',
     street: lastOrder.deliveryStreet ?? '',
     mainImage: null,
+    distance: null,
 });

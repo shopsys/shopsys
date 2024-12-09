@@ -122,6 +122,7 @@
     * [ComplaintInput](#complaintinput)
     * [ComplaintItemInput](#complaintiteminput)
     * [ContactFormInput](#contactforminput)
+    * [Coordinates](#coordinates)
     * [CreateInquiryInput](#createinquiryinput)
     * [CreateWatchdogInput](#createwatchdoginput)
     * [DeliveryAddressInput](#deliveryaddressinput)
@@ -1282,6 +1283,15 @@ Returns list of stores that can be paginated using `first`, `last`, `before` and
 <td colspan="2" align="right" valign="top">before</td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">coordinates</td>
+<td valign="top"><a href="#coordinates">Coordinates</a></td>
+<td>
+
+Returns stores with distance from given coordinates
+
+</td>
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">first</td>
@@ -8719,6 +8729,15 @@ Store description
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>distance</strong></td>
+<td valign="top"><a href="#int">Int</a></td>
+<td>
+
+Distance from the user in meters
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>images</strong></td>
 <td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
@@ -10194,6 +10213,30 @@ Message that will be sent to recipient
 Name of the sender
 
 </td>
+</tr>
+</tbody>
+</table>
+
+### Coordinates
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>latitude</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>longitude</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
 </tr>
 </tbody>
 </table>
