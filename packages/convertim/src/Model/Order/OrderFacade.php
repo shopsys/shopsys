@@ -6,9 +6,12 @@ namespace Shopsys\ConvertimBundle\Model\Order;
 
 use Convertim\Order\ConvertimOrderData;
 use Convertim\Order\ConvertimOrderDataPaymentStatus;
+use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\ConvertimBundle\Model\Payment\PaymentTypeEnum;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Order\OrderFacade as FrameworkOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\PlaceOrderFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
@@ -23,6 +26,9 @@ class OrderFacade
      * @param \Shopsys\ConvertimBundle\Model\Order\OrderRepository $orderRepository
      * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade $paymentTransactionFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory $paymentTransactionDataFactory
+     * @param \Shopsys\ConvertimBundle\Model\Payment\PaymentTypeEnum $paymentTypeEnum
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      */
     public function __construct(
         protected readonly ConvertimOrderDataToOrderDataMapper $convertimOrderDataToOrderMapper,
@@ -31,6 +37,9 @@ class OrderFacade
         protected readonly OrderRepository $orderRepository,
         protected readonly PaymentTransactionFacade $paymentTransactionFacade,
         protected readonly PaymentTransactionDataFactory $paymentTransactionDataFactory,
+        protected readonly PaymentTypeEnum $paymentTypeEnum,
+        protected readonly EntityManagerInterface $em,
+        protected readonly FrameworkOrderFacade $orderFacade,
     ) {
     }
 
@@ -49,8 +58,9 @@ class OrderFacade
             $order = $this->placeOrderFacade->placeOrder($orderData, $deliveryAddressUuid);
         }
 
-        if ($order->getPayment()->isGoPay()) {
-            $this->resolveGoPayStatus($order, $convertimOrderData);
+        if ($order->getPayment()->isGatewayPayment() || in_array($order->getPayment()->getType(), $this->paymentTypeEnum->getAllCases(), true)) {
+            $this->orderFacade->setOrderPaymentStatusPageValidFromNow($order);
+            $this->resolveExternalPaymentStatus($order, $convertimOrderData);
         }
 
         return $order;
@@ -60,11 +70,11 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @param \Convertim\Order\ConvertimOrderData $convertimOrderData
      */
-    protected function resolveGoPayStatus(Order $order, ConvertimOrderData $convertimOrderData): void
+    protected function resolveExternalPaymentStatus(Order $order, ConvertimOrderData $convertimOrderData): void
     {
         $convertimPaymentStatus = $convertimOrderData->getPaymentStatus();
 
-        if ($convertimPaymentStatus === null || $convertimOrderData->getGoPayData() === null) {
+        if ($convertimPaymentStatus === null) {
             return;
         }
 
@@ -75,7 +85,7 @@ class OrderFacade
 
         if (count($paymentTransactions) > 0) {
             foreach ($paymentTransactions as $paymentTransaction) {
-                if ($paymentTransaction->getExternalPaymentIdentifier() === $externalPaymentId) {
+                if ((string)$paymentTransaction->getExternalPaymentIdentifier() === (string)$externalPaymentId) {
                     $currentPaymentTransaction = $paymentTransaction;
 
                     if ($paymentTransaction->getExternalPaymentStatus() === $convertimPaymentStatus->getStatus()) {
