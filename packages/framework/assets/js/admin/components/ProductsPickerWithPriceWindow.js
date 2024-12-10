@@ -1,6 +1,8 @@
 import '../../common/bootstrap/tooltip';
 import Translator from 'bazinga-translator';
 import Register from '../../common/utils/Register';
+import Ajax from '../../common/utils/Ajax';
+import Window from '../utils/Window';
 
 export default class ProductsPickerWithPriceWindow {
 
@@ -32,16 +34,36 @@ export default class ProductsPickerWithPriceWindow {
 
     onClickAddButton (event) {
         const productsPicker = window.parent.ProductsPickerWithPriceInstances[$(event.currentTarget).data('product-picker-instance-id')];
+        const basicPriceUrl = $(event.currentTarget).data('product-picker-basic-price-url');
         const $currentTarget = $(event.currentTarget);
         this.markAddButtonAsAdded($currentTarget);
         $currentTarget.off('click.addProduct');
-        productsPicker.addProduct(
-            $currentTarget.data('product-picker-product-id'),
-            $currentTarget.data('product-picker-product-name'),
-            $currentTarget.data('product-picker-product-price'),
-            $currentTarget.data('product-picker-product-ean'),
-            $currentTarget.data('product-picker-product-catnum')
-        );
+
+        Ajax.ajax({
+            url: basicPriceUrl,
+            method: 'POST',
+            data: {
+                productId: $currentTarget.data('product-picker-product-id'),
+                domainId: $currentTarget.data('product-picker-domain-id')
+            },
+            success: function (data) {
+                productsPicker.addProduct(
+                    $currentTarget.data('product-picker-product-id'),
+                    $currentTarget.data('product-picker-product-name'),
+                    data['basicPrice'],
+                    $currentTarget.data('product-picker-product-ean'),
+                    $currentTarget.data('product-picker-product-catnum')
+                );
+            },
+            error: function () {
+                // eslint-disable-next-line no-new
+                new Window({
+                    content: Translator.trans('Unable to add product'),
+                    buttonCancel: false,
+                    buttonContinue: false
+                });
+            }
+        });
 
         return false;
     }

@@ -15,7 +15,7 @@
     <div
             {{ block('widget_attributes') }}
             data-products-picker-prototype="{{ self.productsWidgetItem(null, form.vars.prototype, domainId)|e }}"
-            data-products-picker-url="{{ url('admin_productpicker_pickmultiple', {jsInstanceId: '__js_instance_id__', allowMainVariants: 0, allowVariants: 1, withPrice: 1}) }}"
+            data-products-picker-url="{{ url('admin_productpicker_pickmultiple', {jsInstanceId: '__js_instance_id__', allowMainVariants: 0, allowVariants: 1, withPrice: 1, domainId: domainId}) }}"
     >
         <div class="table-touch-always">
             <div class="table-touch-always__in">
