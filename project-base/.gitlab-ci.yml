@@ -1,6 +1,7 @@
 stages:
     - build
     - test
+    - regenerate
     - review
     - deploy
     - service
