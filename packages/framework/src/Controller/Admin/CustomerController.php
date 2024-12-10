@@ -193,6 +193,7 @@ class CustomerController extends AdminBaseController
             $queryBuilder,
             'id',
             $this->manipulateRow(...),
+            null,
         );
         $dataSource = new MoneyConvertingDataSourceDecorator($innerDataSource, ['ordersSumPrice']);
 
