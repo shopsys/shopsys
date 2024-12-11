@@ -92,7 +92,7 @@ export const useRegistrationForm = ({
     return [useShopsysForm(resolver, defaultValues), defaultValues];
 };
 
-type RegistrationFormMetaType = {
+export type RegistrationFormMetaType = {
     formName: string;
     messages: {
         error: string;
