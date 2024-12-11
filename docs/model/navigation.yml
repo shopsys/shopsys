@@ -12,3 +12,4 @@ arrange:
     - front-end-product-searching.md
     - front-end-product-filtering.md
     - log-entity-changes.md
+    - domain-limiting.md
