@@ -16,7 +16,7 @@ type LoginActionResult = {
 
 export async function loginAction(
     variables: TypeLoginMutationVariables,
-    rewriteUrl?: string,
+    rewriteUrl?: string, // TODO: when login outside of login page
 ): Promise<LoginActionResult> {
     const response = await createMutation<TypeLoginMutation, TypeLoginMutationVariables>(
         LoginMutationDocument,
