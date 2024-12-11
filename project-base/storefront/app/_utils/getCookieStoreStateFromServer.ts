@@ -1,10 +1,8 @@
-import { getCookies, setCookie } from 'cookies-next';
-import { GetServerSidePropsContext } from 'next';
-import { useEffect } from 'react';
-import { useCookiesStore } from 'store/useCookiesStore';
-import { getProtocol, getIsHttps } from 'utils/requestProtocol';
+import { cookies } from 'next/headers';
 import { v4 as uuidV4 } from 'uuid';
-import { createStore } from 'zustand/vanilla';
+import { createStore } from 'zustand';
+
+const userSnapEnabledDefaultValue = process.env.NEXT_PUBLIC_USERSNAP_STOREFRONT_ENABLED_BY_DEFAULT === '1';
 
 export type CookiesStoreState = {
     lastVisitedProductsCatnums: string[] | null;
@@ -16,28 +14,16 @@ type CookiesStoreActions = {
     setCookiesStoreState: (value: Partial<CookiesStoreState>) => void;
 };
 
-export type CookiesStore = CookiesStoreState & CookiesStoreActions;
-
-type CookiesType = {
-    cookiesStore: string;
-};
-
-const COOKIES_STORE_NAME = 'cookiesStore' as const;
-const THIRTY_DAYS_IN_SECONDS = 60 * 60 * 24 * 30;
-
-// TODO: env
-// const { publicRuntimeConfig } = getConfig();
-// const userSnapEnabledDefaultValue = publicRuntimeConfig.userSnapEnabledDefaultValue;
-const userSnapEnabledDefaultValue = process.env.NEXT_PUBLIC_USERSNAP_STOREFRONT_ENABLED_BY_DEFAULT === '1';
-
 const getDefaultInitState = (): CookiesStoreState => ({
     lastVisitedProductsCatnums: null,
     userIdentifier: uuidV4(),
     isUserSnapEnabled: userSnapEnabledDefaultValue,
 });
 
-export const getCookiesStoreState = (context?: GetServerSidePropsContext): CookiesStoreState => {
-    const { cookiesStore } = getCookies({ ...context, secure: getIsHttps(getProtocol(context)) }) as CookiesType;
+export type CookiesStore = CookiesStoreState & CookiesStoreActions;
+
+export function getCookieStoreStateFromServer(): CookiesStoreState {
+    const cookiesStore = cookies().get('cookiesStore')?.value;
     const newState = getDefaultInitState();
 
     if (!cookiesStore) {
@@ -48,7 +34,7 @@ export const getCookiesStoreState = (context?: GetServerSidePropsContext): Cooki
         Object.keys(newState),
         addMissingCookiesStoreProperties(newState, JSON.parse(decodeURIComponent(cookiesStore))),
     );
-};
+}
 
 const addMissingCookiesStoreProperties = (
     newState: CookiesStoreState,
@@ -70,15 +56,6 @@ const removeIncorrectCookiesStoreProperties = (
     }
 
     return cookiesStoreStateWithoutIncorrectProperties;
-};
-
-export const useCookiesStoreSync = () => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { setCookiesStoreState, ...storeValues } = useCookiesStore((state) => state);
-
-    useEffect(() => {
-        setCookie(COOKIES_STORE_NAME, storeValues, { maxAge: THIRTY_DAYS_IN_SECONDS, secure: getIsHttps() });
-    }, [storeValues]);
 };
 
 export const createCookiesStore = (cookieStoreFromServer: CookiesStoreState) =>
