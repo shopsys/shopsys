@@ -1,3 +1,5 @@
+'use client';
+
 import { createContext, useRef } from 'react';
 import { CookiesStore, CookiesStoreState, createCookiesStore } from 'utils/cookies/cookiesStore';
 import { type StoreApi } from 'zustand';
