@@ -1,3 +1,4 @@
+import { LogoutButton } from './_components/LogoutButton/LogoutButton';
 import { getIsUserLoggedInQuery } from './_queries/getIsUserLoggedInQuery';
 import { createQuery } from './_urql/urql-dto';
 import imageLogo from '/public/images/logo.svg';
@@ -36,7 +37,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     return (
         <Providers>
             <nav className="flex bg-gradient-to-tr from-backgroundBrand to-backgroundBrandLess px-4">
-                <div className="flex w-fit shrink-0">
+                <div className="flex w-fit shrink-0 items-center justify-center">
                     <ExtendedNextLink
                         href="/"
                         className={twJoin(
@@ -61,6 +62,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                     >
                         APP
                     </ExtendedNextLink>
+                    {isUserLoggedIn && <LogoutButton />}
                     {!isUserLoggedIn && (
                         <>
                             <ExtendedNextLink
