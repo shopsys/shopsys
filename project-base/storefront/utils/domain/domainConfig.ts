@@ -25,7 +25,7 @@ export type DomainConfigType = {
     convertimSetting: {
         isEnabled: boolean;
         convertimProjectUuid: string | null;
-    }
+    };
 };
 
 export function getDomainConfig(domainUrl: string): DomainConfigType {
