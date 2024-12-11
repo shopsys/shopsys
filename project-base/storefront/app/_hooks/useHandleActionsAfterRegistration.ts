@@ -30,23 +30,5 @@ export const useHandleActionsAfterRegistration = () => {
         router.replace('/');
     };
 
-    // TODO: will be used in the future as server action
-    // const registerByOrder = async (registrationInput: Omit<TypeRegistrationByOrderInput, 'productListsUuids'>) => {
-    //     blurInput();
-    //     const registerResult = await registerByOrderMutation({
-    //         input: {
-    //             orderUrlHash: registrationInput.orderUrlHash,
-    //             password: registrationInput.password,
-    //             productListsUuids: Object.values(productListUuids),
-    //         },
-    //     });
-
-    //     if (registerResult.data?.RegisterByOrder) {
-    //         return processRegisterResult(registerResult.data.RegisterByOrder);
-    //     }
-
-    //     return registerResult.error;
-    // };
-
     return handleActionsAfterRegistration;
 };
