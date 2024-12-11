@@ -1,9 +1,8 @@
 'use client';
 
-import { loginAction } from 'app/_actions/loginAction';
 import { useLoginForm, useLoginFormMeta } from 'app/_components/LoginForm/loginFormMeta';
 import { SocialNetworkLogin } from 'app/_components/SocialNetworkLogin/SocialNetworkLogin';
-import { useHandleActionsAfterLogin } from 'app/_hooks/useHandleActionsAfterLogin';
+import { useLogin } from 'app/_hooks/useLogin';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
@@ -13,14 +12,8 @@ import { TextInputControlled } from 'components/Forms/TextInput/TextInputControl
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useSettings } from 'components/providers/SettingsProvider';
 import { TIDs } from 'cypress/tids';
-import { TypeLoginMutationVariables } from 'graphql/requests/auth/mutations/LoginMutation.ssr';
-import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import useTranslation from 'next-translate/useTranslation';
-import { FormProvider, SubmitHandler } from 'react-hook-form';
-import { usePersistStore } from 'store/usePersistStore';
-import { LoginFormType } from 'types/form';
-import { blurInput } from 'utils/forms/blurInput';
-import { handleFormErrors } from 'utils/forms/handleFormErrors';
+import { FormProvider } from 'react-hook-form';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 export type LoginFormProps = {
@@ -37,43 +30,19 @@ export const LoginForm: FC<LoginFormProps> = ({
     formHeading,
 }) => {
     const { t } = useTranslation();
-    const cartUuid = usePersistStore((store) => store.cartUuid);
-    const productListUuids = usePersistStore((s) => s.productListUuids);
-    const handleActionsAfterLogin = useHandleActionsAfterLogin();
-
-    const { socialNetworkLoginConfig } = useSettings();
-
     const { url } = useDomainConfig();
     const [resetPasswordUrl] = getInternationalizedStaticUrls(['/reset-password'], url);
+
+    const { socialNetworkLoginConfig } = useSettings();
 
     const [formProviderMethods] = useLoginForm(defaultEmail);
     const formMeta = useLoginFormMeta(formProviderMethods);
 
-    const onLoginHandler: SubmitHandler<LoginFormType> = async (formData) => {
-        blurInput();
-
-        const loginData: TypeLoginMutationVariables = {
-            email: formData.email,
-            password: formData.password,
-            previousCartUuid: cartUuid,
-            productListsUuids: Object.values(productListUuids),
-            shouldOverwriteCustomerUserCart,
-        };
-
-        const { error, showCartMergeInfo } = await loginAction(loginData);
-
-        if (error) {
-            handleFormErrors(error, formProviderMethods, t, undefined, undefined, GtmMessageOriginType.login_popup);
-
-            return;
-        }
-
-        handleActionsAfterLogin(showCartMergeInfo, undefined);
-    };
+    const handleLogin = useLogin({ shouldOverwriteCustomerUserCart });
 
     return (
         <FormProvider {...formProviderMethods}>
-            <Form className="flex w-full justify-center" onSubmit={formProviderMethods.handleSubmit(onLoginHandler)}>
+            <Form className="flex w-full justify-center" onSubmit={formProviderMethods.handleSubmit(handleLogin)}>
                 <FormContentWrapper className={formContentWrapperClassName}>
                     <FormBlockWrapper>
                         <FormHeading>{formHeading}</FormHeading>
