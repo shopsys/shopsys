@@ -5,11 +5,21 @@ type WeblineProps = {
 };
 
 export const Webline: FC<WeblineProps> = ({ children, tid, wrapperClassName, className }) => {
-    const content = (
-        <div className={twMergeCustom('px-5 xl:mx-auto xl:w-full xl:max-w-[1240px]', className)} tid={tid}>
-            {children}
-        </div>
-    );
+    const weblineClassName = 'px-5 xl:mx-auto xl:w-full xl:max-w-screen-xl';
 
-    return <div className={wrapperClassName}>{content}</div>;
+    if (!wrapperClassName) {
+        return (
+            <section className={twMergeCustom(weblineClassName, className)} tid={tid}>
+                {children}
+            </section>
+        );
+    }
+
+    return (
+        <section className={wrapperClassName}>
+            <div className={twMergeCustom(weblineClassName, className)} tid={tid}>
+                {children}
+            </div>
+        </section>
+    );
 };

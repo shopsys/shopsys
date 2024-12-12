@@ -73,6 +73,7 @@ export const SeoMeta: FC<SeoMetaProps> = ({
 
             {description && <meta content={description} name="description" />}
 
+            <meta content="#004EB6" name="theme-color" />
             <meta content={ogType} property="og:type" />
             <meta content={t('metatagSiteName')} property="og:site_name" />
             <meta content={currentUrlWithDomain} property="og:url" />
