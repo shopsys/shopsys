@@ -1,11 +1,11 @@
 import { TIDs } from 'cypress/tids';
-import { HTMLMotionProps, m } from 'framer-motion';
+import { HTMLMotionProps, motion } from 'framer-motion';
 import { slideAnimation } from 'utils/animations/animationVariants';
 
 export const AnimateSlideDiv: FC<
     HTMLMotionProps<'div'> & { tid?: TIDs; keyName?: string; direction?: 'right' | 'left' }
 > = ({ children, className, keyName, direction, ...props }) => (
-    <m.div
+    <motion.div
         key={keyName}
         animate="visible"
         className={className}
@@ -16,5 +16,5 @@ export const AnimateSlideDiv: FC<
         {...props}
     >
         {children}
-    </m.div>
+    </motion.div>
 );
