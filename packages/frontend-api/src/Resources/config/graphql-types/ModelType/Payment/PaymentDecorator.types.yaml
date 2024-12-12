@@ -13,7 +13,7 @@ PaymentDecorator:
             description:
                 type: "String"
                 description: "Localized payment description (domain dependent)"
-            instruction:
+            instructions:
                 type: "String"
                 description: "Localized payment instruction (domain dependent)"
             position:

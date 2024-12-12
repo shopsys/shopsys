@@ -2,7 +2,7 @@ query PaymentsQuery {
     payments {
         name,
         description,
-        instruction,
+        instructions,
         position,
         type,
         price {
