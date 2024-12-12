@@ -1,4 +1,4 @@
-import { AnimatePresence, m } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { MouseEventHandler } from 'react';
 import { fadeAnimation } from 'utils/animations/animationVariants';
 import { twMergeCustom } from 'utils/twMerge';
@@ -13,7 +13,7 @@ export const Overlay: FC<OverlayProps> = ({ onClick, isActive, isHiddenOnDesktop
     return (
         <AnimatePresence>
             {isActive && (
-                <m.div
+                <motion.div
                     animate="visible"
                     exit="hidden"
                     initial="hidden"
@@ -31,7 +31,7 @@ export const Overlay: FC<OverlayProps> = ({ onClick, isActive, isHiddenOnDesktop
                     }}
                 >
                     {children}
-                </m.div>
+                </motion.div>
             )}
         </AnimatePresence>
     );

@@ -2,22 +2,20 @@
 
 import { useHandleActionsAfterRegistration } from './useHandleActionsAfterRegistration';
 import { registrationAction } from 'app/_actions/registrationAction';
-import { RegistrationFormMetaType } from 'app/_components/Registration/registrationFormMeta';
+import { RegistrationFormMetaType } from 'app/_components/Blocks/Registration/registrationFormMeta';
 import { TypeRegistrationMutationVariables } from 'graphql/requests/registration/mutations/RegistrationMutation.ssr';
 import useTranslation from 'next-translate/useTranslation';
 import { SubmitHandler, useFormContext } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';
 import { RegistrationFormType } from 'types/form';
 import { blurInput } from 'utils/forms/blurInput';
-import { clearForm } from 'utils/forms/clearForm';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
 
 type UseRegistrationProps = {
     formMeta: RegistrationFormMetaType;
-    defaultValues: RegistrationFormType;
 };
 
-export const useRegistration = ({ formMeta, defaultValues }: UseRegistrationProps) => {
+export const useRegistration = ({ formMeta }: UseRegistrationProps) => {
     const { t } = useTranslation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const productListUuids = usePersistStore((s) => s.productListUuids);
@@ -60,7 +58,8 @@ export const useRegistration = ({ formMeta, defaultValues }: UseRegistrationProp
 
         handleActionsAfterRegistration(showCartMergeInfo);
 
-        clearForm(error, formProviderMethods, defaultValues);
+        // TODO: maybe its not necessary to clear the form here
+        // clearForm(error, formProviderMethods, defaultValues);
     };
 
     // TODO: will be used in the future as server action

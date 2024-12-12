@@ -1,5 +1,6 @@
-import { Breadcrumbs } from 'app/_components/Breadcrumbs/Breadcrumbs';
-import { ResetPasswordForm } from 'app/_components/ResetPasswordForm/ResetPasswordForm';
+import { ResetPasswordForm } from 'app/_components/Blocks/ResetPasswordForm/ResetPasswordForm';
+import { Breadcrumbs } from 'app/_components/Layout/Breadcrumbs/Breadcrumbs';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { getServerT } from 'utils/getServerTranslation';
 
@@ -11,7 +12,9 @@ export default async function ResetPasswordPage() {
         <>
             <Breadcrumbs breadcrumbs={breadcrumbs} />
 
-            <ResetPasswordForm formHeading={t('Reset password')} />
+            <Webline>
+                <ResetPasswordForm formHeading={t('Reset password')} />
+            </Webline>
         </>
     );
 }

@@ -1,7 +1,7 @@
 'use client';
 
-import { useLoginForm, useLoginFormMeta } from 'app/_components/LoginForm/loginFormMeta';
-import { SocialNetworkLogin } from 'app/_components/SocialNetworkLogin/SocialNetworkLogin';
+import { useLoginForm, useLoginFormMeta } from 'app/_components/Blocks/LoginForm/loginFormMeta';
+import { SocialNetworkLogin } from 'app/_components/Blocks/SocialNetworkLogin/SocialNetworkLogin';
 import { useLogin } from 'app/_hooks/useLogin';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';

@@ -1,3 +1,5 @@
+'use client';
+
 import imageLogoInverted from '/public/images/logo-inverted.svg';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { LogoMetadata } from 'components/Basic/Head/LogoMetadata';
