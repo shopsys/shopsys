@@ -1,6 +1,7 @@
-import { Breadcrumbs } from 'app/_components/Breadcrumbs/Breadcrumbs';
-import { RegistrationForm } from 'app/_components/Registration/RegistrationForm';
+import { RegistrationForm } from 'app/_components/Blocks/Registration/RegistrationForm';
+import { Breadcrumbs } from 'app/_components/Layout/Breadcrumbs/Breadcrumbs';
 import { getCountriesQuery } from 'app/_queries/getCountries';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.ssr';
 import { getServerT } from 'utils/getServerTranslation';
 
@@ -20,7 +21,12 @@ export default async function RegistrationPage() {
         <>
             <Breadcrumbs breadcrumbs={breadcrumbs} />
 
-            <RegistrationForm countries={mappedCountriesToSelectOptions} formHeading={t('New customer registration')} />
+            <Webline>
+                <RegistrationForm
+                    countries={mappedCountriesToSelectOptions}
+                    formHeading={t('New customer registration')}
+                />
+            </Webline>
         </>
     );
 }
