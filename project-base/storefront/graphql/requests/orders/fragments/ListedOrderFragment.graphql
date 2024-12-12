@@ -35,6 +35,7 @@ fragment ListedOrderFragment on Order {
         ...PriceFragment
     }
     isPaid
+    hasExternalPayment
     hasPaymentInProcess
     status
     note

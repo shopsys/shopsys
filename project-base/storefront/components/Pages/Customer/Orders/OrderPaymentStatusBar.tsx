@@ -1,9 +1,8 @@
-import { TypePaymentTypeEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { twMergeCustom } from 'utils/twMerge';
 
 type OrderPaymentStatusBarProps = {
-    orderPaymentType: TypePaymentTypeEnum;
+    orderHasExternalPayment: boolean;
     orderIsPaid: boolean;
     orderHasPaymentInProcess: boolean;
 };
@@ -26,12 +25,12 @@ const OrderPaymentStatus: FC<{
 };
 
 export const OrderPaymentStatusBar: FC<OrderPaymentStatusBarProps> = ({
-    orderPaymentType,
+    orderHasExternalPayment,
     orderIsPaid,
     className,
     orderHasPaymentInProcess,
 }) => {
-    if (orderPaymentType !== TypePaymentTypeEnum.GoPay) {
+    if (!orderHasExternalPayment) {
         return null;
     }
 
