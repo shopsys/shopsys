@@ -4,6 +4,7 @@ import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { GoPayGateway } from 'components/Pages/Order/PaymentConfirmation/Gateways/GoPayGateway';
 import { RegistrationAfterOrder } from 'components/Pages/OrderConfirmation/RegistrationAfterOrder';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import {
     OrderSentPageContentQueryDocument,
@@ -34,6 +35,7 @@ export type OrderConfirmationUrlQuery = {
 const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const { query } = useRouter();
+    const { convertimSetting } = useDomainConfig();
     const { fetchCart } = useCurrentCart(false);
     const { orderUuid, orderPaymentType } = query as OrderConfirmationUrlQuery;
 
@@ -64,7 +66,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
                         content={orderSentPageContentData?.orderSentPageContent}
                         heading={t('Your order was created')}
                     >
-                        {orderPaymentType === TypePaymentTypeEnum.GoPay ? (
+                        {orderPaymentType === TypePaymentTypeEnum.GoPay && !convertimSetting.isEnabled ? (
                             <GoPayGateway orderUuid={orderUuid!} />
                         ) : undefined}
                     </ConfirmationPageContent>
