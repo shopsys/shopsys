@@ -87,7 +87,7 @@ RUN apk add --no-cache --virtual .build-deps \
         musl-locales \
         nano \
         openssl \
-        postgresql-client \
+        postgresql15-client \
         rabbitmq-c \
         vim
 
