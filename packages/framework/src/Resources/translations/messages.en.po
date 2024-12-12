@@ -2191,9 +2191,6 @@ msgstr ""
 msgid "GoPay payment method"
 msgstr ""
 
-msgid "GoPay payment status"
-msgstr ""
-
 msgid "Group"
 msgstr ""
 
@@ -3085,7 +3082,7 @@ msgstr ""
 msgid "Order detail URL address"
 msgstr ""
 
-msgid "Order has not been sent to GoPay"
+msgid "Order has not been sent to payment gateway"
 msgstr ""
 
 msgid "Order in CZK round to whole crowns"
@@ -3308,6 +3305,9 @@ msgid "Payment partially refunded"
 msgstr ""
 
 msgid "Payment refunded"
+msgstr ""
+
+msgid "Payment status"
 msgstr ""
 
 msgid "Payment successful page content"
