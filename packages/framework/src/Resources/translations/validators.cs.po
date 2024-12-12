@@ -133,9 +133,6 @@ msgstr "Odkaz musí být validní URL adresa"
 msgid "Name cannot be longer than {{ limit }} characters"
 msgstr "Název nesmí být delší než {{ limit }} znaků"
 
-msgid "Opacity must be a number with up to two decimal places"
-msgstr "Průhlednost musí být číslo s až dvěma desetinnými místy"
-
 msgid "Opacity must be between {{ min }} and {{ max }}"
 msgstr "Průhlednost musí být mezi {{ min }} a {{ max }}"
 

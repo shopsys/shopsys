@@ -133,9 +133,6 @@ msgstr ""
 msgid "Name cannot be longer than {{ limit }} characters"
 msgstr ""
 
-msgid "Opacity must be a number with up to two decimal places"
-msgstr ""
-
 msgid "Opacity must be between {{ min }} and {{ max }}"
 msgstr ""
 

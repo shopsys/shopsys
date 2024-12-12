@@ -101,16 +101,13 @@ class SliderItemFormType extends AbstractType
             ])
             ->add('opacity', NumberSliderType::class, [
                 'required' => true,
+                'scale' => 2,
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter description box opacity']),
                     new Constraints\Range([
                         'min' => 0,
                         'max' => 1,
                         'notInRangeMessage' => 'Opacity must be between {{ min }} and {{ max }}',
-                    ]),
-                    new Constraints\Regex([
-                        'pattern' => '/^\d(\.\d{1,2})?$/',
-                        'message' => 'Opacity must be a number with up to two decimal places',
                     ]),
                 ],
                 'label' => t('Description opacity'),
