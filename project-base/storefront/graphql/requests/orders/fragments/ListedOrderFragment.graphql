@@ -38,4 +38,5 @@ fragment ListedOrderFragment on Order {
     hasPaymentInProcess
     status
     note
+    hasExternalPayment
 }

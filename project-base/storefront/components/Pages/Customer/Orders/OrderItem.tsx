@@ -38,9 +38,9 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
     return (
         <div className="bg-backgroundMore vl:p-6 flex flex-col gap-5 rounded-md p-4">
             <OrderPaymentStatusBar
+                orderHasExternalPayment={order.hasExternalPayment}
                 orderHasPaymentInProcess={order.hasPaymentInProcess}
                 orderIsPaid={order.isPaid}
-                orderPaymentType={order.payment.type}
             />
             <div className="vl:flex-row vl:items-start vl:justify-between flex flex-col gap-6">
                 <div className="flex flex-col gap-5">
