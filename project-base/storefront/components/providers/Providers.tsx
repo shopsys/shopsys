@@ -29,15 +29,17 @@ export default async function Providers({ children }: ProvidersProps) {
             <DomainConfigProvider domainConfig={domainConfig}>
                 <SettingsProvider settings={settings}>
                     <TranslationProvider dictionary={dictionary} lang={lang}>
-                        <html lang={lang}>
-                            {/* suppressHydrationWarning for ignoring grammarly extension */}
-                            <body suppressHydrationWarning>
-                                <CookiesStoreSync />
-                                <BroadcastChannelProvider />
-                                <ToastifyProvider />
-                                <AuthProvider isUserLoggedIn={isUserLoggedIn}>{children}</AuthProvider>
-                            </body>
-                        </html>
+                        <AuthProvider isUserLoggedIn={isUserLoggedIn}>
+                            <html lang={lang}>
+                                {/* suppressHydrationWarning for ignoring grammarly extension */}
+                                <body suppressHydrationWarning>
+                                    <CookiesStoreSync />
+                                    <BroadcastChannelProvider />
+                                    {children}
+                                    <ToastifyProvider />
+                                </body>
+                            </html>
+                        </AuthProvider>
                     </TranslationProvider>
                 </SettingsProvider>
             </DomainConfigProvider>

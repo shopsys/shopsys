@@ -4,7 +4,7 @@ import { resetPasswordAction } from 'app/_actions/resetPasswordAction';
 import {
     useResetPasswordForm,
     useResetPasswordFormMeta,
-} from 'app/_components/ResetPasswordForm/resetPasswordFormMeta';
+} from 'app/_components/Blocks/ResetPasswordForm/resetPasswordFormMeta';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
