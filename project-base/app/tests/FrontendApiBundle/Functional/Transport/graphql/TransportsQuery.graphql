@@ -2,7 +2,7 @@ query TransportsQuery($cartUuid: Uuid) {
     transports(cartUuid: $cartUuid) {
         name,
         description,
-        instruction,
+        instructions,
         position,
         daysUntilDelivery
         transportTypeCode
