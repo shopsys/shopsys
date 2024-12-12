@@ -17,10 +17,10 @@ use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\OrderItemsType;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
-use Shopsys\FrameworkBundle\Model\GoPay\GoPayOrderStatus;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
+use Shopsys\FrameworkBundle\Model\Payment\Transaction\ExternalPaymentStatus;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -200,20 +200,24 @@ class OrderFormType extends AbstractType
                 'data' => $order->getPayment()->getName(),
             ]);
 
-        if ($order->getPayment()->isGoPay() === true) {
-            $goPayPaymentTransactions = $order->getGoPayTransactions();
+        if ($order->hasExternalPayment()) {
+            $paymentTransactions = $order->getTransactionsOfCurrentPayment();
+            /** @var \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction|bool $paymentTransaction */
+            $paymentTransaction = end($paymentTransactions);
 
-            if (count($goPayPaymentTransactions) > 0) {
-                $translatedGoPayStatus = GoPayOrderStatus::getTranslatedGoPayStatus(end($goPayPaymentTransactions)->getExternalPaymentStatus());
-            } else {
-                $translatedGoPayStatus = t('Order has not been sent to GoPay');
+            if ($paymentTransaction !== false) {
+                if ($paymentTransaction->getExternalPaymentStatus() !== null) {
+                    $translatedPaymentStatus = ExternalPaymentStatus::getTranslatedStatus($paymentTransaction->getExternalPaymentStatus());
+                } else {
+                    $translatedPaymentStatus = t('Order has not been sent to payment gateway');
+                }
+
+                $builderBasicInformationGroup
+                    ->add('paymentStatus', DisplayOnlyType::class, [
+                        'label' => t('Payment status'),
+                        'data' => $translatedPaymentStatus,
+                    ]);
             }
-
-            $builderBasicInformationGroup
-                ->add('gopayStatus', DisplayOnlyType::class, [
-                    'label' => t('GoPay payment status'),
-                    'data' => $translatedGoPayStatus,
-                ]);
         }
 
         $builderBasicInformationGroup
