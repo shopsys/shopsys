@@ -64,7 +64,7 @@ class CartTransportTest extends GraphQlTestCase
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                 $this->getLocaleForFirstDomain(),
             ),
-            'instruction' => null,
+            'instructions' => t('We are looking forward to your visit.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
             'position' => 2,
             'daysUntilDelivery' => 0,
             'transportTypeCode' => TransportTypeEnum::TYPE_PERSONAL_PICKUP,
@@ -164,7 +164,7 @@ class CartTransportTest extends GraphQlTestCase
                 transport {
                     name
                     description
-                    instruction
+                    instructions
                 }
             }
         }';

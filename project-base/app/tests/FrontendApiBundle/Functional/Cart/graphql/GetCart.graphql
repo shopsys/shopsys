@@ -15,7 +15,7 @@ query GetCart(
         transport {
             name
             description
-            instruction
+            instructions
             position
             daysUntilDelivery
             transportTypeCode

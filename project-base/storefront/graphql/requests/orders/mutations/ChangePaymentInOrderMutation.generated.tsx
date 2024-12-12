@@ -9,7 +9,7 @@ export type TypeChangePaymentInOrderMutationVariables = Types.Exact<{
 }>;
 
 
-export type TypeChangePaymentInOrderMutation = { __typename?: 'Mutation', ChangePaymentInOrder: { __typename?: 'Order', urlHash: string, number: string, payment: { __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: Types.TypePaymentTypeEnum, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null, vat: { __typename: 'Vat', percent: string } } } };
+export type TypeChangePaymentInOrderMutation = { __typename?: 'Mutation', ChangePaymentInOrder: { __typename?: 'Order', urlHash: string, number: string, payment: { __typename: 'Payment', uuid: string, name: string, description: string | null, instructions: string | null, type: Types.TypePaymentTypeEnum, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null, vat: { __typename: 'Vat', percent: string } } } };
 
 
       export interface PossibleTypesResultData {
