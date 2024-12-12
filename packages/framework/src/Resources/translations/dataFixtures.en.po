@@ -16,6 +16,12 @@ msgstr ""
 msgid "<p> Payment for order number {number} has failed. <br /><br /> Please contact us to resolve the issue. </p>"
 msgstr ""
 
+msgid "Administrator reset password request"
+msgstr ""
+
+msgid "Dear administrator.<br /><br />You can set a new password following this link: <a href=\"{new_password_url}\">{new_password_url}</a>"
+msgstr ""
+
 msgid "New product inquiry received"
 msgstr ""
 
