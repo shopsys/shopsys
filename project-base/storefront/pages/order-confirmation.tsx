@@ -9,6 +9,7 @@ import { OrderConfirmationStepper } from 'components/Pages/OrderConfirmation/Ord
 import { FlowTypesEnum } from 'components/Pages/OrderConfirmation/OrderConfirmationStepperFlows';
 import { OrderConfirmationSummary } from 'components/Pages/OrderConfirmation/OrderConfirmationSummary';
 import { RegistrationAfterOrder } from 'components/Pages/OrderConfirmation/RegistrationAfterOrder';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { useOrderDetailByHashOrUuidQuery } from 'graphql/requests/orders/queries/OrderDetailByHashOrUuidQuery.generated';
 import {
@@ -41,6 +42,7 @@ export type OrderConfirmationUrlQuery = {
 const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const { query } = useRouter();
+    const { convertimSetting } = useDomainConfig();
     const { fetchCart } = useCurrentCart(false);
     const { orderUuid, orderPaymentType, companyNumber, orderEmail, orderUrlHash } = query as OrderConfirmationUrlQuery;
 
@@ -90,7 +92,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
                         content={orderSentPageContentData?.orderSentPageContent}
                         heading={t('Your order was created')}
                     >
-                        {orderPaymentType === TypePaymentTypeEnum.GoPay ? (
+                        {orderPaymentType === TypePaymentTypeEnum.GoPay && !convertimSetting.isEnabled ? (
                             <GoPayGateway orderUuid={orderUuid!} />
                         ) : undefined}
                     </ConfirmationPageContent>
