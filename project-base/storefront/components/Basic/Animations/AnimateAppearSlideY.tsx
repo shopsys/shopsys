@@ -1,4 +1,4 @@
-import { HTMLMotionProps, m } from 'framer-motion';
+import { HTMLMotionProps, motion } from 'framer-motion';
 
 export const AnimateAppearSlideY: FC<HTMLMotionProps<'div'> & { keyName?: string }> = ({
     children,
@@ -6,7 +6,7 @@ export const AnimateAppearSlideY: FC<HTMLMotionProps<'div'> & { keyName?: string
     keyName,
     ...props
 }) => (
-    <m.div
+    <motion.div
         key={keyName}
         layout
         animate={{ opacity: 1, y: 0 }}
@@ -17,5 +17,5 @@ export const AnimateAppearSlideY: FC<HTMLMotionProps<'div'> & { keyName?: string
         {...props}
     >
         {children}
-    </m.div>
+    </motion.div>
 );
