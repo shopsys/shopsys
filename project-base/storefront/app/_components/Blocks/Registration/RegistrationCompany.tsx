@@ -1,6 +1,6 @@
 'use client';
 
-import { useRegistrationFormMeta } from 'app/_components/Registration/registrationFormMeta';
+import { useRegistrationFormMeta } from 'app/_components/Blocks/Registration/registrationFormMeta';
 import { FormHeading, FormBlockWrapper } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
