@@ -137,9 +137,6 @@ class PaymentTransaction
      * @return string
      */
     #[EntityLogIdentify]
-    /**
-     * @return string
-     */
     public function getExternalPaymentIdentifier()
     {
         return $this->externalPaymentIdentifier;

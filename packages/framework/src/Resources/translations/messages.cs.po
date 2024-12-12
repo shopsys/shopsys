@@ -2161,9 +2161,6 @@ msgstr "GoPay API vrátilo chybu - jděte do administrace GoPay, najděte transa
 msgid "GoPay payment method"
 msgstr "Platební metoda GoPay"
 
-msgid "GoPay payment status"
-msgstr "Stav platby GoPay"
-
 msgid "Group"
 msgstr "Skupina"
 
@@ -3055,8 +3052,8 @@ msgstr "Detail objednávky"
 msgid "Order detail URL address"
 msgstr "URL adresa detailu objednávky"
 
-msgid "Order has not been sent to GoPay"
-msgstr "Objednávka nebyla odeslána do GoPay"
+msgid "Order has not been sent to payment gateway"
+msgstr "Objednávka ještě nebyla odeslána do platební brány"
 
 msgid "Order in CZK round to whole crowns"
 msgstr "Objednávku v CZK zaokrouhlit na celé koruny"
@@ -3276,6 +3273,9 @@ msgstr "Platba částečně refundována"
 
 msgid "Payment refunded"
 msgstr "Refundovaná platba"
+
+msgid "Payment status"
+msgstr "Stav platby"
 
 msgid "Payment successful page content"
 msgstr "Obsah stránky po dokončené platbě"
@@ -3998,7 +3998,7 @@ msgid "Set prices manually"
 msgstr "Manuálně nastavené ceny"
 
 msgid "Setting for domain \"%domainName%\" was saved."
-msgstr ""
+msgstr "Nastavení pro doménu \"%domainName%\" bylo uloženo."
 
 msgid "Settings"
 msgstr "Nastavení"
