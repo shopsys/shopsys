@@ -163,7 +163,7 @@ export const mapPaymentsData = (transports?: TypeTransportWithAvailablePaymentsF
                         : undefined,
                     paymentDescription: payment.description ?? '',
                     restrictedTransports: [...transportUuids],
-                    paymentInstruction: payment.instruction ?? '',
+                    paymentInstruction: payment.instructions ?? '',
                     ...getSpecialExtensions(payment.type),
                 });
             }

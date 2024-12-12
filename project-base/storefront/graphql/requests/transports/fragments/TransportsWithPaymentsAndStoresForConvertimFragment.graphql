@@ -3,6 +3,7 @@ fragment TransportsWithPaymentsAndStoresForConvertimFragment on Transport {
     uuid
     name
     description
+    instructions
     price {
         ...PriceFragment
     }

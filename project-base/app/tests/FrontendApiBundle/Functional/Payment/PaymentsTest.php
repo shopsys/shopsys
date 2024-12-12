@@ -30,7 +30,7 @@ class PaymentsTest extends GraphQlTestCase
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $this->getLocaleForFirstDomain(),
                 ),
-                'instruction' => null,
+                'instructions' => t('<b>You have chosen payment by credit card. Please finish it in two business days.</b>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'position' => 0,
                 'type' => 'basic',
                 'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('100', $vatZero),
@@ -53,7 +53,7 @@ class PaymentsTest extends GraphQlTestCase
             [
                 'name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'description' => null,
-                'instruction' => null,
+                'instructions' => null,
                 'position' => 1,
                 'type' => 'basic',
                 'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('49.9', $vatZero),
@@ -75,7 +75,7 @@ class PaymentsTest extends GraphQlTestCase
             [
                 'name' => t('Cash', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'description' => null,
-                'instruction' => null,
+                'instructions' => null,
                 'position' => 2,
                 'type' => 'basic',
                 'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero),
@@ -96,7 +96,7 @@ class PaymentsTest extends GraphQlTestCase
             [
                 'name' => t('GoPay - Payment By Card', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'description' => null,
-                'instruction' => null,
+                'instructions' => t('<b>You have chosen GoPay Payment, you will be shown a payment gateway.</b>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'position' => 3,
                 'type' => 'goPay',
                 'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatHigh),
@@ -119,7 +119,7 @@ class PaymentsTest extends GraphQlTestCase
             [
                 'name' => t('GoPay - Quick Bank Account Transfer', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'description' => t('Quick and Safe payment via bank account transfer.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                'instruction' => null,
+                'instructions' => t('<b>You have chosen GoPay Payment, you will be shown a payment gateway.</b>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'position' => 4,
                 'type' => 'goPay',
                 'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatHigh),
@@ -144,7 +144,7 @@ class PaymentsTest extends GraphQlTestCase
             [
                 'name' => t('Pay later', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
                 'description' => null,
-                'instruction' => null,
+                'instructions' => null,
                 'position' => 5,
                 'type' => 'basic',
                 'price' => $this->getSerializedPriceConvertedToDomainDefaultCurrency('200', $vatZero),

@@ -3,7 +3,7 @@ fragment SimplePaymentFragment on Payment {
     uuid
     name
     description
-    instruction
+    instructions
     price {
         ...PriceFragment
     }

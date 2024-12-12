@@ -13,7 +13,7 @@ TransportDecorator:
             description:
                 type: "String"
                 description: "Localized transport description (domain dependent)"
-            instruction:
+            instructions:
                 type: "String"
                 description: "Localized transport instruction (domain dependent)"
             position:

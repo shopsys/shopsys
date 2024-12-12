@@ -6592,6 +6592,15 @@ The customer's first name
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong id="order.hasexternalpayment">hasExternalPayment</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Indicates whether the order is paid with an external payment method
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong id="order.haspaymentinprocess">hasPaymentInProcess</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
@@ -7665,7 +7674,7 @@ Payment images
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="payment.instruction">instruction</strong></td>
+<td colspan="2" valign="top"><strong id="payment.instructions">instructions</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -9688,7 +9697,7 @@ Transport images
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="transport.instruction">instruction</strong></td>
+<td colspan="2" valign="top"><strong id="transport.instructions">instructions</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
