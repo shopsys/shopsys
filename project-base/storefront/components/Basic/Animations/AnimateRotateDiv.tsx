@@ -1,4 +1,4 @@
-import { HTMLMotionProps, m } from 'framer-motion';
+import { HTMLMotionProps, motion } from 'framer-motion';
 
 export const AnimateRotateDiv: FC<HTMLMotionProps<'div'> & { condition?: boolean; keyName?: string }> = ({
     children,
@@ -7,7 +7,7 @@ export const AnimateRotateDiv: FC<HTMLMotionProps<'div'> & { condition?: boolean
     keyName,
     ...props
 }) => (
-    <m.div
+    <motion.div
         key={keyName}
         animate={{ rotate: condition ? 180 : 0 }}
         className={className}
@@ -15,5 +15,5 @@ export const AnimateRotateDiv: FC<HTMLMotionProps<'div'> & { condition?: boolean
         {...props}
     >
         {children}
-    </m.div>
+    </motion.div>
 );
