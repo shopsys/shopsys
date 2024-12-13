@@ -22,7 +22,7 @@ For example:
 ```yaml
 Shopsys\ProductFeed\GoogleBundle\GoogleFeed:
     tags:
-        - { name: shopsys.product_feed, hours: '1', minutes: '0' }
+        - { name: shopsys.feed, hours: '1', minutes: '0' }
 ```
 
 Google feed will be generated every day at 1:00 AM.
@@ -32,7 +32,7 @@ You can also set it like this:
 ```yaml
 Shopsys\ProductFeed\GoogleBundle\GoogleFeed:
     tags:
-        - { name: shopsys.product_feed, hours: '*/4', minutes: '0' }
+        - { name: shopsys.feed, hours: '*/4', minutes: '0' }
 ```
 
 In such a case, this feed will be generated every four hours.
@@ -54,7 +54,7 @@ For example, if you want to limit Google Feed to first and third domain, you wil
 ```yaml
 Shopsys\ProductFeed\GoogleBundle\GoogleFeed:
     tags:
-        - { name: shopsys.product_feed, hours: '1', minutes: '0', domain_ids: '1,3' }
+        - { name: shopsys.feed, hours: '1', minutes: '0', domain_ids: '1,3' }
 ```
 
 ## How to implement a custom product feed?
