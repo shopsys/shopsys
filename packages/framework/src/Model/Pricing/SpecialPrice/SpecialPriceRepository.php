@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Model\PriceList\ProductWithPrice;
+use Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class SpecialPriceRepository
@@ -61,7 +61,7 @@ class SpecialPriceRepository
 
         return $this->em->createQueryBuilder()
             ->select('pwp.priceAmount, pl.validFrom, pl.validTo, IDENTITY(pwp.product) as productId, pl.name as productListName, pl.id as productListId')
-            ->from(ProductWithPrice::class, 'pwp')
+            ->from(PriceListProductPrice::class, 'pwp')
             ->join('pwp.priceList', 'pl')
             ->where('pwp.product IN (:productIds)')
             ->andWhere('pl.domainId = :domainId')

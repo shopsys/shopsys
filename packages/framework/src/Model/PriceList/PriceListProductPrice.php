@@ -7,10 +7,10 @@ namespace Shopsys\FrameworkBundle\Model\PriceList;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="products_with_prices")
+ * @ORM\Table(name="price_list_product_prices")
  * @ORM\Entity
  */
-class ProductWithPrice  // @todo PriceListProductPrice
+class PriceListProductPrice
 {
     /**
      * @var int
@@ -35,19 +35,19 @@ class ProductWithPrice  // @todo PriceListProductPrice
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\PriceList\PriceList
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\PriceList\PriceList", inversedBy="productsWithPrices")
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\PriceList\PriceList", inversedBy="priceListProductPrices")
      * @ORM\JoinColumn(name="price_list_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     protected $priceList;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\ProductWithPriceData $productWithPriceData
+     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPriceData $priceListProductPriceData
      */
     public function __construct(
-        ProductWithPriceData $productWithPriceData,
+        PriceListProductPriceData $priceListProductPriceData,
     ) {
-        $this->product = $productWithPriceData->product;
-        $this->priceAmount = $productWithPriceData->priceAmount;
+        $this->product = $priceListProductPriceData->product;
+        $this->priceAmount = $priceListProductPriceData->priceAmount;
     }
 
     /**

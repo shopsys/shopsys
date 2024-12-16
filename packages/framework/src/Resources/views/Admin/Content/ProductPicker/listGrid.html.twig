@@ -25,7 +25,7 @@
         ></i>
     {% elseif isMultiple %}
         <a
-            class="{% if withPrice %}js-products-picker-with-price-window-add-product{% else %}js-products-picker-window-add-product{% endif %} btn btn--light btn--plus btn--small"
+            class="{% if withPrice %}js-price-list-product-picker-window-add-product{% else %}js-products-picker-window-add-product{% endif %} btn btn--light btn--plus btn--small"
             href="#"
             data-product-picker-instance-id="{{ jsInstanceId }}"
             data-product-picker-basic-price-url="{{ url('admin_productpicker_basicproductprice') }}"

@@ -10,8 +10,8 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\PriceList\PriceList;
 use Shopsys\FrameworkBundle\Model\PriceList\PriceListDataFactory;
 use Shopsys\FrameworkBundle\Model\PriceList\PriceListFacade;
-use Shopsys\FrameworkBundle\Model\PriceList\ProductWithPriceDataFactory;
-use Shopsys\FrameworkBundle\Model\PriceList\ProductWithPriceFactory;
+use Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPriceDataFactory;
+use Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPriceFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -28,16 +28,16 @@ final class RelevantSpecialPriceForProductTest extends TransactionFunctionalTest
     private readonly SpecialPriceFacade $specialPriceFacade;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\PriceList\ProductWithPriceDataFactory
+     * @var \Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPriceDataFactory
      * @inject
      */
-    private readonly ProductWithPriceDataFactory $productWithPriceDataFactory;
+    private readonly PriceListProductPriceDataFactory $priceListProductPriceDataFactory;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\PriceList\ProductWithPriceFactory
+     * @var \Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPriceFactory
      * @inject
      */
-    private readonly ProductWithPriceFactory $productWithPriceFactory;
+    private readonly PriceListProductPriceFactory $priceListProductPriceFactory;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\PriceList\PriceListDataFactory
@@ -139,15 +139,15 @@ final class RelevantSpecialPriceForProductTest extends TransactionFunctionalTest
     ): void {
         $priceList = $this->getReferenceForDomain($priceListReferenceName, self::TEST_DOMAIN_ID, PriceList::class);
 
-        $productWithPriceData = $this->productWithPriceDataFactory->create(
+        $priceListProductPriceData = $this->priceListProductPriceDataFactory->create(
             $product,
             Money::create($productPriceAmount),
             self::TEST_DOMAIN_ID,
         );
 
-        $productWithPrice = $this->productWithPriceFactory->create($productWithPriceData);
+        $priceListProductPrice = $this->priceListProductPriceFactory->create($priceListProductPriceData);
 
-        $priceList->addProductWithPrice($productWithPrice);
+        $priceList->addPriceListProductPrice($priceListProductPrice);
 
         $this->em->flush();
     }

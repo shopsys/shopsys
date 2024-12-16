@@ -27,7 +27,7 @@ class PriceListData
     public $validTo;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\PriceList\ProductWithPriceData[]
+     * @var \Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPriceData[]
      */
-    public $productsWithPrices = [];
+    public $priceListProductPricesData = [];
 }

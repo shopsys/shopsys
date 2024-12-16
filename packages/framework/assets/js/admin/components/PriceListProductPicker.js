@@ -7,25 +7,25 @@ import Window from '../utils/Window';
 import Translator from 'bazinga-translator';
 import { formatPrice } from '../../common/utils/priceFormatter';
 
-window.ProductsPickerWithPriceInstances = {};
+window.PriceListProductPickerInstances = {};
 
-export default class ProductsWithPricePicker {
+export default class PriceListProductPicker {
 
     constructor ($productsPicker) {
-        this.instanceId = Object.keys(window.ProductsPickerWithPriceInstances).length;
-        window.ProductsPickerWithPriceInstances[this.instanceId] = this;
+        this.instanceId = Object.keys(window.PriceListProductPickerInstances).length;
+        window.PriceListProductPickerInstances[this.instanceId] = this;
 
         this.$productsPicker = $productsPicker;
-        this.$header = $productsPicker.find('.js-products-with-price-picker-header');
-        this.$addButton = $productsPicker.find('.js-products-with-price-picker-button-add');
-        this.$itemsContainer = $productsPicker.find('.js-products-with-price-picker-items');
+        this.$header = $productsPicker.find('.js-price-list-product-picker-header');
+        this.$addButton = $productsPicker.find('.js-price-list-product-picker-button-add');
+        this.$itemsContainer = $productsPicker.find('.js-price-list-product-picker-items');
         this.productItems = [];
 
         this.initDomainChangeListener();
 
         const _this = this;
         this.$addButton.click(() => _this.openProductsPickerWindow());
-        this.$itemsContainer.find('.js-products-with-price-picker-item').each(function () {
+        this.$itemsContainer.find('.js-price-list-product-picker-item').each(function () {
             _this.initItem($(this));
         });
     }
@@ -76,13 +76,13 @@ export default class ProductsWithPricePicker {
 
         _this.updateDiscount($item);
         _this.productItems.push($item);
-        $item.find('.js-products-with-price-picker-item-button-delete').click(() => {
+        $item.find('.js-price-list-product-picker-item-button-delete').click(() => {
             _this.removeItem($item);
         });
     }
 
     removeItem ($item) {
-        const productId = $item.find('.js-products-with-price-picker-item-input:first').val();
+        const productId = $item.find('.js-price-list-product-picker-item-input:first').val();
         const productItemIndex = this.findProductItemIndex(productId);
 
         delete this.productItems[productItemIndex];
@@ -102,7 +102,7 @@ export default class ProductsWithPricePicker {
 
     findProductItemIndex (productId) {
         for (let key in this.productItems) {
-            if (this.productItems[key].find('.js-products-with-price-picker-item-input:first').val() === productId.toString()) {
+            if (this.productItems[key].find('.js-price-list-product-picker-item-input:first').val() === productId.toString()) {
                 return key;
             }
         }
@@ -113,7 +113,7 @@ export default class ProductsWithPricePicker {
     reIndex () {
         const elements = {};
 
-        this.$itemsContainer.find('.js-products-with-price-picker-item-input-reorder').each((index, element) => {
+        this.$itemsContainer.find('.js-price-list-product-picker-item-input-reorder').each((index, element) => {
             const $element = $(element);
             const name = $element.data('name');
 
@@ -139,9 +139,9 @@ export default class ProductsWithPricePicker {
 
     updateDiscount ($item) {
         const inputs = $item.find('input[type=text]');
-        const prices = $item.find('.js-products-with-price-picker-item-product-price');
-        const discounts = $item.find('.js-products-with-price-picker-item-product-price-discount');
-        const discountsPercentages = $item.find('.js-products-with-price-picker-item-product-price-discount-percentage');
+        const prices = $item.find('.js-price-list-product-picker-item-product-price');
+        const discounts = $item.find('.js-price-list-product-picker-item-product-price-discount');
+        const discountsPercentages = $item.find('.js-price-list-product-picker-item-product-price-discount-percentage');
 
         if (inputs.length > 0 && prices.length && discounts.length > 0 && discountsPercentages.length > 0) {
             const $input = $(inputs[0]);
@@ -177,19 +177,19 @@ export default class ProductsWithPricePicker {
     }
 
     addProduct (productId, productName, productPrice, productEan, productCatnum) {
-        const nextIndex = this.$itemsContainer.find('.js-products-with-price-picker-item').length;
+        const nextIndex = this.$itemsContainer.find('.js-price-list-product-picker-item').length;
         const itemHtml = this.$productsPicker.data('products-picker-prototype').replace(/__name__/g, nextIndex);
         const $item = $($.parseHTML(itemHtml));
-        const priceItem = $item.find('.js-products-with-price-picker-item-product-price');
-        $item.find('.js-products-with-price-picker-item-product-ean').text(productEan);
-        $item.find('.js-products-with-price-picker-item-product-name').text(productName);
-        $item.find('.js-products-with-price-picker-item-product-catnum').text(productCatnum);
+        const priceItem = $item.find('.js-price-list-product-picker-item-product-price');
+        $item.find('.js-price-list-product-picker-item-product-ean').text(productEan);
+        $item.find('.js-price-list-product-picker-item-product-name').text(productName);
+        $item.find('.js-price-list-product-picker-item-product-catnum').text(productCatnum);
         priceItem.data('price', productPrice);
         priceItem.text(formatPrice(productPrice, priceItem.data('locale'), priceItem.data('currency')));
 
-        $item.find('.js-products-with-price-picker-item-input').val(productId);
-        $item.find('.js-products-with-price-picker-item-price-input').val(productPrice);
-        $item.find('.js-products-with-price-picker-item-base-price-input').val(productPrice);
+        $item.find('.js-price-list-product-picker-item-input').val(productId);
+        $item.find('.js-price-list-product-picker-item-price-input').val(productPrice);
+        $item.find('.js-price-list-product-picker-item-base-price-input').val(productPrice);
 
         this.$itemsContainer.append($item);
         this.initItem($item);
@@ -198,15 +198,15 @@ export default class ProductsWithPricePicker {
     }
 
     static init ($container) {
-        $container.filterAllNodes('.js-products-with-price-picker').each(function () {
+        $container.filterAllNodes('.js-price-list-product-picker').each(function () {
             // eslint-disable-next-line no-new
-            new ProductsWithPricePicker($(this));
+            new PriceListProductPicker($(this));
         });
 
-        $('.js-products-with-price-picker-close').click(() => {
+        $container.filterAllNodes('.js-price-list-product-picker-close').click(() => {
             window.parent.$.magnificPopup.instance.close();
         });
     }
 }
 
-(new Register().registerCallback(ProductsWithPricePicker.init, 'ProductsWithPricePicker.init'));
+(new Register().registerCallback(PriceListProductPicker.init, 'PriceListProductPicker.init'));

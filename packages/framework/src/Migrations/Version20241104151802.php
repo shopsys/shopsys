@@ -30,26 +30,26 @@ final class Version20241104151802 extends AbstractMigration
         $this->sql('COMMENT ON COLUMN price_lists.valid_to IS \'(DC2Type:datetime_immutable)\'');
 
         $this->sql('
-            CREATE TABLE products_with_prices (
+            CREATE TABLE price_list_product_prices (
                 id SERIAL NOT NULL,
                 product_id INT NOT NULL,
                 price_list_id INT NOT NULL,
                 price_amount NUMERIC(20, 6) NOT NULL,
                 PRIMARY KEY(id)
             )');
-        $this->sql('CREATE INDEX IDX_4564C7CE4584665A ON products_with_prices (product_id)');
-        $this->sql('CREATE INDEX IDX_4564C7CE5688DED7 ON products_with_prices (price_list_id)');
-        $this->sql('COMMENT ON COLUMN products_with_prices.price_amount IS \'(DC2Type:money)\'');
+        $this->sql('CREATE INDEX IDX_418F3D234584665A ON price_list_product_prices (product_id)');
+        $this->sql('CREATE INDEX IDX_418F3D235688DED7 ON price_list_product_prices (price_list_id)');
+        $this->sql('COMMENT ON COLUMN price_list_product_prices.price_amount IS \'(DC2Type:money)\'');
         $this->sql('
             ALTER TABLE
-                products_with_prices
+                price_list_product_prices
             ADD
-                CONSTRAINT FK_4564C7CE4584665A FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
+                CONSTRAINT FK_418F3D234584665A FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->sql('
             ALTER TABLE
-                products_with_prices
+                price_list_product_prices
             ADD
-                CONSTRAINT FK_4564C7CE5688DED7 FOREIGN KEY (price_list_id) REFERENCES price_lists (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
+                CONSTRAINT FK_418F3D235688DED7 FOREIGN KEY (price_list_id) REFERENCES price_lists (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
     }
 
     /**

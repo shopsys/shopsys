@@ -16,14 +16,14 @@ class PriceListFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListFactory $priceListFactory
      * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListRepository $priceListRepository
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\ProductWithPriceFactory $productWithPriceFactory
+     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPriceFactory $priceListProductPriceFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly PriceListFactory $priceListFactory,
         protected readonly PriceListRepository $priceListRepository,
-        protected readonly ProductWithPriceFactory $productWithPriceFactory,
+        protected readonly PriceListProductPriceFactory $priceListProductPriceFactory,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
     ) {
     }
@@ -55,7 +55,7 @@ class PriceListFacade
         $this->em->persist($priceList);
         $this->em->flush();
 
-        $this->refreshProductWithPrices($priceList, $priceListData);
+        $this->refreshPriceListProductPrices($priceList, $priceListData);
 
         return $priceList;
     }
@@ -68,15 +68,15 @@ class PriceListFacade
     {
         $priceList = $this->getById($priceListId);
         $originalProductIds = array_map(
-            static fn (ProductWithPrice $productWithPrice) => $productWithPrice->getProduct()->getId(),
-            $priceList->getProductsWithPrices(),
+            static fn (PriceListProductPrice $priceListProductPrice) => $priceListProductPrice->getProduct()->getId(),
+            $priceList->getPriceListProductPrices(),
         );
 
         $priceList->edit($priceListData);
 
         $this->em->flush();
 
-        $this->refreshProductWithPrices($priceList, $priceListData, $originalProductIds);
+        $this->refreshPriceListProductPrices($priceList, $priceListData, $originalProductIds);
     }
 
     /**
@@ -84,25 +84,25 @@ class PriceListFacade
      * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListData $priceListData
      * @param int[] $originalProductIds
      */
-    protected function refreshProductWithPrices(
+    protected function refreshPriceListProductPrices(
         PriceList $priceList,
         PriceListData $priceListData,
         array $originalProductIds = [],
     ): void {
         $dispatchedProductIds = [];
 
-        foreach ($priceListData->productsWithPrices as $productWithPriceData) {
-            $productWithPrice = $this->productWithPriceFactory->create($productWithPriceData);
-            $this->em->persist($productWithPrice);
-            $priceList->addProductWithPrice($productWithPrice);
+        foreach ($priceListData->priceListProductPricesData as $priceListProductPriceData) {
+            $priceListProductPrice = $this->priceListProductPriceFactory->create($priceListProductPriceData);
+            $this->em->persist($priceListProductPrice);
+            $priceList->addPriceListProductPrice($priceListProductPrice);
 
             $this->productRecalculationDispatcher->dispatchSingleProductId(
-                $productWithPrice->getProduct()->getId(),
+                $priceListProductPrice->getProduct()->getId(),
                 ProductRecalculationPriorityEnum::HIGH,
                 [ProductExportScopeConfig::SCOPE_PRICE],
             );
 
-            $dispatchedProductIds[] = $productWithPrice->getProduct()->getId();
+            $dispatchedProductIds[] = $priceListProductPrice->getProduct()->getId();
         }
 
         $removedProductIds = array_diff($originalProductIds, $dispatchedProductIds);

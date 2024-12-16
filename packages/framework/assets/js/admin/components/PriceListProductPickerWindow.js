@@ -4,10 +4,10 @@ import Register from '../../common/utils/Register';
 import Ajax from '../../common/utils/Ajax';
 import Window from '../utils/Window';
 
-export default class ProductsPickerWithPriceWindow {
+export default class PriceListProductPickerWindow {
 
     constructor ($addButton) {
-        const productsPicker = window.parent.ProductsPickerWithPriceInstances[$addButton.data('product-picker-instance-id')];
+        const productsPicker = window.parent.PriceListProductPickerInstances[$addButton.data('product-picker-instance-id')];
         const productId = $addButton.data('product-picker-product-id');
 
         if (productsPicker.hasProduct(productId)) {
@@ -33,7 +33,7 @@ export default class ProductsPickerWithPriceWindow {
     }
 
     onClickAddButton (event) {
-        const productsPicker = window.parent.ProductsPickerWithPriceInstances[$(event.currentTarget).data('product-picker-instance-id')];
+        const productsPicker = window.parent.PriceListProductPickerInstances[$(event.currentTarget).data('product-picker-instance-id')];
         const basicPriceUrl = $(event.currentTarget).data('product-picker-basic-price-url');
         const $currentTarget = $(event.currentTarget);
         this.markAddButtonAsAdded($currentTarget);
@@ -69,7 +69,7 @@ export default class ProductsPickerWithPriceWindow {
     }
 
     onClickOnAddedButton ($addButton, originalLabelText, originalIconText) {
-        const productsPicker = window.parent.ProductsPickerWithPriceInstances[$addButton.data('product-picker-instance-id')];
+        const productsPicker = window.parent.PriceListProductPickerInstances[$addButton.data('product-picker-instance-id')];
         this.unmarkAddButtonAsAdded($addButton, originalLabelText, originalIconText);
         $addButton.off('click.removeProduct');
         productsPicker.removeItemByProductId($addButton.data('product-picker-product-id'));
@@ -87,11 +87,11 @@ export default class ProductsPickerWithPriceWindow {
     }
 
     static init ($container) {
-        $container.filterAllNodes('.js-products-picker-with-price-window-add-product').each(function () {
+        $container.filterAllNodes('.js-price-list-product-picker-window-add-product').each(function () {
             // eslint-disable-next-line no-new
-            new ProductsPickerWithPriceWindow($(this));
+            new PriceListProductPickerWindow($(this));
         });
     }
 }
 
-(new Register()).registerCallback(ProductsPickerWithPriceWindow.init, 'ProductsPickerWithPriceWindow.init');
+(new Register()).registerCallback(PriceListProductPickerWindow.init, 'PriceListProductPickerWindow.init');

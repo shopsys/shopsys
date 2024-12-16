@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\PriceList;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;
 
-class ProductWithPriceData
+class PriceListProductPriceData
 {
     /**
      * @var \Shopsys\FrameworkBundle\Component\Money\Money|null

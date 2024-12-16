@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Form\Constraints\NotNegativeMoneyAmount;
 use Shopsys\FrameworkBundle\Form\Constraints\PositiveMoneyAmount;
 use Shopsys\FrameworkBundle\Form\Transformers\NumericToMoneyTransformer;
 use Shopsys\FrameworkBundle\Form\Transformers\ProductIdToProductTransformer;
-use Shopsys\FrameworkBundle\Model\PriceList\ProductWithPriceData;
+use Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPriceData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
@@ -54,7 +54,7 @@ final class PriceListProductPickerType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => ProductWithPriceData::class,
+            'data_class' => PriceListProductPriceData::class,
         ]);
     }
 }

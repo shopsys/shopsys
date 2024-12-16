@@ -53,17 +53,17 @@ class PriceList
     protected $validTo;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\PriceList\ProductWithPrice>
-     * @ORM\OneToMany(targetEntity="Shopsys\FrameworkBundle\Model\PriceList\ProductWithPrice", mappedBy="priceList", cascade={"persist", "remove"}, orphanRemoval=true)
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPrice>
+     * @ORM\OneToMany(targetEntity="PriceListProductPrice", mappedBy="priceList", cascade={"persist", "remove"}, orphanRemoval=true)
      */
-    protected $productsWithPrices;
+    protected $priceListProductPrices;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListData $priceListData
      */
     public function __construct(PriceListData $priceListData)
     {
-        $this->productsWithPrices = new ArrayCollection();
+        $this->priceListProductPrices = new ArrayCollection();
         $this->setData($priceListData);
     }
 
@@ -86,16 +86,16 @@ class PriceList
         $this->validTo = $priceListData->validTo;
         $this->lastUpdate = new DateTimeImmutable();
 
-        // products with prices are not set here, they are set in the PriceListFacade::refreshProductWithPrices method
-        $this->productsWithPrices->clear();
+        // products with prices are not set here, they are set in the PriceListFacade::refreshPriceListProductPrices method
+        $this->priceListProductPrices->clear();
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\PriceList\ProductWithPrice[]
+     * @return \Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPrice[]
      */
-    public function getProductsWithPrices()
+    public function getPriceListProductPrices()
     {
-        return $this->productsWithPrices->getValues();
+        return $this->priceListProductPrices->getValues();
     }
 
     /**
@@ -147,11 +147,11 @@ class PriceList
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\ProductWithPrice $productWithPrice
+     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPrice $priceListProductPrice
      */
-    public function addProductWithPrice(ProductWithPrice $productWithPrice): void
+    public function addPriceListProductPrice(PriceListProductPrice $priceListProductPrice): void
     {
-        $this->productsWithPrices->add($productWithPrice);
-        $productWithPrice->setPriceList($this);
+        $this->priceListProductPrices->add($priceListProductPrice);
+        $priceListProductPrice->setPriceList($this);
     }
 }

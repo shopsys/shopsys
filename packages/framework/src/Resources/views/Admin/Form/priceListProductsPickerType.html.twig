@@ -11,7 +11,7 @@
 
 {% block price_list_products_picker_widget %}
     {% import _self as self %}
-    {% set attr = attr|merge({'class': (attr.class|default('') ~ ' js-products-with-price-picker')|trim}) %}
+    {% set attr = attr|merge({'class': (attr.class|default('') ~ ' js-price-list-product-picker')|trim}) %}
     <div
             {{ block('widget_attributes') }}
             data-products-picker-prototype="{{ self.productsWidgetItem(null, form.vars.prototype, domainId)|e }}"
@@ -20,7 +20,7 @@
         <div class="table-touch-always">
             <div class="table-touch-always__in">
                 <table class="table-form">
-                    <thead class="js-products-with-price-picker-header">
+                    <thead class="js-price-list-product-picker-header">
                     <tr class="table-form__row">
                         <td class="table-form__cell">{{ 'Catalog number'|trans }}</td>
                         <td class="table-form__cell">{{ 'EAN'|trans }}</td>
@@ -32,9 +32,9 @@
                         <td class="table-form__cell table-form__cell--actions"></td>
                     </tr>
                     </thead>
-                    <tbody class="js-products-with-price-picker-items">
+                    <tbody class="js-price-list-product-picker-items">
                     {% for key, productForm in form %}
-                        {{ self.productsWidgetItem(form.vars.productsWithPrice[key], productForm, domainId) }}
+                        {{ self.productsWidgetItem(form.vars.priceListProductPrices[key], productForm, domainId) }}
                     {% endfor %}
                     </tbody>
                 </table>
@@ -42,7 +42,7 @@
         </div>
         <div class="form-line form-line--no-top-border">
             <div class="form-line__line form-line__line--no-space">
-                <a href="#" class="btn btn--plus js-products-with-price-picker-button-add">
+                <a href="#" class="btn btn--plus js-price-list-product-picker-button-add">
                     <i class="btn__icon">+</i>
                     {{ 'Add product'|trans }}
                 </a>
@@ -51,35 +51,35 @@
     </div>
 {% endblock %}
 
-{% macro productsWidgetItem(productWithPrice, form, domainId) %}
+{% macro productsWidgetItem(priceListProductPrice, form, domainId) %}
     {% set product = null %}
     {% set discount = null %}
     {% set hasDiscount = null %}
     {% set currency = currencyCode(domainId) %}
 
-    {% if productWithPrice is not null %}
-        {% set product = productWithPrice.product %}
-        {% set discount = productWithPrice.discount %}
-        {% set hasDiscount = productWithPrice.hasDiscount %}
+    {% if priceListProductPrice is not null %}
+        {% set product = priceListProductPrice.product %}
+        {% set discount = priceListProductPrice.discount %}
+        {% set hasDiscount = priceListProductPrice.hasDiscount %}
     {% endif %}
 
-    <tr class="js-products-with-price-picker-item table-form__row">
+    <tr class="js-price-list-product-picker-item table-form__row">
         <td class="table-form__cell">
-            <span class="js-products-with-price-picker-item-product-catnum">
+            <span class="js-price-list-product-picker-item-product-catnum">
                 {% if product is not null %}
                     {{ product.catnum }}
                 {% endif %}
             </span>
         </td>
         <td class="table-form__cell">
-            <span class="js-products-with-price-picker-item-product-ean">
+            <span class="js-price-list-product-picker-item-product-ean">
                 {% if product is not null %}
                     {{ product.ean }}
                 {% endif %}
             </span>
         </td>
         <td class="table-form__cell">
-            <span class="js-products-with-price-picker-item-product-name">
+            <span class="js-price-list-product-picker-item-product-name">
                 {% if product is not null %}
                     <a href="{{ url('admin_product_edit', {id: product.id}) }}"
                        target="_blank"
@@ -97,18 +97,18 @@
             {{ form_errors(form.priceAmount, { errors_attr: { class: 'table-limits__cell__error' } } ) }}
             {{ form_widget(form.priceAmount, {
                 symbolAfterInput: currencySymbolByDomainId(domainId),
-                attr: { class: 'js-products-with-price-picker-item-price-input js-products-with-price-picker-item-input-reorder input--half-width', 'data-name': 'priceAmount' }
+                attr: { class: 'js-price-list-product-picker-item-price-input js-price-list-product-picker-item-input-reorder input--half-width', 'data-name': 'priceAmount' }
             }) }}
         </td>
         <td class="table-form__cell">
             {% if product is not null %}
-                <span class="js-products-with-price-picker-item-product-price"
-                      data-price="{{ productWithPrice.basicPrice|moneyFormat }}" data-currency="{{ currency }}"
+                <span class="js-price-list-product-picker-item-product-price"
+                      data-price="{{ priceListProductPrice.basicPrice|moneyFormat }}" data-currency="{{ currency }}"
                       data-locale="{{ app.request.locale }}">
-                    {{ productWithPrice.basicPrice|priceWithCurrencyByDomainId(domainId) }}
+                    {{ priceListProductPrice.basicPrice|priceWithCurrencyByDomainId(domainId) }}
                 </span>
             {% else %}
-                <span class="js-products-with-price-picker-item-product-price" data-price="0"
+                <span class="js-price-list-product-picker-item-product-price" data-price="0"
                       data-currency="{{ currency }}" data-locale="{{ app.request.locale }}">
                 </span>
             {% endif %}
@@ -117,21 +117,21 @@
             {% if product is not null %}
                 {{ _self.productPrice(discount, hasDiscount, domainId) }}
             {% else %}
-                <span class="js-products-with-price-picker-item-product-price-discount"></span>
+                <span class="js-price-list-product-picker-item-product-price-discount"></span>
             {% endif %}
         </td>
         <td class="table-form__cell">
             {% if product is not null %}
-                {{ _self.productDiscount(productWithPrice, discount, hasDiscount) }}
+                {{ _self.productDiscount(priceListProductPrice, discount, hasDiscount) }}
             {% else %}
-                <span class="js-products-with-price-picker-item-product-price-discount-percentage"></span>
+                <span class="js-price-list-product-picker-item-product-price-discount-percentage"></span>
             {% endif %}
         </td>
         <td class="table-form__cell table-form__cell--actions">
-            <span class="cursor-pointer js-products-with-price-picker-item-button-delete">
+            <span class="cursor-pointer js-price-list-product-picker-item-button-delete">
                 <span class="svg svg-delete-thin in-icon"></span>
-                {{ form_widget(form.product, {attr: {class: 'js-products-with-price-picker-item-input js-products-with-price-picker-item-input-reorder', 'data-name': 'product'}}) }}
-                {{ form_widget(form.basicPrice, {attr: {class: 'js-products-with-price-picker-item-base-price-input js-products-with-price-picker-item-input-reorder', 'data-name': 'basicPrice'}}) }}
+                {{ form_widget(form.product, {attr: {class: 'js-price-list-product-picker-item-input js-price-list-product-picker-item-input-reorder', 'data-name': 'product'}}) }}
+                {{ form_widget(form.basicPrice, {attr: {class: 'js-price-list-product-picker-item-base-price-input js-price-list-product-picker-item-input-reorder', 'data-name': 'basicPrice'}}) }}
             </span>
         </td>
     </tr>
@@ -141,15 +141,15 @@
     {{ _self.showContent(
         discount|priceWithCurrencyByDomainId(domainId),
         hasDiscount,
-        'js-products-with-price-picker-item-product-price-discount'
+        'js-price-list-product-picker-item-product-price-discount'
     ) }}
 {% endmacro %}
 
-{% macro productDiscount(productWithPrice, discount, hasDiscount) %}
+{% macro productDiscount(priceListProductPrice, discount, hasDiscount) %}
     {{ _self.showContent(
-        (discount.amount / (productWithPrice.basicPrice.amount == 0 ? 1 : productWithPrice.basicPrice.amount) * 100)|round(0, 'floor') ~ '%',
+        (discount.amount / (priceListProductPrice.basicPrice.amount == 0 ? 1 : priceListProductPrice.basicPrice.amount) * 100)|round(0, 'floor') ~ '%',
     hasDiscount,
-    'js-products-with-price-picker-item-product-price-discount-percentage'
+    'js-price-list-product-picker-item-product-price-discount-percentage'
     ) }}
 {% endmacro %}
 

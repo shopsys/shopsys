@@ -82,7 +82,7 @@ final class PriceListFormType extends AbstractType
                     new Constraints\NotBlank(['message' => 'Please enter valid to date']),
                 ],
             ])
-            ->add('productsWithPrices', PriceListProductsPickerType::class, [
+            ->add('priceListProductPricesData', PriceListProductsPickerType::class, [
                 'required' => false,
                 'label' => t('Products'),
             ]);

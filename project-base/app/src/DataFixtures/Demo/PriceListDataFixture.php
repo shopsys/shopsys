@@ -12,8 +12,8 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\PriceList\PriceListDataFactory;
 use Shopsys\FrameworkBundle\Model\PriceList\PriceListFacade;
-use Shopsys\FrameworkBundle\Model\PriceList\ProductWithPriceData;
-use Shopsys\FrameworkBundle\Model\PriceList\ProductWithPriceDataFactory;
+use Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPriceData;
+use Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPriceDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
@@ -29,13 +29,13 @@ class PriceListDataFixture extends AbstractReferenceFixture implements Dependent
     /**
      * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListFacade $priceListFacade
      * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListDataFactory $priceListDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\PriceList\ProductWithPriceDataFactory $productWithPriceDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPriceDataFactory $priceListProductPriceDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
      */
     public function __construct(
         private readonly PriceListFacade $priceListFacade,
         private readonly PriceListDataFactory $priceListDataFactory,
-        private readonly ProductWithPriceDataFactory $productWithPriceDataFactory,
+        private readonly PriceListProductPriceDataFactory $priceListProductPriceDataFactory,
         private readonly PriceConverter $priceConverter,
     ) {
     }
@@ -55,9 +55,9 @@ class PriceListDataFixture extends AbstractReferenceFixture implements Dependent
             $priceListData->domainId = $domainConfig->getId();
             $priceListData->validFrom = new DateTimeImmutable('2023-01-10 08:30:00');
             $priceListData->validTo = new DateTimeImmutable('2084-01-10 08:30:00');
-            $priceListData->productsWithPrices = [
-                $this->createProductWithPriceData('27', '42', $domainConfig->getId(), $currencyCzk, $vat),
-                $this->createProductWithPriceData('28', '50', $domainConfig->getId(), $currencyCzk, $vat),
+            $priceListData->priceListProductPricesData = [
+                $this->createPriceListProductPriceData('27', '42', $domainConfig->getId(), $currencyCzk, $vat),
+                $this->createPriceListProductPriceData('28', '50', $domainConfig->getId(), $currencyCzk, $vat),
             ];
             $priceList = $this->priceListFacade->create($priceListData);
             $this->addReferenceForDomain(self::ACTIVE_SPECIAL_OFFERS_REFERENCE, $priceList, $domainConfig->getId());
@@ -67,9 +67,9 @@ class PriceListDataFixture extends AbstractReferenceFixture implements Dependent
             $priceListData->domainId = $domainConfig->getId();
             $priceListData->validFrom = new DateTimeImmutable('2023-11-10 00:00:00');
             $priceListData->validTo = new DateTimeImmutable('2023-11-10 23:59:59');
-            $priceListData->productsWithPrices = [
-                $this->createProductWithPriceData('1', '2800', $domainConfig->getId(), $currencyCzk, $vat),
-                $this->createProductWithPriceData('72', '90', $domainConfig->getId(), $currencyCzk, $vat),
+            $priceListData->priceListProductPricesData = [
+                $this->createPriceListProductPriceData('1', '2800', $domainConfig->getId(), $currencyCzk, $vat),
+                $this->createPriceListProductPriceData('72', '90', $domainConfig->getId(), $currencyCzk, $vat),
             ];
             $priceList = $this->priceListFacade->create($priceListData);
             $this->addReferenceForDomain(self::EXPIRED_BLUE_WEDNESDAY_REFERENCE, $priceList, $domainConfig->getId());
@@ -79,9 +79,9 @@ class PriceListDataFixture extends AbstractReferenceFixture implements Dependent
             $priceListData->domainId = $domainConfig->getId();
             $priceListData->validFrom = new DateTimeImmutable('2023-02-12 06:20:00');
             $priceListData->validTo = new DateTimeImmutable('2084-05-10 08:30:00');
-            $priceListData->productsWithPrices = [
-                $this->createProductWithPriceData('117', '290', $domainConfig->getId(), $currencyCzk, $vat),
-                $this->createProductWithPriceData('19', '170', $domainConfig->getId(), $currencyCzk, $vat),
+            $priceListData->priceListProductPricesData = [
+                $this->createPriceListProductPriceData('117', '290', $domainConfig->getId(), $currencyCzk, $vat),
+                $this->createPriceListProductPriceData('19', '170', $domainConfig->getId(), $currencyCzk, $vat),
             ];
             $priceList = $this->priceListFacade->create($priceListData);
             $this->addReferenceForDomain(self::ACTIVE_ITEMS_ON_SALE_REFERENCE, $priceList, $domainConfig->getId());
@@ -91,9 +91,9 @@ class PriceListDataFixture extends AbstractReferenceFixture implements Dependent
             $priceListData->domainId = $domainConfig->getId();
             $priceListData->validFrom = new DateTimeImmutable('2083-10-15 00:20:00');
             $priceListData->validTo = new DateTimeImmutable('2084-10-15 06:30:00');
-            $priceListData->productsWithPrices = [
-                $this->createProductWithPriceData('145', '800', $domainConfig->getId(), $currencyCzk, $vat),
-                $this->createProductWithPriceData('120', '160', $domainConfig->getId(), $currencyCzk, $vat),
+            $priceListData->priceListProductPricesData = [
+                $this->createPriceListProductPriceData('145', '800', $domainConfig->getId(), $currencyCzk, $vat),
+                $this->createPriceListProductPriceData('120', '160', $domainConfig->getId(), $currencyCzk, $vat),
             ];
             $priceList = $this->priceListFacade->create($priceListData);
             $this->addReferenceForDomain(self::FUTURE_PROMOTED_PRODUCTS_REFERENCE, $priceList, $domainConfig->getId());
@@ -106,15 +106,15 @@ class PriceListDataFixture extends AbstractReferenceFixture implements Dependent
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     * @return \Shopsys\FrameworkBundle\Model\PriceList\ProductWithPriceData
+     * @return \Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPriceData
      */
-    private function createProductWithPriceData(
+    private function createPriceListProductPriceData(
         string $productId,
         string $priceValue,
         int $domainId,
         Currency $currency,
         Vat $vat,
-    ): ProductWithPriceData {
+    ): PriceListProductPriceData {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productId, Product::class);
         $priceAmount = $this->priceConverter->convertPriceToInputPriceWithoutVatInDomainDefaultCurrency(
             Money::create($priceValue),
@@ -123,7 +123,7 @@ class PriceListDataFixture extends AbstractReferenceFixture implements Dependent
             $domainId,
         );
 
-        return $this->productWithPriceDataFactory->create($product, $priceAmount, $domainId);
+        return $this->priceListProductPriceDataFactory->create($product, $priceAmount, $domainId);
     }
 
     /**

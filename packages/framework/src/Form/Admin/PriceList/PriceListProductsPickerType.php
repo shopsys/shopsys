@@ -18,7 +18,7 @@ final class PriceListProductsPickerType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['domainId'] = $form->getParent()?->getData()->domainId;
-        $view->vars['productsWithPrice'] = $form->getData();
+        $view->vars['priceListProductPrices'] = $form->getData();
     }
 
     /**
