@@ -35,7 +35,7 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
     const { query } = useRouter();
     const { fetchCart } = useCurrentCart(false);
-    const { orderUuid, orderPaymentType } = query as OrderConfirmationUrlQuery;
+    const { orderUuid, orderPaymentType, companyNumber, orderEmail, orderUrlHash } = query as OrderConfirmationUrlQuery;
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.order_confirmation);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
@@ -68,7 +68,12 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
                             <GoPayGateway orderUuid={orderUuid!} />
                         ) : undefined}
                     </ConfirmationPageContent>
-                    <RegistrationAfterOrder />
+                    <RegistrationAfterOrder
+                        companyNumber={companyNumber}
+                        orderEmail={orderEmail}
+                        orderUrlHash={orderUrlHash}
+                        orderUuid={orderUuid}
+                    />
                 </Webline>
             </CommonLayout>
         </>
