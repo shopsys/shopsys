@@ -64,7 +64,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
     };
 
     const handlers = useSwipeable({
-        onSwipedLeft: () => slide('NEXT'),
+        onSwipedLeft: () => !isTextSelected() && slide('NEXT'),
         onSwipedRight: () => !isTextSelected() && slide('PREV'),
         preventScrollOnSwipe: true,
         onTouchStartOrOnMouseDown: checkAndClearInterval,

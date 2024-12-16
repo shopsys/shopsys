@@ -9,6 +9,7 @@ import { RefObject, createRef, useEffect, useRef, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { twJoin } from 'tailwind-merge';
 import { twMergeCustom } from 'utils/twMerge';
+import { isTextSelected } from 'utils/ui/disableClickWhenTextSelected';
 import { isWholeElementVisible } from 'utils/ui/isWholeElementVisible';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 import { wait } from 'utils/wait';
@@ -85,7 +86,9 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
 
         const newActiveIndex = isFirstSlide ? productElementRefs!.length - 4 : prevIndex;
 
-        setActiveIndex(newActiveIndex);
+        if (!isTextSelected()) {
+            setActiveIndex(newActiveIndex);
+        }
     };
 
     const handleNext = () => {
@@ -98,7 +101,9 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
 
         const newActiveIndex = isEndSlide ? 0 : nextIndex;
 
-        setActiveIndex(newActiveIndex);
+        if (!isTextSelected()) {
+            setActiveIndex(newActiveIndex);
+        }
     };
 
     const handlers = useSwipeable({
