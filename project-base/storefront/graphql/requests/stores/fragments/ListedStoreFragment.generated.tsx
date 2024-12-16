@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { OpeningHoursFragment } from './OpeningHoursFragment.generated';
 import { CountryFragment } from '../../countries/fragments/CountryFragment.generated';
 import { ImageFragment } from '../../images/fragments/ImageFragment.generated';
-export type TypeListedStoreFragment = { __typename: 'Store', slug: string, name: string, description: string | null, latitude: string | null, longitude: string | null, street: string, postcode: string, city: string, distance: number | null, specialMessage: string | null, identifier: string, openingHours: { __typename?: 'OpeningHours', status: Types.TypeStoreOpeningStatusEnum, dayOfWeek: number, openingHoursOfDays: Array<{ __typename?: 'OpeningHoursOfDay', date: any, dayOfWeek: number, openingHoursRanges: Array<{ __typename?: 'OpeningHoursRange', openingTime: string, closingTime: string }> }> }, country: { __typename: 'Country', name: string, code: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null };
+export type TypeListedStoreFragment = { __typename: 'Store', slug: string, name: string, description: string | null, latitude: string | null, longitude: string | null, street: string, postcode: string, city: string, distance: number | null, email: string | null, phone: string | null, specialMessage: string | null, identifier: string, openingHours: { __typename?: 'OpeningHours', status: Types.TypeStoreOpeningStatusEnum, dayOfWeek: number, openingHoursOfDays: Array<{ __typename?: 'OpeningHoursOfDay', date: any, dayOfWeek: number, openingHoursRanges: Array<{ __typename?: 'OpeningHoursRange', openingTime: string, closingTime: string }> }> }, country: { __typename: 'Country', name: string, code: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null };
 
 
       export interface PossibleTypesResultData {
@@ -99,6 +99,8 @@ export const ListedStoreFragment = gql`
   postcode
   city
   distance
+  email
+  phone
   specialMessage
   country {
     ...CountryFragment

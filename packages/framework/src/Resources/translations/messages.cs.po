@@ -2251,6 +2251,9 @@ msgstr "Nesprávné nastavení může mít negativní vliv na správnou funkčno
 msgid "Information about order rounding item (empty if there is no rounding)"
 msgstr "Informace o zaokrouhlovací položce v objednávce (prázdné pokud v objednávce není zaokrouhlení)"
 
+msgid "Information for customers"
+msgstr "Informace pro zákazníky"
+
 msgid "Input price with VAT"
 msgstr "Vstupní cena s DPH"
 
@@ -2481,6 +2484,9 @@ msgstr "H"
 
 msgid "Make modification"
 msgstr "Provést úpravu"
+
+msgid "Map coordinates"
+msgstr ""
 
 msgid "Marketing"
 msgstr "Marketing"

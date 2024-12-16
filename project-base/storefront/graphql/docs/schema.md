@@ -8706,11 +8706,6 @@ Store address city
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>contactInfo</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>country</strong></td>
 <td valign="top"><a href="#country">Country</a>!</td>
 <td>
@@ -8729,11 +8724,29 @@ Store description
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>directions</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Description of how to get to the store
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>distance</strong></td>
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
 Distance from the user in meters
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>email</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Store email
 
 </td>
 </tr>
@@ -8807,6 +8820,15 @@ Store name
 <td>
 
 Store opening hours
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>phone</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Store phone
 
 </td>
 </tr>

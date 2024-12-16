@@ -36,9 +36,15 @@ StoreDecorator:
             openingHours:
                 type: "OpeningHours!"
                 description: "Store opening hours"
-            contactInfo:
+            email:
                 type: "String"
-                description: ""
+                description: "Store email"
+            phone:
+                type: "String"
+                description: "Store phone"
+            directions:
+                type: "String"
+                description: "Description of how to get to the store"
             specialMessage:
                 type: "String"
                 description: ""

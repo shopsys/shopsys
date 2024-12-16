@@ -29,4 +29,6 @@ export const getGtmPickupPlaceFromLastOrder = (
     mainImage: null,
     distance: null,
     specialMessage: null,
+    phone: null,
+    email: null,
 });

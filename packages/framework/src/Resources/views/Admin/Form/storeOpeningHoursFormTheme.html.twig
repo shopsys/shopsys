@@ -1,4 +1,4 @@
-{% block _store_form_openingHours_widget %}
+{% block _store_form_userInformation_openingHours_widget %}
     {% import _self as self %}
     {% set dayNamesIndexedByDayNumber = {
         1: 'Monday'|trans,
@@ -47,9 +47,9 @@
             </div>
         {% endfor %}
     </div>
-{% endblock _store_form_openingHours_widget %}
+{% endblock _store_form_userInformation_openingHours_widget %}
 
-{% block _store_form_openingHours_label %}
+{% block _store_form_userInformation_openingHours_label %}
     <label class="form-line__label" style="float: none">
         {{ label }}
         <i class="svg svg-info in-icon cursor-help form-line__item form-line__item--info js-tooltip"
@@ -57,13 +57,13 @@
            title="{{ 'Enter in the store local time'|trans }}"
         ></i>
     </label>
-{% endblock _store_form_openingHours_label %}
+{% endblock _store_form_userInformation_openingHours_label %}
 
-{% block _store_form_openingHours_errors %}
+{% block _store_form_userInformation_openingHours_errors %}
     <div style="position: relative; right: 20px; top: 10px">
         {{ form_errors(form) }}
     </div>
-{% endblock _store_form_openingHours_errors %}
+{% endblock _store_form_userInformation_openingHours_errors %}
 
 {% macro openingHoursRangeRow(openingHoursRange, index) %}
     <tr class="js-opening-hours-item js-form-group table-form__row" style="border-bottom: none;" data-index="{{ index }}">

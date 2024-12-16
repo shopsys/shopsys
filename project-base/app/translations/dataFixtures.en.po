@@ -1063,6 +1063,9 @@ msgstr ""
 msgid "Iconic Design"
 msgstr ""
 
+msgid "If you take buses 9, 13 and 24 from the main station, get off at the Outlet Arena Moravia stop. There is no train stop, but there is a parking lot for horses."
+msgstr ""
+
 msgid "Immersive Full HD resolution"
 msgstr ""
 

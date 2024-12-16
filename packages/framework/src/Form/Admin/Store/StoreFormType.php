@@ -22,8 +22,8 @@ use Spatie\OpeningHours\Exceptions\Exception;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -55,25 +55,47 @@ class StoreFormType extends AbstractType
     {
         if ($options['store'] instanceof Store) {
             $this->store = $options['store'];
+        }
 
-            $builder
+        $builder
+            ->add($this->createBasicInformationGroup($builder, $options['store']))
+            ->add($this->createAddressGroup($builder))
+            ->add($this->createUserInformationGroup($builder))
+            ->add($this->createMapGroup($builder))
+            ->add($this->createImagesGroup($builder, $options))
+            ->add('save', SubmitType::class);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Shopsys\FrameworkBundle\Model\Store\Store|null $store
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    private function createBasicInformationGroup(FormBuilderInterface $builder, ?Store $store): FormBuilderInterface
+    {
+        $builderBasicInformationGroup = $builder->create('basicInformationGroup', GroupType::class, [
+            'label' => t('Basic information'),
+        ]);
+
+        if ($store !== null) {
+            $builderBasicInformationGroup
                 ->add('id', DisplayOnlyType::class, [
-                    'data' => $options['store']->getId(),
+                    'data' => $store->getId(),
                     'label' => t('ID'),
                 ])
                 ->add('isDefault', DisplayOnlyType::class, [
                     'required' => false,
-                    'data' => $options['store']->isDefault() ? t('Yes') : t('No'),
+                    'data' => $store->isDefault() ? t('Yes') : t('No'),
                     'label' => t('Default store'),
                 ])
                 ->add('urls', UrlListType::class, [
                     'route_name' => StoreFriendlyUrlProvider::ROUTE_NAME,
-                    'entity_id' => $options['store']->getId(),
+                    'entity_id' => $store->getId(),
                     'label' => t('URL settings'),
                 ]);
         }
 
-        $builder
+        $builderBasicInformationGroup
             ->add('name', TextType::class, [
                 'required' => true,
                 'constraints' => [
@@ -107,16 +129,78 @@ class StoreFormType extends AbstractType
                 'choice_value' => 'id',
                 'multiple' => false,
                 'expanded' => false,
+            ]);
+
+        return $builderBasicInformationGroup;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    private function createUserInformationGroup(FormBuilderInterface $builder): FormBuilderInterface
+    {
+        $builderUserInformationGroup = $builder->create('userInformation', GroupType::class, [
+            'label' => t('Information for customers'),
+        ]);
+
+        $builderUserInformationGroup
+            ->add('specialMessage', TextType::class, [
+                'required' => false,
+            ])
+            ->add('phone', TextType::class, [
+                'required' => false,
+            ])
+            ->add('email', EmailType::class, [
+                'required' => false,
+            ])
+            ->add('openingHours', CollectionType::class, [
+                'label' => t('Opening hours'),
+                'entry_type' => OpeningHoursRangeCollectionFormType::class,
+                'required' => false,
             ])
             ->add('description', CKEditorType::class, [
                 'required' => false,
             ])
+            ->add('directions', CKEditorType::class, [
+                'required' => false,
+            ]);
+
+        return $builderUserInformationGroup;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    private function createMapGroup(FormBuilderInterface $builder): FormBuilderInterface
+    {
+        $builderMapGroup = $builder->create('map', GroupType::class, [
+            'label' => t('Map coordinates'),
+        ]);
+
+        $builderMapGroup
             ->add('latitude', TextType::class, [
                 'required' => false,
             ])
             ->add('longitude', TextType::class, [
                 'required' => false,
-            ])
+            ]);
+
+        return $builderMapGroup;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    private function createAddressGroup(FormBuilderInterface $builder): FormBuilderInterface
+    {
+        $builderAddressGroup = $builder->create('address', GroupType::class, [
+            'label' => t('Address'),
+        ]);
+
+        $builderAddressGroup
             ->add('street', TextType::class, [
                 'label' => t('Street'),
                 'required' => true,
@@ -159,20 +243,9 @@ class StoreFormType extends AbstractType
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please choose country']),
                 ],
-            ])
-            ->add('openingHours', CollectionType::class, [
-                'label' => t('Opening hours'),
-                'entry_type' => OpeningHoursRangeCollectionFormType::class,
-                'required' => false,
-            ])
-            ->add('contactInfo', TextareaType::class, [
-                'required' => false,
-            ])
-            ->add('specialMessage', TextareaType::class, [
-                'required' => false,
-            ])
-            ->add($this->createImagesGroup($builder, $options))
-            ->add('save', SubmitType::class);
+            ]);
+
+        return $builderAddressGroup;
     }
 
     /**

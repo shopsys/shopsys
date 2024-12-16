@@ -1,3 +1,4 @@
+import { StoreContact } from './StoreContact';
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { Infobox } from 'components/Basic/Infobox/Infobox';
@@ -84,12 +85,18 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
                         )}
                         {store.description && (
                             <InfoItem>
-                                <p>{store.description}</p>
+                                <p className="text-sm" dangerouslySetInnerHTML={{ __html: store.description }} />
                             </InfoItem>
                         )}
 
+                        {store.phone || store.email ? (
+                            <InfoItem>
+                                <StoreContact email={store.email} phone={store.phone} />
+                            </InfoItem>
+                        ) : null}
+
                         <InfoItem>
-                            <StoreHeading text={t('Opening hours')} />
+                            <h5 className="mb-2">{t('Opening hours')}</h5>
                             <OpeningHours openingHours={store.openingHours} />
                         </InfoItem>
 
@@ -102,7 +109,5 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
         </div>
     );
 };
-
-const StoreHeading: FC<{ text: string }> = ({ text }) => <h6 className="mb-2">{text}</h6>;
 
 const InfoItem: FC = ({ children }) => <div className="mb-5">{children}</div>;

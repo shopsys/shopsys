@@ -11,6 +11,9 @@ query StoreQuery($uuid: Uuid, $slug: String) {
             code
         }
         specialMessage
+        phone
+        email
+        directions
         latitude
         longitude
         breadcrumb {

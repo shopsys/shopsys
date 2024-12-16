@@ -2456,14 +2456,16 @@ type Store implements Breadcrumb & Slug {
   breadcrumb: [Link!]!
   "Store address city"
   city: String!
-  ""
-  contactInfo: String
   "Store address country"
   country: Country!
   "Store description"
   description: String
+  "Description of how to get to the store"
+  directions: String
   "Distance from the user in meters"
   distance: Int
+  "Store email"
+  email: String
   "Store images"
   images(type: String = null): [Image!]!
   "Is set as default store"
@@ -2478,6 +2480,8 @@ type Store implements Breadcrumb & Slug {
   name: String!
   "Store opening hours"
   openingHours: OpeningHours!
+  "Store phone"
+  phone: String
   "Store address postcode"
   postcode: String!
   "Store URL slug"

@@ -3187,13 +3187,16 @@ export type TypeStore = TypeBreadcrumb & TypeSlug & {
   breadcrumb: Array<TypeLink>;
   /** Store address city */
   city: Scalars['String']['output'];
-  contactInfo: Maybe<Scalars['String']['output']>;
   /** Store address country */
   country: TypeCountry;
   /** Store description */
   description: Maybe<Scalars['String']['output']>;
+  /** Description of how to get to the store */
+  directions: Maybe<Scalars['String']['output']>;
   /** Distance from the user in meters */
   distance: Maybe<Scalars['Int']['output']>;
+  /** Store email */
+  email: Maybe<Scalars['String']['output']>;
   /** Store images */
   images: Array<TypeImage>;
   /** Is set as default store */
@@ -3208,6 +3211,8 @@ export type TypeStore = TypeBreadcrumb & TypeSlug & {
   name: Scalars['String']['output'];
   /** Store opening hours */
   openingHours: TypeOpeningHours;
+  /** Store phone */
+  phone: Maybe<Scalars['String']['output']>;
   /** Store address postcode */
   postcode: Scalars['String']['output'];
   /** Store URL slug */
