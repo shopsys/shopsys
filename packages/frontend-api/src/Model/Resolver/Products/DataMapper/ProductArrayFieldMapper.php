@@ -129,7 +129,7 @@ class ProductArrayFieldMapper
      */
     public function isSellingDenied(array $data): bool
     {
-        return $data['calculated_selling_denied'];
+        return $data['calculated_selling_denied'] === true || $data['is_sale_exclusion'] === true;
     }
 
     /**

@@ -50,6 +50,8 @@ class ProductExportFieldProvider
     public const string STORE_AVAILABILITIES_INFORMATION = 'store_availabilities_information';
     public const string AVAILABILITY_STATUS = 'availability_status';
 
+    public const string IS_SALE_EXCLUSION = 'is_sale_exclusion';
+
     /**
      * @return string[]
      */

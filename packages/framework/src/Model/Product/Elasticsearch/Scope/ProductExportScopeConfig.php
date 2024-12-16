@@ -62,6 +62,7 @@ class ProductExportScopeConfig
         $this->addNewExportScopeRule(self::SCOPE_SELLING_DENIED, [
             ProductExportFieldProvider::SELLING_DENIED,
             ProductExportFieldProvider::CALCULATED_SELLING_DENIED,
+            ProductExportFieldProvider::IS_SALE_EXCLUSION,
         ], [
             self::PRECONDITION_SELLING_DENIED_RECALCULATION,
         ]);

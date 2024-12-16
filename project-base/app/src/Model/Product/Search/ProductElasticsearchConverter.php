@@ -27,7 +27,6 @@ class ProductElasticsearchConverter extends BaseProductElasticsearchConverter
         $result[ProductExportFieldProvider::SEARCHING_SHORT_DESCRIPTIONS] = $product[ProductExportFieldProvider::SEARCHING_SHORT_DESCRIPTIONS] ?? '';
         $result[ProductExportFieldProvider::SEARCHING_DESCRIPTIONS] = $product[ProductExportFieldProvider::SEARCHING_DESCRIPTIONS] ?? '';
 
-        $result[ProductExportFieldProvider::IS_SALE_EXCLUSION] = $product[ProductExportFieldProvider::IS_SALE_EXCLUSION] ?? true;
         $result[ProductExportFieldProvider::MAIN_CATEGORY_PATH] = $product[ProductExportFieldProvider::MAIN_CATEGORY_PATH] ?? '';
         $result[ProductExportFieldProvider::BREADCRUMB] = $product[ProductExportFieldProvider::BREADCRUMB] ?? [];
 

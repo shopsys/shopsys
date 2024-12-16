@@ -433,6 +433,13 @@ class FilterQuery
             ],
         ];
 
+        // exclusion on current domain
+        $clone->filters[] = [
+            'term' => [
+                'is_sale_exclusion' => false,
+            ],
+        ];
+
         return $clone;
     }
 

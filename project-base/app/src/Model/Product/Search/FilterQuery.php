@@ -24,6 +24,7 @@ use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery as BaseFilterQuery;
  * @method \App\Model\Product\Search\FilterQuery filterBySliderParameters(\Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData[] $sliderParametersData)
  * @method \App\Model\Product\Search\FilterQuery filterByPrices(\Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, \Shopsys\FrameworkBundle\Component\Money\Money|null $minimalPrice = null, \Shopsys\FrameworkBundle\Component\Money\Money|null $maximalPrice = null)
  * @method \App\Model\Product\Search\FilterQuery applyOrderingByIdAscending()
+ * @method \App\Model\Product\Search\FilterQuery filterOnlySellable()
  */
 class FilterQuery extends BaseFilterQuery
 {
@@ -81,28 +82,5 @@ class FilterQuery extends BaseFilterQuery
         }
 
         return $query;
-    }
-
-    /**
-     * @return \App\Model\Product\Search\FilterQuery
-     */
-    public function filterOnlySellable(): self
-    {
-        $clone = clone $this;
-
-        $clone->filters[] = [
-            'term' => [
-                'calculated_selling_denied' => false,
-            ],
-        ];
-
-        // exclusion on current domain
-        $clone->filters[] = [
-            'term' => [
-                'is_sale_exclusion' => false,
-            ],
-        ];
-
-        return $clone;
     }
 }

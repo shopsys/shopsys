@@ -73,15 +73,6 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
 
     /**
      * @param array $data
-     * @return bool
-     */
-    public function isSellingDenied(array $data): bool
-    {
-        return $data['calculated_selling_denied'] === true || $data['is_sale_exclusion'] === true;
-    }
-
-    /**
-     * @param array $data
      * @return string|null
      */
     public function getPartNumber(array $data): ?string
