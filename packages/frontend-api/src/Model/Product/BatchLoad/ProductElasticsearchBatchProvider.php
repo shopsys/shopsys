@@ -4,7 +4,13 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Product\BatchLoad;
 
+use InvalidArgumentException;
+use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
+use Shopsys\FrameworkBundle\Model\Category\Category;
+use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
+use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider;
+use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory;
 
 class ProductElasticsearchBatchProvider
@@ -13,11 +19,13 @@ class ProductElasticsearchBatchProvider
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory $filterQueryFactory
      * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductElasticsearchBatchRepository $productElasticsearchBatchRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider $productFrontendLimitProvider
+     * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
      */
     public function __construct(
         protected readonly FilterQueryFactory $filterQueryFactory,
         protected readonly ProductElasticsearchBatchRepository $productElasticsearchBatchRepository,
         protected readonly ProductFrontendLimitProvider $productFrontendLimitProvider,
+        protected readonly EntityNameResolver $entityNameResolver,
     ) {
     }
 
@@ -49,5 +57,92 @@ class ProductElasticsearchBatchProvider
         }
 
         return $this->productElasticsearchBatchRepository->getBatchedProductsAndTotalsByFilterQueries($filterQueries);
+    }
+
+    /**
+     * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductBatchLoadByEntityData[] $productBatchLoadByEntitiesData
+     * @return array
+     */
+    public function getBatchedByEntities(array $productBatchLoadByEntitiesData): array
+    {
+        $filterQueries = [];
+
+        foreach ($productBatchLoadByEntitiesData as $productBatchLoadByEntityData) {
+            $filterQueries[$productBatchLoadByEntityData->getId()] = $this->getFilterQuery($productBatchLoadByEntityData);
+        }
+
+        return $this->productElasticsearchBatchRepository->getBatchedProductsAndTotalsByFilterQueries($filterQueries);
+    }
+
+    /**
+     * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductBatchLoadByEntityData $productBatchLoadByEntityData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    protected function getFilterQuery(ProductBatchLoadByEntityData $productBatchLoadByEntityData): FilterQuery
+    {
+        $entityClass = $productBatchLoadByEntityData->getEntityClass();
+
+        $entityClass = $this->entityNameResolver->resolve($entityClass);
+
+        $filterQuery = match ($entityClass) {
+            Category::class => $this->getFilterQueryForCategory($productBatchLoadByEntityData),
+            Flag::class => $this->getFilterQueryForFilterData($productBatchLoadByEntityData),
+            Brand::class => $this->getFilterQueryForBrand($productBatchLoadByEntityData),
+            default => throw new InvalidArgumentException(sprintf('Entity class "%s" is not supported for creating filter query', $entityClass)),
+        };
+
+        $filterQuery = $filterQuery->setFrom($productBatchLoadByEntityData->getOffset());
+
+        if ($productBatchLoadByEntityData->getSearch() !== '') {
+            $filterQuery = $filterQuery->search($productBatchLoadByEntityData->getSearch());
+        }
+
+        return $filterQuery;
+    }
+
+    /**
+     * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductBatchLoadByEntityData $productBatchLoadByEntityData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    protected function getFilterQueryForCategory(
+        ProductBatchLoadByEntityData $productBatchLoadByEntityData,
+    ): FilterQuery {
+        return $this->filterQueryFactory->createListableProductsByCategoryId(
+            $productBatchLoadByEntityData->getProductFilterData(),
+            $productBatchLoadByEntityData->getOrderingModeId(),
+            1,
+            $productBatchLoadByEntityData->getLimit(),
+            $productBatchLoadByEntityData->getEntityId(),
+        );
+    }
+
+    /**
+     * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductBatchLoadByEntityData $productBatchLoadByEntityData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    protected function getFilterQueryForFilterData(
+        ProductBatchLoadByEntityData $productBatchLoadByEntityData,
+    ): FilterQuery {
+        return $this->filterQueryFactory->createWithProductFilterData(
+            $productBatchLoadByEntityData->getProductFilterData(),
+            $productBatchLoadByEntityData->getOrderingModeId(),
+            1,
+            $productBatchLoadByEntityData->getLimit(),
+        );
+    }
+
+    /**
+     * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductBatchLoadByEntityData $productBatchLoadByEntityData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    protected function getFilterQueryForBrand(ProductBatchLoadByEntityData $productBatchLoadByEntityData): FilterQuery
+    {
+        return $this->filterQueryFactory->createListableProductsByBrandId(
+            $productBatchLoadByEntityData->getProductFilterData(),
+            $productBatchLoadByEntityData->getOrderingModeId(),
+            1,
+            $productBatchLoadByEntityData->getLimit(),
+            $productBatchLoadByEntityData->getEntityId(),
+        );
     }
 }

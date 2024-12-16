@@ -23,7 +23,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFie
  * @method \App\Model\Category\Category[] getCategories(array $data)
  * @method \App\Model\Product\Flag\Flag[] getFlags(array $data)
  * @method \App\Model\Product\Brand\Brand|null getBrand(array $data)
- * @property \App\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
  * @property \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
  */
 class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
@@ -32,7 +31,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \App\Model\Product\Flag\FlagFacade $flagFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
-     * @param \App\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
      * @param \App\FrontendApi\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider $productFrontendLimitProvider
      * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader

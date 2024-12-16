@@ -86,6 +86,24 @@ class ProductsBatchLoader
     }
 
     /**
+     * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductBatchLoadByEntityData[] $productBatchLoadByEntitiesData
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function loadByEntities(array $productBatchLoadByEntitiesData): Promise
+    {
+        $batchedByEntities = $this->productElasticsearchBatchProvider->getBatchedByEntities($productBatchLoadByEntitiesData);
+        self::$totalsIndexedByBatchLoadDataId = $batchedByEntities[ProductElasticsearchBatchRepository::TOTALS_KEY];
+
+        $result = [];
+
+        foreach ($productBatchLoadByEntitiesData as $productBatchLoadByEntityData) {
+            $result[] = $batchedByEntities[ProductElasticsearchBatchRepository::PRODUCTS_KEY][$productBatchLoadByEntityData->getId()];
+        }
+
+        return $this->promiseAdapter->all($result);
+    }
+
+    /**
      * @param array $arrayForSorting
      * @param array $originalArray
      * @return array
