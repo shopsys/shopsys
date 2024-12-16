@@ -770,16 +770,16 @@ services:
     Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactory
 
+    Shopsys\FrameworkBundle\Model\Mail\MailTemplateSender\MailTemplateSenderFacade:
+        arguments:
+            $mailTemplateSenders: !tagged_iterator shopsys.mail_template_sender
+
     Shopsys\FrameworkBundle\Model\Mail\Mailer: ~
 
     Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider:
         arguments:
             - '%env(MAILER_DSN)%'
             - '%env(bool:MAILER_FORCE_WHITELIST)%'
-
-    Shopsys\FrameworkBundle\Model\Mail\MailTemplateSender\MailTemplateSenderFacade:
-        arguments:
-            $mailTemplateSenders: !tagged_iterator shopsys.mail_template_sender
 
     Shopsys\FrameworkBundle\Model\Module\EnabledModuleFactoryInterface:
         alias: Shopsys\FrameworkBundle\Model\Module\EnabledModuleFactory
