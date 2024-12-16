@@ -17,7 +17,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
-final class EffectiveSpecialPriceForProductTest extends TransactionFunctionalTestCase
+final class RelevantSpecialPriceForProductTest extends TransactionFunctionalTestCase
 {
     private const int TEST_DOMAIN_ID = 1;
 

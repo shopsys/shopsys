@@ -25,7 +25,7 @@ class SpecialPriceRepository
      * @param int $domainId
      * @return array{priceAmount:\Shopsys\FrameworkBundle\Component\Money\Money, validFrom: \DateTimeImmutable, validTo: \DateTimeImmutable, productListName: string, productListId: int, productId: int}|null
      */
-    public function getEffectiveSpecialPrice(Product $product, int $domainId): ?array
+    public function findRelevantSpecialPrice(Product $product, int $domainId): ?array
     {
         $queryBuilder = $this->getCurrentAndFutureSpecialPricesQueryBuilder($product, $domainId)
             ->setMaxResults(1);

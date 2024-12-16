@@ -35,20 +35,20 @@ class SpecialPriceApiFactory
             return null;
         }
 
-        $effectiveSpecialPrice = $this->getEffectiveSpecialPrice($specialPricesArray);
+        $specialPrice = $this->findRelevantSpecialPrice($specialPricesArray);
 
-        if ($effectiveSpecialPrice !== null && $effectiveSpecialPrice->price->getPriceWithVat()->isGreaterThanOrEqualTo($basicPrice->getPriceWithVat())) {
+        if ($specialPrice !== null && $specialPrice->price->getPriceWithVat()->isGreaterThanOrEqualTo($basicPrice->getPriceWithVat())) {
             return null;
         }
 
-        return $effectiveSpecialPrice;
+        return $specialPrice;
     }
 
     /**
      * @param array $specialPricesArray
      * @return \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice|null
      */
-    protected function getEffectiveSpecialPrice(array $specialPricesArray): ?SpecialPrice
+    protected function findRelevantSpecialPrice(array $specialPricesArray): ?SpecialPrice
     {
         $currentDateTime = new DateTimeImmutable();
         $usedProductIds = [];

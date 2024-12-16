@@ -25,23 +25,23 @@ class SpecialPriceFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $basicPrice
      * @return \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice|null
      */
-    public function getEffectiveSpecialPrice(Product $product, int $domainId, Price $basicPrice): ?SpecialPrice
+    public function findRelevantSpecialPrice(Product $product, int $domainId, Price $basicPrice): ?SpecialPrice
     {
-        $effectiveSpecialPrice = $this->specialPriceRepository->getEffectiveSpecialPrice($product, $domainId);
+        $relevantSpecialPrice = $this->specialPriceRepository->findRelevantSpecialPrice($product, $domainId);
 
-        if ($effectiveSpecialPrice === null) {
+        if ($relevantSpecialPrice === null) {
             return null;
         }
 
         $specialPrice = $this->specialPriceFactory->createWithCalculations(
-            $effectiveSpecialPrice['validFrom'],
-            $effectiveSpecialPrice['validTo'],
-            $effectiveSpecialPrice['priceAmount'],
+            $relevantSpecialPrice['validFrom'],
+            $relevantSpecialPrice['validTo'],
+            $relevantSpecialPrice['priceAmount'],
             $domainId,
             $product->getVatForDomain($domainId),
-            $effectiveSpecialPrice['productListId'],
-            $effectiveSpecialPrice['productListName'],
-            $effectiveSpecialPrice['productId'],
+            $relevantSpecialPrice['productListId'],
+            $relevantSpecialPrice['productListName'],
+            $relevantSpecialPrice['productId'],
         );
 
         if ($specialPrice->price->getPriceWithVat()->isGreaterThanOrEqualTo($basicPrice->getPriceWithVat())) {

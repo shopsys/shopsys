@@ -93,7 +93,7 @@ class ProductPriceCalculationForCustomerUser
             $pricingGroup,
         );
 
-        $specialPrice = $this->specialPriceFacade->getEffectiveSpecialPrice($product, $domainId, $basicPrice);
+        $specialPrice = $this->specialPriceFacade->findRelevantSpecialPrice($product, $domainId, $basicPrice);
 
         if ($specialPrice === null || $specialPrice->isFuturePrice()) {
             return $basicPrice;

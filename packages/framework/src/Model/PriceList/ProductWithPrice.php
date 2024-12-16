@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="products_with_prices")
  * @ORM\Entity
  */
-class ProductWithPrice
+class ProductWithPrice  // @todo PriceListProductPrice
 {
     /**
      * @var int
