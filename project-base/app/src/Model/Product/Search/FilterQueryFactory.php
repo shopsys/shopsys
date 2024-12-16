@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Search;
 
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery as BaseFilterQuery;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory as BaseFilterQueryFactory;
 
@@ -40,44 +39,5 @@ class FilterQueryFactory extends BaseFilterQueryFactory
     public function create(string $indexName): BaseFilterQuery
     {
         return new FilterQuery($indexName);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param string $orderingModeId
-     * @param int $page
-     * @param int $limit
-     * @param string $searchText
-     * @return \App\Model\Product\Search\FilterQuery
-     */
-    public function createListableProductsBySearchText(
-        ProductFilterData $productFilterData,
-        string $orderingModeId,
-        int $page,
-        int $limit,
-        string $searchText,
-    ): BaseFilterQuery {
-        /** @var \App\Model\Product\Search\FilterQuery $filterQuery */
-        $filterQuery = parent::createListableProductsBySearchText($productFilterData, $orderingModeId, $page, $limit, $searchText);
-
-        $filterQuery = $filterQuery->filterNotExcludeOrInStock();
-
-        return $filterQuery;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param string $orderingModeId
-     * @param int $page
-     * @param int $limit
-     * @return \App\Model\Product\Search\FilterQuery
-     */
-    public function createListableProducts(
-        ProductFilterData $productFilterData,
-        string $orderingModeId,
-        int $page,
-        int $limit,
-    ): FilterQuery {
-        return $this->createWithProductFilterData($productFilterData, $orderingModeId, $page, $limit);
     }
 }

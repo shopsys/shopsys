@@ -93,25 +93,6 @@ class FilterQueryFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
-     * @param string $orderingModeId
-     * @param int $page
-     * @param int $limit
-     * @param string $searchText
-     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
-     */
-    public function createListableProductsBySearchText(
-        ProductFilterData $productFilterData,
-        string $orderingModeId,
-        int $page,
-        int $limit,
-        string $searchText,
-    ): FilterQuery {
-        return $this->createWithProductFilterData($productFilterData, $orderingModeId, $page, $limit)
-            ->search($searchText);
-    }
-
-    /**
      * @return string
      * @internal visibility of this method will be changed to protected in next major version
      */
