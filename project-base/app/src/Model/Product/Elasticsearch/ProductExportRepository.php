@@ -13,10 +13,8 @@ use App\Model\ProductVideo\ProductVideoTranslationsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
-use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
-use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
@@ -26,7 +24,6 @@ use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository 
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider as BaseProductExportFieldProvider;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
@@ -53,6 +50,9 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
  * @method int extractPriorityByProductType(\App\Model\Product\Product $product, int $domainId)
  * @method array extractStoreAvailabilitiesInformation(\App\Model\Product\Product $product, int $domainId)
  * @method array extractSpecialPrices(int $domainId, \App\Model\Product\Product $product)
+ * @method array extractPrices(int $domainId, \App\Model\Product\Product $product)
+ * @method \Shopsys\FrameworkBundle\Component\Money\Money getMaximalVariantPriceForFilteringMinimalPrice(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int $domainId)
+ * @method \Shopsys\FrameworkBundle\Component\Money\Money getMinimalVariantPriceForFilteringMaximalPrice(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int $domainId)
  */
 class ProductExportRepository extends BaseProductExportRepository
 {
@@ -94,7 +94,7 @@ class ProductExportRepository extends BaseProductExportRepository
         ProductRepository $productRepository,
         InMemoryCache $inMemoryCache,
         SpecialPriceFacade $specialPriceFacade,
-        private readonly ProductPriceCalculation $productPriceCalculation,
+        ProductPriceCalculation $productPriceCalculation,
         private readonly BreadcrumbFacade $breadcrumbFacade,
         private readonly ProductVideoTranslationsRepository $productVideoTranslationsRepository,
     ) {
@@ -115,6 +115,7 @@ class ProductExportRepository extends BaseProductExportRepository
             $productRepository,
             $inMemoryCache,
             $specialPriceFacade,
+            $productPriceCalculation,
         );
     }
 
@@ -150,123 +151,6 @@ class ProductExportRepository extends BaseProductExportRepository
             }, $product->getProductVideos()),
             default => parent::getExportedFieldValue($domainId, $product, $locale, $field),
         };
-    }
-
-    /**
-     * @param int $domainId
-     * @param \App\Model\Product\Product $product
-     * @return array
-     */
-    protected function extractPrices(int $domainId, BaseProduct $product): array
-    {
-        $prices = [];
-        $productSellingPrices = $this->productFacade->getAllProductSellingPricesByDomainId($product, $domainId);
-
-        foreach ($productSellingPrices as $productSellingPrice) {
-            $sellingPrice = $productSellingPrice->getSellingPrice();
-            $priceFrom = false;
-
-            if ($sellingPrice instanceof ProductPrice) {
-                $priceFrom = $sellingPrice->isPriceFrom();
-            }
-
-            $pricingGroup = $productSellingPrice->getPricingGroup();
-            $prices[] = [
-                'pricing_group_id' => $pricingGroup->getId(),
-                'price_with_vat' => (float)$sellingPrice->getPriceWithVat()->getAmount(),
-                'price_without_vat' => (float)$sellingPrice->getPriceWithoutVat()->getAmount(),
-                'vat' => (float)$sellingPrice->getVatAmount()->getAmount(),
-                'price_from' => $priceFrom,
-                'filtering_minimal_price' => (float)$this->getMaximalVariantPriceForFilteringMinimalPrice($product, $pricingGroup, $domainId)->getAmount(),
-                'filtering_maximal_price' => (float)$this->getMinimalVariantPriceForFilteringMaximalPrice($product, $pricingGroup, $domainId)->getAmount(),
-            ];
-        }
-
-        return $prices;
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    private function getMaximalVariantPriceForFilteringMinimalPrice(
-        Product $product,
-        PricingGroup $pricingGroup,
-        int $domainId,
-    ): Money {
-        $price = null;
-
-        if (!$product->isMainVariant()) {
-            return $this->productPriceCalculation->calculatePrice(
-                $product,
-                $pricingGroup->getDomainId(),
-                $pricingGroup,
-            )->getPriceWithVat();
-        }
-
-        $variants = $this->productRepository->getAllSellableVariantsByMainVariant($product, $domainId, $pricingGroup);
-
-        foreach ($variants as $variant) {
-            $variantPrice = $this->productPriceCalculation->calculatePrice(
-                $variant,
-                $pricingGroup->getDomainId(),
-                $pricingGroup,
-            )->getPriceWithVat();
-
-            if ($price === null || $variantPrice->isGreaterThan($price)) {
-                $price = $variantPrice;
-            }
-        }
-
-        if ($price === null) {
-            $price = Money::zero();
-        }
-
-        return $price;
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    public function getMinimalVariantPriceForFilteringMaximalPrice(
-        Product $product,
-        PricingGroup $pricingGroup,
-        int $domainId,
-    ): Money {
-        $price = null;
-
-        if (!$product->isMainVariant()) {
-            return $this->productPriceCalculation->calculatePrice(
-                $product,
-                $pricingGroup->getDomainId(),
-                $pricingGroup,
-            )->getPriceWithVat();
-        }
-
-        $variants = $this->productRepository->getAllSellableVariantsByMainVariant($product, $domainId, $pricingGroup);
-
-        foreach ($variants as $variant) {
-            $variantPrice = $this->productPriceCalculation->calculatePrice(
-                $variant,
-                $pricingGroup->getDomainId(),
-                $pricingGroup,
-            )->getPriceWithVat();
-
-            if ($price === null || $variantPrice->isLessThan($price)) {
-                $price = $variantPrice;
-            }
-        }
-
-        if ($price === null) {
-            $price = Money::zero();
-        }
-
-        return $price;
     }
 
     /**
