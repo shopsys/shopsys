@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Command;
 
-use Shopsys\FrameworkBundle\Component\Maintenance\MaintenanceModeSubscriber;
-use Shopsys\FrameworkBundle\Component\Redis\RedisClientFacade;
+use Shopsys\FrameworkBundle\Component\Maintenance\MaintenanceModeFacade;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -22,13 +21,13 @@ class MaintenanceModeCommand extends Command
     /**
      * @var string
      */
-    private const ACTION_ARGUMENT = 'action';
+    private const string ACTION_ARGUMENT = 'action';
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Redis\RedisClientFacade $redisClientFacade
+     * @param \Shopsys\FrameworkBundle\Component\Maintenance\MaintenanceModeFacade $maintenanceModeFacade
      */
     public function __construct(
-        protected readonly RedisClientFacade $redisClientFacade,
+        protected readonly MaintenanceModeFacade $maintenanceModeFacade,
     ) {
         parent::__construct();
     }
@@ -73,7 +72,7 @@ class MaintenanceModeCommand extends Command
      */
     public function enableMaintenanceMode(SymfonyStyle $symfonyStyleIo): void
     {
-        $this->redisClientFacade->save(MaintenanceModeSubscriber::MAINTENANCE_KEY, true);
+        $this->maintenanceModeFacade->enable();
         $symfonyStyleIo->note('Maintenance mode was enabled');
     }
 
@@ -82,8 +81,8 @@ class MaintenanceModeCommand extends Command
      */
     public function disableMaintenanceMode(SymfonyStyle $symfonyStyleIo): void
     {
-        if ($this->redisClientFacade->contains(MaintenanceModeSubscriber::MAINTENANCE_KEY)) {
-            $this->redisClientFacade->delete(MaintenanceModeSubscriber::MAINTENANCE_KEY);
+        if ($this->maintenanceModeFacade->isEnabled()) {
+            $this->maintenanceModeFacade->disable();
             $symfonyStyleIo->note('Maintenance mode was disabled');
         }
     }
