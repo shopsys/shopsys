@@ -485,7 +485,7 @@ http://nginx.org/LICENSE
 
 ### Redis
 
-Image: `redis:7.0-alpine`  
+Image: `redis:7.4-alpine`  
 License: BSD-3-Clause  
 https://redis.io/topics/license
 

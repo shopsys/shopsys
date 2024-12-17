@@ -147,7 +147,7 @@ services:
             GTM_ID: "${GTM_ID_VALUE}"
 
     redis:
-        image: redis:7.0-alpine
+        image: redis:7.4-alpine
         networks:
             - default
         labels:

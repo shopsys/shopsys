@@ -58,7 +58,7 @@
         "react-swipeable": "~7.0.2",
         "react-tabs": "~6.0.2",
         "react-toastify": "~10.0.6",
-        "redis": "~4.6.15",
+        "redis": "~4.7.0",
         "supercluster": "^8.0.1",
         "tailwind-merge": "~2.2.2",
         "tinycolor2": "~1.6.0",

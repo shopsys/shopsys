@@ -58,7 +58,7 @@ RUN apk add --no-cache --virtual .build-deps \
     make \
     openssl-dev \
     rabbitmq-c-dev && \
-    pecl install redis-5.3.7 && \
+    pecl install redis && \
     docker-php-ext-enable redis && \
     pecl install amqp && \
     docker-php-ext-enable amqp && \

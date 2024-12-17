@@ -72,7 +72,7 @@ services:
             - GROUP=${GROUP}
 
     redis:
-        image: redis:5.0-alpine
+        image: redis:7.4-alpine
         container_name: shopsys-framework-redis
 
     selenium-server:
