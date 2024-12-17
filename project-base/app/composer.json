@@ -159,7 +159,7 @@
             "php app/downloadPhing.php --phing-version=3.0.0": "script",
             "php phing clean": "script",
             "shopsys:domains-urls:configure": "symfony-cmd",
-            "ckeditor:install --clear=skip --release=full --tag=4.5.11": "symfony-cmd"
+            "ckeditor:install --clear=skip --release=full --tag=4.22.1": "symfony-cmd"
         },
         "security-check": "security-checker security:check"
     },

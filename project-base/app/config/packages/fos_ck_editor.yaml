@@ -2,6 +2,7 @@ fos_ck_editor:
     autoload: false
     configs:
         default:
+            versionCheck: false
             entities_greek: false
             entities_latin: false
             enterMode: 2
@@ -22,6 +23,7 @@ fos_ck_editor:
             extraPlugins: 'layoutmanager'
 
         email:
+            versionCheck: false
             entities_greek: false
             entities_latin: false
             enterMode: 2

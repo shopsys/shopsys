@@ -95,8 +95,10 @@ export default class InitGrapesJs {
             plugins: plugins,
             pluginsOpts: {
                 [ckeditorPlugin]: {
+                    ckeditor: '',
                     options: {
                         enterMode: 2,
+                        versionCheck: false,
                         allowedContent: true,
                         extraAllowedContent: '*(*)',
                         toolbar: [
@@ -203,8 +205,10 @@ export default class InitGrapesJs {
                     styleManagerSectors: []
                 },
                 [ckeditorPlugin]: {
+                    ckeditor: '',
                     options: {
                         enterMode: 2,
+                        versionCheck: false,
                         toolbar: [
                             { name: 'basicstyles', items: ['Bold', 'Italic', 'Strike', '-', 'RemoveFormat'] },
                             { name: 'format', items: ['Format'] },
