@@ -10,6 +10,11 @@ export const cs = {
     blockManager: {
         labels: {
             // 'block-id': 'Block Label',
+            image: 'Obrázek',
+            text: 'Text',
+            sect100: '1 sloupec',
+            sect50: '2 sloupce (stejně široké)',
+            'link-block': 'Blok odkazu'
         },
         categories: {
             // 'category-id': 'Category Label',

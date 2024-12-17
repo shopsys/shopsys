@@ -223,6 +223,9 @@ msgstr ""
 msgid "In stock"
 msgstr ""
 
+msgid "Insert variable"
+msgstr ""
+
 msgid "Insert your text here"
 msgstr ""
 
@@ -292,6 +295,9 @@ msgstr ""
 msgid "Made in SK"
 msgstr ""
 
+msgid "Mandatory variables"
+msgstr ""
+
 msgid "Map"
 msgstr ""
 
@@ -350,6 +356,9 @@ msgid "Notification bar has been successfuly deleted"
 msgstr ""
 
 msgid "Open in new window"
+msgstr ""
+
+msgid "Optional variables"
 msgstr ""
 
 msgid "Order confirmation page"
