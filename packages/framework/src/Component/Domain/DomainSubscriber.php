@@ -39,7 +39,7 @@ class DomainSubscriber implements EventSubscriberInterface
     {
         return [
             // Setting domain by request must be done before loading other services (eg.: routing, localization...)
-            KernelEvents::REQUEST => [['onKernelRequest', 100]],
+            KernelEvents::REQUEST => [['onKernelRequest', 20000]],
         ];
     }
 }
