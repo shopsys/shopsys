@@ -11,7 +11,6 @@ use App\DataFixtures\Demo\FlagDataFixture;
 use App\DataFixtures\Demo\ParameterDataFixture;
 use App\Model\Category\Category;
 use App\Model\Product\Brand\Brand;
-use App\Model\Product\Filter\Elasticsearch\ProductFilterConfigFactory;
 use App\Model\Product\Flag\Flag;
 use App\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -37,11 +36,6 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
     /**
      * @inject
      */
-    protected ProductFilterConfigFactory $productFilterConfigFactory;
-
-    /**
-     * @inject
-     */
     protected ParameterRepository $parameterRepository;
 
     /**
@@ -59,13 +53,8 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
             /** @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $expectedCountData */
             $expectedCountData = $dataProvider[2];
 
-            $filterConfig = $this->productFilterConfigFactory->createForCategory(
-                $this->domain->getLocale(),
-                $category,
-            );
             $countData = $this->productOnCurrentDomainFacade->getProductFilterCountDataInCategory(
                 $category->getId(),
-                $filterConfig,
                 $filterData,
             );
             $this->assertEquals($expectedCountData, $this->removeEmptyParameters($countData), 'TestCase: ' . $testCaseName);
@@ -98,14 +87,8 @@ class ProductOnCurrentDomainElasticFacadeCountDataTest extends ParameterTransact
             /** @var \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData $expectedCountData */
             $expectedCountData = $dataProvider[2];
 
-            $filterConfig = $this->productFilterConfigFactory->createForSearch(
-                $this->domain->getId(),
-                $this->domain->getLocale(),
-                $searchText,
-            );
             $countData = $this->productOnCurrentDomainFacade->getProductFilterCountDataForSearch(
                 $searchText,
-                $filterConfig,
                 $filterData,
             );
 

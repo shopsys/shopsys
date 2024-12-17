@@ -323,27 +323,6 @@ class ProductRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Product
      */
-    public function getVisible($id, $domainId, PricingGroup $pricingGroup)
-    {
-        $qb = $this->getAllVisibleQueryBuilder($domainId, $pricingGroup);
-        $qb->andWhere('p.id = :productId');
-        $qb->setParameter('productId', $id);
-
-        $product = $qb->getQuery()->getOneOrNullResult();
-
-        if ($product === null) {
-            throw new ProductNotFoundException();
-        }
-
-        return $product;
-    }
-
-    /**
-     * @param int $id
-     * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Shopsys\FrameworkBundle\Model\Product\Product
-     */
     public function getSellableById($id, $domainId, PricingGroup $pricingGroup)
     {
         $qb = $this->getAllSellableQueryBuilder($domainId, $pricingGroup);

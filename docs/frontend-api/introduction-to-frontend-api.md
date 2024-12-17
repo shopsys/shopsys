@@ -23,9 +23,6 @@ You have to create a pair of private and public keys for signing access tokens w
 Note that when you regenerate the keys in the future, you invalidate all issued access and refresh tokens.
 You can read more about tokens in part [authentication](./authentication.md).
 
-You can also configure the place from which are the data for products taken from by choosing the implementation of `ProductOnCurrentDomainFacadeInterface`.  
-You can find more about this feature in [separate article](../model/front-end-product-filtering.md).
-
 ## Try it
 
 GraphQL endpoint is available directly on your online store's domain on the `/graphql/` path (ie. while running locally on Docker, it's http://127.0.0.1:8000/graphql/).

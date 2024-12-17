@@ -163,7 +163,6 @@ class ProductFilterOptionsFactory
         if ($searchText !== '') {
             $productFilterCountData = $this->productOnCurrentDomainElasticFacade->getProductFilterCountDataForSearch(
                 $searchText,
-                $productFilterConfig,
                 $productFilterData,
             );
         } else {
@@ -206,7 +205,6 @@ class ProductFilterOptionsFactory
 
         $productFilterCountData = $this->productOnCurrentDomainElasticFacade->getProductFilterCountDataInCategory(
             $category->getId(),
-            $productFilterConfig,
             $productFilterData,
         );
 
