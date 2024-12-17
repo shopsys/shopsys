@@ -117,14 +117,36 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
         $methodName = $this->getNormalizedMethodName($this->getNodeName($node));
         $domainArgumentIndex = $this->transMethodSpecifications[$methodName]->getDomainArgumentIndex();
 
-        if ($domainArgumentIndex !== null && isset($node->args[$domainArgumentIndex])) {
-            return PhpParserNodeHelper::getConcatenatedStringValue(
-                $node->args[$domainArgumentIndex]->value,
-                $this->file,
-            );
+        if ($domainArgumentIndex === null) {
+            return Translator::DEFAULT_TRANSLATION_DOMAIN;
         }
 
-        return Translator::DEFAULT_TRANSLATION_DOMAIN;
+        $domainArg = null;
+
+        if (isset($node->args[$domainArgumentIndex]) && $node->args[$domainArgumentIndex] instanceof Node\Arg && $node->args[$domainArgumentIndex]->name === null) {
+            $domainArg = $node->args[$domainArgumentIndex];
+        } else {
+            foreach ($node->args as $arg) {
+                if (!$arg instanceof Node\Arg) {
+                    continue;
+                }
+
+                if ($arg->name !== null && $arg->name->name === 'domain') {
+                    $domainArg = $arg;
+
+                    break;
+                }
+            }
+        }
+
+        if ($domainArg === null) {
+            return Translator::DEFAULT_TRANSLATION_DOMAIN;
+        }
+
+        return PhpParserNodeHelper::getConcatenatedStringValue(
+            $domainArg->value,
+            $this->file,
+        );
     }
 
     /**

@@ -26,6 +26,14 @@ class Controller extends AbstractController
         t('t test');
         t('t test with domain', [], 'testDomain');
 
+        $locale = 'en';
+
+        t('my %adjective% string', ['%adjective%' => 'awesome'], locale: $locale);
+        t('my string with domain only', domain: 'another-translation-domain');
+        t('my %adjective% string with domain', ['%adjective%' => 'awesome'], domain: 'another-translation-domain');
+        t('my %adjective% string with named locale', ['%adjective%' => 'awesome'], 'someDomain', locale: $locale);
+        t('my %adjective% string with unsorted arguments', ['%adjective%' => 'awesome'], locale: $locale, domain: 'unsortedDomain');
+
         /** @Ignore */
         t('ignored');
         /** @Ignore */

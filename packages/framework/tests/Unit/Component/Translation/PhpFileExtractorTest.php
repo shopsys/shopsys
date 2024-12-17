@@ -43,6 +43,26 @@ class PhpFileExtractorTest extends TestCase
         $message->addSource(new FileSource($fileName, 27));
         $expected->add($message);
 
+        $message = new Message('my %adjective% string', Translator::DEFAULT_TRANSLATION_DOMAIN);
+        $message->addSource(new FileSource($fileName, 31));
+        $expected->add($message);
+
+        $message = new Message('my string with domain only', 'another-translation-domain');
+        $message->addSource(new FileSource($fileName, 32));
+        $expected->add($message);
+
+        $message = new Message('my %adjective% string with domain', 'another-translation-domain');
+        $message->addSource(new FileSource($fileName, 33));
+        $expected->add($message);
+
+        $message = new Message('my %adjective% string with named locale', 'someDomain');
+        $message->addSource(new FileSource($fileName, 34));
+        $expected->add($message);
+
+        $message = new Message('my %adjective% string with unsorted arguments', 'unsortedDomain');
+        $message->addSource(new FileSource($fileName, 35));
+        $expected->add($message);
+
         $this->assertEquals($expected, $catalogue);
     }
 
