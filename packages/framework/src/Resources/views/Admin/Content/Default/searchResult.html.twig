@@ -1,0 +1,19 @@
+<table>
+{% for result in results %}
+    <tr>
+        <td>
+            <a href="{{ result['uri'] }}">{{ result['label'] }}
+                <span class="result--path">(
+                    {% for index, pathLabel in result['pathLabels'] %}
+                        {{ pathLabel }}
+
+                        {% if index + 1 < result['pathLabels']|length %}
+                            <span>></span>
+                        {% endif %}
+                    {% endfor %}
+                    )</span>
+            </a>
+        </td>
+    </tr>
+{% endfor %}
+</table>

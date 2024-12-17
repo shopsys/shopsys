@@ -46,3 +46,83 @@
 .table-col-200px {
     width: 200px;
 }
+
+.web__header__search {
+    display: none;
+
+    @media @query-tablet {
+        position: absolute;
+        top: 50px;
+        width: 100%;
+        padding: 10px;
+
+        background-color: @color-f;
+        border-bottom: 1px solid @color-border-dark;
+
+        &.active {
+            display: block!important;
+        }
+
+        .input {
+            width: 100%;
+        }
+    }
+
+    @media @query-lg {
+        display: block;
+        position: relative;
+
+        padding-left: 15px;
+        width : 200px;
+    }
+
+
+    &__icon {
+        display: block;
+        margin-left: 10px;
+
+        @media @query-lg {
+            display: none;
+        }
+    }
+
+    &--input {
+        display: inline-block;
+    }
+
+    &--results {
+        position: absolute;
+        display: none;
+        padding: 5px;
+        width: 50vw;
+
+        color: #3b3b1f;
+        border: 1px solid @color-border-dark;
+        background-color: white;
+
+        @media @query-tablet {
+            margin-right: 5px;
+            width: calc(~'100% - 20px');
+        }
+
+        &__close {
+            display: inline-block;
+            float: right;
+        }
+
+        &__hint {
+            float: right;
+            color: #8a8a8a;
+            display: inline-block;
+            margin: 0 5px 0 3px;
+        }
+
+        .focused {
+            background-color: #b9e5ff;
+        }
+    }
+
+    .result--path {
+        color: #8a8a8a;
+    }
+}

@@ -498,5 +498,6 @@ security:
         - { path: ^/%admin_url%/_error/, roles: PUBLIC_ACCESS }
         # dashboard and the rest of pages
         - { path: ^/%admin_url%/dashboard, roles: ROLE_ADMIN }
+        - { path: ^/%admin_url%/search, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/, roles: ROLE_ALL }
         - { path: ^/, roles: PUBLIC_ACCESS }

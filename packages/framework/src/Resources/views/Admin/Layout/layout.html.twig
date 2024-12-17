@@ -28,6 +28,20 @@
                             <img class="web__header__logo__svg" src="{{ asset('public/admin/images/logo.svg') }}" alt="Shopsys Platform">
                         </a>
                     </div>
+                    <div class="web__header__search js-header-search">
+                        <input type="text" name="search-input" class="js-search-input web__header__search--input input" placeholder="{{ "Search by section name…"|trans }}" data-search-callback-url="{{ url('admin_searchadmin_search') }}" />
+                        <div class="js-search-results  web__header__search--results">
+                            <div>
+                                {{ 'Results: '|trans }} <span class="js-search-results__search"></span><a href="#" class="js-search-results__close web__header__search--results__close"><i class="svg svg-trash"></i></a><span class="web__header__search--results__hint">{{ "use key tab or shift+tab"|trans }}</span>
+                            </div>
+                            <div class="js-search-results__window"></div>
+                        </div>
+                    </div>
+                    <div class="box-dropdown js-search-icon web__header__search__icon">
+                        <div class="box-dropdown__select box-dropdown__select--menu" title="{{ "Search by section name…"|trans }}">
+                            <i class="svg svg-search"></i>
+                        </div>
+                    </div>
                     {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\MenuController::menuAction')) }}
                     <div class="in-corner in-corner--header">
                         <div class="in-corner__in"></div>
