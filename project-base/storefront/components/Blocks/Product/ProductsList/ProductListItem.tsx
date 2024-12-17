@@ -124,7 +124,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                         </div>
 
                         {product.__typename === 'MainVariant' && (
-                            <div className="flex w-fit items-center gap-1.5 whitespace-nowrap rounded-md bg-background py-1.5 font-secondary text-xs group-hover:text-text">
+                            <div className="flex w-fit items-center gap-1.5 whitespace-nowrap rounded-md bg-background px-2.5 py-1.5 font-secondary text-xs group-hover:text-text">
                                 <VariantIcon className="size-3 text-textAccent" />
                                 {product.variantsCount} {t('variants count', { count: product.variantsCount })}
                             </div>
