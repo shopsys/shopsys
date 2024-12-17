@@ -64,7 +64,7 @@ CKEDITOR.plugins.add('strinsert',
                     multiSelect: false,
                     panel:
                         {
-                            css: [ editor.config.contentsCss, CKEDITOR.skin.getPath('editor') ],
+                            css: [CKEDITOR.skin.getPath('editor')].concat(config.contentsCss),
                             voiceLabel: editor.lang.panelVoiceLabel
                         },
 
