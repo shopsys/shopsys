@@ -101,6 +101,7 @@ export default class InitGrapesJs {
                         versionCheck: false,
                         allowedContent: true,
                         extraAllowedContent: '*(*)',
+                        removePlugins: 'exportpdf',
                         toolbar: [
                             { name: 'basicstyles', items: ['Bold', 'Italic', 'Strike', '-', 'RemoveFormat'] },
                             { name: 'clipboard', items: ['PasteText', 'PasteFromWord'] },
@@ -220,6 +221,7 @@ export default class InitGrapesJs {
                             { name: 'insert', items: ['SpecialChar', 'strinsert'] }
                         ],
                         extraPlugins: 'strinsert',
+                        removePlugins: 'exportpdf',
                         strinsert_strings: [
                             { 'name': 'Povinné proměnné' },
                             ...variables
