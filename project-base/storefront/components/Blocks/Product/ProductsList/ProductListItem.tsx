@@ -95,7 +95,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 )}
 
                 <ExtendedNextLink
-                    className="flex select-text flex-col py-5 text-text no-underline hover:text-link hover:no-underline sm:pb-0"
+                    className="flex h-full select-text flex-col py-5 text-text no-underline hover:text-link hover:no-underline sm:pb-0"
                     draggable={false}
                     href={product.slug}
                     type={product.isMainVariant ? 'productMainVariant' : 'product'}
@@ -111,7 +111,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                         onClick?.(product, listIndex);
                     }}
                 >
-                    <div className="flex flex-col gap-2.5 px-2.5 sm:px-5">
+                    <div className="flex h-full flex-col gap-2.5 px-2.5 sm:px-5">
                         <ProductListItemImage product={product} size={size} visibleItemsConfig={visibleItemsConfig} />
 
                         <div
@@ -172,12 +172,6 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                         </>
                     )}
                 </div>
-                {product.__typename === 'MainVariant' && (
-                    <div className="mx-2.5 flex w-fit items-center gap-1.5 whitespace-nowrap rounded-md bg-background px-2.5 py-1.5 font-secondary text-xs sm:mx-5">
-                        <VariantIcon className="size-3 text-textAccent" />
-                        {product.variantsCount} {t('variants count', { count: product.variantsCount })}
-                    </div>
-                )}
             </li>
         );
     },
