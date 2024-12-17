@@ -9,10 +9,10 @@ use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory as BaseFilte
 
 /**
  * @property \App\Model\Product\Search\ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer
- * @method __construct(\App\Model\Product\Search\ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer, \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain)
- * @method \App\Model\Product\Search\FilterQuery createListableProductsByCategoryId(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, int $categoryId)
+ * @method __construct(\App\Model\Product\Search\ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer, \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain,  $categoryAutomatedFilterFacade)
+ * @method \App\Model\Product\Search\FilterQuery createListableProductsByCategory(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, \App\Model\Category\Category $category)
  * @method \App\Model\Product\Search\FilterQuery createWithProductFilterData(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit)
- * @method \App\Model\Product\Search\FilterQuery createListableProductsByBrandId(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, int $brandId)
+ * @method \App\Model\Product\Search\FilterQuery createListableProductsByBrand(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, \App\Model\Product\Brand\Brand $brand)
  * @method \App\Model\Product\Search\FilterQuery createListable()
  * @method \App\Model\Product\Search\FilterQuery createVisible()
  * @method \App\Model\Product\Search\FilterQuery createListableProductsByCategoryIdWithPriceAndStockFilter(int $categoryId, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData)

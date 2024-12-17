@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Search;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 
@@ -40,18 +41,18 @@ class FilterQueryFactory
      * @param string $orderingModeId
      * @param int $page
      * @param int $limit
-     * @param int $categoryId
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
-    public function createListableProductsByCategoryId(
+    public function createListableProductsByCategory(
         ProductFilterData $productFilterData,
         string $orderingModeId,
         int $page,
         int $limit,
-        int $categoryId,
+        Category $category,
     ): FilterQuery {
         return $this->createWithProductFilterData($productFilterData, $orderingModeId, $page, $limit)
-            ->filterByCategory([$categoryId]);
+            ->filterByCategory([$category->getId()]);
     }
 
     /**
@@ -78,18 +79,18 @@ class FilterQueryFactory
      * @param string $orderingModeId
      * @param int $page
      * @param int $limit
-     * @param int $brandId
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand $brand
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
-    public function createListableProductsByBrandId(
+    public function createListableProductsByBrand(
         ProductFilterData $productFilterData,
         string $orderingModeId,
         int $page,
         int $limit,
-        int $brandId,
+        Brand $brand,
     ): FilterQuery {
         return $this->createWithProductFilterData($productFilterData, $orderingModeId, $page, $limit)
-            ->filterByBrands([$brandId]);
+            ->filterByBrands([$brand->getId()]);
     }
 
     /**

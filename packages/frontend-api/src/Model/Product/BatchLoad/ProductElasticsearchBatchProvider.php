@@ -80,15 +80,13 @@ class ProductElasticsearchBatchProvider
      */
     protected function getFilterQuery(ProductBatchLoadByEntityData $productBatchLoadByEntityData): FilterQuery
     {
-        $entityClass = $productBatchLoadByEntityData->getEntityClass();
+        $entity = $productBatchLoadByEntityData->getEntity();
 
-        $entityClass = $this->entityNameResolver->resolve($entityClass);
-
-        $filterQuery = match ($entityClass) {
-            Category::class => $this->getFilterQueryForCategory($productBatchLoadByEntityData),
-            Flag::class => $this->getFilterQueryForFilterData($productBatchLoadByEntityData),
-            Brand::class => $this->getFilterQueryForBrand($productBatchLoadByEntityData),
-            default => throw new InvalidArgumentException(sprintf('Entity class "%s" is not supported for creating filter query', $entityClass)),
+        $filterQuery = match (true) {
+            $entity instanceof Category => $this->getFilterQueryForCategory($productBatchLoadByEntityData),
+            $entity instanceof Flag => $this->getFilterQueryForFilterData($productBatchLoadByEntityData),
+            $entity instanceof Brand => $this->getFilterQueryForBrand($productBatchLoadByEntityData),
+            default => throw new InvalidArgumentException(sprintf('Entity class "%s" is not supported for creating filter query', get_class($entity))),
         };
 
         $filterQuery = $filterQuery->setFrom($productBatchLoadByEntityData->getOffset());
@@ -107,12 +105,12 @@ class ProductElasticsearchBatchProvider
     protected function getFilterQueryForCategory(
         ProductBatchLoadByEntityData $productBatchLoadByEntityData,
     ): FilterQuery {
-        return $this->filterQueryFactory->createListableProductsByCategoryId(
+        return $this->filterQueryFactory->createListableProductsByCategory(
             $productBatchLoadByEntityData->getProductFilterData(),
             $productBatchLoadByEntityData->getOrderingModeId(),
             1,
             $productBatchLoadByEntityData->getLimit(),
-            $productBatchLoadByEntityData->getEntityId(),
+            $productBatchLoadByEntityData->getEntity($this->entityNameResolver->resolve(Category::class)),
         );
     }
 
@@ -137,12 +135,12 @@ class ProductElasticsearchBatchProvider
      */
     protected function getFilterQueryForBrand(ProductBatchLoadByEntityData $productBatchLoadByEntityData): FilterQuery
     {
-        return $this->filterQueryFactory->createListableProductsByBrandId(
+        return $this->filterQueryFactory->createListableProductsByBrand(
             $productBatchLoadByEntityData->getProductFilterData(),
             $productBatchLoadByEntityData->getOrderingModeId(),
             1,
             $productBatchLoadByEntityData->getLimit(),
-            $productBatchLoadByEntityData->getEntityId(),
+            $productBatchLoadByEntityData->getEntity($this->entityNameResolver->resolve(Brand::class)),
         );
     }
 }
