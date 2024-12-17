@@ -3382,6 +3382,9 @@ msgstr ""
 msgid "Resolved"
 msgstr ""
 
+msgid "Results:"
+msgstr ""
+
 msgid "Return back"
 msgstr ""
 
@@ -3533,6 +3536,9 @@ msgid "Search by name, catalog number, or product part number..."
 msgstr ""
 
 msgid "Search by name..."
+msgstr ""
+
+msgid "Search by section name…"
 msgstr ""
 
 msgid "Search by slug..."

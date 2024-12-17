@@ -2,6 +2,7 @@ import '../common/components';
 import '../common/validation';
 
 import './components';
+import './search/search';
 
 import './validation/customization';
 import './validation/form';
