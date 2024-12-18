@@ -7,7 +7,7 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 /**
  * @param string $id
  * @param array $parameters
- * @param string|null $domain
+ * @param string|null $domain Translation domain (default is "messages")
  * @param string|null $locale
  * @return string
  */
