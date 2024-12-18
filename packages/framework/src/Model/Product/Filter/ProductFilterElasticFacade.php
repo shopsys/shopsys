@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Filter;
 
 use Elasticsearch\Client;
+use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory;
 
@@ -23,17 +24,16 @@ class ProductFilterElasticFacade
     }
 
     /**
-     * @param int $categoryId
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigIdsData
      */
     public function getProductFilterDataInCategory(
-        int $categoryId,
+        Category $category,
         PricingGroup $pricingGroup,
     ): ProductFilterConfigIdsData {
-        $filterQuery = $this->filterQueryFactory->createVisible()
-            ->filterOnlySellable()
-            ->filterByCategory([$categoryId]);
+        $filterQuery = $this->filterQueryFactory->createVisibleForCategory($category)
+            ->filterOnlySellable();
 
         $aggregationQuery = $filterQuery
             ->getAggregationQueryForProductFilterConfig($pricingGroup->getId());

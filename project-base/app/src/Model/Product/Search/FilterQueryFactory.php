@@ -9,13 +9,13 @@ use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory as BaseFilte
 
 /**
  * @property \App\Model\Product\Search\ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer
- * @method __construct(\App\Model\Product\Search\ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer, \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain,  $categoryAutomatedFilterFacade)
+ * @method __construct(\App\Model\Product\Search\ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer, \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterFacade $categoryAutomatedFilterFacade)
  * @method \App\Model\Product\Search\FilterQuery createListableProductsByCategory(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, \App\Model\Category\Category $category)
  * @method \App\Model\Product\Search\FilterQuery createWithProductFilterData(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit)
  * @method \App\Model\Product\Search\FilterQuery createListableProductsByBrand(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, \App\Model\Product\Brand\Brand $brand)
  * @method \App\Model\Product\Search\FilterQuery createListable()
  * @method \App\Model\Product\Search\FilterQuery createVisible()
- * @method \App\Model\Product\Search\FilterQuery createListableProductsByCategoryIdWithPriceAndStockFilter(int $categoryId, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData)
+ * @method \App\Model\Product\Search\FilterQuery createListableProductsByCategoryWithPriceAndStockFilter(\App\Model\Category\Category $category, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData)
  * @method \App\Model\Product\Search\FilterQuery createListableProductsByBrandIdWithPriceAndStockFilter(int $brandId, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData)
  * @method \App\Model\Product\Search\FilterQuery createListableProductsWithPriceAndStockFilter(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData)
  * @method \App\Model\Product\Search\FilterQuery createListableProductsBySearchTextWithPriceAndStockFilter(string $searchText, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData)
@@ -29,6 +29,8 @@ use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory as BaseFilte
  * @method \App\Model\Product\Search\FilterQuery createOnlyExistingProductIdsFilterQuery(int[] $productIds, int $domainId)
  * @method \App\Model\Product\Search\FilterQuery createSellableProductIdsByProductUuidsFilter(string[] $productUuids)
  * @method \App\Model\Product\Search\FilterQuery createListableProductsByFlagIdWithPriceAndStockFilter(int $flagId, \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData)
+ * @method \App\Model\Product\Search\FilterQuery createVisibleForCategory(\App\Model\Category\Category $category)
+ * @method \App\Model\Product\Search\FilterQuery filterByCategory(\App\Model\Product\Search\FilterQuery $filterQuery, \App\Model\Category\Category $category)
  */
 class FilterQueryFactory extends BaseFilterQueryFactory
 {

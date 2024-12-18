@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery as BaseFilterQuery;
 /**
  * @method \App\Model\Product\Search\FilterQuery applyOrdering(string $orderingModeId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
  * @method \App\Model\Product\Search\FilterQuery filterByParameters(array $parameters)
- * @method \App\Model\Product\Search\FilterQuery filterByCategory(int[] $categoryIds)
+ * @method \App\Model\Product\Search\FilterQuery filterByCategory(int $categoryId)
  * @method \App\Model\Product\Search\FilterQuery filterByBrands(int[] $brandIds)
  * @method \App\Model\Product\Search\FilterQuery filterByFlags(int[] $flagIds)
  * @method \App\Model\Product\Search\FilterQuery filterOnlyInStock()

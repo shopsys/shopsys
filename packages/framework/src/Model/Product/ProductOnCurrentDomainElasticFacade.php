@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
@@ -36,16 +37,16 @@ class ProductOnCurrentDomainElasticFacade
     }
 
     /**
-     * @param int $categoryId
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
      */
     public function getProductFilterCountDataInCategory(
-        int $categoryId,
+        Category $category,
         ProductFilterData $productFilterData,
     ): ProductFilterCountData {
-        $baseFilterQuery = $this->filterQueryFactory->createListableProductsByCategoryIdWithPriceAndStockFilter(
-            $categoryId,
+        $baseFilterQuery = $this->filterQueryFactory->createListableProductsByCategoryWithPriceAndStockFilter(
+            $category,
             $productFilterData,
         );
 

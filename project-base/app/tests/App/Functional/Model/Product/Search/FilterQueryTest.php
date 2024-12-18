@@ -105,7 +105,7 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
 
         $filter = $this->createFilter()
             ->filterOnlyInStock()
-            ->filterByCategory([$categoryBooks->getId()])
+            ->filterByCategory($categoryBooks->getId())
             ->filterByFlags([$flagSale->getId()])
             ->filterByPrices(
                 $pricingGroup,
@@ -159,7 +159,7 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
         $categoryBooks = $this->getReference(CategoryDataFixture::CATEGORY_BOOKS, Category::class);
 
         $filter = $this->createFilter()
-            ->filterByCategory([$categoryBooks->getId()])
+            ->filterByCategory($categoryBooks->getId())
             ->applyOrderingByIdAscending();
 
         $this->assertIdWithFilter($filter, [25, 26, 27, 28, 29, 33, 39, 40, 50, 72], 'by id asc');
@@ -200,7 +200,7 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
         $categoryBooks = $this->getReference(CategoryDataFixture::CATEGORY_BOOKS, Category::class);
 
         $filter = $this->createFilter()
-            ->filterByCategory([$categoryBooks->getId()])
+            ->filterByCategory($categoryBooks->getId())
             ->applyOrderingByIdAscending();
 
         $this->assertIdWithFilter($filter, [25, 26, 27, 28, 29, 33, 39, 40, 50, 72]);

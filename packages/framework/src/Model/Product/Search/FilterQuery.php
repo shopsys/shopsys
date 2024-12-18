@@ -304,16 +304,16 @@ class FilterQuery
     }
 
     /**
-     * @param int[] $categoryIds
+     * @param int $categoryId
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
-    public function filterByCategory(array $categoryIds): self
+    public function filterByCategory(int $categoryId): self
     {
         $clone = clone $this;
 
         $clone->filters[] = [
-            'terms' => [
-                'categories' => $categoryIds,
+            'term' => [
+                'categories' => $categoryId,
             ],
         ];
 

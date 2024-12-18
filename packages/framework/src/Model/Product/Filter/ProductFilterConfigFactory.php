@@ -64,7 +64,7 @@ class ProductFilterConfigFactory
         Category $category,
     ): ProductFilterConfig {
         $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataInCategory(
-            $category->getId(),
+            $category,
             $this->currentCustomerUser->getPricingGroup(),
         );
 

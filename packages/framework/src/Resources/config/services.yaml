@@ -17,7 +17,7 @@ services:
 
     Shopsys\FrameworkBundle\:
         exclude: '../../{Command,Controller,DependencyInjection,Form,Migrations,Resources,Twig}'
-        resource: '../../**/*{Calculation,Dispatcher,Enum,Facade,Factory,Formatter,Generator,Handler,InlineEdit,Listener,Loader,Mapper,Middleware,Parser,Provider,Recalculator,Registry,Repository,Resolver,Sender,Service,Scheduler,Subscriber,Transformer,DataFetcher}.php'
+        resource: '../../**/*{CategoryAutomatedFilter,Calculation,Dispatcher,Enum,Facade,Factory,Formatter,Generator,Handler,InlineEdit,Listener,Loader,Mapper,Middleware,Parser,Provider,Recalculator,Registry,Repository,Resolver,Sender,Service,Scheduler,Subscriber,Transformer,DataFetcher}.php'
 
     Shopsys\FrameworkBundle\Controller\:
         resource: '../../Controller/'
@@ -770,6 +770,10 @@ services:
     Shopsys\FrameworkBundle\Model\Mail\MailTemplateSender\MailTemplateSenderFacade:
         arguments:
             $mailTemplateSenders: !tagged_iterator shopsys.mail_template_sender
+
+    Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterFacade:
+        arguments:
+            $categoryAutomatedFilters: !tagged shopsys.category_automated_filter
 
     Shopsys\FrameworkBundle\Model\Mail\Mailer: ~
 

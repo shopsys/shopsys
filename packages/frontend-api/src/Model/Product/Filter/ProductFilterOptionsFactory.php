@@ -204,7 +204,7 @@ class ProductFilterOptionsFactory
         }
 
         $productFilterCountData = $this->productOnCurrentDomainElasticFacade->getProductFilterCountDataInCategory(
-            $category->getId(),
+            $category,
             $productFilterData,
         );
 

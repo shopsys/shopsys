@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterInterface;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryDomainNotFoundException;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 
@@ -91,6 +92,12 @@ class Category extends AbstractTranslatableEntity
     protected $domains;
 
     /**
+     * @var string[]
+     * @ORM\Column(type="json")
+     */
+    protected $automatedFilters;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryData $categoryData
      */
     public function __construct(CategoryData $categoryData)
@@ -120,6 +127,7 @@ class Category extends AbstractTranslatableEntity
     {
         $this->setParent($categoryData->parent);
         $this->setTranslations($categoryData);
+        $this->automatedFilters = $categoryData->automatedFilters;
     }
 
     /**
@@ -296,6 +304,23 @@ class Category extends AbstractTranslatableEntity
     public function getUuid()
     {
         return $this->uuid;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getAutomatedFilters()
+    {
+        return $this->automatedFilters;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterInterface $automatedFilter
+     * @return bool
+     */
+    public function isUsingAutomatedFilter(CategoryAutomatedFilterInterface $automatedFilter): bool
+    {
+        return in_array($automatedFilter->getDatabaseValue(), $this->automatedFilters, true);
     }
 
     /**

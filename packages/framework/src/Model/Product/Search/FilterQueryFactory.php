@@ -6,6 +6,8 @@ namespace Shopsys\FrameworkBundle\Model\Product\Search;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
+use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterFacade;
+use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
@@ -18,12 +20,14 @@ class FilterQueryFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterFacade $categoryAutomatedFilterFacade
      */
     public function __construct(
         protected readonly ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly IndexDefinitionLoader $indexDefinitionLoader,
         protected readonly Domain $domain,
+        protected readonly CategoryAutomatedFilterFacade $categoryAutomatedFilterFacade,
     ) {
     }
 
@@ -51,8 +55,9 @@ class FilterQueryFactory
         int $limit,
         Category $category,
     ): FilterQuery {
-        return $this->createWithProductFilterData($productFilterData, $orderingModeId, $page, $limit)
-            ->filterByCategory([$category->getId()]);
+        $filterQuery = $this->createWithProductFilterData($productFilterData, $orderingModeId, $page, $limit);
+
+        return $this->filterByCategory($filterQuery, $category);
     }
 
     /**
@@ -125,19 +130,17 @@ class FilterQueryFactory
     }
 
     /**
-     * @param int $categoryId
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
-    public function createListableProductsByCategoryIdWithPriceAndStockFilter(
-        int $categoryId,
+    public function createListableProductsByCategoryWithPriceAndStockFilter(
+        Category $category,
         ProductFilterData $productFilterData,
     ): FilterQuery {
-        $filterQuery = $this->createListable()
-            ->filterByCategory([$categoryId]);
-        $filterQuery = $this->addPricesAndStockFromFilterDataToQuery($productFilterData, $filterQuery);
+        $filterQuery = $this->filterByCategory($this->createListable(), $category);
 
-        return $filterQuery;
+        return $this->addPricesAndStockFromFilterDataToQuery($productFilterData, $filterQuery);
     }
 
     /**
@@ -312,5 +315,30 @@ class FilterQueryFactory
             ->filterByFlags([$flagId]);
 
         return $this->addPricesAndStockFromFilterDataToQuery($productFilterData, $filterQuery);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    public function createVisibleForCategory(Category $category): FilterQuery
+    {
+        return $this->filterByCategory($this->createVisible(), $category);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $filterQuery
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    protected function filterByCategory(FilterQuery $filterQuery, Category $category): FilterQuery
+    {
+        $filterQuery = $filterQuery->filterByCategory($category->getId());
+
+        foreach ($this->categoryAutomatedFilterFacade->getByCategory($category) as $automatedFilter) {
+            $filterQuery = $automatedFilter->applyFilter($filterQuery);
+        }
+
+        return $filterQuery;
     }
 }
