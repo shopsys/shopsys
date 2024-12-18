@@ -14,15 +14,16 @@ use Shopsys\FrameworkBundle\Model\Security\Exception\LoginFailedException;
 use Shopsys\FrameworkBundle\Model\Security\Exception\LoginWithDefaultPasswordException;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Exception\TooManyLoginAttemptsAuthenticationException;
 
 class LoginController extends AdminBaseController
 {
-    protected const MULTIDOMAIN_LOGIN_TOKEN_PARAMETER_NAME = 'multidomainLoginToken';
-    public const ORIGINAL_DOMAIN_ID_PARAMETER_NAME = 'originalDomainId';
-    public const ORIGINAL_REFERER_PARAMETER_NAME = 'originalReferer';
+    protected const string MULTIDOMAIN_LOGIN_TOKEN_PARAMETER_NAME = 'multidomainLoginToken';
+    public const string ORIGINAL_DOMAIN_ID_PARAMETER_NAME = 'originalDomainId';
+    public const string ORIGINAL_REFERER_PARAMETER_NAME = 'originalReferer';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Security\Authenticator $authenticator
@@ -40,11 +41,12 @@ class LoginController extends AdminBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/', name: 'admin_login')]
     #[Route(path: '/login-check/', name: 'admin_login_check')]
     #[Route(path: '/logout/', name: 'admin_logout')]
-    public function loginAction(Request $request)
+    public function loginAction(Request $request): Response
     {
         $currentDomainId = $this->domain->getId();
 
@@ -97,14 +99,15 @@ class LoginController extends AdminBaseController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $originalDomainId
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/sso/{originalDomainId}', requirements: ['originalDomainId' => '\d+'])]
-    public function ssoAction(Request $request, $originalDomainId)
+    public function ssoAction(Request $request, int $originalDomainId): Response
     {
         $multidomainToken = $this->administratorLoginFacade->generateMultidomainLoginTokenWithExpiration(
             $this->getCurrentAdministrator(),
         );
-        $originalDomainRouter = $this->domainRouterFactory->getRouter((int)$originalDomainId);
+        $originalDomainRouter = $this->domainRouterFactory->getRouter($originalDomainId);
         $redirectTo = $originalDomainRouter->generate(
             'admin_login_authorization',
             [
@@ -119,19 +122,20 @@ class LoginController extends AdminBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/authorization/')]
-    public function authorizationAction(Request $request)
+    public function authorizationAction(Request $request): Response
     {
         $multidomainLoginToken = $request->get(static::MULTIDOMAIN_LOGIN_TOKEN_PARAMETER_NAME);
         $originalReferer = $request->get(self::ORIGINAL_REFERER_PARAMETER_NAME);
 
         try {
             $this->administratorLoginFacade->loginByMultidomainToken($request, $multidomainLoginToken);
-        } catch (InvalidTokenException $ex) {
+        } catch (InvalidTokenException) {
             return $this->render('@ShopsysFramework/Admin/Content/Login/loginFailed.html.twig');
         }
-        $redirectTo = $originalReferer !== null ? $originalReferer : $this->generateUrl('admin_default_dashboard');
+        $redirectTo = $originalReferer ?? $this->generateUrl('admin_default_dashboard');
 
         return $this->redirect($redirectTo);
     }

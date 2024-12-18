@@ -37,7 +37,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class AdministratorController extends AdminBaseController
 {
-    protected const MAX_ADMINISTRATOR_ACTIVITIES_COUNT = 10;
+    protected const int MAX_ADMINISTRATOR_ACTIVITIES_COUNT = 10;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
@@ -63,8 +63,11 @@ class AdministratorController extends AdminBaseController
     ) {
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     #[Route(path: '/administrator/list/')]
-    public function listAction()
+    public function listAction(): Response
     {
         $queryBuilder = $this->administratorFacade->getAllListableQueryBuilder();
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'a.id');
@@ -90,9 +93,10 @@ class AdministratorController extends AdminBaseController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/edit/{id}', requirements: ['id' => '\d+'])]
-    public function editAction(Request $request, int $id)
+    public function editAction(Request $request, int $id): Response
     {
         $this->denyAccessUnlessHimselfOrGranted($request, $id);
 
@@ -181,8 +185,11 @@ class AdministratorController extends AdminBaseController
         }
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     #[Route(path: '/administrator/my-account/')]
-    public function myAccountAction()
+    public function myAccountAction(): Response
     {
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $loggedUser */
         $loggedUser = $this->getUser();
@@ -194,9 +201,10 @@ class AdministratorController extends AdminBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/new/')]
-    public function newAction(Request $request)
+    public function newAction(Request $request): Response
     {
         $form = $this->createForm(AdministratorFormType::class, $this->administratorDataFactory->create(), [
             'scenario' => AdministratorFormType::SCENARIO_CREATE,
@@ -233,9 +241,10 @@ class AdministratorController extends AdminBaseController
     /**
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/delete/{id}', requirements: ['id' => '\d+'])]
-    public function deleteAction(int $id)
+    public function deleteAction(int $id): Response
     {
         try {
             $realName = $this->administratorFacade->getById($id)->getRealName();
@@ -247,16 +256,16 @@ class AdministratorController extends AdminBaseController
                     'name' => $realName,
                 ],
             );
-        } catch (DeletingSelfException $ex) {
+        } catch (DeletingSelfException) {
             $this->addErrorFlash(t('You can\'t delete yourself.'));
-        } catch (DeletingLastAdministratorException $ex) {
+        } catch (DeletingLastAdministratorException) {
             $this->addErrorFlashTwig(
                 t('Administrator <strong>{{ name }}</strong> is the only one and can\'t be deleted.'),
                 [
                     'name' => $this->administratorFacade->getById($id)->getRealName(),
                 ],
             );
-        } catch (AdministratorNotFoundException $ex) {
+        } catch (AdministratorNotFoundException) {
             $this->addErrorFlash(t('Selected administrated doesn\'t exist.'));
         }
 
@@ -291,7 +300,7 @@ class AdministratorController extends AdminBaseController
         $loggedUser = $this->getUser();
         $this->securitySafeCheck($loggedUser);
 
-        if ($administrator->getUsername() !== $loggedUser->getUserIdentifier()) {
+        if ($administrator->getUsername() !== $loggedUser?->getUserIdentifier()) {
             $this->addErrorFlash(t('You are allowed to set up two factor authentication only to yourself.'));
 
             return $this->redirectToRoute('admin_administrator_edit', ['id' => $id]);
@@ -408,7 +417,7 @@ class AdministratorController extends AdminBaseController
         $loggedUser = $this->getUser();
         $this->securitySafeCheck($loggedUser);
 
-        if ($administrator->getUsername() !== $loggedUser->getUserIdentifier()) {
+        if ($administrator->getUsername() !== $loggedUser?->getUserIdentifier()) {
             $this->addErrorFlash(t('You are allowed to disable two factor authentication only to yourself.'));
 
             return $this->redirectToRoute('admin_administrator_edit', ['id' => $id]);
