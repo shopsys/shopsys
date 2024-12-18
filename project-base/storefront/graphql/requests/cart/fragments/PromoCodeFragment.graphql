@@ -1,5 +1,8 @@
 fragment PromoCodeFragment on PromoCode {
     __typename
     code
+    discount {
+        ...PriceFragment
+    }
     type
 }

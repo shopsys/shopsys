@@ -1,7 +1,8 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type TypePromoCodeFragment = { __typename: 'PromoCode', code: string, type: Types.TypePromoCodeTypeEnum };
+import { PriceFragment } from '../../prices/fragments/PriceFragment.generated';
+export type TypePromoCodeFragment = { __typename: 'PromoCode', code: string, type: Types.TypePromoCodeTypeEnum, discount: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } };
 
 
       export interface PossibleTypesResultData {
@@ -90,6 +91,9 @@ export const PromoCodeFragment = gql`
     fragment PromoCodeFragment on PromoCode {
   __typename
   code
+  discount {
+    ...PriceFragment
+  }
   type
 }
-    `;
+    ${PriceFragment}`;
