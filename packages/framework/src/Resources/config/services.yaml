@@ -944,10 +944,6 @@ services:
             - '%kernel.environment%'
             - '%env(bool:IGNORE_DEFAULT_ADMIN_PASSWORD_CHECK)%'
 
-    Shopsys\FrameworkBundle\Model\Security\Authenticator:
-        arguments:
-            - '@security.token_storage'
-
     Shopsys\FrameworkBundle\Model\Security\Filesystem\FilemanagerAccess:
         arguments:
             - '%shopsys.filemanager_upload_dir%'

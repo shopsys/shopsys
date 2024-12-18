@@ -20,8 +20,8 @@ use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingLastAdministra
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSelfException;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
-use Shopsys\FrameworkBundle\Model\Security\Authenticator;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -48,7 +48,7 @@ class AdministratorController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedFacade $administratorRolesChangedFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorTwoFactorAuthenticationFacade $administratorTwoFactorAuthenticationFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorPasswordFacade $administratorPasswordFacade
-     * @param \Shopsys\FrameworkBundle\Model\Security\Authenticator $authenticator
+     * @param \Symfony\Bundle\SecurityBundle\Security $security
      */
     public function __construct(
         protected readonly AdministratorFacade $administratorFacade,
@@ -59,7 +59,7 @@ class AdministratorController extends AdminBaseController
         protected readonly AdministratorRolesChangedFacade $administratorRolesChangedFacade,
         protected readonly AdministratorTwoFactorAuthenticationFacade $administratorTwoFactorAuthenticationFacade,
         protected readonly AdministratorPasswordFacade $administratorPasswordFacade,
-        protected readonly Authenticator $authenticator,
+        protected readonly Security $security,
     ) {
     }
 
@@ -562,7 +562,8 @@ class AdministratorController extends AdminBaseController
             );
 
             if (!$this->isGranted(Roles::ROLE_ADMIN)) {
-                $this->authenticator->loginAdministrator($administrator);
+                $this->security->login($administrator, 'security.authenticator.form_login.administration');
+                $request->getSession()->migrate();
             }
 
             $this->addSuccessFlash(t('Password has been successfully set.'));

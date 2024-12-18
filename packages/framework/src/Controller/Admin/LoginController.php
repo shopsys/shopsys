@@ -9,8 +9,6 @@ use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Form\Admin\Login\LoginFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\InvalidTokenException;
 use Shopsys\FrameworkBundle\Model\Security\AdministratorLoginFacade;
-use Shopsys\FrameworkBundle\Model\Security\Authenticator;
-use Shopsys\FrameworkBundle\Model\Security\Exception\LoginFailedException;
 use Shopsys\FrameworkBundle\Model\Security\Exception\LoginWithDefaultPasswordException;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,6 +16,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Exception\TooManyLoginAttemptsAuthenticationException;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Security\Http\SecurityRequestAttributes;
 
 class LoginController extends AdminBaseController
 {
@@ -26,16 +26,16 @@ class LoginController extends AdminBaseController
     public const string ORIGINAL_REFERER_PARAMETER_NAME = 'originalReferer';
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Security\Authenticator $authenticator
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \Shopsys\FrameworkBundle\Model\Security\AdministratorLoginFacade $administratorLoginFacade
+     * @param \Symfony\Component\Security\Http\Authentication\AuthenticationUtils $authenticationUtils
      */
     public function __construct(
-        protected readonly Authenticator $authenticator,
         protected readonly Domain $domain,
         protected readonly DomainRouterFactory $domainRouterFactory,
         protected readonly AdministratorLoginFacade $administratorLoginFacade,
+        protected readonly AuthenticationUtils $authenticationUtils,
     ) {
     }
 
@@ -74,20 +74,20 @@ class LoginController extends AdminBaseController
             'action' => $this->generateUrl('admin_login_check'),
         ]);
 
-        try {
-            $this->authenticator->checkLoginProcess($request);
-        } catch (LoginFailedException $e) {
-            if ($e->getPrevious() instanceof LoginWithDefaultPasswordException) {
-                $error = t(
+        $lastAuthenticationError = $this->authenticationUtils->getLastAuthenticationError();
+
+        if ($lastAuthenticationError !== null) {
+            $error = match (true) {
+                $lastAuthenticationError->getPrevious() instanceof LoginWithDefaultPasswordException => t(
                     'Oh, you just tried to log in using default credentials. We do not allow that on production'
-                        . ' environment. If you are random hacker, please go somewhere else. If you are authorized user,'
-                        . ' please use another account or contact developers and change password during deployment.',
-                );
-            } elseif ($e->getPrevious() instanceof TooManyLoginAttemptsAuthenticationException) {
-                $error = t('Too many login attempts. Please try again later.');
-            } else {
-                $error = t('Log in failed.');
-            }
+                    . ' environment. If you are random hacker, please go somewhere else. If you are authorized user,'
+                    . ' please use another account or contact developers and change password during deployment.',
+                ),
+                $lastAuthenticationError->getPrevious() instanceof TooManyLoginAttemptsAuthenticationException => t(
+                    'Too many login attempts. Please try again later.',
+                ),
+                default => t('Log in failed.'),
+            };
         }
 
         return $this->render('@ShopsysFramework/Admin/Content/Login/loginForm.html.twig', [
