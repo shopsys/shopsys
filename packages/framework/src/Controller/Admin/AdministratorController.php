@@ -94,6 +94,8 @@ class AdministratorController extends AdminBaseController
     #[Route(path: '/administrator/edit/{id}', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, int $id)
     {
+        $this->denyAccessUnlessHimselfOrGranted($request, $id);
+
         $administrator = $this->administratorFacade->getById($id);
 
         $loggedUser = $this->getUser();
@@ -157,6 +159,26 @@ class AdministratorController extends AdminBaseController
             'administrator' => $administrator,
             'lastAdminActivities' => $lastAdminActivities,
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param int $administratorId
+     */
+    protected function denyAccessUnlessHimselfOrGranted(Request $request, int $administratorId): void
+    {
+        $currentAdministrator = $this->getCurrentAdministrator();
+
+        // always allow admin to edit himself
+        if ($currentAdministrator->getId() === $administratorId) {
+            return;
+        }
+
+        if ($request->getMethod() === Request::METHOD_GET) {
+            $this->denyAccessUnlessGranted(Roles::ROLE_ADMINISTRATOR_VIEW);
+        } else {
+            $this->denyAccessUnlessGranted(Roles::ROLE_ADMINISTRATOR_FULL);
+        }
     }
 
     #[Route(path: '/administrator/my-account/')]
