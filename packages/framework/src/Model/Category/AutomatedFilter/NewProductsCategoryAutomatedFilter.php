@@ -35,4 +35,12 @@ class NewProductsCategoryAutomatedFilter implements CategoryAutomatedFilterInter
     {
         return $filterQuery->filterBySellingFrom(new DateTimeImmutable('-' . self::MAX_PRODUCT_AGE_IN_DAYS . ' days'));
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getNote(): ?string
+    {
+        return t('Only products with "Selling start date" not older than %count% days are displayed', ['%count%' => self::MAX_PRODUCT_AGE_IN_DAYS]);
+    }
 }

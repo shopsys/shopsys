@@ -113,6 +113,8 @@ class CategoryFormType extends AbstractType
                 ]);
         }
 
+        $categoryAutomatedFiltersNotesIndexedByValue = $this->categoryAutomatedFilterFacade->getNotesIndexedByValue();
+
         $builderSettingsGroup
             ->add('name', LocalizedType::class, [
                 'main_constraints' => [
@@ -150,6 +152,20 @@ class CategoryFormType extends AbstractType
                 'expanded' => true,
                 'choice_translation_domain' => false,
                 'choices' => $this->categoryAutomatedFilterFacade->getAllValuesIndexedByLabel(),
+                'choice_attr' => function ($choice, $key, $value) use ($categoryAutomatedFiltersNotesIndexedByValue) {
+                    $iconTitle = $categoryAutomatedFiltersNotesIndexedByValue[$value] ?? null;
+
+                    if ($iconTitle === null) {
+                        return [];
+                    }
+
+                    return [
+                        'icon' => true,
+                        'iconTitle' => $iconTitle,
+                        'iconPlacement' => 'right',
+                        'iconClass' => 'margin-left-10',
+                    ];
+                },
             ]);
 
         $builderSeoGroup = $builder->create('seo', GroupType::class, [

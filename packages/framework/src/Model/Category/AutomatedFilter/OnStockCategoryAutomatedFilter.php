@@ -33,4 +33,12 @@ class OnStockCategoryAutomatedFilter implements CategoryAutomatedFilterInterface
     {
         return $filterQuery->filterOnlyInStock();
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getNote(): ?string
+    {
+        return null;
+    }
 }

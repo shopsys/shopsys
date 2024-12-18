@@ -32,6 +32,20 @@ class CategoryAutomatedFilterFacade
     }
 
     /**
+     * @return array<string, string>
+     */
+    public function getNotesIndexedByValue(): array
+    {
+        $notesIndexedByValue = [];
+
+        foreach ($this->categoryAutomatedFilters as $categoryAutomatedFilter) {
+            $notesIndexedByValue[$categoryAutomatedFilter->getDatabaseValue()] = $categoryAutomatedFilter->getNote();
+        }
+
+        return $notesIndexedByValue;
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterInterface[]
      */
