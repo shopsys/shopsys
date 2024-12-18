@@ -40,10 +40,11 @@ export const PromoCode: FC = () => {
             {promoCodes.length ? (
                 <>
                     {isRemovingPromoCodeFromCart && <LoaderWithOverlay className="w-5" />}
-                    {promoCodes.map(({ code }) => (
+                    {promoCodes.map((promoCode) => (
                         <PromoCodeInfo
-                            promoCode={code}
-                            onRemovePromoCodeCallback={() => removePromoCodeFromCart(code)}
+                            key={promoCode.code}
+                            promoCode={promoCode}
+                            onRemovePromoCodeCallback={() => removePromoCodeFromCart(promoCode.code)}
                         />
                     ))}
                 </>
