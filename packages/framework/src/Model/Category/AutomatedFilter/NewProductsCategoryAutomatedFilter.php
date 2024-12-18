@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery;
 class NewProductsCategoryAutomatedFilter implements CategoryAutomatedFilterInterface
 {
     protected const int MAX_PRODUCT_AGE_IN_DAYS = 30;
-    protected const string DATABASE_VALUE = 'newProducts';
+    public const string DATABASE_VALUE = 'newProducts';
 
     /**
      * {@inheritdoc}

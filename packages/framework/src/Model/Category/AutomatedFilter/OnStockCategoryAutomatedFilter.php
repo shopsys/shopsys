@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery;
 
 class OnStockCategoryAutomatedFilter implements CategoryAutomatedFilterInterface
 {
-    protected const string DATABASE_VALUE = 'onStock';
+    public const string DATABASE_VALUE = 'onStock';
 
     /**
      * {@inheritdoc}

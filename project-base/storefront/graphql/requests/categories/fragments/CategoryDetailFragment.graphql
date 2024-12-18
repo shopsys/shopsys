@@ -39,4 +39,5 @@ fragment CategoryDetailFragment on Category {
     bestsellers {
         ...ListedProductFragment
     }
+    automatedFilters
 }

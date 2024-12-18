@@ -58,6 +58,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
 
             <FilteredProductsWrapper paginationScrollTargetRef={paginationScrollTargetRef}>
                 <DeferredFilterPanel
+                    categoryAutomatedFilters={category.automatedFilters}
                     defaultOrderingMode={category.products.defaultOrderingMode}
                     orderingMode={category.products.orderingMode}
                     originalSlug={category.originalCategorySlug}

@@ -538,6 +538,8 @@ export type TypeCartTransportModificationsResult = {
 /** Represents a category */
 export type TypeCategory = TypeBreadcrumb & TypeProductListable & TypeSlug & {
   __typename?: 'Category';
+  /** Automated filters for the category */
+  automatedFilters: Array<TypeCategoryAutomatedFilterEnum>;
   /** Best selling products */
   bestsellers: Array<TypeProduct>;
   /** Hierarchy of the current element in relation to the structure */
@@ -605,6 +607,12 @@ export type TypeCategoryProductsArgs = {
   last: InputMaybe<Scalars['Int']['input']>;
   orderingMode: InputMaybe<TypeProductOrderingModeEnum>;
 };
+
+/** Category automated filter types */
+export enum TypeCategoryAutomatedFilterEnum {
+  NewProducts = 'newProducts',
+  OnStock = 'onStock'
+}
 
 /** A connection to a list of items. */
 export type TypeCategoryConnection = {
