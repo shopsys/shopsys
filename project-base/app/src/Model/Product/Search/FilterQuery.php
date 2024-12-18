@@ -25,6 +25,7 @@ use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery as BaseFilterQuery;
  * @method \App\Model\Product\Search\FilterQuery filterByPrices(\Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, \Shopsys\FrameworkBundle\Component\Money\Money|null $minimalPrice = null, \Shopsys\FrameworkBundle\Component\Money\Money|null $maximalPrice = null)
  * @method \App\Model\Product\Search\FilterQuery applyOrderingByIdAscending()
  * @method \App\Model\Product\Search\FilterQuery filterOnlySellable()
+ * @method \App\Model\Product\Search\FilterQuery filterBySellingFrom(\DateTimeImmutable $sellingFrom)
  */
 class FilterQuery extends BaseFilterQuery
 {

@@ -193,6 +193,7 @@ class ProductExportRepository
             ProductExportFieldProvider::STORE_AVAILABILITIES_INFORMATION => $this->extractStoreAvailabilitiesInformation($product, $domainId),
             ProductExportFieldProvider::AVAILABILITY_STATUS => $this->productAvailabilityFacade->getProductAvailabilityStatusByDomainId($product, $domainId),
             ProductExportFieldProvider::IS_SALE_EXCLUSION => $product->getSaleExclusion($domainId),
+            ProductExportFieldProvider::SELLING_FROM => $product->getSellingFrom()?->format('Y-m-d H:i:s'),
 
             default => throw new InvalidArgumentException(sprintf('There is no definition for exporting "%s" field to Elasticsearch', $field)),
         };

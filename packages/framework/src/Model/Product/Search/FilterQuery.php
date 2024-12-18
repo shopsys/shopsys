@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Search;
 
+use DateTimeImmutable;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
@@ -414,6 +415,36 @@ class FilterQuery
         $clone->filters[] = [
             'term' => [
                 'in_stock' => true,
+            ],
+        ];
+
+        return $clone;
+    }
+
+    /**
+     * @param \DateTimeImmutable $sellingFrom
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    public function filterBySellingFrom(DateTimeImmutable $sellingFrom): self
+    {
+        $clone = clone $this;
+
+        $clone->filters[] = [
+            'bool' => [
+                'must' => [
+                    [
+                        'exists' => [
+                            'field' => 'selling_from',
+                        ],
+                    ], [
+                        'range' => [
+                            'selling_from' => [
+                                'gte' => $sellingFrom->format('Y-m-d H:i:s'),
+                                'lte' => 'now',
+                            ],
+                        ],
+                    ],
+                ],
             ],
         ];
 

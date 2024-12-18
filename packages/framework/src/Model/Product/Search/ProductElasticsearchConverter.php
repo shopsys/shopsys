@@ -71,6 +71,8 @@ class ProductElasticsearchConverter
 
         $result[ProductExportFieldProvider::IS_SALE_EXCLUSION] = $product[ProductExportFieldProvider::IS_SALE_EXCLUSION] ?? true;
 
+        $result[ProductExportFieldProvider::SELLING_FROM] = $product[ProductExportFieldProvider::SELLING_FROM] ?? null;
+
         return $result;
     }
 
