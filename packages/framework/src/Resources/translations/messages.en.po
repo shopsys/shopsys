@@ -382,6 +382,9 @@ msgstr ""
 msgid "Authentication code"
 msgstr ""
 
+msgid "Automated filters"
+msgstr ""
+
 msgid "Available"
 msgstr ""
 
@@ -1261,7 +1264,13 @@ msgstr ""
 msgid "Display date TO"
 msgstr ""
 
+msgid "Display new products only"
+msgstr ""
+
 msgid "Display on"
+msgstr ""
+
+msgid "Display on stock products only"
 msgstr ""
 
 msgid "Display personal information settings"
@@ -2780,6 +2789,9 @@ msgid "One domain cannot be used in two groups"
 msgstr ""
 
 msgid "Only checked products"
+msgstr ""
+
+msgid "Only products with \"Selling start date\" not older than %count% days are displayed"
 msgstr ""
 
 msgid "Oops! Error occurred."
