@@ -48,7 +48,7 @@ export const useChangePaymentInOrder = () => {
                 query: { orderNumber: editedOrder.number },
             });
         } else {
-            router.push(`${orderByHashUrl}/${editedOrder.urlHash}`);
+            router.push(orderByHashUrl + editedOrder.urlHash);
         }
 
         return changePaymentInOrderData;
