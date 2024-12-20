@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Mail;
 
+use Shopsys\FrameworkBundle\Component\Cdn\CdnFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
@@ -23,23 +24,27 @@ use Twig\Environment;
 
 class OrderMail implements MessageFactoryInterface
 {
-    public const MAIL_TEMPLATE_NAME_PREFIX = 'order_status_';
-    public const VARIABLE_NUMBER = '{number}';
-    public const VARIABLE_DATE = '{date}';
-    public const VARIABLE_URL = '{url}';
-    public const VARIABLE_TRANSPORT = '{transport}';
-    public const VARIABLE_PAYMENT = '{payment}';
-    public const VARIABLE_TOTAL_PRICE = '{total_price}';
-    public const VARIABLE_BILLING_ADDRESS = '{billing_address}';
-    public const VARIABLE_DELIVERY_ADDRESS = '{delivery_address}';
-    public const VARIABLE_NOTE = '{note}';
-    public const VARIABLE_PRODUCTS = '{products}';
-    public const VARIABLE_ORDER_DETAIL_URL = '{order_detail_url}';
-    public const VARIABLE_TRANSPORT_INSTRUCTIONS = '{transport_instructions}';
-    public const VARIABLE_PAYMENT_INSTRUCTIONS = '{payment_instructions}';
-    public const TRANSPORT_VARIABLE_TRACKING_NUMBER = '{tracking_number}';
-    public const TRANSPORT_VARIABLE_TRACKING_URL = '{tracking_url}';
-    public const VARIABLE_TRACKING_INSTRUCTIONS = '{tracking_instructions}';
+    public const string MAIL_TEMPLATE_NAME_PREFIX = 'order_status_';
+    public const string VARIABLE_NUMBER = '{number}';
+    public const string VARIABLE_DATE = '{date}';
+    public const string VARIABLE_URL = '{url}';
+    public const string VARIABLE_TRANSPORT = '{transport}';
+    public const string VARIABLE_TRANSPORT_INFO = '{transport_info}';
+    public const string VARIABLE_PAYMENT = '{payment}';
+    public const string VARIABLE_PAYMENT_INFO = '{payment_info}';
+    public const string VARIABLE_TOTAL_PRICE = '{total_price}';
+    public const string VARIABLE_BILLING_ADDRESS = '{billing_address}';
+    public const string VARIABLE_DELIVERY_ADDRESS = '{delivery_address}';
+    public const string VARIABLE_NOTE = '{note}';
+    public const string VARIABLE_PRODUCTS = '{products}';
+    public const string VARIABLE_ORDER_DETAIL_URL = '{order_detail_url}';
+    public const string VARIABLE_TRANSPORT_INSTRUCTIONS = '{transport_instructions}';
+    public const string VARIABLE_PAYMENT_INSTRUCTIONS = '{payment_instructions}';
+    public const string TRANSPORT_VARIABLE_TRACKING_NUMBER = '{tracking_number}';
+    public const string TRANSPORT_VARIABLE_TRACKING_URL = '{tracking_url}';
+    public const string VARIABLE_TRACKING_INSTRUCTIONS = '{tracking_instructions}';
+    public const string VARIABLE_ROUNDING_INFO = '{rounding_info}';
+    public const string VARIABLE_ADDRESSES = '{addresses}';
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
@@ -51,6 +56,7 @@ class OrderMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator $orderUrlGenerator
      * @param \Shopsys\FrameworkBundle\Twig\HiddenPriceExtension $hiddenPriceExtension
+     * @param \Shopsys\FrameworkBundle\Component\Cdn\CdnFacade $cdnFacade
      */
     public function __construct(
         protected readonly Setting $setting,
@@ -62,6 +68,7 @@ class OrderMail implements MessageFactoryInterface
         protected readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
         protected readonly OrderUrlGenerator $orderUrlGenerator,
         protected readonly HiddenPriceExtension $hiddenPriceExtension,
+        protected readonly CdnFacade $cdnFacade,
     ) {
     }
 
@@ -116,13 +123,10 @@ class OrderMail implements MessageFactoryInterface
     protected function getVariablesReplacementsForBody(Order $order)
     {
         $router = $this->domainRouterFactory->getRouter($order->getDomainId());
-        $orderDomainConfig = $this->domain->getDomainConfigById($order->getDomainId());
 
-        $transport = $order->getTransport();
-        $payment = $order->getPayment();
-
-        $transportInstructions = $transport->getInstructions($orderDomainConfig->getLocale());
-        $paymentInstructions = $payment->getInstructions($orderDomainConfig->getLocale());
+        $orderItemTotalPricesById = $this->orderItemPriceCalculation->calculateTotalPricesIndexedById(
+            $order->getItems(),
+        );
 
         return [
             self::VARIABLE_NUMBER => htmlspecialchars($order->getNumber(), ENT_QUOTES),
@@ -133,12 +137,16 @@ class OrderMail implements MessageFactoryInterface
             self::VARIABLE_TOTAL_PRICE => $this->getFormattedPrice($order),
             self::VARIABLE_BILLING_ADDRESS => $this->getBillingAddressHtmlTable($order),
             self::VARIABLE_DELIVERY_ADDRESS => $this->getDeliveryAddressHtmlTable($order),
-            self::VARIABLE_NOTE => $order->getNote() !== null ? htmlspecialchars($order->getNote(), ENT_QUOTES) : null,
-            self::VARIABLE_PRODUCTS => $this->getProductsHtmlTable($order),
+            self::VARIABLE_NOTE => $this->getNoteHtml($order),
+            self::VARIABLE_PRODUCTS => $this->getProductsHtmlTable($order, $orderItemTotalPricesById),
             self::VARIABLE_ORDER_DETAIL_URL => $this->orderUrlGenerator->getOrderDetailUrl($order),
-            self::VARIABLE_TRANSPORT_INSTRUCTIONS => $transportInstructions,
-            self::VARIABLE_PAYMENT_INSTRUCTIONS => $paymentInstructions,
+            self::VARIABLE_TRANSPORT_INSTRUCTIONS => $this->getTransportInstructionsHtml($order),
+            self::VARIABLE_PAYMENT_INSTRUCTIONS => $this->getPaymentInstructionsHtml($order),
             self::VARIABLE_TRACKING_INSTRUCTIONS => $this->getTrackingInstructions($order),
+            self::VARIABLE_TRANSPORT_INFO => $this->getTransportInfoHtml($order, $orderItemTotalPricesById),
+            self::VARIABLE_PAYMENT_INFO => $this->getPaymentInfoHtml($order, $orderItemTotalPricesById),
+            self::VARIABLE_ROUNDING_INFO => $this->getRoundingInfoHtml($order, $orderItemTotalPricesById),
+            self::VARIABLE_ADDRESSES => $this->getAddressesHtml($order),
         ];
     }
 
@@ -190,6 +198,7 @@ class OrderMail implements MessageFactoryInterface
         return $this->twig->render('@ShopsysFramework/Mail/Order/billingAddress.html.twig', [
             'order' => $order,
             'orderLocale' => $this->getDomainLocaleByOrder($order),
+            'contentBaseUrl' => $this->cdnFacade->resolveDomainUrlForAssets($this->domain->getDomainConfigById($order->getDomainId())),
         ]);
     }
 
@@ -202,19 +211,65 @@ class OrderMail implements MessageFactoryInterface
         return $this->twig->render('@ShopsysFramework/Mail/Order/deliveryAddress.html.twig', [
             'order' => $order,
             'orderLocale' => $this->getDomainLocaleByOrder($order),
+            'contentBaseUrl' => $this->cdnFacade->resolveDomainUrlForAssets($this->domain->getDomainConfigById($order->getDomainId())),
         ]);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @return string|null
+     */
+    protected function getNoteHtml(Order $order): ?string
+    {
+        if ($order->getNote() === null) {
+            return null;
+        }
+
+        return $this->twig->render('@ShopsysFramework/Mail/Order/note.html.twig', [
+            'order' => $order,
+            'orderLocale' => $this->getDomainLocaleByOrder($order),
+        ]);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @return string|null
+     */
+    protected function getTransportInstructionsHtml(Order $order): ?string
+    {
+        if ($order->getTransportItem()->getTransport()->getInstructions($this->getDomainLocaleByOrder($order)) === null) {
+            return null;
+        }
+
+        return $this->twig->render('@ShopsysFramework/Mail/Order/transportInstructions.html.twig', [
+            'order' => $order,
+            'orderLocale' => $this->getDomainLocaleByOrder($order),
+        ]);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @return string|null
+     */
+    protected function getPaymentInstructionsHtml(Order $order): ?string
+    {
+        if ($order->getPaymentItem()->getPayment()->getInstructions($this->getDomainLocaleByOrder($order)) === null) {
+            return null;
+        }
+
+        return $this->twig->render('@ShopsysFramework/Mail/Order/paymentInstructions.html.twig', [
+            'order' => $order,
+            'orderLocale' => $this->getDomainLocaleByOrder($order),
+        ]);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $orderItemTotalPricesById
      * @return string
      */
-    protected function getProductsHtmlTable(Order $order)
+    protected function getProductsHtmlTable(Order $order, array $orderItemTotalPricesById): string
     {
-        $orderItemTotalPricesById = $this->orderItemPriceCalculation->calculateTotalPricesIndexedById(
-            $order->getItems(),
-        );
-
         return $this->twig->render('@ShopsysFramework/Mail/Order/products.html.twig', [
             'order' => $order,
             'orderItemTotalPricesById' => $orderItemTotalPricesById,
@@ -252,6 +307,76 @@ class OrderMail implements MessageFactoryInterface
         return strtr($trackingInstructions, [
             self::TRANSPORT_VARIABLE_TRACKING_NUMBER => $trackingNumber,
             self::TRANSPORT_VARIABLE_TRACKING_URL => $trackingUrl,
+        ]);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $orderItemTotalPricesById
+     * @return string
+     */
+    protected function getTransportInfoHtml(Order $order, array $orderItemTotalPricesById): string
+    {
+        $orderTransportItem = $order->getTransportItem();
+
+        return $this->twig->render('@ShopsysFramework/Mail/Order/transportInfo.html.twig', [
+            'order' => $order,
+            'orderTransportItem' => $orderTransportItem,
+            'orderLocale' => $this->getDomainLocaleByOrder($order),
+            'orderTransportTotalPrice' => $orderItemTotalPricesById[$orderTransportItem->getId()],
+        ]);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $orderItemTotalPricesById
+     * @return string
+     */
+    protected function getPaymentInfoHtml(Order $order, array $orderItemTotalPricesById): string
+    {
+        $orderPaymentItem = $order->getPaymentItem();
+
+        return $this->twig->render('@ShopsysFramework/Mail/Order/paymentInfo.html.twig', [
+            'order' => $order,
+            'orderPaymentItem' => $orderPaymentItem,
+            'orderLocale' => $this->getDomainLocaleByOrder($order),
+            'orderPaymentTotalPrice' => $orderItemTotalPricesById[$orderPaymentItem->getId()],
+        ]);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $orderItemTotalPricesById
+     * @return string|null
+     */
+    protected function getRoundingInfoHtml(Order $order, array $orderItemTotalPricesById): ?string
+    {
+        $orderRoundingItems = $order->getRoundingItems();
+
+        if (count($orderRoundingItems) === 0) {
+            return null;
+        }
+
+        $orderRoundingItem = reset($orderRoundingItems);
+
+        return $this->twig->render('@ShopsysFramework/Mail/Order/roundingInfo.html.twig', [
+            'order' => $order,
+            'orderRoundingItem' => $orderRoundingItem,
+            'orderLocale' => $this->getDomainLocaleByOrder($order),
+            'orderRoundingTotalPrice' => $orderItemTotalPricesById[$orderRoundingItem->getId()],
+        ]);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @return string
+     */
+    protected function getAddressesHtml(Order $order): string
+    {
+        return $this->twig->render('@ShopsysFramework/Mail/Order/addresses.html.twig', [
+            'order' => $order,
+            'orderLocale' => $this->getDomainLocaleByOrder($order),
+            'contentBaseUrl' => $this->cdnFacade->resolveDomainUrlForAssets($this->domain->getDomainConfigById($order->getDomainId())),
         ]);
     }
 }

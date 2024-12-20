@@ -136,6 +136,8 @@ return ECSConfig::configure()
                 __DIR__ . '/packages/framework/src/Migrations/Version*.php',
                 __DIR__ . '/packages/framework/src/Form/Admin/*/*FormType.php',
                 __DIR__ . '/packages/framework/src/Model/AdminNavigation/SideMenuBuilder.php',
+                __DIR__ . '/packages/framework/src/Model/Mail/MailTemplateBuilder.php',
+                __DIR__ . '/packages/framework/src/Model/Mail/MailTemplateConfiguration.php',
                 __DIR__ . '/packages/framework/src/Model/Order/Preview/OrderPreviewCalculation.php',
                 __DIR__ . '/packages/framework/src/Model/Product/Elasticsearch/ProductExportRepository.php',
                 __DIR__ . '/packages/framework/src/Model/Product/Elasticsearch/Scope/ProductExportScopeConfig.php',

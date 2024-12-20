@@ -9,6 +9,7 @@ use App\Model\Mail\MailTemplateData;
 use App\Model\Order\Mail\OrderMail;
 use App\Model\Order\Order;
 use App\Model\Order\Status\OrderStatus;
+use Shopsys\FrameworkBundle\Component\Cdn\CdnFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
@@ -24,7 +25,12 @@ use Twig\Environment;
 
 class OrderMailTest extends TransactionFunctionalTestCase
 {
-    public function testGetMailTemplateNameByStatus()
+    /**
+     * @inject
+     */
+    private OrderItemPriceCalculation $orderItemPriceCalculation;
+
+    public function testGetMailTemplateNameByStatus(): void
     {
         $orderStatus1 = $this->getMockBuilder(OrderStatus::class)
             ->onlyMethods(['getId'])
@@ -50,7 +56,7 @@ class OrderMailTest extends TransactionFunctionalTestCase
         $this->assertNotSame($mailTempleteName1, $mailTempleteName2);
     }
 
-    public function testGetMessageByOrder()
+    public function testGetMessageByOrder(): void
     {
         $routerMock = $this->getMockBuilder(RouterInterface::class)->getMock();
         $routerMock->expects($this->any())->method('generate')->willReturn('generatedUrl');
@@ -62,9 +68,6 @@ class OrderMailTest extends TransactionFunctionalTestCase
         $domainRouterFactoryMock->expects($this->any())->method('getRouter')->willReturn($routerMock);
 
         $twigMock = $this->getMockBuilder(Environment::class)->disableOriginalConstructor()->getMock();
-        $orderItemPriceCalculationMock = $this->getMockBuilder(
-            OrderItemPriceCalculation::class,
-        )->disableOriginalConstructor()->getMock();
         $settingMock = $this->getMockBuilder(Setting::class)->disableOriginalConstructor()->getMock();
         $settingMock->expects($this->any())->method('getForDomain')->willReturn('no-reply@shopsys.com');
         $priceExtensionMock = $this->getMockBuilder(PriceExtension::class)->disableOriginalConstructor()->getMock();
@@ -77,17 +80,21 @@ class OrderMailTest extends TransactionFunctionalTestCase
         $hiddenPriceExtensionMock = $this->getMockBuilder(
             HiddenPriceExtension::class,
         )->disableOriginalConstructor()->getMock();
+        $cdnFacadeMock = $this->getMockBuilder(
+            CdnFacade::class,
+        )->disableOriginalConstructor()->getMock();
 
         $orderMail = new OrderMail(
             $settingMock,
             $domainRouterFactoryMock,
             $twigMock,
-            $orderItemPriceCalculationMock,
+            $this->orderItemPriceCalculation,
             $this->domain,
             $priceExtensionMock,
             $dateTimeFormatterExtensionMock,
             $orderUrlGeneratorMock,
             $hiddenPriceExtensionMock,
+            $cdnFacadeMock,
         );
 
         $order = $this->getReference('order_1', Order::class);

@@ -463,11 +463,11 @@ msgstr "Nejprodávanější zboží - zobrazení"
 msgid "Billing address"
 msgstr "Fakturační adresa"
 
-msgid "Billing address - name, last name, company, company number, tax number and billing address"
-msgstr "Fakturační adresa - jméno, příjmení, firma, ič, dič a fakt. adresa"
-
 msgid "Billing address <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
 msgstr "Fakturační údaje <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byly změněny"
+
+msgid "Billing and delivery address"
+msgstr "Fakturační a doručovací adresa"
 
 msgid "Billing data"
 msgstr "Fakturační údaje"
@@ -664,8 +664,14 @@ msgstr "Zvolit tuto kategorii a pokračovat"
 msgid "Choose type of redirect"
 msgstr "Vyberte typ přesměrování"
 
+msgid "Chosen payment information (image, name, price)"
+msgstr "Informace o vybrané platbě (obrázek, název, cena)"
+
 msgid "Chosen payment name"
 msgstr "Název zvolené platby"
+
+msgid "Chosen shipping information (image, name, price)"
+msgstr "Informace o vybrané dopravě (obrázek, název, cena)"
 
 msgid "Chosen shipping name"
 msgstr "Název zvolené dopravy"
@@ -2212,6 +2218,9 @@ msgstr "S DPH"
 msgid "Incorrect settings may have a negative impact on the correct functionality of the e-shop."
 msgstr "Nesprávné nastavení může mít negativní vliv na správnou funkčnost e-shopu."
 
+msgid "Information about order rounding item (empty if there is no rounding)"
+msgstr "Informace o zaokrouhlovací položce v objednávce (prázdné pokud v objednávce není zaokrouhlení)"
+
 msgid "Input price with VAT"
 msgstr "Vstupní cena s DPH"
 
@@ -2356,8 +2365,8 @@ msgstr "Odkaz na přehled osobních údajů"
 msgid "LinkedIn URL"
 msgstr "LinkedIn URL"
 
-msgid "List of products in order (name, quantity, price per unit including VAT, total price per item including VAT)"
-msgstr "Seznam zboží v objednávce (název, množství, cena za jednotku s DPH, celková cena za položku s DPH)"
+msgid "List of products in order (image, name, quantity, price per unit including VAT, total price per item including VAT)"
+msgstr "Seznam produktů v objednávce (obrázek, název, množství, cena za jednotku s DPH, celková cena za položku s DPH)"
 
 msgid "Lists and nomenclatures"
 msgstr "Seznamy a číselníky"
@@ -4135,9 +4144,6 @@ msgstr "Celkem bez DPH"
 msgid "Total including VAT"
 msgstr "Celkem s DPH"
 
-msgid "Total item price including VAT"
-msgstr "Celková cena za položku s DPH"
-
 msgid "Total order price (including VAT)"
 msgstr "Celková cena za objednávku (s DPH)"
 
@@ -4179,6 +4185,9 @@ msgstr "Přenosy"
 
 msgid "Transfers - view"
 msgstr "Přehled chyb v přenosech - zobrazení"
+
+msgid "Transport"
+msgstr "Doprava"
 
 msgid "Transport type"
 msgstr "Typ dopravy"
@@ -4254,6 +4263,9 @@ msgstr "Jednotka <strong>{{ name }}</strong> byla smazána"
 
 msgid "Unit <strong>{{ name }}</strong> deleted and replaced by unit <strong>{{ newName }}</strong>"
 msgstr "Jednotka <strong>{{ name }}</strong> byla smazána a byla nahrazena jednotkou <strong>{{ newName }}</strong>."
+
+msgid "Unit price"
+msgstr "Jednotková cena"
 
 msgid "Unit price excluding VAT"
 msgstr "Jednotková cena bez DPH"
