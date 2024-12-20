@@ -91,6 +91,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
                 href={sliderItems[bannerSliderState.sliderPosition].link}
                 title={sliderItems[bannerSliderState.sliderPosition].name}
                 onClick={handleClick}
+                onClickExtended={handleClick}
                 onMouseEnter={checkAndClearInterval}
                 onMouseUp={handleClick}
                 onMouseLeave={() => {
