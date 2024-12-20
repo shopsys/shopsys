@@ -143,6 +143,10 @@ class PhpFileExtractor implements FileVisitorInterface, NodeVisitor
             return Translator::DEFAULT_TRANSLATION_DOMAIN;
         }
 
+        if ($domainArg->value instanceof Node\Expr\ConstFetch && (string)$domainArg->value->name === 'null') {
+            return Translator::DEFAULT_TRANSLATION_DOMAIN;
+        }
+
         return PhpParserNodeHelper::getConcatenatedStringValue(
             $domainArg->value,
             $this->file,

@@ -63,6 +63,10 @@ class PhpFileExtractorTest extends TestCase
         $message->addSource(new FileSource($fileName, 35));
         $expected->add($message);
 
+        $message = new Message('my %adjective% string with null domain', Translator::DEFAULT_TRANSLATION_DOMAIN);
+        $message->addSource(new FileSource($fileName, 36));
+        $expected->add($message);
+
         $this->assertEquals($expected, $catalogue);
     }
 
