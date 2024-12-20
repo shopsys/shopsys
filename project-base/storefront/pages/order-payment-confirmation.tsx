@@ -71,11 +71,13 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
                         paymentStatusData={paymentStatusData}
                         successContentData={successContentData}
                     />
-                    <RegistrationAfterOrder
-                        orderEmail={orderEmail as string | undefined}
-                        orderUrlHash={orderUrlHash as string | undefined}
-                        orderUuid={orderUuid}
-                    />
+                    {paymentStatusData?.UpdatePaymentStatus.isPaid && successContentData && (
+                        <RegistrationAfterOrder
+                            orderEmail={orderEmail as string | undefined}
+                            orderUrlHash={orderUrlHash as string | undefined}
+                            orderUuid={orderUuid}
+                        />
+                    )}
                 </Webline>
             </CommonLayout>
         </>
