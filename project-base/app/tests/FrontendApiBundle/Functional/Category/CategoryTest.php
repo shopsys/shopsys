@@ -30,32 +30,10 @@ class CategoryTest extends GraphQlTestCase
 
     public function testCategoryNameByUuid(): void
     {
-        $query = '
-            query {
-                category(uuid: "' . $this->category->getUuid() . '") {
-                    name
-                    description
-                    slug
-                    seoH1
-                    seoTitle
-                    seoMetaDescription
-                    bestsellers {
-                        name
-                    }
-                    breadcrumb {
-                        name
-                        slug
-                    }
-                    readyCategorySeoMixLinks {
-                        name
-                        slug
-                    }
-                    linkedCategories {
-                        name
-                    }
-                }
-            }
-        ';
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CategoryQuery.graphql', [
+            'categoryUuid' => $this->category->getUuid(),
+        ]);
+        $responseData = $this->getResponseDataForGraphQlType($response, 'category');
 
         $readyCategorySeoMixLinks = [
             [
@@ -89,128 +67,88 @@ class CategoryTest extends GraphQlTestCase
         $electronicsName = t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
         $electronicsSlug = '/' . TransformString::stringToFriendlyUrlSlug($electronicsName);
 
-        $arrayExpected = [
-            'data' => [
-                'category' => [
-                    'name' => $electronicsName,
-                    'description' => t('Our electronics include devices used for entertainment (flat screen TVs, DVD players, DVD movies, iPods, video games, remote control cars, etc.), communications (telephones, cell phones, email-capable laptops, etc.) and home office activities (e.g., desktop computers, printers, paper shredders, etc.).', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                    'slug' => $electronicsSlug,
-                    'seoH1' => t('Electronic devices', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                    'seoTitle' => t('Electronic stuff', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                    'seoMetaDescription' => t(
-                        'All kind of electronic devices.',
-                        [],
-                        Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                        $this->getLocaleForFirstDomain(),
-                    ),
-                    'bestsellers' => [
-                        ['name' => t('47" LG 47LA790V (FHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
-                        ['name' => t('32" Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
-                        ['name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
-                        ['name' => t('A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
-                    ],
-                    'breadcrumb' => [
-                        [
-                            'name' => $electronicsName,
-                            'slug' => $this->urlGenerator->generate('front_product_list', ['id' => $this->category->getId()]),
-                        ],
-                    ],
-                    'readyCategorySeoMixLinks' => $readyCategorySeoMixLinks,
-                    'linkedCategories' => [
-                        ['name' => t('Food', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
-                        ['name' => t('Garden tools', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
-                    ],
-                ],
+        $this->assertSame($electronicsName, $responseData['name']);
+        $this->assertSame(t('Our electronics include devices used for entertainment (flat screen TVs, DVD players, DVD movies, iPods, video games, remote control cars, etc.), communications (telephones, cell phones, email-capable laptops, etc.) and home office activities (e.g., desktop computers, printers, paper shredders, etc.).', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()), $responseData['description']);
+        $this->assertSame($electronicsSlug, $responseData['slug']);
+        $this->assertSame(t('Electronic devices', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()), $responseData['seoH1']);
+        $this->assertSame(t('Electronic stuff', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()), $responseData['seoTitle']);
+        $this->assertSame(t(
+            'All kind of electronic devices.',
+            [],
+            Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+            $this->getLocaleForFirstDomain(),
+        ), $responseData['seoMetaDescription']);
+        $this->assertSame([
+            ['name' => t('47" LG 47LA790V (FHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+            ['name' => t('32" Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+            ['name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+            ['name' => t('A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+        ], $responseData['bestsellers']);
+        $this->assertSame([
+            [
+                'name' => $electronicsName,
+                'slug' => $this->urlGenerator->generate('front_product_list', ['id' => $this->category->getId()]),
             ],
-        ];
-
-        $this->assertQueryWithExpectedArray($query, $arrayExpected);
+        ], $responseData['breadcrumb']);
+        $this->assertSame($readyCategorySeoMixLinks, $responseData['readyCategorySeoMixLinks']);
+        $this->assertSame([
+            ['name' => t('Food', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+            ['name' => t('Garden tools', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
+        ], $responseData['linkedCategories']);
     }
 
     public function testCategoryParentAndChildNameByUuid(): void
     {
-        $query = '
-            query {
-                category(uuid: "' . $this->category->getUuid() . '") {
-                    children {
-                        name
-                    }
-                    parent {
-                        name
-                    }
-                }
-            }
-        ';
-
         $locale = $this->getLocaleForFirstDomain();
 
-        $arrayExpected = [
-            'data' => [
-                'category' => [
-                    'children' => [
-                        ['name' => t('TV, audio', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
-                        ['name' => t('Cameras & Photo', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
-                        ['name' => t('Printers', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
-                        ['name' => t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
-                        ['name' => t('Mobile Phones', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
-                        ['name' => t('Coffee Machines', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
-                    ],
-                    'parent' => null,
-                ],
-            ],
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CategoryQuery.graphql', [
+            'categoryUuid' => $this->category->getUuid(),
+        ]);
+        $responseData = $this->getResponseDataForGraphQlType($response, 'category');
+
+        $expectedChildren = [
+            ['name' => t('TV, audio', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
+            ['name' => t('Cameras & Photo', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
+            ['name' => t('Printers', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
+            ['name' => t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
+            ['name' => t('Mobile Phones', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
+            ['name' => t('Coffee Machines', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale)],
         ];
 
-        $this->assertQueryWithExpectedArray($query, $arrayExpected);
+        $this->assertSame($expectedChildren, $responseData['children']);
+        $this->assertNull($responseData['parent']);
     }
 
     public function testCategoryProductsByUuid(): void
     {
-        $query = '
-            query {
-                category(uuid: "' . $this->category->getUuid() . '") {
-                    products (first: 10) {
-                        edges {
-                            ... on ProductEdge {
-                                node {
-                                    name
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        ';
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CategoryQuery.graphql', [
+            'categoryUuid' => $this->category->getUuid(),
+            'firstProducts' => 10,
+        ]);
+        $responseData = $this->getResponseDataForGraphQlType($response, 'category');
 
         $locale = $this->getLocaleForFirstDomain();
 
-        $arrayExpected = [
-            'data' => [
-                'category' => [
-                    'products' => [
-                        'edges' => [
-                            ['node' => [
-                                'name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                            ]],
-                            ['node' => [
-                                'name' => t('32" Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                            ]],
-                            ['node' => [
-                                'name' => t(
-                                    'A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,',
-                                    [],
-                                    Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                                    $locale,
-                                ),
-                            ]],
-                            ['node' => [
-                                'name' => t('47" LG 47LA790V (FHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
-                            ]],
-                        ],
-                    ],
-                ],
-            ],
+        $expectedProducts = [
+            ['node' => [
+                'name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ]],
+            ['node' => [
+                'name' => t('32" Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ]],
+            ['node' => [
+                'name' => t(
+                    'A4tech mouse X-710BK, OSCAR Game, 2000DPI, black,',
+                    [],
+                    Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
+                    $locale,
+                ),
+            ]],
+            ['node' => [
+                'name' => t('47" LG 47LA790V (FHD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale),
+            ]],
         ];
 
-        $this->assertQueryWithExpectedArray($query, $arrayExpected);
+        $this->assertSame($expectedProducts, $responseData['products']['edges']);
     }
 }

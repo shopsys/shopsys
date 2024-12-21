@@ -1,7 +1,26 @@
-query CategoryQuery ($categoryUuid: Uuid!, $firstProducts: Int!) {
+query CategoryQuery ($categoryUuid: Uuid, $firstProducts: Int! = 0) {
     category(uuid: $categoryUuid) {
-        uuid
         name
+        description
+        slug
+        seoH1
+        seoTitle
+        seoMetaDescription
+        bestsellers {
+            name
+        }
+        breadcrumb {
+            name
+            slug
+        }
+        readyCategorySeoMixLinks {
+            name
+            slug
+        }
+        linkedCategories {
+            name
+        }
+        uuid
         children {
             name
         }
@@ -19,8 +38,6 @@ query CategoryQuery ($categoryUuid: Uuid!, $firstProducts: Int!) {
             url
             name
         }
-        seoH1
-        seoTitle
-        seoMetaDescription
+        automatedFilters
     }
 }

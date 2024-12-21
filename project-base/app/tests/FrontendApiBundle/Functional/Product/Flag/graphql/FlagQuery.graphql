@@ -1,0 +1,22 @@
+query FlagQuery($uuid: Uuid, $firstProducts: Int!, $filter: ProductFilter) {
+    flag(uuid: $uuid) {
+        name
+        rgbColor
+        slug
+        breadcrumb {
+            name
+            slug
+        }
+        products (first: $firstProducts, filter: $filter) {
+            orderingMode
+            edges {
+                node {
+                    name
+                }
+            }
+        }
+        categories (productFilter: $filter) {
+            name
+        }
+    }
+}

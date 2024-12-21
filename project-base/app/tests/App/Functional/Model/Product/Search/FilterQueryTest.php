@@ -13,6 +13,7 @@ use App\DataFixtures\Demo\PricingGroupDataFixture;
 use App\Model\Category\Category;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Flag\Flag;
+use DateTimeImmutable;
 use Elasticsearch\Client;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
@@ -222,6 +223,14 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
         $limit4Page4Filter = $filter->setLimit(4)
             ->setPage(4);
         $this->assertIdWithFilter($limit4Page4Filter, []);
+    }
+
+    public function testFilterBySellingFrom(): void
+    {
+        $filter = $this->createFilter()
+            ->filterBySellingFrom(new DateTimeImmutable('-30 days'))
+            ->applyOrderingByIdAscending();
+        $this->assertIdWithFilter($filter, [44, 144]);
     }
 
     /**

@@ -46,7 +46,7 @@ class NavigationTest extends GraphQlTestCase
                                         "name": "' . t('Books', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                                     },
                                     {
-                                        "name": "' . t('Toys', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
+                                        "name": "' . t('Newest toys in stock', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
                                     }
                                 ]
                             },

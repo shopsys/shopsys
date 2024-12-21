@@ -11,6 +11,7 @@ use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductFacade;
 use App\Model\Transport\Transport;
+use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -1308,7 +1309,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '4124');
         $this->productDemoDataSetter->setSellingFrom($productData, '8.2.2014');
         $this->productDemoDataSetter->setStocksQuantity($productData, 0);
-        $this->productDemoDataSetter->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES, CategoryDataFixture::CATEGORY_PC]);
+        $this->productDemoDataSetter->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PHONES, CategoryDataFixture::CATEGORY_PC, CategoryDataFixture::CATEGORY_TOYS]);
         $this->productDemoDataSetter->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
         $this->productDemoDataSetter->setBrand($productData, BrandDataFixture::BRAND_SAMSUNG);
 
@@ -1369,9 +1370,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->partno = 'UE75HU7500';
         $productData->ean = '8845781245932';
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '140486.8');
-        $this->productDemoDataSetter->setSellingFrom($productData, '18.1.2014');
+        $this->productDemoDataSetter->setSellingFrom($productData, (new DateTime('-1d'))->format('d.m.Y'));
         $this->productDemoDataSetter->setStocksQuantity($productData, 10);
-        $this->productDemoDataSetter->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC]);
+        $this->productDemoDataSetter->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_TV, CategoryDataFixture::CATEGORY_PC, CategoryDataFixture::CATEGORY_TOYS]);
         $this->productDemoDataSetter->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW]);
         $this->productDemoDataSetter->setBrand($productData, BrandDataFixture::BRAND_SAMSUNG);
 
@@ -3597,9 +3598,9 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->partno = '8331B006';
         $productData->ean = '8845781245938';
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '1314.1');
-        $this->productDemoDataSetter->setSellingFrom($productData, '24.1.2014');
+        $this->productDemoDataSetter->setSellingFrom($productData, (new DateTime('-1d'))->format('d.m.Y'));
         $this->productDemoDataSetter->setStocksQuantity($productData, 0);
-        $this->productDemoDataSetter->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
+        $this->productDemoDataSetter->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC, CategoryDataFixture::CATEGORY_TOYS]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO, Category::class);
         $this->productDemoDataSetter->setFlags($productData, [FlagDataFixture::FLAG_PRODUCT_NEW, FlagDataFixture::FLAG_PRODUCT_ACTION]);
@@ -3637,7 +3638,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '818');
         $this->productDemoDataSetter->setSellingFrom($productData, '22.1.2014');
         $this->productDemoDataSetter->setStocksQuantity($productData, 459);
-        $this->productDemoDataSetter->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC]);
+        $this->productDemoDataSetter->setCategoriesForAllDomains($productData, [CategoryDataFixture::CATEGORY_PRINTERS, CategoryDataFixture::CATEGORY_PC, CategoryDataFixture::CATEGORY_TOYS]);
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID] = [];
         $productData->categoriesByDomainId[Domain::SECOND_DOMAIN_ID][] = $this->persistentReferenceFacade->getReference(CategoryDataFixture::CATEGORY_PHOTO, Category::class);
         $this->productDemoDataSetter->setBrand($productData, BrandDataFixture::BRAND_CANON);

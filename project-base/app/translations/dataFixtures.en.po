@@ -1255,6 +1255,9 @@ msgstr ""
 msgid "New driving rules and tips just for you!"
 msgstr ""
 
+msgid "Newest toys in stock"
+msgstr ""
+
 msgid "Nikon COS 700D"
 msgstr ""
 
@@ -1859,9 +1862,6 @@ msgid "Toilet paper with Euro pictures. Even you can feel rich now!"
 msgstr ""
 
 msgid "Toner for MC861/ 851, 7000 pages"
-msgstr ""
-
-msgid "Toys"
 msgstr ""
 
 msgid "Transport and payment"
