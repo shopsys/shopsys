@@ -333,12 +333,6 @@ class FilterQueryFactory
      */
     protected function filterByCategory(FilterQuery $filterQuery, Category $category): FilterQuery
     {
-        $filterQuery = $filterQuery->filterByCategory($category->getId());
-
-        foreach ($this->categoryAutomatedFilterFacade->getByCategory($category) as $automatedFilter) {
-            $filterQuery = $automatedFilter->applyFilter($filterQuery);
-        }
-
-        return $filterQuery;
+        return $this->categoryAutomatedFilterFacade->applyFiltersByCategory($filterQuery, $category);
     }
 }

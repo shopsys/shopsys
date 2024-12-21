@@ -28,20 +28,8 @@ class BestsellingProductDataFixture extends AbstractReferenceFixture implements 
     public function load(ObjectManager $manager): void
     {
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
-            if ($domainId !== Domain::SECOND_DOMAIN_ID) {
-                $productsIndexedByPosition = [
-                    0 => $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '7', Product::class),
-                    2 => $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '8', Product::class),
-                    8 => $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '5', Product::class),
-                ];
-            } else {
-                $productsIndexedByPosition = [$this->getReference(ProductDataFixture::PRODUCT_PREFIX . '7', Product::class)];
-            }
-            $this->manualBestsellingProductFacade->edit(
-                $this->getReference(CategoryDataFixture::CATEGORY_PHOTO, Category::class),
-                $domainId,
-                $productsIndexedByPosition,
-            );
+            $this->setBestsellingProductsForCategoryPhoto($domainId);
+            $this->setBestsellingProductsForCategoryToys($domainId);
         }
     }
 
@@ -54,5 +42,45 @@ class BestsellingProductDataFixture extends AbstractReferenceFixture implements 
             ProductDataFixture::class,
             CategoryDataFixture::class,
         ];
+    }
+
+    /**
+     * @param int $domainId
+     */
+    private function setBestsellingProductsForCategoryPhoto(int $domainId): void
+    {
+        if ($domainId !== Domain::SECOND_DOMAIN_ID) {
+            $productsIndexedByPosition = [
+                0 => $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '7', Product::class),
+                2 => $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '8', Product::class),
+                8 => $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '5', Product::class),
+            ];
+        } else {
+            $productsIndexedByPosition = [$this->getReference(ProductDataFixture::PRODUCT_PREFIX . '7', Product::class)];
+        }
+        $this->manualBestsellingProductFacade->edit(
+            $this->getReference(CategoryDataFixture::CATEGORY_PHOTO, Category::class),
+            $domainId,
+            $productsIndexedByPosition,
+        );
+    }
+
+    /**
+     * @param int $domainId
+     */
+    private function setBestsellingProductsForCategoryToys(int $domainId): void
+    {
+        $productsIndexedByPosition = [
+            $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '145', Product::class),
+            $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '44', Product::class),
+            $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '144', Product::class),
+            $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '42', Product::class),
+        ];
+
+        $this->manualBestsellingProductFacade->edit(
+            $this->getReference(CategoryDataFixture::CATEGORY_TOYS, Category::class),
+            $domainId,
+            $productsIndexedByPosition,
+        );
     }
 }

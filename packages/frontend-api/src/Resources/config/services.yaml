@@ -149,7 +149,7 @@ services:
 
     Shopsys\FrontendApiBundle\Model\Resolver\Products\BestsellingProductsQuery:
         arguments:
-            $productsSellableByIdsBatchLoader: '@products_sellable_by_ids_batch_loader'
+            $productsSellableInCategoryByIdsBatchLoader: '@products_sellable_in_category_by_ids_batch_loader'
 
     Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper:
         arguments:

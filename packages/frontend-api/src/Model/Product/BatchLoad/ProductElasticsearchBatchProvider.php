@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Product\BatchLoad;
 
 use InvalidArgumentException;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
+use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterFacade;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
@@ -20,12 +21,14 @@ class ProductElasticsearchBatchProvider
      * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductElasticsearchBatchRepository $productElasticsearchBatchRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider $productFrontendLimitProvider
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
+     * @param \Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterFacade $categoryAutomatedFilterFacade
      */
     public function __construct(
         protected readonly FilterQueryFactory $filterQueryFactory,
         protected readonly ProductElasticsearchBatchRepository $productElasticsearchBatchRepository,
         protected readonly ProductFrontendLimitProvider $productFrontendLimitProvider,
         protected readonly EntityNameResolver $entityNameResolver,
+        protected readonly CategoryAutomatedFilterFacade $categoryAutomatedFilterFacade,
     ) {
     }
 
@@ -54,6 +57,21 @@ class ProductElasticsearchBatchProvider
 
         foreach ($productsIds as $productIds) {
             $filterQueries[] = $this->filterQueryFactory->createSellableProductsByProductIdsFilter($productIds, $this->productFrontendLimitProvider->getProductsFrontendLimit());
+        }
+
+        return $this->productElasticsearchBatchRepository->getBatchedProductsAndTotalsByFilterQueries($filterQueries);
+    }
+
+    /**
+     * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductSellableInCategoryBatchLoadData[] $sellableInCategoryBatchLoadData
+     * @return array
+     */
+    public function getBatchedSellableInCategoryByIds(array $sellableInCategoryBatchLoadData): array
+    {
+        $filterQueries = [];
+
+        foreach ($sellableInCategoryBatchLoadData as $batchLoadData) {
+            $filterQueries[] = $this->getSellableByProductsIdsInCategoryFilterQuery($batchLoadData->productIds, $batchLoadData->category);
         }
 
         return $this->productElasticsearchBatchRepository->getBatchedProductsAndTotalsByFilterQueries($filterQueries);
@@ -142,5 +160,22 @@ class ProductElasticsearchBatchProvider
             $productBatchLoadByEntityData->getLimit(),
             $productBatchLoadByEntityData->getEntity($this->entityNameResolver->resolve(Brand::class)),
         );
+    }
+
+    /**
+     * @param array $productIds
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    protected function getSellableByProductsIdsInCategoryFilterQuery(
+        array $productIds,
+        Category $category,
+    ): FilterQuery {
+        $filterQuery = $this->filterQueryFactory->createSellableProductsByProductIdsFilter(
+            $productIds,
+            $this->productFrontendLimitProvider->getProductsFrontendLimit(),
+        );
+
+        return $this->categoryAutomatedFilterFacade->applyFiltersByCategory($filterQuery, $category);
     }
 }

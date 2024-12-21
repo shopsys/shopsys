@@ -60,6 +60,7 @@ class CategoryWithAutomatedFiltersTest extends GraphQlTestCase
 
         $this->assertSame($automatedFilters, $responseData['automatedFilters']);
         $this->assertSame($expectedProductsData, $responseData['products']['edges']);
+        $this->assertSame(array_column($expectedProductsData, 'node'), $responseData['bestsellers']);
     }
 
     /**

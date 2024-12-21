@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Category\AutomatedFilter;
 
 use Shopsys\FrameworkBundle\Model\Category\Category;
+use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery;
 use Traversable;
 
 class CategoryAutomatedFilterFacade
@@ -46,10 +47,26 @@ class CategoryAutomatedFilterFacade
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $filterQuery
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    public function applyFiltersByCategory(FilterQuery $filterQuery, Category $category): FilterQuery
+    {
+        $filterQuery = $filterQuery->filterByCategory($category->getId());
+
+        foreach ($this->getByCategory($category) as $automatedFilter) {
+            $filterQuery = $automatedFilter->applyFilter($filterQuery);
+        }
+
+        return $filterQuery;
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterInterface[]
      */
-    public function getByCategory(Category $category): array
+    protected function getByCategory(Category $category): array
     {
         $categoryAutomatedFilters = [];
 
