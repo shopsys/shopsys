@@ -29,12 +29,17 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
 
     useEffect(() => {
         if (isExpanded && itemRef.current) {
-            itemRef.current.scrollIntoView({
-                behavior: 'smooth',
-                block: 'nearest',
-                inline: 'center',
-            });
+            const timeoutId = setTimeout(() => {
+                itemRef.current!.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest',
+                    inline: 'end',
+                });
+            }, 100);
+            return () => clearTimeout(timeoutId);
         }
+
+        return undefined;
     }, [isExpanded]);
 
     return (

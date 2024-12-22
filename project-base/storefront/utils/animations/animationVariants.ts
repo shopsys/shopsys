@@ -4,12 +4,17 @@ import { CSSProperties } from 'react';
 export const collapseExpandAnimation: Variants = {
     open: (height: CSSProperties['height'] = 'auto') => ({
         height,
-        type: 'tween',
+        transition: {
+            type: 'tween',
+        },
         transitionEnd: { overflow: 'visible' },
     }),
     closed: {
         height: 0,
         overflow: 'hidden',
+        transition: {
+            type: 'tween',
+        },
         transitionEnd: { display: 'none' },
     },
 };

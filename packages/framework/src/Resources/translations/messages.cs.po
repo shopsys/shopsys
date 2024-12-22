@@ -2486,7 +2486,7 @@ msgid "Make modification"
 msgstr "Provést úpravu"
 
 msgid "Map coordinates"
-msgstr ""
+msgstr "Souřadnice na mapě"
 
 msgid "Marketing"
 msgstr "Marketing"
