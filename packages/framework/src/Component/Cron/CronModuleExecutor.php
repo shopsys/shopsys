@@ -88,7 +88,12 @@ class CronModuleExecutor
         $memoryLimit = BytesHelper::getPhpMemoryLimitInBytes();
 
         if ($memoryLimit !== -1 && $memoryUsage >= $memoryLimit * 0.9) {
-            $this->logger->info('Cron was running out of memory, so it was put to sleep to prevent failure.');
+            $this->logger->error('Cron was running out of memory, so it was put to sleep to prevent failure.', [
+                'service_id' => $cronConfig->getServiceId(),
+                'instance_name' => $cronConfig->getInstanceName(),
+                'memory_usage' => BytesHelper::convertBytesToReadableString($memoryUsage),
+                'memory_limit' => BytesHelper::convertBytesToReadableString($memoryLimit),
+            ]);
 
             return false;
         }

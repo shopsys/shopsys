@@ -55,4 +55,17 @@ class BytesHelper
 
         return $max;
     }
+
+    /**
+     * @param int $bytes
+     * @return string
+     */
+    public static function convertBytesToReadableString(int $bytes): string
+    {
+        $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+        $power = $bytes > 0 ? intval(log($bytes, 1024)) : 0;
+        $power = min($power, count($units) - 1);
+
+        return number_format($bytes / (1024 ** $power), 2) . ' ' . $units[$power];
+    }
 }
