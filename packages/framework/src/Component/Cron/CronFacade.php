@@ -8,6 +8,7 @@ use DateTimeInterface;
 use Monolog\Logger;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
+use Shopsys\FrameworkBundle\Component\Reflection\ReflectionHelper;
 use Throwable;
 
 class CronFacade
@@ -52,17 +53,37 @@ class CronFacade
      */
     protected function runModules(array $cronModuleConfigs, string $instanceName): void
     {
-        $this->logger->info(sprintf('====== Start of cron instance %s ======', $instanceName));
+        $unique = uniqid();
 
-        foreach ($cronModuleConfigs as $cronModuleConfig) {
-            $this->runSingleModule($cronModuleConfig);
+        $this->logger->pushProcessor(function ($record) use ($instanceName, $unique) {
+            $record->extra['instance'] = $instanceName;
+            $record->extra['runId'] = $unique;
 
-            if ($this->cronModuleExecutor->canRun($cronModuleConfig) === false) {
-                break;
+            return $record;
+        });
+
+        $this->logger->info('Start of cron instance');
+
+        try {
+            foreach ($cronModuleConfigs as $cronModuleConfig) {
+                $this->runSingleModule($cronModuleConfig);
+
+                if ($this->cronModuleExecutor->canRun($cronModuleConfig) === false) {
+                    break;
+                }
             }
+        } catch (Throwable $throwable) {
+            $this->logger->error('End of cron instance with error', [
+                'exception' => $throwable,
+            ]);
+            $this->logger->popProcessor();
+
+            return;
         }
 
-        $this->logger->info(sprintf('======= End of cron instance %s =======', $instanceName));
+        $this->logger->info('End of cron instance');
+
+        $this->logger->popProcessor();
     }
 
     /**
@@ -84,7 +105,14 @@ class CronFacade
             return;
         }
 
-        $this->logger->info('Start of ' . $cronModuleConfig->getServiceId());
+        $shortServiceId = ReflectionHelper::getShortClassName($cronModuleConfig->getServiceId());
+        $this->logger->pushProcessor(function ($record) use ($shortServiceId) {
+            $record->extra['module'] = $shortServiceId;
+
+            return $record;
+        });
+
+        $this->logger->info('Cron module started');
         $cronModuleService = $cronModuleConfig->getService();
         $cronModuleService->setLogger($this->logger);
         $this->cronModuleFacade->markCronAsStarted($cronModuleConfig);
@@ -96,7 +124,7 @@ class CronFacade
             );
         } catch (Throwable $throwable) {
             $this->cronModuleFacade->markCronAsFailed($cronModuleConfig);
-            $this->logger->error('End of ' . $cronModuleConfig->getServiceId() . ' because of error', [
+            $this->logger->error('Cron module ended with error', [
                 'exception' => $throwable,
             ]);
 
@@ -107,13 +135,15 @@ class CronFacade
 
         if ($status === CronModuleExecutor::RUN_STATUS_OK) {
             $this->cronModuleFacade->unscheduleModule($cronModuleConfig);
-            $this->logger->info('End of ' . $cronModuleConfig->getServiceId());
         } elseif ($status === CronModuleExecutor::RUN_STATUS_SUSPENDED) {
             $this->cronModuleFacade->suspendModule($cronModuleConfig);
-            $this->logger->info('Suspend ' . $cronModuleConfig->getServiceId());
-        } elseif ($status === CronModuleExecutor::RUN_STATUS_TIMEOUT) {
-            $this->logger->info('Cron reached timeout.');
         }
+
+        $this->logger->info('Cron module ended', [
+            'status' => $status,
+        ]);
+
+        $this->logger->popProcessor();
     }
 
     /**
