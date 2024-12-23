@@ -9,15 +9,14 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    experimental: { scrollRestoration: true, middlewarePrefetch: 'strict' },
+    experimental: {
+        scrollRestoration: true,
+        middlewarePrefetch: 'strict',
+        instrumentationHook: true,
+    },
     reactStrictMode: true,
     swcMinify: true,
     assetPrefix: process.env.CDN_DOMAIN ?? undefined,
-    sentry: {
-        disableServerWebpackPlugin: process.env.APP_ENV === 'development',
-        disableClientWebpackPlugin: process.env.APP_ENV === 'development',
-        hideSourceMaps: true,
-    },
     images: {
         loader: 'custom',
         remotePatterns: [
@@ -107,6 +106,13 @@ const nextConfig = {
 };
 
 const SentryWebpackPluginOptions = {
+    authToken: process.env.SENTRY_AUTH_TOKEN,
+    disableServerWebpackPlugin: process.env.APP_ENV === 'development',
+    disableClientWebpackPlugin: process.env.APP_ENV === 'development',
+    hideSourceMaps: true,
+    sourcemaps: {
+        deleteSourcemapsAfterUpload: true,
+    },
     errorHandler: (err, _invokeErr, compilation) => {
         compilation.warnings.push('Sentry CLI Plugin: ' + err.message);
     },

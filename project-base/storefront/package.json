@@ -26,7 +26,7 @@
         "@floating-ui/react": "~0.26.28",
         "@hookform/resolvers": "~2.6.1",
         "@next/bundle-analyzer": "~14.2.20",
-        "@sentry/nextjs": "~8.40.0",
+        "@sentry/nextjs": "~8.47.0",
         "@urql/devtools": "~2.0.3",
         "@urql/exchange-auth": "~2.1.6",
         "@urql/exchange-graphcache": "~6.4.1",
