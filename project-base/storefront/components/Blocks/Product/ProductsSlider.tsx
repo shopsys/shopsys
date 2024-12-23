@@ -9,7 +9,6 @@ import { RefObject, createRef, useEffect, useRef, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { twJoin } from 'tailwind-merge';
 import { twMergeCustom } from 'utils/twMerge';
-import { isTextSelected } from 'utils/ui/disableClickWhenTextSelected';
 import { isWholeElementVisible } from 'utils/ui/isWholeElementVisible';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 import { wait } from 'utils/wait';
@@ -87,9 +86,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
 
         const newActiveIndex = isFirstSlide ? productElementRefs!.length - 4 : prevIndex;
 
-        if (!isTextSelected()) {
-            setActiveIndex(newActiveIndex);
-        }
+        setActiveIndex(newActiveIndex);
     };
 
     const handleNext = () => {
@@ -102,9 +99,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
 
         const newActiveIndex = isEndSlide ? 0 : nextIndex;
 
-        if (!isTextSelected()) {
-            setActiveIndex(newActiveIndex);
-        }
+        setActiveIndex(newActiveIndex);
     };
 
     const handlers = useSwipeable({
@@ -158,7 +153,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
                     ])}
                     productItemProps={{
                         className: twMergeCustom(
-                            'snap-center md:snap-start mx-1 md:mx-2 first:ml-0 last:mr-0 p-0',
+                            'snap-center md:snap-start mx-1 md:mx-2 first:ml-0 last:mr-0',
                             productItemProps?.className,
                         ),
                         ...productItemProps,
