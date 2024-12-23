@@ -40,7 +40,7 @@ return [
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
     Shopsys\S3Bridge\ShopsysS3BridgeBundle::class => ['all' => true],
     Scheb\TwoFactorBundle\SchebTwoFactorBundle::class => ['all' => true],
-    Sentry\SentryBundle\SentryBundle::class => ['prod' => true],
+    Sentry\SentryBundle\SentryBundle::class => ['all' => true],
     Overblog\DataLoaderBundle\OverblogDataLoaderBundle::class => ['all' => true],
     Shopsys\AdministrationBundle\ShopsysAdministrationBundle::class => ['all' => true],
     Shopsys\ConvertimBundle\ShopsysConvertimBundle::class => ['all' => true],

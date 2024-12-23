@@ -1,15 +1,23 @@
-when@prod:
-    sentry:
-        dsn: '%env(SENTRY_DSN)%'
+sentry:
+    dsn: '%env(SENTRY_DSN)%'
+    messenger:
+        capture_soft_fails: true # captures exceptions marked for retry too
+        enabled: true # flushes Sentry messages at the end of each message handling
+    options:
+        enable_tracing: true
+        environment: '%env(SENTRY_ENVIRONMENT)%'
+        ignore_exceptions:
+            - Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+        release: '%env(SENTRY_RELEASE)%'
+        traces_sample_rate: 0.1
+    register_error_handler: false
+    register_error_listener: false
+    tracing:
+        enabled: true
 
-#        If you are using Monolog, you also need this additional configuration to log the errors correctly:
-#        https://docs.sentry.io/platforms/php/guides/symfony/#monolog-integration
-#        register_error_listener: false
-#        register_error_handler: false
-
-#    monolog:
-#        handlers:
-#            sentry:
-#                type: sentry
-#                level: !php/const Monolog\Logger::ERROR
-#                hub_id: Sentry\State\HubInterface
+services:
+    # (Optionally) Configure the breadcrumb handler as a service (needed for the breadcrumb Monolog handler)
+    Sentry\Monolog\BreadcrumbHandler:
+        arguments:
+            $hub: '@Sentry\State\HubInterface'
+            $level: !php/const Monolog\Logger::INFO
