@@ -31,7 +31,7 @@ Crud controller generates pretty URLs for each action. The URL is generated base
 
 ## Methods
 
-Crud Controller provides several methods that allows you to customize the behavior of the controller.
+Crud Controller provides several methods that allow you to customize the behavior of the controller.
 
 - `configure()` - Method is used to configure general behavior of controller. Customizable options are available [here](#crud-config).
 

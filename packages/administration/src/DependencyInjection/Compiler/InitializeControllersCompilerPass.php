@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\DependencyInjection\Compiler;
 
 use ReflectionClass;
+use RuntimeException;
 use Shopsys\AdministrationBundle\Component\Attributes\CrudController;
 use Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry;
+use Shopsys\AdministrationBundle\Controller\AbstractCrudController;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class InicializeControllersCompilerPass implements CompilerPassInterface
+class InitializeControllersCompilerPass implements CompilerPassInterface
 {
     /**
      * {@inheritdoc}
@@ -39,7 +41,7 @@ class InicializeControllersCompilerPass implements CompilerPassInterface
      *
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      * @param string $serviceId
-     * @return array|null ['class' => string, 'entityClass' => string]|null
+     * @return array{class: string, entityClass: string}|null
      */
     private function processService(ContainerBuilder $container, string $serviceId): ?array
     {
@@ -57,9 +59,13 @@ class InicializeControllersCompilerPass implements CompilerPassInterface
             return null;
         }
 
+        if (is_subclass_of($class, AbstractCrudController::class) === false) {
+            throw new RuntimeException(sprintf('Controller %s is not a subclass of %s', $class, AbstractCrudController::class));
+        }
+
         return [
             'class' => $class,
-            'entityClass' => $attributeInstance->entityClass,
+            'entityClass' => $attributeInstance->getEntityClass(),
         ];
     }
 

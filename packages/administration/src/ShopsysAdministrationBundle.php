@@ -5,7 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle;
 
 use Override;
+use Shopsys\AdministrationBundle\DependencyInjection\Compiler\InitializeControllersCompilerPass;
+use Shopsys\AdministrationBundle\DependencyInjection\Compiler\LoadControllersExtensionCompilerPass;
+use Shopsys\AdministrationBundle\DependencyInjection\Compiler\RegisterControllerExtensionsCompilerPass;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
@@ -19,6 +23,19 @@ class ShopsysAdministrationBundle extends AbstractBundle
     public function loadExtension(array $config, ContainerConfigurator $container, ContainerBuilder $builder): void
     {
         $container->import('../config/services.yaml');
+    }
+
+    /**
+     * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
+     */
+    #[Override]
+    public function build(ContainerBuilder $container)
+    {
+        parent::build($container);
+
+        $container->addCompilerPass(new InitializeControllersCompilerPass());
+        $container->addCompilerPass(new RegisterControllerExtensionsCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 150);
+        $container->addCompilerPass(new LoadControllersExtensionCompilerPass());
     }
 
     /**

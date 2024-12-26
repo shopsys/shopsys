@@ -11,11 +11,17 @@ final class CrudController
 {
     /**
      * @param string $entityClass
-     * @param string|null $parent
      */
     public function __construct(
         public string $entityClass,
-        public ?string $parent = null,
     ) {
+    }
+
+    /**
+     * @return string
+     */
+    public function getEntityClass(): string
+    {
+        return $this->entityClass;
     }
 }

@@ -1,6 +1,6 @@
 # Creating a new Crud Controller
 
-This guide will show you how to create a new Crud Controller in your project.
+This guide will show you how to create a new Crud Controller for your project.
 
 ## 1. Create a new Crud Controller
 

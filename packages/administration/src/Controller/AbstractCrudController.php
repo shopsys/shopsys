@@ -15,6 +15,7 @@ use Shopsys\AdministrationBundle\Component\Config\CrudConfigData;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\OrmAdapterFactory;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 use Shopsys\AdministrationBundle\Component\Datagrid\DatagridFactory;
+use Shopsys\AdministrationBundle\Component\Registry\CrudControllerExtensionsRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Service\Attribute\Required;
@@ -33,6 +34,9 @@ abstract class AbstractCrudController extends AbstractController
 
     #[Required]
     public OrmAdapterFactory $ormAdapterFactory;
+
+    #[Required]
+    public CrudControllerExtensionsRegistry $crudControllerExtensionsRegistry;
 
     /**
      * @param \Shopsys\AdministrationBundle\Component\Config\CrudConfig $config
@@ -71,8 +75,13 @@ abstract class AbstractCrudController extends AbstractController
             'crudConfig' => $this->getConfig(),
             'name' => $this->getConfig()->getEntityName(),
         ]);
-        $this->configureDatagrid($datagrid);
+        $datagrid = $this->configureDatagrid($datagrid);
 
+        $extensions = $this->crudControllerExtensionsRegistry->getExtensions(static::class);
+
+        foreach ($extensions as $extension) {
+            $datagrid = $extension->configureDatagrid($datagrid);
+        }
 
         return $this->render('@ShopsysAdministration/crud/list.html.twig', [
             'title' => $this->getConfig()->getTitle(ActionType::LIST),
@@ -120,6 +129,10 @@ abstract class AbstractCrudController extends AbstractController
     {
         if ($this->actions === null) {
             $this->actions = $this->configureActions(new ActionsConfig(static::class, $this->getConfig()->getActions()));
+        }
+
+        foreach ($this->crudControllerExtensionsRegistry->getExtensions(static::class) as $extension) {
+            $this->actions = $extension->configureActions($this->actions);
         }
 
         return $this->actions->getActions($actionType);

@@ -24,3 +24,7 @@ services:
     Shopsys\AdministrationBundle\Component\Menu\CrudMenuSubscriber:
         tags:
             - { name: kernel.event_subscriber }
+
+    Shopsys\AdministrationBundle\Component\Registry\CrudControllerExtensionsRegistry:
+        arguments:
+            $crudControllerExtensions: '%shopsys.admin.crud_controllers_extensions%'
