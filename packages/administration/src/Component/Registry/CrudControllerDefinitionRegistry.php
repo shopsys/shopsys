@@ -10,7 +10,7 @@ use Webmozart\Assert\Assert;
 
 final class CrudControllerDefinitionRegistry
 {
-    public const CRUD_CONTROLLERS_PARAMETER = 'shopsys.admin.crud_controllers';
+    public const string CRUD_CONTROLLERS_PARAMETER = 'shopsys.admin.crud_controllers';
 
     /**
      * @var \Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionItem[]
@@ -23,9 +23,9 @@ final class CrudControllerDefinitionRegistry
      */
     public function __construct(
         private readonly EntityNameResolver $entityNameResolver,
-        private readonly array $crudControllers = [],
+        array $crudControllers = [],
     ) {
-        foreach ($this->crudControllers as $crudController) {
+        foreach ($crudControllers as $crudController) {
             $this->addItem($crudController['class'], $crudController['entityClass']);
         }
     }

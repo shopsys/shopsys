@@ -9,6 +9,7 @@ Crud controller is built using known Shopsys components like [Grid](../grid.md) 
 ## Getting started
 - [Creating a new Crud Controller](getting-started/creating-a-new-crud-controller.md)
 - [Configure List page (Datagrid)](getting-started/configure-list-page.md)
+- [Extending existing Crud Controller](getting-started/extending-existing-crud-controller.md)
 
 ## Reference
 - [Configuration](reference/crud-controller.md)
