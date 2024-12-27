@@ -2,7 +2,15 @@
     "name": "shopsys/article-feed-luigis-box",
     "type": "library",
     "description": "Shopsys Platform plugin interface for Luigis Box XML article feed generation",
-    "keywords": ["Luigis Box", "article feed", "XML feed", "plugin", "Shopsys Platform", "SSFW", "SSP"],
+    "keywords": [
+        "Luigis Box",
+        "article feed",
+        "XML feed",
+        "plugin",
+        "Shopsys Platform",
+        "SSFW",
+        "SSP"
+    ],
     "license": "MIT",
     "authors": [
         {
@@ -28,10 +36,10 @@
         "doctrine/doctrine-bundle": "^2.5.7",
         "doctrine/orm": "^2.11.2",
         "doctrine/persistence": "^3.3.3",
-        "shopsys/form-types-bundle": "16.0.x-dev",
-        "shopsys/framework": "16.0.x-dev",
-        "shopsys/migrations": "16.0.x-dev",
-        "shopsys/plugin-interface": "16.0.x-dev",
+        "shopsys/form-types-bundle": "dev-rc-16-0-0 as 16.0.0",
+        "shopsys/framework": "dev-rc-16-0-0 as 16.0.0",
+        "shopsys/migrations": "dev-rc-16-0-0 as 16.0.0",
+        "shopsys/plugin-interface": "dev-rc-16-0-0 as 16.0.0",
         "symfony/config": "^6.4",
         "symfony/dependency-injection": "^6.4",
         "symfony/form": "^6.4",
