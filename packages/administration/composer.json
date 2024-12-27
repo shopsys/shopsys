@@ -2,7 +2,13 @@
     "name": "shopsys/administration",
     "type": "library",
     "description": "Administration interface for the Shopsys Platform",
-    "keywords": ["Shopsys Platform", "SSFW", "admin", "administration", "admin panel"],
+    "keywords": [
+        "Shopsys Platform",
+        "SSFW",
+        "admin",
+        "administration",
+        "admin panel"
+    ],
     "license": "proprietary",
     "authors": [
         {

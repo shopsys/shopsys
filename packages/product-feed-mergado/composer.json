@@ -2,7 +2,14 @@
     "name": "shopsys/product-feed-mergado",
     "type": "library",
     "description": "Shopsys Platform plugin interface for Mergado XML product feed generation",
-    "keywords": ["Mergado", "product feed", "XML feed", "plugin", "Shopsys Platform", "SSFW"],
+    "keywords": [
+        "Mergado",
+        "product feed",
+        "XML feed",
+        "plugin",
+        "Shopsys Platform",
+        "SSFW"
+    ],
     "license": "MIT",
     "authors": [
         {

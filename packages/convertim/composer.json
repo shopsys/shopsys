@@ -2,7 +2,13 @@
     "name": "shopsys/convertim",
     "type": "library",
     "description": "A Symfony bundle to integrate Convertim into Shopsys Platform.",
-    "keywords": ["Shopsys Platform", "SSFW", "convertim", "checkout", "integration"],
+    "keywords": [
+        "Shopsys Platform",
+        "SSFW",
+        "convertim",
+        "checkout",
+        "integration"
+    ],
     "license": "proprietary",
     "authors": [
         {

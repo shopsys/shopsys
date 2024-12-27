@@ -2,7 +2,15 @@
     "name": "shopsys/brand-feed-luigis-box",
     "type": "library",
     "description": "Shopsys Platform plugin interface for Luigis Box XML brand feed generation",
-    "keywords": ["Luigis Box", "brand feed", "XML feed", "plugin", "Shopsys Platform", "SSFW", "SSP"],
+    "keywords": [
+        "Luigis Box",
+        "brand feed",
+        "XML feed",
+        "plugin",
+        "Shopsys Platform",
+        "SSFW",
+        "SSP"
+    ],
     "license": "MIT",
     "authors": [
         {

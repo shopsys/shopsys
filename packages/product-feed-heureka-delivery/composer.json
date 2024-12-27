@@ -2,7 +2,14 @@
     "name": "shopsys/product-feed-heureka-delivery",
     "type": "library",
     "description": "Shopsys Platform plugin interface for Heureka delivery XML product feed generation",
-    "keywords": ["Heureka", "product delivery feed", "XML feed", "plugin", "Shopsys Platform", "SSFW"],
+    "keywords": [
+        "Heureka",
+        "product delivery feed",
+        "XML feed",
+        "plugin",
+        "Shopsys Platform",
+        "SSFW"
+    ],
     "license": "MIT",
     "authors": [
         {

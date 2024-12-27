@@ -2,7 +2,12 @@
     "name": "shopsys/frontend-api",
     "type": "library",
     "description": "Shopsys Platform Frontend API support",
-    "keywords": ["api", "Shopsys Platform", "GraphQL", "SSFW"],
+    "keywords": [
+        "api",
+        "Shopsys Platform",
+        "GraphQL",
+        "SSFW"
+    ],
     "license": "proprietary",
     "authors": [
         {
