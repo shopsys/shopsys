@@ -12,9 +12,9 @@ export const BlogLayout: FC<BlogLayoutProps> = ({ children, activeCategoryUuid }
     return (
         <Webline>
             <div className="scroll-mt-5">
-                <div className="mb-[60px] flex flex-col gap-3 md:gap-10 vl:flex-row xl:gap-[116px]">
-                    <div className="order-2 flex w-full flex-col vl:order-1 vl:flex-1">{children}</div>
-                    <div className="order-1 w-full vl:order-2 vl:w-[300px]">
+                <div className="mb-[60px] flex flex-col gap-3 md:gap-10 xl:flex-row xl:gap-[60px]">
+                    <div className="order-2 flex w-full flex-col xl:order-1 xl:max-w-[840px] xl:flex-1">{children}</div>
+                    <div className="order-1 w-full xl:order-2 xl:w-[300px]">
                         <BlogSignpost
                             activeItem={activeCategoryUuid}
                             blogCategoryItems={blogCategoriesData?.blogCategories}
