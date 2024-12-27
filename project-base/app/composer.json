@@ -53,6 +53,7 @@
         "fakerphp/faker": "^1.19.0",
         "friendsofsymfony/ckeditor-bundle": "^2.1",
         "guzzlehttp/guzzle": "^7.5.0",
+        "guzzlehttp/psr7": "^2.7.0",
         "helios-ag/fm-elfinder-bundle": "^12.2",
         "heureka/overeno-zakazniky": "^4.0.1",
         "jms/serializer-bundle": "^5.0",
@@ -138,8 +139,7 @@
         "zalas/phpunit-injector": "2.5.x-dev as 2.5.1"
     },
     "conflict": {
-        "symfony/symfony": "*",
-        "guzzlehttp/psr7": "<=1.8.3 || >=2.0.0 <=2.1.0"
+        "symfony/symfony": "*"
     },
     "scripts": {
         "pre-install-cmd": [
