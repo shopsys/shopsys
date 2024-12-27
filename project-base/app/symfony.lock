@@ -652,22 +652,22 @@
         ]
     },
     "shopsys/administration": {
-        "version": "16.0.x-dev"
+        "version": "17.0.x-dev"
     },
     "shopsys/article-feed-luigis-box": {
-        "version": "16.0.x-dev"
+        "version": "17.0.x-dev"
     },
     "shopsys/brand-feed-luigis-box": {
-        "version": "16.0.x-dev"
+        "version": "17.0.x-dev"
     },
     "shopsys/category-feed-luigis-box": {
-        "version": "16.0.x-dev"
+        "version": "17.0.x-dev"
     },
     "shopsys/coding-standards": {
         "version": "v9.1.1"
     },
     "shopsys/convertim": {
-        "version": "16.0.x-dev"
+        "version": "17.0.x-dev"
     },
     "shopsys/form-types-bundle": {
         "version": "v9.1.1"
@@ -688,7 +688,7 @@
         "version": "1.7.0"
     },
     "shopsys/luigis-box": {
-        "version": "16.0.x-dev"
+        "version": "17.0.x-dev"
     },
     "shopsys/migrations": {
         "version": "v9.1.1"
@@ -709,7 +709,7 @@
         "version": "v9.1.1"
     },
     "shopsys/product-feed-luigis-box": {
-        "version": "16.0.x-dev"
+        "version": "17.0.x-dev"
     },
     "shopsys/product-feed-zbozi": {
         "version": "v9.1.1"
