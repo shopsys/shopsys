@@ -28,7 +28,7 @@ use Shopsys\FrontendApiBundle\Model\Complaint\ComplaintRepository;
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
 use Shopsys\FrontendApiBundle\Model\Order\OrderItemApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\InvalidAccessUserError;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class ComplaintApiFacadeTest extends TestCase
 {

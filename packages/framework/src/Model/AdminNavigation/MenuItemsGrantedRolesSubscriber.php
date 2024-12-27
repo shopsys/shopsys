@@ -6,13 +6,13 @@ namespace Shopsys\FrameworkBundle\Model\AdminNavigation;
 
 use Knp\Menu\ItemInterface;
 use Shopsys\FrameworkBundle\Model\Security\MenuItemsGrantedRolesSetting;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Security\Core\Security;
 
 class MenuItemsGrantedRolesSubscriber implements EventSubscriberInterface
 {
     /**
-     * @param \Symfony\Component\Security\Core\Security $security
+     * @param \Symfony\Bundle\SecurityBundle\Security $security
      * @param \Shopsys\FrameworkBundle\Model\Security\MenuItemsGrantedRolesSetting $menuItemsGrantedRolesSetting
      */
     public function __construct(

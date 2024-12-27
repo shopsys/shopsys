@@ -10,12 +10,12 @@ use Shopsys\FrameworkBundle\Component\Money\HiddenMoney;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
 use Shopsys\FrontendApiBundle\Component\Price\MoneyFormatterHelper;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class MoneyResolverMap extends ResolverMap
 {
     /**
-     * @param \Symfony\Component\Security\Core\Security $security
+     * @param \Symfony\Bundle\SecurityBundle\Security $security
      */
     public function __construct(protected readonly Security $security)
     {

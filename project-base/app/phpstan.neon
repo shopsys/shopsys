@@ -36,10 +36,6 @@ parameters:
         -
             message: '#^Service "snc_redis.test" is not registered in the container.$#'
             path: %currentWorkingDirectory%/tests/App/Functional/Component/Redis/Redis*FacadeTest.php
-        -
-            # in fact, anything can be passed to the load function, it just has a bad annotation
-            message: '#^Parameter \#1 \$key of method Overblog\\DataLoader\\DataLoaderInterface::load\(\) expects string#'
-            path: %currentWorkingDirectory%/src/FrontendApi/*
     excludePaths:
         - tests/App/Unit/PhpStan/GedmoTestEntity.php
         # Exclude coding standards for generated files

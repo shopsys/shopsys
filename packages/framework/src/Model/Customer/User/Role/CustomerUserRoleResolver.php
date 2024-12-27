@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Customer\User\Role;
 
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
-use Symfony\Component\Security\Core\Security;
 
 class CustomerUserRoleResolver
 {
     /**
      * @param \Symfony\Component\Security\Core\Role\RoleHierarchyInterface $roleHierarchy
-     * @param \Symfony\Component\Security\Core\Security $security
+     * @param \Symfony\Bundle\SecurityBundle\Security $security
      */
     public function __construct(
         protected readonly RoleHierarchyInterface $roleHierarchy,

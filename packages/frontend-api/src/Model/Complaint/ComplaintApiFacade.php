@@ -26,7 +26,7 @@ use Shopsys\FrontendApiBundle\Model\Complaint\Exception\OrderItemNotFoundUserErr
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
 use Shopsys\FrontendApiBundle\Model\Order\OrderItemApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\InvalidAccessUserError;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class ComplaintApiFacade
 {
@@ -41,7 +41,7 @@ class ComplaintApiFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrontendApiBundle\Model\Complaint\ComplaintDataApiFactory $complaintDataApiFactory
      * @param \Shopsys\FrontendApiBundle\Model\Complaint\ComplaintItemDataApiFactory $complaintItemDataApiFactory
-     * @param \Symfony\Component\Security\Core\Security $security
+     * @param \Symfony\Bundle\SecurityBundle\Security $security
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMailFacade $complaintMailFacade
      * @param \Shopsys\FrontendApiBundle\Model\Complaint\ComplaintRepository $complaintRepository
      */

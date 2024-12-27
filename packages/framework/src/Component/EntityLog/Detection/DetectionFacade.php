@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\EntityLog\Detection;
 
 use Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogSourceEnum;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class DetectionFacade
 {
@@ -14,7 +14,7 @@ class DetectionFacade
     protected ?string $userIdentifier = null;
 
     /**
-     * @param \Symfony\Component\Security\Core\Security $security
+     * @param \Symfony\Bundle\SecurityBundle\Security $security
      */
     public function __construct(
         protected readonly Security $security,
