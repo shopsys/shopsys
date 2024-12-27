@@ -30,6 +30,9 @@ class TokenMock implements TokenInterface
     {
     }
 
+    /**
+     * @return string
+     */
     public function __toString(): string
     {
         return '';

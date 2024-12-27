@@ -12,14 +12,14 @@ use Shopsys\FrontendApiBundle\Model\Complaint\ComplaintApiFacade;
 use Shopsys\FrontendApiBundle\Model\Complaint\Exception\ComplaintNotFoundUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class ComplaintQuery extends AbstractQuery
 {
     /**
      * @param \Shopsys\FrontendApiBundle\Model\Complaint\ComplaintApiFacade $complaintApiFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Symfony\Component\Security\Core\Security $security
+     * @param \Symfony\Bundle\SecurityBundle\Security $security
      */
     public function __construct(
         protected readonly ComplaintApiFacade $complaintApiFacade,

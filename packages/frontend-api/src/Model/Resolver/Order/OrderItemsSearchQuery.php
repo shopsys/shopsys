@@ -18,7 +18,7 @@ use Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilter;
 use Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilterFactory;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class OrderItemsSearchQuery extends AbstractQuery
 {
@@ -26,7 +26,7 @@ class OrderItemsSearchQuery extends AbstractQuery
      * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemApiFacade $orderItemApiFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrontendApiBundle\Model\Order\OrderItemsFilterFactory $orderItemsFilterFactory
-     * @param \Symfony\Component\Security\Core\Security $security
+     * @param \Symfony\Bundle\SecurityBundle\Security $security
      */
     public function __construct(
         protected readonly OrderItemApiFacade $orderItemApiFacade,
