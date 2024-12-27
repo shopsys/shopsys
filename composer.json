@@ -113,6 +113,7 @@
         "gopay/payments-sdk-php": "^1.7",
         "gordalina/cachetool": "^9.2",
         "guzzlehttp/guzzle": "^7.5",
+        "guzzlehttp/psr7": "^2.7.0",
         "helios-ag/fm-elfinder-bundle": "^12.2",
         "heureka/overeno-zakazniky": "^4.0.1",
         "hybridauth/hybridauth": "^3.11",
