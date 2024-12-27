@@ -115,11 +115,12 @@ class CronFacade
             );
         } catch (Throwable $throwable) {
             $this->cronModuleFacade->markCronAsFailed($cronModuleConfig);
-            $this->logger->error('Cron module ended with error', [
+            $this->logger->error('Cron module ended', [
+                'status' => 'error',
                 'exception' => $throwable,
             ]);
 
-            throw $throwable;
+            return;
         }
 
         $this->cronModuleFacade->markCronAsEnded($cronModuleConfig);
