@@ -30,7 +30,7 @@ class TokenMock implements TokenInterface
     {
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return '';
     }
@@ -58,7 +58,7 @@ class TokenMock implements TokenInterface
     /**
      * @param mixed $user
      */
-    public function setUser($user)
+    public function setUser($user): void
     {
     }
 
@@ -74,7 +74,7 @@ class TokenMock implements TokenInterface
     {
     }
 
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
     }
 
@@ -89,7 +89,7 @@ class TokenMock implements TokenInterface
     /**
      * @param array $attributes
      */
-    public function setAttributes(array $attributes)
+    public function setAttributes(array $attributes): void
     {
     }
 
@@ -115,7 +115,7 @@ class TokenMock implements TokenInterface
      * @param string $name
      * @param mixed $value
      */
-    public function setAttribute(string $name, $value)
+    public function setAttribute(string $name, $value): void
     {
     }
 
