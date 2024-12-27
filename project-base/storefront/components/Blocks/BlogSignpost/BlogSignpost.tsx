@@ -26,19 +26,19 @@ export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeI
     return (
         <>
             <div className="relative flex flex-col gap-y-2.5">
-                <div className="cursor-pointer vl:cursor-text">
+                <div className="cursor-pointer xl:cursor-text">
                     <Button
                         variant="secondary"
                         className={twJoin(
                             'relative w-full justify-between !text-base',
-                            'vl:pointer-events-none  vl:bg-transparent vl:p-0 vl:font-semibold vl:text-text vl:outline-none',
-                            'max-vl:z-aboveOverlay max-vl:py-2.5 max-vl:font-default',
+                            'xl:pointer-events-none  xl:bg-transparent xl:p-0 xl:font-semibold xl:text-text xl:outline-none',
+                            'max-xl:z-aboveOverlay max-xl:py-2.5 max-xl:font-default',
                         )}
                         onClick={() => setIsBlogSignpostOpen(!isBlogSignpostOpen)}
                     >
                         {t('Article categories')}
                         <ArrowIcon
-                            className={twJoin('size-6 transition-all vl:hidden', isBlogSignpostOpen && 'rotate-180')}
+                            className={twJoin('size-6 transition-all xl:hidden', isBlogSignpostOpen && 'rotate-180')}
                         />
                     </Button>
                 </div>
@@ -48,8 +48,8 @@ export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeI
                         className={twJoin(
                             'flex w-full flex-col gap-y-2.5',
                             isBlogSignpostOpen
-                                ? 'max-vl:absolute max-vl:top-full max-vl:z-aboveOverlay max-vl:mt-1 max-vl:rounded-2xl max-vl:bg-background max-vl:p-5'
-                                : 'max-vl:hidden',
+                                ? 'max-xl:absolute max-xl:top-full max-xl:z-aboveOverlay max-xl:mt-1 max-xl:rounded-2xl max-xl:bg-background max-xl:p-5'
+                                : 'max-xl:hidden',
                         )}
                     >
                         {blogCategoryItems.map((blogCategory) => {

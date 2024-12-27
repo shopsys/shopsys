@@ -59,7 +59,9 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     }, [products.length]);
 
     useEffect(() => {
-        handleScroll(activeIndex);
+        if (!isMobile) {
+            handleScroll(activeIndex);
+        }
     }, [activeIndex]);
 
     const handleScroll = async (selectedActiveIndex: number) => {
@@ -85,7 +87,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
             return;
         }
 
-        const newActiveIndex = isFirstSlide ? productElementRefs!.length - 4 : prevIndex;
+        const newActiveIndex = isFirstSlide ? productElementRefs!.length - visibleSliderItems : prevIndex;
 
         if (!isTextSelected()) {
             setActiveIndex(newActiveIndex);
@@ -94,7 +96,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
 
     const handleNext = () => {
         const nextIndex = activeIndex + 1;
-        const isEndSlide = nextIndex + visibleSliderItems > productElementRefs!.length;
+        const isEndSlide = nextIndex > productElementRefs!.length - visibleSliderItems;
 
         if (isMobile && isEndSlide) {
             return;

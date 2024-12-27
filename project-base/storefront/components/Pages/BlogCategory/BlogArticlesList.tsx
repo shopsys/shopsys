@@ -21,7 +21,7 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles, isLo
     return (
         <ul className="flex w-full flex-col gap-y-5">
             {blogArticles.map((blogArticle) => (
-                <li key={blogArticle.uuid} className="w-full">
+                <li key={blogArticle.uuid} className="w-full xl:max-w-[784px]">
                     <ExtendedNextLink
                         href={blogArticle.link}
                         type="blogArticle"
