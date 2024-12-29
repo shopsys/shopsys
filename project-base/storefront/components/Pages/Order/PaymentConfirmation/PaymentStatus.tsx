@@ -1,26 +1,27 @@
 import { PaymentFail } from './PaymentFail';
 import { PaymentInProcess } from './PaymentInProcess';
 import { PaymentSuccess } from './PaymentSuccess';
-import { TypeUpdatePaymentStatusMutation } from 'graphql/requests/orders/mutations/UpdatePaymentStatusMutation.generated';
+import { TypeOrderDetailByHashQuery } from 'graphql/requests/orders/queries/OrderDetailByHashQuery.generated';
 import { TypeOrderPaymentFailedContentQuery } from 'graphql/requests/orders/queries/OrderPaymentFailedContentQuery.generated';
 import { TypeOrderPaymentSuccessfulContentQuery } from 'graphql/requests/orders/queries/OrderPaymentSuccessfulContentQuery.generated';
 
 export const PaymentStatus: FC<{
-    paymentStatusData: TypeUpdatePaymentStatusMutation | undefined;
+    orderData: TypeOrderDetailByHashQuery | undefined;
     failedContentData: TypeOrderPaymentFailedContentQuery | undefined;
     successContentData: TypeOrderPaymentSuccessfulContentQuery | undefined;
-}> = ({ paymentStatusData, failedContentData, successContentData }) => {
-    if (paymentStatusData?.UpdatePaymentStatus.isPaid) {
+}> = ({ orderData, failedContentData, successContentData }) => {
+    const order = orderData?.order;
+    if (order?.isPaid) {
         return successContentData ? (
             <PaymentSuccess orderPaymentSuccessfulContent={successContentData.orderPaymentSuccessfulContent} />
         ) : null;
     }
 
-    if (paymentStatusData?.UpdatePaymentStatus.hasPaymentInProcess) {
-        return <PaymentInProcess orderUrlHash={paymentStatusData.UpdatePaymentStatus.urlHash} />;
+    if (order?.hasPaymentInProcess) {
+        return <PaymentInProcess orderUrlHash={order.urlHash} />;
     }
 
-    if (paymentStatusData && failedContentData) {
+    if (order && failedContentData) {
         return <PaymentFail orderPaymentFailedContent={failedContentData.orderPaymentFailedContent} />;
     }
 
