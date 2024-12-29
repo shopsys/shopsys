@@ -53,6 +53,7 @@ class GoPayOrderMapper
                     [
                         'orderIdentifier' => $order->getUuid(),
                         'orderPaymentStatusPageValidityHash' => $order->getOrderPaymentStatusPageValidityHash(),
+                        'orderUrlHash' => $order->getUrlHash(),
                     ],
                     UrlGeneratorInterface::ABSOLUTE_URL,
                 ),
