@@ -16,15 +16,21 @@ import { CombinedError } from 'urql';
 import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 
 export const getPaymentSessionExpiredErrorMessage = (
-    isOrderPaymentFailedError: CombinedError | undefined,
     t: Translate,
+    ...combinedErrors: (CombinedError | undefined)[]
 ) => {
-    if (!isOrderPaymentFailedError?.graphQLErrors.length) {
-        return '';
+    for (const error of combinedErrors) {
+        if (!error?.graphQLErrors.length) {
+            continue;
+        }
+
+        const { applicationError } = getUserFriendlyErrors(error, t);
+        if (applicationError?.type === 'order-sent-page-not-available') {
+            return t('Order sent page is not available.');
+        }
     }
 
-    const { applicationError } = getUserFriendlyErrors(isOrderPaymentFailedError, t);
-    return applicationError?.type === 'order-sent-page-not-available' ? t('Order sent page is not available.') : '';
+    return '';
 };
 
 export const useUpdatePaymentStatus = (orderUuid: string, orderPaymentStatusPageValidityHash: string | null) => {

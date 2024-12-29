@@ -26,7 +26,7 @@ export const PromoCode: FC = () => {
 
     const [isContentVisible, setIsContentVisible] = useState(!!defaultValues.promoCode);
 
-    if (!promoCodes.length) {
+    if (promoCodes.length > 0) {
         return null;
     }
 
@@ -64,21 +64,21 @@ export const PromoCode: FC = () => {
                                     textInputProps={{
                                         label: formMeta.fields.promoCode.label,
                                         required: true,
-                                        className: '!rounded-r-none border-r-0',
                                     }}
                                 />
-                                <SubmitButton
-                                    className="self-start"
-                                    isWithDisabledLook={!formProviderMethods.formState.isValid}
-                                    size="xlarge"
-                                    tid={TIDs.blocks_promocode_apply_button}
-                                    variant="inverted"
-                                >
-                                    {isApplyingPromoCodeToCart && <Loader className="w-4" />}
-
-                                    {t('Apply code')}
-                                </SubmitButton>
                             </div>
+
+                            <SubmitButton
+                                className="self-start"
+                                isWithDisabledLook={!formProviderMethods.formState.isValid}
+                                size="xlarge"
+                                tid={TIDs.blocks_promocode_apply_button}
+                                variant="inverted"
+                            >
+                                {isApplyingPromoCodeToCart && <Loader className="w-4" />}
+
+                                {t('Apply code')}
+                            </SubmitButton>
                         </m.form>
                     </FormProvider>
                 )}

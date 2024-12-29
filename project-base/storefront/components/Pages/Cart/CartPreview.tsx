@@ -13,7 +13,7 @@ import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
 export const CartPreview: FC = () => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
-    const { cart, promoCode } = useCurrentCart();
+    const { cart, promoCodes } = useCurrentCart();
     const { goToNextStepFromCartPage } = useCartPageNavigation();
 
     const { removePromoCodeFromCart, isRemovingPromoCodeFromCart } = useRemovePromoCodeFromCart({
@@ -29,18 +29,18 @@ export const CartPreview: FC = () => {
         <div className="bg-backgroundMore font-secondary vl:max-w-[495px] w-full rounded-xl px-4 py-6 text-center font-semibold sm:p-8">
             {isRemovingPromoCodeFromCart && <LoaderWithOverlay className="w-5" />}
 
-            {promoCode !== null && (
+            {promoCodes.length > 0 && (
                 <div className="border-borderAccentLess mb-4 flex flex-col gap-4 border-b-[3px] pb-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                             <p>{t('Promo code')}</p>
 
-                            <Flag type="discount">{promoCode.code}</Flag>
+                            <Flag type="discount">{promoCodes[0].code}</Flag>
 
                             <button
                                 className="text-link hover:text-linkHovered text-xs underline hover:no-underline"
                                 tid={TIDs.blocks_promocode_promocodeinfo_code}
-                                onClick={() => removePromoCodeFromCart(promoCode.code)}
+                                onClick={() => removePromoCodeFromCart(promoCodes[0].code)}
                             >
                                 {t('Remove')}
                             </button>
