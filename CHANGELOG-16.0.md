@@ -38,6 +38,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 <!-- Add generated changelog below this line -->
 <!-- Release notes generated using configuration in .github/release.yml at 16.0 -->
 
+## [v16.0.0](https://github.com/shopsys/shopsys/compare/v15.0.0...v16.0.0) (2024-12-30)
+
 ### :sparkles: Enhancements and features
 
 - [framework] user is logged out after role change by @grossmannmartin in https://github.com/shopsys/shopsys/pull/3458
