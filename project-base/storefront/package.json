@@ -105,7 +105,7 @@
         "jsdom": "~24.0.0",
         "postcss": "~8.4.49",
         "prettier": "~3.2.5",
-        "prettier-plugin-tailwindcss": "~0.5.14",
+        "prettier-plugin-tailwindcss": "~0.6.9",
         "tailwindcss": "~3.4.16",
         "typescript": "~5.3.3",
         "vite-tsconfig-paths": "~4.3.2",
