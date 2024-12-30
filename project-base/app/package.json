@@ -66,7 +66,7 @@
         "counterup2": "^1.0.4",
         "grapesjs": "^0.20.3",
         "grapesjs-plugin-ckeditor": "^1.0.1",
-        "grapesjs-preset-newsletter": "^0.2.21",
+        "grapesjs-preset-newsletter": "^1.0.2",
         "grapesjs-preset-webpage": "^1.0.2",
         "intersection-observer": "^0.11.0",
         "jquery-hoverintent": "^1.10.1",
