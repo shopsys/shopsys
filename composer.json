@@ -113,6 +113,7 @@
         "gopay/payments-sdk-php": "^1.7",
         "gordalina/cachetool": "^9.2",
         "guzzlehttp/guzzle": "^7.5",
+        "guzzlehttp/psr7": "^2.7.0",
         "helios-ag/fm-elfinder-bundle": "^12.2",
         "heureka/overeno-zakazniky": "^4.0.1",
         "hybridauth/hybridauth": "^3.11",
@@ -213,8 +214,7 @@
         "zalas/phpunit-injector": "2.5.x-dev as 2.5.1"
     },
     "conflict": {
-        "symfony/symfony": "*",
-        "guzzlehttp/psr7": "<=1.8.3 || >=2.0.0 <=2.1.0"
+        "symfony/symfony": "*"
     },
     "scripts": {
         "post-install-cmd": [

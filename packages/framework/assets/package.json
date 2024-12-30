@@ -1,6 +1,6 @@
 {
     "name": "@shopsys/framework",
-    "version": "16.0.0-dev.5",
+    "version": "16.0.0",
     "description": "Shopsys Platform assets files",
     "repository": "https://github.com/shopsys/shopsys",
     "author": "Shopsys",

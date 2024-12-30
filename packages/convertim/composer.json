@@ -2,7 +2,13 @@
     "name": "shopsys/convertim",
     "type": "library",
     "description": "A Symfony bundle to integrate Convertim into Shopsys Platform.",
-    "keywords": ["Shopsys Platform", "SSFW", "convertim", "checkout", "integration"],
+    "keywords": [
+        "Shopsys Platform",
+        "SSFW",
+        "convertim",
+        "checkout",
+        "integration"
+    ],
     "license": "proprietary",
     "authors": [
         {
@@ -22,10 +28,10 @@
     },
     "require": {
         "php": "^8.3",
-        "shopsys/form-types-bundle": "16.0.x-dev",
-        "shopsys/framework": "16.0.x-dev",
-        "shopsys/migrations": "16.0.x-dev",
-        "shopsys/plugin-interface": "16.0.x-dev",
+        "shopsys/form-types-bundle": "16.0.0",
+        "shopsys/framework": "16.0.0",
+        "shopsys/migrations": "16.0.0",
+        "shopsys/plugin-interface": "16.0.0",
         "symfony/config": "^6.4",
         "symfony/dependency-injection": "^6.4",
         "symfony/form": "^6.4",
@@ -41,7 +47,7 @@
         "phpstan/phpstan-phpunit": "^1.4.0",
         "phpstan/phpstan-symfony": "^1.4.6",
         "phpunit/phpunit": "^9.5.20",
-        "shopsys/coding-standards": "16.0.x-dev"
+        "shopsys/coding-standards": "16.0.0"
     },
     "extra": {
         "symfony": {
