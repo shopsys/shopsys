@@ -52,7 +52,7 @@
         "require-context": "^1.1.0",
         "stylelint": "^13.13.1",
         "stylelint-webpack-plugin": "^2.1.1",
-        "svgo": "1.2.2",
+        "svgo": "3.3.2",
         "webpack-livereload-plugin": "^3.0.1",
         "webpack-notifier": "^1.13.0"
     },
@@ -66,7 +66,7 @@
         "counterup2": "^1.0.4",
         "grapesjs": "^0.20.3",
         "grapesjs-plugin-ckeditor": "^1.0.1",
-        "grapesjs-preset-newsletter": "^0.2.21",
+        "grapesjs-preset-newsletter": "^1.0.2",
         "grapesjs-preset-webpage": "^1.0.2",
         "intersection-observer": "^0.11.0",
         "jquery-hoverintent": "^1.10.1",
