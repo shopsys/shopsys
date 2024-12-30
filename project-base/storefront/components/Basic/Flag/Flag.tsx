@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { twMergeCustom } from 'utils/twMerge';
 
-export type FlagTypes = 'blog' | 'dynamic' | 'custom';
+export type FlagTypes = 'blog' | 'dynamic' | 'custom' | 'discount';
 
 type FlagProps = {
     href?: string;
@@ -17,6 +17,7 @@ export const Flag: FC<FlagProps> = ({ children, href, className, type = 'custom'
         type === 'blog' &&
             'bg-textSubtle font-secondary font-semiBold text-xs !text-textInverted no-underline hover:bg-backgroundAccentMore hover:text-textInverted hover:!no-underline',
         type === 'dynamic' && '!text-textInverted text-zero py-1.5 rounded-full vl:text-xs vl:py-0.5 vl:rounded',
+        type === 'discount' && 'bg-priceDiscounted text-textInverted font-semiBold py-1',
     );
 
     return (

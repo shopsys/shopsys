@@ -58,6 +58,7 @@ export const AutocompleteSearchProductsResult: FC<AutocompleteSearchProductsResu
                 productItemProps={{
                     size: 'small',
                     textSize: 'xs',
+                    textSizePrice: 'base',
                     visibleItemsConfig: { price: true },
                     onClick: (product) => {
                         onProductDetailRedirectHandler(product);

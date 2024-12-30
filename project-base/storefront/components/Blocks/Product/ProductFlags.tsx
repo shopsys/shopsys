@@ -1,11 +1,31 @@
 import { ProductFlag } from './ProductFlag';
+import { ProductVisibleItemsConfigType } from './ProductsList/ProductListItem';
+import { Flag } from 'components/Basic/Flag/Flag';
 import { TypeSimpleFlagFragment } from 'graphql/requests/flags/fragments/SimpleFlagFragment.generated';
+import useTranslation from 'next-translate/useTranslation';
 import { twMergeCustom } from 'utils/twMerge';
 
-type ProductFlagsProps = { flags: TypeSimpleFlagFragment[]; variant: 'list' | 'detail' | 'comparison' | 'bestsellers' };
+type ProductFlagsProps = {
+    flags: TypeSimpleFlagFragment[];
+    percentageDiscount: number | null;
+    variant: 'list' | 'detail' | 'comparison' | 'bestsellers';
+    visibleItemsConfig?: ProductVisibleItemsConfigType;
+};
 
-export const ProductFlags: FC<ProductFlagsProps> = ({ flags, variant }) => {
-    if (!flags.length) {
+export const ProductFlags: FC<ProductFlagsProps> = ({
+    flags,
+    percentageDiscount,
+    variant,
+    visibleItemsConfig = { flags: true, discount: false },
+}) => {
+    const { t } = useTranslation();
+
+    if (
+        (!visibleItemsConfig.flags && !visibleItemsConfig.discount) ||
+        (!flags.length && !percentageDiscount) ||
+        (!visibleItemsConfig.flags && !percentageDiscount) ||
+        (!visibleItemsConfig.discount && !flags.length)
+    ) {
         return null;
     }
 
@@ -13,14 +33,23 @@ export const ProductFlags: FC<ProductFlagsProps> = ({ flags, variant }) => {
         list: 'top-5 right-2.5 sm:right-5 items-end z-above',
         detail: 'top-3 left-4',
         comparison: 'top-3 left-0',
-        bestsellers: 'flex-row relative flex-wrap mb-3 gap-2',
+        bestsellers: 'flex-row relative flex-wrap mb-1 gap-2',
     };
 
     return (
         <div className={twMergeCustom('absolute flex flex-col items-start gap-1', variantTwClass[variant])}>
-            {flags.map(({ name, rgbColor }, index) => (
-                <ProductFlag key={index} name={name} rgbColor={rgbColor} />
-            ))}
+            {visibleItemsConfig.flags &&
+                flags.length > 0 &&
+                flags.map(({ name, rgbColor }, index) => <ProductFlag key={index} name={name} rgbColor={rgbColor} />)}
+
+            {visibleItemsConfig.discount &&
+                !!percentageDiscount &&
+                percentageDiscount > 0 &&
+                percentageDiscount < 100 && (
+                    <Flag type="discount">
+                        -{percentageDiscount}% {t('disount')}
+                    </Flag>
+                )}
         </div>
     );
 };

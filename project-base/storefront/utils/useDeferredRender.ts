@@ -69,6 +69,7 @@ const PRODUCT_PAGE_DEFER_ORDER = [
     'menu_iconic',
     'navigation',
     'mobile_menu',
+    'countdown',
     'comparison_and_wishlist_button',
     'recommended_products',
     'accessories',

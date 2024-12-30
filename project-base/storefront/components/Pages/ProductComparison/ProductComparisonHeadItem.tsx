@@ -41,9 +41,9 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
     );
 
     return (
-        <th className="relative px-3 pb-3 align-top sm:px-5 sm:pb-5" id="js-table-compare-product">
-            <div className="flex h-[365px] w-[182px] flex-col gap-2 sm:w-[205px]">
-                <div className="flex flex-col items-center ">
+        <th className="relative px-3 pb-3 align-top font-semibold sm:px-5 sm:pb-5" id="js-table-compare-product">
+            <div className="flex w-[182px] flex-col gap-2 sm:w-[205px]">
+                <div className="flex flex-col gap-2">
                     <div className="flex h-[185px] w-full items-center justify-center pb-3 pt-4">
                         <Image
                             alt={product.mainImage?.name || product.fullName}
@@ -64,33 +64,35 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
                             )
                         }
                     >
-                        {product.fullName}
+                        <span className="line-clamp-4 min-h-[5rem] font-secondary text-sm">{product.fullName}</span>
                     </ExtendedNextLink>
-                    <p className="mb-2 text-xs">
+                    <span className="text-xs">
                         {t('Code')}: {product.catalogNumber}
-                    </p>
+                    </span>
                 </div>
-                <div className="mt-auto">
-                    <ProductAction
-                        gtmMessageOrigin={GtmMessageOriginType.other}
-                        gtmProductListName={GtmProductListNameType.product_comparison_page}
-                        listIndex={listIndex}
-                        product={product}
-                    />
-                </div>
+                <ProductAction
+                    gtmMessageOrigin={GtmMessageOriginType.other}
+                    gtmProductListName={GtmProductListNameType.product_comparison_page}
+                    listIndex={listIndex}
+                    product={product}
+                />
             </div>
             <Button
-                className="absolute right-1 top-1 flex p-2"
+                className="absolute right-3 top-0 bg-background p-2 sm:right-5"
                 variant="inverted"
                 onClick={() => {
                     toggleProductInComparison();
                     calcMaxMarginLeft();
                 }}
             >
-                <RemoveIcon className="w-4" />
+                <RemoveIcon className="size-3" />
             </Button>
 
-            {product.flags.length > 0 && <ProductFlags flags={product.flags} variant="comparison" />}
+            <ProductFlags
+                flags={product.flags}
+                percentageDiscount={product.price.percentageDiscount}
+                variant="comparison"
+            />
         </th>
     );
 };

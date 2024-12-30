@@ -52,6 +52,8 @@ module.exports = {
             backgroundWarningMore: '#D58B00',
 
             price: '#004EB6',
+            priceBefore: '#7892BC',
+            priceDiscounted: '#EC5353',
 
             actionPrimaryText: '#FFFFFF',
             actionPrimaryTextActive: '#FFFFFF',

@@ -1,6 +1,7 @@
 import { Image } from 'components/Basic/Image/Image';
 import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
+import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
 import { WatchDogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
 import { TIDs } from 'cypress/tids';
 import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
@@ -11,8 +12,6 @@ import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
-import { useFormatPrice } from 'utils/formatting/useFormatPrice';
-import { isPriceVisible } from 'utils/mappers/price';
 
 const ProductVariantsAvailabilityPopup = dynamic(
     () =>
@@ -30,7 +29,6 @@ type ProductVariantsTableProps = {
 
 export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ variants }) => {
     const { t } = useTranslation();
-    const formatPrice = useFormatPrice();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     if (variants.length === 0) {
@@ -81,10 +79,8 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ variants }
                         />
                     )}
 
-                    <div className="flex flex-col items-center justify-end gap-2.5 lg:ml-auto lg:min-w-80 lg:max-w-96 lg:flex-row">
-                        <div className="min-h-8  lg:min-h-full lg:text-right">
-                            {isPriceVisible(variant.price.priceWithVat) && formatPrice(variant.price.priceWithVat)}
-                        </div>
+                    <div className="flex flex-col items-center justify-end gap-2.5 lg:ml-auto lg:min-w-96 lg:flex-row">
+                        <ProductPrice className="lg:flex-col lg:items-end" productPrice={variant.price} />
 
                         <div className="flex flex-col gap-2">
                             <WatchDogButton
