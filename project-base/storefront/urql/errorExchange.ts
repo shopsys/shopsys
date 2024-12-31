@@ -27,6 +27,11 @@ export const getErrorExchange =
                         return;
                     }
 
+                    const isMaintenance = error.response?.status === 503;
+                    if (isMaintenance) {
+                        return;
+                    }
+
                     if (isWithErrorDebugging && operation.kind === 'mutation') {
                         handleErrorMessagesForMutation(error);
 

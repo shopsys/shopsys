@@ -108,6 +108,9 @@ describe('fetcher test', () => {
         vi.stubEnv('REDIS_PREFIX', 'TEST_PREFIX');
         mockFetch.mockImplementation(() =>
             Promise.resolve({
+                headers: new Headers({
+                    'content-type': 'application/json',
+                }),
                 json: () => Promise.resolve({ data: TEST_RESPONSE_BODY }),
             }),
         );
@@ -123,6 +126,24 @@ describe('fetcher test', () => {
             { EX: 3600 },
         );
         vi.unstubAllEnvs();
+    });
+
+    test('should handle non-JSON content-type responses', async () => {
+        (isClientGetter as Mock).mockImplementation(() => false);
+        mockFetch.mockImplementation(() =>
+            Promise.resolve({
+                headers: new Headers({
+                    'content-type': 'text/html',
+                }),
+            }),
+        );
+
+        const testFetcher = fetcher(mockRedisClient);
+        const response = await testFetcher(TEST_URL, REQUEST_WITH_DIRECTIVE);
+        const responseBody = await response.json();
+
+        expect(responseBody).toStrictEqual({});
+        expect(response.headers.get('content-type')).toBe('application/json');
     });
 
     test('using fetcher on an already cached query should get it from Redis', async () => {

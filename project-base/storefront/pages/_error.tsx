@@ -41,7 +41,7 @@ ErrorPage.getInitialProps = getServerSidePropsWrapper(({ redisClient, domainConf
         err = JSON.stringify({ name: err.name, message: err.message, stack: err.stack, cause: err.cause });
     }
 
-    if (statusCode !== 404 || isWithErrorDebugging) {
+    if ((statusCode !== 404 || isWithErrorDebugging) && statusCode !== 503) {
         logException({
             message: err,
             statusCode,

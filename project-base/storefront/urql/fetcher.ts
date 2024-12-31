@@ -74,9 +74,9 @@ export const fetcher =
                 body,
             });
 
-            const contentType = result.headers.get('content-type')?.includes('application/json');
+            const isJsonContentType = result.headers.get('content-type')?.includes('application/json');
 
-            if (!contentType) {
+            if (!isJsonContentType) {
                 return Promise.resolve(
                     new Response(JSON.stringify({}), {
                         statusText: result.statusText,
