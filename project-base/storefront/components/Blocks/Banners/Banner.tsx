@@ -44,10 +44,10 @@ export const Banner: FC<BannerProps> = ({ banner, bannerSliderState, index, numI
                 mobileAlt={banner.mobileMainImage.name || banner.name}
                 mobileSrc={banner.mobileMainImage.url}
             >
-                <BannerContent banner={banner} className="hidden lg:block" />
+                {banner.description && <BannerContent banner={banner} className="hidden lg:block" />}
             </BannerImage>
 
-            <BannerContent banner={banner} className="block lg:hidden" />
+            {banner.description && <BannerContent banner={banner} className="block lg:hidden" />}
         </div>
     );
 };
