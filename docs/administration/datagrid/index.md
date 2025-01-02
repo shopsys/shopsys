@@ -88,11 +88,6 @@ class MyController extends AbstractController
     }
 }
 ```
-
-As a second argument, you can pass the configuration array to the `create` method. The configuration array can contain the following keys:
-
-- `name` (optional, string) - The name of the datagrid
-- `crudConfig` (optional, object) - Crud Config provided by Crud Controller. It's used to define some additional configuration specific for Crud Controller
-- `pagination` (optional, bool) - Enable or disable pagination. Default is `true`
+You can also pass the `options` array as the second argument. More about options can be found in the [Options Configuration](./configuration.md#options-configuration) section.
 
 Now you can configure the Datagrid using the `Datagrid` class.

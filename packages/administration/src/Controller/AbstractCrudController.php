@@ -67,7 +67,10 @@ abstract class AbstractCrudController extends AbstractController
     public function listAction(): Response
     {
         $adapter = $this->ormAdapterFactory->create($this->getConfig()->getEntityClass());
-        $datagrid = $this->datagridFactory->create($adapter);
+        $datagrid = $this->datagridFactory->create($adapter, [
+            'crudConfig' => $this->getConfig(),
+            'name' => $this->getConfig()->getEntityName(),
+        ]);
         $this->configureDatagrid($datagrid);
 
 
@@ -136,7 +139,7 @@ abstract class AbstractCrudController extends AbstractController
             }
 
             $entityClass = $attributes[0]->newInstance()->entityClass;
-            $this->config = $this->configure(new CrudConfig($entityClass))->getConfig();
+            $this->config = $this->configure(new CrudConfig(static::class, $entityClass))->getConfig();
         }
 
         return $this->config;

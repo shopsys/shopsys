@@ -7,11 +7,14 @@ namespace Shopsys\AdministrationBundle\Component\Datagrid;
 use Doctrine\Common\Collections\ArrayCollection;
 use InvalidArgumentException;
 use phpDocumentor\Reflection\DocBlock\Tags\Param;
+use Shopsys\AdministrationBundle\Component\Config\CrudConfigData;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
 use Shopsys\FrameworkBundle\Component\Grid\GridView;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
+ * @phpstan-import-type DatagridOptions from \Shopsys\AdministrationBundle\Component\Datagrid\DatagridFactory
  * @phpstan-import-type FieldOptions from \Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor
  */
 final class Datagrid
@@ -24,14 +27,47 @@ final class Datagrid
     private string $identificationName = 'id';
 
     /**
+     * @var DatagridOptions
+     */
+    private array $options;
+
+    /**
+     * @var string[]
+     */
+    private array $fieldsOrder = [];
+
+    /**
      * @param \Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface $adapter
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
+     * @param \Shopsys\AdministrationBundle\Component\Datagrid\DatagridManager $datagridManager
+     * @param DatagridOptions $options
      */
     public function __construct(
         private readonly AdapterInterface $adapter,
-        private readonly GridFactory $gridFactory,
+        private readonly DatagridManager $datagridManager,
+        array $options,
     ) {
         $this->fields = new ArrayCollection();
+        $this->options = $this->resolveOptions($options);
+    }
+
+    /**
+     * @param DatagridOptions $options
+     * @return DatagridOptions
+     */
+    private function resolveOptions(array $options): array
+    {
+        $resolver = new OptionsResolver();
+        $resolver->setDefaults([
+            'name' => 'datagrid',
+            'crudConfig' => null,
+            'pagination' => true,
+        ]);
+
+        $resolver->setAllowedTypes('name', 'string');
+        $resolver->setAllowedTypes('crudConfig', [CrudConfigData::class, 'null']);
+        $resolver->setAllowedTypes('pagination', 'bool');
+
+        return $resolver->resolve($options);
     }
 
     /**
@@ -44,6 +80,32 @@ final class Datagrid
     public function setIdentifier(string $identifier): self
     {
         $this->identificationName = $identifier;
+
+        return $this;
+    }
+
+    /**
+     * Enable or disable pagination in datagrid
+     *
+     * @param bool $pagination
+     * @return self
+     */
+    public function setPagination(bool $pagination): self
+    {
+        $this->options['pagination'] = $pagination;
+
+        return $this;
+    }
+
+    /**
+     * Array of field names in order they should be displayed. Field names not present in this array will be displayed at the end.
+     *
+     * @param string[] $columnIds
+     * @return self
+     */
+    public function reorder(array $columnIds): self
+    {
+        $this->fieldsOrder = $columnIds;
 
         return $this;
     }
@@ -127,7 +189,7 @@ final class Datagrid
     public function createView(): GridView
     {
         $query = $this->adapter->getDatasource($this->identificationName, $this->fields->getValues());
-        $grid = $this->gridFactory->create('$entityClass', $query);
+        $grid = $this->datagridManager->createGrid($this->options['name'], $query);
 
         if ($this->fields->count() === 1 && $this->fields->first()->isVisible() === false) {
             return $grid->createView();
@@ -144,7 +206,13 @@ final class Datagrid
             ]);
         }
 
-        $grid->enablePaging();
+        if ($this->options['pagination'] === true) {
+            $grid->enablePaging();
+        }
+
+        if (count($this->fieldsOrder) > 0) {
+            $grid->reorderColumns($this->fieldsOrder);
+        }
 
         return $grid->createView();
     }

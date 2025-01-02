@@ -11,11 +11,12 @@ final class CrudConfig
     private CrudConfigData $crudConfigData;
 
     /**
-     * @param string $entityClass
+     * @param class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController> $crudController
+     * @param class-string $entityClass
      */
-    public function __construct(string $entityClass)
+    public function __construct(string $crudController, string $entityClass)
     {
-        $this->crudConfigData = new CrudConfigData($entityClass);
+        $this->crudConfigData = new CrudConfigData($crudController, $entityClass);
     }
 
     /**
