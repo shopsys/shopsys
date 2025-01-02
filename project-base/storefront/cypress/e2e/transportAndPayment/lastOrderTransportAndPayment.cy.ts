@@ -10,10 +10,16 @@ import { payment, transport, url } from 'fixtures/demodata';
 import { generateCreateOrderInput, generateCustomerRegistrationData } from 'fixtures/generators';
 import {
     checkLoaderOverlayIsNotVisibleAfterTimePeriod,
+    getSnapshotIndexingFunction,
+    getTestSummary,
     initializePersistStoreInLocalStorageToDefaultValues,
+    SNAPSHOT_GROUP,
     takeSnapshotAndCompare,
 } from 'support';
 import { TIDs } from 'tids';
+
+const SUBGROUP_INDEX = 0;
+const getSnapshotFullIndexAsString = getSnapshotIndexingFunction(SNAPSHOT_GROUP.TRANSPORT_AND_PAYMENT, SUBGROUP_INDEX);
 
 describe('Last Order Transport And Payment Select Tests', { retries: { runMode: 0 } }, () => {
     beforeEach(() => {
@@ -28,10 +34,11 @@ describe('Last Order Transport And Payment Select Tests', { retries: { runMode: 
         cy.addProductToCartForTest();
     });
 
-    it('[Preselect T&P] preselect transport and payment from last order for logged-in user', function () {
+    it('[Preselect T&P] should preselect transport and payment from last order for logged-in user', function () {
+        const testSummary = getTestSummary(this.test?.title);
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
-        takeSnapshotAndCompare(this.test?.title, 'preselected transport and payment', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'preselected transport and payment', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -40,7 +47,8 @@ describe('Last Order Transport And Payment Select Tests', { retries: { runMode: 
         });
     });
 
-    it('[Change T&P And Preserve On Refresh] change preselected transport and payment from last order for logged-in user and keep the new selection after refresh', function () {
+    it('[Change T&P And Preserve On Refresh] should change preselected transport and payment from last order for logged-in user and keep the new selection after refresh', function () {
+        const testSummary = getTestSummary(this.test?.title);
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
         changeSelectionOfTransportByName(transport.czechPost.name);
@@ -50,7 +58,7 @@ describe('Last Order Transport And Payment Select Tests', { retries: { runMode: 
         changeSelectionOfPaymentByName(payment.onDelivery.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod(500);
         cy.reloadAndWaitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(this.test?.title, 'after first change and refresh', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after first change and refresh', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -68,7 +76,7 @@ describe('Last Order Transport And Payment Select Tests', { retries: { runMode: 
         changeOpeningHoursDayOfWeekWithDateToStaticString('Wednesday 30.10.2024');
         changeOpeningHoursStatusToEmptyString();
         changeOpeningHoursRangesToStaticString('8:00 - 18:00');
-        takeSnapshotAndCompare(this.test?.title, 'after second change and refresh', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after second change and refresh', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },

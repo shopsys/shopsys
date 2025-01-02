@@ -1,17 +1,27 @@
 // do NOT remove this file, it is needed for the parallel e2e tests to run in the others matrix group
-import { initializePersistStoreInLocalStorageToDefaultValues, takeSnapshotAndCompare } from '../../support';
+import {
+    getSnapshotIndexingFunction,
+    getTestSummary,
+    initializePersistStoreInLocalStorageToDefaultValues,
+    SNAPSHOT_GROUP,
+    takeSnapshotAndCompare,
+} from '../../support';
 import { TIDs } from '../../tids';
 import { changeBlogArticleDynamicPartsToStaticDemodata } from '../visits/visitsSupport';
+
+const SUBGROUP_INDEX = 0;
+const getSnapshotFullIndexAsString = getSnapshotIndexingFunction(SNAPSHOT_GROUP.MATRIX, SUBGROUP_INDEX);
 
 describe('Matrix Test for blank others group visit tests with screenshots', () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('[Matrix] matrix page visit with screenshot', function () {
+    it('[Matrix] should visit matrix page with screenshot', function () {
+        const testSummary = getTestSummary(this.test?.title);
         cy.visitAndWaitForStableAndInteractiveDOM('/');
         changeBlogArticleDynamicPartsToStaticDemodata();
-        takeSnapshotAndCompare(this.test?.title, 'matrix page', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'matrix page', {
             blackout: [
                 { tid: TIDs.product_list_item_image },
                 { tid: TIDs.banners_slider },

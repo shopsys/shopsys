@@ -10,7 +10,6 @@ import {
     checkCartItemSpinboxDecreaseButtonIsDisabled,
     checkCartItemSpinboxIncreaseButtonIsEnabled,
     checkCartItemSpinboxDecreaseButtonIsEnabled,
-    checkCartItemSpinboxIncreaseButtonIsDisabled,
 } from './cartSupport';
 import { checkTransportSelectionIsVisible } from 'e2e/order/orderSupport';
 import { changeSelectionOfTransportByName } from 'e2e/transportAndPayment/transportAndPaymentSupport';
@@ -22,10 +21,16 @@ import {
     checkLoaderOverlayIsNotVisibleAfterTimePeriod,
     checkNumberOfApiRequestsTriggeredByActions,
     checkUrl,
+    getSnapshotIndexingFunction,
+    getTestSummary,
     initializePersistStoreInLocalStorageToDefaultValues,
+    SNAPSHOT_GROUP,
     takeSnapshotAndCompare,
 } from 'support';
 import { TIDs } from 'tids';
+
+const SUBGROUP_INDEX = 2;
+const getSnapshotFullIndexAsString = getSnapshotIndexingFunction(SNAPSHOT_GROUP.CART, SUBGROUP_INDEX);
 
 describe('Cart Page Tests', () => {
     beforeEach(() => {
@@ -37,7 +42,8 @@ describe('Cart Page Tests', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.cart);
     });
 
-    it('[Fast Quantity Clicked] increase and decrease product quantity using spinbox in cart (once if clicked fast)', function () {
+    it('[Fast Quantity Clicked] should increase and decrease product quantity using spinbox in cart (once if clicked fast)', function () {
+        const testSummary = getTestSummary(this.test?.title);
         checkNumberOfApiRequestsTriggeredByActions(
             () => {
                 increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
@@ -49,7 +55,7 @@ describe('Cart Page Tests', () => {
             1,
             'AddToCartMutation',
         );
-        takeSnapshotAndCompare(this.test?.title, 'after increase', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after increase', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
@@ -66,7 +72,7 @@ describe('Cart Page Tests', () => {
             1,
             'AddToCartMutation',
         );
-        takeSnapshotAndCompare(this.test?.title, 'after decrease', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after decrease', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
@@ -75,7 +81,8 @@ describe('Cart Page Tests', () => {
         });
     });
 
-    it('[Slow Quantity Clicked] increase and decrease product quantity using spinbox in cart (multiple times if clicked slowly)', function () {
+    it('[Slow Quantity Clicked] should increase and decrease product quantity using spinbox in cart (multiple times if clicked slowly)', function () {
+        const testSummary = getTestSummary(this.test?.title);
         checkNumberOfApiRequestsTriggeredByActions(
             () => {
                 increaseCartItemQuantityWithSpinbox(products.helloKitty.catnum);
@@ -90,7 +97,7 @@ describe('Cart Page Tests', () => {
             4,
             'AddToCartMutation',
         );
-        takeSnapshotAndCompare(this.test?.title, 'after increase', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after increase', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
@@ -108,7 +115,7 @@ describe('Cart Page Tests', () => {
             2,
             'AddToCartMutation',
         );
-        takeSnapshotAndCompare(this.test?.title, 'after decrease', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after decrease', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
@@ -117,10 +124,11 @@ describe('Cart Page Tests', () => {
         });
     });
 
-    it('[Remove Products] remove products from cart', function () {
+    it('[Remove Products] should remove products from cart', function () {
+        const testSummary = getTestSummary(this.test?.title);
         removeProductFromCartPage(products.philips32PFL4308.catnum);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
-        takeSnapshotAndCompare(this.test?.title, 'after first removal', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after first removal', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
@@ -130,7 +138,7 @@ describe('Cart Page Tests', () => {
 
         removeProductFromCartPage(products.helloKitty.catnum);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
-        takeSnapshotAndCompare(this.test?.title, 'empty cart after second removal', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'empty cart after second removal', {
             blackout: [{ tid: TIDs.footer_social_links }, { tid: TIDs.footer_copyright }],
         });
     });
@@ -147,11 +155,12 @@ describe('Cart Page Tests', () => {
         checkCartItemSpinboxIncreaseButtonIsEnabled(products.philips32PFL4308.catnum);
     });
 
-    it('[Add Remove Promo] add promo code to cart, check it, remove promo code from cart, and then add a different one', function () {
+    it('[Add Remove Promo] should add promo code to cart, check it, remove promo code from cart, and then add a different one', function () {
+        const testSummary = getTestSummary(this.test?.title);
         clickOnPromoCodeButton();
         applyPromoCodeOnCartPage('test');
         checkAndHideSuccessToast('Promo code was added to the order.');
-        takeSnapshotAndCompare(this.test?.title, 'cart page after applying first promocode', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'cart page after applying first promocode', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
@@ -162,18 +171,22 @@ describe('Cart Page Tests', () => {
         goToNextOrderStep();
         checkUrl(url.order.transportAndPayment);
         checkTransportSelectionIsVisible();
-        takeSnapshotAndCompare(this.test?.title, 'transport and payment page after applying first promocode', {
-            blackout: [
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.transport_and_payment_list_item_image },
-            ],
-        });
+        takeSnapshotAndCompare(
+            getSnapshotFullIndexAsString(testSummary),
+            'transport and payment page after applying first promocode',
+            {
+                blackout: [
+                    { tid: TIDs.order_summary_cart_item_image },
+                    { tid: TIDs.transport_and_payment_list_item_image },
+                ],
+            },
+        );
 
         goToPreviousOrderStep();
         checkUrl(url.cart);
         removePromoCodeOnCartPage();
         checkAndHideSuccessToast('Promo code was removed from the order.');
-        takeSnapshotAndCompare(this.test?.title, 'cart page after removing first promocode', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'cart page after removing first promocode', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
@@ -183,7 +196,7 @@ describe('Cart Page Tests', () => {
 
         applyPromoCodeOnCartPage('test-product2');
         checkAndHideSuccessToast('Promo code was added to the order.');
-        takeSnapshotAndCompare(this.test?.title, 'cart page after removing second promocode', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'cart page after removing second promocode', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
@@ -192,12 +205,13 @@ describe('Cart Page Tests', () => {
         });
     });
 
-    it('[Add Promo Remove Product] add promo code to cart, remove product that allows it, and see the promo code removed', function () {
+    it('[Add Promo Remove Product] should add promo code to cart, remove product that allows it, and see the promo code removed', function () {
+        const testSummary = getTestSummary(this.test?.title);
         clickOnPromoCodeButton();
 
         applyPromoCodeOnCartPage('test');
         checkAndHideSuccessToast('Promo code was added to the order.');
-        takeSnapshotAndCompare(this.test?.title, 'after applying promocode', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after applying promocode', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
@@ -207,34 +221,43 @@ describe('Cart Page Tests', () => {
 
         removeProductFromCartPage(products.helloKitty.catnum);
         checkAndHideInfoToast('The promo code test is no longer applicable.');
-        takeSnapshotAndCompare(this.test?.title, 'after removing product that allows promocode', {
-            blackout: [
-                { tid: TIDs.cart_list_item_image },
-                { tid: TIDs.footer_social_links },
-                { tid: TIDs.footer_copyright },
-            ],
-        });
+        takeSnapshotAndCompare(
+            getSnapshotFullIndexAsString(testSummary),
+            'after removing product that allows promocode',
+            {
+                blackout: [
+                    { tid: TIDs.cart_list_item_image },
+                    { tid: TIDs.footer_social_links },
+                    { tid: TIDs.footer_copyright },
+                ],
+            },
+        );
     });
 
     it('[No Free Transport] transport should not be free if price minus promo code discount is below the free transport limit', function () {
+        const testSummary = getTestSummary(this.test?.title);
         cy.addProductToCartForTest(products.helloKitty.uuid, 10);
         cy.reloadAndWaitForStableAndInteractiveDOM();
 
         clickOnPromoCodeButton();
         applyPromoCodeOnCartPage('test');
         checkAndHideSuccessToast('Promo code was added to the order.');
-        takeSnapshotAndCompare(this.test?.title, 'cart page with non-free transport after applying promocode', {
-            blackout: [
-                { tid: TIDs.cart_list_item_image },
-                { tid: TIDs.footer_social_links },
-                { tid: TIDs.footer_copyright },
-            ],
-        });
+        takeSnapshotAndCompare(
+            getSnapshotFullIndexAsString(testSummary),
+            'cart page with non-free transport after applying promocode',
+            {
+                blackout: [
+                    { tid: TIDs.cart_list_item_image },
+                    { tid: TIDs.footer_social_links },
+                    { tid: TIDs.footer_copyright },
+                ],
+            },
+        );
 
         goToNextOrderStep();
         changeSelectionOfTransportByName(transport.ppl.name);
         takeSnapshotAndCompare(
-            this.test?.title,
+            getSnapshotFullIndexAsString(testSummary),
             'transport and payment page with non-free options after applying promocode',
             {
                 blackout: [

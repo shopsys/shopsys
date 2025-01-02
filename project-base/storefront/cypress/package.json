@@ -10,7 +10,8 @@
         "base": "cypress run --env type=base",
         "actual": "cypress run --env type=actual",
         "selected-actual": "./runSelectedTests.js type=actual",
-        "selected-base": "./runSelectedTests.js type=base"
+        "selected-base": "./runSelectedTests.js type=base",
+        "generate-snapshots-table": "./generateSnapshotsInfoTable.js"
     },
     "devDependencies": {
         "cypress": "^12.3.0",

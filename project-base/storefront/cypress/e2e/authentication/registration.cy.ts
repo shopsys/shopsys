@@ -14,12 +14,18 @@ import {
     checkIsUserLoggedIn,
     checkPopupIsVisible,
     checkUrl,
+    getSnapshotIndexingFunction,
+    getTestSummary,
     goToEditProfileFromHeader,
     initializePersistStoreInLocalStorageToDefaultValues,
     loseFocus,
+    SNAPSHOT_GROUP,
     takeSnapshotAndCompare,
 } from 'support';
 import { TIDs } from 'tids';
+
+const SUBGROUP_INDEX = 0;
+const getSnapshotFullIndexAsString = getSnapshotIndexingFunction(SNAPSHOT_GROUP.AUTHENTICATION, SUBGROUP_INDEX);
 
 describe('Registration Tests (Basic)', { retries: { runMode: 0 } }, () => {
     beforeEach(() => {
@@ -27,15 +33,16 @@ describe('Registration Tests (Basic)', { retries: { runMode: 0 } }, () => {
         cy.visitAndWaitForStableAndInteractiveDOM('/');
     });
 
-    it('[Register B2C] register as a B2C customer', function () {
+    it('[Register B2C] should register as a B2C customer', function () {
+        const testSummary = getTestSummary(this.test?.title);
         goToRegistrationPageFromHeader();
         const email = 'register-as-b2c@shopsys.com';
         clearAndFillInRegstrationFormEmail(email);
         fillInRegstrationForm('commonCustomer', email);
         clearAndFillInRegistrationFormPasswords(password);
         loseFocus();
-        takeSnapshotAndCompare(this.test?.title, 'filled registration form', {
-            blackout: [{ tid: TIDs.footer_social_links }, { tid: TIDs.footer_copyright }],
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'filled registration form', {
+            blackout: [{ tid: TIDs.footer_social_links }],
         });
 
         submitRegistrationForm();
@@ -45,8 +52,8 @@ describe('Registration Tests (Basic)', { retries: { runMode: 0 } }, () => {
 
         goToEditProfileFromHeader();
         checkUrl(url.customer.editProfile);
-        takeSnapshotAndCompare(this.test?.title, 'customer edit page', {
-            blackout: [{ tid: TIDs.footer_social_links }, { tid: TIDs.footer_copyright }],
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'customer edit page', {
+            blackout: [{ tid: TIDs.footer_social_links }],
         });
     });
 });
@@ -57,13 +64,14 @@ describe('Registration Tests (Repeated Tries)', { retries: { runMode: 0 } }, () 
         cy.visitAndWaitForStableAndInteractiveDOM(url.registration);
     });
 
-    it('[Empty Form] disallow registration with empty registration form, but then allow after filling', function () {
+    it('[Empty Form] should disallow registration with empty registration form, but then allow after filling', function () {
+        const testSummary = getTestSummary(this.test?.title);
         submitRegistrationForm();
         checkRegistrationValidationErrorsPopup();
         checkPopupIsVisible(true);
         loseFocus();
-        takeSnapshotAndCompare(this.test?.title, 'after invalid try', {
-            blackout: [{ tid: TIDs.footer_social_links }, { tid: TIDs.footer_copyright }],
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after invalid try', {
+            blackout: [{ tid: TIDs.footer_social_links }],
         });
 
         const email = 'invalid-registration-then-correct-and-try-again@shopsys.com';
@@ -76,7 +84,7 @@ describe('Registration Tests (Repeated Tries)', { retries: { runMode: 0 } }, () 
         checkIsUserLoggedIn();
     });
 
-    it('[Invalid Info] disallow registration with invalid info, but then allow after correction', function () {
+    it('[Invalid Info] should disallow registration with invalid info, but then allow after correction', function () {
         const email = 'registration-with-existing-email@shopsys.com';
         cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer', email), false);
 

@@ -8,7 +8,15 @@ import { TIDs } from 'tids';
 
 registerCommand({ pollInterval: 500, timeout: 5000 });
 
-const FILENAME_LENGTH_LIMIT = 250;
+export enum SNAPSHOT_GROUP {
+    MATRIX = 0,
+    AUTHENTICATION = 1,
+    CART = 2,
+    ORDER = 3,
+    TRANSPORT_AND_PAYMENT = 4,
+    VISITS = 5,
+}
+
 const ELEMENTS_WITH_DISABLED_HOVER_DURING_SCREENSHOTS = [
     '[for="newsletter-form-privacyPolicy"]',
     TIDs.simple_header_contact,
@@ -193,25 +201,7 @@ export const takeSnapshotAndCompare = (
     resetPointerEventsAfterScreenshot();
 };
 
-const getSnapshotNameFormatted = (testName: string, snapshotName: string) => {
-    // get the test name summary in square brackets using regex
-    const testNameSummary = testName.match(/\[(.*?)\]/)?.[0] ?? '';
-    const testNameRest = testNameSummary ? testName.replace(testNameSummary + ' ', '') : testName;
-    const filenameBaseLength = (testNameSummary ? testNameSummary.length + 1 : 0) + snapshotName.length + 3;
-    const filenameLengthSum = filenameBaseLength + testNameRest.length;
-
-    return getStringWithAllInfo(
-        testNameSummary,
-        snapshotName,
-        filenameLengthSum < FILENAME_LENGTH_LIMIT
-            ? testNameRest
-            : `${testNameRest?.slice(0, FILENAME_LENGTH_LIMIT - filenameBaseLength)}`,
-    );
-};
-
-const getStringWithAllInfo = (summary: string, snapshotName: string, testName: string) => {
-    return `${summary ? summary + ' ' : ''}(${snapshotName}) ${testName}`;
-};
+const getSnapshotNameFormatted = (testName: string, snapshotName: string) => `${testName} ${snapshotName}`;
 
 const scrollPageBeforeScreenshot = (optionsWithDefaultValues: SnapshotAdditionalOptions) => {
     if (optionsWithDefaultValues.capture === 'fullPage' || optionsWithDefaultValues.capture === 'viewport') {
@@ -349,4 +339,16 @@ export const goToPageThroughSimpleNavigation = (index: number) => {
 
 export const checkCanGoToNextOrderStep = () => {
     cy.getByTID([TIDs.blocks_orderaction_next]).should('be.visible').and('not.be.disabled');
+};
+
+export const getSnapshotIndexingFunction = (snapshotGroupIndex: number, snapshotSubgroupIndex: number) => {
+    let snapshotGroupCounter = 0;
+    return (testSummary: string) => {
+        return `${snapshotGroupIndex}-${snapshotSubgroupIndex}-${snapshotGroupCounter++}`;
+    };
+};
+
+export const getTestSummary = (testName?: string) => {
+    // get the test name summary in square brackets, remove brackets and replace spaces with dashes
+    return (testName?.match(/\[(.*?)\]/)?.[0] ?? '[]').slice(1, -1).split(' ').join('-').toLowerCase();
 };

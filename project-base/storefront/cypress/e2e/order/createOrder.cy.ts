@@ -21,12 +21,18 @@ import { generateCustomerRegistrationData } from 'fixtures/generators';
 import {
     checkAndHideSuccessToast,
     checkUrl,
+    getSnapshotIndexingFunction,
+    getTestSummary,
     goToEditProfileFromHeader,
     initializePersistStoreInLocalStorageToDefaultValues,
     loseFocus,
+    SNAPSHOT_GROUP,
     takeSnapshotAndCompare,
 } from 'support';
 import { TIDs } from 'tids';
+
+const SUBGROUP_INDEX = 1;
+const getSnapshotFullIndexAsString = getSnapshotIndexingFunction(SNAPSHOT_GROUP.ORDER, SUBGROUP_INDEX);
 
 describe('Create Order Tests', () => {
     beforeEach(() => {
@@ -34,7 +40,8 @@ describe('Create Order Tests', () => {
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
     });
 
-    it('[Anon Registered Home Cash] create order as unlogged user with a registered email (transport to home, cash on delivery) and check it in order detail', function () {
+    it('[Anon Registered Home Cash] should create order as unlogged user with a registered email (transport to home, cash on delivery) and check it in order detail', function () {
+        const testSummary = getTestSummary(this.test?.title);
         cy.preselectTransportForTest(transport.czechPost.uuid);
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
@@ -44,7 +51,7 @@ describe('Create Order Tests', () => {
         fillBillingAdressInThirdStep(customer1.billingStreet, customer1.billingCity, customer1.billingPostCode);
         fillInNoteInThirdStep(orderNote);
         loseFocus();
-        takeSnapshotAndCompare(this.test?.title, 'filled contact information form', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'filled contact information form', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -62,7 +69,8 @@ describe('Create Order Tests', () => {
         checkOrderDetailFromOrderPage(transport.czechPost.name, payment.onDelivery.name, orderNote);
     });
 
-    it('[Anon Home Cash] create order as unlogged user (transport to home, cash on delivery) and check it in order detail', function () {
+    it('[Anon Home Cash] should create order as unlogged user (transport to home, cash on delivery) and check it in order detail', function () {
+        const testSummary = getTestSummary(this.test?.title);
         cy.preselectTransportForTest(transport.czechPost.uuid);
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
@@ -72,7 +80,7 @@ describe('Create Order Tests', () => {
         fillBillingAdressInThirdStep(customer1.billingStreet, customer1.billingCity, customer1.billingPostCode);
         fillInNoteInThirdStep(orderNote);
         loseFocus();
-        takeSnapshotAndCompare(this.test?.title, 'filled contact information form', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'filled contact information form', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -90,7 +98,8 @@ describe('Create Order Tests', () => {
         checkOrderDetailFromOrderPage(transport.czechPost.name, payment.onDelivery.name, orderNote);
     });
 
-    it('[Anon Collect Cash] create order as unlogged user (personal collection, cash) and check it in order detail', function () {
+    it('[Anon Collect Cash] should create order as unlogged user (personal collection, cash) and check it in order detail', function () {
+        const testSummary = getTestSummary(this.test?.title);
         cy.preselectTransportForTest(transport.personalCollection.uuid, transport.personalCollection.storeOstrava.uuid);
         cy.preselectPaymentForTest(payment.cash.uuid);
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
@@ -100,7 +109,7 @@ describe('Create Order Tests', () => {
         fillBillingAdressInThirdStep(customer1.billingStreet, customer1.billingCity, customer1.billingPostCode);
         fillInNoteInThirdStep(orderNote);
         loseFocus();
-        takeSnapshotAndCompare(this.test?.title, 'filled contact information form', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'filled contact information form', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -122,7 +131,8 @@ describe('Create Order Tests', () => {
         );
     });
 
-    it('[Anon PPL Card] create order as unlogged user (PPL, credit card) and check it in order detail', function () {
+    it('[Anon PPL Card] should create order as unlogged user (PPL, credit card) and check it in order detail', function () {
+        const testSummary = getTestSummary(this.test?.title);
         cy.preselectTransportForTest(transport.ppl.uuid);
         cy.preselectPaymentForTest(payment.creditCard.uuid);
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
@@ -132,7 +142,7 @@ describe('Create Order Tests', () => {
         fillBillingAdressInThirdStep(customer1.billingStreet, customer1.billingCity, customer1.billingPostCode);
         fillInNoteInThirdStep(orderNote);
         loseFocus();
-        takeSnapshotAndCompare(this.test?.title, 'filled contact information form', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'filled contact information form', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -150,7 +160,8 @@ describe('Create Order Tests', () => {
         checkOrderDetailFromOrderPage(transport.ppl.name, payment.creditCard.name, orderNote);
     });
 
-    it('[Anon Promo Code] create order with promo code and check it in order detail', function () {
+    it('[Anon Promo Code] should create order with promo code and check it in order detail', function () {
+        const testSummary = getTestSummary(this.test?.title);
         cy.addPromoCodeToCartForTest(promoCode);
         cy.preselectTransportForTest(transport.czechPost.uuid);
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
@@ -161,7 +172,7 @@ describe('Create Order Tests', () => {
         fillBillingAdressInThirdStep(customer1.billingStreet, customer1.billingCity, customer1.billingPostCode);
         fillInNoteInThirdStep(orderNote);
         loseFocus();
-        takeSnapshotAndCompare(this.test?.title, 'filled contact information form', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'filled contact information form', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -180,9 +191,10 @@ describe('Create Order Tests', () => {
     });
 
     it(
-        '[Register After Order] register after order completion, and check that the just created order is in customer orders',
+        '[Register After Order] should register after order completion, and check that the just created order is in customer orders',
         { retries: { runMode: 0 } },
         function () {
+            const testSummary = getTestSummary(this.test?.title);
             cy.preselectTransportForTest(transport.czechPost.uuid);
             cy.preselectPaymentForTest(payment.onDelivery.uuid);
             cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
@@ -191,7 +203,7 @@ describe('Create Order Tests', () => {
             fillCustomerInformationInThirdStep(customer1.phone, customer1.firstName, customer1.lastName);
             fillBillingAdressInThirdStep(customer1.billingStreet, customer1.billingCity, customer1.billingPostCode);
             loseFocus();
-            takeSnapshotAndCompare(this.test?.title, 'filled contact information form', {
+            takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'filled contact information form', {
                 blackout: [
                     { tid: TIDs.order_summary_transport_and_payment_image },
                     { tid: TIDs.order_summary_cart_item_image },
@@ -215,16 +227,17 @@ describe('Create Order Tests', () => {
             checkOrderDetailFromOrderPageWithComplaintButton(transport.czechPost.name, payment.onDelivery.name);
 
             goToEditProfileFromHeader();
-            takeSnapshotAndCompare(this.test?.title, 'customer edit page', {
+            takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'customer edit page', {
                 blackout: [{ tid: TIDs.footer_social_links }, { tid: TIDs.footer_copyright }],
             });
         },
     );
 
     it(
-        '[Logged Home Cash] create order as logged-in user (transport to home, cash on delivery) and check it in order detail',
+        '[Logged Home Cash] should create order as logged-in user (transport to home, cash on delivery) and check it in order detail',
         { retries: { runMode: 0 } },
         function () {
+            const testSummary = getTestSummary(this.test?.title);
             cy.registerAsNewUser(
                 generateCustomerRegistrationData('commonCustomer', 'create-order-as-logged-in-user@shopsys.com'),
             );
@@ -235,7 +248,7 @@ describe('Create Order Tests', () => {
 
             fillInNoteInThirdStep(orderNote);
             loseFocus();
-            takeSnapshotAndCompare(this.test?.title, 'filled contact information form', {
+            takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'filled contact information form', {
                 blackout: [
                     { tid: TIDs.order_summary_transport_and_payment_image },
                     { tid: TIDs.order_summary_cart_item_image },
