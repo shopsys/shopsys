@@ -711,6 +711,9 @@
     "shopsys/product-feed-luigis-box": {
         "version": "16.0.x-dev"
     },
+    "shopsys/product-feed-mergado": {
+        "version": "v16.0.0"
+    },
     "shopsys/product-feed-zbozi": {
         "version": "v9.1.1"
     },
