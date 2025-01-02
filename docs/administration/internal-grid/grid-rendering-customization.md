@@ -3,9 +3,36 @@
 Default [Twig](https://twig.symfony.com/) template for rendering each grid can be found in [`src/Resources/views/Admin/Grid/Grid.html.twig`](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Resources/views/Admin/Grid/Grid.html.twig).
 The template is composed of a set of Twig blocks, and you can override any of them when there is a need for customization of the default appearance.
 
-To customize your grid, you need to create a new template extending the original one, override appropriate blocks, and then set the template as a theme of your grid using `Grid::setTheme` method.
+To customize your grid, you can use on of the following approaches:
 
-## Blocks that are being overridden at most
+## 1. Define your own column template
+
+You can create your own template and set is as a parameter to the column definition. 
+
+Create a new template in your project, e.g. `templates/Admin/Grid/my_awesome_column.html.twig`:
+```
+<span class="my-awesome-column">
+    {{ value }}
+</span>
+```
+
+In template, you can use following variables:
+- `value` - the value of the column
+- `row` - the whole row of the grid. You can access to the row data using the column name as a key, e.g. `row['columnName']` or as a property, e.g. `row.columnName`
+- `column` - the column object itself (i.e instance of `Shopsys\FrameworkBundle\Component\Grid\Column` class)
+
+Then, set the template in your grid definition:
+```php
+$grid->addColumn('my_awesome_column', 'p.attribute', t('My awesome column'), true, [
+    'template' => 'Admin/Grid/my_awesome_column.html.twig',
+]);
+```
+
+## 2. Override the default template
+
+Create a new template extending the original one, override appropriate blocks, and then set the template as a theme of your grid using `Grid::setTheme` method.
+
+### Blocks that are being overridden at most
 
 - `grid_title_cell_id_<column_id>`
     - `<column_id>` stands for the ID of the column that is defined during the grid creation by the first argument of `Grid::addColumn` method
