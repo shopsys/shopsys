@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use InvalidArgumentException;
+use RuntimeException;
 
 final class ProxyQuery
 {
@@ -17,6 +18,11 @@ final class ProxyQuery
     private QueryBuilder $queryBuilder;
 
     private string $rootAlias;
+
+    /**
+     * @var array<string, string>
+     */
+    private array $selects = [];
 
     /**
      * @var array<string, string>
@@ -48,78 +54,72 @@ final class ProxyQuery
 
     /**
      * @param string $select
-     * @param string|null $alias
      */
-    public function addSelect(string $select, ?string $alias = null): void
+    public function addSelect(string $select): void
     {
-        if ($alias !== null) {
-            $this->queryBuilder->addSelect($select . ' AS ' . $alias);
-
+        if (array_key_exists($select, $this->selects)) {
             return;
         }
 
-        $this->processDotNotation($select);
+        $alias = $this->processDotNotation($select);
+        $this->selects[$select] = $alias;
     }
 
     /**
-     * @param string $select
+     * @param string $string
+     * @return string Returns alias of the select
      */
-    private function processDotNotation(string $select): void
+    private function processDotNotation(string $string): string
     {
         $alias = $this->rootAlias;
-        $parts = explode('.', $select);
+        $parts = explode('.', $string);
 
         $currentClassMetadata = $this->entityManager->getClassMetadata($this->entityClass);
 
         // dot notation is processed from left to right and each part is joined
-        // the last part is added to select
-
-        foreach ($parts as $index => $part) {
+        foreach ($parts as $index => $field) {
             $path = implode('.', array_slice($parts, 0, $index + 1));
-            $joinAlias = $part . '_join';
+            $joinAlias = $field . '_join';
 
-            if ($index >= count($parts) - 1) {
-                if ($currentClassMetadata->hasField($part)) {
-                    $this->queryBuilder->addSelect("{$alias}.{$part}" . ' AS ' . $this->getAlias($path));
+            if ($this->isLastPart($parts, $index)) {
+                switch ($this->getPartType($currentClassMetadata, $field)) {
+                    case PartType::FIELD:
+                        $this->queryBuilder->addSelect("{$alias}.{$field} AS {$this->getAlias($path)}");
 
-                    continue;
+                        break;
+                    case PartType::ASSOCIATION:
+                        $this->joinAssociation($currentClassMetadata, $path, $field, $alias, $joinAlias);
+                        $this->queryBuilder->addSelect("{$joinAlias} AS {$this->getAlias($path)}");
+
+                        break;
+                    case PartType::TRANSLATION:
+                        $this->joinAssociation($currentClassMetadata, $path . '_tr', 'translations', $alias, $alias . '_tr');
+                        $this->queryBuilder->addSelect("{$alias}_tr.{$field} AS {$this->getAlias($path)}");
+
+                        break;
                 }
 
-                if ($currentClassMetadata->hasAssociation($part)) {
-                    $this->joinAssociation($currentClassMetadata, $path, $part, $alias, $joinAlias);
-                    $this->queryBuilder->addSelect("{$joinAlias}" . ' AS ' . $this->getAlias($path));
-
-                    continue;
-                }
-
-                try {
-                    // If entity does not have field, check if it has association to translations and try to select from translations
-                    $this->joinAssociation($currentClassMetadata, $path . '_tr', 'translations', $alias, $alias . '_tr');
-                    $this->queryBuilder->addSelect("{$alias}_tr.{$part}" . ' AS ' . $this->getAlias($path));
-
-                    continue;
-                } catch (InvalidArgumentException $exception) {
-                    // We don't need to throw exeption here
-                }
-
-                throw new InvalidArgumentException('Field "' . $part . '" not found in entity ' . $currentClassMetadata->getName());
+                return $this->getAlias($path);
             }
 
             // If next part is last and is primary key, select it as identity without join
             if ($this->isNextPartLastAndIdentity($parts, $index, $currentClassMetadata)) {
                 $path = implode('.', $parts);
 
-                $this->queryBuilder->addSelect("IDENTITY({$alias}.{$part})" . ' AS ' . $this->getAlias($path));
+                $this->queryBuilder->addSelect("IDENTITY({$alias}.{$field}) AS {$this->getAlias($path)}");
 
-                break;
+                return $this->getAlias($path);
             }
 
-            $this->joinAssociation($currentClassMetadata, $path, $part, $alias, $joinAlias);
+            $this->joinAssociation($currentClassMetadata, $path, $field, $alias, $joinAlias);
 
-            $currentClassMetadata = $this->getClassMetadataForTarget($part, $currentClassMetadata);
-
+            $currentClassMetadata = $this->getClassMetadataForTarget($field, $currentClassMetadata);
             $alias = $joinAlias;
         }
+
+        throw new RuntimeException(
+            "Error processing dot notation for string '{$string}' in entity '{$this->entityClass}'. Ensure the field or association exists in the mapping.",
+        );
     }
 
     /**
@@ -128,7 +128,43 @@ final class ProxyQuery
      */
     private function getAlias($part): string
     {
-        return str_replace('.', '__', $part);
+        return strtr($part, ['.' => '__']);
+    }
+
+    /**
+     * @param \Doctrine\ORM\Mapping\ClassMetadata $classMetadata
+     * @param string $field
+     * @return \Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\PartType
+     */
+    private function getPartType(ClassMetadata $classMetadata, string $field): PartType
+    {
+        if ($classMetadata->hasField($field)) {
+            return PartType::FIELD;
+        }
+
+        if ($classMetadata->hasAssociation($field)) {
+            return PartType::ASSOCIATION;
+        }
+
+        if ($classMetadata->hasAssociation('translations')) {
+            $translationClassMetadata = $this->getClassMetadataForTarget('translations', $classMetadata);
+
+            if ($translationClassMetadata->hasField($field)) {
+                return PartType::TRANSLATION;
+            }
+        }
+
+        throw new InvalidArgumentException('Field "' . $field . '" not found in entity ' . $classMetadata->getName());
+    }
+
+    /**
+     * @param string[] $parts
+     * @param int $currentIndex
+     * @return bool
+     */
+    private function isLastPart(array $parts, int $currentIndex): bool
+    {
+        return $currentIndex >= count($parts) - 1;
     }
 
     /**
@@ -140,7 +176,7 @@ final class ProxyQuery
     private function isNextPartLastAndIdentity(array $parts, int $currentIndex, ClassMetadata $classMetadata): bool
     {
         // check if next iteration will be last part of dot notation
-        if ($currentIndex >= count($parts) - 1) {
+        if ($this->isLastPart($parts, $currentIndex + 1) === false) {
             return false;
         }
 
