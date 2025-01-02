@@ -251,8 +251,6 @@ git log --oneline --format="%%H %%s" | grep "<put_here_commit_message_of_merge_c
                     $commitLinesRaw,
                 );
 
-                array_pop($commitLines);
-
                 $commitLinesByPrNumber[$prNumber] = $commitLines;
             } catch (ProcessFailedException) {
                 $commitLinesByPrNumber[$prNumber] = null;
@@ -358,7 +356,7 @@ git log --oneline --format="%%H %%s" | grep "<put_here_commit_message_of_merge_c
         }
 
         foreach ($commitLinesByPrNumber as $prNumber => $commitLines) {
-            if ($commitLines === null) {
+            if ($commitLines === null || count($commitLines) === 0) {
                 $this->symfonyStyle->warning('For PR #' . $prNumber . ' has been found #project-base-diff hash but no corresponding commit.');
 
                 $commitSha = $this->symfonyStyle->ask('Enter commit SHA1 from project-base repository for PR #' . $prNumber);
