@@ -158,7 +158,11 @@ describe('Transport Select Tests', () => {
         cy.addProductToCartForTest(products.helloKitty.uuid, 1099);
         cy.visitAndWaitForStableAndInteractiveDOM(url.cart);
         takeSnapshotAndCompare(this.test?.title, 'cart page with enough products', {
-            blackout: [{ tid: TIDs.cart_list_item_image }, { tid: TIDs.footer_social_links }],
+            blackout: [
+                { tid: TIDs.cart_list_item_image },
+                { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_copyright },
+            ],
         });
 
         goToNextOrderStep();
