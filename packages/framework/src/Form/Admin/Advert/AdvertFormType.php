@@ -85,6 +85,7 @@ class AdvertFormType extends AbstractType
                     t('HTML code') => Advert::TYPE_CODE,
                     t('Image with link') => Advert::TYPE_IMAGE,
                 ],
+                'choice_translation_domain' => false,
                 'expanded' => true,
                 'multiple' => false,
                 'constraints' => [

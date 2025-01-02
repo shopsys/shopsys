@@ -113,6 +113,7 @@ class PromoCodeFormType extends AbstractType
                 'expanded' => true,
                 'multiple' => false,
                 'choices' => $this->promoCodeTypeEnum->getAllIndexedByTranslations(),
+                'choice_translation_domain' => false,
                 'label' => t('Discount type'),
                 'attr' => [
                     'class' => 'js-promo-code-discount-type',

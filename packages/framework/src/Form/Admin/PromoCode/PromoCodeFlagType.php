@@ -48,6 +48,7 @@ class PromoCodeFlagType extends AbstractType
                 t('Products with this flag') => PromoCodeFlag::TYPE_INCLUSIVE,
                 t('Products without this flag') => PromoCodeFlag::TYPE_EXCLUSIVE,
             ],
+            'choice_translation_domain' => false,
             'expanded' => true,
             'multiple' => false,
             'constraints' => [

@@ -41,6 +41,7 @@ class RolesType extends AbstractType
             'expanded' => true,
             'label' => false,
             'choices' => $this->rolesChoices,
+            'choice_translation_domain' => false,
         ]);
     }
 
