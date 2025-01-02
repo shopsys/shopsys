@@ -88,6 +88,9 @@ class MyController extends AbstractController
     }
 }
 ```
-You can also pass the `options` array as the second argument. More about options can be found in the [Options Configuration](./configuration.md#options-configuration) section.
 
-Now you can configure the Datagrid using the `Datagrid` class.
+3. Configure Datagrid:
+
+The next step is to configure Datagrid by using the `Datagrid` class. The `Datagrid` class provides methods to configure columns, filters, actions, and other features.
+
+More information about configuration can be found in the [Configuration](./configuration.md) section.

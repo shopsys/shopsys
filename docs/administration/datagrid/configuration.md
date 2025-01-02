@@ -12,6 +12,7 @@ You can pass `options` array as second argument to `DatagridFactory::create()` m
 ## Methods Configuration
 
 You can configure the datagrid using the `Datagrid` class. The `Datagrid` class provides methods to configure columns, filters, actions, and other features.
+All methods are chainable, so you can call them one after another.
 
 ```php
 
@@ -21,4 +22,23 @@ $datagrid->setPagination(true);
 // Reorder columns by specified order. The columns that are not specified in the array will be appended at the end.
 $datagrid->reorder(['name', 'price']);
 
+// Define identifier column
+$datagrid->addIdentifier('id');
+
+// Add column to the datagrid
+$datagrid->add('name', [
+    'label' => t('Name'),
+    'sortable' => true,
+]);
+
+// Edit column (update label)
+$datagrid->update('name', [
+    'label' => t('Product name'),
+]);
+
+// Remove column from the datagrid
+$datagrid->remove('name');
+
 ```
+
+More about fields configuration can be found in the [Fields Configuration](./fields.md) section.
