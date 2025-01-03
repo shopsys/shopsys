@@ -39,6 +39,31 @@ $datagrid->update('name', [
 // Remove column from the datagrid
 $datagrid->remove('name');
 
+// Access to action configuration
+$actions = $datagrid->actions();
+
+// Add action to the datagrid
+$actions->add('print', [
+    'label' => t('Print'),
+    'icon' => 'print',
+    'routeName' => 'route_name', // `id` parameter is automatically passed to the URL
+    'confirmMessage' => t('Are you sure you want to print this item?'), // If not set, no confirmation dialog is displayed
+    'additionalParameters' => [
+        'invoice' => true,
+    ],
+]);
+
+// Edit already defined action (update label)
+$actions->update('print', [
+    'label' => t('Print invoice'),
+]);
+
+// Remove action from the datagrid
+$actions->remove('print');
+
 ```
 
-More about fields configuration can be found in the [Fields Configuration](./fields.md) section.
+More information about configuration specific sections can be found in the following sections:
+
+- [Fields](./fields.md)
+- [Actions](./actions.md)

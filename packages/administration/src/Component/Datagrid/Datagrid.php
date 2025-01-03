@@ -7,6 +7,7 @@ namespace Shopsys\AdministrationBundle\Component\Datagrid;
 use Doctrine\Common\Collections\ArrayCollection;
 use InvalidArgumentException;
 use phpDocumentor\Reflection\DocBlock\Tags\Param;
+use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfigData;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
@@ -23,6 +24,8 @@ final class Datagrid
      * @var \Doctrine\Common\Collections\ArrayCollection<string, \Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor>
      */
     private ArrayCollection $fields;
+
+    private DatagridActions $actions;
 
     private string $identificationName;
 
@@ -47,9 +50,11 @@ final class Datagrid
         array $options,
     ) {
         $this->fields = new ArrayCollection();
+        $this->actions = new DatagridActions();
         $this->options = $this->resolveOptions($options);
 
         $this->addIdentifier('id');
+        $this->configureDefaultCrudActions();
     }
 
     /**
@@ -189,6 +194,16 @@ final class Datagrid
     }
 
     /**
+     * Class for managing actions in datagrid
+     *
+     * @return \Shopsys\AdministrationBundle\Component\Datagrid\DatagridActions
+     */
+    public function actions(): DatagridActions
+    {
+        return $this->actions;
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Component\Grid\GridView
      */
     public function createView(): GridView
@@ -215,6 +230,40 @@ final class Datagrid
             $grid->reorderColumns($this->fieldsOrder);
         }
 
+        foreach ($this->actions->getActions() as $action) {
+            $actionColumn = $grid->addActionColumn($action['icon'], $action['label'], $action['routeName'], ['id' => 'id'], $action['additionalParameters']);
+
+            if ($action['confirmMessage'] !== null) {
+                $actionColumn->setConfirmMessage($action['confirmMessage']);
+            }
+        }
+
         return $grid->createView();
+    }
+
+    private function configureDefaultCrudActions(): void
+    {
+        if ($this->options['crudConfig'] === null) {
+            return;
+        }
+
+        /** @var \Shopsys\AdministrationBundle\Component\Config\CrudConfigData $crudConfig */
+        $crudConfig = $this->options['crudConfig'];
+
+        if ($crudConfig->isActionEnabled(ActionType::EDIT) && $this->fields->containsKey('edit') === false) {
+            $this->actions->add('edit', [
+                'label' => t('Edit'),
+                'icon' => 'edit',
+                'routeName' => $this->datagridManager->getCrudRouteProvider()->generateCrudRoute($crudConfig->getCrudController(), ActionType::EDIT),
+            ]);
+        }
+
+        if ($crudConfig->isActionEnabled(ActionType::DELETE) && $this->fields->containsKey('delete') === false) {
+            $this->actions->add('delete', [
+                'label' => t('Delete'),
+                'icon' => 'delete',
+                'routeName' => $this->datagridManager->getCrudRouteProvider()->generateCrudRoute($crudConfig->getCrudController(), ActionType::DELETE),
+            ]);
+        }
     }
 }
