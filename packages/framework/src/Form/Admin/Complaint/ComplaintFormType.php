@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Complaint;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Form\Admin\Complaint\Status\ComplaintItemsType;
+use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyCustomerType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyDomainIconType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyOrderType;
@@ -123,6 +124,17 @@ class ComplaintFormType extends AbstractType
             ->add('user', DisplayOnlyCustomerType::class, [
                 'label' => t('Customer'),
                 'user' => $complaint->getCustomerUser(),
+            ])
+            ->add('email', TextType::class, [
+                'label' => t('Email'),
+                'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Please enter email']),
+                    new Email(['message' => 'Please enter valid email']),
+                    new Constraints\Length([
+                        'max' => 255,
+                        'maxMessage' => 'Email cannot be longer than {{ limit }} characters',
+                    ]),
+                ],
             ]);
 
         return $builderBasicInformationGroup;
