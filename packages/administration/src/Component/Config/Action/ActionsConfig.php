@@ -31,15 +31,17 @@ class ActionsConfig
         $this->add(
             ActionType::LIST,
             Action::create(ActionType::CREATE->value, t('New'))
-            ->linkToCrud($controllerClass, ActionType::CREATE)
-            ->displayIf(function () use ($defaultActions): bool {
-                return in_array(ActionType::CREATE, $defaultActions, true);
-            }),
+                ->linkToCrud($controllerClass, ActionType::CREATE)
+                ->setIcon('circle-plus')
+                ->displayIf(function () use ($defaultActions): bool {
+                    return in_array(ActionType::CREATE, $defaultActions, true);
+                }),
         );
 
 
         $backToListAction = Action::create('backToList', t('Back to overview'))
-            ->linkToCrud($controllerClass, ActionType::LIST);
+            ->linkToCrud($controllerClass, ActionType::LIST)
+            ->setIcon('arrow-back');
 
         $this->add(ActionType::EDIT, $backToListAction);
         $this->add(ActionType::DETAIL, $backToListAction);

@@ -101,6 +101,7 @@ abstract class AbstractAction
             $this->label,
             $this->icon,
             $this->cssClass,
+            $this->openInNewTab,
             $this->actionRoute,
             $this->displayIf,
         );

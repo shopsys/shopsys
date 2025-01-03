@@ -14,6 +14,8 @@ use Webmozart\Assert\Assert;
 
 final class Action extends AbstractAction
 {
+    private bool $openInNewTab = false;
+
     /**
      * @param string $name
      * @param string $label
@@ -22,6 +24,19 @@ final class Action extends AbstractAction
     public static function create(string $name, string $label): self
     {
         return new self($name, $label);
+    }
+
+    /**
+     * Determines if new tab should be opened when action is clicked
+     *
+     * @param bool $openInNewTab
+     * @return $this
+     */
+    public function setOpenInNewTab(bool $openInNewTab = true): self
+    {
+        $this->openInNewTab = $openInNewTab;
+
+        return $this;
     }
 
     /**
