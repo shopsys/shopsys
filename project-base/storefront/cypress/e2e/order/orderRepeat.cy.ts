@@ -23,7 +23,11 @@ describe('Order Repeat Tests From Order List (Logged-in User)', { retries: { run
         checkUrl(url.cart);
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(this.test?.title, 'after repeat', {
-            blackout: [{ tid: TIDs.cart_list_item_image }, { tid: TIDs.footer_social_links }],
+            blackout: [
+                { tid: TIDs.cart_list_item_image },
+                { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_copyright },
+            ],
         });
     });
 
@@ -43,7 +47,11 @@ describe('Order Repeat Tests From Order List (Logged-in User)', { retries: { run
         checkUrl(url.cart);
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(this.test?.title, 'after repeat', {
-            blackout: [{ tid: TIDs.cart_list_item_image }, { tid: TIDs.footer_social_links }],
+            blackout: [
+                { tid: TIDs.cart_list_item_image },
+                { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_copyright },
+            ],
         });
     });
 
@@ -63,7 +71,11 @@ describe('Order Repeat Tests From Order List (Logged-in User)', { retries: { run
         checkUrl(url.cart);
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(this.test?.title, 'after repeat', {
-            blackout: [{ tid: TIDs.cart_list_item_image }, { tid: TIDs.footer_social_links }],
+            blackout: [
+                { tid: TIDs.cart_list_item_image },
+                { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_copyright },
+            ],
         });
     });
 });
@@ -89,7 +101,11 @@ describe('Order Repeat Tests From Order Detail (Unlogged User)', () => {
         checkUrl(url.cart);
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(this.test?.title, 'after repeat', {
-            blackout: [{ tid: TIDs.cart_list_item_image }, { tid: TIDs.footer_social_links }],
+            blackout: [
+                { tid: TIDs.cart_list_item_image },
+                { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_copyright },
+            ],
         });
     });
 
@@ -112,7 +128,11 @@ describe('Order Repeat Tests From Order Detail (Unlogged User)', () => {
         checkUrl(url.cart);
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(this.test?.title, 'after repeat', {
-            blackout: [{ tid: TIDs.cart_list_item_image }, { tid: TIDs.footer_social_links }],
+            blackout: [
+                { tid: TIDs.cart_list_item_image },
+                { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_copyright },
+            ],
         });
     });
 
@@ -135,7 +155,11 @@ describe('Order Repeat Tests From Order Detail (Unlogged User)', () => {
         checkUrl(url.cart);
         cy.waitForStableAndInteractiveDOM();
         takeSnapshotAndCompare(this.test?.title, 'after repeat', {
-            blackout: [{ tid: TIDs.cart_list_item_image }, { tid: TIDs.footer_social_links }],
+            blackout: [
+                { tid: TIDs.cart_list_item_image },
+                { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_copyright },
+            ],
         });
     });
 });

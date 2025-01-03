@@ -216,7 +216,7 @@ describe('Create Order Tests', () => {
 
             goToEditProfileFromHeader();
             takeSnapshotAndCompare(this.test?.title, 'customer edit page', {
-                blackout: [{ tid: TIDs.footer_social_links }],
+                blackout: [{ tid: TIDs.footer_social_links }, { tid: TIDs.footer_copyright }],
             });
         },
     );
