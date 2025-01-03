@@ -114,9 +114,10 @@ abstract class AbstractCrudController extends AbstractController
     }
 
     /**
+     * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function deleteAction(): Response
+    public function deleteAction(int $id): Response
     {
         return $this->redirect($this->generateUrl('admin_default_dashboard'));
     }

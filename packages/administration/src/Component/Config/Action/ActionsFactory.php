@@ -98,7 +98,7 @@ final class ActionsFactory
                 $actionRoute->getActionType(),
             );
 
-            $parameters = $actionRoute->getId($entity) !== null ? ['entityId' => $actionRoute->getId($entity)] : [];
+            $parameters = $actionRoute->getId($entity) !== null ? ['id' => $actionRoute->getId($entity)] : [];
 
             return $this->router->generate($routeItem->getRouteName(), $parameters);
         }
