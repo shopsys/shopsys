@@ -16,6 +16,7 @@ class ActionData
      * @param string $label
      * @param string|null $icon
      * @param string $cssClass
+     * @param bool $openInNewTab
      * @param \Shopsys\AdministrationBundle\Component\Config\Action\Builder\ActionRoute\ActionRouteInterface|null $actionRoute
      * @param null|Closure(?object $entity): bool $displayIf
      */
@@ -24,6 +25,7 @@ class ActionData
         public readonly string $label,
         public readonly ?string $icon,
         public readonly string $cssClass,
+        public readonly bool $openInNewTab,
         public readonly ?ActionRouteInterface $actionRoute = null,
         public readonly ?Closure $displayIf = null,
     ) {
