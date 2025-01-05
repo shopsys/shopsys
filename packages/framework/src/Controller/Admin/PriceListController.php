@@ -6,10 +6,13 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\CsvResponse;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Form\Admin\PriceList\PriceListFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\PriceList\Exception\PriceListNotFoundException;
+use Shopsys\FrameworkBundle\Model\PriceList\PriceListCsvColumnsEnum;
 use Shopsys\FrameworkBundle\Model\PriceList\PriceListDataFactory;
 use Shopsys\FrameworkBundle\Model\PriceList\PriceListFacade;
 use Shopsys\FrameworkBundle\Model\PriceList\PriceListGridFactory;
@@ -29,6 +32,7 @@ class PriceListController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
+     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListCsvColumnsEnum $priceListCsvColumnsEnum
      */
     public function __construct(
         protected readonly PriceListGridFactory $priceListGridFactory,
@@ -37,6 +41,7 @@ class PriceListController extends AdminBaseController
         protected readonly AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,
         protected readonly Domain $domain,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
+        protected readonly PriceListCsvColumnsEnum $priceListCsvColumnsEnum,
     ) {
     }
 
@@ -173,5 +178,30 @@ class PriceListController extends AdminBaseController
         }
 
         return $this->redirectToRoute('admin_pricelist_list');
+    }
+
+    /**
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    #[Route(path: '/pricing/price-list/export/{id}', requirements: ['id' => '\d+'])]
+    public function exportAction(int $id): Response
+    {
+        try {
+            $priceList = $this->priceListFacade->getById($id);
+            $sanitizedPriceListName = TransformString::safeFilename($priceList->getName());
+
+            $priceListDataToExport = $this->priceListFacade->getPriceListDataToExport($id);
+
+            return new CsvResponse(
+                $priceListDataToExport,
+                'price_list_' . $id . '_' . $sanitizedPriceListName . '.csv',
+                $this->priceListCsvColumnsEnum->getAllCases(),
+            );
+        } catch (PriceListNotFoundException) {
+            $this->addErrorFlash(t('Selected price list does not exist.'));
+
+            return $this->redirectToRoute('admin_pricelist_list');
+        }
     }
 }

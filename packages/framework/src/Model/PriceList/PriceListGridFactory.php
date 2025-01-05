@@ -60,6 +60,7 @@ class PriceListGridFactory
             ->setConfirmMessage(
                 t('Do you really want to remove this product list? Special prices for products in this list will be removed.'),
             );
+        $grid->addActionColumn('download', 'Export CSV', 'admin_pricelist_export', ['id' => 'pl.id']);
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/PriceList/listGrid.html.twig');
 

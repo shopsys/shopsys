@@ -2,3 +2,12 @@
 
 {% block title %}- {{ 'Editing price list'|trans }} - {{ priceList.name }}{% endblock %}
 {% block h1 %}{{ 'Editing price list'|trans }} - {{ priceList.name }}{% endblock %}
+
+{% block btn %}
+    <div class="wrap-bar__buttons">
+        <a href="{{ protectedUrl('admin_pricelist_export', {id: priceList.id}) }}" class="btn btn--light wrap-bar__btn">
+            {{ icon('download') }}
+            {{ 'Export CSV'|trans }}
+        </a>
+    </div>
+{% endblock %}

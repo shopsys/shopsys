@@ -106,6 +106,7 @@
         "symfony/proxy-manager-bridge": "^6.4",
         "symfony/rate-limiter": "^6.4",
         "symfony/security-bundle": "^6.4",
+        "symfony/serializer": "^6.4",
         "symfony/service-contracts": "^2.5.2",
         "symfony-cmf/routing": "^3.0.3",
         "symfony-cmf/routing-bundle": "^3.0.3",

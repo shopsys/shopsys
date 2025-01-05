@@ -6,9 +6,11 @@ namespace Shopsys\FrameworkBundle\Model\PriceList;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum;
+use Symfony\Component\Serializer\Encoder\CsvEncoder;
 
 class PriceListFacade
 {
@@ -18,6 +20,7 @@ class PriceListFacade
      * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListRepository $priceListRepository
      * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPriceFactory $priceListProductPriceFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
+     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListCsvColumnsEnum $priceListExportColumnsEnum
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -25,6 +28,7 @@ class PriceListFacade
         protected readonly PriceListRepository $priceListRepository,
         protected readonly PriceListProductPriceFactory $priceListProductPriceFactory,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
+        protected readonly PriceListCsvColumnsEnum $priceListExportColumnsEnum,
     ) {
     }
 
@@ -128,5 +132,34 @@ class PriceListFacade
 
         $this->em->remove($priceList);
         $this->em->flush();
+    }
+
+    /**
+     * @param int $priceListId
+     * @return array<int, array<string, string>>
+     */
+    public function getPriceListDataToExport(int $priceListId): array
+    {
+        $data = [];
+
+        foreach ($this->priceListRepository->getPriceListDataToExport($priceListId) as $priceListWithProducts) {
+            $priceListWithProducts[PriceListCsvColumnsEnum::PRICE] = $this->normalizePriceColumn($priceListWithProducts[PriceListCsvColumnsEnum::PRICE]);
+            $data[] = $priceListWithProducts;
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $priceAmount
+     * @return string
+     */
+    protected function normalizePriceColumn(?Money $priceAmount): string
+    {
+        if ($priceAmount === null) {
+            return '';
+        }
+
+        return (string)(float)$priceAmount->getAmount();
     }
 }
