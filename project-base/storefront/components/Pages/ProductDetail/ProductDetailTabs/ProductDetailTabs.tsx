@@ -1,4 +1,4 @@
-import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
+import { DownloadIcon } from 'components/Basic/Icon/DownloadIcon';
 import { Cell, Row, Table } from 'components/Basic/Table/Table';
 import { Tabs, TabsContent, TabsList, TabsListItem } from 'components/Basic/Tabs/Tabs';
 import { UserText } from 'components/Basic/UserText/UserText';
@@ -7,7 +7,8 @@ import { TypeParameterFragment } from 'graphql/requests/parameters/fragments/Par
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
+import { useMediaMin } from 'utils/ui/useMediaMin';
 
 const ProductDetailRelatedProductsTab = dynamic(
     () => import('./ProductDetailRelatedProductsTab').then((component) => component.ProductDetailRelatedProductsTab),
@@ -26,6 +27,7 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
     const { t } = useTranslation();
     const [selectedTab, setSelectedTab] = useState(0);
     const [skipInitialAnimation, setSkipInitialAnimation] = useState(true);
+    const isLg = useMediaMin('lg');
 
     const formatParameterValue = (valueText: string, index: number) => {
         return index > 0 ? ' | ' + valueText : valueText;
@@ -87,45 +89,46 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
 
             {!!parameters.length && (
                 <TabsContent headingTextMobile={t('Parameters')} isActive={selectedTab === parametersTabIndex}>
-                    {sortedIndividualParameters.length > 0 && (
-                        <div>
-                            <Table className="mx-auto max-w-screen-lg border-0 p-0">
-                                {sortedIndividualParameters.map((parameter) => (
-                                    <Row
-                                        key={parameter.uuid}
-                                        className="border-none bg-tableBackground odd:bg-tableBackgroundContrast"
-                                    >
-                                        <Cell className="py-2 text-left text-sm font-bold uppercase leading-5">
-                                            {parameter.name}
-                                        </Cell>
-                                        <Cell className="py-2 text-right text-sm leading-5">
-                                            {parameter.values.map((value, index) =>
-                                                formatParameterValue(
-                                                    value.text +
-                                                        (parameter.unit?.name ? ` (${parameter.unit.name})` : ''),
-                                                    index,
-                                                ),
-                                            )}
-                                        </Cell>
-                                    </Row>
-                                ))}
-                            </Table>
-                        </div>
-                    )}
-
-                    {sortedGroupParameters.map(({ groupName, groupParameters }) => (
-                        <div key={groupName}>
-                            <h2 className="mx-auto my-4 max-w-screen-lg text-lg font-bold">{groupName}</h2>
-                            <Table className="mx-auto max-w-screen-lg border-0 p-0">
+                    <Table className="mx-auto max-w-[700px] border-0 p-0">
+                        {sortedIndividualParameters.length > 0 &&
+                            sortedIndividualParameters.map((parameter) => (
+                                <Row
+                                    key={parameter.uuid}
+                                    className="border-none bg-tableBackground odd:bg-tableBackgroundContrast"
+                                >
+                                    <Cell className="hidden w-[240px] px-5 py-2.5 align-top lg:table-cell">
+                                        <h6 className="leading-5">{parameter.name}</h6>
+                                    </Cell>
+                                    <Cell className="px-5 py-2.5 text-sm">
+                                        <h6 className="mb-1 lg:hidden">{parameter.name}</h6>
+                                        {parameter.values.map((value, index) =>
+                                            formatParameterValue(
+                                                value.text + (parameter.unit?.name ? ` (${parameter.unit.name})` : ''),
+                                                index,
+                                            ),
+                                        )}
+                                    </Cell>
+                                </Row>
+                            ))}
+                        {sortedGroupParameters.map(({ groupName, groupParameters }) => (
+                            <Fragment key={groupName}>
+                                {isLg && (
+                                    <tr>
+                                        <td colSpan={2}>
+                                            <h4 className="py-5">{groupName}</h4>
+                                        </td>
+                                    </tr>
+                                )}
                                 {groupParameters.map((parameter) => (
                                     <Row
                                         key={parameter.uuid}
                                         className="border-none bg-tableBackground odd:bg-tableBackgroundContrast"
                                     >
-                                        <Cell className="py-2 text-left text-sm font-bold uppercase leading-5">
-                                            {parameter.name}
+                                        <Cell className="hidden w-[240px] px-5 py-2.5 align-top lg:table-cell">
+                                            <h6 className="leading-5">{parameter.name}</h6>
                                         </Cell>
-                                        <Cell className="py-2 text-right text-sm leading-5">
+                                        <Cell className="px-5 py-2.5 text-sm">
+                                            <h6 className="mb-1 lg:hidden">{parameter.name}</h6>
                                             {parameter.values.map((value, index) =>
                                                 formatParameterValue(
                                                     value.text +
@@ -136,9 +139,9 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                                         </Cell>
                                     </Row>
                                 ))}
-                            </Table>
-                        </div>
-                    ))}
+                            </Fragment>
+                        ))}
+                    </Table>
                 </TabsContent>
             )}
 
@@ -153,12 +156,15 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
 
             {!!files.length && (
                 <TabsContent headingTextMobile={t('Files')} isActive={selectedTab === filesTabIndex}>
-                    <ul>
+                    <ul className="grid grid-cols-1 gap-3 lg:grid-cols-2">
                         {files.map((file) => (
-                            <li key={file.url}>
-                                <a className="no-underline" href={file.url}>
-                                    {file.anchorText}
-                                    <ArrowSecondaryIcon className="ml-1 rotate-90" />
+                            <li key={file.url} className="">
+                                <a
+                                    className="flex cursor-pointer items-center gap-5 rounded-xl bg-backgroundMore px-5 py-2.5 no-underline"
+                                    href={file.url}
+                                >
+                                    <DownloadIcon className="size-6" />
+                                    <h4>{file.anchorText}</h4>
                                 </a>
                             </li>
                         ))}
