@@ -165,7 +165,7 @@ final class CreateAndPushGitTagsExceptProjectBaseReleaseWorker extends AbstractS
             $versionString,
         );
 
-        $headers = get_headers($url, true);
+        $headers = @get_headers($url, true);
 
         return $headers[0] === 'HTTP/1.1 200 OK';
     }

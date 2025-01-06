@@ -17,8 +17,8 @@ final class DockerfileVersionFileManipulator
         $dockerFilePath = getcwd() . '/project-base/app/docker/php-fpm/Dockerfile';
         $fileContent = FileSystem::read($dockerFilePath);
 
-        $replacement = ':' . $versionString . ' as base';
-        $newContent = preg_replace('/:([\w.-]+) as base/', $replacement, $fileContent);
+        $replacement = ':' . $versionString . ' AS base';
+        $newContent = preg_replace('/:([\w.-]+) AS base/', $replacement, $fileContent);
 
         FileSystem::write($dockerFilePath, $newContent);
     }

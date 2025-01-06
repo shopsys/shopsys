@@ -36,7 +36,7 @@ class ComposerJsonFilesProvider
         $finder = Finder::create()
             ->files()
             ->ignoreUnreadableDirs()
-            ->depth(1)
+            ->depth('<= 1')
             ->in($this->packageDirectories)
             ->exclude([
                 'vendor',

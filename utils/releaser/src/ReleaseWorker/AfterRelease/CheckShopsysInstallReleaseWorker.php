@@ -42,6 +42,7 @@ final class CheckShopsysInstallReleaseWorker extends AbstractCheckShopsysInstall
             'Instructions for project base preparation:
 
 git clone https://github.com/shopsys/project-base.git
+cd project-base
 git checkout v%s
 ',
             $version->getVersionString(),

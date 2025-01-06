@@ -38,6 +38,7 @@ docker rm $(docker ps -a -q)
 docker rmi --force $(docker images -q)
 
 # install the application following the corresponding installation guide
+see https://docs.shopsys.com/en/latest/installation/installation-guide/
 
 # run the test suites including acceptance tests:
 docker compose exec php-fpm php phing tests tests-acceptance

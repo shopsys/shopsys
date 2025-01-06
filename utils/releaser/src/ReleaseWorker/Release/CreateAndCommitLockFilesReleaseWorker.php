@@ -60,7 +60,7 @@ final class CreateAndCommitLockFilesReleaseWorker extends AbstractShopsysRelease
 
         $this->symfonyStyle->note([
             'Push last commit with generated lock files',
-            'You have to allow push to the protected branch here https://github.com/shopsys/shopsys/settings/branches first',
+            'If you are not one of the chosen ones (that are allowed to bypass the protection), you have to allow push to the protected branch here https://github.com/shopsys/shopsys/settings/branches first',
         ]);
 
         $this->symfonyStyle->confirm(
