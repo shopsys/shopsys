@@ -253,6 +253,7 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
             PaymentDataFixture::class,
             OrderStatusDataFixture::class,
             CompanyDataFixture::class,
+            OrderDataFixture::class,
         ];
     }
 

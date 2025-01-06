@@ -210,12 +210,12 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
         $responseData = $this->getResponseDataForGraphQlType($response, 'orders');
 
         $expectedOrders = [
-            ['uuid' => $this->getReference(CompanyOrderDataFixture::ORDER_PREFIX . 30, Order::class)->getUuid(), 'email' => CompanyDataFixture::B2B_COMPANY_LIMITED_USER_EMAIL],
-            ['uuid' => $this->getReference(CompanyOrderDataFixture::ORDER_PREFIX . 28, Order::class)->getUuid(), 'email' => CompanyDataFixture::B2B_COMPANY_SELF_MANAGE_USER_EMAIL],
+            ['uuid' => $this->getReference(CompanyOrderDataFixture::ORDER_PREFIX . 31, Order::class)->getUuid(), 'email' => CompanyDataFixture::B2B_COMPANY_LIMITED_USER_EMAIL],
             ['uuid' => $this->getReference(CompanyOrderDataFixture::ORDER_PREFIX . 29, Order::class)->getUuid(), 'email' => CompanyDataFixture::B2B_COMPANY_SELF_MANAGE_USER_EMAIL],
-            ['uuid' => $this->getReference(CompanyOrderDataFixture::ORDER_PREFIX . 27, Order::class)->getUuid(), 'email' => CompanyDataFixture::B2B_COMPANY_SELF_MANAGE_USER_EMAIL],
-            ['uuid' => $this->getReference(CompanyOrderDataFixture::ORDER_PREFIX . 25, Order::class)->getUuid(), 'email' => CompanyDataFixture::B2B_COMPANY_OWNER_EMAIL],
+            ['uuid' => $this->getReference(CompanyOrderDataFixture::ORDER_PREFIX . 30, Order::class)->getUuid(), 'email' => CompanyDataFixture::B2B_COMPANY_SELF_MANAGE_USER_EMAIL],
+            ['uuid' => $this->getReference(CompanyOrderDataFixture::ORDER_PREFIX . 28, Order::class)->getUuid(), 'email' => CompanyDataFixture::B2B_COMPANY_SELF_MANAGE_USER_EMAIL],
             ['uuid' => $this->getReference(CompanyOrderDataFixture::ORDER_PREFIX . 26, Order::class)->getUuid(), 'email' => CompanyDataFixture::B2B_COMPANY_OWNER_EMAIL],
+            ['uuid' => $this->getReference(CompanyOrderDataFixture::ORDER_PREFIX . 27, Order::class)->getUuid(), 'email' => CompanyDataFixture::B2B_COMPANY_OWNER_EMAIL],
         ];
 
         $this->assertSame(6, $responseData['totalCount']);
