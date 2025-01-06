@@ -4,6 +4,7 @@ query GetComplaintQuery ($complaintNumber: String!) {
     ) {
         uuid
         number
+        email
         createdAt
         deliveryFirstName
         deliveryLastName

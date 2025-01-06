@@ -17,3 +17,14 @@ ComplaintInputDecorator:
                 type: "[ComplaintItemInput!]!"
                 description: "All items in the complaint"
                 validation: cascade
+            email:
+                type: "String!"
+                description: "The customer's email address"
+                validation:
+                    -   NotBlank:
+                            message: "Please enter email"
+                    -   Email:
+                            message: "Please enter valid email"
+                    -   Length:
+                            max: 255
+                            maxMessage: "Email cannot be longer than {{ limit }} characters"

@@ -1,6 +1,7 @@
 mutation CreateComplaint($input: ComplaintInput!) {
     CreateComplaint(input: $input) {
         number
+        email
         items {
             quantity
             productName

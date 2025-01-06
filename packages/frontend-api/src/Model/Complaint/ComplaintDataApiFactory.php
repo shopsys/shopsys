@@ -50,6 +50,8 @@ class ComplaintDataApiFactory
         $complaintData->customerUser = $customerUser;
         $complaintData->complaintItems = $complaintItems;
 
+        $complaintData->email = $input['email'];
+
         $delivery = $input['deliveryAddress'];
         $complaintData->deliveryFirstName = $delivery['firstName'];
         $complaintData->deliveryLastName = $delivery['lastName'];
