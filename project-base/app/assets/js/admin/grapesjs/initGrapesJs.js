@@ -17,7 +17,8 @@ import './plugins/grapesjs-table-custom-plugin';
 import './plugins/grapesjs-mail-custom-image-with-variable-plugin';
 import './plugins/grapesjs-mail-custom-image-plugin';
 import 'magnific-popup';
-import { en } from './locales/en';
+import { en } from './locales/en.js';
+import { cs } from './locales/cs.js';
 import Translator from 'bazinga-translator';
 
 import { Buffer } from 'buffer';
@@ -96,12 +97,20 @@ export default class InitGrapesJs {
             forceClass: false,
             nativeDnD: true,
             plugins: plugins,
+            i18n: {
+                locale: Translator.locale,
+                detectLocale: false,
+                messages: {
+                    en, cs
+                }
+            },
             pluginsOpts: {
                 [ckeditorPlugin]: {
                     ckeditor: '',
                     options: {
                         enterMode: 2,
                         versionCheck: false,
+                        language: Translator.locale,
                         allowedContent: true,
                         extraAllowedContent: '*(*)',
                         removePlugins: 'exportpdf',
@@ -173,10 +182,6 @@ export default class InitGrapesJs {
             }
         });
 
-        editor.I18n.setMessages({
-            en
-        });
-
         editor.once('load', () => {
             editor.Panels.getButton('options', 'sw-visibility').set('active', 1);
 
@@ -212,15 +217,24 @@ export default class InitGrapesJs {
             avoidInlineStyle: false,
             forceClass: false,
             plugins: defaultPlugins.concat(customPlugins),
+            i18n: {
+                locale: Translator.locale,
+                detectLocale: false,
+                messages: {
+                    en, cs
+                }
+            },
             pluginsOpts: {
                 [newsletterPlugin]: {
-                    styleManagerSectors: []
+                    styleManagerSectors: [],
+                    useCustomTheme: false
                 },
                 [ckeditorPlugin]: {
                     ckeditor: '',
                     options: {
                         enterMode: 2,
                         versionCheck: false,
+                        language: Translator.locale,
                         toolbar: [
                             { name: 'basicstyles', items: ['Bold', 'Italic', 'Strike', '-', 'RemoveFormat'] },
                             { name: 'format', items: ['Format'] },
@@ -233,14 +247,15 @@ export default class InitGrapesJs {
                         ],
                         extraPlugins: 'strinsert',
                         removePlugins: 'exportpdf',
+                        strinsert_button_label: Translator.trans('Insert variable'),
                         strinsert_strings: [
-                            { 'name': 'Povinné proměnné' },
+                            { 'name': Translator.trans('Mandatory variables') },
                             ...variables
                                 .filter((variable) => variable.isRequired === true)
                                 .map((variable) => {
                                     return { 'name': variable.label, 'value': variable.placeholder };
                                 }),
-                            { 'name': 'Volitelné proměnné' },
+                            { 'name': Translator.trans('Optional variables') },
                             ...variables
                                 .filter((variable) => variable.isRequired === false)
                                 .map((variable) => {
@@ -276,10 +291,6 @@ export default class InitGrapesJs {
                     }
                 }
             }
-        });
-
-        editor.I18n.addMessages({
-            en
         });
 
         editor.Panels.getButton('options', 'sw-visibility').set('active', 1);

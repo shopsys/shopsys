@@ -223,6 +223,9 @@ msgstr "Obrázek"
 msgid "In stock"
 msgstr "Skladem"
 
+msgid "Insert variable"
+msgstr "Vložit proměnnou"
+
 msgid "Insert your text here"
 msgstr "Zde vložte text"
 
@@ -292,6 +295,9 @@ msgstr "Vyrobeno v DE"
 msgid "Made in SK"
 msgstr "Vyrobeno v SK"
 
+msgid "Mandatory variables"
+msgstr "Povinné proměnné"
+
 msgid "Map"
 msgstr "Mapa"
 
@@ -351,6 +357,9 @@ msgstr "Notifikační lišta byla úspěšně smazána"
 
 msgid "Open in new window"
 msgstr "Otevírat v novém okně"
+
+msgid "Optional variables"
+msgstr "Volitelné proměnné"
 
 msgid "Order confirmation page"
 msgstr "Stránka s potvrzením objednávky"

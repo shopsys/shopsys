@@ -10,6 +10,11 @@ export const en = {
     blockManager: {
         labels: {
             // 'block-id': 'Block Label',
+            image: 'Image',
+            text: 'Text',
+            sect100: '1 column',
+            sect50: '2 columns',
+            'link-block': 'Link Block'
         },
         categories: {
             // 'category-id': 'Category Label',
