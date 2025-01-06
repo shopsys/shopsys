@@ -64,7 +64,7 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
         return [
             'expanded' => false,
             'multiple' => false,
-            'choices' => $this->categoryFacade->getAllTranslated($this->localization->getAdminLocale()),
+            'choices' => $this->categoryFacade->getAllTranslated($this->localization->getLocale()),
             'choice_label' => function (Category $category) {
                 $padding = str_repeat("\u{00a0}", ($category->getLevel() - 1) * 2);
 

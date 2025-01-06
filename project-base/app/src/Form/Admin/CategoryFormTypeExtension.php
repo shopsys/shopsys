@@ -42,7 +42,7 @@ class CategoryFormTypeExtension extends AbstractTypeExtension
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
 
         $categoryPaths = $this->categoryFacade->getFullPathsIndexedByIds(
-            $this->localization->getAdminLocale(),
+            $this->localization->getLocale(),
         );
         $builder->get('seo')->add(
             $builder

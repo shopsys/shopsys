@@ -47,7 +47,7 @@ class OrderListType extends AbstractType
     {
         parent::buildView($view, $form, $options);
 
-        $view->vars['orders'] = $this->orderFacade->getLastCustomerOrdersByLimit($options['customer'], $options['limit'], $this->localization->getAdminLocale());
+        $view->vars['orders'] = $this->orderFacade->getLastCustomerOrdersByLimit($options['customer'], $options['limit'], $this->localization->getLocale());
         $view->vars['customer'] = $options['customer'];
         $view->vars['limit'] = $options['limit'];
     }

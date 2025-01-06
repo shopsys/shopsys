@@ -39,7 +39,7 @@ class ProductParameterValueFormType extends AbstractType
         $builder
             ->add('parameter', ChoiceType::class, [
                 'required' => true,
-                'choices' => $this->parameterFacade->getAllWithTranslations($this->localization->getAdminLocale()),
+                'choices' => $this->parameterFacade->getAllWithTranslations($this->localization->getLocale()),
                 'choice_label' => 'name',
                 'choice_value' => 'id',
                 'constraints' => [

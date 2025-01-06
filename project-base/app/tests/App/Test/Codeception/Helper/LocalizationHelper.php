@@ -81,7 +81,7 @@ class LocalizationHelper extends Module
         string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
         array $parameters = [],
     ): void {
-        $translatedMessage = t($id, $parameters, $translationDomain, $this->getAdminLocale());
+        $translatedMessage = t($id, $parameters, $translationDomain, $this->getL());
         $this->webDriver->see(strip_tags($translatedMessage));
     }
 

@@ -115,10 +115,6 @@ class NumberFormatterExtension extends AbstractExtension
             return $locale;
         }
 
-        if ($this->administrationFacade->isInAdmin()) {
-            return $this->localization->getAdminLocale();
-        }
-
         return $this->localization->getLocale();
     }
 

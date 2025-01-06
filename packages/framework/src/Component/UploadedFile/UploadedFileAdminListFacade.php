@@ -25,7 +25,7 @@ class UploadedFileAdminListFacade
      */
     public function getUploadedFileListQueryBuilder(): QueryBuilder
     {
-        $locale = $this->localization->getAdminLocale();
+        $locale = $this->localization->getLocale();
 
         return $this->uploadedFileAdminListRepository->getUploadedFileListQueryBuilder($locale);
     }

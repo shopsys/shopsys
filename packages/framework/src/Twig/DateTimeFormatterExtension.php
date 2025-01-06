@@ -76,7 +76,7 @@ class DateTimeFormatterExtension extends AbstractExtension
             $dateTime,
             IntlDateFormatter::MEDIUM,
             IntlDateFormatter::NONE,
-            $locale,
+            $this->getLocale($locale),
         );
     }
 
@@ -91,7 +91,7 @@ class DateTimeFormatterExtension extends AbstractExtension
             $dateTime,
             IntlDateFormatter::NONE,
             IntlDateFormatter::MEDIUM,
-            $locale,
+            $this->getLocale($locale),
         );
     }
 
@@ -106,7 +106,7 @@ class DateTimeFormatterExtension extends AbstractExtension
             $dateTime,
             IntlDateFormatter::MEDIUM,
             IntlDateFormatter::MEDIUM,
-            $locale,
+            $this->getLocale($locale),
         );
     }
 
@@ -137,11 +137,7 @@ class DateTimeFormatterExtension extends AbstractExtension
      */
     protected function getLocale($locale = null)
     {
-        if ($locale === null) {
-            $locale = $this->localization->getLocale();
-        }
-
-        return $locale;
+        return $locale ?? $this->localization->getLocale();
     }
 
     /**

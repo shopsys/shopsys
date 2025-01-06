@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\AdministratorIsNotLoggedException;
 use Shopsys\FrameworkBundle\Model\Localization\Exception\AdminLocaleNotFoundException;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class Localization
 {
@@ -21,11 +22,13 @@ class Localization
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param string[] $allowedAdminLocales
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
+     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly array $allowedAdminLocales,
         protected readonly AdministratorFrontSecurityFacade $administratorFrontSecurityFacade,
+        protected readonly RequestStack $requestStack,
     ) {
     }
 
@@ -34,7 +37,7 @@ class Localization
      */
     public function getLocale(): string
     {
-        return $this->domain->getLocale();
+        return $this->requestStack->getMainRequest()->getLocale();
     }
 
     /**

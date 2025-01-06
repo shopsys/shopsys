@@ -92,10 +92,10 @@ class CategoryFormType extends AbstractType
         if ($options['category'] !== null) {
             $parentChoices = $this->categoryFacade->getAllTranslatedWithoutBranch(
                 $options['category'],
-                $this->localization->getAdminLocale(),
+                $this->localization->getLocale(),
             );
         } else {
-            $parentChoices = $this->categoryFacade->getAllTranslated($this->localization->getAdminLocale());
+            $parentChoices = $this->categoryFacade->getAllTranslated($this->localization->getLocale());
         }
 
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [
