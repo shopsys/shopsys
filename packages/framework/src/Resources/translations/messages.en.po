@@ -3547,7 +3547,7 @@ msgstr ""
 msgid "Searching in all currencies"
 msgstr ""
 
-msgid "Searching searches in complaint number, order number, delivery last name, delivery company name, last name from order, email from order, complaint author last name, complaint author company name. It is possible to use wildcards * and ?."
+msgid "Searching searches in complaint number, complaint email, order number, delivery last name, delivery company name, last name from order, email from order, complaint author last name, complaint author company name. It is possible to use wildcards * and ?."
 msgstr ""
 
 msgid "Searching searches in email. It is possible to use wildcards * and ?."

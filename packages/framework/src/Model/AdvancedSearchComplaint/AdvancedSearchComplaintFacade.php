@@ -95,6 +95,8 @@ class AdvancedSearchComplaintFacade
                     (
                         cmp.number LIKE :text
                         OR
+                        NORMALIZED(cmp.email) LIKE NORMALIZED(:text)
+                        OR
                         o.number LIKE :text
                         OR
                         NORMALIZED(cmp.deliveryLastName) LIKE NORMALIZED(:text)
