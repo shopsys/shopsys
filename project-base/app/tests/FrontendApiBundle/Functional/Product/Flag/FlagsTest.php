@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Product\Flag;
 
-use Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorter;
+use Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorterHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class FlagsTest extends GraphQlTestCase
 {
+    /**
+     * @inject
+     */
+    private ArraySorterHelper $arraySorterHelper;
+
     public function testFlags(): void
     {
         $query = '
@@ -44,7 +49,7 @@ class FlagsTest extends GraphQlTestCase
             ],
         ];
 
-        ArraySorter::sortArrayAlphabeticallyByValue('name', $flags, $this->getLocaleForFirstDomain());
+        $this->arraySorterHelper->sortArrayAlphabeticallyByValue('name', $flags, $this->getLocaleForFirstDomain());
 
         $arrayExpected = [
             'data' => [

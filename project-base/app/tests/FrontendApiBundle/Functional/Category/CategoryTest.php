@@ -6,7 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Category;
 
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\Model\Category\Category;
-use Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorter;
+use Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorterHelper;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -14,7 +14,12 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class CategoryTest extends GraphQlTestCase
 {
-    protected Category $category;
+    /**
+     * @inject
+     */
+    private ArraySorterHelper $arraySorterHelper;
+
+    private Category $category;
 
     /**
      * @inject
@@ -62,7 +67,7 @@ class CategoryTest extends GraphQlTestCase
             ],
         ];
 
-        ArraySorter::sortArrayAlphabeticallyByValue('name', $readyCategorySeoMixLinks, $this->getLocaleForFirstDomain());
+        $this->arraySorterHelper->sortArrayAlphabeticallyByValue('name', $readyCategorySeoMixLinks, $this->getLocaleForFirstDomain());
 
         $electronicsName = t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
         $electronicsSlug = '/' . TransformString::stringToFriendlyUrlSlug($electronicsName);

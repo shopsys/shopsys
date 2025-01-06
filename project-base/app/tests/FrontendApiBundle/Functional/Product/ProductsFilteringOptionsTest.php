@@ -13,7 +13,7 @@ use App\Model\Product\Brand\Brand;
 use App\Model\Product\Flag\Flag;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Ramsey\Uuid\Uuid;
-use Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorter;
+use Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorterHelper;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
@@ -25,6 +25,11 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     private const PARAMETER_HDMI = 5;
 
     private string $firstDomainLocale;
+
+    /**
+     * @inject
+     */
+    private ArraySorterHelper $arraySorterHelper;
 
     public function setUp(): void
     {
@@ -58,7 +63,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             ],
         ];
 
-        ArraySorter::sortArrayAlphabeticallyByValue('text', $materials, $this->getLocaleForFirstDomain());
+        $this->arraySorterHelper->sortArrayAlphabeticallyByValue('text', $materials, $this->getLocaleForFirstDomain());
 
         $colors = [
             [
@@ -75,7 +80,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             ],
         ];
 
-        ArraySorter::sortArrayAlphabeticallyByValue('text', $colors, $this->getLocaleForFirstDomain());
+        $this->arraySorterHelper->sortArrayAlphabeticallyByValue('text', $colors, $this->getLocaleForFirstDomain());
 
         $screenSizes = [
             [
@@ -95,7 +100,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             ],
         ];
 
-        ArraySorter::sortArrayAlphabeticallyByValue('text', $screenSizes, $this->getLocaleForFirstDomain());
+        $this->arraySorterHelper->sortArrayAlphabeticallyByValue('text', $screenSizes, $this->getLocaleForFirstDomain());
 
         $hdmiValues = [
             [
@@ -110,7 +115,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             ],
         ];
 
-        ArraySorter::sortArrayAlphabeticallyByValue('text', $hdmiValues, $this->getLocaleForFirstDomain());
+        $this->arraySorterHelper->sortArrayAlphabeticallyByValue('text', $hdmiValues, $this->getLocaleForFirstDomain());
 
         $expectedFlagFilterOptions = [
             [
@@ -394,7 +399,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             ],
         ];
 
-        ArraySorter::sortArrayAlphabeticallyByValue('text', $materials, $this->getLocaleForFirstDomain());
+        $this->arraySorterHelper->sortArrayAlphabeticallyByValue('text', $materials, $this->getLocaleForFirstDomain());
 
         $colors = [
             [
@@ -411,7 +416,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             ],
         ];
 
-        ArraySorter::sortArrayAlphabeticallyByValue('text', $colors, $this->getLocaleForFirstDomain());
+        $this->arraySorterHelper->sortArrayAlphabeticallyByValue('text', $colors, $this->getLocaleForFirstDomain());
 
         $screenSizes = [
             [
@@ -431,7 +436,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             ],
         ];
 
-        ArraySorter::sortArrayAlphabeticallyByValue('text', $screenSizes, $this->getLocaleForFirstDomain());
+        $this->arraySorterHelper->sortArrayAlphabeticallyByValue('text', $screenSizes, $this->getLocaleForFirstDomain());
 
         $hdmiValues = [
             [
@@ -451,7 +456,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
             ],
         ];
 
-        ArraySorter::sortArrayAlphabeticallyByValue('text', $hdmiValues, $this->getLocaleForFirstDomain());
+        $this->arraySorterHelper->sortArrayAlphabeticallyByValue('text', $hdmiValues, $this->getLocaleForFirstDomain());
 
         $expectedArray = [
             [

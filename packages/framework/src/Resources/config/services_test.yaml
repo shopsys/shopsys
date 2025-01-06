@@ -27,3 +27,5 @@ services:
         class: Tests\FrameworkBundle\Test\TestTranslatableListener
         tags:
             - 'doctrine.event_subscriber'
+
+    Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorterHelper: ~
