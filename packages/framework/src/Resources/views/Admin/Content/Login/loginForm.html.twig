@@ -19,14 +19,33 @@
             <span class="box-login__error">
                 {{ form_errors(form.username) }}
             </span>
-            {{ form_widget(form.username, {attr: {placeholder: 'Username'|trans, class: 'box-login__input'}}) }}
+            {% set
+                usernameAttributes = {
+                    placeholder: 'Username'|trans,
+                    class: 'box-login__input',
+                    value: lastUsername
+                }
+            %}
+            {% if not lastUsername %}
+                {% set usernameAttributes = usernameAttributes|merge({'autofocus': 'autofocus'}) %}
+            {% endif %}
+            {{ form_widget(form.username, {attr: usernameAttributes}) }}
         </div>
 
         <div class="box-login__row">
             <span class="box-login__error">
                 {{ form_errors(form.password) }}
             </span>
-            {{ form_widget(form.password, {attr: {placeholder: 'Password'|trans, class: 'box-login__input'}}) }}
+            {% set
+                passwordAttributes = {
+                    placeholder: 'Password'|trans,
+                    class: 'box-login__input',
+                }
+             %}
+            {% if lastUsername %}
+                {% set passwordAttributes = passwordAttributes|merge({'autofocus': 'autofocus'}) %}
+            {% endif %}
+            {{ form_widget(form.password, {attr: passwordAttributes}) }}
         </div>
 
         <div class="box-login__row box-login__row--btn">

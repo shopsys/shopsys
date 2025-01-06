@@ -25,7 +25,7 @@ class LoginListener
     /**
      * @param \Symfony\Component\Security\Http\Event\LoginSuccessEvent $event
      */
-    public function onSecurityInteractiveLogin(LoginSuccessEvent $event)
+    public function onSecurityInteractiveLogin(LoginSuccessEvent $event): void
     {
         $token = $event->getAuthenticatedToken();
         $user = $token->getUser();

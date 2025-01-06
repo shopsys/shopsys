@@ -6,7 +6,6 @@ namespace Shopsys\FrontendApiBundle\Controller;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Cart\CartFacade;
-use Shopsys\FrameworkBundle\Model\Security\Authenticator;
 use Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationFacade;
 use Shopsys\FrontendApiBundle\Model\SocialNetwork\Exception\SocialNetworkLoginException;
@@ -30,7 +29,6 @@ class SocialNetworkController extends AbstractController
     protected const string PARAMETER_SHOULD_OVERWRITE_CUSTOMER_USER_CART = 'shouldOverwriteCustomerUserCart';
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Security\Authenticator $authenticator
      * @param \Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkConfigFactory $socialNetworkConfigFactory
      * @param \Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationFacade $registrationFacade
      * @param \Shopsys\FrontendApiBundle\Model\Customer\User\RegistrationDataFactory $registrationDataFactory
@@ -39,7 +37,6 @@ class SocialNetworkController extends AbstractController
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
      */
     public function __construct(
-        protected readonly Authenticator $authenticator,
         protected readonly SocialNetworkConfigFactory $socialNetworkConfigFactory,
         protected readonly RegistrationFacade $registrationFacade,
         protected readonly RegistrationDataFactory $registrationDataFactory,
@@ -78,7 +75,7 @@ class SocialNetworkController extends AbstractController
     }
 
     /**
-     * We need to save some data because login to social networks does redirect and after that, we would lose them
+     * We need to save some data because login to social networks does redirect, and after that, we would lose them
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      */

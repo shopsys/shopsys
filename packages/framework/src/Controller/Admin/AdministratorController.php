@@ -20,8 +20,8 @@ use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingLastAdministra
 use Shopsys\FrameworkBundle\Model\Administrator\Exception\DeletingSelfException;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
-use Shopsys\FrameworkBundle\Model\Security\Authenticator;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -37,7 +37,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class AdministratorController extends AdminBaseController
 {
-    protected const MAX_ADMINISTRATOR_ACTIVITIES_COUNT = 10;
+    protected const int MAX_ADMINISTRATOR_ACTIVITIES_COUNT = 10;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
@@ -48,7 +48,7 @@ class AdministratorController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedFacade $administratorRolesChangedFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorTwoFactorAuthenticationFacade $administratorTwoFactorAuthenticationFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorPasswordFacade $administratorPasswordFacade
-     * @param \Shopsys\FrameworkBundle\Model\Security\Authenticator $authenticator
+     * @param \Symfony\Bundle\SecurityBundle\Security $security
      */
     public function __construct(
         protected readonly AdministratorFacade $administratorFacade,
@@ -59,12 +59,15 @@ class AdministratorController extends AdminBaseController
         protected readonly AdministratorRolesChangedFacade $administratorRolesChangedFacade,
         protected readonly AdministratorTwoFactorAuthenticationFacade $administratorTwoFactorAuthenticationFacade,
         protected readonly AdministratorPasswordFacade $administratorPasswordFacade,
-        protected readonly Authenticator $authenticator,
+        protected readonly Security $security,
     ) {
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     #[Route(path: '/administrator/list/')]
-    public function listAction()
+    public function listAction(): Response
     {
         $queryBuilder = $this->administratorFacade->getAllListableQueryBuilder();
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'a.id');
@@ -90,10 +93,13 @@ class AdministratorController extends AdminBaseController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/edit/{id}', requirements: ['id' => '\d+'])]
-    public function editAction(Request $request, int $id)
+    public function editAction(Request $request, int $id): Response
     {
+        $this->denyAccessUnlessHimselfOrGranted($request, $id);
+
         $administrator = $this->administratorFacade->getById($id);
 
         $loggedUser = $this->getUser();
@@ -159,8 +165,31 @@ class AdministratorController extends AdminBaseController
         ]);
     }
 
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param int $administratorId
+     */
+    protected function denyAccessUnlessHimselfOrGranted(Request $request, int $administratorId): void
+    {
+        $currentAdministrator = $this->getCurrentAdministrator();
+
+        // always allow admin to edit himself
+        if ($currentAdministrator->getId() === $administratorId) {
+            return;
+        }
+
+        if ($request->getMethod() === Request::METHOD_GET) {
+            $this->denyAccessUnlessGranted(Roles::ROLE_ADMINISTRATOR_VIEW);
+        } else {
+            $this->denyAccessUnlessGranted(Roles::ROLE_ADMINISTRATOR_FULL);
+        }
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     #[Route(path: '/administrator/my-account/')]
-    public function myAccountAction()
+    public function myAccountAction(): Response
     {
         /** @var \Shopsys\FrameworkBundle\Model\Administrator\Administrator $loggedUser */
         $loggedUser = $this->getUser();
@@ -172,9 +201,10 @@ class AdministratorController extends AdminBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/new/')]
-    public function newAction(Request $request)
+    public function newAction(Request $request): Response
     {
         $form = $this->createForm(AdministratorFormType::class, $this->administratorDataFactory->create(), [
             'scenario' => AdministratorFormType::SCENARIO_CREATE,
@@ -211,9 +241,10 @@ class AdministratorController extends AdminBaseController
     /**
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/administrator/delete/{id}', requirements: ['id' => '\d+'])]
-    public function deleteAction(int $id)
+    public function deleteAction(int $id): Response
     {
         try {
             $realName = $this->administratorFacade->getById($id)->getRealName();
@@ -225,16 +256,16 @@ class AdministratorController extends AdminBaseController
                     'name' => $realName,
                 ],
             );
-        } catch (DeletingSelfException $ex) {
+        } catch (DeletingSelfException) {
             $this->addErrorFlash(t('You can\'t delete yourself.'));
-        } catch (DeletingLastAdministratorException $ex) {
+        } catch (DeletingLastAdministratorException) {
             $this->addErrorFlashTwig(
                 t('Administrator <strong>{{ name }}</strong> is the only one and can\'t be deleted.'),
                 [
                     'name' => $this->administratorFacade->getById($id)->getRealName(),
                 ],
             );
-        } catch (AdministratorNotFoundException $ex) {
+        } catch (AdministratorNotFoundException) {
             $this->addErrorFlash(t('Selected administrated doesn\'t exist.'));
         }
 
@@ -269,7 +300,7 @@ class AdministratorController extends AdminBaseController
         $loggedUser = $this->getUser();
         $this->securitySafeCheck($loggedUser);
 
-        if ($administrator->getUsername() !== $loggedUser->getUserIdentifier()) {
+        if ($administrator->getUsername() !== $loggedUser?->getUserIdentifier()) {
             $this->addErrorFlash(t('You are allowed to set up two factor authentication only to yourself.'));
 
             return $this->redirectToRoute('admin_administrator_edit', ['id' => $id]);
@@ -386,7 +417,7 @@ class AdministratorController extends AdminBaseController
         $loggedUser = $this->getUser();
         $this->securitySafeCheck($loggedUser);
 
-        if ($administrator->getUsername() !== $loggedUser->getUserIdentifier()) {
+        if ($administrator->getUsername() !== $loggedUser?->getUserIdentifier()) {
             $this->addErrorFlash(t('You are allowed to disable two factor authentication only to yourself.'));
 
             return $this->redirectToRoute('admin_administrator_edit', ['id' => $id]);
@@ -531,7 +562,8 @@ class AdministratorController extends AdminBaseController
             );
 
             if (!$this->isGranted(Roles::ROLE_ADMIN)) {
-                $this->authenticator->loginAdministrator($administrator);
+                $this->security->login($administrator, 'security.authenticator.form_login.administration');
+                $request->getSession()->migrate();
             }
 
             $this->addSuccessFlash(t('Password has been successfully set.'));
