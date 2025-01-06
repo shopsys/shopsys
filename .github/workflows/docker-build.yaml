@@ -464,19 +464,19 @@ jobs:
                 if: ${{ failure() }}
                 uses: actions/upload-artifact@v4
                 with:
-                    name: cypress-videos
+                    name: cypress-videos-${{ matrix.group }}
                     path: ./videos
             -   name: Upload Cypress screenshots to artifacts
                 if: ${{ failure() }}
                 uses: actions/upload-artifact@v4
                 with:
-                    name: cypress-screenshots
+                    name: cypress-screenshots-${{ matrix.group }}
                     path: ./screenshots
             -   name: Upload Cypress snapshot diffs to artifacts
                 if: ${{ failure() }}
                 uses: actions/upload-artifact@v4
                 with:
-                    name: cypress-snapshot-diffs
+                    name: cypress-snapshot-diffs-${{ matrix.group }}
                     path: ./snapshotDiffs
             -   name: PHP-FPM container logs
                 if: ${{ failure() }}
