@@ -12,10 +12,12 @@ class PropertyAnnotationsFactory
     /**
      * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap $annotationsReplacementsMap
      * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer $annotationsReplacer
+     * @param \Shopsys\FrameworkBundle\Component\ClassExtension\TypehintHelper $typehintHelper
      */
     public function __construct(
         protected readonly AnnotationsReplacementsMap $annotationsReplacementsMap,
         protected readonly AnnotationsReplacer $annotationsReplacer,
+        protected readonly TypehintHelper $typehintHelper,
     ) {
     }
 
@@ -104,7 +106,7 @@ class PropertyAnnotationsFactory
     ): bool {
         $docComment = $reflectionProperty->getDocComment() ?? '';
 
-        $propertyTypeString = $docComment !== '' ? $docComment : TypehintHelper::getPropertyTypeFromTypehint($reflectionProperty);
+        $propertyTypeString = $docComment !== '' ? $docComment : $this->typehintHelper->getPropertyTypeFromTypehint($reflectionProperty);
 
 
         return (bool)preg_match(

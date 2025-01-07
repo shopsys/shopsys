@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap;
 use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer;
 use Shopsys\FrameworkBundle\Component\ClassExtension\DocBlockParser;
 use Shopsys\FrameworkBundle\Component\ClassExtension\MethodAnnotationsFactory;
+use Shopsys\FrameworkBundle\Component\ClassExtension\TypehintHelper;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass2;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\MethodAnnotationsFactoryTest\BaseClass3;
@@ -42,7 +43,7 @@ class MethodAnnotationsFactoryTest extends TestCase
         $docBlockParser = new DocBlockParser();
         $this->methodAnnotationsFactory = new MethodAnnotationsFactory(
             $replacementMap,
-            new AnnotationsReplacer($replacementMap, $docBlockParser),
+            new AnnotationsReplacer($replacementMap, $docBlockParser, new TypehintHelper()),
             $docBlockParser,
         );
     }

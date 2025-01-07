@@ -13,10 +13,12 @@ class AnnotationsReplacer
     /**
      * @param \Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap $annotationsReplacementsMap
      * @param \Shopsys\FrameworkBundle\Component\ClassExtension\DocBlockParser $docBlockParser
+     * @param \Shopsys\FrameworkBundle\Component\ClassExtension\TypehintHelper $typehintHelper
      */
     public function __construct(
         protected readonly AnnotationsReplacementsMap $annotationsReplacementsMap,
         protected readonly DocBlockParser $docBlockParser,
+        protected readonly TypehintHelper $typehintHelper,
     ) {
     }
 
@@ -58,7 +60,7 @@ class AnnotationsReplacer
         $type = $this->docBlockParser->getPropertyType($reflectionProperty);
 
         if ($type === null) {
-            $type = TypehintHelper::getPropertyTypeFromTypehint($reflectionProperty);
+            $type = $this->typehintHelper->getPropertyTypeFromTypehint($reflectionProperty);
         }
 
         if ($type === null) {
