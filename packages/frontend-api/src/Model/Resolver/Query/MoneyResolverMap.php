@@ -60,7 +60,7 @@ class MoneyResolverMap extends ResolverMap
             return MoneyFormatterHelper::formatWithMaxFractionDigits($money);
         }
 
-        return MoneyFormatterHelper::HIDDEN_FORMAT;
+        return HiddenMoney::HIDDEN_FORMAT;
     }
 
     /**
