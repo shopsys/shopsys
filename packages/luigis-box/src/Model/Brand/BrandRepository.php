@@ -15,10 +15,12 @@ class BrandRepository
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly Domain $domain,
+        protected readonly OrderByCollationHelper $orderByCollationHelper,
     ) {
     }
 
@@ -40,7 +42,7 @@ class BrandRepository
             ->createQueryBuilder('b')
             ->andWhere('b.name IN(:brandNames)');
         $queryBuilder->setParameter('brandNames', $brandNames);
-        $queryBuilder->orderBy(OrderByCollationHelper::createOrderByForLocale('b.name', $this->domain->getLocale()));
+        $queryBuilder->orderBy($this->orderByCollationHelper->createOrderByForLocale('b.name', $this->domain->getLocale()));
 
         return $queryBuilder->getQuery()->getResult();
     }

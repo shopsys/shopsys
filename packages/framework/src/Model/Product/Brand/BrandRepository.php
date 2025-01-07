@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Brand;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
@@ -18,17 +19,19 @@ class BrandRepository
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly Domain $domain,
+        protected readonly OrderByCollationHelper $orderByCollationHelper,
     ) {
     }
 
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getBrandRepository()
+    protected function getBrandRepository(): EntityRepository
     {
         return $this->em->getRepository(Brand::class);
     }
@@ -37,7 +40,7 @@ class BrandRepository
      * @param int $brandId
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand
      */
-    public function getById($brandId)
+    public function getById(int $brandId): Brand
     {
         $brand = $this->getBrandRepository()->find($brandId);
 
@@ -53,7 +56,7 @@ class BrandRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\Brand[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->getBrandRepository()->findBy([], ['name' => 'asc']);
     }
@@ -92,7 +95,7 @@ class BrandRepository
             ->select('b')
             ->where('b.id IN (:brandIds)')
             ->setParameter('brandIds', $brandsIds)
-            ->orderBy(OrderByCollationHelper::createOrderByForLocale('b.name', $this->domain->getLocale()), 'asc');
+            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('b.name', $this->domain->getLocale()), 'asc');
 
         return $brandsQueryBuilder->getQuery()->getResult();
     }
@@ -109,7 +112,7 @@ class BrandRepository
                 'NORMALIZED(b.name) LIKE NORMALIZED(:searchText)',
             );
         $queryBuilder->setParameter('searchText', DatabaseSearching::getFullTextLikeSearchString($searchText));
-        $queryBuilder->orderBy(OrderByCollationHelper::createOrderByForLocale('b.name', $this->domain->getLocale()));
+        $queryBuilder->orderBy($this->orderByCollationHelper->createOrderByForLocale('b.name', $this->domain->getLocale()));
 
         return $queryBuilder->getQuery()->getResult();
     }

@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Category;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryDomain;
@@ -17,10 +18,12 @@ class CategoryRepository
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
+     * @param \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly FrameworkCategoryRepository $categoryRepository,
+        protected readonly OrderByCollationHelper $orderByCollationHelper,
     ) {
     }
 
@@ -42,7 +45,7 @@ class CategoryRepository
         $queryBuilder = $this->getVisibleCategoriesBySearchTextQueryBuilder($searchText, $locale, $domainId);
 
         $queryBuilder
-            ->orderBy('ct.name')
+            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('ct.name', $locale))
             ->setFirstResult($offset)
             ->setMaxResults($limit);
 

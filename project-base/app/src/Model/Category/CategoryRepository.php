@@ -4,22 +4,20 @@ declare(strict_types=1);
 
 namespace App\Model\Category;
 
-use App\Model\Category\LinkedCategory\LinkedCategory;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
-use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
-use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository as BaseCategoryRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
 
 /**
+ * @property \App\Model\Product\ProductRepository $productRepository
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Product\ProductRepository $productRepository, \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper)
  * @method \App\Model\Category\Category[] getAll()
  * @method \App\Model\Category\Category[] getAllCategoriesOfCollapsedTree(\App\Model\Category\Category[] $selectedCategories)
- * @method \App\Model\Category\Category[] getFullPathsIndexedByIdsForDomain(int $domainId, string $locale)
  * @method \App\Model\Category\Category getRootCategory()
+ * @method \App\Model\Category\Category[] getAllTranslatedWithoutBranch(\App\Model\Category\Category $categoryBranch, string $locale)
  * @method \App\Model\Category\Category|null findById(int $categoryId)
  * @method \App\Model\Category\Category getById(int $categoryId)
  * @method \App\Model\Category\Category getOneByUuid(string $uuid)
@@ -34,9 +32,6 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
  * @method string[] getCategoryNamesInPathFromRootToProductMainCategoryOnDomain(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig)
  * @method \App\Model\Category\Category[] getCategoriesByIds(int[] $categoryIds)
  * @method \App\Model\Category\Category[] getCategoriesWithVisibleChildren(\App\Model\Category\Category[] $categories, int $domainId)
- * @property \App\Model\Product\ProductRepository $productRepository
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Product\ProductRepository $productRepository)
- * @method \App\Model\Category\Category[] getAllTranslatedWithoutBranch(\App\Model\Category\Category $categoryBranch, string $locale)
  * @method \App\Model\Category\Category[] getAllTranslated(string $locale)
  */
 class CategoryRepository extends BaseCategoryRepository
@@ -50,8 +45,8 @@ class CategoryRepository extends BaseCategoryRepository
     public function getListableProductCountsIndexedByCategoryId(
         array $categories,
         PricingGroup $pricingGroup,
-        $domainId,
-    ) {
+        int $domainId,
+    ): array {
         if (count($categories) === 0) {
             return [];
         }
@@ -126,59 +121,13 @@ class CategoryRepository extends BaseCategoryRepository
     }
 
     /**
-     * @param \App\Model\Category\Category $parentCategory
-     * @param int $domainId
-     * @param \App\Model\Category\Category[] $excludeCategories
-     * @return \App\Model\Category\Category[]
-     */
-    public function getVisibleCategoriesByLinkedCategories(
-        Category $parentCategory,
-        int $domainId,
-        array $excludeCategories,
-    ): array {
-        $excludeCategories[] = $parentCategory;
-
-        $queryBuilder = $this->getAllVisibleByDomainIdQueryBuilder($domainId)
-            ->join(LinkedCategory::class, 'lc', Join::WITH, 'lc.category = c AND lc.parentCategory = :parentCategory')
-            ->andWhere('c NOT IN (:excludeCategories)')
-            ->orderBy('lc.position', 'asc')
-            ->setParameter('excludeCategories', $excludeCategories)
-            ->setParameter('parentCategory', $parentCategory);
-
-        return $queryBuilder->getQuery()->execute();
-    }
-
-    /**
-     * @param string|null $searchText
-     * @param int $domainId
-     * @param string $locale
-     * @param int $page
-     * @param int $limit
-     * @return \Shopsys\FrameworkBundle\Component\Paginator\PaginationResult
-     */
-    public function getPaginationResultForSearchVisible(
-        $searchText,
-        $domainId,
-        $locale,
-        $page,
-        $limit,
-    ): PaginationResult {
-        $queryBuilder = $this->getVisibleByDomainIdAndSearchTextQueryBuilder($domainId, $locale, $searchText);
-        $queryBuilder->orderBy(OrderByCollationHelper::createOrderByForLocale('ct.name', $locale));
-
-        $queryPaginator = new QueryPaginator($queryBuilder);
-
-        return $queryPaginator->getResult($page, $limit);
-    }
-
-    /**
      * Thanks to joining "c.domains" instead of "CategoryDomain::class",
      * the category domains can be eager loaded (by adding "cd" to "select" part), but are still excluded from the result array
      *
      * @param int $domainId
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getAllVisibleByDomainIdQueryBuilder($domainId)
+    public function getAllVisibleByDomainIdQueryBuilder(int $domainId): QueryBuilder
     {
         $queryBuilder = $this->getAllQueryBuilder()
             ->join('c.domains', 'cd', Join::WITH, 'cd.domainId = :domainId AND cd.visible = TRUE');

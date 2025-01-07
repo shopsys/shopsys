@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Flag;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
@@ -12,20 +13,20 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagNotFoundException;
 
 class FlagRepository
 {
-    protected EntityManagerInterface $em;
-
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper
      */
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->em = $entityManager;
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+        protected readonly OrderByCollationHelper $orderByCollationHelper,
+    ) {
     }
 
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getFlagRepository()
+    protected function getFlagRepository(): EntityRepository
     {
         return $this->em->getRepository(Flag::class);
     }
@@ -34,7 +35,7 @@ class FlagRepository
      * @param int $flagId
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag|null
      */
-    public function findById($flagId)
+    public function findById(int $flagId): ?Flag
     {
         return $this->getFlagRepository()->find($flagId);
     }
@@ -43,7 +44,7 @@ class FlagRepository
      * @param int $flagId
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag
      */
-    public function getById($flagId)
+    public function getById(int $flagId): Flag
     {
         $flag = $this->findById($flagId);
 
@@ -81,7 +82,7 @@ class FlagRepository
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->getFlagRepository()->findBy([], ['id' => 'asc']);
     }
@@ -106,7 +107,7 @@ class FlagRepository
             ->addSelect('ft')
             ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
             ->where('f.id IN (:flagsIds)')
-            ->orderBy(OrderByCollationHelper::createOrderByForLocale('ft.name', $locale), 'asc')
+            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('ft.name', $locale), 'asc')
             ->setParameter('flagsIds', $flagsIds)
             ->setParameter('locale', $locale);
 
@@ -170,7 +171,7 @@ class FlagRepository
         $flagsQueryBuilder = $this->getVisibleQueryBuilder()
             ->addSelect('f')
             ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
-            ->orderBy(OrderByCollationHelper::createOrderByForLocale('ft.name', $locale), 'asc')
+            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('ft.name', $locale), 'asc')
             ->setParameter('locale', $locale);
 
         return $flagsQueryBuilder->getQuery()->getResult();

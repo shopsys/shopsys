@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model\Product\Parameter;
 
 use Doctrine\ORM\Query\Expr\Join;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterValueNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository as BaseParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData;
@@ -25,23 +24,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue;
  */
 class ParameterRepository extends BaseParameterRepository
 {
-    /**
-     * @param int $parameterValueId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
-     */
-    public function getParameterValueById(int $parameterValueId): ParameterValue
-    {
-        $parameterValue = $this->getParameterValueRepository()->find($parameterValueId);
-
-        if ($parameterValue === null) {
-            $message = 'ParameterValue with ID ' . $parameterValueId . ' not found.';
-
-            throw new ParameterValueNotFoundException($message);
-        }
-
-        return $parameterValue;
-    }
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData $parameterValueData
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
@@ -123,7 +105,7 @@ class ParameterRepository extends BaseParameterRepository
      */
     protected function getParameterValuesIndexedByProductIdAndParameterName(
         array $productIdsAndParameterNamesAndValues,
-    ) {
+    ): array {
         $productParameterValuesIndexedByProductIdAndParameterName = [];
 
         foreach ($productIdsAndParameterNamesAndValues as $productIdAndParameterNameAndValue) {

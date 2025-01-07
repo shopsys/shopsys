@@ -6,7 +6,6 @@ namespace App\Model\Product\Filter;
 
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
@@ -15,7 +14,7 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 
 /**
  * @property \App\Model\Product\ProductRepository $productRepository
- * @method __construct(\App\Model\Product\ProductRepository $productRepository)
+ * @method __construct(\App\Model\Product\ProductRepository $productRepository, \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper)
  * @method \App\Model\Product\Flag\Flag[] getVisibleFlagsByProductsQueryBuilder(\Doctrine\ORM\QueryBuilder $productsQueryBuilder, string $locale)
  */
 class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
@@ -27,8 +26,12 @@ class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
      * @param \App\Model\Category\Category $category
      * @return \App\Model\Product\Flag\Flag[]
      */
-    public function getFlagFilterChoicesInCategory($domainId, PricingGroup $pricingGroup, $locale, Category $category)
-    {
+    public function getFlagFilterChoicesInCategory(
+        int $domainId,
+        PricingGroup $pricingGroup,
+        string $locale,
+        Category $category,
+    ): array {
         $productsQueryBuilder = $this->productRepository->getSellableInCategoryQueryBuilder(
             $domainId,
             $pricingGroup,
@@ -67,8 +70,12 @@ class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
      * @param string|null $searchText
      * @return \App\Model\Product\Flag\Flag[]
      */
-    public function getFlagFilterChoicesForSearch($domainId, PricingGroup $pricingGroup, $locale, $searchText)
-    {
+    public function getFlagFilterChoicesForSearch(
+        int $domainId,
+        PricingGroup $pricingGroup,
+        string $locale,
+        ?string $searchText,
+    ): array {
         $productsQueryBuilder = $this->productRepository
             ->getSellableBySearchTextQueryBuilder($domainId, $pricingGroup, $locale, $searchText);
 
@@ -101,7 +108,7 @@ class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
         QueryBuilder $productsQueryBuilder,
         string $locale,
         int $domainId,
-    ) {
+    ): array {
         $clonedProductsQueryBuilder = clone $productsQueryBuilder;
 
         $clonedProductsQueryBuilder
@@ -120,7 +127,7 @@ class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
             ->from(Flag::class, 'f')
             ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
             ->andWhere($flagsQueryBuilder->expr()->exists($clonedProductsQueryBuilder))
-            ->orderBy(OrderByCollationHelper::createOrderByForLocale('ft.name', $locale), 'asc')
+            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('ft.name', $locale), 'asc')
             ->setParameter('locale', $locale);
 
         foreach ($clonedProductsQueryBuilder->getParameters() as $parameter) {

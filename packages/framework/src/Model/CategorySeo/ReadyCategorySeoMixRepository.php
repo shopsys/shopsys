@@ -20,10 +20,12 @@ class ReadyCategorySeoMixRepository
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
+     * @param \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly InMemoryCache $inMemoryCache,
+        protected readonly OrderByCollationHelper $orderByCollationHelper,
     ) {
     }
 
@@ -198,7 +200,7 @@ class ReadyCategorySeoMixRepository
             ->andWhere('rcsm.category IN(:categories)')
             ->andWhere('rcsm.domainId = :domainId')
             ->andWhere('rcsm.showInCategory = true')
-            ->orderBy(OrderByCollationHelper::createOrderByForLocale('rcsm.h1', $domainConfig->getLocale()), 'asc')
+            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('rcsm.h1', $domainConfig->getLocale()), 'asc')
             ->setParameters([
                 'categories' => $categoryIds,
                 'domainId' => $domainConfig->getId(),

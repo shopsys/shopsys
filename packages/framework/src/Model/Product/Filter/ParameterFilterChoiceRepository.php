@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Filter;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Doctrine\GroupedScalarHydrator;
+use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
@@ -19,10 +20,12 @@ class ParameterFilterChoiceRepository
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
+     * @param \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ProductRepository $productRepository,
+        protected readonly OrderByCollationHelper $orderByCollationHelper,
     ) {
     }
 
@@ -34,11 +37,11 @@ class ParameterFilterChoiceRepository
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[]
      */
     public function getParameterFilterChoicesInCategory(
-        $domainId,
+        int $domainId,
         PricingGroup $pricingGroup,
-        $locale,
+        string $locale,
         Category $category,
-    ) {
+    ): array {
         $productsQueryBuilder = $this->productRepository->getListableInCategoryQueryBuilder(
             $domainId,
             $pricingGroup,
@@ -80,7 +83,7 @@ class ParameterFilterChoiceRepository
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[]
      */
-    protected function getVisibleParametersIndexedByIdOrderedByName(array $rows, $locale)
+    protected function getVisibleParametersIndexedByIdOrderedByName(array $rows, string $locale): array
     {
         $parameterIds = [];
 
@@ -94,7 +97,7 @@ class ParameterFilterChoiceRepository
             ->join('pp.translations', 'pt', Join::WITH, 'pt.locale = :locale')
             ->where('pp.id IN (:parameterIds)')
             ->andWhere('pp.visible = true')
-            ->orderBy('pt.name', 'asc');
+            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('pt.name', $locale), 'asc');
         $parametersQueryBuilder->setParameter('parameterIds', $parameterIds);
         $parametersQueryBuilder->setParameter('locale', $locale);
         $parameters = $parametersQueryBuilder->getQuery()->execute();
@@ -114,7 +117,7 @@ class ParameterFilterChoiceRepository
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[][]
      */
-    protected function getParameterValuesIndexedByParameterIdOrderedByValueText(array $rows, $locale)
+    protected function getParameterValuesIndexedByParameterIdOrderedByValueText(array $rows, string $locale): array
     {
         $parameterIdsByValueId = [];
 
@@ -142,7 +145,7 @@ class ParameterFilterChoiceRepository
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue[]
      */
-    protected function getParameterValuesIndexedByIdOrderedByText(array $rows, $locale)
+    protected function getParameterValuesIndexedByIdOrderedByText(array $rows, string $locale): array
     {
         $valueIds = [];
 
@@ -156,14 +159,13 @@ class ParameterFilterChoiceRepository
             ->from(ParameterValue::class, 'pv')
             ->where('pv.id IN (:valueIds)')
             ->andWhere('pv.locale = :locale')
-            ->orderBy('pv.text', 'asc');
+            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('pv.text', $locale), 'asc');
         $valuesQueryBuilder->setParameter('valueIds', $valueIds);
         $valuesQueryBuilder->setParameter('locale', $locale);
         $values = $valuesQueryBuilder->getQuery()->execute();
 
         $valuesIndexedById = [];
 
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue $value */
         foreach ($values as $value) {
             $valuesIndexedById[$value->getId()] = $value;
         }

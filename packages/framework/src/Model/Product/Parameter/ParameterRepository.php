@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Join;
@@ -20,25 +21,24 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
 
 class ParameterRepository
 {
-    protected EntityManagerInterface $em;
-
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactory $parameterValueFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
+     * @param \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper
      */
     public function __construct(
-        EntityManagerInterface $entityManager,
+        protected readonly EntityManagerInterface $em,
         protected readonly ParameterValueFactory $parameterValueFactory,
         protected readonly ParameterValueDataFactory $parameterValueDataFactory,
+        protected readonly OrderByCollationHelper $orderByCollationHelper,
     ) {
-        $this->em = $entityManager;
     }
 
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getParameterRepository()
+    protected function getParameterRepository(): EntityRepository
     {
         return $this->em->getRepository(Parameter::class);
     }
@@ -46,7 +46,7 @@ class ParameterRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getParameterValueRepository()
+    protected function getParameterValueRepository(): EntityRepository
     {
         return $this->em->getRepository(ParameterValue::class);
     }
@@ -54,7 +54,7 @@ class ParameterRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getParameterGroupRepository()
+    protected function getParameterGroupRepository(): EntityRepository
     {
         return $this->em->getRepository(ParameterGroup::class);
     }
@@ -62,7 +62,7 @@ class ParameterRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getProductParameterValueRepository()
+    protected function getProductParameterValueRepository(): EntityRepository
     {
         return $this->em->getRepository(ProductParameterValue::class);
     }
@@ -71,7 +71,7 @@ class ParameterRepository
      * @param int $parameterId
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter|null
      */
-    public function findById($parameterId)
+    public function findById(int $parameterId): ?Parameter
     {
         return $this->getParameterRepository()->find($parameterId);
     }
@@ -80,7 +80,7 @@ class ParameterRepository
      * @param int $parameterId
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter
      */
-    public function getById($parameterId)
+    public function getById(int $parameterId): Parameter
     {
         $parameter = $this->findById($parameterId);
 
@@ -105,7 +105,7 @@ class ParameterRepository
             ->join(ProductParameterValue::class, 'ppv', Join::WITH, 'p = ppv.parameter')
             ->join('p.translations', 'pt', Join::WITH, 'pt.locale = :locale')
             ->setParameter('locale', $domainConfig->getLocale())
-            ->orderBy(OrderByCollationHelper::createOrderByForLocale('pt.name', $domainConfig->getLocale()))
+            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('pt.name', $domainConfig->getLocale()))
             ->groupBy('p, pt');
 
         $this->applyCategorySeoConditions($queryBuilder, $category, $domainConfig->getId());
@@ -179,7 +179,7 @@ class ParameterRepository
         return $this->getAllQueryBuilder()
             ->addSelect('pt')
             ->join('p.translations', 'pt')
-            ->orderBy(OrderByCollationHelper::createOrderByForLocale('pt.name', $locale), 'asc')
+            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('pt.name', $locale), 'asc')
             ->getQuery()
             ->execute();
     }
@@ -199,7 +199,7 @@ class ParameterRepository
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue
      */
-    public function findOrCreateParameterValueByValueTextAndLocale($valueText, $locale)
+    public function findOrCreateParameterValueByValueTextAndLocale(string $valueText, string $locale): ParameterValue
     {
         $parameterValue = $this->getParameterValueRepository()->findOneBy([
             'text' => $valueText,
@@ -292,7 +292,7 @@ class ParameterRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[]
      */
-    public function getProductParameterValuesByProduct(Product $product)
+    public function getProductParameterValuesByProduct(Product $product): array
     {
         $queryBuilder = $this->getProductParameterValuesByProductQueryBuilder($product);
 
@@ -304,8 +304,10 @@ class ParameterRepository
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[]
      */
-    public function getProductParameterValuesByProductSortedByOrderingPriorityAndName(Product $product, $locale)
-    {
+    public function getProductParameterValuesByProductSortedByOrderingPriorityAndName(
+        Product $product,
+        string $locale,
+    ): array {
         $queryBuilder = $this->getProductParameterValuesByProductSortedByOrderingPriorityAndNameQueryBuilder($product, $locale);
 
         return $queryBuilder->getQuery()->execute();
@@ -316,8 +318,10 @@ class ParameterRepository
      * @param string $locale
      * @return string[][]
      */
-    public function getParameterValuesIndexedByProductIdAndParameterNameForProducts(array $products, $locale)
-    {
+    public function getParameterValuesIndexedByProductIdAndParameterNameForProducts(
+        array $products,
+        string $locale,
+    ): array {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('IDENTITY(ppv.product) as productId', 'pt.name', 'pv.text', 'uv.name as unit')
             ->from(ProductParameterValue::class, 'ppv')
@@ -340,21 +344,10 @@ class ParameterRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
-     * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValue[]
-     */
-    public function getProductParameterValuesByParameter(Parameter $parameter)
-    {
-        return $this->getProductParameterValueRepository()->findBy([
-            'parameter' => $parameter,
-        ]);
-    }
-
-    /**
      * @param string[] $namesByLocale
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter|null
      */
-    public function findParameterByNames(array $namesByLocale)
+    public function findParameterByNames(array $namesByLocale): ?Parameter
     {
         $queryBuilder = $this->getParameterRepository()->createQueryBuilder('p');
         $index = 0;
@@ -385,7 +378,7 @@ class ParameterRepository
      */
     protected function getParameterValuesIndexedByProductIdAndParameterName(
         array $productIdsAndParameterNamesAndValues,
-    ) {
+    ): array {
         $productParameterValuesIndexedByProductIdAndParameterName = [];
 
         foreach ($productIdsAndParameterNamesAndValues as $productIdAndParameterNameAndValue) {
@@ -449,7 +442,7 @@ class ParameterRepository
             ->setParameter('parameterIds', $parameterIds)
             ->setParameter('locale', $locale)
             ->orderBy('p.orderingPriority', 'DESC')
-            ->addOrderBy(OrderByCollationHelper::createOrderByForLocale('pt.name', $locale), 'asc');
+            ->addOrderBy($this->orderByCollationHelper->createOrderByForLocale('pt.name', $locale), 'asc');
 
         return $parametersQueryBuilder->getQuery()->getResult();
     }
@@ -491,7 +484,7 @@ class ParameterRepository
             ->setParameter(':locale', $locale)
             ->setParameter(':type', $type)
             ->groupBy('pv')
-            ->orderBy(OrderByCollationHelper::createOrderByForLocale('pv.text', $locale));
+            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('pv.text', $locale));
     }
 
     /**
@@ -797,7 +790,7 @@ class ParameterRepository
      * @param string $locale
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getOrderedParameterGroupsQueryBuilder(string $locale)
+    public function getOrderedParameterGroupsQueryBuilder(string $locale): QueryBuilder
     {
         return $this->em->createQueryBuilder()
             ->select('pg, pgt')
