@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Form\Transformers;
 
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValuesLocalizedData;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValuesLocalizedDataFactory;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
@@ -15,10 +15,12 @@ class ProductParameterValueToProductParameterValuesLocalizedTransformer implemen
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory $productParameterValueDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValuesLocalizedDataFactory $productParameterValuesLocalizedDataFactory
      */
     public function __construct(
         protected readonly ProductParameterValueDataFactory $productParameterValueDataFactory,
         protected readonly ParameterValueDataFactory $parameterValueDataFactory,
+        protected readonly ProductParameterValuesLocalizedDataFactory $productParameterValuesLocalizedDataFactory,
     ) {
     }
 
@@ -44,7 +46,7 @@ class ProductParameterValueToProductParameterValuesLocalizedTransformer implemen
             $locale = $productParameterValueData->parameterValueData->locale;
 
             if (!array_key_exists($parameterId, $normData)) {
-                $normData[$parameterId] = new ProductParameterValuesLocalizedData();
+                $normData[$parameterId] = $this->productParameterValuesLocalizedDataFactory->create();
                 $normData[$parameterId]->parameter = $productParameterValueData->parameter;
                 $normData[$parameterId]->valueTextsByLocale = [];
             }
