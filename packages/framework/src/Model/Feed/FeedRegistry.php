@@ -24,12 +24,14 @@ class FeedRegistry
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronTimeResolver $cronTimeResolver
      * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig $cronConfig
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper $dateTimeHelper
      */
     public function __construct(
         protected readonly ?string $cronTimeZone,
         protected readonly CronTimeResolver $cronTimeResolver,
         protected readonly CronConfig $cronConfig,
         protected readonly Domain $domain,
+        protected readonly DateTimeHelper $dateTimeHelper,
     ) {
     }
 
@@ -63,7 +65,7 @@ class FeedRegistry
         foreach ($this->feedConfigsByName as $feedConfig) {
             if ($this->cronTimeResolver->isValidAtTime(
                 $feedConfig,
-                DateTimeHelper::getCurrentRoundedTimeForIntervalAndTimezone(
+                $this->dateTimeHelper->getCurrentRoundedTimeForIntervalAndTimezone(
                     $this->getFeedCronModuleRunEveryMinuteValue(),
                     $timeZone,
                 ),

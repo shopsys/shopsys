@@ -11,6 +11,14 @@ use Symfony\Component\Form\DataTransformerInterface;
 class OpeningHourTimeToStringTransformer implements DataTransformerInterface
 {
     /**
+     * @param \Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper $dateTimeHelper
+     */
+    public function __construct(
+        protected readonly DateTimeHelper $dateTimeHelper,
+    ) {
+    }
+
+    /**
      * @param string|null $time
      * @return \DateTimeImmutable|null
      */
@@ -20,7 +28,7 @@ class OpeningHourTimeToStringTransformer implements DataTransformerInterface
             return null;
         }
 
-        return DateTimeHelper::createDateTimeFromTime($time);
+        return $this->dateTimeHelper->createDateTimeFromTime($time);
     }
 
     /**

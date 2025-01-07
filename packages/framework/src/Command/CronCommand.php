@@ -25,22 +25,24 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 )]
 class CronCommand extends Command
 {
-    private const OPTION_MODULE = 'module';
-    private const OPTION_LIST = 'list';
-    private const OPTION_INSTANCE_NAME = 'instance-name';
-    private const OPTION_RUN_ALL_SERIALLY = 'run-all-serially';
+    protected const string OPTION_MODULE = 'module';
+    protected const string OPTION_LIST = 'list';
+    protected const string OPTION_INSTANCE_NAME = 'instance-name';
+    protected const string OPTION_RUN_ALL_SERIALLY = 'run-all-serially';
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade
      * @param \Shopsys\FrameworkBundle\Component\Cron\MutexFactory $mutexFactory
      * @param \Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface $parameterBag
      * @param \NinjaMutex\Lock\LockInterface $lock
+     * @param \Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper $dateTimeHelper
      */
     public function __construct(
-        private readonly CronFacade $cronFacade,
-        private readonly MutexFactory $mutexFactory,
-        private readonly ParameterBagInterface $parameterBag,
+        protected readonly CronFacade $cronFacade,
+        protected readonly MutexFactory $mutexFactory,
+        protected readonly ParameterBagInterface $parameterBag,
         protected readonly LockInterface $lock,
+        protected readonly DateTimeHelper $dateTimeHelper,
     ) {
         parent::__construct();
     }
@@ -104,11 +106,11 @@ class CronCommand extends Command
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @param \Shopsys\FrameworkBundle\Component\Cron\CronFacade $cronFacade
      */
-    private function listAllCronModulesSortedByServiceId(
+    protected function listAllCronModulesSortedByServiceId(
         InputInterface $input,
         OutputInterface $output,
         CronFacade $cronFacade,
-    ) {
+    ): void {
         $instanceNames = $cronFacade->getInstanceNames();
         $io = new SymfonyStyle($input, $output);
 
@@ -132,7 +134,7 @@ class CronCommand extends Command
      * @param bool $includeInstance
      * @return string[]
      */
-    private function getCronCommands(array $cronModuleConfigs, bool $includeInstance = false): array
+    protected function getCronCommands(array $cronModuleConfigs, bool $includeInstance = false): array
     {
         uasort(
             $cronModuleConfigs,
@@ -167,12 +169,12 @@ class CronCommand extends Command
      * @param \Shopsys\FrameworkBundle\Component\Cron\MutexFactory $mutexFactory
      * @param string $instanceName
      */
-    private function runCron(
+    protected function runCron(
         InputInterface $input,
         CronFacade $cronFacade,
         MutexFactory $mutexFactory,
         string $instanceName,
-    ) {
+    ): void {
         $requestedModuleServiceId = $input->getOption(self::OPTION_MODULE);
         $runAllModules = $requestedModuleServiceId === null;
         $cronInstances = $this->parameterBag->get('cron_instances');
@@ -183,7 +185,7 @@ class CronCommand extends Command
         }
 
         if ($runAllModules) {
-            $cronFacade->scheduleModulesByTime(DateTimeHelper::getCurrentRoundedTimeForIntervalAndTimezone($instanceRunEveryMin, $this->getCronTimeZone()));
+            $cronFacade->scheduleModulesByTime($this->dateTimeHelper->getCurrentRoundedTimeForIntervalAndTimezone($instanceRunEveryMin, $this->getCronTimeZone()));
         }
 
         $mutex = $mutexFactory->getPrefixedCronMutex($instanceName);
@@ -207,7 +209,7 @@ class CronCommand extends Command
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return string
      */
-    private function chooseInstance(InputInterface $input, OutputInterface $output): string
+    protected function chooseInstance(InputInterface $input, OutputInterface $output): string
     {
         $instanceNames = $this->cronFacade->getInstanceNames();
 
@@ -241,7 +243,7 @@ class CronCommand extends Command
     /**
      * @return \DateTimeZone
      */
-    private function getCronTimeZone(): DateTimeZone
+    protected function getCronTimeZone(): DateTimeZone
     {
         /** @var string|null $cronTimezone */
         $cronTimezone = $this->parameterBag->get('shopsys.cron_timezone');
