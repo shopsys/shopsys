@@ -17,7 +17,9 @@ class BytesHelperTest extends TestCase
     #[DataProvider('phpStringBytesToBytesDataProvider')]
     public function testConvertPhpStringByteDefinitionToBytes(string $phpStringBytes, int $expectedBytes): void
     {
-        $this->assertSame($expectedBytes, BytesHelper::convertPhpStringByteDefinitionToBytes($phpStringBytes));
+        $bytesHelper = new BytesHelper();
+
+        $this->assertSame($expectedBytes, $bytesHelper->convertPhpStringByteDefinitionToBytes($phpStringBytes));
     }
 
     /**

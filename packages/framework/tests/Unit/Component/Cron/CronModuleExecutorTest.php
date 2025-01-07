@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Component\Cron;
 
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\Bytes\BytesHelper;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
 use Shopsys\FrameworkBundle\Component\Cron\CronModuleExecutor;
@@ -90,6 +91,7 @@ class CronModuleExecutorTest extends TestCase
 
         /** @var \Symfony\Bridge\Monolog\Logger $loggerMock */
         $loggerMock = $this->createMock(Logger::class);
+        $bytesHelper = new BytesHelper();
 
         foreach ($servicesIndexedById as $serviceId => $service) {
             $cronConfig->registerCronModuleInstance(
@@ -105,6 +107,6 @@ class CronModuleExecutorTest extends TestCase
             );
         }
 
-        return new CronModuleExecutor($cronConfig, $loggerMock);
+        return new CronModuleExecutor($cronConfig, $loggerMock, $bytesHelper);
     }
 }
