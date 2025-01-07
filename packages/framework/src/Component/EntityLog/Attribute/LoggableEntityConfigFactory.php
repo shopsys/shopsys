@@ -14,10 +14,12 @@ class LoggableEntityConfigFactory
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableEntityConfigCacheFacade $loggableSetupCacheFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade $entityLogFacade
      */
     public function __construct(
         protected readonly LoggableEntityConfigCacheFacade $loggableSetupCacheFacade,
         protected readonly EntityManagerInterface $em,
+        protected readonly EntityLogFacade $entityLogFacade,
     ) {
     }
 
@@ -27,7 +29,7 @@ class LoggableEntityConfigFactory
      */
     public function getLoggableSetupByEntity(object|string $objectOrClass): LoggableEntityConfig
     {
-        $entityNameData = EntityLogFacade::getEntityNameDataByEntity($objectOrClass);
+        $entityNameData = $this->entityLogFacade->getEntityNameDataByEntity($objectOrClass);
         $loggableSetup = $this->loggableSetupCacheFacade->findLoggableEntityConfig($entityNameData->getShortName());
 
         if ($loggableSetup !== null) {

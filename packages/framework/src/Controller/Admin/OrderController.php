@@ -48,6 +48,7 @@ class OrderController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade
      * @param \Shopsys\FrameworkBundle\Component\EntityLog\Model\Grid\EntityLogGridFactory $entityLogGridFactory
      * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
+     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade $entityLogFacade
      */
     public function __construct(
         protected readonly OrderFacade $orderFacade,
@@ -62,6 +63,7 @@ class OrderController extends AdminBaseController
         protected readonly AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,
         protected readonly EntityLogGridFactory $entityLogGridFactory,
         protected readonly InMemoryCache $inMemoryCache,
+        protected readonly EntityLogFacade $entityLogFacade,
     ) {
     }
 
@@ -109,7 +111,7 @@ class OrderController extends AdminBaseController
         );
 
         $entityLogGrid = $this->entityLogGridFactory->createByEntityNameAndEntityId(
-            EntityLogFacade::getEntityNameByEntity($order),
+            $this->entityLogFacade->getEntityNameByEntity($order),
             $order->getId(),
         );
 

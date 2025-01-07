@@ -31,16 +31,16 @@ class EntityLogFacade
      * @param object|string $objectOrClass
      * @return string
      */
-    public static function getEntityNameByEntity(object|string $objectOrClass): string
+    public function getEntityNameByEntity(object|string $objectOrClass): string
     {
-        return self::getEntityNameDataByEntity($objectOrClass)->getShortName();
+        return $this->getEntityNameDataByEntity($objectOrClass)->getShortName();
     }
 
     /**
      * @param object|string $objectOrClass
      * @return \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityNameData
      */
-    public static function getEntityNameDataByEntity(object|string $objectOrClass): EntityNameData
+    public function getEntityNameDataByEntity(object|string $objectOrClass): EntityNameData
     {
         $entityFullyQualifiedName = is_string($objectOrClass) ? $objectOrClass : get_class($objectOrClass);
         $entityFullyQualifiedName = str_replace('Proxies\__CG__\\', '', $entityFullyQualifiedName);

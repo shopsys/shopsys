@@ -11,6 +11,14 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 class MoneyDataTypeResolver extends AbstractDataTypeResolver
 {
     /**
+     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade $entityLogFacade
+     */
+    public function __construct(
+        protected readonly EntityLogFacade $entityLogFacade,
+    ) {
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function isResolvedDataType(mixed $value): bool
@@ -27,7 +35,7 @@ class MoneyDataTypeResolver extends AbstractDataTypeResolver
         [$oldMoney, $newMoney] = $changes;
 
         return new ResolvedChanges(
-            EntityLogFacade::getEntityNameByEntity($oldMoney ?? $newMoney),
+            $this->entityLogFacade->getEntityNameByEntity($oldMoney ?? $newMoney),
             $oldMoney?->getAmount(),
             $oldMoney,
             $newMoney?->getAmount(),

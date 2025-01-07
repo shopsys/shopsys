@@ -120,7 +120,7 @@ class ChangeSetResolver
                 );
 
                 $collectionChanges->insertedItems[] = (new ResolvedChanges(
-                    EntityLogFacade::getEntityNameByEntity($insertEntity),
+                    $this->entityLogFacade->getEntityNameByEntity($insertEntity),
                     null,
                     null,
                     $newReadableValue ?? $insertEntity->getId(),
@@ -136,7 +136,7 @@ class ChangeSetResolver
                 );
 
                 $collectionChanges->deletedItems[] = (new ResolvedChanges(
-                    EntityLogFacade::getEntityNameByEntity($deleteEntity),
+                    $this->entityLogFacade->getEntityNameByEntity($deleteEntity),
                     $oldReadableValue ?? $deleteEntity->getId(),
                     $deleteEntity->getId(),
                     null,
