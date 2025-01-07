@@ -8,7 +8,6 @@ import { TypeListedProductFragment } from 'graphql/requests/products/fragments/L
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { Fragment, useState } from 'react';
-import { useMediaMin } from 'utils/ui/useMediaMin';
 
 const ProductDetailRelatedProductsTab = dynamic(
     () => import('./ProductDetailRelatedProductsTab').then((component) => component.ProductDetailRelatedProductsTab),
@@ -27,7 +26,6 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
     const { t } = useTranslation();
     const [selectedTab, setSelectedTab] = useState(0);
     const [skipInitialAnimation, setSkipInitialAnimation] = useState(true);
-    const isLg = useMediaMin('lg');
 
     const formatParameterValue = (valueText: string, index: number) => {
         return index > 0 ? ' | ' + valueText : valueText;
@@ -89,59 +87,65 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
 
             {!!parameters.length && (
                 <TabsContent headingTextMobile={t('Parameters')} isActive={selectedTab === parametersTabIndex}>
-                    <Table className="mx-auto max-w-[700px] border-0 p-0">
-                        {sortedIndividualParameters.length > 0 &&
-                            sortedIndividualParameters.map((parameter) => (
-                                <Row
-                                    key={parameter.uuid}
-                                    className="border-none bg-tableBackground odd:bg-tableBackgroundContrast"
-                                >
-                                    <Cell className="hidden w-[240px] px-5 py-2.5 align-top lg:table-cell">
-                                        <h6 className="leading-5">{parameter.name}</h6>
-                                    </Cell>
-                                    <Cell className="px-5 py-2.5 text-sm">
-                                        <h6 className="mb-1 lg:hidden">{parameter.name}</h6>
-                                        {parameter.values.map((value, index) =>
-                                            formatParameterValue(
-                                                value.text + (parameter.unit?.name ? ` (${parameter.unit.name})` : ''),
-                                                index,
-                                            ),
-                                        )}
-                                    </Cell>
-                                </Row>
-                            ))}
+                    <div className="mx-auto max-w-[700px]">
                         {sortedGroupParameters.map(({ groupName, groupParameters }) => (
                             <Fragment key={groupName}>
-                                {isLg && (
-                                    <tr>
-                                        <td colSpan={2}>
-                                            <h4 className="py-5">{groupName}</h4>
-                                        </td>
-                                    </tr>
-                                )}
-                                {groupParameters.map((parameter) => (
-                                    <Row
-                                        key={parameter.uuid}
-                                        className="border-none bg-tableBackground odd:bg-tableBackgroundContrast"
-                                    >
-                                        <Cell className="hidden w-[240px] px-5 py-2.5 align-top lg:table-cell">
-                                            <h6 className="leading-5">{parameter.name}</h6>
-                                        </Cell>
-                                        <Cell className="px-5 py-2.5 text-sm">
-                                            <h6 className="mb-1 lg:hidden">{parameter.name}</h6>
-                                            {parameter.values.map((value, index) =>
-                                                formatParameterValue(
-                                                    value.text +
-                                                        (parameter.unit?.name ? ` (${parameter.unit.name})` : ''),
-                                                    index,
-                                                ),
-                                            )}
-                                        </Cell>
-                                    </Row>
-                                ))}
+                                <h4 className="py-5">{groupName}</h4>
+                                <Table>
+                                    {groupParameters.map((parameter) => (
+                                        <Row
+                                            key={parameter.uuid}
+                                            className="border-none bg-tableBackground odd:bg-tableBackgroundContrast"
+                                        >
+                                            <Cell className="w-[240px] px-5 py-2.5 align-top">
+                                                <h6 className="leading-5">{parameter.name}</h6>
+                                            </Cell>
+                                            <Cell className="px-5 py-2.5 text-sm">
+                                                {parameter.values.map((value, index) =>
+                                                    formatParameterValue(
+                                                        value.text +
+                                                            (parameter.unit?.name ? ` (${parameter.unit.name})` : ''),
+                                                        index,
+                                                    ),
+                                                )}
+                                            </Cell>
+                                        </Row>
+                                    ))}
+                                </Table>
                             </Fragment>
                         ))}
-                    </Table>
+
+                        {sortedIndividualParameters.length > 0 && (
+                            <Fragment key="other-parameters">
+                                {!!sortedGroupParameters.length && <h4 className="py-5">{t('Other parameters')}</h4>}
+                                <Table>
+                                    {sortedIndividualParameters.map((parameter) => (
+                                        <Fragment key={parameter.uuid}>
+                                            <Row
+                                                key={parameter.uuid}
+                                                className="border-none bg-tableBackground odd:bg-tableBackgroundContrast"
+                                            >
+                                                <Cell className="w-[240px] px-5 py-2.5 align-top">
+                                                    <h6 className="leading-5">{parameter.name}</h6>
+                                                </Cell>
+                                                <Cell className="px-5 py-2.5 text-sm">
+                                                    {parameter.values.map((value, index) =>
+                                                        formatParameterValue(
+                                                            value.text +
+                                                                (parameter.unit?.name
+                                                                    ? ` (${parameter.unit.name})`
+                                                                    : ''),
+                                                            index,
+                                                        ),
+                                                    )}
+                                                </Cell>
+                                            </Row>
+                                        </Fragment>
+                                    ))}
+                                </Table>
+                            </Fragment>
+                        )}
+                    </div>
                 </TabsContent>
             )}
 
