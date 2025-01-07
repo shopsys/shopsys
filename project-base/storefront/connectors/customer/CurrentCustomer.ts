@@ -1,3 +1,4 @@
+'use client';
 import { useCurrentCustomerUserQuery } from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
 import { TypeDeliveryAddress } from 'graphql/types';
 import { CurrentCustomerType, DeliveryAddressType } from 'types/customer';
