@@ -42,7 +42,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid,
     const user = useCurrentCustomerData();
 
     const defaultDeliveryAddressChecked = user?.deliveryAddresses[0]?.uuid || '';
-    const [formProviderMethods] = useComplaintForm(defaultDeliveryAddressChecked);
+    const [formProviderMethods] = useComplaintForm(defaultDeliveryAddressChecked, user?.email || '');
     const isSubmitting = formProviderMethods.formState.isSubmitting;
     const { setValue } = formProviderMethods;
     const formMeta = useComplaintFormMeta(formProviderMethods);
@@ -103,6 +103,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid,
                 orderUuid,
                 items,
                 deliveryAddress,
+                email: complaintFormData.email,
             },
         });
 
@@ -166,6 +167,21 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid,
                                 label={t('Drag & drop some files here, or click to select files')}
                                 name={formMeta.fields.files.name}
                                 render={(dropzone) => <FormLine>{dropzone}</FormLine>}
+                            />
+                        </FormBlockWrapper>
+                        <FormBlockWrapper>
+                            <FormHeading>{t('Email')}</FormHeading>
+                            <TextInputControlled
+                                control={formProviderMethods.control}
+                                formName={formMeta.formName}
+                                name={formMeta.fields.email.name}
+                                render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                textInputProps={{
+                                    label: formMeta.fields.email.label,
+                                    required: true,
+                                    type: 'email',
+                                    autoComplete: 'email',
+                                }}
                             />
                         </FormBlockWrapper>
                         <FormBlockWrapper>

@@ -3,6 +3,7 @@ import {
     validateCity,
     validateCompanyName,
     validateCountry,
+    validateEmail,
     validateFirstName,
     validateImageFile,
     validateLastName,
@@ -19,6 +20,7 @@ import * as Yup from 'yup';
 
 export const useComplaintForm = (
     defaultDeliveryAddressChecked: string,
+    defaultEmail: string,
 ): [UseFormReturn<ComplaintFormType>, ComplaintFormType | undefined] => {
     const { t } = useTranslation();
 
@@ -30,6 +32,7 @@ export const useComplaintForm = (
             description: Yup.string().required(t('Please enter description')),
             files: validateImageFile(t),
             deliveryAddressUuid: Yup.string().nullable(),
+            email: validateEmail(t),
             firstName: Yup.string().when('deliveryAddressUuid', {
                 is: (deliveryAddressUuid: string) => deliveryAddressUuid === '',
                 then: () => validateFirstName(t),
@@ -72,6 +75,7 @@ export const useComplaintForm = (
         quantity: '1',
         description: '',
         files: [],
+        email: defaultEmail,
         deliveryAddressUuid: defaultDeliveryAddressChecked,
         firstName: '',
         lastName: '',
@@ -130,6 +134,11 @@ export const useComplaintFormMeta = (formProviderMethods: UseFormReturn<Complain
                     label: t('Files'),
                     errorMessage: errors.files?.message,
                 },
+                email: {
+                    name: 'email' as const,
+                    label: t('Email'),
+                    errorMessage: errors.email?.message,
+                },
                 deliveryAddressUuid: {
                     name: 'deliveryAddressUuid' as const,
                     label: t('Delivery address'),
@@ -181,6 +190,7 @@ export const useComplaintFormMeta = (formProviderMethods: UseFormReturn<Complain
             errors.quantity?.message,
             errors.description?.message,
             errors.files?.message,
+            errors.email?.message,
             errors.firstName?.message,
             errors.lastName?.message,
             errors.companyName?.message,
