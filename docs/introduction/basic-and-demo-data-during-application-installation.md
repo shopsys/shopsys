@@ -26,7 +26,6 @@ domains:
       load_demo_data: true
       locale: en
       name: shopsys
-      styles_directory: common
       timezone: Europe/Prague
       type: b2c
 
@@ -34,7 +33,6 @@ domains:
       load_demo_data: true
       locale: cs
       name: 2.shopsys
-      styles_directory: domain2
       timezone: Europe/Prague
       type: b2b
 
@@ -42,7 +40,6 @@ domains:
       load_demo_data: false
       locale: cs
       name: 3.shopsys
-      styles_directory: domain2
       timezone: Europe/Prague
       type: b2b
 ```

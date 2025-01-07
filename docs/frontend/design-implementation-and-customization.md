@@ -17,10 +17,6 @@ Shopsys Platform provides an ability of running multiple domains as a single app
 if you want to know more about this concept, you can read [the separate article](../introduction/domain-multidomain-multilanguage.md).
 In order to change your multidomain appearance, you can set two parameters [`domains.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/domains.yaml) configuration file:
 
-- `styles_directory`
-    - allows you to define a custom sub-folder with LESS files in `assets/styles/frontend`
-    - if you need to use custom styles for a particular domain, put your LESS files in this sub-folder
-    - you can create your own directories structure in the sub-folder that suits your needs
 - `design_id`
     - allows you to define a design identifier
     - the parameter can be a number (e.g., domain ID), however, you can use a string identifier as well (e.g., "flat-design") so you are able to use the same design across multiple domains

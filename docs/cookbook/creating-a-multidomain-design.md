@@ -5,27 +5,7 @@ To know the basic technologies we use for frontend implementation, you can read 
 
 ## Model scenarios
 
-### Scenario 1 - I want to use red color for links on my 2nd domain
-
-This is very easy as there are already prepared `less` files for the second domain in `domain2` folder
-that is configured for usage by `styles_directory` parameter in [`domains.yaml`](https://github.com/shopsys/shopsys/blob/master/project-base/config/domains.yaml).
-
-Edit `assets/styles/frontend/domain2/core/variables.less`:
-
-```diff
-- @color-link: @color-green;
-+ @color-link: @color-red;
-```
-
-!!! hint
-
-    If you are not familiar with LESS and how it deals with file imports, see [the separate article](../frontend/introduction-to-less.md).
-
-!!! hint
-
-    If you are not familiar with `phing`, there is [a separate article](../introduction/console-commands-for-application-management-phing-targets.md) about it as well.
-
-### Scenario 2 - I want to change the layout in the footer on my 2nd domain
+### Scenario 1 - I want to change the layout in the footer on my 2nd domain
 
 In the footer, among other things, are on the right side contact phone number and email, a list of articles and a link to the contact page.
 Let us say we want to change the elements so the list of articles goes first, then the link to the contact page, and the phone number and email are last.
@@ -41,7 +21,6 @@ Open [`domains.yaml`](https://github.com/shopsys/shopsys/blob/master/project-bas
        -   id: 2
            name: 2.shopsys
            locale: cs
-           styles_directory: domain2
 +          design_id: my-design
 ```
 
