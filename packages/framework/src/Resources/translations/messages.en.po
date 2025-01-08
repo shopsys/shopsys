@@ -4657,6 +4657,9 @@ msgstr ""
 msgid "unregistered customer"
 msgstr ""
 
+msgid "use key tab or shift+tab"
+msgstr ""
+
 msgid "watchdogs"
 msgstr ""
 

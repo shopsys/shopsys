@@ -4657,6 +4657,9 @@ msgstr "jednotky"
 msgid "unregistered customer"
 msgstr "neregistrovaný zákazník"
 
+msgid "use key tab or shift+tab"
+msgstr "použíj 'Tab' nebo 'Shift+Tab'"
+
 msgid "watchdogs"
 msgstr "hlídací psi"
 

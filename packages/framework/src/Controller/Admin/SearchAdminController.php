@@ -78,7 +78,7 @@ class SearchAdminController extends AdminBaseController
      */
     protected function convertStringWithDiacritics(string $string): string
     {
-        return strtolower(preg_replace('~\p{M}+~u', '', Normalizer::normalize($string, Normalizer::FORM_D)));
+        return strtolower(preg_replace('~[\p{M}-]+~u', '', Normalizer::normalize($string, Normalizer::FORM_D)));
     }
 
     /**
