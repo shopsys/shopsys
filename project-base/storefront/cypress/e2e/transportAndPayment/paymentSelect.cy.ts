@@ -10,10 +10,16 @@ import {
     checkCanGoToNextOrderStep,
     checkLoaderOverlayIsNotVisibleAfterTimePeriod,
     checkUrl,
+    getSnapshotIndexingFunction,
+    getTestSummary,
     initializePersistStoreInLocalStorageToDefaultValues,
+    SNAPSHOT_GROUP,
     takeSnapshotAndCompare,
 } from 'support';
 import { TIDs } from 'tids';
+
+const SUBGROUP_INDEX = 1;
+const getSnapshotFullIndexAsString = getSnapshotIndexingFunction(SNAPSHOT_GROUP.TRANSPORT_AND_PAYMENT, SUBGROUP_INDEX);
 
 describe('Payment Select Tests', () => {
     beforeEach(() => {
@@ -24,11 +30,12 @@ describe('Payment Select Tests', () => {
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
     });
 
-    it('[Select Payment] select payment on delivery', function () {
+    it('[Select Payment] should select payment on delivery', function () {
+        const testSummary = getTestSummary(this.test?.title);
         changeSelectionOfPaymentByName(payment.onDelivery.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         checkCanGoToNextOrderStep();
-        takeSnapshotAndCompare(this.test?.title, 'after payment selection', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after payment selection', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -40,7 +47,8 @@ describe('Payment Select Tests', () => {
         checkUrl(url.order.contactInformation);
     });
 
-    it('[Select And Change Payment] select a payment, deselect it, and then change the payment option', function () {
+    it('[Select And Change Payment] should select a payment, deselect it, and then change the payment option', function () {
+        const testSummary = getTestSummary(this.test?.title);
         changeSelectionOfPaymentByName(payment.onDelivery.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         changeSelectionOfPaymentByName(payment.onDelivery.name);
@@ -48,7 +56,7 @@ describe('Payment Select Tests', () => {
         changeSelectionOfPaymentByName(payment.creditCard.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         checkCanGoToNextOrderStep();
-        takeSnapshotAndCompare(this.test?.title, 'after changing payment selection', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after changing payment selection', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -60,10 +68,11 @@ describe('Payment Select Tests', () => {
         checkUrl(url.order.contactInformation);
     });
 
-    it('[Remove Payment Repeated Click] remove payment using repeated clicks', function () {
+    it('[Remove Payment Repeated Click] should remove payment using repeated clicks', function () {
+        const testSummary = getTestSummary(this.test?.title);
         changeSelectionOfPaymentByName(payment.creditCard.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
-        takeSnapshotAndCompare(this.test?.title, 'after selecting', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after selecting', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -73,7 +82,7 @@ describe('Payment Select Tests', () => {
 
         changeSelectionOfPaymentByName(payment.creditCard.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
-        takeSnapshotAndCompare(this.test?.title, 'after removing', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after removing', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -82,10 +91,11 @@ describe('Payment Select Tests', () => {
         });
     });
 
-    it('[Remove Payment Button Click] remove payment using reset button', function () {
+    it('[Remove Payment Button Click] should remove payment using reset button', function () {
+        const testSummary = getTestSummary(this.test?.title);
         changeSelectionOfPaymentByName(payment.creditCard.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
-        takeSnapshotAndCompare(this.test?.title, 'after selecting', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after selecting', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -95,7 +105,7 @@ describe('Payment Select Tests', () => {
 
         removePaymentSelectionUsingButton();
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
-        takeSnapshotAndCompare(this.test?.title, 'after removing', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after removing', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -104,10 +114,11 @@ describe('Payment Select Tests', () => {
         });
     });
 
-    it('[Remove & Select New T&P] remove transport to remove payment as well, and then allow to select transport incompatible with previous payment', function () {
+    it('[Remove & Select New T&P] should remove transport to remove payment as well, and then allow to select transport incompatible with previous payment', function () {
+        const testSummary = getTestSummary(this.test?.title);
         changeSelectionOfPaymentByName(payment.creditCard.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
-        takeSnapshotAndCompare(this.test?.title, 'after selecting', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after selecting', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -117,7 +128,7 @@ describe('Payment Select Tests', () => {
 
         removeTransportSelectionUsingButton();
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
-        takeSnapshotAndCompare(this.test?.title, 'after removing transport', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after removing transport', {
             blackout: [
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.transport_and_payment_list_item_image },
@@ -126,12 +137,16 @@ describe('Payment Select Tests', () => {
 
         changeSelectionOfTransportByName(transport.czechPost.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
-        takeSnapshotAndCompare(this.test?.title, 'after selecting transport incompatible with the previous payment', {
-            blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.order_summary_transport_and_payment_image },
-            ],
-        });
+        takeSnapshotAndCompare(
+            getSnapshotFullIndexAsString(testSummary),
+            'after selecting transport incompatible with the previous payment',
+            {
+                blackout: [
+                    { tid: TIDs.transport_and_payment_list_item_image },
+                    { tid: TIDs.order_summary_cart_item_image },
+                    { tid: TIDs.order_summary_transport_and_payment_image },
+                ],
+            },
+        );
     });
 });

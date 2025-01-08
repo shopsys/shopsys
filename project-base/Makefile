@@ -88,3 +88,11 @@ open-acceptance-tests-base:
 .PHONY: open-acceptance-tests-actual
 open-acceptance-tests-actual:
 	$(call open_acceptance_tests,actual)
+
+generate-snapshots-info-table:
+	docker compose stop storefront
+	docker compose up -d --wait storefront-cypress --force-recreate
+	-docker compose run --rm -e TYPE=null -e COMMAND=generate cypress;
+	docker rm -f shopsys-framework-storefront-cypress
+	docker compose up -d storefront
+	docker compose exec php-fpm php phing -D change.environment=dev environment-change

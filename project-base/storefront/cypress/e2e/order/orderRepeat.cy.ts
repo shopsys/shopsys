@@ -1,15 +1,26 @@
 import { repeatOrderFromOrderDetail, repeatOrderFromOrderList } from './orderSupport';
 import { transport, payment, url, products } from 'fixtures/demodata';
 import { generateCustomerRegistrationData, generateCreateOrderInput } from 'fixtures/generators';
-import { checkUrl, initializePersistStoreInLocalStorageToDefaultValues, takeSnapshotAndCompare } from 'support';
+import {
+    checkUrl,
+    getSnapshotIndexingFunction,
+    getTestSummary,
+    initializePersistStoreInLocalStorageToDefaultValues,
+    SNAPSHOT_GROUP,
+    takeSnapshotAndCompare,
+} from 'support';
 import { TIDs } from 'tids';
+
+const SUBGROUP_INDEX = 3;
+const getSnapshotFullIndexAsString = getSnapshotIndexingFunction(SNAPSHOT_GROUP.ORDER, SUBGROUP_INDEX);
 
 describe('Order Repeat Tests From Order List (Logged-in User)', { retries: { runMode: 0 } }, () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('[Logged Repeat With Empty] repeat order (pre-fill cart) for logged-in user with initially empty cart', function () {
+    it('[Logged Repeat With Empty] should repeat order (pre-fill cart) for logged-in user with initially empty cart', function () {
+        const testSummary = getTestSummary(this.test?.title);
         const email = 'order-repeat-logged-in-with-empty-cart@shopsys.com';
         cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer', email));
         cy.addProductToCartForTest(products.helloKitty.uuid, 3);
@@ -22,7 +33,7 @@ describe('Order Repeat Tests From Order List (Logged-in User)', { retries: { run
         repeatOrderFromOrderList();
         checkUrl(url.cart);
         cy.waitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(this.test?.title, 'after repeat', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after repeat', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
@@ -31,7 +42,8 @@ describe('Order Repeat Tests From Order List (Logged-in User)', { retries: { run
         });
     });
 
-    it('[Logged Repeat With Prefilled And Merge] repeat order (pre-fill cart) for logged-in user with initially filled cart and allowed merging', function () {
+    it('[Logged Repeat With Prefilled And Merge] should repeat order (pre-fill cart) for logged-in user with initially filled cart and allowed merging', function () {
+        const testSummary = getTestSummary(this.test?.title);
         const email = 'order-repeat-logged-in-with-filled-cart-and-merging@shopsys.com';
         cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer', email));
         cy.addProductToCartForTest(products.helloKitty.uuid, 3);
@@ -46,7 +58,7 @@ describe('Order Repeat Tests From Order List (Logged-in User)', { retries: { run
         repeatOrderFromOrderList(true);
         checkUrl(url.cart);
         cy.waitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(this.test?.title, 'after repeat', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after repeat', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
@@ -55,7 +67,8 @@ describe('Order Repeat Tests From Order List (Logged-in User)', { retries: { run
         });
     });
 
-    it('[Logged Repeat With Prefilled And No Merge] repeat order (pre-fill cart) for logged-in user with initially filled cart and disallowed merging', function () {
+    it('[Logged Repeat With Prefilled And No Merge] should repeat order (pre-fill cart) for logged-in user with initially filled cart and disallowed merging', function () {
+        const testSummary = getTestSummary(this.test?.title);
         const email = 'order-repeat-logged-in-with-filled-cart-without-merging@shopsys.com';
         cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer', email));
         cy.addProductToCartForTest(products.helloKitty.uuid, 3);
@@ -70,7 +83,7 @@ describe('Order Repeat Tests From Order List (Logged-in User)', { retries: { run
         repeatOrderFromOrderList(false);
         checkUrl(url.cart);
         cy.waitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(this.test?.title, 'after repeat', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after repeat', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
@@ -85,7 +98,8 @@ describe('Order Repeat Tests From Order Detail (Unlogged User)', () => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('[Anon Repeat With Empty] repeat order (pre-fill cart) for unlogged user with initially empty cart', function () {
+    it('[Anon Repeat With Empty] should repeat order (pre-fill cart) for unlogged user with initially empty cart', function () {
+        const testSummary = getTestSummary(this.test?.title);
         const email = 'order-repeat-unlogged-with-empty-cart@shopsys.com';
         cy.addProductToCartForTest(products.helloKitty.uuid, 3).then((cart) =>
             cy.storeCartUuidInLocalStorage(cart.uuid),
@@ -100,7 +114,7 @@ describe('Order Repeat Tests From Order Detail (Unlogged User)', () => {
         repeatOrderFromOrderDetail();
         checkUrl(url.cart);
         cy.waitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(this.test?.title, 'after repeat', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after repeat', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
@@ -109,7 +123,8 @@ describe('Order Repeat Tests From Order Detail (Unlogged User)', () => {
         });
     });
 
-    it('[Anon Repeat With Prefilled Merge] repeat order (pre-fill cart) for unlogged user with initially filled cart and allowed merging', function () {
+    it('[Anon Repeat With Prefilled Merge] should repeat order (pre-fill cart) for unlogged user with initially filled cart and allowed merging', function () {
+        const testSummary = getTestSummary(this.test?.title);
         const email = 'order-repeat-unlogged-with-filled-cart-and-merging@shopsys.com';
         cy.addProductToCartForTest(products.helloKitty.uuid, 3).then((cart) =>
             cy.storeCartUuidInLocalStorage(cart.uuid),
@@ -127,7 +142,7 @@ describe('Order Repeat Tests From Order Detail (Unlogged User)', () => {
         repeatOrderFromOrderDetail(true);
         checkUrl(url.cart);
         cy.waitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(this.test?.title, 'after repeat', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after repeat', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
@@ -136,7 +151,8 @@ describe('Order Repeat Tests From Order Detail (Unlogged User)', () => {
         });
     });
 
-    it('[Anon Repeat With Prefilled No Merge] repeat order (pre-fill cart) for unlogged user with initially filled cart and disallowed merging', function () {
+    it('[Anon Repeat With Prefilled No Merge] should repeat order (pre-fill cart) for unlogged user with initially filled cart and disallowed merging', function () {
+        const testSummary = getTestSummary(this.test?.title);
         const email = 'order-repeat-unlogged-with-filled-cart-without-merging@shopsys.com';
         cy.addProductToCartForTest(products.helloKitty.uuid, 3).then((cart) =>
             cy.storeCartUuidInLocalStorage(cart.uuid),
@@ -154,7 +170,7 @@ describe('Order Repeat Tests From Order Detail (Unlogged User)', () => {
         repeatOrderFromOrderDetail(false);
         checkUrl(url.cart);
         cy.waitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(this.test?.title, 'after repeat', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after repeat', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },

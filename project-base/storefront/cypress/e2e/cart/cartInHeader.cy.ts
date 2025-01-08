@@ -1,7 +1,16 @@
 import { openHeaderCartByMouseover, removeFirstProductFromHeaderCart } from './cartSupport';
 import { products } from 'fixtures/demodata';
-import { initializePersistStoreInLocalStorageToDefaultValues, takeSnapshotAndCompare } from 'support';
+import {
+    getSnapshotIndexingFunction,
+    getTestSummary,
+    initializePersistStoreInLocalStorageToDefaultValues,
+    SNAPSHOT_GROUP,
+    takeSnapshotAndCompare,
+} from 'support';
 import { TIDs } from 'tids';
+
+const SUBGROUP_INDEX = 0;
+const getSnapshotFullIndexAsString = getSnapshotIndexingFunction(SNAPSHOT_GROUP.CART, SUBGROUP_INDEX);
 
 describe('Cart In Header Tests', () => {
     beforeEach(() => {
@@ -13,10 +22,11 @@ describe('Cart In Header Tests', () => {
         cy.visitAndWaitForStableAndInteractiveDOM('/');
     });
 
-    it('[Cart Header Remove] remove products from cart using cart in header and then display empty cart message', function () {
+    it('[Cart Header Remove] should remove products from cart using cart in header and then display empty cart message', function () {
+        const testSummary = getTestSummary(this.test?.title);
         openHeaderCartByMouseover();
         removeFirstProductFromHeaderCart();
-        takeSnapshotAndCompare(this.test?.title, 'after first remove', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after first remove', {
             capture: 'viewport',
             blackout: [
                 { tid: TIDs.banners_slider, zIndex: 5999 },
@@ -25,7 +35,7 @@ describe('Cart In Header Tests', () => {
             ],
         });
         removeFirstProductFromHeaderCart();
-        takeSnapshotAndCompare(this.test?.title, 'after second remove', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after second remove', {
             capture: 'viewport',
             wait: 2000,
             blackout: [{ tid: TIDs.banners_slider, zIndex: 5999 }, { tid: TIDs.simple_navigation_image }],

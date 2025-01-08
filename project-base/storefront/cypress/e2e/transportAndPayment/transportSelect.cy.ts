@@ -12,23 +12,30 @@ import { generateCustomerRegistrationData } from 'fixtures/generators';
 import {
     checkLoaderOverlayIsNotVisibleAfterTimePeriod,
     checkUrl,
+    getSnapshotIndexingFunction,
+    getTestSummary,
     initializePersistStoreInLocalStorageToDefaultValues,
+    SNAPSHOT_GROUP,
     takeSnapshotAndCompare,
 } from 'support';
 import { TIDs } from 'tids';
+
+const SUBGROUP_INDEX = 2;
+const getSnapshotFullIndexAsString = getSnapshotIndexingFunction(SNAPSHOT_GROUP.TRANSPORT_AND_PAYMENT, SUBGROUP_INDEX);
 
 describe('Transport Select Tests', () => {
     beforeEach(() => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('[Transport Home] select transport to home', function () {
+    it('[Transport Home] should select transport to home', function () {
+        const testSummary = getTestSummary(this.test?.title);
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
         changeSelectionOfTransportByName(transport.czechPost.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
-        takeSnapshotAndCompare(this.test?.title, 'after selecting', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after selecting', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -37,7 +44,8 @@ describe('Transport Select Tests', () => {
         });
     });
 
-    it('[Personal Collection] select personal pickup transport', function () {
+    it('[Personal Collection] should select personal pickup transport', function () {
+        const testSummary = getTestSummary(this.test?.title);
         changeDayOfWeekInTransportsApiResponse(1);
         changeDayOfWeekInChangeTransportMutationResponse(1);
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
@@ -45,7 +53,7 @@ describe('Transport Select Tests', () => {
 
         chooseTransportPersonalCollectionAndStore(transport.personalCollection.storeOstrava.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
-        takeSnapshotAndCompare(this.test?.title, 'after selecting', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after selecting', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -54,7 +62,8 @@ describe('Transport Select Tests', () => {
         });
     });
 
-    it('[Change Transport] select a transport, deselect it, and then change the transport option', function () {
+    it('[Change Transport] should select a transport, deselect it, and then change the transport option', function () {
+        const testSummary = getTestSummary(this.test?.title);
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
@@ -64,32 +73,37 @@ describe('Transport Select Tests', () => {
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         changeSelectionOfTransportByName(transport.ppl.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
-        takeSnapshotAndCompare(this.test?.title, 'after selecting, deselecting, and selecting again', {
+        takeSnapshotAndCompare(
+            getSnapshotFullIndexAsString(testSummary),
+            'after selecting, deselecting, and selecting again',
+            {
+                blackout: [
+                    { tid: TIDs.transport_and_payment_list_item_image },
+                    { tid: TIDs.order_summary_cart_item_image },
+                    { tid: TIDs.order_summary_transport_and_payment_image },
+                ],
+            },
+        );
+    });
+
+    it('[Remove Transport Repeated Click] should be able to remove transport using repeated clicks', function () {
+        const testSummary = getTestSummary(this.test?.title);
+        cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
+        cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
+
+        changeSelectionOfTransportByName(transport.czechPost.name);
+        checkLoaderOverlayIsNotVisibleAfterTimePeriod();
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after selecting', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.order_summary_transport_and_payment_image },
             ],
         });
-    });
-
-    it('[Remove Transport Repeated Click] be able to remove transport using repeated clicks', function () {
-        cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
-        cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
         changeSelectionOfTransportByName(transport.czechPost.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
-        takeSnapshotAndCompare(this.test?.title, 'after selecting', {
-            blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image },
-                { tid: TIDs.order_summary_cart_item_image },
-                { tid: TIDs.order_summary_transport_and_payment_image },
-            ],
-        });
-
-        changeSelectionOfTransportByName(transport.czechPost.name);
-        checkLoaderOverlayIsNotVisibleAfterTimePeriod();
-        takeSnapshotAndCompare(this.test?.title, 'after removing', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after removing', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -97,13 +111,14 @@ describe('Transport Select Tests', () => {
         });
     });
 
-    it('[Remove Transport Button Click] remove transport using reset button', function () {
+    it('[Remove Transport Button Click] should remove transport using reset button', function () {
+        const testSummary = getTestSummary(this.test?.title);
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
         changeSelectionOfTransportByName(transport.czechPost.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
-        takeSnapshotAndCompare(this.test?.title, 'after selecting', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after selecting', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -113,7 +128,7 @@ describe('Transport Select Tests', () => {
 
         removeTransportSelectionUsingButton();
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
-        takeSnapshotAndCompare(this.test?.title, 'after removing', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after removing', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -121,7 +136,7 @@ describe('Transport Select Tests', () => {
         });
     });
 
-    it('[Anon No Transport Empty Cart] redirect to cart page and not display transport options if cart is empty and user is not logged in', function () {
+    it('[Anon No Transport Empty Cart] should redirect to cart page and not display transport options if cart is empty and user is not logged in', function () {
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
         checkTransportSelectionIsNotVisible();
@@ -131,7 +146,7 @@ describe('Transport Select Tests', () => {
     });
 
     it(
-        '[Logged No Transport Empty Cart] redirect to cart page and not display transport options if cart is empty and user is logged in',
+        '[Logged No Transport Empty Cart] should redirect to cart page and not display transport options if cart is empty and user is logged in',
         { retries: { runMode: 0 } },
         function () {
             cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer'));
@@ -144,20 +159,25 @@ describe('Transport Select Tests', () => {
         },
     );
 
-    it('[Transport Fee] change price for transport when cart is large enough for transport to be free', function () {
+    it('[Transport Fee] should change price for transport when cart is large enough for transport to be free', function () {
+        const testSummary = getTestSummary(this.test?.title);
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.transportAndPayment);
 
-        takeSnapshotAndCompare(this.test?.title, 'transport and payment page with too few products', {
-            blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image },
-                { tid: TIDs.order_summary_cart_item_image },
-            ],
-        });
+        takeSnapshotAndCompare(
+            getSnapshotFullIndexAsString(testSummary),
+            'transport and payment page with too few products',
+            {
+                blackout: [
+                    { tid: TIDs.transport_and_payment_list_item_image },
+                    { tid: TIDs.order_summary_cart_item_image },
+                ],
+            },
+        );
 
         cy.addProductToCartForTest(products.helloKitty.uuid, 1099);
         cy.visitAndWaitForStableAndInteractiveDOM(url.cart);
-        takeSnapshotAndCompare(this.test?.title, 'cart page with enough products', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'cart page with enough products', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
@@ -168,11 +188,15 @@ describe('Transport Select Tests', () => {
         goToNextOrderStep();
         changeSelectionOfTransportByName(transport.ppl.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
-        takeSnapshotAndCompare(this.test?.title, 'transport and payment page with enough products', {
-            blackout: [
-                { tid: TIDs.transport_and_payment_list_item_image },
-                { tid: TIDs.order_summary_cart_item_image },
-            ],
-        });
+        takeSnapshotAndCompare(
+            getSnapshotFullIndexAsString(testSummary),
+            'transport and payment page with enough products',
+            {
+                blackout: [
+                    { tid: TIDs.transport_and_payment_list_item_image },
+                    { tid: TIDs.order_summary_cart_item_image },
+                ],
+            },
+        );
     });
 });

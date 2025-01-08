@@ -19,7 +19,7 @@ describe('Login Tests', () => {
         initializePersistStoreInLocalStorageToDefaultValues();
     });
 
-    it('[Login Page] login from login page and then log out', function () {
+    it('[Login Page] should login from login page and then log out', function () {
         cy.visitAndWaitForStableAndInteractiveDOM(url.login);
 
         fillInEmailAndPasswordOnLoginPage(customer1.emailRegistered, password);
@@ -36,7 +36,7 @@ describe('Login Tests', () => {
         checkIsUserLoggedOut();
     });
 
-    it('[Header] login from header and then log out', function () {
+    it('[Header] should login from header and then log out', function () {
         cy.visitAndWaitForStableAndInteractiveDOM('/');
 
         loginFromHeader(customer1.emailRegistered, password);
