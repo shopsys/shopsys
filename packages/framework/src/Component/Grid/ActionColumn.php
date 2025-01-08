@@ -10,21 +10,15 @@ use Symfony\Component\Routing\RouterInterface;
 
 class ActionColumn
 {
-    public const TYPE_DELETE = 'delete';
-    public const TYPE_EDIT = 'edit';
-    public const TYPE_RESET_PASSWORD = 'resetPassword';
-
-    protected string $type;
-
-    protected string $title;
-
-    protected string $route;
+    public const string TYPE_DELETE = 'delete';
+    public const string TYPE_EDIT = 'edit';
+    public const string TYPE_RESET_PASSWORD = 'resetPassword';
 
     protected ?string $classAttribute = null;
 
     protected ?string $confirmMessage = null;
 
-    protected bool $isAjaxConfirm;
+    protected bool $isAjaxConfirm = false;
 
     /**
      * @param \Symfony\Component\Routing\RouterInterface $router
@@ -34,26 +28,24 @@ class ActionColumn
      * @param string $route
      * @param array $bindingRouteParams
      * @param array $additionalRouteParams
+     * @param \Shopsys\FrameworkBundle\Component\Grid\Grid $grid
      */
     public function __construct(
         protected readonly RouterInterface $router,
         protected readonly RouteCsrfProtector $routeCsrfProtector,
-        $type,
-        $title,
-        $route,
+        protected readonly string $type,
+        protected readonly string $title,
+        protected readonly string $route,
         protected readonly array $bindingRouteParams,
         protected readonly array $additionalRouteParams,
+        protected readonly Grid $grid,
     ) {
-        $this->type = $type;
-        $this->title = $title;
-        $this->route = $route;
-        $this->isAjaxConfirm = false;
     }
 
     /**
      * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
     }
@@ -61,7 +53,7 @@ class ActionColumn
     /**
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -69,7 +61,7 @@ class ActionColumn
     /**
      * @return string|null
      */
-    public function getClassAttribute()
+    public function getClassAttribute(): ?string
     {
         return $this->classAttribute;
     }
@@ -77,7 +69,7 @@ class ActionColumn
     /**
      * @return string|null
      */
-    public function getConfirmMessage()
+    public function getConfirmMessage(): ?string
     {
         return $this->confirmMessage;
     }
@@ -86,7 +78,7 @@ class ActionColumn
      * @param string $classAttribute
      * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
      */
-    public function setClassAttribute($classAttribute)
+    public function setClassAttribute(string $classAttribute): self
     {
         $this->classAttribute = $classAttribute;
 
@@ -97,7 +89,7 @@ class ActionColumn
      * @param string $confirmMessage
      * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
      */
-    public function setConfirmMessage($confirmMessage)
+    public function setConfirmMessage(string $confirmMessage): self
     {
         $this->confirmMessage = $confirmMessage;
 
@@ -107,7 +99,7 @@ class ActionColumn
     /**
      * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn
      */
-    public function setAjaxConfirm()
+    public function setAjaxConfirm(): self
     {
         $this->isAjaxConfirm = true;
 
@@ -117,7 +109,7 @@ class ActionColumn
     /**
      * @return bool
      */
-    public function isAjaxConfirm()
+    public function isAjaxConfirm(): bool
     {
         return $this->isAjaxConfirm;
     }
@@ -126,12 +118,12 @@ class ActionColumn
      * @param array $row
      * @return string
      */
-    public function getTargetUrl(array $row)
+    public function getTargetUrl(array $row): string
     {
         $parameters = $this->additionalRouteParams;
 
         foreach ($this->bindingRouteParams as $key => $sourceColumnName) {
-            $parameters[$key] = Grid::getValueFromRowBySourceColumnName($row, $sourceColumnName);
+            $parameters[$key] = $this->grid->getValueFromRowBySourceColumnName($row, $sourceColumnName);
         }
 
         if ($this->type === self::TYPE_DELETE || $this->type === self::TYPE_RESET_PASSWORD) {
