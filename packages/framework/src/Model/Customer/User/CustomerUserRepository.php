@@ -7,7 +7,9 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User;
 use DateTimeInterface;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundByEmailAndDomainException;
@@ -17,20 +19,20 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 
 class CustomerUserRepository
 {
-    protected EntityManagerInterface $em;
-
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
      */
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->em = $entityManager;
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+        protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
+    ) {
     }
 
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getCustomerUserRepository()
+    protected function getCustomerUserRepository(): EntityRepository
     {
         return $this->em->getRepository(CustomerUser::class);
     }
@@ -40,7 +42,7 @@ class CustomerUserRepository
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
-    public function findCustomerUserByEmailAndDomain($email, $domainId)
+    public function findCustomerUserByEmailAndDomain(string $email, int $domainId): ?CustomerUser
     {
         return $this->getCustomerUserRepository()->findOneBy([
             'email' => mb_strtolower($email),
@@ -53,7 +55,7 @@ class CustomerUserRepository
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
-    public function getCustomerUserByEmailAndDomain($email, $domainId)
+    public function getCustomerUserByEmailAndDomain(string $email, int $domainId): ?CustomerUser
     {
         $customerUser = $this->findCustomerUserByEmailAndDomain($email, $domainId);
 
@@ -71,7 +73,7 @@ class CustomerUserRepository
      * @param int $id
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
      */
-    public function getCustomerUserById($id)
+    public function getCustomerUserById(int $id): CustomerUser
     {
         $customerUser = $this->findById($id);
 
@@ -86,7 +88,7 @@ class CustomerUserRepository
      * @param int $id
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
-    public function findById($id)
+    public function findById(int $id): ?CustomerUser
     {
         return $this->getCustomerUserRepository()->find($id);
     }
@@ -96,7 +98,7 @@ class CustomerUserRepository
      * @param string $loginToken
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
-    public function findByIdAndLoginToken($id, $loginToken)
+    public function findByIdAndLoginToken(int $id, string $loginToken): ?CustomerUser
     {
         return $this->getCustomerUserRepository()->findOneBy([
             'id' => $id,
@@ -110,9 +112,9 @@ class CustomerUserRepository
      * @return \Doctrine\ORM\QueryBuilder
      */
     public function getCustomerUserListQueryBuilderByQuickSearchData(
-        $domainId,
+        int $domainId,
         QuickSearchFormData $quickSearchData,
-    ) {
+    ): QueryBuilder {
         $queryBuilder = $this->em->createQueryBuilder()
             ->select('
                 MAX(ba.id) AS billingAddressId,
@@ -163,7 +165,7 @@ class CustomerUserRepository
                         OR
                         NORMALIZED(u.telephone) LIKE :text
                     )');
-            $querySearchText = DatabaseSearching::getFullTextLikeSearchString($quickSearchData->text);
+            $querySearchText = $this->databaseSearchingHelper->getFullTextLikeSearchString($quickSearchData->text);
             $queryBuilder->setParameter('text', $querySearchText);
         }
 
@@ -174,8 +176,10 @@ class CustomerUserRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $oldPricingGroup
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $newPricingGroup
      */
-    public function replaceCustomerUsersPricingGroup(PricingGroup $oldPricingGroup, PricingGroup $newPricingGroup)
-    {
+    public function replaceCustomerUsersPricingGroup(
+        PricingGroup $oldPricingGroup,
+        PricingGroup $newPricingGroup,
+    ): void {
         $this->em->createQueryBuilder()
             ->update(CustomerUser::class, 'u')
             ->set('u.pricingGroup', ':newPricingGroup')->setParameter('newPricingGroup', $newPricingGroup)

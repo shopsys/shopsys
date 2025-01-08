@@ -6,11 +6,23 @@ namespace Tests\FrameworkBundle\Unit\Component\String;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 
 class DatabaseSearchingTest extends TestCase
 {
-    public static function searchTextProvider()
+    private DatabaseSearchingHelper $databaseSearchingHelper;
+
+    protected function setUp(): void
+    {
+        $this->databaseSearchingHelper = new DatabaseSearchingHelper();
+
+        parent::setUp();
+    }
+
+    /**
+     * @return array
+     */
+    public static function searchTextProvider(): array
     {
         return [
             ['searchText' => 'foo bar', 'querySearchStringQuery' => 'foo bar'],
@@ -23,12 +35,12 @@ class DatabaseSearchingTest extends TestCase
     }
 
     /**
-     * @param mixed $searchText
-     * @param mixed $querySearchStringQuery
+     * @param string $searchText
+     * @param string $querySearchStringQuery
      */
     #[DataProvider('searchTextProvider')]
-    public function testSafeFilename($searchText, $querySearchStringQuery)
+    public function testSafeFilename(string $searchText, string $querySearchStringQuery): void
     {
-        $this->assertSame($querySearchStringQuery, DatabaseSearching::getLikeSearchString($searchText));
+        $this->assertSame($querySearchStringQuery, $this->databaseSearchingHelper->getLikeSearchString($searchText));
     }
 }

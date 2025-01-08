@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
 use Shopsys\FrameworkBundle\Component\Paginator\QueryPaginator;
-use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
 use Shopsys\FrameworkBundle\Model\Category\Exception\RootCategoryNotFoundException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
@@ -29,11 +29,13 @@ class CategoryRepository extends NestedTreeRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper
+     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ProductRepository $productRepository,
         protected readonly OrderByCollationHelper $orderByCollationHelper,
+        protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
     ) {
         $classMetadata = $this->em->getClassMetadata(Category::class);
 
@@ -442,7 +444,7 @@ class CategoryRepository extends NestedTreeRepository
         $queryBuilder->andWhere(
             'NORMALIZED(ct.name) LIKE NORMALIZED(:searchText)',
         );
-        $queryBuilder->setParameter('searchText', DatabaseSearching::getFullTextLikeSearchString($searchText));
+        $queryBuilder->setParameter('searchText', $this->databaseSearchingHelper->getFullTextLikeSearchString($searchText));
     }
 
     /**

@@ -9,15 +9,16 @@ use Shopsys\FrameworkBundle\Form\ProductType;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterOperatorNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
+use Symfony\Component\Form\FormTypeInterface;
 
 class OrderProductFilter implements AdvancedSearchFilterInterface
 {
-    public const NAME = 'orderProduct';
+    public const string NAME = 'orderProduct';
 
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return self::NAME;
     }
@@ -25,7 +26,7 @@ class OrderProductFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getAllowedOperators()
+    public function getAllowedOperators(): array
     {
         return [
             self::OPERATOR_CONTAINS,
@@ -36,7 +37,7 @@ class OrderProductFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getValueFormType()
+    public function getValueFormType(): FormTypeInterface|string
     {
         return ProductType::class;
     }
@@ -44,7 +45,7 @@ class OrderProductFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getValueFormOptions()
+    public function getValueFormOptions(): array
     {
         return [];
     }
@@ -52,7 +53,7 @@ class OrderProductFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData)
+    public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {
             if (
@@ -81,7 +82,7 @@ class OrderProductFilter implements AdvancedSearchFilterInterface
      * @param string $operator
      * @return string
      */
-    protected function getContainsDqlOperator($operator)
+    protected function getContainsDqlOperator(string $operator): string
     {
         switch ($operator) {
             case self::OPERATOR_CONTAINS:

@@ -6,7 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Order;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
@@ -15,9 +15,11 @@ class OrderItemApiFacade
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
+        protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
     ) {
     }
 
@@ -333,7 +335,7 @@ class OrderItemApiFacade
                 'NORMALIZED(oi.catnum) LIKE NORMALIZED(:search)',
                 'NORMALIZED(o.number) LIKE NORMALIZED(:search)',
             ),
-        )->setParameter(':search', DatabaseSearching::getFullTextLikeSearchString($search));
+        )->setParameter(':search', $this->databaseSearchingHelper->getFullTextLikeSearchString($search));
 
         return $queryBuilder;
     }

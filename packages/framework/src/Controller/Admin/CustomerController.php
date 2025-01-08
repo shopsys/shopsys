@@ -326,7 +326,7 @@ class CustomerController extends AdminBaseController
      * @param int $id
      */
     #[Route(path: '/customer/delete/{id}', requirements: ['id' => '\d+'])]
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         $customerUser = $this->customerUserFacade->getCustomerUserById($id);
         $customer = $customerUser->getCustomer();

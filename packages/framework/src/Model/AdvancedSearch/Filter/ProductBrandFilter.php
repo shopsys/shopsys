@@ -10,10 +10,11 @@ use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\FormTypeInterface;
 
 class ProductBrandFilter implements AdvancedSearchFilterInterface
 {
-    public const NAME = 'productBrand';
+    public const string NAME = 'productBrand';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
@@ -25,7 +26,7 @@ class ProductBrandFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getAllowedOperators()
+    public function getAllowedOperators(): array
     {
         return [
             self::OPERATOR_IS,
@@ -37,7 +38,7 @@ class ProductBrandFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return self::NAME;
     }
@@ -45,7 +46,7 @@ class ProductBrandFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getValueFormOptions()
+    public function getValueFormOptions(): array
     {
         return [
             'expanded' => false,
@@ -59,7 +60,7 @@ class ProductBrandFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getValueFormType()
+    public function getValueFormType(): FormTypeInterface|string
     {
         return ChoiceType::class;
     }
@@ -67,7 +68,7 @@ class ProductBrandFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData)
+    public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
         $isNotBrand = [];
 

@@ -7,15 +7,16 @@ namespace Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
+use Symfony\Component\Form\FormTypeInterface;
 
 class OrderCreateDateFilter implements AdvancedSearchFilterInterface
 {
-    public const NAME = 'orderCreatedAt';
+    public const string NAME = 'orderCreatedAt';
 
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return self::NAME;
     }
@@ -23,7 +24,7 @@ class OrderCreateDateFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getAllowedOperators()
+    public function getAllowedOperators(): array
     {
         return [
             self::OPERATOR_AFTER,
@@ -35,7 +36,7 @@ class OrderCreateDateFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getValueFormType()
+    public function getValueFormType(): FormTypeInterface|string
     {
         return DatePickerType::class;
     }
@@ -43,7 +44,7 @@ class OrderCreateDateFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getValueFormOptions()
+    public function getValueFormOptions(): array
     {
         return [];
     }
@@ -51,7 +52,7 @@ class OrderCreateDateFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData)
+    public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {
             if ($ruleData->value === null) {

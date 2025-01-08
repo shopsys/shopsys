@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
 
 /**
  * @property \App\Model\Product\ProductRepository $productRepository
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Product\ProductRepository $productRepository, \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Product\ProductRepository $productRepository, \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper, \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper)
  * @method \App\Model\Category\Category[] getAll()
  * @method \App\Model\Category\Category[] getAllCategoriesOfCollapsedTree(\App\Model\Category\Category[] $selectedCategories)
  * @method \App\Model\Category\Category getRootCategory()

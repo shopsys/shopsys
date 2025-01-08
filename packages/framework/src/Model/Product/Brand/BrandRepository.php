@@ -11,7 +11,7 @@ use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Exception\BrandNotFoundException;
 
 class BrandRepository
@@ -20,11 +20,13 @@ class BrandRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper
+     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly Domain $domain,
         protected readonly OrderByCollationHelper $orderByCollationHelper,
+        protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
     ) {
     }
 
@@ -111,7 +113,7 @@ class BrandRepository
             ->andWhere(
                 'NORMALIZED(b.name) LIKE NORMALIZED(:searchText)',
             );
-        $queryBuilder->setParameter('searchText', DatabaseSearching::getFullTextLikeSearchString($searchText));
+        $queryBuilder->setParameter('searchText', $this->databaseSearchingHelper->getFullTextLikeSearchString($searchText));
         $queryBuilder->orderBy($this->orderByCollationHelper->createOrderByForLocale('b.name', $this->domain->getLocale()));
 
         return $queryBuilder->getQuery()->getResult();

@@ -6,22 +6,28 @@ namespace Shopsys\FrameworkBundle\Model\Newsletter;
 
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Internal\Hydration\IterableResult;
+use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 
 class NewsletterRepository
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
      */
-    public function __construct(protected readonly EntityManagerInterface $em)
-    {
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+        protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
+    ) {
     }
 
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getNewsletterSubscriberRepository()
+    protected function getNewsletterSubscriberRepository(): EntityRepository
     {
         return $this->em->getRepository(NewsletterSubscriber::class);
     }
@@ -46,7 +52,7 @@ class NewsletterRepository
      * @param int $domainId
      * @return \Doctrine\ORM\Internal\Hydration\IterableResult
      */
-    public function getAllEmailsDataIteratorByDomainId($domainId)
+    public function getAllEmailsDataIteratorByDomainId(int $domainId): IterableResult
     {
         $query = $this->getNewsletterSubscriberRepository()
             ->createQueryBuilder('ns')
@@ -63,7 +69,7 @@ class NewsletterRepository
      * @param \Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData $searchData
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getQueryBuilderForQuickSearch(int $domainId, QuickSearchFormData $searchData)
+    public function getQueryBuilderForQuickSearch(int $domainId, QuickSearchFormData $searchData): QueryBuilder
     {
         $queryBuilder = $this->getNewsletterSubscriberRepository()
             ->createQueryBuilder('ns')
@@ -73,7 +79,7 @@ class NewsletterRepository
 
         if ($searchData->text !== null && $searchData->text !== '') {
             $queryBuilder->andWhere('NORMALIZED(ns.email) LIKE NORMALIZED(:searchData)')
-                ->setParameter('searchData', DatabaseSearching::getFullTextLikeSearchString($searchData->text));
+                ->setParameter('searchData', $this->databaseSearchingHelper->getFullTextLikeSearchString($searchData->text));
         }
 
         return $queryBuilder;
@@ -93,7 +99,7 @@ class NewsletterRepository
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriber|null
      */
-    public function findNewsletterSubscribeByEmailAndDomainId($email, $domainId)
+    public function findNewsletterSubscribeByEmailAndDomainId(string $email, int $domainId): ?NewsletterSubscriber
     {
         return $this->getNewsletterSubscriberRepository()
             ->findOneBy([

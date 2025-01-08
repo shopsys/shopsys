@@ -5,19 +5,28 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter;
 
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterOperatorNotFoundException;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormTypeInterface;
 
 class ProductCatnumFilter implements AdvancedSearchFilterInterface
 {
-    public const NAME = 'productCatnum';
+    public const string NAME = 'productCatnum';
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
+     */
+    public function __construct(
+        protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
+    ) {
+    }
 
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return self::NAME;
     }
@@ -25,7 +34,7 @@ class ProductCatnumFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getAllowedOperators()
+    public function getAllowedOperators(): array
     {
         return [
             self::OPERATOR_CONTAINS,
@@ -37,7 +46,7 @@ class ProductCatnumFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getValueFormType()
+    public function getValueFormType(): FormTypeInterface|string
     {
         return TextType::class;
     }
@@ -45,7 +54,7 @@ class ProductCatnumFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getValueFormOptions()
+    public function getValueFormOptions(): array
     {
         return [];
     }
@@ -53,7 +62,7 @@ class ProductCatnumFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData)
+    public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {
             if ($ruleData->operator === self::OPERATOR_NOT_SET) {
@@ -65,7 +74,7 @@ class ProductCatnumFilter implements AdvancedSearchFilterInterface
                 if ($ruleData->value === null) {
                     $searchValue = '%';
                 } else {
-                    $searchValue = DatabaseSearching::getFullTextLikeSearchString($ruleData->value);
+                    $searchValue = $this->databaseSearchingHelper->getFullTextLikeSearchString($ruleData->value);
                 }
 
                 $dqlOperator = $this->getContainsDqlOperator($ruleData->operator);
@@ -80,7 +89,7 @@ class ProductCatnumFilter implements AdvancedSearchFilterInterface
      * @param string $operator
      * @return string
      */
-    protected function getContainsDqlOperator($operator)
+    protected function getContainsDqlOperator(string $operator): string
     {
         switch ($operator) {
             case self::OPERATOR_CONTAINS:

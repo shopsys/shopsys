@@ -9,10 +9,11 @@ use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterOperatorNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\FormTypeInterface;
 
 class OrderStatusFilter implements AdvancedSearchFilterInterface
 {
-    public const NAME = 'orderStatus';
+    public const string NAME = 'orderStatus';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
@@ -24,7 +25,7 @@ class OrderStatusFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return self::NAME;
     }
@@ -32,7 +33,7 @@ class OrderStatusFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getAllowedOperators()
+    public function getAllowedOperators(): array
     {
         return [
             self::OPERATOR_IS,
@@ -43,7 +44,7 @@ class OrderStatusFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getValueFormType()
+    public function getValueFormType(): FormTypeInterface|string
     {
         return ChoiceType::class;
     }
@@ -51,7 +52,7 @@ class OrderStatusFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getValueFormOptions()
+    public function getValueFormOptions(): array
     {
         return [
             'choices' => $this->orderStatusFacade->getAll(),
@@ -65,7 +66,7 @@ class OrderStatusFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData)
+    public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {
             $dqlOperator = $this->getContainsDqlOperator($ruleData->operator);
@@ -80,7 +81,7 @@ class OrderStatusFilter implements AdvancedSearchFilterInterface
      * @param string $operator
      * @return string
      */
-    protected function getContainsDqlOperator($operator)
+    protected function getContainsDqlOperator(string $operator): string
     {
         switch ($operator) {
             case self::OPERATOR_IS:

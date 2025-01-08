@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Listing;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPrice;
@@ -18,10 +18,12 @@ class ProductListAdminRepository
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
+     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly Localization $localization,
+        protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
     ) {
     }
 
@@ -29,7 +31,7 @@ class ProductListAdminRepository
      * @param int $pricingGroupId
      * @return \Doctrine\ORM\QueryBuilder
      */
-    public function getProductListQueryBuilder($pricingGroupId)
+    public function getProductListQueryBuilder(int $pricingGroupId): QueryBuilder
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
@@ -63,7 +65,7 @@ class ProductListAdminRepository
     public function extendQueryBuilderByQuickSearchData(
         QueryBuilder $queryBuilder,
         QuickSearchFormData $quickSearchData,
-    ) {
+    ): void {
         if ($quickSearchData->text !== null && $quickSearchData->text !== '') {
             $queryBuilder->andWhere('
                 (
@@ -73,7 +75,7 @@ class ProductListAdminRepository
                     OR
                     NORMALIZED(p.partno) LIKE NORMALIZED(:text)
                 )');
-            $querySearchText = DatabaseSearching::getFullTextLikeSearchString($quickSearchData->text);
+            $querySearchText = $this->databaseSearchingHelper->getFullTextLikeSearchString($quickSearchData->text);
             $queryBuilder->setParameter('text', $querySearchText);
         }
     }

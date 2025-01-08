@@ -181,6 +181,12 @@ class UrlListType extends AbstractType
         $mainFriendlyUrlsSlugsByDomainId = [];
 
         foreach ($this->domain->getAdminEnabledDomainIds() as $domainId) {
+            if ($entityId === null) {
+                $mainFriendlyUrlsSlugsByDomainId[$domainId] = null;
+
+                continue;
+            }
+
             $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl(
                 $domainId,
                 $routeName,
