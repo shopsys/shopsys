@@ -57,7 +57,7 @@ class FlagTest extends GraphQlTestCase
     "data": {
         "flag": {
             "name": "' . t('Made in DE', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '",
-            "rgbColor": "#f79f08",
+            "rgbColor": "#000000",
             "slug": "' . $this->urlGenerator->generate('front_flag_detail', ['id' => $flag->getId()]) . '",
             "breadcrumb": [
                 {

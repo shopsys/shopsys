@@ -37,12 +37,12 @@ class FlagDataFixture extends AbstractReferenceFixture
      */
     public function load(ObjectManager $manager): void
     {
-        $this->createFlag(1, self::FLAG_PRODUCT_SALE, '#ee13f2');
-        $this->createFlag(2, self::FLAG_PRODUCT_ACTION, '#030202');
-        $this->createFlag(3, self::FLAG_PRODUCT_NEW, '#40ed68');
+        $this->createFlag(1, self::FLAG_PRODUCT_SALE, '#f7d631');
+        $this->createFlag(2, self::FLAG_PRODUCT_ACTION, '#ee1c25');
+        $this->createFlag(3, self::FLAG_PRODUCT_NEW, '#2bba51');
         $this->createFlag(4, self::FLAG_PRODUCT_MADEIN_CZ, '#3110e8');
-        $this->createFlag(5, self::FLAG_PRODUCT_MADEIN_SK, '#f52c2c');
-        $this->createFlag(6, self::FLAG_PRODUCT_MADEIN_DE, '#f79f08');
+        $this->createFlag(5, self::FLAG_PRODUCT_MADEIN_SK, '#b01c1f');
+        $this->createFlag(6, self::FLAG_PRODUCT_MADEIN_DE, '#000000');
     }
 
     /**

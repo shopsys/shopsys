@@ -25,7 +25,7 @@ class Version20200714071640 extends AbstractMigration implements ContainerAwareI
             return;
         }
 
-        $this->sql('INSERT INTO flags (rgb_color, visible, akeneo_code) VALUES (\'#ffffff\', true, \'flag__product_hit\')');
+        $this->sql('INSERT INTO flags (rgb_color, visible, akeneo_code) VALUES (\'#30a1ba\', true, \'flag__product_hit\')');
         $lastFlagsId = $this->connection->lastInsertId('flags_id_seq');
 
         foreach ($this->getAllLocales() as $locale) {
