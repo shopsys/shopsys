@@ -197,11 +197,15 @@ class ProductFacade
         string $priority = ProductRecalculationPriorityEnum::REGULAR,
     ): void {
         $product = $this->productRepository->getById($productId);
-        $productDeleteResult = $product->getProductDeleteResult();
-        $productsForRecalculations = $productDeleteResult->getProductsForRecalculations();
 
-        foreach ($productsForRecalculations as $productForRecalculations) {
-            $this->productRecalculationDispatcher->dispatchSingleProductId($productForRecalculations->getId(), $priority);
+        if ($product->isMainVariant()) {
+            foreach ($product->getVariants() as $variantProduct) {
+                $variantProduct->unsetMainVariant();
+            }
+        }
+
+        if ($product->isVariant() && $product->getMainVariant() !== null) {
+            $this->productRecalculationDispatcher->dispatchSingleProductId($product->getMainVariant()->getId(), $priority);
         }
 
         $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId(), $priority);
