@@ -18,11 +18,13 @@ class LuigisBoxCategoryFeedItemFactory
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryRepository $categoryRepository
+     * @param \Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper $imageUrlWithSizeHelper
      */
     public function __construct(
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly ImageFacade $imageFacade,
         protected readonly CategoryRepository $categoryRepository,
+        protected readonly ImageUrlWithSizeHelper $imageUrlWithSizeHelper,
     ) {
     }
 
@@ -39,7 +41,7 @@ class LuigisBoxCategoryFeedItemFactory
         $rootCategory = $this->categoryRepository->getRootCategory();
 
         try {
-            $imageUrl = ImageUrlWithSizeHelper::limitSizeInImageUrl($this->imageFacade->getImageUrl($domainConfig, $category), 100, 100);
+            $imageUrl = $this->imageUrlWithSizeHelper->limitSizeInImageUrl($this->imageFacade->getImageUrl($domainConfig, $category), 100, 100);
         } catch (ImageNotFoundException) {
             $imageUrl = null;
         }

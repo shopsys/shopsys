@@ -4,16 +4,12 @@ declare(strict_types=1);
 
 namespace Shopsys\ArticleFeed\LuigisBoxBundle\Model;
 
-use Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper;
 use Shopsys\FrameworkBundle\Model\Feed\FeedItemInterface;
 
 class LuigisBoxArticleFeedItem implements FeedItemInterface
 {
-    public const UNIQUE_BLOG_ARTICLE_IDENTIFIER_PREFIX = 'blog_article';
-    public const UNIQUE_ARTICLE_IDENTIFIER_PREFIX = 'article';
-    protected const SMALL_IMAGE_SIZE = 100;
-    protected const MEDIUM_IMAGE_SIZE = 200;
-    protected const LARGE_IMAGE_SIZE = 600;
+    public const string UNIQUE_BLOG_ARTICLE_IDENTIFIER_PREFIX = 'blog_article';
+    public const string UNIQUE_ARTICLE_IDENTIFIER_PREFIX = 'article';
 
     /**
      * @param int $id
@@ -22,7 +18,9 @@ class LuigisBoxArticleFeedItem implements FeedItemInterface
      * @param string $link
      * @param string|null $description
      * @param string|null $perex
-     * @param string|null $imageUrl
+     * @param string|null $imageUrlS
+     * @param string|null $imageUrlM
+     * @param string|null $imageUrlL
      */
     public function __construct(
         protected readonly int $id,
@@ -31,7 +29,9 @@ class LuigisBoxArticleFeedItem implements FeedItemInterface
         protected readonly string $link,
         protected readonly ?string $description,
         protected readonly ?string $perex,
-        protected readonly ?string $imageUrl = null,
+        protected readonly ?string $imageUrlS = null,
+        protected readonly ?string $imageUrlM = null,
+        protected readonly ?string $imageUrlL = null,
     ) {
     }
 
@@ -88,11 +88,7 @@ class LuigisBoxArticleFeedItem implements FeedItemInterface
      */
     public function getImageLinkS(): ?string
     {
-        if ($this->imageUrl === null) {
-            return null;
-        }
-
-        return ImageUrlWithSizeHelper::limitSizeInImageUrl($this->imageUrl, static::SMALL_IMAGE_SIZE, static::SMALL_IMAGE_SIZE);
+        return $this->imageUrlS;
     }
 
     /**
@@ -100,11 +96,7 @@ class LuigisBoxArticleFeedItem implements FeedItemInterface
      */
     public function getImageLinkM(): ?string
     {
-        if ($this->imageUrl === null) {
-            return null;
-        }
-
-        return ImageUrlWithSizeHelper::limitSizeInImageUrl($this->imageUrl, static::MEDIUM_IMAGE_SIZE, static::MEDIUM_IMAGE_SIZE);
+        return $this->imageUrlM;
     }
 
     /**
@@ -112,10 +104,6 @@ class LuigisBoxArticleFeedItem implements FeedItemInterface
      */
     public function getImageLinkL(): ?string
     {
-        if ($this->imageUrl === null) {
-            return null;
-        }
-
-        return ImageUrlWithSizeHelper::limitSizeInImageUrl($this->imageUrl, static::LARGE_IMAGE_SIZE, static::LARGE_IMAGE_SIZE);
+        return $this->imageUrlL;
     }
 }

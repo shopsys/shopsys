@@ -11,6 +11,7 @@ use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
@@ -164,6 +165,7 @@ class MergadoFeedItemTest extends TestCase
             $this->pricingGroupSettingFacadeMock,
             $this->loggerMock,
             $this->settingMock,
+            new ImageUrlWithSizeHelper(),
         );
 
         $this->defaultCurrency = $this->createCurrencyMock(1, 'EUR');

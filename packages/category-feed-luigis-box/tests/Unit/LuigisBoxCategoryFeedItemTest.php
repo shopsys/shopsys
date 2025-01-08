@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
@@ -47,6 +48,7 @@ class LuigisBoxCategoryFeedItemTest extends TestCase
             $this->friendlyUrlFacadeMock,
             $this->imageFacadeMock,
             $categoryRepositoryMock,
+            new ImageUrlWithSizeHelper(),
         );
 
         $this->defaultDomain = $this->createDomainConfigMock(

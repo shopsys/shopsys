@@ -4,16 +4,31 @@ declare(strict_types=1);
 
 namespace Shopsys\ArticleFeed\LuigisBoxBundle\Model;
 
+use Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper;
 use Shopsys\FrameworkBundle\Component\String\TransformString;
 
 class LuigisBoxArticleFeedItemFactory
 {
+    protected const int SMALL_IMAGE_SIZE = 100;
+    protected const int MEDIUM_IMAGE_SIZE = 200;
+    protected const int LARGE_IMAGE_SIZE = 600;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper $imageUrlWithSizeHelper
+     */
+    public function __construct(
+        protected readonly ImageUrlWithSizeHelper $imageUrlWithSizeHelper,
+    ) {
+    }
+
     /**
      * @param array $articleData
      * @return \Shopsys\ArticleFeed\LuigisBoxBundle\Model\LuigisBoxArticleFeedItem
      */
     public function create(array $articleData): LuigisBoxArticleFeedItem
     {
+        $imageUrl = $articleData['imageUrl'] ?? null;
+
         return new LuigisBoxArticleFeedItem(
             $articleData['id'],
             $articleData['index'],
@@ -21,7 +36,9 @@ class LuigisBoxArticleFeedItemFactory
             $articleData['url'],
             TransformString::convertHtmlToPlainText($articleData['text']),
             TransformString::convertHtmlToPlainText($articleData['perex'] ?? null),
-            $articleData['imageUrl'] ?? null,
+            $imageUrl !== null ? $this->imageUrlWithSizeHelper->limitSizeInImageUrl($imageUrl, static::SMALL_IMAGE_SIZE, static::SMALL_IMAGE_SIZE) : null,
+            $imageUrl !== null ? $this->imageUrlWithSizeHelper->limitSizeInImageUrl($imageUrl, static::MEDIUM_IMAGE_SIZE, static::MEDIUM_IMAGE_SIZE) : null,
+            $imageUrl !== null ? $this->imageUrlWithSizeHelper->limitSizeInImageUrl($imageUrl, static::LARGE_IMAGE_SIZE, static::LARGE_IMAGE_SIZE) : null,
         );
     }
 }

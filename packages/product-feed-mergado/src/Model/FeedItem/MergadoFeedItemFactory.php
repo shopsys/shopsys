@@ -34,6 +34,7 @@ class MergadoFeedItemFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
+     * @param \Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper $imageUrlWithSizeHelper
      */
     public function __construct(
         protected readonly ProductUrlsBatchLoader $productUrlsBatchLoader,
@@ -47,6 +48,7 @@ class MergadoFeedItemFactory
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         protected readonly LoggerInterface $logger,
         protected readonly Setting $setting,
+        protected readonly ImageUrlWithSizeHelper $imageUrlWithSizeHelper,
     ) {
     }
 
@@ -116,7 +118,7 @@ class MergadoFeedItemFactory
 
         foreach ($images as $image) {
             try {
-                $imageUrls[] = ImageUrlWithSizeHelper::limitSizeInImageUrl($this->imageFacade->getImageUrl($domainConfig, $image));
+                $imageUrls[] = $this->imageUrlWithSizeHelper->limitSizeInImageUrl($this->imageFacade->getImageUrl($domainConfig, $image));
             } catch (ImageNotFoundException $exception) {
                 $this->logger->error(sprintf('Image with id "%s" not found on filesystem', $image->getId()));
             }

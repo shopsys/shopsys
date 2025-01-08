@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Image;
 
 class ImageUrlWithSizeHelper
 {
-    protected const DEFAULT_IMAGE_SIZE = 605;
+    protected const int DEFAULT_IMAGE_SIZE = 605;
 
     /**
      * @param string $imageUrl
@@ -14,7 +14,7 @@ class ImageUrlWithSizeHelper
      * @param int|null $height
      * @return string
      */
-    public static function limitSizeInImageUrl(string $imageUrl, ?int $width = null, ?int $height = null): string
+    public function limitSizeInImageUrl(string $imageUrl, ?int $width = null, ?int $height = null): string
     {
         return $imageUrl . '?width=' . ($width ?? static::DEFAULT_IMAGE_SIZE) . ($height !== null ? '&height=' . $height : '');
     }
