@@ -31,6 +31,7 @@ class WatchdogMail
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Image\ProductImageFacade $productImageFacade
+     * @param \Shopsys\FrameworkBundle\Component\Mailer\MailerHelper $mailerHelper
      */
     public function __construct(
         protected readonly Setting $setting,
@@ -38,6 +39,7 @@ class WatchdogMail
         protected readonly DomainRouterFactory $domainRouterFactory,
         protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
         protected readonly ProductImageFacade $productImageFacade,
+        protected readonly MailerHelper $mailerHelper,
     ) {
     }
 
@@ -91,7 +93,7 @@ class WatchdogMail
     protected function getSubjectVariablesReplacements(Product $product, string $locale): array
     {
         return [
-            self::VARIABLE_PRODUCT_NAME => MailerHelper::escapeOptionalString($product->getName($locale)),
+            self::VARIABLE_PRODUCT_NAME => $this->mailerHelper->escapeOptionalString($product->getName($locale)),
         ];
     }
 
