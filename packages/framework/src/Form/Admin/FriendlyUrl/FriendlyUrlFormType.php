@@ -21,9 +21,12 @@ class FriendlyUrlFormType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlGridFactory $friendlyUrlGridFactory
      */
-    public function __construct(private readonly DateTimeFormatterExtension $dateTimeFormatterExtension)
-    {
+    public function __construct(
+        private readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
+        private readonly FriendlyUrlGridFactory $friendlyUrlGridFactory,
+    ) {
     }
 
     /**
@@ -52,7 +55,7 @@ class FriendlyUrlFormType extends AbstractType
                 DisplayOnlyType::class,
                 [
                     'compound' => false,
-                    'data' => FriendlyUrlGridFactory::getReadableNameForRouteName($friendlyUrlData->name),
+                    'data' => $this->friendlyUrlGridFactory->getReadableNameForRouteName($friendlyUrlData->name),
                     'attr' => [
                         'class' => 'input--auto-size',
                     ],
