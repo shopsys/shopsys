@@ -37,19 +37,20 @@ class FlagDataFixture extends AbstractReferenceFixture
      */
     public function load(ObjectManager $manager): void
     {
-        $this->createFlag(1, self::FLAG_PRODUCT_SALE);
-        $this->createFlag(2, self::FLAG_PRODUCT_ACTION);
-        $this->createFlag(3, self::FLAG_PRODUCT_NEW);
-        $this->createFlag(4, self::FLAG_PRODUCT_MADEIN_CZ);
-        $this->createFlag(5, self::FLAG_PRODUCT_MADEIN_SK);
-        $this->createFlag(6, self::FLAG_PRODUCT_MADEIN_DE);
+        $this->createFlag(1, self::FLAG_PRODUCT_SALE, '#ee13f2');
+        $this->createFlag(2, self::FLAG_PRODUCT_ACTION, '#030202');
+        $this->createFlag(3, self::FLAG_PRODUCT_NEW, '#40ed68');
+        $this->createFlag(4, self::FLAG_PRODUCT_MADEIN_CZ, '#3110e8');
+        $this->createFlag(5, self::FLAG_PRODUCT_MADEIN_SK, '#f52c2c');
+        $this->createFlag(6, self::FLAG_PRODUCT_MADEIN_DE, '#f79f08');
     }
 
     /**
      * @param int $flagId
      * @param string|null $referenceName
+     * @param string|null $rgbColor
      */
-    private function createFlag(int $flagId, ?string $referenceName = null): void
+    private function createFlag(int $flagId, ?string $referenceName = null, ?string $rgbColor = null): void
     {
         $flag = $this->flagFacade->getById($flagId);
 
@@ -57,15 +58,18 @@ class FlagDataFixture extends AbstractReferenceFixture
             $this->addReference($referenceName, $flag);
         }
 
-        if ($referenceName !== self::FLAG_PRODUCT_ACTION) {
-            return;
-        }
-
         $flagData = $this->flagDataFactory->createFromFlag($flag);
 
-        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
-            $flagData->name[$locale] = t('Action', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        if ($rgbColor !== null) {
+            $flagData->rgbColor = $rgbColor;
         }
+
+        if ($referenceName === self::FLAG_PRODUCT_ACTION) {
+            foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+                $flagData->name[$locale] = t('Action', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            }
+        }
+
         $this->flagFacade->edit($flagId, $flagData);
     }
 }
