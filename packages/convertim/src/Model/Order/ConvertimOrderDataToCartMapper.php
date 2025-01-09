@@ -101,6 +101,7 @@ class ConvertimOrderDataToCartMapper
         $transport = $this->transportFacade->getByUuid($convertimOrderData->getTransportData()->getUuid());
 
         $pickupPointIdentifier = null;
+
         if ($transport->isPersonalPickup() || $transport->isPacketery()) {
             $pickupPointIdentifier = $convertimOrderData->getTransportData()->getExtra()?->getPickUpPointCode();
         }
