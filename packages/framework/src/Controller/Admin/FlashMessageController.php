@@ -12,6 +12,7 @@ class FlashMessageController extends AdminBaseController
             'errorMessages' => $this->getErrorMessages(),
             'infoMessages' => $this->getInfoMessages(),
             'successMessages' => $this->getSuccessMessages(),
+            'warningMessages' => $this->getWarningMessages(),
         ]);
     }
 }
