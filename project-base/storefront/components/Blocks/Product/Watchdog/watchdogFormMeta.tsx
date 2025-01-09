@@ -72,7 +72,12 @@ export const useWatchdogFormMeta = (formProviderMethods: UseFormReturn<WatchdogF
                             i18nKey="GdprAgreementCheckbox"
                             components={{
                                 lnk1: privacyPolicyArticleUrl ? (
-                                    <Link isExternal href={privacyPolicyArticleUrl} target="_blank" />
+                                    <Link
+                                        isExternal
+                                        className="inline"
+                                        href={privacyPolicyArticleUrl}
+                                        target="_blank"
+                                    />
                                 ) : (
                                     <span className={linkPlaceholderTwClass} />
                                 ),

@@ -46,6 +46,7 @@ export const Link: FC<LinkProps> = ({
     const classNameTwClass = twMergeCustom(
         linkPlaceholderTwClassSegments[0],
         isButton ? 'no-underline hover:no-underline' : linkPlaceholderTwClassSegments[1],
+        className,
     );
 
     const props = {

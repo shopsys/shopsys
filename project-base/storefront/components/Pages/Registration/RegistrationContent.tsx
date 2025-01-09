@@ -79,6 +79,7 @@ export const RegistrationContent: FC = () => {
                                 render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
                                 checkboxProps={{
                                     label: formMeta.fields.gdprAgreement.label,
+                                    required: true,
                                 }}
                             />
                             <CheckboxControlled

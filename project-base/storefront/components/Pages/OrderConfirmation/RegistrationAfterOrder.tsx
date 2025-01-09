@@ -132,6 +132,7 @@ export const RegistrationAfterOrder: FC = () => {
                                         render={(checkbox) => <FormLine>{checkbox}</FormLine>}
                                         checkboxProps={{
                                             label: formMeta.fields.privacyPolicy.label,
+                                            required: true,
                                         }}
                                     />
                                 </FormBlockWrapper>
