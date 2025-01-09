@@ -7,6 +7,7 @@ namespace Shopsys\ProductFeed\GoogleBundle\Model\FeedItem;
 use Shopsys\FrameworkBundle\Model\Feed\FeedItemInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice;
 
 class GoogleFeedItem implements FeedItemInterface
 {
@@ -20,6 +21,7 @@ class GoogleFeedItem implements FeedItemInterface
      * @param string $name
      * @param bool $sellingDenied
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice|null $specialPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param string $url
      * @param string|null $brandName
@@ -33,6 +35,7 @@ class GoogleFeedItem implements FeedItemInterface
         protected readonly string $name,
         protected readonly bool $sellingDenied,
         protected readonly Price $price,
+        protected readonly ?SpecialPrice $specialPrice,
         protected readonly Currency $currency,
         protected readonly string $url,
         protected readonly ?string $brandName,
@@ -113,6 +116,14 @@ class GoogleFeedItem implements FeedItemInterface
     public function getPrice(): Price
     {
         return $this->price;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice|null
+     */
+    public function getSpecialPrice(): ?SpecialPrice
+    {
+        return $this->specialPrice;
     }
 
     /**

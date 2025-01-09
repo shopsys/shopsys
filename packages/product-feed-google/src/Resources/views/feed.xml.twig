@@ -15,6 +15,10 @@
         {% endif -%}
         <g:availability>{{ item.availability }}</g:availability>
         <g:price>{{ item.price.priceWithVat|moneyFormat(2) }} {{ item.currency.code }}</g:price>
+        {% if item.specialPrice %}
+            <g:sale_price>{{ item.specialPrice.price.priceWithVat|moneyFormat(2) }} {{ item.currency.code }}</g:sale_price>
+            <g:sale_price_effective_date>{{ item.specialPrice.validFrom|date(constant('DATE_ATOM')) }}/{{ item.specialPrice.validTo|date(constant('DATE_ATOM')) }}</g:sale_price_effective_date>
+        {% endif %}
         {%  if item.brand is not null -%}
             <g:brand>{{ item.brand }}</g:brand>
         {% endif -%}
