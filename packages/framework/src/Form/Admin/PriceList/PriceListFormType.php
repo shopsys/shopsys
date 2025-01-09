@@ -45,7 +45,6 @@ final class PriceListFormType extends AbstractType
             $builder
                 ->add('id', DisplayOnlyType::class, [
                     'label' => t('ID'),
-                    'data' => $priceList->getId(),
                 ])
                 ->add('lastUpdate', DisplayOnlyType::class, [
                     'label' => t('Last update'),
