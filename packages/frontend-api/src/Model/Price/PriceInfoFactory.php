@@ -94,6 +94,6 @@ class PriceInfoFactory
             ->divide($basicPriceWithVat->getAmount(), 6)
             ->multiply(100);
 
-        return floor((float)$floatDiscount->getAmount());
+        return max(1, floor((float)$floatDiscount->getAmount()));
     }
 }
