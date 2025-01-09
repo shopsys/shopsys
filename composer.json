@@ -123,7 +123,7 @@
         "jms/translation-bundle": "^2.2.1",
         "knplabs/knp-menu-bundle": "^3.2",
         "lcobucci/clock": "^3.3",
-        "lcobucci/jwt": "^5.4",
+        "lcobucci/jwt": "^4.3",
         "league/csv": "^9.6",
         "league/flysystem": "^3.11",
         "league/flysystem-aws-s3-v3": "^3.12.2",
