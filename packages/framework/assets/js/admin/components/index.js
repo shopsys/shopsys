@@ -66,3 +66,4 @@ import './Statistics';
 import './SymfonyToolbarSupport';
 import './ToggleMenu';
 import './TransportPriceWithWeightLimitCollection';
+import './ImportPriceList';

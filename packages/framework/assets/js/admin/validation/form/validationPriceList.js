@@ -11,6 +11,14 @@ export default function priceListValidator ($container) {
             }
         }
     });
+
+    window.$('form[name="import_price_list_form"]').jsFormValidator({
+        callbacks: {
+            checkDateValidity: function () {
+                // JS validation is not necessary
+            }
+        }
+    });
 }
 
 (new Register()).registerCallback(priceListValidator, 'priceListValidator');

@@ -577,6 +577,9 @@ msgstr "Vypočtená cena vč. DPH"
 msgid "Cancel"
 msgstr "Zrušit"
 
+msgid "Cannot read file."
+msgstr "Soubor nelze načíst."
+
 msgid "Canonical URL"
 msgstr "Kanonická URL"
 

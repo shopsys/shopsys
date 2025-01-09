@@ -334,6 +334,10 @@ class SideMenuBuilder
             'edit',
             ['route' => 'admin_pricelist_edit', 'label' => t('Editing price list'), 'display' => false],
         );
+        $priceListMenu->addChild(
+            'import',
+            ['route' => 'admin_pricelist_import', 'label' => t('Import price list'), 'display' => false],
+        );
 
         $menu->addChild('pricing_groups', ['route' => 'admin_pricinggroup_list', 'label' => t('Pricing groups')]);
         $menu->addChild('vat', ['route' => 'admin_vat_list', 'label' => t('VAT')]);

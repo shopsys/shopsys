@@ -1,0 +1,17 @@
+{% extends '@ShopsysFramework/Admin/Layout/layoutWithPanel.html.twig' %}
+
+{% block title %}- {{ 'Import price list'|trans }}{% endblock %}
+{% block h1 %}{{ 'Import price list'|trans }}{% endblock %}
+
+{% block main_content %}
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
+        {% block fixed_bar_content %}
+            <a href="{{ url('admin_pricelist_list') }}" class="btn-link-style">{{ 'Back to overview'|trans }}</a>
+            {{ form_widget(form.save) }}
+        {% endblock %}
+    {% endembed %}
+    {{ form_end(form) }}
+{% endblock %}

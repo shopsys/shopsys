@@ -577,6 +577,9 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
+msgid "Cannot read file."
+msgstr ""
+
 msgid "Canonical URL"
 msgstr ""
 

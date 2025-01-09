@@ -76,4 +76,12 @@ class PriceListRepository
 
         return $queryBuilder->getQuery()->getResult();
     }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\PriceList\PriceList[]
+     */
+    public function getAll(): array
+    {
+        return $this->getPriceListRepository()->findAll();
+    }
 }
