@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\PriceList;
 
-use Shopsys\FrameworkBundle\Form\Constraints\NotNegativeMoneyAmount;
 use Shopsys\FrameworkBundle\Form\Constraints\PositiveMoneyAmount;
 use Shopsys\FrameworkBundle\Form\Transformers\NumericToMoneyTransformer;
 use Shopsys\FrameworkBundle\Form\Transformers\ProductIdToProductTransformer;

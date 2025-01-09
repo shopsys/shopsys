@@ -24,6 +24,7 @@ class LuigisBoxProductFeedItem implements FeedItemInterface
      * @param string $availabilityText
      * @param int $availabilityRank
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $basicPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param int $mainCategoryId
      * @param string $url
@@ -46,6 +47,7 @@ class LuigisBoxProductFeedItem implements FeedItemInterface
         protected readonly string $availabilityText,
         protected readonly int $availabilityRank,
         protected readonly Price $price,
+        protected readonly Price $basicPrice,
         protected readonly Currency $currency,
         protected readonly int $mainCategoryId,
         protected readonly string $url,
@@ -177,6 +179,18 @@ class LuigisBoxProductFeedItem implements FeedItemInterface
     public function getPrice(): Price
     {
         return $this->price;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
+     */
+    public function getOldPrice(): ?Price
+    {
+        if ($this->price->equals($this->basicPrice)) {
+            return null;
+        }
+
+        return $this->basicPrice;
     }
 
     /**

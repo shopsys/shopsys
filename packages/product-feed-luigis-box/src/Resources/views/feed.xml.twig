@@ -19,6 +19,9 @@
             <brand>{{ item.brand }}</brand>
         {% endif -%}
         <price>{{ item.price.priceWithVat|moneyFormat(2) }} {{ item.currency.code }}</price>
+        {% if item.oldPrice %}
+            <old_price>{{ item.oldPrice.priceWithVat|moneyFormat(2) }} {{ item.currency.code }}</old_price>
+        {% endif %}
         {% if item.imageLinkS is not null -%}
             <image_link_s>{{ item.imageLinkS }}</image_link_s>
             <image_link_m>{{ item.imageLinkM }}</image_link_m>

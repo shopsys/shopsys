@@ -62,6 +62,30 @@ class ProductPriceCalculationForCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
+    public function calculateBasicPriceForCustomerUserAndDomainId(
+        Product $product,
+        int $domainId,
+        ?CustomerUser $customerUser = null,
+    ): ProductPrice {
+        if ($customerUser === null) {
+            $pricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId);
+        } else {
+            $pricingGroup = $customerUser->getPricingGroup();
+        }
+
+        return $this->productPriceCalculation->calculatePrice(
+            $product,
+            $domainId,
+            $pricingGroup,
+        );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
+     */
     public function calculatePriceForCustomerUserAndDomainId(
         Product $product,
         int $domainId,
