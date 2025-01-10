@@ -33,7 +33,7 @@ class PricesWithCalculatedSellingPricesType extends AbstractType
 
         foreach ($this->pricingGroupFacade->getByDomainId($options['domain_id']) as $pricingGroup) {
             $builder->add((string)$pricingGroup->getId(), MoneyWithCalculatedPriceType::class, [
-                'selling_price' => $sellingPrices !== null ? $sellingPrices[$pricingGroup->getId()]?->getSellingPrice() : null,
+                'selling_price' => $sellingPrices !== null ? $sellingPrices[$pricingGroup->getId()]?->getProductPrice() : null,
                 'block_prefix' => 'prices_with_calculated_selling_prices_input',
                 'scale' => 6,
                 'required' => false,

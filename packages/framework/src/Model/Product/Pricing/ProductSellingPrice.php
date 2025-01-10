@@ -5,31 +5,32 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Pricing;
 
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
 
-class ProductSellingPrice
+final class ProductSellingPrice
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $sellingPrice
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice $productPrice
      */
-    public function __construct(protected readonly PricingGroup $pricingGroup, protected readonly Price $sellingPrice)
-    {
+    public function __construct(
+        private readonly PricingGroup $pricingGroup,
+        private readonly ProductPrice $productPrice,
+    ) {
     }
 
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
      */
-    public function getPricingGroup()
+    public function getPricingGroup(): PricingGroup
     {
         return $this->pricingGroup;
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
-    public function getSellingPrice()
+    public function getProductPrice(): ProductPrice
     {
-        return $this->sellingPrice;
+        return $this->productPrice;
     }
 }

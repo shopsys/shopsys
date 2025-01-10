@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidArgumentException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -39,7 +40,7 @@ class ProductPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
-    public function calculatePrice(Product $product, $domainId, PricingGroup $pricingGroup)
+    public function calculatePrice(Product $product, int $domainId, PricingGroup $pricingGroup): ProductPrice
     {
         if ($product->isMainVariant()) {
             return $this->calculateMainVariantPrice($product, $domainId, $pricingGroup);
@@ -54,8 +55,11 @@ class ProductPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
-    protected function calculateMainVariantPrice(Product $mainVariant, $domainId, PricingGroup $pricingGroup)
-    {
+    protected function calculateMainVariantPrice(
+        Product $mainVariant,
+        int $domainId,
+        PricingGroup $pricingGroup,
+    ): ProductPrice {
         $variants = $this->productRepository->getAllSellableVariantsByMainVariant(
             $mainVariant,
             $domainId,
@@ -79,10 +83,11 @@ class ProductPriceCalculation
             $variantPrices[] = $this->calculatePrice($variant, $domainId, $pricingGroup);
         }
 
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice $minVariantPrice */
         $minVariantPrice = $this->getMinimumPriceByPriceWithoutVat($variantPrices);
         $from = $this->arePricesDifferent($variantPrices);
 
-        return new ProductPrice($minVariantPrice, $from);
+        return new ProductPrice($minVariantPrice->getPrice(), $from);
     }
 
     /**
@@ -90,7 +95,7 @@ class ProductPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
-    protected function calculateProductPriceForPricingGroup(Product $product, PricingGroup $pricingGroup)
+    protected function calculateProductPriceForPricingGroup(Product $product, PricingGroup $pricingGroup): ProductPrice
     {
         $manualInputPrice = $this->productManualInputPriceRepository->findByProductAndPricingGroup(
             $product,
@@ -117,10 +122,10 @@ class ProductPriceCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $prices
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface[] $prices
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
-    public function getMinimumPriceByPriceWithoutVat(array $prices)
+    public function getMinimumPriceByPriceWithoutVat(array $prices): PriceInterface
     {
         if (count($prices) === 0) {
             throw new InvalidArgumentException('Array can not be empty.');
@@ -138,20 +143,23 @@ class ProductPriceCalculation
             }
         }
 
+        if ($minimumPrice === null) {
+            throw new MainVariantPriceCalculationException('Minimum price not found.');
+        }
+
         return $minimumPrice;
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $prices
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface[] $prices
      * @return bool
      */
-    public function arePricesDifferent(array $prices)
+    public function arePricesDifferent(array $prices): bool
     {
         if (count($prices) === 0) {
             throw new InvalidArgumentException('Array can not be empty.');
         }
 
-        /** @var \Shopsys\FrameworkBundle\Model\Pricing\Price $firstPrice */
         $firstPrice = array_pop($prices);
 
         foreach ($prices as $price) {

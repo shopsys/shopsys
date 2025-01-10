@@ -377,20 +377,14 @@ class ProductExportRepository
         $productSellingPrices = $this->productFacade->getAllProductSellingPricesByDomainId($product, $domainId);
 
         foreach ($productSellingPrices as $productSellingPrice) {
-            $sellingPrice = $productSellingPrice->getSellingPrice();
-            $priceFrom = false;
-
-            if ($sellingPrice instanceof ProductPrice) {
-                $priceFrom = $sellingPrice->isPriceFrom();
-            }
-
+            $sellingPrice = $productSellingPrice->getProductPrice();
             $pricingGroup = $productSellingPrice->getPricingGroup();
             $prices[] = [
                 'pricing_group_id' => $pricingGroup->getId(),
                 'price_with_vat' => (float)$sellingPrice->getPriceWithVat()->getAmount(),
                 'price_without_vat' => (float)$sellingPrice->getPriceWithoutVat()->getAmount(),
                 'vat' => (float)$sellingPrice->getVatAmount()->getAmount(),
-                'price_from' => $priceFrom,
+                'price_from' => $sellingPrice->isPriceFrom(),
                 'filtering_minimal_price' => (float)$this->getMaximalVariantPriceForFilteringMinimalPrice($product, $pricingGroup, $domainId)->getAmount(),
                 'filtering_maximal_price' => (float)$this->getMinimalVariantPriceForFilteringMaximalPrice($product, $pricingGroup, $domainId)->getAmount(),
             ];

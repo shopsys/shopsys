@@ -6,7 +6,7 @@ namespace Shopsys\ProductFeed\ZboziBundle\Model\FeedItem;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Feed\FeedItemInterface;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
 class ZboziFeedItem implements FeedItemInterface
 {
@@ -16,7 +16,7 @@ class ZboziFeedItem implements FeedItemInterface
      * @param int $id
      * @param string $name
      * @param string $url
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $price
      * @param array $pathToMainCategory
      * @param array $parametersByName
      * @param int|null $mainVariantId
@@ -33,7 +33,7 @@ class ZboziFeedItem implements FeedItemInterface
         protected readonly int $id,
         protected readonly string $name,
         protected readonly string $url,
-        protected readonly Price $price,
+        protected readonly PriceInterface $price,
         protected readonly array $pathToMainCategory,
         protected readonly array $parametersByName,
         protected readonly ?int $mainVariantId = null,
@@ -105,9 +105,9 @@ class ZboziFeedItem implements FeedItemInterface
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
-    public function getPrice(): Price
+    public function getPrice(): PriceInterface
     {
         return $this->price;
     }

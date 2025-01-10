@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
 class QuantifiedProductPriceCalculation
@@ -49,7 +50,7 @@ class QuantifiedProductPriceCalculation
 
         $totalPrice = new Price($priceWithoutVat, $totalPriceWithVat);
 
-        return new QuantifiedItemPrice($productPrice, $totalPrice, $product->getVatForDomain($domainId));
+        return new QuantifiedItemPrice($productPrice->getPrice(), $totalPrice, $product->getVatForDomain($domainId));
     }
 
     /**
@@ -64,10 +65,10 @@ class QuantifiedProductPriceCalculation
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $unitPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $unitPrice
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    protected function getTotalPriceWithVat(QuantifiedProduct $quantifiedProduct, Price $unitPrice): Money
+    protected function getTotalPriceWithVat(QuantifiedProduct $quantifiedProduct, PriceInterface $unitPrice): Money
     {
         return $unitPrice->getPriceWithVat()->multiply($quantifiedProduct->getQuantity());
     }

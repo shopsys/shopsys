@@ -7,11 +7,11 @@ namespace Shopsys\ProductFeed\GoogleBundle\Model\FeedItem;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
@@ -70,9 +70,9 @@ class GoogleFeedItemFactory
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
-    protected function getPrice(Product $product, DomainConfig $domainConfig): Price
+    protected function getPrice(Product $product, DomainConfig $domainConfig): ProductPrice
     {
         return $this->productPriceCalculationForCustomerUser->calculateBasicPriceForCustomerUserAndDomainId(
             $product,

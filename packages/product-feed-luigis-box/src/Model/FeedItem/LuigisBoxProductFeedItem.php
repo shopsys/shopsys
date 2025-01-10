@@ -7,7 +7,7 @@ namespace Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem;
 use Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper;
 use Shopsys\FrameworkBundle\Model\Feed\FeedItemInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
 class LuigisBoxProductFeedItem implements FeedItemInterface
 {
@@ -23,8 +23,8 @@ class LuigisBoxProductFeedItem implements FeedItemInterface
      * @param string $catalogNumber
      * @param string $availabilityText
      * @param int $availabilityRank
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $basicPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $price
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $basicPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param int $mainCategoryId
      * @param string $url
@@ -46,8 +46,8 @@ class LuigisBoxProductFeedItem implements FeedItemInterface
         protected readonly string $catalogNumber,
         protected readonly string $availabilityText,
         protected readonly int $availabilityRank,
-        protected readonly Price $price,
-        protected readonly Price $basicPrice,
+        protected readonly PriceInterface $price,
+        protected readonly PriceInterface $basicPrice,
         protected readonly Currency $currency,
         protected readonly int $mainCategoryId,
         protected readonly string $url,
@@ -174,17 +174,17 @@ class LuigisBoxProductFeedItem implements FeedItemInterface
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
-    public function getPrice(): Price
+    public function getPrice(): PriceInterface
     {
         return $this->price;
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface|null
      */
-    public function getOldPrice(): ?Price
+    public function getOldPrice(): ?PriceInterface
     {
         if ($this->price->equals($this->basicPrice)) {
             return null;

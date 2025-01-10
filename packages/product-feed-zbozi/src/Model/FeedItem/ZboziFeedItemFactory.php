@@ -6,10 +6,10 @@ namespace Shopsys\ProductFeed\ZboziBundle\Model\FeedItem;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductParametersBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomain;
@@ -80,9 +80,9 @@ class ZboziFeedItemFactory
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
-    protected function getPrice(Product $product, DomainConfig $domainConfig): Price
+    protected function getPrice(Product $product, DomainConfig $domainConfig): ProductPrice
     {
         return $this->productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId(
             $product,

@@ -4,18 +4,19 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Pricing;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Money\HiddenMoney;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 
-class Price
+final class Price implements PriceInterface
 {
-    protected Money $vatAmount;
+    private Money $vatAmount;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithoutVat
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
      */
-    public function __construct(protected readonly Money $priceWithoutVat, protected readonly Money $priceWithVat)
+    public function __construct(private readonly Money $priceWithoutVat, private readonly Money $priceWithVat)
     {
         $this->vatAmount = $priceWithVat->subtract($priceWithoutVat);
     }
@@ -31,6 +32,7 @@ class Price
     /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
+    #[Override]
     public function getPriceWithoutVat(): Money
     {
         return $this->priceWithoutVat;
@@ -39,6 +41,7 @@ class Price
     /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
+    #[Override]
     public function getPriceWithVat(): Money
     {
         return $this->priceWithVat;
@@ -47,6 +50,7 @@ class Price
     /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
+    #[Override]
     public function getVatAmount(): Money
     {
         return $this->vatAmount;

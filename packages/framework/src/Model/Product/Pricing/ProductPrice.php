@@ -4,27 +4,27 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Pricing;
 
+use Override;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
-class ProductPrice extends Price
+final class ProductPrice implements PriceInterface
 {
-    protected bool $priceFrom;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
      * @param bool $priceFrom
      */
-    public function __construct(Price $price, $priceFrom)
-    {
-        $this->priceFrom = $priceFrom;
-
-        parent::__construct($price->getPriceWithoutVat(), $price->getPriceWithVat());
+    public function __construct(
+        private readonly Price $price,
+        private readonly bool $priceFrom = false,
+    ) {
     }
 
     /**
      * @return bool
      */
-    public function isPriceFrom()
+    public function isPriceFrom(): bool
     {
         return $this->priceFrom;
     }
@@ -35,8 +35,43 @@ class ProductPrice extends Price
     public static function createHiddenProductPrice(): self
     {
         return new self(
-            self::createHiddenPrice(),
+            Price::createHiddenPrice(),
             false,
         );
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    public function getPrice(): Price
+    {
+        return $this->price;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     */
+    #[Override]
+    public function getPriceWithoutVat(): Money
+    {
+        return $this->price->getPriceWithoutVat();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     */
+    #[Override]
+    public function getPriceWithVat(): Money
+    {
+        return $this->price->getPriceWithVat();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     */
+    #[Override]
+    public function getVatAmount(): Money
+    {
+        return $this->price->getVatAmount();
     }
 }
