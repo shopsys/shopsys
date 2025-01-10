@@ -30,6 +30,7 @@ export const middleware: NextMiddleware = async (request) => {
         const response = await validateAuthTokens(request);
 
         const host = getHostFromRequest(request);
+
         const domainUrlFromStaticUrls = getDomainUrlFromStaticUrls(host);
         const staticUrlsAvailableForDomain = getStaticUrlsAvailableForDomain(domainUrlFromStaticUrls);
         const rewriteTargetUrl = getRewriteTargetPathname(request, staticUrlsAvailableForDomain);

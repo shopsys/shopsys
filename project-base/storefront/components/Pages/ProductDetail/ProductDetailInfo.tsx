@@ -1,7 +1,9 @@
+'use client';
+
 import { ProductDetailHeading, ProductDetailPrefix } from './ProductDetailElements';
 import { ProductDetailUsps } from './ProductDetailUsps';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import useTranslation from 'next-translate/useTranslation';
+import { useTranslation } from 'components/providers/TranslationProvider';
 
 type ProductDetailContentProps = {
     namePrefix: string | null;
