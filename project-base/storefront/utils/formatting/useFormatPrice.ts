@@ -1,5 +1,7 @@
+'use client';
+
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { formatPrice } from 'utils/formaters/formatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 
@@ -7,10 +9,10 @@ export type FormatPriceFunctionType = (price: string | number, options?: { expli
 
 export const useFormatPrice = (): FormatPriceFunctionType => {
     const { t } = useTranslation();
-    const [{ data: settingsData }] = useSettingsQuery();
+    const { pricing } = useAppConfig((settings) => settings.settings);
     const { defaultLocale = 'en' } = useDomainConfig();
 
-    const { minimumFractionDigits = 0, defaultCurrencyCode = 'CZK' } = settingsData?.settings?.pricing ?? {};
+    const { minimumFractionDigits = 0, defaultCurrencyCode = 'CZK' } = pricing;
     const getPriceAsFloat = (price: string | number) => (typeof price === 'number' ? price : parseFloat(price));
 
     return (price, options) =>

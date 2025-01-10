@@ -21,13 +21,13 @@ import {
 } from 'components/Forms/validationRules';
 import { useAppConfig } from 'components/providers/AppConfigProvider';
 import Trans from 'next-translate/Trans';
-import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 import { FieldError, UseFormReturn, useWatch } from 'react-hook-form';
 import { CustomerTypeEnum } from 'types/customer';
 import { RegistrationFormType } from 'types/form';
 import { SelectOptionType } from 'types/selectOptions';
 import { useShopsysForm } from 'utils/forms/useShopsysForm';
+import useTranslation from 'utils/i18n/useTranslationWrapper';
 import * as Yup from 'yup';
 
 type UseRegistrationFormProps = {

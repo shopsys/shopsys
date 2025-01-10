@@ -1,3 +1,5 @@
+'use client';
+
 import { ProductDetailHeading, ProductDetailPrefix } from './ProductDetailElements';
 import { ProductDetailUsps } from './ProductDetailUsps';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
