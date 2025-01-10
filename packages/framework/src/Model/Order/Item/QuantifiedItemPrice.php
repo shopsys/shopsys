@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\Item;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
-class QuantifiedItemPrice
+final class QuantifiedItemPrice
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $unitPrice
@@ -15,9 +15,9 @@ class QuantifiedItemPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      */
     public function __construct(
-        protected readonly Price $unitPrice,
-        protected readonly Price $totalPrice,
-        protected readonly Vat $vat,
+        private readonly Price $unitPrice,
+        private readonly Price $totalPrice,
+        private readonly Vat $vat,
     ) {
     }
 
