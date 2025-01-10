@@ -154,4 +154,15 @@ class PriceList
         $this->priceListProductPrices->add($priceListProductPrice);
         $priceListProductPrice->setPriceList($this);
     }
+
+    /**
+     * @return int[]
+     */
+    public function getProductIds(): array
+    {
+        return array_map(
+            static fn (PriceListProductPrice $priceListProductPrice) => $priceListProductPrice->getProduct()->getId(),
+            $this->getPriceListProductPrices(),
+        );
+    }
 }

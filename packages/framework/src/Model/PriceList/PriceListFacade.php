@@ -67,10 +67,7 @@ class PriceListFacade
     public function edit(int $priceListId, PriceListData $priceListData): void
     {
         $priceList = $this->getById($priceListId);
-        $originalProductIds = array_map(
-            static fn (PriceListProductPrice $priceListProductPrice) => $priceListProductPrice->getProduct()->getId(),
-            $priceList->getPriceListProductPrices(),
-        );
+        $originalProductIds = $priceList->getProductIds();
 
         $priceList->edit($priceListData);
 
@@ -123,13 +120,8 @@ class PriceListFacade
     {
         $priceList = $this->getById($priceListId);
 
-        $originalProductIds = array_map(
-            static fn (PriceListProductPrice $priceListProductPrice) => $priceListProductPrice->getProduct()->getId(),
-            $priceList->getPriceListProductPrices(),
-        );
-
         $this->productRecalculationDispatcher->dispatchProductIds(
-            $originalProductIds,
+            $priceList->getProductIds(),
             ProductRecalculationPriorityEnum::HIGH,
             [ProductExportScopeConfig::SCOPE_PRICE],
         );
