@@ -1,4 +1,4 @@
-import { Translate } from 'next-translate';
+import { Translate } from 'types/translation';
 
 export function formatPrice(
     price: number,

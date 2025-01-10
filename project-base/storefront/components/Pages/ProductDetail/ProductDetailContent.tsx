@@ -1,49 +1,37 @@
 'use client';
 
-import { DeferredComparisonAndWishlistButtons } from './ComparisonAndWishlistButtons/DeferredComparisonAndWishlistButtons';
-import { DeferredProductDetailAccessories } from './ProductDetailAccessories/DeferredProductDetailAccessories';
-import { DeferredProductDetailAddToCart } from './ProductDetailAddToCart/DeferredProductDetailAddToCart';
+import { ProductDetailAccessories } from './ProductDetailAccessories/ProductDetailAccessories';
 import { ProductDetailAvailability } from './ProductDetailAvailability';
 import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailInfo } from './ProductDetailInfo';
 import { ProductDetailPrice } from './ProductDetailPrice';
 import { ProductDetailTabs } from './ProductDetailTabs/ProductDetailTabs';
-import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
-import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
-import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
-import { useLastVisitedProductView } from 'components/Blocks/Product/LastVisitedProducts/lastVisitedProductsUtils';
 import { WatchDogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
-import { TypeRecommendationType } from 'graphql/types';
-import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
-import { useGtmProductDetailViewEvent } from 'gtm/utils/pageViewEvents/useGtmProductDetailViewEvent';
-import useTranslation from 'next-translate/useTranslation';
-import { useRouter } from 'next/router';
-import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
+import { useSessionStore } from 'store/useSessionStore';
 
 type ProductDetailContentProps = {
     product: TypeProductDetailFragment;
-    isProductDetailFetching: boolean;
 };
 
-export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, isProductDetailFetching }) => {
+export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product }) => {
     const { t } = useTranslation();
-    const router = useRouter();
+    // const router = useRouter();
+    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
-    const { isLuigisBoxActive } = useDomainConfig();
+    // const { isLuigisBoxActive } = useDomainConfig();
 
-    const pageViewEvent = useGtmFriendlyPageViewEvent(product);
-    useGtmPageViewEvent(pageViewEvent, isProductDetailFetching);
-    useLastVisitedProductView(product.catalogNumber);
-    useGtmProductDetailViewEvent(product, getUrlWithoutGetParameters(router.asPath), isProductDetailFetching);
+    // const pageViewEvent = useGtmFriendlyPageViewEvent(product);
+    // useGtmPageViewEvent(pageViewEvent, isProductDetailFetching);
+    // useLastVisitedProductView(product.catalogNumber);
+    // useGtmProductDetailViewEvent(product, getUrlWithoutGetParameters(router.asPath), isProductDetailFetching);
 
     return (
         <>
-            <ProductMetadata product={product} />
+            {/* <ProductMetadata product={product} /> */}
 
             <VerticalStack gap="md">
                 <Webline className="vl:flex-row flex flex-col gap-6">
@@ -85,9 +73,9 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                                 productUuid={product.uuid}
                             />
 
-                            <DeferredProductDetailAddToCart product={product} />
+                            {/* <ProductDetailAddToCart product={product} /> */}
 
-                            <DeferredComparisonAndWishlistButtons product={product} />
+                            {/* <DeferredComparisonAndWishlistButtons product={product} /> */}
                         </div>
                     </div>
                 </Webline>
@@ -99,7 +87,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                     relatedProducts={product.relatedProducts}
                 />
 
-                {isLuigisBoxActive && (
+                {/* {isLuigisBoxActive && (
                     <DeferredRecommendedProducts
                         itemUuids={[product.uuid]}
                         recommendationType={TypeRecommendationType.ItemDetail}
@@ -110,11 +98,10 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                             </section>
                         )}
                     />
-                )}
+                )} */}
 
-                <DeferredProductDetailAccessories accessories={product.accessories} />
-
-                <DeferredLastVisitedProducts currentProductCatnum={product.catalogNumber} />
+                <ProductDetailAccessories accessories={product.accessories} />
+                {/* <DeferredProductDetailAccessories accessories={product.accessories} /> */}
             </VerticalStack>
         </>
     );
