@@ -7,6 +7,9 @@ msgstr ""
 msgid ""
 msgstr ""
 
+msgid "%count% item from CSV file was imported successfully.|%count% items from CSV file were imported successfully."
+msgstr "%count% položka z CSV souboru byla úspěšně importována.|%count% položky z CSV souboru byly úspěšně importovány.|%count% položek z CSV souboru bylo úspěšně importováno."
+
 msgid "%defaultCurrency% per 1 %currentCurrency%"
 msgstr "%defaultCurrency% za 1 %currentCurrency%"
 
@@ -33,6 +36,9 @@ msgstr "-- Vyberte skupinu parametrů --"
 
 msgid "-- Choose unit --"
 msgstr "-- Vyberte jednotku --"
+
+msgid "-- Create new price list --"
+msgstr "-- Vytvořit nový ceník --"
 
 msgid "-- Select a role --"
 msgstr "-- Vyber roli --"
@@ -567,6 +573,9 @@ msgstr "Dle příznaku"
 
 msgid "CSS documentation"
 msgstr "CSS dokumentace"
+
+msgid "CSV file"
+msgstr "CSV soubor"
 
 msgid "Calculated price excluding VAT"
 msgstr "Vypočtená cena bez DPH"
@@ -1792,6 +1801,9 @@ msgstr "Při nahrávání souboru došlo k chybě: %message%"
 msgid "Error occurred, try again please."
 msgstr "Nastala chyba, zkuste to, prosím, znovu."
 
+msgid "Error while importing CSV file."
+msgstr "Při importu CSV souboru došlo k chybě."
+
 msgid "Every 5 minutes in %hour% hour"
 msgstr "{0}Každých 5 minut v 0 hodin|{1}Každých 5 minut v 1 hodinu|[2,4]Každých 5 minut ve %hour% hodiny|[5,Inf]Každých 5 minut v %hour% hodin"
 
@@ -1836,6 +1848,9 @@ msgstr "Očekávané maximální trvání"
 
 msgid "Expired"
 msgstr "Vypršelý"
+
+msgid "Export CSV"
+msgstr "Exportovat CSV"
 
 msgid "Export email list in CSV format"
 msgstr "Exportovat seznam e-mailů jako CSV"
@@ -2203,6 +2218,15 @@ msgstr "Obrázek s odkazem"
 msgid "Images"
 msgstr "Obrázky"
 
+msgid "Import"
+msgstr "Nahrát"
+
+msgid "Import CSV"
+msgstr "Nahrát CSV"
+
+msgid "Import price list"
+msgstr "Nahrát ceník"
+
 msgid "In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains"
 msgstr "Na záložce konkrétní domény není možné upravovat pořadí a zanoření kategorií. Prosím přejděte na kartu kategorie nebo na přehled kategorií všech domén."
 
@@ -2343,6 +2367,9 @@ msgstr "Nastavení právních podmínek upravené"
 
 msgid "Limits"
 msgstr "Limity"
+
+msgid "Line:"
+msgstr "Řádek:"
 
 msgid "Link"
 msgstr "Odkaz"
@@ -2622,6 +2649,9 @@ msgstr "Nová platba"
 
 msgid "New price list"
 msgstr "Nový ceník"
+
+msgid "New price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was created."
+msgstr "Byl vytvořen nový ceník <strong><a href=\"{{ url }}\">{{ name }}</a></strong>."
 
 msgid "New product"
 msgstr "Nové zboží"
@@ -2968,6 +2998,9 @@ msgstr "Původ"
 msgid "Out of stock"
 msgstr "Aktuálně nedostupné"
 
+msgid "Overwrite Price list"
+msgstr "Přepsat ceník"
+
 msgid "Package tracking"
 msgstr "Sledování zásilky"
 
@@ -3228,6 +3261,9 @@ msgstr "Byl vytvořen ceník <strong><a href=\"{{ url }}\">{{ name }}</a></stron
 
 msgid "Price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
 msgstr "Byl upraven ceník <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
+
+msgid "Price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was replaced."
+msgstr "Ceník <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl nahrazen."
 
 msgid "Price list <strong>{{ name }}</strong> deleted"
 msgstr "Byl smazán ceník <strong>{{ name }}</strong>"
@@ -3906,6 +3942,9 @@ msgstr "Slug"
 
 msgid "Some data may not be localized or serve the technical administrators of the e-shop."
 msgstr "Některé údaje nemusí být lokalizovány nebo slouží technickým správcům e-shopu."
+
+msgid "Some items cannot be imported due to errors:"
+msgstr "Některé položky nebyly naimportovány kvůli chybám:"
 
 msgid "Sorting priority"
 msgstr "Priorita řazení"

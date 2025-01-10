@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileData;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
@@ -214,6 +215,7 @@ class PriceListFacade
                 t(
                     'Invalid header in the CSV file. Use following columns: {{ columns }}',
                     ['{{ columns }}' => implode(', ', $this->priceListExportColumnsEnum->getAllCases())],
+                    Translator::VALIDATOR_TRANSLATION_DOMAIN,
                 ),
             );
 
@@ -240,7 +242,14 @@ class PriceListFacade
             $product = $this->productFacade->findByCatnum($row[PriceListCsvColumnsEnum::PRODUCT_CATNUM]);
 
             if ($product === null) {
-                $importResult->addWarning($line, t('Product with catnum {{ catnum }} not found', ['{{ catnum }}' => $row[PriceListCsvColumnsEnum::PRODUCT_CATNUM]]));
+                $importResult->addWarning(
+                    $line,
+                    t(
+                        'Product with catnum {{ catnum }} not found',
+                        ['{{ catnum }}' => $row[PriceListCsvColumnsEnum::PRODUCT_CATNUM]],
+                        Translator::VALIDATOR_TRANSLATION_DOMAIN,
+                    ),
+                );
 
                 continue;
             }
@@ -288,6 +297,7 @@ class PriceListFacade
                         message: t(
                             'column {{ column_name }} cannot be empty',
                             ['{{ column_name }}' => PriceListCsvColumnsEnum::PRODUCT_CATNUM],
+                            Translator::VALIDATOR_TRANSLATION_DOMAIN,
                         ),
                     ),
                 ],
@@ -297,6 +307,7 @@ class PriceListFacade
                         message: t(
                             'column {{ column_name }} must be number, {{ value }} provided',
                             ['{{ column_name }}' => PriceListCsvColumnsEnum::PRICE],
+                            Translator::VALIDATOR_TRANSLATION_DOMAIN,
                         ),
                     ),
                     new Constraints\GreaterThan(

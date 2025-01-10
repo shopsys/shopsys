@@ -130,6 +130,9 @@ msgstr ""
 msgid "Image can be only in PNG format"
 msgstr ""
 
+msgid "Invalid header in the CSV file. Use following columns: {{ columns }}"
+msgstr ""
+
 msgid "Invalid whitelist pattern."
 msgstr ""
 
@@ -481,6 +484,12 @@ msgstr ""
 msgid "Please enter zip code"
 msgstr ""
 
+msgid "Please upload a CSV file"
+msgstr ""
+
+msgid "Please upload a file."
+msgstr ""
+
 msgid "Please use each limit only once"
 msgstr ""
 
@@ -506,6 +515,9 @@ msgid "Product prefix name cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Product suffix name cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "Product with catnum {{ catnum }} not found"
 msgstr ""
 
 msgid "Product with entered catalog number already exists"
@@ -632,5 +644,14 @@ msgid "You have to select any domain."
 msgstr ""
 
 msgid "Zip code cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "column {{ column_name }} cannot be empty"
+msgstr ""
+
+msgid "column {{ column_name }} must be greater than 0"
+msgstr ""
+
+msgid "column {{ column_name }} must be number, {{ value }} provided"
 msgstr ""
 

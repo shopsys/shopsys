@@ -7,6 +7,9 @@ msgstr ""
 msgid ""
 msgstr ""
 
+msgid "%count% item from CSV file was imported successfully.|%count% items from CSV file were imported successfully."
+msgstr ""
+
 msgid "%defaultCurrency% per 1 %currentCurrency%"
 msgstr ""
 
@@ -32,6 +35,9 @@ msgid "-- Choose group --"
 msgstr ""
 
 msgid "-- Choose unit --"
+msgstr ""
+
+msgid "-- Create new price list --"
 msgstr ""
 
 msgid "-- Select a role --"
@@ -566,6 +572,9 @@ msgid "By flag"
 msgstr ""
 
 msgid "CSS documentation"
+msgstr ""
+
+msgid "CSV file"
 msgstr ""
 
 msgid "Calculated price excluding VAT"
@@ -1792,6 +1801,9 @@ msgstr ""
 msgid "Error occurred, try again please."
 msgstr ""
 
+msgid "Error while importing CSV file."
+msgstr ""
+
 msgid "Every 5 minutes in %hour% hour"
 msgstr ""
 
@@ -1835,6 +1847,9 @@ msgid "Expected maximum duration"
 msgstr ""
 
 msgid "Expired"
+msgstr ""
+
+msgid "Export CSV"
 msgstr ""
 
 msgid "Export email list in CSV format"
@@ -2203,6 +2218,15 @@ msgstr ""
 msgid "Images"
 msgstr ""
 
+msgid "Import"
+msgstr ""
+
+msgid "Import CSV"
+msgstr ""
+
+msgid "Import price list"
+msgstr ""
+
 msgid "In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains"
 msgstr ""
 
@@ -2342,6 +2366,9 @@ msgid "Legal conditions settings modified."
 msgstr ""
 
 msgid "Limits"
+msgstr ""
+
+msgid "Line:"
 msgstr ""
 
 msgid "Link"
@@ -2621,6 +2648,9 @@ msgid "New payment"
 msgstr ""
 
 msgid "New price list"
+msgstr ""
+
+msgid "New price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was created."
 msgstr ""
 
 msgid "New product"
@@ -2968,6 +2998,9 @@ msgstr ""
 msgid "Out of stock"
 msgstr ""
 
+msgid "Overwrite Price list"
+msgstr ""
+
 msgid "Package tracking"
 msgstr ""
 
@@ -3227,6 +3260,9 @@ msgid "Price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
 msgstr ""
 
 msgid "Price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr ""
+
+msgid "Price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> was replaced."
 msgstr ""
 
 msgid "Price list <strong>{{ name }}</strong> deleted"
@@ -3905,6 +3941,9 @@ msgid "Slug"
 msgstr ""
 
 msgid "Some data may not be localized or serve the technical administrators of the e-shop."
+msgstr ""
+
+msgid "Some items cannot be imported due to errors:"
 msgstr ""
 
 msgid "Sorting priority"
