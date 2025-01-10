@@ -7,8 +7,6 @@ import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import React, { RefObject } from 'react';
 import { SwipeableHandlers } from 'react-swipeable';
-import { useComparison } from 'utils/productLists/comparison/useComparison';
-import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
 import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
 
 type ProductsListProps = {
@@ -35,8 +33,8 @@ export const ProductsListContent: FC<ProductsListProps> = ({
     className,
 }) => {
     const currentPage = useCurrentPageQuery();
-    const { toggleProductInComparison, isProductInComparison } = useComparison();
-    const { toggleProductInWishlist, isProductInWishlist } = useWishlist();
+    // const { toggleProductInComparison, isProductInComparison } = useComparison();
+    // const { toggleProductInWishlist, isProductInWishlist } = useWishlist();
 
     return (
         <ul className={className} ref={ref} {...swipeHandlers}>
@@ -45,13 +43,17 @@ export const ProductsListContent: FC<ProductsListProps> = ({
                     key={product.uuid}
                     gtmMessageOrigin={gtmMessageOrigin}
                     gtmProductListName={gtmProductListName}
-                    isProductInComparison={isProductInComparison(product.uuid)}
-                    isProductInWishlist={isProductInWishlist(product.uuid)}
+                    isProductInComparison={false}
+                    isProductInWishlist={false}
+                    // isProductInComparison={isProductInComparison(product.uuid)}
+                    // isProductInWishlist={isProductInWishlist(product.uuid)}
                     listIndex={(currentPage - 1) * DEFAULT_PAGE_SIZE + index}
                     product={product}
                     ref={productRefs?.[index]}
-                    toggleProductInComparison={() => toggleProductInComparison(product.uuid)}
-                    toggleProductInWishlist={() => toggleProductInWishlist(product.uuid)}
+                    toggleProductInComparison={() => null}
+                    toggleProductInWishlist={() => null}
+                    // toggleProductInComparison={() => toggleProductInComparison(product.uuid)}
+                    // toggleProductInWishlist={() => toggleProductInWishlist(product.uuid)}
                     {...productItemProps}
                 />
             ))}
