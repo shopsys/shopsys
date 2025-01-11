@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Controller;
 
+use Doctrine\ORM\QueryBuilder;
 use ReflectionClass;
 use RuntimeException;
 use Shopsys\AdministrationBundle\Component\Attributes\CrudController;
@@ -66,18 +67,30 @@ abstract class AbstractCrudController extends AbstractController
     }
 
     /**
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
+     */
+    protected function configureQuery(QueryBuilder $queryBuilder): void
+    {
+    }
+
+    /**
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function listAction(): Response
     {
-        $adapter = $this->ormAdapterFactory->create($this->getConfig()->getEntityClass());
+        $extensions = $this->crudControllerExtensionsRegistry->getExtensions(static::class);
+        $adapter = $this->ormAdapterFactory->create($this->getConfig()->getEntityClass(), function (QueryBuilder $queryBuilder) use ($extensions) {
+            $this->configureQuery($queryBuilder);
+
+            foreach ($extensions as $extension) {
+                $extension->configureQuery($queryBuilder);
+            }
+        });
         $datagrid = $this->datagridFactory->create($adapter, [
             'crudConfig' => $this->getConfig(),
             'name' => $this->getConfig()->getEntityName(),
         ]);
         $datagrid = $this->configureDatagrid($datagrid);
-
-        $extensions = $this->crudControllerExtensionsRegistry->getExtensions(static::class);
 
         foreach ($extensions as $extension) {
             $datagrid = $extension->configureDatagrid($datagrid);

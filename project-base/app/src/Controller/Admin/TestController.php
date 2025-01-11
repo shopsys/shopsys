@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Model\Order\Order;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\AdministrationBundle\Component\Attributes\CrudController;
 use Shopsys\AdministrationBundle\Component\Config\Action\ActionsConfig;
 use Shopsys\AdministrationBundle\Component\Config\Action\Builder\AbstractAction;
@@ -12,6 +13,7 @@ use Shopsys\AdministrationBundle\Component\Config\Action\Builder\Action;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
+use Shopsys\AdministrationBundle\Component\Datagrid\OrderingEnum;
 use Shopsys\AdministrationBundle\Controller\AbstractCrudController;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 
@@ -74,6 +76,20 @@ class TestController extends AbstractCrudController
     }
 
     /**
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
+     */
+    protected function configureQuery(QueryBuilder $queryBuilder): void
+    {
+        $queryBuilder
+            ->addSelect('(CASE WHEN o.companyName IS NOT NULL
+                    THEN o.companyName
+                    ELSE CONCAT(o.lastName, \' \', o.firstName)
+                END) AS customerName')
+            ->andWhere('o.deleted = :deleted')
+            ->setParameter('deleted', false);
+    }
+
+    /**
      * @param \Shopsys\AdministrationBundle\Component\Datagrid\Datagrid $datagrid
      * @return \Shopsys\AdministrationBundle\Component\Datagrid\Datagrid
      */
@@ -86,6 +102,11 @@ class TestController extends AbstractCrudController
                 'property' => 'id',
                 'sortable' => false,
                 'template' => 'Admin/Crud/preview.html.twig',
+            ])
+            ->add('customerName', [
+                'label' => t('Customer Name'),
+                'virtual' => true,
+                'property' => 'customerName',
             ])
             ->add('number', [
                 'label' => t('Order Nr.'),
@@ -137,6 +158,8 @@ class TestController extends AbstractCrudController
                 },
             ])
         ;
+
+        $datagrid->setDefaultOrder('createdAt', OrderingEnum::DESC);
 
         $datagrid->update('number', [
             'sortable' => false,

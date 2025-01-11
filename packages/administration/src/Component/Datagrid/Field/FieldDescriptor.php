@@ -104,12 +104,12 @@ final class FieldDescriptor
      */
     public function isSortable(): bool
     {
-        if ($this->isVirtual() || $this->options['property'] !== null) {
+        // Transformed fields are not sortable because it would be confusing for the user to sort by not displayed values
+        if ($this->getTransform() !== null) {
             return false;
         }
 
-        // Transformed fields are not sortable because it would be confusing for the user to sort by not displayed values
-        if ($this->getTransform() !== null) {
+        if ($this->getMappingProperty() === null) {
             return false;
         }
 
@@ -151,9 +151,21 @@ final class FieldDescriptor
     /**
      * @return string|null
      */
-    public function getMappingProperty(): ?string
+    public function getSelectProperty(): ?string
     {
         if ($this->isVirtual()) {
+            return null;
+        }
+
+        return $this->options['property'] ?? $this->getName();
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getMappingProperty(): ?string
+    {
+        if ($this->isVirtual() && $this->options['property'] === null) {
             return null;
         }
 
