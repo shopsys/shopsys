@@ -40,6 +40,11 @@ final class Datagrid
     private array $fieldsOrder = [];
 
     /**
+     * @var array{field: string, order: \Shopsys\AdministrationBundle\Component\Datagrid\OrderingEnum}|null
+     */
+    private ?array $defaultOrder = null;
+
+    /**
      * @param \Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface $adapter
      * @param \Shopsys\AdministrationBundle\Component\Datagrid\DatagridManager $datagridManager
      * @param DatagridOptions $options
@@ -99,6 +104,23 @@ final class Datagrid
     public function setPagination(bool $pagination): self
     {
         $this->options['pagination'] = $pagination;
+
+        return $this;
+    }
+
+    /**
+     * Set default order of datagrid
+     *
+     * @param string $field
+     * @param \Shopsys\AdministrationBundle\Component\Datagrid\OrderingEnum $order
+     * @return self
+     */
+    public function setDefaultOrder(string $field, OrderingEnum $order): self
+    {
+        $this->defaultOrder = [
+            'field' => $field,
+            'order' => $order,
+        ];
 
         return $this;
     }
@@ -224,6 +246,10 @@ final class Datagrid
 
         if ($this->options['pagination'] === true) {
             $grid->enablePaging();
+        }
+
+        if ($this->defaultOrder !== null) {
+            $grid->setDefaultOrder($this->defaultOrder['field'], $this->defaultOrder['order']->value);
         }
 
         if (count($this->fieldsOrder) > 0) {

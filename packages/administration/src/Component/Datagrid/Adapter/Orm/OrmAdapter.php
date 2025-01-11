@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm;
 
+use Closure;
 use Doctrine\Persistence\ManagerRegistry;
 use RuntimeException;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface;
@@ -18,13 +19,19 @@ final class OrmAdapter implements AdapterInterface
      * @param class-string $entityClass
      * @param \Doctrine\Persistence\ManagerRegistry $managerRegistry
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
+     * @param null|\Closure(\Doctrine\ORM\QueryBuilder $configureQuery): void $configureQuery
      */
     public function __construct(
         string $entityClass,
         private readonly ManagerRegistry $managerRegistry,
         private readonly Localization $localization,
+        ?Closure $configureQuery,
     ) {
         $this->proxyQuery = $this->createProxyQuery($entityClass);
+
+        if ($configureQuery !== null) {
+            $configureQuery($this->proxyQuery->getQueryBuilder());
+        }
     }
 
     /**
@@ -37,17 +44,17 @@ final class OrmAdapter implements AdapterInterface
         $this->proxyQuery->addSelect($identificationName);
 
         foreach ($fields as $field) {
-            if ($field->getMappingProperty() === null) {
+            if ($field->getSelectProperty() === null) {
                 continue;
             }
 
-            $this->proxyQuery->addSelect($field->getMappingProperty());
+            $this->proxyQuery->addSelect($field->getSelectProperty());
         }
 
         return new DatagridDataSource($this->proxyQuery->getQueryBuilder(), $identificationName, function ($row, $results) use ($fields) {
             foreach ($fields as $field) {
                 if ($field->getTransform() !== null) {
-                    $row[$field->getName()] = call_user_func($field->getTransform(), $row[$field->getName()], $row, $results);
+                    $row[$field->getName()] = call_user_func($field->getTransform(), $row[$field->getName()] ?? null, $row, $results);
                 }
             }
 

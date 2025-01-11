@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Controller;
 
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\AdministrationBundle\Component\Config\Action\ActionsConfig;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
@@ -35,5 +36,12 @@ abstract class AbstractCrudControllerExtension
     public function configureDatagrid(Datagrid $datagrid): Datagrid
     {
         return $datagrid;
+    }
+
+    /**
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
+     */
+    public function configureQuery(QueryBuilder $queryBuilder): void
+    {
     }
 }
