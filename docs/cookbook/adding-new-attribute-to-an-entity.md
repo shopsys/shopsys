@@ -312,7 +312,7 @@ You can use [`Faker`](https://github.com/FakerPHP/Faker/) to generate random num
         ProductVariantFacade $productVariantFacade,
         Domain $domain,
         PricingGroupFacade $pricingGroupFacade,
-        ProductDataFactoryInterface $productDataFactory,
+        ProductDataFactory $productDataFactory,
         ProductParameterValueDataFactory $productParameterValueDataFactory,
         ParameterValueDataFactory $parameterValueDataFactory,
         ParameterFacade $parameterFacade,

@@ -21,13 +21,13 @@ These entities are created by their main entity.
 ### Example
 
 ```php
-// FrameworkBundle/Model/Cart/Item/CartItemFactoryInterface.php
+// FrameworkBundle/Model/Cart/Item/CartItemFactory.php
 
 namespace Shopsys\FrameworkBundle\Model\Cart\Item;
 
 // ...
 
-interface CartItemFactoryInterface
+class CartItemFactory
 {
 
     /**
@@ -443,11 +443,11 @@ Data factory can also fill default values
 ### Example
 
 ```php
-// FrameworkBundle/Model/Product/Brand/BrandDataFactoryInterface.php
+// FrameworkBundle/Model/Product/Brand/BrandDataFactory.php
 
 namespace Shopsys\FrameworkBundle\Model\Product\Brand;
 
-interface BrandDataFactoryInterface
+class BrandDataFactory
 {
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Brand\BrandData

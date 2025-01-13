@@ -122,44 +122,23 @@ Also, it would be difficult to change the shared code just for one use-case.
 Modules don't depend on details of each other, modules depend on interfaces.
 
 ```diff
-class SearchController extends FrontBaseController
+class DatePickerType extends AbstractType
 {
-    /**
--    * @var \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacade
-+    * @var \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainFacadeInterface
-     */
-    private $productOnCurrentDomainFacade;
+-   public function __construct(protected readonly DisplayTimeZoneProvider $displayTimeZoneProvider)
++   public function __construct(protected readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider)
+    {
+    }
 
-    // ...
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'display_timezone' => $this->displayTimeZoneProvider->getDisplayTimeZoneForAdmin()->getName(),
+        ]);
+    }
 ```
-
-```diff
-- class ProductOnCurrentDomainElasticFacade
-+ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacadeInterface
-```
-
-You should use an interface to communicate with a different module.
-The most typical place is `project-base | framework`, so you should keep this principle in mind when programming anything related to both `project-base` and `framework`.
 
 ### Reasons
 
-In a traditional dependency system, the top-most class depends on the lower layer, which depends on the lower layer, and so on.
-In the end, the top-most classes indirectly depend on all lower classes in multiple modules.
-
-        Controller --> Facade --> Repository --> Doctrine
-
-When the interface is introduced, this nested dependency is broken.
-
-        Controller --> FacadeInterface
-                              ^
-                              |
-                          SQLFacade --> Repository --> Doctrine
-
-The most important advantage of this interface dependency system is that the implementation (`SQLFacade`) is replaceable.
+When we need to have a part of the application easily replaceable, we define the interface and use the interface through the whole application.
 This gives you more freedom during a shop implementation.
 If you have a use-case that is not achievable by the framework implementation, you can replace it on your own.
-
-### Misuse
-
-This principle is valid only during the cooperation of modules.
-Don't try to use this principle within a single module (e.g., framework). It won't make any sense.
