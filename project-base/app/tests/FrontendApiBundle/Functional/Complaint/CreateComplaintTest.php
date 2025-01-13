@@ -10,6 +10,8 @@ use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class CreateComplaintTest extends GraphQlWithLoginTestCase
 {
+    protected const string COMPLAINT_EMAIL = 'no-reply@shopsys.com';
+
     public function testCreateComplaint(): void
     {
         /** @var \App\Model\Order\Order $order */
@@ -29,6 +31,7 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
             [
                 'input' => [
                     'orderUuid' => $order->getUuid(),
+                    'email' => self::COMPLAINT_EMAIL,
                     'items' => [
                         [
                             'quantity' => $complaintItemQuantity1,
@@ -69,6 +72,9 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
         $responseData = $this->getResponseDataForGraphQlType($response, 'CreateComplaint');
 
         $this->assertArrayHasKey('number', $responseData);
+
+        $this->assertArrayHasKey('email', $responseData);
+        $this->assertSame(self::COMPLAINT_EMAIL, $responseData['email']);
 
         $this->assertArrayHasKey('items', $responseData);
         $this->assertCount(2, $responseData['items']);

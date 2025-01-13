@@ -2,6 +2,7 @@ fragment ComplaintDetailFragment on Complaint {
     uuid
     number
     createdAt
+    email
     deliveryFirstName
     deliveryLastName
     deliveryCompanyName

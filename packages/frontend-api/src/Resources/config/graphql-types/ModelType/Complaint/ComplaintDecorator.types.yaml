@@ -45,3 +45,6 @@ ComplaintDecorator:
             order:
                 type: "Order!"
                 description: "Order for which the complaint was created"
+            email:
+                type: "String!"
+                description: "The customer's email address"

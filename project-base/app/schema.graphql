@@ -631,6 +631,8 @@ type Complaint {
   deliveryStreet: String!
   "Contact telephone number for delivery"
   deliveryTelephone: String!
+  "The customer's email address"
+  email: String!
   "All items in the complaint"
   items: [ComplaintItem!]!
   "Unique complaint number"
@@ -664,6 +666,8 @@ type ComplaintEdge {
 input ComplaintInput {
   "Delivery address"
   deliveryAddress: DeliveryAddressInput!
+  "The customer's email address"
+  email: String!
   "All items in the complaint"
   items: [ComplaintItemInput!]!
   "UUID of the order"

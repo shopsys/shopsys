@@ -62,6 +62,9 @@ trait ComplaintTestTrait
         $this->assertArrayHasKey('number', $actualComplaintData, $complaintMessage);
         $this->assertSame($expectedComplaint->getNumber(), $actualComplaintData['number'], $complaintMessage);
 
+        $this->assertArrayHasKey('email', $actualComplaintData, $complaintMessage);
+        $this->assertSame($expectedComplaint->getEmail(), $actualComplaintData['email'], $complaintMessage);
+
         $this->assertArrayHasKey('createdAt', $actualComplaintData, $complaintMessage);
         $this->assertSame(
             DateTimeType::serialize($expectedComplaint->getCreatedAt()),

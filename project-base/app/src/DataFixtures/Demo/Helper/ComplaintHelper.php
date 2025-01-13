@@ -62,6 +62,7 @@ class ComplaintHelper
         $complaintData->order = $order;
         $complaintData->status = $status;
         $complaintData->complaintItems = $items;
+        $complaintData->email = $customerUser->getEmail();
 
         $deliveryAddress = $customerUser->getDefaultDeliveryAddress();
         $complaintData->deliveryFirstName = $deliveryAddress->getFirstName();

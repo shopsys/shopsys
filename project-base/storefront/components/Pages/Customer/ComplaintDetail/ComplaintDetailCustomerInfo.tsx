@@ -1,3 +1,4 @@
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { MailIcon } from 'components/Basic/Icon/MailIcon';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { InformationCard } from 'components/Basic/InformationCard/InformationCard';
@@ -17,6 +18,13 @@ export const ComplaintDetailCustomerInfo: FC<ComplaintDetailCustomerInfoProps> =
                 <span>
                     {complaint.deliveryFirstName} {complaint.deliveryLastName}
                 </span>
+
+                <ExtendedNextLink
+                    className="hover:text-greyDark text-textAccent underline hover:no-underline"
+                    href={`mailto:${complaint.email}`}
+                >
+                    {complaint.email}
+                </ExtendedNextLink>
 
                 <span>{complaint.deliveryTelephone}</span>
             </InformationCard>

@@ -772,6 +772,8 @@ export type TypeComplaint = {
   deliveryStreet: Scalars['String']['output'];
   /** Contact telephone number for delivery */
   deliveryTelephone: Scalars['String']['output'];
+  /** The customer's email address */
+  email: Scalars['String']['output'];
   /** All items in the complaint */
   items: Array<TypeComplaintItem>;
   /** Unique complaint number */
@@ -807,6 +809,8 @@ export type TypeComplaintEdge = {
 export type TypeComplaintInput = {
   /** Delivery address */
   deliveryAddress: TypeDeliveryAddressInput;
+  /** The customer's email address */
+  email: Scalars['String']['input'];
   /** All items in the complaint */
   items: Array<TypeComplaintItemInput>;
   /** UUID of the order */

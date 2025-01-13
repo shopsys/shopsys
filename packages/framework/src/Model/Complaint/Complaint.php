@@ -136,6 +136,12 @@ class Complaint
     protected $customer;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $email;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintData $complaintData
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItem[] $complaintItems
      */
@@ -316,6 +322,7 @@ class Complaint
         $this->deliveryPostcode = $complaintData->deliveryPostcode;
         $this->deliveryCountry = $complaintData->deliveryCountry;
         $this->status = $complaintData->status;
+        $this->email = $complaintData->email;
     }
 
     /**
@@ -345,5 +352,13 @@ class Complaint
     public function getCustomer()
     {
         return $this->customer;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
     }
 }

@@ -10,6 +10,7 @@ query GetComplaintsQuery ($first: Int, $last: Int, $searchInput: SearchInput) {
             node {
                 uuid
                 number
+                email
                 createdAt
                 deliveryFirstName
                 deliveryLastName

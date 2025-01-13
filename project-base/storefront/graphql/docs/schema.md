@@ -4149,6 +4149,15 @@ Contact telephone number for delivery
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>email</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The customer's email address
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>items</strong></td>
 <td valign="top">[<a href="#complaintitem">ComplaintItem</a>!]!</td>
 <td>
@@ -10019,6 +10028,15 @@ UUID of a transport that should be added to the cart. If this is set to null, th
 <td>
 
 Delivery address
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>email</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The customer's email address
 
 </td>
 </tr>

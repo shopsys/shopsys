@@ -85,4 +85,9 @@ class ComplaintData
      * @var \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData[]
      */
     public $complaintItems = [];
+
+    /**
+     * @var string|null
+     */
+    public $email;
 }
