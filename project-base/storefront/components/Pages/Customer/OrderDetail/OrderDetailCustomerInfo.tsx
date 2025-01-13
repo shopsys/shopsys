@@ -5,7 +5,6 @@ import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { InformationCard } from 'components/Basic/InformationCard/InformationCard';
 import { TypeOrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
-import { isPacketeryTransport } from 'utils/packetery';
 
 type OrderDetailCustomerInfoProps = {
     order: TypeOrderDetailFragment;
@@ -13,8 +12,7 @@ type OrderDetailCustomerInfoProps = {
 
 export const OrderDetailCustomerInfo: FC<OrderDetailCustomerInfoProps> = ({ order }) => {
     const { t } = useTranslation();
-    const isPickupPlaceTransport =
-        order.transport.isPersonalPickup || isPacketeryTransport(order.transport.transportTypeCode);
+    const isPickupPlaceTransport = order.transport.transportTypeCode !== 'common';
 
     return (
         <div className="flex w-full flex-col gap-6 vl:flex-row vl:flex-wrap xl:flex-nowrap">
