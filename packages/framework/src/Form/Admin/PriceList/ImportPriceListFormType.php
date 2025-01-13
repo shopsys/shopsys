@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Form\Admin\PriceList;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\BasicFileUploadType;
+use Shopsys\FrameworkBundle\Form\Constraints\MustUploadFile;
 use Shopsys\FrameworkBundle\Form\DateTimeType;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Model\PriceList\PriceList;
@@ -103,7 +104,7 @@ final class ImportPriceListFormType extends AbstractType
             ->add('csvFile', BasicFileUploadType::class, [
                 'required' => true,
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please upload a CSV file']),
+                    new MustUploadFile(['message' => 'Please upload a CSV file']),
                 ],
                 'file_constraints' => [
                     new Constraints\File([
