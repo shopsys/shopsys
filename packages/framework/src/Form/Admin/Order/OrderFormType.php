@@ -20,7 +20,7 @@ use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderData;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
-use Shopsys\FrameworkBundle\Model\Payment\Transaction\ExternalPaymentStatus;
+use Shopsys\FrameworkBundle\Model\Payment\Transaction\ExternalPaymentStatusHelper;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -45,12 +45,14 @@ class OrderFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
      * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\ExternalPaymentStatusHelper $externalPaymentStatusHelper
      */
     public function __construct(
         private readonly CountryFacade $countryFacade,
         private readonly OrderStatusFacade $orderStatusFacade,
         private readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
         private readonly Domain $domain,
+        private readonly ExternalPaymentStatusHelper $externalPaymentStatusHelper,
     ) {
     }
 
@@ -207,7 +209,7 @@ class OrderFormType extends AbstractType
 
             if ($paymentTransaction !== false) {
                 if ($paymentTransaction->getExternalPaymentStatus() !== null) {
-                    $translatedPaymentStatus = ExternalPaymentStatus::getTranslatedStatus($paymentTransaction->getExternalPaymentStatus());
+                    $translatedPaymentStatus = $this->externalPaymentStatusHelper->getTranslatedStatus($paymentTransaction->getExternalPaymentStatus());
                 } else {
                     $translatedPaymentStatus = t('Order has not been sent to payment gateway');
                 }

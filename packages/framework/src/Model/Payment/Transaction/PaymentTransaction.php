@@ -69,6 +69,11 @@ class PaymentTransaction
     protected $refundedAmount;
 
     /**
+     * @var \Shopsys\FrameworkBundle\Model\Payment\Transaction\ExternalPaymentStatusHelper
+     */
+    protected $externalPaymentStatusHelper;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionData $paymentTransactionData
      */
     public function __construct(PaymentTransactionData $paymentTransactionData)
@@ -199,7 +204,7 @@ class PaymentTransaction
             return false;
         }
 
-        return $this->externalPaymentStatus === PaymentStatus::PAID;
+        return $this->getExternalPaymentStatusHelper()->isPaid($this->externalPaymentStatus);
     }
 
     /**
@@ -211,6 +216,18 @@ class PaymentTransaction
             return false;
         }
 
-        return $this->externalPaymentStatus === PaymentStatus::PAYMENT_METHOD_CHOSEN;
+        return $this->getExternalPaymentStatusHelper()->hasPaymentInProcess($this->externalPaymentStatus);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Payment\Transaction\ExternalPaymentStatusHelper
+     */
+    protected function getExternalPaymentStatusHelper(): ExternalPaymentStatusHelper
+    {
+        if ($this->externalPaymentStatusHelper === null) {
+            $this->externalPaymentStatusHelper = new ExternalPaymentStatusHelper();
+        }
+
+        return $this->externalPaymentStatusHelper;
     }
 }
