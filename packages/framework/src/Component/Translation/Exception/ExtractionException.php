@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Translation\Exception;
 
 use Exception;
 
-class ExtractionException extends Exception implements TranslationException
+class ExtractionException extends Exception
 {
     /**
      * @param string $message

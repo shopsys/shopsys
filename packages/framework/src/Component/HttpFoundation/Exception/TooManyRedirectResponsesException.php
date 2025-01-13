@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\HttpFoundation\Exception;
 
 use Exception;
 
-class TooManyRedirectResponsesException extends Exception implements HttpFoundationException
+class TooManyRedirectResponsesException extends Exception
 {
     /**
      * @param string $message

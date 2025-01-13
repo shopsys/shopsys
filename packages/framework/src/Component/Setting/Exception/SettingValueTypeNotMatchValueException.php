@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Setting\Exception;
 
 use Exception;
 
-class SettingValueTypeNotMatchValueException extends Exception implements SettingException
+class SettingValueTypeNotMatchValueException extends Exception
 {
     /**
      * @param string $message

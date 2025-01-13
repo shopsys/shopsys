@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\MassAction\Exception;
 
 use Exception;
 
-class UnsupportedSelectionType extends Exception implements MassActionException
+class UnsupportedSelectionType extends Exception
 {
     /**
      * @param string $selectionType

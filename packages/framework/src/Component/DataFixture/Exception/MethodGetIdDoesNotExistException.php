@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\DataFixture\Exception;
 
 use Exception;
 
-class MethodGetIdDoesNotExistException extends Exception implements DataFixtureException
+class MethodGetIdDoesNotExistException extends Exception
 {
     /**
      * @param string $message

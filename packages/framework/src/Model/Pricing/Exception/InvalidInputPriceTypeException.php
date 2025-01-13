@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Exception;
 
 use Exception;
 
-class InvalidInputPriceTypeException extends Exception implements PricingException
+class InvalidInputPriceTypeException extends Exception
 {
     /**
      * @param string $message

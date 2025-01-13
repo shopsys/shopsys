@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Vat\Exception;
 
 use Exception;
 
-class VatWithReplacedDeleteException extends Exception implements VatException
+class VatWithReplacedDeleteException extends Exception
 {
     /**
      * @param string $message

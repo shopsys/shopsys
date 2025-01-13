@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Transport\Exception;
 
 use Exception;
 
-class TransportDomainNotFoundException extends Exception implements TransportException
+class TransportDomainNotFoundException extends Exception
 {
     /**
      * @param int $domainId

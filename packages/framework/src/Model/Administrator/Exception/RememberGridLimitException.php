@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Administrator\Exception;
 
 use Exception;
 
-class RememberGridLimitException extends Exception implements AdministratorException
+class RememberGridLimitException extends Exception
 {
     protected string $gridId;
 

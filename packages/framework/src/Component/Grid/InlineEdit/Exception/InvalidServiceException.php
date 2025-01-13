@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Grid\InlineEdit\Exception;
 
 use Exception;
 
-class InvalidServiceException extends Exception implements InlineEditException
+class InvalidServiceException extends Exception
 {
     /**
      * @param string $serviceName

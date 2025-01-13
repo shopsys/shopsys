@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Module\Exception;
 
 use Exception;
 
-class UnsupportedModuleException extends Exception implements ModuleException
+class UnsupportedModuleException extends Exception
 {
     /**
      * @param string $moduleName

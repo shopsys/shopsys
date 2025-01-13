@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\DataFixture\Exception;
 
 use Exception;
 
-class EntityIdIsNotSetException extends Exception implements DataFixtureException
+class EntityIdIsNotSetException extends Exception
 {
     /**
      * @param string $referenceName

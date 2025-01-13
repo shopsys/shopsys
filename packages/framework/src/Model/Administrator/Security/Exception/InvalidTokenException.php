@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Administrator\Security\Exception;
 
 use Exception;
 
-class InvalidTokenException extends Exception implements SecurityException
+class InvalidTokenException extends Exception
 {
     /**
      * @param string $message

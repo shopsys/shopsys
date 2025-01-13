@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Image\Config\Exception;
 
 use Exception;
 
-class DuplicateTypeNameException extends Exception implements ImageConfigException
+class DuplicateTypeNameExceptionInvalid extends InvalidImageConfigException
 {
     protected ?string $typeName = null;
 

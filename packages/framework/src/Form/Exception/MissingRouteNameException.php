@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Form\Exception;
 
 use Exception;
 
-class MissingRouteNameException extends Exception implements FormException
+class MissingRouteNameException extends Exception
 {
     /**
      * @param string $message

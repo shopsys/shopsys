@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception;
 
 use Exception;
 
-class UploadedFileEntityConfigNotFoundException extends Exception implements UploadedFileConfigException
+class UploadedFileEntityConfigNotFoundException extends Exception
 {
     /**
      * @param string $entityClassOrName

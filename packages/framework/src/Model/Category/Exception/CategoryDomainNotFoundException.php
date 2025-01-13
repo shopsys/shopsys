@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Category\Exception;
 
 use Exception;
 
-class CategoryDomainNotFoundException extends Exception implements CategoryException
+class CategoryDomainNotFoundException extends Exception
 {
     /**
      * @param int $domainId

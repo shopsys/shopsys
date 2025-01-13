@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Advert\Exception;
 
 use Exception;
 
-class AdvertPositionNotKnownException extends Exception implements AdvertException
+class AdvertPositionNotKnownException extends Exception
 {
     /**
      * @param string $positionName

@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\Item\Exception;
 
 use Exception;
 
-class InvalidArgumentException extends Exception implements OrderItemException
+class InvalidArgumentException extends Exception
 {
     /**
      * @param string $message

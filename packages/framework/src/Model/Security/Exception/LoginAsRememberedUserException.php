@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Security\Exception;
 
 use Exception;
 
-class LoginAsRememberedUserException extends Exception implements SecurityException
+class LoginAsRememberedUserException extends Exception
 {
     /**
      * @param string $message

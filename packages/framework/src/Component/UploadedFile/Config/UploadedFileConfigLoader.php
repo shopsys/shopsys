@@ -6,8 +6,8 @@ namespace Shopsys\FrameworkBundle\Component\UploadedFile\Config;
 
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\DuplicateEntityNameException;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\DuplicateTypeNameException;
+use Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\InvalidUploadedFileConfigException;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\NotSupportedTypeNameException;
-use Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\UploadedFileConfigException;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception\UploadedFileConfigurationParseException;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
@@ -70,7 +70,7 @@ class UploadedFileConfigLoader
                 $uploadedFileEntityConfig = $this->processEntityConfig($entityConfig);
                 $this->entityNamesByEntityNames[$uploadedFileEntityConfig->getEntityName()] = $uploadedFileEntityConfig->getEntityName();
                 $this->uploadedFileEntityConfigsByClass[$uploadedFileEntityConfig->getEntityClass()] = $uploadedFileEntityConfig;
-            } catch (UploadedFileConfigException $e) {
+            } catch (InvalidUploadedFileConfigException $e) {
                 throw new UploadedFileConfigurationParseException(
                     $entityConfig[UploadedFileConfigDefinition::CONFIG_CLASS],
                     $e,

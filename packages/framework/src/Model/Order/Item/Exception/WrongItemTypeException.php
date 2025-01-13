@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\Item\Exception;
 
 use Exception;
 
-class WrongItemTypeException extends Exception implements OrderItemException
+class WrongItemTypeException extends Exception
 {
     /**
      * @param string $expectedType

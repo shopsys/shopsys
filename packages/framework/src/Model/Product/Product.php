@@ -14,7 +14,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Product\Exception\MainVariantCannotBeVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductCannotBeTransformedException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductDomainNotFoundException;
-use Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsAlreadyMainVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsAlreadyVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsNotVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\VariantCanBeAddedOnlyToMainVariantException;
@@ -826,13 +825,6 @@ class Product extends AbstractTranslatableEntity
         }
 
         return new ProductDeleteResult();
-    }
-
-    public function checkIsNotMainVariant(): void
-    {
-        if ($this->isMainVariant()) {
-            throw new ProductIsAlreadyMainVariantException($this->id);
-        }
     }
 
     /**

@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Command\Exception;
 
 use Exception;
 
-class CronCommandException extends Exception implements CommandException
+class CronCommandException extends Exception
 {
     /**
      * @param string $message

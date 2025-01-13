@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception;
 
 use Exception;
 
-class AdvancedSearchFilterOperatorNotFoundException extends Exception implements AdvancedSearchException
+class AdvancedSearchFilterOperatorNotFoundException extends Exception
 {
     /**
      * @param string $operator

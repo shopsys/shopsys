@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Breadcrumb\Exception;
 
 use Exception;
 
-class BreadcrumbGeneratorNotFoundException extends Exception implements BreadcrumbException
+class BreadcrumbGeneratorNotFoundException extends Exception
 {
     /**
      * @param string $routeName

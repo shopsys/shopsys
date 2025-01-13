@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Administrator\Activity\Exception;
 
 use Exception;
 
-class CurrentAdministratorActivityNotFoundException extends Exception implements AdministratorActivityException
+class CurrentAdministratorActivityNotFoundException extends Exception
 {
     /**
      * @param string $message

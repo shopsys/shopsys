@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Administrator\Security\Exception;
 
 use Exception;
 
-class AdministratorIsNotLoggedException extends Exception implements SecurityException
+class AdministratorIsNotLoggedException extends Exception
 {
     /**
      * @param string $message

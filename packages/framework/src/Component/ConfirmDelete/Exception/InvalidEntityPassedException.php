@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\ConfirmDelete\Exception;
 
 use Exception;
 
-class InvalidEntityPassedException extends Exception implements ConfirmDeleteException
+class InvalidEntityPassedException extends Exception
 {
     /**
      * @param string $message

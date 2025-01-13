@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Localization\Exception;
 
 use Exception;
 
-class UnsupportedCurrencyException extends Exception implements LocalizationException
+class UnsupportedCurrencyException extends Exception
 {
     /**
      * @param string $currencyCode

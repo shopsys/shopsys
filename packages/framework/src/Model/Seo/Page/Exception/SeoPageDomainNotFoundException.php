@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Seo\Page\Exception;
 
 use Exception;
 
-class SeoPageDomainNotFoundException extends Exception implements SeoPageExceptionInterface
+class SeoPageDomainNotFoundException extends Exception
 {
     /**
      * @param int $seoPageId

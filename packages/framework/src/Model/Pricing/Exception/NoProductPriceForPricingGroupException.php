@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Exception;
 
 use Exception;
 
-class NoProductPriceForPricingGroupException extends Exception implements PricingException
+class NoProductPriceForPricingGroupException extends Exception
 {
     /**
      * @param int $productId

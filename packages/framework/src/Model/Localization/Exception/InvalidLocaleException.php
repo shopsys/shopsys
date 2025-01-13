@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Localization\Exception;
 
 use Exception;
 
-class InvalidLocaleException extends Exception implements LocalizationException
+class InvalidLocaleException extends Exception
 {
     /**
      * @param string $message

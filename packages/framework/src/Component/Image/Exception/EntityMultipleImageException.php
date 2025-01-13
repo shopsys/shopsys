@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Image\Exception;
 
 use Exception;
 
-class EntityMultipleImageException extends Exception implements ImageException
+class EntityMultipleImageException extends Exception
 {
     /**
      * @param string $message

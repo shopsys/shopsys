@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Domain\Exception;
 
 use Exception;
 
-class InvalidDomainIdException extends Exception implements DomainException
+class InvalidDomainIdException extends Exception
 {
     /**
      * @param string $message

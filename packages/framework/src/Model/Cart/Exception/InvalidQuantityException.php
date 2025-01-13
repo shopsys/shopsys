@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Cart\Exception;
 
 use Exception;
 
-class InvalidQuantityException extends Exception implements CartException
+class InvalidQuantityException extends Exception
 {
     protected mixed $invalidValue;
 

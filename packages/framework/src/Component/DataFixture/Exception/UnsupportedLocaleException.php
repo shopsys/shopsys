@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\DataFixture\Exception;
 
 use Exception;
 
-class UnsupportedLocaleException extends Exception implements DataFixtureException
+class UnsupportedLocaleException extends Exception
 {
     /**
      * @param string $locale

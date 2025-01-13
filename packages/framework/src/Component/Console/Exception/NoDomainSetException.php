@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Console\Exception;
 
 use Exception;
 
-class NoDomainSetException extends Exception implements ConsoleException
+class NoDomainSetException extends Exception
 {
     /**
      * @param \Exception|null $previous

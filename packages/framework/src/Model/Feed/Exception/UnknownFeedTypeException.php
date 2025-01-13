@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Feed\Exception;
 
 use Exception;
 
-class UnknownFeedTypeException extends Exception implements FeedException
+class UnknownFeedTypeException extends Exception
 {
     /**
      * @param string $type

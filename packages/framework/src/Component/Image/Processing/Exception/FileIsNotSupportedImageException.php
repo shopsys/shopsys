@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Image\Processing\Exception;
 
 use Exception;
 
-class FileIsNotSupportedImageException extends Exception implements ImageProcessingException
+class FileIsNotSupportedImageException extends Exception
 {
     /**
      * @param string $message

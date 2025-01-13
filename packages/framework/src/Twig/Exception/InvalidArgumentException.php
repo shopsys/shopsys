@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Twig\Exception;
 use Exception;
 use InvalidArgumentException as BaseInvalidArgumentException;
 
-class InvalidArgumentException extends BaseInvalidArgumentException implements TwigException
+class InvalidArgumentException extends BaseInvalidArgumentException
 {
     /**
      * @param string $message

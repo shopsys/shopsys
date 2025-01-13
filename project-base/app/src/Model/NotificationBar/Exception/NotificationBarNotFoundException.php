@@ -6,6 +6,6 @@ namespace App\Model\NotificationBar\Exception;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class NotificationBarNotFoundException extends NotFoundHttpException implements NotificationBarExceptionInterface
+class NotificationBarNotFoundException extends NotFoundHttpException
 {
 }

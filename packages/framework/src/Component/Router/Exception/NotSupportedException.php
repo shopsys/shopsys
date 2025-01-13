@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Router\Exception;
 
 use Exception;
 
-class NotSupportedException extends Exception implements RouterException
+class NotSupportedException extends Exception
 {
     /**
      * @param string $message

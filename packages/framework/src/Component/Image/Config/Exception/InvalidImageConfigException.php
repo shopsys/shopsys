@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Image\Config\Exception;
 
-use Throwable;
+use Exception;
 
-interface ImageConfigException extends Throwable
+class InvalidImageConfigException extends Exception
 {
 }

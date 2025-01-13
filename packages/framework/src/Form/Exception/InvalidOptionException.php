@@ -6,6 +6,6 @@ namespace Shopsys\FrameworkBundle\Form\Exception;
 
 use Exception;
 
-class InvalidOptionException extends Exception implements FormException
+class InvalidOptionException extends Exception
 {
 }

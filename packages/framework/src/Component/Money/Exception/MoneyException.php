@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Money\Exception;
 
-use Throwable;
+use Exception;
 
-interface MoneyException extends Throwable
+class MoneyException extends Exception
 {
 }

@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Localization\Exception;
 use Exception;
 use RuntimeException;
 
-class AdminLocaleNotFoundException extends RuntimeException implements LocalizationException
+class AdminLocaleNotFoundException extends RuntimeException
 {
     /**
      * @param string|null $adminLocale

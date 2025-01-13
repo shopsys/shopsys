@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Image\Config\Exception;
 
 use Exception;
 
-class DuplicateEntityNameException extends Exception implements ImageConfigException
+class DuplicateEntityNameExceptionInvalid extends InvalidImageConfigException
 {
     protected string $entityName;
 

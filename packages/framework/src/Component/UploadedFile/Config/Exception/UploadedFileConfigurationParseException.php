@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception;
 use Exception;
 use Throwable;
 
-class UploadedFileConfigurationParseException extends Exception implements UploadedFileConfigException
+class UploadedFileConfigurationParseException extends Exception
 {
     protected string $entityClass;
 

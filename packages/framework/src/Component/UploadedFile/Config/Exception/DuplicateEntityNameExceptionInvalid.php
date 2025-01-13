@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception;
 
 use Exception;
 
-class DuplicateEntityNameException extends Exception implements UploadedFileConfigException
+class DuplicateEntityNameException extends InvalidUploadedFileConfigException
 {
     protected string $entityName;
 

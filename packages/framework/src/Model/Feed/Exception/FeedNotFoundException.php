@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Feed\Exception;
 
 use Exception;
 
-class FeedNotFoundException extends Exception implements FeedException
+class FeedNotFoundException extends Exception
 {
     /**
      * @param string $name

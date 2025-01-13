@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Cron\Config\Exception;
 
 use Exception;
 
-class InvalidTimeFormatException extends Exception implements CronConfigException
+class InvalidTimeFormatException extends Exception
 {
     /**
      * @param string $timeString

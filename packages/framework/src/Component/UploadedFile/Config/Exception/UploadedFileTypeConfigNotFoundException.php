@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception;
 
 use Exception;
 
-class UploadedFileTypeConfigNotFoundException extends Exception implements UploadedFileConfigException
+class UploadedFileTypeConfigNotFoundException extends Exception
 {
     /**
      * @param string $typeName

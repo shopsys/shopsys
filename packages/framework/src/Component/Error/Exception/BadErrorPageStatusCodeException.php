@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Error\Exception;
 
 use Exception;
 
-class BadErrorPageStatusCodeException extends Exception implements ErrorException
+class BadErrorPageStatusCodeException extends Exception
 {
     /**
      * @param string $url

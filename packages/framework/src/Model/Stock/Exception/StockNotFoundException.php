@@ -6,6 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Stock\Exception;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class StockNotFoundException extends NotFoundHttpException implements StockException
+class StockNotFoundException extends NotFoundHttpException
 {
 }

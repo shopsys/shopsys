@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Cron\Exception;
 
 use Exception;
 
-class InvalidCronModuleException extends Exception implements CronException
+class InvalidCronModuleException extends Exception
 {
     /**
      * @param string $serviceId

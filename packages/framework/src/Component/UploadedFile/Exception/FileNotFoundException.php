@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\UploadedFile\Exception;
 
 use Exception;
 
-class FileNotFoundException extends Exception implements FileException
+class FileNotFoundException extends Exception
 {
     /**
      * @param string $message

@@ -6,6 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Mail\Exception;
 
 use Exception;
 
-class InvalidMailTemplateVariablesConfigurationException extends Exception implements MailException
+class InvalidMailTemplateVariablesConfigurationException extends Exception
 {
 }

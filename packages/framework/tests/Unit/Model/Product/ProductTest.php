@@ -6,7 +6,6 @@ namespace Tests\FrameworkBundle\Unit\Model\Product;
 
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Model\Product\Exception\MainVariantCannotBeVariantException;
-use Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsAlreadyMainVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsAlreadyVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsNotVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\VariantCanBeAddedOnlyToMainVariantException;
@@ -133,16 +132,6 @@ class ProductTest extends TestCase
 
         $this->assertEmpty($mainVariant->getProductDeleteResult()->getProductsForRecalculations());
         $this->assertFalse($variant->isVariant());
-    }
-
-    public function testCheckIsNotMainVariantException()
-    {
-        $productData = TestProductProvider::getTestProductData();
-        $variant = Product::create($productData);
-        $mainVariant = Product::createMainVariant($productData, [$variant]);
-
-        $this->expectException(ProductIsAlreadyMainVariantException::class);
-        $mainVariant->checkIsNotMainVariant();
     }
 
     public function testRefreshVariants()

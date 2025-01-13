@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\Item\Exception;
 
 use Exception;
 
-class MainVariantCannotBeOrderedException extends Exception implements OrderItemException
+class MainVariantCannotBeOrderedException extends Exception
 {
     /**
      * @param string $message

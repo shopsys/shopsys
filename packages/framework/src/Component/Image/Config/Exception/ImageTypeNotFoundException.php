@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Image\Config\Exception;
 
 use Exception;
 
-class ImageTypeNotFoundException extends Exception implements ImageConfigException
+class ImageTypeNotFoundException extends Exception
 {
     protected string $entityClass;
 

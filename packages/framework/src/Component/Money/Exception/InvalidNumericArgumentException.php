@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Money\Exception;
 
-use Exception;
 use Throwable;
 
-class InvalidNumericArgumentException extends Exception implements MoneyException
+class InvalidNumericArgumentException extends MoneyException
 {
     /**
      * @param string $value

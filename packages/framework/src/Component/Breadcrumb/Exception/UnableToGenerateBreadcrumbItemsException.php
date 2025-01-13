@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Breadcrumb\Exception;
 
 use Exception;
 
-class UnableToGenerateBreadcrumbItemsException extends Exception implements BreadcrumbException
+class UnableToGenerateBreadcrumbItemsException extends Exception
 {
     /**
      * @param \Exception|null $previous

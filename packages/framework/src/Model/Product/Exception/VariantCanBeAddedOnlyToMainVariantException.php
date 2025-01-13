@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Exception;
 
 use Exception;
 
-class VariantCanBeAddedOnlyToMainVariantException extends Exception implements VariantException
+class VariantCanBeAddedOnlyToMainVariantException extends VariantException
 {
     /**
      * @param int $productId

@@ -6,6 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Mail\Exception;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class MailTemplateNotFoundException extends NotFoundHttpException implements MailException
+class MailTemplateNotFoundException extends NotFoundHttpException
 {
 }

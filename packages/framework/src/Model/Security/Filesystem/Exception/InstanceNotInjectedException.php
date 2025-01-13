@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Security\Filesystem\Exception;
 
 use Exception;
 
-class InstanceNotInjectedException extends Exception implements FilesystemException
+class InstanceNotInjectedException extends Exception
 {
     /**
      * @param string $message

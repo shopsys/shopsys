@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Throwable;
 
-class OrderItemUnitPricesAreInconsistentButTotalsAreNotForcedException extends RuntimeException implements OrderItemException
+class OrderItemUnitPricesAreInconsistentButTotalsAreNotForcedException extends RuntimeException
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $orderItem
