@@ -101,7 +101,7 @@ class PaymentInExistingOrderValidator extends ConstraintValidator
      */
     protected function validatePaymentCanBeChanged(Order $order, PaymentInExistingOrder $constraint): void
     {
-        if ($order->isPaid() === false && $order->getPayment()->isGoPay()) {
+        if ($this->orderFacade->isPaid($order) === false && $this->paymentFacade->isGatewayPayment($order->getPayment())) {
             return;
         }
 

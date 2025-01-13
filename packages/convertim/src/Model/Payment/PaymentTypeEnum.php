@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ConvertimBundle\Model\Payment;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Payment\AbstractPaymentTypeEnum;
 
 class PaymentTypeEnum extends AbstractPaymentTypeEnum
@@ -20,6 +21,7 @@ class PaymentTypeEnum extends AbstractPaymentTypeEnum
     /**
      * @return array<string, string>
      */
+    #[Override]
     public function getAllIndexedByTranslations(): array
     {
         return [
@@ -37,6 +39,7 @@ class PaymentTypeEnum extends AbstractPaymentTypeEnum
     /**
      * @return bool
      */
+    #[Override]
     public function shouldBeDisplayedInDefaultEshopCart(): bool
     {
         return false;

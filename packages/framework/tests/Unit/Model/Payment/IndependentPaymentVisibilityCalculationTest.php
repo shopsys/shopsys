@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver;
 use Shopsys\FrameworkBundle\Model\Payment\IndependentPaymentVisibilityCalculation;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentTypeEnum;
 use Tests\FrameworkBundle\Test\SetTranslatorTrait;
 
 class IndependentPaymentVisibilityCalculationTest extends TestCase
@@ -45,7 +46,7 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
 
     /**
      * @param bool $canSeePrices
-     * @param bool $isGatewayPayment
+     * @param string $paymentType
      * @param bool $isHidden
      * @param bool $isDeleted
      * @param bool $isHiddenByGoPay
@@ -56,7 +57,7 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
     #[DataProvider('paymentVisibilityProvider')]
     public function testIsIndependentlyVisible(
         bool $canSeePrices,
-        bool $isGatewayPayment,
+        string $paymentType,
         bool $isHidden,
         bool $isDeleted,
         bool $isHiddenByGoPay,
@@ -65,7 +66,7 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
         bool $expectedResult,
     ) {
         $paymentMock = $this->createMock(Payment::class);
-        $paymentMock->method('isGatewayPayment')->willReturn($isGatewayPayment);
+        $paymentMock->method('getType')->willReturn($paymentType);
         $paymentMock->method('isHidden')->willReturn($isHidden);
         $paymentMock->method('isDeleted')->willReturn($isDeleted);
         $paymentMock->method('isHiddenByGoPayByDomainId')->willReturn($isHiddenByGoPay);
@@ -86,7 +87,7 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
         return [
             'Customer can see prices' => [
                 'canSeePrices' => true,
-                'isGatewayPayment' => false,
+                'paymentType' => PaymentTypeEnum::TYPE_BASIC,
                 'isHidden' => false,
                 'isDeleted' => false,
                 'isHiddenByGoPay' => false,
@@ -96,7 +97,7 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
             ],
             'Payment name is empty' => [
                 'canSeePrices' => true,
-                'isGatewayPayment' => false,
+                'paymentType' => PaymentTypeEnum::TYPE_BASIC,
                 'isHidden' => false,
                 'isDeleted' => false,
                 'isHiddenByGoPay' => false,
@@ -106,7 +107,7 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
             ],
             'Payment is hidden' => [
                 'canSeePrices' => true,
-                'isGatewayPayment' => false,
+                'paymentType' => PaymentTypeEnum::TYPE_BASIC,
                 'isHidden' => true,
                 'isDeleted' => false,
                 'isHiddenByGoPay' => false,
@@ -116,7 +117,7 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
             ],
             'Payment is deleted' => [
                 'canSeePrices' => true,
-                'isGatewayPayment' => false,
+                'paymentType' => PaymentTypeEnum::TYPE_BASIC,
                 'isHidden' => false,
                 'isDeleted' => true,
                 'isHiddenByGoPay' => false,
@@ -126,7 +127,7 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
             ],
             'Payment is hidden by GoPay' => [
                 'canSeePrices' => true,
-                'isGatewayPayment' => false,
+                'paymentType' => PaymentTypeEnum::TYPE_BASIC,
                 'isHidden' => false,
                 'isDeleted' => false,
                 'isHiddenByGoPay' => true,
@@ -136,7 +137,7 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
             ],
             'Payment is enabled' => [
                 'canSeePrices' => true,
-                'isGatewayPayment' => false,
+                'paymentType' => PaymentTypeEnum::TYPE_BASIC,
                 'isHidden' => false,
                 'isDeleted' => false,
                 'isHiddenByGoPay' => false,
@@ -146,7 +147,7 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
             ],
             'Payment is not enabled' => [
                 'canSeePrices' => true,
-                'isGatewayPayment' => false,
+                'paymentType' => PaymentTypeEnum::TYPE_BASIC,
                 'isHidden' => false,
                 'isDeleted' => false,
                 'isHiddenByGoPay' => false,
@@ -156,7 +157,7 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
             ],
             'Customer cannot see prices and payment is a gateway payment' => [
                 'canSeePrices' => false,
-                'isGatewayPayment' => true,
+                'paymentType' => PaymentTypeEnum::TYPE_GOPAY,
                 'isHidden' => false,
                 'isDeleted' => false,
                 'isHiddenByGoPay' => false,
@@ -166,7 +167,7 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
             ],
             'Customer cannot see prices and payment is not a gateway payment' => [
                 'canSeePrices' => false,
-                'isGatewayPayment' => false,
+                'paymentType' => PaymentTypeEnum::TYPE_BASIC,
                 'isHidden' => false,
                 'isDeleted' => false,
                 'isHiddenByGoPay' => false,

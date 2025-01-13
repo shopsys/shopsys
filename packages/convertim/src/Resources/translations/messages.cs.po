@@ -37,6 +37,90 @@ msgstr "PPL (pouze Convertim)"
 msgid "PayPal (Convertim only)"
 msgstr "PayPal (pouze Convertim)"
 
+msgid "Payment approved"
+msgstr "Platba schválena"
+
+msgid "Payment authorized"
+msgstr "Platba autorizována"
+
+msgid "Payment authorized pending"
+msgstr "Platba čeká na autorizaci"
+
+msgid "Payment canceled"
+msgstr "Platba zrušena"
+
+msgid "Payment created"
+msgstr "Platba vytvořena"
+
+msgid "Payment error"
+msgstr "Chyba platby"
+
+msgid "Payment expired"
+msgstr "Platba vypršela"
+
+msgid "Payment failed"
+msgstr "Platba selhala"
+
+msgid "Payment has expired"
+msgstr "Platba expirovala"
+
+msgid "Payment method chosen"
+msgstr "Platební metoda vybrána"
+
+msgid "Payment paid"
+msgstr "Platba uhrazena"
+
+msgid "Payment partially refunded"
+msgstr "Platba částečně refundována"
+
+msgid "Payment processing"
+msgstr "Platba zpracovávána"
+
+msgid "Payment received"
+msgstr "Platba přijata"
+
+msgid "Payment refund scheduled"
+msgstr "Refundace platby naplánována"
+
+msgid "Payment refunded"
+msgstr "Platba refundována"
+
+msgid "Payment refunded bulk"
+msgstr "Platba refundována hromadně"
+
+msgid "Payment refused"
+msgstr "Platba odmítnuta"
+
+msgid "Payment requires action"
+msgstr "Platba vyžaduje akci"
+
+msgid "Payment requires capture"
+msgstr "Platba vyžaduje zachycení"
+
+msgid "Payment requires confirmation"
+msgstr "Platba vyžaduje potvrzení"
+
+msgid "Payment requires payment method"
+msgstr "Platba vyžaduje způsob platby"
+
+msgid "Payment sent for refund"
+msgstr "Platba odeslána k refundaci"
+
+msgid "Payment sent for settle"
+msgstr "Platba odeslána k vyřízení"
+
+msgid "Payment settle scheduled"
+msgstr "Platba naplánována k vyřízení"
+
+msgid "Payment settled"
+msgstr "Platba vyřízena"
+
+msgid "Payment settled bulk"
+msgstr "Platba vyřízena hromadně"
+
+msgid "Payment succeeded"
+msgstr "Platba úspěšná"
+
 msgid "Promo code"
 msgstr "Slevový kupón"
 

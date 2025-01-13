@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ConvertimBundle\Model\Transport;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Transport\AbstractTransportTypeEnum;
 
 class TransportTypeEnum extends AbstractTransportTypeEnum
@@ -16,6 +17,7 @@ class TransportTypeEnum extends AbstractTransportTypeEnum
     /**
      * @return array<string, string>
      */
+    #[Override]
     public function getAllIndexedByTranslations(): array
     {
         return [
@@ -29,6 +31,7 @@ class TransportTypeEnum extends AbstractTransportTypeEnum
     /**
      * @return bool
      */
+    #[Override]
     public function shouldBeDisplayedInDefaultEshopCart(): bool
     {
         return false;

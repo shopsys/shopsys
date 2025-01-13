@@ -28,6 +28,7 @@ use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade;
+use Shopsys\FrameworkBundle\Model\Payment\Transaction\ExternalPaymentStatusHelper;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
@@ -40,70 +41,6 @@ use Webmozart\Assert\Assert;
 
 class OrderFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository $orderNumberSequenceRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderRepository $orderRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator $orderUrlGenerator
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository $orderStatusRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade $orderMailFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderHashGeneratorRepository $orderHashGeneratorRepository
-     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
-     * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade $heurekaFacade
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFactory $orderFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Twig\NumberFormatterExtension $numberFormatterExtension
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory $orderItemFactory
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade $paymentTransactionFacade
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory $paymentTransactionDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade $paymentServiceFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactory $orderDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
-     */
-    public function __construct(
-        protected readonly EntityManagerInterface $em,
-        protected readonly OrderNumberSequenceRepository $orderNumberSequenceRepository,
-        protected readonly OrderRepository $orderRepository,
-        protected readonly OrderUrlGenerator $orderUrlGenerator,
-        protected readonly OrderStatusRepository $orderStatusRepository,
-        protected readonly OrderMailFacade $orderMailFacade,
-        protected readonly OrderHashGeneratorRepository $orderHashGeneratorRepository,
-        protected readonly Setting $setting,
-        protected readonly Localization $localization,
-        protected readonly AdministratorFrontSecurityFacade $administratorFrontSecurityFacade,
-        protected readonly CurrentPromoCodeFacade $currentPromoCodeFacade,
-        protected readonly CartFacade $cartFacade,
-        protected readonly CustomerUserFacade $customerUserFacade,
-        protected readonly CurrentCustomerUser $currentCustomerUser,
-        protected readonly HeurekaFacade $heurekaFacade,
-        protected readonly Domain $domain,
-        protected readonly OrderFactory $orderFactory,
-        protected readonly OrderPriceCalculation $orderPriceCalculation,
-        protected readonly OrderItemPriceCalculation $orderItemPriceCalculation,
-        protected readonly NumberFormatterExtension $numberFormatterExtension,
-        protected readonly PaymentPriceCalculation $paymentPriceCalculation,
-        protected readonly TransportPriceCalculation $transportPriceCalculation,
-        protected readonly OrderItemFactory $orderItemFactory,
-        protected readonly PaymentTransactionFacade $paymentTransactionFacade,
-        protected readonly PaymentTransactionDataFactory $paymentTransactionDataFactory,
-        protected readonly PaymentServiceFacade $paymentServiceFacade,
-        protected readonly OrderItemDataFactory $orderItemDataFactory,
-        protected readonly OrderDataFactory $orderDataFactory,
-        protected readonly PricingSetting $pricingSetting,
-    ) {
-    }
-
     /**
      * @param int $orderId
      * @return bool
@@ -161,6 +98,72 @@ class OrderFacade
         $this->handleRefundTransactions($orderData->paymentTransactionRefunds);
 
         return $order;
+    }
+
+    /**
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderNumberSequenceRepository $orderNumberSequenceRepository
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderRepository $orderRepository
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator $orderUrlGenerator
+     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository $orderStatusRepository
+     * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade $orderMailFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderHashGeneratorRepository $orderHashGeneratorRepository
+     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
+     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
+     * @param \Shopsys\FrameworkBundle\Model\Cart\CartFacade $cartFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade $heurekaFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFactory $orderFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation
+     * @param \Shopsys\FrameworkBundle\Twig\NumberFormatterExtension $numberFormatterExtension
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFactory $orderItemFactory
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade $paymentTransactionFacade
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory $paymentTransactionDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade $paymentServiceFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactory $orderDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\ExternalPaymentStatusHelper $externalPaymentStatusHelper
+     */
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+        protected readonly OrderNumberSequenceRepository $orderNumberSequenceRepository,
+        protected readonly OrderRepository $orderRepository,
+        protected readonly OrderUrlGenerator $orderUrlGenerator,
+        protected readonly OrderStatusRepository $orderStatusRepository,
+        protected readonly OrderMailFacade $orderMailFacade,
+        protected readonly OrderHashGeneratorRepository $orderHashGeneratorRepository,
+        protected readonly Setting $setting,
+        protected readonly Localization $localization,
+        protected readonly AdministratorFrontSecurityFacade $administratorFrontSecurityFacade,
+        protected readonly CurrentPromoCodeFacade $currentPromoCodeFacade,
+        protected readonly CartFacade $cartFacade,
+        protected readonly CustomerUserFacade $customerUserFacade,
+        protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly HeurekaFacade $heurekaFacade,
+        protected readonly Domain $domain,
+        protected readonly OrderFactory $orderFactory,
+        protected readonly OrderPriceCalculation $orderPriceCalculation,
+        protected readonly OrderItemPriceCalculation $orderItemPriceCalculation,
+        protected readonly NumberFormatterExtension $numberFormatterExtension,
+        protected readonly PaymentPriceCalculation $paymentPriceCalculation,
+        protected readonly TransportPriceCalculation $transportPriceCalculation,
+        protected readonly OrderItemFactory $orderItemFactory,
+        protected readonly PaymentTransactionFacade $paymentTransactionFacade,
+        protected readonly PaymentTransactionDataFactory $paymentTransactionDataFactory,
+        protected readonly PaymentServiceFacade $paymentServiceFacade,
+        protected readonly OrderItemDataFactory $orderItemDataFactory,
+        protected readonly OrderDataFactory $orderDataFactory,
+        protected readonly PricingSetting $pricingSetting,
+        protected readonly ExternalPaymentStatusHelper $externalPaymentStatusHelper,
+    ) {
     }
 
     /**
@@ -429,5 +432,35 @@ class OrderFacade
     public function getAllWithoutTrackingNumberByTransportType(string $transportType): array
     {
         return $this->orderRepository->getAllWithoutTrackingNumberByTransportType($transportType);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @return bool
+     */
+    public function isPaid(Order $order): bool
+    {
+        foreach ($order->getPaymentTransactions() as $paymentTransaction) {
+            if ($this->externalPaymentStatusHelper->isPaid($paymentTransaction->getExternalPaymentStatus())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @return bool
+     */
+    public function hasPaymentInProcess(Order $order): bool
+    {
+        foreach ($order->getPaymentTransactions() as $paymentTransaction) {
+            if ($this->externalPaymentStatusHelper->hasPaymentInProcess($paymentTransaction->getExternalPaymentStatus())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
