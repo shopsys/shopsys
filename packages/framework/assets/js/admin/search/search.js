@@ -13,8 +13,12 @@ export default class Search {
         $container.on('keydown', function (event) {
             if (event.key === 'Tab' && $searchResults.is(':visible')) {
                 event.preventDefault();
-                const focusableElements = $searchResults.filterAllNodes('table a');
-                $searchResults.filterAllNodes('table tr').removeClass('focused');
+                const focusableElements = $searchResults.filterAllNodes(
+                    'div.web__header__search--results--container a'
+                );
+                $searchResults
+                    .filterAllNodes('div.web__header__search--results--container div.result--item')
+                    .removeClass('focused');
                 const focusable = Array.from(focusableElements);
                 const currentIndex = focusable.indexOf(document.activeElement);
 
@@ -28,7 +32,7 @@ export default class Search {
 
                 if (nextIndex > -1) {
                     focusable[nextIndex].focus();
-                    $(focusable[nextIndex]).closest('tr').addClass('focused');
+                    $(focusable[nextIndex]).closest('div.result--item').addClass('focused');
                 }
             }
         });
@@ -45,6 +49,7 @@ export default class Search {
         $searchResultsCloseButton.on('click', function (event) {
             event.preventDefault();
             Search.closeResults($searchResults, $searchInput);
+            $searchResultsCloseButton.hide();
         });
 
         $(document).on('click', function (event) {
@@ -56,6 +61,11 @@ export default class Search {
         $searchInput.on('input', function () {
             const $input = $(this);
             clearTimeout(timeout);
+            if ($input.val().length > 0) {
+                $searchResultsCloseButton.show();
+            } else {
+                $searchResultsCloseButton.hide();
+            }
             timeout = setTimeout(function () {
                 if ($input.val().length >= 3) {
                     Search.findResultsByInput($input, $searchResults);
@@ -90,7 +100,6 @@ export default class Search {
         $searchResults.find('.js-search-results__window').html($htmlResult);
         $searchResults.find('.js-search-results__search').text(search);
         $searchResults.show();
-
     }
 }
 new Register().registerCallback(Search.init, 'Search.init');

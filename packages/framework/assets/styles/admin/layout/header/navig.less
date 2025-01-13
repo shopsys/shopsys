@@ -2,19 +2,41 @@
 @header-navig-icon-size-small: 20px;
 @header-navig-icon-background: @bg-page;
 
+ul.navig {
+    padding-inline-start: unset;
+}
 .navig {
-    .reset-ul();
-    display: block;
-    margin-left: @width-panel;
-
+    display: flex;
     font-size: 0;
+    padding-inline-start: unset;
 
     &--side {
-        position: absolute;
-        right: 10px;
+        display: flex;
+        width: 100%;
         margin: 0;
 
-        text-align: right;
+        &--left.navig__item {
+            display: flex;
+
+            @media @query-tablet {
+                margin-left: auto;
+                height: 100%;
+            }
+
+            @media @query-lg {
+                flex-grow: 1;
+            }
+        }
+
+        &--right {
+            display: flex;
+            margin-left: auto;
+            padding-right: 10px;
+
+            @media @query-tablet {
+                margin-left: unset;
+            }
+        }
     }
 
     &--main {
@@ -27,7 +49,7 @@
         position: relative;
         margin-right: 5px;
 
-        @media @query-lg {
+        @media @query-xl {
             margin-right: 10px;
         }
 
