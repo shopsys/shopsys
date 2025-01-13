@@ -1,19 +1,13 @@
-<table>
-{% for result in results %}
-    <tr>
-        <td>
-            <a href="{{ result['uri'] }}">{{ result['label'] }}
-                <span class="result--path">(
-                    {% for index, pathLabel in result['pathLabels'] %}
-                        {{ pathLabel }}
-
-                        {% if index + 1 < result['pathLabels']|length %}
-                            <span>></span>
-                        {% endif %}
-                    {% endfor %}
-                    )</span>
+<div class="web__header__search--results--container">
+    {% for result in results %}
+        <div class="result--item">
+            <a href="{{ result['uri'] }}">
+                {{ result['label'] }}
+                <br/>
+                <span class="result--path">
+                    {{ '(' ~ result['pathLabels']|join(' > ') ~ ')' }}
+                </span>
             </a>
-        </td>
-    </tr>
-{% endfor %}
-</table>
+        </div>
+    {% endfor %}
+</div>

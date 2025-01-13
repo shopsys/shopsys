@@ -67,10 +67,11 @@ body {
 
         &__logo {
             padding-left: @admin-header-padding;
-            width: 130px;
+            width: fit-content;
 
             @media @query-lg {
                 width: @width-panel;
+                flex-shrink: 0;
             }
 
             &__svg {
