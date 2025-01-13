@@ -40,11 +40,11 @@ class PaymentMutation extends AbstractMutation
         $uuid = $argument['orderUuid'];
         $order = $this->orderApiFacade->getByUuid($uuid);
 
-        if ($order->isPaid()) {
+        if ($this->orderFacade->isPaid($order)) {
             throw new OrderAlreadyPaidUserError('Order is already paid');
         }
 
-        if ($order->hasPaymentInProcess()) {
+        if ($this->orderFacade->hasPaymentInProcess($order)) {
             throw new OrderWaitingForProcessPaymentUserError('Order is awaiting payment verification.');
         }
 

@@ -37,6 +37,90 @@ msgstr ""
 msgid "PayPal (Convertim only)"
 msgstr ""
 
+msgid "Payment approved"
+msgstr ""
+
+msgid "Payment authorized"
+msgstr ""
+
+msgid "Payment authorized pending"
+msgstr ""
+
+msgid "Payment canceled"
+msgstr ""
+
+msgid "Payment created"
+msgstr ""
+
+msgid "Payment error"
+msgstr ""
+
+msgid "Payment expired"
+msgstr ""
+
+msgid "Payment failed"
+msgstr ""
+
+msgid "Payment has expired"
+msgstr ""
+
+msgid "Payment method chosen"
+msgstr ""
+
+msgid "Payment paid"
+msgstr ""
+
+msgid "Payment partially refunded"
+msgstr ""
+
+msgid "Payment processing"
+msgstr ""
+
+msgid "Payment received"
+msgstr ""
+
+msgid "Payment refund scheduled"
+msgstr ""
+
+msgid "Payment refunded"
+msgstr ""
+
+msgid "Payment refunded bulk"
+msgstr ""
+
+msgid "Payment refused"
+msgstr ""
+
+msgid "Payment requires action"
+msgstr ""
+
+msgid "Payment requires capture"
+msgstr ""
+
+msgid "Payment requires confirmation"
+msgstr ""
+
+msgid "Payment requires payment method"
+msgstr ""
+
+msgid "Payment sent for refund"
+msgstr ""
+
+msgid "Payment sent for settle"
+msgstr ""
+
+msgid "Payment settle scheduled"
+msgstr ""
+
+msgid "Payment settled"
+msgstr ""
+
+msgid "Payment settled bulk"
+msgstr ""
+
+msgid "Payment succeeded"
+msgstr ""
+
 msgid "Promo code"
 msgstr ""
 
