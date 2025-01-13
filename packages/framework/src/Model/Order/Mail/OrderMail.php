@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
+use Shopsys\FrameworkBundle\Twig\HiddenPriceExtension;
 use Shopsys\FrameworkBundle\Twig\PriceExtension;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Environment;
@@ -49,6 +50,7 @@ class OrderMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Twig\PriceExtension $priceExtension
      * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator $orderUrlGenerator
+     * @param \Shopsys\FrameworkBundle\Twig\HiddenPriceExtension $hiddenPriceExtension
      */
     public function __construct(
         protected readonly Setting $setting,
@@ -59,6 +61,7 @@ class OrderMail implements MessageFactoryInterface
         protected readonly PriceExtension $priceExtension,
         protected readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
         protected readonly OrderUrlGenerator $orderUrlGenerator,
+        protected readonly HiddenPriceExtension $hiddenPriceExtension,
     ) {
     }
 
@@ -155,13 +158,15 @@ class OrderMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return string
      */
-    protected function getFormattedPrice(Order $order)
+    protected function getFormattedPrice(Order $order): string
     {
-        return $this->priceExtension->priceTextWithCurrencyByCurrencyIdAndLocaleFilter(
+        $price = $this->priceExtension->priceTextWithCurrencyByCurrencyIdAndLocaleFilter(
             $order->getTotalPriceWithVat(),
             $order->getCurrency()->getId(),
             $this->getDomainLocaleByOrder($order),
         );
+
+        return $this->hiddenPriceExtension->hidePriceFilter($price, $order->getCustomerUser());
     }
 
     /**

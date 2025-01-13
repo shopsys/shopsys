@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Mail\MessageData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
+use Shopsys\FrameworkBundle\Twig\HiddenPriceExtension;
 use Shopsys\FrameworkBundle\Twig\PriceExtension;
 use Symfony\Component\Routing\RouterInterface;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -73,6 +74,9 @@ class OrderMailTest extends TransactionFunctionalTestCase
         $orderUrlGeneratorMock = $this->getMockBuilder(
             OrderUrlGenerator::class,
         )->disableOriginalConstructor()->getMock();
+        $hiddenPriceExtensionMock = $this->getMockBuilder(
+            HiddenPriceExtension::class,
+        )->disableOriginalConstructor()->getMock();
 
         $orderMail = new OrderMail(
             $settingMock,
@@ -83,6 +87,7 @@ class OrderMailTest extends TransactionFunctionalTestCase
             $priceExtensionMock,
             $dateTimeFormatterExtensionMock,
             $orderUrlGeneratorMock,
+            $hiddenPriceExtensionMock,
         );
 
         $order = $this->getReference('order_1', Order::class);

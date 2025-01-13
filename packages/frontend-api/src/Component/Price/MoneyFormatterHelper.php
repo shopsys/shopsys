@@ -11,7 +11,6 @@ class MoneyFormatterHelper
     protected const MAX_FRACTION_DIGITS = 6;
     protected const DECIMAL_POINT = '.';
     protected const THOUSANDS_SEPARATOR = '';
-    public const HIDDEN_FORMAT = '***';
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $money
