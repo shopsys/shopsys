@@ -280,23 +280,10 @@
         }
 
         &--fixed-width-left {
-            width: 40px;
-            right: 22px;
-            position: absolute;
-            text-align: right;
-
-            @media only screen and (min-width: 372px) {
-                right: auto;
-                left: @input-width - 50px;
-            }
-
-            @media @query-lg {
-                position: relative;
-                right: auto;
-                left: auto;
-                text-align: left;
-            }
-
+            right: auto;
+            left: auto;
+            position: relative;
+            text-align: left;
         }
 
         &--input-size {

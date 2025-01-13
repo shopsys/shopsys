@@ -1087,7 +1087,7 @@
 
 {% macro icon(attr) %}
     {% if attr.icon is defined %}
-        <i class="{{ attr.iconClass|default('') }} svg svg-{{ attr.iconType|default('info') }} in-icon cursor-help form-line__item form-line__item--info js-tooltip"
+        <i class="{{ attr.iconClass|default('') }} svg svg-{{ attr.iconType|default('info') }} in-icon cursor-help form-line__item--info js-tooltip"
            data-toggle="tooltip" data-placement="{{ attr.iconPlacement|default('bottom') }}"
            title="{{ attr.iconTitle|default('') }}"
         ></i>
