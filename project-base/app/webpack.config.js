@@ -15,10 +15,6 @@ Encore
     .setManifestKeyPrefix('web')
     .cleanupOutputBeforeBuild()
     .autoProvidejQuery()
-    // hp entry?
-    // order entry?
-    // product entry?
-    // cart entry?
     .addEntry('admin', './assets/js/admin/admin.js')
     .splitEntryChunks()
     .enableSingleRuntimeChunk()
@@ -74,14 +70,13 @@ Encore
     .enablePostCssLoader()
 ;
 
-const config = Encore.getWebpackConfig();
-
-config.resolve.alias = {
+Encore.addAliases({
     'jquery-ui': 'jquery-ui/ui/widgets',
     'framework': '@shopsys/framework/js',
     'jquery': path.resolve(path.join(__dirname, 'node_modules', 'jquery')),
     'jquery-ui-styles': path.resolve(path.join(__dirname, 'node_modules', 'jquery-ui')),
     'bazinga-translator': path.resolve(path.join(__dirname, 'node_modules', 'bazinga-translator')),
     'jquery-ui-nested-sortable': path.resolve(path.join(__dirname, 'node_modules', 'nestedSortable'))
-};
-module.exports = config;
+});
+
+module.exports = Encore.getWebpackConfig();
