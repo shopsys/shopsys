@@ -92,6 +92,8 @@ class Setting
      */
     public function set($key, $value)
     {
+        $this->clearCache();
+
         $this->loadDomainValues(SettingValue::DOMAIN_ID_COMMON);
 
         if (!array_key_exists($key, $this->values[SettingValue::DOMAIN_ID_COMMON])) {
@@ -113,6 +115,8 @@ class Setting
      */
     public function setForDomain($key, $value, $domainId)
     {
+        $this->clearCache();
+
         $this->loadDomainValues($domainId);
 
         if (!array_key_exists($key, $this->values[$domainId])) {
@@ -172,10 +176,12 @@ class Setting
      */
     public function deleteByName(string $name): void
     {
+        $this->clearCache();
+
         $this->settingValueRepository->deleteByName($name);
     }
 
-    public function clearCache()
+    protected function clearCache(): void
     {
         $this->allValuesLoaded = false;
         $this->values = [];

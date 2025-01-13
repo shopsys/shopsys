@@ -60,7 +60,6 @@ class DomainDataCreator
                 $locale = $domainConfig->getLocale();
                 $isNewLocale = $this->isNewLocale($locale);
                 $this->settingValueRepository->copyAllMultidomainSettings(self::TEMPLATE_DOMAIN_ID, $domainId);
-                $this->setting->clearCache();
                 $this->setting->setForDomain(Setting::BASE_URL, $domainConfig->getUrl(), $domainId);
 
                 $this->processDefaultPricingGroupForNewDomain($domainId);
