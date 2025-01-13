@@ -199,7 +199,7 @@ class PaymentTransaction
             return false;
         }
 
-        return $this->payment->isGoPay() && $this->externalPaymentStatus === PaymentStatus::PAID;
+        return $this->externalPaymentStatus === PaymentStatus::PAID;
     }
 
     /**
@@ -211,6 +211,6 @@ class PaymentTransaction
             return false;
         }
 
-        return $this->payment->isGoPay() && $this->externalPaymentStatus === PaymentStatus::PAYMENT_METHOD_CHOSEN;
+        return $this->externalPaymentStatus === PaymentStatus::PAYMENT_METHOD_CHOSEN;
     }
 }
