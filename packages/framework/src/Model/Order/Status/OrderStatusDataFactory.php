@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\Status;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
-class OrderStatusDataFactory implements OrderStatusDataFactoryInterface
+class OrderStatusDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

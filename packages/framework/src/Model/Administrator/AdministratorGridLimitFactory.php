@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Administrator;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
-class AdministratorGridLimitFactory implements AdministratorGridLimitFactoryInterface
+class AdministratorGridLimitFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

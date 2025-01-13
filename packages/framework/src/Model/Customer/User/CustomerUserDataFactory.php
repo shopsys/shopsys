@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFacade
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 
-class CustomerUserDataFactory implements CustomerUserDataFactoryInterface
+class CustomerUserDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade

@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Cron;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
-class CronModuleFactory implements CronModuleFactoryInterface
+class CronModuleFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

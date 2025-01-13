@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Form\Admin\Slider\SliderItemFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Slider\Exception\SliderItemNotFoundException;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItem;
-use Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,7 +25,7 @@ class SliderController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
-     * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactoryInterface $sliderItemDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory $sliderItemDataFactory
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      */
     public function __construct(
@@ -33,7 +33,7 @@ class SliderController extends AdminBaseController
         protected readonly GridFactory $gridFactory,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
-        protected readonly SliderItemDataFactoryInterface $sliderItemDataFactory,
+        protected readonly SliderItemDataFactory $sliderItemDataFactory,
         protected readonly EntityManagerInterface $entityManager,
     ) {
     }

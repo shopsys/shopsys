@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
-class ParameterDataFactory implements ParameterDataFactoryInterface
+class ParameterDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

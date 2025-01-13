@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\Exception\InvalidFormDataException;
 use Shopsys\FrameworkBundle\Form\Admin\Order\Status\OrderStatusFormType;
-use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
 use Symfony\Component\Form\FormFactoryInterface;
 
@@ -18,14 +18,14 @@ class OrderStatusInlineEdit extends AbstractGridInlineEdit
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\Grid\OrderStatusGridFactory $orderStatusGridFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade $orderStatusFacade
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
-     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactoryInterface $orderStatusDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactory $orderStatusDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         OrderStatusGridFactory $orderStatusGridFactory,
         protected readonly OrderStatusFacade $orderStatusFacade,
         protected readonly FormFactoryInterface $formFactory,
-        protected readonly OrderStatusDataFactoryInterface $orderStatusDataFactory,
+        protected readonly OrderStatusDataFactory $orderStatusDataFactory,
         protected readonly Domain $domain,
     ) {
         parent::__construct($orderStatusGridFactory);

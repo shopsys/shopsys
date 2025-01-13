@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Unit;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
-class UnitFactory implements UnitFactoryInterface
+class UnitFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

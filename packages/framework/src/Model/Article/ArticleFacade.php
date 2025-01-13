@@ -18,7 +18,7 @@ class ArticleFacade
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleRepository $articleRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFactoryInterface $articleFactory
+     * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFactory $articleFactory
      * @param \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleExportScheduler $articleExportScheduler
      * @param \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
      */
@@ -27,7 +27,7 @@ class ArticleFacade
         protected readonly ArticleRepository $articleRepository,
         protected readonly Domain $domain,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
-        protected readonly ArticleFactoryInterface $articleFactory,
+        protected readonly ArticleFactory $articleFactory,
         protected readonly ArticleExportScheduler $articleExportScheduler,
         protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
     ) {

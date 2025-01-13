@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Form\Admin\Administrator\AdminDomainsFormType;
-use Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactory;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,11 +14,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class SelectAdminDomainsController extends AdminBaseController
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactoryInterface $administratorDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactory $administratorDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade $administratorFacade
      */
     public function __construct(
-        protected readonly AdministratorDataFactoryInterface $administratorDataFactory,
+        protected readonly AdministratorDataFactory $administratorDataFactory,
         protected readonly AdministratorFacade $administratorFacade,
     ) {
     }

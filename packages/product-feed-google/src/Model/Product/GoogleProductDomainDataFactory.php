@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ProductFeed\GoogleBundle\Model\Product;
 
-class GoogleProductDomainDataFactory implements GoogleProductDomainDataFactoryInterface
+class GoogleProductDomainDataFactory
 {
     /**
      * @return \Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainData

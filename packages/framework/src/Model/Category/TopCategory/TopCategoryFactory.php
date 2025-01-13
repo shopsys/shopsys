@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Category\TopCategory;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 
-class TopCategoryFactory implements TopCategoryFactoryInterface
+class TopCategoryFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

@@ -12,12 +12,12 @@ class AdministratorActivityFacade
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityRepository $administratorActivityRepository
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFactoryInterface $administratorActivityFactory
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFactory $administratorActivityFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly AdministratorActivityRepository $administratorActivityRepository,
-        protected readonly AdministratorActivityFactoryInterface $administratorActivityFactory,
+        protected readonly AdministratorActivityFactory $administratorActivityFactory,
     ) {
     }
 

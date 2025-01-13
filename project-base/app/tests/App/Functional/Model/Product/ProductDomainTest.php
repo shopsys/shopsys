@@ -7,10 +7,10 @@ namespace Tests\App\Functional\Model\Product;
 use App\Model\Product\Product;
 use App\Model\Product\ProductData;
 use App\Model\Product\ProductDataFactory;
+use App\Model\Product\ProductFactory;
 use PHPUnit\Framework\Attributes\Group;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
-use Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductInputPriceDataFactory;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
@@ -32,7 +32,7 @@ class ProductDomainTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    private ProductFactoryInterface $productFactory;
+    private ProductFactory $productFactory;
 
     /**
      * @inject

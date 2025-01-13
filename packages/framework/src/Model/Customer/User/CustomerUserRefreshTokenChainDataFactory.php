@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
-class CustomerUserRefreshTokenChainDataFactory implements CustomerUserRefreshTokenChainDataFactoryInterface
+class CustomerUserRefreshTokenChainDataFactory
 {
     /**
      * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainData

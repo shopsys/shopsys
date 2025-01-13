@@ -9,17 +9,17 @@ use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
-use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory;
 
 class DeliveryAddressDataApiFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory
      */
     public function __construct(
         protected readonly CountryFacade $countryFacade,
-        protected readonly DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory,
+        protected readonly DeliveryAddressDataFactory $deliveryAddressDataFactory,
     ) {
     }
 

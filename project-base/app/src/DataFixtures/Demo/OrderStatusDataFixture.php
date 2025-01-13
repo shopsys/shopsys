@@ -8,7 +8,7 @@ use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\DataFixture\Exception\UnknownNameTranslationForOrderStatusReferenceNameException;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
-use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusFacade;
 
 class OrderStatusDataFixture extends AbstractReferenceFixture
@@ -24,7 +24,7 @@ class OrderStatusDataFixture extends AbstractReferenceFixture
      */
     public function __construct(
         private readonly OrderStatusFacade $orderStatusFacade,
-        private readonly OrderStatusDataFactoryInterface $orderStatusDataFactory,
+        private readonly OrderStatusDataFactory $orderStatusDataFactory,
     ) {
     }
 

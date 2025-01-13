@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ProductFeed\ZboziBundle\Model\Product;
 
-class ZboziProductDomainDataFactory implements ZboziProductDomainDataFactoryInterface
+class ZboziProductDomainDataFactory
 {
     /**
      * @return \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainData

@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Currency;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
-class CurrencyFactory implements CurrencyFactoryInterface
+class CurrencyFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

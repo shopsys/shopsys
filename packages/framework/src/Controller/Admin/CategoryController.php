@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Component\Form\FormBuilderHelper;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Form\Admin\Category\CategoryFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
-use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactory;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade;
@@ -23,7 +23,7 @@ class CategoryController extends AdminBaseController
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface $categoryDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryDataFactory $categoryDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade
@@ -32,7 +32,7 @@ class CategoryController extends AdminBaseController
      */
     public function __construct(
         protected readonly CategoryFacade $categoryFacade,
-        protected readonly CategoryDataFactoryInterface $categoryDataFactory,
+        protected readonly CategoryDataFactory $categoryDataFactory,
         protected readonly Domain $domain,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,

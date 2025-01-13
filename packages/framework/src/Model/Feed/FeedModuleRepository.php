@@ -12,11 +12,11 @@ class FeedModuleRepository
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedModuleFactoryInterface $feedModuleFactory
+     * @param \Shopsys\FrameworkBundle\Model\Feed\FeedModuleFactory $feedModuleFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
-        protected readonly FeedModuleFactoryInterface $feedModuleFactory,
+        protected readonly FeedModuleFactory $feedModuleFactory,
     ) {
     }
 

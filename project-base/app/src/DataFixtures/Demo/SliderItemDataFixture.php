@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Slider\SliderItemDataFactory;
 use Doctrine\Persistence\ObjectManager;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
-use Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade;
 
 class SliderItemDataFixture extends AbstractReferenceFixture
@@ -21,7 +21,7 @@ class SliderItemDataFixture extends AbstractReferenceFixture
      */
     public function __construct(
         private readonly SliderItemFacade $sliderItemFacade,
-        private readonly SliderItemDataFactoryInterface $sliderItemDataFactory,
+        private readonly SliderItemDataFactory $sliderItemDataFactory,
     ) {
     }
 

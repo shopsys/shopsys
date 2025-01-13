@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\UploadedFile;
 
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 
-class UploadedFileDataFactory implements UploadedFileDataFactoryInterface
+class UploadedFileDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade

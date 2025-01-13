@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Administrator\Role;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
-class AdministratorRoleFactory implements AdministratorRoleFactoryInterface
+class AdministratorRoleFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

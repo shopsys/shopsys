@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 
 class VatDataFixture extends AbstractReferenceFixture
@@ -28,7 +28,7 @@ class VatDataFixture extends AbstractReferenceFixture
      */
     public function __construct(
         private readonly VatFacade $vatFacade,
-        private readonly VatDataFactoryInterface $vatDataFactory,
+        private readonly VatDataFactory $vatDataFactory,
         private readonly Setting $setting,
     ) {
     }

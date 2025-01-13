@@ -16,9 +16,6 @@ services:
         tags:
             - { name: shopsys.crud_extension, type: product }
 
-    Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainDataFactoryInterface:
-        alias: Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainDataFactory
-
     Shopsys\ProductFeed\ZboziBundle\ZboziFeed:
         tags:
             - { name: shopsys.feed, hours: '3', minutes: '0' }

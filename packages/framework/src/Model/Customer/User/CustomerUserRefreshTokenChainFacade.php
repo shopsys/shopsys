@@ -11,14 +11,14 @@ use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface;
 class CustomerUserRefreshTokenChainFacade
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainDataFactoryInterface $customerUserRefreshTokenChainDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFactoryInterface $customerUserRefreshTokenChainFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainDataFactory $customerUserRefreshTokenChainDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFactory $customerUserRefreshTokenChainFactory
      * @param \Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface $passwordHasherFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository
      */
     public function __construct(
-        protected readonly CustomerUserRefreshTokenChainDataFactoryInterface $customerUserRefreshTokenChainDataFactory,
-        protected readonly CustomerUserRefreshTokenChainFactoryInterface $customerUserRefreshTokenChainFactory,
+        protected readonly CustomerUserRefreshTokenChainDataFactory $customerUserRefreshTokenChainDataFactory,
+        protected readonly CustomerUserRefreshTokenChainFactory $customerUserRefreshTokenChainFactory,
         protected readonly PasswordHasherFactoryInterface $passwordHasherFactory,
         protected readonly CustomerUserRefreshTokenChainRepository $customerUserRefreshTokenChainRepository,
     ) {

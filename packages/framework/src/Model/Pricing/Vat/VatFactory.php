@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Vat;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
-class VatFactory implements VatFactoryInterface
+class VatFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

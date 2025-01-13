@@ -34,7 +34,7 @@ class CategoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildrenFactory $categoryWithPreloadedChildrenFactory
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildrenFactory $categoryWithLazyLoadedVisibleChildrenFactory
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFactoryInterface $categoryFactory
+     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFactory $categoryFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterFacade $categoryParameterFacade
@@ -50,7 +50,7 @@ class CategoryFacade
         protected readonly PluginCrudExtensionFacade $pluginCrudExtensionFacade,
         protected readonly CategoryWithPreloadedChildrenFactory $categoryWithPreloadedChildrenFactory,
         protected readonly CategoryWithLazyLoadedVisibleChildrenFactory $categoryWithLazyLoadedVisibleChildrenFactory,
-        protected readonly CategoryFactoryInterface $categoryFactory,
+        protected readonly CategoryFactory $categoryFactory,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
         protected readonly EventDispatcherInterface $eventDispatcher,
         protected readonly CategoryParameterFacade $categoryParameterFacade,

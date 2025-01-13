@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
-class ProductParameterValueDataFactory implements ProductParameterValueDataFactoryInterface
+class ProductParameterValueDataFactory
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface $parameterValueDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
      */
-    public function __construct(protected readonly ParameterValueDataFactoryInterface $parameterValueDataFactory)
+    public function __construct(protected readonly ParameterValueDataFactory $parameterValueDataFactory)
     {
     }
 

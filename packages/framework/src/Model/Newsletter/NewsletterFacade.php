@@ -14,12 +14,12 @@ class NewsletterFacade
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterRepository $newsletterRepository
-     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriberFactoryInterface $newsletterSubscriberFactory
+     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriberFactory $newsletterSubscriberFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly NewsletterRepository $newsletterRepository,
-        protected readonly NewsletterSubscriberFactoryInterface $newsletterSubscriberFactory,
+        protected readonly NewsletterSubscriberFactory $newsletterSubscriberFactory,
     ) {
     }
 

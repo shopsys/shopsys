@@ -128,9 +128,6 @@ services:
         arguments:
             $logger: '@monolog.logger.cron'
 
-    Shopsys\FrameworkBundle\Component\Cron\CronModuleFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Component\Cron\CronModuleFactory
-
     Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Config\CustomerUploadedFileConfig:
         arguments:
             - '%shopsys.customer_uploaded_file_config_filepath%'
@@ -148,9 +145,6 @@ services:
 
     Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade:
         public: true
-
-    Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFactory
 
     Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper: ~
 
@@ -429,14 +423,8 @@ services:
             $routerConfiguration: '%router.resource%'
             $cacheDir: '%shopsys.router.domain.cache_dir%'
 
-    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactory
-
     Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProviderRegistry:
         arguments: [!tagged shopsys.friendly_url_provider]
-
-    Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactory
 
     Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRouterFactory:
         arguments: ['%shopsys.router.friendly_url_router_filepath%']
@@ -456,9 +444,6 @@ services:
             - '@annotations.reader'
 
     Shopsys\FrameworkBundle\Component\Setting\Setting: ~
-
-    Shopsys\FrameworkBundle\Component\Setting\SettingValueFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Component\Setting\SettingValueFactory
 
     Shopsys\FrameworkBundle\Component\Translation\ConfigConstraintMessageExtractor:
         tags:
@@ -517,15 +502,9 @@ services:
 
     Shopsys\FrameworkBundle\Component\UploadedFile\DirectoryStructureCreator: ~
 
-    Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory
-
     Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDeleteDoctrineListener:
         tags:
             - { name: doctrine.event_listener, event: preRemove }
-
-    Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFactory
 
     Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator:
         arguments:
@@ -569,27 +548,9 @@ services:
         tags:
             - { name: knp_menu.menu_builder, method: createMenu, alias: admin_side_menu }
 
-    Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFactory
-
-    Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactory
-
-    Shopsys\FrameworkBundle\Model\Administrator\AdministratorFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Administrator\AdministratorFactory
-
-    Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimitFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimitFactory
-
     Shopsys\FrameworkBundle\Model\Administrator\Mail\ResetPasswordMail: ~
 
     Shopsys\FrameworkBundle\Model\Administrator\Mail\TwoFactorAuthenticationMail: ~
-
-    Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleDataFactory
-
-    Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFactory
 
     Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint\AdvancedSearchComplaintFacade:
         arguments:
@@ -620,15 +581,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\AdvancedSearch\ProductAdvancedSearchConfig: ~
 
-    Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactory
-
-    Shopsys\FrameworkBundle\Model\Advert\AdvertFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Advert\AdvertFactory
-
-    Shopsys\FrameworkBundle\Model\Article\ArticleFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Article\ArticleFactory
-
     Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleIndex: ~
 
     Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleExportQueueFacade:
@@ -640,56 +592,17 @@ services:
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
 
-    Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Cart\Item\CartItemFactory
-
     Shopsys\FrameworkBundle\Model\Cart\Watcher\CartWatcher: ~
 
     Shopsys\FrameworkBundle\Model\CategorySeo\CategorySeoFriendlyUrlDataProvider:
         tags:
             - {name: shopsys.friendly_url_provider}
 
-    Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Category\CategoryDataFactory
-
-    Shopsys\FrameworkBundle\Model\Category\CategoryFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Category\CategoryFactory
-
     Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository:
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 20 }
 
-    Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFactory
-
     Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMail: ~
-
-    Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsDataFactory
-
-    Shopsys\FrameworkBundle\Model\Country\CountryDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Country\CountryDataFactory
-
-    Shopsys\FrameworkBundle\Model\Country\CountryFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Country\CountryFactory
-
-    Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory
-
-    Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Customer\BillingAddressFactory
-
-    Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactory
-
-    Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Customer\CustomerFactory
-
-    Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory
-
-    Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFactory
 
     Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerActivationMail: ~
 
@@ -701,24 +614,9 @@ services:
 
     Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser: ~
 
-    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory
-
-    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactory
-
-    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainDataFactory
-
-    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFactory
-
     Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole: ~
 
     Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupSetting: ~
-
-    Shopsys\FrameworkBundle\Model\Feed\FeedModuleFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Feed\FeedModuleFactory
 
     Shopsys\FrameworkBundle\Model\Feed\FeedPathProvider:
         arguments:
@@ -761,12 +659,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Mail\MailTemplateConfiguration: ~
 
-    Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactory
-
-    Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactory
-
     Shopsys\FrameworkBundle\Model\Mail\MailTemplateSender\MailTemplateSenderFacade:
         arguments:
             $mailTemplateSenders: !tagged_iterator shopsys.mail_template_sender
@@ -782,22 +674,13 @@ services:
             - '%env(MAILER_DSN)%'
             - '%env(bool:MAILER_FORCE_WHITELIST)%'
 
-    Shopsys\FrameworkBundle\Model\Module\EnabledModuleFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Module\EnabledModuleFactory
-
     Shopsys\FrameworkBundle\Model\Module\ModuleList: ~
-
-    Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriberFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Newsletter\NewsletterSubscriberFactory
 
     Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail: ~
 
     Shopsys\FrameworkBundle\Model\Order\Messenger\HeurekaPlacedOrderMessageHandler:
         arguments:
             $logger: '@monolog.logger.queue'
-
-    Shopsys\FrameworkBundle\Model\Order\OrderFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Order\OrderFactory
 
     Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack: ~
 
@@ -807,47 +690,11 @@ services:
 
     Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeApplicableProductsTotalPriceCalculator: ~
 
-    Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory
-
-    Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactory
-
-    Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusDataFactory
-
-    Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory
-
-    Shopsys\FrameworkBundle\Model\Payment\PaymentFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Payment\PaymentFactory
-
-    Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactory
-
     Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMail: ~
 
     Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataExportMail: ~
 
-    Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactory
-
-    Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFactory
-
-    Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactory
-
-    Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFactory
-
     Shopsys\FrameworkBundle\Model\Pricing\DelayedPricingSetting: ~
-
-    Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactory
-
-    Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFactory
 
     Shopsys\FrameworkBundle\Model\Pricing\InputPriceRecalculationScheduler:
         tags:
@@ -859,86 +706,24 @@ services:
 
     Shopsys\FrameworkBundle\Model\Pricing\Rounding: ~
 
-    Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory
-
-    Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactory
-
     Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\BestsellingProductCombinator: ~
 
     Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade:
         arguments:
             - '@bestselling_product_cache'
 
-    Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Brand\BrandFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Brand\BrandFactory
 
     Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex: ~
 
     Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig: ~
 
-    Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Flag\FlagFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Flag\FlagFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFactory
-
     Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser: ~
-
-    Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactory
-
-    Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\ProductFactory
-
-    Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactory
 
     Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationMessageHandler:
         arguments:
             $logger: '@monolog.logger.queue'
 
     Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter: ~
-
-    Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Unit\UnitFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Product\Unit\UnitFactory
 
     Shopsys\FrameworkBundle\Model\Security\AdministratorChecker:
         arguments:
@@ -973,23 +758,11 @@ services:
         tags:
             - { name: 'kernel.event_subscriber', priority: 100 }
 
-    Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory
-
-    Shopsys\FrameworkBundle\Model\Slider\SliderItemFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Slider\SliderItemFactory
-
     Shopsys\FrameworkBundle\Model\Statistics\ValueByDateTimeDataPointFormatter: ~
 
     Shopsys\FrameworkBundle\Model\Transfer\TransferLoggerFactory:
         arguments:
             - '@monolog.logger.cron'
-
-    Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Transport\TransportDataFactory
-
-    Shopsys\FrameworkBundle\Model\Transport\TransportFactoryInterface:
-        alias: Shopsys\FrameworkBundle\Model\Transport\TransportFactory
 
     Shopsys\FrameworkBundle\Twig\CKEditorExtension:
         arguments:

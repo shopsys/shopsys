@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\PersonalData;
 
-class PersonalDataAccessRequestDataFactory implements PersonalDataAccessRequestDataFactoryInterface
+class PersonalDataAccessRequestDataFactory
 {
     /**
      * @return \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestData

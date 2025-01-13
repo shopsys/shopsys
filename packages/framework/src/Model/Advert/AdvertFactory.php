@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Advert;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
-class AdvertFactory implements AdvertFactoryInterface
+class AdvertFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

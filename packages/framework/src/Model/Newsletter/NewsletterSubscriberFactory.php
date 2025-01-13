@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Newsletter;
 use DateTimeImmutable;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
-class NewsletterSubscriberFactory implements NewsletterSubscriberFactoryInterface
+class NewsletterSubscriberFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

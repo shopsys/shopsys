@@ -8,7 +8,7 @@ use App\Model\Article\Article;
 use DateTime;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Article\ArticleDataFactory;
-use Shopsys\FrameworkBundle\Model\Article\ArticleFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Article\ArticleFactory;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class ArticleTest extends TransactionFunctionalTestCase
@@ -21,7 +21,7 @@ class ArticleTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    private ArticleFactoryInterface $articleFactory;
+    private ArticleFactory $articleFactory;
 
     public function testArticleIsCorrectlyRestoredFromDatabase()
     {

@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Unit\Unit;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitData;
-use Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 
 class UnitDataFixture extends AbstractReferenceFixture
@@ -36,7 +36,7 @@ class UnitDataFixture extends AbstractReferenceFixture
      */
     public function __construct(
         private readonly UnitFacade $unitFacade,
-        private readonly UnitDataFactoryInterface $unitDataFactory,
+        private readonly UnitDataFactory $unitDataFactory,
         private readonly Setting $setting,
         private readonly Domain $domain,
     ) {

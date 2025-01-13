@@ -54,7 +54,7 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade $heurekaFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFactoryInterface $orderFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFactory $orderFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderPriceCalculation $orderPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation
      * @param \Shopsys\FrameworkBundle\Twig\NumberFormatterExtension $numberFormatterExtension
@@ -84,7 +84,7 @@ class OrderFacade
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly HeurekaFacade $heurekaFacade,
         protected readonly Domain $domain,
-        protected readonly OrderFactoryInterface $orderFactory,
+        protected readonly OrderFactory $orderFactory,
         protected readonly OrderPriceCalculation $orderPriceCalculation,
         protected readonly OrderItemPriceCalculation $orderItemPriceCalculation,
         protected readonly NumberFormatterExtension $numberFormatterExtension,

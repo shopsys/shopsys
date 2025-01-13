@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade as BaseSliderItemFacad
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @method \App\Model\Slider\SliderItem getById(int $sliderItemId)
  * @method \App\Model\Slider\SliderItem[] getAllVisibleOnCurrentDomain()
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Slider\SliderItemRepository $sliderItemRepository, \App\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Slider\SliderItemFactoryInterface $sliderItemFactory, \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Slider\SliderItemRepository $sliderItemRepository, \App\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Slider\SliderItemFactory $sliderItemFactory, \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade)
  */
 class SliderItemFacade extends BaseSliderItemFacade
 {

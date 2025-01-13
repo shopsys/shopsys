@@ -15,14 +15,14 @@ class VatInlineEdit extends AbstractGridInlineEdit
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatGridFactory $vatGridFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactoryInterface $vatDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory $vatDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
         VatGridFactory $vatGridFactory,
         protected readonly VatFacade $vatFacade,
         protected readonly FormFactoryInterface $formFactory,
-        protected readonly VatDataFactoryInterface $vatDataFactory,
+        protected readonly VatDataFactory $vatDataFactory,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
         parent::__construct($vatGridFactory);

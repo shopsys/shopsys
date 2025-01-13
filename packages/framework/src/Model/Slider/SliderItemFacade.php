@@ -16,7 +16,7 @@ class SliderItemFacade
      * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemRepository $sliderItemRepository
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemFactoryInterface $sliderItemFactory
+     * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemFactory $sliderItemFactory
      * @param \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
      */
     public function __construct(
@@ -24,7 +24,7 @@ class SliderItemFacade
         protected readonly SliderItemRepository $sliderItemRepository,
         protected readonly ImageFacade $imageFacade,
         protected readonly Domain $domain,
-        protected readonly SliderItemFactoryInterface $sliderItemFactory,
+        protected readonly SliderItemFactory $sliderItemFactory,
         protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
     ) {
     }

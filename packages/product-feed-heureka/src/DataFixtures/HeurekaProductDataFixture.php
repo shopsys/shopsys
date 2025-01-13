@@ -6,7 +6,7 @@ namespace Shopsys\ProductFeed\HeurekaBundle\DataFixtures;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\Plugin\PluginDataFixtureInterface;
-use Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainDataFactoryInterface;
+use Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainDataFactory;
 use Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainFacade;
 
 class HeurekaProductDataFixture implements PluginDataFixtureInterface
@@ -21,11 +21,11 @@ class HeurekaProductDataFixture implements PluginDataFixtureInterface
 
     /**
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainFacade $heurekaProductDomainFacade
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainDataFactoryInterface $heurekaProductDomainDataFactory
+     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainDataFactory $heurekaProductDomainDataFactory
      */
     public function __construct(
         private readonly HeurekaProductDomainFacade $heurekaProductDomainFacade,
-        private readonly HeurekaProductDomainDataFactoryInterface $heurekaProductDomainDataFactory,
+        private readonly HeurekaProductDomainDataFactory $heurekaProductDomainDataFactory,
     ) {
     }
 

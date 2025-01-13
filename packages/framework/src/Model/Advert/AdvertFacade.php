@@ -19,7 +19,7 @@ class AdvertFacade
      * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertRepository $advertRepository
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertFactoryInterface $advertFactory
+     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertFactory $advertFactory
      * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry $advertPositionRegistry
      */
     public function __construct(
@@ -27,7 +27,7 @@ class AdvertFacade
         protected readonly AdvertRepository $advertRepository,
         protected readonly ImageFacade $imageFacade,
         protected readonly Domain $domain,
-        protected readonly AdvertFactoryInterface $advertFactory,
+        protected readonly AdvertFactory $advertFactory,
         protected readonly AdvertPositionRegistry $advertPositionRegistry,
     ) {
     }

@@ -14,6 +14,3 @@ services:
     Shopsys\ProductFeed\GoogleBundle\GoogleFeed:
         tags:
             - { name: shopsys.feed, hours: '1', minutes: '0' }
-
-    Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainDataFactoryInterface:
-        alias: Shopsys\ProductFeed\GoogleBundle\Model\Product\GoogleProductDomainDataFactory

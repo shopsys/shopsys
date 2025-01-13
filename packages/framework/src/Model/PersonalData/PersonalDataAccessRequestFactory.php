@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\PersonalData;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
-class PersonalDataAccessRequestFactory implements PersonalDataAccessRequestFactoryInterface
+class PersonalDataAccessRequestFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

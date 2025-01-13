@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\DataFixture;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
-class PersistentReferenceFactory implements PersistentReferenceFactoryInterface
+class PersistentReferenceFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Demo;
 
+use App\Model\Product\Brand\BrandDataFactory;
 use Doctrine\Persistence\ObjectManager;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
-use Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 
 class BrandDataFixture extends AbstractReferenceFixture
@@ -46,7 +46,7 @@ class BrandDataFixture extends AbstractReferenceFixture
      */
     public function __construct(
         private readonly BrandFacade $brandFacade,
-        private readonly BrandDataFactoryInterface $brandDataFactory,
+        private readonly BrandDataFactory $brandDataFactory,
     ) {
     }
 

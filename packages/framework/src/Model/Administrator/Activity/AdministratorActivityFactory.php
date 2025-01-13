@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Administrator\Activity;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 
-class AdministratorActivityFactory implements AdministratorActivityFactoryInterface
+class AdministratorActivityFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Slider;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
-class SliderItemFactory implements SliderItemFactoryInterface
+class SliderItemFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

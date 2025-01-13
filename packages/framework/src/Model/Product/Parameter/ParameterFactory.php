@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
-class ParameterFactory implements ParameterFactoryInterface
+class ParameterFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

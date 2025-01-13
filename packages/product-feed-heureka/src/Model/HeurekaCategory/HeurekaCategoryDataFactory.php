@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory;
 
-class HeurekaCategoryDataFactory implements HeurekaCategoryDataFactoryInterface
+class HeurekaCategoryDataFactory
 {
     /**
      * @return \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryData

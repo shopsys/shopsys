@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Country;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
-class CountryFactory implements CountryFactoryInterface
+class CountryFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

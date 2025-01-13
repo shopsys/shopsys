@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
-class FriendlyUrlDataFactory implements FriendlyUrlDataFactoryInterface
+class FriendlyUrlDataFactory
 {
     /**
      * @return \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData

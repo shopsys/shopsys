@@ -19,7 +19,7 @@ class BrandFacade
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFactoryInterface $brandFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFactory $brandFactory
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
@@ -28,7 +28,7 @@ class BrandFacade
         protected readonly ImageFacade $imageFacade,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly Domain $domain,
-        protected readonly BrandFactoryInterface $brandFactory,
+        protected readonly BrandFactory $brandFactory,
         protected readonly EventDispatcherInterface $eventDispatcher,
     ) {
     }

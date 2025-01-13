@@ -16,14 +16,14 @@ class UnitInlineEdit extends AbstractGridInlineEdit
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitGridFactory $unitGridFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactoryInterface $unitDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitDataFactory $unitDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         UnitGridFactory $unitGridFactory,
         protected readonly UnitFacade $unitFacade,
         protected readonly FormFactoryInterface $formFactory,
-        protected readonly UnitDataFactoryInterface $unitDataFactory,
+        protected readonly UnitDataFactory $unitDataFactory,
         protected readonly Domain $domain,
     ) {
         parent::__construct($unitGridFactory);

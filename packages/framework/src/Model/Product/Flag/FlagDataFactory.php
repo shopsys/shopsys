@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Flag;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
-class FlagDataFactory implements FlagDataFactoryInterface
+class FlagDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

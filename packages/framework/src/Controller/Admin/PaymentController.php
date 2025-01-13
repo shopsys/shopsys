@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Form\Admin\Payment\PaymentFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Payment\Exception\PaymentNotFoundException;
 use Shopsys\FrameworkBundle\Model\Payment\Grid\PaymentGridFactory;
-use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,14 +18,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class PaymentController extends AdminBaseController
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface $paymentDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory $paymentDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\Grid\PaymentGridFactory $paymentGridFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      */
     public function __construct(
-        protected readonly PaymentDataFactoryInterface $paymentDataFactory,
+        protected readonly PaymentDataFactory $paymentDataFactory,
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly PaymentFacade $paymentFacade,
         protected readonly PaymentGridFactory $paymentGridFactory,

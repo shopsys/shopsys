@@ -7,7 +7,7 @@ namespace App\DataFixtures\Demo;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 
 class CurrencyDataFixture extends AbstractReferenceFixture
@@ -22,7 +22,7 @@ class CurrencyDataFixture extends AbstractReferenceFixture
      */
     public function __construct(
         private readonly CurrencyFacade $currencyFacade,
-        private readonly CurrencyDataFactoryInterface $currencyDataFactory,
+        private readonly CurrencyDataFactory $currencyDataFactory,
     ) {
     }
 

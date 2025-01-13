@@ -14,13 +14,13 @@ class PersonalDataAccessRequestFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestRepository $personalDataAccessRequestRepository
-     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFactoryInterface $personalDataAccessRequestFactory
+     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFactory $personalDataAccessRequestFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly HashGenerator $hashGenerator,
         protected readonly PersonalDataAccessRequestRepository $personalDataAccessRequestRepository,
-        protected readonly PersonalDataAccessRequestFactoryInterface $personalDataAccessRequestFactory,
+        protected readonly PersonalDataAccessRequestFactory $personalDataAccessRequestFactory,
     ) {
     }
 
