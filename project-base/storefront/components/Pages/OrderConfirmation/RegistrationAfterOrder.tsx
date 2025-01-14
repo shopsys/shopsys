@@ -10,7 +10,6 @@ import { useCouldBeCustomerRegisteredQuery } from 'graphql/requests/customer/que
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
-import { useRouter } from 'next/router';
 import { OrderConfirmationUrlQuery } from 'pages/order-confirmation';
 import { useRef } from 'react';
 import { FormProvider } from 'react-hook-form';
@@ -22,14 +21,17 @@ import { blurInput } from 'utils/forms/blurInput';
 import { useErrorPopup } from 'utils/forms/useErrorPopup';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 
-export const RegistrationAfterOrder: FC = () => {
+export const RegistrationAfterOrder: FC<Partial<OrderConfirmationUrlQuery>> = ({
+    orderUuid,
+    companyNumber,
+    orderEmail,
+    orderUrlHash,
+}) => {
     const { t } = useTranslation();
     const [formProviderMethods] = useRegistrationAfterOrderForm();
     const formMeta = useRegistrationAfterOrderFormMeta(formProviderMethods);
     const { registerByOrder } = useRegistration();
     const isInvalidRegistrationRef = useRef(false);
-    const { query } = useRouter();
-    const { orderUuid, companyNumber, orderEmail, orderUrlHash } = query as OrderConfirmationUrlQuery;
     const isUserLoggedIn = useIsUserLoggedIn();
 
     useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.order_confirmation_page);

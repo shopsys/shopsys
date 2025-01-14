@@ -7,6 +7,7 @@ import {
     getPaymentSessionExpiredErrorMessage,
     useUpdatePaymentStatus,
 } from 'components/Pages/Order/PaymentConfirmation/paymentConfirmationUtils';
+import { RegistrationAfterOrder } from 'components/Pages/OrderConfirmation/RegistrationAfterOrder';
 import { useOrderPaymentFailedContentQuery } from 'graphql/requests/orders/queries/OrderPaymentFailedContentQuery.generated';
 import { useOrderPaymentSuccessfulContentQuery } from 'graphql/requests/orders/queries/OrderPaymentSuccessfulContentQuery.generated';
 import useTranslation from 'next-translate/useTranslation';
@@ -18,7 +19,7 @@ import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initS
 const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
 
-    const { orderIdentifier, orderPaymentStatusPageValidityHash } = useRouter().query;
+    const { orderIdentifier, orderPaymentStatusPageValidityHash, orderEmail, orderUrlHash } = useRouter().query;
     const orderUuid = getStringFromUrlQuery(orderIdentifier);
     const orderPaymentStatusPageValidityHashParam = getStringFromUrlQuery(orderPaymentStatusPageValidityHash);
     const paymentStatusData = useUpdatePaymentStatus(orderUuid, orderPaymentStatusPageValidityHashParam);
@@ -70,6 +71,13 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
                         paymentStatusData={paymentStatusData}
                         successContentData={successContentData}
                     />
+                    {paymentStatusData?.UpdatePaymentStatus.isPaid && successContentData && (
+                        <RegistrationAfterOrder
+                            orderEmail={orderEmail as string | undefined}
+                            orderUrlHash={orderUrlHash as string | undefined}
+                            orderUuid={orderUuid}
+                        />
+                    )}
                 </Webline>
             </CommonLayout>
         </>
