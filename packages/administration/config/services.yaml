@@ -10,6 +10,10 @@ services:
             - '../src/Controller/'
         resource: '../src/'
 
+    Shopsys\AdministrationBundle\Controller\:
+        resource: '../src/Controller/'
+        tags: [ 'controller.service_arguments' ]
+
     Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry:
         arguments:
             - '@Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver'
