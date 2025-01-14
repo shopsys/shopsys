@@ -222,6 +222,15 @@ class OrderFacade
     }
 
     /**
+     * @param int[] $ids
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Order\Order>
+     */
+    public function findByIds(array $ids): array
+    {
+        return $this->orderRepository->findByIds($ids);
+    }
+
+    /**
      * @param string $uuid
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */

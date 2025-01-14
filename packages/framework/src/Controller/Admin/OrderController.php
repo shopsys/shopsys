@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\Grid\EntityLogGridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\DataSourceInterface;
+use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
@@ -30,6 +33,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class OrderController extends AdminBaseController
 {
+    protected const string ORDERS_LIST_FOR_GRID_CACHE_KEY = 'ORDERS_LIST_FOR_GRID_CACHE_KEY';
+
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\AdvancedSearchOrderFacade $advancedSearchOrderFacade
@@ -42,6 +47,7 @@ class OrderController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactory $orderDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade
      * @param \Shopsys\FrameworkBundle\Component\EntityLog\Model\Grid\EntityLogGridFactory $entityLogGridFactory
+     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
      */
     public function __construct(
         protected readonly OrderFacade $orderFacade,
@@ -55,6 +61,7 @@ class OrderController extends AdminBaseController
         protected readonly OrderDataFactory $orderDataFactory,
         protected readonly AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,
         protected readonly EntityLogGridFactory $entityLogGridFactory,
+        protected readonly InMemoryCache $inMemoryCache,
     ) {
     }
 
@@ -181,12 +188,33 @@ class OrderController extends AdminBaseController
                 ->setParameter('domainIds', $this->domain->getAdminEnabledDomainIds());
         }
 
+        $grid = $this->getOrdersGrid($queryBuilder);
+
+        return $this->render('@ShopsysFramework/Admin/Content/Order/list.html.twig', [
+            'gridView' => $grid->createView(),
+            'domainFilterNamespace' => $domainFilterNamespace,
+            'quickSearchForm' => $quickSearchForm->createView(),
+            'advancedSearchForm' => $advancedSearchForm->createView(),
+            'isAdvancedSearchFormSubmitted' => $this->advancedSearchOrderFacade->isAdvancedSearchOrderFormSubmitted(
+                $request,
+            ),
+        ]);
+    }
+
+    /**
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
+     * @throws \Shopsys\FrameworkBundle\Component\Grid\Exception\DuplicateColumnIdException
+     * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
+     */
+    protected function getOrdersGrid(QueryBuilder $queryBuilder): Grid
+    {
         $dataSource = new QueryBuilderWithRowManipulatorDataSource(
             $queryBuilder,
             'o.id',
-            function ($row) {
-                return $this->addOrderEntityToDataSource($row);
+            function ($row, $rows) {
+                return $this->addOrderEntityToDataSource($row, array_column($rows, 'id'));
             },
+            null,
         );
 
         $grid = $this->gridFactory->create('orderList', $dataSource);
@@ -214,24 +242,24 @@ class OrderController extends AdminBaseController
 
         $this->administratorGridFacade->restoreAndRememberGridLimit($this->getCurrentAdministrator(), $grid);
 
-        return $this->render('@ShopsysFramework/Admin/Content/Order/list.html.twig', [
-            'gridView' => $grid->createView(),
-            'domainFilterNamespace' => $domainFilterNamespace,
-            'quickSearchForm' => $quickSearchForm->createView(),
-            'advancedSearchForm' => $advancedSearchForm->createView(),
-            'isAdvancedSearchFormSubmitted' => $this->advancedSearchOrderFacade->isAdvancedSearchOrderFormSubmitted(
-                $request,
-            ),
-        ]);
+        return $grid;
     }
 
     /**
      * @param array $row
+     * @param int[] $ids
      * @return array
      */
-    protected function addOrderEntityToDataSource(array $row): array
+    protected function addOrderEntityToDataSource(array $row, array $ids): array
     {
-        $row['order'] = $this->orderFacade->getById($row['id']);
+        $ordersIndexedById = $this->inMemoryCache->getOrSaveValue(
+            self::ORDERS_LIST_FOR_GRID_CACHE_KEY,
+            fn () => $this->orderFacade->findByIds($ids),
+            self::ORDERS_LIST_FOR_GRID_CACHE_KEY,
+            ...$ids,
+        );
+
+        $row['order'] = $ordersIndexedById[$row['id']];
 
         return $row;
     }

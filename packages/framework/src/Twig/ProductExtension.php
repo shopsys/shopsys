@@ -30,7 +30,7 @@ class ProductExtension extends AbstractExtension
     {
         return [
             new TwigFilter('productDisplayName', $this->getProductDisplayName(...)),
-            new TwigFilter('productListDisplayName', $this->getProductListDisplayName(...)),
+            new TwigFilter('productListDisplayNameByName', $this->getProductListDisplayNameByName(...)),
         ];
     }
 
@@ -83,16 +83,16 @@ class ProductExtension extends AbstractExtension
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param string|null $name
      * @return string
      */
-    public function getProductListDisplayName(Product $product)
+    public function getProductListDisplayNameByName(?string $name): string
     {
-        if ($product->getName() === null) {
+        if ($name === null) {
             return t('Product name in default language is not entered');
         }
 
-        return $product->getName();
+        return $name;
     }
 
     /**

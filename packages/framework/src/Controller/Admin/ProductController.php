@@ -6,8 +6,6 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
-use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderWithRowManipulatorDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
@@ -22,10 +20,10 @@ use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\VariantException;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminFacade;
 use Shopsys\FrameworkBundle\Model\Product\MassAction\ProductMassActionFacade;
-use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
+use Shopsys\FrameworkBundle\Model\Product\ProductGridFactory;
 use Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
@@ -39,7 +37,6 @@ class ProductController extends AdminBaseController
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\MassAction\ProductMassActionFacade $productMassActionFacade
-     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductDataFactory $productDataFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
@@ -51,10 +48,10 @@ class ProductController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductGridFactory $productGridFactory
      */
     public function __construct(
         protected readonly ProductMassActionFacade $productMassActionFacade,
-        protected readonly GridFactory $gridFactory,
         protected readonly ProductFacade $productFacade,
         protected readonly ProductDataFactory $productDataFactory,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
@@ -66,6 +63,7 @@ class ProductController extends AdminBaseController
         protected readonly Domain $domain,
         protected readonly UnitFacade $unitFacade,
         protected readonly Setting $setting,
+        protected readonly ProductGridFactory $productGridFactory,
     ) {
     }
 
@@ -309,40 +307,7 @@ class ProductController extends AdminBaseController
      */
     protected function getGrid(QueryBuilder $queryBuilder)
     {
-        $dataSource = new QueryBuilderWithRowManipulatorDataSource(
-            $queryBuilder,
-            'p.id',
-            function ($row) {
-                $product = $this->productFacade->getById($row['p']['id']);
-                $row['product'] = $product;
-                // actual visibility is rendered in the template, this is just a placeholder for column
-                $row['visibility'] = null;
-
-                return $row;
-            },
-        );
-
-        $grid = $this->gridFactory->create('productList', $dataSource);
-        $grid->enablePaging();
-        $grid->enableSelecting();
-        $grid->setDefaultOrder('name');
-
-        $grid->addColumn('name', 'pt.name', t('Name'), true);
-        $grid->addColumn('price', 'priceForProductList', t('Price'), true)->setClassAttribute('text-right');
-        $grid->addColumn('visibility', 'visibility', t('Visibility'))
-            ->setClassAttribute('text-center table-col table-col-10');
-
-        $grid->setActionColumnClassAttribute('table-col table-col-10');
-        $grid->addEditActionColumn('admin_product_edit', ['id' => 'p.id']);
-        $grid->addDeleteActionColumn('admin_product_delete', ['id' => 'p.id'])
-            ->setConfirmMessage(t('Do you really want to remove this product?'));
-
-        $grid->setTheme('@ShopsysFramework/Admin/Content/Product/listGrid.html.twig', [
-            'VARIANT_TYPE_MAIN' => Product::VARIANT_TYPE_MAIN,
-            'VARIANT_TYPE_VARIANT' => Product::VARIANT_TYPE_VARIANT,
-        ]);
-
-        return $grid;
+        return $this->productGridFactory->getProductControllerGrid($queryBuilder);
     }
 
     /**

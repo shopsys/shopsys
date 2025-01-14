@@ -100,6 +100,21 @@ class OrderRepository
     }
 
     /**
+     * @param int[] $ids
+     * @return array<int, \Shopsys\FrameworkBundle\Model\Order\Order>
+     */
+    public function findByIds(array $ids): array
+    {
+        return $this->getOrderRepository()
+            ->createQueryBuilder('o', 'o.id')
+            ->where('o.id IN (:ids)')
+            ->setParameter('ids', $ids)
+            ->getQuery()
+            ->execute()
+        ;
+    }
+
+    /**
      * @param string $uuid
      * @return \Shopsys\FrameworkBundle\Model\Order\Order
      */

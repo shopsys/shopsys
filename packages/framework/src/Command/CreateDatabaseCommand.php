@@ -95,6 +95,9 @@ class CreateDatabaseCommand extends Command
 
         $this->getConnection()->executeStatement('CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA pg_catalog');
         $symfonyStyleIo->success('Extension "uuid-ossp" is created');
+
+        $this->getConnection()->executeStatement('CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA pg_catalog');
+        $symfonyStyleIo->success('Extension pg_trgm is created');
     }
 
     /**

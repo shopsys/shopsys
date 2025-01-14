@@ -16,10 +16,12 @@ class QueryPaginator implements PaginatorInterface
     /**
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param string|null $hydrationMode
+     * @param string|null $hint
      */
     public function __construct(
         protected readonly QueryBuilder $queryBuilder,
         protected readonly ?string $hydrationMode = null,
+        protected readonly ?string $hint = SortableNullsWalker::class,
     ) {
     }
 
@@ -61,7 +63,10 @@ class QueryPaginator implements PaginatorInterface
         }
 
         $query = $queryBuilder->getQuery();
-        $query->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, SortableNullsWalker::class);
+
+        if ($this->hint) {
+            $query->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, $this->hint);
+        }
 
         $results = $query->execute(null, $this->hydrationMode);
 
