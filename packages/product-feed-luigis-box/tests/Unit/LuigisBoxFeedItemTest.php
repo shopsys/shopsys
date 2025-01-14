@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
@@ -115,7 +116,7 @@ class LuigisBoxFeedItemTest extends TestCase
      */
     private function mockProductPrice(Product $product, DomainConfig $domain, Price $price): void
     {
-        $productPrice = new ProductPrice($price, false);
+        $productPrice = new ProductPrice($price, $this->createMock(PricingGroup::class), false);
         $this->productPriceCalculationForCustomerUserMock->method('calculatePriceForCustomerUserAndDomainId')
             ->with($product, $domain->getId(), null)->willReturn($productPrice);
     }

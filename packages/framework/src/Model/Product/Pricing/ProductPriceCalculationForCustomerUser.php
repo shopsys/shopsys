@@ -123,6 +123,6 @@ class ProductPriceCalculationForCustomerUser
             return $basicPrice;
         }
 
-        return new ProductPrice($specialPrice->price, $basicPrice->isPriceFrom());
+        return new ProductPrice($specialPrice->price, $pricingGroup, $basicPrice->isPriceFrom());
     }
 }

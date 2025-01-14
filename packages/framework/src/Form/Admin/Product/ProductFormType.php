@@ -578,10 +578,10 @@ final class ProductFormType extends AbstractType
             return $builderPricesGroup;
         }
 
-        $productSellingPricesIndexedByDomainId = null;
+        $productPricesIndexedByDomainId = null;
 
         if ($product !== null) {
-            $productSellingPricesIndexedByDomainId = $this->productFacade->getAllProductSellingPricesIndexedByDomainId($product);
+            $productPricesIndexedByDomainId = $this->productFacade->getAllProductPricesIndexedByDomainId($product);
         }
 
         $optionsByDomainId = [];
@@ -589,7 +589,7 @@ final class ProductFormType extends AbstractType
         foreach ($this->domain->getAllIds() as $domainId) {
             $optionsByDomainId[$domainId] = [
                 'domain_id' => $domainId,
-                'selling_prices' => $productSellingPricesIndexedByDomainId[$domainId] ?? null,
+                'product_prices' => $productPricesIndexedByDomainId[$domainId] ?? null,
             ];
         }
 

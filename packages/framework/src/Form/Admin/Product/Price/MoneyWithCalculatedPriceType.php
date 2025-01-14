@@ -21,9 +21,9 @@ class MoneyWithCalculatedPriceType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'selling_price' => null,
+            'product_price' => null,
         ]);
-        $resolver->setAllowedTypes('selling_price', [PriceInterface::class, 'null']);
+        $resolver->setAllowedTypes('product_price', [PriceInterface::class, 'null']);
     }
 
     /**
@@ -32,7 +32,7 @@ class MoneyWithCalculatedPriceType extends AbstractType
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
-        $view->vars['selling_price'] = $options['selling_price'];
+        $view->vars['product_price'] = $options['product_price'];
     }
 
     /**

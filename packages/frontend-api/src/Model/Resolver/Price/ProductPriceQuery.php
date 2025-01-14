@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Price;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
@@ -24,6 +25,7 @@ class ProductPriceQuery extends AbstractQuery
      * @param \Shopsys\FrontendApiBundle\Model\Price\PriceFacade $priceFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
      * @param \Shopsys\FrontendApiBundle\Model\Price\PriceInfoFactory $priceInfoFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      */
     public function __construct(
         protected readonly SpecialPriceFacade $specialPriceFacade,
@@ -32,6 +34,7 @@ class ProductPriceQuery extends AbstractQuery
         protected readonly PriceFacade $priceFacade,
         protected readonly ProductCachedAttributesFacade $productCachedAttributesFacade,
         protected readonly PriceInfoFactory $priceInfoFactory,
+        protected readonly CurrentCustomerUser $currentCustomerUser,
     ) {
     }
 
@@ -42,7 +45,7 @@ class ProductPriceQuery extends AbstractQuery
     public function priceByProductQuery(Product|array $data): PriceInfo
     {
         if ($this->isProductUponInquiry($data)) {
-            return $this->priceInfoFactory->createHiddenPriceInfo();
+            return $this->priceInfoFactory->createHiddenPriceInfo($this->currentCustomerUser->getPricingGroup());
         }
 
         if ($data instanceof Product) {

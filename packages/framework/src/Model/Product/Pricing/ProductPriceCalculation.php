@@ -87,7 +87,7 @@ class ProductPriceCalculation
         $minVariantPrice = $this->getMinimumPriceByPriceWithoutVat($variantPrices);
         $from = $this->arePricesDifferent($variantPrices);
 
-        return new ProductPrice($minVariantPrice->getPrice(), $from);
+        return new ProductPrice($minVariantPrice->getPrice(), $pricingGroup, $from);
     }
 
     /**
@@ -118,7 +118,7 @@ class ProductPriceCalculation
             $defaultCurrency,
         );
 
-        return new ProductPrice($basePrice, false);
+        return new ProductPrice($basePrice, $pricingGroup, false);
     }
 
     /**

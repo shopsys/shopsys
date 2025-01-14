@@ -22,7 +22,7 @@ class PriceFactory
     ): ProductPrice {
         foreach ($pricesArray as $priceArray) {
             if ($priceArray['pricing_group_id'] === $pricingGroup->getId()) {
-                return $this->createProductPriceFromArray($priceArray);
+                return $this->createProductPriceFromArray($priceArray, $pricingGroup);
             }
         }
 
@@ -33,11 +33,11 @@ class PriceFactory
      * @param array{price_without_vat: mixed, price_with_vat: mixed, price_from: bool} $priceArray
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
-    public function createProductPriceFromArray(array $priceArray): ProductPrice
+    public function createProductPriceFromArray(array $priceArray, PricingGroup $pricingGroup): ProductPrice
     {
         $price = $this->createPriceFromArray($priceArray);
 
-        return new ProductPrice($price, $priceArray['price_from']);
+        return new ProductPrice($price, $pricingGroup, $priceArray['price_from']);
     }
 
     /**

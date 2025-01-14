@@ -48,12 +48,12 @@ class ProductPricesWithVatSelectType extends AbstractType
             ])
             ->add(
                 'manualInputPricesByPricingGroupId',
-                PricesWithCalculatedSellingPricesType::class,
+                PricesWithCalculatedPricesType::class,
                 [
                     'label' => false,
                     'required' => false,
                     'domain_id' => $options['domain_id'],
-                    'selling_prices' => $options['selling_prices'],
+                    'product_prices' => $options['product_prices'],
                 ],
             );
     }
@@ -66,12 +66,12 @@ class ProductPricesWithVatSelectType extends AbstractType
     {
         $resolver
             ->setDefaults([
-                'selling_prices' => null,
+                'product_prices' => null,
                 'data_class' => ProductInputPriceData::class,
             ])
             ->setRequired(['domain_id'])
             ->setAllowedTypes('domain_id', 'int')
-            ->setAllowedTypes('selling_prices', ['array', 'null']);
+            ->setAllowedTypes('product_prices', ['array', 'null']);
     }
 
     /**

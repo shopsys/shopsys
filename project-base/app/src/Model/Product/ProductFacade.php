@@ -41,7 +41,7 @@ use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
  * @method \App\Model\Product\Product getById(int $productId)
  * @method \App\Model\Product\Product create(\App\Model\Product\ProductData $productData, string $priority = \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum::REGULAR)
  * @method setAdditionalDataAfterCreate(\App\Model\Product\Product $product, \App\Model\Product\ProductData $productData)
- * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[] getAllProductSellingPricesByDomainId(\App\Model\Product\Product $product, int $domainId)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice[] getAllProductPricesByDomainId(\App\Model\Product\Product $product, int $domainId)
  * @method createProductVisibilities(\App\Model\Product\Product $product)
  * @method \App\Model\Product\Product getOneByCatnumExcludeMainVariants(string $productCatnum)
  * @method \App\Model\Product\Product getByUuid(string $uuid)
@@ -49,10 +49,10 @@ use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
  * @method \App\Model\Product\Product[] getAllByIds(int[] $ids)
  * @method createFriendlyUrlsWhenRenamed(\App\Model\Product\Product $product, array $originalNames)
  * @method array getChangedNamesByLocale(\App\Model\Product\Product $product, array $originalNames)
- * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[][] getAllProductSellingPricesIndexedByDomainId(\App\Model\Product\Product $product)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice[][] getAllProductPricesIndexedByDomainId(\App\Model\Product\Product $product)
  * @method \App\Model\Product\Product|null findByCatnum(string $catnum)
- * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice getProductSellingPriceForDefaultPricingGroup(\App\Model\Product\Product $product, int $domainId)
- * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice getProductSellingPriceForPricingGroup(\App\Model\Product\Product $product, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice getProductPriceForDefaultPricingGroup(\App\Model\Product\Product $product, int $domainId)
+ * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice getProductPriceForPricingGroup(\App\Model\Product\Product $product, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
  */
 class ProductFacade extends BaseProductFacade
 {

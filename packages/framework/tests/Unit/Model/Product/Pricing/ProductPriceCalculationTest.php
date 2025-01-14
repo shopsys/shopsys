@@ -120,27 +120,29 @@ class ProductPriceCalculationTest extends TestCase
 
     public static function getMinimumPriceProvider()
     {
+        $pricingGroup = new PricingGroup(new PricingGroupData(), 1);
+
         return [
             [
                 'prices' => [
-                    new ProductPrice(new Price(Money::create(20), Money::create(30))),
-                    new ProductPrice(new Price(Money::create(10), Money::create(15))),
-                    new ProductPrice(new Price(Money::create(100), Money::create(120))),
+                    new ProductPrice(new Price(Money::create(20), Money::create(30)), $pricingGroup),
+                    new ProductPrice(new Price(Money::create(10), Money::create(15)), $pricingGroup),
+                    new ProductPrice(new Price(Money::create(100), Money::create(120)), $pricingGroup),
                 ],
-                'minimumPrice' => new ProductPrice(new Price(Money::create(10), Money::create(15))),
+                'minimumPrice' => new ProductPrice(new Price(Money::create(10), Money::create(15)), $pricingGroup),
             ],
             [
                 'prices' => [
-                    new ProductPrice(new Price(Money::create(10), Money::create(15))),
+                    new ProductPrice(new Price(Money::create(10), Money::create(15)), $pricingGroup),
                 ],
-                'minimumPrice' => new ProductPrice(new Price(Money::create(10), Money::create(15))),
+                'minimumPrice' => new ProductPrice(new Price(Money::create(10), Money::create(15)), $pricingGroup),
             ],
             [
                 'prices' => [
-                    new ProductPrice(new Price(Money::create(10), Money::create(15))),
-                    new ProductPrice(new Price(Money::create(10), Money::create(15))),
+                    new ProductPrice(new Price(Money::create(10), Money::create(15)), $pricingGroup),
+                    new ProductPrice(new Price(Money::create(10), Money::create(15)), $pricingGroup),
                 ],
-                'minimumPrice' => new ProductPrice(new Price(Money::create(10), Money::create(15))),
+                'minimumPrice' => new ProductPrice(new Price(Money::create(10), Money::create(15)), $pricingGroup),
             ],
         ];
     }

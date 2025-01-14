@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
@@ -65,7 +66,7 @@ class ZboziFeedItemTest extends TestCase
         $this->defaultProduct->method('getId')->willReturn(1);
         $this->defaultProduct->method('getFullName')->with('cs')->willReturn('product name');
 
-        $productPrice = new ProductPrice(Price::zero(), false);
+        $productPrice = new ProductPrice(Price::zero(), $this->createMock(PricingGroup::class), false);
         $this->productPriceCalculationForCustomerUserMock->method('calculatePriceForCustomerUserAndDomainId')
             ->with($this->defaultProduct, Domain::FIRST_DOMAIN_ID, null)->willReturn($productPrice);
 

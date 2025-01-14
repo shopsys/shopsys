@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use LogicException;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 
@@ -45,12 +46,13 @@ class PriceInfoFactory
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrontendApiBundle\Model\Price\PriceInfo
      */
-    public function createHiddenPriceInfo(): PriceInfo
+    public function createHiddenPriceInfo(PricingGroup $pricingGroup): PriceInfo
     {
         return $this->create(
-            ProductPrice::createHiddenProductPrice(),
+            ProductPrice::createHiddenProductPrice($pricingGroup),
             null,
         );
     }

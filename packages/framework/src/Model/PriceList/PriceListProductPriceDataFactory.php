@@ -88,7 +88,7 @@ class PriceListProductPriceDataFactory
      */
     protected function getBasicPriceBasedOnPricingSetting(Product $product, int $domainId): Money
     {
-        $basicPrice = $this->productFacade->getProductSellingPriceForDefaultPricingGroup(
+        $basicPrice = $this->productFacade->getProductPriceForDefaultPricingGroup(
             $product,
             $domainId,
         );

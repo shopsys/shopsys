@@ -140,7 +140,7 @@ class ProductPickerController extends AdminBaseController
         $productId = (int)$request->get('productId');
         $domainId = (int)$request->get('domainId');
 
-        $basicPrice = $this->productFacade->getProductSellingPriceForDefaultPricingGroup(
+        $basicPrice = $this->productFacade->getProductPriceForDefaultPricingGroup(
             $this->productFacade->getById($productId),
             $domainId,
         );

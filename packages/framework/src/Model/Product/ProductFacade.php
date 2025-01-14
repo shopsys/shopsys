@@ -22,7 +22,6 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalc
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockData;
@@ -270,14 +269,14 @@ class ProductFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[][]
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice[][]
      */
-    public function getAllProductSellingPricesIndexedByDomainId(Product $product)
+    public function getAllProductPricesIndexedByDomainId(Product $product)
     {
         $productSellingPrices = [];
 
         foreach ($this->domain->getAllIds() as $domainId) {
-            $productSellingPrices[$domainId] = $this->getAllProductSellingPricesByDomainId($product, $domainId);
+            $productSellingPrices[$domainId] = $this->getAllProductPricesByDomainId($product, $domainId);
         }
 
         return $productSellingPrices;
@@ -286,20 +285,17 @@ class ProductFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductSellingPrice[]
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice[]
      */
-    public function getAllProductSellingPricesByDomainId(Product $product, int $domainId): array
+    public function getAllProductPricesByDomainId(Product $product, int $domainId): array
     {
-        $productSellingPrices = [];
+        $productPrices = [];
 
         foreach ($this->pricingGroupRepository->getPricingGroupsByDomainId($domainId) as $pricingGroup) {
-            $productSellingPrices[$pricingGroup->getId()] = new ProductSellingPrice(
-                $pricingGroup,
-                $this->getProductSellingPriceForPricingGroup($product, $domainId, $pricingGroup),
-            );
+            $productPrices[$pricingGroup->getId()] = $this->getProductPriceForPricingGroup($product, $domainId, $pricingGroup);
         }
 
-        return $productSellingPrices;
+        return $productPrices;
     }
 
     /**
@@ -307,11 +303,11 @@ class ProductFacade
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
-    public function getProductSellingPriceForDefaultPricingGroup(Product $product, int $domainId): ProductPrice
+    public function getProductPriceForDefaultPricingGroup(Product $product, int $domainId): ProductPrice
     {
         $pricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId);
 
-        return $this->getProductSellingPriceForPricingGroup($product, $domainId, $pricingGroup);
+        return $this->getProductPriceForPricingGroup($product, $domainId, $pricingGroup);
     }
 
     /**
@@ -320,7 +316,7 @@ class ProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
-    protected function getProductSellingPriceForPricingGroup(
+    protected function getProductPriceForPricingGroup(
         Product $product,
         int $domainId,
         PricingGroup $pricingGroup,
@@ -328,7 +324,7 @@ class ProductFacade
         try {
             $sellingPrice = $this->productPriceCalculation->calculatePrice($product, $domainId, $pricingGroup);
         } catch (MainVariantPriceCalculationException) {
-            $sellingPrice = new ProductPrice(Price::zero(), false);
+            $sellingPrice = new ProductPrice(Price::zero(), $pricingGroup, false);
         }
 
         return $sellingPrice;

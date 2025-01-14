@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Pricing;
 
 use Override;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
@@ -13,10 +14,12 @@ final class ProductPrice implements PriceInterface
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param bool $priceFrom
      */
     public function __construct(
         private readonly Price $price,
+        private readonly PricingGroup $pricingGroup,
         private readonly bool $priceFrom = false,
     ) {
     }
@@ -30,12 +33,14 @@ final class ProductPrice implements PriceInterface
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return self
      */
-    public static function createHiddenProductPrice(): self
+    public static function createHiddenProductPrice(PricingGroup $pricingGroup): self
     {
         return new self(
             Price::createHiddenPrice(),
+            $pricingGroup,
             false,
         );
     }
@@ -73,5 +78,13 @@ final class ProductPrice implements PriceInterface
     public function getVatAmount(): Money
     {
         return $this->price->getVatAmount();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
+     */
+    public function getPricingGroup(): PricingGroup
+    {
+        return $this->pricingGroup;
     }
 }

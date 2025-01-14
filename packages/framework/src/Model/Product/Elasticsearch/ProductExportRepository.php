@@ -374,17 +374,17 @@ class ProductExportRepository
     protected function extractPrices(int $domainId, Product $product): array
     {
         $prices = [];
-        $productSellingPrices = $this->productFacade->getAllProductSellingPricesByDomainId($product, $domainId);
+        $productPrices = $this->productFacade->getAllProductPricesByDomainId($product, $domainId);
 
-        foreach ($productSellingPrices as $productSellingPrice) {
-            $sellingPrice = $productSellingPrice->getProductPrice();
-            $pricingGroup = $productSellingPrice->getPricingGroup();
+        foreach ($productPrices as $productPrice) {
+            $pricingGroup = $productPrice->getPricingGroup();
+
             $prices[] = [
                 'pricing_group_id' => $pricingGroup->getId(),
-                'price_with_vat' => (float)$sellingPrice->getPriceWithVat()->getAmount(),
-                'price_without_vat' => (float)$sellingPrice->getPriceWithoutVat()->getAmount(),
-                'vat' => (float)$sellingPrice->getVatAmount()->getAmount(),
-                'price_from' => $sellingPrice->isPriceFrom(),
+                'price_with_vat' => (float)$productPrice->getPriceWithVat()->getAmount(),
+                'price_without_vat' => (float)$productPrice->getPriceWithoutVat()->getAmount(),
+                'vat' => (float)$productPrice->getVatAmount()->getAmount(),
+                'price_from' => $productPrice->isPriceFrom(),
                 'filtering_minimal_price' => (float)$this->getMaximalVariantPriceForFilteringMinimalPrice($product, $pricingGroup, $domainId)->getAmount(),
                 'filtering_maximal_price' => (float)$this->getMinimalVariantPriceForFilteringMaximalPrice($product, $pricingGroup, $domainId)->getAmount(),
             ];
