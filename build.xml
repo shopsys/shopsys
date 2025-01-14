@@ -9,6 +9,7 @@
     <property name="path.framework" value="${path.packages}/framework"/>
     <property name="path.utils" value="${project.basedir}/utils"/>
     <property name="path.upgrade-notes" value="${project.basedir}/upgrade-notes"/>
+    <property name="path.administration.assets" value="${path.packages}/administration/assets"/>
     <property name="translations.dump.flags" value=""/>
 
     <import file="${path.framework}/build.xml"/>
@@ -48,6 +49,14 @@
             <arg value="--ignore-path"/>
             <arg path="${path.framework.assets}/.eslintignore"/>
         </exec>
+        <exec executable="${path.eslint.executable}" passthru="true" checkreturn="true">
+            <arg value="--color"/>
+            <arg path="${path.administration.assets}"/>
+            <arg value="--config"/>
+            <arg path="${path.root}/.eslintrc.json"/>
+            <arg value="--ignore-path"/>
+            <arg path="${path.administration.assets}/.eslintignore"/>
+        </exec>
     </target>
 
     <target name="eslint-check-diff" hidden="true">
@@ -65,6 +74,15 @@
             <arg path="${path.root}/.eslintrc.json"/>
             <arg value="--ignore-path"/>
             <arg path="${path.framework.assets}/.eslintignore"/>
+        </exec>
+        <exec executable="${path.eslint.executable}" passthru="true" checkreturn="true">
+            <arg value="--color"/>
+            <arg value="--fix"/>
+            <arg path="${path.administration.assets}"/>
+            <arg value="--config"/>
+            <arg path="${path.root}/.eslintrc.json"/>
+            <arg value="--ignore-path"/>
+            <arg path="${path.administration.assets}/.eslintignore"/>
         </exec>
     </target>
 

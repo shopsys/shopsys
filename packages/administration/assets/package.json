@@ -1,0 +1,28 @@
+{
+    "name": "@shopsys/administration",
+    "description": "Shopsys Administration assets",
+    "repository": "https://github.com/shopsys/shopsys",
+    "author": "Shopsys",
+    "license": "proprietary",
+    "symfony": {
+        "controllers": {
+            "collection": {
+            }
+        }
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.23.9",
+        "@babel/core": "^7.24.0",
+        "@babel/plugin-transform-class-properties": "^7.23.3",
+        "@babel/preset-env": "^7.24.0",
+        "@babel/preset-typescript": "^7.23.3",
+        "@hotwired/stimulus": "^3.2.2",
+        "@symfony/stimulus-bridge": "^3.2.3"
+    },
+    "scripts": {
+        "build": "babel src -d dist",
+        "lint": "eslint src test",
+        "watch": "babel src -d dist --watch",
+        "postinstall": "npm run build"
+    }
+}

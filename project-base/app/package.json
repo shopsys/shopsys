@@ -58,6 +58,7 @@
     },
     "dependencies": {
         "@claviska/jquery-minicolors": "^2.3.4",
+        "@shopsys/administration": "file:vendor/shopsys/administration/assets",
         "@shopsys/framework": "file:vendor/shopsys/framework/assets",
         "@yaireo/tagify": "^4.25.1",
         "bazinga-translator": "^2.6.6",
