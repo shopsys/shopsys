@@ -1,1 +1,15 @@
-project-base/app/package.json
+{
+    "name": "shopsys",
+    "private": true,
+    "workspaces": [
+        "packages/*/assets",
+        "project-base/app"
+    ],
+    "dependencies": {
+        "fs-extra": "^11.2.0",
+        "globby": "^14.0.2"
+    },
+    "scripts": {
+        "postinstall": "node ./utils/link-packages.js"
+    }
+}

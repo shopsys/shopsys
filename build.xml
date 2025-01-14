@@ -2,7 +2,6 @@
 <project name="Shopsys Platform" default="list">
 
     <property name="check-and-fix-annotations" value="true"/>
-    <property name="npm.framework" value="@shopsys/framework"/>
     <property name="path.root" value="${project.basedir}/project-base/app"/>
     <property name="path.vendor" value="${project.basedir}/vendor"/>
     <property name="path.packages" value="${project.basedir}/packages"/>
@@ -108,23 +107,6 @@
             <arg path="${project.basedir}/docs/**/*.md"/>
             <arg path="${project.basedir}/*.md"/>
             <arg path="${project.basedir}/upgrade-notes/*.md"/>
-        </exec>
-    </target>
-
-    <target name="npm-install-dependencies" description="Installs node modules dependencies." hidden="true">
-        <phingcall target="shopsys_framework.npm-install-dependencies"/>
-
-        <exec executable="${path.npm.executable}" dir="${path.framework.assets}" logoutput="true" passthru="true" checkreturn="true">
-            <arg value="install"/>
-        </exec>
-
-        <exec executable="${path.npm.executable}" dir="${path.framework.assets}" logoutput="true" passthru="true" checkreturn="true">
-            <arg value="link"/>
-        </exec>
-
-        <exec executable="${path.npm.executable}" dir="${path.root}" logoutput="true" passthru="true" checkreturn="true">
-            <arg value="link"/>
-            <arg value="${npm.framework}"/>
         </exec>
     </target>
 
