@@ -75,6 +75,7 @@ use PhpCsFixer\Fixer\Phpdoc\PhpdocNoEmptyReturnFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocNoPackageFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocNoUselessInheritdocFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocOrderFixer;
+use PhpCsFixer\Fixer\Phpdoc\PhpdocParamOrderFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocScalarFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocSingleLineVarSpacingFixer;
 use PhpCsFixer\Fixer\Phpdoc\PhpdocTrimFixer;
@@ -96,7 +97,6 @@ use Shopsys\CodingStandards\CsFixer\OrmJoinColumnRequireNullableFixer;
 use Shopsys\CodingStandards\CsFixer\Phpdoc\InheritDocFormatFixer;
 use Shopsys\CodingStandards\CsFixer\Phpdoc\MissingParamAnnotationsFixer;
 use Shopsys\CodingStandards\CsFixer\Phpdoc\MissingReturnAnnotationFixer;
-use Shopsys\CodingStandards\CsFixer\Phpdoc\OrderedParamAnnotationsFixer;
 use Shopsys\CodingStandards\Helper\CyclomaticComplexitySniffSetting;
 use Shopsys\CodingStandards\Sniffs\ForbiddenDoctrineDefaultValueSniff;
 use Shopsys\CodingStandards\Sniffs\ForbiddenDoctrineInheritanceSniff;
@@ -174,7 +174,7 @@ return ECSConfig::configure()
         // add all @param, @return and @var annotations, in FQN
         MissingParamAnnotationsFixer::class,
         MissingReturnAnnotationFixer::class,
-        OrderedParamAnnotationsFixer::class,
+        PhpdocParamOrderFixer::class,
         FullyQualifiedClassNameInAnnotationSniff::class,
         EmptyStatementSniff::class,
         ForLoopShouldBeWhileLoopSniff::class,

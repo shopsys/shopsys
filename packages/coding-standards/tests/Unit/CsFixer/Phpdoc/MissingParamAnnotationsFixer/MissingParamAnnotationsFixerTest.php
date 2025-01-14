@@ -56,6 +56,8 @@ final class MissingParamAnnotationsFixerTest extends AbstractFixerTestCase
 
         yield [__DIR__ . '/fixed/fixed7.php', __DIR__ . '/wrong/wrong7.php'];
 
+        yield [__DIR__ . '/fixed/fixed8.php', __DIR__ . '/wrong/wrong8.php'];
+
         yield [__DIR__ . '/correct/correct.php'];
     }
 }
