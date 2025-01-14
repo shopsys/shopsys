@@ -97,10 +97,11 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                                             key={parameter.uuid}
                                             className="border-none bg-tableBackground odd:bg-tableBackgroundContrast"
                                         >
-                                            <Cell className="w-[240px] px-5 py-2.5 align-top">
+                                            <Cell className="hidden w-[240px] px-5 py-2.5 align-top lg:table-cell">
                                                 <h6 className="leading-5">{parameter.name}</h6>
                                             </Cell>
                                             <Cell className="px-5 py-2.5 text-sm">
+                                                <h6 className="leading-5 lg:hidden">{parameter.name}</h6>
                                                 {parameter.values.map((value, index) =>
                                                     formatParameterValue(
                                                         value.text +
@@ -125,10 +126,11 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                                                 key={parameter.uuid}
                                                 className="border-none bg-tableBackground odd:bg-tableBackgroundContrast"
                                             >
-                                                <Cell className="w-[240px] px-5 py-2.5 align-top">
+                                                <Cell className="hidden w-[240px] px-5 py-2.5 align-top lg:table-cell">
                                                     <h6 className="leading-5">{parameter.name}</h6>
                                                 </Cell>
                                                 <Cell className="px-5 py-2.5 text-sm">
+                                                    <h6 className="leading-5 lg:hidden">{parameter.name}</h6>
                                                     {parameter.values.map((value, index) =>
                                                         formatParameterValue(
                                                             value.text +
