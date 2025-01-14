@@ -85,15 +85,6 @@ msgstr "Kontakt"
 msgid "Content"
 msgstr "Obsah"
 
-msgid "Content-Security-Policy header"
-msgstr "Hlavička Content-Security-Policy"
-
-msgid "Content-Security-Policy header has been set."
-msgstr "Hlavička Content-Security-Policy byla nastavena."
-
-msgid "Content-Security-Policy header setting"
-msgstr "Nastavení hlavičky Content-Security-Policy"
-
 msgid "Create flag"
 msgstr "Vytvořit příznak"
 
@@ -234,9 +225,6 @@ msgstr "Rozložení uvnitř"
 
 msgid "Integrations"
 msgstr "Integrace"
-
-msgid "It is highly recommended to test this setting on devel or CI server before it is applied in production!"
-msgstr "Je vysoce doporučeno toto nastavení otestovat na vývojovém nebo CI serveru před tím, než bude použita v produkci!"
 
 msgid "Key"
 msgstr "Klíč"

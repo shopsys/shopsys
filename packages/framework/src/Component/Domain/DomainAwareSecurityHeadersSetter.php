@@ -4,15 +4,19 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Domain;
 
+use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class DomainAwareSecurityHeadersSetter
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      */
-    public function __construct(protected readonly Domain $domain)
-    {
+    public function __construct(
+        protected readonly Domain $domain,
+        protected readonly Setting $setting,
+    ) {
     }
 
     /**
@@ -28,14 +32,7 @@ class DomainAwareSecurityHeadersSetter
             return;
         }
 
-        // Do not allow to external content from non-HTTPS URLs.
-        // Other security features stays as if CSP was not used:
-        // - allow inline JavaScript and CSS
-        // - allow eval() function in JavaScript
-        // - allow data URLs
-        $event->getResponse()->headers->set(
-            'Content-Security-Policy',
-            "default-src https: 'unsafe-inline' 'unsafe-eval' data:",
-        );
+        $cspHeaderValue = $this->setting->get(Setting::CSP_HEADER);
+        $event->getResponse()->headers->set('Content-Security-Policy', $cspHeaderValue);
     }
 }

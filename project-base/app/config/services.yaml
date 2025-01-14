@@ -151,11 +151,6 @@ services:
     Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender:
         alias: App\Component\Doctrine\QueryBuilderExtender
 
-    Shopsys\FrameworkBundle\Component\Domain\DomainAwareSecurityHeadersSetter:
-        class: App\Component\Domain\DomainAwareSecurityHeadersSetter
-        tags:
-            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
-
     Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassProviderInterface:
         alias: App\Model\MultidomainEntityClassProvider
 

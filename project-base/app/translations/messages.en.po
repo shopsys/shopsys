@@ -85,15 +85,6 @@ msgstr ""
 msgid "Content"
 msgstr ""
 
-msgid "Content-Security-Policy header"
-msgstr ""
-
-msgid "Content-Security-Policy header has been set."
-msgstr ""
-
-msgid "Content-Security-Policy header setting"
-msgstr ""
-
 msgid "Create flag"
 msgstr ""
 
@@ -233,9 +224,6 @@ msgid "Inside layout"
 msgstr ""
 
 msgid "Integrations"
-msgstr ""
-
-msgid "It is highly recommended to test this setting on devel or CI server before it is applied in production!"
 msgstr ""
 
 msgid "Key"

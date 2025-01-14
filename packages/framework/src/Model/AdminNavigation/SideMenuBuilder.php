@@ -666,6 +666,7 @@ class SideMenuBuilder
                 ['route' => 'admin_superadmin_mailwhitelist', 'label' => t('E-mail whitelist settings')],
             );
             $superadminMenu->addChild(t('Clean Storefront Cache'), ['route' => 'admin_redis_show']);
+            $superadminMenu->addChild('cspHeader', ['route' => 'admin_cspheader_setting', 'label' => t('Content-Security-Policy header')]);
         }
 
         $heurekaMenu = $menu->addChild('heureka', ['label' => t('Heureka - Verified by Customer')]);

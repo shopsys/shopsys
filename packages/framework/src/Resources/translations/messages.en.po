@@ -838,6 +838,15 @@ msgstr ""
 msgid "Content"
 msgstr ""
 
+msgid "Content-Security-Policy header"
+msgstr ""
+
+msgid "Content-Security-Policy header has been set."
+msgstr ""
+
+msgid "Content-Security-Policy header setting"
+msgstr ""
+
 msgid "Convert values associated with parameter - %name%"
 msgstr ""
 
@@ -2303,6 +2312,9 @@ msgid "Invalid reset password hash for administrator"
 msgstr ""
 
 msgid "Invalid two-factor authentication code."
+msgstr ""
+
+msgid "It is highly recommended to test this setting on devel or CI server before it is applied in production!"
 msgstr ""
 
 msgid "It is not possible to update order and indentation of blog categories on specific domain tab. Please go to the category detail or blog category overview for all domains"

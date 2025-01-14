@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Admin;
+namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use App\Component\Setting\Setting;
-use App\Form\Admin\CspHeaderSettingFormType;
-use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
+use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Form\Admin\CspHeaderSetting\CspHeaderSettingFormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,9 +13,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class CspHeaderController extends AdminBaseController
 {
     /**
-     * @param \App\Component\Setting\Setting $setting
+     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      */
-    public function __construct(private Setting $setting)
+    public function __construct(protected readonly Setting $setting)
     {
     }
 
@@ -37,7 +36,7 @@ class CspHeaderController extends AdminBaseController
             $this->addSuccessFlashTwig(t('Content-Security-Policy header has been set.'));
         }
 
-        return $this->render('Admin/Content/CspHeader/setting.html.twig', [
+        return $this->render('@ShopsysFramework/Admin/Content/CspHeader/setting.html.twig', [
             'form' => $form->createView(),
         ]);
     }

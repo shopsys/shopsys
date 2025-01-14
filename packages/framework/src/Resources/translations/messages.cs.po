@@ -838,6 +838,15 @@ msgstr "Napište nám"
 msgid "Content"
 msgstr "Obsah"
 
+msgid "Content-Security-Policy header"
+msgstr "Hlavička Content-Security-Policy"
+
+msgid "Content-Security-Policy header has been set."
+msgstr "Hlavička Content-Security-Policy byla nastavena."
+
+msgid "Content-Security-Policy header setting"
+msgstr "Nastavení hlavičky Content-Security-Policy"
+
 msgid "Convert values associated with parameter - %name%"
 msgstr "Převeďte hodnoty spojené s parametrem - %name%"
 
@@ -2304,6 +2313,9 @@ msgstr "Neplatný hash pro resetování hesla administrátora"
 
 msgid "Invalid two-factor authentication code."
 msgstr "Neplatný kód dvoufaktorového ověření."
+
+msgid "It is highly recommended to test this setting on devel or CI server before it is applied in production!"
+msgstr "Je vysoce doporučeno toto nastavení otestovat na vývojovém nebo CI serveru před tím, než bude použita v produkci!"
 
 msgid "It is not possible to update order and indentation of blog categories on specific domain tab. Please go to the category detail or blog category overview for all domains"
 msgstr "Na konkrétní záložce domény není možné upravovat pořadí a zanoření rubrik blogu. Prosím přejděte na detail kategorie nebo na přehled kategorií na všech doménách"
