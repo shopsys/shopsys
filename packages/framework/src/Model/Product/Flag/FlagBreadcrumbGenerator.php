@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Product\Flag;
+namespace Shopsys\FrameworkBundle\Model\Product\Flag;
 
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem;
@@ -11,11 +11,13 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 class FlagBreadcrumbGenerator implements BreadcrumbGeneratorInterface
 {
     /**
-     * @param \App\Model\Product\Flag\FlagFacade $flagFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
-    public function __construct(private FlagFacade $flagFacade, private Domain $domain)
-    {
+    public function __construct(
+        protected readonly FlagFacade $flagFacade,
+        protected readonly Domain $domain,
+    ) {
     }
 
     /**

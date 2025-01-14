@@ -580,7 +580,10 @@ class SideMenuBuilder
             'edit_payment',
             ['route' => 'admin_payment_edit', 'label' => t('Editing payment'), 'display' => false],
         );
-        $listsMenu->addChild('flags', ['route' => 'admin_flag_list', 'label' => t('Flags')]);
+
+        $flagsMenu = $listsMenu->addChild('flags', ['route' => 'admin_flag_list', 'label' => t('Flags')]);
+        $flagsMenu->addChild('flagNew', ['route' => 'admin_flag_new', 'label' => t('New flag'), 'display' => false]);
+        $flagsMenu->addChild('flagEdit', ['route' => 'admin_flag_edit', 'label' => t('Editing flag'), 'display' => false]);
 
         $parametersMenu = $listsMenu->addChild('parameters', ['route' => 'admin_parameter_list', 'label' => t('Parameters')]);
         $parametersMenu->addChild('parameters_new', ['route' => 'admin_parameter_new', 'display' => false, 'label' => t('New parameter')]);

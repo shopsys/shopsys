@@ -32,22 +32,23 @@ class FlagGridFactory implements GridFactoryInterface
     {
         $queryBuilder = $this->em->createQueryBuilder();
         $queryBuilder
-            ->select('a, at')
-            ->from(Flag::class, 'a')
-            ->join('a.translations', 'at', Join::WITH, 'at.locale = :locale')
+            ->select('f, ft')
+            ->from(Flag::class, 'f')
+            ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
             ->setParameter('locale', $this->localization->getAdminLocale());
-        $dataSource = new QueryBuilderDataSource($queryBuilder, 'a.id');
+        $dataSource = new QueryBuilderDataSource($queryBuilder, 'f.id');
 
         $grid = $this->gridFactory->create('flagList', $dataSource);
         $grid->setDefaultOrder('name');
 
-        $grid->addColumn('name', 'at.name', t('Name'), true);
-        $grid->addColumn('rgbColor', 'a.rgbColor', t('Color'), true);
-        $grid->addColumn('visible', 'a.visible', t('Filter by'), true);
+        $grid->addColumn('name', 'ft.name', t('Name'), true);
+        $grid->addColumn('rgbColor', 'f.rgbColor', t('Color'), true);
+        $grid->addColumn('visible', 'f.visible', t('Display'), true);
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
-        $grid->addDeleteActionColumn('admin_flag_delete', ['id' => 'a.id'])
-            ->setConfirmMessage(t('Do you really want to remove this flag?'));
+        $grid->addEditActionColumn('admin_flag_edit', ['id' => 'f.id']);
+        $grid->addDeleteActionColumn('admin_flag_deleteconfirm', ['id' => 'f.id'])
+            ->setAjaxConfirm();
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Flag/listGrid.html.twig');
 

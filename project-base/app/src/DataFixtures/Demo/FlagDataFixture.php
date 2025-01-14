@@ -20,7 +20,7 @@ class FlagDataFixture extends AbstractReferenceFixture
     public const string FLAG_PRODUCT_MADEIN_DE = 'product_madein_de';
 
     /**
-     * @param \App\Model\Product\Flag\FlagFacade $flagFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
      * @param \App\Model\Product\Flag\FlagDataFactory $flagDataFactory
      */
     public function __construct(
@@ -52,6 +52,7 @@ class FlagDataFixture extends AbstractReferenceFixture
      */
     private function createFlag(int $flagId, ?string $referenceName = null, ?string $rgbColor = null): void
     {
+        /** @var \App\Model\Product\Flag\Flag $flag */
         $flag = $this->flagFacade->getById($flagId);
 
         if ($referenceName !== null) {

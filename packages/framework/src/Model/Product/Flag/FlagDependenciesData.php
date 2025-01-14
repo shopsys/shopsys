@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Product\Flag;
+namespace Shopsys\FrameworkBundle\Model\Product\Flag;
 
 class FlagDependenciesData
 {

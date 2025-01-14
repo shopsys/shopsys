@@ -1636,6 +1636,12 @@ msgstr ""
 msgid "Editing file"
 msgstr ""
 
+msgid "Editing flag"
+msgstr ""
+
+msgid "Editing flag - {{ name }}"
+msgstr ""
+
 msgid "Editing holiday / internal day - {{ name }}"
 msgstr ""
 
@@ -1984,9 +1990,6 @@ msgstr ""
 msgid "Fill missing settings to enable creating products."
 msgstr ""
 
-msgid "Filter by"
-msgstr ""
-
 msgid "Filter parameters"
 msgstr ""
 
@@ -2003,6 +2006,12 @@ msgid "First name"
 msgstr ""
 
 msgid "Flag"
+msgstr ""
+
+msgid "Flag <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr ""
+
+msgid "Flag <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
 msgstr ""
 
 msgid "Flag <strong>{{ name }}</strong> deleted"
@@ -2645,6 +2654,9 @@ msgid "New customer user role group"
 msgstr ""
 
 msgid "New delivery address"
+msgstr ""
+
+msgid "New flag"
 msgstr ""
 
 msgid "New item"
@@ -4117,6 +4129,9 @@ msgstr ""
 msgid "The product is no longer in the catalog. This was the catalog number at the time of the inquiry."
 msgstr ""
 
+msgid "The selected flag cannot be deleted."
+msgstr ""
+
 msgid "The stock quantities are set for the product variants separately."
 msgstr ""
 
@@ -4142,6 +4157,9 @@ msgid "This currency can't be deleted, it is set as default or is saved with ord
 msgstr ""
 
 msgid "This email was sent from the contact form located below the panel of categories."
+msgstr ""
+
+msgid "This flag can not be deleted as it is used in definition of"
 msgstr ""
 
 msgid "This is the last customer user. It will remove all its related data. Do you really want to delete it ?"

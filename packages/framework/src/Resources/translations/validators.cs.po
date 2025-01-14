@@ -103,8 +103,8 @@ msgstr "Jméno kontaktní osoby nesmí být delší než {{ limit }} znaků"
 msgid "Flag \"{{ flagName }}\" is selected multiple times."
 msgstr "Příznak \"{{ flagName }}\" je zvolen několikrát."
 
-msgid "Flag color in must be in valid hexadecimal code e.g. #3333ff"
-msgstr "Barva příznaku se zadává v hexa kódu, například #3333ff. Nesmí být tedy delší než {{ limit }} znaků"
+msgid "Flag color must be in valid hexadecimal code e.g. #3333ff"
+msgstr "Barva příznaku se zadává v hexa kódu, například #3333ff"
 
 msgid "Flag name cannot be longer than {{ limit }} characters"
 msgstr "Název příznaku nesmí být delší než {{ limit }} znaků"
@@ -332,7 +332,7 @@ msgid "Please enter flag color"
 msgstr "Vyplňte prosím barvu příznaku"
 
 msgid "Please enter flag name in all languages"
-msgstr "Vyplňte prosím název příznaku ve všech jazycích"
+msgstr "Prosím zadejte název příznaku ve všech jazycích"
 
 msgid "Please enter full name"
 msgstr "Vyplňte prosím celé jméno"

@@ -175,9 +175,6 @@ services:
     Shopsys\FrameworkBundle\Controller\Admin\CustomerController:
         class: 'App\Controller\Admin\CustomerController'
 
-    Shopsys\FrameworkBundle\Controller\Admin\FlagController:
-        class: 'App\Controller\Admin\FlagController'
-
     Shopsys\FrameworkBundle\Controller\Admin\MailController:
         class: App\Controller\Admin\MailController
 
@@ -375,15 +372,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactory:
         alias: App\Model\Product\Flag\FlagDataFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade:
-        alias: App\Model\Product\Flag\FlagFacade
-
-    Shopsys\FrameworkBundle\Model\Product\Flag\FlagGridFactory:
-        alias: App\Model\Product\Flag\FlagGridFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository:
-        alias: App\Model\Product\Flag\FlagRepository
 
     Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade:
         alias: App\Model\Product\Listing\ProductListOrderingModeForListFacade

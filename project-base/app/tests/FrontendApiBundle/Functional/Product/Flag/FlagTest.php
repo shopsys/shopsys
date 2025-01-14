@@ -6,9 +6,9 @@ namespace Tests\FrontendApiBundle\Functional\Product\Flag;
 
 use App\DataFixtures\Demo\FlagDataFixture;
 use App\Model\Product\Flag\Flag;
-use App\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorterHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 

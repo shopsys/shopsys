@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Flag;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class FlagFacade
@@ -14,12 +15,14 @@ class FlagFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository $flagRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFactory $flagFactory
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly FlagRepository $flagRepository,
         protected readonly FlagFactory $flagFactory,
         protected readonly EventDispatcherInterface $eventDispatcher,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
     ) {
     }
 
@@ -62,6 +65,8 @@ class FlagFacade
 
         $this->dispatchFlagEvent($flag, FlagEvent::CREATE);
 
+        $this->friendlyUrlFacade->createFriendlyUrls('front_flag_detail', $flag->getId(), $flag->getNames());
+
         return $flag;
     }
 
@@ -77,6 +82,9 @@ class FlagFacade
         $this->em->flush();
 
         $this->dispatchFlagEvent($flag, FlagEvent::UPDATE);
+
+        $this->friendlyUrlFacade->saveUrlListFormData('front_flag_detail', $flag->getId(), $flagData->urls);
+        $this->friendlyUrlFacade->createFriendlyUrls('front_flag_detail', $flag->getId(), $flag->getNames());
 
         return $flag;
     }
@@ -168,5 +176,14 @@ class FlagFacade
     public function getVisibleFlagById(int $flagId, string $locale): Flag
     {
         return $this->flagRepository->getVisibleFlagById($flagId, $locale);
+    }
+
+    /**
+     * @param int $flagId
+     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\FlagDependenciesData
+     */
+    public function getFlagDependencies(int $flagId): FlagDependenciesData
+    {
+        return $this->flagRepository->getFlagDependencies($flagId);
     }
 }

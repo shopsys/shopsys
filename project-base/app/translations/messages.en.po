@@ -40,9 +40,6 @@ msgstr ""
 msgid "Banners"
 msgstr ""
 
-msgid "Basic information"
-msgstr ""
-
 msgid "Basic objects"
 msgstr ""
 
@@ -50,9 +47,6 @@ msgid "Brand overview"
 msgstr ""
 
 msgid "CMS"
-msgstr ""
-
-msgid "Cancel"
 msgstr ""
 
 msgid "Catalog numbers"
@@ -65,9 +59,6 @@ msgid "Clean Storefront Query Cache"
 msgstr ""
 
 msgid "Close"
-msgstr ""
-
-msgid "Color"
 msgstr ""
 
 msgid "Column 1"
@@ -85,16 +76,10 @@ msgstr ""
 msgid "Content"
 msgstr ""
 
-msgid "Create flag"
-msgstr ""
-
 msgid "Create new banner"
 msgstr ""
 
 msgid "Create notification bar"
-msgstr ""
-
-msgid "Creating a record requires all domains to be enabled as domain-specific fields cannot be empty. If you want to proceed, select all domains in the Domain filter in the header first."
 msgstr ""
 
 msgid "Default"
@@ -106,16 +91,10 @@ msgstr ""
 msgid "Disable two factor authentication"
 msgstr ""
 
-msgid "Display"
-msgstr ""
-
 msgid "Display date FROM"
 msgstr ""
 
 msgid "Display date TO"
-msgstr ""
-
-msgid "Do you really want to remove this flag?"
 msgstr ""
 
 msgid "Do you really want to remove this language constant translation?"
@@ -136,12 +115,6 @@ msgstr ""
 msgid "Editing banner"
 msgstr ""
 
-msgid "Editing flag"
-msgstr ""
-
-msgid "Editing flag - {{ name }}"
-msgstr ""
-
 msgid "Editing notification bar"
 msgstr ""
 
@@ -154,25 +127,10 @@ msgstr ""
 msgid "Enable two factor authentication by email"
 msgstr ""
 
-msgid "Extended SEO categories"
-msgstr ""
-
 msgid "File"
 msgstr ""
 
 msgid "File not found in main filesystem. Please try again later."
-msgstr ""
-
-msgid "Flag"
-msgstr ""
-
-msgid "Flag <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
-msgstr ""
-
-msgid "Flag <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
-msgstr ""
-
-msgid "Flag <strong>{{ name }}</strong> deleted"
 msgstr ""
 
 msgid "Forgotten password"
@@ -307,9 +265,6 @@ msgstr ""
 msgid "New closed day"
 msgstr ""
 
-msgid "New flag"
-msgstr ""
-
 msgid "New notification bar"
 msgstr ""
 
@@ -394,9 +349,6 @@ msgstr ""
 msgid "Product image"
 msgstr ""
 
-msgid "Promo code"
-msgstr ""
-
 msgid "Promoted categories"
 msgstr ""
 
@@ -436,13 +388,7 @@ msgstr "Search"
 msgid "Secondary"
 msgstr ""
 
-msgid "Selected flag doesn't exist."
-msgstr ""
-
 msgid "Selected notification bar does not exist"
-msgstr ""
-
-msgid "Seo"
 msgstr ""
 
 msgid "Settings"
@@ -478,19 +424,10 @@ msgstr ""
 msgid "Text with image"
 msgstr ""
 
-msgid "The selected flag cannot be deleted."
-msgstr ""
-
-msgid "This flag can not be deleted as it is used in definition of"
-msgstr ""
-
 msgid "Title"
 msgstr ""
 
 msgid "Type of image"
-msgstr ""
-
-msgid "URL addresses"
 msgstr ""
 
 msgid "Unable to load list of language constants"
