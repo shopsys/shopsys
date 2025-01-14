@@ -28,6 +28,7 @@ class YesNoType extends AbstractType
                 $this->translator->trans('Yes') => true,
                 $this->translator->trans('No') => false,
             ],
+            'choice_translation_domain' => false,
             'choice_name' => function ($choice) {
                 return $choice ? 'yes' : 'no';
             },

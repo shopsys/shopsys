@@ -10,8 +10,7 @@ class ProductBatchLoadByEntityData
 {
     /**
      * @param string $id
-     * @param int $entityId
-     * @param string $entityClass
+     * @param object $entity
      * @param int $limit
      * @param int $offset
      * @param string $orderingModeId
@@ -20,8 +19,7 @@ class ProductBatchLoadByEntityData
      */
     public function __construct(
         protected readonly string $id,
-        protected readonly int $entityId,
-        protected readonly string $entityClass,
+        protected readonly object $entity,
         protected readonly int $limit,
         protected readonly int $offset,
         protected readonly string $orderingModeId,
@@ -39,19 +37,13 @@ class ProductBatchLoadByEntityData
     }
 
     /**
-     * @return int
+     * @template T of object
+     * @param class-string<T>|null $entityClassName
+     * @return T
      */
-    public function getEntityId(): int
+    public function getEntity(string $entityClassName = null): object
     {
-        return $this->entityId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEntityClass(): string
-    {
-        return $this->entityClass;
+        return $this->entity;
     }
 
     /**

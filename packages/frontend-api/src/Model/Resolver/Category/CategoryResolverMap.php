@@ -73,6 +73,7 @@ class CategoryResolverMap extends ResolverMap
             'linkedCategories' => $this->linkedCategoriesBatchLoader->load($category),
             'categoryHierarchy' => $this->categoryFacade->getVisibleCategoriesInPathFromRootOnDomain($category, $this->domain->getId()),
             'hreflangLinks' => $this->hreflangLinksFacade->getForCategory($category, $this->domain->getId()),
+            'automatedFilters' => $category->getAutomatedFilters(),
             default => throw new InvalidArgumentException(sprintf('Unknown field name "%s".', $fieldName)),
         };
     }

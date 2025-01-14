@@ -109,6 +109,7 @@ class CategoryDataFactory implements CategoryDataFactoryInterface
 
         $categoryData->pluginData = $this->pluginCrudExtensionFacade->getAllData('category', $category->getId());
         $categoryData->image = $this->imageUploadDataFactory->createFromEntityAndType($category);
+        $categoryData->automatedFilters = $category->getAutomatedFilters();
     }
 
     /**

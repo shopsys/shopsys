@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery as BaseFilterQuery;
 /**
  * @method \App\Model\Product\Search\FilterQuery applyOrdering(string $orderingModeId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
  * @method \App\Model\Product\Search\FilterQuery filterByParameters(array $parameters)
- * @method \App\Model\Product\Search\FilterQuery filterByCategory(int[] $categoryIds)
+ * @method \App\Model\Product\Search\FilterQuery filterByCategory(int $categoryId)
  * @method \App\Model\Product\Search\FilterQuery filterByBrands(int[] $brandIds)
  * @method \App\Model\Product\Search\FilterQuery filterByFlags(int[] $flagIds)
  * @method \App\Model\Product\Search\FilterQuery filterOnlyInStock()
@@ -24,6 +24,8 @@ use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery as BaseFilterQuery;
  * @method \App\Model\Product\Search\FilterQuery filterBySliderParameters(\Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterData[] $sliderParametersData)
  * @method \App\Model\Product\Search\FilterQuery filterByPrices(\Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, \Shopsys\FrameworkBundle\Component\Money\Money|null $minimalPrice = null, \Shopsys\FrameworkBundle\Component\Money\Money|null $maximalPrice = null)
  * @method \App\Model\Product\Search\FilterQuery applyOrderingByIdAscending()
+ * @method \App\Model\Product\Search\FilterQuery filterOnlySellable()
+ * @method \App\Model\Product\Search\FilterQuery filterBySellingFrom(\DateTimeImmutable $sellingFrom)
  */
 class FilterQuery extends BaseFilterQuery
 {
@@ -81,55 +83,5 @@ class FilterQuery extends BaseFilterQuery
         }
 
         return $query;
-    }
-
-    /**
-     * @return \App\Model\Product\Search\FilterQuery
-     */
-    public function filterNotExcludeOrInStock(): self
-    {
-        $clone = clone $this;
-
-        $clone->filters[] = [
-            'bool' => [
-                'should' => [
-                    [
-                        'term' => [
-                            'is_sale_exclusion' => false,
-                        ],
-                    ],
-                    [
-                        'term' => [
-                            'in_stock' => true,
-                        ],
-                    ],
-                ],
-            ],
-        ];
-
-        return $clone;
-    }
-
-    /**
-     * @return \App\Model\Product\Search\FilterQuery
-     */
-    public function filterOnlySellable(): self
-    {
-        $clone = clone $this;
-
-        $clone->filters[] = [
-            'term' => [
-                'calculated_selling_denied' => false,
-            ],
-        ];
-
-        // exclusion on current domain
-        $clone->filters[] = [
-            'term' => [
-                'is_sale_exclusion' => false,
-            ],
-        ];
-
-        return $clone;
     }
 }

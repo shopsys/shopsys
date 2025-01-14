@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
-use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterCountDataElasticsearchRepository;
 
-class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacadeInterface
+class ProductOnCurrentDomainElasticFacade
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
@@ -37,27 +37,16 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getVisibleProductById(int $productId): Product
-    {
-        return $this->productRepository->getVisible(
-            $productId,
-            $this->domain->getId(),
-            $this->currentCustomerUser->getPricingGroup(),
-        );
-    }
-
-    /**
-     * {@inheritdoc}
+     * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
      */
     public function getProductFilterCountDataInCategory(
-        int $categoryId,
-        ProductFilterConfig $productFilterConfig,
+        Category $category,
         ProductFilterData $productFilterData,
     ): ProductFilterCountData {
-        $baseFilterQuery = $this->filterQueryFactory->createListableProductsByCategoryIdWithPriceAndStockFilter(
-            $categoryId,
+        $baseFilterQuery = $this->filterQueryFactory->createListableProductsByCategoryWithPriceAndStockFilter(
+            $category,
             $productFilterData,
         );
 
@@ -86,11 +75,12 @@ class ProductOnCurrentDomainElasticFacade implements ProductOnCurrentDomainFacad
     }
 
     /**
-     * {@inheritdoc}
+     * @param string|null $searchText
+     * @param \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData
+     * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterCountData
      */
     public function getProductFilterCountDataForSearch(
         ?string $searchText,
-        ProductFilterConfig $productFilterConfig,
         ProductFilterData $productFilterData,
     ): ProductFilterCountData {
         $searchText = $searchText ?? '';

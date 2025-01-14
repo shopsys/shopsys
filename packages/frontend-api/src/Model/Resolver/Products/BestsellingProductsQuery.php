@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider;
+use Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductSellableInCategoryBatchLoadDataFactory;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class BestsellingProductsQuery extends AbstractQuery
@@ -20,15 +21,17 @@ class BestsellingProductsQuery extends AbstractQuery
      * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade $cachedBestsellingProductFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
-     * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableByIdsBatchLoader
+     * @param \Overblog\DataLoader\DataLoaderInterface $productsSellableInCategoryByIdsBatchLoader
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider $productFrontendLimitProvider
+     * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductSellableInCategoryBatchLoadDataFactory $productSellableInCategoryBatchLoadDataFactory
      */
     public function __construct(
         protected readonly CachedBestsellingProductFacade $cachedBestsellingProductFacade,
         protected readonly Domain $domain,
         protected readonly CurrentCustomerUser $currentCustomerUser,
-        protected readonly DataLoaderInterface $productsSellableByIdsBatchLoader,
+        protected readonly DataLoaderInterface $productsSellableInCategoryByIdsBatchLoader,
         protected readonly ProductFrontendLimitProvider $productFrontendLimitProvider,
+        protected readonly ProductSellableInCategoryBatchLoadDataFactory $productSellableInCategoryBatchLoadDataFactory,
     ) {
     }
 
@@ -50,6 +53,11 @@ class BestsellingProductsQuery extends AbstractQuery
             $this->productFrontendLimitProvider->getProductsFrontendLimit(),
         );
 
-        return $this->productsSellableByIdsBatchLoader->load($bestsellingProductsIds);
+        $batchLoadData = $this->productSellableInCategoryBatchLoadDataFactory->create(
+            $bestsellingProductsIds,
+            $category,
+        );
+
+        return $this->productsSellableInCategoryByIdsBatchLoader->load($batchLoadData);
     }
 }

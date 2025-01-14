@@ -73,6 +73,11 @@ class CategoryData
      */
     public $parametersCollapsed;
 
+    /**
+     * @var string[]
+     */
+    public $automatedFilters;
+
     public function __construct()
     {
         $this->name = [];
@@ -85,5 +90,6 @@ class CategoryData
         $this->pluginData = [];
         $this->parametersPosition = [];
         $this->parametersCollapsed = [];
+        $this->automatedFilters = [];
     }
 }

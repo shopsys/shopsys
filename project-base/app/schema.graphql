@@ -428,6 +428,8 @@ type CartTransportModificationsResult {
 
 "Represents a category"
 type Category implements Breadcrumb & Slug & ProductListable {
+  "Automated filters for the category"
+  automatedFilters: [CategoryAutomatedFilterEnum!]!
   "Best selling products"
   bestsellers: [Product!]!
   "Hierarchy of the current element in relation to the structure"
@@ -468,6 +470,12 @@ type Category implements Breadcrumb & Slug & ProductListable {
   slug: String!
   "UUID"
   uuid: Uuid!
+}
+
+"Category automated filter types"
+enum CategoryAutomatedFilterEnum {
+  newProducts
+  onStock
 }
 
 "A connection to a list of items."

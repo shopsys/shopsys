@@ -28,90 +28,55 @@ class FlagTest extends GraphQlTestCase
     {
         $flag = $this->getReference(FlagDataFixture::FLAG_PRODUCT_MADEIN_DE, Flag::class);
 
-        $query = '
-            query {
-                flag(uuid: "' . $flag->getUuid() . '") {
-                    name
-                    rgbColor
-                    slug
-                    breadcrumb {
-                        name
-                        slug
-                    }
-                    products {
-                        orderingMode
-                        edges {
-                            node {
-                                name
-                            }
-                        }
-                    }
-                    categories {
-                        name
-                    }
-                }
-            }
-        ';
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/FlagQuery.graphql', [
+            'uuid' => $flag->getUuid(),
+            'firstProducts' => 5,
+        ]);
 
-        $jsonExpected = '{
-    "data": {
-        "flag": {
-            "name": "' . t('Made in DE', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '",
-            "rgbColor": "#000000",
-            "slug": "' . $this->urlGenerator->generate('front_flag_detail', ['id' => $flag->getId()]) . '",
-            "breadcrumb": [
-                {
-                    "name": "' . t('Made in DE', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '",
-                    "slug": "' . $this->urlGenerator->generate('front_flag_detail', ['id' => $flag->getId()]) . '"
-                }
+        $responseData = $this->getResponseDataForGraphQlType($response, 'flag');
+
+        $this->assertSame(t('Made in DE', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()), $responseData['name']);
+        $this->assertSame('#000000', $responseData['rgbColor']);
+        $this->assertSame($this->urlGenerator->generate('front_flag_detail', ['id' => $flag->getId()]), $responseData['slug']);
+        $this->assertSame([
+            [
+                'name' => t('Made in DE', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                'slug' => $this->urlGenerator->generate('front_flag_detail', ['id' => $flag->getId()]),
             ],
-            "products": {
-                "orderingMode": "PRIORITY",
-                "edges": [
-                    {
-                        "node": {
-                            "name": "' . t('OLYMPUS VH-620', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
-                        }
-                    }
-                ]
-            },
-            "categories": [
-                {
-                    "name": "' . t('Cameras & Photo', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
-                },
-                {
-                    "name": "' . t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()) . '"
-                }
-            ]
-        }
-    }
-}';
-
-        $this->assertQueryWithExpectedJson($query, $jsonExpected);
+        ], $responseData['breadcrumb']);
+        $this->assertSame([
+            'orderingMode' => 'PRIORITY',
+            'edges' => [
+                [
+                    'node' => [
+                        'name' => t('OLYMPUS VH-620', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+                    ],
+                ],
+            ],
+        ], $responseData['products']);
+        $this->assertSame([
+            [
+                'name' => t('Cameras & Photo', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+            ],
+            [
+                'name' => t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+            ],
+        ], $responseData['categories']);
     }
 
     public function testFlagByUuidFilteredByAnotherFlag(): void
     {
-        $limit = 5;
         $flagAction = $this->getReference(FlagDataFixture::FLAG_PRODUCT_ACTION, Flag::class);
         $flagNew = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW, Flag::class);
 
-        $query = '
-            query {
-                flag(uuid: "' . $flagAction->getUuid() . '") {
-                    products(first:' . $limit . ', filter:{flags:["' . $flagNew->getUuid() . '"]}) {
-                        edges {
-                            node {
-                                name
-                            }
-                        }
-                    }
-                    categories(productFilter:{flags:["' . $flagNew->getUuid() . '"]}) {
-                        name
-                    }
-                }
-            }
-        ';
+        $limit = 5;
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/FlagQuery.graphql', [
+            'uuid' => $flagAction->getUuid(),
+            'firstProducts' => $limit,
+            'filter' => ['flags' => [$flagNew->getUuid()]],
+        ]);
+
+        $responseData = $this->getResponseDataForGraphQlType($response, 'flag');
 
         $products = [
             [
@@ -141,39 +106,34 @@ class FlagTest extends GraphQlTestCase
             ];
         }
 
-        $arrayExpected = [
-            'data' => [
-                'flag' => [
-                    'products' => [
-                        'edges' => $productsWithNodes,
-                    ],
-                    'categories' => [
-                        [
-                            'name' => t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                        ],
-                        [
-                            'name' => t('TV, audio', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                        ],
-                        [
-                            'name' => t('Printers', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                        ],
-                        [
-                            'name' => t('Books', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                        ],
-                        [
-                            'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                        ],
-                        [
-                            'name' => t('Mobile Phones', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                        ],
-                        [
-                            'name' => t('Food', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-                        ],
-                    ],
-                ],
+        $expectedCategories = [
+            [
+                'name' => t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+            ],
+            [
+                'name' => t('TV, audio', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+            ],
+            [
+                'name' => t('Printers', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+            ],
+            [
+                'name' => t('Books', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+            ],
+            [
+                'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+            ],
+            [
+                'name' => t('Mobile Phones', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+            ],
+            [
+                'name' => t('Newest toys in stock', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+            ],
+            [
+                'name' => t('Food', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
             ],
         ];
 
-        $this->assertQueryWithExpectedJson($query, json_encode($arrayExpected, JSON_THROW_ON_ERROR));
+        $this->assertSame($productsWithNodes, $responseData['products']['edges']);
+        $this->assertSame($expectedCategories, $responseData['categories']);
     }
 }

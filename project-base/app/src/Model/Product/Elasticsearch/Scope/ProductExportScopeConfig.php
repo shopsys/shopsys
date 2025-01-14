@@ -32,7 +32,7 @@ class ProductExportScopeConfig extends BaseProductExportScopeConfig
             ProductExportFieldProvider::SEARCHING_PARTNOS,
             ProductExportFieldProvider::SEARCHING_SHORT_DESCRIPTIONS,
         ]);
-        $this->addExportFieldsToExistingScopeRule(self::SCOPE_SELLING_DENIED, [ProductExportFieldProvider::IS_SALE_EXCLUSION]);
+        $this->addExportFieldsToExistingScopeRule(self::SCOPE_SELLING_DENIED, []);
         $this->addExportFieldsToExistingScopeRule(self::SCOPE_NAME, [
             ProductExportFieldProvider::SEARCHING_NAMES,
             ProductExportFieldProvider::SLUG,

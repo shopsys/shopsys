@@ -77,12 +77,48 @@ class ProductsBatchLoader
     }
 
     /**
+     * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductSellableInCategoryBatchLoadData[] $sellableInCategoryBatchLoadData
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function loadSellableInCategoryByIds(array $sellableInCategoryBatchLoadData): Promise
+    {
+        return $this->promiseAdapter->all($this->productElasticsearchBatchProvider->getBatchedSellableInCategoryByIds($sellableInCategoryBatchLoadData)[ProductElasticsearchBatchRepository::PRODUCTS_KEY]);
+    }
+
+    /**
+     * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductSellableInCategoryBatchLoadData[] $sellableInCategoryBatchLoadData
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function loadSellableCountInCategoryByIds(array $sellableInCategoryBatchLoadData): Promise
+    {
+        return $this->promiseAdapter->all($this->productElasticsearchBatchProvider->getBatchedSellableInCategoryByIds($sellableInCategoryBatchLoadData)[ProductElasticsearchBatchRepository::TOTALS_KEY]);
+    }
+
+    /**
      * @param string $batchLoadDataId
      * @return int
      */
     public static function getTotalByBatchLoadDataId(string $batchLoadDataId): int
     {
         return self::$totalsIndexedByBatchLoadDataId[$batchLoadDataId] ?? 0;
+    }
+
+    /**
+     * @param \Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductBatchLoadByEntityData[] $productBatchLoadByEntitiesData
+     * @return \GraphQL\Executor\Promise\Promise
+     */
+    public function loadByEntities(array $productBatchLoadByEntitiesData): Promise
+    {
+        $batchedByEntities = $this->productElasticsearchBatchProvider->getBatchedByEntities($productBatchLoadByEntitiesData);
+        self::$totalsIndexedByBatchLoadDataId = $batchedByEntities[ProductElasticsearchBatchRepository::TOTALS_KEY];
+
+        $result = [];
+
+        foreach ($productBatchLoadByEntitiesData as $productBatchLoadByEntityData) {
+            $result[] = $batchedByEntities[ProductElasticsearchBatchRepository::PRODUCTS_KEY][$productBatchLoadByEntityData->getId()];
+        }
+
+        return $this->promiseAdapter->all($result);
     }
 
     /**

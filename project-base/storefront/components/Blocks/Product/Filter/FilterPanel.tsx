@@ -5,7 +5,7 @@ import { FilterGroupPrice } from './FilterGroupPrice';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { TypeProductFilterOptionsFragment } from 'graphql/requests/productFilterOptions/fragments/ProductFilterOptionsFragment.generated';
-import { TypeProductOrderingModeEnum } from 'graphql/types';
+import { TypeCategoryAutomatedFilterEnum, TypeProductOrderingModeEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { useSessionStore } from 'store/useSessionStore';
 import { ParametersType } from 'types/productFilter';
@@ -20,13 +20,18 @@ export type FilterPanelProps = {
     originalSlug: string | null;
     slug: string;
     totalCount: number;
+    categoryAutomatedFilters?: string[];
 };
 
 const DEFAULT_NUMBER_OF_SHOWN_FLAGS = 5;
 const DEFAULT_NUMBER_OF_SHOWN_BRANDS = 5;
 const DEFAULT_NUMBER_OF_SHOWN_PARAMETERS = 5;
 
-export const FilterPanel: FC<FilterPanelProps> = ({ productFilterOptions: filterOptions, totalCount }) => {
+export const FilterPanel: FC<FilterPanelProps> = ({
+    productFilterOptions: filterOptions,
+    totalCount,
+    categoryAutomatedFilters,
+}) => {
     const { t } = useTranslation();
     const { resetAllFilterQueries } = useUpdateFilterQuery();
     const currentFilter = useCurrentFilterQuery();
@@ -34,6 +39,8 @@ export const FilterPanel: FC<FilterPanelProps> = ({ productFilterOptions: filter
     const activeFlagFilter = !!currentFilter?.flags?.length;
     const activeBrandFilter = !!currentFilter?.brands?.length;
     const setIsFilterPanelOpen = useSessionStore((s) => s.setIsFilterPanelOpen);
+    const shouldDisplayInStockFilter =
+        !!filterOptions.inStock && !categoryAutomatedFilters?.includes(TypeCategoryAutomatedFilterEnum.OnStock);
 
     return (
         <div className="z-aboveOverlay flex h-full flex-col bg-background pb-1 vl:z-above">
@@ -45,7 +52,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({ productFilterOptions: filter
             </div>
 
             <div className="h-full overflow-y-scroll px-5 vl:static vl:overflow-visible vl:px-0">
-                {!!filterOptions.inStock && <FilterGroupInStock inStockCount={filterOptions.inStock} />}
+                {shouldDisplayInStockFilter && <FilterGroupInStock inStockCount={filterOptions.inStock} />}
 
                 <div className="divide-y divide-borderAccent">
                     {isPriceVisible(filterOptions.minimalPrice) && (

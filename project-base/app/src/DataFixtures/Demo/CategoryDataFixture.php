@@ -9,6 +9,8 @@ use Doctrine\Persistence\ObjectManager;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\NewProductsCategoryAutomatedFilter;
+use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\OnStockCategoryAutomatedFilter;
 use Shopsys\FrameworkBundle\Model\Category\CategoryData;
 use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
@@ -194,7 +196,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $locale = $domainConfig->getLocale();
-            $categoryData->name[$locale] = t('Toys', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            $categoryData->name[$locale] = t('Newest toys in stock', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
             $categoryData->descriptions[$domainConfig->getId()] = t(
                 'A toy is an item that can be used for play. Toys are generally played with by children and pets. '
                     . 'Playing with toys is an enjoyable means of training young children for life in society. Different materials are '
@@ -204,6 +206,10 @@ class CategoryDataFixture extends AbstractReferenceFixture
                 $locale,
             );
         }
+        $categoryData->automatedFilters = [
+            OnStockCategoryAutomatedFilter::DATABASE_VALUE,
+            NewProductsCategoryAutomatedFilter::DATABASE_VALUE,
+        ];
         $this->createCategory($categoryData, self::CATEGORY_TOYS);
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {

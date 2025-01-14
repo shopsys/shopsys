@@ -1255,6 +1255,9 @@ msgstr "Nové počítače s USB"
 msgid "New driving rules and tips just for you!"
 msgstr "Prostudujte si nová pravidla silničního provozu platná od 1. července 2006!"
 
+msgid "Newest toys in stock"
+msgstr "Nejnovější hračky skladem"
+
 msgid "Nikon COS 700D"
 msgstr "Nikon COS 700D"
 
@@ -1860,9 +1863,6 @@ msgstr "toaleťák s potiskem bankovek EURO, pocit z použití tohoto toaletníh
 
 msgid "Toner for MC861/ 851, 7000 pages"
 msgstr "OKI MC861cdxn+, barevná A3 34/26 ppm ProQ2400 dpi PCL/PS,USB 2.0,LPT,LAN"
-
-msgid "Toys"
-msgstr "Hračky a další"
 
 msgid "Transport and payment"
 msgstr "Doprava a platba"

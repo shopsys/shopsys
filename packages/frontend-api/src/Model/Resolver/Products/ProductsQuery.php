@@ -84,8 +84,7 @@ class ProductsQuery extends AbstractQuery
                 return $this->productsByEntitiesBatchLoader->load(
                     new ProductBatchLoadByEntityData(
                         $batchLoadDataId,
-                        $brand->getId(),
-                        Brand::class,
+                        $brand,
                         $limit,
                         $offset,
                         $this->productOrderingModeProvider->getOrderingModeFromArgument($argument),
@@ -187,8 +186,7 @@ class ProductsQuery extends AbstractQuery
                 return $this->productsByEntitiesBatchLoader->load(
                     new ProductBatchLoadByEntityData(
                         $batchLoadDataId,
-                        $category->getId(),
-                        Category::class,
+                        $category,
                         $limit,
                         $offset,
                         $orderingMode,
@@ -231,8 +229,7 @@ class ProductsQuery extends AbstractQuery
                 return $this->productsByEntitiesBatchLoader->load(
                     new ProductBatchLoadByEntityData(
                         $batchLoadDataId,
-                        $flag->getId(),
-                        Flag::class,
+                        $flag,
                         $limit,
                         $offset,
                         $this->productOrderingModeProvider->getOrderingModeFromArgument($argument),

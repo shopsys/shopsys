@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Form\SortableValuesType;
 use Shopsys\FrameworkBundle\Form\UrlListType;
+use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterFacade;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryData;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
@@ -44,6 +45,7 @@ class CategoryFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
+     * @param \Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterFacade $categoryAutomatedFilterFacade
      */
     public function __construct(
         private readonly CategoryFacade $categoryFacade,
@@ -52,6 +54,7 @@ class CategoryFormType extends AbstractType
         private readonly PluginCrudExtensionFacade $pluginCrudExtensionFacade,
         private readonly Localization $localization,
         private readonly ParameterRepository $parameterRepository,
+        private readonly CategoryAutomatedFilterFacade $categoryAutomatedFilterFacade,
     ) {
     }
 
@@ -110,6 +113,8 @@ class CategoryFormType extends AbstractType
                 ]);
         }
 
+        $categoryAutomatedFiltersNotesIndexedByValue = $this->categoryAutomatedFilterFacade->getNotesIndexedByValue();
+
         $builderSettingsGroup
             ->add('name', LocalizedType::class, [
                 'main_constraints' => [
@@ -139,6 +144,28 @@ class CategoryFormType extends AbstractType
             ->add('enabled', DomainsType::class, [
                 'required' => false,
                 'label' => t('Display on'),
+            ])
+            ->add('automatedFilters', ChoiceType::class, [
+                'label' => 'Automated filters',
+                'required' => false,
+                'multiple' => true,
+                'expanded' => true,
+                'choice_translation_domain' => false,
+                'choices' => $this->categoryAutomatedFilterFacade->getAllValuesIndexedByLabel(),
+                'choice_attr' => function ($choice, $key, $value) use ($categoryAutomatedFiltersNotesIndexedByValue) {
+                    $iconTitle = $categoryAutomatedFiltersNotesIndexedByValue[$value] ?? null;
+
+                    if ($iconTitle === null) {
+                        return [];
+                    }
+
+                    return [
+                        'icon' => true,
+                        'iconTitle' => $iconTitle,
+                        'iconPlacement' => 'right',
+                        'iconClass' => 'margin-left-10',
+                    ];
+                },
             ]);
 
         $builderSeoGroup = $builder->create('seo', GroupType::class, [

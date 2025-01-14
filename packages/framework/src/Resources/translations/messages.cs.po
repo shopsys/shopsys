@@ -382,6 +382,9 @@ msgstr "Atribut %attribute% byl změněn %changes%"
 msgid "Authentication code"
 msgstr "Ověřovací kód"
 
+msgid "Automated filters"
+msgstr "Automatické filtry"
+
 msgid "Available"
 msgstr "Dostupné"
 
@@ -1261,8 +1264,14 @@ msgstr "Datum zobrazení OD"
 msgid "Display date TO"
 msgstr "Datum zobrazení DO"
 
+msgid "Display new products only"
+msgstr "Zobrazit pouze novinky"
+
 msgid "Display on"
 msgstr "Zobrazovat na"
+
+msgid "Display on stock products only"
+msgstr "Zobrazit pouze produkty skladem"
 
 msgid "Display personal information settings"
 msgstr "Nastavení zobrazení osobních údajů"
@@ -2781,6 +2790,9 @@ msgstr "Stejná doména nemůže být použita ve dvou skupinách"
 
 msgid "Only checked products"
 msgstr "Pouze zaškrtnuté zboží"
+
+msgid "Only products with \"Selling start date\" not older than %count% days are displayed"
+msgstr "Zobrazují se pouze produkty s datem vložení mladším než %count% dní"
 
 msgid "Oops! Error occurred."
 msgstr "Jejda! Nastala chyba."

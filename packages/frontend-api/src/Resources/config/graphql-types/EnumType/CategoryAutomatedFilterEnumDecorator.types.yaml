@@ -1,0 +1,10 @@
+CategoryAutomatedFilterEnumDecorator:
+    type: enum
+    decorator: true
+    config:
+        description: "Category automated filter types"
+        values:
+            onStock:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Category\\AutomatedFilter\\OnStockCategoryAutomatedFilter::DATABASE_VALUE")'
+            newProducts:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Category\\AutomatedFilter\\NewProductsCategoryAutomatedFilter::DATABASE_VALUE")'

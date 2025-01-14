@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Search;
 
+use DateTimeImmutable;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
@@ -304,16 +305,16 @@ class FilterQuery
     }
 
     /**
-     * @param int[] $categoryIds
+     * @param int $categoryId
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
-    public function filterByCategory(array $categoryIds): self
+    public function filterByCategory(int $categoryId): self
     {
         $clone = clone $this;
 
         $clone->filters[] = [
-            'terms' => [
-                'categories' => $categoryIds,
+            'term' => [
+                'categories' => $categoryId,
             ],
         ];
 
@@ -421,6 +422,36 @@ class FilterQuery
     }
 
     /**
+     * @param \DateTimeImmutable $sellingFrom
+     * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
+     */
+    public function filterBySellingFrom(DateTimeImmutable $sellingFrom): self
+    {
+        $clone = clone $this;
+
+        $clone->filters[] = [
+            'bool' => [
+                'must' => [
+                    [
+                        'exists' => [
+                            'field' => 'selling_from',
+                        ],
+                    ], [
+                        'range' => [
+                            'selling_from' => [
+                                'gte' => $sellingFrom->format('Y-m-d H:i:s'),
+                                'lte' => 'now',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        return $clone;
+    }
+
+    /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery
      */
     public function filterOnlySellable(): self
@@ -430,6 +461,13 @@ class FilterQuery
         $clone->filters[] = [
             'term' => [
                 'calculated_selling_denied' => false,
+            ],
+        ];
+
+        // exclusion on current domain
+        $clone->filters[] = [
+            'term' => [
+                'is_sale_exclusion' => false,
             ],
         ];
 

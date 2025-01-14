@@ -88,7 +88,7 @@ class CategoryHierarchyTest extends GraphQlTestCase
                 'categoryHierarchy' => $this->getExpectedCategoryHierarchyData([$this->categoryBooks]),
             ],
             [
-                'name' => t('Toys', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'name' => t('Newest toys in stock', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'categoryHierarchy' => $this->getExpectedCategoryHierarchyData([$this->categoryToys]),
             ],
             [

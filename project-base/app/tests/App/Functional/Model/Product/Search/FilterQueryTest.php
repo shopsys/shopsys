@@ -13,6 +13,7 @@ use App\DataFixtures\Demo\PricingGroupDataFixture;
 use App\Model\Category\Category;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Flag\Flag;
+use DateTimeImmutable;
 use Elasticsearch\Client;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
@@ -105,7 +106,7 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
 
         $filter = $this->createFilter()
             ->filterOnlyInStock()
-            ->filterByCategory([$categoryBooks->getId()])
+            ->filterByCategory($categoryBooks->getId())
             ->filterByFlags([$flagSale->getId()])
             ->filterByPrices(
                 $pricingGroup,
@@ -159,7 +160,7 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
         $categoryBooks = $this->getReference(CategoryDataFixture::CATEGORY_BOOKS, Category::class);
 
         $filter = $this->createFilter()
-            ->filterByCategory([$categoryBooks->getId()])
+            ->filterByCategory($categoryBooks->getId())
             ->applyOrderingByIdAscending();
 
         $this->assertIdWithFilter($filter, [25, 26, 27, 28, 29, 33, 39, 40, 50, 72], 'by id asc');
@@ -200,7 +201,7 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
         $categoryBooks = $this->getReference(CategoryDataFixture::CATEGORY_BOOKS, Category::class);
 
         $filter = $this->createFilter()
-            ->filterByCategory([$categoryBooks->getId()])
+            ->filterByCategory($categoryBooks->getId())
             ->applyOrderingByIdAscending();
 
         $this->assertIdWithFilter($filter, [25, 26, 27, 28, 29, 33, 39, 40, 50, 72]);
@@ -222,6 +223,14 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
         $limit4Page4Filter = $filter->setLimit(4)
             ->setPage(4);
         $this->assertIdWithFilter($limit4Page4Filter, []);
+    }
+
+    public function testFilterBySellingFrom(): void
+    {
+        $filter = $this->createFilter()
+            ->filterBySellingFrom(new DateTimeImmutable('-30 days'))
+            ->applyOrderingByIdAscending();
+        $this->assertIdWithFilter($filter, [44, 144]);
     }
 
     /**

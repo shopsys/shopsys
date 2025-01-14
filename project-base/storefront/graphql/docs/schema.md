@@ -147,6 +147,7 @@
   * [Enums](#enums)
     * [ArticlePlacementTypeEnum](#articleplacementtypeenum)
     * [AvailabilityStatusEnum](#availabilitystatusenum)
+    * [CategoryAutomatedFilterEnum](#categoryautomatedfilterenum)
     * [LoginTypeEnum](#logintypeenum)
     * [OrderItemTypeEnum](#orderitemtypeenum)
     * [OrderStatusEnum](#orderstatusenum)
@@ -3485,6 +3486,15 @@ Represents a category
 </tr>
 </thead>
 <tbody>
+<tr>
+<td colspan="2" valign="top"><strong>automatedFilters</strong></td>
+<td valign="top">[<a href="#categoryautomatedfilterenum">CategoryAutomatedFilterEnum</a>!]!</td>
+<td>
+
+Automated filters for the category
+
+</td>
+</tr>
 <tr>
 <td colspan="2" valign="top"><strong>bestsellers</strong></td>
 <td valign="top">[<a href="#product">Product</a>!]!</td>
@@ -11597,6 +11607,29 @@ Product availability status in stock
 Product availability status out of stock
 
 </td>
+</tr>
+</tbody>
+</table>
+
+### CategoryAutomatedFilterEnum
+
+Category automated filter types
+
+<table>
+<thead>
+<tr>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>newProducts</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>onStock</strong></td>
+<td></td>
 </tr>
 </tbody>
 </table>

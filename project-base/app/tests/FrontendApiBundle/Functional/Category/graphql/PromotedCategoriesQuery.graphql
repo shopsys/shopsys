@@ -1,7 +1,26 @@
 query PromotedCategoriesQuery($firstProducts: Int!) {
     promotedCategories {
-        uuid
         name
+        description
+        slug
+        seoH1
+        seoTitle
+        seoMetaDescription
+        bestsellers {
+            name
+        }
+        breadcrumb {
+            name
+            slug
+        }
+        readyCategorySeoMixLinks {
+            name
+            slug
+        }
+        linkedCategories {
+            name
+        }
+        uuid
         children {
             name
         }
@@ -19,8 +38,6 @@ query PromotedCategoriesQuery($firstProducts: Int!) {
             url
             name
         }
-        seoH1
-        seoTitle
-        seoMetaDescription
+        automatedFilters
     }
 }

@@ -69,6 +69,10 @@ class ProductElasticsearchConverter
         $result[ProductExportFieldProvider::UUID] = $product[ProductExportFieldProvider::UUID] ?? '00000000-0000-0000-0000-000000000000';
         $result[ProductExportFieldProvider::UNIT] = $product[ProductExportFieldProvider::UNIT] ?? '';
 
+        $result[ProductExportFieldProvider::IS_SALE_EXCLUSION] = $product[ProductExportFieldProvider::IS_SALE_EXCLUSION] ?? true;
+
+        $result[ProductExportFieldProvider::SELLING_FROM] = $product[ProductExportFieldProvider::SELLING_FROM] ?? null;
+
         return $result;
     }
 
