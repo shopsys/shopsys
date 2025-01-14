@@ -29,6 +29,7 @@ class PaymentFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFactoryInterface $paymentFactory
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactoryInterface $paymentPriceFactory
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentTypeProvider $paymentTypeProvider
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -41,6 +42,7 @@ class PaymentFacade
         protected readonly PaymentPriceCalculation $paymentPriceCalculation,
         protected readonly PaymentFactoryInterface $paymentFactory,
         protected readonly PaymentPriceFactoryInterface $paymentPriceFactory,
+        protected readonly PaymentTypeProvider $paymentTypeProvider,
     ) {
     }
 
@@ -349,5 +351,27 @@ class PaymentFacade
         } catch (PaymentNotFoundException $exception) {
             return false;
         }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
+     * @return bool
+     */
+    public function isGatewayPayment(Payment $payment): bool
+    {
+        return in_array($payment->getType(), $this->getGatewayPayments(), true);
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getGatewayPayments(): array
+    {
+        $paymentTypes = array_values($this->paymentTypeProvider->getAllIndexedByTranslations());
+        $basicPaymentKey = array_search(PaymentTypeEnum::TYPE_BASIC, $paymentTypes, true);
+
+        unset($paymentTypes[$basicPaymentKey]);
+
+        return $paymentTypes;
     }
 }

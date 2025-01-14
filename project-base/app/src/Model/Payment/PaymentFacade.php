@@ -23,12 +23,13 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade as BasePaymentFacade;
  * @property \App\Component\Image\ImageFacade $imageFacade
  * @property \App\Model\Transport\TransportRepository $transportRepository
  * @method \App\Model\Payment\Payment getEnabledOnDomainByUuid(string $uuid, int $domainId)
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Payment\PaymentRepository $paymentRepository, \App\Model\Transport\TransportRepository $transportRepository, \Shopsys\FrameworkBundle\Model\Payment\PaymentVisibilityCalculation $paymentVisibilityCalculation, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade, \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation, \Shopsys\FrameworkBundle\Model\Payment\PaymentFactoryInterface $paymentFactory, \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactoryInterface $paymentPriceFactory)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Payment\PaymentRepository $paymentRepository, \App\Model\Transport\TransportRepository $transportRepository, \Shopsys\FrameworkBundle\Model\Payment\PaymentVisibilityCalculation $paymentVisibilityCalculation, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade, \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation, \Shopsys\FrameworkBundle\Model\Payment\PaymentFactoryInterface $paymentFactory, \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactoryInterface $paymentPriceFactory, \Shopsys\FrameworkBundle\Model\Payment\PaymentTypeProvider $paymentTypeProvider)
  * @method \App\Model\Payment\Payment[] getVisibleOnCurrentDomainByTransport(\App\Model\Transport\Transport $transport)
  * @method \App\Model\Payment\Payment[] getVisibleForOrder(\App\Model\Order\Order $order)
  * @method \App\Model\Payment\Payment[] getVisibleOnDomainByTransport(int $domainId, \App\Model\Transport\Transport $transport)
  * @method bool isPaymentVisibleAndEnabledOnCurrentDomain(\App\Model\Payment\Payment $payment)
  * @method \App\Model\Payment\Payment[] getVisibleOnCurrentDomain()
+ * @method bool isGatewayPayment(\App\Model\Payment\Payment $payment)
  */
 class PaymentFacade extends BasePaymentFacade
 {

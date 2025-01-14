@@ -44,7 +44,7 @@ class IndependentPaymentVisibilityCalculation
         }
 
         if (!$this->customerUserRoleResolver->canCurrentCustomerUserSeePrices()) {
-            return !$payment->isGatewayPayment();
+            return $payment->getType() === PaymentTypeEnum::TYPE_BASIC;
         }
 
         return true;

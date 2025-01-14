@@ -489,24 +489,6 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     }
 
     /**
-     * @return string[]
-     */
-    protected function getGatewayPayments(): array
-    {
-        return [
-            PaymentTypeEnum::TYPE_GOPAY,
-        ];
-    }
-
-    /**
-     * @return bool
-     */
-    public function isGatewayPayment(): bool
-    {
-        return in_array($this->type, $this->getGatewayPayments(), true);
-    }
-
-    /**
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
      */

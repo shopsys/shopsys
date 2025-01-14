@@ -28,6 +28,7 @@ use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade;
+use Shopsys\FrameworkBundle\Model\Payment\Transaction\ExternalPaymentStatusHelper;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
@@ -66,6 +67,7 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade $paymentServiceFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactory $orderDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\ExternalPaymentStatusHelper $externalPaymentStatusHelper
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -96,6 +98,7 @@ class OrderFacade
         protected readonly PaymentServiceFacade $paymentServiceFacade,
         protected readonly OrderItemDataFactory $orderItemDataFactory,
         protected readonly OrderDataFactory $orderDataFactory,
+        protected readonly ExternalPaymentStatusHelper $externalPaymentStatusHelper,
     ) {
     }
 
@@ -395,5 +398,35 @@ class OrderFacade
     public function getAllWithoutTrackingNumberByTransportType(string $transportType): array
     {
         return $this->orderRepository->getAllWithoutTrackingNumberByTransportType($transportType);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @return bool
+     */
+    public function isPaid(Order $order): bool
+    {
+        foreach ($order->getPaymentTransactions() as $paymentTransaction) {
+            if ($this->externalPaymentStatusHelper->isPaid($paymentTransaction->getExternalPaymentStatus())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @return bool
+     */
+    public function hasPaymentInProcess(Order $order): bool
+    {
+        foreach ($order->getPaymentTransactions() as $paymentTransaction) {
+            if ($this->externalPaymentStatusHelper->hasPaymentInProcess($paymentTransaction->getExternalPaymentStatus())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

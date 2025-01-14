@@ -119,7 +119,7 @@ class GetOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCase
                     'trackingNumber' => $order->getTrackingNumber(),
                     'trackingUrl' => $order->getTrackingUrl(),
                     'paymentTransactionsCount' => $order->getPaymentTransactionsCount(),
-                    'isPaid' => $order->isPaid(),
+                    'isPaid' => $this->orderFacade->isPaid($order),
                 ],
             ];
         }

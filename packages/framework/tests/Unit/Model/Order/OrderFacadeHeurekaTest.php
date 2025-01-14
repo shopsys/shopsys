@@ -35,6 +35,7 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusRepository;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade;
+use Shopsys\FrameworkBundle\Model\Payment\Transaction\ExternalPaymentStatusHelper;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
@@ -124,6 +125,7 @@ class OrderFacadeHeurekaTest extends TestCase
             $this->createMock(PaymentServiceFacade::class),
             $this->createMock(OrderItemDataFactory::class),
             $this->createMock(OrderDataFactory::class),
+            $this->createMock(ExternalPaymentStatusHelper::class),
         );
     }
 

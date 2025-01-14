@@ -488,34 +488,6 @@ class Order
     }
 
     /**
-     * @return bool
-     */
-    public function isPaid(): bool
-    {
-        foreach ($this->paymentTransactions as $paymentTransaction) {
-            if ($paymentTransaction->isPaid()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasPaymentInProcess(): bool
-    {
-        foreach ($this->paymentTransactions as $paymentTransaction) {
-            if ($paymentTransaction->hasPaymentInProcess()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
      * @return int
      */
     public function getPaymentTransactionsCount(): int

@@ -69,11 +69,6 @@ class PaymentTransaction
     protected $refundedAmount;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Payment\Transaction\ExternalPaymentStatusHelper
-     */
-    protected $externalPaymentStatusHelper;
-
-    /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionData $paymentTransactionData
      */
     public function __construct(PaymentTransactionData $paymentTransactionData)
@@ -193,41 +188,5 @@ class PaymentTransaction
     public function isPartiallyRefunded(): bool
     {
         return $this->payment->isGoPay() && $this->externalPaymentStatus === PaymentStatus::PARTIALLY_REFUNDED;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isPaid(): bool
-    {
-        if ($this->payment === null) {
-            return false;
-        }
-
-        return $this->getExternalPaymentStatusHelper()->isPaid($this->externalPaymentStatus);
-    }
-
-    /**
-     * @return bool
-     */
-    public function hasPaymentInProcess(): bool
-    {
-        if ($this->payment === null) {
-            return false;
-        }
-
-        return $this->getExternalPaymentStatusHelper()->hasPaymentInProcess($this->externalPaymentStatus);
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Payment\Transaction\ExternalPaymentStatusHelper
-     */
-    protected function getExternalPaymentStatusHelper(): ExternalPaymentStatusHelper
-    {
-        if ($this->externalPaymentStatusHelper === null) {
-            $this->externalPaymentStatusHelper = new ExternalPaymentStatusHelper();
-        }
-
-        return $this->externalPaymentStatusHelper;
     }
 }

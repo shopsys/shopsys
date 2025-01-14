@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Monolog\Logger;
 use Shopsys\FrameworkBundle\Model\GoPay\Exception\GoPayPaymentDownloadException;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade;
+use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade;
 use Shopsys\Plugin\Cron\SimpleCronModuleInterface;
 
@@ -22,12 +23,14 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
      * @param \Shopsys\FrameworkBundle\Model\GoPay\GoPayFacade $goPayFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Mail\OrderMailFacade $orderMailFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade $paymentServiceFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly GoPayFacade $goPayFacade,
         protected readonly OrderMailFacade $orderMailFacade,
         protected readonly PaymentServiceFacade $paymentServiceFacade,
+        protected readonly OrderFacade $orderFacade,
     ) {
     }
 
@@ -56,7 +59,7 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
             }
 
             $oldOrderGoPayStatusesIndexedByGoPaiId = $order->getGoPayTransactionStatusesIndexedByGoPayId();
-            $oldIsOrderPaid = $order->isPaid();
+            $oldIsOrderPaid = $this->orderFacade->isPaid($order);
 
             try {
                 $this->paymentServiceFacade->updatePaymentTransactionsByOrder($order);
@@ -81,7 +84,7 @@ class OrderGoPayStatusUpdateCronModule implements SimpleCronModuleInterface
                 }
             }
 
-            if ($oldIsOrderPaid === $order->isPaid()) {
+            if ($oldIsOrderPaid === $this->orderFacade->isPaid($order)) {
                 continue;
             }
 
