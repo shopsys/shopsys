@@ -7,7 +7,6 @@ import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { RefObject } from 'react';
 import { SwipeableHandlers } from 'react-swipeable';
-import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
 
 type ProductsListProps = {
     products: TypeListedProductFragment[];
@@ -34,7 +33,8 @@ export const ProductsListContent: FC<ProductsListProps> = ({
     className,
     keyboardFocusableProductIndices,
 }) => {
-    const currentPage = useCurrentPageQuery();
+    // const currentPage = useCurrentPageQuery();
+    const currentPage = 1;
     // const { toggleProductInComparison, isProductInComparison } = useComparison();
     // const { toggleProductInWishlist, isProductInWishlist } = useWishlist();
 

@@ -2,6 +2,7 @@
 
 import { ProductDetailAccessories } from './ProductDetailAccessories/ProductDetailAccessories';
 import { ProductDetailAvailability } from './ProductDetailAvailability';
+import { ProductDetailPrefix, ProductDetailHeading } from './ProductDetailElements';
 import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailInfo } from './ProductDetailInfo';
 import { ProductDetailPrice } from './ProductDetailPrice';
@@ -11,7 +12,6 @@ import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useTranslation } from 'components/providers/TranslationProvider';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
-import { useSessionStore } from 'store/useSessionStore';
 
 type ProductDetailContentProps = {
     product: TypeProductDetailFragment;
@@ -20,7 +20,7 @@ type ProductDetailContentProps = {
 export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product }) => {
     const { t } = useTranslation();
     // const router = useRouter();
-    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    // const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     // const { isLuigisBoxActive } = useDomainConfig();
 
@@ -58,22 +58,22 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product })
                         <div className="bg-background-more flex flex-col gap-4 rounded-xl p-3 sm:p-6">
                             <ProductDetailPrice productPrice={product.price} />
 
-                            <ProductDetailAvailability
+                            {/* <ProductDetailAvailability
                                 availability={product.availability}
                                 availableStoresCount={product.availableStoresCount}
                                 isInquiryType={product.isInquiryType}
                                 isSellingDenied={product.isSellingDenied}
                                 storeAvailabilities={product.storeAvailabilities}
-                            />
+                            /> */}
 
-                            <WatchDogButton
+                            {/* <WatchDogButton
                                 availability={product.availability}
                                 className="self-start"
                                 isInquiryType={product.isInquiryType}
                                 productIsSellingDenied={product.isSellingDenied}
                                 productName={product.name}
                                 productUuid={product.uuid}
-                            />
+                            /> */}
 
                             {/* <ProductDetailAddToCart product={product} /> */}
 
@@ -102,7 +102,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product })
                     />
                 )} */}
 
-                <ProductDetailAccessories accessories={product.accessories} />
+                {/* <ProductDetailAccessories accessories={product.accessories} /> */}
                 {/* <DeferredProductDetailAccessories accessories={product.accessories} /> */}
             </VerticalStack>
         </>
