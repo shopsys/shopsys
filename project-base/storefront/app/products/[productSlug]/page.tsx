@@ -1,4 +1,5 @@
 import { createQuery } from 'app/_urql/urql-dto';
+import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { ProductDetailContent } from 'components/Pages/ProductDetail/ProductDetailContent';
 import { ProductDetailQueryDocument } from 'graphql/requests/products/queries/ProductDetailQuery.ssr';
 import { headers } from 'next/headers';
@@ -8,6 +9,8 @@ async function getProductQuery() {
     const headersList = headers();
     const slug = headersList.get('x-friendly-slug');
 
+    console.log('🐳 slug', slug);
+
     return createQuery(ProductDetailQueryDocument, {
         urlSlug: slug,
     });
@@ -15,6 +18,8 @@ async function getProductQuery() {
 
 export default async function ProductPage() {
     const { data, error } = await getProductQuery();
+
+    console.log('🧪 data', data);
 
     if (error || !data?.product) {
         notFound();
@@ -27,5 +32,11 @@ export default async function ProductPage() {
 
     const firstImageUrl = product?.images[0]?.url;
 
-    return <div>{product?.__typename === 'RegularProduct' && <ProductDetailContent product={product} />}</div>;
+    return (
+        <>
+            {product?.__typename === 'RegularProduct' && <ProductDetailContent product={product} />}
+
+            <LastVisitedProducts currentProductCatnum={product.catalogNumber} />
+        </>
+    );
 }
