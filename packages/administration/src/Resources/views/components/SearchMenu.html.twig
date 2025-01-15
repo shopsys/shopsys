@@ -1,0 +1,39 @@
+<div {{ attributes.defaults(stimulus_controller('shopsys/administration/searchMenu')) }}>
+    <div class="web__header__search js-search-wrapper" {{ stimulus_action('live', 'action', 'keydown.esc', {action: 'close'})}}>
+        <input type="text" data-model="search" class="web__header__search--input input js-search-input" placeholder="{{ "Search by section name…"|trans }}" />
+
+        {% if this.results|length > 0 %}
+            <div class="web__header__search--results">
+                <div>
+                    {{ 'Results: '|trans }} <span>{{ this.results|length }}</span><button data-action="live#action" data-live-action-param="close" class="web__header__search--results__close"><i class="svg svg-trash"></i></button><span class="web__header__search--results__hint">{{ "use key tab or shift+tab"|trans }}</span>
+                </div>
+                <div>
+                    <table class="jg-results-list">
+                        {% for result in this.results %}
+                            <tr {{ stimulus_target("shopsys/administration/searchMenu", "result") }} tabindex="0">
+                                <td>
+                                    <a href="{{ result['uri'] }}">{{ result['label'] }}
+                                        <span class="result--path">(
+                                            {% for index, pathLabel in result['pathLabels'] %}
+                                                {{ pathLabel }}
+
+                                                {% if index + 1 < result['pathLabels']|length %}
+                                                    <span>></span>
+                                                {% endif %}
+                                            {% endfor %}
+                                            )</span>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <div class="box-dropdown web__header__search__icon">
+        <div class="box-dropdown__select box-dropdown__select--menu" title="{{ "Search by section name…"|trans }}">
+            <i class="svg svg-search"></i>
+        </div>
+    </div>
+</div>

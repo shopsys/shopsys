@@ -11,6 +11,11 @@
                 "main": "dist/hello/Controller.js",
                 "fetch": "eager",
                 "enabled": true
+            },
+            "searchMenu": {
+                "main": "dist/SearchMenu/Controller.js",
+                "fetch": "eager",
+                "enabled": true
             }
         },
         "importmap": {

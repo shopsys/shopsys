@@ -4,6 +4,22 @@
             "hello": {
                 "enabled": true,
                 "fetch": "eager"
+            },
+            "searchMenu": {
+                "enabled": true,
+                "fetch": "eager"
+            }
+        },
+        "@symfony/ux-live-component": {
+            "live": {
+                "main": "dist/live_controller.js",
+                "name": "live",
+                "webpackMode": "eager",
+                "fetch": "eager",
+                "enabled": true,
+                "autoimport": {
+                    "@symfony/ux-live-component/dist/live.min.css": true
+                }
             }
         }
     },
