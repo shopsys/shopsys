@@ -202,7 +202,7 @@ class TransportFormType extends AbstractType
                 'label' => t('Tracking URL variables'),
                 'required' => false,
                 'variables' => [
-                    OrderMail::TRANSPORT_VARIABLE_TRACKING_NUMBER => [
+                    OrderMail::VARIABLE_TRANSPORT_TRACKING_NUMBER => [
                         'text' => t('Tracking number'),
                         'required' => false,
                     ],
@@ -218,11 +218,11 @@ class TransportFormType extends AbstractType
                 'label' => t('Tracking instructions variables'),
                 'required' => false,
                 'variables' => [
-                    OrderMail::TRANSPORT_VARIABLE_TRACKING_NUMBER => [
+                    OrderMail::VARIABLE_TRANSPORT_TRACKING_NUMBER => [
                         'text' => t('Tracking number'),
                         'required' => false,
                     ],
-                    OrderMail::TRANSPORT_VARIABLE_TRACKING_URL => [
+                    OrderMail::VARIABLE_TRANSPORT_TRACKING_URL => [
                         'text' => t('Tracking URL'),
                         'required' => false,
                     ],

@@ -40,8 +40,8 @@ class OrderMail implements MessageFactoryInterface
     public const string VARIABLE_ORDER_DETAIL_URL = '{order_detail_url}';
     public const string VARIABLE_TRANSPORT_INSTRUCTIONS = '{transport_instructions}';
     public const string VARIABLE_PAYMENT_INSTRUCTIONS = '{payment_instructions}';
-    public const string TRANSPORT_VARIABLE_TRACKING_NUMBER = '{tracking_number}';
-    public const string TRANSPORT_VARIABLE_TRACKING_URL = '{tracking_url}';
+    public const string VARIABLE_TRANSPORT_TRACKING_NUMBER = '{tracking_number}';
+    public const string VARIABLE_TRANSPORT_TRACKING_URL = '{tracking_url}';
     public const string VARIABLE_TRACKING_INSTRUCTIONS = '{tracking_instructions}';
     public const string VARIABLE_ROUNDING_INFO = '{rounding_info}';
     public const string VARIABLE_ADDRESSES = '{addresses}';
@@ -305,8 +305,8 @@ class OrderMail implements MessageFactoryInterface
         }
 
         return strtr($trackingInstructions, [
-            self::TRANSPORT_VARIABLE_TRACKING_NUMBER => $trackingNumber,
-            self::TRANSPORT_VARIABLE_TRACKING_URL => $trackingUrl,
+            self::VARIABLE_TRANSPORT_TRACKING_NUMBER => $trackingNumber,
+            self::VARIABLE_TRANSPORT_TRACKING_URL => $trackingUrl,
         ]);
     }
 
