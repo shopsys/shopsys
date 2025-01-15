@@ -46,4 +46,5 @@ return [
     Shopsys\ConvertimBundle\ShopsysConvertimBundle::class => ['all' => true],
     Becklyn\OrderedFormBundle\BecklynOrderedFormBundle::class => ['all' => true],
     Symfony\UX\StimulusBundle\StimulusBundle::class => ['all' => true],
+    Symfony\UX\TwigComponent\TwigComponentBundle::class => ['all' => true],
 ];

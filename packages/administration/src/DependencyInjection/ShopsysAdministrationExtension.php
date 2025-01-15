@@ -31,5 +31,14 @@ class ShopsysAdministrationExtension extends Extension implements PrependExtensi
                 'Shopsys\AdministrationBundle\Migrations' => __DIR__ . '/../Migrations',
             ],
         ]);
+
+        $container->prependExtensionConfig('twig_component', [
+            'defaults' => [
+                'Shopsys\AdministrationBundle\Twig\Components\\' => [
+                    'template_directory' => '@ShopsysAdministration/components/',
+                    'name_prefix' => 'Admin',
+                ],
+            ],
+        ]);
     }
 }

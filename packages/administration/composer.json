@@ -34,6 +34,7 @@
         "symfony/routing": "^6.4",
         "symfony/stimulus-bundle": "^2.22",
         "symfony/translation": "^6.4",
+        "symfony/ux-twig-component": "^2.22",
         "twig/twig": "^3.14.0"
     },
     "require-dev": {
