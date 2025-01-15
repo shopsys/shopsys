@@ -1,22 +1,14 @@
 'use client';
 
-import { ProductDetailAccessories } from './ProductDetailAccessories/ProductDetailAccessories';
-import { ProductDetailAvailabilityList } from './ProductDetailAvailabilityList';
-import { ProductDetailHeading, ProductDetailPrefix } from './ProductDetailElements';
+import { ProductDetailPrefix, ProductDetailHeading } from './ProductDetailElements';
 import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailPrice } from './ProductDetailPrice';
 import { ProductDetailTabs } from './ProductDetailTabs/ProductDetailTabs';
 import { ProductDetailUsps } from './ProductDetailUsps';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
-import { WatchDogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
-import { Popup } from 'components/Layout/Popup/Popup';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useTranslation } from 'components/providers/TranslationProvider';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
-import { TypeAvailabilityStatusEnum } from 'graphql/types';
-import { useSessionStore } from 'store/useSessionStore';
-import { twJoin } from 'tailwind-merge';
 
 type ProductDetailContentProps = {
     product: TypeProductDetailFragment;
@@ -25,7 +17,7 @@ type ProductDetailContentProps = {
 export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product }) => {
     const { t } = useTranslation();
     // const router = useRouter();
-    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    // const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     // const { isLuigisBoxActive } = useDomainConfig();
 
@@ -79,7 +71,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product })
                         <div className="bg-backgroundMore flex flex-col gap-4 rounded-xl p-3 sm:p-6">
                             <ProductDetailPrice productPrice={product.price} />
 
-                            {!product.isSellingDenied && (
+                            {/* {!product.isSellingDenied && (
                                 <ProductAvailability
                                     availability={product.availability}
                                     availableStoresCount={product.availableStoresCount}
@@ -100,15 +92,15 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product })
                                         )
                                     }
                                 />
-                            )}
+                            )} */}
 
-                            <WatchDogButton
+                            {/* <WatchDogButton
                                 availability={product.availability}
                                 className="self-start"
                                 isInquiryType={product.isInquiryType}
                                 productIsSellingDenied={product.isSellingDenied}
                                 productUuid={product.uuid}
-                            />
+                            /> */}
 
                             {/* <ProductDetailAddToCart product={product} /> */}
 
@@ -137,7 +129,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product })
                     />
                 )} */}
 
-                <ProductDetailAccessories accessories={product.accessories} />
+                {/* <ProductDetailAccessories accessories={product.accessories} /> */}
                 {/* <DeferredProductDetailAccessories accessories={product.accessories} /> */}
             </Webline>
         </>
