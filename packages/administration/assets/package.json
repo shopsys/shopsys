@@ -40,5 +40,8 @@
         "lint": "eslint src test",
         "watch": "babel src --delete-dir-on-start --extensions .ts -d dist --watch",
         "postinstall": "npm run build"
+    },
+    "dependencies": {
+        "stimulus-use": "^0.52.3"
     }
 }

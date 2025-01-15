@@ -1,5 +1,7 @@
 <div {{ attributes.defaults(stimulus_controller('shopsys/administration/searchMenu')) }}>
-    <div class="web__header__search js-search-wrapper" {{ stimulus_action('live', 'action', 'keydown.esc', {action: 'close'})}}>
+    <div class="web__header__search js-search-wrapper"
+            {{ stimulus_action('live', 'action', 'keydown.esc', {action: 'close'}) }}
+    >
         <input type="text" data-model="search" class="web__header__search--input input js-search-input" placeholder="{{ "Search by section name…"|trans }}" />
 
         {% if this.results|length > 0 %}

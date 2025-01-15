@@ -1,9 +1,14 @@
 import { Controller } from '@hotwired/stimulus';
 import { getComponent } from '@symfony/ux-live-component';
+import { useClickOutside } from 'stimulus-use';
 
 export default class extends Controller {
 
     static targets = ['result'];
+
+    connect() {
+        useClickOutside(this as Controller);
+    }
 
     async initialize() {
         this.component = await getComponent(this.element);
@@ -13,8 +18,12 @@ export default class extends Controller {
         this.element.querySelector('.js-search-wrapper').addEventListener('keydown', this.onKeydown.bind(this));
     }
 
+    clickOutside(event) {
+        event.preventDefault()
+        this.component.action('close');
+    }
+
     onKeydown(event) {
-        console.log(this.currentIndex);
         if (this.resultTargets.length === 0 || !this.enabledKeys.includes(event.key)) {
             return;
         }

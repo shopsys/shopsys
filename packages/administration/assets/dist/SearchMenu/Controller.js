@@ -10,12 +10,16 @@ function _inheritsLoose(t, o) { t.prototype = Object.create(o.prototype), t.prot
 function _setPrototypeOf(t, e) { return _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function (t, e) { return t.__proto__ = e, t; }, _setPrototypeOf(t, e); }
 import { Controller } from '@hotwired/stimulus';
 import { getComponent } from '@symfony/ux-live-component';
+import { useClickOutside } from 'stimulus-use';
 var _default = /*#__PURE__*/function (_Controller) {
   function _default() {
     return _callSuper(this, _default, arguments);
   }
   _inheritsLoose(_default, _Controller);
   var _proto = _default.prototype;
+  _proto.connect = function connect() {
+    useClickOutside(this);
+  };
   _proto.initialize = /*#__PURE__*/function () {
     var _initialize = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
       return _regeneratorRuntime().wrap(function _callee$(_context) {
@@ -39,8 +43,11 @@ var _default = /*#__PURE__*/function (_Controller) {
     }
     return initialize;
   }();
+  _proto.clickOutside = function clickOutside(event) {
+    event.preventDefault();
+    this.component.action('close');
+  };
   _proto.onKeydown = function onKeydown(event) {
-    console.log(this.currentIndex);
     if (this.resultTargets.length === 0 || !this.enabledKeys.includes(event.key)) {
       return;
     }
