@@ -227,19 +227,19 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
 
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         $expectedViolationMessages = [
-            0 => t(
+            'input.firstName' => t(
                 'First name cannot be longer than {{ limit }} characters',
                 ['{{ limit }}' => 100],
                 'validators',
                 $firstDomainLocale,
             ),
-            1 => t(
+            'input.lastName' => t(
                 'Last name cannot be longer than {{ limit }} characters',
                 ['{{ limit }}' => 100],
                 'validators',
                 $firstDomainLocale,
             ),
-            2 => t(
+            'input.telephone' => t(
                 'Telephone number cannot be longer than {{ limit }} characters',
                 ['{{ limit }}' => 30],
                 'validators',
@@ -250,13 +250,12 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
         $responseData = $this->getErrorsExtensionValidationFromResponse($response);
 
-        $i = 0;
+        $this->assertCount(count($expectedViolationMessages), $responseData);
 
-        foreach ($responseData as $responseRow) {
+        foreach ($responseData as $key => $responseRow) {
             foreach ($responseRow as $validationError) {
                 $this->assertArrayHasKey('message', $validationError);
-                $this->assertEquals($expectedViolationMessages[$i], $validationError['message']);
-                $i++;
+                $this->assertEquals($expectedViolationMessages[$key], $validationError['message']);
             }
         }
     }
