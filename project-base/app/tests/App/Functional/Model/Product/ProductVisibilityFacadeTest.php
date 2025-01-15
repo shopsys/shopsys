@@ -61,6 +61,6 @@ class ProductVisibilityFacadeTest extends TransactionFunctionalTestCase
         $visibilityIndexedByProductId = $this->productVisibilityFacade->areProductsVisibleForDefaultPricingGroupOnSomeDomainIndexedByProductId(
             [$productId],
         );
-        $this->assertTrue($visibilityIndexedByProductId[$productId]);
+        $this->assertSame($visibilityIndexedByProductId[$productId], $this->domain->isMultidomain());
     }
 }
