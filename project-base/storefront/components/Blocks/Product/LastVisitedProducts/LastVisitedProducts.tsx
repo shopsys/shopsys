@@ -1,31 +1,33 @@
-'use client';
-
 import { LastVisitedProductsContent } from './LastVisitedProductsContent';
+import { getCookieStoreStateFromServer } from 'app/_utils/getCookieStoreStateFromServer';
+import { SkeletonModuleLastVisitedProducts } from 'components/Blocks/Skeleton/SkeletonModuleLastVisitedProducts';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { useCookiesStore } from 'store/useCookiesStore';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { useTranslation } from 'components/providers/TranslationProvider';
+import { Suspense } from 'react';
 
 export type LastVisitedProductsProps = {
     currentProductCatnum?: string;
 };
 
-export const LastVisitedProducts: FC<LastVisitedProductsProps> = ({ currentProductCatnum }) => {
+export async function LastVisitedProducts({ currentProductCatnum }: LastVisitedProductsProps) {
     const { t } = useTranslation();
-    const lastVisitedProductsCatnums = useCookiesStore((state) => state.lastVisitedProductsCatnums);
+    const { lastVisitedProductsCatnums } = getCookieStoreStateFromServer();
 
-    const lastVisitedProductsWithoutCurrentProduct = lastVisitedProductsCatnums?.filter(
-        (lastVisitedProduct) => lastVisitedProduct !== currentProductCatnum,
-    );
-
-    if (!lastVisitedProductsWithoutCurrentProduct?.length) {
+    if (!lastVisitedProductsCatnums) {
         return null;
     }
+
+    const lastVisitedProductsWithoutCurrentProduct = lastVisitedProductsCatnums.filter(
+        (lastVisitedProduct) => lastVisitedProduct !== currentProductCatnum,
+    );
 
     return (
         <Webline>
             <h2 className="h5 mb-3">{t('Last visited products')}</h2>
 
-            <LastVisitedProductsContent productsCatnums={lastVisitedProductsWithoutCurrentProduct} />
+            <Suspense fallback={<SkeletonModuleLastVisitedProducts />}>
+                <LastVisitedProductsContent productsCatnums={lastVisitedProductsWithoutCurrentProduct} />
+            </Suspense>
         </Webline>
     );
-};
+}
