@@ -9,7 +9,6 @@ use App\Model\Mail\MailTemplateData;
 use App\Model\Order\Mail\OrderMail;
 use App\Model\Order\Order;
 use App\Model\Order\Status\OrderStatus;
-use Shopsys\FrameworkBundle\Component\Cdn\CdnFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
@@ -80,9 +79,6 @@ class OrderMailTest extends TransactionFunctionalTestCase
         $hiddenPriceExtensionMock = $this->getMockBuilder(
             HiddenPriceExtension::class,
         )->disableOriginalConstructor()->getMock();
-        $cdnFacadeMock = $this->getMockBuilder(
-            CdnFacade::class,
-        )->disableOriginalConstructor()->getMock();
 
         $orderMail = new OrderMail(
             $settingMock,
@@ -94,7 +90,6 @@ class OrderMailTest extends TransactionFunctionalTestCase
             $dateTimeFormatterExtensionMock,
             $orderUrlGeneratorMock,
             $hiddenPriceExtensionMock,
-            $cdnFacadeMock,
         );
 
         $order = $this->getReference('order_1', Order::class);

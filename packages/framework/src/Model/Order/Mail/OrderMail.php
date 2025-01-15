@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Mail;
 
-use Shopsys\FrameworkBundle\Component\Cdn\CdnFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
@@ -56,7 +55,6 @@ class OrderMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator $orderUrlGenerator
      * @param \Shopsys\FrameworkBundle\Twig\HiddenPriceExtension $hiddenPriceExtension
-     * @param \Shopsys\FrameworkBundle\Component\Cdn\CdnFacade $cdnFacade
      */
     public function __construct(
         protected readonly Setting $setting,
@@ -68,7 +66,6 @@ class OrderMail implements MessageFactoryInterface
         protected readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
         protected readonly OrderUrlGenerator $orderUrlGenerator,
         protected readonly HiddenPriceExtension $hiddenPriceExtension,
-        protected readonly CdnFacade $cdnFacade,
     ) {
     }
 
@@ -198,7 +195,6 @@ class OrderMail implements MessageFactoryInterface
         return $this->twig->render('@ShopsysFramework/Mail/Order/billingAddress.html.twig', [
             'order' => $order,
             'orderLocale' => $this->getDomainLocaleByOrder($order),
-            'contentBaseUrl' => $this->cdnFacade->resolveDomainUrlForAssets($this->domain->getDomainConfigById($order->getDomainId())),
         ]);
     }
 
@@ -211,7 +207,6 @@ class OrderMail implements MessageFactoryInterface
         return $this->twig->render('@ShopsysFramework/Mail/Order/deliveryAddress.html.twig', [
             'order' => $order,
             'orderLocale' => $this->getDomainLocaleByOrder($order),
-            'contentBaseUrl' => $this->cdnFacade->resolveDomainUrlForAssets($this->domain->getDomainConfigById($order->getDomainId())),
         ]);
     }
 
@@ -376,7 +371,6 @@ class OrderMail implements MessageFactoryInterface
         return $this->twig->render('@ShopsysFramework/Mail/Order/addresses.html.twig', [
             'order' => $order,
             'orderLocale' => $this->getDomainLocaleByOrder($order),
-            'contentBaseUrl' => $this->cdnFacade->resolveDomainUrlForAssets($this->domain->getDomainConfigById($order->getDomainId())),
         ]);
     }
 }

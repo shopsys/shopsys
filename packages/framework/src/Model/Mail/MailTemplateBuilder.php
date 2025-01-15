@@ -24,11 +24,12 @@ class MailTemplateBuilder
 
     /**
      * @param int $domainId
+     * @param string $imageNameWithExtension
      * @return string
      */
-    protected function getContentBaseUrl(int $domainId): string
+    public function getMailImageSrc(int $domainId, string $imageNameWithExtension): string
     {
-        return $this->cdnFacade->resolveDomainUrlForAssets($this->domain->getDomainConfigById($domainId));
+        return $this->cdnFacade->resolveDomainUrlForAssets($this->domain->getDomainConfigById($domainId)) . '/public/frontend/mail/' . $imageNameWithExtension;
     }
 
     /**
@@ -54,9 +55,10 @@ class MailTemplateBuilder
                 continue;
             }
 
+            $footerIconNameWithExtension = $footerIconName . '.png';
             $footerIconsHtml .= <<<EOT
                 <a href="{$footerIconUrl}" style="border:none;text-decoration:none;padding: 0 10px;" target="_blank">
-                    <img alt="{$footerIconName}" border="0" src="{$this->getContentBaseUrl($domainId)}/public/frontend/mail/{$footerIconName}.png" width="32" height="32" style="color: black; width: 32px; height: 32px;">
+                    <img alt="{$footerIconName}" border="0" src="{$this->getMailImageSrc($domainId, $footerIconNameWithExtension)}" width="32" height="32" style="color: black; width: 32px; height: 32px;">
                 </a>
             EOT;
         }
@@ -150,7 +152,8 @@ class MailTemplateBuilder
                     }
 
                     .content {
-                        background-color: #fff;
+                        background-color: #ffffff !important;
+                        color: #000000 !important;
                         -webkit-box-shadow: 1px 4px 11px 0px rgba(0, 0, 0, 0.15);
                         -moz-box-shadow: 1px 4px 11px 0px rgba(0, 0, 0, 0.15);
                         box-shadow: 1px 4px 11px 0px rgba(0, 0, 0, 0.15);
@@ -194,7 +197,7 @@ class MailTemplateBuilder
                                 <tr>
                                     <td>
                                         <div class="header">
-                                            <img src="{$this->getContentBaseUrl($domainId)}/public/frontend/mail/logo.png" style="height: 50px;">
+                                            <img src="{$this->getMailImageSrc($domainId, 'logo.png')}" style="height: 50px;">
                                         </div>
                                     </td>
                                 </tr>
