@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\CsvResponse;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Form\Admin\PriceList\ImportPriceListFormType;
 use Shopsys\FrameworkBundle\Form\Admin\PriceList\PriceListFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
@@ -37,6 +37,7 @@ class PriceListController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListCsvColumnsEnum $priceListCsvColumnsEnum
      * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
+     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
      */
     public function __construct(
         protected readonly PriceListGridFactory $priceListGridFactory,
@@ -47,6 +48,7 @@ class PriceListController extends AdminBaseController
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly PriceListCsvColumnsEnum $priceListCsvColumnsEnum,
         protected readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider,
+        protected readonly TransformStringHelper $transformStringHelper,
     ) {
     }
 
@@ -194,7 +196,7 @@ class PriceListController extends AdminBaseController
     {
         try {
             $priceList = $this->priceListFacade->getById($id);
-            $sanitizedPriceListName = TransformString::safeFilename($priceList->getName());
+            $sanitizedPriceListName = $this->transformStringHelper->safeFilename($priceList->getName());
 
             $priceListDataToExport = $this->priceListFacade->getPriceListDataToExport($id);
 

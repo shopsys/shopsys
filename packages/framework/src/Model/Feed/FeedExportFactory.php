@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\DependencyInjection\ServicesResetter;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -21,6 +22,7 @@ class FeedExportFactory
      * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
      * @param \League\Flysystem\MountManager $mountManager
      * @param \Shopsys\FrameworkBundle\DependencyInjection\ServicesResetter $servicesResetter
+     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
      */
     public function __construct(
         protected readonly FeedRendererFactory $feedRendererFactory,
@@ -30,6 +32,7 @@ class FeedExportFactory
         protected readonly Filesystem $localFilesystem,
         protected readonly MountManager $mountManager,
         protected readonly ServicesResetter $servicesResetter,
+        protected readonly TransformStringHelper $transformStringHelper,
     ) {
     }
 
@@ -53,6 +56,7 @@ class FeedExportFactory
             $this->localFilesystem,
             $this->mountManager,
             $this->em,
+            $this->transformStringHelper,
             $feedFilepath,
             $feedLocalFilepath,
             $this->servicesResetter,

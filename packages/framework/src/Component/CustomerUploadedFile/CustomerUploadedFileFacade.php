@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileLocatorIn
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileRepositoryInterface;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Config\CustomerUploadedFileConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfigInterface;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
@@ -26,6 +27,7 @@ class CustomerUploadedFileFacade extends AbstractUploadedFileFacade
     /**
      * @param \League\Flysystem\FilesystemOperator $filesystem
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
      * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Config\CustomerUploadedFileConfig $customerUploadedFileConfig
      * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileRepository $customerUploadedFileRepository
      * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileLocator $customerUploadedFileLocator
@@ -35,13 +37,14 @@ class CustomerUploadedFileFacade extends AbstractUploadedFileFacade
     public function __construct(
         FilesystemOperator $filesystem,
         EntityManagerInterface $em,
+        TransformStringHelper $transformStringHelper,
         protected readonly CustomerUploadedFileConfig $customerUploadedFileConfig,
         protected readonly CustomerUploadedFileRepository $customerUploadedFileRepository,
         protected readonly CustomerUploadedFileLocator $customerUploadedFileLocator,
         protected readonly CustomerUploadedFileFactory $customerUploadedFileFactory,
         protected readonly AdministratorFrontSecurityFacade $administratorFrontSecurityFacade,
     ) {
-        parent::__construct($filesystem, $em);
+        parent::__construct($filesystem, $em, $transformStringHelper);
     }
 
     /**
@@ -245,8 +248,10 @@ class CustomerUploadedFileFacade extends AbstractUploadedFileFacade
     {
         foreach ($fileNamesIndexedByFileId as $fileId => $fileName) {
             $file = $this->getById($fileId);
+            $filename = pathinfo($fileName, PATHINFO_FILENAME);
 
-            $file->setNameAndSlug($fileName);
+            $file->setName($filename);
+            $file->setSlug($this->transformStringHelper->stringToFriendlyUrlSlug($filename));
 
             $this->em->flush();
         }

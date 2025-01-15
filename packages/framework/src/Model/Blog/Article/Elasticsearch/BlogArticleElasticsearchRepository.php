@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch;
 
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchNoResultException;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Exception\BlogArticleNotFoundException;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 
@@ -14,10 +14,12 @@ class BlogArticleElasticsearchRepository
     /**
      * @param \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\FilterQueryFactory $filterQueryFactory
      * @param \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchDataFetcher $blogArticleElasticsearchDataFetcher
+     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
      */
     public function __construct(
         protected readonly FilterQueryFactory $filterQueryFactory,
         protected readonly BlogArticleElasticsearchDataFetcher $blogArticleElasticsearchDataFetcher,
+        protected readonly TransformStringHelper $transformStringHelper,
     ) {
     }
 
@@ -73,7 +75,7 @@ class BlogArticleElasticsearchRepository
         $blogArticle = $this->findBySlug($slug);
 
         if ($blogArticle === null) {
-            $blogArticle = $this->findBySlug(TransformString::addOrRemoveTrailingSlashFromString($slug));
+            $blogArticle = $this->findBySlug($this->transformStringHelper->addOrRemoveTrailingSlashFromString($slug));
         }
 
         if ($blogArticle === null) {

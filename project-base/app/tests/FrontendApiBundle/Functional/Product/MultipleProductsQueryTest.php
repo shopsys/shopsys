@@ -4,16 +4,21 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Product;
 
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class MultipleProductsQueryTest extends GraphQlTestCase
 {
+    /**
+     * @inject
+     */
+    private TransformStringHelper $transformStringHelper;
+
     public function testMultipleProductsQueriesAtOnce(): void
     {
         $translatedName = t('TV, audio', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
-        $slug = TransformString::stringToFriendlyUrlSlug($translatedName);
+        $slug = $this->transformStringHelper->stringToFriendlyUrlSlug($translatedName);
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/multipleProductsQuery.graphql', [
             'urlSlug' => $slug,

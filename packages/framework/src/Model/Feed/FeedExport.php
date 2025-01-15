@@ -8,14 +8,14 @@ use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\DependencyInjection\ServicesResetter;
 use Symfony\Component\Filesystem\Filesystem;
 
 class FeedExport
 {
-    protected const TEMPORARY_FILENAME_SUFFIX = '.tmp';
-    protected const BATCH_SIZE = 1000;
+    protected const string TEMPORARY_FILENAME_SUFFIX = '.tmp';
+    protected const int BATCH_SIZE = 1000;
 
     protected bool $finished = false;
 
@@ -27,6 +27,7 @@ class FeedExport
      * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
      * @param \League\Flysystem\MountManager $mountManager
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
      * @param string $feedFilepath
      * @param string $feedLocalFilepath
      * @param \Shopsys\FrameworkBundle\DependencyInjection\ServicesResetter $servicesResetter
@@ -40,6 +41,7 @@ class FeedExport
         protected readonly Filesystem $localFilesystem,
         protected readonly MountManager $mountManager,
         protected readonly EntityManagerInterface $em,
+        protected readonly TransformStringHelper $transformStringHelper,
         protected readonly string $feedFilepath,
         protected readonly string $feedLocalFilepath,
         protected readonly ServicesResetter $servicesResetter,
@@ -52,7 +54,7 @@ class FeedExport
         if ($this->filesystem->has($this->getTemporaryFilepath())) {
             $this->mountManager->move(
                 'main://' . $this->getTemporaryFilepath(),
-                'local://' . TransformString::removeDriveLetterFromPath($this->getTemporaryLocalFilepath()),
+                'local://' . $this->transformStringHelper->removeDriveLetterFromPath($this->getTemporaryLocalFilepath()),
             );
         } else {
             $this->localFilesystem->touch($this->getTemporaryLocalFilepath());
@@ -62,7 +64,7 @@ class FeedExport
     public function sleep(): void
     {
         $this->mountManager->move(
-            'local://' . TransformString::removeDriveLetterFromPath($this->getTemporaryLocalFilepath()),
+            'local://' . $this->transformStringHelper->removeDriveLetterFromPath($this->getTemporaryLocalFilepath()),
             'main://' . $this->getTemporaryFilepath(),
         );
     }
@@ -137,7 +139,7 @@ class FeedExport
         }
 
         $this->mountManager->move(
-            'local://' . TransformString::removeDriveLetterFromPath($this->getTemporaryLocalFilepath()),
+            'local://' . $this->transformStringHelper->removeDriveLetterFromPath($this->getTemporaryLocalFilepath()),
             'main://' . $this->feedFilepath,
         );
 

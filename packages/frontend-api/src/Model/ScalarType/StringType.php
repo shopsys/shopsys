@@ -11,7 +11,7 @@ use GraphQL\Language\AST\StringValueNode;
 use GraphQL\Language\Printer;
 use GraphQL\Type\Definition\ScalarType;
 use GraphQL\Utils\Utils;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use function is_object;
 use function is_scalar;
 use function is_string;
@@ -35,7 +35,7 @@ class StringType extends ScalarType
             throw new SerializationError("String cannot represent value: {$notStringable}");
         }
 
-        return TransformString::getTrimmedStringOrNullOnEmpty((string)$value);
+        return TransformStringHelper::getTrimmedStringOrNullOnEmpty((string)$value);
     }
 
     /**
@@ -51,7 +51,7 @@ class StringType extends ScalarType
             throw new Error("String cannot represent a non string value: {$notString}");
         }
 
-        return TransformString::getTrimmedStringOrNullOnEmpty($value);
+        return TransformStringHelper::getTrimmedStringOrNullOnEmpty($value);
     }
 
     /**
@@ -62,7 +62,7 @@ class StringType extends ScalarType
     public function parseLiteral(Node $valueNode, ?array $variables = null): ?string
     {
         if ($valueNode instanceof StringValueNode) {
-            return TransformString::getTrimmedStringOrNullOnEmpty($valueNode->value);
+            return TransformStringHelper::getTrimmedStringOrNullOnEmpty($valueNode->value);
         }
 
         $notString = Printer::doPrint($valueNode);

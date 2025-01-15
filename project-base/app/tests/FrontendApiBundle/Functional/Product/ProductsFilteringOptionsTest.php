@@ -14,7 +14,7 @@ use App\Model\Product\Flag\Flag;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorterHelper;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
@@ -30,6 +30,11 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
      * @inject
      */
     private ArraySorterHelper $arraySorterHelper;
+
+    /**
+     * @inject
+     */
+    private TransformStringHelper $transformStringHelper;
 
     public function setUp(): void
     {
@@ -733,7 +738,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         $parameterSliderWarrantyUuid = $parameterSliderWarranty->getUuid();
 
         $translatedName = t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
-        $slug = TransformString::stringToFriendlyUrlSlug($translatedName);
+        $slug = $this->transformStringHelper->stringToFriendlyUrlSlug($translatedName);
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/SliderFilterInCategory.graphql', [
             'urlSlug' => $slug,
@@ -761,7 +766,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
         $parameterSliderWarrantyUuid = $parameterSliderWarranty->getUuid();
 
         $translatedName = t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
-        $slug = TransformString::stringToFriendlyUrlSlug($translatedName);
+        $slug = $this->transformStringHelper->stringToFriendlyUrlSlug($translatedName);
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/SliderFilterInCategory.graphql', [
             'urlSlug' => $slug,

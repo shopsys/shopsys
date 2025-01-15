@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 use Doctrine\ORM\Mapping as ORM;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 
 /**
  * @ORM\Table(name="parameter_groups_translations")
@@ -40,6 +40,6 @@ class ParameterGroupTranslation extends AbstractTranslation
      */
     public function setName($name)
     {
-        $this->name = TransformString::getTrimmedStringOrNullOnEmpty($name);
+        $this->name = TransformStringHelper::getTrimmedStringOrNullOnEmpty($name);
     }
 }

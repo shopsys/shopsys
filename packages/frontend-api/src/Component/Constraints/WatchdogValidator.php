@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Component\Constraints;
 
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
@@ -16,9 +16,11 @@ class WatchdogValidator extends ConstraintValidator
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
+     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
      */
     public function __construct(
         protected readonly ProductFacade $productFacade,
+        protected readonly TransformStringHelper $transformStringHelper,
     ) {
     }
 
@@ -32,7 +34,7 @@ class WatchdogValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, Watchdog::class);
         }
 
-        if (TransformString::emptyToNull($value) === null) {
+        if ($this->transformStringHelper->emptyToNull($value) === null) {
             return;
         }
 

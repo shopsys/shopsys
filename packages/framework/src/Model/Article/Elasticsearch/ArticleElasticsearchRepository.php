@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Article\Elasticsearch;
 
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchNoResultException;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Article\Exception\ArticleNotFoundException;
 
 class ArticleElasticsearchRepository
@@ -13,10 +13,12 @@ class ArticleElasticsearchRepository
     /**
      * @param \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\FilterQueryFactory $filterQueryFactory
      * @param \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleElasticsearchDataFetcher $articleElasticsearchDataFetcher
+     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
      */
     public function __construct(
         protected readonly FilterQueryFactory $filterQueryFactory,
         protected readonly ArticleElasticsearchDataFetcher $articleElasticsearchDataFetcher,
+        protected readonly TransformStringHelper $transformStringHelper,
     ) {
     }
 
@@ -91,7 +93,7 @@ class ArticleElasticsearchRepository
         $article = $this->findBySlug($slug);
 
         if ($article === null) {
-            $article = $this->findBySlug(TransformString::addOrRemoveTrailingSlashFromString($slug));
+            $article = $this->findBySlug($this->transformStringHelper->addOrRemoveTrailingSlashFromString($slug));
         }
 
         if ($article === null) {

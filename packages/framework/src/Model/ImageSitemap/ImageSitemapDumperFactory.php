@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\ImageSitemap;
 
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Sitemap\SitemapDumper;
 use Shopsys\FrameworkBundle\Model\Sitemap\SitemapDumperFactory;
 use Shopsys\FrameworkBundle\Model\Sitemap\SitemapFilePrefixer;
@@ -22,6 +23,7 @@ class ImageSitemapDumperFactory extends SitemapDumperFactory
      * @param \League\Flysystem\MountManager $mountManager
      * @param \Shopsys\FrameworkBundle\Model\Sitemap\SitemapFilePrefixer $sitemapFilePrefixer
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
+     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
      * @param \Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapFilePrefixer $imageSitemapFilePrefixer
      */
     public function __construct(
@@ -31,9 +33,10 @@ class ImageSitemapDumperFactory extends SitemapDumperFactory
         MountManager $mountManager,
         SitemapFilePrefixer $sitemapFilePrefixer,
         UrlGeneratorInterface $urlGenerator,
+        TransformStringHelper $transformStringHelper,
         protected readonly ImageSitemapFilePrefixer $imageSitemapFilePrefixer,
     ) {
-        parent::__construct($eventDispatcher, $localFilesystem, $filesystem, $mountManager, $sitemapFilePrefixer, $urlGenerator);
+        parent::__construct($eventDispatcher, $localFilesystem, $filesystem, $mountManager, $sitemapFilePrefixer, $urlGenerator, $transformStringHelper);
     }
 
     /**
@@ -47,6 +50,7 @@ class ImageSitemapDumperFactory extends SitemapDumperFactory
             $this->localFilesystem,
             $this->filesystem,
             $this->mountManager,
+            $this->transformStringHelper,
             $this->urlGenerator,
             $this->imageSitemapFilePrefixer->getSitemapFilePrefixForDomain($domainId),
             static::MAX_ITEMS_IN_FILE,

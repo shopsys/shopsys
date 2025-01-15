@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\FriendlyUrl;
 
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class FriendlyUrlTest extends GraphQlTestCase
 {
+    /**
+     * @inject
+     */
+    private TransformStringHelper $transformStringHelper;
+
     public function testGetEntityNameByFriendlyUrl(): void
     {
         foreach ($this->getEntityNameByFriendlyUrlProvider() as $dataSet) {
@@ -68,16 +73,16 @@ class FriendlyUrlTest extends GraphQlTestCase
     private function getEntityNameByFriendlyUrlProvider(): array
     {
         $canonName = t('Canon', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
-        $canonSlug = TransformString::stringToFriendlyUrlSlug($canonName);
+        $canonSlug = $this->transformStringHelper->stringToFriendlyUrlSlug($canonName);
 
         $privacyPolicyName = t('Privacy policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
-        $privacyPolicySlug = TransformString::stringToFriendlyUrlSlug($privacyPolicyName);
+        $privacyPolicySlug = $this->transformStringHelper->stringToFriendlyUrlSlug($privacyPolicyName);
 
         $electronicsName = t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
-        $electronicsSlug = TransformString::stringToFriendlyUrlSlug($electronicsName);
+        $electronicsSlug = $this->transformStringHelper->stringToFriendlyUrlSlug($electronicsName);
 
         $canonMg3550Name = t('Canon MG3550', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
-        $canonMg3550Slug = TransformString::stringToFriendlyUrlSlug($canonMg3550Name);
+        $canonMg3550Slug = $this->transformStringHelper->stringToFriendlyUrlSlug($canonMg3550Name);
 
         return [
             [

@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlUniqueResultFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 
 class FriendlyUrlUniqueResultFactoryTest extends TestCase
@@ -36,7 +37,7 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
         $domain = new Domain($this->getDomainConfigs(), $settingMock, $administratorFacadeMock);
 
         $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(
-            new FriendlyUrlFactory($domain, new EntityNameResolver([])),
+            new FriendlyUrlFactory($domain, new EntityNameResolver([]), new TransformStringHelper()),
         );
 
         $attempt = 1;
@@ -60,7 +61,7 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
         $domain = new Domain($this->getDomainConfigs(), $settingMock, $administratorFacadeMock);
 
         $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(
-            new FriendlyUrlFactory($domain, new EntityNameResolver([])),
+            new FriendlyUrlFactory($domain, new EntityNameResolver([]), new TransformStringHelper()),
         );
 
         $attempt = 1;
@@ -87,7 +88,7 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
         $domain = new Domain($this->getDomainConfigs(), $settingMock, $administratorFacadeMock);
 
         $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(
-            new FriendlyUrlFactory($domain, new EntityNameResolver([])),
+            new FriendlyUrlFactory($domain, new EntityNameResolver([]), new TransformStringHelper()),
         );
 
         $attempt = 3;

@@ -8,7 +8,7 @@ use GraphQL\Type\Definition\ResolveInfo;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
@@ -36,6 +36,7 @@ class CategoryQuery extends AbstractQuery
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \Shopsys\FrontendApiBundle\Model\Product\Filter\ProductFilterFacade $productFilterFacade
      * @param \Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductOrderingModeProvider $productOrderingModeProvider
+     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
      */
     public function __construct(
         protected readonly CategoryFacade $categoryFacade,
@@ -45,6 +46,7 @@ class CategoryQuery extends AbstractQuery
         protected readonly ParameterFacade $parameterFacade,
         protected readonly ProductFilterFacade $productFilterFacade,
         protected readonly ProductOrderingModeProvider $productOrderingModeProvider,
+        protected readonly TransformStringHelper $transformStringHelper,
     ) {
     }
 
@@ -104,7 +106,7 @@ class CategoryQuery extends AbstractQuery
             );
 
             if ($friendlyUrl === null) {
-                $modifiedSlug = TransformString::addOrRemoveTrailingSlashFromString($urlSlug);
+                $modifiedSlug = $this->transformStringHelper->addOrRemoveTrailingSlashFromString($urlSlug);
                 $friendlyUrl = $this->friendlyUrlFacade->findByDomainIdAndSlug(
                     $this->domain->getId(),
                     $modifiedSlug,

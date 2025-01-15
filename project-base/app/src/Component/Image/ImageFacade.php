@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Component\Image\ImageFacade as BaseImageFacade;
 use Shopsys\FrameworkBundle\Component\Image\ImageFactory;
 use Shopsys\FrameworkBundle\Component\Image\ImageLocator;
 use Shopsys\FrameworkBundle\Component\Image\ImageRepository;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 use Symfony\Contracts\Cache\CacheInterface;
 
@@ -43,6 +44,7 @@ class ImageFacade extends BaseImageFacade
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Shopsys\FrameworkBundle\Component\Cdn\CdnFacade $cdnFacade
      * @param \Symfony\Contracts\Cache\CacheInterface|\Symfony\Component\Cache\Adapter\AdapterInterface $cache
+     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
      */
     public function __construct(
         string $imageUrlPrefix,
@@ -57,6 +59,7 @@ class ImageFacade extends BaseImageFacade
         LoggerInterface $logger,
         CdnFacade $cdnFacade,
         CacheInterface|AdapterInterface $cache,
+        TransformStringHelper $transformStringHelper,
     ) {
         parent::__construct(
             $imageUrlPrefix,
@@ -71,6 +74,7 @@ class ImageFacade extends BaseImageFacade
             $logger,
             $cdnFacade,
             $cache,
+            $transformStringHelper,
         );
     }
 

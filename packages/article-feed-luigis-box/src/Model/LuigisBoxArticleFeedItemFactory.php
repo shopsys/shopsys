@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\ArticleFeed\LuigisBoxBundle\Model;
 
 use Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 
 class LuigisBoxArticleFeedItemFactory
 {
@@ -34,8 +34,8 @@ class LuigisBoxArticleFeedItemFactory
             $articleData['index'],
             $articleData['name'],
             $articleData['url'],
-            TransformString::convertHtmlToPlainText($articleData['text']),
-            TransformString::convertHtmlToPlainText($articleData['perex'] ?? null),
+            TransformStringHelper::convertHtmlToPlainText($articleData['text']),
+            TransformStringHelper::convertHtmlToPlainText($articleData['perex'] ?? null),
             $imageUrl !== null ? $this->imageUrlWithSizeHelper->limitSizeInImageUrl($imageUrl, static::SMALL_IMAGE_SIZE, static::SMALL_IMAGE_SIZE) : null,
             $imageUrl !== null ? $this->imageUrlWithSizeHelper->limitSizeInImageUrl($imageUrl, static::MEDIUM_IMAGE_SIZE, static::MEDIUM_IMAGE_SIZE) : null,
             $imageUrl !== null ? $this->imageUrlWithSizeHelper->limitSizeInImageUrl($imageUrl, static::LARGE_IMAGE_SIZE, static::LARGE_IMAGE_SIZE) : null,

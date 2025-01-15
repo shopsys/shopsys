@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
@@ -19,12 +19,14 @@ abstract class AbstractFileFixture extends AbstractReferenceFixture
      * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
      * @param \League\Flysystem\MountManager $mountManager
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
      */
     public function __construct(
         protected readonly FilesystemOperator $filesystem,
         protected readonly Filesystem $localFilesystem,
         protected readonly MountManager $mountManager,
         protected readonly EntityManagerInterface $em,
+        protected readonly TransformStringHelper $transformStringHelper,
     ) {
     }
 
@@ -75,7 +77,7 @@ abstract class AbstractFileFixture extends AbstractReferenceFixture
         $finder->files()->in($origin);
 
         foreach ($finder as $file) {
-            $filepath = TransformString::removeDriveLetterFromPath($file->getPathname());
+            $filepath = $this->transformStringHelper->removeDriveLetterFromPath($file->getPathname());
 
             if (!$this->localFilesystem->exists($filepath)) {
                 continue;

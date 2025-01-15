@@ -7,19 +7,24 @@ namespace Tests\FrontendApiBundle\Functional\ParameterFilter;
 use App\DataFixtures\Demo\ParameterDataFixture;
 use App\FrontendApi\Model\Component\Constraints\ParameterFilter;
 use Ramsey\Uuid\Uuid;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class ParameterFilterValidationTest extends GraphQlTestCase
 {
+    /**
+     * @inject
+     */
+    private TransformStringHelper $transformStringHelper;
+
     public function testValuesNotSupportedForSliderType(): void
     {
         $parameterSlider = $this->getReference(ParameterDataFixture::PARAM_WARRANTY_IN_YEARS, Parameter::class);
 
         $translatedName = t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
-        $slug = TransformString::stringToFriendlyUrlSlug($translatedName);
+        $slug = $this->transformStringHelper->stringToFriendlyUrlSlug($translatedName);
 
         $mutation = 'query {
   category(urlSlug: "' . $slug . '") {
@@ -47,7 +52,7 @@ class ParameterFilterValidationTest extends GraphQlTestCase
         $parameterNonSlider = $this->getReference(ParameterDataFixture::PARAM_HDMI, Parameter::class);
 
         $translatedName = t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
-        $slug = TransformString::stringToFriendlyUrlSlug($translatedName);
+        $slug = $this->transformStringHelper->stringToFriendlyUrlSlug($translatedName);
 
         $mutation = 'query {
   category(urlSlug: "' . $slug . '") {

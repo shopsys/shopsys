@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Router;
 
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
@@ -16,9 +16,12 @@ class NormalizeUrlTrailingSlashSubscriber implements EventSubscriberInterface
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Router\CurrentDomainRouter $currentDomainRouter
+     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
      */
-    public function __construct(protected readonly CurrentDomainRouter $currentDomainRouter)
-    {
+    public function __construct(
+        protected readonly CurrentDomainRouter $currentDomainRouter,
+        protected readonly TransformStringHelper $transformStringHelper,
+    ) {
     }
 
     /**
@@ -34,11 +37,11 @@ class NormalizeUrlTrailingSlashSubscriber implements EventSubscriberInterface
     /**
      * @param \Symfony\Component\HttpKernel\Event\ExceptionEvent $event
      */
-    public function onKernelException(ExceptionEvent $event)
+    public function onKernelException(ExceptionEvent $event): void
     {
         if ($event->getThrowable() instanceof NotFoundHttpException) {
             $pathInfo = $event->getRequest()->getPathInfo();
-            $pathInfo = TransformString::addOrRemoveTrailingSlashFromString($pathInfo);
+            $pathInfo = $this->transformStringHelper->addOrRemoveTrailingSlashFromString($pathInfo);
 
             // prevents invalid redirection if request URL is http://host/index.php as $pathInfo is empty in that case
             if ($pathInfo !== '') {
@@ -62,7 +65,7 @@ class NormalizeUrlTrailingSlashSubscriber implements EventSubscriberInterface
 
             $fullPathBefore = $httpHost . $pathInfo;
             $fullPathAfter = $httpHost . $newPath;
-            $pathToRedirect = TransformString::replaceOccurences($fullPathBefore, $fullPathAfter, $uri, 1);
+            $pathToRedirect = $this->transformStringHelper->replaceOccurrences($fullPathBefore, $fullPathAfter, $uri, 1);
 
             $event->setResponse(new RedirectResponse($pathToRedirect, 301));
         } catch (ResourceNotFoundException $exception) {
