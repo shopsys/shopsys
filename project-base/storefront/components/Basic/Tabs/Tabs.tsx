@@ -39,14 +39,14 @@ export const Tabs: TabFC<Partial<TabsProps>> = ({ children, className, ...props 
 );
 
 export const TabsList: TabFC<Partial<TabListProps>> = ({ children }) => (
-    <TabList className="z-above hidden flex-row lg:flex lg:gap-4">{children}</TabList>
+    <TabList className="z-above hidden flex-row lg:flex lg:gap-5">{children}</TabList>
 );
 
 export const TabsListItem: TabFC<Partial<PropsWithRef<TabProps>>> = ({ children, className, ...props }) => (
     <Tab
         selectedClassName="isActive"
         className={twJoin(
-            'cursor-pointer select-none rounded-2xl bg-backgroundMore px-3 py-2 text-sm font-semibold outline-1 outline-borderAccentSuccess [&.isActive]:outline',
+            'cursor-pointer select-none rounded-2xl bg-backgroundMore px-3 py-2 font-secondary text-sm font-semibold outline-1 outline-borderAccentSuccess [&.isActive]:bg-textInverted [&.isActive]:outline',
             className,
         )}
         {...props}
@@ -69,24 +69,24 @@ export const TabsContent: TabFC<TabsContentProps & Partial<PropsWithRef<TabPanel
     return (
         <TabPanel
             forceRender
-            className="flex flex-col flex-wrap lg:hidden [&.isActive]:flex [&.isActive]:lg:pt-12"
+            className="flex flex-col flex-wrap lg:hidden [&.isActive]:flex [&.isActive]:lg:pt-5"
             selectedClassName="isActive"
             {...props}
         >
-            <h3
-                className="flex w-full cursor-pointer items-center justify-between rounded bg-backgroundMore px-5 py-4 font-bold lg:hidden"
+            <div
+                className="flex w-full cursor-pointer items-center justify-between rounded-xl bg-backgroundMore p-3 font-secondary text-sm font-semibold lg:hidden"
                 onClick={mobileTab}
             >
                 {headingTextMobile}
                 <AnimateRotateDiv className="flex items-start" condition={isActiveOnMobile}>
                     <ArrowIcon className={twJoin('size-4 rotate-0 text-text transition')} />
                 </AnimateRotateDiv>
-            </h3>
+            </div>
 
             <AnimatePresence initial={false}>
                 {(isActiveOnMobile || (isActive && isLg)) && (
                     <AnimateCollapseDiv
-                        className="relative !block w-full"
+                        className="relative mt-3 !block w-full lg:mt-0"
                         initial={skipInitialAnimation ? 'open' : 'closed'}
                         keyName={`tabs-content-${headingTextMobile}`}
                     >

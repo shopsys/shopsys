@@ -242,6 +242,7 @@
     "Order sent": "Objednávka odoslaná",
     "Order sent page is not available.": "Stránka odoslanej objednávky nie je k dispozícii. Z dôvodu bezpečnosti a ochrany osobných údajov táto stránka stratila platnosť. Skontrolujte si prosím svoj e-mail, kde nájdete odkaz na zobrazenie podrobností objednávky a možností platby.",
     "Orders": "Objednávky",
+    "Other parameters": "Ostatné parametre",
     "Overview": "Prehľad",
     "page {{ currentPage }} from {{ totalPages }}": "stránka {{ currentPage }} z {{ totalPages }}",
     "page {{ currentPage }} to {{ currentPageWithLoadMore }} from {{ totalPages }}": "page {{ currentPage }} to {{ currentPageWithLoadMore }} from {{ totalPages }}",
