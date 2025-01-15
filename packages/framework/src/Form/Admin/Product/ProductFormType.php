@@ -609,24 +609,29 @@ final class ProductFormType extends AbstractType
 
         if ($product !== null) {
             $priceListOverviewOptionsByDomainId = [];
+            $isAnySpecialPrice = false;
 
             foreach ($this->domain->getAdminEnabledDomainIds() as $domainId) {
+                $specialPrices = $this->specialPriceFacade->getCurrentAndFutureSpecialPrices($product, $domainId);
                 $priceListOverviewOptionsByDomainId[$domainId] = [
-                    'specialPrices' => $this->specialPriceFacade->getCurrentAndFutureSpecialPrices($product, $domainId),
+                    'specialPrices' => $specialPrices,
                 ];
+                $isAnySpecialPrice = $isAnySpecialPrice || count($specialPrices) > 0;
             }
 
-            $builderPricesGroup->add(
-                'priceListOverview',
-                MultidomainType::class,
-                [
-                    'label' => t('Price list overview'),
-                    'entry_type' => PriceListOverviewType::class,
-                    'required' => false,
-                    'mapped' => false,
-                    'options_by_domain_id' => $priceListOverviewOptionsByDomainId,
-                ],
-            );
+            if ($isAnySpecialPrice) {
+                $builderPricesGroup->add(
+                    'priceListOverview',
+                    MultidomainType::class,
+                    [
+                        'label' => t('Price list overview'),
+                        'entry_type' => PriceListOverviewType::class,
+                        'required' => false,
+                        'mapped' => false,
+                        'options_by_domain_id' => $priceListOverviewOptionsByDomainId,
+                    ],
+                );
+            }
         }
 
         return $builderPricesGroup;
