@@ -4,11 +4,21 @@
     "repository": "https://github.com/shopsys/shopsys",
     "author": "Shopsys",
     "license": "proprietary",
+    "private": "true",
     "symfony": {
         "controllers": {
-            "collection": {
+            "hello": {
+                "main": "dist/hello/Controller.js",
+                "fetch": "eager",
+                "enabled": true
             }
+        },
+        "importmap": {
+            "@hotwired/stimulus": "^3.2.2"
         }
+    },
+    "peerDependencies": {
+        "@hotwired/stimulus": "^3.2.2"
     },
     "devDependencies": {
         "@babel/cli": "^7.23.9",
@@ -17,12 +27,13 @@
         "@babel/preset-env": "^7.24.0",
         "@babel/preset-typescript": "^7.23.3",
         "@hotwired/stimulus": "^3.2.2",
-        "@symfony/stimulus-bridge": "^3.2.3"
+        "@symfony/stimulus-bridge": "^3.2.3",
+        "typescript": "^5.7.3"
     },
     "scripts": {
-        "build": "babel src -d dist",
+        "build": "babel src --delete-dir-on-start --extensions .ts -d dist",
         "lint": "eslint src test",
-        "watch": "babel src -d dist --watch",
+        "watch": "babel src --delete-dir-on-start --extensions .ts -d dist --watch",
         "postinstall": "npm run build"
     }
 }

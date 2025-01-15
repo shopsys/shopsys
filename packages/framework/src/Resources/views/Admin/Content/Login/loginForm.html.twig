@@ -6,6 +6,7 @@
 
 {% block content %}
 
+    <div {{ stimulus_controller("@shopsys/administration/hello") }}></div>
     {{ form_start(form, {attr: {class: 'box-login'}}) }}
         {{ form_errors(form) }}
 

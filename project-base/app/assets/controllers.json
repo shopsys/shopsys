@@ -1,0 +1,11 @@
+{
+    "controllers": {
+        "@shopsys/administration": {
+            "hello": {
+                "enabled": true,
+                "fetch": "eager"
+            }
+        }
+    },
+    "entrypoints": []
+}

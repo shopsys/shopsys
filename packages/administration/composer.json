@@ -1,8 +1,8 @@
 {
     "name": "shopsys/administration",
-    "type": "library",
+    "type": "symfony-bundle",
     "description": "Administration interface for the Shopsys Platform",
-    "keywords": ["Shopsys Platform", "SSFW", "admin", "administration", "admin panel"],
+    "keywords": ["Shopsys Platform", "SSFW", "admin", "administration", "admin panel", "symfony-ux"],
     "license": "proprietary",
     "authors": [
         {
@@ -32,6 +32,7 @@
         "symfony/http-foundation": "^6.4",
         "symfony/http-kernel": "^6.4",
         "symfony/routing": "^6.4",
+        "symfony/stimulus-bundle": "^2.22",
         "symfony/translation": "^6.4",
         "twig/twig": "^3.14.0"
     },

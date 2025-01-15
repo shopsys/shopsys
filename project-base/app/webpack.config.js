@@ -15,8 +15,10 @@ Encore
     .setManifestKeyPrefix('web')
     .cleanupOutputBeforeBuild()
     .autoProvidejQuery()
+    .addEntry('app', './assets/app.js')
     .addEntry('admin', './assets/js/admin/admin.js')
     .splitEntryChunks()
+    .enableStimulusBridge('./assets/controllers.json')
     .enableSingleRuntimeChunk()
     .enableSourceMaps(!Encore.isProduction())
     .enableVersioning(Encore.isProduction())
@@ -73,10 +75,10 @@ Encore
 Encore.addAliases({
     'jquery-ui': 'jquery-ui/ui/widgets',
     'framework': '@shopsys/framework/js',
-    'jquery': path.resolve(path.join(__dirname, 'node_modules', 'jquery')),
-    'jquery-ui-styles': path.resolve(path.join(__dirname, 'node_modules', 'jquery-ui')),
-    'bazinga-translator': path.resolve(path.join(__dirname, 'node_modules', 'bazinga-translator')),
-    'jquery-ui-nested-sortable': path.resolve(path.join(__dirname, 'node_modules', 'nestedSortable'))
+    'jquery': path.resolve(path.join(sources.getNodeModulesDir(), 'jquery')),
+    'jquery-ui-styles': path.resolve(path.join(sources.getNodeModulesDir(), 'jquery-ui')),
+    'bazinga-translator': path.resolve(path.join(sources.getNodeModulesDir(), 'bazinga-translator')),
+    'jquery-ui-nested-sortable': path.resolve(path.join(sources.getNodeModulesDir(), 'nestedSortable'))
 });
 
 module.exports = Encore.getWebpackConfig();

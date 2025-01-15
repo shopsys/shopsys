@@ -2,14 +2,22 @@ const fs = require('fs');
 
 const getFrameworkNodeModulesDir = () => {
     if (isMonorepo()) {
-        return '../packages/framework/assets';
+        return '../../packages/framework/assets';
     }
 
     return './node_modules/@shopsys/framework';
 };
 
 const isMonorepo = () => {
-    return fs.existsSync('../packages');
+    return fs.existsSync('../../packages');
 };
 
-module.exports = { getFrameworkNodeModulesDir };
+const getNodeModulesDir = () => {
+    if (isMonorepo()) {
+        return '../../node_modules';
+    }
+
+    return './node_modules';
+};
+
+module.exports = { getFrameworkNodeModulesDir, getNodeModulesDir };

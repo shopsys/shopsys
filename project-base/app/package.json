@@ -58,8 +58,9 @@
     },
     "dependencies": {
         "@claviska/jquery-minicolors": "^2.3.4",
-        "@shopsys/administration": "file:vendor/shopsys/administration/assets",
+        "@hotwired/stimulus": "^3.2.2",
         "@shopsys/framework": "file:vendor/shopsys/framework/assets",
+        "@symfony/stimulus-bridge": "^3.2.3",
         "@yaireo/tagify": "^4.25.1",
         "bazinga-translator": "^2.6.6",
         "buffer": "^6.0.3",
@@ -85,5 +86,10 @@
     },
     "jest": {
         "testEnvironment": "jsdom"
+    },
+    "symfony": {
+        "importmap": {
+            "@shopsys/administration": "file:vendor/shopsys/administration/assets"
+        }
     }
 }

@@ -4,6 +4,7 @@
     "repository": "https://github.com/shopsys/shopsys",
     "author": "Shopsys",
     "license": "proprietary",
+    "private": true,
     "scripts": {
         "tests": "npm run tests:unit",
         "tests:unit": "jest js"

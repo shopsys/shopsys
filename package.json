@@ -10,6 +10,18 @@
         "globby": "^14.0.2"
     },
     "scripts": {
-        "postinstall": "node ./utils/link-packages.js"
+        "postinstall": "node ./utils/link-packages.js",
+        "pb:watch": "npm run watch -w project-base",
+        "pb:build": "npm run build -w project-base",
+        "admin:watch": "npm run watch -w packages/administration",
+        "admin:build": "npm run build -w packages/administration",
+        "watch": "npm-run-all --parallel admin:watch pb:watch",
+        "build": "npm-run-all --parallel admin:build pb:build",
+        "dev": "npm run dev --w project-base"
+    },
+    "devDependencies": {
+        "@hotwired/stimulus": "^3.0.0",
+        "@symfony/stimulus-bridge": "^3.2.0",
+        "npm-run-all": "^4.1.5"
     }
 }
