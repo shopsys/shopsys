@@ -1,22 +1,28 @@
-'use client';
-
+import { createQuery } from 'app/_urql/urql-dto';
 import { ProductsSlider, VISIBLE_SLIDER_ITEMS_LAST_VISITED } from 'components/Blocks/Product/ProductsSlider';
-import { SkeletonModuleLastVisitedProducts } from 'components/Blocks/Skeleton/SkeletonModuleLastVisitedProducts';
-import { useProductsByCatnums } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
+import { ProductsByCatnumsDocument } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.ssr';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
+import { getTranslation } from 'app/_utils/translation/getTranslation';
+
+async function getLastVisitedProductsQuery(productsCatnums: string[]) {
+    return createQuery(ProductsByCatnumsDocument, {
+        catnums: productsCatnums,
+    });
+}
 
 type LastVisitedProductsProps = {
     productsCatnums: string[];
 };
 
-export const LastVisitedProductsContent: FC<LastVisitedProductsProps> = ({ productsCatnums }) => {
-    const [{ data: productsData, fetching: areProductsFetching }] = useProductsByCatnums({
-        variables: { catnums: productsCatnums },
-    });
+export async function LastVisitedProductsContent({ productsCatnums }: LastVisitedProductsProps) {
+    const [t, lastVisitedProductsResult] = await Promise.all([
+        getTranslation(),
+        getLastVisitedProductsQuery(productsCatnums),
+    ]);
 
-    const lastVisitedProducts = productsData?.productsByCatnums;
+    const lastVisitedProducts = lastVisitedProductsResult.data?.productsByCatnums;
 
-    if (!lastVisitedProducts && !areProductsFetching) {
+    if (!lastVisitedProducts) {
         return null;
     }
 
@@ -28,17 +34,18 @@ export const LastVisitedProductsContent: FC<LastVisitedProductsProps> = ({ produ
 
     return (
         <>
-            {lastVisitedProducts && !areProductsFetching ? (
-                <ProductsSlider
-                    gtmProductListName={GtmProductListNameType.last_visited_products}
-                    productItemProps={productItemStyleProps}
-                    products={lastVisitedProducts}
-                    variant="lastVisited"
-                    visibleSliderItems={VISIBLE_SLIDER_ITEMS_LAST_VISITED}
-                />
-            ) : (
-                <SkeletonModuleLastVisitedProducts />
-            )}
+            <h5 className="mb-3">{t('Last visited products')}</h5>
+
+            <ProductsSlider
+                gtmProductListName={GtmProductListNameType.last_visited_products}
+                products={lastVisitedProducts}
+                variant="lastVisited"
+                visibleSliderItems={VISIBLE_SLIDER_ITEMS_LAST_VISITED}
+                productItemProps={{
+                    visibleItemsConfig: productItemStyleProps.visibleItemsConfig,
+                    size: productItemStyleProps.size,
+                }}
+            />
         </>
     );
-};
+}
