@@ -74,11 +74,24 @@ export const fetcher =
                 body,
             });
 
+            const isJsonContentType = result.headers.get('content-type')?.includes('application/json');
+
+            if (!isJsonContentType) {
+                return Promise.resolve(
+                    new Response(JSON.stringify({}), {
+                        statusText: result.statusText,
+                        status: result.status,
+                        headers: { 'Content-Type': 'application/json' },
+                    }),
+                );
+            }
+
             const res = await result.json();
 
             if (res.data !== undefined && res.error === undefined) {
                 await redisClient.set(hash, JSON.stringify(res.data), { EX: ttl });
             }
+
             return Promise.resolve(
                 new Response(JSON.stringify(res), {
                     statusText: 'OK',
