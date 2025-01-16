@@ -46,6 +46,7 @@ describe('Create Order With Delivery Address Tests', () => {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
 
@@ -56,6 +57,7 @@ describe('Create Order With Delivery Address Tests', () => {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
 
@@ -77,6 +79,7 @@ describe('Create Order With Delivery Address Tests', () => {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
 
@@ -92,6 +95,7 @@ describe('Create Order With Delivery Address Tests', () => {
                 blackout: [
                     { tid: TIDs.order_summary_transport_and_payment_image },
                     { tid: TIDs.order_summary_cart_item_image },
+                    { tid: TIDs.footer_copyright },
                 ],
             },
         );
@@ -131,6 +135,7 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
 
@@ -140,6 +145,7 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
 
@@ -171,6 +177,7 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
 
@@ -186,6 +193,7 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
                 blackout: [
                     { tid: TIDs.order_summary_transport_and_payment_image },
                     { tid: TIDs.order_summary_cart_item_image },
+                    { tid: TIDs.footer_copyright },
                 ],
             },
         );
@@ -212,6 +220,7 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
 
@@ -222,6 +231,7 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
 
@@ -247,6 +257,7 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
 
@@ -257,6 +268,7 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
 
@@ -269,6 +281,7 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
                 blackout: [
                     { tid: TIDs.order_summary_transport_and_payment_image },
                     { tid: TIDs.order_summary_cart_item_image },
+                    { tid: TIDs.footer_copyright },
                 ],
             },
         );
@@ -303,6 +316,7 @@ describe('Delivery Address In Order Tests (Pickup Point)', () => {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
 
@@ -312,6 +326,7 @@ describe('Delivery Address In Order Tests (Pickup Point)', () => {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
 
@@ -335,6 +350,7 @@ describe('Delivery Address In Order Tests (Pickup Point)', () => {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
 
@@ -347,6 +363,7 @@ describe('Delivery Address In Order Tests (Pickup Point)', () => {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
 
@@ -384,6 +401,7 @@ describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', { ret
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
 
@@ -393,6 +411,7 @@ describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', { ret
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
 
@@ -424,6 +443,7 @@ describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', { ret
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
 
@@ -436,6 +456,7 @@ describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', { ret
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
 

@@ -55,6 +55,7 @@ describe('Create Order Tests', () => {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
 
@@ -84,6 +85,7 @@ describe('Create Order Tests', () => {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
 
@@ -113,6 +115,7 @@ describe('Create Order Tests', () => {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
 
@@ -146,6 +149,7 @@ describe('Create Order Tests', () => {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
 
@@ -176,6 +180,7 @@ describe('Create Order Tests', () => {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
 
@@ -207,6 +212,7 @@ describe('Create Order Tests', () => {
                 blackout: [
                     { tid: TIDs.order_summary_transport_and_payment_image },
                     { tid: TIDs.order_summary_cart_item_image },
+                    { tid: TIDs.footer_copyright },
                 ],
             });
 
@@ -252,6 +258,7 @@ describe('Create Order Tests', () => {
                 blackout: [
                     { tid: TIDs.order_summary_transport_and_payment_image },
                     { tid: TIDs.order_summary_cart_item_image },
+                    { tid: TIDs.footer_copyright },
                 ],
             });
 

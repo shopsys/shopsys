@@ -151,7 +151,7 @@
     "First name must be at most {{ max }} characters": "First name must be at most {{ max }} characters",
     "Flags": "Flags",
     "Follow Us": "Follow Us",
-    "footerCopyright": "Copyright © <currentYear />, Shopsys s.r.o. All rights reserved.",
+    "footerCopyright": "Copyright © {{ currentYear }}, Shopsys s.r.o. All rights reserved.",
     "Forgotten password": "Forgotten password",
     "Found articles": "Found articles",
     "Found brands": "Found brands",

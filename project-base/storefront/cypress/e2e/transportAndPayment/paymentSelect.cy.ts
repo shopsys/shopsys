@@ -40,6 +40,7 @@ describe('Payment Select Tests', () => {
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.order_summary_transport_and_payment_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
 
@@ -61,6 +62,7 @@ describe('Payment Select Tests', () => {
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.order_summary_transport_and_payment_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
 
@@ -77,6 +79,7 @@ describe('Payment Select Tests', () => {
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.order_summary_transport_and_payment_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
 
@@ -87,6 +90,7 @@ describe('Payment Select Tests', () => {
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.order_summary_transport_and_payment_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
     });
@@ -100,6 +104,7 @@ describe('Payment Select Tests', () => {
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.order_summary_transport_and_payment_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
 
@@ -110,6 +115,7 @@ describe('Payment Select Tests', () => {
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.order_summary_transport_and_payment_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
     });
@@ -123,6 +129,7 @@ describe('Payment Select Tests', () => {
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.order_summary_transport_and_payment_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
 
@@ -132,6 +139,7 @@ describe('Payment Select Tests', () => {
             blackout: [
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.transport_and_payment_list_item_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
 
@@ -145,6 +153,7 @@ describe('Payment Select Tests', () => {
                     { tid: TIDs.transport_and_payment_list_item_image },
                     { tid: TIDs.order_summary_cart_item_image },
                     { tid: TIDs.order_summary_transport_and_payment_image },
+                    { tid: TIDs.footer_copyright },
                 ],
             },
         );

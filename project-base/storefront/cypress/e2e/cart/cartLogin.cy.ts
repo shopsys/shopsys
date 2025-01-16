@@ -183,6 +183,7 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
             blackout: [
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.order_summary_transport_and_payment_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
 
@@ -193,6 +194,7 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
             blackout: [
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.order_summary_transport_and_payment_image },
+                { tid: TIDs.footer_copyright },
             ],
         });
     });
