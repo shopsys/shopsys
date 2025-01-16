@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\ConvertimBundle\Model\Payment\PaymentTypeEnum;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade as FrameworkOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\PlaceOrderFacade;
@@ -31,6 +32,7 @@ class OrderFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
+     * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      */
     public function __construct(
         protected readonly ConvertimOrderDataToOrderDataMapper $convertimOrderDataToOrderMapper,
@@ -43,6 +45,7 @@ class OrderFacade
         protected readonly EntityManagerInterface $em,
         protected readonly FrameworkOrderFacade $orderFacade,
         protected readonly PaymentFacade $paymentFacade,
+        protected readonly NewsletterFacade $newsletterFacade,
     ) {
     }
 
@@ -59,6 +62,8 @@ class OrderFacade
             $deliveryAddressUuid = $convertimOrderData->getCustomerData()->getConvertimCustomerDeliveryAddressData()->getUuid();
 
             $order = $this->placeOrderFacade->placeOrder($orderData, $deliveryAddressUuid);
+        } elseif ($convertimOrderData->isRegisterToNewsletter()) {
+            $this->newsletterFacade->addSubscribedEmailIfNotExists($order->getEmail(), $order->getDomainId());
         }
 
         if ($this->paymentFacade->isGatewayPayment($order->getPayment()) || in_array($order->getPayment()->getType(), $this->paymentTypeEnum->getAllCases(), true)) {
