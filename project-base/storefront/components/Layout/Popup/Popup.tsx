@@ -2,7 +2,7 @@
 
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { TIDs } from 'cypress/tids';
-import { AnimatePresence, m } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import { useLayoutEffect, useRef, useState, useEffect } from 'react';
 import { RemoveScroll } from 'react-remove-scroll';
@@ -83,7 +83,7 @@ export const Popup: React.FC<PopupProps> = ({
                 <Overlay isActive onClick={() => updatePortalContent(null)} />
 
                 <AnimatePresence>
-                    <m.div
+                    <motion.div
                         key="popup"
                         animate={{ opacity: 1, scale: 1 }}
                         aria-label={ariaLabel}
@@ -131,8 +131,9 @@ export const Popup: React.FC<PopupProps> = ({
                             )}
                         </div>
 
-                        <div className={twMergeCustom(contentClassName)}>{children}</div>
-                    </m.div>
+                        {/* TODO: maybe without p-4 */}
+                        <div className={twMergeCustom('p-4', contentClassName)}>{children}</div>
+                    </motion.div>
                 </AnimatePresence>
             </RemoveScroll>
         </div>
