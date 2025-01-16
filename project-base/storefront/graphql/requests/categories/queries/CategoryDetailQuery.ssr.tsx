@@ -88,7 +88,7 @@ export type TypeCategoryDetailQuery = { __typename?: 'Query', category: { __type
   }
 };
       export default result;
-    
+
 
 export const CategoryDetailQueryDocument = gql`
     query CategoryDetailQuery($urlSlug: String, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter) @friendlyUrl {

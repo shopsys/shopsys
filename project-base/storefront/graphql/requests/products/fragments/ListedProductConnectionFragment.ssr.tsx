@@ -80,7 +80,7 @@ export type TypeListedProductConnectionFragment = { __typename: 'ProductConnecti
   }
 };
       export default result;
-    
+
 export const ListedProductConnectionFragment = gql`
     fragment ListedProductConnectionFragment on ProductConnection {
   __typename

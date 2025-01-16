@@ -90,7 +90,7 @@ export type TypeFlagProductsQuery = { __typename?: 'Query', products: { __typena
   }
 };
       export default result;
-    
+
 
 export const FlagProductsQueryDocument = gql`
     query FlagProductsQuery($endCursor: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter, $urlSlug: String, $pageSize: Int) {

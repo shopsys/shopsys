@@ -87,7 +87,7 @@ export type TypeProductInProductListFragment = TypeProductInProductListFragment_
   }
 };
       export default result;
-    
+
 export const ProductInProductListFragment = gql`
     fragment ProductInProductListFragment on Product {
   ...ListedProductFragment

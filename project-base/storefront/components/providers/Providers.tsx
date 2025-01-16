@@ -1,5 +1,6 @@
 import { AppConfigProvider } from './AppConfigProvider';
-import AuthProvider from './AuthProvider';
+import { AuthInfo } from './AuthInfo';
+import { AuthProvider } from './AuthProvider';
 import BroadcastChannelProvider from './BroadcastChannelProvider';
 import { CookiesStoreProvider } from './CookiesStoreProvider';
 import { CookiesStoreSync } from './CookiesStoreSync';
@@ -7,10 +8,11 @@ import { DomainConfigProvider } from './DomainConfigProvider';
 import ToastifyProvider from './ToastifyProvider';
 import { TranslationProvider } from './TranslationProvider';
 import { STATIC_REWRITE_PATHS } from 'app/_config/staticRewritePaths';
-import { getIsUserLoggedInQuery } from 'app/_queries/getIsUserLoggedInQuery';
+import { getCurrentCustomerData } from 'app/_queries/getCurrentCustomerData';
 import { getSettingsQuery } from 'app/_queries/getSettingsQuery';
 import { getCookieStoreStateFromServer } from 'app/_utils/getCookieStoreStateFromServer';
 import { getDomainConfig } from 'app/_utils/getDomainConfig';
+import { Portal } from 'components/Basic/Portal/Portal';
 import { headers } from 'next/headers';
 import { getDictionary } from 'utils/getDictionary';
 
@@ -23,7 +25,7 @@ export default async function Providers({ children }: ProvidersProps) {
     const domainConfig = getDomainConfig(headers().get('host')!);
     const { defaultLocale: lang } = domainConfig;
     const dictionary = await getDictionary(lang);
-    const [isUserLoggedIn, settingsData] = await Promise.allSettled([getIsUserLoggedInQuery(), getSettingsQuery()]);
+    const [user, settingsData] = await Promise.allSettled([getCurrentCustomerData(), getSettingsQuery()]);
 
     if (settingsData.status === 'rejected' || !settingsData.value?.settings) {
         throw new Error('Failed to fetch settings');
@@ -38,18 +40,18 @@ export default async function Providers({ children }: ProvidersProps) {
                     staticRewritePaths={STATIC_REWRITE_PATHS[domainConfig.url]}
                 >
                     <TranslationProvider dictionary={dictionary} lang={lang}>
-                        <AuthProvider
-                            isUserLoggedIn={isUserLoggedIn.status === 'fulfilled' ? isUserLoggedIn.value : null}
-                        >
+                        <AuthProvider user={user.status === 'fulfilled' ? user.value : undefined}>
                             <html lang={lang}>
                                 <head>
                                     <script async src="https://unpkg.com/react-scan/dist/auto.global.js" />
                                 </head>
                                 {/* suppressHydrationWarning for ignoring grammarly extension */}
                                 <body suppressHydrationWarning>
+                                    <AuthInfo isUserLoggedIn={!!user} />
                                     <CookiesStoreSync />
                                     <BroadcastChannelProvider />
                                     {children}
+                                    <Portal />
                                     <ToastifyProvider />
                                 </body>
                             </html>

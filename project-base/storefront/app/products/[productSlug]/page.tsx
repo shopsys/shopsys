@@ -9,8 +9,6 @@ async function getProductQuery() {
     const headersList = headers();
     const slug = headersList.get('x-friendly-slug');
 
-    console.log('🐳 slug', slug);
-
     return createQuery(ProductDetailQueryDocument, {
         urlSlug: slug,
     });
@@ -18,8 +16,6 @@ async function getProductQuery() {
 
 export default async function ProductPage() {
     const { data, error } = await getProductQuery();
-
-    console.log('🧪 data', data);
 
     if (error || !data?.product) {
         notFound();

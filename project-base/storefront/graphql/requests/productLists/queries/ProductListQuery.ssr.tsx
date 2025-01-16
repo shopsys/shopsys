@@ -86,7 +86,7 @@ export type TypeProductListQuery = { __typename?: 'Query', productList: { __type
   }
 };
       export default result;
-    
+
 
 export const ProductListQueryDocument = gql`
     query ProductListQuery($input: ProductListInput!) {
