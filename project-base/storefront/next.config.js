@@ -17,6 +17,7 @@ const nextConfig = {
     reactStrictMode: true,
     swcMinify: true,
     assetPrefix: process.env.CDN_DOMAIN ?? undefined,
+    output: process.env.APP_ENV === 'production' ? 'standalone' : undefined,
     images: {
         loader: 'custom',
         remotePatterns: [
