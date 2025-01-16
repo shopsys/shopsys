@@ -1,4 +1,4 @@
-FROM node:20-alpine3.17 as development
+FROM node:23-alpine3.21 AS development
 
 RUN corepack enable
 RUN corepack prepare --activate pnpm@9.0.5

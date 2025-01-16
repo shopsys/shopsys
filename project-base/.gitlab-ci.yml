@@ -75,7 +75,7 @@ test:standards-with-graphql-schema-check:
 test:storefront-standards-with-codegen:
     stage: test
     <<: *only-default
-    image: node:20-alpine3.17
+    image: node:23-alpine3.21
     tags:
         - tests
     needs:

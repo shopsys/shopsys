@@ -70,7 +70,7 @@ License: Apache License 2.0
 https://github.com/elastic/kibana/blob/v7.6.0/LICENSE.txt
 
 ### Node
-Image: `node:20-alpine3.17`  
+Image: `node:23-alpine3.21`  
 License: MIT  
 https://github.com/nodejs/docker-node/blob/main/LICENSE
 
