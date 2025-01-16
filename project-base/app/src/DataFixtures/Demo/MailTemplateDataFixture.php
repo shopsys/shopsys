@@ -115,7 +115,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
         $mailTemplateData->sendMail = true;
 
         $mailTemplateData->subject = t(
-            'Thank you for your order no. {number} placed at {date}',
+            'Your order no. {number} has been placed',
             [],
             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
             $locale,
@@ -154,12 +154,25 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
         $mailTemplateData->sendMail = false;
 
         $mailTemplateData->subject = t('
-            Order status has changed
+            Your order no. {number} is being processed
             ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $mailTemplateData->body = t('
-            Dear customer,<br/><br/>
-            your order is being processed.<br/><br/>
-            Best Regards
+            <h1>Your order is being processed</h1>
+            Dear customer,<br/>
+            <br/>
+            we have started processing your order.<br/>
+            <br/>
+            Order number: <a href="{order_detail_url}">{number}</a><br/>
+            Date and time of creation: {date}<br/>
+            {note}<br/>
+            {transport_info}<br/>
+            {transport_instructions}<br/>
+            {payment_info}<br/>
+            {payment_instructions}<br/>
+            {products}
+            <h3 style="text-align: right; margin: 0;">Total price including VAT: <span style="white-space: nowrap;">{total_price}</span></h3>
+            {rounding_info}<br/>
+            {addresses}
             ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $mailTemplateData->orderStatus = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_IN_PROGRESS, OrderStatus::class);
 
@@ -177,12 +190,25 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
         $mailTemplateData->sendMail = false;
 
         $mailTemplateData->subject = t('
-            Order status has changed
+            Your order no. {number} has been completed
             ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $mailTemplateData->body = t('
-            Dear customer,<br/><br/>
-            processing your order has been finished.<br/><br/>
-            Best regards
+            <h1>Your order has been completed</h1>
+            Dear customer,<br/>
+            <br/>
+            your order has been successfully completed.<br/>
+            <br/>
+            Order number: <a href="{order_detail_url}">{number}</a><br/>
+            Date and time of creation: {date}<br/>
+            {note}<br/>
+            {transport_info}<br/>
+            {transport_instructions}<br/>
+            {payment_info}<br/>
+            {payment_instructions}<br/>
+            {products}
+            <h3 style="text-align: right; margin: 0;">Total price including VAT: <span style="white-space: nowrap;">{total_price}</span></h3>
+            {rounding_info}<br/>
+            {addresses}
             ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $mailTemplateData->orderStatus = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_DONE, OrderStatus::class);
 
@@ -200,12 +226,25 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
         $mailTemplateData->sendMail = false;
 
         $mailTemplateData->subject = t('
-            Order status has changed
+            Your order no. {number} has been cancelled
             ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $mailTemplateData->body = t('
-            Dear customer,<br/><br/>
-            your order has been cancelled.<br/><br/>
-            Best regards
+            <h1>Your order has been cancelled</h1>
+            Dear customer,<br/>
+            <br/>
+            your order has been cancelled.<br/>
+            <br/>
+            Order number: <a href="{order_detail_url}">{number}</a><br/>
+            Date and time of creation: {date}<br/>
+            {note}<br/>
+            {transport_info}<br/>
+            {transport_instructions}<br/>
+            {payment_info}<br/>
+            {payment_instructions}<br/>
+            {products}
+            <h3 style="text-align: right; margin: 0;">Total price including VAT: <span style="white-space: nowrap;">{total_price}</span></h3>
+            {rounding_info}<br/>
+            {addresses}
             ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $mailTemplateData->orderStatus = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_CANCELED, OrderStatus::class);
 

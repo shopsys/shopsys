@@ -286,8 +286,17 @@ msgstr "<div class=\"gjs-text-ckeditor\"> description - Lorem ipsum dolor sit am
 msgid "<div class=\"gjs-text-ckeditor\">Article text for search testing, the search phrase is &#34;Dina&#34;.</div>"
 msgstr "<div class=\"gjs-text-ckeditor\">Text článku pro testování vyhledávání, vyhledávací fráze je &#34;Dina&#34;.</div>"
 
+msgid "<h1>Your order has been cancelled</h1> Dear customer,<br/> <br/> your order has been cancelled.<br/> <br/> Order number: <a href=\"{order_detail_url}\">{number}</a><br/> Date and time of creation: {date}<br/> {note}<br/> {transport_info}<br/> {transport_instructions}<br/> {payment_info}<br/> {payment_instructions}<br/> {products} <h3 style=\"text-align: right; margin: 0;\">Total price including VAT: <span style=\"white-space: nowrap;\">{total_price}</span></h3> {rounding_info}<br/> {addresses}"
+msgstr "<h1>Vaše objednávka byla zrušena</h1> Vážený zákazníku,<br/> <br/> vaše objednávka byla zrušena.<br/> <br/> Číslo objednávky: <a href=\"{order_detail_url}\">{number}</a><br/> Datum a čas vytvoření: {date}<br/> {note}<br/> {transport_info}<br/> {transport_instructions}<br/> {payment_info}<br/> {payment_instructions}<br/> {products} <h3 style=\"text-align: right; margin: 0;\">Celková cena včetně DPH: <span style=\"white-space : nowrap;\">{total_price}</span></h3> {rounding_info}<br/> {addresses}"
+
+msgid "<h1>Your order has been completed</h1> Dear customer,<br/> <br/> your order has been successfully completed.<br/> <br/> Order number: <a href=\"{order_detail_url}\">{number}</a><br/> Date and time of creation: {date}<br/> {note}<br/> {transport_info}<br/> {transport_instructions}<br/> {payment_info}<br/> {payment_instructions}<br/> {products} <h3 style=\"text-align: right; margin: 0;\">Total price including VAT: <span style=\"white-space: nowrap;\">{total_price}</span></h3> {rounding_info}<br/> {addresses}"
+msgstr "<h1>Vaše objednávka byla dokončena</h1> Vážený zákazníku,<br/> <br/> vaše objednávka byla dokončena.<br/> <br/> Číslo objednávky: <a href=\"{order_detail_url}\">{number}</a><br/> Datum a čas vytvoření: {date}<br/> {note}<br/> {transport_info}<br/> {transport_instructions}<br/> {payment_info}<br/> {payment_instructions}<br/> {products} <h3 style=\"text-align: right; margin: 0;\">Celková cena včetně DPH: <span style=\"white-space : nowrap;\">{total_price}</span></h3> {rounding_info}<br/> {addresses}"
+
 msgid "<h1>Your order has been placed successfully</h1> Dear customer,<br/> <br/> you will be contacted when the order state changes.<br/> <br/> Order number: <a href=\"{order_detail_url}\">{number}</a><br/> Date and time of creation: {date}<br/> {note}<br/> {transport_info}<br/> {transport_instructions}<br/> {payment_info}<br/> {payment_instructions}<br/> {products} <h3 style=\"text-align: right; margin: 0;\">Total price including VAT: <span style=\"white-space: nowrap;\">{total_price}</span></h3> {rounding_info}<br/> {addresses}"
-msgstr "<h1>Vaše objednávka byla úspěšně zadána</h1> Vážený zákazníku,<br/> <br/> při změně stavu objednávky vás budeme kontaktovat.<br/> <br/> Číslo objednávky: <a href=\"{order_detail_url}\">{number}</a><br/> Datum a čas vytvoření: {date}<br/> {note}<br/> {transport_info}<br/> {transport_instructions}<br /> {payment_info}<br/> {payment_instructions}<br/> {products} <h3 style=\"text-align: right; margin: 0;\">Celková cena včetně DPH: <span style=\"white-space : nowrap;\">{total_price}</span></h3> {rounding_info}<br/> {addresses}"
+msgstr "<h1>Vaše objednávka byla úspěšně přijata</h1> Vážený zákazníku,<br/> <br/> při změně stavu objednávky vás budeme kontaktovat.<br/> <br/> Číslo objednávky: <a href=\"{order_detail_url}\">{number}</a><br/> Datum a čas vytvoření: {date}<br/> {note}<br/> {transport_info}<br/> {transport_instructions}<br /> {payment_info}<br/> {payment_instructions}<br/> {products} <h3 style=\"text-align: right; margin: 0;\">Celková cena včetně DPH: <span style=\"white-space : nowrap;\">{total_price}</span></h3> {rounding_info}<br/> {addresses}"
+
+msgid "<h1>Your order is being processed</h1> Dear customer,<br/> <br/> we have started processing your order.<br/> <br/> Order number: <a href=\"{order_detail_url}\">{number}</a><br/> Date and time of creation: {date}<br/> {note}<br/> {transport_info}<br/> {transport_instructions}<br/> {payment_info}<br/> {payment_instructions}<br/> {products} <h3 style=\"text-align: right; margin: 0;\">Total price including VAT: <span style=\"white-space: nowrap;\">{total_price}</span></h3> {rounding_info}<br/> {addresses}"
+msgstr "<h1>Vaše objednávka se zpracovává</h1> Vážený zákazníku,<br/> <br/> začali jsme zpracovávat vaši objednávku.<br/> <br/> Číslo objednávky: <a href=\"{order_detail_url}\">{number}</a><br/> Datum a čas vytvoření: {date}<br/> {note}<br/> {transport_info}<br/> {transport_instructions}<br/> {payment_info}<br/> {payment_instructions}<br/> {products} <h3 style=\"text-align: right; margin: 0;\">Celková cena včetně DPH: <span style=\"white-space : nowrap;\">{total_price}</span></h3> {rounding_info}<br/> {addresses}"
 
 msgid "<h2> Cookbook </h2> <br /> <br /> <p> What can be cooked in a steam oven? <br /> Using a steamer Concept is surprisingly versatile. It can be used to prepare appetizers, soups, meat, fish, vegetables, vegetarian dishes, dumplings, rice, fruit and desserts. <br /> 75 pages of cookbooks Concept - cook healthy steamed - contains recipes with practical procedures. Each recipe includes: </p> <br /> <br /> <p> The list of ingredients </p> <br /> <p> Method </p> <br /> <p> How many people </p > <br /> <p> Preparation time </p> <br /> <p> The degree of difficulty </p> <br /> <p> + time + temperature </p> <br /> <br /> From under the lids give you some tips - Asparagus with tuna sauce, salmon in vermouth sauce, soup minestrone, chicken mint surprise Cabbage leaves stuffed with minced meat, grilled chop with vegetables, potatoes baked with blue cheese, pear with chocolate sauce, roasted mandelimi and ice cream, etc."
 msgstr "<h2>Kuchařka</h2><br /><p>Co vše lze vařit v parní troubě?<br />Použití parní trouby Concept  je překvapivě všestranné. Lze v ní připravit předkrmy, polévky, maso, ryby, zeleninu, vegetariánská jídla, knedlíky, rýži, ovoce i dezerty.<br />75 stran kuchařky Concept – Vaříme zdravě, vaříme v páře - obsahuje recepty s praktickými postupy. Každý recept obsahuje:</p><br /><br /><p>Seznam ingrediencí</p><br />Postup<br /><p>Pro kolik osob</p><br /><p>Doba přípravy</p><br /><p>Stupeň obtížnosti</p><br /><p> Funkce + doba + teplota</p><br /><ul><li>Z pod pokličky prozradíme pár tipů – Chřest s tuňákovou omáčkou, Losos ve vermutové omáčce, Polévka minestrone, Kuřecí mátové překvapení, Zelné listy plněné mletým masem, Grilovaná kotleta se zeleninou, Brambory zapékané s nivou, Hruška s čokoládovou omáčkou, praženými mandelimi a zmrzlinou atd.</li></ul><br />"
@@ -365,10 +374,10 @@ msgid "<p> Order number {number} has been sent, thank you for your purchase. We 
 msgstr "<p> Objednávka číslo {number} byla úspěšně odeslána, děkujeme za Váš nákup. O dalším stavu objednávky Vás budeme informovat. <br /><br /> Stav Vaší objednávky můžete sledovat <a href=\"{order_detail_url}\">zde.</a> <br /> {transport_instructions} <br /> {payment_instructions} </p>"
 
 msgid "<p> Payment for order number {number} has been successful. <br /><br /> <a href=\"{order_detail_url}\">Track</a> the status of your order. <br /> {transport_instructions} </p>"
-msgstr ""
+msgstr "<p> Platba za objednávku číslo {number} byla úspěšná. <br /><br /> <a href=\"{order_detail_url}\">Sledujte</a> stav své objednávky. <br /> {transport_instructions} </p>"
 
 msgid "<p> Payment for order number {number} has failed. <br /><br /> Please contact us to resolve the issue. </p>"
-msgstr ""
+msgstr "<p> Platba za objednávku číslo {number} se nezdařila. <br /><br /> Kontaktujte nás, abychom problém vyřešili. </p>"
 
 msgid "<p> The minimum space requirements excels sub-mounting range hood OPP-2060th Suitable for very small kitchens. Metal buttons provide ease of use and precise adjustment of the corresponding stage performance. </p> <br /> <br /> <h2> Reasons to choose just the sub-mounting range hood Concept OPP-2060: </h2> <br /> <br /> <ol> <li> Performance is the most important parameter hoods and should be at least equal to ten times the volume of the room. The sub-mounting range hood brand Concept OPP-2060 will surprise performance <strong> 186 m3 per hour </strong>. </li><li> Very practical is the ability to select <strong> 4 Ways exhaust </strong>. </li></ol> Model OPP-2060 is equipped with a practical <strong> metal grease filter </strong>, its maintenance is very easy and unlimited lifespan. If you can not pay out of steam, you can choose instead of exhaust classic <strong> recirculation system </strong> using a carbon filter, which can be bought."
 msgstr "<p>Minimální prostorovou náročností vyniká podstavný odsavač par OPP-2060. Vhodný  i pro velmi malé kuchyně. Kovová tlačítka zajišťují jednoduchost ovládání a přesné nastavení odpovídajícího stupně výkonu.</p><br /><br /><h2>Důvody, proč se rozhodnout právě pro podstavný odsavač par Concept OPP-2060:</h2><br /><br /><ol><li>Výkon je nejdůležitějším parametrem odsavačů  a měl by odpovídat minimálně desetinásobku objemu místnosti. Podstavný odsavač par značky Concept  OPP-2060 Vás překvapí výkonem <strong>186 m3 za hodinu</strong>.</li><li>Velice praktická je možnost navolit <strong>4 způsoby odtahu</strong>.</li><li>Model OPP-2060 je vybaven praktickým <strong>kovovým filtrem proti mastnotám</strong>, jeho údržba je velice snadná a životnost neomezená. Pokud nemáte možnost odvést páry ven, můžete zvolit namísto klasického odtahu <strong>systém recirkulace</strong>s užitím  uhlíkového filtru, který lze dokoupit. Jakmile bude filtr znečištěný, odsavač Vás sám upozorní.</li></ol><br /><h2>Technické parametry:</h2><br /><ul><li>Výška: 150 mm</li><li>Šířka: 600 mm</li><li>Hloubka: 490 mm</li><li>Příslušenství: zpětná klapka</li><li>Nerezové provedení</li><li>Možnost horního, zadního, bočního levého a pravého odtahu nebo recirkulace</li><li>Kovová tlačítka</li><li>3 stupně výkonu</li><li>Max. výkon: 186 m3/hod.</li><li>Max.hlučnost na nejvyšším stupni 66 dB (A)</li><li>Žárovka 40 W</li><li>1x kovový filtr proti mastnotám</li><li>Průměr odtahu: 100 mm</li></ul><br /><h2>Detailní popis:</h2><br /><ul><li>Volitelné příslušenství: 1x uhlíkový filtr 61990022</li><li>1 motor/ventilátor</li><li>Minimální vzdálenost od elektrické varné desky: 650 mm</li><li>Minimální vzdálenost od plynové varné desky: 750 mm</li><li>Netto hmotnost: 4,8 kg</li><li>Napětí: 230 V ~ 50Hz</li><li>Příkon: 150 W</li><li>Délka přívodního kabelu: 1,2 m</li></ul>"
@@ -727,17 +736,8 @@ msgstr "Vážený zákazníku,<br/> <br/> váš dvoufaktorový ověřovací kód
 msgid "Dear customer,<br/> based on your email {email}, we are sending you a link where you can download your personal details registered on our online store in readable format. Clicking on the link will take you to a page where you’ll be able to download these informations, which we have in evidence in our online store {domain}.<br/> <br/> To download your personal information please click <a href=\"{url}\">here</a>.<br/> The link is valid for next 24 hours.<br/> <br/> Best regards<br /> Team of {domain}"
 msgstr "Vážený zákazníku,<br/> na základě Vašeho emailu {email} Vám zasíláme odkaz, kde si můžete stáhnout Vaše osobní údaje registrované v našem internetovém obchodě v čitelném formátu. Kliknutím na odkaz se dostanete na stránku, kde si budete moci stáhnout tyto informace, které máme v evidenci v našem internetovém obchodě {domain}.<br/> <br/> Chcete-li stáhnout své osobní údaje, klikněte na < a href=\"{url}\">zde</a>.<br/> Odkaz je platný po dobu následujících 24 hodin.<br/> <br/> S pozdravem<br /> Tým {domain}"
 
-msgid "Dear customer,<br/><br/> processing your order has been finished.<br/><br/> Best regards"
-msgstr "Vážený zákazníku,<br/><br/> zpracování Vaší objednávky bylo dokončeno.<br/><br/> S pozdravem"
-
 msgid "Dear customer,<br/><br/> you can set a new password following this <a href=\"{new_password_url}\">link</a>.<br/><br/> Best regards"
 msgstr "Vážený zákazníku,<br/><br/> pomocí tohoto <a href=\"{new_password_url}\">odkazu</a> si můžete nastavit nové heslo.<br/><br/> S pozdravem"
-
-msgid "Dear customer,<br/><br/> your order has been cancelled.<br/><br/> Best regards"
-msgstr "Vážený zákazníku,<br/><br/> vaše objednávka byla zrušena.<br/><br/> S pozdravem"
-
-msgid "Dear customer,<br/><br/> your order is being processed.<br/><br/> Best Regards"
-msgstr "Vážený zákazníku,<br/><br/> vaše objednávka se zpracovává.<br/><br/> S pozdravem"
 
 msgid "Deep baking sheet ETV-2560/2860/2960 / 3160bc"
 msgstr "Plech pečicí hluboký ETV-2560/2860/2960/3160bc"
@@ -1348,9 +1348,6 @@ msgstr "Orava LT-823 C82B"
 msgid "Orava LT-823 C82C"
 msgstr "Orava LT-823 C82C"
 
-msgid "Order status has changed"
-msgstr "Stav objednávky se změnil"
-
 msgid "Ordinary customer"
 msgstr "Obyčejný zákazník"
 
@@ -1807,9 +1804,6 @@ msgstr "Obchodní podmínky obchodních domů"
 msgid "Terms and conditions of eshop"
 msgstr "Obchodní podmínky e-shopu"
 
-msgid "Thank you for your order no. {number} placed at {date}"
-msgstr "Děkujeme za objednávku č. {number} ze dne {date}"
-
 msgid "The TV monitor PLS LED, 1000:1, 5ms, 1920x1080, tuner DVB-T/C, PiP +, 2x HDMI, MHL, USB, CI, Scart, 2x 5W speakers, remote control"
 msgstr "Televizní monitor PLS LED, 1000:1, 5ms, 1920x1080, tuner DVB-T/C, PiP+, 2x HDMI, MHL, USB, CI, Scart, 2x 5W repro, dálkový ovladač"
 
@@ -1992,6 +1986,18 @@ msgstr "Ano"
 
 msgid "You will be welcomed by friendly staff!"
 msgstr "Uvítá Vás milý personál!"
+
+msgid "Your order no. {number} has been cancelled"
+msgstr "Vaše objednávka č. {number} byla zrušena"
+
+msgid "Your order no. {number} has been completed"
+msgstr "Vaše objednávka č. {number} byla dokončena"
+
+msgid "Your order no. {number} has been placed"
+msgstr "Vaše objednávka č. {number} byla přijata"
+
+msgid "Your order no. {number} is being processed"
+msgstr "Vaše objednávka č. {number} se zpracovává"
 
 msgid "ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue"
 msgstr "ZN-8009 napařovací žehlička Ferratte nerez 2200 W modrá"

@@ -286,7 +286,16 @@ msgstr ""
 msgid "<div class=\"gjs-text-ckeditor\">Article text for search testing, the search phrase is &#34;Dina&#34;.</div>"
 msgstr ""
 
+msgid "<h1>Your order has been cancelled</h1> Dear customer,<br/> <br/> your order has been cancelled.<br/> <br/> Order number: <a href=\"{order_detail_url}\">{number}</a><br/> Date and time of creation: {date}<br/> {note}<br/> {transport_info}<br/> {transport_instructions}<br/> {payment_info}<br/> {payment_instructions}<br/> {products} <h3 style=\"text-align: right; margin: 0;\">Total price including VAT: <span style=\"white-space: nowrap;\">{total_price}</span></h3> {rounding_info}<br/> {addresses}"
+msgstr ""
+
+msgid "<h1>Your order has been completed</h1> Dear customer,<br/> <br/> your order has been successfully completed.<br/> <br/> Order number: <a href=\"{order_detail_url}\">{number}</a><br/> Date and time of creation: {date}<br/> {note}<br/> {transport_info}<br/> {transport_instructions}<br/> {payment_info}<br/> {payment_instructions}<br/> {products} <h3 style=\"text-align: right; margin: 0;\">Total price including VAT: <span style=\"white-space: nowrap;\">{total_price}</span></h3> {rounding_info}<br/> {addresses}"
+msgstr ""
+
 msgid "<h1>Your order has been placed successfully</h1> Dear customer,<br/> <br/> you will be contacted when the order state changes.<br/> <br/> Order number: <a href=\"{order_detail_url}\">{number}</a><br/> Date and time of creation: {date}<br/> {note}<br/> {transport_info}<br/> {transport_instructions}<br/> {payment_info}<br/> {payment_instructions}<br/> {products} <h3 style=\"text-align: right; margin: 0;\">Total price including VAT: <span style=\"white-space: nowrap;\">{total_price}</span></h3> {rounding_info}<br/> {addresses}"
+msgstr ""
+
+msgid "<h1>Your order is being processed</h1> Dear customer,<br/> <br/> we have started processing your order.<br/> <br/> Order number: <a href=\"{order_detail_url}\">{number}</a><br/> Date and time of creation: {date}<br/> {note}<br/> {transport_info}<br/> {transport_instructions}<br/> {payment_info}<br/> {payment_instructions}<br/> {products} <h3 style=\"text-align: right; margin: 0;\">Total price including VAT: <span style=\"white-space: nowrap;\">{total_price}</span></h3> {rounding_info}<br/> {addresses}"
 msgstr ""
 
 msgid "<h2> Cookbook </h2> <br /> <br /> <p> What can be cooked in a steam oven? <br /> Using a steamer Concept is surprisingly versatile. It can be used to prepare appetizers, soups, meat, fish, vegetables, vegetarian dishes, dumplings, rice, fruit and desserts. <br /> 75 pages of cookbooks Concept - cook healthy steamed - contains recipes with practical procedures. Each recipe includes: </p> <br /> <br /> <p> The list of ingredients </p> <br /> <p> Method </p> <br /> <p> How many people </p > <br /> <p> Preparation time </p> <br /> <p> The degree of difficulty </p> <br /> <p> + time + temperature </p> <br /> <br /> From under the lids give you some tips - Asparagus with tuna sauce, salmon in vermouth sauce, soup minestrone, chicken mint surprise Cabbage leaves stuffed with minced meat, grilled chop with vegetables, potatoes baked with blue cheese, pear with chocolate sauce, roasted mandelimi and ice cream, etc."
@@ -727,16 +736,7 @@ msgstr ""
 msgid "Dear customer,<br/> based on your email {email}, we are sending you a link where you can download your personal details registered on our online store in readable format. Clicking on the link will take you to a page where you’ll be able to download these informations, which we have in evidence in our online store {domain}.<br/> <br/> To download your personal information please click <a href=\"{url}\">here</a>.<br/> The link is valid for next 24 hours.<br/> <br/> Best regards<br /> Team of {domain}"
 msgstr ""
 
-msgid "Dear customer,<br/><br/> processing your order has been finished.<br/><br/> Best regards"
-msgstr ""
-
 msgid "Dear customer,<br/><br/> you can set a new password following this <a href=\"{new_password_url}\">link</a>.<br/><br/> Best regards"
-msgstr ""
-
-msgid "Dear customer,<br/><br/> your order has been cancelled.<br/><br/> Best regards"
-msgstr ""
-
-msgid "Dear customer,<br/><br/> your order is being processed.<br/><br/> Best Regards"
 msgstr ""
 
 msgid "Deep baking sheet ETV-2560/2860/2960 / 3160bc"
@@ -1348,9 +1348,6 @@ msgstr ""
 msgid "Orava LT-823 C82C"
 msgstr ""
 
-msgid "Order status has changed"
-msgstr ""
-
 msgid "Ordinary customer"
 msgstr ""
 
@@ -1807,9 +1804,6 @@ msgstr ""
 msgid "Terms and conditions of eshop"
 msgstr ""
 
-msgid "Thank you for your order no. {number} placed at {date}"
-msgstr ""
-
 msgid "The TV monitor PLS LED, 1000:1, 5ms, 1920x1080, tuner DVB-T/C, PiP +, 2x HDMI, MHL, USB, CI, Scart, 2x 5W speakers, remote control"
 msgstr ""
 
@@ -1991,6 +1985,18 @@ msgid "Yes"
 msgstr ""
 
 msgid "You will be welcomed by friendly staff!"
+msgstr ""
+
+msgid "Your order no. {number} has been cancelled"
+msgstr ""
+
+msgid "Your order no. {number} has been completed"
+msgstr ""
+
+msgid "Your order no. {number} has been placed"
+msgstr ""
+
+msgid "Your order no. {number} is being processed"
 msgstr ""
 
 msgid "ZN-8009 steam iron Ferrato stainless steel 2200 Watt Blue"
