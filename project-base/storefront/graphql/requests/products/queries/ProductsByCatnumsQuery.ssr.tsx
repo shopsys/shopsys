@@ -86,7 +86,7 @@ export type TypeProductsByCatnums = { __typename?: 'Query', productsByCatnums: A
   }
 };
       export default result;
-    
+
 
 export const ProductsByCatnumsDocument = gql`
     query ProductsByCatnums($catnums: [String!]!) {

@@ -94,7 +94,7 @@ export type TypeAutocompleteSearchQuery = { __typename?: 'Query', articlesSearch
   }
 };
       export default result;
-    
+
 
 export const AutocompleteSearchQueryDocument = gql`
     query AutocompleteSearchQuery($search: String!, $maxProductCount: Int, $maxCategoryCount: Int, $isAutocomplete: Boolean!, $userIdentifier: Uuid!) {
