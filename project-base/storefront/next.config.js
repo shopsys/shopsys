@@ -107,8 +107,8 @@ const nextConfig = {
 
 const SentryWebpackPluginOptions = {
     authToken: process.env.SENTRY_AUTH_TOKEN,
-    disableServerWebpackPlugin: process.env.APP_ENV === 'development',
-    disableClientWebpackPlugin: process.env.APP_ENV === 'development',
+    disableServerWebpackPlugin: process.env.APP_ENV === 'development' || process.env.SENTRY_DSN === '',
+    disableClientWebpackPlugin: process.env.APP_ENV === 'development' || process.env.SENTRY_DSN === '',
     hideSourceMaps: true,
     sourcemaps: {
         deleteSourcemapsAfterUpload: true,
