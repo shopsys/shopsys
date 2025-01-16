@@ -26,9 +26,9 @@ class OrderPriceCalculation
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @return \Shopsys\FrameworkBundle\Model\Order\OrderTotalPrice
+     * @return \Shopsys\FrameworkBundle\Model\Order\OrderTotalPriceInterface
      */
-    public function getOrderTotalPrice(Order $order): OrderTotalPrice
+    public function getOrderTotalPrice(Order $order): OrderTotalPriceInterface
     {
         $priceWithVat = Money::zero();
         $priceWithoutVat = Money::zero();

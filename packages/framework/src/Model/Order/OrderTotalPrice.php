@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
-final class OrderTotalPrice
+final class OrderTotalPrice implements OrderTotalPriceInterface
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
@@ -25,16 +26,18 @@ final class OrderTotalPrice
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
+     * {@inheritdoc}
      */
+    #[Override]
     public function getPrice(): PriceInterface
     {
         return new Price($this->priceWithoutVat, $this->priceWithVat);
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
+     * {@inheritdoc}
      */
+    #[Override]
     public function getProductPrice(): PriceInterface
     {
         return new Price($this->productPriceWithoutVat, $this->productPriceWithVat);
