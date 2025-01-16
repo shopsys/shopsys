@@ -14,12 +14,12 @@ class PriceFactory
     /**
      * @param array<int, array{price_without_vat: mixed, price_with_vat: mixed, price_from: bool, pricing_group_id: int}> $pricesArray
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface
      */
     public function createProductPriceFromArrayByPricingGroup(
         array $pricesArray,
         PricingGroup $pricingGroup,
-    ): ProductPrice {
+    ): ProductPriceInterface {
         foreach ($pricesArray as $priceArray) {
             if ($priceArray['pricing_group_id'] === $pricingGroup->getId()) {
                 return $this->createProductPriceFromArray($priceArray, $pricingGroup);
@@ -31,6 +31,7 @@ class PriceFactory
 
     /**
      * @param array{price_without_vat: mixed, price_with_vat: mixed, price_from: bool} $priceArray
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
      */
     public function createProductPriceFromArray(array $priceArray, PricingGroup $pricingGroup): ProductPrice

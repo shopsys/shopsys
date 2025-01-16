@@ -63,7 +63,7 @@ class MergadoFeedItemFactory
             $product,
             $domainId,
             $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId),
-        );
+        )->getPrice();
 
         return new MergadoFeedItem(
             $product->getId(),
@@ -73,7 +73,7 @@ class MergadoFeedItemFactory
             $this->categoryFacade->getCategoryNamesInPathFromRootToProductMainCategoryOnDomain($product, $domainConfig),
             $this->getProductUsp($product, $domainId),
             $this->availabilityFacade->getProductAvailabilityDaysForFeedsByDomainId($product, $domainId),
-            $this->productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId($product, $domainId),
+            $this->productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId($product, $domainId)->getPrice(),
             $this->getOtherProductImages($product, $domainConfig),
             $this->productParametersBatchLoader->getProductParametersByName($product, $domainConfig),
             $currency->getCode(),

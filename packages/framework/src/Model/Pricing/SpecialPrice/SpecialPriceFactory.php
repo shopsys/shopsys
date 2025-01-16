@@ -8,7 +8,7 @@ use DateTimeInterface;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
@@ -73,7 +73,7 @@ class SpecialPriceFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $price
      * @param \DateTimeInterface $validFrom
      * @param \DateTimeInterface $validTo
      * @param int $priceListId
@@ -82,7 +82,7 @@ class SpecialPriceFactory
      * @return \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice
      */
     public function create(
-        Price $price,
+        PriceInterface $price,
         DateTimeInterface $validFrom,
         DateTimeInterface $validTo,
         int $priceListId,

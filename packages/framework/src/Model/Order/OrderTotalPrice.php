@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Order;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
 final class OrderTotalPrice
 {
@@ -24,17 +25,17 @@ final class OrderTotalPrice
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
-    public function getPrice(): Price
+    public function getPrice(): PriceInterface
     {
         return new Price($this->priceWithoutVat, $this->priceWithVat);
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
-    public function getProductPrice(): Price
+    public function getProductPrice(): PriceInterface
     {
         return new Price($this->productPriceWithoutVat, $this->productPriceWithVat);
     }

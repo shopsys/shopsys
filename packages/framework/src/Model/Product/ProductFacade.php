@@ -22,6 +22,7 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalc
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockData;
@@ -269,7 +270,7 @@ class ProductFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice[][]
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface[][]
      */
     public function getAllProductPricesIndexedByDomainId(Product $product)
     {
@@ -285,7 +286,7 @@ class ProductFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice[]
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface[]
      */
     public function getAllProductPricesByDomainId(Product $product, int $domainId): array
     {
@@ -301,9 +302,9 @@ class ProductFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface
      */
-    public function getProductPriceForDefaultPricingGroup(Product $product, int $domainId): ProductPrice
+    public function getProductPriceForDefaultPricingGroup(Product $product, int $domainId): ProductPriceInterface
     {
         $pricingGroup = $this->pricingGroupSettingFacade->getDefaultPricingGroupByDomainId($domainId);
 
@@ -314,13 +315,13 @@ class ProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface
      */
     protected function getProductPriceForPricingGroup(
         Product $product,
         int $domainId,
         PricingGroup $pricingGroup,
-    ): ProductPrice {
+    ): ProductPriceInterface {
         try {
             $sellingPrice = $this->productPriceCalculation->calculatePrice($product, $domainId, $pricingGroup);
         } catch (MainVariantPriceCalculationException) {

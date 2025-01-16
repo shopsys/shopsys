@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Test;
 
 use PHPUnit\Framework\Constraint\Constraint;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
 final class IsPriceEqual extends Constraint
 {
     private PriceExporter $exporter;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $value
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $value
      */
-    public function __construct(private readonly Price $value)
+    public function __construct(private readonly PriceInterface $value)
     {
         $this->exporter = new PriceExporter();
     }
@@ -33,6 +33,6 @@ final class IsPriceEqual extends Constraint
      */
     protected function matches($other): bool
     {
-        return $other instanceof Price && $other->equals($this->value);
+        return $other instanceof PriceInterface && $other->equals($this->value);
     }
 }

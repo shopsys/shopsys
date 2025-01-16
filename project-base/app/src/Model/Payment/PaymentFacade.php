@@ -16,8 +16,8 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade as BasePaymentFacade;
  * @method updatePaymentPrices(\App\Model\Payment\Payment $payment, \Shopsys\FrameworkBundle\Component\Money\Money[] $pricesIndexedByDomainId, \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat[] $vatsIndexedByDomainId)
  * @method \App\Model\Payment\Payment[] getAllIncludingDeleted()
  * @method \App\Model\Payment\Payment[] getAll()
- * @method \Shopsys\FrameworkBundle\Model\Pricing\Price[] getIndependentBasePricesIndexedByDomainId(\App\Model\Payment\Payment $payment)
- * @method \Shopsys\FrameworkBundle\Model\Pricing\Price[] getPricesIndexedByDomainId(\App\Model\Payment\Payment|null $payment)
+ * @method \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface[] getIndependentBasePricesIndexedByDomainId(\App\Model\Payment\Payment $payment)
+ * @method \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface[] getPricesIndexedByDomainId(\App\Model\Payment\Payment|null $payment)
  * @method \App\Model\Payment\Payment getByUuid(string $uuid)
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @property \App\Component\Image\ImageFacade $imageFacade

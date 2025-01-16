@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 
 class CartWithModificationsResult
@@ -65,17 +65,17 @@ class CartWithModificationsResult
         'notAddedProducts' => [],
     ];
 
-    protected ?Price $totalPrice = null;
+    protected ?PriceInterface $totalPrice = null;
 
-    protected ?Price $totalItemsPrice = null;
+    protected ?PriceInterface $totalItemsPrice = null;
 
-    protected ?Price $totalDiscountPrice = null;
+    protected ?PriceInterface $totalDiscountPrice = null;
 
-    protected ?Price $totalPriceWithoutDiscountTransportAndPayment = null;
+    protected ?PriceInterface $totalPriceWithoutDiscountTransportAndPayment = null;
 
     protected ?Money $remainingAmountWithVatForFreeTransport = null;
 
-    protected ?Price $roundingPrice = null;
+    protected ?PriceInterface $roundingPrice = null;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
@@ -178,9 +178,9 @@ class CartWithModificationsResult
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
-    public function getTotalPrice(): Price
+    public function getTotalPrice(): PriceInterface
     {
         if (!$this->totalPrice) {
             throw new LogicException('Total price must be set before calling the getter.');
@@ -190,9 +190,9 @@ class CartWithModificationsResult
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
-    public function getTotalItemsPrice(): Price
+    public function getTotalItemsPrice(): PriceInterface
     {
         if (!$this->totalItemsPrice) {
             throw new LogicException('Total items price must be set before calling the getter.');
@@ -202,25 +202,25 @@ class CartWithModificationsResult
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $totalPrice
      */
-    public function setTotalPrice(Price $totalPrice): void
+    public function setTotalPrice(PriceInterface $totalPrice): void
     {
         $this->totalPrice = $totalPrice;
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalItemsPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $totalItemsPrice
      */
-    public function setTotalItemsPrice(Price $totalItemsPrice): void
+    public function setTotalItemsPrice(PriceInterface $totalItemsPrice): void
     {
         $this->totalItemsPrice = $totalItemsPrice;
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
-    public function getTotalDiscountPrice(): Price
+    public function getTotalDiscountPrice(): PriceInterface
     {
         if (!$this->totalDiscountPrice) {
             throw new LogicException('Total discount price must be set before calling the getter.');
@@ -230,9 +230,9 @@ class CartWithModificationsResult
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalDiscountPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $totalDiscountPrice
      */
-    public function setTotalDiscountPrice(Price $totalDiscountPrice): void
+    public function setTotalDiscountPrice(PriceInterface $totalDiscountPrice): void
     {
         $this->totalDiscountPrice = $totalDiscountPrice;
     }
@@ -309,9 +309,9 @@ class CartWithModificationsResult
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
-    public function getTotalPriceWithoutDiscountTransportAndPayment(): Price
+    public function getTotalPriceWithoutDiscountTransportAndPayment(): PriceInterface
     {
         if (!$this->totalPriceWithoutDiscountTransportAndPayment) {
             throw new LogicException('Total price without discount, transport, and payment must be set before calling the getter.');
@@ -321,10 +321,10 @@ class CartWithModificationsResult
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalPriceWithoutDiscountTransportAndPayment
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $totalPriceWithoutDiscountTransportAndPayment
      */
     public function setTotalPriceWithoutDiscountTransportAndPayment(
-        Price $totalPriceWithoutDiscountTransportAndPayment,
+        PriceInterface $totalPriceWithoutDiscountTransportAndPayment,
     ): void {
         $this->totalPriceWithoutDiscountTransportAndPayment = $totalPriceWithoutDiscountTransportAndPayment;
     }
@@ -389,17 +389,17 @@ class CartWithModificationsResult
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface|null
      */
-    public function getRoundingPrice(): ?Price
+    public function getRoundingPrice(): ?PriceInterface
     {
         return $this->roundingPrice->isZero() ? null : $this->roundingPrice;
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $roundingPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface|null $roundingPrice
      */
-    public function setRoundingPrice(?Price $roundingPrice): void
+    public function setRoundingPrice(?PriceInterface $roundingPrice): void
     {
         $this->roundingPrice = $roundingPrice;
     }

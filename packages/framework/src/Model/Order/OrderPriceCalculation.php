@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Rounding;
 
 class OrderPriceCalculation
@@ -54,14 +55,14 @@ class OrderPriceCalculation
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $orderTotalPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $orderTotalPrice
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
      */
     public function calculateOrderRoundingPrice(
         Payment $payment,
         Currency $currency,
-        Price $orderTotalPrice,
-    ): ?Price {
+        PriceInterface $orderTotalPrice,
+    ): ?PriceInterface {
         if (!$payment->isCzkRounding() || $currency->getCode() !== Currency::CODE_CZK) {
             return null;
         }

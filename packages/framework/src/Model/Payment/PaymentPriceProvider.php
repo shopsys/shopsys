@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
 class PaymentPriceProvider
 {
@@ -30,9 +30,9 @@ class PaymentPriceProvider
      * @param \Shopsys\FrameworkBundle\Model\Cart\Cart $cart
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
-    public function getPaymentPrice(Cart $cart, Payment $payment, DomainConfig $domainConfig): Price
+    public function getPaymentPrice(Cart $cart, Payment $payment, DomainConfig $domainConfig): PriceInterface
     {
         $orderInput = $this->orderInputFactory->createFromCart($cart, $domainConfig);
         $orderInput->setPayment($payment);

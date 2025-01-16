@@ -5,37 +5,37 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Product\Pricing;
 
 use Override;
-use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
-final class ProductPrice implements PriceInterface
+final class ProductPrice implements ProductPriceInterface
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $price
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param bool $priceFrom
      */
     public function __construct(
-        private readonly Price $price,
+        private readonly PriceInterface $price,
         private readonly PricingGroup $pricingGroup,
         private readonly bool $priceFrom = false,
     ) {
     }
 
     /**
-     * @return bool
+     * {@inheritdoc}
      */
+    #[Override]
     public function isPriceFrom(): bool
     {
         return $this->priceFrom;
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return self
+     * {@inheritdoc}
      */
+    #[Override]
     public static function createHiddenProductPrice(PricingGroup $pricingGroup): self
     {
         return new self(
@@ -46,43 +46,18 @@ final class ProductPrice implements PriceInterface
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * {@inheritdoc}
      */
-    public function getPrice(): Price
+    #[Override]
+    public function getPrice(): PriceInterface
     {
         return $this->price;
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     * {@inheritdoc}
      */
     #[Override]
-    public function getPriceWithoutVat(): Money
-    {
-        return $this->price->getPriceWithoutVat();
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    #[Override]
-    public function getPriceWithVat(): Money
-    {
-        return $this->price->getPriceWithVat();
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    #[Override]
-    public function getVatAmount(): Money
-    {
-        return $this->price->getVatAmount();
-    }
-
-    /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup
-     */
     public function getPricingGroup(): PricingGroup
     {
         return $this->pricingGroup;

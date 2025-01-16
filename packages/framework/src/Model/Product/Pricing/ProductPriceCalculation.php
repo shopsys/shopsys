@@ -38,9 +38,9 @@ class ProductPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface
      */
-    public function calculatePrice(Product $product, int $domainId, PricingGroup $pricingGroup): ProductPrice
+    public function calculatePrice(Product $product, int $domainId, PricingGroup $pricingGroup): ProductPriceInterface
     {
         if ($product->isMainVariant()) {
             return $this->calculateMainVariantPrice($product, $domainId, $pricingGroup);
@@ -53,13 +53,13 @@ class ProductPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $mainVariant
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface
      */
     protected function calculateMainVariantPrice(
         Product $mainVariant,
         int $domainId,
         PricingGroup $pricingGroup,
-    ): ProductPrice {
+    ): ProductPriceInterface {
         $variants = $this->productRepository->getAllSellableVariantsByMainVariant(
             $mainVariant,
             $domainId,
@@ -80,23 +80,24 @@ class ProductPriceCalculation
         $variantPrices = [];
 
         foreach ($variants as $variant) {
-            $variantPrices[] = $this->calculatePrice($variant, $domainId, $pricingGroup);
+            $variantPrices[] = $this->calculateProductPriceForPricingGroup($variant, $pricingGroup)->getPrice();
         }
 
-        /** @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice $minVariantPrice */
         $minVariantPrice = $this->getMinimumPriceByPriceWithoutVat($variantPrices);
         $from = $this->arePricesDifferent($variantPrices);
 
-        return new ProductPrice($minVariantPrice->getPrice(), $pricingGroup, $from);
+        return new ProductPrice($minVariantPrice, $pricingGroup, $from);
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface
      */
-    protected function calculateProductPriceForPricingGroup(Product $product, PricingGroup $pricingGroup): ProductPrice
-    {
+    protected function calculateProductPriceForPricingGroup(
+        Product $product,
+        PricingGroup $pricingGroup,
+    ): ProductPriceInterface {
         $manualInputPrice = $this->productManualInputPriceRepository->findByProductAndPricingGroup(
             $product,
             $pricingGroup,

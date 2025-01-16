@@ -94,10 +94,10 @@ class PriceListProductPriceDataFactory
         );
 
         if ($this->pricingSetting->getInputPriceType() === PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT) {
-            return $basicPrice->getPriceWithoutVat();
+            return $basicPrice->getPrice()->getPriceWithoutVat();
         }
 
-        return $basicPrice->getPriceWithVat();
+        return $basicPrice->getPrice()->getPriceWithVat();
     }
 
     /**

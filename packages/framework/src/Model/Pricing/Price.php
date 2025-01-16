@@ -22,15 +22,16 @@ final class Price implements PriceInterface
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * {@inheritdoc}
      */
+    #[Override]
     public static function zero(): self
     {
         return new self(Money::zero(), Money::zero());
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     * {@inheritdoc}
      */
     #[Override]
     public function getPriceWithoutVat(): Money
@@ -39,7 +40,7 @@ final class Price implements PriceInterface
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     * {@inheritdoc}
      */
     #[Override]
     public function getPriceWithVat(): Money
@@ -48,7 +49,7 @@ final class Price implements PriceInterface
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     * {@inheritdoc}
      */
     #[Override]
     public function getVatAmount(): Money
@@ -57,33 +58,33 @@ final class Price implements PriceInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $priceToAdd
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * {@inheritdoc}
      */
-    public function add(self $priceToAdd): self
+    #[Override]
+    public function add(PriceInterface $priceToAdd): self
     {
         return new self(
-            $this->priceWithoutVat->add($priceToAdd->priceWithoutVat),
-            $this->priceWithVat->add($priceToAdd->priceWithVat),
+            $this->priceWithoutVat->add($priceToAdd->getPriceWithoutVat()),
+            $this->priceWithVat->add($priceToAdd->getPriceWithVat()),
         );
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $priceToSubtract
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * {@inheritdoc}
      */
-    public function subtract(self $priceToSubtract): self
+    #[Override]
+    public function subtract(PriceInterface $priceToSubtract): self
     {
         return new self(
-            $this->priceWithoutVat->subtract($priceToSubtract->priceWithoutVat),
-            $this->priceWithVat->subtract($priceToSubtract->priceWithVat),
+            $this->priceWithoutVat->subtract($priceToSubtract->getPriceWithoutVat()),
+            $this->priceWithVat->subtract($priceToSubtract->getPriceWithVat()),
         );
     }
 
     /**
-     * @param int|string $multiplier
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * {@inheritdoc}
      */
+    #[Override]
     public function multiply(int|string $multiplier): self
     {
         return new self(
@@ -93,34 +94,37 @@ final class Price implements PriceInterface
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * {@inheritdoc}
      */
+    #[Override]
     public function inverse(): self
     {
         return $this->multiply(-1);
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
-     * @return bool
+     * {@inheritdoc}
      */
-    public function equals(self $price): bool
+    #[Override]
+    public function equals(PriceInterface $price): bool
     {
-        return $this->priceWithoutVat->equals($price->priceWithoutVat)
-            && $this->priceWithVat->equals($price->priceWithVat);
+        return $this->priceWithoutVat->equals($price->getPriceWithoutVat())
+            && $this->priceWithVat->equals($price->getPriceWithVat());
     }
 
     /**
-     * @return bool
+     * {@inheritdoc}
      */
+    #[Override]
     public function isZero(): bool
     {
         return $this->priceWithoutVat->isZero() && $this->priceWithVat->isZero();
     }
 
     /**
-     * @return self
+     * {@inheritdoc}
      */
+    #[Override]
     public static function createHiddenPrice(): self
     {
         return new self(

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\Product\Price;
 
 use Override;
-use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormInterface;
@@ -23,7 +23,7 @@ class MoneyWithCalculatedPriceType extends AbstractType
         $resolver->setDefaults([
             'product_price' => null,
         ]);
-        $resolver->setAllowedTypes('product_price', [PriceInterface::class, 'null']);
+        $resolver->setAllowedTypes('product_price', [ProductPriceInterface::class, 'null']);
     }
 
     /**

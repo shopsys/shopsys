@@ -6,7 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Price;
 
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\PriceFactory;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface;
 
 class PriceFacade
 {
@@ -22,9 +22,9 @@ class PriceFacade
 
     /**
      * @param array $pricesArray
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface
      */
-    public function createProductPriceFromArrayForCurrentCustomer(array $pricesArray): ProductPrice
+    public function createProductPriceFromArrayForCurrentCustomer(array $pricesArray): ProductPriceInterface
     {
         return $this->priceFactory->createProductPriceFromArrayByPricingGroup(
             $pricesArray,

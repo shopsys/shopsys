@@ -146,8 +146,8 @@ class ProductPickerController extends AdminBaseController
         );
 
         $basicPriceAmount = $this->pricingSetting->getInputPriceType() === PricingSetting::INPUT_PRICE_TYPE_WITH_VAT
-            ? $basicPrice->getPriceWithVat()->getAmount()
-            : $basicPrice->getPriceWithoutVat()->getAmount();
+            ? $basicPrice->getPrice()->getPriceWithVat()->getAmount()
+            : $basicPrice->getPrice()->getPriceWithoutVat()->getAmount();
 
         return new JsonResponse([
             'basicPrice' => $basicPriceAmount,

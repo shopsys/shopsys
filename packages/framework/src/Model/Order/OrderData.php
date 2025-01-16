@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
 class OrderData
 {
@@ -298,10 +299,10 @@ class OrderData
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $priceToAdd
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $priceToAdd
      * @param string $type
      */
-    public function addTotalPrice(Price $priceToAdd, string $type): void
+    public function addTotalPrice(PriceInterface $priceToAdd, string $type): void
     {
         $this->totalPricesByItemType[$type] = $this->totalPricesByItemType[$type]->add($priceToAdd);
         $this->totalPrice = $this->totalPrice->add($priceToAdd);
@@ -317,9 +318,9 @@ class OrderData
 
     /**
      * @param string[] $itemTypes
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
-    public function getTotalPriceForItemTypes(array $itemTypes): Price
+    public function getTotalPriceForItemTypes(array $itemTypes): PriceInterface
     {
         $totalPrice = new Price(Money::zero(), Money::zero());
 
@@ -331,9 +332,9 @@ class OrderData
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
-    public function getProductsTotalPriceAfterAppliedDiscounts(): Price
+    public function getProductsTotalPriceAfterAppliedDiscounts(): PriceInterface
     {
         return $this->getTotalPriceForItemTypes([
             OrderItemTypeEnum::TYPE_PRODUCT,
@@ -342,9 +343,9 @@ class OrderData
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
-    public function getTotalPriceWithoutDiscountTransportAndPayment(): Price
+    public function getTotalPriceWithoutDiscountTransportAndPayment(): PriceInterface
     {
         return $this->totalPrice
             ->subtract($this->totalPricesByItemType[OrderItemTypeEnum::TYPE_TRANSPORT])

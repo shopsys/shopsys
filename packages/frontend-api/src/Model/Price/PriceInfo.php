@@ -6,7 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Price;
 
 use DateTimeInterface;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
 class PriceInfo
 {
@@ -20,14 +20,14 @@ class PriceInfo
 
     public ?float $percentageDiscount = null;
 
-    public Price $basicPrice;
+    public PriceInterface $basicPrice;
 
     public bool $isPriceFrom;
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $price
      */
-    public function setSellingPrice(Price $price): void
+    public function setSellingPrice(PriceInterface $price): void
     {
         $this->priceWithoutVat = $price->getPriceWithoutVat();
         $this->priceWithVat = $price->getPriceWithVat();

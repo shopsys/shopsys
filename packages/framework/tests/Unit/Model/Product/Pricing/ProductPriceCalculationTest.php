@@ -18,7 +18,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Rounding;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceRepository;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
@@ -120,29 +119,27 @@ class ProductPriceCalculationTest extends TestCase
 
     public static function getMinimumPriceProvider()
     {
-        $pricingGroup = new PricingGroup(new PricingGroupData(), 1);
-
         return [
             [
                 'prices' => [
-                    new ProductPrice(new Price(Money::create(20), Money::create(30)), $pricingGroup),
-                    new ProductPrice(new Price(Money::create(10), Money::create(15)), $pricingGroup),
-                    new ProductPrice(new Price(Money::create(100), Money::create(120)), $pricingGroup),
+                    new Price(Money::create(20), Money::create(30)),
+                    new Price(Money::create(10), Money::create(15)),
+                    new Price(Money::create(100), Money::create(120)),
                 ],
-                'minimumPrice' => new ProductPrice(new Price(Money::create(10), Money::create(15)), $pricingGroup),
+                'minimumPrice' => new Price(Money::create(10), Money::create(15)),
             ],
             [
                 'prices' => [
-                    new ProductPrice(new Price(Money::create(10), Money::create(15)), $pricingGroup),
+                    new Price(Money::create(10), Money::create(15)),
                 ],
-                'minimumPrice' => new ProductPrice(new Price(Money::create(10), Money::create(15)), $pricingGroup),
+                'minimumPrice' => new Price(Money::create(10), Money::create(15)),
             ],
             [
                 'prices' => [
-                    new ProductPrice(new Price(Money::create(10), Money::create(15)), $pricingGroup),
-                    new ProductPrice(new Price(Money::create(10), Money::create(15)), $pricingGroup),
+                    new Price(Money::create(10), Money::create(15)),
+                    new Price(Money::create(10), Money::create(15)),
                 ],
-                'minimumPrice' => new ProductPrice(new Price(Money::create(10), Money::create(15)), $pricingGroup),
+                'minimumPrice' => new Price(Money::create(10), Money::create(15)),
             ],
         ];
     }

@@ -8,8 +8,8 @@ use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface;
 
 class ProductCachedAttributesFacade
 {
@@ -33,9 +33,9 @@ class ProductCachedAttributesFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface|null
      */
-    public function getProductSellingPrice(Product $product)
+    public function getProductSellingPrice(Product $product): ?ProductPriceInterface
     {
         $key = (string)$product->getId();
 
@@ -55,9 +55,9 @@ class ProductCachedAttributesFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface|null
      */
-    public function getProductBasicPrice(Product $product): ?ProductPrice
+    public function getProductBasicPrice(Product $product): ?ProductPriceInterface
     {
         return $this->inMemoryCache->getOrSaveValue(
             static::BASIC_PRICES_CACHE_NAMESPACE,

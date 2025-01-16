@@ -44,7 +44,7 @@ class QuantifiedProductPriceCalculation
             $customerUser,
         );
 
-        $totalPriceWithVat = $this->getTotalPriceWithVat($quantifiedProduct, $productPrice);
+        $totalPriceWithVat = $this->getTotalPriceWithVat($quantifiedProduct, $productPrice->getPrice());
         $totalPriceVatAmount = $this->getTotalPriceVatAmount($totalPriceWithVat, $product->getVatForDomain($domainId));
         $priceWithoutVat = $this->getTotalPriceWithoutVat($totalPriceWithVat, $totalPriceVatAmount);
 

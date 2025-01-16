@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice;
 
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class SpecialPriceFacade
@@ -22,11 +22,14 @@ class SpecialPriceFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $basicPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $basicPrice
      * @return \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice|null
      */
-    public function findRelevantSpecialPrice(Product $product, int $domainId, Price $basicPrice): ?SpecialPrice
-    {
+    public function findRelevantSpecialPrice(
+        Product $product,
+        int $domainId,
+        PriceInterface $basicPrice,
+    ): ?SpecialPrice {
         $relevantSpecialPrice = $this->specialPriceRepository->findRelevantSpecialPrice($product, $domainId);
 
         if ($relevantSpecialPrice === null) {

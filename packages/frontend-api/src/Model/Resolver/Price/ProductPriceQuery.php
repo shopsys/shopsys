@@ -55,10 +55,10 @@ class ProductPriceQuery extends AbstractQuery
                 throw new ProductPriceMissingUserError('The product price is not set.');
             }
 
-            $specialPrice = $this->specialPriceFacade->findRelevantSpecialPrice($data, $this->domain->getId(), $basicProductPrice);
+            $specialPrice = $this->specialPriceFacade->findRelevantSpecialPrice($data, $this->domain->getId(), $basicProductPrice->getPrice());
         } else {
             $basicProductPrice = $this->priceFacade->createProductPriceFromArrayForCurrentCustomer($data['prices']);
-            $specialPrice = $this->specialPriceApiFactory->createSpecialPriceFromArray($data, $basicProductPrice);
+            $specialPrice = $this->specialPriceApiFactory->createSpecialPriceFromArray($data, $basicProductPrice->getPrice());
         }
 
         return $this->priceInfoFactory->create(

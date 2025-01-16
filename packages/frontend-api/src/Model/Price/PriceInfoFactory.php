@@ -11,24 +11,26 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface;
 
 class PriceInfoFactory
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice $basicProductPrice
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface $basicProductPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice|null $specialPrice
      * @return \Shopsys\FrontendApiBundle\Model\Price\PriceInfo
      */
     public function create(
-        ProductPrice $basicProductPrice,
+        ProductPriceInterface $basicProductPrice,
         ?SpecialPrice $specialPrice,
     ): PriceInfo {
         $priceInfo = new PriceInfo();
-        $priceInfo->basicPrice = $basicProductPrice;
+        $price = $basicProductPrice->getPrice();
+        $priceInfo->basicPrice = $price;
         $priceInfo->isPriceFrom = $basicProductPrice->isPriceFrom();
 
         if ($specialPrice === null) {
-            $priceInfo->setSellingPrice($basicProductPrice);
+            $priceInfo->setSellingPrice($price);
 
             return $priceInfo;
         }
@@ -37,9 +39,9 @@ class PriceInfoFactory
 
         if (!$specialPrice->isFuturePrice()) {
             $priceInfo->setSellingPrice($specialPrice->price);
-            $priceInfo->percentageDiscount = $this->calculatePercentageDiscount($basicProductPrice->getPriceWithVat(), $specialPrice->price->getPriceWithVat());
+            $priceInfo->percentageDiscount = $this->calculatePercentageDiscount($price->getPriceWithVat(), $specialPrice->price->getPriceWithVat());
         } else {
-            $priceInfo->setSellingPrice($basicProductPrice);
+            $priceInfo->setSellingPrice($price);
         }
 
         return $priceInfo;

@@ -192,7 +192,7 @@ class TransportFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[][]
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface[][]
      */
     public function getIndependentBasePricesIndexedByDomainId(Transport $transport): array
     {
@@ -210,7 +210,7 @@ class TransportFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface[]
      */
     public function getPricesIndexedByTransportPriceId(Transport $transport): array
     {

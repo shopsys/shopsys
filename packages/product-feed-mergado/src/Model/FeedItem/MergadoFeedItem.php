@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\ProductFeed\MergadoBundle\Model\FeedItem;
 
 use Shopsys\FrameworkBundle\Model\Feed\FeedItemInterface;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 
 class MergadoFeedItem implements FeedItemInterface
 {
@@ -21,12 +21,12 @@ class MergadoFeedItem implements FeedItemInterface
      * @param array $categoryPath
      * @param array $shortDescriptionUsp
      * @param int $deliveryDays
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice $price
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $price
      * @param string[] $galleryImageUrls
      * @param array $parameters
      * @param string $currencyCode
      * @param string|null $description
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice $highProductPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $highProductPrice
      * @param string[] $flags
      * @param string $availability
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\Brand|null $brand
@@ -41,12 +41,12 @@ class MergadoFeedItem implements FeedItemInterface
         protected readonly array $categoryPath,
         protected readonly array $shortDescriptionUsp,
         protected readonly int $deliveryDays,
-        protected readonly ProductPrice $price,
+        protected readonly PriceInterface $price,
         protected readonly array $galleryImageUrls,
         protected readonly array $parameters,
         protected readonly string $currencyCode,
         protected readonly ?string $description,
-        protected readonly ProductPrice $highProductPrice,
+        protected readonly PriceInterface $highProductPrice,
         protected readonly array $flags,
         protected readonly string $availability,
         protected readonly ?Brand $brand = null,
@@ -120,9 +120,9 @@ class MergadoFeedItem implements FeedItemInterface
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
-    public function getPrice(): ProductPrice
+    public function getPrice(): PriceInterface
     {
         return $this->price;
     }
@@ -184,9 +184,9 @@ class MergadoFeedItem implements FeedItemInterface
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
-    public function getHighProductPrice(): ProductPrice
+    public function getHighProductPrice(): PriceInterface
     {
         return $this->highProductPrice;
     }

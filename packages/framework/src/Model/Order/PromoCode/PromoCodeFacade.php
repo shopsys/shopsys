@@ -18,7 +18,7 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodePricingGroup\PromoCod
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodePricingGroup\PromoCodePricingGroupRepository;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeProduct\PromoCodeProductFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeProduct\PromoCodeProductRepository;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
 class PromoCodeFacade
 {
@@ -370,11 +370,13 @@ class PromoCodeFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $price
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit
      */
-    public function getHighestLimitByPromoCodeAndTotalPrice(PromoCode $promoCode, Price $price): PromoCodeLimit
-    {
+    public function getHighestLimitByPromoCodeAndTotalPrice(
+        PromoCode $promoCode,
+        PriceInterface $price,
+    ): PromoCodeLimit {
         $promoCodeLimit = $this->promoCodeLimitRepository->getHighestLimitByPromoCodeAndTotalPrice(
             $promoCode,
             $price->getPriceWithVat(),

@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceProvider;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceProvider;
@@ -50,13 +50,13 @@ class PriceQuery extends AbstractQuery
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
      * @param string|null $cartUuid
      * @param \ArrayObject|null $context
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
     public function priceByPaymentQuery(
         Payment $payment,
         ?string $cartUuid = null,
         ?ArrayObject $context = null,
-    ): Price {
+    ): PriceInterface {
         $cartUuid = $cartUuid ?? GqlContextHelper::getCartUuid($context);
         $orderUuid = GqlContextHelper::getOrderUuid($context);
 
@@ -89,9 +89,9 @@ class PriceQuery extends AbstractQuery
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
-    protected function calculateIndependentPaymentPrice(Payment $payment): Price
+    protected function calculateIndependentPaymentPrice(Payment $payment): PriceInterface
     {
         return $this->paymentPriceCalculation->calculateIndependentPrice(
             $payment,
@@ -104,13 +104,13 @@ class PriceQuery extends AbstractQuery
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
      * @param string|null $cartUuid
      * @param \ArrayObject|null $context
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
     public function priceByTransportQuery(
         Transport $transport,
         ?string $cartUuid = null,
         ?ArrayObject $context = null,
-    ): Price {
+    ): PriceInterface {
         $cartUuid = $cartUuid ?? GqlContextHelper::getCartUuid($context);
 
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
@@ -130,9 +130,9 @@ class PriceQuery extends AbstractQuery
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
-    protected function calculateIndependentTransportPrice(Transport $transport): Price
+    protected function calculateIndependentTransportPrice(Transport $transport): PriceInterface
     {
         return $this->transportPriceCalculation->calculateIndependentPrice(
             $transport->getLowestPriceOnDomain($this->domain->getId()),

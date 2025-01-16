@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Rounding;
 
 class DiscountCalculation
@@ -23,18 +24,18 @@ class DiscountCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalItemPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $totalItemPrice
      * @param float $vatPercent
      * @param float $discountPercent
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Price|null
      */
     public function calculatePercentageDiscountRoundedByCurrency(
-        Price $totalItemPrice,
+        PriceInterface $totalItemPrice,
         float $vatPercent,
         float $discountPercent,
         Currency $currency,
-    ): ?Price {
+    ): ?PriceInterface {
         $multiplier = (string)($discountPercent / 100);
 
         $priceWithVat = $this->rounding->roundPriceWithVatByCurrency(
@@ -55,12 +56,12 @@ class DiscountCalculation
     /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
      * @param float $vatPercent
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
     public function calculateNominalDiscount(
         Money $priceWithVat,
         float $vatPercent,
-    ): Price {
+    ): PriceInterface {
         $priceVatAmount = $this->priceCalculation->getVatAmountByPriceWithVatForVatPercent($priceWithVat, $vatPercent);
         $priceWithoutVat = $priceWithVat->subtract($priceVatAmount);
 

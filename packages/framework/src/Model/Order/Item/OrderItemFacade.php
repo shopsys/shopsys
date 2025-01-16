@@ -52,7 +52,7 @@ class OrderItemFacade
             $product,
             $order->getDomainId(),
             $order->getCustomerUser(),
-        );
+        )->getPrice();
 
         $orderItemData = $this->orderItemDataFactory->create(OrderItemTypeEnum::TYPE_PRODUCT);
         $orderItemData->name = $product->getName($orderDomainConfig->getLocale());
