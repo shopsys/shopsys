@@ -85,7 +85,7 @@ export type TypeCategoryDetailFragment = { __typename: 'Category', id: number, u
   }
 };
       export default result;
-    
+
 export const CategoryDetailFragment = gql`
     fragment CategoryDetailFragment on Category {
   __typename

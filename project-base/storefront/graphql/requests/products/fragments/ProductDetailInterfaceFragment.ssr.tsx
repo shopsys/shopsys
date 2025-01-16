@@ -96,7 +96,7 @@ export type TypeProductDetailInterfaceFragment = TypeProductDetailInterfaceFragm
   }
 };
       export default result;
-    
+
 export const ProductDetailInterfaceFragment = gql`
     fragment ProductDetailInterfaceFragment on Product {
   __typename

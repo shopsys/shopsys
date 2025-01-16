@@ -90,7 +90,7 @@ export type TypeListedProductFragment = TypeListedProductFragment_MainVariant_ |
   }
 };
       export default result;
-    
+
 export const ListedProductFragment = gql`
     fragment ListedProductFragment on Product {
   __typename

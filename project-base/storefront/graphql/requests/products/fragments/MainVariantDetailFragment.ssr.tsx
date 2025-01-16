@@ -82,7 +82,7 @@ export type TypeMainVariantDetailFragment = { __typename: 'MainVariant', id: num
   }
 };
       export default result;
-    
+
 export const MainVariantDetailFragment = gql`
     fragment MainVariantDetailFragment on MainVariant {
   ...ProductDetailInterfaceFragment

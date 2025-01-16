@@ -94,7 +94,7 @@ export type TypeSearchProductsQuery = { __typename?: 'Query', productsSearch: { 
   }
 };
       export default result;
-    
+
 
 export const SearchProductsQueryDocument = gql`
     query SearchProductsQuery($endCursor: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter, $search: String!, $pageSize: Int, $isAutocomplete: Boolean!, $userIdentifier: Uuid!, $parameters: [Uuid!] = []) {

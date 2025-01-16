@@ -86,7 +86,7 @@ export type TypeRemoveProductFromListMutation = { __typename?: 'Mutation', Remov
   }
 };
       export default result;
-    
+
 
 export const RemoveProductFromListMutationDocument = gql`
     mutation RemoveProductFromListMutation($input: ProductListUpdateInput!) {

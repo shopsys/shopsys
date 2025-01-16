@@ -90,7 +90,7 @@ export type TypeBrandProductsQuery = { __typename?: 'Query', products: { __typen
   }
 };
       export default result;
-    
+
 
 export const BrandProductsQueryDocument = gql`
     query BrandProductsQuery($endCursor: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter, $urlSlug: String, $pageSize: Int) {
