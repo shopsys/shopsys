@@ -14,7 +14,7 @@ export default class Search {
             if (event.key === 'Tab' && $searchResults.is(':visible')) {
                 event.preventDefault();
                 const focusableElements = $searchResults.filterAllNodes(
-                    'div.web__header__search--results--container a',
+                    'div.web__header__search--results--container a'
                 );
                 $searchResults
                     .filterAllNodes('div.web__header__search--results--container div.result--item')
@@ -87,11 +87,11 @@ export default class Search {
             url: $searchInput.data('search-callback-url'),
             type: 'GET',
             data: {
-                search: value,
+                search: value
             },
             success: function (results) {
                 Search.showResults(value, results, $searchResults);
-            },
+            }
         });
     }
 
