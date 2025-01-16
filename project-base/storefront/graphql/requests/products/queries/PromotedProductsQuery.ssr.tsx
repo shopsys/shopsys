@@ -84,7 +84,7 @@ export type TypePromotedProductsQuery = { __typename?: 'Query', promotedProducts
   }
 };
       export default result;
-    
+
 
 export const PromotedProductsQueryDocument = gql`
     query PromotedProductsQuery {

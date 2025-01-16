@@ -81,7 +81,7 @@ export type TypeProductDetailFragment = { __typename: 'RegularProduct', shortDes
   }
 };
       export default result;
-    
+
 export const ProductDetailFragment = gql`
     fragment ProductDetailFragment on RegularProduct {
   ...ProductDetailInterfaceFragment

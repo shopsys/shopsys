@@ -66,14 +66,14 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product })
                                 storeAvailabilities={product.storeAvailabilities}
                             /> */}
 
-                            {/* <WatchDogButton
+                            <WatchDogButton
                                 availability={product.availability}
                                 className="self-start"
                                 isInquiryType={product.isInquiryType}
                                 productIsSellingDenied={product.isSellingDenied}
                                 productName={product.name}
                                 productUuid={product.uuid}
-                            /> */}
+                            />
 
                             {/* <ProductDetailAddToCart product={product} /> */}
 

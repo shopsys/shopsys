@@ -6,9 +6,9 @@ import { ComplaintDetailFragment } from '../fragments/ComplaintDetailFragment.ge
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeComplaintsQueryVariables = Types.Exact<{
-  first?: Types.InputMaybe<Types.Scalars['Int']['input']>;
-  after?: Types.InputMaybe<Types.Scalars['String']['input']>;
-  searchInput?: Types.InputMaybe<Types.TypeSearchInput>;
+  first: Types.InputMaybe<Types.Scalars['Int']['input']>;
+  after: Types.InputMaybe<Types.Scalars['String']['input']>;
+  searchInput: Types.InputMaybe<Types.TypeSearchInput>;
 }>;
 
 

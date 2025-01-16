@@ -5,8 +5,8 @@ import { OrderListFragment } from '../fragments/OrderListFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeOrdersQueryVariables = Types.Exact<{
-  after?: Types.InputMaybe<Types.Scalars['String']['input']>;
-  first?: Types.InputMaybe<Types.Scalars['Int']['input']>;
+  after: Types.InputMaybe<Types.Scalars['String']['input']>;
+  first: Types.InputMaybe<Types.Scalars['Int']['input']>;
 }>;
 
 

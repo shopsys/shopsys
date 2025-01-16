@@ -80,7 +80,7 @@ export type TypeProductListFragment = { __typename: 'ProductList', uuid: string,
   }
 };
       export default result;
-    
+
 export const ProductListFragment = gql`
     fragment ProductListFragment on ProductList {
   __typename
