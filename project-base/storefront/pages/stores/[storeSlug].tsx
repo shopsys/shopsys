@@ -37,6 +37,7 @@ const StoreDetailPage: NextPage = () => {
     return (
         <CommonLayout
             breadcrumbs={storeDetailData?.store?.breadcrumb}
+            breadcrumbsType="stores"
             canonicalQueryParams={[]}
             isFetchingData={isStoreFetching}
             ogImageUrlDefault={storeImageUrl}
