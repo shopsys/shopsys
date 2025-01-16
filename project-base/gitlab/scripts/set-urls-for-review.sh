@@ -5,10 +5,16 @@ setUrlsToDomainsUrls () {
     ITERATOR=1
 
     for DOMAIN in ${DOMAINS//,/ } ; do
-        docker compose exec -T php-fpm sed -i "s/http:\/\/127.0.0.${ITERATOR}:8000/https:\/\/${DOMAIN}/g" config/domains_urls.yaml
-        docker compose exec -T php-consumer sed -i "s/http:\/\/127.0.0.${ITERATOR}:8000/https:\/\/${DOMAIN}/g" config/domains_urls.yaml
+        docker compose exec -T php-fpm sed -i "s/http:\/\/127.0.0.${ITERATOR}:8000/https:\/\/${DOMAIN//\//\\/}/g" config/domains_urls.yaml
+        docker compose exec -T php-consumer sed -i "s/http:\/\/127.0.0.${ITERATOR}:8000/https:\/\/${DOMAIN//\//\\/}/g" config/domains_urls.yaml
         ITERATOR=$(expr $ITERATOR + 1)
     done
+}
+
+convertToTraefikHosts() {
+    local hosts_string=$1
+    local filtered_hosts=$(echo "$hosts_string" | sed -e 's|/.*||' | tr ',' '\n' | grep -v '^$' | sort -u | tr '\n' ',')
+    export TRAEFIK_HOSTS=$(echo "$filtered_hosts" | sed -e 's/ *, */,/g' -e 's/\([^,]*\)/Host(`\1`)/g' -e 's/,/ || /g' | sed -e 's/ || $//' | sed -e 's/ || Host(``)//g')
 }
 
 setDomainsToDockerCompose() {

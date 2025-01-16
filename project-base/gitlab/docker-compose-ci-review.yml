@@ -9,10 +9,12 @@ services:
             - web-volume:/var/www/html/web
             - nginx-conf:/etc/nginx/conf.d/
         labels:
-            - traefik.backend=${COMPOSE_PROJECT_NAME}
-            - traefik.frontend.rule=Host:${HOSTS}
+            - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=${TRAEFIK_HOSTS}"
+            - traefik.http.services.${COMPOSE_PROJECT_NAME}.loadbalancer.server.port=8080
             - traefik.docker.network=ci_traefik-network
-            - traefik.port=8080
+            - traefik.http.routers.${COMPOSE_PROJECT_NAME}.tls=true
+            - traefik.http.routers.${COMPOSE_PROJECT_NAME}.tls.certresolver=myresolver
+            - traefik.http.routers.${COMPOSE_PROJECT_NAME}.middlewares=protection@file
         networks:
             - default
             - traefik-network
@@ -93,7 +95,10 @@ services:
 
     img-proxy:
         image: ghcr.io/imgproxy/imgproxy:latest
-
+        networks:
+            - default
+        labels:
+            - traefik.enable=false
 volumes:
     web-volume:
     nginx-conf:
