@@ -86,7 +86,7 @@ export type TypeAddProductToListMutation = { __typename?: 'Mutation', AddProduct
   }
 };
       export default result;
-    
+
 
 export const AddProductToListMutationDocument = gql`
     mutation AddProductToListMutation($input: ProductListUpdateInput!) {

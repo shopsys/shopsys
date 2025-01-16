@@ -90,7 +90,7 @@ export type TypeRecommendedProductsQuery = { __typename?: 'Query', recommendedPr
   }
 };
       export default result;
-    
+
 
 export const RecommendedProductsQueryDocument = gql`
     query RecommendedProductsQuery($userIdentifier: Uuid!, $recommendationType: RecommendationType!, $recommenderClientIdentifier: String, $limit: Int, $itemUuids: [Uuid!]) {

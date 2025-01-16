@@ -6,6 +6,7 @@ import { ProductDetailPrice } from './ProductDetailPrice';
 import { ProductDetailTabs } from './ProductDetailTabs/ProductDetailTabs';
 import { ProductDetailUsps } from './ProductDetailUsps';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { WatchDogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useTranslation } from 'components/providers/TranslationProvider';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
@@ -94,13 +95,13 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product })
                                 />
                             )} */}
 
-                            {/* <WatchDogButton
+                            <WatchDogButton
                                 availability={product.availability}
                                 className="self-start"
                                 isInquiryType={product.isInquiryType}
                                 productIsSellingDenied={product.isSellingDenied}
                                 productUuid={product.uuid}
-                            /> */}
+                            />
 
                             {/* <ProductDetailAddToCart product={product} /> */}
 
