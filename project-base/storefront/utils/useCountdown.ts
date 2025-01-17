@@ -1,6 +1,8 @@
+'use client';
+
 import dayjs, { Dayjs } from 'dayjs';
 import duration from 'dayjs/plugin/duration';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useState, useEffect, useCallback } from 'react';
 
 dayjs.extend(duration);
@@ -34,7 +36,7 @@ const calculateTimeLeft = (duration: duration.Duration): Omit<TimeState, 'isLoad
 
 export const useCountdown = (
     endTime: CountdownTime,
-    callback: () => void = () => router.reload(),
+    callback: () => void = () => router.refresh(),
     interval = 1000,
 ): TimeState => {
     const router = useRouter();
