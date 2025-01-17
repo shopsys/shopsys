@@ -12,9 +12,9 @@ type createWatchDogActionResult = {
     error: CombinedError | undefined;
 };
 
-export async function createWatchDogAction(
+export const createWatchDogAction = async (
     variables: TypeCreateWatchdogMutationVariables,
-): Promise<createWatchDogActionResult> {
+): Promise<createWatchDogActionResult> => {
     const response = await createMutation<TypeCreateWatchdogMutation, TypeCreateWatchdogMutationVariables>(
         CreateWatchdogMutationDocument,
         variables,
@@ -39,4 +39,4 @@ export async function createWatchDogAction(
     return {
         error: undefined,
     };
-}
+};

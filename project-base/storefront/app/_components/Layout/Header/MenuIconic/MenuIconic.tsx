@@ -1,12 +1,12 @@
 import { MenuIconicItem, MenuIconicItemLink } from './MenuIconicElements';
-import MenuIconicItemUserAuthentication from './MenuIconicItemUserAuthentication';
+import { MenuIconicItemUserAuthentication } from './MenuIconicItemUserAuthentication';
 import { getInternationalizedStaticUrls } from 'app/_utils/getInternationalizedStaticUrls';
 import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { MarkerIcon } from 'components/Basic/Icon/MarkerIcon';
 
-export async function MenuIconic() {
+export const MenuIconic = async () => {
     const t = await getTranslation();
     const [storesUrl, productComparisonUrl, wishlistUrl] = getInternationalizedStaticUrls([
         '/stores',
@@ -55,4 +55,4 @@ export async function MenuIconic() {
             </MenuIconicItem>
         </ul>
     );
-}
+};

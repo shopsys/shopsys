@@ -12,9 +12,9 @@ type resetPasswordActionResult = {
     error: CombinedError | undefined;
 };
 
-export async function resetPasswordAction(
+export const resetPasswordAction = async (
     variables: TypePasswordRecoveryMutationVariables,
-): Promise<resetPasswordActionResult> {
+): Promise<resetPasswordActionResult> => {
     const response = await createMutation<TypePasswordRecoveryMutation, TypePasswordRecoveryMutationVariables>(
         PasswordRecoveryMutationDocument,
         variables,
@@ -33,4 +33,4 @@ export async function resetPasswordAction(
     return {
         error: undefined,
     };
-}
+};

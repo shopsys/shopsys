@@ -14,9 +14,9 @@ type RegistrationActionResult = {
     showCartMergeInfo: boolean;
 };
 
-export async function registrationAction(
+export const registrationAction = async (
     variables: TypeRegistrationMutationVariables,
-): Promise<RegistrationActionResult> {
+): Promise<RegistrationActionResult> => {
     const response = await createMutation<TypeRegistrationMutation, TypeRegistrationMutationVariables>(
         RegistrationMutationDocument,
         variables,
@@ -49,4 +49,4 @@ export async function registrationAction(
         error: undefined,
         showCartMergeInfo: false,
     };
-}
+};

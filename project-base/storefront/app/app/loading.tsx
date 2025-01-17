@@ -1,3 +1,5 @@
-export default function Loading() {
+const Loading = () => {
     return <div>Loading APP PAGE...</div>;
-}
+};
+
+export default Loading;

@@ -1,7 +1,7 @@
 import { NavigationList } from './NavigationList';
-import getNavitagionQuery from 'app/_queries/getNavitagionQuery';
+import { getNavitagionQuery } from 'app/_queries/getNavitagionQuery';
 
-export default async function Navigation() {
+export const Navigation = async () => {
     const navigationData = await getNavitagionQuery();
 
     if (!navigationData) {
@@ -9,4 +9,4 @@ export default async function Navigation() {
     }
 
     return <NavigationList navigation={navigationData.navigation} />;
-}
+};
