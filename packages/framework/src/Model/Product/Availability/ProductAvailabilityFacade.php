@@ -196,7 +196,7 @@ class ProductAvailabilityFacade
      * @param int $days
      * @return int
      */
-    public static function calculateDaysToWeeks(int $days): int
+    public function calculateDaysToWeeks(int $days): int
     {
         return (int)ceil($days / static::DAYS_IN_WEEK);
     }
@@ -207,7 +207,7 @@ class ProductAvailabilityFacade
      */
     protected function getTransferWeeksByDomainId(int $domainId): int
     {
-        return self::calculateDaysToWeeks($this->getTransferDaysByDomainId($domainId));
+        return $this->calculateDaysToWeeks($this->getTransferDaysByDomainId($domainId));
     }
 
     /**
