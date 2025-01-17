@@ -7,7 +7,6 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Products\Search;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrontendApiBundle\Component\Validation\PageSizeValidator;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
@@ -29,7 +28,7 @@ class ProductSearchQuery extends AbstractQuery
      */
     public function productsSearchQuery(Argument $argument): ProductConnection|Promise
     {
-        PageSizeValidator::checkMaxPageSize($argument);
+        $this->pageSizeValidator->checkMaxPageSize($argument);
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
         $productSearchResultsProvider = $this->productSearchResultsProviderResolver->getSearchResultsProviderByDomainIdAndEntityName($this->domain->getId(), 'product');

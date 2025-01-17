@@ -18,7 +18,6 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductList;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
-use Shopsys\FrontendApiBundle\Component\Validation\PageSizeValidator;
 use Shopsys\FrontendApiBundle\Model\Product\BatchLoad\ProductBatchLoadByEntityData;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnection;
 use Shopsys\FrontendApiBundle\Model\Product\Connection\ProductConnectionFactory;
@@ -68,7 +67,7 @@ class ProductsQuery extends AbstractQuery
      */
     public function productsByBrandQuery(Argument $argument, Brand $brand): Promise
     {
-        PageSizeValidator::checkMaxPageSize($argument);
+        $this->pageSizeValidator->checkMaxPageSize($argument);
 
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
@@ -131,7 +130,7 @@ class ProductsQuery extends AbstractQuery
         Argument $argument,
         Category|ReadyCategorySeoMix $categoryOrReadyCategorySeoMix,
     ): Promise {
-        PageSizeValidator::checkMaxPageSize($argument);
+        $this->pageSizeValidator->checkMaxPageSize($argument);
 
         if ($categoryOrReadyCategorySeoMix instanceof Category) {
             $category = $categoryOrReadyCategorySeoMix;
@@ -211,7 +210,7 @@ class ProductsQuery extends AbstractQuery
      */
     public function productsByFlagQuery(Argument $argument, Flag $flag): Promise
     {
-        PageSizeValidator::checkMaxPageSize($argument);
+        $this->pageSizeValidator->checkMaxPageSize($argument);
 
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
@@ -252,7 +251,7 @@ class ProductsQuery extends AbstractQuery
      */
     public function productsWithOverlyingEntityQuery(Argument $argument, ResolveInfo $info): ProductConnection|Promise
     {
-        PageSizeValidator::checkMaxPageSize($argument);
+        $this->pageSizeValidator->checkMaxPageSize($argument);
 
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
