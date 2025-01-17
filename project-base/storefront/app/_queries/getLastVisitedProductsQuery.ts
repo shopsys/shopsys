@@ -7,10 +7,10 @@ import {
     TypeProductsByCatnumsVariables,
 } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.ssr';
 
-export async function getLastVisitedProductsQuery(productsCatnums: string[]) {
+export const getLastVisitedProductsQuery = async (productsCatnums: string[]) => {
     const result = await createQuery<TypeProductsByCatnums, TypeProductsByCatnumsVariables>(ProductsByCatnumsDocument, {
         catnums: productsCatnums,
     });
 
     return result;
-}
+};
