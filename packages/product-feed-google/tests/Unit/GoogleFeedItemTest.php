@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
@@ -31,6 +32,8 @@ class GoogleFeedItemTest extends TestCase
     private ProductUrlsBatchLoader|MockObject $productUrlsBatchLoaderMock;
 
     private ProductAvailabilityFacade|MockObject $productAvailabilityFacadeMock;
+
+    private SpecialPriceFacade $specialPriceFacade;
 
     private GoogleFeedItemFactory $googleFeedItemFactory;
 
@@ -60,12 +63,14 @@ class GoogleFeedItemTest extends TestCase
             ->onlyMethods(['isProductAvailableOnDomainCached'])
             ->getMock();
         $this->productAvailabilityFacadeMock->method('isProductAvailableOnDomainCached')->willReturn($isProductAvailableOnStock);
+        $this->specialPriceFacade = $this->createMock(SpecialPriceFacade::class);
 
         $this->googleFeedItemFactory = new GoogleFeedItemFactory(
             $this->productPriceCalculationForCustomerUserMock,
             $this->currencyFacadeMock,
             $this->productUrlsBatchLoaderMock,
             $this->productAvailabilityFacadeMock,
+            $this->specialPriceFacade,
         );
 
         $this->defaultCurrency = $this->createCurrencyMock(1, 'EUR');
@@ -128,7 +133,7 @@ class GoogleFeedItemTest extends TestCase
     private function mockProductPrice(Product $product, DomainConfig $domain, Price $price): void
     {
         $productPrice = new ProductPrice($price, false);
-        $this->productPriceCalculationForCustomerUserMock->method('calculatePriceForCustomerUserAndDomainId')
+        $this->productPriceCalculationForCustomerUserMock->method('calculateBasicPriceForCustomerUserAndDomainId')
             ->with($product, $domain->getId(), null)->willReturn($productPrice);
     }
 

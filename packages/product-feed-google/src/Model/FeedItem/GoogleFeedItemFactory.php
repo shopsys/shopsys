@@ -8,6 +8,8 @@ use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice;
+use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
@@ -20,12 +22,14 @@ class GoogleFeedItemFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader $productUrlsBatchLoader
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade $specialPriceFacade
      */
     public function __construct(
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly ProductUrlsBatchLoader $productUrlsBatchLoader,
         protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
+        protected readonly SpecialPriceFacade $specialPriceFacade,
     ) {
     }
 
@@ -41,6 +45,7 @@ class GoogleFeedItemFactory
             $product->getFullName($domainConfig->getLocale()),
             !$this->productAvailabilityFacade->isProductAvailableOnDomainCached($product, $domainConfig->getId()),
             $this->getPrice($product, $domainConfig),
+            $this->getSpecialPrice($product, $domainConfig),
             $this->getCurrency($domainConfig),
             $this->productUrlsBatchLoader->getProductUrl($product, $domainConfig),
             $this->getBrandName($product),
@@ -69,11 +74,28 @@ class GoogleFeedItemFactory
      */
     protected function getPrice(Product $product, DomainConfig $domainConfig): Price
     {
-        return $this->productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId(
+        return $this->productPriceCalculationForCustomerUser->calculateBasicPriceForCustomerUserAndDomainId(
             $product,
             $domainConfig->getId(),
-            null,
         );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice|null
+     */
+    protected function getSpecialPrice(Product $product, DomainConfig $domainConfig): ?SpecialPrice
+    {
+        $basicPrice = $this->getPrice($product, $domainConfig);
+
+        $specialPrice = $this->specialPriceFacade->findRelevantSpecialPrice($product, $domainConfig->getId(), $basicPrice);
+
+        if ($specialPrice === null || $specialPrice->isFuturePrice()) {
+            return null;
+        }
+
+        return $specialPrice;
     }
 
     /**

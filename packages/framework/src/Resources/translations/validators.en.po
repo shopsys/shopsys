@@ -4,6 +4,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
+msgid "\"Valid to\" must be greater than \"Valid from\""
+msgstr ""
+
 msgid "Address {{ url }} already exists."
 msgstr ""
 
@@ -14,6 +17,9 @@ msgid "Administrator with user name \"{{ value }}\" is already registered"
 msgstr ""
 
 msgid "Amount of money should be greater than or equal to zero."
+msgstr ""
+
+msgid "Amount of money should be greater to zero."
 msgstr ""
 
 msgid "At least two domains must be selected"
@@ -394,6 +400,9 @@ msgstr ""
 msgid "Please enter pricing group name"
 msgstr ""
 
+msgid "Please enter product list name"
+msgstr ""
+
 msgid "Please enter promo code"
 msgstr ""
 
@@ -454,6 +463,12 @@ msgstr ""
 msgid "Please enter valid email"
 msgstr ""
 
+msgid "Please enter valid from date"
+msgstr ""
+
+msgid "Please enter valid to date"
+msgstr ""
+
 msgid "Please enter warehouse name"
 msgstr ""
 
@@ -473,6 +488,12 @@ msgid "Previously selected main URL dos not exist any more"
 msgstr ""
 
 msgid "Price must be greater or equal to zero"
+msgstr ""
+
+msgid "Price must be greater to zero"
+msgstr ""
+
+msgid "Product list name cannot be longer than {{ limit }} characters"
 msgstr ""
 
 msgid "Product name cannot be longer than {{ limit }} characters"

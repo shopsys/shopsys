@@ -52,6 +52,7 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
                 <ProductDetailGallery
                     flags={product.flags}
                     images={mainVariantImagesWithVariantImages}
+                    percentageDiscount={product.price.percentageDiscount}
                     productName={product.name}
                     videoIds={product.productVideos}
                 />

@@ -1,0 +1,57 @@
+{% block price_list_overview_row %}
+    {% if specialPrices is not empty %}
+        {{ block('form_row') }}
+    {% endif %}
+{% endblock %}
+
+{% block price_list_overview_widget %}
+    <div class="form-line__box">
+        {% if isMultidomain() %}
+            <div class="form-line__box__title">
+                <span class="form-line__box__title__image">
+                    {{ domainIcon(domainId, 'large') }}
+                </span>
+                <strong class="form-line__box__title__name">
+                    {{ 'Domain %domainName%'|trans({'%domainName%' : getDomainName(domainId)}) }}
+                </strong>
+            </div>
+        {% endif %}
+        <div class="form-line form-line__box__content">
+            <div class="table-touch-always">
+                <div class="table-touch-always__in">
+                    <table class="table-form">
+                        <thead>
+                        <tr class="table-form__row">
+                            <th class="table-form__cell table-form__cell--label">{{ 'Price list'|trans }}</th>
+                            <th class="table-form__cell table-form__cell--label">{{ 'Valid from'|trans }}</th>
+                            <th class="table-form__cell table-form__cell--label">{{ 'Valid to'|trans }}</th>
+                            <th class="table-form__cell table-form__cell--label">{{ 'Special price' |trans }} {{ priceVatLabel() }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% set isHighlighted = false %}
+                        {% for specialPrice in specialPrices %}
+                            <tr class="table-form__row {{ not isHighlighted and specialPrice.isNowActive ? "highlight" }}">
+                                <td class="table-form__cell">
+                                    <a href="{{ url('admin_pricelist_edit', {id: specialPrice.priceListId}) }}"
+                                       target="_blank"
+                                       class="btn-link-style btn-link-style--iconic-l">
+                                        <span>{{ specialPrice.priceListName }}</span>&nbsp;
+                                        {{ icon('forward-page') }}
+                                    </a>
+                                </td>
+                                <td class="table-form__cell">{{ specialPrice.validFrom|formatDateTime }}</td>
+                                <td class="table-form__cell">{{ specialPrice.validTo|formatDateTime }}</td>
+                                <td class="table-form__cell">{{ specialPrice.price.priceWithVat|priceWithCurrencyByDomainId(domainId) }}</td>
+                            </tr>
+                            {% if not isHighlighted and specialPrice.isNowActive %}
+                                {% set isHighlighted = true %}
+                            {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -325,6 +325,16 @@ class SideMenuBuilder
         $menu = $this->menuFactory->createItem('pricing', ['label' => t('Pricing')]);
         $menu->setExtra('icon', 'tag');
 
+        $priceListMenu = $menu->addChild('price_list', ['route' => 'admin_pricelist_list', 'label' => t('Price lists')]);
+        $priceListMenu->addChild(
+            'new',
+            ['route' => 'admin_pricelist_new', 'label' => t('New price list'), 'display' => false],
+        );
+        $priceListMenu->addChild(
+            'edit',
+            ['route' => 'admin_pricelist_edit', 'label' => t('Editing price list'), 'display' => false],
+        );
+
         $menu->addChild('pricing_groups', ['route' => 'admin_pricinggroup_list', 'label' => t('Pricing groups')]);
         $menu->addChild('vat', ['route' => 'admin_vat_list', 'label' => t('VAT')]);
         $menu->addChild(

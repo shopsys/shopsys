@@ -493,6 +493,9 @@ msgstr ""
 msgid "Blog article for search testing"
 msgstr ""
 
+msgid "Blue wednesday"
+msgstr ""
+
 msgid "Bluetooth"
 msgstr ""
 
@@ -1078,6 +1081,9 @@ msgstr ""
 msgid "Intuitive operation with its easy to handle even a novice in this field. Another big advantage is the use of technology burning \"on the fly\", which is spared not only your time but also the capacity of the disk, because the process does not create any storage (temporary) files on your hard disk."
 msgstr ""
 
+msgid "Items on sale"
+msgstr ""
+
 msgid "JURA Impressa J9 TFT Carbon"
 msgstr ""
 
@@ -1465,6 +1471,9 @@ msgstr ""
 msgid "Processor frequency (GHz)"
 msgstr ""
 
+msgid "Promoted products"
+msgstr ""
+
 msgid "Properties"
 msgstr ""
 
@@ -1655,6 +1664,9 @@ msgid "Speakers 2 x 3W RMS, 2.0 stereo, portable, volume control, frequency rang
 msgstr ""
 
 msgid "Speakers 2 x 3W RMS, 2.0 stereo, portable, volume control, frequency range of 150Hz-20kHz, sensitivity 80dB, 4Ohm impedance, power supply via USB, 3.5 mm audio jack, dimensions 85x85x107mm, weight 550 g"
+msgstr ""
+
+msgid "Special offers"
 msgstr ""
 
 msgid "Standard rate"

@@ -94,6 +94,7 @@ class LuigisBoxProductFeedItemFactory
             $availabilityText,
             $this->getAvailabilityRank($product, $domainConfig),
             $this->getPrice($product, $domainConfig),
+            $this->getBasicPrice($product, $domainConfig),
             $this->getCurrency($domainConfig),
             $mainCategory->getId(),
             $this->productUrlsBatchLoader->getProductUrl($product, $domainConfig),
@@ -121,7 +122,19 @@ class LuigisBoxProductFeedItemFactory
         return $this->productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId(
             $product,
             $domainConfig->getId(),
-            null,
+        );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     */
+    protected function getBasicPrice(Product $product, DomainConfig $domainConfig): Price
+    {
+        return $this->productPriceCalculationForCustomerUser->calculateBasicPriceForCustomerUserAndDomainId(
+            $product,
+            $domainConfig->getId(),
         );
     }
 

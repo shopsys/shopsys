@@ -12,29 +12,21 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceProvider;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
-use Shopsys\FrameworkBundle\Model\Product\Product;
-use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
-use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceProvider;
 use Shopsys\FrontendApiBundle\Component\GqlContext\GqlContextHelper;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
-use Shopsys\FrontendApiBundle\Model\Price\PriceFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
-use Shopsys\FrontendApiBundle\Model\Resolver\Price\Exception\ProductPriceMissingUserError;
 
 class PriceQuery extends AbstractQuery
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
-     * @param \Shopsys\FrontendApiBundle\Model\Price\PriceFacade $priceFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade $cartApiFacade
      * @param \Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade $orderApiFacade
@@ -42,52 +34,16 @@ class PriceQuery extends AbstractQuery
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceProvider $paymentPriceProvider
      */
     public function __construct(
-        protected readonly ProductCachedAttributesFacade $productCachedAttributesFacade,
         protected readonly PaymentPriceCalculation $paymentPriceCalculation,
         protected readonly Domain $domain,
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly TransportPriceCalculation $transportPriceCalculation,
-        protected readonly PriceFacade $priceFacade,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly CartApiFacade $cartApiFacade,
         protected readonly OrderApiFacade $orderApiFacade,
         protected readonly TransportPriceProvider $transportPriceProvider,
         protected readonly PaymentPriceProvider $paymentPriceProvider,
     ) {
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|array $data
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice
-     */
-    public function priceByProductQuery(Product|array $data): ProductPrice
-    {
-        if ($this->isProductUponInquiry($data)) {
-            return ProductPrice::createHiddenProductPrice();
-        }
-
-        if ($data instanceof Product) {
-            $productPrice = $this->productCachedAttributesFacade->getProductSellingPrice($data);
-        } else {
-            $productPrice = $this->priceFacade->createProductPriceFromArrayForCurrentCustomer($data['prices']);
-        }
-
-        if ($productPrice === null) {
-            throw new ProductPriceMissingUserError('The product price is not set.');
-        }
-
-        return $productPrice;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product|array $data
-     * @return bool
-     */
-    protected function isProductUponInquiry(Product|array $data): bool
-    {
-        $productType = $data instanceof Product ? $data->getProductType() : $data['product_type'];
-
-        return $productType === ProductTypeEnum::TYPE_INQUIRY;
     }
 
     /**

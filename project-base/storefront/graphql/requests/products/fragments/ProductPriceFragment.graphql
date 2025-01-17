@@ -4,4 +4,11 @@ fragment ProductPriceFragment on ProductPrice {
     priceWithoutVat
     vatAmount
     isPriceFrom
+    nextPriceChange
+    percentageDiscount
+    basicPrice{
+        priceWithVat
+        priceWithoutVat
+        vatAmount
+    }
 }

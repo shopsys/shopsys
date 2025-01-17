@@ -197,17 +197,9 @@ class PromoCodeFormType extends AbstractType
         $timeValidationGroup->add('datetimeValidFrom', DateTimeType::class, [
             'required' => false,
             'label' => t('Valid from'),
-            'attr' => [
-                'icon' => true,
-                'iconTitle' => t('Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2023 00:00:00)'),
-            ],
         ])->add('datetimeValidTo', DateTimeType::class, [
             'required' => false,
             'label' => t('Valid to'),
-            'attr' => [
-                'icon' => true,
-                'iconTitle' => t('Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2024 23:59:59)'),
-            ],
         ]);
 
         $builder->add($timeValidationGroup);

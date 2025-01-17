@@ -3,6 +3,7 @@ import { DeferredProductDetailAccessories } from './ProductDetailAccessories/Def
 import { DeferredProductDetailAddToCart } from './ProductDetailAddToCart/DeferredProductDetailAddToCart';
 import { ProductDetailPrefix, ProductDetailHeading } from './ProductDetailElements';
 import { ProductDetailGallery } from './ProductDetailGallery';
+import { ProductDetailPrice } from './ProductDetailPrice';
 import { ProductDetailTabs } from './ProductDetailTabs/ProductDetailTabs';
 import { ProductDetailUsps } from './ProductDetailUsps';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
@@ -24,8 +25,6 @@ import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
-import { useFormatPrice } from 'utils/formatting/useFormatPrice';
-import { isPriceVisible } from 'utils/mappers/price';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 
 type ProductDetailContentProps = {
@@ -39,7 +38,6 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     const { isLuigisBoxActive } = useDomainConfig();
-    const formatPrice = useFormatPrice();
 
     const pageViewEvent = useGtmFriendlyPageViewEvent(product);
     useGtmPageViewEvent(pageViewEvent, isProductDetailFetching);
@@ -55,6 +53,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                     <ProductDetailGallery
                         flags={product.flags}
                         images={product.images}
+                        percentageDiscount={product.price.percentageDiscount}
                         productName={product.name}
                         videoIds={product.productVideos}
                     />
@@ -88,11 +87,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                         {!!product.usps.length && <ProductDetailUsps usps={product.usps} />}
 
                         <div className="flex flex-col gap-4 rounded-xl bg-backgroundMore p-3 sm:p-6">
-                            {isPriceVisible(product.price.priceWithVat) && (
-                                <div className="font-secondary text-2xl font-bold text-price">
-                                    {formatPrice(product.price.priceWithVat)}
-                                </div>
-                            )}
+                            <ProductDetailPrice productPrice={product.price} />
 
                             {!product.isSellingDenied && (
                                 <ProductAvailability

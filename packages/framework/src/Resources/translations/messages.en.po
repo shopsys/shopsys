@@ -433,6 +433,9 @@ msgstr ""
 msgid "Basic information"
 msgstr ""
 
+msgid "Basic price"
+msgstr ""
+
 msgid "Batch ID"
 msgstr ""
 
@@ -629,6 +632,9 @@ msgid "Change for"
 msgstr ""
 
 msgid "Changes"
+msgstr ""
+
+msgid "Changing the domain will cause the loss of unsaved changes. Do you want to continue?"
 msgstr ""
 
 msgid "Choose"
@@ -923,6 +929,9 @@ msgid "Create new parameter"
 msgstr ""
 
 msgid "Create new parameter group"
+msgstr ""
+
+msgid "Create new price list"
 msgstr ""
 
 msgid "Create new product"
@@ -1249,6 +1258,9 @@ msgstr ""
 msgid "Discount (%)"
 msgstr ""
 
+msgid "Discount against basic price"
+msgstr ""
+
 msgid "Discount type"
 msgstr ""
 
@@ -1376,6 +1388,9 @@ msgid "Do you really want to remove this parameter? Deleting the parameter will 
 msgstr ""
 
 msgid "Do you really want to remove this payment?"
+msgstr ""
+
+msgid "Do you really want to remove this product list? Special prices for products in this list will be removed."
 msgstr ""
 
 msgid "Do you really want to remove this product?"
@@ -1627,6 +1642,12 @@ msgstr ""
 msgid "Editing payment - %name%"
 msgstr ""
 
+msgid "Editing price list"
+msgstr ""
+
+msgid "Editing price list - %name%"
+msgstr ""
+
 msgid "Editing product"
 msgstr ""
 
@@ -1720,10 +1741,7 @@ msgstr ""
 msgid "Enter in the store local time"
 msgstr ""
 
-msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2023 00:00:00)"
-msgstr ""
-
-msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2024 23:59:59)"
+msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2023 10:12:00)"
 msgstr ""
 
 msgid "Entered code is not valid"
@@ -1805,6 +1823,9 @@ msgid "Expand"
 msgstr ""
 
 msgid "Expected maximum duration"
+msgstr ""
+
+msgid "Expired"
 msgstr ""
 
 msgid "Export email list in CSV format"
@@ -2027,6 +2048,9 @@ msgid "Frontend"
 msgstr ""
 
 msgid "Full name"
+msgstr ""
+
+msgid "Future"
 msgstr ""
 
 msgid "Generate"
@@ -2285,6 +2309,9 @@ msgid "Last order"
 msgstr ""
 
 msgid "Last started at"
+msgstr ""
+
+msgid "Last update"
 msgstr ""
 
 msgid "Legal conditions"
@@ -2581,6 +2608,9 @@ msgstr ""
 msgid "New payment"
 msgstr ""
 
+msgid "New price list"
+msgstr ""
+
 msgid "New product"
 msgstr ""
 
@@ -2699,6 +2729,9 @@ msgid "No pricing groups found. You have to create some first."
 msgstr ""
 
 msgid "No product found."
+msgstr ""
+
+msgid "No product list found."
 msgstr ""
 
 msgid "No promo codes found. You have to create some first."
@@ -3173,6 +3206,33 @@ msgid "Price including VAT"
 msgstr ""
 
 msgid "Price including VAT rounding"
+msgstr ""
+
+msgid "Price list"
+msgstr ""
+
+msgid "Price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr ""
+
+msgid "Price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr ""
+
+msgid "Price list <strong>{{ name }}</strong> deleted"
+msgstr ""
+
+msgid "Price list name"
+msgstr ""
+
+msgid "Price list overview"
+msgstr ""
+
+msgid "Price lists"
+msgstr ""
+
+msgid "Price lists - full"
+msgstr ""
+
+msgid "Price lists - view"
 msgstr ""
 
 msgid "Prices"
@@ -3664,6 +3724,9 @@ msgstr ""
 msgid "Selected payment doesn't exist."
 msgstr ""
 
+msgid "Selected price list does not exist."
+msgstr ""
+
 msgid "Selected pricing group doesn't exist."
 msgstr ""
 
@@ -3833,6 +3896,9 @@ msgid "Some data may not be localized or serve the technical administrators of t
 msgstr ""
 
 msgid "Sorting priority"
+msgstr ""
+
+msgid "Special price"
 msgstr ""
 
 msgid "Standard"
@@ -4552,6 +4618,9 @@ msgstr ""
 msgid "customers"
 msgstr ""
 
+msgid "discount"
+msgstr ""
+
 msgid "doesn't include"
 msgstr ""
 
@@ -4633,6 +4702,9 @@ msgstr ""
 msgid "parameters"
 msgstr ""
 
+msgid "product lists"
+msgstr ""
+
 msgid "products"
 msgstr ""
 
@@ -4664,6 +4736,12 @@ msgid "unregistered customer"
 msgstr ""
 
 msgid "watchdogs"
+msgstr ""
+
+msgid "with VAT"
+msgstr ""
+
+msgid "without VAT"
 msgstr ""
 
 msgid "without positioning"

@@ -38,6 +38,7 @@ class ProductListAdminRepository
             p.calculatedSellingDenied,
             p.variantType,
             p.catnum,
+            p.ean,
             pmip.inputPrice AS priceForProductList')
             ->from(Product::class, 'p')
             ->leftJoin(

@@ -1,4 +1,5 @@
-import { RemoveThinIcon } from 'components/Basic/Icon/RemoveThinIcon';
+import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
+import { Button } from 'components/Forms/Button/Button';
 import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
@@ -12,18 +13,13 @@ export const ProductComparisonButtonRemoveAll: FC<ProductComparisonButtonRemoveA
     const { removeComparison: handleRemoveComparison } = useComparison();
 
     return (
-        <div
-            className={twJoin(
-                'hidden cursor-pointer items-center rounded border-2 px-4 py-2 transition-colors sm:inline-flex',
-                displayMobile && 'mb-5 inline-flex sm:hidden',
-                'border-actionInvertedBorder bg-actionInvertedBackground text-actionInvertedText',
-                'hover:border-actionInvertedBorderHovered hover:bg-actionInvertedBackgroundHovered hover:text-actionInvertedTextHovered',
-                'active:border-actionInvertedBorderActive active:bg-actionInvertedBackgroundActive active:text-actionInvertedTextActive',
-            )}
+        <Button
+            className={twJoin(displayMobile && 'mb-5 inline-flex sm:hidden')}
+            variant="inverted"
             onClick={handleRemoveComparison}
         >
-            <span className="mr-3 text-sm">{t('Delete all')}</span>
-            <RemoveThinIcon className="w-3" />
-        </div>
+            {t('Delete all')}
+            <RemoveIcon className="size-3" />
+        </Button>
     );
 };

@@ -35,7 +35,7 @@ export const ProductListItemPlaceholder: FC<ProductListItemPlaceholderProps> = (
                 href={product.slug}
                 type={product.isMainVariant ? 'productMainVariant' : 'product'}
             >
-                <ProductListItemImage product={product} size={size} visibleItemsConfig={{ flags: false }} />
+                <ProductListItemImage product={product} size={size} visibleItemsConfig={visibleItemsConfig} />
 
                 <div className="line-clamp-3 min-h-[3.75rem] font-secondary text-sm font-semibold group-hover:text-link group-hover:underline">
                     {product.fullName}

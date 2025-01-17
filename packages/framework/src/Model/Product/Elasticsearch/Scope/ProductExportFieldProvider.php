@@ -23,6 +23,7 @@ class ProductExportFieldProvider
     public const string MAIN_CATEGORY_ID = 'main_category_id';
     public const string IN_STOCK = 'in_stock';
     public const string PRICES = 'prices';
+    public const string SPECIAL_PRICES = 'special_prices';
     public const string PARAMETERS = 'parameters';
     public const string ORDERING_PRIORITY = 'ordering_priority';
     public const string CALCULATED_SELLING_DENIED = 'calculated_selling_denied';

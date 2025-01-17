@@ -20,7 +20,8 @@ export const LastVisitedProductsContent: FC<LastVisitedProductsProps> = ({ produ
 
     const productItemStyleProps = {
         size: 'small' as const,
-        visibleItemsConfig: { price: false, addToCart: false, flags: false, storeAvailability: false },
+        visibleItemsConfig: { price: false, addToCart: false, flags: false, discount: false, storeAvailability: false },
+        textSize: 'xs' as const,
     };
 
     return (
@@ -28,14 +29,10 @@ export const LastVisitedProductsContent: FC<LastVisitedProductsProps> = ({ produ
             {lastVisitedProducts && !areProductsFetching ? (
                 <ProductsSlider
                     gtmProductListName={GtmProductListNameType.last_visited_products}
+                    productItemProps={productItemStyleProps}
                     products={lastVisitedProducts}
                     variant="lastVisited"
                     visibleSliderItems={VISIBLE_SLIDER_ITEMS_LAST_VISITED}
-                    productItemProps={{
-                        visibleItemsConfig: productItemStyleProps.visibleItemsConfig,
-                        size: productItemStyleProps.size,
-                        textSize: 'xs',
-                    }}
                 />
             ) : (
                 <SkeletonModuleLastVisitedProducts />

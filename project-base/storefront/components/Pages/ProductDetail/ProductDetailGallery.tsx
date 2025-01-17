@@ -18,11 +18,18 @@ type ProductDetailGalleryProps = {
     productName: string;
     flags: TypeSimpleFlagFragment[];
     videoIds?: TypeVideoTokenFragment[];
+    percentageDiscount: number | null;
 };
 
 const GALLERY_SHOWN_ITEMS_COUNT = 5;
 
-export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, images, productName, videoIds = [] }) => {
+export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
+    flags,
+    images,
+    productName,
+    videoIds = [],
+    percentageDiscount,
+}) => {
     const [firstImage, ...additionalImages] = images;
     const mainImage = images.length ? firstImage : undefined;
 
@@ -54,7 +61,12 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({ flags, ima
                         onClickCapture={() => setSelectedGalleryItemIndex(0)}
                     />
 
-                    {!!flags.length && <ProductFlags flags={flags} variant="detail" />}
+                    <ProductFlags
+                        flags={flags}
+                        percentageDiscount={percentageDiscount}
+                        variant="detail"
+                        visibleItemsConfig={{ flags: true, discount: true }}
+                    />
                 </div>
 
                 {!!galleryItems.length && (

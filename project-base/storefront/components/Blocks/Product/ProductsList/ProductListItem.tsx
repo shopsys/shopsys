@@ -1,6 +1,5 @@
 import { ProductListItemImage } from './ProductListItemImage';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { RemoveBoldIcon } from 'components/Basic/Icon/RemoveBoldIcon';
 import { VariantIcon } from 'components/Basic/Icon/VariantIcon';
 import { ProductCompareButton } from 'components/Blocks/Product/ButtonsAction/ProductCompareButton';
 import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
@@ -27,7 +26,7 @@ export type ProductVisibleItemsConfigType = {
     storeAvailability?: boolean;
     price?: boolean;
     flags?: boolean;
-    wishlistRemoveButton?: boolean;
+    discount?: boolean;
     priceFromWord?: boolean;
 };
 
@@ -44,6 +43,7 @@ export type ProductItemProps = {
     size?: 'extraSmall' | 'small' | 'medium' | 'large' | 'extraLarge';
     onClick?: (product: TypeListedProductFragment, index: number) => void;
     textSize?: 'xs' | 'sm';
+    textSizePrice?: 'base' | 'lg';
 } & FunctionComponentProps;
 
 export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
@@ -61,6 +61,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
             visibleItemsConfig = PREDEFINED_VISIBLE_ITEMS_CONFIGS.largeItem,
             size = 'large',
             textSize = 'sm',
+            textSizePrice = 'lg',
             onClick,
         },
         ref,
@@ -74,28 +75,14 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 ref={ref}
                 tid={TIDs.blocks_product_list_listeditem_ + product.catalogNumber}
                 className={twMergeCustom(
-                    'group relative flex select-none flex-col gap-2.5 rounded-xl border border-backgroundMore bg-backgroundMore pb-2.5 text-left transition sm:pb-5',
-                    size === 'small' && 'p-5',
+                    'group relative flex select-text flex-col gap-2.5 rounded-xl border border-backgroundMore bg-backgroundMore py-5 text-left transition',
+                    size === 'small' && 'gap-0 py-2.5',
                     'hover:border-borderAccentLess hover:bg-background',
                     className,
                 )}
             >
-                {visibleItemsConfig.wishlistRemoveButton && (
-                    <button
-                        title={t('Remove from wishlist')}
-                        className={twJoin(
-                            'absolute left-3 flex h-5 w-5 cursor-pointer items-center justify-center rounded-full p-0 transition',
-                            'border-none bg-backgroundAccentLess text-text outline-none',
-                            'hover:bg-backgroundAccent hover:text-textInverted',
-                        )}
-                        onClick={toggleProductInWishlist}
-                    >
-                        <RemoveBoldIcon className="mx-auto w-2 basis-2" />
-                    </button>
-                )}
-
                 <ExtendedNextLink
-                    className="flex h-full select-text flex-col py-5 text-text no-underline hover:text-link hover:no-underline sm:pb-0"
+                    className="flex grow select-text text-text no-underline hover:text-link hover:no-underline"
                     draggable={false}
                     href={product.slug}
                     type={product.isMainVariant ? 'productMainVariant' : 'product'}
@@ -111,7 +98,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                         onClick?.(product, listIndex);
                     }}
                 >
-                    <div className="flex h-full flex-col gap-2.5 px-2.5 sm:px-5">
+                    <div className="flex flex-col gap-2.5 px-2.5 sm:px-5">
                         <ProductListItemImage product={product} size={size} visibleItemsConfig={visibleItemsConfig} />
 
                         <div
@@ -135,6 +122,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                                 className="min-h-6 sm:min-h-7"
                                 isPriceFromVisible={visibleItemsConfig.priceFromWord}
                                 productPrice={product.price}
+                                textPriceSize={textSizePrice}
                             />
                         )}
 
@@ -149,7 +137,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                     </div>
                 </ExtendedNextLink>
 
-                <div className="flex w-full items-center justify-between gap-1 px-2.5 py-5 sm:justify-normal sm:gap-2.5 sm:px-5 sm:py-0">
+                <div className="flex w-full items-center justify-between gap-1 px-2.5 sm:justify-normal sm:gap-2.5 sm:px-5">
                     {visibleItemsConfig.addToCart && (
                         <ProductAction
                             gtmMessageOrigin={gtmMessageOrigin}
@@ -184,12 +172,14 @@ export const PREDEFINED_VISIBLE_ITEMS_CONFIGS = {
         productListButtons: true,
         addToCart: true,
         flags: true,
+        discount: false,
         price: true,
         storeAvailability: true,
         priceFromWord: true,
     } as ProductVisibleItemsConfigType,
     mediumItem: {
         flags: true,
+        discount: false,
         price: true,
         storeAvailability: true,
         priceFromWord: true,

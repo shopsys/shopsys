@@ -29,8 +29,8 @@
             <BRAND>{{ item.brand.name }}</BRAND>
         {% endif %}
         <URL>{{ item.url }}</URL>
-        <PRICE>{{ item.highProductPrice.priceWithoutVat|moneyFormat(2, '.') }}</PRICE>
-        <PRICE_VAT>{{ item.highProductPrice.priceWithVat|moneyFormat(2, '.') }}</PRICE_VAT>
+        <PRICE>{{ item.price.priceWithoutVat|moneyFormat(2, '.') }}</PRICE>
+        <PRICE_VAT>{{ item.price.priceWithVat|moneyFormat(2, '.') }}</PRICE_VAT>
         {% for parameterName, parameterValue in item.parameters %}
             <PARAM>
                 <NAME>{{ parameterName }}</NAME>

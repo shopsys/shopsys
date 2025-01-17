@@ -37,6 +37,11 @@ class FilterQuery
     protected ?int $from = null;
 
     /**
+     * @var array<string, mixed>
+     */
+    protected array $runtimeFields = [];
+
+    /**
      * @var string[]
      */
     protected array $fields = [];
@@ -91,26 +96,10 @@ class FilterQuery
         }
 
         if ($orderingModeId === ProductListOrderingConfig::ORDER_BY_PRICE_ASC) {
-            $clone->sorting['_script'] = [
-                'type' => 'number',
-                'script' => [
-                    'lang' => 'painless',
-                    'source' => 'doc[\'product_type\'].value == \'inquiry\' ? 1 : 0',
-                ],
-                'order' => 'asc',
-            ];
+            $clone->runtimeFields += $this->getMinCurrentSellingPriceRuntimeField($pricingGroup->getId());
 
-            $clone->sorting['prices.price_with_vat'] = [
-                'order' => 'asc',
-                'nested' => [
-                    'path' => 'prices',
-                    'filter' => [
-                        'term' => [
-                            'prices.pricing_group_id' => $pricingGroup->getId(),
-                        ],
-                    ],
-                ],
-            ];
+            $clone->sorting['_script'] = $this->getInquirySorting();
+            $clone->sorting['min_current_selling_price_with_vat'] = 'asc';
             $clone->sorting['ordering_priority'] = 'desc';
             $clone->sorting['name.keyword'] = 'asc';
 
@@ -118,26 +107,10 @@ class FilterQuery
         }
 
         if ($orderingModeId === ProductListOrderingConfig::ORDER_BY_PRICE_DESC) {
-            $clone->sorting['_script'] = [
-                'type' => 'number',
-                'script' => [
-                    'lang' => 'painless',
-                    'source' => 'doc[\'product_type\'].value == \'inquiry\' ? 1 : 0',
-                ],
-                'order' => 'asc',
-            ];
+            $clone->runtimeFields += $this->getMinCurrentSellingPriceRuntimeField($pricingGroup->getId());
 
-            $clone->sorting['prices.price_with_vat'] = [
-                'order' => 'desc',
-                'nested' => [
-                    'path' => 'prices',
-                    'filter' => [
-                        'term' => [
-                            'prices.pricing_group_id' => $pricingGroup->getId(),
-                        ],
-                    ],
-                ],
-            ];
+            $clone->sorting['_script'] = $this->getInquirySorting();
+            $clone->sorting['min_current_selling_price_with_vat'] = 'desc';
             $clone->sorting['ordering_priority'] = 'desc';
             $clone->sorting['name.keyword'] = 'asc';
 
@@ -145,6 +118,138 @@ class FilterQuery
         }
 
         return $clone;
+    }
+
+    /**
+     * @param int $pricingGroupId
+     * @return array
+     */
+    protected function getMinCurrentSellingPriceRuntimeField(int $pricingGroupId): array
+    {
+        $scriptMinValue = "
+            double finalPrice = Double.MAX_VALUE;
+            DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern('yyyy-MM-dd HH:mm:ss').withZone(java.time.ZoneOffset.UTC);
+
+            if (!params['_source']['prices'].isEmpty()) {
+                for (def price : params['_source']['prices']) {
+                    if (price['pricing_group_id'] === params['pricing_group_id']) {
+                        finalPrice = Math.min(finalPrice, price['filtering_maximal_price']);
+                        break;
+                    }
+                }
+            }
+
+            if (!params['_source']['special_prices'].isEmpty()) {
+                def currentDate = java.time.ZonedDateTime.parse(params['current_date'], formatter).toInstant();
+
+                Set usedProductIds = new HashSet();
+
+                for (def specialPrice : params['_source']['special_prices']) {
+                    def validFrom = java.time.ZonedDateTime.parse(specialPrice['valid_from'], formatter).toInstant();
+                    def validTo = java.time.ZonedDateTime.parse(specialPrice['valid_to'], formatter).toInstant();
+
+                    if ((validFrom.isBefore(currentDate) || validFrom.equals(currentDate)) && (validTo.isAfter(currentDate) || validTo.equals(currentDate))) {
+
+                        for (def price : specialPrice['prices']) {
+                            if (usedProductIds.contains(price['product_id'])) {
+                                continue;
+                            }
+
+                            finalPrice = Math.min(finalPrice, price['price_with_vat']);
+                            usedProductIds.add(price['product_id'])
+                        }
+                    }
+                }
+            }
+
+            emit(finalPrice);";
+
+        return [
+            'min_current_selling_price_with_vat' => [
+                'type' => 'double',
+                'script' => [
+                    'source' => $scriptMinValue,
+                    'params' => [
+                        'pricing_group_id' => $pricingGroupId,
+                        'current_date' => date('Y-m-d H:i:s'),
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @param int $pricingGroupId
+     * @return array[]
+     */
+    public function getMaxCurrentSellingPriceRuntimeField(int $pricingGroupId): array
+    {
+        $scriptMaxValue = "
+            double finalPrice = 0;
+            DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern('yyyy-MM-dd HH:mm:ss').withZone(java.time.ZoneOffset.UTC);
+
+            if (!params['_source']['prices'].isEmpty()) {
+                for (def price : params['_source']['prices']) {
+                    if (price['pricing_group_id'] === params['pricing_group_id']) {
+                        finalPrice = Math.max(finalPrice, price['filtering_minimal_price']);
+                        break;
+                    }
+                }
+            }
+
+            if (!params['_source']['special_prices'].isEmpty()) {
+                def currentDate = java.time.ZonedDateTime.parse(params['current_date'], formatter).toInstant();
+
+                Set usedProductIds = new HashSet();
+
+                for (def specialPrice : params['_source']['special_prices']) {
+                    def validFrom = java.time.ZonedDateTime.parse(specialPrice['valid_from'], formatter).toInstant();
+                    def validTo = java.time.ZonedDateTime.parse(specialPrice['valid_to'], formatter).toInstant();
+
+                    if ((validFrom.isBefore(currentDate) || validFrom.equals(currentDate)) && (validTo.isAfter(currentDate) || validTo.equals(currentDate))) {
+
+                        for (def price : specialPrice['prices']) {
+                            if (usedProductIds.contains(price['product_id'])) {
+                                continue;
+                            }
+
+                            finalPrice = Math.max(finalPrice, price['price_with_vat']);
+                            usedProductIds.add(price['product_id'])
+                        }
+                    }
+                }
+            }
+
+            emit(finalPrice);
+        ";
+
+        return [
+            'max_current_selling_price_with_vat' => [
+                'type' => 'double',
+                'script' => [
+                    'source' => $scriptMaxValue,
+                    'params' => [
+                        'pricing_group_id' => $pricingGroupId,
+                        'current_date' => date('Y-m-d H:i:s'),
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getInquirySorting(): array
+    {
+        return [
+            'type' => 'number',
+            'script' => [
+                'lang' => 'painless',
+                'source' => 'doc[\'product_type\'].value == \'inquiry\' ? 1 : 0',
+            ],
+            'order' => 'asc',
+        ];
     }
 
     /**
@@ -255,36 +360,29 @@ class FilterQuery
             $priceLte = (float)$maximalPrice->getAmount();
         }
 
+        $clone->runtimeFields += $this->getMinCurrentSellingPriceRuntimeField($pricingGroup->getId());
+        $clone->runtimeFields += $this->getMaxCurrentSellingPriceRuntimeField($pricingGroup->getId());
+
         $clone->filters[] = [
             'bool' => [
                 'should' => [
                     [
-                        'nested' => [
-                            'path' => 'prices',
-                            'query' => [
-                                'bool' => [
-                                    'must' => [
-                                        'match_all' => new stdClass(),
+                        'bool' => [
+                            'must' => [
+                                'match_all' => new stdClass(),
+                            ],
+                            'filter' => [
+                                [
+                                    'range' => [
+                                        'max_current_selling_price_with_vat' => [
+                                            'gte' => $priceGte,
+                                        ],
                                     ],
-                                    'filter' => [
-                                        [
-                                            'range' => [
-                                                'prices.filtering_minimal_price' => [
-                                                    'gte' => $priceGte,
-                                                ],
-                                            ],
-                                        ],
-                                        [
-                                            'range' => [
-                                                'prices.filtering_maximal_price' => [
-                                                    'lte' => $priceLte,
-                                                ],
-                                            ],
-                                        ],
-                                        [
-                                            'term' => [
-                                                'prices.pricing_group_id' => $pricingGroup->getId(),
-                                            ],
+                                ],
+                                [
+                                    'range' => [
+                                        'min_current_selling_price_with_vat' => [
+                                            'lte' => $priceLte,
                                         ],
                                     ],
                                 ],
@@ -589,7 +687,7 @@ class FilterQuery
         $query = [
             'index' => $this->indexName,
             'body' => [
-                'from' => $this->from !== null ? $this->from : $this->countFrom($this->page, $this->limit),
+                'from' => $this->from ?? $this->countFrom($this->page, $this->limit),
                 'size' => $this->limit,
                 'sort' => $this->sorting,
                 'query' => [
@@ -600,6 +698,10 @@ class FilterQuery
                 ],
             ],
         ];
+
+        if ($this->runtimeFields !== []) {
+            $query['body']['runtime_mappings'] = $this->runtimeFields;
+        }
 
         if ($this->fields !== []) {
             $query['body']['_source'] = false;
@@ -637,7 +739,7 @@ class FilterQuery
      */
     public function getAbsoluteNumbersAggregationQuery(): array
     {
-        return [
+        $query = [
             'index' => $this->indexName,
             'body' => [
                 'size' => 0,
@@ -670,6 +772,12 @@ class FilterQuery
                 ],
             ],
         ];
+
+        if ($this->runtimeFields !== []) {
+            $query['body']['runtime_mappings'] = $this->runtimeFields;
+        }
+
+        return $query;
     }
 
     /**
@@ -716,7 +824,7 @@ class FilterQuery
      */
     public function getFlagsPlusNumbersQuery(array $selectedFlags): array
     {
-        return [
+        $query = [
             'index' => $this->indexName,
             'body' => [
                 'size' => 0,
@@ -741,6 +849,12 @@ class FilterQuery
                 ],
             ],
         ];
+
+        if ($this->runtimeFields !== []) {
+            $query['body']['runtime_mappings'] = $this->runtimeFields;
+        }
+
+        return $query;
     }
 
     /**
@@ -752,7 +866,7 @@ class FilterQuery
      */
     public function getBrandsPlusNumbersQuery(array $selectedBrandsIds): array
     {
-        return [
+        $query = [
             'index' => $this->indexName,
             'body' => [
                 'size' => 0,
@@ -777,6 +891,12 @@ class FilterQuery
                 ],
             ],
         ];
+
+        if ($this->runtimeFields !== []) {
+            $query['body']['runtime_mappings'] = $this->runtimeFields;
+        }
+
+        return $query;
     }
 
     /**
@@ -792,7 +912,7 @@ class FilterQuery
      */
     public function getParametersPlusNumbersQuery(int $selectedParameterId, array $selectedValuesIds): array
     {
-        return [
+        $query = [
             'index' => $this->indexName,
             'body' => [
                 'size' => 0,
@@ -851,6 +971,12 @@ class FilterQuery
                 ],
             ],
         ];
+
+        if ($this->runtimeFields !== []) {
+            $query['body']['runtime_mappings'] = $this->runtimeFields;
+        }
+
+        return $query;
     }
 
     /**
@@ -865,6 +991,8 @@ class FilterQuery
     {
         $query = $this->getAbsoluteNumbersWithParametersQuery();
 
+        $query['body']['runtime_mappings'] = $this->getMinCurrentSellingPriceRuntimeField($pricingGroupId);
+
         $query['body']['aggs']['prices'] = [
             'filter' => [
                 'bool' => [
@@ -876,30 +1004,14 @@ class FilterQuery
                 ],
             ],
             'aggs' => [
-                'nested_prices' => [
-                    'nested' => [
-                        'path' => 'prices',
+                'min_price' => [
+                    'min' => [
+                        'field' => 'min_current_selling_price_with_vat',
                     ],
-                    'aggs' => [
-                        'filter_pricing_group' => [
-                            'filter' => [
-                                'term' => [
-                                    'prices.pricing_group_id' => $pricingGroupId,
-                                ],
-                            ],
-                            'aggs' => [
-                                'min_price' => [
-                                    'min' => [
-                                        'field' => 'prices.price_with_vat',
-                                    ],
-                                ],
-                                'max_price' => [
-                                    'max' => [
-                                        'field' => 'prices.price_with_vat',
-                                    ],
-                                ],
-                            ],
-                        ],
+                ],
+                'max_price' => [
+                    'max' => [
+                        'field' => 'min_current_selling_price_with_vat',
                     ],
                 ],
             ],

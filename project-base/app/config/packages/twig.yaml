@@ -2,6 +2,7 @@ twig:
     debug: "%kernel.debug%"
     exception_controller: null
     form_themes:
+        - '@ShopsysFramework/Admin/Form/Product/Price/priceListOverviewType.html.twig'
         - '@ShopsysFramework/Admin/Form/Product/Price/pricesWithCalculatedSellingPricesType.html.twig'
         - '@ShopsysFramework/Admin/Form/Product/Price/productPricesWithVatSelectType.html.twig'
         - '@ShopsysFramework/Admin/Form/abstractFileuploadFields.html.twig'
@@ -35,6 +36,7 @@ twig:
         - '@ShopsysFramework/Admin/Form/parameterValueConversionList.html.twig'
         - '@ShopsysFramework/Admin/Form/paymentTransactionsFormTheme.html.twig'
         - '@ShopsysFramework/Admin/Form/priceandvattableByDomainsFields.html.twig'
+        - '@ShopsysFramework/Admin/Form/priceListProductsPickerType.html.twig'
         - '@ShopsysFramework/Admin/Form/productParameterValue.html.twig'
         - '@ShopsysFramework/Admin/Form/promoCodeFlagFormTheme.html.twig'
         - '@ShopsysFramework/Admin/Form/promoCodeLimitFormTheme.html.twig'
@@ -44,7 +46,6 @@ twig:
         - 'Admin/Form/languageConstantFormTheme.html.twig'
         - 'Admin/Form/productDetailFormTheme.html.twig'
         - 'Admin/Form/productVideoValue.html.twig'
-        - 'Admin/Form/productsFormTheme.html.twig'
     globals:
         globalMultipleFormSetting: '@Shopsys\FrameworkBundle\Component\Form\MultipleFormSetting'
         usersnapApiKey: '%env(USERSNAP_PROJECT_API_KEY)%'

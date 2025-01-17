@@ -64,6 +64,9 @@ class MenuItemsGrantedRolesSetting
             'pricing' . static::MENU_ITEM_PATH_SEPARATOR . 'vat' => [
                 Roles::ROLE_VAT_VIEW,
             ],
+            'pricing' . static::MENU_ITEM_PATH_SEPARATOR . 'price_lists' => [
+                Roles::ROLE_PRICE_LIST_VIEW,
+            ],
             'pricing' . static::MENU_ITEM_PATH_SEPARATOR . 'free_transport_and_payment' => [
                 Roles::ROLE_FREE_TRANSPORT_AND_PAYMENT_VIEW,
             ],

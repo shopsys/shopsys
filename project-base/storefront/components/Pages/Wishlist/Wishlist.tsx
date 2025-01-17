@@ -28,19 +28,17 @@ export const Wishlist: FC = () => {
                                 handleRemoveWishlist();
                             }}
                         >
-                            <span className="mr-3 text-sm">{t('Delete all from wishlist')}</span>
-                            <RemoveIcon className="w-3" />
+                            {t('Delete all from wishlist')}
+                            <RemoveIcon className="size-3" />
                         </Button>
                     </div>
 
-                    <div>
-                        <ProductsList
-                            areProductsFetching={isProductListFetching}
-                            gtmMessageOrigin={GtmMessageOriginType.other}
-                            gtmProductListName={GtmProductListNameType.wishlist}
-                            products={wishlist.products}
-                        />
-                    </div>
+                    <ProductsList
+                        areProductsFetching={isProductListFetching}
+                        gtmMessageOrigin={GtmMessageOriginType.other}
+                        gtmProductListName={GtmProductListNameType.wishlist}
+                        products={wishlist.products}
+                    />
                 </>
             )}
 

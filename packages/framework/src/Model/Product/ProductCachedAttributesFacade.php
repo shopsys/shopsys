@@ -8,11 +8,13 @@ use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 
 class ProductCachedAttributesFacade
 {
     protected const string SELLING_PRICES_CACHE_NAMESPACE = 'sellingPricesByProductId';
+    protected const string BASIC_PRICES_CACHE_NAMESPACE = 'basicPricesByProductId';
     protected const string PARAMETER_VALUES_CACHE_NAMESPACE = 'parameterValuesByProductId';
 
     /**
@@ -49,6 +51,25 @@ class ProductCachedAttributesFacade
         $this->inMemoryCache->save(static::SELLING_PRICES_CACHE_NAMESPACE, $productPrice, $key);
 
         return $productPrice;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null
+     */
+    public function getProductBasicPrice(Product $product): ?ProductPrice
+    {
+        return $this->inMemoryCache->getOrSaveValue(
+            static::BASIC_PRICES_CACHE_NAMESPACE,
+            function () use ($product) {
+                try {
+                    return $this->productPriceCalculationForCustomerUser->calculateBasicPriceForCurrentUser($product);
+                } catch (MainVariantPriceCalculationException) {
+                    return null;
+                }
+            },
+            $product->getId(),
+        );
     }
 
     /**

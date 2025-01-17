@@ -42,9 +42,12 @@ export const ProductListItemImage: FC<ProductListItemImageProps> = ({ product, v
                 width={imageSize}
             />
 
-            {!!product.flags.length && visibleItemsConfig?.flags && (
-                <ProductFlags flags={product.flags} variant="list" />
-            )}
+            <ProductFlags
+                flags={product.flags}
+                percentageDiscount={product.price.percentageDiscount}
+                variant="list"
+                visibleItemsConfig={visibleItemsConfig}
+            />
         </div>
     );
 };

@@ -29,6 +29,10 @@ class DateTimeType extends AbstractType
             'widget' => 'single_text',
             'format' => static::FORMAT_PHP,
             'view_timezone' => $this->displayTimeZoneProvider->getDisplayTimeZoneForAdmin()->getName(),
+            'attr' => [
+                'icon' => true,
+                'iconTitle' => t('Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2023 10:12:00)'),
+            ],
             'html5' => false,
         ]);
     }

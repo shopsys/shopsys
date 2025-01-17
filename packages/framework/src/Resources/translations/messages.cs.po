@@ -433,6 +433,9 @@ msgstr "Základní měna frontendu %domainName%"
 msgid "Basic information"
 msgstr "Základní informace"
 
+msgid "Basic price"
+msgstr "Základní cena"
+
 msgid "Batch ID"
 msgstr "ID dávky"
 
@@ -630,6 +633,9 @@ msgstr "Změna pro"
 
 msgid "Changes"
 msgstr "Změny"
+
+msgid "Changing the domain will cause the loss of unsaved changes. Do you want to continue?"
+msgstr "Změnou domény ztratíte neuložené změny. Chcete pokračovat?"
 
 msgid "Choose"
 msgstr "Vybrat"
@@ -924,6 +930,9 @@ msgstr "Vytvořit nový parametr"
 
 msgid "Create new parameter group"
 msgstr "Vytvořit novou skupinu parametrů"
+
+msgid "Create new price list"
+msgstr "Vytvořit nový ceník"
 
 msgid "Create new product"
 msgstr "Vytvořit nové zboží"
@@ -1249,6 +1258,9 @@ msgstr "Sleva"
 msgid "Discount (%)"
 msgstr "Sleva (%)"
 
+msgid "Discount against basic price"
+msgstr "Sleva oproti základní ceně"
+
 msgid "Discount type"
 msgstr "Typ slevy"
 
@@ -1377,6 +1389,9 @@ msgstr "Opravdu chcete odstranit tento parametr? Smazáním parametru dojde k od
 
 msgid "Do you really want to remove this payment?"
 msgstr "Opravdu chcete odstranit tuto platbu?"
+
+msgid "Do you really want to remove this product list? Special prices for products in this list will be removed."
+msgstr "Opravdu chcete odstranit tento ceník? Speciální ceny pro produkty v tomto ceníku budou odstraněny."
 
 msgid "Do you really want to remove this product?"
 msgstr "Opravdu chcete odstranit toto zboží?"
@@ -1627,6 +1642,12 @@ msgstr "Editace platby"
 msgid "Editing payment - %name%"
 msgstr "Editace platby - %name%"
 
+msgid "Editing price list"
+msgstr "Editace ceníku"
+
+msgid "Editing price list - %name%"
+msgstr "Editace ceníku - %name%"
+
 msgid "Editing product"
 msgstr "Editace zboží"
 
@@ -1720,11 +1741,8 @@ msgstr "Vložte 6 místný ověřovací kód z mobilní aplikace pro dvoufaktoro
 msgid "Enter in the store local time"
 msgstr "Zadejte v lokálním čase prodejny"
 
-msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2023 00:00:00)"
-msgstr "Zadejte datum a čas ve formátu dd.mm.yyyy hh:mm (např. 31.12.2023 00:00:00)"
-
-msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2024 23:59:59)"
-msgstr "Zadejte datum a čas ve formátu dd.mm.yyyy hh:mm (např. 31.12.2024 23:59:59)"
+msgid "Enter the date and time in the format dd.mm.yyyy hh:mm (e.g. 31.12.2023 10:12:00)"
+msgstr "Zadejte datum a čas ve formátu dd.mm.yyyy hh:mm (např. 31.12.2023 10:12:00)"
 
 msgid "Entered code is not valid"
 msgstr "Zadaný kód není platný"
@@ -1806,6 +1824,9 @@ msgstr "Rozbalit"
 
 msgid "Expected maximum duration"
 msgstr "Očekávané maximální trvání"
+
+msgid "Expired"
+msgstr "Vypršelý"
 
 msgid "Export email list in CSV format"
 msgstr "Exportovat seznam e-mailů jako CSV"
@@ -2028,6 +2049,9 @@ msgstr "Frontend"
 
 msgid "Full name"
 msgstr "Celé jméno"
+
+msgid "Future"
+msgstr "Budoucí"
 
 msgid "Generate"
 msgstr "Vygenerovat"
@@ -2286,6 +2310,9 @@ msgstr "Poslední objednávka"
 
 msgid "Last started at"
 msgstr "Poslední spuštění"
+
+msgid "Last update"
+msgstr "Poslední aktualizace"
 
 msgid "Legal conditions"
 msgstr "Právní podmínky"
@@ -2581,6 +2608,9 @@ msgstr "URL adresa pro nastavení nového hesla"
 msgid "New payment"
 msgstr "Nová platba"
 
+msgid "New price list"
+msgstr "Nový ceník"
+
 msgid "New product"
 msgstr "Nové zboží"
 
@@ -2700,6 +2730,9 @@ msgstr "Nebyly nalezeny žádné cenové skupiny. Nejprve musíte nějakou vytvo
 
 msgid "No product found."
 msgstr "Nebylo nalezeno žádné zboží."
+
+msgid "No product list found."
+msgstr "Nebyl nalezen žádný ceník."
 
 msgid "No promo codes found. You have to create some first."
 msgstr "Nebyly nalezeny žádné slevové kupóny. Nejprve musíte nějaký vytvořit."
@@ -3174,6 +3207,33 @@ msgstr "Cena s DPH"
 
 msgid "Price including VAT rounding"
 msgstr "Zaokrouhlení ceny s DPH"
+
+msgid "Price list"
+msgstr "Ceník"
+
+msgid "Price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr "Byl vytvořen ceník <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
+
+msgid "Price list <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "Byl upraven ceník <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
+
+msgid "Price list <strong>{{ name }}</strong> deleted"
+msgstr "Byl smazán ceník <strong>{{ name }}</strong>"
+
+msgid "Price list name"
+msgstr "Název ceníku"
+
+msgid "Price list overview"
+msgstr "Přehled ceníků"
+
+msgid "Price lists"
+msgstr "Ceníky"
+
+msgid "Price lists - full"
+msgstr "Ceníky - vše"
+
+msgid "Price lists - view"
+msgstr "Ceníky - zobrazení"
 
 msgid "Prices"
 msgstr "Ceny"
@@ -3664,6 +3724,9 @@ msgstr "Zvolený parametr neexistuje."
 msgid "Selected payment doesn't exist."
 msgstr "Zvolená platba neexistuje."
 
+msgid "Selected price list does not exist."
+msgstr "Zvolený ceník neexistuje."
+
 msgid "Selected pricing group doesn't exist."
 msgstr "Zvolená cenová skupina neexistuje."
 
@@ -3834,6 +3897,9 @@ msgstr "Některé údaje nemusí být lokalizovány nebo slouží technickým sp
 
 msgid "Sorting priority"
 msgstr "Priorita řazení"
+
+msgid "Special price"
+msgstr "Speciální cena"
 
 msgid "Standard"
 msgstr "Standardní"
@@ -4552,6 +4618,9 @@ msgstr "měny"
 msgid "customers"
 msgstr "zákazníků"
 
+msgid "discount"
+msgstr "sleva"
+
 msgid "doesn't include"
 msgstr "neobsahuje"
 
@@ -4633,6 +4702,9 @@ msgstr "hodnoty parametru"
 msgid "parameters"
 msgstr "parametry"
 
+msgid "product lists"
+msgstr "ceníky"
+
 msgid "products"
 msgstr "zboží"
 
@@ -4665,6 +4737,12 @@ msgstr "neregistrovaný zákazník"
 
 msgid "watchdogs"
 msgstr "hlídací psi"
+
+msgid "with VAT"
+msgstr "s DPH"
+
+msgid "without VAT"
+msgstr "bez DPH"
 
 msgid "without positioning"
 msgstr "bez umístění"

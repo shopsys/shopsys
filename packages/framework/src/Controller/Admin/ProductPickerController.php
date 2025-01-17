@@ -4,14 +4,18 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchProductFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListAdminFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductGridFactory;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ProductPickerController extends AdminBaseController
@@ -22,6 +26,7 @@ class ProductPickerController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchProductFacade $advancedSearchProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductFacade $productFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductGridFactory $productGridFactory
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      */
     public function __construct(
         protected readonly AdministratorGridFacade $administratorGridFacade,
@@ -29,6 +34,7 @@ class ProductPickerController extends AdminBaseController
         protected readonly AdvancedSearchProductFacade $advancedSearchProductFacade,
         protected readonly ProductFacade $productFacade,
         protected readonly ProductGridFactory $productGridFactory,
+        protected readonly PricingSetting $pricingSetting,
     ) {
     }
 
@@ -37,13 +43,18 @@ class ProductPickerController extends AdminBaseController
      * @param string $jsInstanceId
      * @param bool $allowMainVariants
      * @param bool $allowVariants
+     * @param bool $withPrice
+     * @param int $domainId
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    #[Route(path: '/product-picker/pick-multiple/{jsInstanceId}/{allowMainVariants}/{allowVariants}')]
+    #[Route(path: '/product-picker/pick-multiple/{jsInstanceId}/{allowMainVariants}/{allowVariants}/{withPrice}/{domainId}')]
     public function pickMultipleAction(
         Request $request,
         $jsInstanceId,
         bool $allowMainVariants = true,
         bool $allowVariants = true,
+        bool $withPrice = false,
+        int $domainId = Domain::FIRST_DOMAIN_ID,
     ) {
         return $this->getPickerResponse(
             $request,
@@ -55,6 +66,8 @@ class ProductPickerController extends AdminBaseController
                 'jsInstanceId' => $jsInstanceId,
                 'allowMainVariants' => $allowMainVariants,
                 'allowVariants' => $allowVariants,
+                'withPrice' => $withPrice,
+                'domainId' => $domainId,
             ],
         );
     }
@@ -115,5 +128,29 @@ class ProductPickerController extends AdminBaseController
         );
 
         return $this->render('@ShopsysFramework/Admin/Content/ProductPicker/list.html.twig', $viewParameters);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    #[Route(path: '/product-picker/basic-price/', methods: ['post'], condition: 'request.isXmlHttpRequest()')]
+    public function basicProductPriceAction(Request $request): Response
+    {
+        $productId = (int)$request->get('productId');
+        $domainId = (int)$request->get('domainId');
+
+        $basicPrice = $this->productFacade->getProductSellingPriceForDefaultPricingGroup(
+            $this->productFacade->getById($productId),
+            $domainId,
+        );
+
+        $basicPriceAmount = $this->pricingSetting->getInputPriceType() === PricingSetting::INPUT_PRICE_TYPE_WITH_VAT
+            ? $basicPrice->getPriceWithVat()->getAmount()
+            : $basicPrice->getPriceWithoutVat()->getAmount();
+
+        return new JsonResponse([
+            'basicPrice' => $basicPriceAmount,
+        ]);
     }
 }
