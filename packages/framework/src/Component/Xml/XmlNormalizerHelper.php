@@ -6,13 +6,13 @@ namespace Shopsys\FrameworkBundle\Component\Xml;
 
 use DOMDocument;
 
-class XmlNormalizer
+class XmlNormalizerHelper
 {
     /**
      * @param string $content
      * @return string
      */
-    public static function normalizeXml($content)
+    public function normalizeXml(string $content): string
     {
         $document = new DOMDocument('1.0');
         $document->preserveWhiteSpace = false;
