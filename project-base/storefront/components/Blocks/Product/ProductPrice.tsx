@@ -1,6 +1,7 @@
 'use client';
 
 import { Flag } from 'components/Basic/Flag/Flag';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { TypeProductPriceFragment } from 'graphql/requests/products/fragments/ProductPriceFragment.generated';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';

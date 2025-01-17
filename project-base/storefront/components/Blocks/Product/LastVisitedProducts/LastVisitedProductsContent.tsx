@@ -1,14 +1,7 @@
-import { createQuery } from 'app/_urql/urql-dto';
+import { getLastVisitedProductsQuery } from 'app/_queries/getLastVisitedProductsQuery';
 import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { ProductsSlider, VISIBLE_SLIDER_ITEMS_LAST_VISITED } from 'components/Blocks/Product/ProductsSlider';
-import { ProductsByCatnumsDocument } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.ssr';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-
-async function getLastVisitedProductsQuery(productsCatnums: string[]) {
-    return createQuery(ProductsByCatnumsDocument, {
-        catnums: productsCatnums,
-    });
-}
 
 type LastVisitedProductsProps = {
     productsCatnums: string[];
