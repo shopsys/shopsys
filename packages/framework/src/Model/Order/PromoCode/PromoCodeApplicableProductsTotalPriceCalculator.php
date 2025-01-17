@@ -43,7 +43,7 @@ class PromoCodeApplicableProductsTotalPriceCalculator
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice[] $quantifiedProductsPrices
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPriceInterface[] $quantifiedProductsPrices
      * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
     protected function countTotalPrice(array $quantifiedProductsPrices): PriceInterface

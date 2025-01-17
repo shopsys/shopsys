@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddlewar
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
-use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice;
+use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPriceInterface;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingData;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
@@ -53,13 +53,13 @@ class AddProductsMiddleware implements OrderProcessorMiddlewareInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice $quantifiedItemPrice
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPriceInterface $quantifiedItemPrice
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData
      */
     protected function createProductItemData(
-        QuantifiedItemPrice $quantifiedItemPrice,
+        QuantifiedItemPriceInterface $quantifiedItemPrice,
         QuantifiedProduct $quantifiedProduct,
         string $locale,
     ): OrderItemData {

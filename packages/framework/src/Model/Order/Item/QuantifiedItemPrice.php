@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Item;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
-final class QuantifiedItemPrice
+final class QuantifiedItemPrice implements QuantifiedItemPriceInterface
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $unitPrice
@@ -22,24 +23,27 @@ final class QuantifiedItemPrice
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
+     * {@inheritdoc}
      */
+    #[Override]
     public function getUnitPrice(): PriceInterface
     {
         return $this->unitPrice;
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
+     * {@inheritdoc}
      */
+    #[Override]
     public function getTotalPrice(): PriceInterface
     {
         return $this->totalPrice;
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
+     * {@inheritdoc}
      */
+    #[Override]
     public function getVat(): Vat
     {
         return $this->vat;
