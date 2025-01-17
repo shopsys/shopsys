@@ -1,10 +1,12 @@
 'use client';
 
+import { ProductDetailAvailability } from './ProductDetailAvailability';
 import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailInfo } from './ProductDetailInfo';
 import { ProductDetailPrice } from './ProductDetailPrice';
 import { ProductDetailTabs } from './ProductDetailTabs/ProductDetailTabs';
 import { ProductGift } from 'components/Blocks/Product/ProductGift';
+import { WatchDogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
@@ -66,13 +68,13 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product })
 
                             <ProductDetailPrice productPrice={product.price} />
 
-                            {/* <ProductDetailAvailability
+                            <ProductDetailAvailability
                                 availability={product.availability}
                                 availableStoresCount={product.availableStoresCount}
                                 isInquiryType={product.isInquiryType}
                                 isSellingDenied={product.isSellingDenied}
                                 storeAvailabilities={product.storeAvailabilities}
-                            /> */}
+                            />
 
                             <WatchDogButton
                                 availability={product.availability}
