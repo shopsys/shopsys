@@ -31,7 +31,7 @@ class CartQuery extends AbstractQuery
      */
     public function cartQuery(Argument $argument): ?CartWithModificationsResult
     {
-        $input = CartInputDefaultValueInitializer::initializeDefaultValues($argument);
+        $input = $argument['cartInput'] ?? ['cartUuid' => null];
 
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 
