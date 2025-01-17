@@ -42,6 +42,10 @@ services:
         networks:
             - default
             - github-runner_traefik-network
+        deploy:
+            resources:
+                limits:
+                    memory: 200M
 
     php-fpm:
         restart: always
@@ -104,6 +108,10 @@ services:
             - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-watchdog.no-overlap=true
             - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-watchdog.user=www-data
             - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-watchdog.tty=true
+        deploy:
+            resources:
+                limits:
+                    memory: 700M
 
     php-consumer:
         restart: always
@@ -133,6 +141,10 @@ services:
             - sleep 5 && project-base/app/docker/php-fpm/consumer-entrypoint.sh 600
         labels:
             - traefik.enable=false
+        deploy:
+            resources:
+                limits:
+                    memory: 400M
 
     rabbitmq:
         image: rabbitmq:3.12-management-alpine
@@ -142,14 +154,18 @@ services:
     storefront:
         restart: always
         image: storefront-image
-        networks:
-            - default
-        labels:
-            - traefik.enable=false
         environment:
             PACKETERY_API_KEY: "${PACKETERY_API_KEY_VALUE}"
             GOOGLE_MAP_API_KEY: "${GOOGLE_MAP_API_KEY_VALUE}"
             GTM_ID: "${GTM_ID_VALUE}"
+        networks:
+            - default
+        labels:
+            - traefik.enable=false
+        deploy:
+            resources:
+                limits:
+                    memory: 500M
 
     redis:
         image: redis:7.4-alpine
