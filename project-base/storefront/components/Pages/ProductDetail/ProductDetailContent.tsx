@@ -135,9 +135,6 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product })
                         )}
                     />
                 )} */}
-
-                {/* <ProductDetailAccessories accessories={product.accessories} /> */}
-                {/* <DeferredProductDetailAccessories accessories={product.accessories} /> */}
             </Webline>
         </>
     );

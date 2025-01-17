@@ -1,36 +1,29 @@
-import { createQuery } from 'app/_urql/urql-dto';
+import { getProductQuery } from 'app/_queries/getProductQuery';
 import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
+import { ProductDetailAccessories } from 'components/Pages/ProductDetail/ProductDetailAccessories/ProductDetailAccessories';
 import { ProductDetailContent } from 'components/Pages/ProductDetail/ProductDetailContent';
-import { ProductDetailQueryDocument } from 'graphql/requests/products/queries/ProductDetailQuery.ssr';
-import { headers } from 'next/headers';
 import { notFound } from 'next/navigation';
-
-async function getProductQuery() {
-    const headersList = headers();
-    const slug = headersList.get('x-friendly-slug');
-
-    return createQuery(ProductDetailQueryDocument, {
-        urlSlug: slug,
-    });
-}
 
 export default async function ProductPage() {
     const { data, error } = await getProductQuery();
-
-    if (error || !data?.product) {
-        notFound();
-    }
 
     const product =
         data?.product?.__typename === 'RegularProduct' || data?.product?.__typename === 'MainVariant'
             ? data.product
             : null;
 
-    const firstImageUrl = product?.images[0]?.url;
+    if (error || !product) {
+        notFound();
+    }
+
+    const firstImageUrl = product.images[0].url;
 
     return (
         <>
-            {product?.__typename === 'RegularProduct' && <ProductDetailContent product={product} />}
+            {product.__typename === 'RegularProduct' && <ProductDetailContent product={product} />}
+
+            {/* how about separete query for accessories similar to last visited products❓ */}
+            <ProductDetailAccessories accessories={product.accessories} />
 
             <LastVisitedProducts currentProductCatnum={product.catalogNumber} />
         </>
