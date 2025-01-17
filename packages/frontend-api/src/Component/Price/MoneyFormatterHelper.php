@@ -8,15 +8,15 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 
 class MoneyFormatterHelper
 {
-    protected const MAX_FRACTION_DIGITS = 6;
-    protected const DECIMAL_POINT = '.';
-    protected const THOUSANDS_SEPARATOR = '';
+    protected const int MAX_FRACTION_DIGITS = 6;
+    protected const string DECIMAL_POINT = '.';
+    protected const string THOUSANDS_SEPARATOR = '';
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $money
      * @return string
      */
-    public static function formatWithMaxFractionDigits(Money $money): string
+    public function formatWithMaxFractionDigits(Money $money): string
     {
         return number_format(
             (float)$money->getAmount(),
