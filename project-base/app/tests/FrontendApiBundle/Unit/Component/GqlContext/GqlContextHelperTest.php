@@ -10,11 +10,20 @@ use Shopsys\FrontendApiBundle\Component\GqlContext\GqlContextHelper;
 
 class GqlContextHelperTest extends TestCase
 {
-    private const CART_UUID = '81d7f8ba-e7e5-4ff6-8fc4-958c6012099d';
+    private const string CART_UUID = '81d7f8ba-e7e5-4ff6-8fc4-958c6012099d';
+
+    private GqlContextHelper $gqlContextHelper;
+
+    protected function setUp(): void
+    {
+        $this->gqlContextHelper = new GqlContextHelper();
+
+        parent::setUp();
+    }
 
     public function testGetArgsFromContext(): void
     {
-        $args = GqlContextHelper::getArgs(
+        $args = $this->gqlContextHelper->getArgs(
             new ArrayObject([
                 'args' => [
                     'cartUuid' => self::CART_UUID,
@@ -31,7 +40,7 @@ class GqlContextHelperTest extends TestCase
 
     public function testContextIsNull(): void
     {
-        $args = GqlContextHelper::getArgs(null);
+        $args = $this->gqlContextHelper->getArgs(null);
 
         $expectedContext = new ArrayObject();
 
@@ -46,6 +55,6 @@ class GqlContextHelperTest extends TestCase
             ],
         ]);
 
-        $this->assertEquals(self::CART_UUID, GqlContextHelper::getCartUuid($context));
+        $this->assertEquals(self::CART_UUID, $this->gqlContextHelper->getCartUuid($context));
     }
 }

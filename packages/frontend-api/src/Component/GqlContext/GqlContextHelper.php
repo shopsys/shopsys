@@ -12,7 +12,7 @@ class GqlContextHelper
      * @param \ArrayObject|null $context
      * @return \ArrayObject
      */
-    public static function getArgs(?ArrayObject $context): ArrayObject
+    public function getArgs(?ArrayObject $context): ArrayObject
     {
         if ($context === null) {
             return new ArrayObject();
@@ -25,17 +25,17 @@ class GqlContextHelper
      * @param \ArrayObject|null $context
      * @return string|null
      */
-    public static function getCartUuid(?ArrayObject $context): ?string
+    public function getCartUuid(?ArrayObject $context): ?string
     {
-        return self::getArgs($context)['cartUuid'] ?? null;
+        return $this->getArgs($context)['cartUuid'] ?? null;
     }
 
     /**
      * @param \ArrayObject|null $context
      * @return string|null
      */
-    public static function getOrderUuid(?ArrayObject $context): ?string
+    public function getOrderUuid(?ArrayObject $context): ?string
     {
-        return self::getArgs($context)['orderUuid'] ?? null;
+        return $this->getArgs($context)['orderUuid'] ?? null;
     }
 }
