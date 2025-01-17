@@ -47,16 +47,16 @@ class ReadyCategorySeoMixDataFactory
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ChoseCategorySeoMixCombination|null $choseCategorySeoMixCombination
+     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombination|null $selectedCategorySeoMixCombination
      * @return \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixData
      */
     public function createReadyCategorySeoMixData(
-        ?ChoseCategorySeoMixCombination $choseCategorySeoMixCombination,
+        ?SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination,
     ): ReadyCategorySeoMixData {
         $readyCategorySeoMix = null;
 
-        if ($choseCategorySeoMixCombination !== null) {
-            $readyCategorySeoMix = $this->readyCategorySeoMixFacade->findByChoseCategorySeoMixCombination($choseCategorySeoMixCombination);
+        if ($selectedCategorySeoMixCombination !== null) {
+            $readyCategorySeoMix = $this->readyCategorySeoMixFacade->findBySelectedCategorySeoMixCombination($selectedCategorySeoMixCombination);
         }
 
         $readyCategorySeoMixData = $this->createInstance();
@@ -79,37 +79,37 @@ class ReadyCategorySeoMixDataFactory
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixData $readyCategorySeoMixData
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ChoseCategorySeoMixCombination $choseCategorySeoMixCombination
+     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination
      */
-    public function fillValuesFromChoseCategorySeoMixCombination(
+    public function fillValuesFromSelectedCategorySeoMixCombination(
         ReadyCategorySeoMixData $readyCategorySeoMixData,
-        ChoseCategorySeoMixCombination $choseCategorySeoMixCombination,
+        SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination,
     ): void {
-        $readyCategorySeoMixData->domainId = $choseCategorySeoMixCombination->getDomainId();
+        $readyCategorySeoMixData->domainId = $selectedCategorySeoMixCombination->getDomainId();
 
         $readyCategorySeoMixData->category = $this->categoryFacade->getById(
-            $choseCategorySeoMixCombination->getCategoryId(),
+            $selectedCategorySeoMixCombination->getCategoryId(),
         );
 
         $readyCategorySeoMixData->flag = null;
 
-        if ($choseCategorySeoMixCombination->getFlagId() !== null) {
-            $flag = $this->flagFacade->getById($choseCategorySeoMixCombination->getFlagId());
+        if ($selectedCategorySeoMixCombination->getFlagId() !== null) {
+            $flag = $this->flagFacade->getById($selectedCategorySeoMixCombination->getFlagId());
             $readyCategorySeoMixData->flag = $flag;
         }
 
-        $readyCategorySeoMixData->ordering = $choseCategorySeoMixCombination->getOrdering();
+        $readyCategorySeoMixData->ordering = $selectedCategorySeoMixCombination->getOrdering();
 
         $readyCategorySeoMixData->readyCategorySeoMixParameterParameterValues = [];
 
-        foreach ($choseCategorySeoMixCombination->getParameterValueIdsByParameterIds() as $parameterId => $parameterValueId) {
+        foreach ($selectedCategorySeoMixCombination->getParameterValueIdsByParameterIds() as $parameterId => $parameterValueId) {
             $readyCategorySeoMixData->readyCategorySeoMixParameterParameterValues[] = $this->readyCategorySeoMixParameterValueFactory->create(
                 $this->parameterFacade->getById($parameterId),
                 $this->parameterFacade->getParameterValueById($parameterValueId),
             );
         }
 
-        $readyCategorySeoMixData->choseCategorySeoMixCombinationJson = $choseCategorySeoMixCombination->getInJson();
+        $readyCategorySeoMixData->selectedCategorySeoMixCombinationJson = $selectedCategorySeoMixCombination->getInJson();
     }
 
     /**

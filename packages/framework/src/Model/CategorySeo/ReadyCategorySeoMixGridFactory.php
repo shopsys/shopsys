@@ -42,14 +42,14 @@ class ReadyCategorySeoMixGridFactory
 
         $grid->addColumn('categoryName', 'categoryName', t('Category name'));
         $grid->addColumn('friendlyUrlSlug', 'fuSlug', t('Main URL'));
-        $grid->addColumn('parameters', 'rcsm.choseCategorySeoMixCombinationJson', t('Combination of parameters and their values'));
+        $grid->addColumn('parameters', 'rcsm.selectedCategorySeoMixCombinationJson', t('Combination of parameters and their values'));
         $grid->addColumn('flagName', 'flagName', t('Flag'));
         $grid->addColumn('ordering', 'rcsm.ordering', t('Ordering'));
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_categoryseo_readycombination', [
             'categoryId' => 'categoryId',
-            'choseCategorySeoMixCombinationJson' => 'rcsm.choseCategorySeoMixCombinationJson',
+            'selectedCategorySeoMixCombinationJson' => 'rcsm.selectedCategorySeoMixCombinationJson',
         ]);
         $grid->addDeleteActionColumn('admin_categoryseo_delete', ['id' => 'rcsmId']);
 
@@ -68,7 +68,7 @@ class ReadyCategorySeoMixGridFactory
     public function getAllByDomainIdQueryBuilder(int $domainId, string $locale): QueryBuilder
     {
         return $this->em->createQueryBuilder()
-            ->select('rcsm.id as rcsmId, c.id as categoryId, ct.name as categoryName, fu.slug as fuSlug, rcsm.choseCategorySeoMixCombinationJson, ft.name as flagName, rcsm.ordering')
+            ->select('rcsm.id as rcsmId, c.id as categoryId, ct.name as categoryName, fu.slug as fuSlug, rcsm.selectedCategorySeoMixCombinationJson, ft.name as flagName, rcsm.ordering')
             ->from(ReadyCategorySeoMix::class, 'rcsm')
             ->andWhere('rcsm.domainId = :domainId')
             ->join('rcsm.category', 'c')

@@ -8,13 +8,13 @@
 {% block main_content %}
 
     {{ _self.infoLine('Flag'|trans, flagName) }}
-    {{ _self.infoLine('Ordering'|trans, getOrderingNameByOrderingId(choseCategorySeoMixCombination.ordering)) }}
+    {{ _self.infoLine('Ordering'|trans, getOrderingNameByOrderingId(selectedCategorySeoMixCombination.ordering)) }}
 
     {% for parameterName, parameterValueName in parameterValueNamesIndexedByParameterNames %}
         {{ _self.infoLine(parameterName, parameterValueName) }}
     {% endfor %}
 
-    {{ _self.infoLine('Domain'|trans, choseCategorySeoMixCombinationDomainConfig.name) }}
+    {{ _self.infoLine('Domain'|trans, selectedCategorySeoMixCombinationDomainConfig.name) }}
 
     {{ form_start(form) }}
     {{ form_errors(form) }}

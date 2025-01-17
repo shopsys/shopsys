@@ -73,7 +73,7 @@ final class ReadyCategorySeoCombinationFormType extends AbstractType
                 ],
             ])
             ->add('categorySeoFilterFormTypeAllQueriesJson', HiddenType::class)
-            ->add('choseCategorySeoMixCombinationJson', HiddenType::class)
+            ->add('selectedCategorySeoMixCombinationJson', HiddenType::class)
             ->add('save', SubmitType::class, [
                 'label' => t('Save'),
                 'attr' => [

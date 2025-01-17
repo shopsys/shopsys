@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\CategorySeo;
 
-use Shopsys\FrameworkBundle\Model\CategorySeo\Exception\ChoseCategorySeoMixCombinationIsNotValidException;
+use Shopsys\FrameworkBundle\Model\CategorySeo\Exception\SelectedCategorySeoMixCombinationIsNotValidException;
 
-class ChoseCategorySeoMixCombination
+class SelectedCategorySeoMixCombination
 {
     /**
      * @param int $domainId
@@ -25,31 +25,31 @@ class ChoseCategorySeoMixCombination
     }
 
     /**
-     * @param string|null $choseCategorySeoMixCombinationJson
+     * @param string|null $selectedCategorySeoMixCombinationJson
      * @return self|null
      */
-    public static function createFromJson(?string $choseCategorySeoMixCombinationJson): ?self
+    public static function createFromJson(?string $selectedCategorySeoMixCombinationJson): ?self
     {
-        if ($choseCategorySeoMixCombinationJson === null) {
+        if ($selectedCategorySeoMixCombinationJson === null) {
             return null;
         }
 
-        $choseCategorySeoMixCombinationArray = json_decode($choseCategorySeoMixCombinationJson, true, 512, JSON_THROW_ON_ERROR);
+        $selectedCategorySeoMixCombinationArray = json_decode($selectedCategorySeoMixCombinationJson, true, 512, JSON_THROW_ON_ERROR);
 
-        return self::createFromArray($choseCategorySeoMixCombinationArray);
+        return self::createFromArray($selectedCategorySeoMixCombinationArray);
     }
 
     /**
-     * @param array $choseCategorySeoMixCombinationArray
+     * @param array $selectedCategorySeoMixCombinationArray
      * @return self|null
      */
-    public static function createFromArray(array $choseCategorySeoMixCombinationArray): ?self
+    public static function createFromArray(array $selectedCategorySeoMixCombinationArray): ?self
     {
         foreach (['domainId', 'categoryId', 'flagId', 'ordering', 'parameterValueIdsByParameterIds'] as $checkIndex) {
-            if (!array_key_exists($checkIndex, $choseCategorySeoMixCombinationArray)) {
-                throw new ChoseCategorySeoMixCombinationIsNotValidException(
+            if (!array_key_exists($checkIndex, $selectedCategorySeoMixCombinationArray)) {
+                throw new SelectedCategorySeoMixCombinationIsNotValidException(
                     sprintf(
-                        'ChoseCategorySeoMixCombinationJson is not valid due to missing %s index',
+                        'SelectedCategorySeoMixCombinationJson is not valid due to missing %s index',
                         $checkIndex,
                     ),
                 );
@@ -57,11 +57,11 @@ class ChoseCategorySeoMixCombination
         }
 
         return new self(
-            $choseCategorySeoMixCombinationArray['domainId'],
-            $choseCategorySeoMixCombinationArray['categoryId'],
-            $choseCategorySeoMixCombinationArray['ordering'],
-            $choseCategorySeoMixCombinationArray['flagId'],
-            $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'],
+            $selectedCategorySeoMixCombinationArray['domainId'],
+            $selectedCategorySeoMixCombinationArray['categoryId'],
+            $selectedCategorySeoMixCombinationArray['ordering'],
+            $selectedCategorySeoMixCombinationArray['flagId'],
+            $selectedCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'],
         );
     }
 
@@ -70,7 +70,7 @@ class ChoseCategorySeoMixCombination
      */
     public function getInArray(): array
     {
-        return self::getChoseCategorySeoMixCombinationArray(
+        return self::getSelectedCategorySeoMixCombinationArray(
             $this->domainId,
             $this->categoryId,
             $this->flagId,
@@ -135,7 +135,7 @@ class ChoseCategorySeoMixCombination
      * @param int[] $parameterValueIdsByParameterIds
      * @return array
      */
-    public static function getChoseCategorySeoMixCombinationArray(
+    public static function getSelectedCategorySeoMixCombinationArray(
         int $domainId,
         int $categoryId,
         ?int $flagId,

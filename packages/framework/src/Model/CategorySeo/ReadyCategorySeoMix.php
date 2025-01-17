@@ -37,7 +37,7 @@ class ReadyCategorySeoMix
      * @var string
      * @ORM\Column(type="text")
      */
-    protected $choseCategorySeoMixCombinationJson;
+    protected $selectedCategorySeoMixCombinationJson;
 
     /**
      * @var \Shopsys\FrameworkBundle\Model\Category\Category
@@ -123,7 +123,7 @@ class ReadyCategorySeoMix
         $this->flag = $readyCategorySeoMixData->flag;
         $this->ordering = $readyCategorySeoMixData->ordering;
         $this->domainId = $readyCategorySeoMixData->domainId;
-        $this->choseCategorySeoMixCombinationJson = $readyCategorySeoMixData->choseCategorySeoMixCombinationJson;
+        $this->selectedCategorySeoMixCombinationJson = $readyCategorySeoMixData->selectedCategorySeoMixCombinationJson;
 
         $this->h1 = $readyCategorySeoMixData->h1;
         $this->shortDescription = $readyCategorySeoMixData->shortDescription;
@@ -275,8 +275,8 @@ class ReadyCategorySeoMix
     /**
      * @return string|null
      */
-    public function getChoseCategorySeoMixCombinationJson()
+    public function getSelectedCategorySeoMixCombinationJson()
     {
-        return $this->choseCategorySeoMixCombinationJson;
+        return $this->selectedCategorySeoMixCombinationJson;
     }
 }

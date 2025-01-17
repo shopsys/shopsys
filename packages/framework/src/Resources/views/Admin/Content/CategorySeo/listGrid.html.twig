@@ -11,7 +11,7 @@
 
 {% block grid_value_cell_id_parameters %}
 
-    {% for parameterNameParameterValuePair in getReadyCategoryMixCombinationParametersPairsIterator(row.choseCategorySeoMixCombinationJson) %}
+    {% for parameterNameParameterValuePair in getReadyCategoryMixCombinationParametersPairsIterator(row.selectedCategorySeoMixCombinationJson) %}
         {{ parameterNameParameterValuePair }}<br>
     {% endfor %}
 

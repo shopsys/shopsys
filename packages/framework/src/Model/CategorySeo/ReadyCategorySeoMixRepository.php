@@ -38,14 +38,14 @@ class ReadyCategorySeoMixRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ChoseCategorySeoMixCombination $choseCategorySeoMixCombination
+     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination
      * @return \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix|null
      */
-    public function findByChoseCategorySeoMixCombination(
-        ChoseCategorySeoMixCombination $choseCategorySeoMixCombination,
+    public function findBySelectedCategorySeoMixCombination(
+        SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination,
     ): ?ReadyCategorySeoMix {
         return $this->getRepository()->findOneBy([
-            'choseCategorySeoMixCombinationJson' => $choseCategorySeoMixCombination->getInJson(),
+            'selectedCategorySeoMixCombinationJson' => $selectedCategorySeoMixCombination->getInJson(),
         ]);
     }
 
@@ -108,7 +108,7 @@ class ReadyCategorySeoMixRepository
             $flagId = null;
         }
 
-        $combinationArray = ChoseCategorySeoMixCombination::getChoseCategorySeoMixCombinationArray(
+        $combinationArray = SelectedCategorySeoMixCombination::getSelectedCategorySeoMixCombinationArray(
             $domainConfig->getId(),
             $categoryId,
             $flagId,
@@ -127,7 +127,7 @@ class ReadyCategorySeoMixRepository
         $readyCategorySeoMix = $this->em->createQueryBuilder()
             ->select('rcsm')
             ->from(ReadyCategorySeoMix::class, 'rcsm')
-            ->andWhere('rcsm.choseCategorySeoMixCombinationJson = :combinationJson')
+            ->andWhere('rcsm.selectedCategorySeoMixCombinationJson = :combinationJson')
             ->setParameter('combinationJson', $combinationJson)
             ->getQuery()
             ->getOneOrNullResult();
@@ -165,7 +165,7 @@ class ReadyCategorySeoMixRepository
             self::READY_SEO_CATEGORY_SETUP_CACHE_NAMESPACE,
             function () use ($categoryId, $domainId): array {
                 $scalarData = $this->em->createQueryBuilder()
-                    ->select('rcsm.choseCategorySeoMixCombinationJson as json')
+                    ->select('rcsm.selectedCategorySeoMixCombinationJson as json')
                     ->from(ReadyCategorySeoMix::class, 'rcsm')
                     ->where('IDENTITY(rcsm.category) = :categoryId')
                     ->andWhere('rcsm.domainId = :domainId')

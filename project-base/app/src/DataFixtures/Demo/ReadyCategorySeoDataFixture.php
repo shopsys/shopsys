@@ -11,9 +11,9 @@ use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
-use Shopsys\FrameworkBundle\Model\CategorySeo\ChoseCategorySeoMixCombination;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixDataFactory;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade;
+use Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombination;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
@@ -48,7 +48,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $firstDomainId = $firstDomain->getId();
         $firstDomainLocale = $firstDomain->getLocale();
 
-        $choseCategorySeoMixCombinationArray = [
+        $selectedCategorySeoMixCombinationArray = [
             'domainId' => $firstDomainId,
             'categoryId' => 8,
             'flagId' => 3,
@@ -62,7 +62,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         ];
 
         $this->createReadyCategorySeoMix(
-            ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
+            SelectedCategorySeoMixCombination::createFromArray($selectedCategorySeoMixCombinationArray),
             t('2 litre coffeemakers in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             ['2-litrove-kavovary-v-akci'],
             $firstDomainId,
@@ -75,17 +75,17 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
 
         $categoryElectronics = $this->getReference(CategoryDataFixture::CATEGORY_ELECTRONICS, Category::class);
 
-        $choseCategorySeoMixCombinationArray = [
+        $selectedCategorySeoMixCombinationArray = [
             'domainId' => $firstDomainId,
             'categoryId' => $categoryElectronics->getId(),
         ];
-        $choseCategorySeoMixCombinationArray['flagId'] = 2;
-        $choseCategorySeoMixCombinationArray['ordering'] = ProductListOrderingConfig::ORDER_BY_PRIORITY;
-        $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
+        $selectedCategorySeoMixCombinationArray['flagId'] = 2;
+        $selectedCategorySeoMixCombinationArray['ordering'] = ProductListOrderingConfig::ORDER_BY_PRIORITY;
+        $selectedCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
             $this->getReference(ParameterDataFixture::PARAM_HDMI, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextAndLocale(t('No', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale)->getId(),
         ];
         $this->createReadyCategorySeoMix(
-            ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
+            SelectedCategorySeoMixCombination::createFromArray($selectedCategorySeoMixCombinationArray),
             t('Electronics without HDMI in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             ['elektro-bez-hdmi-akce'],
             $firstDomainId,
@@ -94,12 +94,12 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             t('short description of Electronics without HDMI in sale seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
         );
 
-        $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
+        $selectedCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
             $this->getReference(ParameterDataFixture::PARAM_SCREEN_SIZE, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextAndLocale(t('30"', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale)->getId(),
             $this->getReference(ParameterDataFixture::PARAM_TECHNOLOGY, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextAndLocale(t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale)->getId(),
         ];
         $this->createReadyCategorySeoMix(
-            ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
+            SelectedCategorySeoMixCombination::createFromArray($selectedCategorySeoMixCombinationArray),
             t('Electronics with LED technology and size 30 inch in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             ['elektro-led-uhlopricka-30-akce'],
             $firstDomainId,
@@ -110,11 +110,11 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             t('meta description of Electronics with LED technology and size 30 inch in sale seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
         );
 
-        $choseCategorySeoMixCombinationArray['flagId'] = null;
-        $choseCategorySeoMixCombinationArray['ordering'] = ProductListOrderingConfig::ORDER_BY_PRICE_DESC;
-        $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [];
+        $selectedCategorySeoMixCombinationArray['flagId'] = null;
+        $selectedCategorySeoMixCombinationArray['ordering'] = ProductListOrderingConfig::ORDER_BY_PRICE_DESC;
+        $selectedCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [];
         $this->createReadyCategorySeoMix(
-            ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
+            SelectedCategorySeoMixCombination::createFromArray($selectedCategorySeoMixCombinationArray),
             t('Electronics from most expensive', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             ['elektro-od-nejdrazsiho'],
             $firstDomainId,
@@ -125,15 +125,15 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             t('meta description of Electronics from most expensive seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
         );
 
-        $choseCategorySeoMixCombinationArray['ordering'] = ProductListOrderingConfig::ORDER_BY_PRIORITY;
-        $choseCategorySeoMixCombinationArray['flagId'] = null;
-        $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
+        $selectedCategorySeoMixCombinationArray['ordering'] = ProductListOrderingConfig::ORDER_BY_PRIORITY;
+        $selectedCategorySeoMixCombinationArray['flagId'] = null;
+        $selectedCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
             $this->getReference(ParameterDataFixture::PARAM_USB, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextAndLocale(t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale)->getId(),
             $this->getReference(ParameterDataFixture::PARAM_TECHNOLOGY, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextAndLocale(t('LED', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale)->getId(),
             $this->getReference(ParameterDataFixture::PARAM_RESOLUTION, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextAndLocale(t('1920×1080 (Full HD)', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale)->getId(),
         ];
         $this->createReadyCategorySeoMix(
-            ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
+            SelectedCategorySeoMixCombination::createFromArray($selectedCategorySeoMixCombinationArray),
             t('Full HD Electronics with LED technology and USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             ['elektro-full-hd-led-usb'],
             $firstDomainId,
@@ -144,12 +144,12 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             t('meta description of Full HD Electronics with LED technology and USB seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
         );
 
-        $choseCategorySeoMixCombinationArray['flagId'] = null;
-        $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
+        $selectedCategorySeoMixCombinationArray['flagId'] = null;
+        $selectedCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
             $this->getReference(ParameterDataFixture::PARAM_COLOR, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextAndLocale(t('black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale)->getId(),
         ];
         $this->createReadyCategorySeoMix(
-            ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
+            SelectedCategorySeoMixCombination::createFromArray($selectedCategorySeoMixCombinationArray),
             t('Electronics in black', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             ['elektro-barva-cerna'],
             $firstDomainId,
@@ -160,11 +160,11 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             t('meta description of Electronics in black seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
         );
 
-        $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
+        $selectedCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
             $this->getReference(ParameterDataFixture::PARAM_COLOR, Parameter::class)->getId() => $this->parameterFacade->getParameterValueByValueTextAndLocale(t('red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale)->getId(),
         ];
         $this->createReadyCategorySeoMix(
-            ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
+            SelectedCategorySeoMixCombination::createFromArray($selectedCategorySeoMixCombinationArray),
             t('Electronics in red', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             ['elektro-barva-cervena'],
             $firstDomainId,
@@ -176,7 +176,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         );
 
         $categoryTv = $this->getReference(CategoryDataFixture::CATEGORY_TV, Category::class);
-        $choseCategorySeoMixCombinationArray = [
+        $selectedCategorySeoMixCombinationArray = [
             'domainId' => $firstDomainId,
             'categoryId' => $categoryTv->getId(),
             'flagId' => null,
@@ -185,7 +185,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         ];
 
         $this->createReadyCategorySeoMix(
-            ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
+            SelectedCategorySeoMixCombination::createFromArray($selectedCategorySeoMixCombinationArray),
             t('TV, audio from the cheapest', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             ['televize-audio-nejlevnejsi'],
             $firstDomainId,
@@ -197,10 +197,10 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         );
 
         $saleFlag = $this->getReference(FlagDataFixture::FLAG_PRODUCT_SALE, Flag::class);
-        $choseCategorySeoMixCombinationArray['flagId'] = $saleFlag->getId();
-        $choseCategorySeoMixCombinationArray['ordering'] = ProductListOrderingConfig::ORDER_BY_PRIORITY;
+        $selectedCategorySeoMixCombinationArray['flagId'] = $saleFlag->getId();
+        $selectedCategorySeoMixCombinationArray['ordering'] = ProductListOrderingConfig::ORDER_BY_PRIORITY;
         $this->createReadyCategorySeoMix(
-            ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
+            SelectedCategorySeoMixCombination::createFromArray($selectedCategorySeoMixCombinationArray),
             t('TV, audio in sale', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             ['televize-audio-vyprodej'],
             $firstDomainId,
@@ -211,15 +211,15 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             t('meta description of TV, audio in sale seo category', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
         );
 
-        $choseCategorySeoMixCombinationArray['flagId'] = null;
+        $selectedCategorySeoMixCombinationArray['flagId'] = null;
         $technologyParameter = $this->getReference(ParameterDataFixture::PARAM_TECHNOLOGY, Parameter::class);
         $hdmiParameter = $this->getReference(ParameterDataFixture::PARAM_HDMI, Parameter::class);
-        $choseCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
+        $selectedCategorySeoMixCombinationArray['parameterValueIdsByParameterIds'] = [
             $hdmiParameter->getId() => $this->getParameterValueId(t('Yes', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale),
             $technologyParameter->getId() => $this->getParameterValueId(t('PLASMA', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale), $firstDomainLocale),
         ];
         $this->createReadyCategorySeoMix(
-            ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
+            SelectedCategorySeoMixCombination::createFromArray($selectedCategorySeoMixCombinationArray),
             t('TV, audio plasma with HDMI', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             ['televize-audio-plasma-s-hdmi'],
             $firstDomainId,
@@ -233,7 +233,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         $categoryPc = $this->getReference(CategoryDataFixture::CATEGORY_PC, Category::class);
         $newFlag = $this->getReference(FlagDataFixture::FLAG_PRODUCT_NEW, Flag::class);
         $usbParameter = $this->getReference(ParameterDataFixture::PARAM_USB, Parameter::class);
-        $choseCategorySeoMixCombinationArray = [
+        $selectedCategorySeoMixCombinationArray = [
             'domainId' => $firstDomainId,
             'categoryId' => $categoryPc->getId(),
             'flagId' => $newFlag->getId(),
@@ -243,7 +243,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
             ],
         ];
         $this->createReadyCategorySeoMix(
-            ChoseCategorySeoMixCombination::createFromArray($choseCategorySeoMixCombinationArray),
+            SelectedCategorySeoMixCombination::createFromArray($selectedCategorySeoMixCombinationArray),
             t('New computers with USB', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             ['nove-pc-s-usb'],
             $firstDomainId,
@@ -256,7 +256,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ChoseCategorySeoMixCombination $choseCategorySeoMixCombination
+     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination
      * @param string $h1
      * @param string[] $slugs
      * @param int $domainId
@@ -267,7 +267,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
      * @param string|null $metaDescription
      */
     private function createReadyCategorySeoMix(
-        ChoseCategorySeoMixCombination $choseCategorySeoMixCombination,
+        SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination,
         string $h1,
         array $slugs,
         int $domainId,
@@ -278,13 +278,13 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         ?string $metaDescription = null,
     ): void {
         $readyCategorySeoMixData = $this->readyCategorySeoMixDataFactory->createReadyCategorySeoMixData(
-            $choseCategorySeoMixCombination,
+            $selectedCategorySeoMixCombination,
         );
         $readyCategorySeoMixData->h1 = $h1;
 
-        $this->readyCategorySeoMixDataFactory->fillValuesFromChoseCategorySeoMixCombination(
+        $this->readyCategorySeoMixDataFactory->fillValuesFromSelectedCategorySeoMixCombination(
             $readyCategorySeoMixData,
-            $choseCategorySeoMixCombination,
+            $selectedCategorySeoMixCombination,
         );
         $readyCategorySeoMixData->showInCategory = true;
         $readyCategorySeoMixData->description = $description;
@@ -303,7 +303,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
         }
 
         $readyCategorySeoMix = $this->readyCategorySeoMixFacade->createOrEdit(
-            $choseCategorySeoMixCombination,
+            $selectedCategorySeoMixCombination,
             $readyCategorySeoMixData,
             $urlListData,
         );

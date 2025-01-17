@@ -14,6 +14,7 @@ class CategoryNestedSetCalculatorTest extends TestCase
     protected function setUp(): void
     {
         $this->categoryNestedSetCalculatorHelper = new CategoryNestedSetCalculatorHelper();
+
         parent::setUp();
     }
 

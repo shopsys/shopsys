@@ -6,8 +6,8 @@ namespace Shopsys\FrameworkBundle\Twig;
 
 use Generator;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
-use Shopsys\FrameworkBundle\Model\CategorySeo\ChoseCategorySeoMixCombination;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade;
+use Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombination;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Extension\AbstractExtension;
@@ -39,15 +39,15 @@ class CategorySeoExtension extends AbstractExtension
     }
 
     /**
-     * @param string $choseCategorySeoMixCombinationJson
+     * @param string $selectedCategorySeoMixCombinationJson
      * @return \Generator
      */
     public function getReadyCategoryMixCombinationParametersPairsIterator(
-        string $choseCategorySeoMixCombinationJson,
+        string $selectedCategorySeoMixCombinationJson,
     ): Generator {
-        $choseCategorySeoMixCombination = ChoseCategorySeoMixCombination::createFromJson($choseCategorySeoMixCombinationJson);
+        $selectedCategorySeoMixCombination = SelectedCategorySeoMixCombination::createFromJson($selectedCategorySeoMixCombinationJson);
 
-        foreach ($choseCategorySeoMixCombination->getParameterValueIdsByParameterIds() as $parameterId => $parameterValueId) {
+        foreach ($selectedCategorySeoMixCombination->getParameterValueIdsByParameterIds() as $parameterId => $parameterValueId) {
             yield $this->parameterFacade->getById($parameterId)->getName() . ': ' . $this->parameterFacade->getParameterValueById($parameterValueId)->getText();
         }
     }

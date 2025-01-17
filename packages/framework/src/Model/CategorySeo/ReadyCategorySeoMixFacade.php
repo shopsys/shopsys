@@ -43,17 +43,17 @@ class ReadyCategorySeoMixFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ChoseCategorySeoMixCombination $choseCategorySeoMixCombination
+     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination
      * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixData $readyCategorySeoMixData
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData $urlListData
      * @return \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix
      */
     public function createOrEdit(
-        ChoseCategorySeoMixCombination $choseCategorySeoMixCombination,
+        SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination,
         ReadyCategorySeoMixData $readyCategorySeoMixData,
         UrlListData $urlListData,
     ): ReadyCategorySeoMix {
-        $readyCategorySeoMix = $this->findByChoseCategorySeoMixCombination($choseCategorySeoMixCombination);
+        $readyCategorySeoMix = $this->findBySelectedCategorySeoMixCombination($selectedCategorySeoMixCombination);
 
         $this->em->beginTransaction();
 
@@ -89,13 +89,13 @@ class ReadyCategorySeoMixFacade
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ChoseCategorySeoMixCombination $choseCategorySeoMixCombination
+     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination
      * @return \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix|null
      */
-    public function findByChoseCategorySeoMixCombination(
-        ChoseCategorySeoMixCombination $choseCategorySeoMixCombination,
+    public function findBySelectedCategorySeoMixCombination(
+        SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination,
     ): ?ReadyCategorySeoMix {
-        return $this->readyCategorySeoMixRepository->findByChoseCategorySeoMixCombination($choseCategorySeoMixCombination);
+        return $this->readyCategorySeoMixRepository->findBySelectedCategorySeoMixCombination($selectedCategorySeoMixCombination);
     }
 
     /**
