@@ -1,12 +1,12 @@
 import { MenuIconic } from './MenuIconic/MenuIconic';
-import Navigation from 'app/_components/Layout/Header/Navigation/Navigation';
+import { Navigation } from 'app/_components/Layout/Header/Navigation/Navigation';
 import { CartIcon } from 'components/Basic/Icon/CartIcon';
 import { MenuIcon } from 'components/Basic/Icon/MenuIcon';
 import { Logo } from 'components/Layout/Header/Logo/Logo';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
 
-export default async function Header() {
+export const Header = () => {
     return (
         <header className="mb-4 bg-gradient-to-tr from-backgroundBrand to-backgroundBrandLess" tid={TIDs.header}>
             <Webline className="mb-0">
@@ -34,4 +34,4 @@ export default async function Header() {
             </Webline>
         </header>
     );
-}
+};

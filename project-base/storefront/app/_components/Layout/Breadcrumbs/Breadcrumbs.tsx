@@ -16,7 +16,7 @@ export const breadcrumbsTwClass = 'flex items-center gap-3';
 const breadcrumbsLinkTwClass =
     'hidden font-secondary text-sm font-semibold no-underline last-of-type:inline hover:no-underline lg:inline';
 
-export async function Breadcrumbs({ breadcrumbs, className }: BreadcrumbsProps) {
+export const Breadcrumbs = async ({ breadcrumbs, className }: BreadcrumbsProps) => {
     const t = await getTranslation();
 
     if (!breadcrumbs.length) {
@@ -57,4 +57,4 @@ export async function Breadcrumbs({ breadcrumbs, className }: BreadcrumbsProps) 
             </div>
         </Webline>
     );
-}
+};

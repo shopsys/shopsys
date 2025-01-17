@@ -1,7 +1,7 @@
 import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { Error404Headless } from 'components/Pages/ErrorPage/Error404Headless';
 
-export default async function NotFound() {
+const NotFound = async () => {
     const t = await getTranslation();
 
     return (
@@ -13,4 +13,6 @@ export default async function NotFound() {
             mainText={t('But at other addresses we have a lot for you...')}
         />
     );
-}
+};
+
+export default NotFound;

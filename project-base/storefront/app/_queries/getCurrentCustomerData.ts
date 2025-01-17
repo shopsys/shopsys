@@ -9,7 +9,7 @@ import {
 import { TypeDeliveryAddress } from 'graphql/types';
 import { DeliveryAddressType } from 'types/customer';
 
-export async function getCurrentCustomerData() {
+export const getCurrentCustomerData = async () => {
     const result = await createQuery<TypeCurrentCustomerUserQuery, TypeCurrentCustomerUserQueryVariables>(
         CurrentCustomerUserQueryDocument,
         {},
@@ -53,7 +53,7 @@ export async function getCurrentCustomerData() {
             code: '',
         },
     };
-}
+};
 
 const mapDeliveryAddress = (apiDeliveryAddressData: TypeDeliveryAddress): DeliveryAddressType => {
     return {
