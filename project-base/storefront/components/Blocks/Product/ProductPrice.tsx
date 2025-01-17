@@ -2,7 +2,7 @@
 
 import { Flag } from 'components/Basic/Flag/Flag';
 import { useTranslation } from 'components/providers/TranslationProvider';
-import { TypeProductPriceFragment } from 'graphql/requests/products/fragments/ProductPriceFragment.generated';
+import { TypeProductPriceFragment } from 'graphql/requests/products/fragments/ProductPriceFragment.ssr';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { isPriceVisible } from 'utils/mappers/price';
 import { twMergeCustom } from 'utils/twMerge';
@@ -38,7 +38,7 @@ export const ProductPrice: FC<ProductPriceProps> = ({
                 className={twMergeCustom(
                     'font-secondary text-price text-lg font-bold whitespace-nowrap',
                     textPriceSize === 'base' ? 'text-base' : 'text-lg',
-                    isSpecialPrice && 'text-priceBefore text-sm font-semibold line-through',
+                    isSpecialPrice && 'text-sm font-semibold text-priceBefore line-through',
                 )}
             >
                 {productPrice.isPriceFrom && isPriceFromVisible && t('From') + '\u00A0'}

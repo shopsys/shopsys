@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { twMergeCustom } from 'utils/twMerge';
 
 export type FlagTypes = 'blog' | 'dynamic' | 'custom' | 'discount';

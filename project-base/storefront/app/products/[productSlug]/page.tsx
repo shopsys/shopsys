@@ -1,28 +1,41 @@
 import { getProductQuery } from 'app/_queries/getProductQuery';
+import { ProductMetadataJsonLd } from 'components/Basic/Head/ProductMetadataJsonLd';
 import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { ProductDetailAccessories } from 'components/Pages/ProductDetail/ProductDetailAccessories/ProductDetailAccessories';
 import { ProductDetailContent } from 'components/Pages/ProductDetail/ProductDetailContent';
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-export default async function ProductPage() {
-    const { data, error } = await getProductQuery();
+export async function generateMetadata(): Promise<Metadata> {
+    const { product } = await getProductQuery();
 
-    const product =
-        data?.product?.__typename === 'RegularProduct' || data?.product?.__typename === 'MainVariant'
-            ? data.product
-            : null;
-
-    if (error || !product) {
+    if (!product) {
         notFound();
     }
 
-    const firstImageUrl = product.images[0].url;
+    return {
+        title: product.fullName,
+        description: product.description,
+        openGraph: {
+            title: product.fullName,
+            description: product.description ?? '',
+            images: product.images.length > 0 ? [product.images[0].url] : [],
+        },
+    };
+}
+export default async function ProductPage() {
+    const { product } = await getProductQuery();
+
+    if (!product) {
+        notFound();
+    }
 
     return (
         <>
+            <ProductMetadataJsonLd product={product} />
+
             {product.__typename === 'RegularProduct' && <ProductDetailContent product={product} />}
 
-            {/* how about separete query for accessories similar to last visited products❓ */}
             <ProductDetailAccessories accessories={product.accessories} />
 
             <LastVisitedProducts currentProductCatnum={product.catalogNumber} />

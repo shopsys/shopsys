@@ -1,6 +1,8 @@
+'use client';
+
 import dayjs, { Dayjs } from 'dayjs';
 import duration from 'dayjs/plugin/duration';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useState, useEffect, useCallback } from 'react';
 
 interface TimeState {
@@ -44,7 +46,7 @@ export const useCountdown = (endTime: CountdownTime): TimeState => {
     const updateTime = useCallback(
         (duration: duration.Duration) => {
             if (duration.asMilliseconds() <= 0) {
-                router.reload();
+                router.refresh();
                 return false;
             }
 
