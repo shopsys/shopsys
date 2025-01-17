@@ -2,7 +2,7 @@
 
 import { Flag } from 'components/Basic/Flag/Flag';
 import { useTranslation } from 'components/providers/TranslationProvider';
-import { TypeProductPriceFragment } from 'graphql/requests/products/fragments/ProductPriceFragment.generated';
+import { TypeProductPriceFragment } from 'graphql/requests/products/fragments/ProductPriceFragment.ssr';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible } from 'utils/mappers/price';

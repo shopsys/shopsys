@@ -10,14 +10,12 @@ import { WatchDogButton } from 'components/Blocks/Product/Watchdog/WatchDogButto
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
 
 type ProductDetailContentProps = {
     product: TypeProductDetailFragment;
 };
 
-export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product }) => {
-    const { t } = useTranslation();
+export function ProductDetailContent({ product }: ProductDetailContentProps) {
     // const router = useRouter();
     // const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
@@ -117,4 +115,4 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product })
             </VerticalStack>
         </>
     );
-};
+}

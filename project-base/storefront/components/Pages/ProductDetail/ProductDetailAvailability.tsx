@@ -1,3 +1,5 @@
+'use client';
+
 import { ProductDetailAvailabilityList } from './ProductDetailAvailabilityList';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { Popup } from 'components/Layout/Popup/Popup';
