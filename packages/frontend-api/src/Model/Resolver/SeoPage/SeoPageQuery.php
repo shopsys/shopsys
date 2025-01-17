@@ -17,10 +17,12 @@ class SeoPageQuery extends AbstractQuery
     /**
      * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageFacade $seoPageFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageSlugTransformer $seoPageSlugTransformer
      */
     public function __construct(
         protected readonly SeoPageFacade $seoPageFacade,
         protected readonly Domain $domain,
+        protected readonly SeoPageSlugTransformer $seoPageSlugTransformer,
     ) {
     }
 
@@ -33,7 +35,7 @@ class SeoPageQuery extends AbstractQuery
         $domainId = $this->domain->getId();
 
         try {
-            $slug = SeoPageSlugTransformer::transformFriendlyUrlToSeoPageSlug($pageSlug);
+            $slug = $this->seoPageSlugTransformer->transformFriendlyUrlToSeoPageSlug($pageSlug);
             $seoPage = $this->seoPageFacade->getByDomainIdAndPageSlug($domainId, $slug);
         } catch (SeoPageNotFoundException $seoPageNotFoundException) {
             throw new SeoPageNotFoundUserError($seoPageNotFoundException->getMessage());

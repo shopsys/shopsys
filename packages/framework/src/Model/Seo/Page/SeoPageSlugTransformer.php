@@ -10,7 +10,7 @@ class SeoPageSlugTransformer
      * @param string $friendlyUrl
      * @return string
      */
-    public static function transformFriendlyUrlToSeoPageSlug(string $friendlyUrl): string
+    public function transformFriendlyUrlToSeoPageSlug(string $friendlyUrl): string
     {
         $pageSlug = ltrim($friendlyUrl, '/');
 
