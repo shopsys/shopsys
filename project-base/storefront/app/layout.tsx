@@ -1,5 +1,6 @@
 import { Footer } from './_components/Layout/Footer/Footer';
 import Header from './_components/Layout/Header/Header';
+import { NotificationBars } from './_components/Layout/NotificationBars/NotificationBars';
 import { Webline } from 'components/Layout/Webline/Webline';
 import Providers from 'components/providers/Providers';
 import 'nprogress/nprogress.css';
@@ -11,9 +12,11 @@ type RootLayoutProps = {
     children: React.ReactNode;
 };
 
-export default function RootLayout({ children }: RootLayoutProps) {
+const RootLayout = async ({ children }: RootLayoutProps) => {
     return (
         <Providers>
+            <NotificationBars />
+
             <div className="flex min-h-dvh flex-col">
                 <Header />
 
@@ -25,7 +28,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
             </div>
         </Providers>
     );
-}
+};
+
+export default RootLayout;
 
 export const metadata = {
     title: 'Shopsys Platform App Router',
