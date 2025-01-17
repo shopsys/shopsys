@@ -1,9 +1,9 @@
 'use client';
 
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { TypeStoreAvailabilityFragment } from 'graphql/requests/storeAvailabilities/fragments/StoreAvailabilityFragment.generated';
 import { TypeAvailabilityStatusEnum } from 'graphql/types';
-import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 
 type ProductDetailAvailabilityListProps = {
