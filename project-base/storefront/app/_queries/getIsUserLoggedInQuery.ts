@@ -7,11 +7,11 @@ import {
     TypeCurrentCustomerUserQueryVariables,
 } from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.ssr';
 
-export async function getIsUserLoggedInQuery() {
+export const getIsUserLoggedInQuery = async () => {
     const result = await createQuery<TypeCurrentCustomerUserQuery, TypeCurrentCustomerUserQueryVariables>(
         CurrentCustomerUserQueryDocument,
         {},
     );
 
     return !!result.data?.currentCustomerUser;
-}
+};

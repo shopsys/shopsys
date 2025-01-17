@@ -1,5 +1,7 @@
 import { SkeletonPageLogin } from 'components/Blocks/Skeleton/SkeletonPageLogin';
 
-export default function Loading() {
+const Loading = () => {
     return <SkeletonPageLogin />;
-}
+};
+
+export default Loading;

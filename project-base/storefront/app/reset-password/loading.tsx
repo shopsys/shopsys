@@ -1,5 +1,7 @@
 import { SkeletonPageResetPassword } from 'components/Blocks/Skeleton/SkeletonPageResetPassword';
 
-export default function Loading() {
+const Loading = () => {
     return <SkeletonPageResetPassword />;
-}
+};
+
+export default Loading;

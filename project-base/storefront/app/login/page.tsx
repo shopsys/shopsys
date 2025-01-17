@@ -4,7 +4,7 @@ import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.ssr';
 
-export default async function LoginPage() {
+const LoginPage = async () => {
     const t = await getTranslation();
     const breadcrumbs: TypeBreadcrumbFragment[] = [{ __typename: 'Link', name: t('Log in'), slug: '' }];
 
@@ -17,4 +17,6 @@ export default async function LoginPage() {
             </Webline>
         </>
     );
-}
+};
+
+export default LoginPage;

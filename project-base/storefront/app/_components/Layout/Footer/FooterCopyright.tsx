@@ -12,6 +12,8 @@ export const FooterCopyright = async () => {
 
     const currentYear = new Date().getFullYear();
 
+    // TODO: add translation
+
     return (
         <div className="flex flex-col items-center py-4 text-center">
             <div className="flex items-center text-sm text-textDisabled">{currentYear}</div>
