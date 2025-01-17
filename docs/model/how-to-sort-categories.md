@@ -40,7 +40,7 @@ you can call `CategoryFacade::reorderByNestedSetValues()` method which accepts a
     This root category must not be present in the data passed to reordering method.
 
 Usually, you don't have a complete nested set model, but it's much easier to obtain a sorted [adjacency list](https://en.wikipedia.org/wiki/Adjacency_list) (for example, from the information system).
-In that case, it's possible to use `Shopsys\FrameworkBundle\Model\Category\CategoryNestedSetCalculator::calculateNestedSetFromAdjacencyList()` helper method to calculate the complete nested set model.
+In that case, it's possible to use `Shopsys\FrameworkBundle\Model\Category\CategoryNestedSetCalculatorHelper::calculateNestedSetFromAdjacencyList()` helper method to calculate the complete nested set model.
 
 Usage is pretty straightforward. The desired category tree structure is following (each node already contain computed left and right attribute for better understanding)
 
@@ -67,9 +67,14 @@ $parentIdByCategoryId = [
 At this point we pass this data to previously mentioned helper method and sort the whole tree
 
 ```php
-use Shopsys\FrameworkBundle\Model\Category\CategoryNestedSetCalculator;
+use Shopsys\FrameworkBundle\Model\Category\CategoryNestedSetCalculatorHelper;
 
-$categoriesOrderingData = CategoryNestedSetCalculator::calculateNestedSetFromAdjacencyList($parentIdByCategoryId);
+public function __construct(
+    private readonly CategoryNestedSetCalculator $categoryNestedSetCalculatorHelper,
+) {
+}
+
+$categoriesOrderingData = $this->categoryNestedSetCalculatorHelper->calculateNestedSetFromAdjacencyList($parentIdByCategoryId);
 
 $this->categoryFacade->reorderByNestedSetValues($categoriesOrderingData);
 ```

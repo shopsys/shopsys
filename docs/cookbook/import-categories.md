@@ -188,13 +188,18 @@ Now we have all categories created or edited, and we have built the sorted array
 ```diff
 + use Shopsys\FrameworkBundle\Model\Category\CategoryNestedSetCalculator;
 
+ public function __construct(
+     private readonly CategoryNestedSetCalculator $categoryNestedSetCalculatorHelper,
+ ) {
+ }
+
  public function run(): void
  {
      foreach ($this->getCategoryDataFromIs() as $importData) {
          $this->importCategory($importData);
      }
 
-+    $categoriesSortingData = CategoryNestedSetCalculator::calculateNestedSetFromAdjacencyList($this->parentIdByCategoryId);
++    $categoriesSortingData = $this->categoryNestedSetCalculatorHelper->calculateNestedSetFromAdjacencyList($this->parentIdByCategoryId);
 +    $this->categoryFacade->reorderByNestedSetValues($categoriesSortingData);
  }
 ```
