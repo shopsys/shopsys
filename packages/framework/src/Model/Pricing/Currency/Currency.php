@@ -151,7 +151,7 @@ class Currency
      */
     protected function setRoundingType($roundingType): void
     {
-        if (in_array($roundingType, static::getRoundingTypes(), true) !== true) {
+        if (in_array($roundingType, $this->getRoundingTypes(), true) !== true) {
             throw new InvalidRoundingTypeException($roundingType);
         }
 
@@ -161,7 +161,7 @@ class Currency
     /**
      * @return string[]
      */
-    protected static function getRoundingTypes(): array
+    protected function getRoundingTypes(): array
     {
         return [
             self::ROUNDING_TYPE_HUNDREDTHS,
