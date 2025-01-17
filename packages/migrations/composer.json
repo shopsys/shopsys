@@ -39,5 +39,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^11.2.1"
+    },
+    "conflict": {
+        "doctrine/doctrine-migrations-bundle": "3.4.0"
     }
 }
