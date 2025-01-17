@@ -12,7 +12,7 @@ use Ramsey\Uuid\Uuid;
  * @ORM\Table(
  *     name="ready_category_seo_mixes",
  *     uniqueConstraints={
- *         @ORM\UniqueConstraint(name="chose_category_seo_mix_combination_json", columns={"chose_category_seo_mix_combination_json"})
+ *         @ORM\UniqueConstraint(name="selected_category_seo_mix_combination_json", columns={"selected_category_seo_mix_combination_json"})
  *     }
  * )
  * @ORM\Entity

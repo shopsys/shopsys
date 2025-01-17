@@ -21,6 +21,7 @@ use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixDataFactory;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixGridFactory;
 use Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombination;
+use Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombinationFactory;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Symfony\Component\Form\FormInterface;
@@ -40,6 +41,7 @@ class CategorySeoController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixGridFactory $readyCategorySeoMixGridFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombinationFactory $selectedCategorySeoMixCombinationFactory
      */
     public function __construct(
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
@@ -51,6 +53,7 @@ class CategorySeoController extends AdminBaseController
         protected readonly ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
         protected readonly ReadyCategorySeoMixGridFactory $readyCategorySeoMixGridFactory,
         protected readonly Domain $domain,
+        protected readonly SelectedCategorySeoMixCombinationFactory $selectedCategorySeoMixCombinationFactory,
     ) {
     }
 
@@ -193,16 +196,19 @@ class CategorySeoController extends AdminBaseController
     public function readyCombinationAction(Request $request, int $categoryId): Response
     {
         $categorySeoFilterFormTypeAllQueries = $request->get('categorySeoFilterFormTypeAllQueries');
+        $selectedCategorySeoMixCombinationJson = $request->get('selectedCategorySeoMixCombinationJson');
 
-        $selectedCategorySeoMixCombination = SelectedCategorySeoMixCombination::createFromJson(
-            $request->get('selectedCategorySeoMixCombinationJson'),
-        );
-
-        // A little hack - when you need form sent data to create that same form - need for friendly URLs
-        if ($selectedCategorySeoMixCombination === null) {
+        if ($selectedCategorySeoMixCombinationJson === null) {
+            // A little hack - when you need form sent data to create that same form - need for friendly URLs
             $sentReadyCategorySeoCombinationFormData = $request->get('ready_category_seo_combination_form');
-            $selectedCategorySeoMixCombination = SelectedCategorySeoMixCombination::createFromJson(
-                $sentReadyCategorySeoCombinationFormData['selectedCategorySeoMixCombinationJson'],
+            $selectedCategorySeoMixCombinationJson = $sentReadyCategorySeoCombinationFormData['selectedCategorySeoMixCombinationJson'];
+
+            $selectedCategorySeoMixCombination = $selectedCategorySeoMixCombinationJson === null ? null : $this->selectedCategorySeoMixCombinationFactory->createFromJson(
+                $selectedCategorySeoMixCombinationJson,
+            );
+        } else {
+            $selectedCategorySeoMixCombination = $this->selectedCategorySeoMixCombinationFactory->createFromJson(
+                $selectedCategorySeoMixCombinationJson,
             );
         }
 
@@ -245,7 +251,7 @@ class CategorySeoController extends AdminBaseController
                 [
                     'categoryId' => $categoryId,
                     'categorySeoFilterFormTypeAllQueries' => $categorySeoFilterFormTypeAllQueries,
-                    'selectedCategorySeoMixCombinationJson' => $selectedCategorySeoMixCombination->getInJson(),
+                    'selectedCategorySeoMixCombinationJson' => $this->selectedCategorySeoMixCombinationFactory->createJsonFromSelectedCategorySeoMixCombination($selectedCategorySeoMixCombination),
                 ],
             );
 
@@ -298,7 +304,7 @@ class CategorySeoController extends AdminBaseController
             'categoryId' => $categoryId,
             'categorySeoFilterFormTypeAllQueries' => $categorySeoFilterFormTypeAllQueries,
             'selectedCategorySeoMixCombination' => $selectedCategorySeoMixCombination,
-            'selectedCategorySeoMixCombinationJson' => $selectedCategorySeoMixCombination->getInJson(),
+            'selectedCategorySeoMixCombinationJson' => $this->selectedCategorySeoMixCombinationFactory->createJsonFromSelectedCategorySeoMixCombination($selectedCategorySeoMixCombination),
         ]);
     }
 
@@ -383,7 +389,7 @@ class CategorySeoController extends AdminBaseController
         }
 
         if (isset($selectedCategorySeoMixCombination)) {
-            $readyCategorySeoMixData->selectedCategorySeoMixCombinationJson = $selectedCategorySeoMixCombination->getInJson();
+            $readyCategorySeoMixData->selectedCategorySeoMixCombinationJson = $this->selectedCategorySeoMixCombinationFactory->createJsonFromSelectedCategorySeoMixCombination($selectedCategorySeoMixCombination);
         }
     }
 }

@@ -21,11 +21,13 @@ class ReadyCategorySeoMixRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper
+     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombinationFactory $selectedCategorySeoMixCombinationFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly InMemoryCache $inMemoryCache,
         protected readonly OrderByCollationHelper $orderByCollationHelper,
+        protected readonly SelectedCategorySeoMixCombinationFactory $selectedCategorySeoMixCombinationFactory,
     ) {
     }
 
@@ -45,7 +47,7 @@ class ReadyCategorySeoMixRepository
         SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination,
     ): ?ReadyCategorySeoMix {
         return $this->getRepository()->findOneBy([
-            'selectedCategorySeoMixCombinationJson' => $selectedCategorySeoMixCombination->getInJson(),
+            'selectedCategorySeoMixCombinationJson' => $this->selectedCategorySeoMixCombinationFactory->createJsonFromSelectedCategorySeoMixCombination($selectedCategorySeoMixCombination),
         ]);
     }
 
@@ -108,7 +110,7 @@ class ReadyCategorySeoMixRepository
             $flagId = null;
         }
 
-        $combinationArray = SelectedCategorySeoMixCombination::getSelectedCategorySeoMixCombinationArray(
+        $combinationArray = $this->selectedCategorySeoMixCombinationFactory->createArray(
             $domainConfig->getId(),
             $categoryId,
             $flagId,

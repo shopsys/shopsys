@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Twig;
 use Generator;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade;
-use Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombination;
+use Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombinationFactory;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Extension\AbstractExtension;
@@ -19,11 +19,13 @@ class CategorySeoExtension extends AbstractExtension
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade $parameterFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
+     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombinationFactory $selectedCategorySeoMixCombinationFactory
      */
     public function __construct(
         protected readonly ParameterFacade $parameterFacade,
         protected readonly DomainRouterFactory $domainRouterFactory,
         protected readonly ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
+        protected readonly SelectedCategorySeoMixCombinationFactory $selectedCategorySeoMixCombinationFactory,
     ) {
     }
 
@@ -45,7 +47,7 @@ class CategorySeoExtension extends AbstractExtension
     public function getReadyCategoryMixCombinationParametersPairsIterator(
         string $selectedCategorySeoMixCombinationJson,
     ): Generator {
-        $selectedCategorySeoMixCombination = SelectedCategorySeoMixCombination::createFromJson($selectedCategorySeoMixCombinationJson);
+        $selectedCategorySeoMixCombination = $this->selectedCategorySeoMixCombinationFactory->createFromJson($selectedCategorySeoMixCombinationJson);
 
         foreach ($selectedCategorySeoMixCombination->getParameterValueIdsByParameterIds() as $parameterId => $parameterValueId) {
             yield $this->parameterFacade->getById($parameterId)->getName() . ': ' . $this->parameterFacade->getParameterValueById($parameterValueId)->getText();

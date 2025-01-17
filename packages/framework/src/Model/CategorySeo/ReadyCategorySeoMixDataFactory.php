@@ -19,6 +19,7 @@ class ReadyCategorySeoMixDataFactory
      * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade $readyCategorySeoMixFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixParameterParameterValueFactory $readyCategorySeoMixParameterValueFactory
+     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombinationFactory $selectedCategorySeoMixCombinationFactory
      */
     public function __construct(
         protected readonly CategoryFacade $categoryFacade,
@@ -27,6 +28,7 @@ class ReadyCategorySeoMixDataFactory
         protected readonly ReadyCategorySeoMixFacade $readyCategorySeoMixFacade,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly ReadyCategorySeoMixParameterParameterValueFactory $readyCategorySeoMixParameterValueFactory,
+        protected readonly SelectedCategorySeoMixCombinationFactory $selectedCategorySeoMixCombinationFactory,
     ) {
     }
 
@@ -109,7 +111,7 @@ class ReadyCategorySeoMixDataFactory
             );
         }
 
-        $readyCategorySeoMixData->selectedCategorySeoMixCombinationJson = $selectedCategorySeoMixCombination->getInJson();
+        $readyCategorySeoMixData->selectedCategorySeoMixCombinationJson = $this->selectedCategorySeoMixCombinationFactory->createJsonFromSelectedCategorySeoMixCombination($selectedCategorySeoMixCombination);
     }
 
     /**
