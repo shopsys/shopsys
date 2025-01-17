@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\Exception;
 
 use Exception;
 
-class OrderNumberSequenceNotFoundException extends Exception implements OrderException
+class OrderNumberSequenceNotFoundException extends Exception
 {
     /**
      * @param string $message

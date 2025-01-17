@@ -13,13 +13,13 @@ class CountryFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryRepository $countryRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Country\CountryFactoryInterface $countryFactory
+     * @param \Shopsys\FrameworkBundle\Model\Country\CountryFactory $countryFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly CountryRepository $countryRepository,
         protected readonly Domain $domain,
-        protected readonly CountryFactoryInterface $countryFactory,
+        protected readonly CountryFactory $countryFactory,
     ) {
     }
 

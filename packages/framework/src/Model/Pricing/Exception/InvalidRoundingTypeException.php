@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Exception;
 
 use Exception;
 
-class InvalidRoundingTypeException extends Exception implements PricingException
+class InvalidRoundingTypeException extends Exception
 {
     /**
      * @param string $message

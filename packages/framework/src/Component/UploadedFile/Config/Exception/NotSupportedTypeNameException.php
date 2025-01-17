@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception;
 use Exception;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
 
-class NotSupportedTypeNameException extends Exception implements UploadedFileConfigException
+class NotSupportedTypeNameException extends Exception
 {
     /**
      * @param string|null $typeName

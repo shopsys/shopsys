@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\UploadedFile;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 
-class UploadedFileFactory implements UploadedFileFactoryInterface
+class UploadedFileFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload

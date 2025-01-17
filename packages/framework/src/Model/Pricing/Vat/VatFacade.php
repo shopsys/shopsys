@@ -17,7 +17,7 @@ class VatFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatRepository $vatRepository
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactoryInterface $vatFactory
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactory $vatFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      */
@@ -25,7 +25,7 @@ class VatFacade
         protected readonly EntityManagerInterface $em,
         protected readonly VatRepository $vatRepository,
         protected readonly Setting $setting,
-        protected readonly VatFactoryInterface $vatFactory,
+        protected readonly VatFactory $vatFactory,
         protected readonly Domain $domain,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
     ) {

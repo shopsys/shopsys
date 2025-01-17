@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures\Performance;
 
 use App\DataFixtures\Demo\CountryDataFixture;
+use App\Model\Customer\DeliveryAddressDataFactory;
 use App\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Faker\Generator as Faker;
@@ -13,8 +14,7 @@ use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Country\Country;
-use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -43,12 +43,12 @@ class CustomerUserDataFixture
         private readonly Domain $domain,
         private readonly SqlLoggerFacade $sqlLoggerFacade,
         private readonly CustomerUserFacade $customerUserEditFacade,
-        private readonly CustomerUserDataFactoryInterface $customerUserDataFactory,
+        private readonly CustomerUserDataFactory $customerUserDataFactory,
         private readonly Faker $faker,
         private readonly PersistentReferenceFacade $persistentReferenceFacade,
         private readonly ProgressBarFactory $progressBarFactory,
         private readonly CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
-        private readonly DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory,
+        private readonly DeliveryAddressDataFactory $deliveryAddressDataFactory,
     ) {
         $this->userCountPerDomain = $userCountPerDomain;
     }

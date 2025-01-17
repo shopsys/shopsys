@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Pricing\Vat;
 
-class VatDataFactory implements VatDataFactoryInterface
+class VatDataFactory
 {
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData

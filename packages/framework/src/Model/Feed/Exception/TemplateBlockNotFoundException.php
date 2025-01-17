@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Feed\Exception;
 
 use Exception;
 
-class TemplateBlockNotFoundException extends Exception implements FeedException
+class TemplateBlockNotFoundException extends Exception
 {
     /**
      * @param string $blockName

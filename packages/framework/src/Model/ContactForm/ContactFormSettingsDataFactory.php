@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\ContactForm;
 
-class ContactFormSettingsDataFactory implements ContactFormSettingsDataFactoryInterface
+class ContactFormSettingsDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsFacade $contactFormSettingsFacade
@@ -22,7 +22,8 @@ class ContactFormSettingsDataFactory implements ContactFormSettingsDataFactoryIn
     }
 
     /**
-     * {@inheritdoc}
+     * @param int $domainId
+     * @return \Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsData
      */
     public function createFromSettingsByDomainId(int $domainId): ContactFormSettingsData
     {

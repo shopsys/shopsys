@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Form\Admin\Product\Brand\BrandFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
-use Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Exception\BrandNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +27,7 @@ class BrandController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface $brandDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactory $brandDataFactory
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      */
     public function __construct(
@@ -36,7 +36,7 @@ class BrandController extends AdminBaseController
         protected readonly GridFactory $gridFactory,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly Domain $domain,
-        protected readonly BrandDataFactoryInterface $brandDataFactory,
+        protected readonly BrandDataFactory $brandDataFactory,
         protected readonly EntityManagerInterface $entityManager,
     ) {
     }

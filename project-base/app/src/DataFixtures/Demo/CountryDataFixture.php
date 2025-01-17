@@ -9,7 +9,7 @@ use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Country\CountryData;
-use Shopsys\FrameworkBundle\Model\Country\CountryDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Country\CountryDataFactory;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 
 class CountryDataFixture extends AbstractReferenceFixture
@@ -24,7 +24,7 @@ class CountryDataFixture extends AbstractReferenceFixture
      */
     public function __construct(
         private readonly CountryFacade $countryFacade,
-        private readonly CountryDataFactoryInterface $countryDataFactory,
+        private readonly CountryDataFactory $countryDataFactory,
         private readonly Domain $domain,
     ) {
     }

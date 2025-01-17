@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Mail;
 
-use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactoryInterface;
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail;
 
-class MailTemplateDataFactory implements MailTemplateDataFactoryInterface
+class MailTemplateDataFactory
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactoryInterface $uploadedFileDataFactory
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory $uploadedFileDataFactory
      */
-    public function __construct(protected readonly UploadedFileDataFactoryInterface $uploadedFileDataFactory)
+    public function __construct(protected readonly UploadedFileDataFactory $uploadedFileDataFactory)
     {
     }
 

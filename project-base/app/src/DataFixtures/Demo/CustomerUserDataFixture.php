@@ -15,7 +15,7 @@ use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 use Shopsys\FrameworkBundle\Model\Country\Country;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
@@ -73,7 +73,7 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
         private readonly EntityManagerInterface $em,
         private readonly HashGenerator $hashGenerator,
         private readonly CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
-        private readonly CustomerUserDataFactoryInterface $customerUserDataFactory,
+        private readonly CustomerUserDataFactory $customerUserDataFactory,
     ) {
     }
 

@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Exception;
 
 use Exception;
 
-class ProductIsAlreadyVariantException extends Exception implements VariantException
+class ProductIsAlreadyVariantException extends VariantException
 {
     /**
      * @param int $productId

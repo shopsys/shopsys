@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Payment\Exception;
 
 use Exception;
 
-class PaymentDomainNotFoundException extends Exception implements PaymentException
+class PaymentDomainNotFoundException extends Exception
 {
     /**
      * @param int $domainId

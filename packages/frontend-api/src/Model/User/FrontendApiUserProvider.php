@@ -11,10 +11,10 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 class FrontendApiUserProvider implements UserProviderInterface
 {
     /**
-     * @param \Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactoryInterface $frontendApiUserFactory
+     * @param \Shopsys\FrontendApiBundle\Model\User\FrontendApiUserFactory $frontendApiUserFactory
      */
     public function __construct(
-        protected readonly FrontendApiUserFactoryInterface $frontendApiUserFactory,
+        protected readonly FrontendApiUserFactory $frontendApiUserFactory,
     ) {
     }
 

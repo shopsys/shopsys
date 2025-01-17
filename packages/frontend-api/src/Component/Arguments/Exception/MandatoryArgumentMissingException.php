@@ -6,6 +6,6 @@ namespace Shopsys\FrontendApiBundle\Component\Arguments\Exception;
 
 use Exception;
 
-class MandatoryArgumentMissingException extends Exception implements BuilderArgumentException
+class MandatoryArgumentMissingException extends Exception
 {
 }

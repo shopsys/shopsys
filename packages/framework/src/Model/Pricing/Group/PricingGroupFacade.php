@@ -18,7 +18,7 @@ class PricingGroupFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFactoryInterface $pricingGroupFactory
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFactory $pricingGroupFactory
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
@@ -27,7 +27,7 @@ class PricingGroupFacade
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         protected readonly ProductVisibilityFacade $productVisibilityFacade,
         protected readonly CustomerUserRepository $customerUserRepository,
-        protected readonly PricingGroupFactoryInterface $pricingGroupFactory,
+        protected readonly PricingGroupFactory $pricingGroupFactory,
         protected readonly EventDispatcherInterface $eventDispatcher,
     ) {
     }

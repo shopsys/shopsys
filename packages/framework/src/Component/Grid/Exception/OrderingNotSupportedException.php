@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Grid\Exception;
 
 use Exception;
 
-class OrderingNotSupportedException extends Exception implements GridException
+class OrderingNotSupportedException extends Exception
 {
     /**
      * @param string $message

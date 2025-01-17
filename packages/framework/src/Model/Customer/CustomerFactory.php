@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
-class CustomerFactory implements CustomerFactoryInterface
+class CustomerFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

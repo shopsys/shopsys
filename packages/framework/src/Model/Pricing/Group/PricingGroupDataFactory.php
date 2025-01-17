@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Pricing\Group;
 
-class PricingGroupDataFactory implements PricingGroupDataFactoryInterface
+class PricingGroupDataFactory
 {
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData

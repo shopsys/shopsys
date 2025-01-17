@@ -8,7 +8,7 @@ use Exception;
 use Prezent\Doctrine\TranslatableBundle\EventListener\LocaleListener;
 use Shopsys\FrameworkBundle\Model\Localization\TranslatableListener;
 
-class ImplicitLocaleNotSetException extends Exception implements LocalizationException
+class ImplicitLocaleNotSetException extends Exception
 {
     /**
      * @param object $entity

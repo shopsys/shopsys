@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures\Demo;
 
 use App\Model\Category\Category;
+use App\Model\Category\CategoryDataFactory;
 use Doctrine\Persistence\ObjectManager;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
@@ -12,7 +13,6 @@ use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\NewProductsCategoryAutomatedFilter;
 use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\OnStockCategoryAutomatedFilter;
 use Shopsys\FrameworkBundle\Model\Category\CategoryData;
-use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 
 class CategoryDataFixture extends AbstractReferenceFixture
@@ -37,7 +37,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
      */
     public function __construct(
         private readonly CategoryFacade $categoryFacade,
-        private readonly CategoryDataFactoryInterface $categoryDataFactory,
+        private readonly CategoryDataFactory $categoryDataFactory,
     ) {
     }
 

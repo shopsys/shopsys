@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception;
 
 use Exception;
 
-class NotYetValidPromoCodeDateTimeException extends Exception implements PromoCodeException
+class NotYetValidPromoCodeDateTimeException extends PromoCodeException
 {
     /**
      * @param string $invalidPromoCode

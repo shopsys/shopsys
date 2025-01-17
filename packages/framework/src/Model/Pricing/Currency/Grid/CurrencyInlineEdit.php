@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Currency\Grid;
 
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
 use Shopsys\FrameworkBundle\Form\Admin\Pricing\Currency\CurrencyFormType;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Symfony\Component\Form\FormFactoryInterface;
 
@@ -16,13 +16,13 @@ class CurrencyInlineEdit extends AbstractGridInlineEdit
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Grid\CurrencyGridFactory $currencyGridFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactoryInterface $currencyDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactory $currencyDataFactory
      */
     public function __construct(
         CurrencyGridFactory $currencyGridFactory,
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly FormFactoryInterface $formFactory,
-        protected readonly CurrencyDataFactoryInterface $currencyDataFactory,
+        protected readonly CurrencyDataFactory $currencyDataFactory,
     ) {
         parent::__construct($currencyGridFactory);
     }

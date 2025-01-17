@@ -27,8 +27,8 @@ class PaymentFacade
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation $paymentPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFactoryInterface $paymentFactory
-     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactoryInterface $paymentPriceFactory
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFactory $paymentFactory
+     * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceFactory $paymentPriceFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -39,8 +39,8 @@ class PaymentFacade
         protected readonly ImageFacade $imageFacade,
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly PaymentPriceCalculation $paymentPriceCalculation,
-        protected readonly PaymentFactoryInterface $paymentFactory,
-        protected readonly PaymentPriceFactoryInterface $paymentPriceFactory,
+        protected readonly PaymentFactory $paymentFactory,
+        protected readonly PaymentPriceFactory $paymentPriceFactory,
     ) {
     }
 

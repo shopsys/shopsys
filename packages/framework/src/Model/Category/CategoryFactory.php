@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Category;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
-class CategoryFactory implements CategoryFactoryInterface
+class CategoryFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

@@ -6,8 +6,8 @@ namespace Tests\FrameworkBundle\Unit\Component\Image\Config;
 
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
-use Shopsys\FrameworkBundle\Component\Image\Config\Exception\DuplicateEntityNameException;
-use Shopsys\FrameworkBundle\Component\Image\Config\Exception\DuplicateTypeNameException;
+use Shopsys\FrameworkBundle\Component\Image\Config\Exception\DuplicateEntityNameExceptionInvalid;
+use Shopsys\FrameworkBundle\Component\Image\Config\Exception\DuplicateTypeNameExceptionInvalid;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\EntityParseException;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfigDefinition;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfigLoader;
@@ -49,7 +49,7 @@ class ImageConfigLoaderTest extends TestCase
             $previousException = $exception->getPrevious();
         }
 
-        $this->assertInstanceOf(DuplicateEntityNameException::class, $previousException);
+        $this->assertInstanceOf(DuplicateEntityNameExceptionInvalid::class, $previousException);
     }
 
     public function testLoadFromArrayDuplicateEntityClass(): void
@@ -77,7 +77,7 @@ class ImageConfigLoaderTest extends TestCase
             $previousException = $exception->getPrevious();
         }
 
-        $this->assertInstanceOf(DuplicateEntityNameException::class, $previousException);
+        $this->assertInstanceOf(DuplicateEntityNameExceptionInvalid::class, $previousException);
     }
 
     public function testLoadFromArrayDuplicateTypeName(): void
@@ -107,7 +107,7 @@ class ImageConfigLoaderTest extends TestCase
             $previousException = $exception->getPrevious();
         }
 
-        $this->assertInstanceOf(DuplicateTypeNameException::class, $previousException);
+        $this->assertInstanceOf(DuplicateTypeNameExceptionInvalid::class, $previousException);
     }
 
     public function testLoadFromArray(): void

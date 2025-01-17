@@ -24,13 +24,13 @@ class ParameterRepository
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactoryInterface $parameterValueFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface $parameterValueDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueFactory $parameterValueFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
      */
     public function __construct(
         EntityManagerInterface $entityManager,
-        protected readonly ParameterValueFactoryInterface $parameterValueFactory,
-        protected readonly ParameterValueDataFactoryInterface $parameterValueDataFactory,
+        protected readonly ParameterValueFactory $parameterValueFactory,
+        protected readonly ParameterValueDataFactory $parameterValueDataFactory,
     ) {
         $this->em = $entityManager;
     }

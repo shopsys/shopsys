@@ -20,7 +20,7 @@ class AdministratorFacade
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository $administratorRepository
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFactoryInterface $administratorFactory
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorFactory $administratorFactory
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFacade $administratorRoleFacade
      * @param \Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactoryInterface $passwordHasherFactory
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
@@ -28,7 +28,7 @@ class AdministratorFacade
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly AdministratorRepository $administratorRepository,
-        protected readonly AdministratorFactoryInterface $administratorFactory,
+        protected readonly AdministratorFactory $administratorFactory,
         protected readonly AdministratorRoleFacade $administratorRoleFacade,
         protected readonly PasswordHasherFactoryInterface $passwordHasherFactory,
         protected readonly TokenStorageInterface $tokenStorage,

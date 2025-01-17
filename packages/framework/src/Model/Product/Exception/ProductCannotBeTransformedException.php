@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Exception;
 
-use Exception;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
-class ProductCannotBeTransformedException extends Exception
+class ProductCannotBeTransformedException extends VariantException
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product

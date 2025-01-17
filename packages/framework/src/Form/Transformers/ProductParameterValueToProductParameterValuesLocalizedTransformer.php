@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Transformers;
 
-use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValuesLocalizedData;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
@@ -13,12 +13,12 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 class ProductParameterValueToProductParameterValuesLocalizedTransformer implements DataTransformerInterface
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactoryInterface $productParameterValueDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactoryInterface $parameterValueDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory $productParameterValueDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueDataFactory $parameterValueDataFactory
      */
     public function __construct(
-        protected readonly ProductParameterValueDataFactoryInterface $productParameterValueDataFactory,
-        protected readonly ParameterValueDataFactoryInterface $parameterValueDataFactory,
+        protected readonly ProductParameterValueDataFactory $productParameterValueDataFactory,
+        protected readonly ParameterValueDataFactory $parameterValueDataFactory,
     ) {
     }
 

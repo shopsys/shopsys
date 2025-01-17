@@ -28,12 +28,6 @@ services:
         tags:
             - { name: shopsys.feed, hours: '2', minutes: '0' }
 
-    Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDataFactoryInterface:
-        alias: Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDataFactory
-
     Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDownloader:
         arguments:
             - '%shopsys.product_feed.heureka_bundle.heureka_category_feed_url%'
-
-    Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainDataFactoryInterface:
-        alias: Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainDataFactory

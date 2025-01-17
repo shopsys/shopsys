@@ -12,12 +12,12 @@ class TopProductFacade
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductRepository $topProductRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFactoryInterface $topProductFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFactory $topProductFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly TopProductRepository $topProductRepository,
-        protected readonly TopProductFactoryInterface $topProductFactory,
+        protected readonly TopProductFactory $topProductFactory,
     ) {
     }
 

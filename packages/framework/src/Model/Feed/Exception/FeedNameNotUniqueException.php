@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Feed\Exception;
 
 use Exception;
 
-class FeedNameNotUniqueException extends Exception implements FeedException
+class FeedNameNotUniqueException extends Exception
 {
     /**
      * @param string $name

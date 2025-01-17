@@ -8,7 +8,7 @@ use Exception;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
-class ProductImageUrlNotLoadedException extends Exception implements ProductCollectionException
+class ProductImageUrlNotLoadedException extends Exception
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product

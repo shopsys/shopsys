@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 
-class ProductCategoryDomainFactory implements ProductCategoryDomainFactoryInterface
+class ProductCategoryDomainFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

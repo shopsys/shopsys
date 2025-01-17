@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Accessory;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
-class ProductAccessoryFactory implements ProductAccessoryFactoryInterface
+class ProductAccessoryFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

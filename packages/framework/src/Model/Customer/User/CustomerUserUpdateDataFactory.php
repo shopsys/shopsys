@@ -7,23 +7,23 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User;
 use Shopsys\FrameworkBundle\Component\Utils\Utils;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddress;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
-use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
-use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 
 class CustomerUserUpdateDataFactory
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface $billingAddressDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface $customerUserDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory $billingAddressDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
      */
     public function __construct(
-        protected readonly BillingAddressDataFactoryInterface $billingAddressDataFactory,
-        protected readonly DeliveryAddressDataFactoryInterface $deliveryAddressDataFactory,
-        protected readonly CustomerUserDataFactoryInterface $customerUserDataFactory,
+        protected readonly BillingAddressDataFactory $billingAddressDataFactory,
+        protected readonly DeliveryAddressDataFactory $deliveryAddressDataFactory,
+        protected readonly CustomerUserDataFactory $customerUserDataFactory,
     ) {
     }
 

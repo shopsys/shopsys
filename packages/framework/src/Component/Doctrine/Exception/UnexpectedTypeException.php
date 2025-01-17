@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Doctrine\Exception;
 
 use Exception;
 
-class UnexpectedTypeException extends Exception implements EntityException
+class UnexpectedTypeException extends Exception
 {
     /**
      * @param string $message

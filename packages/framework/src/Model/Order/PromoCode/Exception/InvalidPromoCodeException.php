@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception;
 
 use Exception;
 
-class InvalidPromoCodeException extends Exception implements PromoCodeException
+class InvalidPromoCodeException extends PromoCodeException
 {
     /**
      * @param string $invalidPromoCode

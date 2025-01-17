@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\Image\Config\Exception;
 use Exception;
 use Throwable;
 
-class EntityParseException extends Exception implements ImageConfigException
+class EntityParseException extends Exception
 {
     protected string $entityClass;
 

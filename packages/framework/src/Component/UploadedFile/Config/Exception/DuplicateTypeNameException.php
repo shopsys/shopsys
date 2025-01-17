@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\UploadedFile\Config\Exception;
 
 use Exception;
 
-class DuplicateTypeNameException extends Exception implements UploadedFileConfigException
+class DuplicateTypeNameException extends InvalidUploadedFileConfigException
 {
     /**
      * @param string $typeName

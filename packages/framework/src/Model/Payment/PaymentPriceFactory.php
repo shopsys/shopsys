@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Payment;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 
-class PaymentPriceFactory implements PaymentPriceFactoryInterface
+class PaymentPriceFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

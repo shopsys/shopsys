@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
-class DeliveryAddressFactory implements DeliveryAddressFactoryInterface
+class DeliveryAddressFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

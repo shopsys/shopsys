@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Article;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
-class ArticleFactory implements ArticleFactoryInterface
+class ArticleFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

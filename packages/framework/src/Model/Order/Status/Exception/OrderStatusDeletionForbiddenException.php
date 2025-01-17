@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\Status\Exception;
 use Exception;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
 
-class OrderStatusDeletionForbiddenException extends Exception implements OrderStatusException
+class OrderStatusDeletionForbiddenException extends Exception
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus $orderStatus

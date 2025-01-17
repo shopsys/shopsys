@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Country;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
-class CountryDataFactory implements CountryDataFactoryInterface
+class CountryDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

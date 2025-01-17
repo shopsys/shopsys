@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
-use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactoryInterface;
+use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory;
 
-class ParameterValueDataFactory implements ParameterValueDataFactoryInterface
+class ParameterValueDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory $uploadedFileDataFactory
      */
-    public function __construct(protected UploadedFileDataFactoryInterface $uploadedFileDataFactory)
+    public function __construct(protected UploadedFileDataFactory $uploadedFileDataFactory)
     {
     }
 

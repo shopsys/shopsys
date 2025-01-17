@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Transport\Exception\TransportNotFoundException;
 use Shopsys\FrameworkBundle\Model\Transport\Grid\TransportGridFactory;
-use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactory;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,14 +20,14 @@ class TransportController extends AdminBaseController
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\Grid\TransportGridFactory $transportGridFactory
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface $transportDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportDataFactory $transportDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      */
     public function __construct(
         protected readonly TransportFacade $transportFacade,
         protected readonly TransportGridFactory $transportGridFactory,
-        protected readonly TransportDataFactoryInterface $transportDataFactory,
+        protected readonly TransportDataFactory $transportDataFactory,
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
     ) {

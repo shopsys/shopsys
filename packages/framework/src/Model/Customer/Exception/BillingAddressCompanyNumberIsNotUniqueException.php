@@ -6,6 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Customer\Exception;
 
 use Exception;
 
-class BillingAddressCompanyNumberIsNotUniqueException extends Exception implements BillingAddressException
+class BillingAddressCompanyNumberIsNotUniqueException extends Exception
 {
 }

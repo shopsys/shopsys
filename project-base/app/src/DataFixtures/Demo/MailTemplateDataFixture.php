@@ -15,7 +15,7 @@ use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Administrator\Mail\ResetPasswordMail;
 use Shopsys\FrameworkBundle\Model\Administrator\Mail\TwoFactorAuthenticationMail;
-use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactory;
 
 class MailTemplateDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
@@ -24,7 +24,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
      * @param \App\Model\Mail\MailTemplateDataFactory $mailTemplateDataFactory
      */
     public function __construct(
-        private readonly MailTemplateFactoryInterface $mailTemplateFactory,
+        private readonly MailTemplateFactory $mailTemplateFactory,
         private readonly MailTemplateDataFactory $mailTemplateDataFactory,
     ) {
     }

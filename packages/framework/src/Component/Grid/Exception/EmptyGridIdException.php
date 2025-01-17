@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Grid\Exception;
 
 use Exception;
 
-class EmptyGridIdException extends Exception implements GridException
+class EmptyGridIdException extends Exception
 {
     /**
      * @param string $message

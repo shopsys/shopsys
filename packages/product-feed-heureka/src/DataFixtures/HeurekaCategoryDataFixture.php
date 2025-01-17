@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\ProductFeed\HeurekaBundle\DataFixtures;
 
 use Shopsys\Plugin\PluginDataFixtureInterface;
-use Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDataFactoryInterface;
+use Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDataFactory;
 use Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade;
 
 class HeurekaCategoryDataFixture implements PluginDataFixtureInterface
@@ -22,11 +22,11 @@ class HeurekaCategoryDataFixture implements PluginDataFixtureInterface
 
     /**
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade $heurekaCategoryFacade
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDataFactoryInterface $heurekaCategoryDataFactory
+     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryDataFactory $heurekaCategoryDataFactory
      */
     public function __construct(
         private readonly HeurekaCategoryFacade $heurekaCategoryFacade,
-        private readonly HeurekaCategoryDataFactoryInterface $heurekaCategoryDataFactory,
+        private readonly HeurekaCategoryDataFactory $heurekaCategoryDataFactory,
     ) {
     }
 

@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Group\Grid;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
 use Shopsys\FrameworkBundle\Form\Admin\Pricing\Group\PricingGroupFormType;
-use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Symfony\Component\Form\FormFactoryInterface;
 
@@ -18,14 +18,14 @@ class PricingGroupInlineEdit extends AbstractGridInlineEdit
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \Symfony\Component\Form\FormFactoryInterface $formFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactoryInterface $pricingGroupDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactory $pricingGroupDataFactory
      */
     public function __construct(
         PricingGroupGridFactory $pricingGroupGridFactory,
         protected readonly PricingGroupFacade $pricingGroupFacade,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly FormFactoryInterface $formFactory,
-        protected readonly PricingGroupDataFactoryInterface $pricingGroupDataFactory,
+        protected readonly PricingGroupDataFactory $pricingGroupDataFactory,
     ) {
         parent::__construct($pricingGroupGridFactory);
     }

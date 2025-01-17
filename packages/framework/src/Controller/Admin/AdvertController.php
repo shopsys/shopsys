@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Form\Admin\Advert\AdvertFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Advert\Advert;
-use Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactory;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertFacade;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry;
 use Shopsys\FrameworkBundle\Model\Advert\Exception\AdvertNotFoundException;
@@ -31,7 +31,7 @@ class AdvertController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Twig\ImageExtension $imageExtension
-     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactoryInterface $advertDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactory $advertDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry $advertPositionRegistry
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      */
@@ -42,7 +42,7 @@ class AdvertController extends AdminBaseController
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly ImageExtension $imageExtension,
-        protected readonly AdvertDataFactoryInterface $advertDataFactory,
+        protected readonly AdvertDataFactory $advertDataFactory,
         protected readonly AdvertPositionRegistry $advertPositionRegistry,
         protected readonly EntityManagerInterface $entityManager,
     ) {

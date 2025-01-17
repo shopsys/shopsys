@@ -6,6 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Mail\Exception;
 
 use Exception;
 
-class ResetPasswordHashNotValidException extends Exception implements MailException
+class ResetPasswordHashNotValidException extends Exception
 {
 }

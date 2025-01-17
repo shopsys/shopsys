@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Brand\Exception;
 
 use Exception;
 
-class BrandDomainNotFoundException extends Exception implements BrandException
+class BrandDomainNotFoundException extends Exception
 {
     /**
      * @param int $domainId

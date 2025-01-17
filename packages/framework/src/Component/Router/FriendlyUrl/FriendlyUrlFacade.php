@@ -26,7 +26,7 @@ class FriendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlUniqueResultFactory $friendlyUrlUniqueResultFactory
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactoryInterface $friendlyUrlFactory
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactory $friendlyUrlFactory
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider
      * @param \Symfony\Contracts\Cache\CacheInterface $mainFriendlyUrlSlugCache
      */
@@ -36,7 +36,7 @@ class FriendlyUrlFacade
         protected readonly FriendlyUrlUniqueResultFactory $friendlyUrlUniqueResultFactory,
         protected readonly FriendlyUrlRepository $friendlyUrlRepository,
         protected readonly Domain $domain,
-        protected readonly FriendlyUrlFactoryInterface $friendlyUrlFactory,
+        protected readonly FriendlyUrlFactory $friendlyUrlFactory,
         protected readonly FriendlyUrlCacheKeyProvider $friendlyUrlCacheKeyProvider,
         protected readonly CacheInterface $mainFriendlyUrlSlugCache,
     ) {

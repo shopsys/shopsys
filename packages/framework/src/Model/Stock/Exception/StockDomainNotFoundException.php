@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Stock\Exception;
 
 use Exception;
 
-class StockDomainNotFoundException extends Exception implements StockException
+class StockDomainNotFoundException extends Exception
 {
     /**
      * @param int|null $stockId

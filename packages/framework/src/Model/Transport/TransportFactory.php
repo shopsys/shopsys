@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Transport;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
-class TransportFactory implements TransportFactoryInterface
+class TransportFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

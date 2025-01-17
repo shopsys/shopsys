@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception;
 
 use Exception;
 
-class FriendlyUrlRouteNotSupportedException extends Exception implements FriendlyUrlException
+class FriendlyUrlRouteNotSupportedException extends Exception
 {
     /**
      * @param string $routeName

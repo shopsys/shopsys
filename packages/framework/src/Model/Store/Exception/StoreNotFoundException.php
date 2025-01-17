@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Store\Exception;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class StoreNotFoundException extends NotFoundHttpException implements StoreException
+class StoreNotFoundException extends NotFoundHttpException
 {
     /**
      * @param int $storeId

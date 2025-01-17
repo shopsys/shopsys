@@ -11,7 +11,7 @@ use Overblog\GraphQLBundle\Validator\InputValidator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMailFacade;
 use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest;
-use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactory;
 use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 
@@ -26,7 +26,7 @@ class PersonalDataMutation extends AbstractMutation
      */
     public function __construct(
         private readonly PersonalDataAccessRequestFacade $personalDataAccessRequestFacade,
-        private readonly PersonalDataAccessRequestDataFactoryInterface $personalDataAccessRequestDataFactory,
+        private readonly PersonalDataAccessRequestDataFactory $personalDataAccessRequestDataFactory,
         private readonly PersonalDataAccessMailFacade $personalDataAccessMailFacade,
         private readonly Domain $domain,
         private readonly PersonalDataQuery $personalDataPageResolver,

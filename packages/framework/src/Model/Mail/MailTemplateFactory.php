@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Mail;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
-class MailTemplateFactory implements MailTemplateFactoryInterface
+class MailTemplateFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

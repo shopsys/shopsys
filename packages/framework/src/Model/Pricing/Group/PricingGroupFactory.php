@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Group;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
-class PricingGroupFactory implements PricingGroupFactoryInterface
+class PricingGroupFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

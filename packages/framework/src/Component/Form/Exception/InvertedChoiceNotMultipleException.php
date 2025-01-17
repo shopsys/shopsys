@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Form\Exception;
 
 use Exception;
 
-class InvertedChoiceNotMultipleException extends Exception implements FormException
+class InvertedChoiceNotMultipleException extends Exception
 {
     /**
      * @param string $message

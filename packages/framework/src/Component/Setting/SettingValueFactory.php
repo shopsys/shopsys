@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Setting;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
-class SettingValueFactory implements SettingValueFactoryInterface
+class SettingValueFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

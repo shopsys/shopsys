@@ -11,7 +11,7 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Advert\Advert;
-use Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Advert\AdvertDataFactory;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertFacade;
 use Shopsys\FrameworkBundle\Model\Advert\AdvertPositionRegistry;
 
@@ -25,7 +25,7 @@ class AdvertDataFixture extends AbstractReferenceFixture implements DependentFix
      */
     public function __construct(
         private readonly AdvertFacade $advertFacade,
-        private readonly AdvertDataFactoryInterface $advertDataFactory,
+        private readonly AdvertDataFactory $advertDataFactory,
     ) {
     }
 

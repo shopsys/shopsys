@@ -192,9 +192,6 @@ services:
     Shopsys\FrameworkBundle\Controller\Front\PersonalDataController:
         class: 'App\Controller\Front\PersonalDataController'
 
-    Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactoryInterface:
-        alias: App\Model\Administrator\AdministratorDataFactory
-
     Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade:
         alias: App\Model\Administrator\AdministratorFacade
 
@@ -216,7 +213,7 @@ services:
     Shopsys\FrameworkBundle\Model\Cart\CartFacade:
         alias: App\Model\Cart\CartFacade
 
-    Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface:
+    Shopsys\FrameworkBundle\Model\Category\CategoryDataFactory:
         alias: App\Model\Category\CategoryDataFactory
 
     Shopsys\FrameworkBundle\Model\Category\CategoryFacade:
@@ -231,13 +228,7 @@ services:
     Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory:
         alias: App\Model\Customer\BillingAddressDataFactory
 
-    Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactoryInterface:
-        alias: App\Model\Customer\BillingAddressDataFactory
-
     Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory:
-        alias: App\Model\Customer\DeliveryAddressDataFactory
-
-    Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactoryInterface:
         alias: App\Model\Customer\DeliveryAddressDataFactory
 
     Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade:
@@ -255,7 +246,7 @@ services:
     Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser:
         alias: App\Model\Customer\User\CurrentCustomerUser
 
-    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface:
+    Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory:
         alias: App\Model\Customer\User\CustomerUserDataFactory
 
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade:
@@ -327,7 +318,7 @@ services:
     Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade:
         alias: App\Model\Order\PromoCode\CurrentPromoCodeFacade
 
-    Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface:
+    Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory:
         alias: App\Model\Order\PromoCode\PromoCodeDataFactory
 
     Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade:
@@ -345,7 +336,7 @@ services:
     Shopsys\FrameworkBundle\Model\Payment\IndependentPaymentVisibilityCalculation:
         alias: App\Model\Payment\IndependentPaymentVisibilityCalculation
 
-    Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface:
+    Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory:
         alias: App\Model\Payment\PaymentDataFactory
 
     Shopsys\FrameworkBundle\Model\Payment\PaymentFacade:
@@ -357,7 +348,7 @@ services:
     Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataExportMail:
         alias: App\Model\PersonalData\Mail\PersonalDataExportMail
 
-    Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface:
+    Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactory:
         alias: App\Model\Product\Brand\BrandDataFactory
 
     Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository:
@@ -391,9 +382,6 @@ services:
         alias: App\Model\Product\Flag\FlagData
 
     Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactory:
-        alias: App\Model\Product\Flag\FlagDataFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactoryInterface:
         alias: App\Model\Product\Flag\FlagDataFactory
 
     Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade:
@@ -462,7 +450,7 @@ services:
     Shopsys\FrameworkBundle\Model\Transport\Grid\TransportGridFactory:
         alias: App\Model\Transport\Grid\TransportGridFactory
 
-    Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface:
+    Shopsys\FrameworkBundle\Model\Transport\TransportDataFactory:
         alias: App\Model\Transport\TransportDataFactory
 
     Shopsys\FrameworkBundle\Model\Transport\TransportFacade:

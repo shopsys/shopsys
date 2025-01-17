@@ -20,7 +20,7 @@ class CurrencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderRepository $orderRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFactoryInterface $currencyFactory
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFactory $currencyFactory
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
@@ -29,7 +29,7 @@ class CurrencyFacade
         protected readonly PricingSetting $pricingSetting,
         protected readonly OrderRepository $orderRepository,
         protected readonly Domain $domain,
-        protected readonly CurrencyFactoryInterface $currencyFactory,
+        protected readonly CurrencyFactory $currencyFactory,
         protected readonly EventDispatcherInterface $eventDispatcher,
     ) {
     }

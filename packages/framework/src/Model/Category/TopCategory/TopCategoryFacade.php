@@ -11,12 +11,12 @@ class TopCategoryFacade
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryRepository $topCategoryRepository
-     * @param \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFactoryInterface $topCategoryFactory
+     * @param \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFactory $topCategoryFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly TopCategoryRepository $topCategoryRepository,
-        protected readonly TopCategoryFactoryInterface $topCategoryFactory,
+        protected readonly TopCategoryFactory $topCategoryFactory,
     ) {
     }
 

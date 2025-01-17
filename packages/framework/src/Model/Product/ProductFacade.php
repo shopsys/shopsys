@@ -14,10 +14,10 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
-use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactory;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactory;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\Exception\MainVariantPriceCalculationException;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
@@ -42,11 +42,11 @@ class ProductFacade
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFactoryInterface $productFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactoryInterface $productAccessoryFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactoryInterface $productCategoryDomainFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactoryInterface $productParameterValueFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactoryInterface $productVisibilityFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductFactory $productFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactory $productAccessoryFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactory $productCategoryDomainFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactory $productParameterValueFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactory $productVisibilityFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
@@ -65,11 +65,11 @@ class ProductFacade
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly ProductAccessoryRepository $productAccessoryRepository,
         protected readonly PluginCrudExtensionFacade $pluginCrudExtensionFacade,
-        protected readonly ProductFactoryInterface $productFactory,
-        protected readonly ProductAccessoryFactoryInterface $productAccessoryFactory,
-        protected readonly ProductCategoryDomainFactoryInterface $productCategoryDomainFactory,
-        protected readonly ProductParameterValueFactoryInterface $productParameterValueFactory,
-        protected readonly ProductVisibilityFactoryInterface $productVisibilityFactory,
+        protected readonly ProductFactory $productFactory,
+        protected readonly ProductAccessoryFactory $productAccessoryFactory,
+        protected readonly ProductCategoryDomainFactory $productCategoryDomainFactory,
+        protected readonly ProductParameterValueFactory $productParameterValueFactory,
+        protected readonly ProductVisibilityFactory $productVisibilityFactory,
         protected readonly ProductPriceCalculation $productPriceCalculation,
         protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
         protected readonly ProductStockFacade $productStockFacade,

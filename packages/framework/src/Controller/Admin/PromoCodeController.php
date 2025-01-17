@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeGridFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeMassGeneratedBatchGridFactory;
-use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +26,7 @@ class PromoCodeController extends AdminBaseController
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade $administratorGridFacade
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface $promoCodeDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactory $promoCodeDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeGridFactory $promoCodeGridFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\Grid\PromoCodeMassGeneratedBatchGridFactory $promoCodeMassGeneratedBatchGridFactory
@@ -34,7 +34,7 @@ class PromoCodeController extends AdminBaseController
     public function __construct(
         protected readonly PromoCodeFacade $promoCodeFacade,
         protected readonly AdministratorGridFacade $administratorGridFacade,
-        protected readonly PromoCodeDataFactoryInterface $promoCodeDataFactory,
+        protected readonly PromoCodeDataFactory $promoCodeDataFactory,
         protected readonly PromoCodeGridFactory $promoCodeGridFactory,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly PromoCodeMassGeneratedBatchGridFactory $promoCodeMassGeneratedBatchGridFactory,

@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Translation\Exception;
 
 use Exception;
 
-class MessageIdArgumentNotPresent extends Exception implements TranslationException
+class MessageIdArgumentNotPresent extends Exception
 {
     /**
      * @param string $message

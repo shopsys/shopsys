@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\ContactForm\ContactFormSettingsFormType;
-use Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsDataFactory;
 use Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,12 +15,12 @@ class ContactFormSettingsController extends AdminBaseController
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsDataFactoryInterface $contactFormSettingsDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsDataFactory $contactFormSettingsDataFactory
      * @param \Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsFacade $contactFormSettingsFacade
      */
     public function __construct(
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
-        protected readonly ContactFormSettingsDataFactoryInterface $contactFormSettingsDataFactory,
+        protected readonly ContactFormSettingsDataFactory $contactFormSettingsDataFactory,
         protected readonly ContactFormSettingsFacade $contactFormSettingsFacade,
     ) {
     }

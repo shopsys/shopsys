@@ -12,14 +12,14 @@ class CustomerFacade
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFactoryInterface $customerFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFactory $customerFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerRepository $customerRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupSetting $customerUserRoleGroupSetting
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
-        protected readonly CustomerFactoryInterface $customerFactory,
+        protected readonly CustomerFactory $customerFactory,
         protected readonly CustomerRepository $customerRepository,
         protected readonly Domain $domain,
         protected readonly CustomerUserRoleGroupSetting $customerUserRoleGroupSetting,

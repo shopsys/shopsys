@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\DataFixtures\Demo;
 
 use App\Model\Order\PromoCode\PromoCode;
+use App\Model\Order\PromoCode\PromoCodeDataFactory;
 use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeCategory\PromoCodeCategoryFactory;
-use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlagFactory;
@@ -42,7 +42,7 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
      */
     public function __construct(
         private readonly PromoCodeFacade $promoCodeFacade,
-        private readonly PromoCodeDataFactoryInterface $promoCodeDataFactory,
+        private readonly PromoCodeDataFactory $promoCodeDataFactory,
         private readonly PromoCodeProductFactory $promoCodeProductFactory,
         private readonly PromoCodeCategoryFactory $promoCodeCategoryFactory,
         private readonly PromoCodeLimitFactory $promoCodeLimitFactory,

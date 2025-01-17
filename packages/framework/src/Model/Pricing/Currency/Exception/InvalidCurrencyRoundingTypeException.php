@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Currency\Exception;
 
 use Exception;
 
-class InvalidCurrencyRoundingTypeException extends Exception implements CurrencyException
+class InvalidCurrencyRoundingTypeException extends Exception
 {
     /**
      * @param string $roundingType

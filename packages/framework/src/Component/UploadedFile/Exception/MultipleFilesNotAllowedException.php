@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\UploadedFile\Exception;
 
 use Exception;
 
-class MultipleFilesNotAllowedException extends Exception implements FileException
+class MultipleFilesNotAllowedException extends Exception
 {
     /**
      * @param string $message

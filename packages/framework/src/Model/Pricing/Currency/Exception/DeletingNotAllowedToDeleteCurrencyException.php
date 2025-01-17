@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\Currency\Exception;
 
 use Exception;
 
-class DeletingNotAllowedToDeleteCurrencyException extends Exception implements CurrencyException
+class DeletingNotAllowedToDeleteCurrencyException extends Exception
 {
     /**
      * @param string $message

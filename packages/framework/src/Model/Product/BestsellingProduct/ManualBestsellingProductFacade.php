@@ -13,13 +13,13 @@ class ManualBestsellingProductFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductRepository $manualBestsellingProductRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\CachedBestsellingProductFacade $cachedBestsellingProductFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductFactoryInterface $manualBestsellingProductFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductFactory $manualBestsellingProductFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ManualBestsellingProductRepository $manualBestsellingProductRepository,
         protected readonly CachedBestsellingProductFacade $cachedBestsellingProductFacade,
-        protected readonly ManualBestsellingProductFactoryInterface $manualBestsellingProductFactory,
+        protected readonly ManualBestsellingProductFactory $manualBestsellingProductFactory,
     ) {
     }
 

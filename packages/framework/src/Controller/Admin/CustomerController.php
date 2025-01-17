@@ -20,7 +20,7 @@ use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserListAdminFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
@@ -35,7 +35,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CustomerController extends AdminBaseController
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactoryInterface $customerUserDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory $customerUserDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserListAdminFacade $customerUserListAdminFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
@@ -51,7 +51,7 @@ class CustomerController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Watchdog\WatchdogFacade $watchdogFacade
      */
     public function __construct(
-        protected readonly CustomerUserDataFactoryInterface $customerUserDataFactory,
+        protected readonly CustomerUserDataFactory $customerUserDataFactory,
         protected readonly CustomerUserListAdminFacade $customerUserListAdminFacade,
         protected readonly CustomerUserFacade $customerUserFacade,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,

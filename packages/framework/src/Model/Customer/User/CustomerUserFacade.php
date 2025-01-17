@@ -12,7 +12,7 @@ use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
-use Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\CustomerFacade;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade;
@@ -28,11 +28,11 @@ class CustomerUserFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRepository $customerUserRepository
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory $customerUserUpdateDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\Mail\CustomerMailFacade $customerMailFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactoryInterface $customerUserFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFactory $customerUserFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade $customerUserPasswordFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerFacade $customerFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
-     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactoryInterface $customerDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\CustomerDataFactory $customerDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\BillingAddressFacade $billingAddressFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
@@ -43,11 +43,11 @@ class CustomerUserFacade
         protected readonly CustomerUserRepository $customerUserRepository,
         protected readonly CustomerUserUpdateDataFactory $customerUserUpdateDataFactory,
         protected readonly CustomerMailFacade $customerMailFacade,
-        protected readonly CustomerUserFactoryInterface $customerUserFactory,
+        protected readonly CustomerUserFactory $customerUserFactory,
         protected readonly CustomerUserPasswordFacade $customerUserPasswordFacade,
         protected readonly CustomerFacade $customerFacade,
         protected readonly DeliveryAddressFacade $deliveryAddressFacade,
-        protected readonly CustomerDataFactoryInterface $customerDataFactory,
+        protected readonly CustomerDataFactory $customerDataFactory,
         protected readonly BillingAddressFacade $billingAddressFacade,
         protected readonly CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade,
         protected readonly NewsletterFacade $newsletterFacade,

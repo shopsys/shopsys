@@ -6,7 +6,7 @@ namespace Shopsys\ProductFeed\ZboziBundle\DataFixtures;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\Plugin\PluginDataFixtureInterface;
-use Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainDataFactoryInterface;
+use Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainDataFactory;
 use Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainFacade;
 
 class ZboziPluginDataFixture implements PluginDataFixtureInterface
@@ -21,11 +21,11 @@ class ZboziPluginDataFixture implements PluginDataFixtureInterface
 
     /**
      * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainFacade $zboziProductDomainFacade
-     * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainDataFactoryInterface $zboziProductDomainDataFactory
+     * @param \Shopsys\ProductFeed\ZboziBundle\Model\Product\ZboziProductDomainDataFactory $zboziProductDomainDataFactory
      */
     public function __construct(
         private readonly ZboziProductDomainFacade $zboziProductDomainFacade,
-        private readonly ZboziProductDomainDataFactoryInterface $zboziProductDomainDataFactory,
+        private readonly ZboziProductDomainDataFactory $zboziProductDomainDataFactory,
     ) {
     }
 

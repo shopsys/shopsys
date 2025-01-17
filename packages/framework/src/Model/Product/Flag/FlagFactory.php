@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Flag;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
-class FlagFactory implements FlagFactoryInterface
+class FlagFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

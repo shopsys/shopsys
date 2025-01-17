@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Module\Exception;
 
 use Exception;
 
-class NotUniqueModuleLabelException extends Exception implements ModuleException
+class NotUniqueModuleLabelException extends Exception
 {
     /**
      * @param string[] $moduleLabelsIndexedByNames

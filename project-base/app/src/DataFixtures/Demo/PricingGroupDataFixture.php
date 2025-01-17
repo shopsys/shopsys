@@ -8,7 +8,7 @@ use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
-use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 
@@ -24,7 +24,7 @@ class PricingGroupDataFixture extends AbstractReferenceFixture
      */
     public function __construct(
         private readonly PricingGroupFacade $pricingGroupFacade,
-        private readonly PricingGroupDataFactoryInterface $pricingGroupDataFactory,
+        private readonly PricingGroupDataFactory $pricingGroupDataFactory,
         private readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
     ) {
     }

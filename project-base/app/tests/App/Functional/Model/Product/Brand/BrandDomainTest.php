@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Product\Brand;
 
 use App\Model\Product\Brand\Brand;
+use App\Model\Product\Brand\BrandDataFactory;
 use PHPUnit\Framework\Attributes\Group;
-use Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFactory;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class BrandDomainTest extends TransactionFunctionalTestCase
@@ -20,12 +20,12 @@ class BrandDomainTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    private BrandDataFactoryInterface $brandDataFactory;
+    private BrandDataFactory $brandDataFactory;
 
     /**
      * @inject
      */
-    private BrandFactoryInterface $brandFactory;
+    private BrandFactory $brandFactory;
 
     #[Group('multidomain')]
     public function testCreateBrandDomain()

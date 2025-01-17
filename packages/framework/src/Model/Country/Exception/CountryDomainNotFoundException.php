@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Country\Exception;
 
 use Exception;
 
-class CountryDomainNotFoundException extends Exception implements CountryException
+class CountryDomainNotFoundException extends Exception
 {
     /**
      * @param int $domainId

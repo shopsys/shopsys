@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Advert;
 
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 
-class AdvertDataFactory implements AdvertDataFactoryInterface
+class AdvertDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory

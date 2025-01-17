@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
-class CustomerUserRefreshTokenChainFactory implements CustomerUserRefreshTokenChainFactoryInterface
+class CustomerUserRefreshTokenChainFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

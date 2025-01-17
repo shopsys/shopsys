@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\ProductFeed\HeurekaBundle\Form;
 
 use Shopsys\Plugin\PluginCrudExtensionInterface;
-use Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainDataFactoryInterface;
+use Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainDataFactory;
 use Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainFacade;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -14,12 +14,12 @@ class HeurekaProductCrudExtension implements PluginCrudExtensionInterface
     /**
      * @param \Symfony\Contracts\Translation\TranslatorInterface $translator
      * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainFacade $heurekaProductDomainFacade
-     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainDataFactoryInterface $heurekaProductDomainDataFactory
+     * @param \Shopsys\ProductFeed\HeurekaBundle\Model\Product\HeurekaProductDomainDataFactory $heurekaProductDomainDataFactory
      */
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly HeurekaProductDomainFacade $heurekaProductDomainFacade,
-        private readonly HeurekaProductDomainDataFactoryInterface $heurekaProductDomainDataFactory,
+        private readonly HeurekaProductDomainDataFactory $heurekaProductDomainDataFactory,
     ) {
     }
 

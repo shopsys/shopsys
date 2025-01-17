@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\DataFixtures\Performance;
 
+use App\Model\Category\CategoryDataFactory;
 use Faker\Generator as Faker;
 use Shopsys\FrameworkBundle\Component\Console\ProgressBarFactory;
 use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Doctrine\SqlLoggerFacade;
 use Shopsys\FrameworkBundle\Model\Category\Category;
-use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -36,7 +36,7 @@ class CategoryDataFixture
      */
     public function __construct(
         $categoryCountsByLevel,
-        private readonly CategoryDataFactoryInterface $categoryDataFactory,
+        private readonly CategoryDataFactory $categoryDataFactory,
         private readonly CategoryFacade $categoryFacade,
         private readonly SqlLoggerFacade $sqlLoggerFacade,
         private readonly PersistentReferenceFacade $persistentReferenceFacade,

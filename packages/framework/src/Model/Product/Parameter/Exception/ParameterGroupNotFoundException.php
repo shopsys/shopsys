@@ -6,6 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Product\Parameter\Exception;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class ParameterGroupNotFoundException extends NotFoundHttpException implements ParameterException
+class ParameterGroupNotFoundException extends NotFoundHttpException
 {
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Pricing\Currency;
 
-class CurrencyDataFactory implements CurrencyDataFactoryInterface
+class CurrencyDataFactory
 {
     /**
      * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData

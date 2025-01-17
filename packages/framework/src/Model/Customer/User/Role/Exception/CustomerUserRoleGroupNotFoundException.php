@@ -6,6 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User\Role\Exception;
 
 use Exception;
 
-class CustomerUserRoleGroupNotFoundException extends Exception implements CustomerUserRoleException
+class CustomerUserRoleGroupNotFoundException extends Exception
 {
 }

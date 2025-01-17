@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Domain\Exception;
 
 use Exception;
 
-class UnableToResolveDomainException extends Exception implements DomainException
+class UnableToResolveDomainException extends Exception
 {
     /**
      * @param string $url

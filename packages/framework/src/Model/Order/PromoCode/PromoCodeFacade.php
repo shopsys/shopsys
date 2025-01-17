@@ -25,7 +25,7 @@ class PromoCodeFacade
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeRepository $promoCodeRepository
-     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactoryInterface $promoCodeFactory
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFactory $promoCodeFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimitRepository $promoCodeLimitRepository
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeProduct\PromoCodeProductRepository $promoCodeProductRepository
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeCategory\PromoCodeCategoryRepository $promoCodeCategoryRepository
@@ -41,7 +41,7 @@ class PromoCodeFacade
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly PromoCodeRepository $promoCodeRepository,
-        protected readonly PromoCodeFactoryInterface $promoCodeFactory,
+        protected readonly PromoCodeFactory $promoCodeFactory,
         protected readonly PromoCodeLimitRepository $promoCodeLimitRepository,
         protected readonly PromoCodeProductRepository $promoCodeProductRepository,
         protected readonly PromoCodeCategoryRepository $promoCodeCategoryRepository,

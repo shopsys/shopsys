@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Form\Admin\Administrator\AdministratorFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Administrator\AdministratorResetPasswordFormType;
 use Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
-use Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactory;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorTwoFactorAuthenticationFacade;
@@ -44,7 +44,7 @@ class AdministratorController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Activity\AdministratorActivityFacade $administratorActivityFacade
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactoryInterface $administratorDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactory $administratorDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorRolesChangedFacade $administratorRolesChangedFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorTwoFactorAuthenticationFacade $administratorTwoFactorAuthenticationFacade
      * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorPasswordFacade $administratorPasswordFacade
@@ -55,7 +55,7 @@ class AdministratorController extends AdminBaseController
         protected readonly GridFactory $gridFactory,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly AdministratorActivityFacade $administratorActivityFacade,
-        protected readonly AdministratorDataFactoryInterface $administratorDataFactory,
+        protected readonly AdministratorDataFactory $administratorDataFactory,
         protected readonly AdministratorRolesChangedFacade $administratorRolesChangedFacade,
         protected readonly AdministratorTwoFactorAuthenticationFacade $administratorTwoFactorAuthenticationFacade,
         protected readonly AdministratorPasswordFacade $administratorPasswordFacade,

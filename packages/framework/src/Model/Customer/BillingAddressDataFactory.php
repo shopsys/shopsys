@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Customer;
 
-class BillingAddressDataFactory implements BillingAddressDataFactoryInterface
+class BillingAddressDataFactory
 {
     /**
      * @return \Shopsys\FrameworkBundle\Model\Customer\BillingAddressData

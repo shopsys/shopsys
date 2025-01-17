@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Category;
 
 use App\Model\Category\Category;
+use App\Model\Category\CategoryDataFactory;
 use PHPUnit\Framework\Attributes\Group;
-use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Category\CategoryFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Category\CategoryFactory;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class CategoryDomainTest extends TransactionFunctionalTestCase
@@ -21,12 +21,12 @@ class CategoryDomainTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    private CategoryDataFactoryInterface $categoryDataFactory;
+    private CategoryDataFactory $categoryDataFactory;
 
     /**
      * @inject
      */
-    private CategoryFactoryInterface $categoryFactory;
+    private CategoryFactory $categoryFactory;
 
     public function testCreateCategoryEnabledOnDomain()
     {

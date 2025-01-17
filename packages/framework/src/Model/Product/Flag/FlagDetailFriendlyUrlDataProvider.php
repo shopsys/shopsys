@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactoryInterface;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProviderInterface;
 
 class FlagDetailFriendlyUrlDataProvider implements FriendlyUrlDataProviderInterface
@@ -17,11 +17,11 @@ class FlagDetailFriendlyUrlDataProvider implements FriendlyUrlDataProviderInterf
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactoryInterface $friendlyUrlDataFactory
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataFactory $friendlyUrlDataFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
-        protected readonly FriendlyUrlDataFactoryInterface $friendlyUrlDataFactory,
+        protected readonly FriendlyUrlDataFactory $friendlyUrlDataFactory,
     ) {
     }
 

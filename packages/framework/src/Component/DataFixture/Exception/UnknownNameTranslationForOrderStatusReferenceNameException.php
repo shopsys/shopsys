@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\DataFixture\Exception;
 
 use Exception;
 
-class UnknownNameTranslationForOrderStatusReferenceNameException extends Exception implements DataFixtureException
+class UnknownNameTranslationForOrderStatusReferenceNameException extends Exception
 {
     /**
      * @param string $referenceName

@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Slider;
 
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 
-class SliderItemDataFactory implements SliderItemDataFactoryInterface
+class SliderItemDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory

@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Cart\Exception;
 
 use Exception;
 
-class InvalidCartItemException extends Exception implements CartException
+class InvalidCartItemException extends Exception
 {
     /**
      * @param string $message

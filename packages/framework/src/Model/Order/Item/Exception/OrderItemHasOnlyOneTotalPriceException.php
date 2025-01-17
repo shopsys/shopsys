@@ -8,7 +8,7 @@ use RuntimeException;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Throwable;
 
-class OrderItemHasOnlyOneTotalPriceException extends RuntimeException implements OrderItemException
+class OrderItemHasOnlyOneTotalPriceException extends RuntimeException
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $totalPriceWithVat

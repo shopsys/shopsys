@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Command\Exception;
 
 use Exception;
 
-class TranslationReplaceSourceCommandException extends Exception implements CommandException
+class TranslationReplaceSourceCommandException extends Exception
 {
     /**
      * @param string $message

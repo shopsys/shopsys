@@ -15,13 +15,13 @@ class ProductManualInputPriceFacade
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceRepository $productManualInputPriceRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFactoryInterface $productManualInputPriceFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFactory $productManualInputPriceFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ProductManualInputPriceRepository $productManualInputPriceRepository,
-        protected readonly ProductManualInputPriceFactoryInterface $productManualInputPriceFactory,
+        protected readonly ProductManualInputPriceFactory $productManualInputPriceFactory,
         protected readonly PricingGroupRepository $pricingGroupRepository,
     ) {
     }

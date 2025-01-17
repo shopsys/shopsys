@@ -14,14 +14,14 @@ class UnitFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitRepository $unitRepository
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFactoryInterface $unitFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFactory $unitFactory
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly UnitRepository $unitRepository,
         protected readonly Setting $setting,
-        protected readonly UnitFactoryInterface $unitFactory,
+        protected readonly UnitFactory $unitFactory,
         protected readonly EventDispatcherInterface $eventDispatcher,
     ) {
     }

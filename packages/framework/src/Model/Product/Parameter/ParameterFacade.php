@@ -22,7 +22,7 @@ class ParameterFacade
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository $parameterRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactoryInterface $parameterFactory
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFactory $parameterFactory
      * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterRepository $categoryParameterRepository
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
@@ -34,7 +34,7 @@ class ParameterFacade
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ParameterRepository $parameterRepository,
-        protected readonly ParameterFactoryInterface $parameterFactory,
+        protected readonly ParameterFactory $parameterFactory,
         protected readonly EventDispatcherInterface $eventDispatcher,
         protected readonly CategoryParameterRepository $categoryParameterRepository,
         protected readonly UploadedFileFacade $uploadedFileFacade,

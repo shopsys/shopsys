@@ -30,7 +30,7 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRepository $uploadedFileRepository
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator $uploadedFileLocator
-     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFactoryInterface $uploadedFileFactory
+     * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFactory $uploadedFileFactory
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRelationFactory $uploadedFileRelationFactory
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRelationRepository $uploadedFileRelationRepository
      */
@@ -40,7 +40,7 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         protected readonly UploadedFileConfig $uploadedFileConfig,
         protected readonly UploadedFileRepository $uploadedFileRepository,
         protected readonly UploadedFileLocator $uploadedFileLocator,
-        protected readonly UploadedFileFactoryInterface $uploadedFileFactory,
+        protected readonly UploadedFileFactory $uploadedFileFactory,
         protected readonly UploadedFileRelationFactory $uploadedFileRelationFactory,
         protected readonly UploadedFileRelationRepository $uploadedFileRelationRepository,
     ) {

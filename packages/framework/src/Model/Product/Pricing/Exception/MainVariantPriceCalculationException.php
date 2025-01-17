@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Pricing\Exception;
 
 use Exception;
 
-class MainVariantPriceCalculationException extends Exception implements ProductPricingException
+class MainVariantPriceCalculationException extends Exception
 {
     /**
      * @param string $message

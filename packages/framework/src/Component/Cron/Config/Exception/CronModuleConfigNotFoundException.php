@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Cron\Config\Exception;
 
 use Exception;
 
-class CronModuleConfigNotFoundException extends Exception implements CronConfigException
+class CronModuleConfigNotFoundException extends Exception
 {
     /**
      * @param string $serviceId

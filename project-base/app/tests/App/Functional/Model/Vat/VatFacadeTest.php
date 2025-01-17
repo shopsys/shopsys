@@ -8,14 +8,14 @@ use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
 use App\Model\Payment\Payment;
+use App\Model\Payment\PaymentDataFactory;
 use App\Model\Transport\Transport;
+use App\Model\Transport\TransportDataFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
-use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Shopsys\FrameworkBundle\Model\Transport\TransportInputPricesData;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -35,12 +35,12 @@ class VatFacadeTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    private TransportDataFactoryInterface $transportDataFactory;
+    private TransportDataFactory $transportDataFactory;
 
     /**
      * @inject
      */
-    private PaymentDataFactoryInterface $paymentDataFactory;
+    private PaymentDataFactory $paymentDataFactory;
 
     /**
      * @inject

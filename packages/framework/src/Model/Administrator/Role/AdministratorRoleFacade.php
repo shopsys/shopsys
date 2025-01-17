@@ -12,13 +12,13 @@ class AdministratorRoleFacade
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFactoryInterface $administratorRoleFactory
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleDataFactoryInterface $administratorRoleDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFactory $administratorRoleFactory
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleDataFactory $administratorRoleDataFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
-        protected readonly AdministratorRoleFactoryInterface $administratorRoleFactory,
-        protected readonly AdministratorRoleDataFactoryInterface $administratorRoleDataFactory,
+        protected readonly AdministratorRoleFactory $administratorRoleFactory,
+        protected readonly AdministratorRoleDataFactory $administratorRoleDataFactory,
     ) {
     }
 

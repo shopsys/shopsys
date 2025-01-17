@@ -8,7 +8,7 @@ use Lcobucci\JWT\Token\DataSet;
 use Lcobucci\JWT\UnencryptedToken;
 use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
 
-class FrontendApiUserFactory implements FrontendApiUserFactoryInterface
+class FrontendApiUserFactory
 {
     /**
      * @param \Lcobucci\JWT\UnencryptedToken $token

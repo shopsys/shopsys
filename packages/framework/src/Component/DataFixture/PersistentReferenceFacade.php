@@ -16,12 +16,12 @@ class PersistentReferenceFacade
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceRepository $persistentReferenceRepository
-     * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFactoryInterface $persistentReferenceFactory
+     * @param \Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFactory $persistentReferenceFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly PersistentReferenceRepository $persistentReferenceRepository,
-        protected readonly PersistentReferenceFactoryInterface $persistentReferenceFactory,
+        protected readonly PersistentReferenceFactory $persistentReferenceFactory,
     ) {
     }
 

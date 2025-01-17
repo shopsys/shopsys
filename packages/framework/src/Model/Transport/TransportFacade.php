@@ -24,7 +24,7 @@ class TransportFacade
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation $transportPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFactoryInterface $transportFactory
+     * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFactory $transportFactory
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceFactory $transportPriceFactory
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
      */
@@ -37,7 +37,7 @@ class TransportFacade
         protected readonly ImageFacade $imageFacade,
         protected readonly CurrencyFacade $currencyFacade,
         protected readonly TransportPriceCalculation $transportPriceCalculation,
-        protected readonly TransportFactoryInterface $transportFactory,
+        protected readonly TransportFactory $transportFactory,
         protected readonly TransportPriceFactory $transportPriceFactory,
         protected readonly PaymentFacade $paymentFacade,
     ) {

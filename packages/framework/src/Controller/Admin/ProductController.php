@@ -289,7 +289,7 @@ class ProductController extends AdminBaseController
                 );
 
                 return $this->redirectToRoute('admin_product_list');
-            } catch (VariantException $ex) {
+            } catch (VariantException) {
                 $this->addErrorFlash(
                     t('Not possible to create variations of products that are already variant or main variant.'),
                 );

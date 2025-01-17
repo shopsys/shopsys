@@ -18,11 +18,11 @@ class AdministratorGridFacade
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimitFactoryInterface $administratorGridLimitFactory
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridLimitFactory $administratorGridLimitFactory
      */
     public function __construct(
         EntityManagerInterface $em,
-        protected readonly AdministratorGridLimitFactoryInterface $administratorGridLimitFactory,
+        protected readonly AdministratorGridLimitFactory $administratorGridLimitFactory,
     ) {
         $this->em = $em;
     }

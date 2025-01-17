@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Plugin\Exception;
 
 use Exception;
 
-class PluginCrudExtensionAlreadyRegisteredException extends Exception implements PluginException
+class PluginCrudExtensionAlreadyRegisteredException extends Exception
 {
     /**
      * @param string $type

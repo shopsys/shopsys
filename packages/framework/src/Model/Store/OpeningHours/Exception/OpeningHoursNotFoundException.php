@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Store\OpeningHours\Exception;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class OpeningHoursNotFoundException extends NotFoundHttpException implements OpeningHoursException
+class OpeningHoursNotFoundException extends NotFoundHttpException
 {
     /**
      * @param int $storeId

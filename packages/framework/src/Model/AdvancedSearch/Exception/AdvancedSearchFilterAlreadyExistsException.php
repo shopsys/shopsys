@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception;
 
 use Exception;
 
-class AdvancedSearchFilterAlreadyExistsException extends Exception implements AdvancedSearchException
+class AdvancedSearchFilterAlreadyExistsException extends Exception
 {
     /**
      * @param string $message

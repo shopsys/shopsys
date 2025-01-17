@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Domain\Exception;
 
 use Exception;
 
-class NoDomainSelectedException extends Exception implements DomainException
+class NoDomainSelectedException extends Exception
 {
     /**
      * @param string $message

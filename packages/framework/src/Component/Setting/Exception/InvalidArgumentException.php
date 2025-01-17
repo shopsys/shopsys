@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Setting\Exception;
 
 use Exception;
 
-class InvalidArgumentException extends Exception implements SettingException
+class InvalidArgumentException extends Exception
 {
     /**
      * @param string $message

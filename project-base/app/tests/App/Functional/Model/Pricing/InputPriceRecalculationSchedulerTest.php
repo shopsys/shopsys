@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Model\Pricing;
 
+use App\Model\Payment\PaymentDataFactory;
+use App\Model\Transport\TransportDataFactory;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
-use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\InputPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Pricing\InputPriceRecalculator;
@@ -16,7 +17,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
 use Shopsys\FrameworkBundle\Model\Transport\PriceWithLimitData;
-use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,12 +54,12 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
     /**
      * @inject
      */
-    private PaymentDataFactoryInterface $paymentDataFactory;
+    private PaymentDataFactory $paymentDataFactory;
 
     /**
      * @inject
      */
-    private TransportDataFactoryInterface $transportDataFactory;
+    private TransportDataFactory $transportDataFactory;
 
     public function testOnKernelResponseNoAction()
     {

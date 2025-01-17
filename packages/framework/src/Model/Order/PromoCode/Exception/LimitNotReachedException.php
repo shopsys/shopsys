@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception;
 use Exception;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 
-class LimitNotReachedException extends Exception implements PromoCodeException
+class LimitNotReachedException extends PromoCodeException
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode

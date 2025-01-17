@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Unit;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 
-class UnitDataFactory implements UnitDataFactoryInterface
+class UnitDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain

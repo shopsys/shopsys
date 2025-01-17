@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Grid\Exception;
 
 use Exception;
 
-class RowNotFoundInGridByIdException extends Exception implements GridException
+class RowNotFoundInGridByIdException extends Exception
 {
     /**
      * @param string $message

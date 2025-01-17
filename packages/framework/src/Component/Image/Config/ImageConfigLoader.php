@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Image\Config;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
-use Shopsys\FrameworkBundle\Component\Image\Config\Exception\DuplicateEntityNameException;
-use Shopsys\FrameworkBundle\Component\Image\Config\Exception\DuplicateTypeNameException;
+use Shopsys\FrameworkBundle\Component\Image\Config\Exception\DuplicateEntityNameExceptionInvalid;
+use Shopsys\FrameworkBundle\Component\Image\Config\Exception\DuplicateTypeNameExceptionInvalid;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\EntityParseException;
-use Shopsys\FrameworkBundle\Component\Image\Config\Exception\ImageConfigException;
+use Shopsys\FrameworkBundle\Component\Image\Config\Exception\InvalidImageConfigException;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 use Symfony\Component\Filesystem\Filesystem;
@@ -73,7 +73,7 @@ class ImageConfigLoader
         foreach ($outputConfig as $entityConfig) {
             try {
                 $this->processEntityConfig($entityConfig);
-            } catch (ImageConfigException $e) {
+            } catch (InvalidImageConfigException $e) {
                 throw new EntityParseException(
                     $entityConfig[ImageConfigDefinition::CONFIG_CLASS],
                     $e,
@@ -95,7 +95,7 @@ class ImageConfigLoader
         if (array_key_exists($entityClass, $this->foundEntityConfigs)
             || array_key_exists($entityName, $this->foundEntityNames)
         ) {
-            throw new DuplicateEntityNameException($entityName);
+            throw new DuplicateEntityNameExceptionInvalid($entityName);
         }
 
         $types = $this->prepareTypes($entityConfig[ImageConfigDefinition::CONFIG_TYPES]);
@@ -118,7 +118,7 @@ class ImageConfigLoader
             $typeName = $typeConfig[ImageConfigDefinition::CONFIG_TYPE_NAME];
 
             if (array_key_exists($typeName, $result)) {
-                throw new DuplicateTypeNameException($typeName);
+                throw new DuplicateTypeNameExceptionInvalid($typeName);
             }
 
             $result[$typeName] = $typeName;

@@ -14,9 +14,9 @@ use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecur
 use Shopsys\FrameworkBundle\Model\Localization\IntlCurrencyRepository;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFactory;
 use Shopsys\FrameworkBundle\Twig\PriceExtension;
 use Tests\App\Test\FunctionalTestCase;
 
@@ -37,12 +37,12 @@ class PriceExtensionTest extends FunctionalTestCase
     /**
      * @inject
      */
-    private CurrencyFactoryInterface $currencyFactory;
+    private CurrencyFactory $currencyFactory;
 
     /**
      * @inject
      */
-    private CurrencyDataFactoryInterface $currencyDataFactory;
+    private CurrencyDataFactory $currencyDataFactory;
 
     /**
      * @inject

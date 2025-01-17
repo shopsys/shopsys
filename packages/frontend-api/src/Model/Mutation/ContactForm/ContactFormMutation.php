@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Mutation\ContactForm;
 
+use Exception;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Validator\InputValidator;
 use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Model\ContactForm\ContactFormData;
 use Shopsys\FrameworkBundle\Model\ContactForm\ContactFormFacade;
-use Shopsys\FrameworkBundle\Model\Mail\Exception\MailException;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
 
 class ContactFormMutation extends AbstractMutation
@@ -37,7 +37,7 @@ class ContactFormMutation extends AbstractMutation
 
         try {
             $this->contactFormFacade->sendMail($contactFormData);
-        } catch (MailException $ex) {
+        } catch (Exception $ex) {
             $this->logger->error(
                 'Email was not sent from contact form',
                 [

@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\Exception;
 
 use Exception;
 
-class OrderHashGenerateException extends Exception implements OrderException
+class OrderHashGenerateException extends Exception
 {
     /**
      * @param string $message

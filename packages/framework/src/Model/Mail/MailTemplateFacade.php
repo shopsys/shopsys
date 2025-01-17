@@ -18,8 +18,8 @@ class MailTemplateFacade
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateRepository $mailTemplateRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactoryInterface $mailTemplateFactory
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactoryInterface $mailTemplateDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFactory $mailTemplateFactory
+     * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactory $mailTemplateDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateAttachmentFilepathProvider $mailTemplateAttachmentFilepathProvider
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateBuilder $mailTemplateBuilder
      */
@@ -28,8 +28,8 @@ class MailTemplateFacade
         protected readonly MailTemplateRepository $mailTemplateRepository,
         protected readonly Domain $domain,
         protected readonly UploadedFileFacade $uploadedFileFacade,
-        protected readonly MailTemplateFactoryInterface $mailTemplateFactory,
-        protected readonly MailTemplateDataFactoryInterface $mailTemplateDataFactory,
+        protected readonly MailTemplateFactory $mailTemplateFactory,
+        protected readonly MailTemplateDataFactory $mailTemplateDataFactory,
         protected readonly MailTemplateAttachmentFilepathProvider $mailTemplateAttachmentFilepathProvider,
         protected readonly MailTemplateBuilder $mailTemplateBuilder,
     ) {

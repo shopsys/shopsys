@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception;
 
 use Exception;
 
-class AlreadyAppliedPromoCodeException extends Exception implements PromoCodeException
+class AlreadyAppliedPromoCodeException extends PromoCodeException
 {
     /**
      * @param string $promoCode

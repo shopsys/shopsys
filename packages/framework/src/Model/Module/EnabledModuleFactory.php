@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Module;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 
-class EnabledModuleFactory implements EnabledModuleFactoryInterface
+class EnabledModuleFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver

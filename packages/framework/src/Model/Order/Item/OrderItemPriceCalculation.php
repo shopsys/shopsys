@@ -8,20 +8,20 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemHasNoIdException;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactoryInterface;
-use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactoryInterface;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory;
+use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactory;
 
 class OrderItemPriceCalculation
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation $priceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactoryInterface $vatFactory
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactoryInterface $vatDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactory $vatFactory
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory $vatDataFactory
      */
     public function __construct(
         protected readonly PriceCalculation $priceCalculation,
-        protected readonly VatFactoryInterface $vatFactory,
-        protected readonly VatDataFactoryInterface $vatDataFactory,
+        protected readonly VatFactory $vatFactory,
+        protected readonly VatDataFactory $vatDataFactory,
     ) {
     }
 
