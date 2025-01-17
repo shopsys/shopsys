@@ -1,4 +1,6 @@
-import { DeferredCountdown } from './Countdown/DeferredCountdown';
+'use client';
+
+import { Countdown } from './Countdown/Countdown';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { TypeProductPriceFragment } from 'graphql/requests/products/fragments/ProductPriceFragment.generated';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
@@ -43,7 +45,7 @@ export const ProductDetailPrice: FC<ProductDetailPriceProps> = ({ productPrice }
                 )}
             </div>
 
-            {isSpecialPrice && <DeferredCountdown endTime={productPrice.nextPriceChange} />}
+            {isSpecialPrice && <Countdown endTime={productPrice.nextPriceChange} />}
         </div>
     );
 };

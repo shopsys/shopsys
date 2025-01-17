@@ -19,5 +19,13 @@ export async function getProductQuery() {
         },
     );
 
-    return result;
+    const product =
+        result.data?.product?.__typename === 'RegularProduct' || result.data?.product?.__typename === 'MainVariant'
+            ? result.data.product
+            : undefined;
+
+    return {
+        product,
+        error: result.error,
+    };
 }
