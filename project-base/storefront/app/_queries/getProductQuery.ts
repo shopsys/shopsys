@@ -8,7 +8,7 @@ import {
 } from 'graphql/requests/products/queries/ProductDetailQuery.ssr';
 import { headers } from 'next/headers';
 
-export async function getProductQuery() {
+export const getProductQuery = async () => {
     const headersList = headers();
     const slug = headersList.get('x-friendly-slug');
 
@@ -28,4 +28,4 @@ export async function getProductQuery() {
         product,
         error: result.error,
     };
-}
+};

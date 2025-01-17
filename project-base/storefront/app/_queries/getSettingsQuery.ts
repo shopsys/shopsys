@@ -7,8 +7,8 @@ import {
     TypeSettingsQueryVariables,
 } from 'graphql/requests/settings/queries/SettingsQuery.ssr';
 
-export async function getSettingsQuery() {
+export const getSettingsQuery = async () => {
     const result = await createQuery<TypeSettingsQuery, TypeSettingsQueryVariables>(SettingsQueryDocument, {});
 
     return result.data;
-}
+};

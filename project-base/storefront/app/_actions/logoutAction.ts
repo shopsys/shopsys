@@ -12,7 +12,7 @@ type LogoutActionResult = {
     error: CombinedError | undefined;
 };
 
-export async function logoutAction(): Promise<LogoutActionResult> {
+export const logoutAction = async (): Promise<LogoutActionResult> => {
     const response = await createMutation<TypeLogoutMutation, TypeLogoutMutationVariables>(LogoutMutationDocument, {});
 
     if (response.error) {
@@ -28,4 +28,4 @@ export async function logoutAction(): Promise<LogoutActionResult> {
     return {
         error: undefined,
     };
-}
+};

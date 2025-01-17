@@ -4,7 +4,7 @@ import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 
-export default async function ResetPasswordPage() {
+const ResetPasswordPage = async () => {
     const t = await getTranslation();
     const breadcrumbs: TypeBreadcrumbFragment[] = [{ __typename: 'Link', name: t('Reset password'), slug: '' }];
 
@@ -17,4 +17,6 @@ export default async function ResetPasswordPage() {
             </Webline>
         </>
     );
-}
+};
+
+export default ResetPasswordPage;

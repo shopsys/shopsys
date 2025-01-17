@@ -3,7 +3,7 @@ import { MenuIconicItemUserUnauthenticated } from './MenuIconicItemUserUnauthent
 import { getCurrentCustomerData } from 'app/_queries/getCurrentCustomerData';
 import { CurrentCustomerType } from 'types/customer';
 
-export default async function MenuIconicItemUserAuthentication() {
+export const MenuIconicItemUserAuthentication = async () => {
     const currentCustomerUser: CurrentCustomerType | undefined = await getCurrentCustomerData();
 
     return currentCustomerUser ? (
@@ -11,4 +11,4 @@ export default async function MenuIconicItemUserAuthentication() {
     ) : (
         <MenuIconicItemUserUnauthenticated />
     );
-}
+};

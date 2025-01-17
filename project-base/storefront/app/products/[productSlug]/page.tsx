@@ -1,3 +1,4 @@
+import { Breadcrumbs } from 'app/_components/Layout/Breadcrumbs/Breadcrumbs';
 import { getProductQuery } from 'app/_queries/getProductQuery';
 import { ProductMetadataJsonLd } from 'components/Basic/Head/ProductMetadataJsonLd';
 import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
@@ -6,7 +7,7 @@ import { ProductDetailContent } from 'components/Pages/ProductDetail/ProductDeta
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-export async function generateMetadata(): Promise<Metadata> {
+export const generateMetadata = async (): Promise<Metadata> => {
     const { product } = await getProductQuery();
 
     if (!product) {
@@ -14,16 +15,17 @@ export async function generateMetadata(): Promise<Metadata> {
     }
 
     return {
-        title: product.fullName,
+        title: product.seoTitle || product.name,
         description: product.description,
         openGraph: {
             title: product.fullName,
             description: product.description ?? '',
-            images: product.images.length > 0 ? [product.images[0].url] : [],
+            images: product.images[0].url,
         },
     };
-}
-export default async function ProductPage() {
+};
+
+const ProductPage = async () => {
     const { product } = await getProductQuery();
 
     if (!product) {
@@ -32,6 +34,8 @@ export default async function ProductPage() {
 
     return (
         <>
+            <Breadcrumbs breadcrumbs={product.breadcrumb} />
+
             <ProductMetadataJsonLd product={product} />
 
             {product.__typename === 'RegularProduct' && <ProductDetailContent product={product} />}
@@ -41,4 +45,6 @@ export default async function ProductPage() {
             <LastVisitedProducts currentProductCatnum={product.catalogNumber} />
         </>
     );
-}
+};
+
+export default ProductPage;
