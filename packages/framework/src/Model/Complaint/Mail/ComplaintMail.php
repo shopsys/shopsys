@@ -44,7 +44,7 @@ class ComplaintMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Complaint $complaint
      * @return \Shopsys\FrameworkBundle\Model\Mail\MessageData
      */
-    public function createMessage(MailTemplate $mailTemplate, $complaint)
+    public function createMessage(MailTemplate $mailTemplate, $complaint): MessageData
     {
         $complaintDomainId = $complaint->getDomainId();
 
@@ -64,7 +64,7 @@ class ComplaintMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus $complaintStatus
      * @return string
      */
-    public static function getMailTemplateNameByStatus(ComplaintStatus $complaintStatus)
+    public function getMailTemplateNameByStatus(ComplaintStatus $complaintStatus): string
     {
         return static::MAIL_TEMPLATE_NAME_PREFIX . $complaintStatus->getId();
     }
@@ -73,7 +73,7 @@ class ComplaintMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Complaint $complaint
      * @return array
      */
-    protected function getVariablesReplacementsForBody(Complaint $complaint)
+    protected function getVariablesReplacementsForBody(Complaint $complaint): array
     {
         $complaintDomainId = $complaint->getDomainId();
 
@@ -92,7 +92,7 @@ class ComplaintMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Complaint $complaint
      * @return array
      */
-    protected function getVariablesReplacementsForSubject(Complaint $complaint)
+    protected function getVariablesReplacementsForSubject(Complaint $complaint): array
     {
         return [
             self::VARIABLE_COMPLAINT_NUMBER => $complaint->getNumber(),
@@ -105,7 +105,7 @@ class ComplaintMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Complaint $complaint
      * @return string
      */
-    protected function getFormattedDateTime(Complaint $complaint)
+    protected function getFormattedDateTime(Complaint $complaint): string
     {
         return $this->dateTimeFormatterExtension->formatDateTime(
             $complaint->getCreatedAt(),
@@ -117,7 +117,7 @@ class ComplaintMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Complaint $complaint
      * @return string
      */
-    protected function getDomainLocaleByComplaint(Complaint $complaint)
+    protected function getDomainLocaleByComplaint(Complaint $complaint): string
     {
         return $this->domain->getDomainConfigById($complaint->getDomainId())->getLocale();
     }

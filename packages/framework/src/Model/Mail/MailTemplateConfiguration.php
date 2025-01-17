@@ -41,12 +41,14 @@ class MailTemplateConfiguration
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade $complaintStatusFacade
      * @param \Shopsys\FrameworkBundle\Model\Inquiry\Mail\InquiryMailTemplateVariablesProvider $inquiryMailTemplateVariablesProvider
      * @param \Shopsys\FrameworkBundle\Model\Watchdog\Mail\WatchdogMailTemplateVariablesProvider $watchdogMailTemplateVariablesProvider
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMail $complaintMail
      */
     public function __construct(
         protected readonly OrderStatusFacade $orderStatusFacade,
         protected readonly ComplaintStatusFacade $complaintStatusFacade,
         protected readonly InquiryMailTemplateVariablesProvider $inquiryMailTemplateVariablesProvider,
         protected readonly WatchdogMailTemplateVariablesProvider $watchdogMailTemplateVariablesProvider,
+        protected readonly ComplaintMail $complaintMail,
     ) {
         $this->registerStaticMailTemplates();
         $this->registerOrderStatusMailTemplates();
@@ -213,7 +215,7 @@ class MailTemplateConfiguration
 
         foreach ($allComplaintStatuses as $complaintStatus) {
             $this->addMailTemplateVariables(
-                ComplaintMail::getMailTemplateNameByStatus($complaintStatus),
+                $this->complaintMail->getMailTemplateNameByStatus($complaintStatus),
                 $mailTemplateVariables->withNewName(t('Complaint') . ' - ' . $complaintStatus->getName()),
             );
         }

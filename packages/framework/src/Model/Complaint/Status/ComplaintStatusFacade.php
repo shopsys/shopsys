@@ -15,12 +15,14 @@ class ComplaintStatusFacade
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFactory $complaintStatusFactory
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusRepository $complaintStatusRepository
      * @param \Shopsys\FrameworkBundle\Model\Mail\MailTemplateFacade $mailTemplateFacade
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMail $complaintMail
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ComplaintStatusFactory $complaintStatusFactory,
         protected readonly ComplaintStatusRepository $complaintStatusRepository,
         protected readonly MailTemplateFacade $mailTemplateFacade,
+        protected readonly ComplaintMail $complaintMail,
     ) {
     }
 
@@ -38,7 +40,7 @@ class ComplaintStatusFacade
         $this->em->flush();
 
         $this->mailTemplateFacade->createMailTemplateForAllDomains(
-            ComplaintMail::getMailTemplateNameByStatus($complaintStatus),
+            $this->complaintMail->getMailTemplateNameByStatus($complaintStatus),
             null,
             $complaintStatus,
         );
