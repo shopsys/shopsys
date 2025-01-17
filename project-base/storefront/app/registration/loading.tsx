@@ -1,5 +1,7 @@
 import { SkeletonPageRegistrationApp } from 'components/Blocks/Skeleton/SkeletonPageRegistrationApp';
 
-export default function Loading() {
+const Loading = () => {
     return <SkeletonPageRegistrationApp />;
-}
+};
+
+export default Loading;

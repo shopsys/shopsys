@@ -1,6 +1,13 @@
 'use client';
 
-export default function ErrorPage({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
+import * as Sentry from '@sentry/nextjs';
+import { useEffect } from 'react';
+
+const ErrorPage = ({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) => {
+    useEffect(() => {
+        Sentry.captureException(error);
+    }, [error]);
+
     return (
         <html>
             <body>
@@ -12,4 +19,6 @@ export default function ErrorPage({ error, reset }: { error: Error & { digest?: 
             </body>
         </html>
     );
-}
+};
+
+export default ErrorPage;

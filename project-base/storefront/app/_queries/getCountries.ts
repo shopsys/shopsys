@@ -7,8 +7,8 @@ import {
     TypeCountriesQueryVariables,
 } from 'graphql/requests/countries/queries/CountriesQuery.ssr';
 
-export async function getCountriesQuery() {
+export const getCountriesQuery = async () => {
     const result = await createQuery<TypeCountriesQuery, TypeCountriesQueryVariables>(CountriesQueryDocument, {});
 
     return result;
-}
+};
