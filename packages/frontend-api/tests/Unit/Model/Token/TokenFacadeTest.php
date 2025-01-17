@@ -23,6 +23,7 @@ use Shopsys\FrontendApiBundle\Model\Token\Exception\ExpiredTokenUserMessageExcep
 use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
 use Shopsys\FrontendApiBundle\Model\Token\Exception\NotVerifiedTokenUserMessageException;
 use Shopsys\FrontendApiBundle\Model\Token\JwtConfigurationProvider;
+use Shopsys\FrontendApiBundle\Model\Token\TokenCustomerUserTransformer;
 use Shopsys\FrontendApiBundle\Model\Token\TokenFacade;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
@@ -138,6 +139,7 @@ class TokenFacadeTest extends TestCase
             $domain,
             $customerUserFacade,
             $jwtConfigurationProvider,
+            new TokenCustomerUserTransformer(),
         );
     }
 

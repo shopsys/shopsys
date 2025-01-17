@@ -13,7 +13,7 @@ class TokenCustomerUserTransformer
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser $user
      * @return array
      */
-    public static function transform(CustomerUser $user): array
+    public function transform(CustomerUser $user): array
     {
         return [
             FrontendApiUser::CLAIM_UUID => $user->getUuid(),
