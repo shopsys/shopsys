@@ -3,9 +3,6 @@
 import { ProductListItemImage } from './ProductListItemImage';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { VariantIcon } from 'components/Basic/Icon/VariantIcon';
-import { ProductCompareButton } from 'components/Blocks/Product/ButtonsAction/ProductCompareButton';
-import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
-import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
@@ -138,7 +135,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 </ExtendedNextLink>
 
                 <div className="flex w-full items-center justify-between gap-1 px-2.5 md:justify-normal md:gap-2.5 md:px-5">
-                    {visibleItemsConfig.addToCart && (
+                    {/* {visibleItemsConfig.addToCart && (
                         <ProductAction
                             showResponsiveCartIcon
                             gtmMessageOrigin={gtmMessageOrigin}
@@ -147,9 +144,9 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                             product={product}
                             skipKeyboardNavigation={!allowKeyboardFocus}
                         />
-                    )}
+                    )} */}
 
-                    {visibleItemsConfig.productListButtons && (
+                    {/* {visibleItemsConfig.productListButtons && (
                         <>
                             <ProductCompareButton
                                 isProductInComparison={isProductInComparison}
@@ -164,7 +161,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                                 toggleProductInWishlist={toggleProductInWishlist}
                             />
                         </>
-                    )}
+                    )} */}
                 </div>
             </li>
         );
