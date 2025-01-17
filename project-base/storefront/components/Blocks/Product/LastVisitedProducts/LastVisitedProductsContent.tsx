@@ -1,14 +1,7 @@
-import { createQuery } from 'app/_urql/urql-dto';
+import { getLastVisitedProductsQuery } from 'app/_queries/getLastVisitedProductsQuery';
 import { ProductsSlider, VISIBLE_SLIDER_ITEMS_LAST_VISITED } from 'components/Blocks/Product/ProductsSlider';
-import { ProductsByCatnumsDocument } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.ssr';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { getServerT } from 'utils/getServerTranslation';
-
-async function getLastVisitedProductsQuery(productsCatnums: string[]) {
-    return createQuery(ProductsByCatnumsDocument, {
-        catnums: productsCatnums,
-    });
-}
 
 type LastVisitedProductsProps = {
     productsCatnums: string[];
@@ -34,7 +27,7 @@ export async function LastVisitedProductsContent({ productsCatnums }: LastVisite
 
     return (
         <>
-            <h3 className="mb-4">{t('Last visited products')}</h3>
+            <h5 className="mb-4">{t('Last visited products')}</h5>
 
             <ProductsSlider
                 gtmProductListName={GtmProductListNameType.last_visited_products}
