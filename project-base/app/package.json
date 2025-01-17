@@ -71,7 +71,7 @@
         "grapesjs-preset-webpage": "^1.0.3",
         "intersection-observer": "^0.11.0",
         "jquery-hoverintent": "^1.10.1",
-        "jquery-ui": "1.12.1",
+        "jquery-ui": "1.13.2",
         "jquery-ui-touch-punch": "^0.2.3",
         "jquery.cookie": "^1.4.1",
         "juice": "^11.0.0",
