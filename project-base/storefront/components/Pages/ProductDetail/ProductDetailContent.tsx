@@ -1,33 +1,21 @@
 'use client';
 
-import { ProductDetailAccessories } from './ProductDetailAccessories/ProductDetailAccessories';
 import { ProductDetailAvailability } from './ProductDetailAvailability';
-import { ProductDetailAvailabilityList } from './ProductDetailAvailabilityList';
-import { ProductDetailPrefix, ProductDetailHeading } from './ProductDetailElements';
 import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailInfo } from './ProductDetailInfo';
 import { ProductDetailPrice } from './ProductDetailPrice';
 import { ProductDetailTabs } from './ProductDetailTabs/ProductDetailTabs';
-import { ProductDetailUsps } from './ProductDetailUsps';
-import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { WatchDogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
-import { Popup } from 'components/Layout/Popup/Popup';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { useTranslation } from 'components/providers/TranslationProvider';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
-import { TypeAvailabilityStatusEnum } from 'graphql/types';
-import { useSessionStore } from 'store/useSessionStore';
-import { twJoin } from 'tailwind-merge';
 
 type ProductDetailContentProps = {
     product: TypeProductDetailFragment;
 };
 
-export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product }) => {
-    const { t } = useTranslation();
+export function ProductDetailContent({ product }: ProductDetailContentProps) {
     // const router = useRouter();
-    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     // const { isLuigisBoxActive } = useDomainConfig();
 
@@ -112,4 +100,4 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product })
             </VerticalStack>
         </>
     );
-};
+}
