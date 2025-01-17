@@ -18,6 +18,10 @@ services:
         networks:
             - default
             - github-runner_traefik-network
+        deploy:
+            resources:
+                limits:
+                    memory: 200M
 
     php-fpm:
         restart: always
@@ -83,6 +87,10 @@ services:
             - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-watchdog.no-overlap=true
             - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-watchdog.user=www-data
             - chadburn.job-exec.${BRANCH_NAME_ESCAPED}-cron-watchdog.tty=true
+        deploy:
+            resources:
+                limits:
+                    memory: 700M
 
     php-consumer:
         restart: always
@@ -114,6 +122,10 @@ services:
             - sleep 5 && project-base/app/docker/php-fpm/consumer-entrypoint.sh 600
         labels:
             - traefik.enable=false
+        deploy:
+            resources:
+                limits:
+                    memory: 400M
 
     storefront:
         restart: always
@@ -128,6 +140,10 @@ services:
             - services-network
         labels:
             - traefik.enable=false
+        deploy:
+            resources:
+                limits:
+                    memory: 500M
 
     img-proxy:
         image: ghcr.io/imgproxy/imgproxy:latest
