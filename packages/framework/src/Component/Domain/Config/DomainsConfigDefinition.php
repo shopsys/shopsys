@@ -14,7 +14,6 @@ class DomainsConfigDefinition implements ConfigurationInterface
     public const string CONFIG_NAME = 'name';
     public const string CONFIG_LOCALE = 'locale';
     public const string CONFIG_TIMEZONE = 'timezone';
-    public const string CONFIG_DESIGN_ID = 'design_id';
     public const string CONFIG_TYPE = 'type';
     public const string CONFIG_LOAD_DEMO_DATA = 'load_demo_data';
 
@@ -37,7 +36,6 @@ class DomainsConfigDefinition implements ConfigurationInterface
                             ->scalarNode(self::CONFIG_NAME)->isRequired()->cannotBeEmpty()->end()
                             ->scalarNode(self::CONFIG_LOCALE)->isRequired()->cannotBeEmpty()->end()
                             ->scalarNode(self::CONFIG_TIMEZONE)->isRequired()->cannotBeEmpty()->end()
-                            ->scalarNode(self::CONFIG_DESIGN_ID)->defaultNull()->end()
                             ->scalarNode(self::CONFIG_TYPE)->defaultValue(
                                 DomainConfig::TYPE_B2C,
                             )->end()

@@ -93,7 +93,6 @@ class DomainsConfigLoader
             $domainConfig[DomainsConfigDefinition::CONFIG_NAME],
             $domainConfig[DomainsConfigDefinition::CONFIG_LOCALE],
             new DateTimeZone($domainConfig[DomainsConfigDefinition::CONFIG_TIMEZONE]),
-            $domainConfig[DomainsConfigDefinition::CONFIG_DESIGN_ID],
             $domainConfig[DomainsConfigDefinition::CONFIG_TYPE],
             $domainConfig[DomainsConfigDefinition::CONFIG_LOAD_DEMO_DATA],
         );
