@@ -54,6 +54,7 @@ services:
             - web-volume:/var/www/html/project-base/app/web
             - nginx-conf:/var/www/html/docker/nginx
             - postgres-conf:/var/www/html/project-base/app/docker/postgres
+            - ./ci-www.conf:/usr/local/etc/php-fpm.d/www.conf
         depends_on:
             - postgres
         environment:
