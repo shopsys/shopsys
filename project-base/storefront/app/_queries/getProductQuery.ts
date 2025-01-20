@@ -7,6 +7,7 @@ import {
     TypeProductDetailQueryVariables,
 } from 'graphql/requests/products/queries/ProductDetailQuery.ssr';
 import { headers } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 export const getProductQuery = async () => {
     const headersList = headers();
@@ -18,6 +19,10 @@ export const getProductQuery = async () => {
             urlSlug: slug,
         },
     );
+
+    if (result.data?.product?.__typename === 'Variant' && result.data.product.mainVariant?.slug) {
+        redirect(result.data.product.mainVariant.slug);
+    }
 
     const product =
         result.data?.product?.__typename === 'RegularProduct' || result.data?.product?.__typename === 'MainVariant'
