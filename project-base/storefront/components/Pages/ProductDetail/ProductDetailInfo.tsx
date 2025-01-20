@@ -7,13 +7,13 @@ type ProductDetailContentProps = {
     namePrefix: string | null;
     name: string;
     nameSuffix: string | null;
-    brand: {
+    brand?: {
         name: string;
         slug: string;
     } | null;
     catalogNumber: string;
-    shortDescription: string | null;
-    usps: string[];
+    shortDescription?: string | null;
+    usps?: string[];
 };
 
 export async function ProductDetailInfo({
@@ -54,7 +54,7 @@ export async function ProductDetailInfo({
 
             {shortDescription && <div className="text-sm">{shortDescription}</div>}
 
-            {!!usps.length && <ProductDetailUsps usps={usps} />}
+            {usps && !!usps.length && <ProductDetailUsps usps={usps} />}
         </>
     );
 }
