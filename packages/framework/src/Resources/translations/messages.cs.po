@@ -127,6 +127,9 @@ msgstr "Přidat další parametr"
 msgid "Add another price with weight limit"
 msgstr "Přidat další cenu s váhovým limitem"
 
+msgid "Add another video"
+msgstr "Přidat další video"
+
 msgid "Add country"
 msgstr "Přidat stát"
 
@@ -170,7 +173,7 @@ msgid "Add some mail whitelist patterns"
 msgstr "Přidejte nějaké předpisy pro e-mailový whitelist"
 
 msgid "Add some parameters"
-msgstr "Přidejte nějaké parametry"
+msgstr "Přidat parametr"
 
 msgid "Add to products"
 msgstr "Přidat k produktům"
@@ -439,8 +442,11 @@ msgstr "Zpět na volbu parametrů"
 msgid "Background color"
 msgstr "Barva pozadí"
 
+msgid "Banner"
+msgstr "Banner"
+
 msgid "Banners"
-msgstr ""
+msgstr "Bannery"
 
 msgid "Basic"
 msgstr "Základní"
@@ -645,9 +651,6 @@ msgstr "Kategorie <strong>{{ name }}</strong> byla smazána"
 
 msgid "Category description"
 msgstr "Popis kategorie"
-
-msgid "Category guidepost on main page"
-msgstr "Rozcestník kategorií na titulní stránce"
 
 msgid "Category name"
 msgstr "Název kategorie"
@@ -934,6 +937,9 @@ msgstr "Vytvořit novou reklamu"
 msgid "Create new article"
 msgstr "Vytvořit nový článek"
 
+msgid "Create new banner"
+msgstr "Vytvořit nový banner"
+
 msgid "Create new blog article"
 msgstr "Vytvořit nový článek blogu"
 
@@ -969,9 +975,6 @@ msgstr "Vytvořit novou položku"
 
 msgid "Create new order status"
 msgstr "Vytvořit nový stav objednávek"
-
-msgid "Create new page"
-msgstr "Vytvořit novou stránku"
 
 msgid "Create new parameter"
 msgstr "Vytvořit nový parametr"
@@ -1591,6 +1594,9 @@ msgstr "Editace článku"
 msgid "Editing article - %name%"
 msgstr "Editace článku - %name%"
 
+msgid "Editing banner"
+msgstr "Upravit banner"
+
 msgid "Editing bestseller"
 msgstr "Editace nejprodávanějšího zboží"
 
@@ -1740,9 +1746,6 @@ msgstr "Editace dopravy"
 
 msgid "Editing shipping - %name%"
 msgstr "Editace dopravy - %name%"
-
-msgid "Editing slider page"
-msgstr "Editace stránky slideru"
 
 msgid "Editing slider page - %name%"
 msgstr "Editace stránky slideru - %name%"
@@ -2164,6 +2167,9 @@ msgstr "Stav platby GoPay"
 msgid "Group"
 msgstr "Skupina"
 
+msgid "Groups"
+msgstr "Skupiny"
+
 msgid "HTML code"
 msgstr "HTML kód"
 
@@ -2557,9 +2563,6 @@ msgstr "Hlavní kategorie na doménách"
 msgid "Main image"
 msgstr "Hlavní obrázek"
 
-msgid "Main page products"
-msgstr "Propagované produkty"
-
 msgid "Main text"
 msgstr "Text"
 
@@ -2586,6 +2589,9 @@ msgstr "Maximální hmotnost produktů"
 
 msgid "Measurement units"
 msgstr "Měrné jednotky"
+
+msgid "Measurement units overview"
+msgstr "Přehled měrných jednotek"
 
 msgid "Menu"
 msgstr "Menu"
@@ -2692,6 +2698,9 @@ msgstr "Nová reklama"
 msgid "New article"
 msgstr "Nový článek"
 
+msgid "New banner"
+msgstr "Nový banner"
+
 msgid "New blog article"
 msgstr "Nový článek blogu"
 
@@ -2770,9 +2779,6 @@ msgstr "Nový obchodní zástupce"
 msgid "New shipping"
 msgstr "Nová doprava"
 
-msgid "New slider page"
-msgstr "Nová stránka slideru"
-
 msgid "New store"
 msgstr "Nová prodejna"
 
@@ -2846,7 +2852,10 @@ msgid "No files found."
 msgstr "Žádné soubory nebyly nalezeny."
 
 msgid "No flags found. You have to create some first."
-msgstr "Nebyly nalezeny žádné příznaky. Nejprve musíte nějaké vytvořit."
+msgstr "Nebyly nalezeny žádné příznaky. Musíte prvně nějaký vytvořit."
+
+msgid "No group"
+msgstr "Nezařazeno"
 
 msgid "No inquiries found."
 msgstr "Nebyly nalezeny žádné poptávky."
@@ -3560,10 +3569,10 @@ msgid "Promo codes - view"
 msgstr "Slevové kupóny - zobrazení"
 
 msgid "Promoted categories"
-msgstr ""
+msgstr "Promované kategorie"
 
 msgid "Promoted products"
-msgstr ""
+msgstr "Promované produkty"
 
 msgid "Quantity"
 msgstr "Množství"
@@ -4057,17 +4066,11 @@ msgstr "Bannery - vše"
 msgid "Slider items - view"
 msgstr "Bannery - zobrazení"
 
-msgid "Slider page"
-msgstr "Stránka slideru"
-
 msgid "Slider page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
 msgstr "Byla vytvořena stránka slideru <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
 
 msgid "Slider page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
 msgstr "Byla upravena stránka slideru <strong><a href=\"{{ url }}\">{{ name }}</a></strong>"
-
-msgid "Slider pages"
-msgstr "Stránky slideru"
 
 msgid "Slug"
 msgstr "Slug"
@@ -4396,6 +4399,9 @@ msgstr "Dopravy a platby - zobrazení"
 msgid "Tuesday"
 msgstr "Úterý"
 
+msgid "Two factor authentication"
+msgstr ""
+
 msgid "Two factor authentication code"
 msgstr "Dvoufaktorový ověřovací kód"
 
@@ -4476,9 +4482,6 @@ msgstr "Měrné jednotky - vše"
 
 msgid "Units - view"
 msgstr "Měrné jednotky - zobrazení"
-
-msgid "Units overview"
-msgstr "Přehled jednotek"
 
 msgid "Unlimited"
 msgstr "Neomezeně"
@@ -4847,7 +4850,7 @@ msgid "files"
 msgstr "soubory"
 
 msgid "flags"
-msgstr "příznaky"
+msgstr "příznaků"
 
 msgid "from"
 msgstr "z"

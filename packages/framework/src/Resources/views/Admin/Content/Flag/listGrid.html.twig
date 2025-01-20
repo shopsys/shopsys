@@ -9,6 +9,10 @@
     {{ parent() }}
 {% endblock %}
 
+{% block grid_value_cell_id_name %}
+    <a href="{{ url('admin_flag_edit', { id: row.f.id }) }}">{{ value }}</a>
+{% endblock %}
+
 {% block grid_value_cell_id_rgbColor %}
     {% if value is not empty %}
         <span class="in-pill" style="background-color: {{ value }};">{{ value }}</span>

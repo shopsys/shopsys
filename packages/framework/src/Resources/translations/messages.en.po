@@ -127,6 +127,9 @@ msgstr ""
 msgid "Add another price with weight limit"
 msgstr ""
 
+msgid "Add another video"
+msgstr ""
+
 msgid "Add country"
 msgstr ""
 
@@ -439,6 +442,9 @@ msgstr ""
 msgid "Background color"
 msgstr ""
 
+msgid "Banner"
+msgstr ""
+
 msgid "Banners"
 msgstr ""
 
@@ -644,9 +650,6 @@ msgid "Category <strong>{{ name }}</strong> deleted"
 msgstr ""
 
 msgid "Category description"
-msgstr ""
-
-msgid "Category guidepost on main page"
 msgstr ""
 
 msgid "Category name"
@@ -934,6 +937,9 @@ msgstr ""
 msgid "Create new article"
 msgstr ""
 
+msgid "Create new banner"
+msgstr ""
+
 msgid "Create new blog article"
 msgstr ""
 
@@ -968,9 +974,6 @@ msgid "Create new item"
 msgstr ""
 
 msgid "Create new order status"
-msgstr ""
-
-msgid "Create new page"
 msgstr ""
 
 msgid "Create new parameter"
@@ -1591,6 +1594,9 @@ msgstr ""
 msgid "Editing article - %name%"
 msgstr ""
 
+msgid "Editing banner"
+msgstr ""
+
 msgid "Editing bestseller"
 msgstr ""
 
@@ -1739,9 +1745,6 @@ msgid "Editing shipping"
 msgstr ""
 
 msgid "Editing shipping - %name%"
-msgstr ""
-
-msgid "Editing slider page"
 msgstr ""
 
 msgid "Editing slider page - %name%"
@@ -2164,6 +2167,9 @@ msgstr ""
 msgid "Group"
 msgstr ""
 
+msgid "Groups"
+msgstr ""
+
 msgid "HTML code"
 msgstr ""
 
@@ -2557,9 +2563,6 @@ msgstr ""
 msgid "Main image"
 msgstr ""
 
-msgid "Main page products"
-msgstr "Promoted products"
-
 msgid "Main text"
 msgstr ""
 
@@ -2585,6 +2588,9 @@ msgid "Maximum weight of products"
 msgstr ""
 
 msgid "Measurement units"
+msgstr ""
+
+msgid "Measurement units overview"
 msgstr ""
 
 msgid "Menu"
@@ -2692,6 +2698,9 @@ msgstr ""
 msgid "New article"
 msgstr ""
 
+msgid "New banner"
+msgstr ""
+
 msgid "New blog article"
 msgstr ""
 
@@ -2770,9 +2779,6 @@ msgstr ""
 msgid "New shipping"
 msgstr ""
 
-msgid "New slider page"
-msgstr ""
-
 msgid "New store"
 msgstr ""
 
@@ -2846,6 +2852,9 @@ msgid "No files found."
 msgstr ""
 
 msgid "No flags found. You have to create some first."
+msgstr ""
+
+msgid "No group"
 msgstr ""
 
 msgid "No inquiries found."
@@ -4057,16 +4066,10 @@ msgstr ""
 msgid "Slider items - view"
 msgstr ""
 
-msgid "Slider page"
-msgstr ""
-
 msgid "Slider page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
 msgstr ""
 
 msgid "Slider page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
-msgstr ""
-
-msgid "Slider pages"
 msgstr ""
 
 msgid "Slug"
@@ -4396,6 +4399,9 @@ msgstr ""
 msgid "Tuesday"
 msgstr ""
 
+msgid "Two factor authentication"
+msgstr ""
+
 msgid "Two factor authentication code"
 msgstr ""
 
@@ -4475,9 +4481,6 @@ msgid "Units - full"
 msgstr ""
 
 msgid "Units - view"
-msgstr ""
-
-msgid "Units overview"
 msgstr ""
 
 msgid "Unlimited"

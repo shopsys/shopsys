@@ -7,6 +7,9 @@ export default function validationPromoCode () {
         callbacks: {
             validateUniquePromoCode: function () {
 
+            },
+            validateUniquePromoCodeByDomain: function () {
+                // JS validation is not necessary
             }
         }
     });

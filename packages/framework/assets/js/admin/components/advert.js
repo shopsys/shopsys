@@ -1,4 +1,4 @@
-import Register from 'framework/common/utils/Register';
+import Register from '../../common/utils/Register';
 
 (new Register()).registerCallback($container => {
     const getCheckedPositionName = function () {

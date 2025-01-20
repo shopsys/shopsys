@@ -7,28 +7,7 @@ msgstr ""
 msgid "Action"
 msgstr ""
 
-msgid "Add another parameter"
-msgstr ""
-
-msgid "Add another video"
-msgstr ""
-
-msgid "Add some parameters"
-msgstr ""
-
-msgid "Administrator"
-msgstr ""
-
 msgid "Alt"
-msgstr ""
-
-msgid "Back to overview"
-msgstr ""
-
-msgid "Banner"
-msgstr ""
-
-msgid "Banners"
 msgstr ""
 
 msgid "Basic objects"
@@ -58,16 +37,10 @@ msgstr ""
 msgid "Contact"
 msgstr ""
 
-msgid "Create new banner"
-msgstr ""
-
 msgid "Default"
 msgstr ""
 
 msgid "Description"
-msgstr ""
-
-msgid "Disable two factor authentication"
 msgstr ""
 
 msgid "Display date FROM"
@@ -77,15 +50,6 @@ msgid "Display date TO"
 msgstr ""
 
 msgid "Edit data"
-msgstr ""
-
-msgid "Editing banner"
-msgstr ""
-
-msgid "Enable two factor authentication by Google Authenticator"
-msgstr ""
-
-msgid "Enable two factor authentication by email"
 msgstr ""
 
 msgid "File"
@@ -103,9 +67,6 @@ msgstr ""
 msgid "GTM creative"
 msgstr ""
 
-msgid "Groups"
-msgstr ""
-
 msgid "Height"
 msgstr ""
 
@@ -113,9 +74,6 @@ msgid "Href"
 msgstr ""
 
 msgid "Image"
-msgstr ""
-
-msgid "In stock"
 msgstr ""
 
 msgid "Insert variable"
@@ -160,19 +118,7 @@ msgstr ""
 msgid "Map"
 msgstr ""
 
-msgid "Measurement units overview"
-msgstr ""
-
 msgid "New"
-msgstr ""
-
-msgid "New banner"
-msgstr ""
-
-msgid "No flags found. You have to create some first."
-msgstr ""
-
-msgid "No group"
 msgstr ""
 
 msgid "No products are set. Please add some in the component settings."
@@ -193,9 +139,6 @@ msgstr ""
 msgid "Outside layout"
 msgstr ""
 
-msgid "Parameter"
-msgstr ""
-
 msgid "Path to file"
 msgstr ""
 
@@ -209,12 +152,6 @@ msgid "Price hit"
 msgstr ""
 
 msgid "Product image"
-msgstr ""
-
-msgid "Promoted categories"
-msgstr ""
-
-msgid "Promoted products"
 msgstr ""
 
 msgid "Registration"
@@ -233,9 +170,6 @@ msgid "Sale"
 msgstr ""
 
 msgid "Save"
-msgstr ""
-
-msgid "Save changes in order"
 msgstr ""
 
 msgid "Search [noun]"
@@ -280,9 +214,6 @@ msgstr ""
 msgid "Upload image for mobile devices"
 msgstr ""
 
-msgid "Value"
-msgstr ""
-
 msgid "Variant"
 msgstr ""
 
@@ -290,9 +221,6 @@ msgid "Video"
 msgstr ""
 
 msgid "Videos"
-msgstr ""
-
-msgid "Warehouse"
 msgstr ""
 
 msgid "Width"
@@ -308,9 +236,6 @@ msgid "e.g. Sale-04-20-2020"
 msgstr ""
 
 msgid "e.g. red-1035x340-jpg-carousel"
-msgstr ""
-
-msgid "flags"
 msgstr ""
 
 msgid "from most expensive"

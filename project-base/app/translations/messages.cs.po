@@ -7,29 +7,8 @@ msgstr ""
 msgid "Action"
 msgstr "Akce"
 
-msgid "Add another parameter"
-msgstr "Přidat další parametr"
-
-msgid "Add another video"
-msgstr "Přidat další video"
-
-msgid "Add some parameters"
-msgstr "Přidat parametr"
-
-msgid "Administrator"
-msgstr "Administrátor"
-
 msgid "Alt"
 msgstr "Alt"
-
-msgid "Back to overview"
-msgstr "Zpět na přehled"
-
-msgid "Banner"
-msgstr "Banner"
-
-msgid "Banners"
-msgstr "Bannery"
 
 msgid "Basic objects"
 msgstr "Basic"
@@ -58,17 +37,11 @@ msgstr "Sloupce"
 msgid "Contact"
 msgstr "Kontakt"
 
-msgid "Create new banner"
-msgstr "Vytvořit nový banner"
-
 msgid "Default"
 msgstr "Základní"
 
 msgid "Description"
 msgstr "Popis"
-
-msgid "Disable two factor authentication"
-msgstr "Vypnout dvoufaktorové ověřování"
 
 msgid "Display date FROM"
 msgstr "Datum zobrazení OD"
@@ -78,15 +51,6 @@ msgstr "Datum zobrazení DO"
 
 msgid "Edit data"
 msgstr "Upravit data"
-
-msgid "Editing banner"
-msgstr "Upravit banner"
-
-msgid "Enable two factor authentication by Google Authenticator"
-msgstr "Zapnout dvoufaktorové ověřování pomocí Google Autentikátoru"
-
-msgid "Enable two factor authentication by email"
-msgstr "Zapnout dvoufaktorové ověřování pomocí e-mailu"
 
 msgid "File"
 msgstr "Soubor"
@@ -103,9 +67,6 @@ msgstr "GTM ID"
 msgid "GTM creative"
 msgstr ""
 
-msgid "Groups"
-msgstr "Skupiny"
-
 msgid "Height"
 msgstr "Výška"
 
@@ -114,9 +75,6 @@ msgstr "Href"
 
 msgid "Image"
 msgstr "Obrázek"
-
-msgid "In stock"
-msgstr "Skladem"
 
 msgid "Insert variable"
 msgstr "Vložit proměnnou"
@@ -160,20 +118,8 @@ msgstr "Povinné proměnné"
 msgid "Map"
 msgstr "Mapa"
 
-msgid "Measurement units overview"
-msgstr "Přehled měrných jednotek"
-
 msgid "New"
 msgstr "Novinka"
-
-msgid "New banner"
-msgstr "Nový banner"
-
-msgid "No flags found. You have to create some first."
-msgstr "Nebyly nalezeny žádné příznaky. Musíte prvně nějaký vytvořit."
-
-msgid "No group"
-msgstr "Nezařazeno"
 
 msgid "No products are set. Please add some in the component settings."
 msgstr "Nejsou nastavené žádné produkty. Přidejte prosím produkt v nastavení komponenty."
@@ -193,9 +139,6 @@ msgstr "Objednávky"
 msgid "Outside layout"
 msgstr "Rozložení vně"
 
-msgid "Parameter"
-msgstr "Parametr"
-
 msgid "Path to file"
 msgstr "Cesta k souboru"
 
@@ -210,12 +153,6 @@ msgstr "Cenový hit"
 
 msgid "Product image"
 msgstr "Obrázek produktu"
-
-msgid "Promoted categories"
-msgstr "Promované kategorie"
-
-msgid "Promoted products"
-msgstr "Promované produkty"
 
 msgid "Registration"
 msgstr "Registrace"
@@ -234,9 +171,6 @@ msgstr "Výprodej"
 
 msgid "Save"
 msgstr "Uložit"
-
-msgid "Save changes in order"
-msgstr "Uložit změny v pořadí"
 
 msgid "Search [noun]"
 msgstr "Hledání"
@@ -280,9 +214,6 @@ msgstr "Nahrát obrázek"
 msgid "Upload image for mobile devices"
 msgstr "Nahrát obrázek pro mobilní zařízení"
 
-msgid "Value"
-msgstr "Hodnota"
-
 msgid "Variant"
 msgstr "Varianta"
 
@@ -291,9 +222,6 @@ msgstr "Video"
 
 msgid "Videos"
 msgstr "Videa"
-
-msgid "Warehouse"
-msgstr "Sklad"
 
 msgid "Width"
 msgstr "Šířka"
@@ -309,9 +237,6 @@ msgstr "např. Akce-04-20-2020"
 
 msgid "e.g. red-1035x340-jpg-carousel"
 msgstr "např. cervena-1035x340-jpg-carousel"
-
-msgid "flags"
-msgstr "příznaků"
 
 msgid "from most expensive"
 msgstr "od nejdražšího"
