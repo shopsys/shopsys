@@ -77,7 +77,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
         ]);
 
         $mailTemplateData->body = <<<EOT
-            <div style="box-sizing: border-box; padding: 10px;">
+            <div style="box-sizing: border-box;">
                 <div class="gjs-text-ckeditor">{$mailTemplateData->body}</div>
             </div>
         EOT;
@@ -115,27 +115,29 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
         $mailTemplateData->sendMail = true;
 
         $mailTemplateData->subject = t(
-            'Thank you for your order no. {number} placed at {date}',
+            'Your order no. {number} has been placed',
             [],
             Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
             $locale,
         );
-        $mailTemplateData->body = t('Dear customer,<br /><br />'
-            . 'Your order has been placed successfully.<br /><br />'
-            . 'You will be contacted when the order state changes.<br />'
-            . 'Order number: {number} <br />'
-            . 'Date and time of creation: {date} <br />'
-            . 'E-shop link: {url} <br />'
-            . 'Order detail link: {order_detail_url} <br />'
-            . 'Shipping: {transport} <br />'
-            . 'Payment: {payment} <br />'
-            . 'Total price including VAT: {total_price} <br />'
-            . 'Billing address:<br /> {billing_address} <br />'
-            . 'Delivery address: {delivery_address} <br />'
-            . 'Note: {note} <br />'
-            . 'Products: {products} <br />'
-            . '{transport_instructions} <br />'
-            . '{payment_instructions}', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->body = t('
+            <h1>Your order has been placed successfully</h1>
+            Dear customer,<br/>
+            <br/>
+            you will be contacted when the order state changes.<br/>
+            <br/>
+            Order number: <a href="{order_detail_url}">{number}</a><br/>
+            Date and time of creation: {date}<br/>
+            {note}<br/>
+            {transport_info}<br/>
+            {transport_instructions}<br/>
+            {payment_info}<br/>
+            {payment_instructions}<br/>
+            {products}
+            <h3 style="text-align: right; margin: 0;">Total price including VAT: <span style="white-space: nowrap;">{total_price}</span></h3>
+            {rounding_info}<br/>
+            {addresses}
+            ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $mailTemplateData->orderStatus = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW, OrderStatus::class);
 
         $this->createMailTemplate($manager, 'order_status_1', $mailTemplateData, $domainId);
@@ -151,9 +153,27 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
         $mailTemplateData = $this->mailTemplateDataFactory->create();
         $mailTemplateData->sendMail = false;
 
-        $mailTemplateData->subject = t('Order status has changed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-        $mailTemplateData->body = t('Dear customer, <br /><br />'
-            . 'Your order is being processed.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->subject = t('
+            Your order no. {number} is being processed
+            ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->body = t('
+            <h1>Your order is being processed</h1>
+            Dear customer,<br/>
+            <br/>
+            we have started processing your order.<br/>
+            <br/>
+            Order number: <a href="{order_detail_url}">{number}</a><br/>
+            Date and time of creation: {date}<br/>
+            {note}<br/>
+            {transport_info}<br/>
+            {transport_instructions}<br/>
+            {payment_info}<br/>
+            {payment_instructions}<br/>
+            {products}
+            <h3 style="text-align: right; margin: 0;">Total price including VAT: <span style="white-space: nowrap;">{total_price}</span></h3>
+            {rounding_info}<br/>
+            {addresses}
+            ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $mailTemplateData->orderStatus = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_IN_PROGRESS, OrderStatus::class);
 
         $this->createMailTemplate($manager, 'order_status_2', $mailTemplateData, $domainId);
@@ -169,9 +189,27 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
         $mailTemplateData = $this->mailTemplateDataFactory->create();
         $mailTemplateData->sendMail = false;
 
-        $mailTemplateData->subject = t('Order status has changed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-        $mailTemplateData->body = t('Dear customer, <br /><br />'
-            . 'Processing your order has been finished.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->subject = t('
+            Your order no. {number} has been completed
+            ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->body = t('
+            <h1>Your order has been completed</h1>
+            Dear customer,<br/>
+            <br/>
+            your order has been successfully completed.<br/>
+            <br/>
+            Order number: <a href="{order_detail_url}">{number}</a><br/>
+            Date and time of creation: {date}<br/>
+            {note}<br/>
+            {transport_info}<br/>
+            {transport_instructions}<br/>
+            {payment_info}<br/>
+            {payment_instructions}<br/>
+            {products}
+            <h3 style="text-align: right; margin: 0;">Total price including VAT: <span style="white-space: nowrap;">{total_price}</span></h3>
+            {rounding_info}<br/>
+            {addresses}
+            ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $mailTemplateData->orderStatus = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_DONE, OrderStatus::class);
 
         $this->createMailTemplate($manager, 'order_status_3', $mailTemplateData, $domainId);
@@ -187,9 +225,27 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
         $mailTemplateData = $this->mailTemplateDataFactory->create();
         $mailTemplateData->sendMail = false;
 
-        $mailTemplateData->subject = t('Order status has changed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-        $mailTemplateData->body = t('Dear customer, <br /><br />'
-            . 'Your order has been cancelled.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->subject = t('
+            Your order no. {number} has been cancelled
+            ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->body = t('
+            <h1>Your order has been cancelled</h1>
+            Dear customer,<br/>
+            <br/>
+            your order has been cancelled.<br/>
+            <br/>
+            Order number: <a href="{order_detail_url}">{number}</a><br/>
+            Date and time of creation: {date}<br/>
+            {note}<br/>
+            {transport_info}<br/>
+            {transport_instructions}<br/>
+            {payment_info}<br/>
+            {payment_instructions}<br/>
+            {products}
+            <h3 style="text-align: right; margin: 0;">Total price including VAT: <span style="white-space: nowrap;">{total_price}</span></h3>
+            {rounding_info}<br/>
+            {addresses}
+            ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $mailTemplateData->orderStatus = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_CANCELED, OrderStatus::class);
 
         $this->createMailTemplate($manager, 'order_status_4', $mailTemplateData, $domainId);
@@ -205,9 +261,14 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
         $mailTemplateData = $this->mailTemplateDataFactory->create();
         $mailTemplateData->sendMail = true;
 
-        $mailTemplateData->subject = t('Reset password request', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-        $mailTemplateData->body = t('Dear customer.<br /><br />'
-            . 'You can set a new password following this link: <a href="{new_password_url}">{new_password_url}</a>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->subject = t('
+            Reset password request
+            ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->body = t('
+            Dear customer,<br/><br/>
+            you can set a new password following this <a href="{new_password_url}">link</a>.<br/><br/>
+            Best regards
+            ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
 
         $this->createMailTemplate($manager, MailTemplate::RESET_PASSWORD_NAME, $mailTemplateData, $domainId);
     }
@@ -225,9 +286,14 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
         $mailTemplateData = $this->mailTemplateDataFactory->create();
         $mailTemplateData->sendMail = true;
 
-        $mailTemplateData->subject = t('Administrator reset password request', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-        $mailTemplateData->body = t('Dear administrator.<br /><br />'
-            . 'You can set a new password following this link: <a href="{new_password_url}">{new_password_url}</a>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->subject = t('
+            Administrator reset password request
+            ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->body = t('
+            Dear administrator,<br/><br/>
+            you can set a new password following this <a href="{new_password_url}">link</a>.<br/><br/>
+            Best regards
+            ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
 
         $this->createMailTemplate($manager, ResetPasswordMail::MAIL_TEMPLATE_NAME, $mailTemplateData, $domainId);
     }
@@ -245,13 +311,22 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
         $mailTemplateData = $this->mailTemplateDataFactory->create();
         $mailTemplateData->sendMail = true;
 
-        $mailTemplateData->subject = t('Registration completed', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-        $mailTemplateData->body = t('Dear customer, <br /><br />'
-            . 'your registration is completed. <br />'
-            . 'Name: {first_name} {last_name}<br />'
-            . 'Email: {email}<br />'
-            . 'E-shop link: {url}<br />'
-            . 'Log in page: {login_page}', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->subject = t('
+            Registration completed
+            ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->body = t('
+            Dear customer,<br/>
+            <br/>
+            your registration is completed.<br/>
+            <br/>
+            Name: {first_name} {last_name}<br />
+            Email: {email}<br/>
+            <br/>
+            E-shop: <a href="{url}">link</a><br />
+            Login page: <a href="{login_page}">Log in</a><br/>
+            <br/>
+            Best regards
+            ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
 
         $this->createMailTemplate($manager, MailTemplate::REGISTRATION_CONFIRM_NAME, $mailTemplateData, $domainId);
     }
@@ -269,15 +344,20 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
         $mailTemplateData = $this->mailTemplateDataFactory->create();
         $mailTemplateData->sendMail = true;
 
-        $mailTemplateData->subject = t('Personal information overview - {domain}', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-        $mailTemplateData->body = t('Dear customer, <br /><br />
-            based on your email {email}, we are sending you a link to your personal details. By clicking on the link below, you will be taken to a page listing all the<br/>
-            personal details which we have in evidence in our online store {domain}. 
-            <br/><br/>
-            To overview your personal information please click here - {url} <br/>
+        $mailTemplateData->subject = t('
+            Personal information overview - {domain}
+            ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->body = t('
+            Dear customer,<br/>
+            <br/>
+            based on your email {email}, we are sending you a link to your personal details. By clicking on the link below, you will be taken to a page listing all thepersonal details which we have in evidence in our online store {domain}.<br/>
+            <br/>
+            To overview your personal information please click <a href="{url}">here</a>.<br/>
             The link is valid for next 24 hours.<br/>
-            Best Regards <br/><br/>
-            team of {domain}', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+            <br/>
+            Best regards<br />
+            Team of {domain}
+            ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
 
         $this->createMailTemplate($manager, MailTemplate::PERSONAL_DATA_ACCESS_NAME, $mailTemplateData, $domainId);
     }
@@ -295,16 +375,20 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
         $mailTemplateData = $this->mailTemplateDataFactory->create();
         $mailTemplateData->sendMail = true;
 
-        $mailTemplateData->subject = t('Personal information export - {domain}', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-        $mailTemplateData->body = t('Dear customer, <br/><br/>
-based on your email {email}, we are sending you a link where you can download your personal details registered on our online store in readable format. Clicking on the link will take you to a page where you’ll be able to download these informations, which we have in evidence in our online store {domain}. 
-<br/><br/>
-To download your personal information please click here - {url}<br/> 
-The link is valid for next 24 hours.
-<br/><br/>
-Best regards<br/>
-team of {domain}
-', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->subject = t('
+            Personal information export - {domain}
+            ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->body = t('
+            Dear customer,<br/>
+            based on your email {email}, we are sending you a link where you can download your personal details registered on our online store in readable format. Clicking on the link will take you to a page where you’ll be able to download these informations, which we have in evidence in our online store {domain}.<br/>
+            <br/>
+            To download your personal information please click <a href="{url}">here</a>.<br/>
+            The link is valid for next 24 hours.<br/>
+            <br/>
+            Best regards<br />
+            Team of {domain}
+            
+            ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
 
         $this->createMailTemplate($manager, MailTemplate::PERSONAL_DATA_EXPORT_NAME, $mailTemplateData, $domainId);
     }
@@ -319,8 +403,16 @@ team of {domain}
         $mailTemplateData = $this->mailTemplateDataFactory->create();
         $mailTemplateData->sendMail = true;
 
-        $mailTemplateData->subject = t('Customer activation', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-        $mailTemplateData->body = t('Dear customer,<br /><br />you can finish registration and set new password via this link: <a href="{activation_url}">{activation_url}</a>', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->subject = t('
+            Customer activation
+            ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->body = t('
+            Dear customer,<br/>
+            <br/>
+            you can finish registration and set new password via this <a href="{activation_url}">link</a>.<br/>
+            <br/>
+            Best regards
+            ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
 
         $this->createMailTemplate($manager, CustomerActivationMail::CUSTOMER_ACTIVATION_NAME, $mailTemplateData, $domainId);
     }
@@ -338,8 +430,16 @@ team of {domain}
         $mailTemplateData = $this->mailTemplateDataFactory->create();
         $mailTemplateData->sendMail = true;
 
-        $mailTemplateData->subject = t('Authentication code', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
-        $mailTemplateData->body = t('Authentication code for two factor authentication: {authentication_code}', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->subject = t('
+            Authentication code
+            ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        $mailTemplateData->body = t('
+            Dear customer,<br/>
+            <br/>
+            your two factor authentication code is: {authentication_code}<br/>
+            <br/>
+            Best regards
+            ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         $this->createMailTemplate($manager, TwoFactorAuthenticationMail::TWO_FACTOR_AUTHENTICATION_CODE, $mailTemplateData, $domainId);
     }
 }

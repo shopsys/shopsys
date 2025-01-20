@@ -157,6 +157,7 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
             $promoCodeData->domainId = $domainId;
             $promoCode = $this->promoCodeFacade->create($promoCodeData);
             $this->setDefaultLimit($promoCode);
+            $this->addReferenceForDomain(self::VALID_PROMO_CODE, $promoCode, $domainId);
 
             $promoCodeData = $this->promoCodeDataFactory->create();
             $promoCodeData->code = 'test100';

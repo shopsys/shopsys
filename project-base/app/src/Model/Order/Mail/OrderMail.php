@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail as BaseOrderMail;
  * @method string getFormattedPrice(\App\Model\Order\Order $order)
  * @method string getFormattedDateTime(\App\Model\Order\Order $order)
  * @method string getDeliveryAddressHtmlTable(\App\Model\Order\Order $order)
- * @method string getProductsHtmlTable(\App\Model\Order\Order $order)
+ * @method string getProductsHtmlTable(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Pricing\Price[] $orderItemTotalPricesById)
  * @method string getDomainLocaleByOrder(\App\Model\Order\Order $order)
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @property \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
@@ -23,6 +23,13 @@ use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail as BaseOrderMail;
  * @method array getVariablesReplacementsForBody(\App\Model\Order\Order $order)
  * @method string|null getTrackingInstructions(\App\Model\Order\Order $order)
  * @method string getBillingAddressHtmlTable(\App\Model\Order\Order $order)
+ * @method string|null getNoteHtml(\App\Model\Order\Order $order)
+ * @method string|null getTransportInstructionsHtml(\App\Model\Order\Order $order)
+ * @method string|null getPaymentInstructionsHtml(\App\Model\Order\Order $order)
+ * @method string getTransportInfoHtml(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Pricing\Price[] $orderItemTotalPricesById)
+ * @method string getPaymentInfoHtml(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Pricing\Price[] $orderItemTotalPricesById)
+ * @method string|null getRoundingInfoHtml(\App\Model\Order\Order $order, \Shopsys\FrameworkBundle\Model\Pricing\Price[] $orderItemTotalPricesById)
+ * @method string getAddressesHtml(\App\Model\Order\Order $order)
  */
 class OrderMail extends BaseOrderMail
 {

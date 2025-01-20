@@ -1,22 +1,50 @@
-<table>
-    <tr>
-        <th>{% trans into orderLocale %}First name{% endtrans %}</th>
-        <th>{% trans into orderLocale %}Last name{% endtrans %}</th>
-        <th>{% trans into orderLocale %}Company{% endtrans %}</th>
-        <th>{% trans into orderLocale %}Company number{% endtrans %}</th>
-        <th>{% trans into orderLocale %}Tax number{% endtrans %}</th>
-        <th>{% trans into orderLocale %}Street{% endtrans %}</th>
-        <th>{% trans into orderLocale %}City{% endtrans %}</th>
-        <th>{% trans into orderLocale %}Postcode{% endtrans %}</th>
-    </tr>
-    <tr>
-        <td>{{ order.firstName }}</td>
-        <td>{{ order.lastName }}</td>
-        <td>{{ order.companyName }}</td>
-        <td>{{ order.companyNumber }}</td>
-        <td>{{ order.companyTaxNumber }}</td>
-        <td>{{ order.street }}</td>
-        <td>{{ order.city }}</td>
-        <td>{{ order.postcode }}</td>
-    </tr>
+<table  border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+    <tbody>
+        <tr>
+            <td style="vertical-align:top;" width="60">
+                <img src="{{ mailImageSrc(order.domainId, 'billing-address.png') }}" style="box-sizing: border-box; color: black; margin: 0; height: 50px;">
+            </td>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <h2 style="margin: 0 0 5px 0;">{% trans into orderLocale %}Billing address{% endtrans %}</h2>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{ order.firstName }} {{ order.lastName }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{ order.companyName }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{ order.companyNumber }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{ order.companyTaxNumber }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{ order.street }},  {{ order.city }},  {{ order.postcode }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{ order.country.name }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
 </table>

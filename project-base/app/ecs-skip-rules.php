@@ -39,6 +39,8 @@ return [
         __DIR__ . '/src/Form/Admin/NotificationBarFormType.php',
         __DIR__ . '/src/Migrations/Version20200319113341.php',
         __DIR__ . '/src/Migrations/Version20221205123619.php',
+        __DIR__ . '/src/Model/Mail/MailTemplateBuilder.php',
+        __DIR__ . '/src/Model/Mail/MailTemplateConfiguration.php',
         __DIR__ . '/tests/App/Functional/EntityExtension/EntityExtensionTest.php',
         __DIR__ . '/tests/App/Functional/Model/Product/ProductOnCurrentDomainElasticFacadeCountDataTest.php',
         __DIR__ . '/tests/App/Smoke/Http/RouteConfigCustomization.php',

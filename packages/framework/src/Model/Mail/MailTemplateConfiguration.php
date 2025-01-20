@@ -116,7 +116,13 @@ class MailTemplateConfiguration
                 t('Chosen shipping name'),
                 MailTemplateVariables::CONTEXT_BODY,
             )
+            ->addVariable(
+                OrderMail::VARIABLE_TRANSPORT_INFO,
+                t('Chosen shipping information (image, name, price)'),
+                MailTemplateVariables::CONTEXT_BODY,
+            )
             ->addVariable(OrderMail::VARIABLE_PAYMENT, t('Chosen payment name'), MailTemplateVariables::CONTEXT_BODY)
+            ->addVariable(OrderMail::VARIABLE_PAYMENT_INFO, t('Chosen payment information (image, name, price)'), MailTemplateVariables::CONTEXT_BODY)
             ->addVariable(
                 OrderMail::VARIABLE_TOTAL_PRICE,
                 t('Total order price (including VAT)'),
@@ -124,7 +130,7 @@ class MailTemplateConfiguration
             )
             ->addVariable(
                 OrderMail::VARIABLE_BILLING_ADDRESS,
-                t('Billing address - name, last name, company, company number, tax number and billing address'),
+                t('Billing address'),
                 MailTemplateVariables::CONTEXT_BODY,
             )
             ->addVariable(
@@ -135,7 +141,7 @@ class MailTemplateConfiguration
             ->addVariable(OrderMail::VARIABLE_NOTE, t('Note'), MailTemplateVariables::CONTEXT_BODY)
             ->addVariable(
                 OrderMail::VARIABLE_PRODUCTS,
-                t('List of products in order (name, quantity, price per unit including VAT, total price per item including VAT)'),
+                t('List of products in order (image, name, quantity, price per unit including VAT, total price per item including VAT)'),
                 MailTemplateVariables::CONTEXT_BODY,
             )
             ->addVariable(
@@ -156,6 +162,16 @@ class MailTemplateConfiguration
             ->addVariable(
                 OrderMail::VARIABLE_TRACKING_INSTRUCTIONS,
                 t('Tracking instructions'),
+                MailTemplateVariables::CONTEXT_BODY,
+            )
+            ->addVariable(
+                OrderMail::VARIABLE_ROUNDING_INFO,
+                t('Information about order rounding item (empty if there is no rounding)'),
+                MailTemplateVariables::CONTEXT_BODY,
+            )
+            ->addVariable(
+                OrderMail::VARIABLE_ADDRESSES,
+                t('Billing and delivery address'),
                 MailTemplateVariables::CONTEXT_BODY,
             );
     }

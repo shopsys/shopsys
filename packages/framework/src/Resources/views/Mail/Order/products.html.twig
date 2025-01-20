@@ -1,16 +1,66 @@
-<table>
-    <tr>
-        <th>{% trans into orderLocale %}Name{% endtrans %}</th>
-        <th>{% trans into orderLocale %}Amount{% endtrans %}</th>
-        <th>{% trans into orderLocale %}Unit price including VAT{% endtrans %}</th>
-        <th>{% trans into orderLocale %}Total item price including VAT{% endtrans %}</th>
-    </tr>
-    {% for item in order.itemsSortedWithRelatedItems %}
-        <tr>
-            <td style="font-weight: bold;">{{ item.name }}</td>
-            <td style="text-align: right;">{{ item.quantity|formatNumber(orderLocale) }} {{ item.unitName }}</td>
-            <td style="text-align: right;">{{ item.unitPriceWithVat|priceTextWithCurrencyByCurrencyIdAndLocale(order.currency.id, orderLocale)|hidePrice(order.customerUser) }}</td>
-            <td style="text-align: right;">{{ orderItemTotalPricesById[item.id].priceWithVat|priceTextWithCurrencyByCurrencyIdAndLocale(order.currency.id, orderLocale)|hidePrice(order.customerUser) }}</td>
-        </tr>
+{% import _self as self %}
+
+<h2>{% trans into orderLocale %}Order items{% endtrans %}</h2>
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="border-bottom: 1px solid #efefef; min-width: 1px; margin-bottom: 10px;">
+    {% for orderItem in order.itemsSortedWithRelatedItems %}
+        {{ self.orderItemRows(orderItem, order, orderLocale, orderItemTotalPricesById) }}
     {% endfor %}
 </table>
+
+{% macro orderItemRows(orderItem, order, orderLocale, orderItemTotalPricesById) %}
+    {% set entity = null %}
+    {% if orderItem.isTypeProduct and orderItem.product is not null %}
+        {% set entity = orderItem.product %}
+    {% elseif orderItem.isTypeTransport and orderItem.transport is not null %}
+        {% set entity = orderItem.transport %}
+    {% elseif orderItem.isTypePayment and orderItem.payment is not null %}
+        {% set entity = orderItem.payment %}
+    {% endif %}
+
+
+    {% if not orderItem.isTypeRounding and not orderItem.isTypeTransport and not orderItem.isTypePayment %}
+        <tr>
+            <td style="{% if orderItem.isTypeDiscount %} padding-bottom: 10px; {% else %} padding: 10px 0; border-top: 1px solid #efefef {% endif %}; min-width: 1px;">
+                <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                                <tbody>
+                                <tr>
+                                    <td style="width: 80px; padding-right: 15px; text-align: center;">
+                                        {% if entity is not null %}
+                                            {{ image(entity, { style: 'max-height: 60px; max-width: 60px;' }) }}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+                                            <tbody>
+                                            <tr>
+                                                <td class="product-description">
+                                                    <strong>{{ orderItem.name }}</strong><br>
+                                                    {% if orderItem.isTypeProduct %}
+                                                        {% trans into orderLocale %}Amount{% endtrans %}: {{ orderItem.quantity|formatNumber(orderLocale) }} {{ orderItem.unitName }}<br>
+                                                        {% trans into orderLocale %}Unit price{% endtrans %}: <span style="white-space: nowrap;">{{ orderItem.unitPriceWithVat|priceTextWithCurrencyByCurrencyIdAndLocale(order.currency.id, orderLocale)|hidePrice(order.customerUser) }}</span><br>
+                                                        {% trans into orderLocale %}Catalog number{% endtrans %}: <span style="white-space: nowrap;">{{ orderItem.catnum }}</span><br>
+                                                    {% endif %}
+                                                </td>
+                                                <td align="right" class="product-price">
+                                                    <strong style="white-space: nowrap; padding-left: 10px;">{{ orderItemTotalPricesById[orderItem.id].priceWithVat|priceTextWithCurrencyByCurrencyIdAndLocale(order.currency.id, orderLocale)|hidePrice(order.customerUser) }}</strong>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    {% endif %}
+
+{% endmacro %}

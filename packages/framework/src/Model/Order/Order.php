@@ -1231,7 +1231,7 @@ class Order
         }
 
         return strtr($trackingUrl, [
-            OrderMail::TRANSPORT_VARIABLE_TRACKING_NUMBER => $trackingNumber,
+            OrderMail::VARIABLE_TRANSPORT_TRACKING_NUMBER => $trackingNumber,
         ]);
     }
 

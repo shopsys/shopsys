@@ -463,10 +463,10 @@ msgstr ""
 msgid "Billing address"
 msgstr ""
 
-msgid "Billing address - name, last name, company, company number, tax number and billing address"
+msgid "Billing address <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
 msgstr ""
 
-msgid "Billing address <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgid "Billing and delivery address"
 msgstr ""
 
 msgid "Billing data"
@@ -664,7 +664,13 @@ msgstr ""
 msgid "Choose type of redirect"
 msgstr ""
 
+msgid "Chosen payment information (image, name, price)"
+msgstr ""
+
 msgid "Chosen payment name"
+msgstr ""
+
+msgid "Chosen shipping information (image, name, price)"
 msgstr ""
 
 msgid "Chosen shipping name"
@@ -2212,6 +2218,9 @@ msgstr ""
 msgid "Incorrect settings may have a negative impact on the correct functionality of the e-shop."
 msgstr ""
 
+msgid "Information about order rounding item (empty if there is no rounding)"
+msgstr ""
+
 msgid "Input price with VAT"
 msgstr ""
 
@@ -2356,7 +2365,7 @@ msgstr ""
 msgid "LinkedIn URL"
 msgstr ""
 
-msgid "List of products in order (name, quantity, price per unit including VAT, total price per item including VAT)"
+msgid "List of products in order (image, name, quantity, price per unit including VAT, total price per item including VAT)"
 msgstr ""
 
 msgid "Lists and nomenclatures"
@@ -4135,9 +4144,6 @@ msgstr ""
 msgid "Total including VAT"
 msgstr ""
 
-msgid "Total item price including VAT"
-msgstr ""
-
 msgid "Total order price (including VAT)"
 msgstr ""
 
@@ -4178,6 +4184,9 @@ msgid "Transfers"
 msgstr ""
 
 msgid "Transfers - view"
+msgstr ""
+
+msgid "Transport"
 msgstr ""
 
 msgid "Transport type"
@@ -4253,6 +4262,9 @@ msgid "Unit <strong>{{ name }}</strong> deleted"
 msgstr ""
 
 msgid "Unit <strong>{{ name }}</strong> deleted and replaced by unit <strong>{{ newName }}</strong>"
+msgstr ""
+
+msgid "Unit price"
 msgstr ""
 
 msgid "Unit price excluding VAT"

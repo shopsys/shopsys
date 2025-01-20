@@ -6,6 +6,7 @@ namespace App\DataFixtures\Demo;
 
 use App\Model\Administrator\Administrator;
 use App\Model\Order\Order;
+use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Order\Status\OrderStatus;
 use App\Model\Payment\Payment;
 use App\Model\Product\Product;
@@ -24,6 +25,8 @@ use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\PlaceOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 
 class OrderDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
@@ -42,6 +45,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor $orderProcessor
      * @param \Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory $orderInputFactory
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactory $currencyDataFactory
      */
     public function __construct(
         private readonly CustomerUserRepository $customerUserRepository,
@@ -51,6 +55,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         private readonly CurrencyFacade $currencyFacade,
         private readonly OrderProcessor $orderProcessor,
         private readonly OrderInputFactory $orderInputFactory,
+        private readonly CurrencyDataFactory $currencyDataFactory,
     ) {
     }
 
@@ -775,6 +780,8 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             PaymentDataFixture::PAYMENT_LATER,
             $customerUser,
         );
+
+        $this->createOrderWithPromoCodeAndRounding($domainDefaultCurrency, $domainId);
     }
 
     /**
@@ -783,6 +790,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
      * @param string $transportReferenceName
      * @param string $paymentReferenceName
      * @param \App\Model\Customer\User\CustomerUser|null $customerUser
+     * @param \App\Model\Order\PromoCode\PromoCode|null $promoCode
      * @return \App\Model\Order\Order
      */
     private function createOrder(
@@ -791,6 +799,7 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         string $transportReferenceName,
         string $paymentReferenceName,
         ?CustomerUser $customerUser = null,
+        ?PromoCode $promoCode = null,
     ): Order {
         $uniqueOrderHash = $orderData->domainId . '-';
 
@@ -801,6 +810,10 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
         $orderInput->setTransport($transport);
         $orderInput->setPayment($payment);
         $orderInput->setCustomerUser($customerUser);
+
+        if ($promoCode !== null) {
+            $orderInput->addPromoCode($promoCode);
+        }
 
         foreach ($products as $productReferenceName => $quantity) {
             $product = $this->getReference($productReferenceName, Product::class);
@@ -837,6 +850,48 @@ class OrderDataFixture extends AbstractReferenceFixture implements DependentFixt
             OrderStatusDataFixture::class,
             CountryDataFixture::class,
             SettingValueDataFixture::class,
+            PromoCodeDataFixture::class,
         ];
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $domainDefaultCurrency
+     * @param int $domainId
+     */
+    private function createOrderWithPromoCodeAndRounding(Currency $domainDefaultCurrency, int $domainId): void
+    {
+        $currencyData = $this->currencyDataFactory->createFromCurrency($domainDefaultCurrency);
+        $originalRounding = $currencyData->roundingType;
+        $currencyData->roundingType = Currency::ROUNDING_TYPE_HUNDREDTHS;
+        $this->currencyFacade->edit($domainDefaultCurrency->getId(), $currencyData);
+
+        $orderData = $this->orderDataFactory->create();
+        $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW, OrderStatus::class);
+        $orderData->firstName = 'Peťka';
+        $orderData->lastName = 'Šuster';
+        $orderData->email = 'no-reply@shopsys.com';
+        $orderData->telephone = '+420123456789';
+        $orderData->street = 'Petřkovická 123';
+        $orderData->city = 'Ostrava Lhotka';
+        $orderData->postcode = '71200';
+        $orderData->country = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class);
+        $orderData->deliveryAddressSameAsBillingAddress = true;
+        $orderData->domainId = $domainId;
+        $orderData->currency = $domainDefaultCurrency;
+        $orderData->createdAt = new DateTime('now');
+        $this->createOrder(
+            $orderData,
+            [
+                ProductDataFixture::PRODUCT_PREFIX . '1' => 1,
+                ProductDataFixture::PRODUCT_PREFIX . '2' => 1,
+            ],
+            TransportDataFixture::TRANSPORT_CZECH_POST,
+            PaymentDataFixture::PAYMENT_CASH,
+            null,
+            $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, $domainId, PromoCode::class),
+        );
+
+        $currencyData->roundingType = $originalRounding;
+        $this->currencyFacade->edit($domainDefaultCurrency->getId(), $currencyData);
     }
 }

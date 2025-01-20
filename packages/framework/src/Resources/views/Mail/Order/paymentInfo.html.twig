@@ -1,0 +1,18 @@
+<h2>{% trans into orderLocale %}Payment{% endtrans %}</h2>
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
+    <tbody>
+        <tr>
+            <td style="width: 40px; padding-right: 15px;">
+                {% if orderPaymentItem.payment is not null %}
+                    {{ image(orderPaymentItem.payment, { width: 40 }) }}
+                {% endif %}
+            </td>
+            <td>
+                <strong>{{ orderPaymentItem.name }}</strong>
+            </td>
+            <td align="right">
+                <strong style="white-space: nowrap; padding-left: 10px;">{{ orderPaymentTotalPrice.priceWithVat|priceTextWithCurrencyByCurrencyIdAndLocale(order.currency.id, orderLocale)|hidePrice(order.customerUser) }}</strong>
+            </td>
+        </tr>
+    </tbody>
+</table>
