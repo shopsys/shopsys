@@ -53,6 +53,7 @@ use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
  * @method \App\Model\Product\Product|null findByCatnum(string $catnum)
  * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface getProductPriceForDefaultPricingGroup(\App\Model\Product\Product $product, int $domainId)
  * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface getProductPriceForPricingGroup(\App\Model\Product\Product $product, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
+ * @method \App\Model\Product\Product[] findAllByCatnums(string[] $catnums)
  */
 class ProductFacade extends BaseProductFacade
 {
@@ -203,15 +204,6 @@ class ProductFacade extends BaseProductFacade
         if (count($toFlush) > 0) {
             $this->em->flush();
         }
-    }
-
-    /**
-     * @param array $catnums
-     * @return \App\Model\Product\Product[]
-     */
-    public function findAllByCatnums(array $catnums): array
-    {
-        return $this->productRepository->findAllByCatnums($catnums);
     }
 
     /**

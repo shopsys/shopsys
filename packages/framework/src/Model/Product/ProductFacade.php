@@ -471,4 +471,13 @@ class ProductFacade
     {
         return $this->productRepository->findByCatnum($catnum);
     }
+
+    /**
+     * @param string[] $catnums
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
+     */
+    public function findAllByCatnums(array $catnums): array
+    {
+        return $this->productRepository->findAllByCatnums($catnums);
+    }
 }

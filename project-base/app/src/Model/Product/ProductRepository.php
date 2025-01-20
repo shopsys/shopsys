@@ -30,6 +30,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository as BaseProductReposi
  * @method \App\Model\Product\Product[] getAllOfferedProductsPaginated(int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int $offset, int $limit)
  * @property \App\Component\Doctrine\QueryBuilderExtender $queryBuilderExtender
  * @method \App\Model\Product\Product|null findByCatnum(string $catnum)
+ * @method \App\Model\Product\Product[] findAllByCatnums(string[] $catnums)
  */
 class ProductRepository extends BaseProductRepository
 {
@@ -50,20 +51,6 @@ class ProductRepository extends BaseProductRepository
             ->setParameter('catnums', $productCatnums)
             ->getQuery()
             ->execute();
-    }
-
-    /**
-     * @param array $catnums
-     * @return \App\Model\Product\Product[]
-     */
-    public function findAllByCatnums(array $catnums): array
-    {
-        $queryBuilder = $this->getProductRepository()
-            ->createQueryBuilder('p', 'p.catnum')
-            ->andWhere('p.catnum IN (:catnum)')
-            ->setParameter('catnum', $catnums);
-
-        return $queryBuilder->getQuery()->getResult();
     }
 
     /**
