@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\LanguageConstant;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\LanguageConstant;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantFacade;
@@ -15,8 +15,8 @@ class LanguageConstantQuery extends AbstractQuery
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        private readonly LanguageConstantFacade $languageConstantFacade,
-        private readonly Domain $domain,
+        protected readonly LanguageConstantFacade $languageConstantFacade,
+        protected readonly Domain $domain,
     ) {
     }
 

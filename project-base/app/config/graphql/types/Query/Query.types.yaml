@@ -9,6 +9,5 @@ Query:
         - 'PersonalDataQuery'
         - 'ProductQuery'
         - 'NotificationBarQuery'
-        - 'LanguageConstantQuery'
         - 'SeoPageQuery'
         - 'RecommendationQueryDecorator'
