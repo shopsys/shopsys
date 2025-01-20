@@ -43,9 +43,6 @@ msgstr "Katalogová čísla"
 msgid "Center"
 msgstr "Na střed"
 
-msgid "Clean Storefront Query Cache"
-msgstr "Vymazat cache s graphql dotazy na FE"
-
 msgid "Close"
 msgstr "Zavřít"
 

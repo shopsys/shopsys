@@ -43,9 +43,6 @@ msgstr ""
 msgid "Center"
 msgstr ""
 
-msgid "Clean Storefront Query Cache"
-msgstr ""
-
 msgid "Close"
 msgstr ""
 

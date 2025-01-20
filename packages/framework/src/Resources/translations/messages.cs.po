@@ -712,6 +712,9 @@ msgstr "Město"
 msgid "Clean Storefront Cache"
 msgstr "Vymazat Storefront cache"
 
+msgid "Clean Storefront Query Cache"
+msgstr "Vymazat cache s graphql dotazy na FE"
+
 msgid "Click to go to product section"
 msgstr "Kliknutím přejdete k výběru produktu"
 

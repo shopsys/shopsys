@@ -712,6 +712,9 @@ msgstr ""
 msgid "Clean Storefront Cache"
 msgstr ""
 
+msgid "Clean Storefront Query Cache"
+msgstr ""
+
 msgid "Click to go to product section"
 msgstr ""
 
