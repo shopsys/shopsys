@@ -2,21 +2,16 @@
 
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
-import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
 import { ProductGift } from 'components/Blocks/Product/ProductGift';
 import { Button } from 'components/Forms/Button/Button';
-import { LinkButton } from 'components/Forms/Button/LinkButton';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeCartItemWithGiftsFragment } from 'graphql/requests/cart/fragments/CartItemWithGiftsFragment.generated';
-import { TypeRecommendationType } from 'graphql/types';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
 import { generateProductImageAlt } from 'utils/productAltText';
-import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
 
@@ -28,8 +23,13 @@ type AddToCartPopupProps = {
 export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { product, quantity } }) => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
-    const { url, isLuigisBoxActive } = useDomainConfig();
-    const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
+
+    // const { url, isLuigisBoxActive } = useDomainConfig(); // TODO: add recommended products with client side fetching
+    {
+        /* TODO: fix after cart is implemented */
+    }
+    // const { url } = useDomainConfig();
+    // const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     const productUrl = (product.__typename === 'Variant' && product.mainVariant?.slug) || product.slug;
@@ -100,7 +100,8 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
                 )}
             </div>
 
-            {isLuigisBoxActive && (
+            {/* TODO: add recommended products with client side fetching */}
+            {/* {isLuigisBoxActive && (
                 <DeferredRecommendedProducts
                     itemUuids={[product.uuid]}
                     recommendationType={TypeRecommendationType.BasketPopup}
@@ -111,7 +112,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
                         </section>
                     )}
                 />
-            )}
+            )} */}
 
             <div className="flex flex-col gap-4 text-center md:flex-row md:items-center md:justify-between md:p-0">
                 <Button
@@ -123,14 +124,17 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
                     {t('Back to shop')}
                 </Button>
 
-                <LinkButton
-                    aria-label={t('Go to cart', { ns: 'accessibility' })}
-                    href={cartUrl}
-                    skeletonType="cart"
-                    tid={TIDs.popup_go_to_cart_button}
-                >
-                    {t('To cart')}
-                </LinkButton>
+                {/* TODO: fix after cart is implemented */}
+                {/* <ExtendedNextLink className="mt-2 w-full md:w-auto" href={cartUrl} skeletonType="cart">
+                    <LinkButton
+                         aria-label={t('Go to cart', { ns: 'accessibility' })}
+                        href={cartUrl}
+                        skeletonType="cart"
+                        tid={TIDs.popup_go_to_cart_button}
+                    >
+                        {t('To cart')}
+                    </LinkButton>
+                </ExtendedNextLink> */}
             </div>
         </Popup>
     );
