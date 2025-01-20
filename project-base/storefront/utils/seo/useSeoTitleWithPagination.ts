@@ -27,8 +27,12 @@ export const useSeoTitleWithPagination = (
         })}`;
     }
 
-    return `${title} ${t('page {{ currentPage }} from {{ totalPages }}', {
-        currentPage,
-        totalPages: Math.ceil(totalCount / pageSize),
-    })}`;
+    if (currentPage > 1) {
+        return `${title} ${t('page {{ currentPage }} from {{ totalPages }}', {
+            currentPage,
+            totalPages: Math.ceil(totalCount / pageSize),
+        })}`;
+    }
+
+    return title;
 };

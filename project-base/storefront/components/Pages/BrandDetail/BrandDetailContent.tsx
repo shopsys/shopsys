@@ -8,6 +8,7 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeBrandDetailFragment } from 'graphql/requests/brands/fragments/BrandDetailFragment.generated';
 import { useRef } from 'react';
 import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
+import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
 
 type BrandDetailContentProps = {
     brand: TypeBrandDetailFragment;
@@ -18,11 +19,13 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
     const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
     const currentPage = useCurrentPageQuery();
 
+    const title = useSeoTitleWithPagination(brand.products.totalCount, brand.name, brand.seoH1);
+
     brand.products.productFilterOptions.brands = null;
 
     return (
         <Webline>
-            <h1 ref={scrollTargetRef}>{brand.seoH1 || brand.name}</h1>
+            <h1 ref={scrollTargetRef}>{title}</h1>
 
             <CollapsibleDescriptionWithImage
                 currentPage={currentPage}

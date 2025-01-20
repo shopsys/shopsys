@@ -2,7 +2,7 @@ import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCurso
 import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { BlogCategoryContent } from 'components/Pages/BlogCategory/BlogCategoryContent';
-import { DEFAULT_PAGE_SIZE } from 'config/constants';
+import { DEFAULT_BLOG_PAGE_SIZE, DEFAULT_PAGE_SIZE } from 'config/constants';
 import { BlogCategoriesDocument } from 'graphql/requests/blogCategories/queries/BlogCategoriesQuery.generated';
 import { BlogCategoryArticlesDocument } from 'graphql/requests/blogCategories/queries/BlogCategoryArticlesQuery.generated';
 import {
@@ -37,6 +37,7 @@ const BlogCategoryPage: NextPage<ServerSidePropsType> = () => {
         blogCategoryData?.blogCategory?.articlesTotalCount,
         blogCategoryData?.blogCategory?.name,
         blogCategoryData?.blogCategory?.seoTitle,
+        DEFAULT_BLOG_PAGE_SIZE,
     );
 
     const pageViewEvent = useGtmFriendlyPageViewEvent(blogCategoryData?.blogCategory);

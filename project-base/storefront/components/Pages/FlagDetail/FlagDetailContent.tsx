@@ -6,6 +6,7 @@ import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/Deferr
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeFlagDetailFragment } from 'graphql/requests/flags/fragments/FlagDetailFragment.generated';
 import { useRef } from 'react';
+import { useSeoTitleWithPagination } from 'utils/seo/useSeoTitleWithPagination';
 
 type FlagDetailContentProps = {
     flag: TypeFlagDetailFragment;
@@ -14,11 +15,13 @@ type FlagDetailContentProps = {
 export const FlagDetailContent: FC<FlagDetailContentProps> = ({ flag }) => {
     const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
 
+    const title = useSeoTitleWithPagination(flag.products.totalCount, flag.name);
+
     flag.products.productFilterOptions.flags = null;
 
     return (
         <Webline>
-            <h1>{flag.name}</h1>
+            <h1>{title}</h1>
 
             <FilteredProductsWrapper paginationScrollTargetRef={paginationScrollTargetRef}>
                 <DeferredFilterPanel
