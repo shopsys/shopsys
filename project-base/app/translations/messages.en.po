@@ -184,12 +184,6 @@ msgstr ""
 msgid "Left"
 msgstr ""
 
-msgid "Legal conditions"
-msgstr ""
-
-msgid "Legal conditions settings modified."
-msgstr ""
-
 msgid "Link"
 msgstr ""
 
@@ -292,9 +286,6 @@ msgstr ""
 msgid "Path to file"
 msgstr ""
 
-msgid "Personal data access"
-msgstr ""
-
 msgid "Please check the correctness of all data filled."
 msgstr ""
 
@@ -305,12 +296,6 @@ msgid "Position of link"
 msgstr ""
 
 msgid "Price hit"
-msgstr ""
-
-msgid "Privacy Policy"
-msgstr ""
-
-msgid "Privacy Policy settings"
 msgstr ""
 
 msgid "Product image"
@@ -370,12 +355,6 @@ msgstr ""
 msgid "Table"
 msgstr ""
 
-msgid "Terms and Conditions"
-msgstr ""
-
-msgid "Terms and Conditions settings"
-msgstr ""
-
 msgid "Terms-and-conditions.html"
 msgstr ""
 
@@ -407,9 +386,6 @@ msgid "Upload image for mobile devices"
 msgstr ""
 
 msgid "Upload new image"
-msgstr ""
-
-msgid "User consent policy"
 msgstr ""
 
 msgid "Valid from"

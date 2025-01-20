@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class LegalConditionsSettingFormType extends AbstractType
+class PrivacyPolicySettingFormType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
@@ -34,20 +34,6 @@ class LegalConditionsSettingFormType extends AbstractType
         ]);
 
         $builderSettingsGroup
-            ->add('termsAndConditionsArticle', ChoiceType::class, [
-                'required' => false,
-                'choices' => $articles,
-                'choice_label' => 'name',
-                'choice_value' => 'id',
-                'placeholder' => t('-- Choose article --'),
-                'label' => t('Terms and conditions'),
-                'attr' => [
-                    'icon' => true,
-                    'iconTitle' => t(
-                        'Choose article, which will serve as terms and conditions with which the customer has to agree when creating order.',
-                    ),
-                ],
-            ])
             ->add('privacyPolicyArticle', ChoiceType::class, [
                 'required' => false,
                 'choices' => $articles,

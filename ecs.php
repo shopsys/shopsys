@@ -105,6 +105,7 @@ return ECSConfig::configure()
                 __DIR__ . '/packages/framework/src/Form/Admin/Product/ProductFormType.php',
                 __DIR__ . '/packages/framework/src/Model/Order/Order.php',
                 __DIR__ . '/packages/framework/src/Model/Product/Search/FilterQuery.php',
+                __DIR__ . '/packages/framework/src/Model/AdminNavigation/SideMenuBuilder.php',
             ],
             CyclomaticComplexitySniff::class => [
                 __DIR__ . '/packages/framework/src/Migrations/Version20231124121921.php',

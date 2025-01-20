@@ -106,7 +106,7 @@ class MenuItemsGrantedRolesSetting
             'marketing' . static::MENU_ITEM_PATH_SEPARATOR . 'legal' . static::MENU_ITEM_PATH_SEPARATOR . 'terms_and_conditions' => [
                 Roles::ROLE_LEGAL_CONDITIONS_VIEW,
             ],
-            'marketing' . static::MENU_ITEM_PATH_SEPARATOR . 'legal' . static::MENU_ITEM_PATH_SEPARATOR . 'privace_policy' => [
+            'marketing' . static::MENU_ITEM_PATH_SEPARATOR . 'legal' . static::MENU_ITEM_PATH_SEPARATOR . 'privacy_policy' => [
                 Roles::ROLE_PRIVACY_POLICY_VIEW,
             ],
             'marketing' . static::MENU_ITEM_PATH_SEPARATOR . 'legal' . static::MENU_ITEM_PATH_SEPARATOR . 'personal_data' => [

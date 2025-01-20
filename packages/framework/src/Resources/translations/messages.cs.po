@@ -2410,11 +2410,8 @@ msgstr "Obchodní podmínky - vše"
 msgid "Legal conditions article setting - view"
 msgstr "Obchodní podmínky - zobrazení"
 
-msgid "Legal conditions settings"
-msgstr "Nastavení právních podmínek"
-
 msgid "Legal conditions settings modified."
-msgstr "Nastavení právních podmínek upravené"
+msgstr "Nastavení právních podmínek upraveno."
 
 msgid "Limits"
 msgstr "Limity"
@@ -3382,8 +3379,11 @@ msgstr "Nastavení cenotvorby bylo upraveno"
 msgid "Priority"
 msgstr "Priorita"
 
-msgid "Privacy policy"
+msgid "Privacy Policy"
 msgstr "Zásady ochrany osobních údajů"
+
+msgid "Privacy Policy settings"
+msgstr "Nastavení zásad ochrany osobních údajů"
 
 msgid "Privacy policy article setting - full"
 msgstr "Nastavení zásad ochrany osobních údajů - vše"
@@ -4135,8 +4135,11 @@ msgstr "DIČ"
 msgid "Telephone"
 msgstr "Telefon"
 
-msgid "Terms and conditions"
+msgid "Terms and Conditions"
 msgstr "Obchodní podmínky"
+
+msgid "Terms and Conditions settings"
+msgstr "Nastavení obchodních podmínek"
 
 msgid "Test email sent to %email%."
 msgstr "Testovací email odeslán na adresu %email%."

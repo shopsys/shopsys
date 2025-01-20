@@ -433,6 +433,21 @@ class SideMenuBuilder
         $navigationMenu->addChild('navigation_edit', ['route' => 'admin_navigation_edit', 'display' => false, 'label' => t('Editing item')]);
         $navigationMenu->addChild('navigation_new', ['route' => 'admin_navigation_new', 'display' => false, 'label' => t('New item')]);
 
+        $legalMenu = $menu->addChild('legal', ['label' => t('Legal conditions')]);
+        $legalMenu->addChild(
+            'terms_and_conditions',
+            ['route' => 'admin_legalconditions_termsandconditions', 'label' => t('Terms and Conditions')],
+        );
+        $legalMenu->addChild(
+            'privacy_policy',
+            ['route' => 'admin_legalconditions_privacypolicy', 'label' => t('Privacy Policy')],
+        );
+        $legalMenu->addChild(
+            'personal_data',
+            ['route' => 'admin_personaldata_setting', 'label' => t('Personal data access')],
+        );
+        $legalMenu->addChild('user_consent_policy', ['route' => 'admin_userconsentpolicy_setting', 'label' => t('User consent policy')]);
+
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_MARKETING, $menu);
 
         return $menu;
@@ -529,17 +544,6 @@ class SideMenuBuilder
                 ['route' => 'admin_domain_edit', 'label' => t('Editing domain'), 'display' => false],
             );
         }
-
-        $legalMenu = $menu->addChild('legal', ['label' => t('Legal conditions')]);
-        $legalMenu->addChild(
-            'legal_conditions',
-            ['route' => 'admin_legalconditions_setting', 'label' => t('Legal conditions')],
-        );
-        $legalMenu->addChild(
-            'personal_data',
-            ['route' => 'admin_personaldata_setting', 'label' => t('Personal data access')],
-        );
-        $legalMenu->addChild('user_consent_policy', ['route' => 'admin_userconsentpolicy_setting', 'label' => t('User consent policy')]);
 
         $communicationMenu = $menu->addChild('communication', ['label' => t('Communication with customer')]);
         $communicationMenu->addChild(

@@ -184,12 +184,6 @@ msgstr "Integrace"
 msgid "Left"
 msgstr "Vlevo"
 
-msgid "Legal conditions"
-msgstr "Právní podmínky"
-
-msgid "Legal conditions settings modified."
-msgstr "Nastavení právních podmínek upraveno."
-
 msgid "Link"
 msgstr "Odkaz"
 
@@ -292,9 +286,6 @@ msgstr "Parametr"
 msgid "Path to file"
 msgstr "Cesta k souboru"
 
-msgid "Personal data access"
-msgstr "Přístup k osobním údajům"
-
 msgid "Please check the correctness of all data filled."
 msgstr "Prosím zkontrolujte si správnost vyplnění všech údajů."
 
@@ -306,12 +297,6 @@ msgstr "Zarovnání odkazu"
 
 msgid "Price hit"
 msgstr "Cenový hit"
-
-msgid "Privacy Policy"
-msgstr "Zásady ochrany osobních údajů"
-
-msgid "Privacy Policy settings"
-msgstr "Nastavení zásad ochrany osobních údajů"
 
 msgid "Product image"
 msgstr "Obrázek produktu"
@@ -370,12 +355,6 @@ msgstr "TOP"
 msgid "Table"
 msgstr "Tabulka"
 
-msgid "Terms and Conditions"
-msgstr "Obchodní podmínky"
-
-msgid "Terms and Conditions settings"
-msgstr "Nastavení obchodních podmínek"
-
 msgid "Terms-and-conditions.html"
 msgstr "Obchodni-podminky.html"
 
@@ -408,9 +387,6 @@ msgstr "Nahrát obrázek pro mobilní zařízení"
 
 msgid "Upload new image"
 msgstr "Nahrát nový obrázek"
-
-msgid "User consent policy"
-msgstr "Správa osobních údajů"
 
 msgid "Valid from"
 msgstr "Platnost od"

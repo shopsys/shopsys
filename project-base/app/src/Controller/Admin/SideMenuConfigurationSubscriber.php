@@ -57,12 +57,6 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $notificationBar->addChild('notification_bar_edit', ['route' => 'admin_notificationbar_edit', 'label' => t('Editing notification bar'), 'display' => false]);
 
         $marketingMenu->addChild('order_confirmation', ['route' => 'admin_customercommunication_ordersubmitted', 'label' => t('Order confirmation page')]);
-
-        $legalMenu = $marketingMenu->addChild('legal', ['label' => t('Legal conditions')]);
-        $legalMenu->addChild('terms_and_conditions', ['route' => 'admin_legalconditions_termsandconditions', 'label' => t('Terms and Conditions')]);
-        $legalMenu->addChild('privace_policy', ['route' => 'admin_legalconditions_privacypolicy', 'label' => t('Privacy Policy')]);
-        $legalMenu->addChild('personal_data', ['route' => 'admin_personaldata_setting', 'label' => t('Personal data access')]);
-        $legalMenu->addChild('user_consent_policy', ['route' => 'admin_userconsentpolicy_setting', 'label' => t('User consent policy')]);
     }
 
     /**
@@ -72,7 +66,6 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
     {
         $settingsMenu = $event->getMenu();
         $settingsMenu->removeChild('heureka');
-        $settingsMenu->removeChild('legal');
         $settingsMenu->getChild('communication')->removeChild('order_confirmation');
 
         $listMenu = $settingsMenu->getChild('lists');
