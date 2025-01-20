@@ -4,6 +4,9 @@ BrandDecorator:
     config:
         interfaces:
             - 'Hreflang'
+            - 'Breadcrumb'
+            - 'Slug'
+            - 'ProductListable'
         description: "Represents a brand"
         fields:
             uuid:
@@ -36,7 +39,7 @@ BrandDecorator:
                         type: "String"
                         defaultValue: null
             products:
-                type: "ProductConnection"
+                type: "ProductConnection!"
                 description: "Paginated and ordered products of brand"
                 argsBuilder:
                     builder: "ProductPaginatorArgumentsBuilder"
@@ -46,3 +49,10 @@ BrandDecorator:
             hreflangLinks:
                 type: "[HreflangLink!]!"
                 description: "Alternate links for hreflang meta tags"
+            breadcrumb:
+                type: "[Link!]!"
+                description: "Hierarchy of the current element in relation to the structure"
+                resolve: '@=query("breadcrumbQuery", value.getId(), "front_brand_detail")'
+            slug:
+                type: "String!"
+                description: "Brand URL slug"

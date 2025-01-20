@@ -13,3 +13,5 @@ MainVariantDecorator:
         interfaces:
             - 'Product'
             - 'Hreflang'
+            - 'Breadcrumb'
+            - 'Slug'

@@ -7,3 +7,5 @@ RegularProductDecorator:
         interfaces:
             - 'Product'
             - 'Hreflang'
+            - 'Breadcrumb'
+            - 'Slug'

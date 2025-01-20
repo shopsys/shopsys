@@ -5,6 +5,8 @@ FlagDecorator:
         interfaces:
             - 'Hreflang'
             - 'Slug'
+            - 'Breadcrumb'
+            - 'ProductListable'
         description: "Represents a flag"
         fields:
             uuid:
@@ -22,3 +24,22 @@ FlagDecorator:
             hreflangLinks:
                 type: "[HreflangLink!]!"
                 description: "Alternate links for hreflang meta tags"
+            products:
+                type: "ProductConnection!"
+                description: "Paginated and ordered products of flag"
+                argsBuilder:
+                    builder: "ProductPaginatorArgumentsBuilder"
+                    config:
+                        orderingModeType: 'ProductOrderingModeEnum'
+                resolve: "@=query('productsByFlagQuery', args, value)"
+            breadcrumb:
+                type: "[Link!]!"
+                description: "Hierarchy of the current element in relation to the structure"
+                resolve: '@=query("breadcrumbQuery", value.getId(), "front_flag_detail")'
+            categories:
+                type: "[Category!]!"
+                description: "Categories containing at least one product with flag"
+                resolve: '@=query("categoriesFilteredByProductFilterForFlagQuery", args, value)'
+                args:
+                    productFilter:
+                        type: "ProductFilter"
