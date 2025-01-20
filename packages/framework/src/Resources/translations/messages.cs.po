@@ -577,6 +577,9 @@ msgstr "CSS dokumentace"
 msgid "CSV file"
 msgstr "CSV soubor"
 
+msgid "CSV file must be in UTF-8 encoding with columns \"{{ columns }}\". A comma is recommended as a column delimiter and a dot (.) as a decimal separator."
+msgstr "CSV soubor musí být v kódování UTF-8 se sloupci \"{{ columns }}\". Doporučuje se čárka jako oddělovač sloupců a tečka (.) jako desetinný oddělovač."
+
 msgid "Calculated price excluding VAT"
 msgstr "Vypočtená cena bez DPH"
 

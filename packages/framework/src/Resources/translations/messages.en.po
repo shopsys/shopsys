@@ -577,6 +577,9 @@ msgstr ""
 msgid "CSV file"
 msgstr ""
 
+msgid "CSV file must be in UTF-8 encoding with columns \"{{ columns }}\". A comma is recommended as a column delimiter and a dot (.) as a decimal separator."
+msgstr ""
+
 msgid "Calculated price excluding VAT"
 msgstr ""
 

@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Form\Constraints\MustUploadFile;
 use Shopsys\FrameworkBundle\Form\DateTimeType;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Model\PriceList\PriceList;
+use Shopsys\FrameworkBundle\Model\PriceList\PriceListCsvColumnsEnum;
 use Shopsys\FrameworkBundle\Model\PriceList\PriceListFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -27,11 +28,13 @@ final class ImportPriceListFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListFacade $priceListFacade
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListCsvColumnsEnum $priceListCsvColumnsEnum
      */
     public function __construct(
         protected readonly PriceListFacade $priceListFacade,
         protected readonly UrlGeneratorInterface $urlGenerator,
         protected readonly Domain $domain,
+        protected readonly PriceListCsvColumnsEnum $priceListCsvColumnsEnum,
     ) {
     }
 
@@ -106,6 +109,9 @@ final class ImportPriceListFormType extends AbstractType
                 'constraints' => [
                     new MustUploadFile(['message' => 'Please upload a CSV file']),
                 ],
+                'info_text' => t('CSV file must be in UTF-8 encoding with columns "{{ columns }}". A comma is recommended as a column delimiter and a dot (.) as a decimal separator.', [
+                    '{{ columns }}' => implode('", "', $this->priceListCsvColumnsEnum->getAllCases()),
+                ]),
                 'file_constraints' => [
                     new Constraints\File([
                         'maxSize' => '2M',
