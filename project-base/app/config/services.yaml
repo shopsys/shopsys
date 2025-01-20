@@ -163,21 +163,6 @@ services:
     Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRepository:
         alias: App\Component\UploadedFile\UploadedFileRepository
 
-    Shopsys\FrameworkBundle\Controller\Admin\AdministratorController:
-        class: 'App\Controller\Admin\AdministratorController'
-
-    Shopsys\FrameworkBundle\Controller\Admin\CustomerController:
-        class: 'App\Controller\Admin\CustomerController'
-
-    Shopsys\FrameworkBundle\Controller\Admin\MailController:
-        class: App\Controller\Admin\MailController
-
-    Shopsys\FrameworkBundle\Controller\Admin\ProductController:
-        class: 'App\Controller\Admin\ProductController'
-
-    Shopsys\FrameworkBundle\Controller\Front\PersonalDataController:
-        class: 'App\Controller\Front\PersonalDataController'
-
     Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade:
         alias: App\Model\Administrator\AdministratorFacade
 
