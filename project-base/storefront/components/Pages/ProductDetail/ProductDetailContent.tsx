@@ -1,3 +1,4 @@
+import { ProductDetailAddToCart } from './ProductDetailAddToCart/ProductDetailAddToCart';
 import { ProductDetailAvailability } from './ProductDetailAvailability';
 import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailInfo } from './ProductDetailInfo';
@@ -13,8 +14,6 @@ type ProductDetailContentProps = {
 
 export function ProductDetailContent({ product }: ProductDetailContentProps) {
     // const router = useRouter();
-
-    // const { isLuigisBoxActive } = useDomainConfig();
 
     // const pageViewEvent = useGtmFriendlyPageViewEvent(product);
     // useGtmPageViewEvent(pageViewEvent, isProductDetailFetching);
@@ -62,8 +61,9 @@ export function ProductDetailContent({ product }: ProductDetailContentProps) {
                             productUuid={product.uuid}
                         />
 
-                        {/* <ProductDetailAddToCart product={product} /> */}
+                        <ProductDetailAddToCart product={product} />
 
+                        {/* TODO: add product comparion and wishlist */}
                         {/* <DeferredComparisonAndWishlistButtons product={product} /> */}
                     </div>
                 </div>
@@ -75,19 +75,6 @@ export function ProductDetailContent({ product }: ProductDetailContentProps) {
                 parameters={product.parameters}
                 relatedProducts={product.relatedProducts}
             />
-
-            {/* {isLuigisBoxActive && (
-                    <DeferredRecommendedProducts
-                        itemUuids={[product.uuid]}
-                        recommendationType={TypeRecommendationType.ItemDetail}
-                        render={(recommendedProductsContent) => (
-                            <div>
-                                <div className="text-xl font-bold">{t('Recommended for you')}</div>
-                                {recommendedProductsContent}
-                            </div>
-                        )}
-                    />
-                )} */}
         </Webline>
     );
 }

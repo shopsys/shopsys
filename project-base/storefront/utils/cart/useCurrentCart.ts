@@ -1,3 +1,4 @@
+import { useCurrentCustomerData } from 'components/providers/AuthProvider';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useCartQuery } from 'graphql/requests/cart/queries/CartQuery.generated';
 import { TypeTransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
@@ -6,12 +7,11 @@ import { useEffect } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { useSessionStore } from 'store/useSessionStore';
 import { CurrentCartType } from 'types/cart';
-import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { isPacketeryTransport } from 'utils/packetery';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 
 export const useCurrentCart = (fromCache = true): CurrentCartType => {
-    const isUserLoggedIn = useIsUserLoggedIn();
+    const isUserLoggedIn = !!useCurrentCustomerData();
     const authLoading = usePersistStore((s) => s.authLoading);
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const packeteryPickupPoint = usePersistStore((store) => store.packeteryPickupPoint);
