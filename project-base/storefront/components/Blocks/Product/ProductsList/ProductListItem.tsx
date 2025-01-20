@@ -3,6 +3,7 @@
 import { ProductListItemImage } from './ProductListItemImage';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { VariantIcon } from 'components/Basic/Icon/VariantIcon';
+import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
@@ -131,15 +132,16 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 </ExtendedNextLink>
 
                 <div className="flex w-full items-center justify-between gap-1 px-2.5 sm:justify-normal sm:gap-2.5 sm:px-5">
-                    {/* {visibleItemsConfig.addToCart && (
+                    {visibleItemsConfig.addToCart && (
                         <ProductAction
                             gtmMessageOrigin={gtmMessageOrigin}
                             gtmProductListName={gtmProductListName}
                             listIndex={listIndex}
                             product={product}
                         />
-                    )} */}
+                    )}
 
+                    {/* TODO: add product comparion and wishlist */}
                     {/* {visibleItemsConfig.productListButtons && (
                         <>
                             <ProductCompareButton
