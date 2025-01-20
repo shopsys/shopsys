@@ -1,5 +1,4 @@
-'use client';
-
+import { ProductDetailAddToCart } from './ProductDetailAddToCart/ProductDetailAddToCart';
 import { ProductDetailAvailability } from './ProductDetailAvailability';
 import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailInfo } from './ProductDetailInfo';
@@ -16,8 +15,6 @@ type ProductDetailContentProps = {
 
 export function ProductDetailContent({ product }: ProductDetailContentProps) {
     // const router = useRouter();
-
-    // const { isLuigisBoxActive } = useDomainConfig();
 
     // const pageViewEvent = useGtmFriendlyPageViewEvent(product);
     // useGtmPageViewEvent(pageViewEvent, isProductDetailFetching);
@@ -70,8 +67,9 @@ export function ProductDetailContent({ product }: ProductDetailContentProps) {
                                 productUuid={product.uuid}
                             />
 
-                            {/* <ProductDetailAddToCart product={product} /> */}
+                            <ProductDetailAddToCart product={product} />
 
+                            {/* TODO: add product comparion and wishlist */}
                             {/* <DeferredComparisonAndWishlistButtons product={product} /> */}
                         </div>
                     </div>
