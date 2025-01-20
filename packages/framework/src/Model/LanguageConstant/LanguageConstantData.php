@@ -2,27 +2,27 @@
 
 declare(strict_types=1);
 
-namespace App\Model\LanguageConstant;
+namespace Shopsys\FrameworkBundle\Model\LanguageConstant;
 
 class LanguageConstantData
 {
     /**
      * @var string
      */
-    public string $key;
+    public $key;
 
     /**
      * @var string
      */
-    public string $locale;
+    public $locale;
 
     /**
      * @var string
      */
-    public string $originalTranslation;
+    public $originalTranslation;
 
     /**
      * @var string
      */
-    public string $userTranslation;
+    public $userTranslation;
 }

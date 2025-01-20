@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Model\LanguageConstant;
+namespace Shopsys\FrameworkBundle\Model\LanguageConstant;
 
 class LanguageConstantDataFactory
 {
     /**
-     * @return \App\Model\LanguageConstant\LanguageConstantData
+     * @return \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantData
      */
     public function create(): LanguageConstantData
     {
@@ -18,8 +18,8 @@ class LanguageConstantDataFactory
      * @param string $key
      * @param string $locale
      * @param string $translation
-     * @param \App\Model\LanguageConstant\LanguageConstant|null $languageConstant
-     * @return \App\Model\LanguageConstant\LanguageConstantData
+     * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstant|null $languageConstant
+     * @return \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantData
      */
     public function createFromDataOrLanguageConstant(
         string $key,
@@ -36,9 +36,9 @@ class LanguageConstantDataFactory
      * @param string $key
      * @param string $locale
      * @param string $originalTranslation
-     * @return \App\Model\LanguageConstant\LanguageConstantData
+     * @return \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantData
      */
-    private function createFromData(string $key, string $locale, string $originalTranslation): LanguageConstantData
+    protected function createFromData(string $key, string $locale, string $originalTranslation): LanguageConstantData
     {
         $languageConstantData = $this->create();
         $languageConstantData->key = $key;
@@ -49,12 +49,12 @@ class LanguageConstantDataFactory
     }
 
     /**
-     * @param \App\Model\LanguageConstant\LanguageConstant $languageConstant
+     * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstant $languageConstant
      * @param string $locale
      * @param string $originalTranslation
-     * @return \App\Model\LanguageConstant\LanguageConstantData
+     * @return \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantData
      */
-    private function createFromLanguageConstant(
+    protected function createFromLanguageConstant(
         LanguageConstant $languageConstant,
         string $locale,
         string $originalTranslation,

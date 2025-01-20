@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\LanguageConstant;
 
-use App\Model\LanguageConstant\LanguageConstantDataFactory;
-use App\Model\LanguageConstant\LanguageConstantFacade;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantDataFactory;
+use Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class LanguageConstantsTest extends GraphQlTestCase

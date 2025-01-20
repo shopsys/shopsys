@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace App\Model\LanguageConstant;
+namespace Shopsys\FrameworkBundle\Model\LanguageConstant;
 
-use App\Model\LanguageConstant\Exception\LanguageConstantNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
+use Shopsys\FrameworkBundle\Model\LanguageConstant\Exception\LanguageConstantNotFoundException;
 
 class LanguageConstantRepository
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
-    public function __construct(private EntityManagerInterface $em)
+    public function __construct(protected EntityManagerInterface $em)
     {
     }
 
@@ -37,7 +37,7 @@ class LanguageConstantRepository
 
     /**
      * @param string $key
-     * @return \App\Model\LanguageConstant\LanguageConstant
+     * @return \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstant
      */
     public function getByKey(string $key): LanguageConstant
     {
@@ -52,7 +52,7 @@ class LanguageConstantRepository
 
     /**
      * @param string $key
-     * @return \App\Model\LanguageConstant\LanguageConstant|null
+     * @return \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstant|null
      */
     public function findByKey(string $key): ?LanguageConstant
     {
@@ -77,7 +77,7 @@ class LanguageConstantRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    private function getRepository(): EntityRepository
+    protected function getRepository(): EntityRepository
     {
         return $this->em->getRepository(LanguageConstant::class);
     }
@@ -85,7 +85,7 @@ class LanguageConstantRepository
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    private function getTranslationRepository(): EntityRepository
+    protected function getTranslationRepository(): EntityRepository
     {
         return $this->em->getRepository(LanguageConstantTranslation::class);
     }

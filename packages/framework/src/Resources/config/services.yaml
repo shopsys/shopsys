@@ -653,6 +653,11 @@ services:
 
     Shopsys\FrameworkBundle\Model\Inquiry\Mail\InquiryMail: ~
 
+    Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantFacade:
+        arguments:
+            $languageConstantsUrlPattern: '%env(LANGUAGE_CONSTANTS_URL_PATTERN)%'
+            $domainLocalesDirectory: '%shopsys.locale_file_dir%'
+
     Shopsys\FrameworkBundle\Model\Localization\Localization:
         arguments:
             $allowedAdminLocales: '%shopsys.allowed_admin_locales%'

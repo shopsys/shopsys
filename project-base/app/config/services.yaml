@@ -93,12 +93,6 @@ services:
 
     App\Model\Customer\User\CurrentCustomerUser: ~
 
-    App\Model\LanguageConstant\LanguageConstantFacade:
-        arguments:
-            $languageConstantsUrlPattern: '%env(LANGUAGE_CONSTANTS_URL_PATTERN)%'
-            $domainLocalesDirectory: '%shopsys.locale_file_dir%'
-        class: App\Model\LanguageConstant\LanguageConstantFacade
-
     App\Model\Mail\MailTemplateBuilder: ~
 
     App\Model\Order\Mail\OrderMail: ~

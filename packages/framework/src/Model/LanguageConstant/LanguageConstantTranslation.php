@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\LanguageConstant;
+namespace Shopsys\FrameworkBundle\Model\LanguageConstant;
 
 use Doctrine\ORM\Mapping as ORM;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
@@ -15,20 +15,20 @@ use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 class LanguageConstantTranslation extends AbstractTranslation
 {
     /**
-     * @var \App\Model\LanguageConstant\LanguageConstant
-     * @Prezent\Translatable(targetEntity="App\Model\LanguageConstant\LanguageConstant")
+     * @var \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstant
+     * @Prezent\Translatable(targetEntity="Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstant")
      */
     protected $translatable;
 
     /**
      * @ORM\Column(type="text")
      */
-    private string $translation = '';
+    protected $translation;
 
     /**
      * @return string|null
      */
-    public function getTranslation(): ?string
+    public function getTranslation()
     {
         return $this->translation;
     }
@@ -36,7 +36,7 @@ class LanguageConstantTranslation extends AbstractTranslation
     /**
      * @param string $translation
      */
-    public function setTranslation(string $translation): void
+    public function setTranslation($translation)
     {
         $this->translation = $translation;
     }

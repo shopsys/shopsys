@@ -97,9 +97,6 @@ msgstr "Datum zobrazení OD"
 msgid "Display date TO"
 msgstr "Datum zobrazení DO"
 
-msgid "Do you really want to remove this language constant translation?"
-msgstr "Opravdu chcete odstranit tento překlad jazykové konstanty?"
-
 msgid "Do you really want to remove this notification bar?"
 msgstr "Opravdu chcete odebrat tuto notifikační lištu?"
 
@@ -184,27 +181,6 @@ msgstr "Rozložení uvnitř"
 msgid "Integrations"
 msgstr "Integrace"
 
-msgid "Key"
-msgstr "Klíč"
-
-msgid "Language"
-msgstr "Jazyk"
-
-msgid "Language constant translation"
-msgstr "Překlad jazykové konstanty"
-
-msgid "Language constant translation <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
-msgstr "Překlad jazykové konstanty <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl upraven"
-
-msgid "Language constant translation <strong>{{ name }}</strong> deleted"
-msgstr "Překlad jazykové konstanty <strong>{{ name }}</strong> byl smazán"
-
-msgid "Language constant translation <strong>{{ name }}</strong> not found"
-msgstr "Překlad jazykové konstanty <strong>{{ name }}</strong> nenalezen"
-
-msgid "Language constants"
-msgstr "Jazykové konstanty"
-
 msgid "Left"
 msgstr "Vlevo"
 
@@ -222,9 +198,6 @@ msgstr "Blok odkazu"
 
 msgid "Linked categories"
 msgstr "Propojené kategorie"
-
-msgid "List of language constants"
-msgstr "Přehled jazykových konstant"
 
 msgid "List of products"
 msgstr "Seznam produktů"
@@ -252,9 +225,6 @@ msgstr "Měrné jednotky"
 
 msgid "Measurement units overview"
 msgstr "Přehled měrných jednotek"
-
-msgid "Name"
-msgstr "Název"
 
 msgid "New"
 msgstr "Novinka"
@@ -313,9 +283,6 @@ msgstr "Detail objednávky"
 msgid "Orders"
 msgstr "Objednávky"
 
-msgid "Original translation"
-msgstr "Původní překlad"
-
 msgid "Outside layout"
 msgstr "Rozložení vně"
 
@@ -355,9 +322,6 @@ msgstr "Promované kategorie"
 msgid "Promoted products"
 msgstr "Promované produkty"
 
-msgid "Quick search"
-msgstr "Rychlé hledání"
-
 msgid "Registration"
 msgstr "Registrace"
 
@@ -381,9 +345,6 @@ msgstr "Uložit změny v pořadí"
 
 msgid "Search [noun]"
 msgstr "Hledání"
-
-msgid "Search [verb]"
-msgstr "Vyhledat"
 
 msgid "Secondary"
 msgstr "Sekundární"
@@ -430,9 +391,6 @@ msgstr "Title"
 msgid "Type of image"
 msgstr "Typ obrázku"
 
-msgid "Unable to load list of language constants"
-msgstr "Nepodařilo se načíst přehled jazykových konstant"
-
 msgid "Unlimited"
 msgstr "Neomezeně"
 
@@ -453,9 +411,6 @@ msgstr "Nahrát nový obrázek"
 
 msgid "User consent policy"
 msgstr "Správa osobních údajů"
-
-msgid "User translation"
-msgstr "Uživatelský překlad"
 
 msgid "Valid from"
 msgstr "Platnost od"

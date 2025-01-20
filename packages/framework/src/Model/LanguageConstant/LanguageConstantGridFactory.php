@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\LanguageConstant;
+namespace Shopsys\FrameworkBundle\Model\LanguageConstant;
 
 use Shopsys\FrameworkBundle\Component\Grid\ArrayWithPaginationDataSource;
 use Shopsys\FrameworkBundle\Component\Grid\Grid;
@@ -11,12 +11,12 @@ use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 class LanguageConstantGridFactory
 {
     /**
-     * @param \App\Model\LanguageConstant\LanguageConstantFacade $languageConstantFacade
+     * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantFacade $languageConstantFacade
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      */
     public function __construct(
-        private readonly LanguageConstantFacade $languageConstantFacade,
-        private readonly GridFactory $gridFactory,
+        protected readonly LanguageConstantFacade $languageConstantFacade,
+        protected readonly GridFactory $gridFactory,
     ) {
     }
 
@@ -53,7 +53,7 @@ class LanguageConstantGridFactory
             ->addDeleteActionColumn('admin_languageconstant_delete', ['key' => 'key'])
             ->setConfirmMessage(t('Do you really want to remove this language constant translation?'));
 
-        $grid->setTheme('Admin/Content/LanguageConstant/listGrid.html.twig');
+        $grid->setTheme('@ShopsysFramework/Admin/Content/LanguageConstant/listGrid.html.twig');
 
         return $grid;
     }
@@ -64,7 +64,7 @@ class LanguageConstantGridFactory
      * @param string $locale
      * @return array<int, array{key: string, locale: string, originalTranslation: string, userTranslation: string}>
      */
-    private function getTranslations(array $originalTranslations, array $userTranslations, string $locale): array
+    protected function getTranslations(array $originalTranslations, array $userTranslations, string $locale): array
     {
         $translations = [];
 
@@ -87,7 +87,7 @@ class LanguageConstantGridFactory
      * @param string $search
      * @return array<int, array{key: string, locale: string, originalTranslation: string, userTranslation: string}>
      */
-    private function getTranslationsWithSearch(
+    protected function getTranslationsWithSearch(
         array $originalTranslations,
         array $userTranslations,
         string $locale,

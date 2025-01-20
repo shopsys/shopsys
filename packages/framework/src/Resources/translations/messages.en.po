@@ -1405,6 +1405,9 @@ msgstr ""
 msgid "Do you really want to remove this holiday / internal day?"
 msgstr ""
 
+msgid "Do you really want to remove this language constant translation?"
+msgstr ""
+
 msgid "Do you really want to remove this navigation item?"
 msgstr ""
 
@@ -2341,7 +2344,25 @@ msgstr ""
 msgid "Keep empty if you do not want to limit the price by products' weight"
 msgstr ""
 
+msgid "Key"
+msgstr ""
+
 msgid "Language"
+msgstr ""
+
+msgid "Language constant translation"
+msgstr ""
+
+msgid "Language constant translation <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr ""
+
+msgid "Language constant translation <strong>{{ name }}</strong> deleted"
+msgstr ""
+
+msgid "Language constant translation <strong>{{ name }}</strong> not found"
+msgstr ""
+
+msgid "Language constants"
 msgstr ""
 
 msgid "Language constants - full"
@@ -2423,6 +2444,9 @@ msgid "Link to the personal information overview"
 msgstr ""
 
 msgid "LinkedIn URL"
+msgstr ""
+
+msgid "List of language constants"
 msgstr ""
 
 msgid "List of products in order (image, name, quantity, price per unit including VAT, total price per item including VAT)"
@@ -3032,6 +3056,9 @@ msgid "Orders value"
 msgstr ""
 
 msgid "Origin"
+msgstr ""
+
+msgid "Original translation"
 msgstr ""
 
 msgid "Out of stock"
@@ -4339,6 +4366,9 @@ msgstr ""
 msgid "Unable to add product"
 msgstr ""
 
+msgid "Unable to load list of language constants"
+msgstr ""
+
 msgid "Unavailable"
 msgstr ""
 
@@ -4451,6 +4481,9 @@ msgid "User consent policy settings"
 msgstr ""
 
 msgid "User consent policy settings modified."
+msgstr ""
+
+msgid "User translation"
 msgstr ""
 
 msgid "Username"

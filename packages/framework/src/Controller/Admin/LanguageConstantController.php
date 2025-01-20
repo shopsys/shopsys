@@ -2,19 +2,18 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Admin;
+namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use App\Form\Admin\LanguageConstant\LanguageConstantFormType;
-use App\Model\LanguageConstant\Exception\LanguageConstantNotFoundException;
-use App\Model\LanguageConstant\LanguageConstantDataFactory;
-use App\Model\LanguageConstant\LanguageConstantFacade;
-use App\Model\LanguageConstant\LanguageConstantGridFactory;
 use GuzzleHttp\Exception\GuzzleException;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
-use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
+use Shopsys\FrameworkBundle\Form\Admin\LanguageConstant\LanguageConstantFormType;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormType;
+use Shopsys\FrameworkBundle\Model\LanguageConstant\Exception\LanguageConstantNotFoundException;
+use Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantDataFactory;
+use Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantFacade;
+use Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantGridFactory;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,16 +21,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class LanguageConstantController extends AdminBaseController
 {
     /**
-     * @param \App\Model\LanguageConstant\LanguageConstantFacade $languageConstantFacade
-     * @param \App\Model\LanguageConstant\LanguageConstantDataFactory $languageConstantDataFactory
-     * @param \App\Model\LanguageConstant\LanguageConstantGridFactory $languageConstantGridFactory
+     * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantFacade $languageConstantFacade
+     * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantDataFactory $languageConstantDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantGridFactory $languageConstantGridFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
-        private readonly LanguageConstantFacade $languageConstantFacade,
-        private readonly LanguageConstantDataFactory $languageConstantDataFactory,
-        private readonly LanguageConstantGridFactory $languageConstantGridFactory,
-        private readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+        protected readonly LanguageConstantFacade $languageConstantFacade,
+        protected readonly LanguageConstantDataFactory $languageConstantDataFactory,
+        protected readonly LanguageConstantGridFactory $languageConstantGridFactory,
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
     }
 
@@ -53,7 +52,7 @@ class LanguageConstantController extends AdminBaseController
             $this->addErrorFlashTwig(t('Unable to load list of language constants'));
         }
 
-        return $this->render('Admin/Content/LanguageConstant/list.html.twig', [
+        return $this->render('@ShopsysFramework/Admin/Content/LanguageConstant/list.html.twig', [
             'gridView' => $grid?->createView(),
             'quickSearchForm' => $quickSearchForm->createView(),
         ]);
@@ -115,7 +114,7 @@ class LanguageConstantController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('Admin/Content/LanguageConstant/edit.html.twig', [
+        return $this->render('@ShopsysFramework/Admin/Content/LanguageConstant/edit.html.twig', [
             'form' => $form->createView(),
             'constant' => $constant,
         ]);
@@ -159,7 +158,7 @@ class LanguageConstantController extends AdminBaseController
     /**
      * @return string
      */
-    private function getSelectedLocale(): string
+    protected function getSelectedLocale(): string
     {
         return $this->adminDomainTabsFacade->getSelectedDomainConfig()->getLocale();
     }

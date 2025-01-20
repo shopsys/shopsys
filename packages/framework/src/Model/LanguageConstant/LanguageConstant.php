@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\LanguageConstant;
+namespace Shopsys\FrameworkBundle\Model\LanguageConstant;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
@@ -14,7 +14,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
  *     @ORM\UniqueConstraint(name="language_constants_key", columns={"key"})
  * })
  * @ORM\Entity
- * @method \App\Model\LanguageConstant\LanguageConstantTranslation translation(?string $locale = null)
+ * @method \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantTranslation translation(?string $locale = null)
  */
 class LanguageConstant extends AbstractTranslatableEntity
 {
@@ -27,18 +27,19 @@ class LanguageConstant extends AbstractTranslatableEntity
     protected $id;
 
     /**
+     * @var string
      * @ORM\Column(type="text")
      */
-    private string $key;
+    protected $key;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Model\LanguageConstant\LanguageConstantTranslation>
-     * @Prezent\Translations(targetEntity="App\Model\LanguageConstant\LanguageConstantTranslation")
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantTranslation>
+     * @Prezent\Translations(targetEntity="Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantTranslation")
      */
     protected $translations;
 
     /**
-     * @param \App\Model\LanguageConstant\LanguageConstantData $languageConstantData
+     * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantData $languageConstantData
      */
     public function __construct(LanguageConstantData $languageConstantData)
     {
@@ -50,7 +51,7 @@ class LanguageConstant extends AbstractTranslatableEntity
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -58,7 +59,7 @@ class LanguageConstant extends AbstractTranslatableEntity
     /**
      * @return string
      */
-    public function getKey(): string
+    public function getKey()
     {
         return $this->key;
     }
@@ -67,13 +68,13 @@ class LanguageConstant extends AbstractTranslatableEntity
      * @param string|null $locale
      * @return string
      */
-    public function getTranslation(?string $locale = null): string
+    public function getTranslation(?string $locale = null)
     {
         return $this->translation($locale)->getTranslation();
     }
 
     /**
-     * @param \App\Model\LanguageConstant\LanguageConstantData $constantData
+     * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantData $constantData
      */
     public function editTranslation(LanguageConstantData $constantData): void
     {
@@ -89,7 +90,7 @@ class LanguageConstant extends AbstractTranslatableEntity
     }
 
     /**
-     * @return \App\Model\LanguageConstant\LanguageConstantTranslation
+     * @return \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantTranslation
      */
     protected function createTranslation(): LanguageConstantTranslation
     {

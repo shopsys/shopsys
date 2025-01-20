@@ -97,9 +97,6 @@ msgstr ""
 msgid "Display date TO"
 msgstr ""
 
-msgid "Do you really want to remove this language constant translation?"
-msgstr ""
-
 msgid "Do you really want to remove this notification bar?"
 msgstr ""
 
@@ -184,27 +181,6 @@ msgstr ""
 msgid "Integrations"
 msgstr ""
 
-msgid "Key"
-msgstr ""
-
-msgid "Language"
-msgstr ""
-
-msgid "Language constant translation"
-msgstr ""
-
-msgid "Language constant translation <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
-msgstr ""
-
-msgid "Language constant translation <strong>{{ name }}</strong> deleted"
-msgstr ""
-
-msgid "Language constant translation <strong>{{ name }}</strong> not found"
-msgstr ""
-
-msgid "Language constants"
-msgstr ""
-
 msgid "Left"
 msgstr ""
 
@@ -221,9 +197,6 @@ msgid "Link Block"
 msgstr ""
 
 msgid "Linked categories"
-msgstr ""
-
-msgid "List of language constants"
 msgstr ""
 
 msgid "List of products"
@@ -251,9 +224,6 @@ msgid "Measurement units"
 msgstr ""
 
 msgid "Measurement units overview"
-msgstr ""
-
-msgid "Name"
 msgstr ""
 
 msgid "New"
@@ -313,9 +283,6 @@ msgstr ""
 msgid "Orders"
 msgstr ""
 
-msgid "Original translation"
-msgstr ""
-
 msgid "Outside layout"
 msgstr ""
 
@@ -355,9 +322,6 @@ msgstr ""
 msgid "Promoted products"
 msgstr ""
 
-msgid "Quick search"
-msgstr ""
-
 msgid "Registration"
 msgstr ""
 
@@ -381,9 +345,6 @@ msgstr ""
 
 msgid "Search [noun]"
 msgstr ""
-
-msgid "Search [verb]"
-msgstr "Search"
 
 msgid "Secondary"
 msgstr ""
@@ -430,9 +391,6 @@ msgstr ""
 msgid "Type of image"
 msgstr ""
 
-msgid "Unable to load list of language constants"
-msgstr ""
-
 msgid "Unlimited"
 msgstr ""
 
@@ -452,9 +410,6 @@ msgid "Upload new image"
 msgstr ""
 
 msgid "User consent policy"
-msgstr ""
-
-msgid "User translation"
 msgstr ""
 
 msgid "Valid from"

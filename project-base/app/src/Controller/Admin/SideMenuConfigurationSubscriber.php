@@ -92,10 +92,6 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $closedDayMenu = $listMenu->addChild('closed_day', ['route' => 'admin_closedday_list', 'label' => t('Holidays and internal days')]);
         $closedDayMenu->addChild('closed_day_new', ['route' => 'admin_closedday_new', 'label' => t('New closed day'), 'display' => false]);
         $closedDayMenu->addChild('closed_day_edit', ['route' => 'admin_closedday_edit', 'label' => t('Holiday / internal day detail'), 'display' => false]);
-
-        $constantsMenu = $settingsMenu->addChild('constants', ['label' => t('Language constants')]);
-        $constantsListMenu = $constantsMenu->addChild('constants_list', ['route' => 'admin_languageconstant_list', 'label' => t('List of language constants')]);
-        $constantsListMenu->addChild('constants_edit', ['route' => 'admin_languageconstant_edit', 'label' => t('Language constant translation'), 'display' => false]);
     }
 
     /**

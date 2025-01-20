@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Form\Admin\LanguageConstant;
+namespace Shopsys\FrameworkBundle\Form\Admin\LanguageConstant;
 
-use App\Model\LanguageConstant\LanguageConstantData;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
+use Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -21,7 +21,7 @@ class LanguageConstantFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /** @var \App\Model\LanguageConstant\LanguageConstantData $languageConstantData */
+        /** @var \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantData $languageConstantData */
         $languageConstantData = $options['data'];
 
         $builder

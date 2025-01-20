@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\LanguageConstant;
+namespace Shopsys\FrameworkBundle\Model\LanguageConstant;
 
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
@@ -12,25 +12,25 @@ use function GuzzleHttp\json_decode;
 
 class LanguageConstantFacade
 {
-    private const GENERATED_FILE_NAME = 'common.json';
+    protected const GENERATED_FILE_NAME = 'common.json';
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \App\Model\LanguageConstant\LanguageConstantRepository $languageConstantRepository
-     * @param \App\Model\LanguageConstant\LanguageConstantFactory $languageConstantFactory
+     * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantRepository $languageConstantRepository
+     * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantFactory $languageConstantFactory
      * @param string $languageConstantsUrlPattern
      * @param string $domainLocalesDirectory
      * @param \League\Flysystem\FilesystemOperator $filesystem
      * @param \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
      */
     public function __construct(
-        private readonly EntityManagerInterface $em,
-        private readonly LanguageConstantRepository $languageConstantRepository,
-        private readonly LanguageConstantFactory $languageConstantFactory,
-        private readonly string $languageConstantsUrlPattern,
-        private readonly string $domainLocalesDirectory,
-        private readonly FilesystemOperator $filesystem,
-        private readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
+        protected readonly EntityManagerInterface $em,
+        protected readonly LanguageConstantRepository $languageConstantRepository,
+        protected readonly LanguageConstantFactory $languageConstantFactory,
+        protected readonly string $languageConstantsUrlPattern,
+        protected readonly string $domainLocalesDirectory,
+        protected readonly FilesystemOperator $filesystem,
+        protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
     ) {
     }
 
@@ -56,7 +56,7 @@ class LanguageConstantFacade
 
     /**
      * @param string $key
-     * @return \App\Model\LanguageConstant\LanguageConstant|null
+     * @return \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstant|null
      */
     public function findByKey(string $key): ?LanguageConstant
     {
@@ -64,9 +64,9 @@ class LanguageConstantFacade
     }
 
     /**
-     * @param \App\Model\LanguageConstant\LanguageConstantData $languageConstantData
-     * @param \App\Model\LanguageConstant\LanguageConstant|null $languageConstant
-     * @return \App\Model\LanguageConstant\LanguageConstant
+     * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantData $languageConstantData
+     * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstant|null $languageConstant
+     * @return \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstant
      */
     public function createOrEdit(
         LanguageConstantData $languageConstantData,
@@ -100,10 +100,10 @@ class LanguageConstantFacade
     }
 
     /**
-     * @param \App\Model\LanguageConstant\LanguageConstantData $languageConstantData
-     * @return \App\Model\LanguageConstant\LanguageConstant
+     * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantData $languageConstantData
+     * @return \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstant
      */
-    private function create(LanguageConstantData $languageConstantData): LanguageConstant
+    protected function create(LanguageConstantData $languageConstantData): LanguageConstant
     {
         $languageConstant = $this->languageConstantFactory->create($languageConstantData);
 
@@ -114,10 +114,10 @@ class LanguageConstantFacade
     }
 
     /**
-     * @param \App\Model\LanguageConstant\LanguageConstantData $languageConstantData
-     * @return \App\Model\LanguageConstant\LanguageConstant
+     * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantData $languageConstantData
+     * @return \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstant
      */
-    private function edit(LanguageConstantData $languageConstantData): LanguageConstant
+    protected function edit(LanguageConstantData $languageConstantData): LanguageConstant
     {
         $languageConstant = $this->languageConstantRepository->getByKey($languageConstantData->key);
         $languageConstant->editTranslation($languageConstantData);
@@ -140,6 +140,6 @@ class LanguageConstantFacade
             $this->filesystem->createDirectory($targetFilePath, ['directory_visibility' => 'public']);
         }
 
-        $this->filesystem->write($targetFilePath . '/' . self::GENERATED_FILE_NAME, $translations);
+        $this->filesystem->write($targetFilePath . '/' . static::GENERATED_FILE_NAME, $translations);
     }
 }

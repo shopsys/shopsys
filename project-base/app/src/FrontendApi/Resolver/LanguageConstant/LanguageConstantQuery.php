@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\LanguageConstant;
 
-use App\Model\LanguageConstant\LanguageConstantFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class LanguageConstantQuery extends AbstractQuery
 {
     /**
-     * @param \App\Model\LanguageConstant\LanguageConstantFacade $languageConstantFacade
+     * @param \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantFacade $languageConstantFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(

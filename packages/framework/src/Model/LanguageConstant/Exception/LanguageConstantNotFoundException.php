@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\LanguageConstant\Exception;
+namespace Shopsys\FrameworkBundle\Model\LanguageConstant\Exception;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 

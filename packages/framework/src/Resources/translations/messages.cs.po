@@ -1405,6 +1405,9 @@ msgstr "Opravdu si přejete odebrat tuto hezkou URL? Odstranění hezké URL mů
 msgid "Do you really want to remove this holiday / internal day?"
 msgstr "Opravdu si přejete odstranit tento svátek / interní den?"
 
+msgid "Do you really want to remove this language constant translation?"
+msgstr "Opravdu chcete odstranit tento překlad jazykové konstanty?"
+
 msgid "Do you really want to remove this navigation item?"
 msgstr "Opravdu si přejete odstranit tuto položku navigace?"
 
@@ -2341,8 +2344,26 @@ msgstr "Položek na stránku:"
 msgid "Keep empty if you do not want to limit the price by products' weight"
 msgstr "Pokud nechcete omezit cenu podle hmotnosti produktů, nechte pole prázdné."
 
+msgid "Key"
+msgstr "Klíč"
+
 msgid "Language"
 msgstr "Jazyk"
+
+msgid "Language constant translation"
+msgstr "Překlad jazykové konstanty"
+
+msgid "Language constant translation <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr "Překlad jazykové konstanty <strong><a href=\"{{ url }}\">{{ name }}</a></strong> byl upraven"
+
+msgid "Language constant translation <strong>{{ name }}</strong> deleted"
+msgstr "Překlad jazykové konstanty <strong>{{ name }}</strong> byl smazán"
+
+msgid "Language constant translation <strong>{{ name }}</strong> not found"
+msgstr "Překlad jazykové konstanty <strong>{{ name }}</strong> nenalezen"
+
+msgid "Language constants"
+msgstr ""
 
 msgid "Language constants - full"
 msgstr "Jazykové konstanty - vše"
@@ -2424,6 +2445,9 @@ msgstr "Odkaz na přehled osobních údajů"
 
 msgid "LinkedIn URL"
 msgstr "LinkedIn URL"
+
+msgid "List of language constants"
+msgstr "Přehled jazykových konstant"
 
 msgid "List of products in order (image, name, quantity, price per unit including VAT, total price per item including VAT)"
 msgstr "Seznam produktů v objednávce (obrázek, název, množství, cena za jednotku s DPH, celková cena za položku s DPH)"
@@ -3034,6 +3058,9 @@ msgstr "Hodnota objednávek"
 msgid "Origin"
 msgstr "Původ"
 
+msgid "Original translation"
+msgstr "Původní překlad"
+
 msgid "Out of stock"
 msgstr "Aktuálně nedostupné"
 
@@ -3485,7 +3512,7 @@ msgid "Quick product search"
 msgstr "Rychlé vyhledávání v produktech"
 
 msgid "Quick search"
-msgstr "Rychlé vyhledávání"
+msgstr "Rychlé hledání"
 
 msgid "RGB Hex"
 msgstr "RGB Hex"
@@ -4339,6 +4366,9 @@ msgstr "Nelze přidat"
 msgid "Unable to add product"
 msgstr "Zboží se nepodařilo vložit"
 
+msgid "Unable to load list of language constants"
+msgstr "Nepodařilo se načíst přehled jazykových konstant"
+
 msgid "Unavailable"
 msgstr "Nedostupné"
 
@@ -4452,6 +4482,9 @@ msgstr "Nastavení správy osobních údajů"
 
 msgid "User consent policy settings modified."
 msgstr "Nastavení správy osobních údajů bylo uloženo"
+
+msgid "User translation"
+msgstr "Uživatelský překlad"
 
 msgid "Username"
 msgstr "Uživatelské jméno"
