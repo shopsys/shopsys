@@ -2,8 +2,10 @@ import { Breadcrumbs } from 'app/_components/Layout/Breadcrumbs/Breadcrumbs';
 import { getProductQuery } from 'app/_queries/getProductQuery';
 import { ProductMetadataJsonLd } from 'components/Basic/Head/ProductMetadataJsonLd';
 import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
+import { RecommendedProducts } from 'components/Blocks/Product/RecommendedProducts/RecommendedProducts';
 import { ProductDetailAccessories } from 'components/Pages/ProductDetail/ProductDetailAccessories/ProductDetailAccessories';
 import { ProductDetailContent } from 'components/Pages/ProductDetail/ProductDetailContent';
+import { TypeRecommendationType } from 'graphql/types';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
@@ -41,6 +43,8 @@ const ProductPage = async () => {
             {product.__typename === 'RegularProduct' && <ProductDetailContent product={product} />}
 
             <ProductDetailAccessories accessories={product.accessories} />
+
+            <RecommendedProducts itemUuids={[product.uuid]} recommendationType={TypeRecommendationType.ItemDetail} />
 
             <LastVisitedProducts currentProductCatnum={product.catalogNumber} />
         </>
