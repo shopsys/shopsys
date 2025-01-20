@@ -5,6 +5,7 @@ import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProduc
 import { RecommendedProducts } from 'components/Blocks/Product/RecommendedProducts/RecommendedProducts';
 import { ProductDetailAccessories } from 'components/Pages/ProductDetail/ProductDetailAccessories/ProductDetailAccessories';
 import { ProductDetailContent } from 'components/Pages/ProductDetail/ProductDetailContent';
+import { ProductDetailMainVariantContent } from 'components/Pages/ProductDetail/ProductDetailMainVariantContent';
 import { TypeRecommendationType } from 'graphql/types';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
@@ -22,7 +23,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
         openGraph: {
             title: product.fullName,
             description: product.description ?? '',
-            images: product.images[0].url,
+            images: product.images.length ? product.images[0].url : undefined,
         },
     };
 };
@@ -41,6 +42,8 @@ const ProductPage = async () => {
             <ProductMetadataJsonLd product={product} />
 
             {product.__typename === 'RegularProduct' && <ProductDetailContent product={product} />}
+
+            {product.__typename === 'MainVariant' && <ProductDetailMainVariantContent product={product} />}
 
             <ProductDetailAccessories accessories={product.accessories} />
 

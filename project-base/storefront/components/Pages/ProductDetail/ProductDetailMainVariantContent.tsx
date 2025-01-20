@@ -7,21 +7,15 @@ import { ProductDetailTabs } from './ProductDetailTabs/ProductDetailTabs';
 import { ProductVariantsTable } from './ProductDetailVariantsTable';
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
 import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
-import { useLastVisitedProductView } from 'components/Blocks/Product/LastVisitedProducts/lastVisitedProductsUtils';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
-import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
-import { useGtmProductDetailViewEvent } from 'gtm/utils/pageViewEvents/useGtmProductDetailViewEvent';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
-import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 
 type ProductDetailMainVariantContentProps = {
     product: TypeMainVariantDetailFragment;
-    isProductDetailFetching: boolean;
 };
 
 export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContentProps> = ({
@@ -41,10 +35,10 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
         return [...product.images, ...variantImages];
     }, [product]);
 
-    const pageViewEvent = useGtmFriendlyPageViewEvent(product);
-    useGtmPageViewEvent(pageViewEvent, isProductDetailFetching);
-    useLastVisitedProductView(product.catalogNumber);
-    useGtmProductDetailViewEvent(product, getUrlWithoutGetParameters(router.asPath), isProductDetailFetching);
+    // const pageViewEvent = useGtmFriendlyPageViewEvent(product);
+    // useGtmPageViewEvent(pageViewEvent, isProductDetailFetching);
+    // useLastVisitedProductView(product.catalogNumber);
+    // useGtmProductDetailViewEvent(product, getUrlWithoutGetParameters(router.asPath), isProductDetailFetching);
 
     return (
         <>
