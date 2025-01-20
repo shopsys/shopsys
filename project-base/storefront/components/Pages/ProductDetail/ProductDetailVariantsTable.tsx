@@ -1,8 +1,9 @@
 'use client';
 
+import { ProductDetailAvailability } from './ProductDetailAvailability';
+import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { Image } from 'components/Basic/Image/Image';
 import { ProductAction } from 'components/Blocks/Product/ProductAction';
-import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
 import { WatchDogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -11,28 +12,13 @@ import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragmen
 import { TypeAvailabilityStatusEnum } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import dynamic from 'next/dynamic';
-import { useSessionStore } from 'store/useSessionStore';
-import { twJoin } from 'tailwind-merge';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
-
-const ProductVariantsAvailabilityPopup = dynamic(
-    () =>
-        import('components/Blocks/Popup/ProductVariantsAvailabilityPopup').then(
-            (component) => component.ProductVariantsAvailabilityPopup,
-        ),
-    {
-        ssr: false,
-    },
-);
 
 type ProductVariantsTableProps = {
     variants: TypeMainVariantDetailFragment['variants'];
 };
 
-export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ variants }) => {
-    const { t } = useTranslation();
-    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+export const ProductVariantsTable: FC<ProductVariantsTableProps> = async ({ variants }) => {
+    const t = await getTranslation();
 
     if (variants.length === 0) {
         return <p>{t('Currently, it is not possible to purchase any variant of this product.')}</p>;
@@ -62,27 +48,13 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ variants }
                             {variant.fullName}
                         </div>
 
-                        {!variant.isSellingDenied && (
-                            <ProductAvailability
-                                availability={variant.availability}
-                                availableStoresCount={variant.availableStoresCount}
-                                isInquiryType={variant.isInquiryType}
-                                className={twJoin(
-                                    'min-w-40 text-center lg:text-left',
-                                    variant.availability.status === TypeAvailabilityStatusEnum.InStock &&
-                                        'cursor-pointer',
-                                )}
-                                onClick={() => {
-                                    if (variant.availability.status === TypeAvailabilityStatusEnum.InStock) {
-                                        updatePortalContent(
-                                            <ProductVariantsAvailabilityPopup
-                                                storeAvailabilities={variant.storeAvailabilities}
-                                            />,
-                                        );
-                                    }
-                                }}
-                            />
-                        )}
+                        <ProductDetailAvailability
+                            availability={variant.availability}
+                            availableStoresCount={variant.availableStoresCount}
+                            isInquiryType={variant.isInquiryType}
+                            isSellingDenied={variant.isSellingDenied}
+                            storeAvailabilities={variant.storeAvailabilities}
+                        />
 
                         <div className="flex flex-col items-center justify-end gap-2.5 lg:ml-auto lg:min-w-96 lg:flex-row">
                             <ProductPrice className="lg:flex-col lg:items-end" productPrice={variant.price} />
