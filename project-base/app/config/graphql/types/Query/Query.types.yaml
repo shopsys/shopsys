@@ -8,6 +8,5 @@ Query:
         - 'OrderQuery'
         - 'PersonalDataQuery'
         - 'ProductQuery'
-        - 'NotificationBarQuery'
         - 'SeoPageQuery'
         - 'RecommendationQueryDecorator'

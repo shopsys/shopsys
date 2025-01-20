@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\NotificationBar;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\NotificationBar;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarFacade;
@@ -15,8 +15,8 @@ class NotificationBarsQuery extends AbstractQuery
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        private readonly NotificationBarFacade $notificationBarFacade,
-        private readonly Domain $domain,
+        protected readonly NotificationBarFacade $notificationBarFacade,
+        protected readonly Domain $domain,
     ) {
     }
 
