@@ -62,7 +62,7 @@ const ComplaintsPage: FC = () => {
                 <div className="my-5">
                     <SearchInput
                         className="w-full border border-inputBorder"
-                        label={t('Search for a product you want to complain about')}
+                        label={t('Search for a product you complained about')}
                         shouldShowSpinnerInInput={complaintsDataFetching}
                         value={searchQueryValue}
                         onChange={(e) => setSearchQueryValue(e.currentTarget.value)}
