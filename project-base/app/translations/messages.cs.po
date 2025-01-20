@@ -37,9 +37,6 @@ msgstr "Basic"
 msgid "Brand overview"
 msgstr "Přehled značek"
 
-msgid "CMS"
-msgstr "CMS"
-
 msgid "Catalog numbers"
 msgstr "Katalogová čísla"
 
@@ -85,14 +82,8 @@ msgstr "Datum zobrazení DO"
 msgid "Edit data"
 msgstr "Upravit data"
 
-msgid "Edit store"
-msgstr "Upravit prodejnu"
-
 msgid "Editing banner"
 msgstr "Upravit banner"
-
-msgid "Editing page"
-msgstr "Editace stránky"
 
 msgid "Enable two factor authentication by Google Authenticator"
 msgstr "Zapnout dvoufaktorové ověřování pomocí Google Autentikátoru"
@@ -121,18 +112,6 @@ msgstr "Skupiny"
 msgid "Height"
 msgstr "Výška"
 
-msgid "Heureka"
-msgstr "Heureka"
-
-msgid "Holiday / internal day detail"
-msgstr "Detail svátku / interního dne"
-
-msgid "Holidays and internal days"
-msgstr "Svátky a interní dny"
-
-msgid "Home page"
-msgstr "Domovská stránka"
-
 msgid "Href"
 msgstr "Href"
 
@@ -150,9 +129,6 @@ msgstr "Zde vložte text"
 
 msgid "Inside layout"
 msgstr "Rozložení uvnitř"
-
-msgid "Integrations"
-msgstr "Integrace"
 
 msgid "Left"
 msgstr "Vlevo"
@@ -187,9 +163,6 @@ msgstr "Povinné proměnné"
 msgid "Map"
 msgstr "Mapa"
 
-msgid "Measurement units"
-msgstr "Měrné jednotky"
-
 msgid "Measurement units overview"
 msgstr "Přehled měrných jednotek"
 
@@ -198,18 +171,6 @@ msgstr "Novinka"
 
 msgid "New banner"
 msgstr "Nový banner"
-
-msgid "New closed day"
-msgstr "Nový svátek / interní den"
-
-msgid "New page"
-msgstr "Nová stránka"
-
-msgid "New store"
-msgstr "Nová prodejna"
-
-msgid "New warehouse"
-msgstr "Nový sklad"
 
 msgid "No flags found. You have to create some first."
 msgstr "Nebyly nalezeny žádné příznaky. Musíte prvně nějaký vytvořit."
@@ -225,9 +186,6 @@ msgstr "Otevírat v novém okně"
 
 msgid "Optional variables"
 msgstr "Volitelné proměnné"
-
-msgid "Order confirmation page"
-msgstr "Stránka s potvrzením objednávky"
 
 msgid "Order detail"
 msgstr "Detail objednávky"
@@ -292,12 +250,6 @@ msgstr "Sekundární"
 msgid "Src"
 msgstr "Src"
 
-msgid "Stocking"
-msgstr "Skladovost"
-
-msgid "Stores"
-msgstr "Prodejny"
-
 msgid "TOP"
 msgstr "TOP"
 
@@ -346,20 +298,8 @@ msgstr "Videa"
 msgid "Warehouse"
 msgstr "Sklad"
 
-msgid "Warehouse detail"
-msgstr "Detail skladu"
-
-msgid "Warehouse settings"
-msgstr "Nastavení skladů"
-
-msgid "Warehouses"
-msgstr "Sklady"
-
 msgid "Width"
 msgstr "Šířka"
-
-msgid "XML Feeds"
-msgstr "XML Feedy"
 
 msgid "You can upload following formats: PNG, JPG"
 msgstr "Můžete nahrát následující formáty: PNG, JPG"

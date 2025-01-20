@@ -22,7 +22,6 @@
 
 - All the available roles are defined along with their human-readable labels in `src/Model/Security/Roles.php`
 - If a particular page or section is restricted for the given admin, it is removed from the menu
-    - see `src/Controller/Admin/SideMenuConfigurationSubscriber.php`
     - see `src/Model/Security/MenuItemsGrantedRolesSetting.php`
     - we use the default [access decision strategy (i.e. `affirmative`)](https://symfony.com/doc/5.4/security/voters.html#changing-the-access-decision-strategy), i.e., an admin will be granted access if he has at least one of the required roles, see the example below:
     ```php

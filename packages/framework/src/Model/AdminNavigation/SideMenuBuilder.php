@@ -44,6 +44,7 @@ class SideMenuBuilder
         $menu->addChild($this->createFilesMenu());
         $menu->addChild($this->createAdministratorsMenu());
         $menu->addChild($this->createSettingsMenu());
+        $menu->addChild($this->createIntegrationsMenu());
 
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_ROOT, $menu);
 
@@ -366,7 +367,7 @@ class SideMenuBuilder
      */
     protected function createMarketingMenu(): ItemInterface
     {
-        $menu = $this->menuFactory->createItem('marketing', ['label' => t('Marketing')]);
+        $menu = $this->menuFactory->createItem('marketing', ['label' => t('CMS')]);
         $menu->setExtra('icon', 'chart-piece');
 
         $articlesMenu = $menu->addChild(
@@ -382,19 +383,6 @@ class SideMenuBuilder
             ['route' => 'admin_article_edit', 'label' => t('Editing article'), 'display' => false],
         );
 
-        $sliderMenu = $menu->addChild('slider', ['route' => 'admin_slider_list', 'label' => t('Slider on main page')]);
-        $sliderMenu->addChild(
-            'new_page',
-            ['route' => 'admin_slider_new', 'label' => t('New page'), 'display' => false],
-        );
-        $sliderMenu->addChild(
-            'edit_page',
-            ['route' => 'admin_slider_edit', 'label' => t('Editing page'), 'display' => false],
-        );
-
-        $menu->addChild('top_products', ['route' => 'admin_topproduct_list', 'label' => t('Main page products')]);
-        $menu->addChild('top_categories', ['route' => 'admin_topcategory_list', 'label' => t('Popular categories')]);
-
         $advertsMenu = $menu->addChild(
             'adverts',
             ['route' => 'admin_advert_list', 'label' => t('Advertising system')],
@@ -407,8 +395,6 @@ class SideMenuBuilder
             'edit',
             ['route' => 'admin_advert_edit', 'label' => t('Editing advertising'), 'display' => false],
         );
-
-        $menu->addChild('feeds', ['route' => 'admin_feed_list', 'label' => t('XML Feeds')]);
 
         $bestsellingProductsMenu = $menu->addChild(
             'bestselling_products',
@@ -433,6 +419,21 @@ class SideMenuBuilder
         $navigationMenu->addChild('navigation_edit', ['route' => 'admin_navigation_edit', 'display' => false, 'label' => t('Editing item')]);
         $navigationMenu->addChild('navigation_new', ['route' => 'admin_navigation_new', 'display' => false, 'label' => t('New item')]);
 
+        $homepageMenu = $menu->addChild('homepage', ['label' => t('Home page')]);
+
+        $bannersMenu = $homepageMenu->addChild('banners', ['route' => 'admin_slider_list', 'label' => t('Banners')]);
+        $bannersMenu->addChild('new_page', ['route' => 'admin_slider_new', 'label' => t('New page'), 'display' => false]);
+        $bannersMenu->addChild('edit_page', ['route' => 'admin_slider_edit', 'label' => t('Editing page'), 'display' => false]);
+
+        $homepageMenu->addChild('promoted_products', ['route' => 'admin_topproduct_list', 'label' => t('Promoted products')]);
+        $homepageMenu->addChild('promoted_categories', ['route' => 'admin_topcategory_list', 'label' => t('Promoted categories')]);
+
+        $notificationBarMenu = $menu->addChild('notification_bar', ['route' => 'admin_notificationbar_list', 'label' => t('Notification bar')]);
+        $notificationBarMenu->addChild('notification_bar_new', ['route' => 'admin_notificationbar_new', 'label' => t('New notification bar'), 'display' => false]);
+        $notificationBarMenu->addChild('notification_bar_edit', ['route' => 'admin_notificationbar_edit', 'label' => t('Editing notification bar'), 'display' => false]);
+
+        $menu->addChild('order_confirmation', ['route' => 'admin_customercommunication_ordersubmitted', 'label' => t('Order confirmation page')]);
+
         $legalMenu = $menu->addChild('legal', ['label' => t('Legal conditions')]);
         $legalMenu->addChild(
             'terms_and_conditions',
@@ -447,10 +448,6 @@ class SideMenuBuilder
             ['route' => 'admin_personaldata_setting', 'label' => t('Personal data access')],
         );
         $legalMenu->addChild('user_consent_policy', ['route' => 'admin_userconsentpolicy_setting', 'label' => t('User consent policy')]);
-
-        $notificationBarMenu = $menu->addChild('notification_bar', ['route' => 'admin_notificationbar_list', 'label' => t('Notification bar')]);
-        $notificationBarMenu->addChild('notification_bar_new', ['route' => 'admin_notificationbar_new', 'label' => t('New notification bar'), 'display' => false]);
-        $notificationBarMenu->addChild('notification_bar_edit', ['route' => 'admin_notificationbar_edit', 'label' => t('Editing notification bar'), 'display' => false]);
 
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_MARKETING, $menu);
 
@@ -562,10 +559,6 @@ class SideMenuBuilder
             'edit_template',
             ['route' => 'admin_mail_edit', 'label' => t('Editing email template'), 'display' => false],
         );
-        $communicationMenu->addChild(
-            'order_confirmation',
-            ['route' => 'admin_customercommunication_ordersubmitted', 'label' => t('Order confirmation page')],
-        );
 
         $listsMenu = $menu->addChild('lists', ['label' => t('Lists and nomenclatures')]);
         $transportsAndPaymentsMenu = $listsMenu->addChild(
@@ -616,7 +609,7 @@ class SideMenuBuilder
             'edit',
             ['route' => 'admin_brand_edit', 'label' => t('Editing brand'), 'display' => false],
         );
-        $listsMenu->addChild('units', ['route' => 'admin_unit_list', 'label' => t('Units')]);
+        $listsMenu->addChild('units', ['route' => 'admin_unit_list', 'label' => t('Measurement units')]);
         $countriesMenu = $listsMenu->addChild(
             'countries',
             ['route' => 'admin_country_list', 'label' => t('Countries')],
@@ -632,6 +625,14 @@ class SideMenuBuilder
 
         $parameterValueMenu = $listsMenu->addChild('parameter_values', ['route' => 'admin_parametervalue_list', 'label' => t('Pararameter value of type color')]);
         $parameterValueMenu->addChild('parameter_values_edit', ['route' => 'admin_parametervalue_edit', 'display' => false, 'label' => t('Editing parameter value of type color')]);
+
+        $storeMenu = $listsMenu->addChild('stores', ['route' => 'admin_store_list', 'label' => t('Stores')]);
+        $storeMenu->addChild('new_store', ['route' => 'admin_store_new', 'display' => false, 'label' => t('New store')]);
+        $storeMenu->addChild('edit_store', ['route' => 'admin_store_edit', 'display' => false, 'label' => t('Edit store')]);
+
+        $closedDayMenu = $listsMenu->addChild('closed_day', ['route' => 'admin_closedday_list', 'label' => t('Holidays and internal days')]);
+        $closedDayMenu->addChild('closed_day_new', ['route' => 'admin_closedday_new', 'label' => t('New closed day'), 'display' => false]);
+        $closedDayMenu->addChild('closed_day_edit', ['route' => 'admin_closedday_edit', 'label' => t('Holiday / internal day detail'), 'display' => false]);
 
         $seoMenu = $menu->addChild('seo', ['label' => t('SEO')]);
         $seoMenu->addChild('seo', ['route' => 'admin_seo_index', 'label' => t('SEO')]);
@@ -654,6 +655,16 @@ class SideMenuBuilder
             'contact_form_settings',
             ['route' => 'admin_contactformsettings_index', 'label' => t('Contact form')],
         );
+
+        $stockMenu = $menu->addChild('stocks', ['label' => t('Stocking')]);
+        $stockMenu->addChild('stock', ['route' => 'admin_stock_list', 'label' => t('Warehouses')]);
+        $stockMenu->addChild('new_stock', ['route' => 'admin_stock_new', 'display' => false, 'label' => t('New warehouse')]);
+        $stockMenu->addChild('edit_stock', ['route' => 'admin_stock_edit', 'display' => false, 'label' => t('Warehouse detail')]);
+        $stockMenu->addChild('stock_settings', ['route' => 'admin_stock_settings', 'label' => t('Warehouse settings')]);
+
+        $constantsMenu = $menu->addChild('constants', ['label' => t('Language constants')]);
+        $constantsListMenu = $constantsMenu->addChild('constants_list', ['route' => 'admin_languageconstant_list', 'label' => t('List of language constants')]);
+        $constantsListMenu->addChild('constants_edit', ['route' => 'admin_languageconstant_edit', 'label' => t('Language constant translation'), 'display' => false]);
 
         if ($this->authorizationChecker->isGranted(Roles::ROLE_SUPER_ADMIN)) {
             $superadminMenu = $menu->addChild('superadmin', ['label' => t('Superadmin')]);
@@ -680,19 +691,27 @@ class SideMenuBuilder
             $superadminMenu->addChild('cspHeader', ['route' => 'admin_cspheader_setting', 'label' => t('Content-Security-Policy header')]);
         }
 
-        $heurekaMenu = $menu->addChild('heureka', ['label' => t('Heureka - Verified by Customer')]);
-        $heurekaMenu->addChild(
-            'settings',
-            ['route' => 'admin_heureka_setting', 'label' => t('Heureka - Verified by Customer')],
-        );
-
-        $constantsMenu = $menu->addChild('constants', ['label' => t('Language constants')]);
-        $constantsListMenu = $constantsMenu->addChild('constants_list', ['route' => 'admin_languageconstant_list', 'label' => t('List of language constants')]);
-        $constantsListMenu->addChild('constants_edit', ['route' => 'admin_languageconstant_edit', 'label' => t('Language constant translation'), 'display' => false]);
-
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_SETTINGS, $menu);
 
         return $menu;
+    }
+
+    /**
+     * @return \Knp\Menu\ItemInterface
+     */
+    protected function createIntegrationsMenu(): ItemInterface
+    {
+        $integrationsMenu = $this->menuFactory->createItem('integrations', ['label' => t('Integrations')]);
+        $integrationsMenu->setExtra('icon', 'gear');
+
+        $integrationsMenu->addChild('feeds', ['route' => 'admin_feed_list', 'label' => t('XML Feeds')]);
+
+        $heurekaMenu = $integrationsMenu->addChild('heureka', ['label' => t('Heureka')]);
+        $heurekaMenu->addChild('settings', ['route' => 'admin_heureka_setting', 'label' => t('Heureka')]);
+
+        $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_INTEGRATIONS, $integrationsMenu);
+
+        return $integrationsMenu;
     }
 
     /**

@@ -439,6 +439,9 @@ msgstr "Zpět na volbu parametrů"
 msgid "Background color"
 msgstr "Barva pozadí"
 
+msgid "Banners"
+msgstr ""
+
 msgid "Basic"
 msgstr "Základní"
 
@@ -579,6 +582,9 @@ msgstr "Ale na jiných adresách toho pro Vás máme spousty..."
 
 msgid "By flag"
 msgstr "Dle příznaku"
+
+msgid "CMS"
+msgstr "CMS"
 
 msgid "CSS documentation"
 msgstr "CSS dokumentace"
@@ -2164,6 +2170,9 @@ msgstr "Nadpis (H1)"
 msgid "Headline"
 msgstr "Titulek"
 
+msgid "Heureka"
+msgstr "Heureka"
+
 msgid "Heureka - Verified by Customer"
 msgstr "Heureka - Ověřeno zákazníky"
 
@@ -2218,8 +2227,17 @@ msgstr "Svátek / interní den <strong><a href=\"{{ url }}\">{{ name }}</a></str
 msgid "Holiday / internal day <strong>{{ name }}</strong> deleted"
 msgstr "Svátek / interní <strong>{{ name }}</strong> byl smazán"
 
+msgid "Holiday / internal day detail"
+msgstr "Detail svátku / interního dne"
+
+msgid "Holidays and internal days"
+msgstr "Svátky a interní dny"
+
 msgid "Holidays and internal days overview"
 msgstr "Přehled svátků a interních dní"
+
+msgid "Home page"
+msgstr "Domovská stránka"
 
 msgid "Hreflang tags help search engines understand the language and regional targeting of your content. By selecting multiple domains, you ensure that hreflang tags will be properly rendered in sitemap and on the page. Search engines then properly index and display the correct versions of your content to users across different regions."
 msgstr "Hreflang tagy pomáhají vyhledávačům porozumět jazyku a regionálnímu zaměření obsahu. Výběrem více domén zajistíte, že se značky hreflang budou správně zobrazovat v sitemapě a na stránkách. Vyhledávače pak správně indexují a zobrazují správné verze vašeho obsahu uživatelům v různých regionech."
@@ -2334,6 +2352,9 @@ msgstr "Instagram URL"
 
 msgid "Instructions"
 msgstr "Pokyny"
+
+msgid "Integrations"
+msgstr "Integrace"
 
 msgid "Internal note"
 msgstr "Interní poznámka"
@@ -2551,9 +2572,6 @@ msgstr "Provést úpravu"
 msgid "Map coordinates"
 msgstr "Souřadnice na mapě"
 
-msgid "Marketing"
-msgstr "Marketing"
-
 msgid "Max duration (mm:ss)"
 msgstr "Max. trvání (mm:ss)"
 
@@ -2562,6 +2580,9 @@ msgstr "Maximální trvání všech cronů za posledních sedm dní"
 
 msgid "Maximum weight of products"
 msgstr "Maximální hmotnost produktů"
+
+msgid "Measurement units"
+msgstr "Měrné jednotky"
 
 msgid "Menu"
 msgstr "Menu"
@@ -3319,9 +3340,6 @@ msgstr "Použijte prosím tlačítko níže k odeslání jednorázového příst
 msgid "Please wait until all files are uploaded and try again."
 msgstr "Prosím počkejte dokud nebudou nahrány všechny soubory a zkuste to znovu."
 
-msgid "Popular categories"
-msgstr "Rozcestník kategorií"
-
 msgid "Postcode"
 msgstr "PSČ"
 
@@ -3537,6 +3555,12 @@ msgstr "Slevoé kupóny - vygenerované dávky"
 
 msgid "Promo codes - view"
 msgstr "Slevové kupóny - zobrazení"
+
+msgid "Promoted categories"
+msgstr ""
+
+msgid "Promoted products"
+msgstr ""
 
 msgid "Quantity"
 msgstr "Množství"
@@ -4030,9 +4054,6 @@ msgstr "Bannery - vše"
 msgid "Slider items - view"
 msgstr "Bannery - zobrazení"
 
-msgid "Slider on main page"
-msgstr "Slider na titulce"
-
 msgid "Slider page"
 msgstr "Stránka slideru"
 
@@ -4099,6 +4120,9 @@ msgstr "Stav objednávek <strong>{{ name }}</strong> je rezervovaný a nelze jej
 msgid "Status of orders <strong>{{ oldName }}</strong> replaced by status <strong>{{ newName }}</strong> and deleted."
 msgstr "Stav objednávek <strong>{{ oldName }}</strong> byl nahrazen stavem <strong>{{ newName }}</strong> a byl smazán."
 
+msgid "Stocking"
+msgstr "Skladovost"
+
 msgid "Store"
 msgstr "Prodejna"
 
@@ -4122,6 +4146,9 @@ msgstr "Seznam prodejen"
 
 msgid "Storefront queries cache has been cleaned."
 msgstr "Cache s dotazy na FE byla smazána."
+
+msgid "Stores"
+msgstr "Prodejny"
 
 msgid "Stores - full"
 msgstr "Prodejny - vše"
@@ -4441,9 +4468,6 @@ msgstr "Jednotková cena bez DPH"
 msgid "Unit price including VAT"
 msgstr "Jednotková cena s DPH"
 
-msgid "Units"
-msgstr "Jednotky"
-
 msgid "Units - full"
 msgstr "Měrné jednotky - vše"
 
@@ -4623,6 +4647,9 @@ msgstr "Sklad <strong>{{ name }}</strong> byl smazán"
 
 msgid "Warehouse <strong>{{ name }}</strong> was set as default."
 msgstr "Sklad <strong>{{ name }}</strong> byl nastaven jako výchozí."
+
+msgid "Warehouse detail"
+msgstr "Detail skladu"
 
 msgid "Warehouse overview"
 msgstr "Přehled skladů"

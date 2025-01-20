@@ -37,9 +37,6 @@ msgstr ""
 msgid "Brand overview"
 msgstr ""
 
-msgid "CMS"
-msgstr ""
-
 msgid "Catalog numbers"
 msgstr ""
 
@@ -85,13 +82,7 @@ msgstr ""
 msgid "Edit data"
 msgstr ""
 
-msgid "Edit store"
-msgstr ""
-
 msgid "Editing banner"
-msgstr ""
-
-msgid "Editing page"
 msgstr ""
 
 msgid "Enable two factor authentication by Google Authenticator"
@@ -121,18 +112,6 @@ msgstr ""
 msgid "Height"
 msgstr ""
 
-msgid "Heureka"
-msgstr ""
-
-msgid "Holiday / internal day detail"
-msgstr ""
-
-msgid "Holidays and internal days"
-msgstr ""
-
-msgid "Home page"
-msgstr ""
-
 msgid "Href"
 msgstr ""
 
@@ -149,9 +128,6 @@ msgid "Insert your text here"
 msgstr ""
 
 msgid "Inside layout"
-msgstr ""
-
-msgid "Integrations"
 msgstr ""
 
 msgid "Left"
@@ -187,9 +163,6 @@ msgstr ""
 msgid "Map"
 msgstr ""
 
-msgid "Measurement units"
-msgstr ""
-
 msgid "Measurement units overview"
 msgstr ""
 
@@ -197,18 +170,6 @@ msgid "New"
 msgstr ""
 
 msgid "New banner"
-msgstr ""
-
-msgid "New closed day"
-msgstr ""
-
-msgid "New page"
-msgstr ""
-
-msgid "New store"
-msgstr ""
-
-msgid "New warehouse"
 msgstr ""
 
 msgid "No flags found. You have to create some first."
@@ -224,9 +185,6 @@ msgid "Open in new window"
 msgstr ""
 
 msgid "Optional variables"
-msgstr ""
-
-msgid "Order confirmation page"
 msgstr ""
 
 msgid "Order detail"
@@ -292,12 +250,6 @@ msgstr ""
 msgid "Src"
 msgstr ""
 
-msgid "Stocking"
-msgstr ""
-
-msgid "Stores"
-msgstr ""
-
 msgid "TOP"
 msgstr ""
 
@@ -346,19 +298,7 @@ msgstr ""
 msgid "Warehouse"
 msgstr ""
 
-msgid "Warehouse detail"
-msgstr ""
-
-msgid "Warehouse settings"
-msgstr ""
-
-msgid "Warehouses"
-msgstr ""
-
 msgid "Width"
-msgstr ""
-
-msgid "XML Feeds"
 msgstr ""
 
 msgid "You can upload following formats: PNG, JPG"

@@ -20,6 +20,7 @@ class ConfigureMenuEvent extends Event
     public const SIDE_MENU_MARKETING = 'shopsys.admin_side_menu.configure_marketing';
     public const SIDE_MENU_ADMINISTRATORS = 'shopsys.admin_side_menu.configure_administrators';
     public const SIDE_MENU_SETTINGS = 'shopsys.admin_side_menu.configure_settings';
+    public const SIDE_MENU_INTEGRATIONS = 'shopsys.admin_side_menu.configure_integrations';
 
     /**
      * @param \Knp\Menu\FactoryInterface $menuFactory
