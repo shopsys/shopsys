@@ -1,34 +1,21 @@
 'use client';
 
-import { ProductDetailAccessories } from './ProductDetailAccessories/ProductDetailAccessories';
-import { ProductDetailPrefix, ProductDetailHeading } from './ProductDetailElements';
 import { ProductDetailGallery } from './ProductDetailGallery';
+import { ProductDetailInfo } from './ProductDetailInfo';
 import { ProductDetailTabs } from './ProductDetailTabs/ProductDetailTabs';
 import { ProductVariantsTable } from './ProductDetailVariantsTable';
-import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
-import { useLastVisitedProductView } from 'components/Blocks/Product/LastVisitedProducts/lastVisitedProductsUtils';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
-import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
-import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
-import { useGtmProductDetailViewEvent } from 'gtm/utils/pageViewEvents/useGtmProductDetailViewEvent';
-import useTranslation from 'next-translate/useTranslation';
-import { useRouter } from 'next/router';
 import { useMemo } from 'react';
-import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
 
 type ProductDetailMainVariantContentProps = {
     product: TypeMainVariantDetailFragment;
-    isProductDetailFetching: boolean;
 };
 
-export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContentProps> = ({
-    product,
-    isProductDetailFetching,
-}) => {
-    const router = useRouter();
-    const { t } = useTranslation();
+export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContentProps> = ({ product }) => {
+    // const router = useRouter();
+
     const mainVariantImagesWithVariantImages = useMemo(() => {
         const variantImages = product.variants.reduce((mappedVariantImages, variant) => {
             if (variant.mainImage) {
@@ -41,47 +28,36 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
         return [...product.images, ...variantImages];
     }, [product]);
 
-    const pageViewEvent = useGtmFriendlyPageViewEvent(product);
-    useGtmPageViewEvent(pageViewEvent, isProductDetailFetching);
-    useLastVisitedProductView(product.catalogNumber);
-    useGtmProductDetailViewEvent(product, getUrlWithoutGetParameters(router.asPath), isProductDetailFetching);
+    // const pageViewEvent = useGtmFriendlyPageViewEvent(product);
+    // useGtmPageViewEvent(pageViewEvent, isProductDetailFetching);
+    // useLastVisitedProductView(product.catalogNumber);
+    // useGtmProductDetailViewEvent(product, getUrlWithoutGetParameters(router.asPath), isProductDetailFetching);
 
     return (
-        <>
-            <ProductMetadata product={product} />
+        <Webline className="flex flex-col gap-8">
+            <ProductDetailGallery
+                flags={product.flags}
+                images={mainVariantImagesWithVariantImages}
+                percentageDiscount={product.price.percentageDiscount}
+                productName={product.name}
+                videoIds={product.productVideos}
+            />
 
-            <Webline className="flex flex-col gap-8">
-                <ProductDetailGallery
-                    flags={product.flags}
-                    images={mainVariantImagesWithVariantImages}
-                    percentageDiscount={product.price.percentageDiscount}
-                    productName={product.name}
-                    videoIds={product.productVideos}
-                />
+            <ProductDetailInfo
+                catalogNumber={product.catalogNumber}
+                name={product.name}
+                namePrefix={product.namePrefix}
+                nameSuffix={product.nameSuffix}
+            />
 
-                <div className="gap-2">
-                    <ProductDetailPrefix>{product.namePrefix}</ProductDetailPrefix>
+            <ProductVariantsTable variants={product.variants} />
 
-                    <ProductDetailHeading>
-                        {product.name} {product.nameSuffix}
-                    </ProductDetailHeading>
-
-                    <div className="text-sm">
-                        {t('Code')}: {product.catalogNumber}
-                    </div>
-                </div>
-
-                <ProductVariantsTable variants={product.variants} />
-
-                <ProductDetailTabs
-                    description={product.description}
-                    files={product.files}
-                    parameters={product.parameters}
-                    relatedProducts={product.relatedProducts}
-                />
-
-                {!!product.accessories.length && <ProductDetailAccessories accessories={product.accessories} />}
-            </Webline>
-        </>
+            <ProductDetailTabs
+                description={product.description}
+                files={product.files}
+                parameters={product.parameters}
+                relatedProducts={product.relatedProducts}
+            />
+        </Webline>
     );
 };
