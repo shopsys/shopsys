@@ -7,6 +7,9 @@ msgstr ""
 msgid ""
 msgstr ""
 
+msgid "\"Valid to\" must be greater than \"Valid from\""
+msgstr ""
+
 msgid "%count% item from CSV file was imported successfully.|%count% items from CSV file were imported successfully."
 msgstr ""
 
@@ -80,6 +83,9 @@ msgid "<a href=\"%url%\">There are no warehouses, you need to create some.</a>"
 msgstr ""
 
 msgid "<a href=\"%url%\">User consent policy article for domain %domainName% is not set.</a>"
+msgstr ""
+
+msgid "<strong><a href=\"{{ url }}\">Notification bar</a></strong> has been successfuly updated"
 msgstr ""
 
 msgid "<strong><a href=\"{{ url }}\">SEO category</a></strong> has been saved"
@@ -428,6 +434,9 @@ msgid "Back to overview of available combinations"
 msgstr ""
 
 msgid "Back to parameter selection"
+msgstr ""
+
+msgid "Background color"
 msgstr ""
 
 msgid "Basic"
@@ -976,6 +985,9 @@ msgstr ""
 msgid "Create new warehouse"
 msgstr ""
 
+msgid "Create notification bar"
+msgstr ""
+
 msgid "Create payment"
 msgstr ""
 
@@ -1411,6 +1423,9 @@ msgstr ""
 msgid "Do you really want to remove this navigation item?"
 msgstr ""
 
+msgid "Do you really want to remove this notification bar?"
+msgstr ""
+
 msgid "Do you really want to remove this page?"
 msgstr ""
 
@@ -1652,6 +1667,9 @@ msgid "Editing item"
 msgstr ""
 
 msgid "Editing navigation item"
+msgstr ""
+
+msgid "Editing notification bar"
 msgstr ""
 
 msgid "Editing order"
@@ -2686,6 +2704,9 @@ msgstr ""
 msgid "New navigation item"
 msgstr ""
 
+msgid "New notification bar"
+msgstr ""
+
 msgid "New orders"
 msgstr ""
 
@@ -2881,10 +2902,19 @@ msgstr ""
 msgid "Nothing to choose from."
 msgstr ""
 
+msgid "Notification bar"
+msgstr ""
+
 msgid "Notification bar - full"
 msgstr ""
 
 msgid "Notification bar - view"
+msgstr ""
+
+msgid "Notification bar has been successfuly created"
+msgstr ""
+
+msgid "Notification bar has been successfuly deleted"
 msgstr ""
 
 msgid "Number of delivery days for out of stock products in XML feeds"
@@ -3832,6 +3862,9 @@ msgstr ""
 msgid "Selected navigation item does not exist."
 msgstr ""
 
+msgid "Selected notification bar does not exist"
+msgstr ""
+
 msgid "Selected order doesn't exist."
 msgstr ""
 
@@ -4150,6 +4183,9 @@ msgstr ""
 msgid "Test email sent to %email%."
 msgstr ""
 
+msgid "Text"
+msgstr ""
+
 msgid "The current list of URL addresses can be found in the project's repository in the \"storefront/config/staticRewritePaths.js\" file."
 msgstr ""
 
@@ -4415,6 +4451,9 @@ msgid "Units - view"
 msgstr ""
 
 msgid "Units overview"
+msgstr ""
+
+msgid "Unlimited"
 msgstr ""
 
 msgid "Unsupported two factor authentication method"

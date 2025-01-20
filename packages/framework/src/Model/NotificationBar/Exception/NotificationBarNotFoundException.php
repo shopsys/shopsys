@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\NotificationBar\Exception;
+namespace Shopsys\FrameworkBundle\Model\NotificationBar\Exception;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 

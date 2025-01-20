@@ -7,6 +7,9 @@ msgstr ""
 msgid ""
 msgstr ""
 
+msgid "\"Valid to\" must be greater than \"Valid from\""
+msgstr "\"Platnost do\" musí být větší než \"Platnost od\""
+
 msgid "%count% item from CSV file was imported successfully.|%count% items from CSV file were imported successfully."
 msgstr "%count% položka z CSV souboru byla úspěšně importována.|%count% položky z CSV souboru byly úspěšně importovány.|%count% položek z CSV souboru bylo úspěšně importováno."
 
@@ -81,6 +84,9 @@ msgstr "<a href=\"%url%\">Neexistují žádné sklady, musíte nějaký vytvoři
 
 msgid "<a href=\"%url%\">User consent policy article for domain %domainName% is not set.</a>"
 msgstr "<a href=\"%url%\">Není nastaven článek správa osobních údajů pro doménu %domainName%.</a>"
+
+msgid "<strong><a href=\"{{ url }}\">Notification bar</a></strong> has been successfuly updated"
+msgstr "<strong><a href=\"{{ url }}\">Notifikační lišta</a></strong> byla úspěšně upravena"
 
 msgid "<strong><a href=\"{{ url }}\">SEO category</a></strong> has been saved"
 msgstr "<strong><a href=\"{{ url }}\">SEO kombinace kategorie</a></strong> byla uložena"
@@ -429,6 +435,9 @@ msgstr "Zpět na přehled možných kombinací"
 
 msgid "Back to parameter selection"
 msgstr "Zpět na volbu parametrů"
+
+msgid "Background color"
+msgstr "Barva pozadí"
 
 msgid "Basic"
 msgstr "Základní"
@@ -976,6 +985,9 @@ msgstr "Vytvořit novou prodejnu"
 msgid "Create new warehouse"
 msgstr "Vytvořit nový sklad"
 
+msgid "Create notification bar"
+msgstr "Vytvořit notifikační lištu"
+
 msgid "Create payment"
 msgstr "Vytvořit platbu"
 
@@ -1411,6 +1423,9 @@ msgstr "Opravdu chcete odstranit tento překlad jazykové konstanty?"
 msgid "Do you really want to remove this navigation item?"
 msgstr "Opravdu si přejete odstranit tuto položku navigace?"
 
+msgid "Do you really want to remove this notification bar?"
+msgstr "Opravdu chcete odebrat tuto notifikační lištu?"
+
 msgid "Do you really want to remove this page?"
 msgstr "Opravdu chcete odstranit tuto stránku?"
 
@@ -1653,6 +1668,9 @@ msgstr "Editace položky"
 
 msgid "Editing navigation item"
 msgstr "Editace položky navigace"
+
+msgid "Editing notification bar"
+msgstr "Editace notifikační lišty"
 
 msgid "Editing order"
 msgstr "Editace objednávky"
@@ -2686,6 +2704,9 @@ msgstr "Nová položka"
 msgid "New navigation item"
 msgstr "Nová položka navigace"
 
+msgid "New notification bar"
+msgstr "Nová notifikační lišta"
+
 msgid "New orders"
 msgstr "Nové objednávky"
 
@@ -2881,11 +2902,20 @@ msgstr "Poznámka"
 msgid "Nothing to choose from."
 msgstr "Není z čeho vybírat."
 
+msgid "Notification bar"
+msgstr "Notifikační lišta"
+
 msgid "Notification bar - full"
 msgstr "Notifikační lišta - vše"
 
 msgid "Notification bar - view"
 msgstr "Notifikační lišta - zobrazení"
+
+msgid "Notification bar has been successfuly created"
+msgstr "Notifikační lišta byla úspěšně vytvořena"
+
+msgid "Notification bar has been successfuly deleted"
+msgstr "Notifikační lišta byla úspěšně smazána"
 
 msgid "Number of delivery days for out of stock products in XML feeds"
 msgstr "Počet dní k doručení neskladových položek pro XML feedy"
@@ -3385,6 +3415,9 @@ msgstr "Zásady ochrany osobních údajů"
 msgid "Privacy Policy settings"
 msgstr "Nastavení zásad ochrany osobních údajů"
 
+msgid "Privacy policy"
+msgstr "Zásady ochrany osobních údajů"
+
 msgid "Privacy policy article setting - full"
 msgstr "Nastavení zásad ochrany osobních údajů - vše"
 
@@ -3829,6 +3862,9 @@ msgstr "Vybraný svátek / interní den neexistuje."
 msgid "Selected navigation item does not exist."
 msgstr "Zvolená položka navigace neexistuje."
 
+msgid "Selected notification bar does not exist"
+msgstr "Vybraná notifikační lišta neexistuje"
+
 msgid "Selected order doesn't exist."
 msgstr "Zvolená objednávka neexistuje"
 
@@ -4141,8 +4177,14 @@ msgstr "Obchodní podmínky"
 msgid "Terms and Conditions settings"
 msgstr "Nastavení obchodních podmínek"
 
+msgid "Terms and conditions"
+msgstr "Obchodní podmínky"
+
 msgid "Test email sent to %email%."
 msgstr "Testovací email odeslán na adresu %email%."
+
+msgid "Text"
+msgstr "Text"
 
 msgid "The current list of URL addresses can be found in the project's repository in the \"storefront/config/staticRewritePaths.js\" file."
 msgstr "Aktuální seznam URL adres lze nalézt v repozitáři projektu v souboru \"storefront/config/staticRewritePaths.js\"."
@@ -4410,6 +4452,9 @@ msgstr "Měrné jednotky - zobrazení"
 
 msgid "Units overview"
 msgstr "Přehled jednotek"
+
+msgid "Unlimited"
+msgstr "Neomezeně"
 
 msgid "Unsupported two factor authentication method"
 msgstr "Nepodporovaná metoda dvoufaktorového ověření"

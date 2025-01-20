@@ -10,13 +10,7 @@ msgstr ""
 msgid "Email cannot be longer than {{ limit }} characters"
 msgstr ""
 
-msgid "Flag color must be in valid hexadecimal code e.g. #3333ff"
-msgstr ""
-
 msgid "Image can be only in JPG or PNG format"
-msgstr ""
-
-msgid "Image can be only in JPG, GIF or PNG format"
 msgstr ""
 
 msgid "Minimal and maximal value are not supported as an input for other than \"slider\" type parameter. Use \"values\" instead."
@@ -34,13 +28,7 @@ msgstr ""
 msgid "Please enter email"
 msgstr ""
 
-msgid "Please enter flag color"
-msgstr ""
-
 msgid "Please enter new password"
-msgstr ""
-
-msgid "Please enter notification bar content"
 msgstr ""
 
 msgid "Please enter valid email"

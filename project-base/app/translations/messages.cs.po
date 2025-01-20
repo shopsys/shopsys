@@ -4,12 +4,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
 
-msgid "\"Valid to\" must be greater than \"Valid from\""
-msgstr "\"Platnost do\" musí být větší než \"Platnost od\""
-
-msgid "<strong><a href=\"{{ url }}\">Notification bar</a></strong> has been successfuly updated"
-msgstr "<strong><a href=\"{{ url }}\">Notifikační lišta</a></strong> byla úspěšně upravena"
-
 msgid "Action"
 msgstr "Akce"
 
@@ -30,9 +24,6 @@ msgstr "Alt"
 
 msgid "Back to overview"
 msgstr "Zpět na přehled"
-
-msgid "Background color"
-msgstr "Barva pozadí"
 
 msgid "Banner"
 msgstr "Banner"
@@ -73,14 +64,8 @@ msgstr "Sloupce"
 msgid "Contact"
 msgstr "Kontakt"
 
-msgid "Content"
-msgstr "Obsah"
-
 msgid "Create new banner"
 msgstr "Vytvořit nový banner"
-
-msgid "Create notification bar"
-msgstr "Vytvořit notifikační lištu"
 
 msgid "Default"
 msgstr "Základní"
@@ -97,12 +82,6 @@ msgstr "Datum zobrazení OD"
 msgid "Display date TO"
 msgstr "Datum zobrazení DO"
 
-msgid "Do you really want to remove this notification bar?"
-msgstr "Opravdu chcete odebrat tuto notifikační lištu?"
-
-msgid "Domain"
-msgstr "Doména"
-
 msgid "Edit data"
 msgstr "Upravit data"
 
@@ -111,9 +90,6 @@ msgstr "Upravit prodejnu"
 
 msgid "Editing banner"
 msgstr "Upravit banner"
-
-msgid "Editing notification bar"
-msgstr "Editace notifikační lišty"
 
 msgid "Editing page"
 msgstr "Editace stránky"
@@ -147,9 +123,6 @@ msgstr "Výška"
 
 msgid "Heureka"
 msgstr "Heureka"
-
-msgid "Hide"
-msgstr "Skrýt"
 
 msgid "Holiday / internal day detail"
 msgstr "Detail svátku / interního dne"
@@ -229,9 +202,6 @@ msgstr "Nový banner"
 msgid "New closed day"
 msgstr "Nový svátek / interní den"
 
-msgid "New notification bar"
-msgstr "Nová notifikační lišta"
-
 msgid "New page"
 msgstr "Nová stránka"
 
@@ -247,20 +217,8 @@ msgstr "Nebyly nalezeny žádné příznaky. Musíte prvně nějaký vytvořit."
 msgid "No group"
 msgstr "Nezařazeno"
 
-msgid "No page found."
-msgstr "Nebyla nalezena žádná stránka."
-
 msgid "No products are set. Please add some in the component settings."
 msgstr "Nejsou nastavené žádné produkty. Přidejte prosím produkt v nastavení komponenty."
-
-msgid "Notification bar"
-msgstr "Notifikační lišta"
-
-msgid "Notification bar has been successfuly created"
-msgstr "Notifikační lišta byla úspěšně vytvořena"
-
-msgid "Notification bar has been successfuly deleted"
-msgstr "Notifikační lišta byla úspěšně smazána"
 
 msgid "Open in new window"
 msgstr "Otevírat v novém okně"
@@ -285,9 +243,6 @@ msgstr "Parametr"
 
 msgid "Path to file"
 msgstr "Cesta k souboru"
-
-msgid "Please check the correctness of all data filled."
-msgstr "Prosím zkontrolujte si správnost vyplnění všech údajů."
 
 msgid "Position of image"
 msgstr "Pozice obrázku"
@@ -334,12 +289,6 @@ msgstr "Hledání"
 msgid "Secondary"
 msgstr "Sekundární"
 
-msgid "Selected notification bar does not exist"
-msgstr "Vybraná notifikační lišta neexistuje"
-
-msgid "Settings"
-msgstr "Nastavení"
-
 msgid "Src"
 msgstr "Src"
 
@@ -370,9 +319,6 @@ msgstr "Title"
 msgid "Type of image"
 msgstr "Typ obrázku"
 
-msgid "Unlimited"
-msgstr "Neomezeně"
-
 msgid "Unsupported file type"
 msgstr "Nepodporovaný typ souboru"
 
@@ -385,15 +331,6 @@ msgstr "Nahrát obrázek"
 msgid "Upload image for mobile devices"
 msgstr "Nahrát obrázek pro mobilní zařízení"
 
-msgid "Upload new image"
-msgstr "Nahrát nový obrázek"
-
-msgid "Valid from"
-msgstr "Platnost od"
-
-msgid "Valid to"
-msgstr "Platnost do"
-
 msgid "Value"
 msgstr "Hodnota"
 
@@ -405,9 +342,6 @@ msgstr "Video"
 
 msgid "Videos"
 msgstr "Videa"
-
-msgid "Visibility"
-msgstr "Viditelnost"
 
 msgid "Warehouse"
 msgstr "Sklad"
@@ -429,9 +363,6 @@ msgstr "XML Feedy"
 
 msgid "You can upload following formats: PNG, JPG"
 msgstr "Můžete nahrát následující formáty: PNG, JPG"
-
-msgid "You can upload following formats: PNG, JPG, GIF"
-msgstr "Můžete nahrát následující formáty: PNG, JPG, GIF"
 
 msgid "Youtube ID"
 msgstr "Youtube ID"

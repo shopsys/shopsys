@@ -2,19 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\Migrations;
+namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
-class Version20200714072919 extends AbstractMigration
+class Version20250120145445 extends AbstractMigration
 {
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
     public function up(Schema $schema): void
     {
-        $this->sql('
+        if ($this->isAppMigrationNotInstalledRemoveIfExists('Version20200714072919')) {
+            $this->sql('
             CREATE TABLE notification_bars (
                 id SERIAL NOT NULL,
                 domain_id INT NOT NULL,
@@ -25,6 +26,7 @@ class Version20200714072919 extends AbstractMigration
                 hidden BOOLEAN NOT NULL,
                 PRIMARY KEY(id)
             )');
+        }
     }
 
     /**

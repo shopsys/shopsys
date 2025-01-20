@@ -2,10 +2,8 @@
 
 declare(strict_types=1);
 
-namespace App\Form\Admin;
+namespace Shopsys\FrameworkBundle\Form\Admin\NotificationBar;
 
-use App\Model\NotificationBar\NotificationBar;
-use App\Model\NotificationBar\NotificationBarData;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\ColorPickerType;
@@ -13,6 +11,8 @@ use Shopsys\FrameworkBundle\Form\DatePickerType;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
+use Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBar;
+use Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -25,8 +25,8 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class NotificationBarFormType extends AbstractType
 {
-    public const SCENARIO_CREATE = 'create';
-    public const SCENARIO_EDIT = 'edit';
+    public const string SCENARIO_CREATE = 'create';
+    public const string SCENARIO_EDIT = 'edit';
 
     /**
      * {@inheritdoc}
@@ -126,7 +126,7 @@ class NotificationBarFormType extends AbstractType
     }
 
     /**
-     * @param \App\Model\NotificationBar\NotificationBarData $notificationBarData
+     * @param \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarData $notificationBarData
      * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      */
     public function checkDateValidity(

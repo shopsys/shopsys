@@ -52,10 +52,6 @@ class SideMenuConfigurationSubscriber implements EventSubscriberInterface
         $homepageMenu->addChild('promoted_products', ['route' => 'admin_topproduct_list', 'label' => t('Promoted products')]);
         $homepageMenu->addChild('promoted_categories', ['route' => 'admin_topcategory_list', 'label' => t('Promoted categories')]);
 
-        $notificationBar = $marketingMenu->addChild('notification_bar', ['route' => 'admin_notificationbar_list', 'label' => t('Notification bar')]);
-        $notificationBar->addChild('notification_bar_new', ['route' => 'admin_notificationbar_new', 'label' => t('New notification bar'), 'display' => false]);
-        $notificationBar->addChild('notification_bar_edit', ['route' => 'admin_notificationbar_edit', 'label' => t('Editing notification bar'), 'display' => false]);
-
         $marketingMenu->addChild('order_confirmation', ['route' => 'admin_customercommunication_ordersubmitted', 'label' => t('Order confirmation page')]);
     }
 

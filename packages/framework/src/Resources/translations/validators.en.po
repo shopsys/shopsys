@@ -370,6 +370,9 @@ msgstr ""
 msgid "Please enter navigation item name"
 msgstr ""
 
+msgid "Please enter notification bar content"
+msgstr ""
+
 msgid "Please enter order status name in all languages"
 msgstr ""
 

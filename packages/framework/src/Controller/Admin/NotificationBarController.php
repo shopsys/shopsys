@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Controller\Admin;
+namespace Shopsys\FrameworkBundle\Controller\Admin;
 
-use App\Form\Admin\NotificationBarFormType;
-use App\Model\NotificationBar\Exception\NotificationBarNotFoundException;
-use App\Model\NotificationBar\NotificationBarDataFactory;
-use App\Model\NotificationBar\NotificationBarFacade;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
-use Shopsys\FrameworkBundle\Controller\Admin\AdminBaseController;
+use Shopsys\FrameworkBundle\Form\Admin\NotificationBar\NotificationBarFormType;
+use Shopsys\FrameworkBundle\Model\NotificationBar\Exception\NotificationBarNotFoundException;
+use Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarDataFactory;
+use Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarFacade;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,15 +21,15 @@ class NotificationBarController extends AdminBaseController
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
-     * @param \App\Model\NotificationBar\NotificationBarFacade $notificationBarFacade
-     * @param \App\Model\NotificationBar\NotificationBarDataFactory $notificationBarDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarFacade $notificationBarFacade
+     * @param \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarDataFactory $notificationBarDataFactory
      * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      */
     public function __construct(
-        private AdminDomainTabsFacade $adminDomainTabsFacade,
-        private NotificationBarFacade $notificationBarFacade,
-        private NotificationBarDataFactory $notificationBarDataFactory,
-        private GridFactory $gridFactory,
+        protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+        protected readonly NotificationBarFacade $notificationBarFacade,
+        protected readonly NotificationBarDataFactory $notificationBarDataFactory,
+        protected readonly GridFactory $gridFactory,
     ) {
     }
 
@@ -53,9 +52,9 @@ class NotificationBarController extends AdminBaseController
         $grid->addDeleteActionColumn('admin_notificationbar_delete', ['id' => 'nb.id'])
             ->setConfirmMessage(t('Do you really want to remove this notification bar?'));
 
-        $grid->setTheme('Admin/Content/NotificationBar/listGrid.html.twig');
+        $grid->setTheme('@ShopsysFramework/Admin/Content/NotificationBar/listGrid.html.twig');
 
-        return $this->render('Admin/Content/NotificationBar/list.html.twig', [
+        return $this->render('@ShopsysFramework/Admin/Content/NotificationBar/list.html.twig', [
             'gridView' => $grid->createView(),
         ]);
     }
@@ -88,7 +87,7 @@ class NotificationBarController extends AdminBaseController
             $this->addErrorFlashTwig(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('Admin/Content/NotificationBar/new.html.twig', [
+        return $this->render('@ShopsysFramework/Admin/Content/NotificationBar/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -127,7 +126,7 @@ class NotificationBarController extends AdminBaseController
             $this->addErrorFlash(t('Please check the correctness of all data filled.'));
         }
 
-        return $this->render('Admin/Content/NotificationBar/edit.html.twig', [
+        return $this->render('@ShopsysFramework/Admin/Content/NotificationBar/edit.html.twig', [
             'form' => $form->createView(),
             'notificationBar' => $notificationBar,
         ]);

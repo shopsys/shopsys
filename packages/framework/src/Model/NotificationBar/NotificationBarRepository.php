@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\Model\NotificationBar;
+namespace Shopsys\FrameworkBundle\Model\NotificationBar;
 
-use App\Model\NotificationBar\Exception\NotificationBarNotFoundException;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Model\NotificationBar\Exception\NotificationBarNotFoundException;
 
 class NotificationBarRepository
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
-    public function __construct(protected EntityManagerInterface $em)
+    public function __construct(protected readonly EntityManagerInterface $em)
     {
     }
 
@@ -29,7 +29,7 @@ class NotificationBarRepository
 
     /**
      * @param int $notificationBarId
-     * @return \App\Model\NotificationBar\NotificationBar
+     * @return \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBar
      */
     public function getById(int $notificationBarId): NotificationBar
     {
@@ -46,7 +46,7 @@ class NotificationBarRepository
 
     /**
      * @param int $domainId
-     * @return \App\Model\NotificationBar\NotificationBar[]|null
+     * @return \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBar[]|null
      */
     public function findVisibleAndValidByDomainId(int $domainId): ?array
     {
@@ -80,7 +80,7 @@ class NotificationBarRepository
      * @param int $domainId
      * @return \Doctrine\ORM\QueryBuilder
      */
-    private function getAllByDomainIdQueryBuilder(int $domainId): QueryBuilder
+    protected function getAllByDomainIdQueryBuilder(int $domainId): QueryBuilder
     {
         return $this->getNotificationBarRepository()->createQueryBuilder('nb')
             ->where('nb.domainId = :domainId')

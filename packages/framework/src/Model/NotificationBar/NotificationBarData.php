@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\NotificationBar;
+namespace Shopsys\FrameworkBundle\Model\NotificationBar;
 
 class NotificationBarData
 {

@@ -2,43 +2,45 @@
 
 declare(strict_types=1);
 
-namespace App\Model\NotificationBar;
+namespace Shopsys\FrameworkBundle\Model\NotificationBar;
 
-use App\Component\Image\ImageFacade;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 
 class NotificationBarFacade
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \App\Model\NotificationBar\NotificationBarRepository $notificationBarRepository
-     * @param \App\Component\Image\ImageFacade $imageFacade
+     * @param \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarRepository $notificationBarRepository
+     * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
+     * @param \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarFactory $notificationBarFactory
      */
     public function __construct(
-        private EntityManagerInterface $em,
-        private NotificationBarRepository $notificationBarRepository,
-        private ImageFacade $imageFacade,
+        protected readonly EntityManagerInterface $em,
+        protected readonly NotificationBarRepository $notificationBarRepository,
+        protected readonly ImageFacade $imageFacade,
+        protected readonly NotificationBarFactory $notificationBarFactory,
     ) {
     }
 
     /**
-     * @param \App\Model\NotificationBar\NotificationBarData $notificationBarData
+     * @param \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarData $notificationBarData
      */
     public function create(NotificationBarData $notificationBarData): void
     {
-        $notificationBar = new NotificationBar($notificationBarData);
+        $notificationBar = $this->notificationBarFactory->create($notificationBarData);
 
         $this->em->persist($notificationBar);
         $this->em->flush();
 
-        $this->imageFacade->manageImages($notificationBar, $notificationBarData->image, null);
+        $this->imageFacade->manageImages($notificationBar, $notificationBarData->image);
     }
 
     /**
-     * @param \App\Model\NotificationBar\NotificationBar $notificationBar
-     * @param \App\Model\NotificationBar\NotificationBarData $notificationBarData
-     * @return \App\Model\NotificationBar\NotificationBar
+     * @param \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBar $notificationBar
+     * @param \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarData $notificationBarData
+     * @return \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBar
      */
     public function edit(NotificationBar $notificationBar, NotificationBarData $notificationBarData): NotificationBar
     {
@@ -46,7 +48,7 @@ class NotificationBarFacade
 
         $this->em->flush();
 
-        $this->imageFacade->manageImages($notificationBar, $notificationBarData->image, null);
+        $this->imageFacade->manageImages($notificationBar, $notificationBarData->image);
 
         return $notificationBar;
     }
@@ -64,7 +66,7 @@ class NotificationBarFacade
 
     /**
      * @param int $notificationBarId
-     * @return \App\Model\NotificationBar\NotificationBar
+     * @return \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBar
      */
     public function getById(int $notificationBarId): NotificationBar
     {
@@ -73,7 +75,7 @@ class NotificationBarFacade
 
     /**
      * @param int $domainId
-     * @return \App\Model\NotificationBar\NotificationBar[]|null
+     * @return \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBar[]|null
      */
     public function findVisibleAndValidByDomainId(int $domainId): ?array
     {

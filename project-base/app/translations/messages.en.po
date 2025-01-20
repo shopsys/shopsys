@@ -4,12 +4,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
-msgid "\"Valid to\" must be greater than \"Valid from\""
-msgstr ""
-
-msgid "<strong><a href=\"{{ url }}\">Notification bar</a></strong> has been successfuly updated"
-msgstr ""
-
 msgid "Action"
 msgstr ""
 
@@ -29,9 +23,6 @@ msgid "Alt"
 msgstr ""
 
 msgid "Back to overview"
-msgstr ""
-
-msgid "Background color"
 msgstr ""
 
 msgid "Banner"
@@ -73,13 +64,7 @@ msgstr ""
 msgid "Contact"
 msgstr ""
 
-msgid "Content"
-msgstr ""
-
 msgid "Create new banner"
-msgstr ""
-
-msgid "Create notification bar"
 msgstr ""
 
 msgid "Default"
@@ -97,12 +82,6 @@ msgstr ""
 msgid "Display date TO"
 msgstr ""
 
-msgid "Do you really want to remove this notification bar?"
-msgstr ""
-
-msgid "Domain"
-msgstr ""
-
 msgid "Edit data"
 msgstr ""
 
@@ -110,9 +89,6 @@ msgid "Edit store"
 msgstr ""
 
 msgid "Editing banner"
-msgstr ""
-
-msgid "Editing notification bar"
 msgstr ""
 
 msgid "Editing page"
@@ -146,9 +122,6 @@ msgid "Height"
 msgstr ""
 
 msgid "Heureka"
-msgstr ""
-
-msgid "Hide"
 msgstr ""
 
 msgid "Holiday / internal day detail"
@@ -229,9 +202,6 @@ msgstr ""
 msgid "New closed day"
 msgstr ""
 
-msgid "New notification bar"
-msgstr ""
-
 msgid "New page"
 msgstr ""
 
@@ -247,19 +217,7 @@ msgstr ""
 msgid "No group"
 msgstr ""
 
-msgid "No page found."
-msgstr ""
-
 msgid "No products are set. Please add some in the component settings."
-msgstr ""
-
-msgid "Notification bar"
-msgstr ""
-
-msgid "Notification bar has been successfuly created"
-msgstr ""
-
-msgid "Notification bar has been successfuly deleted"
 msgstr ""
 
 msgid "Open in new window"
@@ -284,9 +242,6 @@ msgid "Parameter"
 msgstr ""
 
 msgid "Path to file"
-msgstr ""
-
-msgid "Please check the correctness of all data filled."
 msgstr ""
 
 msgid "Position of image"
@@ -334,12 +289,6 @@ msgstr ""
 msgid "Secondary"
 msgstr ""
 
-msgid "Selected notification bar does not exist"
-msgstr ""
-
-msgid "Settings"
-msgstr ""
-
 msgid "Src"
 msgstr ""
 
@@ -370,9 +319,6 @@ msgstr ""
 msgid "Type of image"
 msgstr ""
 
-msgid "Unlimited"
-msgstr ""
-
 msgid "Unsupported file type"
 msgstr ""
 
@@ -385,15 +331,6 @@ msgstr ""
 msgid "Upload image for mobile devices"
 msgstr ""
 
-msgid "Upload new image"
-msgstr ""
-
-msgid "Valid from"
-msgstr ""
-
-msgid "Valid to"
-msgstr ""
-
 msgid "Value"
 msgstr ""
 
@@ -404,9 +341,6 @@ msgid "Video"
 msgstr ""
 
 msgid "Videos"
-msgstr ""
-
-msgid "Visibility"
 msgstr ""
 
 msgid "Warehouse"
@@ -428,9 +362,6 @@ msgid "XML Feeds"
 msgstr ""
 
 msgid "You can upload following formats: PNG, JPG"
-msgstr ""
-
-msgid "You can upload following formats: PNG, JPG, GIF"
 msgstr ""
 
 msgid "Youtube ID"

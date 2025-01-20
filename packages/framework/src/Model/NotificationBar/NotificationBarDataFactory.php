@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\NotificationBar;
+namespace Shopsys\FrameworkBundle\Model\NotificationBar;
 
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 
@@ -12,14 +12,14 @@ class NotificationBarDataFactory
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory $imageUploadDataFactory
      */
     public function __construct(
-        private readonly ImageUploadDataFactory $imageUploadDataFactory,
+        protected readonly ImageUploadDataFactory $imageUploadDataFactory,
     ) {
     }
 
     /**
-     * @return \App\Model\NotificationBar\NotificationBarData
+     * @return \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarData
      */
-    private function createInstance(): NotificationBarData
+    protected function createInstance(): NotificationBarData
     {
         $notificationBarData = new NotificationBarData();
         $notificationBarData->image = $this->imageUploadDataFactory->create();
@@ -28,7 +28,7 @@ class NotificationBarDataFactory
     }
 
     /**
-     * @return \App\Model\NotificationBar\NotificationBarData
+     * @return \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarData
      */
     public function create(): NotificationBarData
     {
@@ -39,8 +39,8 @@ class NotificationBarDataFactory
     }
 
     /**
-     * @param \App\Model\NotificationBar\NotificationBar $notificationBar
-     * @return \App\Model\NotificationBar\NotificationBarData
+     * @param \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBar $notificationBar
+     * @return \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarData
      */
     public function createFromNotificationBar(NotificationBar $notificationBar): NotificationBarData
     {
@@ -53,15 +53,15 @@ class NotificationBarDataFactory
         $notificationBarData->rgbColor = $notificationBar->getRgbColor();
         $notificationBarData->hidden = $notificationBar->isHidden();
 
-        $notificationBarData->image = $this->imageUploadDataFactory->createFromEntityAndType($notificationBar, null);
+        $notificationBarData->image = $this->imageUploadDataFactory->createFromEntityAndType($notificationBar);
 
         return $notificationBarData;
     }
 
     /**
-     * @param \App\Model\NotificationBar\NotificationBarData $notificationBarData
+     * @param \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarData $notificationBarData
      */
-    private function fillNew(NotificationBarData $notificationBarData): void
+    protected function fillNew(NotificationBarData $notificationBarData): void
     {
         $notificationBarData->hidden = false;
     }

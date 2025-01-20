@@ -41,7 +41,7 @@
     class: Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle
 
 -   name: notificationBar
-    class: App\Model\NotificationBar\NotificationBar
+    class: Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBar
 
 -   name: store
     class: Shopsys\FrameworkBundle\Model\Store\Store

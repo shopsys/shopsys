@@ -448,6 +448,10 @@ class SideMenuBuilder
         );
         $legalMenu->addChild('user_consent_policy', ['route' => 'admin_userconsentpolicy_setting', 'label' => t('User consent policy')]);
 
+        $notificationBarMenu = $menu->addChild('notification_bar', ['route' => 'admin_notificationbar_list', 'label' => t('Notification bar')]);
+        $notificationBarMenu->addChild('notification_bar_new', ['route' => 'admin_notificationbar_new', 'label' => t('New notification bar'), 'display' => false]);
+        $notificationBarMenu->addChild('notification_bar_edit', ['route' => 'admin_notificationbar_edit', 'label' => t('Editing notification bar'), 'display' => false]);
+
         $this->dispatchConfigureMenuEvent(ConfigureMenuEvent::SIDE_MENU_MARKETING, $menu);
 
         return $menu;
