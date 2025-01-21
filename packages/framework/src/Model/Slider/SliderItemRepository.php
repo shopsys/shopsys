@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Slider;
 
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query;
-use Shopsys\FrameworkBundle\Component\Doctrine\SortableNullsWalker;
+use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Model\Slider\Exception\SliderItemNotFoundException;
 
 class SliderItemRepository
@@ -68,20 +68,35 @@ class SliderItemRepository
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Slider\SliderItem[]
      */
-    public function getAllVisibleByDomainId($domainId)
+    public function getAllVisibleByDomainId(int $domainId): array
     {
-        $queryBuilder = $this->em->createQueryBuilder()
-            ->select('si')
-            ->from(SliderItem::class, 'si')
+        $dateToday = new DateTime();
+        $dateToday = $dateToday->format('Y-m-d 00:00:00');
+
+        $queryBuilder = $this->getSliderItemQueryBuilder()
             ->where('si.domainId = :domainId')
-            ->setParameter('domainId', $domainId)
-            ->andWhere('si.hidden = false')
+            ->andWhere('si.hidden = :hidden')
+            ->andWhere('si.datetimeVisibleFrom is NULL or si.datetimeVisibleFrom <= :now')
+            ->andWhere('si.datetimeVisibleTo is NULL or si.datetimeVisibleTo >= :now')
             ->orderBy('si.position')
             ->addOrderBy('si.id');
 
-        return $queryBuilder
-            ->getQuery()
-            ->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, SortableNullsWalker::class)
-            ->execute();
+        $queryBuilder->setParameters([
+            'domainId' => $domainId,
+            'hidden' => false,
+            'now' => $dateToday,
+        ]);
+
+        return $queryBuilder->getQuery()->execute();
+    }
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function getSliderItemQueryBuilder(): QueryBuilder
+    {
+        return $this->em->createQueryBuilder()
+            ->select('si')
+            ->from(SliderItem::class, 'si');
     }
 }

@@ -61,5 +61,7 @@ class SliderItemDataFactory
         $sliderItemData->description = $sliderItem->getDescription();
         $sliderItemData->rgbBackgroundColor = $sliderItem->getRgbBackgroundColor();
         $sliderItemData->opacity = $sliderItem->getOpacity();
+        $sliderItemData->datetimeVisibleFrom = $sliderItem->getDatetimeVisibleFrom();
+        $sliderItemData->datetimeVisibleTo = $sliderItem->getDatetimeVisibleTo();
     }
 }

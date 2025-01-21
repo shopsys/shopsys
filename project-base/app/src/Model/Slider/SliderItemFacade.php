@@ -9,12 +9,11 @@ use Shopsys\FrameworkBundle\Model\Slider\SliderItemData;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade as BaseSliderItemFacade;
 
 /**
- * @property \App\Model\Slider\SliderItemRepository $sliderItemRepository
  * @property \App\Component\Image\ImageFacade $imageFacade
  * @property \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
  * @method \App\Model\Slider\SliderItem getById(int $sliderItemId)
  * @method \App\Model\Slider\SliderItem[] getAllVisibleOnCurrentDomain()
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Slider\SliderItemRepository $sliderItemRepository, \App\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Slider\SliderItemFactory $sliderItemFactory, \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \Shopsys\FrameworkBundle\Model\Slider\SliderItemRepository $sliderItemRepository, \App\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Slider\SliderItemFactory $sliderItemFactory, \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade)
  */
 class SliderItemFacade extends BaseSliderItemFacade
 {
@@ -47,6 +46,7 @@ class SliderItemFacade extends BaseSliderItemFacade
      */
     public function edit($sliderItemId, SliderItemData $sliderItemData)
     {
+        /** @var \App\Model\Slider\SliderItem $sliderItem */
         $sliderItem = $this->sliderItemRepository->getById($sliderItemId);
         $sliderItem->edit($sliderItemData);
 

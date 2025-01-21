@@ -7,7 +7,6 @@ namespace App\Form\Admin;
 use App\Model\Slider\SliderItemFacade;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 use Shopsys\FrameworkBundle\Form\Admin\Slider\SliderItemFormType;
-use Shopsys\FrameworkBundle\Form\DatePickerType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItem;
 use Symfony\Component\Form\AbstractTypeExtension;
@@ -22,7 +21,6 @@ class SliderItemFormTypeExtension extends AbstractTypeExtension
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->buildVisibilityIntervalForm($builder);
         $this->buildImagesGroup($builder, $options);
         $this->buildGtmForm($builder);
     }
@@ -84,20 +82,6 @@ class SliderItemFormTypeExtension extends AbstractTypeExtension
                 'extensions' => [ImageProcessor::EXTENSION_JPG, ImageProcessor::EXTENSION_JPEG, ImageProcessor::EXTENSION_PNG],
                 'hide_delete_button' => $options['scenario'] === SliderItemFormType::SCENARIO_EDIT,
             ]);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     */
-    private function buildVisibilityIntervalForm(FormBuilderInterface $builder): void
-    {
-        $builder->add('datetimeVisibleFrom', DatePickerType::class, [
-            'required' => false,
-            'label' => t('Display date FROM'),
-        ])->add('datetimeVisibleTo', DatePickerType::class, [
-            'required' => false,
-            'label' => t('Display date TO'),
-        ]);
     }
 
     /**

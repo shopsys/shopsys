@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Slider;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 use Shopsys\FrameworkBundle\Form\ColorPickerType;
+use Shopsys\FrameworkBundle\Form\DatePickerType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\GroupType;
@@ -150,6 +151,14 @@ class SliderItemFormType extends AbstractType
         $builder
             ->add($builderSettingsGroup)
             ->add($builderImageGroup)
+            ->add('datetimeVisibleFrom', DatePickerType::class, [
+                'required' => false,
+                'label' => t('Display date FROM'),
+            ])
+            ->add('datetimeVisibleTo', DatePickerType::class, [
+                'required' => false,
+                'label' => t('Display date TO'),
+            ])
             ->add('save', SubmitType::class);
     }
 

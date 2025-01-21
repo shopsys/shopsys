@@ -403,9 +403,6 @@ services:
     Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade:
         alias: App\Model\Slider\SliderItemFacade
 
-    Shopsys\FrameworkBundle\Model\Slider\SliderItemRepository:
-        alias: App\Model\Slider\SliderItemRepository
-
     Shopsys\FrameworkBundle\Model\Transport\Grid\TransportGridFactory:
         alias: App\Model\Transport\Grid\TransportGridFactory
 
