@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Migrations;
+namespace Shopsys\FrameworkBundle\Migrations;
 
 use DateTime;
 use DateTimeZone;
 use Doctrine\DBAL\Schema\Schema;
-use Shopsys\FrameworkBundle\Migrations\MultidomainMigrationTrait;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
-class Version20240111153621 extends AbstractMigration implements ContainerAwareInterface
+class Version20250121135309 extends AbstractMigration implements ContainerAwareInterface
 {
     use MultidomainMigrationTrait;
 
@@ -20,9 +19,11 @@ class Version20240111153621 extends AbstractMigration implements ContainerAwareI
      */
     public function up(Schema $schema): void
     {
-        $this->convertAdvertDates();
-        $this->convertNotificationBarDates();
-        $this->convertSliderItemDates();
+        if ($this->isAppMigrationNotInstalledRemoveIfExists('Version20240111153621')) {
+            $this->convertAdvertDates();
+            $this->convertNotificationBarDates();
+            $this->convertSliderItemDates();
+        }
     }
 
     /**
