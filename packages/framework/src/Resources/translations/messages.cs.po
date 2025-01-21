@@ -4630,6 +4630,9 @@ msgstr "DPH - vše"
 msgid "Vats - view"
 msgstr "DPH - zobrazení"
 
+msgid "Videos"
+msgstr "Videa"
+
 msgid "Visibility"
 msgstr "Viditelnost"
 
@@ -4791,6 +4794,9 @@ msgstr "Máte neuložené změny!"
 
 msgid "You have unsaved changes, save them first, please."
 msgstr "Máte neuložené změny. Nejdříve je prosím uložte."
+
+msgid "Youtube ID"
+msgstr "Youtube ID"
 
 msgid "Youtube URL"
 msgstr "Youtube URL"

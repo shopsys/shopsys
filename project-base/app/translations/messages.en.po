@@ -40,15 +40,6 @@ msgstr ""
 msgid "Default"
 msgstr ""
 
-msgid "Description"
-msgstr ""
-
-msgid "Display date FROM"
-msgstr ""
-
-msgid "Display date TO"
-msgstr ""
-
 msgid "Edit data"
 msgstr ""
 
@@ -220,16 +211,10 @@ msgstr ""
 msgid "Video"
 msgstr ""
 
-msgid "Videos"
-msgstr ""
-
 msgid "Width"
 msgstr ""
 
 msgid "You can upload following formats: PNG, JPG"
-msgstr ""
-
-msgid "Youtube ID"
 msgstr ""
 
 msgid "e.g. Sale-04-20-2020"

@@ -34,9 +34,6 @@ msgstr "Vyplňte prosím nové heslo"
 msgid "Please enter valid email"
 msgstr "Vyplňte prosím platný e-mail"
 
-msgid "Please enter video ID"
-msgstr "Prosím vyplňte ID videa"
-
 msgid "Please enter your email address"
 msgstr "Vyplňte prosím e-mail"
 

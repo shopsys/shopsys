@@ -34,9 +34,6 @@ msgstr ""
 msgid "Please enter valid email"
 msgstr ""
 
-msgid "Please enter video ID"
-msgstr ""
-
 msgid "Please enter your email address"
 msgstr ""
 

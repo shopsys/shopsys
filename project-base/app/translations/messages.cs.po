@@ -40,15 +40,6 @@ msgstr "Kontakt"
 msgid "Default"
 msgstr "Základní"
 
-msgid "Description"
-msgstr "Popis"
-
-msgid "Display date FROM"
-msgstr "Datum zobrazení OD"
-
-msgid "Display date TO"
-msgstr "Datum zobrazení DO"
-
 msgid "Edit data"
 msgstr "Upravit data"
 
@@ -220,17 +211,11 @@ msgstr "Varianta"
 msgid "Video"
 msgstr "Video"
 
-msgid "Videos"
-msgstr "Videa"
-
 msgid "Width"
 msgstr "Šířka"
 
 msgid "You can upload following formats: PNG, JPG"
 msgstr "Můžete nahrát následující formáty: PNG, JPG"
-
-msgid "Youtube ID"
-msgstr "Youtube ID"
 
 msgid "e.g. Sale-04-20-2020"
 msgstr "např. Akce-04-20-2020"

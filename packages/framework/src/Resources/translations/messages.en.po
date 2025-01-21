@@ -4630,6 +4630,9 @@ msgstr ""
 msgid "Vats - view"
 msgstr ""
 
+msgid "Videos"
+msgstr ""
+
 msgid "Visibility"
 msgstr ""
 
@@ -4790,6 +4793,9 @@ msgid "You have unsaved changes!"
 msgstr ""
 
 msgid "You have unsaved changes, save them first, please."
+msgstr ""
+
+msgid "Youtube ID"
 msgstr ""
 
 msgid "Youtube URL"
