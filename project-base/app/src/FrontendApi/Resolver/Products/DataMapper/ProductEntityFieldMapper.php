@@ -9,8 +9,6 @@ use App\Model\Category\Category;
 use App\Model\Product\Parameter\ParameterRepository;
 use App\Model\Product\Product;
 use App\Model\Product\ProductRepository;
-use App\Model\ProductVideo\ProductVideo;
-use App\Model\ProductVideo\ProductVideoTranslationsRepository;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
@@ -24,6 +22,7 @@ use Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
+use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFieldMapper as BaseProductEntityFieldMapper;
 
@@ -53,6 +52,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @method int|null getStockQuantity(\App\Model\Product\Product $product)
  * @method array getStoreAvailabilities(\App\Model\Product\Product $product)
  * @method int|null getAvailableStoresCount(\App\Model\Product\Product $product)
+ * @method array getProductVideos(\App\Model\Product\Product $product)
  */
 class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 {
@@ -69,6 +69,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleByIdsBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleCountByIdsBatchLoader
+     * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository $productVideoTranslationsRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
@@ -76,7 +77,6 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
      * @param \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
      * @param \Overblog\DataLoader\DataLoaderInterface $categoriesBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $brandsBatchLoader
-     * @param \App\Model\ProductVideo\ProductVideoTranslationsRepository $productVideoTranslationsRepository
      */
     public function __construct(
         Domain $domain,
@@ -91,6 +91,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         ProductVisibilityFacade $productVisibilityFacade,
         DataLoaderInterface $productsVisibleByIdsBatchLoader,
         DataLoaderInterface $productsVisibleCountByIdsBatchLoader,
+        ProductVideoTranslationsRepository $productVideoTranslationsRepository,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly ProductRepository $productRepository,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
@@ -98,7 +99,6 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         protected readonly BreadcrumbFacade $breadcrumbFacade,
         protected readonly DataLoaderInterface $categoriesBatchLoader,
         protected readonly DataLoaderInterface $brandsBatchLoader,
-        protected readonly ProductVideoTranslationsRepository $productVideoTranslationsRepository,
     ) {
         parent::__construct(
             $domain,
@@ -113,6 +113,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
             $productVisibilityFacade,
             $productsVisibleByIdsBatchLoader,
             $productsVisibleCountByIdsBatchLoader,
+            $productVideoTranslationsRepository,
         );
     }
 
@@ -277,21 +278,5 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         $brand = $product->getBrand();
 
         return $brand !== null ? $this->brandsBatchLoader->load($brand->getId()) : null;
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @return array
-     */
-    public function getProductVideos(Product $product): array
-    {
-        $locale = $this->domain->getLocale();
-
-        return array_map(function (ProductVideo $productVideo) use ($locale) {
-            return [
-                'token' => $productVideo->getVideoToken(),
-                'description' => $this->productVideoTranslationsRepository->findByProductVideoIdAndLocale($productVideo->getId(), $locale),
-            ];
-        }, $product->getProductVideos());
     }
 }

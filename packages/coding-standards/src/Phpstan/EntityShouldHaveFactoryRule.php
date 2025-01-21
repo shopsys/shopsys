@@ -17,6 +17,7 @@ class EntityShouldHaveFactoryRule implements Rule
     private const IGNORED_SUFFIXES = [
         'Domain',
         'Translation',
+        'Translations',
     ];
 
     /**

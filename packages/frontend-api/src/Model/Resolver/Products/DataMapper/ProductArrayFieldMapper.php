@@ -316,4 +316,13 @@ class ProductArrayFieldMapper
     {
         return $data['available_stores_count'];
     }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    public function getProductVideos(array $data): array
+    {
+        return $data['product_videos'];
+    }
 }

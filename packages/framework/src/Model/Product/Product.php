@@ -177,6 +177,17 @@ class Product extends AbstractTranslatableEntity
     protected $productType;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection<int, \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo>
+     * @ORM\OneToMany(
+     *   targetEntity="Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo",
+     *   mappedBy="product",
+     *   orphanRemoval=true,
+     *   cascade={"persist"}
+     * )
+     */
+    protected $productVideos;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[]|null $variants
      */
@@ -185,6 +196,7 @@ class Product extends AbstractTranslatableEntity
         $this->translations = new ArrayCollection();
         $this->domains = new ArrayCollection();
         $this->excludedTransports = new ArrayCollection();
+        $this->productVideos = new ArrayCollection();
         $this->catnum = $productData->catnum;
         $this->partno = $productData->partno;
         $this->ean = $productData->ean;
@@ -962,5 +974,13 @@ class Product extends AbstractTranslatableEntity
     public function getNameSuffix($locale = null)
     {
         return $this->translation($locale)->getNameSuffix();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo[]
+     */
+    public function getProductVideos()
+    {
+        return $this->productVideos->getValues();
     }
 }

@@ -213,6 +213,11 @@ class ProductData
      */
     public $productType;
 
+    /**
+     * @var \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoData[]
+     */
+    public $productVideosData;
+
     public function __construct()
     {
         $this->name = [];
@@ -245,5 +250,6 @@ class ProductData
         $this->domainHidden = [];
         $this->excludedTransports = [];
         $this->productType = ProductTypeEnum::TYPE_BASIC;
+        $this->productVideosData = [];
     }
 }

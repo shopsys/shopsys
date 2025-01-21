@@ -2,29 +2,29 @@
 
 declare(strict_types=1);
 
-namespace App\Model\ProductVideo;
+namespace Shopsys\FrameworkBundle\Model\ProductVideo;
 
 class ProductVideoDataFactory
 {
     /**
-     * @param \App\Model\ProductVideo\ProductVideoTranslationsRepository $videoTranslationsRepository
+     * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository $videoTranslationsRepository
      */
     public function __construct(
-        public readonly ProductVideoTranslationsRepository $videoTranslationsRepository,
+        protected readonly ProductVideoTranslationsRepository $videoTranslationsRepository,
     ) {
     }
 
     /**
-     * @return \App\Model\ProductVideo\ProductVideoData
+     * @return \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoData
      */
-    private function createInstance(): ProductVideoData
+    protected function createInstance(): ProductVideoData
     {
         return new ProductVideoData();
     }
 
     /**
-     * @param \App\Model\ProductVideo\ProductVideo $productVideo
-     * @return \App\Model\ProductVideo\ProductVideoData
+     * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo $productVideo
+     * @return \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoData
      */
     public function createFromProductVideo(ProductVideo $productVideo): ProductVideoData
     {

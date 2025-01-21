@@ -65,17 +65,6 @@ class Product extends BaseProduct
     protected $relatedProducts;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Model\ProductVideo\ProductVideo>
-     * @ORM\OneToMany(
-     *   targetEntity="App\Model\ProductVideo\ProductVideo",
-     *   mappedBy="product",
-     *   orphanRemoval=true,
-     *   cascade={"persist"}
-     * )
-     */
-    private $productVideos;
-
-    /**
      * @param \App\Model\Product\ProductData $productData
      * @param \App\Model\Product\Product[]|null $variants
      */
@@ -84,23 +73,6 @@ class Product extends BaseProduct
         parent::__construct($productData, $variants);
 
         $this->relatedProducts = new ArrayCollection();
-        $this->productVideos = new ArrayCollection();
-    }
-
-    /**
-     * @return \App\Model\ProductVideo\ProductVideo[]
-     */
-    public function getProductVideos(): array
-    {
-        return $this->productVideos->getValues();
-    }
-
-    /**
-     * @param \Doctrine\Common\Collections\ArrayCollection<int, \App\Model\ProductVideo\ProductVideo> $productVideos
-     */
-    public function setProductVideos(ArrayCollection $productVideos): void
-    {
-        $this->productVideos = $productVideos;
     }
 
     /**

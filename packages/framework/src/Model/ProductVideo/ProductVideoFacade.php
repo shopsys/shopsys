@@ -2,37 +2,41 @@
 
 declare(strict_types=1);
 
-namespace App\Model\ProductVideo;
+namespace Shopsys\FrameworkBundle\Model\ProductVideo;
 
-use App\Model\Product\Product;
+use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductVideoFacade
 {
-    public const YOUTUBE_URL_HTTPS = 'https://www.youtube.com/watch?v=';
-    public const YOUTUBE_URL_HTTP = 'http://www.youtube.com/watch?v=';
+    public const string YOUTUBE_URL_HTTPS = 'https://www.youtube.com/watch?v=';
+    public const string YOUTUBE_URL_HTTP = 'http://www.youtube.com/watch?v=';
 
-    public const YOUTUBE_LINKS_ARRAY = [
+    public const array YOUTUBE_LINKS_ARRAY = [
         self::YOUTUBE_URL_HTTP,
         self::YOUTUBE_URL_HTTPS,
     ];
 
     /**
-     * @param \App\Model\ProductVideo\ProductVideoRepository $productVideoRepository
-     * @param \App\Model\ProductVideo\ProductVideoTranslationsRepository $productVideoTranslationsRepository
+     * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoRepository $productVideoRepository
+     * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository $productVideoTranslationsRepository
+     * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoFactory $productVideoFactory
+     * @param \Doctrine\ORM\EntityManagerInterface $em
      */
     public function __construct(
-        private readonly ProductVideoRepository $productVideoRepository,
-        private readonly ProductVideoTranslationsRepository $productVideoTranslationsRepository,
+        protected readonly ProductVideoRepository $productVideoRepository,
+        protected readonly ProductVideoTranslationsRepository $productVideoTranslationsRepository,
+        protected readonly ProductVideoFactory $productVideoFactory,
+        protected readonly EntityManagerInterface $em,
     ) {
     }
 
     /**
-     * @param \App\Model\Product\Product $product
-     * @param \App\Model\ProductVideo\ProductVideoData[] $productVideoDataList
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoData[] $productVideoDataList
      */
     public function saveProductVideosToProduct(Product $product, array $productVideoDataList): void
     {
-        /** @var \App\Model\ProductVideo\ProductVideo[] $productVideos */
         $productVideos = $this->productVideoRepository->findByProductId($product->getId());
 
         $videoDataListToUpdate = array_filter($productVideoDataList, function (ProductVideoData $productVideoData) {
@@ -59,25 +63,25 @@ class ProductVideoFacade
 
         foreach ($productVideosToRemove as $productVideoToRemove) {
             $this->cleanProductVideoTranslationsForProductVideo($productVideoToRemove);
-            $this->productVideoRepository->em->remove($productVideoToRemove);
+            $this->em->remove($productVideoToRemove);
         }
 
         foreach ($videoDataListToCreate as $videoDataToCreate) {
-            $productVideoEntity = new ProductVideo();
+            $productVideoEntity = $this->productVideoFactory->create($videoDataToCreate);
             $productVideoEntity->setProduct($product);
             $productVideoEntity->setVideoToken(str_replace(self::YOUTUBE_LINKS_ARRAY, '', $videoDataToCreate->videoToken));
-            $this->productVideoRepository->em->persist($productVideoEntity);
+            $this->em->persist($productVideoEntity);
 
             $this->persistVideoTranslations($videoDataToCreate, $productVideoEntity);
         }
-        $this->productVideoRepository->em->flush();
+        $this->em->flush();
     }
 
     /**
-     * @param \App\Model\ProductVideo\ProductVideoData $videoDataToCreate
-     * @param \App\Model\ProductVideo\ProductVideo $productVideoEntity
+     * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoData $videoDataToCreate
+     * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo $productVideoEntity
      */
-    private function persistVideoTranslations(
+    protected function persistVideoTranslations(
         ProductVideoData $videoDataToCreate,
         ProductVideo $productVideoEntity,
     ): void {
@@ -86,19 +90,19 @@ class ProductVideoFacade
             $productVideoTranslation->setLocale($descriptionLocale);
             $productVideoTranslation->setDescription($descriptionValue ?? '');
             $productVideoTranslation->setProductVideo($productVideoEntity);
-            $this->productVideoRepository->em->persist($productVideoTranslation);
+            $this->em->persist($productVideoTranslation);
         }
     }
 
     /**
-     * @param \App\Model\ProductVideo\ProductVideo $productVideo
+     * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo $productVideo
      */
-    private function cleanProductVideoTranslationsForProductVideo(ProductVideo $productVideo): void
+    protected function cleanProductVideoTranslationsForProductVideo(ProductVideo $productVideo): void
     {
         $productVideoTranslations = $this->productVideoTranslationsRepository->findByProductVideoId($productVideo->getId());
 
         foreach ($productVideoTranslations as $productVideoTranslation) {
-            $this->productVideoTranslationsRepository->em->remove($productVideoTranslation);
+            $this->em->remove($productVideoTranslation);
         }
     }
 }

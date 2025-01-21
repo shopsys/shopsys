@@ -29,6 +29,8 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibility;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
+use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo;
+use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 
 class ProductExportRepository
@@ -53,6 +55,7 @@ class ProductExportRepository
      * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
      * @param \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade $specialPriceFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository $productVideoTranslationsRepository
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -72,6 +75,7 @@ class ProductExportRepository
         protected readonly InMemoryCache $inMemoryCache,
         protected readonly SpecialPriceFacade $specialPriceFacade,
         protected readonly ProductPriceCalculation $productPriceCalculation,
+        protected readonly ProductVideoTranslationsRepository $productVideoTranslationsRepository,
     ) {
     }
 
@@ -202,6 +206,12 @@ class ProductExportRepository
             ProductExportFieldProvider::AVAILABILITY_STATUS => $this->productAvailabilityFacade->getProductAvailabilityStatusByDomainId($product, $domainId),
             ProductExportFieldProvider::IS_SALE_EXCLUSION => $product->getSaleExclusion($domainId),
             ProductExportFieldProvider::SELLING_FROM => $product->getSellingFrom()?->format('Y-m-d H:i:s'),
+            ProductExportFieldProvider::PRODUCT_VIDEOS => array_map(function (ProductVideo $productVideo) use ($locale) {
+                return [
+                    'token' => $productVideo->getVideoToken(),
+                    'description' => ($this->productVideoTranslationsRepository->findByProductVideoIdAndLocale($productVideo->getId(), $locale))->getDescription(),
+                ];
+            }, $product->getProductVideos()),
 
             default => throw new InvalidArgumentException(sprintf('There is no definition for exporting "%s" field to Elasticsearch', $field)),
         };

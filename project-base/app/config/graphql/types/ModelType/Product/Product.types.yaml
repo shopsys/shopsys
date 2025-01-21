@@ -52,5 +52,3 @@ Product:
                         defaultValue: null
             isMainVariant:
                 type: "Boolean!"
-            productVideos:
-                type: "[VideoToken!]!"

@@ -54,6 +54,7 @@ class ProductExportFieldProvider
     public const string IS_SALE_EXCLUSION = 'is_sale_exclusion';
 
     public const string SELLING_FROM = 'selling_from';
+    public const string PRODUCT_VIDEOS = 'product_videos';
 
     /**
      * @return string[]

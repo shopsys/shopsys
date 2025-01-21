@@ -66,6 +66,7 @@ class ProductElasticsearchConverterTest extends TestCase
             'unit' => '',
             'is_sale_exclusion' => true,
             'selling_from' => null,
+            'product_videos' => [],
         ];
 
         $converter = new ProductElasticsearchConverter();
@@ -144,6 +145,7 @@ class ProductElasticsearchConverterTest extends TestCase
             'unit' => '',
             'is_sale_exclusion' => true,
             'selling_from' => null,
+            'product_videos' => [],
         ];
 
         $converter = new ProductElasticsearchConverter();

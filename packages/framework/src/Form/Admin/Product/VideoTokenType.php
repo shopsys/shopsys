@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Form\Admin;
+namespace Shopsys\FrameworkBundle\Form\Admin\Product;
 
-use App\Model\ProductVideo\ProductVideoData;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
+use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;

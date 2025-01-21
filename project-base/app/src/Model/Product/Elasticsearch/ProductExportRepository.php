@@ -8,8 +8,6 @@ use App\Model\Category\CategoryFacade;
 use App\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider;
 use App\Model\Product\Product;
 use App\Model\Product\ProductRepository;
-use App\Model\ProductVideo\ProductVideo;
-use App\Model\ProductVideo\ProductVideoTranslationsRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
@@ -28,6 +26,7 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
+use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 
 /**
@@ -75,8 +74,8 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
      * @param \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade $specialPriceFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository $productVideoTranslationsRepository
      * @param \Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade $breadcrumbFacade
-     * @param \App\Model\ProductVideo\ProductVideoTranslationsRepository $productVideoTranslationsRepository
      */
     public function __construct(
         EntityManagerInterface $em,
@@ -96,8 +95,8 @@ class ProductExportRepository extends BaseProductExportRepository
         InMemoryCache $inMemoryCache,
         SpecialPriceFacade $specialPriceFacade,
         ProductPriceCalculation $productPriceCalculation,
+        ProductVideoTranslationsRepository $productVideoTranslationsRepository,
         private readonly BreadcrumbFacade $breadcrumbFacade,
-        private readonly ProductVideoTranslationsRepository $productVideoTranslationsRepository,
     ) {
         parent::__construct(
             $em,
@@ -117,6 +116,7 @@ class ProductExportRepository extends BaseProductExportRepository
             $inMemoryCache,
             $specialPriceFacade,
             $productPriceCalculation,
+            $productVideoTranslationsRepository,
         );
     }
 
@@ -144,12 +144,6 @@ class ProductExportRepository extends BaseProductExportRepository
             ProductExportFieldProvider::SLUG => $this->friendlyUrlFacade->getMainFriendlyUrl($domainId, 'front_product_detail', $product->getId())->getSlug(),
             ProductExportFieldProvider::RELATED_PRODUCTS => $this->extractRelatedProductsId($product),
             ProductExportFieldProvider::BREADCRUMB => $this->extractBreadcrumb($product, $domainId, $locale),
-            ProductExportFieldProvider::PRODUCT_VIDEOS => array_map(function (ProductVideo $productVideo) use ($locale) {
-                return [
-                    'token' => $productVideo->getVideoToken(),
-                    'description' => ($this->productVideoTranslationsRepository->findByProductVideoIdAndLocale($productVideo->getId(), $locale))->getDescription(),
-                ];
-            }, $product->getProductVideos()),
             default => parent::getExportedFieldValue($domainId, $product, $locale, $field),
         };
     }

@@ -25,6 +25,7 @@ use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum;
+use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoFacade;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockData;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
 use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
@@ -53,6 +54,7 @@ class ProductFacade
      * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
+     * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoFacade $productVideoFacade
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -76,6 +78,7 @@ class ProductFacade
         protected readonly StockFacade $stockFacade,
         protected readonly UploadedFileFacade $uploadedFileFacade,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
+        protected readonly ProductVideoFacade $productVideoFacade,
     ) {
     }
 
@@ -137,6 +140,8 @@ class ProductFacade
 
         $this->friendlyUrlFacade->saveUrlListFormData('front_product_detail', $product->getId(), $productData->urls);
         $this->friendlyUrlFacade->createFriendlyUrls('front_product_detail', $product->getId(), $product->getFullNames());
+
+        $this->productVideoFacade->saveProductVideosToProduct($product, $productData->productVideosData);
     }
 
     /**
@@ -182,6 +187,7 @@ class ProductFacade
         $this->pluginCrudExtensionFacade->saveAllData('product', $product->getId(), $productData->pluginData);
 
         $this->editProductStockRelation($productData, $product);
+        $this->productVideoFacade->saveProductVideosToProduct($product, $productData->productVideosData);
 
         $this->productRecalculationDispatcher->dispatchSingleProductId($product->getId(), $priority);
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\ProductVideo;
+namespace Shopsys\FrameworkBundle\Model\ProductVideo;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -12,21 +12,21 @@ class ProductVideoTranslationsRepository
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      */
-    public function __construct(public readonly EntityManagerInterface $em)
+    public function __construct(protected readonly EntityManagerInterface $em)
     {
     }
 
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    private function getRepository(): EntityRepository
+    protected function getRepository(): EntityRepository
     {
         return $this->em->getRepository(ProductVideoTranslations::class);
     }
 
     /**
      * @param int $id
-     * @return \App\Model\ProductVideo\ProductVideoTranslations|null
+     * @return \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslations|null
      */
     public function findById(int $id): ?ProductVideoTranslations
     {
@@ -35,9 +35,9 @@ class ProductVideoTranslationsRepository
 
     /**
      * @param int $id
-     * @return \App\Model\ProductVideo\ProductVideoTranslations[]|null
+     * @return \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslations[]
      */
-    public function findByProductVideoId(int $id): ?array
+    public function findByProductVideoId(int $id): array
     {
         return $this->getRepository()->findBy(['productVideo' => $id]);
     }
@@ -45,7 +45,7 @@ class ProductVideoTranslationsRepository
     /**
      * @param int $id
      * @param string $locale
-     * @return \App\Model\ProductVideo\ProductVideoTranslations|null
+     * @return \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslations|null
      */
     public function findByProductVideoIdAndLocale(int $id, string $locale): ?ProductVideoTranslations
     {

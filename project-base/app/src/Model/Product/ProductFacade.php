@@ -4,33 +4,9 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
-use App\Model\ProductVideo\ProductVideoFacade;
-use Doctrine\ORM\EntityManagerInterface;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
-use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
-use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository;
-use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
-use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactory;
-use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
-use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactory;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
-use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactory;
-use Shopsys\FrameworkBundle\Model\Product\ProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade as BaseProductFacade;
-use Shopsys\FrameworkBundle\Model\Product\ProductFactory as BaseProductFactory;
-use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
-use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactory;
-use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
-use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum;
-use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
-use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
 
 /**
  * @property \App\Model\Product\ProductRepository $productRepository
@@ -54,82 +30,12 @@ use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
  * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface getProductPriceForDefaultPricingGroup(\App\Model\Product\Product $product, int $domainId)
  * @method \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface getProductPriceForPricingGroup(\App\Model\Product\Product $product, int $domainId, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup)
  * @method \App\Model\Product\Product[] findAllByCatnums(string[] $catnums)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Product\ProductRepository $productRepository, \App\Model\Product\Parameter\ParameterRepository $parameterRepository, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \App\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository, \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade $productManualInputPriceFacade, \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade, \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository, \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade, \App\Model\Product\ProductFactory $productFactory, \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactory $productAccessoryFactory, \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactory $productCategoryDomainFactory, \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactory $productParameterValueFactory, \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactory $productVisibilityFactory, \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation, \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher, \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade, \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade, \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade, \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoFacade $productVideoFacade)
+ * @method \App\Model\Product\Product edit(int $productId, \App\Model\Product\ProductData $productData, string $priority = \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum::REGULAR)
+ * @method refreshProductAccessories(\App\Model\Product\Product $product, \App\Model\Product\Product[] $accessories)
  */
 class ProductFacade extends BaseProductFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \App\Model\Product\ProductRepository $productRepository
-     * @param \App\Model\Product\Parameter\ParameterRepository $parameterRepository
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\Component\Image\ImageFacade $imageFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupRepository $pricingGroupRepository
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductManualInputPriceFacade $productManualInputPriceFacade
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository $productAccessoryRepository
-     * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
-     * @param \App\Model\Product\ProductFactory $productFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFactory $productAccessoryFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomainFactory $productCategoryDomainFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueFactory $productParameterValueFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFactory $productVisibilityFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation $productPriceCalculation
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
-     * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade $productStockFacade
-     * @param \Shopsys\FrameworkBundle\Model\Stock\StockFacade $stockFacade
-     * @param \App\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
-     * @param \App\Model\ProductVideo\ProductVideoFacade $productVideoFacade
-     */
-    public function __construct(
-        EntityManagerInterface $em,
-        ProductRepository $productRepository,
-        ParameterRepository $parameterRepository,
-        Domain $domain,
-        ImageFacade $imageFacade,
-        PricingGroupRepository $pricingGroupRepository,
-        ProductManualInputPriceFacade $productManualInputPriceFacade,
-        FriendlyUrlFacade $friendlyUrlFacade,
-        ProductAccessoryRepository $productAccessoryRepository,
-        PluginCrudExtensionFacade $pluginCrudExtensionFacade,
-        BaseProductFactory $productFactory,
-        ProductAccessoryFactory $productAccessoryFactory,
-        ProductCategoryDomainFactory $productCategoryDomainFactory,
-        ProductParameterValueFactory $productParameterValueFactory,
-        ProductVisibilityFactory $productVisibilityFactory,
-        ProductPriceCalculation $productPriceCalculation,
-        ProductRecalculationDispatcher $productRecalculationDispatcher,
-        ProductStockFacade $productStockFacade,
-        StockFacade $stockFacade,
-        UploadedFileFacade $uploadedFileFacade,
-        PricingGroupSettingFacade $pricingGroupSettingFacade,
-        private readonly ProductVideoFacade $productVideoFacade,
-    ) {
-        parent::__construct(
-            $em,
-            $productRepository,
-            $parameterRepository,
-            $domain,
-            $imageFacade,
-            $pricingGroupRepository,
-            $productManualInputPriceFacade,
-            $friendlyUrlFacade,
-            $productAccessoryRepository,
-            $pluginCrudExtensionFacade,
-            $productFactory,
-            $productAccessoryFactory,
-            $productCategoryDomainFactory,
-            $productParameterValueFactory,
-            $productVisibilityFactory,
-            $productPriceCalculation,
-            $productRecalculationDispatcher,
-            $productStockFacade,
-            $stockFacade,
-            $uploadedFileFacade,
-            $pricingGroupSettingFacade,
-        );
-    }
-
     /**
      * @param string $productCatnum
      * @return \App\Model\Product\Product|null
@@ -141,25 +47,6 @@ class ProductFacade extends BaseProductFacade
         } catch (ProductNotFoundException $exception) {
             return null;
         }
-    }
-
-    /**
-     * @param int $productId
-     * @param \App\Model\Product\ProductData $productData
-     * @param string $priority
-     * @return \App\Model\Product\Product
-     */
-    public function edit(
-        int $productId,
-        ProductData $productData,
-        string $priority = ProductRecalculationPriorityEnum::REGULAR,
-    ): Product {
-        /** @var \App\Model\Product\Product $product */
-        $product = parent::edit($productId, $productData, $priority);
-
-        $this->productVideoFacade->saveProductVideosToProduct($product, $productData->productVideosData);
-
-        return $product;
     }
 
     /**
@@ -204,14 +91,5 @@ class ProductFacade extends BaseProductFacade
         if (count($toFlush) > 0) {
             $this->em->flush();
         }
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @param \App\Model\Product\Product[] $accessories
-     */
-    public function refreshProductAccessories(BaseProduct $product, array $accessories): void
-    {
-        parent::refreshProductAccessories($product, $accessories);
     }
 }

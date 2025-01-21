@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\ProductVideo;
+namespace Shopsys\FrameworkBundle\Model\ProductVideo;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -18,47 +18,47 @@ class ProductVideoTranslations
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected int $id;
+    protected $id;
 
     /**
-     * @var \App\Model\ProductVideo\ProductVideo
-     * @ORM\ManyToOne(targetEntity="App\Model\ProductVideo\ProductVideo")
+     * @var \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo")
      * @ORM\JoinColumn(name="product_video", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
-    private ProductVideo $productVideo;
+    protected $productVideo;
 
     /**
      * @var string
      * @ORM\Column(type="string")
      */
-    private string $description;
+    protected $description;
 
     /**
      * @var string
      * @ORM\Column(type="string")
      */
-    private string $locale;
+    protected $locale;
 
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
 
     /**
-     * @return \App\Model\ProductVideo\ProductVideo
+     * @return \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo
      */
-    public function getProductVideo(): ProductVideo
+    public function getProductVideo()
     {
         return $this->productVideo;
     }
 
     /**
-     * @param \App\Model\ProductVideo\ProductVideo $productVideo
+     * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo $productVideo
      */
-    public function setProductVideo(ProductVideo $productVideo): void
+    public function setProductVideo($productVideo)
     {
         $this->productVideo = $productVideo;
     }
@@ -66,7 +66,7 @@ class ProductVideoTranslations
     /**
      * @return string
      */
-    public function getDescription(): string
+    public function getDescription()
     {
         return $this->description;
     }
@@ -74,7 +74,7 @@ class ProductVideoTranslations
     /**
      * @param string $description
      */
-    public function setDescription(string $description): void
+    public function setDescription($description)
     {
         $this->description = $description;
     }
@@ -82,7 +82,7 @@ class ProductVideoTranslations
     /**
      * @return string
      */
-    public function getLocale(): string
+    public function getLocale()
     {
         return $this->locale;
     }
@@ -90,7 +90,7 @@ class ProductVideoTranslations
     /**
      * @param string $locale
      */
-    public function setLocale(string $locale): void
+    public function setLocale($locale)
     {
         $this->locale = $locale;
     }
