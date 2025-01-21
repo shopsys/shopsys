@@ -2,7 +2,10 @@ import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';
 
 export default class Search {
-    static init ($container) {
+    static init($container) {
+        if ($container.is('body') === false) {
+            return;
+        }
         let timeout;
         const $searchInput = $container.filterAllNodes('.js-search-input');
         const $searchResults = $container.filterAllNodes('.js-search-results');
@@ -11,10 +14,13 @@ export default class Search {
         const $searchElement = $container.filterAllNodes('.js-header-search');
 
         $container.on('keydown', function (event) {
-            if (event.key === 'Tab' && $searchResults.is(':visible')) {
+            if (
+                (event.key === 'Tab' || event.key === 'ArrowDown' || event.key === 'ArrowUp') &&
+                $searchResults.is(':visible')
+            ) {
                 event.preventDefault();
                 const focusableElements = $searchResults.filterAllNodes(
-                    'div.web__header__search--results--container a'
+                    'div.web__header__search--results--container a',
                 );
                 $searchResults
                     .filterAllNodes('div.web__header__search--results--container div.result--item')
@@ -24,7 +30,10 @@ export default class Search {
 
                 let nextIndex;
 
-                if (event.shiftKey) {
+                const isUpward = event.key === 'ArrowUp' || (event.shiftKey && event.key === 'Tab');
+                console.log("🚀 -> file: search.js:31 -> Search -> isUpward:", isUpward)
+
+                if (isUpward) {
                     nextIndex = (currentIndex - 1 + focusable.length) % focusable.length;
                 } else {
                     nextIndex = (currentIndex + 1) % focusable.length;
@@ -34,6 +43,14 @@ export default class Search {
                     focusable[nextIndex].focus();
                     $(focusable[nextIndex]).closest('div.result--item').addClass('focused');
                 }
+
+                return;
+            }
+
+            if (event.key === 'Escape' && $searchResults.is(':visible')) {
+                event.preventDefault();
+                $searchResults.hide();
+                return;
             }
         });
 
@@ -55,6 +72,7 @@ export default class Search {
         $(document).on('click', function (event) {
             if (!$(event.target).closest('.js-search-results').length) {
                 Search.closeResults($searchResults, $searchInput);
+                $searchResultsCloseButton.hide();
             }
         });
 
@@ -70,32 +88,40 @@ export default class Search {
                 if ($input.val().length >= 3) {
                     Search.findResultsByInput($input, $searchResults);
                 }
+                if ($input.val().length < 3) {
+                    Search.clearResults($searchResults);
+                }
             }, 500);
         });
     }
 
-    static closeResults ($searchResults, $searchInput) {
-        $searchResults.find('.js-search-results__window').text('');
-        $searchResults.find('.js-search-results__search').text('');
-        $searchResults.hide();
+    static closeResults($searchResults, $searchInput) {
+        Search.clearResults($searchResults);
         $searchInput.val('');
     }
 
-    static findResultsByInput ($searchInput, $searchResults) {
+    static clearResults($searchResults) {
+        $searchResults.find('.js-search-results__window').text('');
+        $searchResults.find('.js-search-results__search').text('');
+        $searchResults.hide();
+    }
+
+    static findResultsByInput($searchInput, $searchResults) {
         const value = $searchInput.val();
         Ajax.ajax({
             url: $searchInput.data('search-callback-url'),
+            loaderElement: 'none',
             type: 'GET',
             data: {
-                search: value
+                search: value,
             },
             success: function (results) {
                 Search.showResults(value, results, $searchResults);
-            }
+            },
         });
     }
 
-    static showResults (search, results, $searchResults) {
+    static showResults(search, results, $searchResults) {
         const $htmlResult = $($.parseHTML(results));
         $searchResults.find('.js-search-results__window').html($htmlResult);
         $searchResults.find('.js-search-results__search').text(search);
