@@ -115,6 +115,11 @@ jobs:
                 with:
                     name: set-urls-for-review
                     path: ./.github/set-urls-for-review.sh
+            -   name: Upload ci-www.conf to artifacts
+                uses: actions/upload-artifact@v4
+                with:
+                    name: ci-www-conf
+                    path: ./project-base/gitlab/php-fpm-conf/ci-www.conf
             -   name: Upload rabbitmq-vhost.sh to artifacts
                 uses: actions/upload-artifact@v4
                 with:
@@ -875,6 +880,11 @@ jobs:
                 uses: actions/download-artifact@v4
                 with:
                     name: set-urls-for-review
+                    path: ${{ needs.variables.outputs.BRANCH_NAME }}
+            -   name: Download ci-www.conf from artifacts
+                uses: actions/download-artifact@v4
+                with:
+                    name: ci-www-conf
                     path: ${{ needs.variables.outputs.BRANCH_NAME }}
             -   name: Download rabbitmq-vhost-sh from artifacts
                 uses: actions/download-artifact@v4
