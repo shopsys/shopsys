@@ -25,8 +25,8 @@ class SomeClass extends SomeParentClassWithAttribute
     }
 
     /**
-     * @param string $foo
      * @param string $bar
+     * @param string $foo
      */
     #[\ReturnTypeWillChange]
     public function bar(string $foo, string $bar): void

@@ -10,7 +10,6 @@ use PhpCsFixer\WhitespacesFixerConfig;
 use PHPUnit\Framework\Attributes\CoversClass;
 use Shopsys\CodingStandards\CsFixer\Phpdoc\MissingParamAnnotationsFixer;
 use Shopsys\CodingStandards\CsFixer\Phpdoc\MissingReturnAnnotationFixer;
-use Shopsys\CodingStandards\CsFixer\Phpdoc\OrderedParamAnnotationsFixer;
 use Shopsys\CodingStandards\Helper\FqnNameResolver;
 use Shopsys\CodingStandards\Helper\PhpToDocTypeTransformer;
 use Symplify\CodingStandard\TokenRunner\Analyzer\FixerAnalyzer\IndentDetector;
@@ -19,7 +18,6 @@ use Tests\CodingStandards\Unit\CsFixer\ChainedFixer;
 
 #[CoversClass(MissingParamAnnotationsFixer::class)]
 #[CoversClass(MissingReturnAnnotationFixer::class)]
-#[CoversClass(OrderedParamAnnotationsFixer::class)]
 final class FunctionAnnotationFixerTest extends AbstractFixerTestCase
 {
     /**
@@ -52,10 +50,6 @@ final class FunctionAnnotationFixerTest extends AbstractFixerTestCase
                 $phpToDocTypeTransformer,
                 $indentDetector,
             ),
-        );
-
-        $fixer->registerFixer(
-            new OrderedParamAnnotationsFixer($functionsAnalyzer),
         );
 
         return $fixer;

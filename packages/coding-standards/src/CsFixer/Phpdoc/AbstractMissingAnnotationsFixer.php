@@ -330,7 +330,7 @@ abstract class AbstractMissingAnnotationsFixer implements FixerInterface
                 Strings::contains($newLine->getContent(), '@param')
                 && Strings::contains($docToken->getContent(), '@param')
             ) {
-                return $this->getLastParamLinePosition($docToken);
+                return $this->getLastParamLinePosition($docToken) + 1;
             }
         }
 
