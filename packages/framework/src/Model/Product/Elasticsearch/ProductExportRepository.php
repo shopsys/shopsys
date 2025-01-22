@@ -387,6 +387,7 @@ class ProductExportRepository
                 'price_from' => $productPrice->isPriceFrom(),
                 'filtering_minimal_price' => (float)$this->getMaximalVariantPriceForFilteringMinimalPrice($product, $pricingGroup, $domainId)->getAmount(),
                 'filtering_maximal_price' => (float)$this->getMinimalVariantPriceForFilteringMaximalPrice($product, $pricingGroup, $domainId)->getAmount(),
+                'variant_prices' => $this->getVariantPrices($product, $pricingGroup, $domainId),
             ];
         }
 
@@ -649,5 +650,27 @@ class ProductExportRepository
         }
 
         return $price;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @param int $domainId
+     * @return array
+     */
+    protected function getVariantPrices(Product $product, PricingGroup $pricingGroup, int $domainId): array
+    {
+        $variantPrices = [];
+
+        foreach ($this->productRepository->getAllSellableVariantsByMainVariant($product, $domainId, $pricingGroup) as $variant) {
+            $price = $this->productPriceCalculation->calculatePrice($variant, $pricingGroup->getDomainId(), $pricingGroup);
+            $variantPrices[] = [
+                'variant_id' => $variant->getId(),
+                'price_with_vat' => (float)$price->getPrice()->getPriceWithVat()->getAmount(),
+                'price_without_vat' => (float)$price->getPrice()->getPriceWithoutVat()->getAmount(),
+            ];
+        }
+
+        return $variantPrices;
     }
 }

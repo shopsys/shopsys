@@ -46,6 +46,8 @@ class FilterQuery
      */
     protected array $fields = [];
 
+    protected bool $isFilteringBySpecialPriceActive = false;
+
     /**
      * @param string $indexName
      */
@@ -228,6 +230,81 @@ class FilterQuery
                 'type' => 'double',
                 'script' => [
                     'source' => $scriptMaxValue,
+                    'params' => [
+                        'pricing_group_id' => $pricingGroupId,
+                        'current_date' => date('Y-m-d H:i:s'),
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @param int $pricingGroupId
+     * @return array[]
+     */
+    protected function getHasActiveSpecialPriceRuntimeField(int $pricingGroupId): array
+    {
+        $script = "
+            boolean hasActiveSpecialPrice = false;
+            DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern('yyyy-MM-dd HH:mm:ss').withZone(java.time.ZoneOffset.UTC);
+            def currentDate = java.time.ZonedDateTime.parse(params['current_date'], formatter).toInstant();
+
+            for (def price : params['_source']['prices']) {
+                if (price['pricing_group_id'] === params['pricing_group_id']) {
+                    if (params['_source']['is_main_variant'] === false) {
+                        double basicPrice = price['price_with_vat'];
+
+                        for (def specialPrice : params['_source']['special_prices']) {
+                            def validFrom = java.time.ZonedDateTime.parse(specialPrice['valid_from'], formatter).toInstant();
+                            def validTo = java.time.ZonedDateTime.parse(specialPrice['valid_to'], formatter).toInstant();
+            
+                            if ((validFrom.isBefore(currentDate) || validFrom.equals(currentDate)) &&
+                                (validTo.isAfter(currentDate) || validTo.equals(currentDate))) {
+                                for (def specialPriceData : specialPrice['prices']) {
+                                    if (basicPrice > specialPriceData['price_with_vat']) {
+                                        hasActiveSpecialPrice = true;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (hasActiveSpecialPrice) break;
+                        }
+                    } else {
+                        for (def variantPrice : price['variant_prices']) {
+                            double variantBasicPrice = variantPrice['price_with_vat'];
+                            for (def specialPrice : params['_source']['special_prices']) {
+                                def validFrom = java.time.ZonedDateTime.parse(specialPrice['valid_from'], formatter).toInstant();
+                                def validTo = java.time.ZonedDateTime.parse(specialPrice['valid_to'], formatter).toInstant();
+        
+                                if ((validFrom.isBefore(currentDate) || validFrom.equals(currentDate)) &&
+                                    (validTo.isAfter(currentDate) || validTo.equals(currentDate))) {
+                                    for (def specialPriceData : specialPrice['prices']) {
+                                        if (specialPriceData['product_id'] === variantPrice['variant_id'] &&
+                                            specialPriceData['price_with_vat'] < variantBasicPrice) {
+                                            hasActiveSpecialPrice = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+    
+                            if (hasActiveSpecialPrice) break;
+                        }
+                        if (hasActiveSpecialPrice) break;
+                    }
+                    break;
+                }
+            }
+    
+            emit(hasActiveSpecialPrice);
+        ";
+
+        return [
+            'has_active_special_price' => [
+                'type' => 'boolean',
+                'script' => [
+                    'source' => $script,
                     'params' => [
                         'pricing_group_id' => $pricingGroupId,
                         'current_date' => date('Y-m-d H:i:s'),
@@ -602,6 +679,24 @@ class FilterQuery
                         ],
                     ],
                 ],
+            ],
+        ];
+
+        return $clone;
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
+     * @return $this
+     */
+    public function filterWithActiveSpecialPriceOnly(PricingGroup $pricingGroup): self
+    {
+        $clone = clone $this;
+        $clone->isFilteringBySpecialPriceActive = true;
+        $clone->runtimeFields += $this->getHasActiveSpecialPriceRuntimeField($pricingGroup->getId());
+        $clone->filters[] = [
+            'term' => [
+                'has_active_special_price' => true,
             ],
         ];
 
@@ -992,6 +1087,10 @@ class FilterQuery
         $query = $this->getAbsoluteNumbersWithParametersQuery();
 
         $query['body']['runtime_mappings'] = $this->getMinCurrentSellingPriceRuntimeField($pricingGroupId);
+
+        if ($this->isFilteringBySpecialPriceActive) {
+            $query['body']['runtime_mappings'] += $this->getHasActiveSpecialPriceRuntimeField($pricingGroupId);
+        }
 
         $query['body']['aggs']['prices'] = [
             'filter' => [

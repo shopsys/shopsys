@@ -30,7 +30,7 @@ class ProductElasticsearchConverter
         $result[ProductExportFieldProvider::CATEGORIES] = $product[ProductExportFieldProvider::CATEGORIES] ?? [];
         $result[ProductExportFieldProvider::FLAGS] = $product[ProductExportFieldProvider::FLAGS] ?? [];
         $result[ProductExportFieldProvider::PARAMETERS] = array_key_exists(ProductExportFieldProvider::PARAMETERS, $product) && $product[ProductExportFieldProvider::PARAMETERS] ? $this->fillEmptyParameters($product[ProductExportFieldProvider::PARAMETERS]) : [];
-        $result[ProductExportFieldProvider::PRICES] = $product[ProductExportFieldProvider::PRICES] ?? [];
+        $result[ProductExportFieldProvider::PRICES] = array_key_exists(ProductExportFieldProvider::PRICES, $product) && $product[ProductExportFieldProvider::PRICES] ? $this->fillEmptyVariantPrices($product[ProductExportFieldProvider::PRICES]) : [];
         $result[ProductExportFieldProvider::SPECIAL_PRICES] = $product[ProductExportFieldProvider::SPECIAL_PRICES] ?? [];
         $result[ProductExportFieldProvider::VISIBILITY] = $product[ProductExportFieldProvider::VISIBILITY] ?? [];
         $result[ProductExportFieldProvider::ACCESSORIES] = $product[ProductExportFieldProvider::ACCESSORIES] ?? [];
@@ -94,6 +94,23 @@ class ProductElasticsearchConverter
             $filledParameter['parameter_value_uuid'] = $parameter['parameter_value_uuid'] ?? '';
             $filledParameter['parameter_value_text'] = $parameter['parameter_value_text'] ?? '';
             $results[] = $filledParameter;
+        }
+
+        return $results;
+    }
+
+    /**
+     * @param array $prices
+     * @return array
+     */
+    protected function fillEmptyVariantPrices(array $prices): array
+    {
+        $results = [];
+
+        foreach ($prices as $priceData) {
+            $filledPriceData = $priceData;
+            $filledPriceData['variant_prices'] = $priceData['variant_prices'] ?? [];
+            $results[] = $filledPriceData;
         }
 
         return $results;

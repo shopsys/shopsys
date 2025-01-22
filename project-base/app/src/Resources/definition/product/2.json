@@ -192,6 +192,20 @@
                     },
                     "filtering_maximal_price": {
                         "type": "float"
+                    },
+                    "variant_prices": {
+                        "type": "nested",
+                        "properties": {
+                            "variant_id": {
+                                "type": "integer"
+                            },
+                            "price_with_vat": {
+                                "type": "float"
+                            },
+                            "price_without_vat": {
+                                "type": "float"
+                            }
+                        }
                     }
                 }
             },

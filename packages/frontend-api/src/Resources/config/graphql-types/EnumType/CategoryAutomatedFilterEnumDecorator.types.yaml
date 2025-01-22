@@ -8,3 +8,5 @@ CategoryAutomatedFilterEnumDecorator:
                 value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Category\\AutomatedFilter\\OnStockCategoryAutomatedFilter::DATABASE_VALUE")'
             newProducts:
                 value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Category\\AutomatedFilter\\NewProductsCategoryAutomatedFilter::DATABASE_VALUE")'
+            specialPrices:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Category\\AutomatedFilter\\SpecialPricesCategoryAutomatedFilter::DATABASE_VALUE")'

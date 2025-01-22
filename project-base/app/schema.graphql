@@ -476,6 +476,7 @@ type Category implements Breadcrumb & Slug & ProductListable {
 enum CategoryAutomatedFilterEnum {
   newProducts
   onStock
+  specialPrices
 }
 
 "A connection to a list of items."

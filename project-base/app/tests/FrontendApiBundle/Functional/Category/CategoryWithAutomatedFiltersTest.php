@@ -13,6 +13,7 @@ use App\Model\Product\Product;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\NewProductsCategoryAutomatedFilter;
 use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\OnStockCategoryAutomatedFilter;
+use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\SpecialPricesCategoryAutomatedFilter;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class CategoryWithAutomatedFiltersTest extends GraphQlTestCase
@@ -30,11 +31,15 @@ class CategoryWithAutomatedFiltersTest extends GraphQlTestCase
     /**
      * @param string[] $automatedFilters
      * @param int[] $expectedProductIds
+     * @param string $categoryReferenceName
      */
     #[DataProvider('categoryWithAutomatedFiltersDataProvider')]
-    public function testCategoryWithAutomatedFilters(array $automatedFilters, array $expectedProductIds): void
-    {
-        $category = $this->getReference(CategoryDataFixture::CATEGORY_TOYS, Category::class);
+    public function testCategoryWithAutomatedFilters(
+        array $automatedFilters,
+        array $expectedProductIds,
+        string $categoryReferenceName,
+    ): void {
+        $category = $this->getReference($categoryReferenceName, Category::class);
 
         $categoryData = $this->categoryDataFactory->createFromCategory($category);
         $categoryData->automatedFilters = $automatedFilters;
@@ -60,7 +65,10 @@ class CategoryWithAutomatedFiltersTest extends GraphQlTestCase
 
         $this->assertSame($automatedFilters, $responseData['automatedFilters']);
         $this->assertSame($expectedProductsData, $responseData['products']['edges']);
-        $this->assertSame(array_column($expectedProductsData, 'node'), $responseData['bestsellers']);
+
+        if ($categoryReferenceName === CategoryDataFixture::CATEGORY_TOYS) {
+            $this->assertSame(array_column($expectedProductsData, 'node'), $responseData['bestsellers']);
+        }
     }
 
     /**
@@ -69,23 +77,33 @@ class CategoryWithAutomatedFiltersTest extends GraphQlTestCase
     public static function categoryWithAutomatedFiltersDataProvider(): iterable
     {
         yield 'new products and on stock automated filters' => [
-            [NewProductsCategoryAutomatedFilter::DATABASE_VALUE, OnStockCategoryAutomatedFilter::DATABASE_VALUE],
-            [44],
+            'automatedFilters' => [NewProductsCategoryAutomatedFilter::DATABASE_VALUE, OnStockCategoryAutomatedFilter::DATABASE_VALUE],
+            'expectedProductIds' => [44],
+            'categoryReferenceName' => CategoryDataFixture::CATEGORY_TOYS,
         ];
 
         yield 'new products automated filter' => [
-            [NewProductsCategoryAutomatedFilter::DATABASE_VALUE],
-            [44, 144],
+            'automatedFilters' => [NewProductsCategoryAutomatedFilter::DATABASE_VALUE],
+            'expectedProductIds' => [44, 144],
+            'categoryReferenceName' => CategoryDataFixture::CATEGORY_TOYS,
         ];
 
         yield 'on stock automated filter' => [
-            [OnStockCategoryAutomatedFilter::DATABASE_VALUE],
-            [145, 44],
+            'automatedFilters' => [OnStockCategoryAutomatedFilter::DATABASE_VALUE],
+            'expectedProductIds' => [145, 44],
+            'categoryReferenceName' => CategoryDataFixture::CATEGORY_TOYS,
         ];
 
         yield 'no automated filters' => [
-            [],
-            [145, 44, 144, 42],
+            'automatedFilters' => [],
+            'expectedProductIds' => [145, 44, 144, 42],
+            'categoryReferenceName' => CategoryDataFixture::CATEGORY_TOYS,
+        ];
+
+        yield 'special price automated filter' => [
+            'automatedFilters' => [SpecialPricesCategoryAutomatedFilter::DATABASE_VALUE],
+            'expectedProductIds' => [27, 28],
+            'categoryReferenceName' => CategoryDataFixture::CATEGORY_BOOKS,
         ];
     }
 }
