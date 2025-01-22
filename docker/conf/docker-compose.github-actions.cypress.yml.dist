@@ -79,6 +79,7 @@ services:
         environment:
             - discovery.type=single-node
             - "ES_JAVA_OPTS=-Xms512m -Xmx1024m"
+            - xpack.security.enabled=false
 
     cypress:
         build:

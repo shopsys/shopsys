@@ -26,7 +26,7 @@ Example of mapping part for English domain with ID 1 (`category/1.json`)
                     "language": "english"
                 },
                 "edge_ngram": {
-                    "type": "edgeNGram",
+                    "type": "edge_ngram",
                     "min_gram": 2,
                     "max_gram": 20
                 }

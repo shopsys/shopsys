@@ -78,6 +78,7 @@ services:
             - "9200:9200"
         environment:
             - discovery.type=single-node
+            - xpack.security.enabled=false
 
     img-proxy:
         image: ghcr.io/imgproxy/imgproxy:latest

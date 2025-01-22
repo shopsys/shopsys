@@ -190,6 +190,7 @@ services:
                 hard: 65536
         environment:
             - discovery.type=single-node
+            - xpack.security.enabled=false
         networks:
             - default
         labels:

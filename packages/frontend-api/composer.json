@@ -22,7 +22,7 @@
     },
     "require": {
         "php": "^8.3",
-        "elasticsearch/elasticsearch": "^7.6.1",
+        "elasticsearch/elasticsearch": "^8.17.0",
         "hybridauth/hybridauth": "^3.11",
         "lcobucci/clock": "^3.3",
         "lcobucci/jwt": "^5.4",
