@@ -48,7 +48,7 @@ class ProductPricesWithVatSelectType extends AbstractType
             ])
             ->add(
                 'manualInputPricesByPricingGroupId',
-                PricesWithCalculatedPricesType::class,
+                PricesByPricingGroupsType::class,
                 [
                     'label' => false,
                     'required' => false,

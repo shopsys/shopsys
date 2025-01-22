@@ -1,4 +1,4 @@
-{% block prices_with_calculated_prices_row %}
+{% block prices_by_pricing_groups_row %}
     <div class="form-price-heading">
         <div class="form-price-heading__cell form-price-heading__cell--field">
             {{ inputPriceLabel({ isSimple: true }) }}
@@ -11,7 +11,7 @@
     {{ form_widget(form) }}
 {% endblock %}
 
-{% block prices_with_calculated_prices_input_row %}
+{% block pricing_group_price_input_row %}
     {% set domainId = form.parent.vars.domain_id %}
     <div class="form-line form-line--in-box">
         <div class="form-line__label">

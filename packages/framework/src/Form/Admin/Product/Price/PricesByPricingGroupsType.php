@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PricesWithCalculatedPricesType extends AbstractType
+class PricesByPricingGroupsType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
@@ -33,9 +33,9 @@ class PricesWithCalculatedPricesType extends AbstractType
         $productPrices = $options['product_prices'];
 
         foreach ($this->pricingGroupFacade->getByDomainId($options['domain_id']) as $pricingGroup) {
-            $builder->add((string)$pricingGroup->getId(), MoneyWithCalculatedPriceType::class, [
+            $builder->add((string)$pricingGroup->getId(), PricingGroupPriceType::class, [
                 'product_price' => $productPrices !== null ? $productPrices[$pricingGroup->getId()] : null,
-                'block_prefix' => 'prices_with_calculated_prices_input',
+                'block_prefix' => 'pricing_group_price_input',
                 'scale' => 6,
                 'required' => false,
                 'invalid_message' => 'Please enter price in correct format (positive number with decimal separator)',
