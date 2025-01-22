@@ -6,13 +6,19 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\CsvResponse;
+use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
+use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Form\Admin\PriceList\ImportPriceListFormType;
 use Shopsys\FrameworkBundle\Form\Admin\PriceList\PriceListFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\PriceList\Exception\PriceListNotFoundException;
+use Shopsys\FrameworkBundle\Model\PriceList\PriceListCsvColumnsEnum;
 use Shopsys\FrameworkBundle\Model\PriceList\PriceListDataFactory;
 use Shopsys\FrameworkBundle\Model\PriceList\PriceListFacade;
 use Shopsys\FrameworkBundle\Model\PriceList\PriceListGridFactory;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,6 +35,8 @@ class PriceListController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
+     * @param \Shopsys\FrameworkBundle\Model\PriceList\PriceListCsvColumnsEnum $priceListCsvColumnsEnum
+     * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
      */
     public function __construct(
         protected readonly PriceListGridFactory $priceListGridFactory,
@@ -37,6 +45,8 @@ class PriceListController extends AdminBaseController
         protected readonly AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,
         protected readonly Domain $domain,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
+        protected readonly PriceListCsvColumnsEnum $priceListCsvColumnsEnum,
+        protected readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider,
     ) {
     }
 
@@ -173,5 +183,140 @@ class PriceListController extends AdminBaseController
         }
 
         return $this->redirectToRoute('admin_pricelist_list');
+    }
+
+    /**
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    #[Route(path: '/pricing/price-list/export/{id}', requirements: ['id' => '\d+'])]
+    public function exportAction(int $id): Response
+    {
+        try {
+            $priceList = $this->priceListFacade->getById($id);
+            $sanitizedPriceListName = TransformString::safeFilename($priceList->getName());
+
+            $priceListDataToExport = $this->priceListFacade->getPriceListDataToExport($id);
+
+            return new CsvResponse(
+                $priceListDataToExport,
+                'price_list_' . $id . '_' . $sanitizedPriceListName . '.csv',
+                $this->priceListCsvColumnsEnum->getAllCases(),
+            );
+        } catch (PriceListNotFoundException) {
+            $this->addErrorFlash(t('Selected price list does not exist.'));
+
+            return $this->redirectToRoute('admin_pricelist_list');
+        }
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    #[Route(path: '/pricing/price-list/import')]
+    public function importAction(Request $request): Response
+    {
+        $form = $this->createForm(ImportPriceListFormType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            if ($data['selectPriceList'] === null) {
+                $priceListData = $this->priceListDataFactory->create();
+                $priceListData->domainId = $data['domainId'];
+            } else {
+                $priceListData = $this->priceListDataFactory->createFromPriceList($data['selectPriceList']);
+            }
+            $priceListData->name = $data['name'];
+            $priceListData->validFrom = $data['validFrom'];
+            $priceListData->validTo = $data['validTo'];
+
+            $importResult = $this->priceListFacade->importPriceList(
+                $priceListData,
+                $data['csvFile'],
+            );
+
+            if ($importResult->hasErrors()) {
+                $this->addErrorFlash(t('Error while importing CSV file.'));
+
+                foreach ($importResult->getErrors() as $error) {
+                    $this->addErrorFlash($error);
+                }
+
+                return $this->render('@ShopsysFramework/Admin/Content/PriceList/import.html.twig', [
+                    'form' => $form->createView(),
+                ]);
+            }
+
+            $this->addSuccessFlash(t(
+                '%count% item from CSV file was imported successfully.|%count% items from CSV file were imported successfully.',
+                ['%count%' => $importResult->getImportedCount()],
+            ));
+
+            if ($data['selectPriceList'] === null) {
+                $this->addSuccessFlash(t(
+                    'New price list <strong><a href="{{ url }}">{{ name }}</a></strong> was created.',
+                    [
+                        '{{ name }}' => $importResult->getPriceListName(),
+                        '{{ url }}' => $this->generateUrl('admin_pricelist_edit', ['id' => $importResult->getPriceListId()]),
+                    ],
+                ));
+            } else {
+                $this->addSuccessFlash(t(
+                    'Price list <strong><a href="{{ url }}">{{ name }}</a></strong> was replaced.',
+                    [
+                        '{{ name }}' => $importResult->getPriceListName(),
+                        '{{ url }}' => $this->generateUrl('admin_pricelist_edit', ['id' => $importResult->getPriceListId()]),
+                    ],
+                ));
+            }
+
+            if ($importResult->hasWarnings()) {
+                $this->addWarningFlash(t('Some items cannot be imported due to errors:'));
+
+                foreach ($importResult->getWarnings() as $warning) {
+                    $this->addWarningFlash($warning);
+                }
+            }
+
+            return $this->redirectToRoute('admin_pricelist_list');
+        }
+
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $this->addErrorFlash(t('Error while importing CSV file.'));
+        }
+
+        return $this->render('@ShopsysFramework/Admin/Content/PriceList/import.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    #[Route(path: '/pricing/price-list/loadMetadata/{id}', requirements: ['id' => '\d+'], condition: 'request.isXmlHttpRequest()')]
+    public function loadMetadataAction(int $id): Response
+    {
+        try {
+            $priceList = $this->priceListFacade->getById($id);
+
+            $validFrom = $priceList->getValidFrom()->setTimezone($this->displayTimeZoneProvider->getDisplayTimeZoneForAdmin());
+            $validTo = $priceList->getValidTo()->setTimezone($this->displayTimeZoneProvider->getDisplayTimeZoneForAdmin());
+
+            return new JsonResponse([
+                'result' => 'valid',
+                'name' => $priceList->getName(),
+                'validFrom' => $validFrom->format('d.m.Y H:i:s'),
+                'validTo' => $validTo->format('d.m.Y H:i:s'),
+            ]);
+        } catch (PriceListNotFoundException) {
+            return new JsonResponse([
+                'result' => 'invalid',
+                'errors' => 'Price list not found',
+            ]);
+        }
     }
 }

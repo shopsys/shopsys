@@ -8,6 +8,10 @@
         <a href="{{ url('admin_pricelist_new') }}" class="btn btn--primary btn--plus wrap-bar__btn">
             <i class="btn__icon">+</i>{{ 'Create new price list'|trans }}
         </a>
+        <a href="{{ url('admin_pricelist_import') }}" class="btn wrap-bar__btn">
+            {{ icon('upload') }}
+            {{ 'Import CSV'|trans }}
+        </a>
     </div>
 {% endblock %}
 

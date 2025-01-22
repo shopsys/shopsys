@@ -11,4 +11,6 @@ class FlashMessage
     public const KEY_INFO = 'info';
 
     public const KEY_SUCCESS = 'success';
+
+    public const KEY_WARNING = 'warning';
 }

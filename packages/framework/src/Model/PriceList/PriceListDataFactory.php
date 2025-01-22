@@ -58,6 +58,7 @@ class PriceListDataFactory
      */
     protected function fillFromPriceList(PriceListData $priceListData, PriceList $priceList): void
     {
+        $priceListData->id = $priceList->getId();
         $priceListData->name = $priceList->getName();
         $priceListData->domainId = $priceList->getDomainId();
         $priceListData->validFrom = $priceList->getValidFrom();

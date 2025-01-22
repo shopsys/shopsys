@@ -175,6 +175,7 @@
         "symfony/rate-limiter": "^6.4",
         "symfony/runtime": "^6.4",
         "symfony/security-bundle": "^6.4",
+        "symfony/serializer": "^6.4",
         "symfony/service-contracts": "^2.5.2",
         "symfony/stopwatch": "^6.4",
         "symfony/translation": "^6.4",

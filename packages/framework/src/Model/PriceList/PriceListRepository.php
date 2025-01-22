@@ -57,4 +57,31 @@ class PriceListRepository
                 END AS validityStatus')
             ->setParameter('now', new DateTimeImmutable());
     }
+
+    /**
+     * @param int $priceListId
+     * @return iterable
+     */
+    public function getPriceListDataToExport(int $priceListId): iterable
+    {
+        $queryBuilder = $this->em->createQueryBuilder()
+            ->select([
+                'p.catnum as ' . PriceListCsvColumnsEnum::PRODUCT_CATNUM,
+                'plpp.priceAmount as ' . PriceListCsvColumnsEnum::PRICE,
+            ])
+            ->from(PriceListProductPrice::class, 'plpp')
+            ->leftJoin('plpp.product', 'p')
+            ->where('plpp.priceList = :priceListId')
+            ->setParameter('priceListId', $priceListId);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\PriceList\PriceList[]
+     */
+    public function getAll(): array
+    {
+        return $this->getPriceListRepository()->findAll();
+    }
 }

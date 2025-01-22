@@ -67,6 +67,14 @@ trait FlashMessageTrait
     }
 
     /**
+     * @param string $message
+     */
+    public function addWarningFlash(string $message): void
+    {
+        $this->addFlashMessage(FlashMessage::KEY_WARNING, $message);
+    }
+
+    /**
      * @param string $type
      * @param string $message
      */
@@ -98,11 +106,12 @@ trait FlashMessageTrait
 
         return !$flashBag->has(FlashMessage::KEY_ERROR)
             && !$flashBag->has(FlashMessage::KEY_INFO)
-            && !$flashBag->has(FlashMessage::KEY_SUCCESS);
+            && !$flashBag->has(FlashMessage::KEY_SUCCESS)
+            && !$flashBag->has(FlashMessage::KEY_WARNING);
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getErrorMessages()
     {
@@ -110,7 +119,7 @@ trait FlashMessageTrait
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getInfoMessages()
     {
@@ -118,7 +127,7 @@ trait FlashMessageTrait
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getSuccessMessages()
     {
@@ -126,8 +135,16 @@ trait FlashMessageTrait
     }
 
     /**
+     * @return string[]
+     */
+    public function getWarningMessages(): array
+    {
+        return $this->getMessages(FlashMessage::KEY_WARNING);
+    }
+
+    /**
      * @param string $key
-     * @return array
+     * @return string[]
      */
     protected function getMessages($key)
     {

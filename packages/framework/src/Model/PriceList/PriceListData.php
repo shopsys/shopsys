@@ -7,22 +7,27 @@ namespace Shopsys\FrameworkBundle\Model\PriceList;
 class PriceListData
 {
     /**
-     * @var string
+     * @var int|null
+     */
+    public $id;
+
+    /**
+     * @var string|null
      */
     public $name;
 
     /**
-     * @var int
+     * @var int|null
      */
     public $domainId;
 
     /**
-     * @var \DateTimeImmutable
+     * @var \DateTimeImmutable|null
      */
     public $validFrom;
 
     /**
-     * @var \DateTimeImmutable
+     * @var \DateTimeImmutable|null
      */
     public $validTo;
 
