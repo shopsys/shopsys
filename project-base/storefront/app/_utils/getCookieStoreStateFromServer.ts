@@ -8,6 +8,7 @@ export type CookiesStoreState = {
     lastVisitedProductsCatnums: string[] | null;
     userIdentifier: string;
     isUserSnapEnabled: boolean;
+    productListUuids: { COMPARISON: string; WISHLIST: string } | null;
 };
 
 type CookiesStoreActions = {
@@ -18,6 +19,7 @@ const getDefaultInitState = (): CookiesStoreState => ({
     lastVisitedProductsCatnums: null,
     userIdentifier: uuidV4(),
     isUserSnapEnabled: userSnapEnabledDefaultValue,
+    productListUuids: null,
 });
 
 export type CookiesStore = CookiesStoreState & CookiesStoreActions;

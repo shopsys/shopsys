@@ -1,6 +1,6 @@
 'use client';
 
-import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
+import { ProductsList } from 'app/_components/Blocks/Product/ProductsList/ProductsList';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -22,7 +22,13 @@ export async function ProductDetailAccessories({ accessories }: ProductDetailAcc
         <Webline>
             <h5 className="mb-4">{t('You can also buy')}</h5>
 
-            <ProductsSlider
+            {/* <ProductsSlider
+                gtmMessageOrigin={GtmMessageOriginType.product_detail_page}
+                gtmProductListName={GtmProductListNameType.product_detail_accessories}
+                products={accessories}
+            /> */}
+
+            <ProductsList
                 gtmMessageOrigin={GtmMessageOriginType.product_detail_page}
                 gtmProductListName={GtmProductListNameType.product_detail_accessories}
                 products={accessories}
