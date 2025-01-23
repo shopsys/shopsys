@@ -47,24 +47,24 @@ import {
     TypeCreateOrderMutation,
     TypeCreateOrderMutationVariables,
 } from 'graphql/requests/orders/mutations/CreateOrderMutation.generated';
-import { TypeProductListFragment } from 'graphql/requests/productLists/fragments/ProductListFragment.generated';
+import { TypeProductListFragment } from 'graphql/requests/productLists/fragments/ProductListFragment.ssr';
 import {
     TypeAddProductToListMutation,
     TypeAddProductToListMutationVariables,
-} from 'graphql/requests/productLists/mutations/AddProductToListMutation.generated';
+} from 'graphql/requests/productLists/mutations/AddProductToListMutation.ssr';
 import {
     TypeRemoveProductFromListMutation,
     TypeRemoveProductFromListMutationVariables,
-} from 'graphql/requests/productLists/mutations/RemoveProductFromListMutation.generated';
+} from 'graphql/requests/productLists/mutations/RemoveProductFromListMutation.ssr';
 import {
     TypeRemoveProductListMutation,
     TypeRemoveProductListMutationVariables,
-} from 'graphql/requests/productLists/mutations/RemoveProductListMutation.generated';
+} from 'graphql/requests/productLists/mutations/RemoveProductListMutation.ssr';
 import {
     TypeProductListQuery,
     TypeProductListQueryVariables,
     ProductListQueryDocument,
-} from 'graphql/requests/productLists/queries/ProductListQuery.generated';
+} from 'graphql/requests/productLists/queries/ProductListQuery.ssr';
 import { MakeMaybe, TypeProductListInput } from 'graphql/types';
 
 export const cacheUpdates: UpdatesConfig = {
