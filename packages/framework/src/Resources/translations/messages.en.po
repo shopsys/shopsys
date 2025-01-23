@@ -3439,12 +3439,6 @@ msgstr ""
 msgid "Priority"
 msgstr ""
 
-msgid "Privacy Policy"
-msgstr ""
-
-msgid "Privacy Policy settings"
-msgstr ""
-
 msgid "Privacy policy"
 msgstr ""
 
@@ -3452,6 +3446,9 @@ msgid "Privacy policy article setting - full"
 msgstr ""
 
 msgid "Privacy policy article setting - view"
+msgstr ""
+
+msgid "Privacy policy settings"
 msgstr ""
 
 msgid "Product"
@@ -4204,13 +4201,10 @@ msgstr ""
 msgid "Telephone"
 msgstr ""
 
-msgid "Terms and Conditions"
-msgstr ""
-
-msgid "Terms and Conditions settings"
-msgstr ""
-
 msgid "Terms and conditions"
+msgstr ""
+
+msgid "Terms and conditions settings"
 msgstr ""
 
 msgid "Test email sent to %email%."

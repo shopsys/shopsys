@@ -2411,7 +2411,7 @@ msgid "Language constant translation <strong>{{ name }}</strong> not found"
 msgstr "Překlad jazykové konstanty <strong>{{ name }}</strong> nenalezen"
 
 msgid "Language constants"
-msgstr ""
+msgstr "Jazykové konstanty"
 
 msgid "Language constants - full"
 msgstr "Jazykové konstanty - vše"
@@ -3439,12 +3439,6 @@ msgstr "Nastavení cenotvorby bylo upraveno"
 msgid "Priority"
 msgstr "Priorita"
 
-msgid "Privacy Policy"
-msgstr "Zásady ochrany osobních údajů"
-
-msgid "Privacy Policy settings"
-msgstr "Nastavení zásad ochrany osobních údajů"
-
 msgid "Privacy policy"
 msgstr "Zásady ochrany osobních údajů"
 
@@ -3453,6 +3447,9 @@ msgstr "Nastavení zásad ochrany osobních údajů - vše"
 
 msgid "Privacy policy article setting - view"
 msgstr "Nastavení zásad ochrany osobních údajů - zobrazení"
+
+msgid "Privacy policy settings"
+msgstr "Nastavení zásad ochrany osobních údajů"
 
 msgid "Product"
 msgstr "Zboží"
@@ -4204,14 +4201,11 @@ msgstr "DIČ"
 msgid "Telephone"
 msgstr "Telefon"
 
-msgid "Terms and Conditions"
-msgstr "Obchodní podmínky"
-
-msgid "Terms and Conditions settings"
-msgstr "Nastavení obchodních podmínek"
-
 msgid "Terms and conditions"
 msgstr "Obchodní podmínky"
+
+msgid "Terms and conditions settings"
+msgstr "Nastavení obchodních podmínek"
 
 msgid "Test email sent to %email%."
 msgstr "Testovací email odeslán na adresu %email%."
@@ -4400,7 +4394,7 @@ msgid "Tuesday"
 msgstr "Úterý"
 
 msgid "Two factor authentication"
-msgstr ""
+msgstr "Dvoufaktorové ověření"
 
 msgid "Two factor authentication code"
 msgstr "Dvoufaktorový ověřovací kód"

@@ -437,11 +437,11 @@ class SideMenuBuilder
         $legalMenu = $menu->addChild('legal', ['label' => t('Legal conditions')]);
         $legalMenu->addChild(
             'terms_and_conditions',
-            ['route' => 'admin_legalconditions_termsandconditions', 'label' => t('Terms and Conditions')],
+            ['route' => 'admin_legalconditions_termsandconditions', 'label' => t('Terms and conditions')],
         );
         $legalMenu->addChild(
             'privacy_policy',
-            ['route' => 'admin_legalconditions_privacypolicy', 'label' => t('Privacy Policy')],
+            ['route' => 'admin_legalconditions_privacypolicy', 'label' => t('Privacy policy')],
         );
         $legalMenu->addChild(
             'personal_data',
