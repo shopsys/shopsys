@@ -85,6 +85,8 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
 
             <Adverts withGapBottom withGapTop withWebline positionName="footer" />
 
+            <Webline className="relative mb-4" />
+
             <Webline wrapperClassName="mt-auto h-fit bg-backgroundAccentLess">
                 <DeferredNewsletterForm />
                 <DeferredFooter />
