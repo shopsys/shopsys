@@ -4,6 +4,7 @@ import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailInfo } from './ProductDetailInfo';
 import { ProductDetailPrice } from './ProductDetailPrice';
 import { ProductDetailTabs } from './ProductDetailTabs/ProductDetailTabs';
+import { ProductWishlistButton } from 'app/_components/Blocks/Product/ButtonsAction/ProductWishlistButton';
 import { WatchDogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
@@ -65,6 +66,9 @@ export function ProductDetailContent({ product }: ProductDetailContentProps) {
 
                         {/* TODO: add product comparion and wishlist */}
                         {/* <DeferredComparisonAndWishlistButtons product={product} /> */}
+                        <div className="flex flex-wrap gap-x-4">
+                            <ProductWishlistButton productUuid={product.uuid} />
+                        </div>
                     </div>
                 </div>
             </div>
