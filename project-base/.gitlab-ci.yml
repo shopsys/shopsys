@@ -224,14 +224,16 @@ review:
             - schema.graphql
     script:
         - cp -f ./gitlab/docker-compose-ci-review.yml ./docker-compose.yml
-        - chmod +x ./gitlab/scripts/set-urls-for-review.sh && ./gitlab/scripts/set-urls-for-review.sh setDomainsToDockerCompose
+        - chmod +x ./gitlab/scripts/set-urls-for-review.sh && source ./gitlab/scripts/set-urls-for-review.sh
+        - convertToTraefikHosts "$HOSTS"
+        - setDomainsToDockerCompose
         - docker compose down --rmi all -v --remove-orphans
         - chmod +x ./gitlab/scripts/rabbitmq-vhost.sh && ./gitlab/scripts/rabbitmq-vhost.sh create ${COMPOSE_PROJECT_NAME}
         - docker compose up -d
-        - ./gitlab/scripts/set-urls-for-review.sh setUrlsToDomainsUrls
+        - setUrlsToDomainsUrls
         - docker compose exec -T php-fpm php phing -D production.confirm.action=y clean db-create build-review-ci
         - docker compose exec -T php-consumer php phing -D production.confirm.action=y frontend-api-generate-new-keys
-        - ./gitlab/scripts/set-urls-for-review.sh printDomains
+        - printDomains
     tags:
         - review
     interruptible: true
