@@ -7,9 +7,11 @@ namespace Shopsys\FrameworkBundle\Model\Product\Pricing;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice;
+use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPriceInterface;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
 class QuantifiedProductPriceCalculation
@@ -28,13 +30,13 @@ class QuantifiedProductPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPriceInterface
      */
     public function calculatePrice(
         QuantifiedProduct $quantifiedProduct,
         int $domainId,
         ?CustomerUser $customerUser = null,
-    ): QuantifiedItemPrice {
+    ): QuantifiedItemPriceInterface {
         $product = $quantifiedProduct->getProduct();
 
         $productPrice = $this->productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId(
@@ -43,13 +45,13 @@ class QuantifiedProductPriceCalculation
             $customerUser,
         );
 
-        $totalPriceWithVat = $this->getTotalPriceWithVat($quantifiedProduct, $productPrice);
+        $totalPriceWithVat = $this->getTotalPriceWithVat($quantifiedProduct, $productPrice->getPrice());
         $totalPriceVatAmount = $this->getTotalPriceVatAmount($totalPriceWithVat, $product->getVatForDomain($domainId));
         $priceWithoutVat = $this->getTotalPriceWithoutVat($totalPriceWithVat, $totalPriceVatAmount);
 
         $totalPrice = new Price($priceWithoutVat, $totalPriceWithVat);
 
-        return new QuantifiedItemPrice($productPrice, $totalPrice, $product->getVatForDomain($domainId));
+        return new QuantifiedItemPrice($productPrice->getPrice(), $totalPrice, $product->getVatForDomain($domainId));
     }
 
     /**
@@ -64,10 +66,10 @@ class QuantifiedProductPriceCalculation
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $unitPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $unitPrice
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    protected function getTotalPriceWithVat(QuantifiedProduct $quantifiedProduct, Price $unitPrice): Money
+    protected function getTotalPriceWithVat(QuantifiedProduct $quantifiedProduct, PriceInterface $unitPrice): Money
     {
         return $unitPrice->getPriceWithVat()->multiply($quantifiedProduct->getQuantity());
     }
@@ -86,7 +88,7 @@ class QuantifiedProductPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
      * @param int $domainId
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
-     * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice[]
+     * @return \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPriceInterface[]
      */
     public function calculatePrices(
         array $quantifiedProducts,

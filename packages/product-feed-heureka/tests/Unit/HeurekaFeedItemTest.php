@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
@@ -231,7 +232,7 @@ class HeurekaFeedItemTest extends TestCase
         $this->defaultProduct->method('getId')->willReturn(1);
         $this->defaultProduct->method('getFullName')->with('cs')->willReturn('product name');
 
-        $productPrice = new ProductPrice(Price::zero(), false);
+        $productPrice = new ProductPrice(Price::zero(), $this->createMock(PricingGroup::class), false);
         $this->productPriceCalculationForCustomerUserMock->method('calculatePriceForCustomerUserAndDomainId')
             ->with($this->defaultProduct, Domain::FIRST_DOMAIN_ID, null)->willReturn($productPrice);
 

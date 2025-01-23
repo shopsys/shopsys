@@ -42,7 +42,7 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
         $customerUserData->lastName = 'lastName';
 
         $customerUser = new CustomerUser($customerUserData);
-        $expectedProductPrice = new ProductPrice(new Price(Money::create(1), Money::create(1)), false);
+        $expectedProductPrice = new ProductPrice(new Price(Money::create(1), Money::create(1)), $pricingGroup, false);
 
         $currentCustomerUserMock = $this->createMock(CurrentCustomerUser::class);
         $pricingGroupSettingFacadeMock = $this->createMock(PricingGroupSettingFacade::class);
@@ -82,7 +82,7 @@ class ProductPriceCalculationForCustomerUserTest extends TestCase
         $pricingGroupData = new PricingGroupData();
         $pricingGroupData->name = 'name';
         $pricingGroup = new PricingGroup($pricingGroupData, $domainId);
-        $expectedProductPrice = new ProductPrice(new Price(Money::create(1), Money::create(1)), false);
+        $expectedProductPrice = new ProductPrice(new Price(Money::create(1), Money::create(1)), $pricingGroup, false);
 
         $currentCustomerUserMock = $this->createMock(CurrentCustomerUser::class);
 

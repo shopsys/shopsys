@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice;
 
 use DateTimeImmutable;
 use DateTimeInterface;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
 class SpecialPrice
 {
@@ -14,7 +14,7 @@ class SpecialPrice
 
     public DateTimeInterface $validTo;
 
-    public Price $price;
+    public PriceInterface $price;
 
     public int $productId;
 

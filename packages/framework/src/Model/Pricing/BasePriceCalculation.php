@@ -26,14 +26,14 @@ class BasePriceCalculation
      * @param int $inputPriceType
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
     public function calculateBasePriceRoundedByCurrency(
         Money $inputPrice,
         int $inputPriceType,
         Vat $vat,
         Currency $currency,
-    ): Price {
+    ): PriceInterface {
         $basePriceWithVat = $this->getBasePriceWithVatRoundedByCurrency($inputPrice, $inputPriceType, $vat, $currency);
         $vatAmount = $this->priceCalculation->getVatAmountByPriceWithVat($basePriceWithVat, $vat);
         $basePriceWithoutVat = $this->rounding->roundPriceWithoutVat($basePriceWithVat->subtract($vatAmount));

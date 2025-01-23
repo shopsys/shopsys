@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
@@ -132,7 +133,7 @@ class GoogleFeedItemTest extends TestCase
      */
     private function mockProductPrice(Product $product, DomainConfig $domain, Price $price): void
     {
-        $productPrice = new ProductPrice($price, false);
+        $productPrice = new ProductPrice($price, $this->createMock(PricingGroup::class), false);
         $this->productPriceCalculationForCustomerUserMock->method('calculateBasicPriceForCustomerUserAndDomainId')
             ->with($product, $domain->getId(), null)->willReturn($productPrice);
     }

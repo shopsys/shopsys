@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemHasOnlyOneTotalP
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\WrongItemTypeException;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
 /**
  * @ORM\Table(name="order_items")
@@ -147,7 +148,7 @@ class OrderItem
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @param string $name
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $price
      * @param string $vatPercent
      * @param int $quantity
      * @param string $type
@@ -157,7 +158,7 @@ class OrderItem
     public function __construct(
         Order $order,
         string $name,
-        Price $price,
+        PriceInterface $price,
         string $vatPercent,
         int $quantity,
         string $type,
@@ -228,9 +229,9 @@ class OrderItem
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
-    public function getPrice(): Price
+    public function getPrice(): PriceInterface
     {
         return new Price($this->unitPriceWithoutVat, $this->unitPriceWithVat);
     }
@@ -257,9 +258,9 @@ class OrderItem
      * The total price property can be used when order item has prices that differ from current price calculation implementation.
      * Otherwise, it should be set to NULL (which means it will be calculated automatically).
      *
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price|null $totalPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface|null $totalPrice
      */
-    public function setTotalPrice(?Price $totalPrice): void
+    public function setTotalPrice(?PriceInterface $totalPrice): void
     {
         $this->totalPriceWithVat = $totalPrice?->getPriceWithVat();
         $this->totalPriceWithoutVat = $totalPrice?->getPriceWithoutVat();

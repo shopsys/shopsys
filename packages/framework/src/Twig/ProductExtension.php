@@ -117,7 +117,7 @@ class ProductExtension extends AbstractExtension
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice|null
+     * @return \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface|null
      */
     public function getProductSellingPrice(Product $product)
     {

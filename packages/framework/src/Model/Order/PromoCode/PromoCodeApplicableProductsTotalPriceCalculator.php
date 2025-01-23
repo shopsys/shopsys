@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\PromoCode;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\QuantifiedProductPriceCalculation;
 
 class PromoCodeApplicableProductsTotalPriceCalculator
@@ -25,9 +26,9 @@ class PromoCodeApplicableProductsTotalPriceCalculator
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct[] $quantifiedProducts
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
-    public function calculateTotalPrice(array $quantifiedProducts): Price
+    public function calculateTotalPrice(array $quantifiedProducts): PriceInterface
     {
         $domainId = $this->domain->getId();
         $currentCustomer = $this->currentCustomerUser->findCurrentCustomerUser();
@@ -42,10 +43,10 @@ class PromoCodeApplicableProductsTotalPriceCalculator
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice[] $quantifiedProductsPrices
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPriceInterface[] $quantifiedProductsPrices
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
-    protected function countTotalPrice(array $quantifiedProductsPrices): Price
+    protected function countTotalPrice(array $quantifiedProductsPrices): PriceInterface
     {
         $finalPrice = Price::zero();
 

@@ -11,8 +11,8 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
@@ -290,13 +290,13 @@ abstract class GraphQlTestCase extends ApplicationTestCase
      * @param string $priceWithoutVat
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      * @param int $quantity
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
     private function getConvertedPriceToDomainDefaultCurrency(
         string $priceWithoutVat,
         Vat $vat,
         int $quantity = 1,
-    ): Price {
+    ): PriceInterface {
         $domainId = $this->domain->getId();
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
         $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);

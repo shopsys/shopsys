@@ -15,7 +15,7 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\NotYetValidPromoCode
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\Exception\PromoCodeWithoutRelationWithAnyProductFromCurrentCartException;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodePricingGroup\PromoCodePricingGroupRepository;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeProduct\PromoCodeProductRepository;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class CurrentPromoCodeFacade
@@ -124,9 +124,9 @@ class CurrentPromoCodeFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $price
      */
-    protected function validateLimit(PromoCode $promoCode, Price $price): void
+    protected function validateLimit(PromoCode $promoCode, PriceInterface $price): void
     {
         $this->promoCodeFacade->getHighestLimitByPromoCodeAndTotalPrice($promoCode, $price);
     }
@@ -225,11 +225,11 @@ class CurrentPromoCodeFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalProductPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $totalProductPrice
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      * @return int[]
      */
-    public function validatePromoCode(PromoCode $promoCode, Price $totalProductPrice, array $products): array
+    public function validatePromoCode(PromoCode $promoCode, PriceInterface $totalProductPrice, array $products): array
     {
         if ($promoCode->isRegisteredCustomerUserOnly() && $this->currentCustomerUser->findCurrentCustomerUser() === null) {
             throw new AvailableForRegisteredCustomerUserOnly($promoCode->getCode());

@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Rounding;
 
 class AddRoundingMiddleware implements OrderProcessorMiddlewareInterface
@@ -67,11 +68,11 @@ class AddRoundingMiddleware implements OrderProcessorMiddlewareInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $roundingPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $roundingPrice
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData
      */
-    protected function createRoundingItemData(Price $roundingPrice, DomainConfig $domainConfig): OrderItemData
+    protected function createRoundingItemData(PriceInterface $roundingPrice, DomainConfig $domainConfig): OrderItemData
     {
         $orderItemData = $this->orderItemDataFactory->create(OrderItemTypeEnum::TYPE_ROUNDING);
 

@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemHasNoIdException;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactory;
 
@@ -43,9 +44,9 @@ class OrderItemPriceCalculation
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem $orderItem
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
-    public function calculateTotalPrice(OrderItem $orderItem): Price
+    public function calculateTotalPrice(OrderItem $orderItem): PriceInterface
     {
         if ($orderItem->hasForcedTotalPrice()) {
             return new Price($orderItem->getTotalPriceWithoutVat(), $orderItem->getTotalPriceWithVat());
@@ -65,7 +66,7 @@ class OrderItemPriceCalculation
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItem[] $orderItems
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface[]
      */
     public function calculateTotalPricesIndexedById($orderItems): array
     {

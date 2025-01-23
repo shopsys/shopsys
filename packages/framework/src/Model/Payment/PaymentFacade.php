@@ -210,7 +210,7 @@ class PaymentFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface[]
      */
     public function getIndependentBasePricesIndexedByDomainId(Payment $payment): array
     {
@@ -231,7 +231,7 @@ class PaymentFacade
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment|null $payment
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price[]
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface[]
      */
     public function getPricesIndexedByDomainId(?Payment $payment): array
     {

@@ -36,14 +36,14 @@ class CartWatcher
         $modifiedItems = [];
 
         foreach ($cart->getItems() as $cartItem) {
-            $productPrice = $this->productPriceCalculationForCustomerUser->calculatePriceForCurrentUser(
+            $price = $this->productPriceCalculationForCustomerUser->calculatePriceForCurrentUser(
                 $cartItem->getProduct(),
-            );
+            )->getPrice();
 
-            if (!$productPrice->getPriceWithVat()->equals($cartItem->getWatchedPrice())) {
+            if (!$price->getPriceWithVat()->equals($cartItem->getWatchedPrice())) {
                 $modifiedItems[] = $cartItem;
             }
-            $cartItem->setWatchedPrice($productPrice->getPriceWithVat());
+            $cartItem->setWatchedPrice($price->getPriceWithVat());
         }
 
         return $modifiedItems;
@@ -85,7 +85,7 @@ class CartWatcher
                     $product,
                 );
 
-                if ($productPrice->getPriceWithVat()->equals(Money::zero())) {
+                if ($productPrice->getPrice()->getPriceWithVat()->equals(Money::zero())) {
                     $notListableItems[] = $item;
                 }
             } catch (ProductNotFoundException $e) {

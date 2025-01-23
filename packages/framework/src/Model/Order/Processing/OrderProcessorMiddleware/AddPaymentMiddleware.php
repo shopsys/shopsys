@@ -13,7 +13,7 @@ use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
 class AddPaymentMiddleware implements OrderProcessorMiddlewareInterface
 {
@@ -73,13 +73,13 @@ class AddPaymentMiddleware implements OrderProcessorMiddlewareInterface
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $paymentPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $paymentPrice
      * @param \Shopsys\FrameworkBundle\Model\Payment\Payment $payment
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData
      */
     protected function createPaymentItemData(
-        Price $paymentPrice,
+        PriceInterface $paymentPrice,
         Payment $payment,
         DomainConfig $domainConfig,
     ): OrderItemData {

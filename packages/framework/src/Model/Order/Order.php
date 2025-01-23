@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTypeEnum;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransaction;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductNotFoundException;
 
 /**
@@ -739,10 +740,10 @@ class Order
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $orderTotalPrice
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsTotalPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $orderTotalPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $productsTotalPrice
      */
-    public function setTotalPrices(Price $orderTotalPrice, Price $productsTotalPrice): void
+    public function setTotalPrices(PriceInterface $orderTotalPrice, PriceInterface $productsTotalPrice): void
     {
         $this->totalPriceWithVat = $orderTotalPrice->getPriceWithVat();
         $this->totalPriceWithoutVat = $orderTotalPrice->getPriceWithoutVat();
@@ -1179,9 +1180,9 @@ class Order
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
-    public function getTotalProductsPrice(): Price
+    public function getTotalProductsPrice(): PriceInterface
     {
         return new Price($this->totalProductPriceWithoutVat, $this->totalProductPriceWithVat);
     }

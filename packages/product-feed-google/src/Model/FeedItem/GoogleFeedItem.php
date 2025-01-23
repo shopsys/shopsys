@@ -6,7 +6,7 @@ namespace Shopsys\ProductFeed\GoogleBundle\Model\FeedItem;
 
 use Shopsys\FrameworkBundle\Model\Feed\FeedItemInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice;
 
 class GoogleFeedItem implements FeedItemInterface
@@ -20,7 +20,7 @@ class GoogleFeedItem implements FeedItemInterface
      * @param int $id
      * @param string $name
      * @param bool $sellingDenied
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $price
      * @param \Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPrice|null $specialPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @param string $url
@@ -34,7 +34,7 @@ class GoogleFeedItem implements FeedItemInterface
         protected readonly int $id,
         protected readonly string $name,
         protected readonly bool $sellingDenied,
-        protected readonly Price $price,
+        protected readonly PriceInterface $price,
         protected readonly ?SpecialPrice $specialPrice,
         protected readonly Currency $currency,
         protected readonly string $url,
@@ -111,9 +111,9 @@ class GoogleFeedItem implements FeedItemInterface
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
-    public function getPrice(): Price
+    public function getPrice(): PriceInterface
     {
         return $this->price;
     }

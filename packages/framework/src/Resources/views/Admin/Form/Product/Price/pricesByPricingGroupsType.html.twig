@@ -1,4 +1,4 @@
-{% block prices_with_calculated_selling_prices_row %}
+{% block prices_by_pricing_groups_row %}
     <div class="form-price-heading">
         <div class="form-price-heading__cell form-price-heading__cell--field">
             {{ inputPriceLabel({ isSimple: true }) }}
@@ -11,7 +11,7 @@
     {{ form_widget(form) }}
 {% endblock %}
 
-{% block prices_with_calculated_selling_prices_input_row %}
+{% block pricing_group_price_input_row %}
     {% set domainId = form.parent.vars.domain_id %}
     <div class="form-line form-line--in-box">
         <div class="form-line__label">
@@ -20,19 +20,19 @@
         <div class="form-line__item">
             {{ form_widget(form, { symbolAfterInput: currencySymbolByDomainId(domainId) }) }}
         </div>
-        {% if form.vars.selling_price %}
+        {% if form.vars.product_price %}
             <div class="form-line__item--right">
                 <div class="form-line__item__price">
                     <div class="form-line__item__price__label-mobile">
                         {{ 'Excl. VAT'|trans }}
                     </div>
-                    {{ form.vars.selling_price.priceWithoutVat|priceWithCurrencyByDomainId(domainId) }}
+                    {{ form.vars.product_price.price.priceWithoutVat|priceWithCurrencyByDomainId(domainId) }}
                 </div>
                 <div class="form-line__item__price">
                     <div class="form-line__item__price__label-mobile">
                         {{ 'Incl. VAT'|trans }}
                     </div>
-                    <strong>{{ form.vars.selling_price.priceWithVat|priceWithCurrencyByDomainId(domainId) }}</strong>
+                    <strong>{{ form.vars.product_price.price.priceWithVat|priceWithCurrencyByDomainId(domainId) }}</strong>
                 </div>
             </div>
         {% endif %}

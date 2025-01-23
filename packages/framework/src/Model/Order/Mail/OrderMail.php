@@ -260,7 +260,7 @@ class OrderMail implements MessageFactoryInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $orderItemTotalPricesById
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface[] $orderItemTotalPricesById
      * @return string
      */
     protected function getProductsHtmlTable(Order $order, array $orderItemTotalPricesById): string
@@ -307,7 +307,7 @@ class OrderMail implements MessageFactoryInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $orderItemTotalPricesById
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface[] $orderItemTotalPricesById
      * @return string
      */
     protected function getTransportInfoHtml(Order $order, array $orderItemTotalPricesById): string
@@ -324,7 +324,7 @@ class OrderMail implements MessageFactoryInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $orderItemTotalPricesById
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface[] $orderItemTotalPricesById
      * @return string
      */
     protected function getPaymentInfoHtml(Order $order, array $orderItemTotalPricesById): string
@@ -341,7 +341,7 @@ class OrderMail implements MessageFactoryInterface
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price[] $orderItemTotalPricesById
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface[] $orderItemTotalPricesById
      * @return string|null
      */
     protected function getRoundingInfoHtml(Order $order, array $orderItemTotalPricesById): ?string

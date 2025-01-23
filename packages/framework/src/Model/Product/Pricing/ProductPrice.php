@@ -4,39 +4,62 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Pricing;
 
+use Override;
+use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
-class ProductPrice extends Price
+final class ProductPrice implements ProductPriceInterface
 {
-    protected bool $priceFrom;
-
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $price
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup
      * @param bool $priceFrom
      */
-    public function __construct(Price $price, $priceFrom)
-    {
-        $this->priceFrom = $priceFrom;
-
-        parent::__construct($price->getPriceWithoutVat(), $price->getPriceWithVat());
+    public function __construct(
+        private readonly PriceInterface $price,
+        private readonly PricingGroup $pricingGroup,
+        private readonly bool $priceFrom = false,
+    ) {
     }
 
     /**
-     * @return bool
+     * {@inheritdoc}
      */
-    public function isPriceFrom()
+    #[Override]
+    public function isPriceFrom(): bool
     {
         return $this->priceFrom;
     }
 
     /**
-     * @return self
+     * {@inheritdoc}
      */
-    public static function createHiddenProductPrice(): self
+    #[Override]
+    public static function createHiddenProductPrice(PricingGroup $pricingGroup): self
     {
         return new self(
-            self::createHiddenPrice(),
+            Price::createHiddenPrice(),
+            $pricingGroup,
             false,
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function getPrice(): PriceInterface
+    {
+        return $this->price;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    public function getPricingGroup(): PricingGroup
+    {
+        return $this->pricingGroup;
     }
 }

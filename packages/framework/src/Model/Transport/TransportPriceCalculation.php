@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Transport;
 use Shopsys\FrameworkBundle\Model\Pricing\BasePriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\TransportAndPayment\FreeTransportAndPaymentFacade;
 
@@ -30,19 +31,19 @@ class TransportPriceCalculation
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\Transport $transport
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $productsPrice
      * @param int $domainId
      * @param int $cartTotalWeight
      * @param bool $forceFreeTransport
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
     public function calculatePrice(
         Transport $transport,
-        Price $productsPrice,
+        PriceInterface $productsPrice,
         int $domainId,
         int $cartTotalWeight,
         bool $forceFreeTransport,
-    ): Price {
+    ): PriceInterface {
         $transportPrice = $this->transportPriceFacade->getTransportPriceOnDomainByTransportAndClosestWeight($domainId, $transport, $cartTotalWeight);
 
         if ($this->freeTransportAndPaymentFacade->isFree($productsPrice->getPriceWithVat(), $domainId, $forceFreeTransport)) {
@@ -54,9 +55,9 @@ class TransportPriceCalculation
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPrice $transportPrice
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
-    public function calculateIndependentPrice(TransportPrice $transportPrice): Price
+    public function calculateIndependentPrice(TransportPrice $transportPrice): PriceInterface
     {
         $domainId = $transportPrice->getDomainId();
         $defaultCurrencyForDomain = $this->currencyFacade->getDomainDefaultCurrencyByDomainId(

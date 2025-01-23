@@ -58,9 +58,9 @@ class OrderPriceCalculationTest extends TestCase
 
         $orderTotalPrice = $priceCalculation->getOrderTotalPrice($orderMock);
 
-        $this->assertThat($orderTotalPrice->getPriceWithVat(), new IsMoneyEqual(Money::create(3220)));
-        $this->assertThat($orderTotalPrice->getPriceWithoutVat(), new IsMoneyEqual(Money::create(1165)));
-        $this->assertThat($orderTotalPrice->getProductPriceWithVat(), new IsMoneyEqual(Money::create(3200)));
+        $this->assertThat($orderTotalPrice->getPrice()->getPriceWithVat(), new IsMoneyEqual(Money::create(3220)));
+        $this->assertThat($orderTotalPrice->getPrice()->getPriceWithoutVat(), new IsMoneyEqual(Money::create(1165)));
+        $this->assertThat($orderTotalPrice->getProductPrice()->getPriceWithVat(), new IsMoneyEqual(Money::create(3200)));
     }
 
     public function testCalculateOrderRoundingPriceForOtherCurrency()

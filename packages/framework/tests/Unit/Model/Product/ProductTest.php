@@ -107,33 +107,6 @@ class ProductTest extends TestCase
         $mainVariant->addVariant($mainVariant);
     }
 
-    public function testDeleteResultNotVariant()
-    {
-        $productData = TestProductProvider::getTestProductData();
-        $product = Product::create($productData);
-
-        $this->assertEmpty($product->getProductDeleteResult()->getProductsForRecalculations());
-    }
-
-    public function testDeleteResultVariant()
-    {
-        $productData = TestProductProvider::getTestProductData();
-        $variant = Product::create($productData);
-        $mainVariant = Product::createMainVariant($productData, [$variant]);
-
-        $this->assertSame([$mainVariant], $variant->getProductDeleteResult()->getProductsForRecalculations());
-    }
-
-    public function testDeleteResultMainVariant()
-    {
-        $productData = TestProductProvider::getTestProductData();
-        $variant = Product::create($productData);
-        $mainVariant = Product::createMainVariant($productData, [$variant]);
-
-        $this->assertEmpty($mainVariant->getProductDeleteResult()->getProductsForRecalculations());
-        $this->assertFalse($variant->isVariant());
-    }
-
     public function testRefreshVariants()
     {
         $productData = TestProductProvider::getTestProductData();

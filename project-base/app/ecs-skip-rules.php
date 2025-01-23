@@ -67,7 +67,6 @@ return [
     ],
     ObjectIsCreatedByFactorySniff::class => [
         __DIR__ . '/tests/*',
-        __DIR__ . '/src/Model/Product/Filter/Elasticsearch/ProductFilterConfigFactory.php',
     ],
     ForbiddenDumpSniff::class => [
         __DIR__ . '/tests/App/Functional/Model/Cart/CartFacadeTest.php',

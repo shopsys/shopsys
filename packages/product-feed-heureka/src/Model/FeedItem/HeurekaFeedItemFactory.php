@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -79,15 +79,14 @@ class HeurekaFeedItemFactory
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
-    protected function getPrice(Product $product, DomainConfig $domainConfig): Price
+    protected function getPrice(Product $product, DomainConfig $domainConfig): PriceInterface
     {
         return $this->productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId(
             $product,
             $domainConfig->getId(),
-            null,
-        );
+        )->getPrice();
     }
 
     /**

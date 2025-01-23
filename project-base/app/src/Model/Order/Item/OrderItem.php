@@ -24,7 +24,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem as BaseOrderItem;
  * @method setTransport(\App\Model\Transport\Transport $transport)
  * @method setPayment(\App\Model\Payment\Payment $payment)
  * @method setProduct(\App\Model\Product\Product|null $product)
- * @method __construct(\App\Model\Order\Order $order, string $name, \Shopsys\FrameworkBundle\Model\Pricing\Price $price, string $vatPercent, int $quantity, string $type, string|null $unitName, string|null $catnum)
+ * @method __construct(\App\Model\Order\Order $order, string $name, \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $price, string $vatPercent, int $quantity, string $type, string|null $unitName, string|null $catnum)
  * @property \Doctrine\Common\Collections\Collection<int,\App\Model\Order\Item\OrderItem> $relatedItems
  * @method addRelatedItem(\App\Model\Order\Item\OrderItem $relatedItem)
  * @method \App\Model\Order\Item\OrderItem[] getRelatedItems()

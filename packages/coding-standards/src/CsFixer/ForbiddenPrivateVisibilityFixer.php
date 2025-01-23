@@ -76,7 +76,7 @@ final class ForbiddenPrivateVisibilityFixer implements ConfigurableFixerInterfac
     public function getDefinition(): FixerDefinitionInterface
     {
         return new FixerDefinition(
-            'Properties and methods should be public or protected in defined namespace',
+            'Properties and methods should be public or protected in defined namespace (if the class is not final).',
             [
                 new CodeSample(
                     '<?php
@@ -106,7 +106,7 @@ private function method()
      */
     public function isCandidate(Tokens $tokens): bool
     {
-        return $tokens->isAnyTokenKindsFound([T_PRIVATE, CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PRIVATE]) && $this->checkNamespace($tokens);
+        return !$this->isFinalClass($tokens) && $tokens->isAnyTokenKindsFound([T_PRIVATE, CT::T_CONSTRUCTOR_PROPERTY_PROMOTION_PRIVATE]) && $this->checkNamespace($tokens);
     }
 
     /**
@@ -159,6 +159,25 @@ private function method()
     private function namespaceStartsWith(string $fullNamespace, string $namespacePrefix): bool
     {
         return strncmp($fullNamespace, $namespacePrefix, strlen($namespacePrefix)) === 0;
+    }
+
+    /**
+     * @param \PhpCsFixer\Tokenizer\Tokens $tokens
+     * @return bool
+     */
+    private function isFinalClass(Tokens $tokens): bool
+    {
+        foreach ($tokens as $index => $token) {
+            if ($token->isGivenKind(T_CLASS)) {
+                $prevIndex = $tokens->getPrevMeaningfulToken($index);
+
+                if ($prevIndex !== null && $tokens[$prevIndex]->isGivenKind(T_FINAL)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /**

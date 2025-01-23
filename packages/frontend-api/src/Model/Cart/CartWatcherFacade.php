@@ -27,16 +27,18 @@ class CartWatcherFacade
      * @param \Shopsys\FrontendApiBundle\Model\Cart\TransportAndPaymentWatcherFacade $transportAndPaymentWatcherFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\CurrentPromoCodeFacade $currentPromoCodeFacade
      * @param \Shopsys\FrameworkBundle\Model\Cart\CartPromoCodeFacade $cartPromoCodeFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Cart\CartWithModificationsResultFactory $cartWithModificationsResultFactory
      */
     public function __construct(
-        protected CartWatcher $cartWatcher,
-        protected EntityManagerInterface $em,
-        protected CurrentCustomerUser $currentCustomerUser,
-        protected ProductAvailabilityFacade $productAvailabilityFacade,
-        protected Domain $domain,
-        protected TransportAndPaymentWatcherFacade $transportAndPaymentWatcherFacade,
-        protected CurrentPromoCodeFacade $currentPromoCodeFacade,
-        protected CartPromoCodeFacade $cartPromoCodeFacade,
+        protected readonly CartWatcher $cartWatcher,
+        protected readonly EntityManagerInterface $em,
+        protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
+        protected readonly Domain $domain,
+        protected readonly TransportAndPaymentWatcherFacade $transportAndPaymentWatcherFacade,
+        protected readonly CurrentPromoCodeFacade $currentPromoCodeFacade,
+        protected readonly CartPromoCodeFacade $cartPromoCodeFacade,
+        protected readonly CartWithModificationsResultFactory $cartWithModificationsResultFactory,
     ) {
     }
 
@@ -46,7 +48,7 @@ class CartWatcherFacade
      */
     public function getCheckedCartWithModifications(Cart $cart): CartWithModificationsResult
     {
-        $this->cartWithModificationsResult = new CartWithModificationsResult($cart);
+        $this->cartWithModificationsResult = $this->cartWithModificationsResultFactory->create($cart);
 
         $this->checkRemovedProductsItems($cart);
         $this->checkNotListableItems($cart);

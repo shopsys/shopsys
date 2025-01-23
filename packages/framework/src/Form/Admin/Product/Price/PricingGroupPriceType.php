@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\Product\Price;
 
 use Override;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class MoneyWithCalculatedPriceType extends AbstractType
+class PricingGroupPriceType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -21,9 +21,9 @@ class MoneyWithCalculatedPriceType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'selling_price' => null,
+            'product_price' => null,
         ]);
-        $resolver->setAllowedTypes('selling_price', [Price::class, 'null']);
+        $resolver->setAllowedTypes('product_price', [ProductPriceInterface::class, 'null']);
     }
 
     /**
@@ -32,7 +32,7 @@ class MoneyWithCalculatedPriceType extends AbstractType
     #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
-        $view->vars['selling_price'] = $options['selling_price'];
+        $view->vars['product_price'] = $options['product_price'];
     }
 
     /**

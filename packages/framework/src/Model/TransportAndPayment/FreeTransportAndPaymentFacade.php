@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\TransportAndPayment;
 
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 
 class FreeTransportAndPaymentFacade
@@ -93,13 +93,13 @@ class FreeTransportAndPaymentFacade
 
     /**
      * @param int $domainId
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $productsPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $productsPrice
      * @param bool $forceFreeTransportAndPayment
      * @return bool
      */
     public function isFreeTransportAndPaymentApplied(
         int $domainId,
-        Price $productsPrice,
+        PriceInterface $productsPrice,
         bool $forceFreeTransportAndPayment,
     ): bool {
         return $this->isActive($domainId, $forceFreeTransportAndPayment) && $this->getRemainingPriceWithVat($productsPrice->getPriceWithVat(), $domainId, $forceFreeTransportAndPayment)->isZero();

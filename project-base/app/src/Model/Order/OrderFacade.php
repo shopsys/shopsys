@@ -27,7 +27,7 @@ use Shopsys\FrameworkBundle\Model\Order\OrderFacade as BaseOrderFacade;
  * @method \App\Model\Order\Order getByUuidAndUrlHash(string $uuid, string $urlHash)
  * @method \App\Model\Order\Order getByUrlHashAndDomain(string $urlHash, int $domainId)
  * @method \App\Model\Order\Order getByOrderNumberAndUser(string $orderNumber, \App\Model\Customer\User\CustomerUser $customerUser)
- * @method addOrderItemDiscount(\App\Model\Order\Item\OrderItem $orderItem, \Shopsys\FrameworkBundle\Model\Pricing\Price $quantifiedItemDiscount, string $locale, float $discountPercent)
+ * @method addOrderItemDiscount(\App\Model\Order\Item\OrderItem $orderItem, \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $quantifiedItemDiscount, string $locale, float $discountPercent)
  * @method refreshOrderItemsWithoutTransportAndPayment(\App\Model\Order\Order $order, \App\Model\Order\OrderData $orderData)
  * @method calculateOrderItemDataPrices(\App\Model\Order\Item\OrderItemData $orderItemData, int $domainId)
  * @method updateOrderDataWithDeliveryAddress(\App\Model\Order\OrderData $orderData, \App\Model\Customer\DeliveryAddress|null $deliveryAddress)

@@ -4,42 +4,46 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Item;
 
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Override;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
-class QuantifiedItemPrice
+final class QuantifiedItemPrice implements QuantifiedItemPriceInterface
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $unitPrice
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $totalPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $unitPrice
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $totalPrice
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
      */
     public function __construct(
-        protected readonly Price $unitPrice,
-        protected readonly Price $totalPrice,
-        protected readonly Vat $vat,
+        private readonly PriceInterface $unitPrice,
+        private readonly PriceInterface $totalPrice,
+        private readonly Vat $vat,
     ) {
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * {@inheritdoc}
      */
-    public function getUnitPrice(): Price
+    #[Override]
+    public function getUnitPrice(): PriceInterface
     {
         return $this->unitPrice;
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * {@inheritdoc}
      */
-    public function getTotalPrice(): Price
+    #[Override]
+    public function getTotalPrice(): PriceInterface
     {
         return $this->totalPrice;
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat
+     * {@inheritdoc}
      */
+    #[Override]
     public function getVat(): Vat
     {
         return $this->vat;

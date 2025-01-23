@@ -230,8 +230,9 @@ class MergadoFeedItemTest extends TestCase
     private function mockProductPrice(Product $product, DomainConfig $domain, Price $price): void
     {
         $domainId = $domain->getId();
-        $this->pricingGroupSettingFacadeMock->method('getDefaultPricingGroupByDomainId')->willReturn(new PricingGroup(new PricingGroupData(), $domainId));
-        $productPrice = new ProductPrice($price, false);
+        $pricingGroup = new PricingGroup(new PricingGroupData(), $domainId);
+        $this->pricingGroupSettingFacadeMock->method('getDefaultPricingGroupByDomainId')->willReturn($pricingGroup);
+        $productPrice = new ProductPrice($price, $pricingGroup, false);
         $this->productPriceCalculationForCustomerUserMock->method('calculatePriceForCustomerUserAndDomainId')
             ->with($product, $domainId, null)->willReturn($productPrice);
 

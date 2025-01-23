@@ -20,7 +20,7 @@ namespace App\Model\Service;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
 /**
  * @ORM\Table(name="services")
@@ -59,10 +59,10 @@ class Service
 
     /**
      * @param string $name
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Price $price
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $price
      * @param string|null $uuid
      */
-    public function __construct(string $name, Price $price, string $uuid = null)
+    public function __construct(string $name, PriceInterface $price, string $uuid = null)
     {
         $this->name = $name;
         $this->uuid = $uuid ?? Uuid::uuid4()->toString();
@@ -87,9 +87,9 @@ class Service
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\Price
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
-    public function getPrice(): Price
+    public function getPrice(): PriceInterface
     {
         return new Price($this->priceWithoutVat, $this->priceWithVat);
     }

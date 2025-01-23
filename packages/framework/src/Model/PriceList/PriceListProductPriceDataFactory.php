@@ -88,16 +88,16 @@ class PriceListProductPriceDataFactory
      */
     protected function getBasicPriceBasedOnPricingSetting(Product $product, int $domainId): Money
     {
-        $basicPrice = $this->productFacade->getProductSellingPriceForDefaultPricingGroup(
+        $basicPrice = $this->productFacade->getProductPriceForDefaultPricingGroup(
             $product,
             $domainId,
         );
 
         if ($this->pricingSetting->getInputPriceType() === PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT) {
-            return $basicPrice->getPriceWithoutVat();
+            return $basicPrice->getPrice()->getPriceWithoutVat();
         }
 
-        return $basicPrice->getPriceWithVat();
+        return $basicPrice->getPrice()->getPriceWithVat();
     }
 
     /**

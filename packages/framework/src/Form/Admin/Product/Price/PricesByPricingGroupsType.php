@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PricesWithCalculatedSellingPricesType extends AbstractType
+class PricesByPricingGroupsType extends AbstractType
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade $pricingGroupFacade
@@ -29,12 +29,13 @@ class PricesWithCalculatedSellingPricesType extends AbstractType
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $sellingPrices = $options['selling_prices'];
+        /** @var \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice[] $productPrices */
+        $productPrices = $options['product_prices'];
 
         foreach ($this->pricingGroupFacade->getByDomainId($options['domain_id']) as $pricingGroup) {
-            $builder->add((string)$pricingGroup->getId(), MoneyWithCalculatedPriceType::class, [
-                'selling_price' => $sellingPrices !== null ? $sellingPrices[$pricingGroup->getId()]?->getSellingPrice() : null,
-                'block_prefix' => 'prices_with_calculated_selling_prices_input',
+            $builder->add((string)$pricingGroup->getId(), PricingGroupPriceType::class, [
+                'product_price' => $productPrices !== null ? $productPrices[$pricingGroup->getId()] : null,
+                'block_prefix' => 'pricing_group_price_input',
                 'scale' => 6,
                 'required' => false,
                 'invalid_message' => 'Please enter price in correct format (positive number with decimal separator)',
@@ -54,11 +55,11 @@ class PricesWithCalculatedSellingPricesType extends AbstractType
     {
         $resolver
             ->setDefaults([
-                'selling_prices' => null,
+                'product_prices' => null,
             ])
             ->setRequired(['domain_id'])
             ->setAllowedTypes('domain_id', 'int')
-            ->setAllowedTypes('selling_prices', ['array', 'null']);
+            ->setAllowedTypes('product_prices', ['array', 'null']);
     }
 
     /**
@@ -68,6 +69,6 @@ class PricesWithCalculatedSellingPricesType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['domain_id'] = $options['domain_id'];
-        $view->vars['selling_prices'] = $options['selling_prices'];
+        $view->vars['product_prices'] = $options['product_prices'];
     }
 }

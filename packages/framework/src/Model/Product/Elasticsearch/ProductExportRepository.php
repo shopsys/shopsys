@@ -22,7 +22,6 @@ use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
-use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPrice;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
@@ -374,23 +373,18 @@ class ProductExportRepository
     protected function extractPrices(int $domainId, Product $product): array
     {
         $prices = [];
-        $productSellingPrices = $this->productFacade->getAllProductSellingPricesByDomainId($product, $domainId);
+        $productPrices = $this->productFacade->getAllProductPricesByDomainId($product, $domainId);
 
-        foreach ($productSellingPrices as $productSellingPrice) {
-            $sellingPrice = $productSellingPrice->getSellingPrice();
-            $priceFrom = false;
+        foreach ($productPrices as $productPrice) {
+            $pricingGroup = $productPrice->getPricingGroup();
+            $price = $productPrice->getPrice();
 
-            if ($sellingPrice instanceof ProductPrice) {
-                $priceFrom = $sellingPrice->isPriceFrom();
-            }
-
-            $pricingGroup = $productSellingPrice->getPricingGroup();
             $prices[] = [
                 'pricing_group_id' => $pricingGroup->getId(),
-                'price_with_vat' => (float)$sellingPrice->getPriceWithVat()->getAmount(),
-                'price_without_vat' => (float)$sellingPrice->getPriceWithoutVat()->getAmount(),
-                'vat' => (float)$sellingPrice->getVatAmount()->getAmount(),
-                'price_from' => $priceFrom,
+                'price_with_vat' => (float)$price->getPriceWithVat()->getAmount(),
+                'price_without_vat' => (float)$price->getPriceWithoutVat()->getAmount(),
+                'vat' => (float)$price->getVatAmount()->getAmount(),
+                'price_from' => $productPrice->isPriceFrom(),
                 'filtering_minimal_price' => (float)$this->getMaximalVariantPriceForFilteringMinimalPrice($product, $pricingGroup, $domainId)->getAmount(),
                 'filtering_maximal_price' => (float)$this->getMinimalVariantPriceForFilteringMaximalPrice($product, $pricingGroup, $domainId)->getAmount(),
             ];
@@ -591,7 +585,7 @@ class ProductExportRepository
                 $product,
                 $pricingGroup->getDomainId(),
                 $pricingGroup,
-            )->getPriceWithVat();
+            )->getPrice()->getPriceWithVat();
         }
 
         $variants = $this->productRepository->getAllSellableVariantsByMainVariant($product, $domainId, $pricingGroup);
@@ -601,7 +595,7 @@ class ProductExportRepository
                 $variant,
                 $pricingGroup->getDomainId(),
                 $pricingGroup,
-            )->getPriceWithVat();
+            )->getPrice()->getPriceWithVat();
 
             if ($price === null || $variantPrice->isGreaterThan($price)) {
                 $price = $variantPrice;
@@ -633,7 +627,7 @@ class ProductExportRepository
                 $product,
                 $pricingGroup->getDomainId(),
                 $pricingGroup,
-            )->getPriceWithVat();
+            )->getPrice()->getPriceWithVat();
         }
 
         $variants = $this->productRepository->getAllSellableVariantsByMainVariant($product, $domainId, $pricingGroup);
@@ -643,7 +637,7 @@ class ProductExportRepository
                 $variant,
                 $pricingGroup->getDomainId(),
                 $pricingGroup,
-            )->getPriceWithVat();
+            )->getPrice()->getPriceWithVat();
 
             if ($price === null || $variantPrice->isLessThan($price)) {
                 $price = $variantPrice;
