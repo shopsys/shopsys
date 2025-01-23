@@ -107,11 +107,6 @@ services:
 
     App\Model\Product\Search\ProductElasticsearchConverter: ~
 
-    App\Model\Sitemap\SitemapFacade:
-        arguments:
-            - '%shopsys.sitemaps_dir%'
-            - '%shopsys.sitemaps_url_prefix%'
-
     App\Twig\:
         resource: '../src/Twig/'
 
