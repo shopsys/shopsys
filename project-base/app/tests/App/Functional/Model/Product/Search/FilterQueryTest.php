@@ -245,7 +245,7 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
             ->filterWithActiveSpecialPriceOnly($pricingGroup)
             ->applyOrderingByIdAscending();
 
-        $this->assertIdWithFilter($filter, [19, 27, 28, 117]);
+        $this->assertIdWithFilter($filter, [19, 27, 28, 54, 69, 117]);
     }
 
     /**

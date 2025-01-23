@@ -58,6 +58,7 @@ class PriceListDataFixture extends AbstractReferenceFixture implements Dependent
             $priceListData->priceListProductPricesData = [
                 $this->createPriceListProductPriceData('27', '42', $domainConfig->getId(), $currencyCzk, $vat),
                 $this->createPriceListProductPriceData('28', '50', $domainConfig->getId(), $currencyCzk, $vat),
+                $this->createPriceListProductPriceData('54', '10123', $domainConfig->getId(), $currencyCzk, $vat),
             ];
             $priceList = $this->priceListFacade->create($priceListData);
             $this->addReferenceForDomain(self::ACTIVE_SPECIAL_OFFERS_REFERENCE, $priceList, $domainConfig->getId());
