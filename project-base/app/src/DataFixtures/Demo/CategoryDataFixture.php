@@ -212,6 +212,8 @@ class CategoryDataFixture extends AbstractReferenceFixture
         ];
         $this->createCategory($categoryData, self::CATEGORY_TOYS);
 
+        $categoryData->automatedFilters = [];
+
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $locale = $domainConfig->getLocale();
             $categoryData->name[$locale] = t('Garden tools', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
