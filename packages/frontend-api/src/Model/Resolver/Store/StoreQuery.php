@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\Store;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\Store;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
@@ -23,9 +23,9 @@ class StoreQuery extends AbstractQuery
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
-        private readonly StoreFacade $storeFacade,
-        private readonly FriendlyUrlFacade $friendlyUrlFacade,
-        private readonly Domain $domain,
+        protected readonly StoreFacade $storeFacade,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        protected readonly Domain $domain,
     ) {
     }
 

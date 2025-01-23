@@ -1,5 +1,7 @@
+import { StoreContact } from './StoreContact';
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
+import { Infobox } from 'components/Basic/Infobox/Infobox';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
@@ -27,12 +29,17 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
 
     useEffect(() => {
         if (isExpanded && itemRef.current) {
-            itemRef.current.scrollIntoView({
-                behavior: 'smooth',
-                block: 'nearest',
-                inline: 'center',
-            });
+            const timeoutId = setTimeout(() => {
+                itemRef.current!.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest',
+                    inline: 'end',
+                });
+            }, 100);
+            return () => clearTimeout(timeoutId);
         }
+
+        return undefined;
     }, [isExpanded]);
 
     return (
@@ -48,13 +55,20 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
         >
             <div className="flex items-center justify-between gap-3.5">
                 <div className="w-full items-center justify-between xl:flex">
-                    <div className="max-xl:mb-2.5">
+                    <div className="max-xl:mb-2.5 xl:w-[215px]">
                         <h5>{store.name}</h5>
                         <p className="mt-1.5 text-xs">
                             {store.street}, {store.postcode} {store.city}
                         </p>
                     </div>
-                    <div className="flex items-center xl:block xl:text-right" tid={TIDs.store_opening_status}>
+                    {store.distance && (
+                        <p className="text-xs text-inputPlaceholder max-xl:hidden">
+                            {t('{{ distance }} km from you', {
+                                distance: (store.distance / 1000).toFixed(0),
+                            })}
+                        </p>
+                    )}
+                    <div className="flex w-44 items-center xl:block xl:text-right" tid={TIDs.store_opening_status}>
                         <OpeningStatus className="xl:mb-1.5" status={store.openingHours.status} />
                         <p className="ml-2.5 text-xs" tid={TIDs.store_opening_hours}>
                             {getTodayOpeningHours(store.openingHours)}
@@ -69,15 +83,25 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
             <AnimatePresence initial={false}>
                 {isExpanded && (
                     <AnimateCollapseDiv className="mt-2.5 !block" keyName="store-info">
+                        {!!store.specialMessage && (
+                            <InfoItem>
+                                <Infobox message={store.specialMessage} />
+                            </InfoItem>
+                        )}
                         {store.description && (
                             <InfoItem>
-                                <StoreHeading text={t('Store description')} />
-                                <p>{store.description}</p>
+                                <p className="text-sm" dangerouslySetInnerHTML={{ __html: store.description }} />
                             </InfoItem>
                         )}
 
+                        {store.phone || store.email ? (
+                            <InfoItem>
+                                <StoreContact email={store.email} phone={store.phone} />
+                            </InfoItem>
+                        ) : null}
+
                         <InfoItem>
-                            <StoreHeading text={t('Opening hours')} />
+                            <h5 className="mb-2">{t('Opening hours')}</h5>
                             <OpeningHours openingHours={store.openingHours} />
                         </InfoItem>
 
@@ -91,6 +115,4 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
     );
 };
 
-const StoreHeading: FC<{ text: string }> = ({ text }) => <h6 className="mb-2">{text}</h6>;
-
-const InfoItem: FC = ({ children }) => <div className="mb-2">{children}</div>;
+const InfoItem: FC = ({ children }) => <div className="mb-5">{children}</div>;

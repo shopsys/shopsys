@@ -122,6 +122,7 @@
     * [ComplaintInput](#complaintinput)
     * [ComplaintItemInput](#complaintiteminput)
     * [ContactFormInput](#contactforminput)
+    * [Coordinates](#coordinates)
     * [CreateInquiryInput](#createinquiryinput)
     * [CreateWatchdogInput](#createwatchdoginput)
     * [DeliveryAddressInput](#deliveryaddressinput)
@@ -1284,6 +1285,15 @@ Returns list of stores that can be paginated using `first`, `last`, `before` and
 <td></td>
 </tr>
 <tr>
+<td colspan="2" align="right" valign="top">coordinates</td>
+<td valign="top"><a href="#coordinates">Coordinates</a></td>
+<td>
+
+Returns stores with distance from given coordinates
+
+</td>
+</tr>
+<tr>
 <td colspan="2" align="right" valign="top">first</td>
 <td valign="top"><a href="#int">Int</a></td>
 <td></td>
@@ -1292,6 +1302,15 @@ Returns list of stores that can be paginated using `first`, `last`, `before` and
 <td colspan="2" align="right" valign="top">last</td>
 <td valign="top"><a href="#int">Int</a></td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">searchText</td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Search for city or post code
+
+</td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>transport</strong></td>
@@ -8687,11 +8706,6 @@ Store address city
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>contactInfo</strong></td>
-<td valign="top"><a href="#string">String</a></td>
-<td></td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong>country</strong></td>
 <td valign="top"><a href="#country">Country</a>!</td>
 <td>
@@ -8706,6 +8720,33 @@ Store address country
 <td>
 
 Store description
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>directions</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Description of how to get to the store
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>distance</strong></td>
+<td valign="top"><a href="#int">Int</a></td>
+<td>
+
+Distance from the user in meters
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>email</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Store email
 
 </td>
 </tr>
@@ -8779,6 +8820,15 @@ Store name
 <td>
 
 Store opening hours
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>phone</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Store phone
 
 </td>
 </tr>
@@ -10185,6 +10235,30 @@ Message that will be sent to recipient
 Name of the sender
 
 </td>
+</tr>
+</tbody>
+</table>
+
+### Coordinates
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>latitude</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>longitude</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td></td>
 </tr>
 </tbody>
 </table>

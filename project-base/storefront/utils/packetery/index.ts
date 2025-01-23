@@ -37,6 +37,10 @@ export const mapPacketeryExtendedPoint = (packeteryExtendedPoint: PacketeryExten
     postcode: packeteryExtendedPoint.zip.replaceAll(' ', ''),
     openingHours: mapPacketeryOpeningHoursToInternalOpeningHours(packeteryExtendedPoint),
     mainImage: null,
+    distance: null,
+    specialMessage: null,
+    phone: null,
+    email: null,
 });
 
 const mapPacketeryOpeningHoursToInternalOpeningHours = (

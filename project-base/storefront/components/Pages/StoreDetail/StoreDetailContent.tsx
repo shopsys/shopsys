@@ -1,17 +1,15 @@
 import { GoogleMap } from 'components/Basic/GoogleMap/GoogleMap';
-import { ChatIcon } from 'components/Basic/Icon/ChatIcon';
 import { Image } from 'components/Basic/Image/Image';
+import { Infobox } from 'components/Basic/Infobox/Infobox';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
-import { LinkButton } from 'components/Forms/Button/LinkButton';
+import { StoreContact } from 'components/Blocks/StoreList/StoreContact';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeStoreDetailFragment } from 'graphql/requests/stores/fragments/StoreDetailFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
-import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 const ModalGallery = dynamic(() =>
     import('components/Basic/ModalGallery/ModalGallery').then((component) => component.ModalGallery),
@@ -23,8 +21,6 @@ type StoreDetailContentProps = {
 
 export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
     const { t } = useTranslation();
-    const { url } = useDomainConfig();
-    const [contactUrl] = getInternationalizedStaticUrls(['/contact'], url);
 
     const [selectedGalleryItemIndex, setSelectedGalleryItemIndex] = useState<number>();
 
@@ -40,10 +36,16 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                         </div>
                     </div>
 
+                    {!!store.specialMessage && (
+                        <InfoItem>
+                            <Infobox message={store.specialMessage} />
+                        </InfoItem>
+                    )}
+
                     {!!store.description && (
                         <InfoItem>
                             <StoreHeading text={t('Store description')} />
-                            <div dangerouslySetInnerHTML={{ __html: store.description }} />
+                            <p dangerouslySetInnerHTML={{ __html: store.description }} />
                         </InfoItem>
                     )}
                     <InfoItem>
@@ -59,29 +61,23 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                         </p>
                     </InfoItem>
 
+                    {!!store.directions && (
+                        <InfoItem>
+                            <StoreHeading text={t('How to reach us')} />
+                            <p dangerouslySetInnerHTML={{ __html: store.directions }} />
+                        </InfoItem>
+                    )}
+
+                    {store.phone || store.email ? (
+                        <InfoItem>
+                            <StoreContact email={store.email} phone={store.phone} />
+                        </InfoItem>
+                    ) : null}
+
                     <InfoItem className="flex-1">
                         <StoreHeading text={t('Opening hours')} />
                         <OpeningHours className="mx-auto" openingHours={store.openingHours} />
                     </InfoItem>
-
-                    {!!store.contactInfo && (
-                        <InfoItem>
-                            <StoreHeading text={t('Contact to the department store')} />
-                            {store.contactInfo}
-                        </InfoItem>
-                    )}
-
-                    {!!store.specialMessage && (
-                        <InfoItem>
-                            <StoreHeading text={t('Special announcement')} />
-                            {store.specialMessage}
-                        </InfoItem>
-                    )}
-
-                    <LinkButton href={contactUrl} size="medium" type="contact" variant="inverted">
-                        <ChatIcon className="mr-3 w-6 text-2xl xl:mr-5" />
-                        {t('Do you have any questions?')}
-                    </LinkButton>
                 </div>
                 <div className="w-full lg:basis-1/2">
                     <div className="mt-5 flex aspect-square w-full rounded-xl bg-backgroundMore p-5 lg:mt-0">

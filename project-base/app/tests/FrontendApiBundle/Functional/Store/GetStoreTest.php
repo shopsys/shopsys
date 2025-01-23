@@ -76,7 +76,7 @@ class GetStoreTest extends GraphQlTestCase
             [$uuid, $expectedStoreData] = $dataSet;
 
             $graphQlType = 'store';
-            $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoreQuery.graphql', [
+            $response = $this->getResponseContentForGql(__DIR__ . '/graphql/StoreQuery.graphql', [
                 'uuid' => $uuid,
             ]);
             $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
@@ -93,6 +93,9 @@ class GetStoreTest extends GraphQlTestCase
                     'postcode',
                     'country',
                     'specialMessage',
+                    'email',
+                    'phone',
+                    'directions',
                     'latitude',
                     'longitude',
                     'breadcrumb',
@@ -108,7 +111,7 @@ class GetStoreTest extends GraphQlTestCase
     {
         $storeOnSecondDomain = $this->getReference(StoreDataFixture::STORE_PREFIX . 9, Store::class);
 
-        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoreQuery.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/StoreQuery.graphql', [
             'uuid' => $storeOnSecondDomain->getUuid(),
         ]);
         $this->assertResponseContainsArrayOfErrors($response);
@@ -120,7 +123,7 @@ class GetStoreTest extends GraphQlTestCase
         );
 
         $urlSlug = 'zilina';
-        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoreQuery.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/StoreQuery.graphql', [
             'slug' => $urlSlug,
         ]);
         $this->assertResponseContainsArrayOfErrors($response);
@@ -138,7 +141,7 @@ class GetStoreTest extends GraphQlTestCase
             [$urlSlug, $expectedStoreData] = $dataSet;
 
             $graphQlType = 'store';
-            $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoreQuery.graphql', [
+            $response = $this->getResponseContentForGql(__DIR__ . '/graphql/StoreQuery.graphql', [
                 'slug' => $urlSlug,
             ]);
             $this->assertResponseContainsArrayOfDataForGraphQlType($response, $graphQlType);
@@ -155,6 +158,9 @@ class GetStoreTest extends GraphQlTestCase
                     'postcode',
                     'country',
                     'specialMessage',
+                    'email',
+                    'phone',
+                    'directions',
                     'latitude',
                     'longitude',
                     'breadcrumb',
@@ -187,7 +193,7 @@ class GetStoreTest extends GraphQlTestCase
             $this->createClosedDay($publicHolidayDate, $publicHolidayExcludedStoresIds);
         }
 
-        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoreOpeningHoursQuery.graphql', [
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/StoreOpeningHoursQuery.graphql', [
             'uuid' => $store->getUuid(),
         ]);
 
@@ -398,8 +404,10 @@ class GetStoreTest extends GraphQlTestCase
                 'country' => [
                     'code' => 'CZ',
                 ],
-                'contactInfo' => null,
-                'specialMessage' => null,
+                'email' => 'ostrava@shopsys.cz',
+                'phone' => '+420 123 456 789',
+                'directions' => t('If you take buses 9, 13 and 24 from the main station, get off at the Outlet Arena Moravia stop. There is no train stop, but there is a parking lot for horses.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'specialMessage' => t('Tomorrow will be 20% discount for all items', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'latitude' => '49.8574975',
                 'longitude' => '18.2738861',
                 'breadcrumb' => [
@@ -424,7 +432,9 @@ class GetStoreTest extends GraphQlTestCase
                 'country' => [
                     'code' => 'CZ',
                 ],
-                'contactInfo' => null,
+                'email' => 'pardubice@shopsys.cz',
+                'phone' => '+420 123 456 789',
+                'directions' => null,
                 'specialMessage' => null,
                 'latitude' => '50.0346875',
                 'longitude' => '15.7707169',

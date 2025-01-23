@@ -57,7 +57,9 @@ class StoreDataFactory
         $storeData->postcode = $store->getPostcode();
         $storeData->country = $store->getCountry();
         $storeData->openingHours = $this->openingHourDataFactory->createWholeWeekOpeningHours($store->getOpeningHours());
-        $storeData->contactInfo = $store->getContactInfo();
+        $storeData->phone = $store->getPhone();
+        $storeData->email = $store->getEmail();
+        $storeData->directions = $store->getDirections();
         $storeData->specialMessage = $store->getSpecialMessage();
         $storeData->latitude = $store->getLatitude();
         $storeData->longitude = $store->getLongitude();

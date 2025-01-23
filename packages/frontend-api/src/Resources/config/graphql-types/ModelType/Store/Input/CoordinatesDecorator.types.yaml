@@ -1,0 +1,9 @@
+CoordinatesDecorator:
+    type: input-object
+    decorator: true
+    config:
+        fields:
+            latitude:
+                type: "String!"
+            longitude:
+                type: "String!"

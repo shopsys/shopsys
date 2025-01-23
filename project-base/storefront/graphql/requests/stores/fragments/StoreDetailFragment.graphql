@@ -13,7 +13,9 @@ fragment StoreDetailFragment on Store {
     openingHours {
         ...OpeningHoursFragment
     }
-    contactInfo
+    email
+    phone
+    directions
     specialMessage
     latitude
     longitude

@@ -35,7 +35,7 @@ export const SearchInput: FC<SearchInputProps> = ({
     };
 
     return (
-        <div className="relative w-full">
+        <div className="relative w-full rounded-md border border-borderAccent">
             <input
                 autoComplete="off"
                 placeholder={label}
@@ -63,7 +63,7 @@ export const SearchInput: FC<SearchInputProps> = ({
                 type="submit"
                 onClick={onSearch}
             >
-                <SearchIcon className="w-[18px]" />
+                <SearchIcon className="w-4 text-inputPlaceholder" />
             </button>
 
             {!!value && !shouldShowSpinnerInInput && (

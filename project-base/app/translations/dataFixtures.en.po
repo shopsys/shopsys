@@ -1063,6 +1063,9 @@ msgstr ""
 msgid "Iconic Design"
 msgstr ""
 
+msgid "If you take buses 9, 13 and 24 from the main station, get off at the Outlet Arena Moravia stop. There is no train stop, but there is a parking lot for horses."
+msgstr ""
+
 msgid "Immersive Full HD resolution"
 msgstr ""
 
@@ -1865,6 +1868,9 @@ msgid "To track your package, click on this link: <a href=\"{tracking_url}\">{tr
 msgstr ""
 
 msgid "Toilet paper with Euro pictures. Even you can feel rich now!"
+msgstr ""
+
+msgid "Tomorrow will be 20% discount for all items"
 msgstr ""
 
 msgid "Toner for MC861/ 851, 7000 pages"

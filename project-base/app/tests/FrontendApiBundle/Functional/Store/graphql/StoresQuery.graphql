@@ -6,7 +6,6 @@ query Stores ($first: Int, $last: Int) {
                 name
                 isDefault
                 description
-                contactInfo
                 street
                 city
                 postcode

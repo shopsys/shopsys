@@ -66,7 +66,17 @@ class StoreData
     /**
      * @var string|null
      */
-    public $contactInfo;
+    public $phone;
+
+    /**
+     * @var string|null
+     */
+    public $email;
+
+    /**
+     * @var string|null
+     */
+    public $directions;
 
     /**
      * @var string|null

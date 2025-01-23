@@ -33,7 +33,6 @@ class GetStoresTest extends GraphQlTestCase
                         'name',
                         'isDefault',
                         'description',
-                        'contactInfo',
                         'street',
                         'city',
                         'postcode',
@@ -69,17 +68,17 @@ class GetStoresTest extends GraphQlTestCase
     {
         return [
             [
-                $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoresQuery.graphql'),
+                $this->getResponseContentForGql(__DIR__ . '/graphql/StoresQuery.graphql'),
                 $this->getExpectedStores(),
             ],
             [
-                $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoresQuery.graphql', [
+                $this->getResponseContentForGql(__DIR__ . '/graphql/StoresQuery.graphql', [
                     'first' => 1,
                 ]),
                 array_slice($this->getExpectedStores(), 0, 1),
             ],
             [
-                $this->getResponseContentForGql(__DIR__ . '/../_graphql/query/StoresQuery.graphql', [
+                $this->getResponseContentForGql(__DIR__ . '/graphql/StoresQuery.graphql', [
                     'last' => 1,
                 ]),
                 array_slice($this->getExpectedStores(), 7, 1),
@@ -105,8 +104,7 @@ class GetStoresTest extends GraphQlTestCase
                 'country' => [
                     'code' => 'CZ',
                 ],
-                'contactInfo' => null,
-                'specialMessage' => null,
+                'specialMessage' => t('Tomorrow will be 20% discount for all items', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'latitude' => '49.8574975',
                 'longitude' => '18.2738861',
             ], [
@@ -119,7 +117,6 @@ class GetStoresTest extends GraphQlTestCase
                 'country' => [
                     'code' => 'CZ',
                 ],
-                'contactInfo' => null,
                 'specialMessage' => null,
                 'latitude' => '50.0346875',
                 'longitude' => '15.7707169',
@@ -133,7 +130,6 @@ class GetStoresTest extends GraphQlTestCase
                 'country' => [
                     'code' => 'CZ',
                 ],
-                'contactInfo' => null,
                 'specialMessage' => null,
                 'latitude' => '49.1950606',
                 'longitude' => '16.6084842',
@@ -147,7 +143,6 @@ class GetStoresTest extends GraphQlTestCase
                 'country' => [
                     'code' => 'CZ',
                 ],
-                'contactInfo' => null,
                 'specialMessage' => null,
                 'latitude' => '50.0802931',
                 'longitude' => '14.4208994',
@@ -161,7 +156,6 @@ class GetStoresTest extends GraphQlTestCase
                 'country' => [
                     'code' => 'CZ',
                 ],
-                'contactInfo' => null,
                 'specialMessage' => null,
                 'latitude' => '50.2090192',
                 'longitude' => '15.8328583',
@@ -175,7 +169,6 @@ class GetStoresTest extends GraphQlTestCase
                 'country' => [
                     'code' => 'CZ',
                 ],
-                'contactInfo' => null,
                 'specialMessage' => null,
                 'latitude' => '49.5951442',
                 'longitude' => '17.2500006',
@@ -189,7 +182,6 @@ class GetStoresTest extends GraphQlTestCase
                 'country' => [
                     'code' => 'CZ',
                 ],
-                'contactInfo' => null,
                 'specialMessage' => null,
                 'latitude' => '50.7670131',
                 'longitude' => '15.0562825',
@@ -203,7 +195,6 @@ class GetStoresTest extends GraphQlTestCase
                 'country' => [
                     'code' => 'CZ',
                 ],
-                'contactInfo' => null,
                 'specialMessage' => null,
                 'latitude' => '49.7476961',
                 'longitude' => '13.3777325',

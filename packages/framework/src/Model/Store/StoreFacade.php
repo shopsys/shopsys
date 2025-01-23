@@ -142,15 +142,6 @@ class StoreFacade
     }
 
     /**
-     * @param int $domainId
-     * @return int
-     */
-    public function getStoresCountByDomainId(int $domainId): int
-    {
-        return $this->storeRepository->getStoresCountByDomainId($domainId);
-    }
-
-    /**
      * @param string $uuid
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Store\Store

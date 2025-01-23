@@ -1,0 +1,10 @@
+query Stores ($searchText: String, $coordinates: Coordinates) {
+    stores (searchText: $searchText, coordinates: $coordinates) {
+        edges {
+            node {
+                name
+                distance
+            }
+        }
+    }
+}

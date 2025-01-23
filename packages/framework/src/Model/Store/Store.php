@@ -102,9 +102,21 @@ class Store implements OrderableEntityInterface
 
     /**
      * @var string|null
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $email;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $phone;
+
+    /**
+     * @var string|null
      * @ORM\Column(type="text", nullable=true)
      */
-    protected $contactInfo;
+    protected $directions;
 
     /**
      * @var string|null
@@ -130,6 +142,11 @@ class Store implements OrderableEntityInterface
      * @ORM\Column(type="integer")
      */
     protected $position;
+
+    /**
+     * @var int|null
+     */
+    protected $distance = null;
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Store\StoreData $storeData
@@ -172,11 +189,13 @@ class Store implements OrderableEntityInterface
         $this->city = $storeData->city;
         $this->postcode = $storeData->postcode;
         $this->country = $storeData->country;
-        $this->contactInfo = $storeData->contactInfo;
         $this->specialMessage = $storeData->specialMessage;
         $this->latitude = $storeData->latitude;
         $this->longitude = $storeData->longitude;
         $this->domainId = $storeData->domainId;
+        $this->email = $storeData->email;
+        $this->phone = $storeData->phone;
+        $this->directions = $storeData->directions;
     }
 
     /**
@@ -278,9 +297,25 @@ class Store implements OrderableEntityInterface
     /**
      * @return string|null
      */
-    public function getContactInfo()
+    public function getEmail()
     {
-        return $this->contactInfo;
+        return $this->email;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDirections()
+    {
+        return $this->directions;
     }
 
     /**
@@ -326,5 +361,21 @@ class Store implements OrderableEntityInterface
     public function getDomainId()
     {
         return $this->domainId;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getDistance()
+    {
+        return $this->distance;
+    }
+
+    /**
+     * @param int $distance
+     */
+    public function setDistance($distance): void
+    {
+        $this->distance = $distance;
     }
 }

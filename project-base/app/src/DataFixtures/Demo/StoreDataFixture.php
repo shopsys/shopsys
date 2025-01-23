@@ -32,7 +32,9 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     private const string ATTR_CITY = 'city';
     private const string ATTR_POSTCODE = 'postcode';
     private const string ATTR_COUNTRY = 'country';
-    private const string ATTR_CONTACT_INFO = 'contactInfo';
+    private const string ATTR_EMAIL = 'email';
+    private const string ATTR_PHONE = 'phone';
+    private const string ATTR_DIRECTIONS = 'directions';
     private const string ATTR_SPECIAL_MESSAGE = 'specialMessage';
     private const string ATTR_LOCATION_LATITUDE = 'latitude';
     private const string ATTR_LOCATION_LONGITUDE = 'longitude';
@@ -85,8 +87,10 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
                 self::ATTR_CITY => 'Ostrava',
                 self::ATTR_POSTCODE => '70200',
                 self::ATTR_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class),
-                self::ATTR_CONTACT_INFO => null,
-                self::ATTR_SPECIAL_MESSAGE => null,
+                self::ATTR_EMAIL => 'ostrava@shopsys.cz',
+                self::ATTR_PHONE => '+420 123 456 789',
+                self::ATTR_DIRECTIONS => t('If you take buses 9, 13 and 24 from the main station, get off at the Outlet Arena Moravia stop. There is no train stop, but there is a parking lot for horses.', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainConfig->getLocale()),
+                self::ATTR_SPECIAL_MESSAGE => t('Tomorrow will be 20% discount for all items', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainConfig->getLocale()),
                 self::ATTR_LOCATION_LATITUDE => '49.8574975',
                 self::ATTR_LOCATION_LONGITUDE => '18.2738861',
                 self::ATTR_IMAGE => $this->imageUploadDataFactory->create(),
@@ -101,7 +105,9 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
                 self::ATTR_CITY => 'Pardubice',
                 self::ATTR_POSTCODE => '53002',
                 self::ATTR_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class),
-                self::ATTR_CONTACT_INFO => null,
+                self::ATTR_EMAIL => 'pardubice@shopsys.cz',
+                self::ATTR_PHONE => '+420 123 456 789',
+                self::ATTR_DIRECTIONS => null,
                 self::ATTR_SPECIAL_MESSAGE => null,
                 self::ATTR_LOCATION_LATITUDE => '50.0346875',
                 self::ATTR_LOCATION_LONGITUDE => '15.7707169',
@@ -118,7 +124,9 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
                 self::ATTR_CITY => 'Brno',
                 self::ATTR_POSTCODE => '60200',
                 self::ATTR_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class),
-                self::ATTR_CONTACT_INFO => null,
+                self::ATTR_EMAIL => 'brno@shopsys.cz',
+                self::ATTR_PHONE => '+420 123 456 789',
+                self::ATTR_DIRECTIONS => null,
                 self::ATTR_SPECIAL_MESSAGE => null,
                 self::ATTR_LOCATION_LATITUDE => '49.1950606',
                 self::ATTR_LOCATION_LONGITUDE => '16.6084842',
@@ -135,7 +143,9 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
                 self::ATTR_CITY => 'Praha',
                 self::ATTR_POSTCODE => '11000',
                 self::ATTR_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class),
-                self::ATTR_CONTACT_INFO => null,
+                self::ATTR_EMAIL => 'praha@shopsys.cz',
+                self::ATTR_PHONE => '+420 123 456 789',
+                self::ATTR_DIRECTIONS => null,
                 self::ATTR_SPECIAL_MESSAGE => null,
                 self::ATTR_LOCATION_LATITUDE => '50.0802931',
                 self::ATTR_LOCATION_LONGITUDE => '14.4208994',
@@ -152,7 +162,9 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
                 self::ATTR_CITY => 'Hradec Králové',
                 self::ATTR_POSTCODE => '50002',
                 self::ATTR_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class),
-                self::ATTR_CONTACT_INFO => null,
+                self::ATTR_EMAIL => 'hradec@shopsys.cz',
+                self::ATTR_PHONE => '+420 123 456 789',
+                self::ATTR_DIRECTIONS => null,
                 self::ATTR_SPECIAL_MESSAGE => null,
                 self::ATTR_LOCATION_LATITUDE => '50.2090192',
                 self::ATTR_LOCATION_LONGITUDE => '15.8328583',
@@ -169,7 +181,9 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
                 self::ATTR_CITY => 'Olomouc',
                 self::ATTR_POSTCODE => '77900',
                 self::ATTR_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class),
-                self::ATTR_CONTACT_INFO => null,
+                self::ATTR_EMAIL => 'olomouc@shopsys.cz',
+                self::ATTR_PHONE => '+420 123 456 789',
+                self::ATTR_DIRECTIONS => null,
                 self::ATTR_SPECIAL_MESSAGE => null,
                 self::ATTR_LOCATION_LATITUDE => '49.5951442',
                 self::ATTR_LOCATION_LONGITUDE => '17.2500006',
@@ -186,7 +200,9 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
                 self::ATTR_CITY => 'Liberec',
                 self::ATTR_POSTCODE => '46001',
                 self::ATTR_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class),
-                self::ATTR_CONTACT_INFO => null,
+                self::ATTR_EMAIL => 'liberec@shopsys.cz',
+                self::ATTR_PHONE => '+420 123 456 789',
+                self::ATTR_DIRECTIONS => null,
                 self::ATTR_SPECIAL_MESSAGE => null,
                 self::ATTR_LOCATION_LATITUDE => '50.7670131',
                 self::ATTR_LOCATION_LONGITUDE => '15.0562825',
@@ -203,7 +219,9 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
                 self::ATTR_CITY => 'Plzeň',
                 self::ATTR_POSTCODE => '30100',
                 self::ATTR_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class),
-                self::ATTR_CONTACT_INFO => null,
+                self::ATTR_EMAIL => 'plzen@shopsys.cz',
+                self::ATTR_PHONE => '+420 123 456 789',
+                self::ATTR_DIRECTIONS => null,
                 self::ATTR_SPECIAL_MESSAGE => null,
                 self::ATTR_LOCATION_LATITUDE => '49.7476961',
                 self::ATTR_LOCATION_LONGITUDE => '13.3777325',
@@ -227,10 +245,72 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
                 self::ATTR_CITY => 'Žilina',
                 self::ATTR_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA, Country::class),
                 self::ATTR_POSTCODE => '01007',
-                self::ATTR_CONTACT_INFO => null,
+                self::ATTR_EMAIL => 'zilina@shopsys.sk',
+                self::ATTR_PHONE => '+421 123 456 789',
+                self::ATTR_DIRECTIONS => null,
                 self::ATTR_SPECIAL_MESSAGE => null,
                 self::ATTR_LOCATION_LATITUDE => '49.2030444',
                 self::ATTR_LOCATION_LONGITUDE => '18.7499042',
+                self::ATTR_IMAGE => $this->imageUploadDataFactory->create(),
+            ];
+
+            $stores[] = [
+                self::ATTR_NAME => 'Bratislava',
+                self::ATTR_IS_DEFAULT => false,
+                self::ATTR_DOMAIN_ID => $domainConfig->getId(),
+                self::ATTR_STOCK => null,
+                self::ATTR_DESCRIPTION => '',
+                self::ATTR_EXTERNAL_ID => null,
+                self::ATTR_STREET => 'Kováčska 4-6',
+                self::ATTR_CITY => 'Bratislava',
+                self::ATTR_POSTCODE => '83104',
+                self::ATTR_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA, Country::class),
+                self::ATTR_EMAIL => 'bratislava@shopsys.sk',
+                self::ATTR_PHONE => '+420 123 456 789',
+                self::ATTR_DIRECTIONS => null,
+                self::ATTR_SPECIAL_MESSAGE => null,
+                self::ATTR_LOCATION_LATITUDE => '48.157054',
+                self::ATTR_LOCATION_LONGITUDE => '17.124221',
+                self::ATTR_IMAGE => $this->imageUploadDataFactory->create(),
+            ];
+
+            $stores[] = [
+                self::ATTR_NAME => 'Banská Bystrica',
+                self::ATTR_IS_DEFAULT => false,
+                self::ATTR_DOMAIN_ID => $domainConfig->getId(),
+                self::ATTR_STOCK => null,
+                self::ATTR_DESCRIPTION => '',
+                self::ATTR_EXTERNAL_ID => null,
+                self::ATTR_STREET => 'Nad plážou 29',
+                self::ATTR_CITY => 'Banská Bystrica',
+                self::ATTR_POSTCODE => '97401',
+                self::ATTR_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA, Country::class),
+                self::ATTR_EMAIL => 'banska.bystrica@shopsys.sk',
+                self::ATTR_PHONE => '+420 123 456 789',
+                self::ATTR_DIRECTIONS => null,
+                self::ATTR_SPECIAL_MESSAGE => null,
+                self::ATTR_LOCATION_LATITUDE => '48.736918',
+                self::ATTR_LOCATION_LONGITUDE => '19.130424',
+                self::ATTR_IMAGE => $this->imageUploadDataFactory->create(),
+            ];
+
+            $stores[] = [
+                self::ATTR_NAME => 'Košice',
+                self::ATTR_IS_DEFAULT => false,
+                self::ATTR_DOMAIN_ID => $domainConfig->getId(),
+                self::ATTR_STOCK => null,
+                self::ATTR_DESCRIPTION => '',
+                self::ATTR_EXTERNAL_ID => null,
+                self::ATTR_STREET => 'Žižkova 23-33',
+                self::ATTR_CITY => 'Košice',
+                self::ATTR_POSTCODE => '04001',
+                self::ATTR_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA, Country::class),
+                self::ATTR_EMAIL => 'kosice@shopsys.sk',
+                self::ATTR_PHONE => '+420 123 456 789',
+                self::ATTR_DIRECTIONS => null,
+                self::ATTR_SPECIAL_MESSAGE => null,
+                self::ATTR_LOCATION_LATITUDE => '48.713752',
+                self::ATTR_LOCATION_LONGITUDE => '21.249161',
                 self::ATTR_IMAGE => $this->imageUploadDataFactory->create(),
             ];
 
@@ -260,7 +340,9 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
         $storeData->postcode = $demoRow[self::ATTR_POSTCODE];
         $storeData->country = $demoRow[self::ATTR_COUNTRY];
         $storeData->openingHours = $this->createOpeningHoursData();
-        $storeData->contactInfo = $demoRow[self::ATTR_CONTACT_INFO];
+        $storeData->email = $demoRow[self::ATTR_EMAIL];
+        $storeData->phone = $demoRow[self::ATTR_PHONE];
+        $storeData->directions = $demoRow[self::ATTR_DIRECTIONS];
         $storeData->specialMessage = $demoRow[self::ATTR_SPECIAL_MESSAGE];
         $storeData->latitude = $demoRow[self::ATTR_LOCATION_LATITUDE];
         $storeData->longitude = $demoRow[self::ATTR_LOCATION_LONGITUDE];

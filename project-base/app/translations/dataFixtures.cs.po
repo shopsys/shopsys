@@ -1063,6 +1063,9 @@ msgstr "Hadice VP-9310"
 msgid "Iconic Design"
 msgstr "Ikonický design"
 
+msgid "If you take buses 9, 13 and 24 from the main station, get off at the Outlet Arena Moravia stop. There is no train stop, but there is a parking lot for horses."
+msgstr "Pokud pojedete autobusem č. 9, 13 a 24 z hlavního nádraží, vystoupíte na zastávce Outlet Arena Moravia. Vlaková zastávka zde není, ale parkoviště pro koně ano."
+
 msgid "Immersive Full HD resolution"
 msgstr "Rozlišení, co tě vtáhne"
 
@@ -1866,6 +1869,9 @@ msgstr "Pro sledování Vaši zásilky klikněte na tento odkaz: <a href=\"{trac
 
 msgid "Toilet paper with Euro pictures. Even you can feel rich now!"
 msgstr "toaleťák s potiskem bankovek EURO, pocit z použití tohoto toaletního papíru dá zapomenout na jakékoliv trable spojené s finanční krizí"
+
+msgid "Tomorrow will be 20% discount for all items"
+msgstr "Zítra bude 20% sleva na všechny produkty"
 
 msgid "Toner for MC861/ 851, 7000 pages"
 msgstr "OKI MC861cdxn+, barevná A3 34/26 ppm ProQ2400 dpi PCL/PS,USB 2.0,LPT,LAN"
