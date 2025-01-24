@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\ProductVideo;
 
 use Doctrine\ORM\Mapping as ORM;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 
 /**
  * @ORM\Table(name="product_video_translations")
@@ -29,7 +30,7 @@ class ProductVideoTranslations
 
     /**
      * @var string
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $description;
 
@@ -76,7 +77,7 @@ class ProductVideoTranslations
      */
     public function setDescription($description)
     {
-        $this->description = $description;
+        $this->description = TransformStringHelper::getTrimmedStringOrNullOnEmpty($description);
     }
 
     /**

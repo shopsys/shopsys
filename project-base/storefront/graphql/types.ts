@@ -3436,6 +3436,6 @@ export type TypeVariantMainImageArgs = {
 
 export type TypeVideoToken = {
   __typename?: 'VideoToken';
-  description: Scalars['String']['output'];
+  description: Maybe<Scalars['String']['output']>;
   token: Scalars['String']['output'];
 };

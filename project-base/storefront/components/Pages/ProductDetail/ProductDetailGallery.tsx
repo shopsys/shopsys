@@ -5,6 +5,7 @@ import { TIDs } from 'cypress/tids';
 import { TypeSimpleFlagFragment } from 'graphql/requests/flags/fragments/SimpleFlagFragment.generated';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { TypeVideoTokenFragment } from 'graphql/requests/products/fragments/VideoTokenFragment.generated';
+import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
@@ -30,6 +31,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
     videoIds = [],
     percentageDiscount,
 }) => {
+    const { t } = useTranslation();
     const [firstImage, ...additionalImages] = images;
     const mainImage = images.length ? firstImage : undefined;
 
@@ -106,7 +108,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                                     {isVideo && (
                                         <>
                                             <Image
-                                                alt={galleryItem.description}
+                                                alt={galleryItem.description ?? t('Product Video')}
                                                 className="max-h-full rounded-md"
                                                 height={90}
                                                 src={`https://img.youtube.com/vi/${galleryItem.token}/1.jpg`}

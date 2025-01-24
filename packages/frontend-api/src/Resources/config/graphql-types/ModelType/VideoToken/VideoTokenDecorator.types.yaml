@@ -5,4 +5,4 @@ VideoTokenDecorator:
             token:
                 type: "String!"
             description:
-                type: "String!"
+                type: "String"

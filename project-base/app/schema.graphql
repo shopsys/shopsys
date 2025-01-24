@@ -2661,6 +2661,6 @@ type Variant implements Product & Hreflang & Breadcrumb & Slug {
 }
 
 type VideoToken {
-  description: String!
+  description: String
   token: String!
 }

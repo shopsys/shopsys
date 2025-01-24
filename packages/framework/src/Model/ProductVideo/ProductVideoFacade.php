@@ -88,7 +88,7 @@ class ProductVideoFacade
         foreach ($videoDataToCreate->videoTokenDescriptions as $descriptionLocale => $descriptionValue) {
             $productVideoTranslation = new ProductVideoTranslations();
             $productVideoTranslation->setLocale($descriptionLocale);
-            $productVideoTranslation->setDescription($descriptionValue ?? '');
+            $productVideoTranslation->setDescription($descriptionValue);
             $productVideoTranslation->setProductVideo($productVideoEntity);
             $this->em->persist($productVideoTranslation);
         }
