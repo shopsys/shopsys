@@ -1,7 +1,6 @@
 shopsys_administration:
     prefix: /%admin_url%
-    resource: "@ShopsysAdministrationBundle/Controller"
-    type: attribute
+    resource: "@ShopsysAdministrationBundle/config/routing.yaml"
 
 shopsys_framework:
     prefix: /%admin_url%
