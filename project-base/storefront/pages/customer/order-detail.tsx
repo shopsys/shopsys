@@ -10,11 +10,12 @@ import {
     TypeOrderAvailablePaymentsQueryVariables,
 } from 'graphql/requests/orders/queries/OrderAvailablePaymentsQuery.generated';
 import {
-    useOrderDetailQuery,
-    TypeOrderDetailQueryVariables,
     OrderDetailQueryDocument,
     TypeOrderDetailQuery,
+    TypeOrderDetailQueryVariables,
+    useOrderDetailQuery,
 } from 'graphql/requests/orders/queries/OrderDetailQuery.generated';
+import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
@@ -94,7 +95,10 @@ export const getServerSideProps = getServerSidePropsWrapper(
             const orderUuid = orderResponse.data?.order?.uuid;
 
             return initServerSideProps<TypeOrderAvailablePaymentsQueryVariables>({
-                authenticationConfig: { authenticationRequired: true },
+                authenticationConfig: {
+                    authenticationRequired: true,
+                    authorizedRoles: [TypeCustomerUserRoleEnum.RoleApiOrderInfo],
+                },
                 prefetchedQueries: orderUuid
                     ? [
                           {

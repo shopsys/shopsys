@@ -6,6 +6,7 @@ import {
     TypeAdvertsQueryVariables,
 } from 'graphql/requests/adverts/queries/AdvertsQuery.generated';
 import { CountriesQueryDocument } from 'graphql/requests/countries/queries/CountriesQuery.generated';
+import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmContactInformationPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmContactInformationPageViewEvent';
@@ -36,6 +37,9 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 redisClient,
                 domainConfig,
                 t,
+                authenticationConfig: {
+                    authorizedRoles: [TypeCustomerUserRoleEnum.RoleApiCartAndOrderCreation],
+                },
                 prefetchedQueries: [
                     { query: CountriesQueryDocument },
                     {
