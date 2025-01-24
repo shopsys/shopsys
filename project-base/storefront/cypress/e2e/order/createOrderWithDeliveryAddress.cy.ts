@@ -16,7 +16,6 @@ import { generateCustomerRegistrationData } from 'fixtures/generators';
 import {
     clickOnLabel,
     getSnapshotIndexingFunction,
-    getTestSummary,
     initializePersistStoreInLocalStorageToDefaultValues,
     loseFocus,
     SNAPSHOT_GROUP,
@@ -40,9 +39,8 @@ describe('Create Order With Delivery Address Tests', () => {
     });
 
     it('[Preserve Form On Refresh] should keep filled delivery address after page refresh', function () {
-        const testSummary = getTestSummary(this.test?.title);
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'contact information form before filling', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form before filling', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -53,7 +51,7 @@ describe('Create Order With Delivery Address Tests', () => {
         clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
         loseFocus();
         cy.reloadAndWaitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'contact information form after refresh', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form after refresh', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -73,9 +71,8 @@ describe('Create Order With Delivery Address Tests', () => {
     });
 
     it('[Preserve Form On Checkbox Change] should keep filled delivery address after unchecking the checkbox for different delivery address and then checking it again', function () {
-        const testSummary = getTestSummary(this.test?.title);
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'contact information form before filling', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form before filling', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -88,17 +85,13 @@ describe('Create Order With Delivery Address Tests', () => {
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         cy.wait(500);
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
-        takeSnapshotAndCompare(
-            getSnapshotFullIndexAsString(testSummary),
-            'contact information form after checking again',
-            {
-                blackout: [
-                    { tid: TIDs.order_summary_transport_and_payment_image },
-                    { tid: TIDs.order_summary_cart_item_image },
-                    { tid: TIDs.footer_copyright },
-                ],
-            },
-        );
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form after checking again', {
+            blackout: [
+                { tid: TIDs.order_summary_transport_and_payment_image },
+                { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.footer_copyright },
+            ],
+        });
 
         clickOnSendOrderButton();
         cy.waitForStableAndInteractiveDOM();
@@ -118,7 +111,6 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
     });
 
     it('[Logged Preserve Form On Refresh] should keep filled delivery address for logged-in user after page refresh', function () {
-        const testSummary = getTestSummary(this.test?.title);
         cy.registerAsNewUser(
             generateCustomerRegistrationData(
                 'commonCustomer',
@@ -131,7 +123,7 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'contact information form before filling', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form before filling', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -141,7 +133,7 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
 
         clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
         cy.reloadAndWaitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'contact information form after refresh', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form after refresh', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -160,7 +152,6 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
     });
 
     it('[Logged Preserve Form On Checkbox Change] should keep filled delivery address for logged-in user after unchecking the checkbox for different delivery address and then checking it again', function () {
-        const testSummary = getTestSummary(this.test?.title);
         cy.registerAsNewUser(
             generateCustomerRegistrationData(
                 'commonCustomer',
@@ -173,7 +164,7 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'contact information form before filling', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form before filling', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -186,17 +177,13 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         cy.wait(500);
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
-        takeSnapshotAndCompare(
-            getSnapshotFullIndexAsString(testSummary),
-            'contact information form after checking again',
-            {
-                blackout: [
-                    { tid: TIDs.order_summary_transport_and_payment_image },
-                    { tid: TIDs.order_summary_cart_item_image },
-                    { tid: TIDs.footer_copyright },
-                ],
-            },
-        );
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form after checking again', {
+            blackout: [
+                { tid: TIDs.order_summary_transport_and_payment_image },
+                { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.footer_copyright },
+            ],
+        });
 
         clickOnSendOrderButton();
         cy.waitForStableAndInteractiveDOM();
@@ -209,14 +196,13 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
     });
 
     it('[Logged Default Fill New] should first select saved default delivery address for logged-in user, but then fill and keep new delivery address after refresh', function () {
-        const testSummary = getTestSummary(this.test?.title);
         registerAndCreateOrderForDeliveryAddressTests(
             'first-select-saved-then-fill-and-keep-filled-after-refresh@shopsys.com',
         );
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'with default address', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'with default address', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -227,7 +213,7 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
         clickOnLabel('contact-information-formdeliveryAddressUuid-new-delivery-address');
         clearAndFillDeliveryAdressInThirdStep(deliveryAddress2);
         cy.reloadAndWaitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'changed contact information after refresh', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'changed contact information after refresh', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -246,14 +232,13 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
     });
 
     it('[Logged Default Fill New Default] should first select saved default delivery address for logged-in user, then fill new delivery address, then change it to a saved one and back to the new address which should stay filled', function () {
-        const testSummary = getTestSummary(this.test?.title);
         registerAndCreateOrderForDeliveryAddressTests(
             'first-select-saved-then-change-to-new-then-to-saved-and-to-new-again-logged-in@shopsys.com',
         );
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'with default address', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'with default address', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -264,7 +249,7 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
         clickOnLabel('contact-information-formdeliveryAddressUuid-new-delivery-address');
         clearAndFillDeliveryAdressInThirdStep(deliveryAddress2);
         loseFocus();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'with changed delivery address', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'with changed delivery address', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -275,7 +260,7 @@ describe('Delivery Address In Order Tests (Logged-in User)', { retries: { runMod
         clickOnLabel('contact-information-formdeliveryAddressUuid0');
         clickOnLabel('contact-information-formdeliveryAddressUuid-new-delivery-address');
         takeSnapshotAndCompare(
-            getSnapshotFullIndexAsString(testSummary),
+            getSnapshotFullIndexAsString(),
             'with changed delivery address after switching back from default',
             {
                 blackout: [
@@ -310,9 +295,8 @@ describe('Delivery Address In Order Tests (Pickup Point)', () => {
     });
 
     it('[Preserve Pickup On Refresh] should prefill delivery address from selected pickup point and keep delivery contact after refresh', function () {
-        const testSummary = getTestSummary(this.test?.title);
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'contact information form before filling', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form before filling', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -322,7 +306,7 @@ describe('Delivery Address In Order Tests (Pickup Point)', () => {
 
         clearAndFillDeliveryContactInThirdStep(deliveryAddress);
         cy.reloadAndWaitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'contact information form after refresh', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form after refresh', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -344,9 +328,8 @@ describe('Delivery Address In Order Tests (Pickup Point)', () => {
     });
 
     it('[Preserve Pickup On Checkbox Change] should prefill delivery address from selected pickup point and keep delivery contact after unchecking the checkbox for different delivery contact and then checking it again', function () {
-        const testSummary = getTestSummary(this.test?.title);
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'contact information form before filling', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form before filling', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -359,7 +342,7 @@ describe('Delivery Address In Order Tests (Pickup Point)', () => {
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         cy.wait(500);
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after checking again', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after checking again', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -387,7 +370,6 @@ describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', { ret
     });
 
     it('[Logged No Prefill On Pickup Preserve On Refresh] should not prefill delivery contact for logged-in user with saved address and with selected pickup point, and then keep the filled delivery information after refresh', function () {
-        const testSummary = getTestSummary(this.test?.title);
         registerAndCreateOrderForDeliveryAddressTests(
             'no-prefill-contact-information-with-selected-pickup-place@shopsys.com',
             transport.personalCollection.uuid,
@@ -397,7 +379,7 @@ describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', { ret
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'contact information form before filling', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form before filling', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -407,7 +389,7 @@ describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', { ret
 
         clearAndFillDeliveryContactInThirdStep(deliveryAddress2);
         cy.reloadAndWaitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'contact information form after refresh', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form after refresh', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -429,7 +411,6 @@ describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', { ret
     });
 
     it('[Logged No Prefill On Pickup Preserve On Checkbox Change] should not prefill delivery contact for logged-in user with saved address and pickup point, but keep filled delivery information after unchecking and checking checkbox for different delivery address', function () {
-        const testSummary = getTestSummary(this.test?.title);
         registerAndCreateOrderForDeliveryAddressTests(
             'keep-delivery-address-with-saved-after-uncheck@shopsys.com',
             transport.personalCollection.uuid,
@@ -439,7 +420,7 @@ describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', { ret
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'contact information form before filling', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information form before filling', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -452,7 +433,7 @@ describe('Delivery Address in Order Tests (Pickup Point, Logged-in User)', { ret
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         cy.wait(500);
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after checking again', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after checking again', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },

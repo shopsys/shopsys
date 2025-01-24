@@ -11,7 +11,6 @@ import {
     checkLoaderOverlayIsNotVisibleAfterTimePeriod,
     checkUrl,
     getSnapshotIndexingFunction,
-    getTestSummary,
     initializePersistStoreInLocalStorageToDefaultValues,
     SNAPSHOT_GROUP,
     takeSnapshotAndCompare,
@@ -31,11 +30,10 @@ describe('Payment Select Tests', () => {
     });
 
     it('[Select Payment] should select payment on delivery', function () {
-        const testSummary = getTestSummary(this.test?.title);
         changeSelectionOfPaymentByName(payment.onDelivery.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         checkCanGoToNextOrderStep();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after payment selection', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after payment selection', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -49,7 +47,6 @@ describe('Payment Select Tests', () => {
     });
 
     it('[Select And Change Payment] should select a payment, deselect it, and then change the payment option', function () {
-        const testSummary = getTestSummary(this.test?.title);
         changeSelectionOfPaymentByName(payment.onDelivery.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         changeSelectionOfPaymentByName(payment.onDelivery.name);
@@ -57,7 +54,7 @@ describe('Payment Select Tests', () => {
         changeSelectionOfPaymentByName(payment.creditCard.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         checkCanGoToNextOrderStep();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after changing payment selection', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after changing payment selection', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -71,10 +68,9 @@ describe('Payment Select Tests', () => {
     });
 
     it('[Remove Payment Repeated Click] should remove payment using repeated clicks', function () {
-        const testSummary = getTestSummary(this.test?.title);
         changeSelectionOfPaymentByName(payment.creditCard.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after selecting', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -85,7 +81,7 @@ describe('Payment Select Tests', () => {
 
         changeSelectionOfPaymentByName(payment.creditCard.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after removing', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after removing', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -96,10 +92,9 @@ describe('Payment Select Tests', () => {
     });
 
     it('[Remove Payment Button Click] should remove payment using reset button', function () {
-        const testSummary = getTestSummary(this.test?.title);
         changeSelectionOfPaymentByName(payment.creditCard.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after selecting', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -110,7 +105,7 @@ describe('Payment Select Tests', () => {
 
         removePaymentSelectionUsingButton();
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after removing', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after removing', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -121,10 +116,9 @@ describe('Payment Select Tests', () => {
     });
 
     it('[Remove & Select New T&P] should remove transport to remove payment as well, and then allow to select transport incompatible with previous payment', function () {
-        const testSummary = getTestSummary(this.test?.title);
         changeSelectionOfPaymentByName(payment.creditCard.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after selecting', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after selecting', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -135,7 +129,7 @@ describe('Payment Select Tests', () => {
 
         removeTransportSelectionUsingButton();
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after removing transport', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after removing transport', {
             blackout: [
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.transport_and_payment_list_item_image },
@@ -146,7 +140,7 @@ describe('Payment Select Tests', () => {
         changeSelectionOfTransportByName(transport.czechPost.name);
         checkLoaderOverlayIsNotVisibleAfterTimePeriod();
         takeSnapshotAndCompare(
-            getSnapshotFullIndexAsString(testSummary),
+            getSnapshotFullIndexAsString(),
             'after selecting transport incompatible with the previous payment',
             {
                 blackout: [

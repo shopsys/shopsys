@@ -17,7 +17,6 @@ import {
     checkUrl,
     clickOnLabel,
     getSnapshotIndexingFunction,
-    getTestSummary,
     initializePersistStoreInLocalStorageToDefaultValues,
     loseFocus,
     SNAPSHOT_GROUP,
@@ -43,14 +42,13 @@ describe('Contact Information Page Tests', () => {
     });
 
     it('[Anon Transport & Payment] should redirect to transport and payment select page and not display contact information form if transport and payment are not selected and user is not logged in', function () {
-        const testSummary = getTestSummary(this.test?.title);
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
 
         checkContactInformationFormIsNotVisible();
         checkTransportSelectionIsVisible();
         checkUrl(url.order.transportAndPayment);
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'transport and payment page', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'transport and payment page', {
             blackout: [
                 { tid: TIDs.transport_and_payment_list_item_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -77,7 +75,6 @@ describe('Contact Information Page Tests', () => {
         '[Logged Transport & Payment] should redirect to transport and payment select page and not display contact information form if transport and payment are not selected and user is logged in',
         { retries: { runMode: 0 } },
         function () {
-            const testSummary = getTestSummary(this.test?.title);
             cy.registerAsNewUser(generateCustomerRegistrationData('commonCustomer'));
             cy.addProductToCartForTest();
             cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
@@ -85,7 +82,7 @@ describe('Contact Information Page Tests', () => {
             checkContactInformationFormIsNotVisible();
             checkTransportSelectionIsVisible();
             checkUrl(url.order.transportAndPayment);
-            takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'transport and payment page', {
+            takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'transport and payment page', {
                 blackout: [
                     { tid: TIDs.transport_and_payment_list_item_image },
                     { tid: TIDs.order_summary_cart_item_image },
@@ -96,7 +93,6 @@ describe('Contact Information Page Tests', () => {
     );
 
     it('[Preserve Contact Form] should keep filled contact information after page refresh', function () {
-        const testSummary = getTestSummary(this.test?.title);
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.preselectTransportForTest(transport.czechPost.uuid);
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
@@ -108,7 +104,7 @@ describe('Contact Information Page Tests', () => {
         fillInNoteInThirdStep(orderNote);
         loseFocus();
         cy.reloadAndWaitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'contact information page after reload', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information page after reload', {
             blackout: [
                 { tid: TIDs.order_summary_transport_and_payment_image },
                 { tid: TIDs.order_summary_cart_item_image },
@@ -121,7 +117,6 @@ describe('Contact Information Page Tests', () => {
         '[Logged Preserve Contact Form] should keep changed contact information after page refresh for logged-in user',
         { retries: { runMode: 0 } },
         function () {
-            const testSummary = getTestSummary(this.test?.title);
             cy.registerAsNewUser(
                 generateCustomerRegistrationData('commonCustomer', 'refresh-page-contact-information@shopsys.com'),
             );
@@ -135,7 +130,7 @@ describe('Contact Information Page Tests', () => {
             fillBillingAdressInThirdStep(' changed', ' changed', '29292');
             fillInNoteInThirdStep(orderNote);
             loseFocus();
-            takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'contact information page after reload', {
+            takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'contact information page after reload', {
                 blackout: [
                     { tid: TIDs.order_summary_transport_and_payment_image },
                     { tid: TIDs.order_summary_cart_item_image },
@@ -146,7 +141,6 @@ describe('Contact Information Page Tests', () => {
     );
 
     it('[Logout Clear Form] should remove contact information after logout', { retries: { runMode: 0 } }, function () {
-        const testSummary = getTestSummary(this.test?.title);
         cy.registerAsNewUser(
             generateCustomerRegistrationData('commonCustomer', 'remove-contact-information-after-logout@shopsys.com'),
         );
@@ -158,34 +152,26 @@ describe('Contact Information Page Tests', () => {
         clickOnLabel('contact-information-form-isDeliveryAddressDifferentFromBilling');
         clearAndFillDeliveryAdressInThirdStep(deliveryAddress);
         loseFocus();
-        takeSnapshotAndCompare(
-            getSnapshotFullIndexAsString(testSummary),
-            'filled contact information form before logout',
-            {
-                blackout: [
-                    { tid: TIDs.order_summary_transport_and_payment_image },
-                    { tid: TIDs.order_summary_cart_item_image },
-                    { tid: TIDs.footer_copyright },
-                ],
-            },
-        );
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'filled contact information form before logout', {
+            blackout: [
+                { tid: TIDs.order_summary_transport_and_payment_image },
+                { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.footer_copyright },
+            ],
+        });
 
         cy.logout();
         cy.addProductToCartForTest().then((cart) => cy.storeCartUuidInLocalStorage(cart.uuid));
         cy.preselectTransportForTest(transport.czechPost.uuid);
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
         cy.reloadAndWaitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(
-            getSnapshotFullIndexAsString(testSummary),
-            'empty contact information form after logout',
-            {
-                blackout: [
-                    { tid: TIDs.order_summary_transport_and_payment_image },
-                    { tid: TIDs.order_summary_cart_item_image },
-                    { tid: TIDs.footer_copyright },
-                ],
-            },
-        );
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'empty contact information form after logout', {
+            blackout: [
+                { tid: TIDs.order_summary_transport_and_payment_image },
+                { tid: TIDs.order_summary_cart_item_image },
+                { tid: TIDs.footer_copyright },
+            ],
+        });
         checkThatContactInformationWasRemovedFromLocalStorage();
     });
 });

@@ -14,7 +14,6 @@ import {
     checkIsUserLoggedOut,
     checkPopupIsVisible,
     getSnapshotIndexingFunction,
-    getTestSummary,
     initializePersistStoreInLocalStorageToDefaultValues,
     SNAPSHOT_GROUP,
     takeSnapshotAndCompare,
@@ -30,7 +29,6 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
     });
 
     it('[Prefilled Cart] should log in, add product to cart to an already prefilled cart, and empty cart after log out', function () {
-        const testSummary = getTestSummary(this.test?.title);
         const registrationInput = generateCustomerRegistrationData('commonCustomer');
         cy.registerAsNewUser(registrationInput, false);
         cy.addProductToCartForTest(products.philips32PFL4308.uuid).then((cart) =>
@@ -41,7 +39,7 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
         loginFromHeader(registrationInput.email, password);
         checkAndHideSuccessToast('Successfully logged in');
         cy.waitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'cart page after login', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'cart page after login', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
@@ -53,7 +51,7 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
         addProductToCartFromPromotedProductsOnHomepage(products.helloKitty.catnum);
         checkPopupIsVisible(true);
         goToCartPageFromHeader();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'cart page after adding product to cart', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'cart page after adding product to cart', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
@@ -69,7 +67,6 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
     });
 
     it('[Empty Cart] should log in, add product to an empty cart, and empty cart after log out', function () {
-        const testSummary = getTestSummary(this.test?.title);
         const registrationInput = generateCustomerRegistrationData('commonCustomer');
         cy.registerAsNewUser(registrationInput, false);
         cy.visitAndWaitForStableAndInteractiveDOM('/');
@@ -81,7 +78,7 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
         addProductToCartFromPromotedProductsOnHomepage(products.helloKitty.catnum);
         checkPopupIsVisible(true);
         goToCartPageFromHeader();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'cart page after adding product to cart', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'cart page after adding product to cart', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
@@ -97,7 +94,6 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
     });
 
     it('[Merge Cart] should repeatedly merge carts when logged in (starting with an empty cart for the registered customer)', function () {
-        const testSummary = getTestSummary(this.test?.title);
         const registrationInput = generateCustomerRegistrationData('commonCustomer');
         cy.registerAsNewUser(registrationInput, false);
         cy.visitAndWaitForStableAndInteractiveDOM('/');
@@ -110,7 +106,7 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
         cy.waitForStableAndInteractiveDOM();
 
         goToCartPageFromHeader();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'cart page after adding product to cart', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'cart page after adding product to cart', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
@@ -129,22 +125,18 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
         checkPopupIsVisible(true);
         goToCartPageFromHeader();
 
-        takeSnapshotAndCompare(
-            getSnapshotFullIndexAsString(testSummary),
-            'cart page after adding second product to cart',
-            {
-                blackout: [
-                    { tid: TIDs.cart_list_item_image },
-                    { tid: TIDs.footer_social_links },
-                    { tid: TIDs.footer_copyright },
-                ],
-            },
-        );
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'cart page after adding second product to cart', {
+            blackout: [
+                { tid: TIDs.cart_list_item_image },
+                { tid: TIDs.footer_social_links },
+                { tid: TIDs.footer_copyright },
+            ],
+        });
         loginFromHeader(registrationInput.email, password);
         checkAndHideSuccessToast('Successfully logged in');
         checkAndHideInfoToast('Your cart has been modified. Please check the changes.');
 
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'cart page after second login', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'cart page after second login', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
@@ -154,14 +146,13 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
     });
 
     it("[Discard Cart] should discard user's previous cart after logging in in order 3rd step", function () {
-        const testSummary = getTestSummary(this.test?.title);
         const email = 'discard-user-cart-after-login-in-order-3rd-step@shopsys.com';
         const registrationInput = generateCustomerRegistrationData('commonCustomer', email);
         cy.registerAsNewUser(registrationInput);
         cy.addProductToCartForTest(products.philips32PFL4308.uuid);
         cy.visitAndWaitForStableAndInteractiveDOM(url.cart);
 
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'cart page after first login', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'cart page after first login', {
             blackout: [
                 { tid: TIDs.cart_list_item_image },
                 { tid: TIDs.footer_social_links },
@@ -179,7 +170,7 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
         cy.preselectTransportForTest(transport.czechPost.uuid);
         cy.preselectPaymentForTest(payment.onDelivery.uuid);
         cy.visitAndWaitForStableAndInteractiveDOM(url.order.contactInformation);
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'third step before second login', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'third step before second login', {
             blackout: [
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.order_summary_transport_and_payment_image },
@@ -190,7 +181,7 @@ describe('Cart Login Tests', { retries: { runMode: 0 } }, () => {
         fillEmailInThirdStep(email);
         loginInThirdOrderStep(password);
         checkAndHideSuccessToast('Successfully logged in');
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'third step after second login', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'third step after second login', {
             blackout: [
                 { tid: TIDs.order_summary_cart_item_image },
                 { tid: TIDs.order_summary_transport_and_payment_image },

@@ -5,7 +5,6 @@ import {
 import { url } from 'fixtures/demodata';
 import {
     getSnapshotIndexingFunction,
-    getTestSummary,
     initializePersistStoreInLocalStorageToDefaultValues,
     SNAPSHOT_GROUP,
     takeSnapshotAndCompare,
@@ -21,10 +20,9 @@ describe('Simple page visit tests with screenshots', () => {
     });
 
     it('[Homepage] should visit homepage with screenshot', function () {
-        const testSummary = getTestSummary(this.test?.title);
         cy.visitAndWaitForStableAndInteractiveDOM('/');
         changeBlogArticleDynamicPartsToStaticDemodata();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'homepage', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'homepage', {
             blackout: [
                 { tid: TIDs.product_list_item_image },
                 { tid: TIDs.banners_slider },
@@ -37,9 +35,8 @@ describe('Simple page visit tests with screenshots', () => {
     });
 
     it('[Product Detail] should visit product detail with screenshot', function () {
-        const testSummary = getTestSummary(this.test?.title);
         cy.visitAndWaitForStableAndInteractiveDOM(url.productHelloKitty);
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'product detail', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'product detail', {
             blackout: [
                 { tid: TIDs.product_list_item_image },
                 { tid: TIDs.product_detail_main_image },
@@ -51,9 +48,8 @@ describe('Simple page visit tests with screenshots', () => {
     });
 
     it('[Category Detail] should visit category detail with screenshot', function () {
-        const testSummary = getTestSummary(this.test?.title);
         cy.visitAndWaitForStableAndInteractiveDOM(url.categoryElectronics);
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'category detail', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'category detail', {
             blackout: [
                 { tid: TIDs.product_list_item_image },
                 { tid: TIDs.simple_navigation_image },
@@ -65,10 +61,9 @@ describe('Simple page visit tests with screenshots', () => {
     });
 
     it('[Stores] should visit stores page with screenshot', function () {
-        const testSummary = getTestSummary(this.test?.title);
         cy.visitAndWaitForStableAndInteractiveDOM(url.stores);
         changeStoreOpeningHoursToStaticDemodata();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'stores page', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'stores page', {
             blackout: [
                 { tid: TIDs.footer_social_links },
                 { tid: TIDs.footer_copyright },
@@ -79,10 +74,9 @@ describe('Simple page visit tests with screenshots', () => {
     });
 
     it('[Blog Detail] should visit blog article detail with screenshot', function () {
-        const testSummary = getTestSummary(this.test?.title);
         cy.visitAndWaitForStableAndInteractiveDOM(url.blogArticleGrapesJs);
         changeBlogArticleDynamicPartsToStaticDemodata();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'blog article detail', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'blog article detail', {
             blackout: [
                 { tid: TIDs.product_list_item_image },
                 { tid: TIDs.footer_social_links },

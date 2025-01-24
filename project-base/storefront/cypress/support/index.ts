@@ -342,13 +342,13 @@ export const checkCanGoToNextOrderStep = () => {
 };
 
 export const getSnapshotIndexingFunction = (snapshotGroupIndex: number, snapshotSubgroupIndex: number) => {
-    let snapshotGroupCounter = 0;
-    return (testSummary: string) => {
-        return `${snapshotGroupIndex}-${snapshotSubgroupIndex}-${snapshotGroupCounter++}`;
+    let snapshotCounter = 0;
+    return () => {
+        const attempt = Cypress.currentRetry;
+        // if the test is retried, decrement the snapshot counter
+        if (attempt > 0) {
+            snapshotCounter -= 1;
+        }
+        return `${snapshotGroupIndex}-${snapshotSubgroupIndex}-${snapshotCounter++}`;
     };
-};
-
-export const getTestSummary = (testName?: string) => {
-    // get the test name summary in square brackets, remove brackets and replace spaces with dashes
-    return (testName?.match(/\[(.*?)\]/)?.[0] ?? '[]').slice(1, -1).split(' ').join('-').toLowerCase();
 };
