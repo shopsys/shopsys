@@ -610,6 +610,9 @@ msgstr "Dobírka"
 msgid "Catalog"
 msgstr "Katalog"
 
+msgid "Catalog user"
+msgstr "Katalogový uživatel"
+
 msgid "Christmas Day"
 msgstr "První svátek Vánoční"
 

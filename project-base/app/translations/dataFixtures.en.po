@@ -610,6 +610,9 @@ msgstr ""
 msgid "Catalog"
 msgstr ""
 
+msgid "Catalog user"
+msgstr ""
+
 msgid "Christmas Day"
 msgstr ""
 

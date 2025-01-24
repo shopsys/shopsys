@@ -616,6 +616,9 @@ msgstr "Soubor nelze načíst."
 msgid "Canonical URL"
 msgstr "Kanonická URL"
 
+msgid "Cart manipulation and order creation"
+msgstr "Manipulace s košíkem a vytváření objednávky"
+
 msgid "Catalog number"
 msgstr "Katalogové číslo"
 
@@ -2319,6 +2322,9 @@ msgstr "Nesprávné nastavení může mít negativní vliv na správnou funkčno
 
 msgid "Information about order rounding item (empty if there is no rounding)"
 msgstr "Informace o zaokrouhlovací položce v objednávce (prázdné pokud v objednávce není zaokrouhlení)"
+
+msgid "Information about orders"
+msgstr "Informace o objednávkách"
 
 msgid "Information for customers"
 msgstr "Informace pro zákazníky"

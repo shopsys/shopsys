@@ -616,6 +616,9 @@ msgstr ""
 msgid "Canonical URL"
 msgstr ""
 
+msgid "Cart manipulation and order creation"
+msgstr ""
+
 msgid "Catalog number"
 msgstr ""
 
@@ -2318,6 +2321,9 @@ msgid "Incorrect settings may have a negative impact on the correct functionalit
 msgstr ""
 
 msgid "Information about order rounding item (empty if there is no rounding)"
+msgstr ""
+
+msgid "Information about orders"
 msgstr ""
 
 msgid "Information for customers"

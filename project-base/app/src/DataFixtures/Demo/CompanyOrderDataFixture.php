@@ -113,7 +113,7 @@ class CompanyOrderDataFixture extends AbstractReferenceFixture implements Depend
             $customerUser,
         );
 
-        $customerUser = $this->getReferenceForDomain(CompanyDataFixture::B2B_COMPANY_SELF_MANAGE_USER_EMAIL, $domainId, CustomerUser::class);
+        $customerUser = $this->getReferenceForDomain(CompanyDataFixture::B2B_COMPANY_USER_EMAIL, $domainId, CustomerUser::class);
         $orderData = $this->orderDataFactory->create();
         $orderData->status = $this->getReference(OrderStatusDataFixture::ORDER_STATUS_NEW, OrderStatus::class);
         $this->mapCustomerUserDataToOrderData($orderData, $customerUser);
