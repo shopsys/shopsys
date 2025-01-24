@@ -40,7 +40,7 @@ CurrentCustomerUserDecorator:
                 type: "Boolean!"
                 description: "Whether the customer user has password set or not"
             roles:
-                type: "[String!]!"
+                type: "[CustomerUserRoleEnum!]!"
             roleGroup:
                 type: "CustomerUserRoleGroup!"
                 description: "The customer user role group"

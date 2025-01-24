@@ -2,9 +2,10 @@ import {
     TypeCurrentCustomerUserQuery,
     CurrentCustomerUserQueryDocument,
 } from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
+import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { Client } from 'urql';
 
-export const getCurrentCustomerUserRoles = (currentClient: Client): string[] => {
+export const getCurrentCustomerUserRoles = (currentClient: Client): TypeCustomerUserRoleEnum[] => {
     const customerQueryResult = currentClient.readQuery<TypeCurrentCustomerUserQuery>(
         CurrentCustomerUserQueryDocument,
         {},

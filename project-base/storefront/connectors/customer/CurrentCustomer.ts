@@ -1,5 +1,5 @@
 import { useCurrentCustomerUserQuery } from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
-import { TypeDeliveryAddress } from 'graphql/types';
+import { TypeCustomerUserRoleEnum, TypeDeliveryAddress } from 'graphql/types';
 import { CurrentCustomerType, DeliveryAddressType } from 'types/customer';
 
 export const useCurrentCustomerData = (): CurrentCustomerType | undefined => {
@@ -36,7 +36,7 @@ export const useCurrentCustomerData = (): CurrentCustomerType | undefined => {
         oldPassword: '',
         newPassword: '',
         newPasswordConfirm: '',
-        arePricesHidden: !currentCustomerUser.roles.includes('ROLE_API_CUSTOMER_SEES_PRICES'),
+        arePricesHidden: !currentCustomerUser.roles.includes(TypeCustomerUserRoleEnum.RoleApiCustomerSeesPrices),
         country: currentCustomerUser.country ?? {
             __typename: 'Country',
             name: '',

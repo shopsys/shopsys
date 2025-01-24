@@ -1,9 +1,10 @@
-import { CustomerUserAreaEnum, CustomerUserRoleEnum } from 'types/customer';
+import { TypeCustomerUserRoleEnum } from 'graphql/types';
+import { CustomerUserAreaEnum } from 'types/customer';
 
 export const getIsUserAuthorizedToViewPage = (
-    currentCustomerUserRoles: string[],
+    currentCustomerUserRoles: TypeCustomerUserRoleEnum[],
     currentCustomerUserArea: CustomerUserAreaEnum,
-    allowedUserRoles?: CustomerUserRoleEnum[],
+    allowedUserRoles?: TypeCustomerUserRoleEnum[],
     allowedUserAreas?: CustomerUserAreaEnum[],
 ): boolean => {
     const isAreaAllowed = allowedUserAreas?.includes(currentCustomerUserArea) ?? true;

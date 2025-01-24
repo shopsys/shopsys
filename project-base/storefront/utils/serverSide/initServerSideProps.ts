@@ -19,12 +19,12 @@ import {
     TypeSettingsQueryVariables,
     SettingsQueryDocument,
 } from 'graphql/requests/settings/queries/SettingsQuery.generated';
-import { TypeArticlePlacementTypeEnum } from 'graphql/types';
+import { TypeArticlePlacementTypeEnum, TypeCustomerUserRoleEnum } from 'graphql/types';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { Translate } from 'next-translate';
 import loadNamespaces from 'next-translate/loadNamespaces';
 import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'redis';
-import { CustomerUserAreaEnum, CustomerUserRoleEnum } from 'types/customer';
+import { CustomerUserAreaEnum } from 'types/customer';
 import { Client, SSRData, SSRExchange, ssrExchange } from 'urql';
 import { createClient } from 'urql/createClient';
 import { getCurrentCustomerUserRoles } from 'utils/auth/getCurrentCustomerUserRoles';
@@ -53,10 +53,9 @@ type InitServerSidePropsParameters<VariablesType> = {
     context: GetServerSidePropsContext;
     authenticationConfig?: {
         authenticationRequired?: boolean;
-        authorizedRoles?: CustomerUserRoleEnum[];
+        authorizedRoles?: TypeCustomerUserRoleEnum[];
         authorizedAreas?: CustomerUserAreaEnum[];
     };
-    authorizedRole?: CustomerUserRoleEnum;
     prefetchedQueries?: QueriesArray<VariablesType>;
     additionalProps?: Record<string, any>;
 } & (

@@ -149,6 +149,7 @@
     * [ArticlePlacementTypeEnum](#articleplacementtypeenum)
     * [AvailabilityStatusEnum](#availabilitystatusenum)
     * [CategoryAutomatedFilterEnum](#categoryautomatedfilterenum)
+    * [CustomerUserRoleEnum](#customeruserroleenum)
     * [LoginTypeEnum](#logintypeenum)
     * [OrderItemTypeEnum](#orderitemtypeenum)
     * [OrderStatusEnum](#orderstatusenum)
@@ -4042,7 +4043,7 @@ The customer user role group
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>roles</strong></td>
-<td valign="top">[<a href="#string">String</a>!]!</td>
+<td valign="top">[<a href="#customeruserroleenum">CustomerUserRoleEnum</a>!]!</td>
 <td></td>
 </tr>
 <tr>
@@ -7849,7 +7850,7 @@ The customer user role group
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>roles</strong></td>
-<td valign="top">[<a href="#string">String</a>!]!</td>
+<td valign="top">[<a href="#customeruserroleenum">CustomerUserRoleEnum</a>!]!</td>
 <td></td>
 </tr>
 <tr>
@@ -11739,6 +11740,45 @@ Category automated filter types
 </tbody>
 </table>
 
+### CustomerUserRoleEnum
+
+Available customer user roles
+
+<table>
+<thead>
+<tr>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>ROLE_API_ALL</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>ROLE_API_CART_AND_ORDER_CREATION</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>ROLE_API_CUSTOMER_SEES_PRICES</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>ROLE_API_CUSTOMER_SELF_MANAGE</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>ROLE_API_LOGGED_CUSTOMER</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>ROLE_API_ORDER_INFO</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
 ### LoginTypeEnum
 
 One of the possible methods of the customer user login
@@ -12475,7 +12515,7 @@ The customer user role group
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>roles</strong></td>
-<td valign="top">[<a href="#string">String</a>!]!</td>
+<td valign="top">[<a href="#customeruserroleenum">CustomerUserRoleEnum</a>!]!</td>
 <td></td>
 </tr>
 <tr>

@@ -9,7 +9,7 @@ export type TypeAddNewCustomerUserMutationVariables = Types.Exact<{
 }>;
 
 
-export type TypeAddNewCustomerUserMutation = { __typename?: 'Mutation', AddNewCustomerUser: { __typename: 'CompanyCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<string>, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } } | { __typename: 'RegularCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<string>, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } } };
+export type TypeAddNewCustomerUserMutation = { __typename?: 'Mutation', AddNewCustomerUser: { __typename: 'CompanyCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<Types.TypeCustomerUserRoleEnum>, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } } | { __typename: 'RegularCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<Types.TypeCustomerUserRoleEnum>, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } } };
 
 
       export interface PossibleTypesResultData {

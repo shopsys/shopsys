@@ -9,13 +9,14 @@ import { CustomerUsersTable } from 'components/Pages/Customer/Users/CustomerUser
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { TypeSimpleCustomerUserFragment } from 'graphql/requests/customer/fragments/SimpleCustomerUserFragment.generated';
+import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
-import { CustomerUserAreaEnum, CustomerUserRoleEnum } from 'types/customer';
+import { CustomerUserAreaEnum } from 'types/customer';
 import { useUserPermissions } from 'utils/auth/useUserPermissions';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
@@ -88,7 +89,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 context,
                 authenticationConfig: {
                     authenticationRequired: true,
-                    authorizedRoles: [CustomerUserRoleEnum.ROLE_API_ALL],
+                    authorizedRoles: [TypeCustomerUserRoleEnum.RoleApiAll],
                     authorizedAreas: [CustomerUserAreaEnum.B2B],
                 },
                 redisClient,

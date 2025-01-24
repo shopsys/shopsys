@@ -5,12 +5,6 @@ export enum CustomerTypeEnum {
     CompanyCustomer = 'companyCustomer',
 }
 
-export enum CustomerUserRoleEnum {
-    ROLE_API_ALL = 'ROLE_API_ALL',
-    ROLE_API_CUSTOMER_SELF_MANAGE = 'ROLE_API_CUSTOMER_SELF_MANAGE',
-    ROLE_API_LOGGED_CUSTOMER = 'ROLE_API_LOGGED_CUSTOMER',
-}
-
 export enum CustomerUserAreaEnum {
     B2C = 'B2C',
     B2B = 'B2B',
