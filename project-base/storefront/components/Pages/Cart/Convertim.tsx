@@ -1,7 +1,6 @@
 import { getGtm, mapCartData, mapPaymentsData, mapStoresData, mapTransportsData } from './convertimUtils';
 import {
     ConvertimComponent,
-    ConvertimOrderObject,
     GetCartType,
     GetPaymentsType,
     GetStoresType,
@@ -13,6 +12,7 @@ import { useTransportsWithPaymentsAndStoresForConvertimQuery } from 'graphql/req
 import useTranslation from 'next-translate/useTranslation';
 import { useCallback } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
+import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useLogout } from 'utils/auth/useLogout';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 
@@ -23,6 +23,7 @@ export const Convertim: FC<ConvertimProps> = ({ cart, convertimProjectUuid }) =>
     const formatPrice = useFormatPrice();
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const [, removeCartMutation] = useRemoveCartMutation();
+    const isUserLoggedIn = useIsUserLoggedIn();
     const [{ data: transportsData, fetching: isTransportsFetching }] =
         useTransportsWithPaymentsAndStoresForConvertimQuery({
             variables: { cartUuid: cart?.uuid ?? null, displayInCartOnly: false },
@@ -54,7 +55,11 @@ export const Convertim: FC<ConvertimProps> = ({ cart, convertimProjectUuid }) =>
     );
 
     const handleEventsAfterOrderCreation = async () => {
-        await removeCartMutation({ cartUuid: cart?.uuid ?? null });
+        if (!cart || (!cart.uuid && !isUserLoggedIn)) {
+            // skip cart removal
+            return;
+        }
+        await removeCartMutation({ cartUuid: isUserLoggedIn ? null : cart.uuid });
         updateCartUuid(null);
     };
 
@@ -72,13 +77,13 @@ export const Convertim: FC<ConvertimProps> = ({ cart, convertimProjectUuid }) =>
             gtm={getGtm()}
             isProduction={false}
             callbacks={{
-                afterSaveOrder: (orderObject: ConvertimOrderObject, continueFunction) => {
+                afterSaveOrder: (_, continueFunction) => {
                     handleEventsAfterOrderCreation().then(() => continueFunction());
                 },
                 beforeOpenConvertim: (continueFunction) => {
                     continueFunction();
                 },
-                validateCustomZipTransport: (transportId: string, postalCode: string, setResult: () => void) => {
+                validateCustomZipTransport: (_, __, setResult: () => void) => {
                     setResult();
                 },
                 afterLogout: () => {
