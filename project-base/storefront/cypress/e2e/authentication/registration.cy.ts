@@ -15,7 +15,6 @@ import {
     checkPopupIsVisible,
     checkUrl,
     getSnapshotIndexingFunction,
-    getTestSummary,
     goToEditProfileFromHeader,
     initializePersistStoreInLocalStorageToDefaultValues,
     loseFocus,
@@ -34,15 +33,14 @@ describe('Registration Tests (Basic)', { retries: { runMode: 0 } }, () => {
     });
 
     it('[Register B2C] should register as a B2C customer', function () {
-        const testSummary = getTestSummary(this.test?.title);
         goToRegistrationPageFromHeader();
         const email = 'register-as-b2c@shopsys.com';
         clearAndFillInRegstrationFormEmail(email);
         fillInRegstrationForm('commonCustomer', email);
         clearAndFillInRegistrationFormPasswords(password);
         loseFocus();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'filled registration form', {
-            blackout: [{ tid: TIDs.footer_social_links }],
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'filled registration form', {
+            blackout: [{ tid: TIDs.footer_social_links }, { tid: TIDs.footer_copyright }],
         });
 
         submitRegistrationForm();
@@ -52,8 +50,8 @@ describe('Registration Tests (Basic)', { retries: { runMode: 0 } }, () => {
 
         goToEditProfileFromHeader();
         checkUrl(url.customer.editProfile);
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'customer edit page', {
-            blackout: [{ tid: TIDs.footer_social_links }],
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'customer edit page', {
+            blackout: [{ tid: TIDs.footer_social_links }, { tid: TIDs.footer_copyright }],
         });
     });
 });
@@ -65,13 +63,12 @@ describe('Registration Tests (Repeated Tries)', { retries: { runMode: 0 } }, () 
     });
 
     it('[Empty Form] should disallow registration with empty registration form, but then allow after filling', function () {
-        const testSummary = getTestSummary(this.test?.title);
         submitRegistrationForm();
         checkRegistrationValidationErrorsPopup();
         checkPopupIsVisible(true);
         loseFocus();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after invalid try', {
-            blackout: [{ tid: TIDs.footer_social_links }],
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after invalid try', {
+            blackout: [{ tid: TIDs.footer_social_links }, { tid: TIDs.footer_copyright }],
         });
 
         const email = 'invalid-registration-then-correct-and-try-again@shopsys.com';

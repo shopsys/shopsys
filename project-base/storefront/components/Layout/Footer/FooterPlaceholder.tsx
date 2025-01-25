@@ -4,7 +4,6 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { Image } from 'components/Basic/Image/Image';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
-import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
@@ -39,13 +38,7 @@ export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticle
                     ))}
                 </>
             )}
-            <Trans
-                defaultTrans="Copyright © <currentYear />, Shopsys s.r.o. All rights reserved."
-                i18nKey="footerCopyright"
-                components={{
-                    currentYear: <span tid={TIDs.footer_copyright}>{currentYear}</span>,
-                }}
-            />
+            <div tid={TIDs.footer_copyright}>{t('footerCopyright', { currentYear })}</div>
             {t('Customized E-shop by')}
             <a className="ml-2 flex w-20" href="https://www.shopsys.com" rel="noreferrer" target="_blank">
                 <Image alt="footer logo" src={imageLogo} />

@@ -2,7 +2,6 @@ import { openHeaderCartByMouseover, removeFirstProductFromHeaderCart } from './c
 import { products } from 'fixtures/demodata';
 import {
     getSnapshotIndexingFunction,
-    getTestSummary,
     initializePersistStoreInLocalStorageToDefaultValues,
     SNAPSHOT_GROUP,
     takeSnapshotAndCompare,
@@ -23,10 +22,9 @@ describe('Cart In Header Tests', () => {
     });
 
     it('[Cart Header Remove] should remove products from cart using cart in header and then display empty cart message', function () {
-        const testSummary = getTestSummary(this.test?.title);
         openHeaderCartByMouseover();
         removeFirstProductFromHeaderCart();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after first remove', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after first remove', {
             capture: 'viewport',
             blackout: [
                 { tid: TIDs.banners_slider, zIndex: 5999 },
@@ -35,7 +33,7 @@ describe('Cart In Header Tests', () => {
             ],
         });
         removeFirstProductFromHeaderCart();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'after second remove', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'after second remove', {
             capture: 'viewport',
             wait: 2000,
             blackout: [{ tid: TIDs.banners_slider, zIndex: 5999 }, { tid: TIDs.simple_navigation_image }],

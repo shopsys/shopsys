@@ -10,7 +10,6 @@ import {
     checkPopupIsVisible,
     checkUrl,
     getSnapshotIndexingFunction,
-    getTestSummary,
     goToPageThroughSimpleNavigation,
     initializePersistStoreInLocalStorageToDefaultValues,
     SNAPSHOT_GROUP,
@@ -27,14 +26,13 @@ describe('Product Add To Cart Tests', () => {
     });
 
     it('[Brand Page Add] should add product to cart from brand page', function () {
-        const testSummary = getTestSummary(this.test?.title);
         cy.visitAndWaitForStableAndInteractiveDOM(url.brandsOverview);
 
         goToPageThroughSimpleNavigation(22);
         addProductToCartFromProductList(products.helloKitty.catnum);
         checkPopupIsVisible();
         cy.waitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'add to cart popup', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'add to cart popup', {
             capture: 'viewport',
             blackout: [
                 { tid: TIDs.add_to_cart_popup_image, zIndex: 20000 },
@@ -45,13 +43,12 @@ describe('Product Add To Cart Tests', () => {
     });
 
     it('[Product Detail Add] should add product to cart from product detail', function () {
-        const testSummary = getTestSummary(this.test?.title);
         cy.visitAndWaitForStableAndInteractiveDOM(products.helloKitty.url);
 
         addToCartOnProductDetailPage();
         checkPopupIsVisible();
         cy.waitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'add to cart popup', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'add to cart popup', {
             capture: 'viewport',
             blackout: [
                 { tid: TIDs.add_to_cart_popup_image, zIndex: 20000 },
@@ -62,13 +59,12 @@ describe('Product Add To Cart Tests', () => {
     });
 
     it('[Category Page Add] should add product to cart from category page', function () {
-        const testSummary = getTestSummary(this.test?.title);
         cy.visitAndWaitForStableAndInteractiveDOM(url.categoryElectronics);
 
         addProductToCartFromProductList(products.helloKitty.catnum);
         checkPopupIsVisible();
         cy.waitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'add to cart popup', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'add to cart popup', {
             capture: 'viewport',
             blackout: [
                 { tid: TIDs.add_to_cart_popup_image, zIndex: 20000 },
@@ -79,13 +75,12 @@ describe('Product Add To Cart Tests', () => {
     });
 
     it('[Product Variant Add] should add variant product to cart from product detail', function () {
-        const testSummary = getTestSummary(this.test?.title);
         cy.visitAndWaitForStableAndInteractiveDOM(products.philips32PFL4308.url);
 
         addVariantToCartFromMainVariantDetail(products.philips54CRT.catnum);
         checkPopupIsVisible();
         cy.waitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'add to cart popup', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'add to cart popup', {
             capture: 'viewport',
             blackout: [{ tid: TIDs.product_detail_main_image, zIndex: 5 }],
         });
@@ -93,13 +88,12 @@ describe('Product Add To Cart Tests', () => {
     });
 
     it('[Promoted Products Add] should add product to cart from promoted products on homepage', function () {
-        const testSummary = getTestSummary(this.test?.title);
         cy.visitAndWaitForStableAndInteractiveDOM('/');
 
         addProductToCartFromPromotedProductsOnHomepage(products.helloKitty.catnum);
         checkPopupIsVisible();
         cy.waitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'add to cart popup', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'add to cart popup', {
             capture: 'viewport',
             blackout: [
                 { tid: TIDs.add_to_cart_popup_image, zIndex: 20000 },
@@ -111,7 +105,6 @@ describe('Product Add To Cart Tests', () => {
     });
 
     it('[Search Page Add] should add product to cart from search results page', function () {
-        const testSummary = getTestSummary(this.test?.title);
         cy.visitAndWaitForStableAndInteractiveDOM('/');
 
         searchProductByNameWithAutocomplete(products.helloKitty.name);
@@ -121,7 +114,7 @@ describe('Product Add To Cart Tests', () => {
         addProductToCartFromProductList(products.helloKitty.catnum);
         checkPopupIsVisible();
         cy.waitForStableAndInteractiveDOM();
-        takeSnapshotAndCompare(getSnapshotFullIndexAsString(testSummary), 'add to cart popup', {
+        takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'add to cart popup', {
             capture: 'viewport',
             blackout: [
                 { tid: TIDs.add_to_cart_popup_image, zIndex: 20000 },

@@ -159,7 +159,7 @@
     "First name must be at most {{ max }} characters": "Jméno nesmí být delší než {{ max }} znaků",
     "Flags": "Příznaky",
     "Follow Us": "Sledujte nás",
-    "footerCopyright": "Copyright © <currentYear />, Shopsys s.r.o. Všechna práva vyhrazena.",
+    "footerCopyright": "Copyright © {{ currentYear }}, Shopsys s.r.o. Všechna práva vyhrazena.",
     "Forgotten password": "Zapomenuté heslo",
     "Found articles": "Nalezené články",
     "Found brands": "Nalezené značky",
