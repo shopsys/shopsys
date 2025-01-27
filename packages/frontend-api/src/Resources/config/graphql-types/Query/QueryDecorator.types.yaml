@@ -75,7 +75,7 @@ QueryDecorator:
             payments:
                 type: '[Payment!]!'
                 resolve: "@=query('paymentsQuery')"
-                access: "@=isGranted('ROLE_API_CART_AND_ORDER_CREATION')"
+                access: "@=isGranted('ROLE_API_ORDER_FULL')"
                 description: "Returns complete list of payment methods"
             payment:
                 type: 'Payment'
@@ -87,7 +87,7 @@ QueryDecorator:
             transports:
                 type: '[Transport!]!'
                 resolve: "@=query('transportsQuery', args['cartUuid'])"
-                access: "@=isGranted('ROLE_API_CART_AND_ORDER_CREATION')"
+                access: "@=isGranted('ROLE_API_ORDER_FULL')"
                 args:
                     cartUuid:
                         type: "Uuid"
@@ -107,7 +107,7 @@ QueryDecorator:
                 type: "OrderConnection"
                 argsBuilder: "Relay::Connection"
                 resolve: "@=query('ordersQuery', args)"
-                access: "@=isGranted('ROLE_API_ORDER_INFO')"
+                access: "@=isGranted('ROLE_API_ORDER_VIEW')"
                 args:
                     filter:
                         type: "OrderFilterInput"
@@ -116,7 +116,7 @@ QueryDecorator:
                 type: "OrderItemConnection!"
                 argsBuilder: "Relay::Connection"
                 resolve: "@=query('orderItemsQuery', args)"
-                access: "@=isGranted('ROLE_API_ORDER_INFO')"
+                access: "@=isGranted('ROLE_API_ORDER_VIEW')"
                 complexity: "@=dynamicPaginationComplexity(args)"
                 args:
                     filter:
@@ -125,7 +125,7 @@ QueryDecorator:
                 type: "OrderItemConnection!"
                 argsBuilder: "Relay::Connection"
                 resolve: "@=query('orderItemsSearchQuery', args)"
-                access: "@=isGranted('ROLE_API_ORDER_INFO')"
+                access: "@=isGranted('ROLE_API_ORDER_VIEW')"
                 complexity: "@=dynamicPaginationComplexity(args)"
                 args:
                     searchInput:
@@ -136,7 +136,7 @@ QueryDecorator:
             order:
                 type: 'Order'
                 resolve: "@=query('orderByUuidOrUrlHashQuery', args['uuid'], args['urlHash'])"
-                access: "@=isGranted('ROLE_API_ORDER_INFO')"
+                access: "@=isGranted('ROLE_API_ORDER_VIEW')"
                 args:
                     uuid:
                         type: "Uuid"
@@ -274,7 +274,7 @@ QueryDecorator:
                 type: "[GoPayBankSwift!]!"
                 description: "List of available banks for GoPay bank transfer payment"
                 resolve: "@=query('goPaySwiftsQuery', args['currencyCode'])"
-                access: "@=isGranted('ROLE_API_CART_AND_ORDER_CREATION')"
+                access: "@=isGranted('ROLE_API_ORDER_FULL')"
                 args:
                     currencyCode:
                         type: "String!"
@@ -285,7 +285,7 @@ QueryDecorator:
                         type: CartInput
                         validation: cascade
                 resolve: "@=query('cartQuery', args)"
-                access: "@=isGranted('ROLE_API_CART_AND_ORDER_CREATION')"
+                access: "@=isGranted('ROLE_API_ORDER_FULL')"
                 description: "Return cart of logged customer or cart by UUID for anonymous user"
             navigation:
                 type: '[NavigationItem!]!'
@@ -410,12 +410,12 @@ QueryDecorator:
             lastOrder:
                 type: 'Order'
                 resolve: "@=query('lastOrderQuery')"
-                access: "@=isGranted('ROLE_API_ORDER_INFO')"
+                access: "@=isGranted('ROLE_API_ORDER_VIEW')"
                 description: "Returns last order of the user or null if no order was placed yet"
             orderSentPageContent:
                 type: "String!"
                 resolve: "@=query('orderSentPageContentQuery', args['orderUuid'])"
-                access: "@=isGranted('ROLE_API_CART_AND_ORDER_CREATION')"
+                access: "@=isGranted('ROLE_API_ORDER_FULL')"
                 args:
                     orderUuid:
                         type: "Uuid!"
@@ -423,7 +423,7 @@ QueryDecorator:
             orderPaymentSuccessfulContent:
                 type: "String!"
                 resolve: "@=query('orderPaymentSuccessfulContentQuery', args['orderUuid'])"
-                access: "@=isGranted('ROLE_API_CART_AND_ORDER_CREATION')"
+                access: "@=isGranted('ROLE_API_ORDER_FULL')"
                 args:
                     orderUuid:
                         type: "Uuid!"
@@ -431,7 +431,7 @@ QueryDecorator:
             orderPaymentFailedContent:
                 type: "String!"
                 resolve: "@=query('orderPaymentFailedContentQuery', args['orderUuid'])"
-                access: "@=isGranted('ROLE_API_CART_AND_ORDER_CREATION')"
+                access: "@=isGranted('ROLE_API_ORDER_FULL')"
                 args:
                     orderUuid:
                         type: "Uuid!"

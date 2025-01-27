@@ -39,7 +39,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 domainConfig,
                 t,
                 authenticationConfig: {
-                    authorizedRoles: [TypeCustomerUserRoleEnum.RoleApiCartAndOrderCreation],
+                    authorizedRoles: [TypeCustomerUserRoleEnum.RoleApiOrderFull],
                 },
             }),
 );
