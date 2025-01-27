@@ -412,3 +412,24 @@ QueryDecorator:
                 resolve: "@=query('lastOrderQuery')"
                 access: "@=isGranted('ROLE_API_ORDER_INFO')"
                 description: "Returns last order of the user or null if no order was placed yet"
+            orderSentPageContent:
+                type: "String!"
+                resolve: "@=query('orderSentPageContentQuery', args['orderUuid'])"
+                args:
+                    orderUuid:
+                        type: "Uuid!"
+                description: "Returns HTML content for order sent page."
+            orderPaymentSuccessfulContent:
+                type: "String!"
+                resolve: "@=query('orderPaymentSuccessfulContentQuery', args['orderUuid'])"
+                args:
+                    orderUuid:
+                        type: "Uuid!"
+                description: "Returns HTML content for order with successful payment."
+            orderPaymentFailedContent:
+                type: "String!"
+                resolve: "@=query('orderPaymentFailedContentQuery', args['orderUuid'])"
+                args:
+                    orderUuid:
+                        type: "Uuid!"
+                description: "Returns HTML content for order with failed payment."

@@ -2,24 +2,24 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\Order;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\Order;
 
-use App\FrontendApi\Model\Order\Exception\OrderSentPageNotAvailableUserError;
-use App\FrontendApi\Model\Order\OrderApiFacade;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageFacade;
+use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
+use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\OrderSentPageNotAvailableUserError;
 
-final class OrderSentPageContentQuery extends AbstractQuery
+class OrderSentPageContentQuery extends AbstractQuery
 {
     /**
-     * @param \App\FrontendApi\Model\Order\OrderApiFacade $orderApiFacade
+     * @param \Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade $orderApiFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageFacade $orderContentPageFacade
      */
     public function __construct(
-        private readonly OrderApiFacade $orderApiFacade,
-        private readonly OrderContentPageFacade $orderContentPageFacade,
+        protected readonly OrderApiFacade $orderApiFacade,
+        protected readonly OrderContentPageFacade $orderContentPageFacade,
     ) {
     }
 
