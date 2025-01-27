@@ -2,7 +2,7 @@ import Ajax from '../../common/utils/Ajax';
 import Register from '../../common/utils/Register';
 
 export default class Search {
-    static init($container) {
+    static init ($container) {
         if ($container.is('body') === false) {
             return;
         }
@@ -15,12 +15,12 @@ export default class Search {
 
         $container.on('keydown', function (event) {
             if (
-                (event.key === 'Tab' || event.key === 'ArrowDown' || event.key === 'ArrowUp') &&
-                $searchResults.is(':visible')
+                (event.key === 'Tab' || event.key === 'ArrowDown' || event.key === 'ArrowUp')
+                && $searchResults.is(':visible')
             ) {
                 event.preventDefault();
                 const focusableElements = $searchResults.filterAllNodes(
-                    'div.web__header__search--results--container a',
+                    'div.web__header__search--results--container a'
                 );
                 $searchResults
                     .filterAllNodes('div.web__header__search--results--container div.result--item')
@@ -31,7 +31,6 @@ export default class Search {
                 let nextIndex;
 
                 const isUpward = event.key === 'ArrowUp' || (event.shiftKey && event.key === 'Tab');
-                console.log("🚀 -> file: search.js:31 -> Search -> isUpward:", isUpward)
 
                 if (isUpward) {
                     nextIndex = (currentIndex - 1 + focusable.length) % focusable.length;
@@ -50,7 +49,6 @@ export default class Search {
             if (event.key === 'Escape' && $searchResults.is(':visible')) {
                 event.preventDefault();
                 $searchResults.hide();
-                return;
             }
         });
 
@@ -95,33 +93,33 @@ export default class Search {
         });
     }
 
-    static closeResults($searchResults, $searchInput) {
+    static closeResults ($searchResults, $searchInput) {
         Search.clearResults($searchResults);
         $searchInput.val('');
     }
 
-    static clearResults($searchResults) {
+    static clearResults ($searchResults) {
         $searchResults.find('.js-search-results__window').text('');
         $searchResults.find('.js-search-results__search').text('');
         $searchResults.hide();
     }
 
-    static findResultsByInput($searchInput, $searchResults) {
+    static findResultsByInput ($searchInput, $searchResults) {
         const value = $searchInput.val();
         Ajax.ajax({
             url: $searchInput.data('search-callback-url'),
             loaderElement: 'none',
             type: 'GET',
             data: {
-                search: value,
+                search: value
             },
             success: function (results) {
                 Search.showResults(value, results, $searchResults);
-            },
+            }
         });
     }
 
-    static showResults(search, results, $searchResults) {
+    static showResults (search, results, $searchResults) {
         const $htmlResult = $($.parseHTML(results));
         $searchResults.find('.js-search-results__window').html($htmlResult);
         $searchResults.find('.js-search-results__search').text(search);
