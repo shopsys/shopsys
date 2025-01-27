@@ -75,6 +75,7 @@ QueryDecorator:
             payments:
                 type: '[Payment!]!'
                 resolve: "@=query('paymentsQuery')"
+                access: "@=isGranted('ROLE_API_CART_AND_ORDER_CREATION')"
                 description: "Returns complete list of payment methods"
             payment:
                 type: 'Payment'
@@ -86,6 +87,7 @@ QueryDecorator:
             transports:
                 type: '[Transport!]!'
                 resolve: "@=query('transportsQuery', args['cartUuid'])"
+                access: "@=isGranted('ROLE_API_CART_AND_ORDER_CREATION')"
                 args:
                     cartUuid:
                         type: "Uuid"
@@ -105,6 +107,7 @@ QueryDecorator:
                 type: "OrderConnection"
                 argsBuilder: "Relay::Connection"
                 resolve: "@=query('ordersQuery', args)"
+                access: "@=isGranted('ROLE_API_ORDER_INFO')"
                 args:
                     filter:
                         type: "OrderFilterInput"
@@ -113,6 +116,7 @@ QueryDecorator:
                 type: "OrderItemConnection!"
                 argsBuilder: "Relay::Connection"
                 resolve: "@=query('orderItemsQuery', args)"
+                access: "@=isGranted('ROLE_API_ORDER_INFO')"
                 complexity: "@=dynamicPaginationComplexity(args)"
                 args:
                     filter:
@@ -121,6 +125,7 @@ QueryDecorator:
                 type: "OrderItemConnection!"
                 argsBuilder: "Relay::Connection"
                 resolve: "@=query('orderItemsSearchQuery', args)"
+                access: "@=isGranted('ROLE_API_ORDER_INFO')"
                 complexity: "@=dynamicPaginationComplexity(args)"
                 args:
                     searchInput:
@@ -131,6 +136,7 @@ QueryDecorator:
             order:
                 type: 'Order'
                 resolve: "@=query('orderByUuidOrUrlHashQuery', args['uuid'], args['urlHash'])"
+                access: "@=isGranted('ROLE_API_ORDER_INFO')"
                 args:
                     uuid:
                         type: "Uuid"
@@ -268,6 +274,7 @@ QueryDecorator:
                 type: "[GoPayBankSwift!]!"
                 description: "List of available banks for GoPay bank transfer payment"
                 resolve: "@=query('goPaySwiftsQuery', args['currencyCode'])"
+                access: "@=isGranted('ROLE_API_CART_AND_ORDER_CREATION')"
                 args:
                     currencyCode:
                         type: "String!"
@@ -278,6 +285,7 @@ QueryDecorator:
                         type: CartInput
                         validation: cascade
                 resolve: "@=query('cartQuery', args)"
+                access: "@=isGranted('ROLE_API_CART_AND_ORDER_CREATION')"
                 description: "Return cart of logged customer or cart by UUID for anonymous user"
             navigation:
                 type: '[NavigationItem!]!'

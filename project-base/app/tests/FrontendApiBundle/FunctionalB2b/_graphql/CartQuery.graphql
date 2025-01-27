@@ -1,0 +1,5 @@
+query CartQuery {
+    cart {
+        uuid
+    }
+}

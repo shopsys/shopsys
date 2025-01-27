@@ -13,7 +13,7 @@ class MinimalOrderAsAuthenticatedCustomerUserTest extends GraphQlWithLoginTestCa
 {
     public const string DEFAULT_USER_EMAIL = CustomerUserDataFixture::USER_WITH_DELIVERY_ADDRESS_PERSISTENT_REFERENCE_EMAIL;
 
-    private const array DEFAULT_INPUT_VALUES = [
+    public const array DEFAULT_INPUT_VALUES = [
         'firstName' => 'firstName',
         'lastName' => 'lastName',
         'email' => 'user@example.com',
