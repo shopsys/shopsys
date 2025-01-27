@@ -19,10 +19,6 @@ OrderQuery:
                     orderNumber:
                         type: "String"
                 description: "Returns order filtered using UUID, orderNumber, or urlHash"
-            lastOrder:
-                type: 'Order'
-                resolve: "@=query('lastOrderQuery')"
-                description: "Returns last order of the user or null if no order was placed yet"
             orderSentPageContent:
                 type: "String!"
                 resolve: "@=query('orderSentPageContentQuery', args['orderUuid'])"
