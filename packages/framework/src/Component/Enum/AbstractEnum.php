@@ -13,7 +13,9 @@ class AbstractEnum
      */
     public function getAllCases(): array
     {
-        return ReflectionHelper::getAllPublicClassConstants(static::class);
+        $publicConstants = ReflectionHelper::getAllPublicClassConstants(static::class);
+
+        return array_diff($publicConstants, $this->getUnusedConstants());
     }
 
     /**
@@ -24,5 +26,13 @@ class AbstractEnum
         if (!in_array($case, $this->getAllCases(), true)) {
             throw new InvalidEnumCaseException(static::class, $case);
         }
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getUnusedConstants(): array
+    {
+        return [];
     }
 }
