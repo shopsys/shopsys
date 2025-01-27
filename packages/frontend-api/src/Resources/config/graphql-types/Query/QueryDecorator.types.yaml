@@ -410,4 +410,5 @@ QueryDecorator:
             lastOrder:
                 type: 'Order'
                 resolve: "@=query('lastOrderQuery')"
+                access: "@=isGranted('ROLE_API_ORDER_INFO')"
                 description: "Returns last order of the user or null if no order was placed yet"

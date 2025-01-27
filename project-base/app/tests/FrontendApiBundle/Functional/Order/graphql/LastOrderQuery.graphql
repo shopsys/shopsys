@@ -1,0 +1,7 @@
+query LastOrderQuery {
+    lastOrder {
+        number
+        deliveryStreet
+        deliveryCity
+    }
+}

@@ -12,17 +12,7 @@ class GetLastOrderTest extends GraphQlWithLoginTestCase
 {
     public function testLastOrderOfUser(): void
     {
-        $query = '
-            {
-                lastOrder {
-                    number
-                    deliveryStreet
-                    deliveryCity
-                }
-            }
-        ';
-
-        $response = $this->getResponseContentForQuery($query);
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/LastOrderQuery.graphql');
         $data = $this->getResponseDataForGraphQlType($response, 'lastOrder');
 
         $expectedOrder = $this->getReference(OrderDataFixture::ORDER_PREFIX . '4', Order::class);
