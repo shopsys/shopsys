@@ -83,6 +83,33 @@ class CustomerUserCatalogUserTest extends GraphQlB2bDomainWithLoginTestCase
         $this->assertAccessDeniedWarning($response);
     }
 
+    public function testOrderSentPageContentQueryIsNotAllowed(): void
+    {
+        $response = $this->getResponseContentForGql(__DIR__ . '/../../Functional/Order/graphql/OrderSentPageContentQuery.graphql', [
+            'orderUuid' => self::FAKE_UUID,
+        ]);
+
+        $this->assertAccessDeniedWarning($response);
+    }
+
+    public function testOrderPaymentSuccessfulContentQueryIsNotAllowed(): void
+    {
+        $response = $this->getResponseContentForGql(__DIR__ . '/../../Functional/Order/graphql/PaymentSuccessfulPageContentQuery.graphql', [
+            'orderUuid' => self::FAKE_UUID,
+        ]);
+
+        $this->assertAccessDeniedWarning($response);
+    }
+
+    public function testOrderPaymentFailedContentQueryIsNotAllowed(): void
+    {
+        $response = $this->getResponseContentForGql(__DIR__ . '/../../Functional/Order/graphql/PaymentFailedPageContentQuery.graphql', [
+            'orderUuid' => self::FAKE_UUID,
+        ]);
+
+        $this->assertAccessDeniedWarning($response);
+    }
+
     public function testCreateOrderMutationIsNotAllowed(): void
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/../../Functional/Order/graphql/CreateMinimalOrderMutation.graphql', [

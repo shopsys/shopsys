@@ -415,6 +415,7 @@ QueryDecorator:
             orderSentPageContent:
                 type: "String!"
                 resolve: "@=query('orderSentPageContentQuery', args['orderUuid'])"
+                access: "@=isGranted('ROLE_API_CART_AND_ORDER_CREATION')"
                 args:
                     orderUuid:
                         type: "Uuid!"
@@ -422,6 +423,7 @@ QueryDecorator:
             orderPaymentSuccessfulContent:
                 type: "String!"
                 resolve: "@=query('orderPaymentSuccessfulContentQuery', args['orderUuid'])"
+                access: "@=isGranted('ROLE_API_CART_AND_ORDER_CREATION')"
                 args:
                     orderUuid:
                         type: "Uuid!"
@@ -429,6 +431,7 @@ QueryDecorator:
             orderPaymentFailedContent:
                 type: "String!"
                 resolve: "@=query('orderPaymentFailedContentQuery', args['orderUuid'])"
+                access: "@=isGranted('ROLE_API_CART_AND_ORDER_CREATION')"
                 args:
                     orderUuid:
                         type: "Uuid!"
