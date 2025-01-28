@@ -1,6 +1,7 @@
 export type TranslationQuery = {
     [name: string]: any;
 };
+
 type RemovePlural<Key extends string> =
     Key extends `${infer Prefix}${'_zero' | '_one' | '_two' | '_few' | '_many' | '_other' | `_${number}`}`
         ? Prefix
@@ -17,4 +18,13 @@ const dictionary = () => import('../public/locales/cs/common.json').then((module
 export type Dictionary = Awaited<ReturnType<typeof dictionary>>;
 export type TranslationKeys = Paths<Dictionary>;
 
-export type Translate = (i18nKey: TranslationKeys, query?: TranslationQuery | null) => string;
+export type Translate = <T extends string>(
+    i18nKey: TranslationKeys,
+    query?: TranslationQuery | null,
+    options?: {
+        returnObjects?: boolean;
+        fallback?: string | string[];
+        default?: T | string;
+        ns?: string;
+    },
+) => string;

@@ -1,7 +1,7 @@
 import { FooterContacts } from './FooterContacts';
 import { FooterContainer } from './FooterContainer';
 import { FooterMenuItem } from 'components/Layout/Footer/FooterMenuItem';
-import useTranslation from 'next-translate/useTranslation';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { FooterArticle } from 'types/footerArticle';
 
 type FooterMenuProps = {
