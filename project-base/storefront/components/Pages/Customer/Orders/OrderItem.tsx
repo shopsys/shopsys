@@ -3,6 +3,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeListedOrderFragment } from 'graphql/requests/orders/fragments/ListedOrderFragment.generated';
@@ -22,14 +23,17 @@ type OrderItemProps = {
 
 export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart, listIndex }) => {
     const { t } = useTranslation();
+    const { canCreateOrder } = useAuthorization();
     const { formatDate } = useFormatDate();
     const formatPrice = useFormatPrice();
     const { url } = useDomainConfig();
     const [customerOrderDetailUrl] = getInternationalizedStaticUrls(['/customer/order-detail'], url);
 
-    const showRepeatOrderButton = order.productItems.some(
-        (item) => item.product?.isVisible && !item.product.isSellingDenied && !item.product.isInquiryType,
-    );
+    const showRepeatOrderButton =
+        canCreateOrder &&
+        order.productItems.some(
+            (item) => item.product?.isVisible && !item.product.isSellingDenied && !item.product.isInquiryType,
+        );
 
     return (
         <div className="flex flex-col gap-5 rounded-md bg-backgroundMore p-4 vl:p-6">

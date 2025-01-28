@@ -5,10 +5,10 @@ import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { LockCheckIcon } from 'components/Basic/Icon/LockCheckIcon';
 import { SearchListIcon } from 'components/Basic/Icon/SearchListIcon';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import useTranslation from 'next-translate/useTranslation';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
-import { useUserPermissions } from 'utils/auth/useUserPermissions';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
 import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
@@ -26,7 +26,7 @@ export const useUserMenuItems = (): UserMenuItemType[] => {
     const { url } = useDomainConfig();
     const { comparison } = useComparison();
     const { wishlist } = useWishlist();
-    const { canManageUsers } = useUserPermissions();
+    const { canManageUsers, canCreateOrder, canViewCompanyOrders } = useAuthorization();
     const [
         customerOrdersUrl,
         customerComplaintsUrl,
@@ -49,12 +49,6 @@ export const useUserMenuItems = (): UserMenuItemType[] => {
     );
 
     const userMenuItems: UserMenuItemType[] = [
-        {
-            text: t('Orders'),
-            link: customerOrdersUrl,
-            type: 'orderList',
-            iconComponent: SearchListIcon,
-        },
         {
             text: t('Complaints'),
             link: customerComplaintsUrl,
@@ -88,6 +82,15 @@ export const useUserMenuItems = (): UserMenuItemType[] => {
             iconComponent: CompareIcon,
         },
     ];
+
+    if (canCreateOrder || canViewCompanyOrders) {
+        userMenuItems.splice(0, 0, {
+            text: t('Orders'),
+            link: customerOrdersUrl,
+            type: 'orderList',
+            iconComponent: SearchListIcon,
+        });
+    }
 
     if (canManageUsers) {
         userMenuItems.splice(2, 0, {

@@ -2,16 +2,16 @@ import { FormHeading, FormBlockWrapper } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useCustomerChangeProfileFormMeta } from 'components/Pages/Customer/EditProfile/customerChangeProfileFormMeta';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import useTranslation from 'next-translate/useTranslation';
 import { useFormContext } from 'react-hook-form';
 import { CustomerChangeProfileFormType } from 'types/form';
-import { useUserPermissions } from 'utils/auth/useUserPermissions';
 
 export const CompanyCustomer: FC = () => {
     const { t } = useTranslation();
     const formProviderMethods = useFormContext<CustomerChangeProfileFormType>();
     const formMeta = useCustomerChangeProfileFormMeta(formProviderMethods);
-    const { canManageProfile } = useUserPermissions();
+    const { canManageProfile } = useAuthorization();
 
     return (
         <FormBlockWrapper>

@@ -1,6 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { AddToCart } from 'components/Blocks/Product/AddToCart';
 import { Button } from 'components/Forms/Button/Button';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
@@ -36,6 +37,7 @@ export const ProductAction: FC<ProductActionProps> = ({
 }) => {
     const { t } = useTranslation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const { canCreateOrder } = useAuthorization();
 
     if (product.isSellingDenied) {
         return <div className="max-w-[215px] text-center">{t('This item can no longer be purchased')}</div>;
@@ -51,6 +53,10 @@ export const ProductAction: FC<ProductActionProps> = ({
                 {t('Inquire')}
             </Button>
         );
+    }
+
+    if (!canCreateOrder) {
+        return null;
     }
 
     if (product.isMainVariant) {

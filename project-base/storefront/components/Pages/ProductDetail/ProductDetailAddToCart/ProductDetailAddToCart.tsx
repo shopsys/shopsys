@@ -1,6 +1,7 @@
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Button } from 'components/Forms/Button/Button';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
 import { TypeAvailabilityStatusEnum } from 'graphql/types';
@@ -36,6 +37,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
         GtmProductListNameType.product_detail,
     );
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const { canCreateOrder } = useAuthorization();
 
     const onAddToCartHandler = async () => {
         if (!spinboxRef.current) {
@@ -70,6 +72,10 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
                 {t('Inquire')}
             </Button>
         );
+    }
+
+    if (!canCreateOrder) {
+        return null;
     }
 
     const isWatchdogButtonVisible =

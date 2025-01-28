@@ -2,6 +2,7 @@ import { OrderDetailBasicInfo } from './OrderDetailBasicInfo';
 import { OrderDetailCustomerInfo } from './OrderDetailCustomerInfo';
 import { OrderPaymentStatusBar } from 'components/Pages/Customer/Orders/OrderPaymentStatusBar';
 import { PaymentsInOrderSelect } from 'components/PaymentsInOrderSelect/PaymentsInOrderSelect';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TypeOrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
 import { PaymentTypeEnum } from 'types/payment';
 
@@ -10,6 +11,8 @@ type OrderDetailContentProps = {
 };
 
 export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
+    const { canCreateOrder } = useAuthorization();
+
     return (
         <div>
             <OrderPaymentStatusBar
@@ -17,14 +20,17 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                 orderIsPaid={order.isPaid}
                 orderPaymentType={order.payment.type}
             />
-            {order.payment.type === PaymentTypeEnum.GoPay && !order.isPaid && !order.hasPaymentInProcess && (
-                <div>
-                    <PaymentsInOrderSelect
-                        orderUuid={order.uuid}
-                        paymentTransactionCount={order.paymentTransactionsCount}
-                    />
-                </div>
-            )}
+            {canCreateOrder &&
+                order.payment.type === PaymentTypeEnum.GoPay &&
+                !order.isPaid &&
+                !order.hasPaymentInProcess && (
+                    <div>
+                        <PaymentsInOrderSelect
+                            orderUuid={order.uuid}
+                            paymentTransactionCount={order.paymentTransactionsCount}
+                        />
+                    </div>
+                )}
             <OrderDetailBasicInfo order={order} />
             <OrderDetailCustomerInfo order={order} />
         </div>

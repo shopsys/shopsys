@@ -1,3 +1,4 @@
+import { AuthorizationProvider } from 'components/providers/AuthorizationProvider';
 import { CookiesStoreProvider } from 'components/providers/CookiesStoreProvider';
 import { DomainConfigProvider } from 'components/providers/DomainConfigProvider';
 import { LazyMotion } from 'framer-motion';
@@ -62,11 +63,13 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
             <UrqlWrapper pageProps={pageProps}>
                 <CookiesStoreProvider cookieStoreStateFromServer={pageProps.cookiesStore}>
                     <DomainConfigProvider domainConfig={pageProps.domainConfig}>
-                        <GtmProvider>
-                            <LazyMotion features={framerMotionPlugins}>
-                                <AppPageContent Component={Component} pageProps={pageProps} />
-                            </LazyMotion>
-                        </GtmProvider>
+                        <AuthorizationProvider customerUserRoles={pageProps.customerUserRoles}>
+                            <GtmProvider>
+                                <LazyMotion features={framerMotionPlugins}>
+                                    <AppPageContent Component={Component} pageProps={pageProps} />
+                                </LazyMotion>
+                            </GtmProvider>
+                        </AuthorizationProvider>
                     </DomainConfigProvider>
                 </CookiesStoreProvider>
             </UrqlWrapper>

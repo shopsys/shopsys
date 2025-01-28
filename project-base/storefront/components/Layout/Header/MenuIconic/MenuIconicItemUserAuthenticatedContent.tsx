@@ -6,20 +6,20 @@ import { ExitIcon } from 'components/Basic/Icon/ExitIcon';
 import { LockCheckIcon } from 'components/Basic/Icon/LockCheckIcon';
 import { SearchListIcon } from 'components/Basic/Icon/SearchListIcon';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 import { useLogout } from 'utils/auth/useLogout';
-import { useUserPermissions } from 'utils/auth/useUserPermissions';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 export const MenuIconicItemUserAuthenticatedContent: FC = () => {
     const { t } = useTranslation();
     const logout = useLogout();
     const user = useCurrentCustomerData();
-    const { canManageUsers } = useUserPermissions();
+    const { canManageUsers, canCreateOrder, canViewCompanyOrders } = useAuthorization();
     const { url } = useDomainConfig();
     const [
         customerOrdersUrl,
@@ -55,12 +55,18 @@ export const MenuIconicItemUserAuthenticatedContent: FC = () => {
                 </span>
             </div>
             <ul className="flex max-h-[87dvh] flex-col gap-2">
-                <MenuIconicItemUserAuthenticatedContentListItem>
-                    <MenuIconicSubItemLink href={customerOrdersUrl} tid={TIDs.header_my_orders_link} type="orderList">
-                        <SearchListIcon className="size-6" />
-                        {t('My orders')}
-                    </MenuIconicSubItemLink>
-                </MenuIconicItemUserAuthenticatedContentListItem>
+                {(canCreateOrder || canViewCompanyOrders) && (
+                    <MenuIconicItemUserAuthenticatedContentListItem>
+                        <MenuIconicSubItemLink
+                            href={customerOrdersUrl}
+                            tid={TIDs.header_my_orders_link}
+                            type="orderList"
+                        >
+                            <SearchListIcon className="size-6" />
+                            {t('My orders')}
+                        </MenuIconicSubItemLink>
+                    </MenuIconicItemUserAuthenticatedContentListItem>
+                )}
 
                 <MenuIconicItemUserAuthenticatedContentListItem>
                     <MenuIconicSubItemLink

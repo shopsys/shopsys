@@ -42,6 +42,7 @@ export type ServerSidePropsType = {
     urqlState: SSRData;
     isMaintenance: boolean;
     isForbidden: boolean;
+    customerUserRoles: TypeCustomerUserRoleEnum[];
     domainConfig: DomainConfigType;
     cookiesStore: CookiesStoreState;
 } & Record<string, any>;
@@ -172,10 +173,9 @@ export const initServerSideProps = async <VariablesType extends Variables>({
     }
 
     let isForbidden = false;
+    const customerUserRoles = getCurrentCustomerUserRoles(currentClient);
 
     if (authenticationConfig.authorizedRoles || authenticationConfig.authorizedAreas) {
-        const customerUserRoles = getCurrentCustomerUserRoles(currentClient);
-
         const isUserAuthorized = getIsUserAuthorizedToViewPage(
             customerUserRoles,
             domainConfig.type,
@@ -206,6 +206,7 @@ export const initServerSideProps = async <VariablesType extends Variables>({
             urqlState: JSON.parse(JSON.stringify(currentSsrCache.extractData())),
             isMaintenance,
             isForbidden,
+            customerUserRoles,
             ...additionalProps,
         },
     };

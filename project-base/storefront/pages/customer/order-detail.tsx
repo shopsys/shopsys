@@ -97,7 +97,10 @@ export const getServerSideProps = getServerSidePropsWrapper(
             return initServerSideProps<TypeOrderAvailablePaymentsQueryVariables>({
                 authenticationConfig: {
                     authenticationRequired: true,
-                    authorizedRoles: [TypeCustomerUserRoleEnum.RoleApiOrderView],
+                    authorizedRoles: [
+                        TypeCustomerUserRoleEnum.RoleApiCartAndOrderCreation,
+                        TypeCustomerUserRoleEnum.RoleApiCompanyOrdersView,
+                    ],
                 },
                 prefetchedQueries: orderUuid
                     ? [

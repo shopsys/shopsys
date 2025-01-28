@@ -70,7 +70,10 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
         context,
         authenticationConfig: {
             authenticationRequired: true,
-            authorizedRoles: [TypeCustomerUserRoleEnum.RoleApiOrderView],
+            authorizedRoles: [
+                TypeCustomerUserRoleEnum.RoleApiCartAndOrderCreation,
+                TypeCustomerUserRoleEnum.RoleApiCompanyOrdersView,
+            ],
         },
         prefetchedQueries: [
             {
