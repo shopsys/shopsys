@@ -1,3 +1,5 @@
+'use client'
+
 import { FacebookIcon } from 'components/Basic/Icon/FacebookIcon';
 import { InstagramIcon } from 'components/Basic/Icon/InstagramIcon';
 import { YoutubeIcon } from 'components/Basic/Icon/YoutubeIcon';
