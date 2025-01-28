@@ -53,7 +53,7 @@ class OrdersQuery extends AbstractQuery
             throw new InvalidTokenUserMessageException();
         }
 
-        if ($this->security->isGranted(CustomerUserRole::ROLE_API_ALL)) {
+        if ($this->security->isGranted(CustomerUserRole::ROLE_API_COMPANY_ORDERS_VIEW)) {
             return $this->getPaginatedCustomerOrders($customerUser->getCustomer(), $argument);
         }
 

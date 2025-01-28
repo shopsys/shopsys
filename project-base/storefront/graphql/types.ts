@@ -962,10 +962,10 @@ export type TypeCustomerUser = {
 /** Available customer user roles */
 export enum TypeCustomerUserRoleEnum {
   RoleApiAll = 'ROLE_API_ALL',
+  RoleApiCartAndOrderCreation = 'ROLE_API_CART_AND_ORDER_CREATION',
+  RoleApiCompanyOrdersView = 'ROLE_API_COMPANY_ORDERS_VIEW',
   RoleApiCustomerSeesPrices = 'ROLE_API_CUSTOMER_SEES_PRICES',
-  RoleApiCustomerSelfManage = 'ROLE_API_CUSTOMER_SELF_MANAGE',
-  RoleApiOrderFull = 'ROLE_API_ORDER_FULL',
-  RoleApiOrderView = 'ROLE_API_ORDER_VIEW'
+  RoleApiCustomerSelfManage = 'ROLE_API_CUSTOMER_SELF_MANAGE'
 }
 
 export type TypeCustomerUserRoleGroup = {

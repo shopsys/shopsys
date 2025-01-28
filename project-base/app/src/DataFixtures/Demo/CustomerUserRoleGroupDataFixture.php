@@ -17,6 +17,7 @@ class CustomerUserRoleGroupDataFixture extends AbstractReferenceFixture
     public const string ROLE_GROUP_USER = 'role_group_user';
     public const string ROLE_GROUP_LIMITED_USER = 'role_group_limited_user';
     public const string ROLE_GROUP_CATALOG_USER = 'role_group_catalog_user';
+    public const string ROLE_GROUP_ACCOUNTANT = 'role_group_accountant';
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupDataFactory $customerUserRoleGroupDataFactory
@@ -37,6 +38,7 @@ class CustomerUserRoleGroupDataFixture extends AbstractReferenceFixture
         $this->createUserRoleGroup();
         $this->createLimitedUserRoleGroup();
         $this->createCatalogUserRoleGroup();
+        $this->createAccountantRoleGroup();
     }
 
     /**
@@ -60,7 +62,7 @@ class CustomerUserRoleGroupDataFixture extends AbstractReferenceFixture
         $customerUserRoleGroupData->roles = [
             CustomerUserRole::ROLE_API_CUSTOMER_SELF_MANAGE,
             CustomerUserRole::ROLE_API_CUSTOMER_SEES_PRICES,
-            CustomerUserRole::ROLE_API_ORDER_FULL,
+            CustomerUserRole::ROLE_API_CART_AND_ORDER_CREATION,
         ];
 
         $customerUserRoleGroup = $this->customerUserRoleGroupFacade->create($customerUserRoleGroupData);
@@ -76,7 +78,7 @@ class CustomerUserRoleGroupDataFixture extends AbstractReferenceFixture
         }
         $customerUserRoleGroupData->roles = [
             CustomerUserRole::ROLE_API_CUSTOMER_SELF_MANAGE,
-            CustomerUserRole::ROLE_API_ORDER_FULL,
+            CustomerUserRole::ROLE_API_CART_AND_ORDER_CREATION,
         ];
 
         $customerUserRoleGroup = $this->customerUserRoleGroupFacade->create($customerUserRoleGroupData);
@@ -96,5 +98,22 @@ class CustomerUserRoleGroupDataFixture extends AbstractReferenceFixture
 
         $customerUserRoleGroup = $this->customerUserRoleGroupFacade->create($customerUserRoleGroupData);
         $this->addReference(self::ROLE_GROUP_CATALOG_USER, $customerUserRoleGroup);
+    }
+
+    private function createAccountantRoleGroup(): void
+    {
+        $customerUserRoleGroupData = $this->customerUserRoleGroupDataFactory->create();
+
+        foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
+            $customerUserRoleGroupData->names[$locale] = t('Accountant', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
+        }
+        $customerUserRoleGroupData->roles = [
+            CustomerUserRole::ROLE_API_CUSTOMER_SELF_MANAGE,
+            CustomerUserRole::ROLE_API_CUSTOMER_SEES_PRICES,
+            CustomerUserRole::ROLE_API_COMPANY_ORDERS_VIEW,
+        ];
+
+        $customerUserRoleGroup = $this->customerUserRoleGroupFacade->create($customerUserRoleGroupData);
+        $this->addReference(self::ROLE_GROUP_ACCOUNTANT, $customerUserRoleGroup);
     }
 }

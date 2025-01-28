@@ -55,7 +55,7 @@ class OrderItemsSearchQuery extends AbstractQuery
         $search = (string)$searchInput;
         $filter = $this->orderItemsFilterFactory->createFromArgument($argument);
 
-        if ($this->security->isGranted(CustomerUserRole::ROLE_API_ALL)) {
+        if ($this->security->isGranted(CustomerUserRole::ROLE_API_COMPANY_ORDERS_VIEW)) {
             return $this->getPaginatedCustomerOrderItemsSearchList($customerUser->getCustomer(), $search, $filter, $argument);
         }
 

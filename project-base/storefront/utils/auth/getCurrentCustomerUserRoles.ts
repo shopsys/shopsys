@@ -1,4 +1,7 @@
-import { CurrentCustomerUserQueryDocument, TypeCurrentCustomerUserQuery } from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
+import {
+    CurrentCustomerUserQueryDocument,
+    TypeCurrentCustomerUserQuery,
+} from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.generated';
 import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { Client } from 'urql';
 

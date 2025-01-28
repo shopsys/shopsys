@@ -31,6 +31,7 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
     public const string B2B_COMPANY_USER_EMAIL = 'marek.horvat@shopsys.com';
     public const string B2B_COMPANY_LIMITED_USER_EMAIL = 'peter.kovac@shopsys.com';
     public const string B2B_COMPANY_CATALOG_USER_EMAIL = 'jiri.katalogovy@shopsys.com';
+    public const string B2B_COMPANY_ACCOUNTANT_EMAIL = 'jana.ucetni@shopsys.com';
 
     private const string KEY_CUSTOMER_USER_DATA = 'customerUserData';
     private const string KEY_DELIVERY_ADDRESS = 'deliveryAddress';
@@ -272,6 +273,26 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
                     self::KEY_ADDRESS_POSTCODE => '81101',
                     self::KEY_ADDRESS_STREET => 'Revolučná 123',
                     self::KEY_ADDRESS_TELEPHONE => '606060608',
+                    self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA, Country::class),
+                ],
+            ],
+            [
+                self::KEY_CUSTOMER_USER_DATA => [
+                    self::KEY_CUSTOMER_USER_DATA_FIRST_NAME => 'Jana',
+                    self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Účetní',
+                    self::KEY_CUSTOMER_USER_DATA_EMAIL => self::B2B_COMPANY_ACCOUNTANT_EMAIL,
+                    self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'user123',
+                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '606060609',
+                    self::KEY_CUSTOMER_USER_REFERENCE => self::B2B_COMPANY_ACCOUNTANT_EMAIL,
+                    self::KEY_CUSTOMER_ROLE_GROUP => $this->getReference(CustomerUserRoleGroupDataFixture::ROLE_GROUP_ACCOUNTANT, CustomerUserRoleGroup::class),
+                ],
+                self::KEY_DELIVERY_ADDRESS => [
+                    self::KEY_ADDRESS_FIRST_NAME => 'Jana',
+                    self::KEY_ADDRESS_LAST_NAME => 'Účetní',
+                    self::KEY_ADDRESS_CITY => 'Bratislava',
+                    self::KEY_ADDRESS_POSTCODE => '81101',
+                    self::KEY_ADDRESS_STREET => 'Revolučná 123',
+                    self::KEY_ADDRESS_TELEPHONE => '606060609',
                     self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA, Country::class),
                 ],
             ],

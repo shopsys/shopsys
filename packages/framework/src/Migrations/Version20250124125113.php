@@ -17,7 +17,7 @@ class Version20250124125113 extends AbstractMigration
         $this->sql(
             '
             UPDATE customer_user_role_groups
-            SET roles = roles::jsonb || \'["ROLE_API_ORDER_FULL"]\'::jsonb
+            SET roles = roles::jsonb || \'["ROLE_API_CART_AND_ORDER_CREATION"]\'::jsonb
             WHERE NOT (roles::jsonb @> \'["ROLE_API_ALL"]\'::jsonb);',
         );
     }

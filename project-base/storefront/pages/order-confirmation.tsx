@@ -96,7 +96,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
     return initServerSideProps<TypeOrderSentPageContentQueryVariables>({
         context,
         authenticationConfig: {
-            authorizedRoles: [TypeCustomerUserRoleEnum.RoleApiOrderFull],
+            authorizedRoles: [TypeCustomerUserRoleEnum.RoleApiCartAndOrderCreation],
         },
         prefetchedQueries: [
             {

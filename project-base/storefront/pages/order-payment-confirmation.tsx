@@ -103,7 +103,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
         domainConfig,
         t,
         authenticationConfig: {
-            authorizedRoles: [TypeCustomerUserRoleEnum.RoleApiOrderFull],
+            authorizedRoles: [TypeCustomerUserRoleEnum.RoleApiCartAndOrderCreation],
         },
     });
 });

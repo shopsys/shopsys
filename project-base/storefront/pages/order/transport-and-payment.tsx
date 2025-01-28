@@ -36,7 +36,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 domainConfig,
                 t,
                 authenticationConfig: {
-                    authorizedRoles: [TypeCustomerUserRoleEnum.RoleApiOrderFull],
+                    authorizedRoles: [TypeCustomerUserRoleEnum.RoleApiCartAndOrderCreation],
                 },
                 prefetchedQueries: [
                     {

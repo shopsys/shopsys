@@ -11757,19 +11757,19 @@ Available customer user roles
 <td></td>
 </tr>
 <tr>
+<td valign="top"><strong>ROLE_API_CART_AND_ORDER_CREATION</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>ROLE_API_COMPANY_ORDERS_VIEW</strong></td>
+<td></td>
+</tr>
+<tr>
 <td valign="top"><strong>ROLE_API_CUSTOMER_SEES_PRICES</strong></td>
 <td></td>
 </tr>
 <tr>
 <td valign="top"><strong>ROLE_API_CUSTOMER_SELF_MANAGE</strong></td>
-<td></td>
-</tr>
-<tr>
-<td valign="top"><strong>ROLE_API_ORDER_FULL</strong></td>
-<td></td>
-</tr>
-<tr>
-<td valign="top"><strong>ROLE_API_ORDER_VIEW</strong></td>
 <td></td>
 </tr>
 </tbody>

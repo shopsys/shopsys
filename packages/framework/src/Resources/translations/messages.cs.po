@@ -91,6 +91,9 @@ msgstr "<strong><a href=\"{{ url }}\">Notifikační lišta</a></strong> byla ús
 msgid "<strong><a href=\"{{ url }}\">SEO category</a></strong> has been saved"
 msgstr "<strong><a href=\"{{ url }}\">SEO kombinace kategorie</a></strong> byla uložena"
 
+msgid "Access to all the orders created under the user's company"
+msgstr "Přístup ke všem objednávkám vytvořeným pod firmou uživatele"
+
 msgid "Accessories"
 msgstr "Příslušenství"
 
@@ -2322,9 +2325,6 @@ msgstr "Nesprávné nastavení může mít negativní vliv na správnou funkčno
 
 msgid "Information about order rounding item (empty if there is no rounding)"
 msgstr "Informace o zaokrouhlovací položce v objednávce (prázdné pokud v objednávce není zaokrouhlení)"
-
-msgid "Information about orders"
-msgstr "Informace o objednávkách"
 
 msgid "Information for customers"
 msgstr "Informace pro zákazníky"

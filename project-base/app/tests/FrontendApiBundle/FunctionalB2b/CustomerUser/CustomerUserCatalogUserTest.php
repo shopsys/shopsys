@@ -20,39 +20,6 @@ class CustomerUserCatalogUserTest extends GraphQlB2bDomainWithLoginTestCase
         $this->assertAccessDeniedWarning($response);
     }
 
-    public function testOrdersQueryIsNotAllowed(): void
-    {
-        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/OrdersQuery.graphql');
-
-        $this->assertAccessDeniedWarning($response);
-    }
-
-    public function testOrderQueryIsNotAllowed(): void
-    {
-        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/OrderQuery.graphql', [
-            'orderUuid' => self::FAKE_UUID,
-        ]);
-
-        $this->assertAccessDeniedWarning($response);
-    }
-
-    public function testOrderItemsQueryIsNotAllowed(): void
-    {
-        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/OrderItemsQuery.graphql');
-
-        $this->assertAccessDeniedWarning($response);
-    }
-
-    public function testOrderItemsSearchQueryIsNotAllowed(): void
-    {
-        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/OrderItemsSearchQuery.graphql', [
-            'search' => 'search',
-            'userIdentifier' => self::FAKE_UUID,
-        ]);
-
-        $this->assertAccessDeniedWarning($response);
-    }
-
     public function testPaymentsQueryIsNotAllowed(): void
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/../../Functional/Payment/graphql/PaymentsQuery.graphql');
@@ -72,13 +39,6 @@ class CustomerUserCatalogUserTest extends GraphQlB2bDomainWithLoginTestCase
         $response = $this->getResponseContentForGql(__DIR__ . '/../../Functional/Payment/graphql/GoPaySwiftsQuery.graphql', [
             'currencyCode' => 'CZK',
         ]);
-
-        $this->assertAccessDeniedWarning($response);
-    }
-
-    public function testLastOrderQueryIsNotAllowed(): void
-    {
-        $response = $this->getResponseContentForGql(__DIR__ . '/../../Functional/Order/graphql/LastOrderQuery.graphql');
 
         $this->assertAccessDeniedWarning($response);
     }

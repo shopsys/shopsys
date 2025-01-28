@@ -82,6 +82,7 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
             ['email' => CompanyDataFixture::B2B_COMPANY_CATALOG_USER_EMAIL],
             ['email' => CompanyDataFixture::B2B_COMPANY_LIMITED_USER_EMAIL],
             ['email' => CompanyDataFixture::B2B_COMPANY_OWNER_EMAIL],
+            ['email' => CompanyDataFixture::B2B_COMPANY_ACCOUNTANT_EMAIL],
         ];
 
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/CustomerUsersQuery.graphql');

@@ -74,7 +74,7 @@ class OrderQuery extends AbstractQuery
      */
     protected function getOrderForCustomerUserByUuid(CustomerUser $customerUser, string $uuid): Order
     {
-        if ($this->security->isGranted(CustomerUserRole::ROLE_API_ALL)) {
+        if ($this->security->isGranted(CustomerUserRole::ROLE_API_COMPANY_ORDERS_VIEW)) {
             return $this->orderApiFacade->getByUuidAndCustomer($uuid, $customerUser->getCustomer());
         }
 
@@ -88,7 +88,7 @@ class OrderQuery extends AbstractQuery
      */
     protected function getByOrderNumberAndCustomerUser(string $orderNumber, CustomerUser $customerUser): Order
     {
-        if ($this->security->isGranted(CustomerUserRole::ROLE_API_ALL)) {
+        if ($this->security->isGranted(CustomerUserRole::ROLE_API_COMPANY_ORDERS_VIEW)) {
             return $this->orderApiFacade->getByOrderNumberAndCustomer($orderNumber, $customerUser->getCustomer());
         }
 

@@ -91,6 +91,9 @@ msgstr ""
 msgid "<strong><a href=\"{{ url }}\">SEO category</a></strong> has been saved"
 msgstr ""
 
+msgid "Access to all the orders created under the user's company"
+msgstr ""
+
 msgid "Accessories"
 msgstr ""
 
@@ -2321,9 +2324,6 @@ msgid "Incorrect settings may have a negative impact on the correct functionalit
 msgstr ""
 
 msgid "Information about order rounding item (empty if there is no rounding)"
-msgstr ""
-
-msgid "Information about orders"
 msgstr ""
 
 msgid "Information for customers"

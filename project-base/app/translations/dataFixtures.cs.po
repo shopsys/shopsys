@@ -442,6 +442,9 @@ msgstr "A4tech myš X-710BK, OSCAR Game, 2000DPI, černá"
 msgid "About us"
 msgstr "O nás"
 
+msgid "Accountant"
+msgstr "Účetní"
+
 msgid "Action"
 msgstr "Akce"
 
