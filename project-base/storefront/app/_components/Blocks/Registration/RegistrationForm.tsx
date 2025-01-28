@@ -25,11 +25,11 @@ export type RegistrationFormProps = {
 export const RegistrationForm: FC<RegistrationFormProps> = ({ formHeading, countries }) => {
     const { t } = useTranslation();
 
-    const [formProviderMethods, defaultValues] = useRegistrationForm({ preSelectedCountry: countries[0] });
+    const [formProviderMethods] = useRegistrationForm({ preSelectedCountry: countries[0] });
     const formMeta = useRegistrationFormMeta(formProviderMethods);
     const customerValue = useWatch({ name: formMeta.fields.customer.name, control: formProviderMethods.control });
 
-    const handleRegistration = useRegistration({ formMeta, defaultValues });
+    const handleRegistration = useRegistration({ formMeta });
 
     return (
         <FormProvider {...formProviderMethods}>
