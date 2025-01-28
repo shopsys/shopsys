@@ -1,3 +1,5 @@
+'use client';
+
 import Trans from 'next-translate/Trans';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 

@@ -1,3 +1,5 @@
+'use client';
+
 import { BannerImage } from './BannerImage';
 import { CarouselState, getBannerOrderCSSProperty } from './bannersUtils';
 import { TypeSliderItemFragment } from 'graphql/requests/sliderItems/fragments/SliderItemFragment.generated';

@@ -1,3 +1,5 @@
+'use client';
+
 import { StyleguideSection } from './StyleguideElements';
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { useState } from 'react';

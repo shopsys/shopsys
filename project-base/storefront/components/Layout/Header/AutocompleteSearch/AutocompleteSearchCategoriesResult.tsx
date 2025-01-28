@@ -1,3 +1,5 @@
+'use client';
+
 import { SearchResultLink, SearchResultSectionGroup, SearchResultSectionTitle } from './AutocompleteSearchPopup';
 import { AUTOCOMPLETE_CATEGORY_LIMIT } from './constants';
 import { TypeSimpleCategoryFragment } from 'graphql/requests/categories/fragments/SimpleCategoryFragment.generated';

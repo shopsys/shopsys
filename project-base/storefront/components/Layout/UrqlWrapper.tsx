@@ -1,3 +1,5 @@
+'use client';
+
 import { useMemo } from 'react';
 import { Provider, SSRExchange, ssrExchange as createSsrExchange } from 'urql';
 import { createClient } from 'urql/createClient';

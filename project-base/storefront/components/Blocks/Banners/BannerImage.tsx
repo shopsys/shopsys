@@ -1,3 +1,5 @@
+'use client';
+
 import Head from 'next/head';
 import { getImageProps } from 'next/image';
 import { DragEvent } from 'react';

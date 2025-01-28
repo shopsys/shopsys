@@ -1,3 +1,5 @@
+'use client';
+
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { TIDs } from 'cypress/tids';
 import { twMergeCustom } from 'utils/twMerge';

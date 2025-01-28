@@ -1,3 +1,5 @@
+'use client';
+
 import { EditIcon } from 'components/Basic/Icon/EditIcon';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { Cell, Row, Table } from 'components/Basic/Table/Table';

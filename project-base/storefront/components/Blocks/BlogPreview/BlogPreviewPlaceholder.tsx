@@ -1,3 +1,5 @@
+'use client';
+
 import { BlogPreviewProps } from './BlogPreview';
 import { BlogPreviewMain } from './BlogPreviewMain';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';

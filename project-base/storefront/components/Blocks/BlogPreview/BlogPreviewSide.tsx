@@ -1,3 +1,5 @@
+'use client';
+
 import { ArticleLink } from './BlogPreviewElements';
 import { ArticleDate } from 'components/Basic/ArticleDate/ArticleDate';
 import { Flag } from 'components/Basic/Flag/Flag';

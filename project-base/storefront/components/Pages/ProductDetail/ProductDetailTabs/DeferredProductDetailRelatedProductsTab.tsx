@@ -1,3 +1,5 @@
+'use client';
+
 import { ProductDetailRelatedProductsTabProps } from './ProductDetailRelatedProductsTab';
 import { ProductDetailRelatedProductsTabPlaceholder } from './ProductDetailRelatedProductsTabPlaceholder';
 import dynamic from 'next/dynamic';

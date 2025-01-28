@@ -1,3 +1,5 @@
+'use client';
+
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';

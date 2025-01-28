@@ -1,3 +1,4 @@
+'use client';
 export const CheckmarkBadgeIcon: SvgFC = (props) => (
     <svg {...props} fill="none" viewBox="0 0 22 23" xmlns="http://www.w3.org/2000/svg">
         <path

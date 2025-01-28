@@ -1,3 +1,5 @@
+'use client';
+
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { OrderItemGiftCard } from 'components/Blocks/OrderItemGiftCard/OrderItemGiftCard';
 import { OrderItemProductCard } from 'components/Blocks/OrderItemProductCard/OrderItemProductCard';

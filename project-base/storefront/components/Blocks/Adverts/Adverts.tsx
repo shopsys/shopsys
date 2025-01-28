@@ -1,3 +1,5 @@
+'use client';
+
 import { AdvertImage } from './AdvertImage';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useAdvertsQuery } from 'graphql/requests/adverts/queries/AdvertsQuery.generated';

@@ -1,3 +1,5 @@
+'use client';
+
 import { ErrorPage, ErrorPageTextHeading, ErrorPageTextMain } from './ErrorPageElements';
 import { ErrorLayout } from 'components/Layout/ErrorLayout';
 import { Webline } from 'components/Layout/Webline/Webline';

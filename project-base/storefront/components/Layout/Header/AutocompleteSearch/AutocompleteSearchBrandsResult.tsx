@@ -1,3 +1,5 @@
+'use client';
+
 import { SearchResultLink, SearchResultSectionGroup, SearchResultSectionTitle } from './AutocompleteSearchPopup';
 import { AUTOCOMPLETE_BRAND_LIMIT } from './constants';
 import { TypeAutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';

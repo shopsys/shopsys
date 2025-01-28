@@ -1,3 +1,5 @@
+'use client';
+
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
 import { TIDs } from 'cypress/tids';
 import { TypeOpeningHours } from 'graphql/types';

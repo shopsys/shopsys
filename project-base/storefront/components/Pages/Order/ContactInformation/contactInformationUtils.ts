@@ -1,3 +1,5 @@
+'use client';
+
 import { ContactInformationFormMetaType } from './contactInformationFormMeta';
 import {
     getDeliveryInfoFromFormValues,

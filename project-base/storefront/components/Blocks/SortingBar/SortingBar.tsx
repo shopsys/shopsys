@@ -1,3 +1,5 @@
+'use client';
+
 import { SortingBarItem } from './SortingBarItem';
 import { SortIcon } from 'components/Basic/Icon/SortIcon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';

@@ -1,3 +1,5 @@
+'use client';
+
 import { StyleguideSection } from './StyleguideElements';
 import { MultiSelect } from 'components/Forms/Multiselect/Multiselect';
 import { Select } from 'components/Forms/Select/Select';

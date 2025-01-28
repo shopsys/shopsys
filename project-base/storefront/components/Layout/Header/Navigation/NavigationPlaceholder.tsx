@@ -1,3 +1,5 @@
+'use client';
+
 import { NavigationProps } from './Navigation';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';

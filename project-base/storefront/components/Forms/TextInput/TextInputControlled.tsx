@@ -1,3 +1,5 @@
+'use client';
+
 import { TextInput, TextInputProps } from './TextInput';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { ChangeEventHandler, FocusEventHandler, ReactElement } from 'react';

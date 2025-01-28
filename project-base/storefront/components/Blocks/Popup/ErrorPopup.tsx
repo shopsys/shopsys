@@ -1,3 +1,5 @@
+'use client';
+
 import { Popup } from 'components/Layout/Popup/Popup';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmMessageType } from 'gtm/enums/GtmMessageType';

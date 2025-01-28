@@ -1,3 +1,5 @@
+'use client';
+
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeHreflangLink } from 'graphql/types';
 import Head from 'next/head';

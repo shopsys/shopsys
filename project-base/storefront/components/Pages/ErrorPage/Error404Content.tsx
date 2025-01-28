@@ -1,3 +1,5 @@
+'use client';
+
 import { Error404Headless } from './Error404Headless';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';

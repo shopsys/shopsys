@@ -1,3 +1,5 @@
+'use client';
+
 import { forwardRef, InputHTMLAttributes } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';

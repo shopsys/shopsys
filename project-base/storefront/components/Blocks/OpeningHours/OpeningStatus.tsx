@@ -1,3 +1,5 @@
+'use client';
+
 import { Flag } from 'components/Basic/Flag/Flag';
 import { TypeStoreOpeningStatusEnum } from 'graphql/types';
 import useTranslation from 'utils/i18n/useTranslationWrapper';

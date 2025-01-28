@@ -1,3 +1,5 @@
+'use client';
+
 import { useRegistrationAfterOrderForm, useRegistrationAfterOrderFormMeta } from './registrationAfterOrderFormMeta';
 import { ThumbUp } from 'components/Basic/Icon/ThumbUp';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';

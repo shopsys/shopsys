@@ -1,10 +1,10 @@
 import { getArticlesQuery } from './getArticlesQuery';
+import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { TypeSimpleNotBlogArticleFragment } from 'graphql/requests/articlesInterface/articles/fragments/SimpleNotBlogArticleFragment.generated';
 import { TypeArticlePlacementTypeEnum } from 'graphql/types';
-import { getServerT } from 'utils/translation/getServerTranslation';
 
 export const getFooterArticles = async () => {
-    const t = await getServerT();
+    const t = await getTranslation();
     const articlesData = await getArticlesQuery({
         placement: [
             TypeArticlePlacementTypeEnum.Footer1,

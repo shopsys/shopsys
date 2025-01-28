@@ -1,3 +1,5 @@
+'use client';
+
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { twJoin } from 'tailwind-merge';

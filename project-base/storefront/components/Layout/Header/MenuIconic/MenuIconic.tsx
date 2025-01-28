@@ -1,3 +1,5 @@
+'use client';
+
 import { MenuIconicItem, MenuIconicItemLink } from './MenuIconicElements';
 import { MenuIconicItemUserAuthenticated } from './MenuIconicItemUserAuthenticated';
 import { MenuIconicItemUserUnauthenticated } from './MenuIconicItemUserUnauthenticated';

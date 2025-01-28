@@ -1,3 +1,5 @@
+'use client';
+
 import { SearchProducts } from './SearchProducts';
 import { useSearchQuery } from './searchUtils';
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';

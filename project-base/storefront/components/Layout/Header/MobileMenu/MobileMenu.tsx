@@ -1,3 +1,5 @@
+'use client';
+
 import { MobileMenuContent } from './MobileMenuContent';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { HamburgerMenu } from 'components/Layout/Header/HamburgerMenu/HamburgerMenu';

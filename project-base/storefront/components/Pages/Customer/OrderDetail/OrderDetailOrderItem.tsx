@@ -1,3 +1,5 @@
+'use client';
+
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { FillIcon } from 'components/Basic/Icon/FillIcon';
 import { Image } from 'components/Basic/Image/Image';

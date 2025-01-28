@@ -1,3 +1,5 @@
+'use client';
+
 import { ProductItemProps } from './ProductsList/ProductListItem';
 import { ProductsListContent } from './ProductsList/ProductsListContent';
 import { AccessibleLink } from 'components/Basic/AccessibleLink/AccessibleLink';

@@ -1,3 +1,5 @@
+'use client';
+
 import { SkeletonModuleAutocompleteSearch } from 'components/Blocks/Skeleton/SkeletonModuleAutocompleteSearch';
 import dynamic from 'next/dynamic';
 import { useDeferredRender } from 'utils/useDeferredRender';

@@ -1,3 +1,5 @@
+'use client';
+
 import { useRequests } from './symfonyDebugToolbarUtils';
 import symfonyImage from '/public/images/symfony.svg';
 import { Image } from 'components/Basic/Image/Image';

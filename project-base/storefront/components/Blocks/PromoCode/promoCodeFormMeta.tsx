@@ -1,3 +1,5 @@
+'use client';
+
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';

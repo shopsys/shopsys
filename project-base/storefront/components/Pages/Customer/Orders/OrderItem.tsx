@@ -1,3 +1,5 @@
+'use client';
+
 import { ElementWithImage, OrderItemColumnInfo, OrderItemRowInfo } from './OrderItemElements';
 import { OrderItemProducts } from './OrderItemProducts';
 import { OrderPaymentStatusBar } from './OrderPaymentStatusBar';

@@ -1,3 +1,5 @@
+'use client';
+
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
 import { TypeAvailabilityStatusEnum } from 'graphql/types';

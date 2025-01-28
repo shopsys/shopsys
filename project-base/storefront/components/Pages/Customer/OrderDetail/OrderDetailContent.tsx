@@ -1,3 +1,5 @@
+'use client';
+
 import { OrderDetailBasicInfo } from './OrderDetailBasicInfo';
 import { OrderCustomerInfo } from 'components/Blocks/OrderCustomerInfo/OrderCustomerInfo';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';

@@ -1,3 +1,5 @@
+'use client';
+
 import { SearchProductsContent } from './SearchProductsContent';
 import { useSearchProductsData } from './searchUtils';
 import { FilteredProductsWrapper } from 'components/Blocks/FilteredProductsWrapper/FilteredProductsWrapper';

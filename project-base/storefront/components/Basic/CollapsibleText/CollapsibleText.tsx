@@ -1,3 +1,5 @@
+'use client';
+
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import DOMPurify from 'isomorphic-dompurify';
 import { RefObject, useEffect, useRef, useState } from 'react';

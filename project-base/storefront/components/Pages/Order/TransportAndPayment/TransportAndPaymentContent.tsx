@@ -1,3 +1,5 @@
+'use client';
+
 import { TransportAndPaymentSelect } from './TransportAndPaymentSelect/TransportAndPaymentSelect';
 import {
     getTransportAndPaymentValidationMessages,

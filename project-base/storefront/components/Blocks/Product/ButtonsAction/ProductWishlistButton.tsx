@@ -1,3 +1,5 @@
+'use client';
+
 import { HeartFilledIcon } from 'components/Basic/Icon/HeartFilledIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { HTMLAttributes } from 'react';

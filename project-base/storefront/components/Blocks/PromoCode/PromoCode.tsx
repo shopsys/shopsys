@@ -1,3 +1,5 @@
+'use client';
+
 import { usePromoCodeForm, usePromoCodeFormMeta } from './promoCodeFormMeta';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';

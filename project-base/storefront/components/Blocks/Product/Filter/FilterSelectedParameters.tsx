@@ -1,3 +1,5 @@
+'use client';
+
 import { SelectedParametersList, SelectedParametersListItem, SelectedParametersName } from './FilterElements';
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { Flag } from 'components/Basic/Flag/Flag';

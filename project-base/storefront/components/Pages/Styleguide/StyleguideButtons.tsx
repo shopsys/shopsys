@@ -1,3 +1,5 @@
+'use client';
+
 import { StyleguideSection, StyleguideSubSection } from './StyleguideElements';
 import { Button } from 'components/Forms/Button/Button';
 

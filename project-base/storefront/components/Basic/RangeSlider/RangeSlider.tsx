@@ -1,3 +1,5 @@
+'use client';
+
 import { TextInput } from 'components/Forms/TextInput/TextInput';
 import {
     ChangeEvent,

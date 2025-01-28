@@ -1,3 +1,4 @@
+'use client';
 export const InstagramIcon: SvgFC = (props) => (
     <svg {...props} fill="none" viewBox="0 0 41 41" xmlns="http://www.w3.org/2000/svg">
         <circle cx="20.5" cy="20.5635" fill="#08131F" r="20" />

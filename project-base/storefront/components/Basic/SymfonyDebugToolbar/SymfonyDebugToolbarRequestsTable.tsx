@@ -1,3 +1,5 @@
+'use client';
+
 import { ResponseInfo } from './symfonyDebugToolbarUtils';
 import { RefObject, createRef, useEffect } from 'react';
 

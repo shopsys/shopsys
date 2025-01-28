@@ -1,3 +1,5 @@
+'use client';
+
 import { CompareFilledIcon } from 'components/Basic/Icon/CompareFilledIcon';
 import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import useTranslation from 'utils/i18n/useTranslationWrapper';

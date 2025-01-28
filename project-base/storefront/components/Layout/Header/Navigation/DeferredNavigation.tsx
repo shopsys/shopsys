@@ -1,3 +1,5 @@
+'use client';
+
 import { Navigation } from './Navigation';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';

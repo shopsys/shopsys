@@ -1,3 +1,5 @@
+'use client';
+
 import { Loader } from 'components/Basic/Loader/Loader';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import DropzoneControlled from 'components/Forms/Dropzone/DropzoneControlled';

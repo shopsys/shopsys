@@ -1,3 +1,4 @@
+'use client';
 export const VALIDATION_CONSTANTS = {
     streetMaxLength: 100,
     cityMaxLength: 100,
