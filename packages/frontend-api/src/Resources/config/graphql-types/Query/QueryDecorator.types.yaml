@@ -262,6 +262,7 @@ QueryDecorator:
             orderPayments:
                 type: 'OrderPaymentsConfig!'
                 resolve: "@=query('orderPaymentsQuery', args['orderUuid'])"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
                 args:
                     orderUuid:
                         type: "Uuid!"
