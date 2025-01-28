@@ -75,7 +75,7 @@ QueryDecorator:
             payments:
                 type: '[Payment!]!'
                 resolve: "@=query('paymentsQuery')"
-                access: "@=isGranted('ROLE_API_ORDER_FULL')"
+                access: "@=(isGranted('ROLE_API_ORDER_FULL') || not isAuthenticated())"
                 description: "Returns complete list of payment methods"
             payment:
                 type: 'Payment'
@@ -87,7 +87,7 @@ QueryDecorator:
             transports:
                 type: '[Transport!]!'
                 resolve: "@=query('transportsQuery', args['cartUuid'])"
-                access: "@=isGranted('ROLE_API_ORDER_FULL')"
+                access: "@=(isGranted('ROLE_API_ORDER_FULL') || not isAuthenticated())"
                 args:
                     cartUuid:
                         type: "Uuid"
@@ -136,7 +136,7 @@ QueryDecorator:
             order:
                 type: 'Order'
                 resolve: "@=query('orderByUuidOrUrlHashQuery', args['uuid'], args['urlHash'])"
-                access: "@=isGranted('ROLE_API_ORDER_VIEW')"
+                access: "@=(isGranted('ROLE_API_ORDER_VIEW') || not isAuthenticated())"
                 args:
                     uuid:
                         type: "Uuid"
@@ -274,7 +274,7 @@ QueryDecorator:
                 type: "[GoPayBankSwift!]!"
                 description: "List of available banks for GoPay bank transfer payment"
                 resolve: "@=query('goPaySwiftsQuery', args['currencyCode'])"
-                access: "@=isGranted('ROLE_API_ORDER_FULL')"
+                access: "@=(isGranted('ROLE_API_ORDER_FULL') || not isAuthenticated())"
                 args:
                     currencyCode:
                         type: "String!"
@@ -285,7 +285,7 @@ QueryDecorator:
                         type: CartInput
                         validation: cascade
                 resolve: "@=query('cartQuery', args)"
-                access: "@=isGranted('ROLE_API_ORDER_FULL')"
+                access: "@=(isGranted('ROLE_API_ORDER_FULL') || not isAuthenticated())"
                 description: "Return cart of logged customer or cart by UUID for anonymous user"
             navigation:
                 type: '[NavigationItem!]!'
@@ -415,7 +415,7 @@ QueryDecorator:
             orderSentPageContent:
                 type: "String!"
                 resolve: "@=query('orderSentPageContentQuery', args['orderUuid'])"
-                access: "@=isGranted('ROLE_API_ORDER_FULL')"
+                access: "@=(isGranted('ROLE_API_ORDER_FULL') || not isAuthenticated())"
                 args:
                     orderUuid:
                         type: "Uuid!"
@@ -423,7 +423,7 @@ QueryDecorator:
             orderPaymentSuccessfulContent:
                 type: "String!"
                 resolve: "@=query('orderPaymentSuccessfulContentQuery', args['orderUuid'])"
-                access: "@=isGranted('ROLE_API_ORDER_FULL')"
+                access: "@=(isGranted('ROLE_API_ORDER_FULL') || not isAuthenticated())"
                 args:
                     orderUuid:
                         type: "Uuid!"
@@ -431,7 +431,7 @@ QueryDecorator:
             orderPaymentFailedContent:
                 type: "String!"
                 resolve: "@=query('orderPaymentFailedContentQuery', args['orderUuid'])"
-                access: "@=isGranted('ROLE_API_ORDER_FULL')"
+                access: "@=(isGranted('ROLE_API_ORDER_FULL') || not isAuthenticated())"
                 args:
                     orderUuid:
                         type: "Uuid!"
