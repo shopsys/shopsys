@@ -1,4 +1,4 @@
-import { LoginForm, LoginFormProps } from 'app/_components/Blocks/LoginForm/LoginForm';
+import { LoginForm, LoginFormProps } from 'components/Blocks/Login/LoginForm';
 import { Popup } from 'components/Layout/Popup/Popup';
 import useTranslation from 'next-translate/useTranslation';
 
