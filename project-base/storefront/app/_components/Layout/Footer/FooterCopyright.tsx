@@ -5,7 +5,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { headers } from 'next/headers';
 import { getDictionary } from 'utils/getDictionary';
 
-export default async function FooterCopyright() {
+export const FooterCopyright = async () => {
     const { defaultLocale: lang } = getDomainConfig(headers().get('host')!);
     const dictionary = await getDictionary(lang);
     const t = await getTranslation({ defaultLang: lang, defaultDictionary: dictionary });
@@ -23,4 +23,4 @@ export default async function FooterCopyright() {
             </div>
         </div>
     );
-}
+};

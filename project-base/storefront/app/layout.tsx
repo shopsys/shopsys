@@ -1,5 +1,6 @@
-import Footer from './_components/Layout/Footer/Footer';
+import { Footer } from './_components/Layout/Footer/Footer';
 import Header from './_components/Layout/Header/Header';
+import { Webline } from 'components/Layout/Webline/Webline';
 import Providers from 'components/providers/Providers';
 import 'nprogress/nprogress.css';
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -18,7 +19,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
 
                 <main className="flex-1">{children}</main>
 
-                <Footer />
+                <Webline wrapperClassName="bg-backgroundAccentLess">
+                    <Footer />
+                </Webline>
             </div>
         </Providers>
     );
