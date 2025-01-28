@@ -1,3 +1,5 @@
+'use client';
+
 import { CategoryDetailProductsWrapperProps, CategoryDetailProductsWrapper } from './CategoryDetailProductsWrapper';
 import { CategoryDetailProductsWrapperPlaceholder } from './CategoryDetailProductsWrapperPlaceholder';
 import { CategoryProductsQueryDocument } from 'graphql/requests/products/queries/CategoryProductsQuery.generated';

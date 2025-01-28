@@ -1,3 +1,5 @@
+'use client';
+
 import { MenuItem } from './MobileMenuContent';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';

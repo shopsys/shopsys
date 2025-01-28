@@ -1,3 +1,5 @@
+'use client';
+
 import { SearchResultSectionTitle } from './AutocompleteSearchPopup';
 import { AUTOCOMPLETE_PRODUCT_LIMIT } from './constants';
 import { ProductsSlider, VISIBLE_SLIDER_ITEMS_AUTOCOMPLETE } from 'components/Blocks/Product/ProductsSlider';

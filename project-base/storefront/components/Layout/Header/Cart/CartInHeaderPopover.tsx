@@ -1,3 +1,5 @@
+'use client';
+
 import { AnimateAppearDiv } from 'components/Basic/Animations/AnimateAppearDiv';
 import { AnimatePresence } from 'framer-motion';
 import { twMergeCustom } from 'utils/twMerge';

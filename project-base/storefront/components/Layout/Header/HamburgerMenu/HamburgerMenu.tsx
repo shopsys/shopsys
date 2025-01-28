@@ -1,3 +1,5 @@
+'use client';
+
 import { MenuIcon } from 'components/Basic/Icon/MenuIcon';
 import useTranslation from 'next-translate/useTranslation';
 import { MouseEventHandler } from 'react';

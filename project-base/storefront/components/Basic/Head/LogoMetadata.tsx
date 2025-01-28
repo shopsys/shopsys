@@ -1,3 +1,5 @@
+'use client';
+
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import Head from 'next/head';
 

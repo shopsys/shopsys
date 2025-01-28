@@ -1,3 +1,5 @@
+'use client';
+
 import { Breadcrumbs } from './Breadcrumbs/Breadcrumbs';
 import { DeferredFooter } from './Footer/DeferredFooter';
 import { DeferredNewsletterForm } from './Footer/NewsletterForm/DeferredNewsletterForm';

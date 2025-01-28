@@ -1,3 +1,5 @@
+'use client';
+
 import { useCartPageNavigation } from './cartUtils';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';

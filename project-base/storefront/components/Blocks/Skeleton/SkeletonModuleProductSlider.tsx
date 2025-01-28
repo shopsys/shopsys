@@ -1,3 +1,5 @@
+'use client';
+
 import { SkeletonModuleProductListItem } from './SkeletonModuleProductListItem';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { VISIBLE_SLIDER_ITEMS } from 'components/Blocks/Product/ProductsSlider';

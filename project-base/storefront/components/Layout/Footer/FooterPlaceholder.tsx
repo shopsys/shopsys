@@ -1,3 +1,5 @@
+'use client';
+
 import { FooterProps } from './Footer';
 import imageLogo from '/public/images/logo.svg';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';

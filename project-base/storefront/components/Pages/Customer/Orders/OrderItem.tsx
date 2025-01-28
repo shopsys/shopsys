@@ -1,3 +1,5 @@
+'use client';
+
 import { ElementWithImage, OrderItemColumnInfo, OrderItemRowInfo } from './OrderItemElements';
 import { OrderPaymentStatusBar } from './OrderPaymentStatusBar';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';

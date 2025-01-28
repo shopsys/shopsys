@@ -1,3 +1,5 @@
+'use client';
+
 import { LastVisitedProductsContent } from './LastVisitedProductsContent';
 import { Webline } from 'components/Layout/Webline/Webline';
 import useTranslation from 'next-translate/useTranslation';

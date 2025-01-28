@@ -1,3 +1,5 @@
+'use client';
+
 import { MenuItem } from './MobileMenuContent';
 import { TypeNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';
 

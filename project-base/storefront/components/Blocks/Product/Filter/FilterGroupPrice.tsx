@@ -1,3 +1,5 @@
+'use client';
+
 import { FilterGroupContent, FilterGroupTitle, FilterGroupWrapper } from './FilterElements';
 import { RangeSlider } from 'components/Basic/RangeSlider/RangeSlider';
 import { AnimatePresence } from 'framer-motion';

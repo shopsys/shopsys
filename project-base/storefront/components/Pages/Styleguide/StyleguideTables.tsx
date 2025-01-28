@@ -1,3 +1,5 @@
+'use client';
+
 import { StyleguideSection, StyleguideSubSection } from './StyleguideElements';
 import { Cell, CellHead, CellMinor, Row, Table } from 'components/Basic/Table/Table';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';

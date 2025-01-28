@@ -1,3 +1,5 @@
+'use client';
+
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { Popup } from 'components/Layout/Popup/Popup';

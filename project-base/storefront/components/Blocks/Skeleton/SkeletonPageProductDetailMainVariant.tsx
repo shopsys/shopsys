@@ -1,3 +1,5 @@
+'use client';
+
 import { SkeletonModuleBreadcrumbs } from './SkeletonModuleBreadcrumbs';
 import { SkeletonModuleLastVisitedProducts } from './SkeletonModuleLastVisitedProducts';
 import { SkeletonModuleProductSlider } from './SkeletonModuleProductSlider';

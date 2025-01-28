@@ -1,3 +1,5 @@
+'use client';
+
 import { Button, ButtonProps } from './Button';
 import { forwardRef } from 'react';
 import { useFormContext } from 'react-hook-form';

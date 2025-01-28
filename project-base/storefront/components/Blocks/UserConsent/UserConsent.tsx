@@ -1,3 +1,5 @@
+'use client';
+
 import { UserConsentForm } from './UserConsentForm';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { useRouter } from 'next/router';

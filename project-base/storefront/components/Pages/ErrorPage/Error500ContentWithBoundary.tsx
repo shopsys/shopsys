@@ -1,3 +1,5 @@
+'use client';
+
 import { Error500Content } from './Error500Content';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';

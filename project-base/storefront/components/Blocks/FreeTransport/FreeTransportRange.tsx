@@ -1,3 +1,5 @@
+'use client';
+
 import useTranslation from 'next-translate/useTranslation';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';

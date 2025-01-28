@@ -1,3 +1,5 @@
+'use client';
+
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';

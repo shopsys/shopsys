@@ -1,3 +1,5 @@
+'use client';
+
 import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import useTranslation from 'next-translate/useTranslation';
 import { useCurrentFilterQuery } from 'utils/queryParams/useCurrentFilterQuery';

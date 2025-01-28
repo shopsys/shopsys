@@ -1,3 +1,5 @@
+'use client';
+
 import { PhoneIcon } from 'components/Basic/Icon/PhoneIcon';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';

@@ -1,3 +1,5 @@
+'use client';
+
 import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper';
 import { forwardRef, InputHTMLAttributes, ReactNode } from 'react';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';

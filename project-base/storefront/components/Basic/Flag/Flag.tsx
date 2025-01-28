@@ -1,3 +1,5 @@
+'use client';
+
 import { useRouter } from 'next/router';
 import { getYIQContrastTextColor } from 'utils/colors/colors';
 import { twMergeCustom } from 'utils/twMerge';

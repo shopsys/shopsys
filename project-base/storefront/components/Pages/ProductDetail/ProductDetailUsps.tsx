@@ -1,3 +1,5 @@
+'use client';
+
 import { CheckmarkBadgeIcon } from 'components/Basic/Icon/CheckmarkBadgeIcon';
 
 type ProductDetailUspsProps = {

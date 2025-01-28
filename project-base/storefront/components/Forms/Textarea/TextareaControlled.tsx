@@ -1,3 +1,5 @@
+'use client';
+
 import { Textarea, TextareaProps } from './Textarea';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { ChangeEventHandler, FocusEventHandler, ReactElement } from 'react';

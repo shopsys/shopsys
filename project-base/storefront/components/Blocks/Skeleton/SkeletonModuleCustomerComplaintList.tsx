@@ -1,3 +1,5 @@
+'use client';
+
 import { SkeletonModuleCustomer } from './SkeletonModuleCustomer';
 import { SkeletonModuleCustomerComplaints } from './SkeletonModuleCustomerComplaints';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';

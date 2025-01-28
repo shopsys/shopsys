@@ -1,3 +1,5 @@
+'use client';
+
 import { ProductItemProps } from './ProductListItem';
 import { ProductsListContent } from './ProductsListContent';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';

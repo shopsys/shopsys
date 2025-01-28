@@ -1,3 +1,5 @@
+'use client';
+
 import { FooterCopyright } from './FooterCopyright';
 import { FooterExtras } from './FooterExtras';
 import { FooterMenu } from './FooterMenu';

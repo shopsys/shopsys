@@ -1,3 +1,5 @@
+'use client';
+
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { AnimatePresence, m } from 'framer-motion';
 import useTranslation from 'next-translate/useTranslation';

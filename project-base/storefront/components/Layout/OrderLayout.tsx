@@ -1,3 +1,5 @@
+'use client';
+
 import { SeoMeta } from 'components/Basic/Head/SeoMeta';
 import { SkeletonManager } from 'components/Blocks/Skeleton/SkeletonManager';
 import { Footer } from 'components/Layout/Footer/Footer';

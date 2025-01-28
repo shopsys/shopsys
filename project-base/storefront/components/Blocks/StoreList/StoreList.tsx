@@ -1,3 +1,5 @@
+'use client';
+
 import { StoreListItem } from './StoreListItem';
 import { StoreOrPacketeryPoint } from 'utils/packetery/types';
 

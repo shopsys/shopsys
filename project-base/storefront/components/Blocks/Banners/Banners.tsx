@@ -1,3 +1,5 @@
+'use client';
+
 import { BannersSlider } from './BannersSlider';
 import { SkeletonModuleBanners } from 'components/Blocks/Skeleton/SkeletonModuleBanners';
 import { Webline } from 'components/Layout/Webline/Webline';

@@ -1,3 +1,5 @@
+'use client';
+
 import { ContactInformationFormContent } from './ContactInformationFormContent';
 import { ContactInformationEmail } from './FormBlocks/ContactInformationEmail';
 import { ContactInformationSendOrderButton } from './FormBlocks/ContactInformationSendOrderButton';

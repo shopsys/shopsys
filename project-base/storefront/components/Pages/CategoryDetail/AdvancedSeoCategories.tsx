@@ -1,3 +1,5 @@
+'use client';
+
 import { Tag } from 'components/Basic/Tag/Tag';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';

@@ -1,3 +1,5 @@
+'use client';
+
 import { CartList } from './CartList/CartList';
 import { CartSummary } from './CartSummary';
 import { CartSteps } from 'components/Blocks/CartSteps/CartSteps';

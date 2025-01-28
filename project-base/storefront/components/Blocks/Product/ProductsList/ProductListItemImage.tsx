@@ -1,3 +1,5 @@
+'use client';
+
 import { ProductItemProps } from './ProductListItem';
 import { Image } from 'components/Basic/Image/Image';
 import { TIDs } from 'cypress/tids';

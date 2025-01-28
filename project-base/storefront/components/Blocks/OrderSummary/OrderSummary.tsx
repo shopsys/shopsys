@@ -1,3 +1,5 @@
+'use client';
+
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { OrderItemProductCard } from 'components/Blocks/OrderItemProductCard/OrderItemProductCard';
 import { CartLoading } from 'components/Pages/Cart/CartLoading';

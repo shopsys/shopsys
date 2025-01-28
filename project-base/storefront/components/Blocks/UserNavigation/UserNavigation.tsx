@@ -1,3 +1,5 @@
+'use client';
+
 import { MenuIcon } from 'components/Basic/Icon/MenuIcon';
 import { UserMenu } from 'components/Blocks/UserMenu/UserMenu';
 import { Button } from 'components/Forms/Button/Button';

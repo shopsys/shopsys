@@ -1,3 +1,5 @@
+'use client';
+
 import { BatchInterceptor } from '@mswjs/interceptors';
 import browserInterceptors from '@mswjs/interceptors/lib/presets/browser';
 import { useEffect, useState } from 'react';

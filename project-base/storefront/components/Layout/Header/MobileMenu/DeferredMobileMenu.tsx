@@ -1,3 +1,5 @@
+'use client';
+
 import { HamburgerMenu } from 'components/Layout/Header/HamburgerMenu/HamburgerMenu';
 import dynamic from 'next/dynamic';
 import { desktopFirstSizes } from 'utils/mediaQueries';

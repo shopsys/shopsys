@@ -1,3 +1,5 @@
+'use client';
+
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { usePersistStore } from 'store/usePersistStore';

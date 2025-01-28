@@ -1,3 +1,5 @@
+'use client';
+
 import { ToggleSwitch } from 'components/Forms/ToggleSwitch/ToggleSwitch';
 import { ReactElement } from 'react';
 import { Control, useController } from 'react-hook-form';

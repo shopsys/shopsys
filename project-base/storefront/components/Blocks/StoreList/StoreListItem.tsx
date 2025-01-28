@@ -1,3 +1,5 @@
+'use client';
+
 import { StoreContact } from './StoreContact';
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';

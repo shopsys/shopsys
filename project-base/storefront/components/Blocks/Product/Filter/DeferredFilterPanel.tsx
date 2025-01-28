@@ -1,3 +1,5 @@
+'use client';
+
 import { FilterPanelProps } from './FilterPanel';
 import { SkeletonModuleFilterPanel } from 'components/Blocks/Skeleton/SkeletonModuleFilterPanel';
 import useTranslation from 'next-translate/useTranslation';

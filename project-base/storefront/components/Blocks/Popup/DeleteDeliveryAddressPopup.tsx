@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from 'components/Forms/Button/Button';
 import { Popup } from 'components/Layout/Popup/Popup';
 import useTranslation from 'next-translate/useTranslation';

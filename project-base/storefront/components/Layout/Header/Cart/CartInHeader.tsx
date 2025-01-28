@@ -1,3 +1,5 @@
+'use client';
+
 import { CartCount } from './CartCount';
 import { CartInHeaderList } from './CartInHeaderList';
 import { CartInHeaderPopover } from './CartInHeaderPopover';

@@ -1,3 +1,5 @@
+'use client';
+
 import { GoogleMap } from 'components/Basic/GoogleMap/GoogleMap';
 import { Image } from 'components/Basic/Image/Image';
 import { Infobox } from 'components/Basic/Infobox/Infobox';

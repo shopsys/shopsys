@@ -1,3 +1,5 @@
+'use client';
+
 import { CartInHeaderListItem } from './CartInHeaderListItem';
 import { EmptyCartIcon } from 'components/Basic/Icon/EmptyCartIcon';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';

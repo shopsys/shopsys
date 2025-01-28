@@ -1,3 +1,5 @@
+'use client';
+
 import { ArticleDate } from 'components/Basic/ArticleDate/ArticleDate';
 import { GrapesJsParser } from 'components/Basic/UserText/GrapesJsParser';
 import { VISIBLE_SLIDER_ITEMS_ARTICLE } from 'components/Blocks/Product/ProductsSlider';

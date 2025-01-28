@@ -1,3 +1,5 @@
+'use client';
+
 import { TIDs } from 'cypress/tids';
 import { HTMLMotionProps, motion } from 'framer-motion';
 import { fadeAnimation } from 'utils/animations/animationVariants';

@@ -1,3 +1,5 @@
+'use client';
+
 import { SimpleNavigationListItem } from './SimpleNavigationListItem';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';

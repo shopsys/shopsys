@@ -1,3 +1,5 @@
+'use client';
+
 import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';

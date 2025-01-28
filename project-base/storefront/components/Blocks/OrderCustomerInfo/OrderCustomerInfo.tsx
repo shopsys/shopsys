@@ -1,3 +1,5 @@
+'use client';
+
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { BoxPackageHandIcon } from 'components/Basic/Icon/BoxPackageHandIcon';
 import { UserProfileCardsIcon } from 'components/Basic/Icon/UserProfileCardsIcon';
