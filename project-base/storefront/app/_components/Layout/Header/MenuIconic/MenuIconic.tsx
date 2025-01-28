@@ -19,9 +19,6 @@ export async function MenuIconic() {
     // const { comparison } = useComparison();
     // const { wishlist } = useWishlist();
 
-    const menuCountTwClass =
-        'absolute -right-2 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-activeIconFull px-0.5 font-secondary text-[10px] font-bold leading-normal text-textInverted lg:-right-2 lg:-top-[6.5px]';
-
     return (
         <ul className="flex lg:gap-7">
             <MenuIconicItem className="flex max-lg:hidden">
