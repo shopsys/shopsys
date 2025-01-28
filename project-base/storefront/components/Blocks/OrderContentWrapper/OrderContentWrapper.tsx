@@ -1,3 +1,5 @@
+'use client';
+
 import { CartSteps } from 'components/Blocks/CartSteps/CartSteps';
 import { OrderSummary } from 'components/Blocks/OrderSummary/OrderSummary';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';

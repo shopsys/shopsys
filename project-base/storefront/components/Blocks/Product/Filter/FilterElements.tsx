@@ -1,3 +1,5 @@
+'use client';
+
 import { AnimateAppearSlideY } from 'components/Basic/Animations/AnimateAppearSlideY';
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { AnimateSlideDiv } from 'components/Basic/Animations/AnimateSlideDiv';

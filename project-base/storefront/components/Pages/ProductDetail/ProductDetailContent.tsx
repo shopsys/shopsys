@@ -1,3 +1,5 @@
+'use client';
+
 import { DeferredComparisonAndWishlistButtons } from './ComparisonAndWishlistButtons/DeferredComparisonAndWishlistButtons';
 import { DeferredProductDetailAccessories } from './ProductDetailAccessories/DeferredProductDetailAccessories';
 import { DeferredProductDetailAddToCart } from './ProductDetailAddToCart/DeferredProductDetailAddToCart';

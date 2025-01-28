@@ -1,3 +1,5 @@
+'use client';
+
 import { ChangePassword } from './ChangePassword';
 import { ResetPassword } from 'components/Pages/Customer/ChangePassword/ResetPassword';
 import { CurrentCustomerType } from 'types/customer';

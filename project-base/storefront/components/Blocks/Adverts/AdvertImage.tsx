@@ -1,3 +1,5 @@
+'use client';
+
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { TypeAdvertsFragment_AdvertImage_ } from 'graphql/requests/adverts/fragments/AdvertsFragment.generated';

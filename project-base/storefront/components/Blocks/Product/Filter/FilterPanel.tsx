@@ -1,3 +1,5 @@
+'use client';
+
 import { FilterGroupGeneric } from './FilterGroupGeneric';
 import { FilterGroupInStock } from './FilterGroupInStock';
 import { FilterGroupParameters } from './FilterGroupParameters';

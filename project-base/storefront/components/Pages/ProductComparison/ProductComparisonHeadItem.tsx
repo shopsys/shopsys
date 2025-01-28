@@ -1,3 +1,5 @@
+'use client';
+
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { Image } from 'components/Basic/Image/Image';

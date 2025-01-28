@@ -1,3 +1,5 @@
+'use client';
+
 import { TransportAndPaymentListItem } from './TransportAndPaymentListItem';
 import { TransportAndPaymentSelectItemLabel } from './TransportAndPaymentSelectItemLabel';
 import { Radiobutton } from 'components/Forms/Radiobutton/Radiobutton';

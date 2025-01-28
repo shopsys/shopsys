@@ -1,3 +1,5 @@
+'use client';
+
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Webline } from 'components/Layout/Webline/Webline';
 

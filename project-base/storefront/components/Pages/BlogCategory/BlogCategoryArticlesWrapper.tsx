@@ -1,3 +1,5 @@
+'use client';
+
 import { BlogArticlesList } from './BlogArticlesList';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { SkeletonModuleArticleBlog } from 'components/Blocks/Skeleton/SkeletonModuleArticleBlog';

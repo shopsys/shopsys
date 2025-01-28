@@ -1,3 +1,5 @@
+'use client';
+
 import { GoogleMap } from 'components/Basic/GoogleMap/GoogleMap';
 import { StoreList } from 'components/Blocks/StoreList/StoreList';
 import { SearchInput } from 'components/Forms/TextInput/SearchInput';

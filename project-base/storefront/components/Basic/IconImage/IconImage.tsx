@@ -1,3 +1,5 @@
+'use client';
+
 import { Image } from 'components/Basic/Image/Image';
 import { HTMLAttributes } from 'react';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';

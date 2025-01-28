@@ -1,3 +1,5 @@
+'use client';
+
 import { SkeletonModuleProductSlider } from './SkeletonModuleProductSlider';
 import { Webline } from 'components/Layout/Webline/Webline';
 import Skeleton from 'react-loading-skeleton';

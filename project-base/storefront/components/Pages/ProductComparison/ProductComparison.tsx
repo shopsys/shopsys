@@ -1,3 +1,5 @@
+'use client';
+
 import { ProductComparisonContent } from './ProductComparisonContent';
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { SkeletonModuleComparison } from 'components/Blocks/Skeleton/SkeletonModuleComparison';

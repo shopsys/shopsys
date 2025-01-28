@@ -1,3 +1,5 @@
+'use client';
+
 import { ProductItemProps, ProductListItem } from './ProductListItem';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';

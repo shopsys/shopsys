@@ -1,3 +1,5 @@
+'use client';
+
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { ListedItemPropTypeTypename } from 'types/simpleNavigation';
 

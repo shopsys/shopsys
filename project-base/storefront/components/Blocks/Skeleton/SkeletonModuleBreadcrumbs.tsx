@@ -1,3 +1,5 @@
+'use client';
+
 import { BreadcrumbsSpan, breadcrumbsTwClass } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { Fragment } from 'react';
 import Skeleton from 'react-loading-skeleton';

@@ -1,3 +1,5 @@
+'use client';
+
 import { ArticleTitle } from './ArticleTitle';
 import { GrapesJsParser } from 'components/Basic/UserText/GrapesJsParser';
 import { VISIBLE_SLIDER_ITEMS_ARTICLE } from 'components/Blocks/Product/ProductsSlider';

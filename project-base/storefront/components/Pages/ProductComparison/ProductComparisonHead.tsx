@@ -1,3 +1,5 @@
+'use client';
+
 import { ProductComparisonButtonRemoveAll } from './ProductComparisonButtonRemoveAll';
 import { ProductComparisonHeadItem } from './ProductComparisonHeadItem';
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';

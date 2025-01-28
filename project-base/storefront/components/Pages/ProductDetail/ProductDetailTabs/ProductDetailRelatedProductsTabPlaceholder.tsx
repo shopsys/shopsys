@@ -1,3 +1,5 @@
+'use client';
+
 import { ProductDetailRelatedProductsTabProps } from './ProductDetailRelatedProductsTab';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';

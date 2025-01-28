@@ -1,3 +1,5 @@
+'use client';
+
 import { useRecoveryPasswordForm, useRecoveryPasswordFormMeta } from './recoveryPasswordFormMeta';
 import { Link } from 'components/Basic/Link/Link';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';

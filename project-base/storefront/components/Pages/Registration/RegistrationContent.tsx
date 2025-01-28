@@ -1,3 +1,5 @@
+'use client';
+
 import { RegistrationAddress } from './RegistrationAddress';
 import { RegistrationCompany } from './RegistrationCompany';
 import { RegistrationPassword } from './RegistrationPassword';

@@ -1,3 +1,5 @@
+'use client';
+
 import { FacebookIcon } from 'components/Basic/Icon/FacebookIcon';
 import { GoogleIcon } from 'components/Basic/Icon/GoogleIcon';
 import { SeznamIcon } from 'components/Basic/Icon/SeznamIcon';

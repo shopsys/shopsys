@@ -1,3 +1,5 @@
+'use client';
+
 import { OrderDetailOrderItem } from './OrderDetailOrderItem';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Button } from 'components/Forms/Button/Button';

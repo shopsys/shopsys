@@ -1,3 +1,5 @@
+'use client';
+
 import { StyleguideSection } from './StyleguideElements';
 import { twJoin } from 'tailwind-merge';
 

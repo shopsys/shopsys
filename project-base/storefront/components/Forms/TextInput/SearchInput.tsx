@@ -1,3 +1,5 @@
+'use client';
+
 import { CloseIcon } from 'components/Basic/Icon/CloseIcon';
 import { SearchIcon } from 'components/Basic/Icon/SearchIcon';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';

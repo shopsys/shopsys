@@ -1,3 +1,5 @@
+'use client';
+
 import { PaymentsInOrderSelectItem } from './PaymentsInOrderSelectItem';
 import { useChangePaymentInOrder } from './paymentInOrderSelectUtils';
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';

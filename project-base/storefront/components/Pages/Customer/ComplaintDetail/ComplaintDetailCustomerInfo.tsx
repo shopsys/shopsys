@@ -1,3 +1,5 @@
+'use client';
+
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { MailIcon } from 'components/Basic/Icon/MailIcon';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';

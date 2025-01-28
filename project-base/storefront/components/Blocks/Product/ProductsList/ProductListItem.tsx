@@ -1,3 +1,5 @@
+'use client';
+
 import { ProductListItemImage } from './ProductListItemImage';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { VariantIcon } from 'components/Basic/Icon/VariantIcon';

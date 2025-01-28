@@ -1,3 +1,5 @@
+'use client';
+
 import { UserNavigation } from 'components/Blocks/UserNavigation/UserNavigation';
 import { Breadcrumbs } from 'components/Layout/Breadcrumbs/Breadcrumbs';
 import { CommonLayout, CommonLayoutProps } from 'components/Layout/CommonLayout';

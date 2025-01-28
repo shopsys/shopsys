@@ -1,3 +1,4 @@
+'use client';
 export const MenuIcon: SvgFC = (props) => (
     <svg {...props} fill="none" viewBox="0 0 18 15" xmlns="http://www.w3.org/2000/svg">
         <path

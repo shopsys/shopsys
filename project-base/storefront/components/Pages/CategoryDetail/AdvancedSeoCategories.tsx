@@ -1,3 +1,5 @@
+'use client';
+
 import { LabelLink } from 'components/Basic/LabelLink/LabelLink';
 import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
 import useTranslation from 'next-translate/useTranslation';

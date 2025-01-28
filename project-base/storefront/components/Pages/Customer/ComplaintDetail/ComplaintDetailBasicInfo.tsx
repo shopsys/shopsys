@@ -1,3 +1,5 @@
+'use client';
+
 import { ComplaintDetailComplaintItem } from './ComplaintDetailComplaintItem';
 import { TIDs } from 'cypress/tids';
 import { TypeComplaintDetailFragment } from 'graphql/requests/complaints/fragments/ComplaintDetailFragment.generated';

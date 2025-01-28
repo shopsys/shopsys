@@ -1,3 +1,5 @@
+'use client';
+
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { FormBlockWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';

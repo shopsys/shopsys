@@ -1,3 +1,5 @@
+'use client';
+
 import { AddressList } from './AddressList';
 import { Button } from 'components/Forms/Button/Button';
 import { FormBlockWrapper, FormHeading } from 'components/Forms/Form/Form';

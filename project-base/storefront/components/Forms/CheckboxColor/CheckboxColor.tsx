@@ -1,3 +1,5 @@
+'use client';
+
 import { ColorLabelWrapper } from 'components/Forms/Lib/ColorLabelWrapper';
 import { InputHTMLAttributes } from 'react';
 import tinycolor from 'tinycolor2';

@@ -1,3 +1,5 @@
+'use client';
+
 import { FlagDetailProductsWrapper } from './FlagDetailProductsWrapper';
 import { FilteredProductsWrapper } from 'components/Blocks/FilteredProductsWrapper/FilteredProductsWrapper';
 import { DeferredFilterPanel } from 'components/Blocks/Product/Filter/DeferredFilterPanel';

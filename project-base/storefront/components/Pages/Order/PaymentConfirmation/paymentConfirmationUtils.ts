@@ -1,3 +1,5 @@
+'use client';
+
 import { useUpdatePaymentStatusMutation } from 'graphql/requests/orders/mutations/UpdatePaymentStatusMutation.generated';
 import {
     getGtmCreateOrderEventFromLocalStorage,

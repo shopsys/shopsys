@@ -1,3 +1,5 @@
+'use client';
+
 import { MinusIcon } from 'components/Basic/Icon/MinusIcon';
 import { PlusIcon } from 'components/Basic/Icon/PlusIcon';
 import { TIDs } from 'cypress/tids';

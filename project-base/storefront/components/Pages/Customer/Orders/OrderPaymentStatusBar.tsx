@@ -1,3 +1,5 @@
+'use client';
+
 import { InfoIconInCircle } from 'components/Basic/Icon/InfoIconInCircle';
 import useTranslation from 'next-translate/useTranslation';
 import { PaymentTypeEnum } from 'types/payment';

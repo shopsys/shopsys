@@ -1,3 +1,5 @@
+'use client';
+
 import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';

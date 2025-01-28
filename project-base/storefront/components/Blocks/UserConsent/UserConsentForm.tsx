@@ -1,3 +1,5 @@
+'use client';
+
 import { useUserConsentForm, useUserConsentFormMeta } from './userConsentFormMeta';
 import { Button } from 'components/Forms/Button/Button';
 import { ToggleSwitchControlled } from 'components/Forms/ToggleSwitch/ToggleSwitchControlled';

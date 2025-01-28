@@ -1,3 +1,5 @@
+'use client';
+
 import getConfig from 'next/config';
 import Head from 'next/head';
 import { useCookiesStore } from 'store/useCookiesStore';
