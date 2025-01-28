@@ -1,3 +1,5 @@
+'use client';
+
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { SkeletonPageBrandsOverview } from 'components/Blocks/Skeleton/SkeletonPageBrandsOverview';
 import { Webline } from 'components/Layout/Webline/Webline';

@@ -1,3 +1,5 @@
+'use client';
+
 import { CategoryDetailProductsWrapperProps } from './CategoryDetailProductsWrapper';
 import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { ProductListItemPlaceholder } from 'components/Blocks/Product/ProductsList/ProductListItemPlaceholder';

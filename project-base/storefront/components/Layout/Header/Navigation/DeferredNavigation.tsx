@@ -1,3 +1,5 @@
+'use client';
+
 import { Navigation } from './Navigation';
 import { DEFAULT_SKELETON_TYPE } from 'config/constants';
 import { useNavigationQuery } from 'graphql/requests/navigation/queries/NavigationQuery.generated';

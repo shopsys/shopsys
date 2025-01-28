@@ -1,3 +1,5 @@
+'use client';
+
 import { ArticleLink } from './BlogPreviewElements';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { Image } from 'components/Basic/Image/Image';

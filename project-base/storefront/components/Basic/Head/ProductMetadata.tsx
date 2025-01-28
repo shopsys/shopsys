@@ -1,3 +1,5 @@
+'use client';
+
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';

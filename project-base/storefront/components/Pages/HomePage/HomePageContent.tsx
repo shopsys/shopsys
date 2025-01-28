@@ -1,3 +1,5 @@
+'use client';
+
 import { SearchMetadata } from 'components/Basic/Head/SearchMetadata';
 import { Banners } from 'components/Blocks/Banners/Banners';
 import { DeferredBlogPreview } from 'components/Blocks/BlogPreview/DeferredBlogPreview';

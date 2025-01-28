@@ -1,3 +1,5 @@
+'use client';
+
 import { Webline } from 'components/Layout/Webline/Webline';
 import { BLOG_PREVIEW_VARIABLES } from 'config/constants';
 import { useBlogArticlesQuery } from 'graphql/requests/articlesInterface/blogArticles/queries/BlogArticlesQuery.generated';

@@ -1,3 +1,5 @@
+'use client';
+
 import { GoogleMapMarker } from './GoogleMapMarker';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import GoogleMapReact from 'google-map-react';

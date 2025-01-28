@@ -1,3 +1,5 @@
+'use client';
+
 import { Image } from 'components/Basic/Image/Image';
 import { TypeProductInProductListFragment } from 'graphql/requests/productLists/fragments/ProductInProductListFragment.generated';
 import { useState } from 'react';

@@ -1,3 +1,5 @@
+'use client';
+
 import { useFooterArticles } from './footerUtils';
 import dynamic from 'next/dynamic';
 import { useDeferredRender } from 'utils/useDeferredRender';

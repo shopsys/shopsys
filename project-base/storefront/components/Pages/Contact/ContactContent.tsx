@@ -1,3 +1,5 @@
+'use client';
+
 import { useContactForm, useContactFormMeta } from './contactFormMeta';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';

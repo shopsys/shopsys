@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from 'components/Forms/Button/Button';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import useTranslation from 'next-translate/useTranslation';

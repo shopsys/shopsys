@@ -1,3 +1,5 @@
+'use client';
+
 import { twMergeCustom } from 'utils/twMerge';
 
 type GrapesJsProps = {

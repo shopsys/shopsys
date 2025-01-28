@@ -1,3 +1,5 @@
+'use client';
+
 import { ProductDetailAccessories } from './ProductDetailAccessories/ProductDetailAccessories';
 import { ProductDetailGallery } from './ProductDetailGallery';
 import { ProductDetailInfo } from './ProductDetailInfo';

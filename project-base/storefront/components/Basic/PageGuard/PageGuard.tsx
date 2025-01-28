@@ -1,3 +1,5 @@
+'use client';
+
 import { useRouter } from 'next/router';
 import { isClient } from 'utils/isClient';
 

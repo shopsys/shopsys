@@ -1,3 +1,4 @@
+'use client';
 export const GoogleIcon: SvgFC = (props) => (
     <svg {...props} viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
         <path

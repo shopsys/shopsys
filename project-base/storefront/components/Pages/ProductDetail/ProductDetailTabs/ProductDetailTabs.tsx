@@ -1,3 +1,5 @@
+'use client';
+
 import { DownloadIcon } from 'components/Basic/Icon/DownloadIcon';
 import { Cell, Row, Table } from 'components/Basic/Table/Table';
 import { Tabs, TabsContent, TabsList, TabsListItem } from 'components/Basic/Tabs/Tabs';

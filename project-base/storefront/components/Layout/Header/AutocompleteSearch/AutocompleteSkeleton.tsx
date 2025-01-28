@@ -1,3 +1,5 @@
+'use client';
+
 import { SearchResultSectionGroup } from './AutocompleteSearchPopup';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';

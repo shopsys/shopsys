@@ -1,3 +1,5 @@
+'use client';
+
 import { PromotedCategoriesContent } from './PromotedCategoriesContent';
 import { SkeletonModulePromotedCategories } from 'components/Blocks/Skeleton/SkeletonModulePromotedCategories';
 import { Webline } from 'components/Layout/Webline/Webline';

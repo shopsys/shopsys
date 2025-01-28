@@ -1,3 +1,4 @@
+'use client';
 type StyleguideSectionProps = {
     title: string;
 };

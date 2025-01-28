@@ -1,3 +1,5 @@
+'use client';
+
 import { ArticleDate } from 'components/Basic/ArticleDate/ArticleDate';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { Image } from 'components/Basic/Image/Image';

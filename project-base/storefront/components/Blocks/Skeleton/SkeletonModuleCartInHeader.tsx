@@ -1,3 +1,5 @@
+'use client';
+
 import { CartIcon } from 'components/Basic/Icon/CartIcon';
 import { CartCount } from 'components/Layout/Header/Cart/CartCount';
 import useTranslation from 'next-translate/useTranslation';

@@ -1,3 +1,5 @@
+'use client';
+
 import { usePersonalDataOverviewForm, usePersonalDataOverviewFormMeta } from './personalDataOverviewFormMeta';
 import { UserText } from 'components/Basic/UserText/UserText';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';

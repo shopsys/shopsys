@@ -1,3 +1,5 @@
+'use client';
+
 import { CollapsibleText } from 'components/Basic/CollapsibleText/CollapsibleText';
 import { Image } from 'components/Basic/Image/Image';
 import { Webline } from 'components/Layout/Webline/Webline';

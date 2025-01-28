@@ -1,3 +1,5 @@
+'use client';
+
 import { Pagination } from 'components/Blocks/Pagination/Pagination';
 import { productListTwClass, ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { SkeletonModuleProductListItem } from 'components/Blocks/Skeleton/SkeletonModuleProductListItem';

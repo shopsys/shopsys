@@ -1,3 +1,5 @@
+'use client';
+
 import { ArticleDate } from 'components/Basic/ArticleDate/ArticleDate';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Flag } from 'components/Basic/Flag/Flag';

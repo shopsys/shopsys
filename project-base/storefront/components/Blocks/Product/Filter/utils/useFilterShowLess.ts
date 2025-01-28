@@ -1,3 +1,5 @@
+'use client';
+
 import { MappedFilterOption } from 'components/Blocks/Product/Filter/FilterGroupGeneric';
 import { useState } from 'react';
 

@@ -1,3 +1,5 @@
+'use client';
+
 import { ComplaintsIcon } from 'components/Basic/Icon/ComplaintsIcon';
 import { EditIcon } from 'components/Basic/Icon/EditIcon';
 import { ExitIcon } from 'components/Basic/Icon/ExitIcon';

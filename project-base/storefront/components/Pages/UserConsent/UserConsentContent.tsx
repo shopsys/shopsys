@@ -1,3 +1,5 @@
+'use client';
+
 import { UserConsentForm } from 'components/Blocks/UserConsent/UserConsentForm';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';

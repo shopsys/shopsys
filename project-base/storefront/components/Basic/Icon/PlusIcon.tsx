@@ -1,3 +1,4 @@
+'use client';
 export const PlusIcon: SvgFC = (props) => (
     <svg {...props} fill="none" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
         <path

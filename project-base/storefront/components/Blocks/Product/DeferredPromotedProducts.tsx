@@ -1,3 +1,5 @@
+'use client';
+
 import { ProductsSlider } from './ProductsSlider';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';

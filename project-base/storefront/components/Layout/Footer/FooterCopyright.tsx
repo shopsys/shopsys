@@ -1,3 +1,5 @@
+'use client';
+
 import imageLogo from '/public/images/logo.svg';
 import { Image } from 'components/Basic/Image/Image';
 import { TIDs } from 'cypress/tids';

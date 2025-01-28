@@ -1,3 +1,5 @@
+'use client';
+
 import { LabelLink } from 'components/Basic/LabelLink/LabelLink';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';

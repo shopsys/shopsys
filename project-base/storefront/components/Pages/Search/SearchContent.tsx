@@ -1,3 +1,5 @@
+'use client';
+
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeSimpleCategoryFragment } from 'graphql/requests/categories/fragments/SimpleCategoryFragment.generated';

@@ -1,3 +1,5 @@
+'use client';
+
 import { twMergeCustom } from 'utils/twMerge';
 
 export const TransportAndPaymentListItem: FC = ({ children, className }) => (

@@ -1,3 +1,5 @@
+'use client';
+
 import { AutocompleteSearchArticlesResult } from './AutocompleteSearchArticlesResult';
 import { AutocompleteSearchBrandsResult } from './AutocompleteSearchBrandsResult';
 import { AutocompleteSearchCategoriesResult } from './AutocompleteSearchCategoriesResult';

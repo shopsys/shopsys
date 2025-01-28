@@ -1,3 +1,5 @@
+'use client';
+
 import { StyleguideButtons } from './StyleguideButtons';
 import { StyleguideCheckboxes } from './StyleguideCheckboxes';
 import { StyleguideColors } from './StyleguideColors';

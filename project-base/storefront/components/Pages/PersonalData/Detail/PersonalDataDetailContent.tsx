@@ -1,3 +1,5 @@
+'use client';
+
 import { Link } from 'components/Basic/Link/Link';
 import { Cell, CellHead, CellMinor, Row, Table } from 'components/Basic/Table/Table';
 import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';

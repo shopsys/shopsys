@@ -1,3 +1,5 @@
+'use client';
+
 import { useSessionStore } from 'store/useSessionStore';
 
 export const Portal: FC = () => {

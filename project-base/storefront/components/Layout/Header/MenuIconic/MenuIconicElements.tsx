@@ -1,3 +1,5 @@
+'use client';
+
 import { AnimateAppearDiv } from 'components/Basic/Animations/AnimateAppearDiv';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { AnimatePresence } from 'framer-motion';

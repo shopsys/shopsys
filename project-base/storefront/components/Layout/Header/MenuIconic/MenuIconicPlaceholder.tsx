@@ -1,3 +1,5 @@
+'use client';
+
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';

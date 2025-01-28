@@ -1,3 +1,5 @@
+'use client';
+
 import { twJoin } from 'tailwind-merge';
 
 export const OrderSummaryContent: FC = ({ children }) => <div className="relative flex flex-col">{children}</div>;

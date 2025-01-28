@@ -1,3 +1,5 @@
+'use client';
+
 import { UpsListItem } from './UpsListItem';
 import { UpsFifthIcon } from 'components/Basic/Icon/UpsFifthIcon';
 import { UpsFirstIcon } from 'components/Basic/Icon/UpsFirstIcon';

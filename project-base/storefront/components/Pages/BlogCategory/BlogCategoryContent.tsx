@@ -1,3 +1,5 @@
+'use client';
+
 import { BlogCategoryArticlesWrapper } from './BlogCategoryArticlesWrapper';
 import { BlogCategoryHeader } from './BlogCategoryHeader';
 import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';

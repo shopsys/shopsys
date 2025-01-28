@@ -1,3 +1,4 @@
+'use client';
 export const ProductDetailPrefix: FC = ({ children }) => (
     <div className="font-secondary text-textDisabled mb-1">{children}</div>
 );

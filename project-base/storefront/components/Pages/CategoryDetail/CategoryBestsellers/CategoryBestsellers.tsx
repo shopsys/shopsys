@@ -1,3 +1,5 @@
+'use client';
+
 import { CategoryBestsellersListItem } from './CategoryBestsellersListItem';
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { AnimatePresence } from 'framer-motion';

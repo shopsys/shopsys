@@ -1,3 +1,5 @@
+'use client';
+
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';

@@ -1,3 +1,5 @@
+'use client';
+
 import { FormHeading, FormBlockWrapper } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';

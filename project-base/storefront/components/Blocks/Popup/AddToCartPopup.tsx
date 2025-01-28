@@ -1,3 +1,5 @@
+'use client';
+
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
 import { Image } from 'components/Basic/Image/Image';
