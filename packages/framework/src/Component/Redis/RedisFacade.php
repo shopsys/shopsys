@@ -63,6 +63,14 @@ class RedisFacade
         }
     }
 
+    /**
+     * @return iterable<\Redis>
+     */
+    public function getConnections(): iterable
+    {
+        return $this->allClients;
+    }
+
     public function pingAllClients(): void
     {
         foreach ($this->allClients as $redis) {
