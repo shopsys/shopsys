@@ -13,10 +13,9 @@ type LoginActionResult = {
     error: CombinedError | undefined;
     showCartMergeInfo: boolean;
 };
-
+// TODO: implement rewirteUrl prop
 export async function loginAction(
     variables: TypeLoginMutationVariables,
-    rewriteUrl?: string, // TODO: when login outside of login page
 ): Promise<LoginActionResult> {
     const response = await createMutation<TypeLoginMutation, TypeLoginMutationVariables>(
         LoginMutationDocument,
