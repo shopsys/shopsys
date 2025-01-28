@@ -1,3 +1,5 @@
+'use client';
+
 import { HTMLMotionProps, motion } from 'framer-motion';
 
 export const AnimateRotateDiv: FC<HTMLMotionProps<'div'> & { condition?: boolean; keyName?: string }> = ({

@@ -1,3 +1,5 @@
+'use client';
+
 import Skeleton from 'react-loading-skeleton';
 import { twMergeCustom } from 'utils/twMerge';
 

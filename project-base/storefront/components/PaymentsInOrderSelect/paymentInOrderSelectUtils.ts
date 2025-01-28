@@ -1,3 +1,5 @@
+'use client';
+
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useChangePaymentInOrderMutation } from 'graphql/requests/orders/mutations/ChangePaymentInOrderMutation.generated';
 import useTranslation from 'next-translate/useTranslation';

@@ -1,3 +1,5 @@
+'use client';
+
 import { ProductComparisonBody } from './ProductComparisonBody';
 import { ProductComparisonButtonRemoveAll } from './ProductComparisonButtonRemoveAll';
 import { ProductComparisonHead } from './ProductComparisonHead';

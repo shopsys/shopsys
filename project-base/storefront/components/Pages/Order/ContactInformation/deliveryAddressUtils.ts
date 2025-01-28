@@ -1,3 +1,5 @@
+'use client';
+
 import { TypeCreateOrderMutationVariables } from 'graphql/requests/orders/mutations/CreateOrderMutation.generated';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { CurrentCustomerType } from 'types/customer';

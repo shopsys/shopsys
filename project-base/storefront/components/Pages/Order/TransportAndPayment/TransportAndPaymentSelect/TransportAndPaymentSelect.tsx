@@ -1,3 +1,5 @@
+'use client';
+
 import { PaymentListItem } from './PaymentSelectListItem';
 import { TransportListItem } from './TransportSelectListItem';
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';

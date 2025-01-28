@@ -1,3 +1,5 @@
+'use client';
+
 import { SearchProducts } from './SearchProducts';
 import { useSearchQuery } from './searchUtils';
 import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';

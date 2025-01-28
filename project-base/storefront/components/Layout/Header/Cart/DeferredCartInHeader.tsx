@@ -1,3 +1,5 @@
+'use client';
+
 import { SkeletonModuleCartInHeader } from 'components/Blocks/Skeleton/SkeletonModuleCartInHeader';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import dynamic from 'next/dynamic';

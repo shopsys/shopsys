@@ -1,3 +1,5 @@
+'use client';
+
 import { yupResolver } from '@hookform/resolvers/yup';
 import { validateNewPassword, validateNewPasswordConfirm } from 'components/Forms/validationRules';
 import useTranslation from 'next-translate/useTranslation';

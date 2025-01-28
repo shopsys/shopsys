@@ -1,3 +1,4 @@
+'use client';
 export const SortIcon: SvgFC = (props) => (
     <svg {...props} fill="none" viewBox="0 0 15 21" xmlns="http://www.w3.org/2000/svg">
         <path

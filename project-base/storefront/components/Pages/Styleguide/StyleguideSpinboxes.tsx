@@ -1,3 +1,5 @@
+'use client';
+
 import { StyleguideSection } from './StyleguideElements';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
 import React, { useRef } from 'react';

@@ -1,3 +1,5 @@
+'use client';
+
 import { LastVisitedProductsProps } from './LastVisitedProducts';
 import dynamic from 'next/dynamic';
 import { useDeferredRender } from 'utils/useDeferredRender';

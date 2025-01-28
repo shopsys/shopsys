@@ -1,3 +1,5 @@
+'use client';
+
 import { SearchResultSectionGroup } from './AutocompleteSearchPopup';
 import Skeleton from 'react-loading-skeleton';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';

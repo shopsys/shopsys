@@ -1,3 +1,5 @@
+'use client';
+
 import { GrapesJsProducts } from './GrapesJsProducts';
 import { UserText } from './UserText';
 import { useProductsByCatnums } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';

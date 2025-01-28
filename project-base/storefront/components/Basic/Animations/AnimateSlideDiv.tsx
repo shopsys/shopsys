@@ -1,3 +1,5 @@
+'use client';
+
 import { TIDs } from 'cypress/tids';
 import { HTMLMotionProps, motion } from 'framer-motion';
 import { slideAnimation } from 'utils/animations/animationVariants';

@@ -1,3 +1,5 @@
+'use client';
+
 import { SkeletonModuleBanners } from './SkeletonModuleBanners';
 import { SkeletonModuleMagazine } from './SkeletonModuleMagazine';
 import { SkeletonModulePromotedCategories } from './SkeletonModulePromotedCategories';

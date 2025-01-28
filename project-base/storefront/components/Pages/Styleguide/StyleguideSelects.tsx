@@ -1,3 +1,5 @@
+'use client';
+
 import { StyleguideSection } from './StyleguideElements';
 import { Select } from 'components/Forms/Select/Select';
 import useTranslation from 'next-translate/useTranslation';

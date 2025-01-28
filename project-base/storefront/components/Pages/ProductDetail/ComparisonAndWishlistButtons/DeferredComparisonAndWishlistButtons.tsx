@@ -1,3 +1,5 @@
+'use client';
+
 import { SkeletonModuleComparisonAndWishlistButtons } from 'components/Blocks/Skeleton/SkeletonModuleComparisonAndWishlistButtons';
 import { ComparisonAndWishlistButtonsProps } from 'components/Pages/ProductDetail/ComparisonAndWishlistButtons/ComparisonAndWishlistButtons';
 import dynamic from 'next/dynamic';

@@ -1,3 +1,5 @@
+'use client';
+
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { AnimateRotateDiv } from 'components/Basic/Animations/AnimateRotateDiv';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';

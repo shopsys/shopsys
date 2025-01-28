@@ -1,3 +1,5 @@
+'use client';
+
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeLastOrderFragment } from 'graphql/requests/orders/fragments/LastOrderFragment.generated';
 import {

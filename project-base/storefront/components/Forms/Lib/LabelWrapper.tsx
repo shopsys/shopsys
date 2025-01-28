@@ -1,3 +1,5 @@
+'use client';
+
 import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
 import { LabelHTMLAttributes, ReactNode } from 'react';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';

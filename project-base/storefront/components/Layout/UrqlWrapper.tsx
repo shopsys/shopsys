@@ -1,3 +1,5 @@
+'use client';
+
 import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 import { Provider, SSRExchange, ssrExchange as createSsrExchange } from 'urql';

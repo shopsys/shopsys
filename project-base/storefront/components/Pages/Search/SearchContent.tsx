@@ -1,3 +1,5 @@
+'use client';
+
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { TIDs } from 'cypress/tids';
 import { TypeSimpleCategoryFragment } from 'graphql/requests/categories/fragments/SimpleCategoryFragment.generated';

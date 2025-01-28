@@ -1,3 +1,5 @@
+'use client';
+
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';

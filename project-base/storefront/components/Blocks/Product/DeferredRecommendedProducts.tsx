@@ -1,3 +1,5 @@
+'use client';
+
 import { ProductsSlider } from './ProductsSlider';
 import { SkeletonModuleProductSlider } from 'components/Blocks/Skeleton/SkeletonModuleProductSlider';
 import { Webline } from 'components/Layout/Webline/Webline';

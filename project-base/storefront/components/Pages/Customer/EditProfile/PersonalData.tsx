@@ -1,3 +1,5 @@
+'use client';
+
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { FormHeading, FormBlockWrapper } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';

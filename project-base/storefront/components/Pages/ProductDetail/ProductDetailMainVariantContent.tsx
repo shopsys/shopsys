@@ -1,3 +1,5 @@
+'use client';
+
 import { ProductDetailAccessories } from './ProductDetailAccessories/ProductDetailAccessories';
 import { ProductDetailPrefix, ProductDetailHeading } from './ProductDetailElements';
 import { ProductDetailGallery } from './ProductDetailGallery';
