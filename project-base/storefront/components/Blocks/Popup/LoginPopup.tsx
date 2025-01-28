@@ -1,4 +1,4 @@
-import { LoginForm, LoginFormProps } from 'app/_components/LoginForm/LoginForm';
+import { LoginForm, LoginFormProps } from 'app/_components/Blocks/LoginForm/LoginForm';
 import { Popup } from 'components/Layout/Popup/Popup';
 import useTranslation from 'utils/i18n/useTranslationWrapper';
 

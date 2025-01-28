@@ -1,9 +1,11 @@
-import { getPublicConfigProperty } from 'utils/config/getNextConfig';
+// const errorDebuggingLevel = getPublicConfigProperty('errorDebuggingLevel', '');
 
-const errorDebuggingLevel = getPublicConfigProperty('errorDebuggingLevel', '');
+// const isWithConsoleErrorDebugging = errorDebuggingLevel === 'console';
 
-const isWithConsoleErrorDebugging = errorDebuggingLevel === 'console';
+// export const isWithToastAndConsoleErrorDebugging = errorDebuggingLevel === 'toast-and-console';
 
-export const isWithToastAndConsoleErrorDebugging = errorDebuggingLevel === 'toast-and-console';
+const isWithConsoleErrorDebugging = process.env.errorDebuggingLevel === 'console';
+
+export const isWithToastAndConsoleErrorDebugging = process.env.errorDebuggingLevel === 'toast-and-console';
 
 export const isWithErrorDebugging = isWithConsoleErrorDebugging || isWithToastAndConsoleErrorDebugging;
