@@ -1,3 +1,5 @@
+'use client';
+
 import { Banner } from './Banner';
 import { BannersDot } from './BannersDot';
 import { bannersReducer } from './bannersUtils';

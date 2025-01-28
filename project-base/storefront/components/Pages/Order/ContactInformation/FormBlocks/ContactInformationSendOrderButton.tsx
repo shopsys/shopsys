@@ -1,3 +1,5 @@
+'use client';
+
 import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';

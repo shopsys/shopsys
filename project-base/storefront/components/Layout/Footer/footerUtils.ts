@@ -1,3 +1,5 @@
+'use client';
+
 import { TypeSimpleNotBlogArticleFragment } from 'graphql/requests/articlesInterface/articles/fragments/SimpleNotBlogArticleFragment.generated';
 import { useArticlesQuery } from 'graphql/requests/articlesInterface/articles/queries/ArticlesQuery.generated';
 import { TypeArticlePlacementTypeEnum } from 'graphql/types';

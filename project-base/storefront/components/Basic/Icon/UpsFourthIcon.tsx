@@ -1,3 +1,4 @@
+'use client';
 export const UpsFourthIcon: SvgFC = (props) => (
     <svg {...props} fill="none" viewBox="0 0 52 51" xmlns="http://www.w3.org/2000/svg">
         <path

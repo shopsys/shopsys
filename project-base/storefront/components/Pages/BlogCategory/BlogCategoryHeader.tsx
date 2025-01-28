@@ -1,3 +1,5 @@
+'use client';
+
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 

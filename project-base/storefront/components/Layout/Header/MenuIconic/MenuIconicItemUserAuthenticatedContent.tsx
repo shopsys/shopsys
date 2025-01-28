@@ -1,3 +1,5 @@
+'use client';
+
 import { MenuIconicItemUserAuthenticatedContentListItem, MenuIconicSubItemLink } from './MenuIconicElements';
 import { SalesRepresentative } from './SalesRepresentative';
 import { ComplaintsIcon } from 'components/Basic/Icon/ComplaintsIcon';

@@ -1,3 +1,5 @@
+'use client';
+
 import { LabelWrapper } from 'components/Forms/Lib/LabelWrapper';
 import { forwardRef, ReactNode, TextareaHTMLAttributes } from 'react';
 import { twJoin } from 'tailwind-merge';

@@ -1,3 +1,5 @@
+'use client';
+
 import { UserConsentForm } from 'components/Blocks/UserConsent/UserConsentForm';
 import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import useTranslation from 'next-translate/useTranslation';

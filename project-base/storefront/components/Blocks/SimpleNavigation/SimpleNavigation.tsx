@@ -1,3 +1,5 @@
+'use client';
+
 import { SimpleNavigationListItem } from './SimpleNavigationListItem';
 import { TIDs } from 'cypress/tids';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';

@@ -1,3 +1,5 @@
+'use client';
+
 import { ProductFlag } from './ProductFlag';
 import { ProductVisibleItemsConfigType } from './ProductsList/ProductListItem';
 import { Flag } from 'components/Basic/Flag/Flag';

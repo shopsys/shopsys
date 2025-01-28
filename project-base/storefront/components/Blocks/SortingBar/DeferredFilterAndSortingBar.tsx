@@ -1,3 +1,5 @@
+'use client';
+
 import { SortingBarProps } from './SortingBar';
 import { FilterIcon } from 'components/Basic/Icon/FilterIcon';
 import { SkeletonModuleFilterAndSortingBar } from 'components/Blocks/Skeleton/SkeletonModuleFilterAndSortingBar';

@@ -1,3 +1,5 @@
+'use client';
+
 import { DeferredAutocompleteSearch } from './AutocompleteSearch/DeferredAutocompleteSearch';
 import { DeferredCartInHeader } from './Cart/DeferredCartInHeader';
 import { Logo } from './Logo/Logo';

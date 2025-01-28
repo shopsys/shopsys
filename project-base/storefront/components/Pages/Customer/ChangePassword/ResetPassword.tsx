@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from 'components/Forms/Button/Button';
 import { usePasswordRecoveryMutation } from 'graphql/requests/passwordRecovery/mutations/PasswordRecoveryMutation.generated';
 import { GtmFormType } from 'gtm/enums/GtmFormType';

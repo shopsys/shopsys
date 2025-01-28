@@ -1,3 +1,5 @@
+'use client';
+
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { TypeListedProductConnectionFragment } from 'graphql/requests/products/fragments/ListedProductConnectionFragment.generated';

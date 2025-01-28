@@ -1,3 +1,4 @@
+'use client';
 export const GoogleMapMarkerIcon: SvgFC<{ isSingle?: boolean }> = ({ isSingle = false, ...props }) => (
     <svg {...props} viewBox="0 0 20 26" xmlns="http://www.w3.org/2000/svg">
         <path

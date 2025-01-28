@@ -1,3 +1,5 @@
+'use client';
+
 import { GoogleMapMarkerIcon } from 'components/Basic/Icon/GoogleMapMarkerIcon';
 import { AnyProps, PointFeature } from 'supercluster';
 import { twJoin } from 'tailwind-merge';

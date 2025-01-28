@@ -1,3 +1,5 @@
+'use client';
+
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { FormBlockWrapper, FormHeading } from 'components/Forms/Form/Form';

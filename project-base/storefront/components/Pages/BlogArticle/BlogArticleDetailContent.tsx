@@ -1,3 +1,5 @@
+'use client';
+
 import { Image } from 'components/Basic/Image/Image';
 import { GrapesJsParser } from 'components/Basic/UserText/GrapesJsParser';
 import { VISIBLE_SLIDER_ITEMS_BLOG } from 'components/Blocks/Product/ProductsSlider';

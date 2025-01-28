@@ -1,3 +1,5 @@
+'use client';
+
 import { BlogCategoryArticlesWrapper } from './BlogCategoryArticlesWrapper';
 import { BlogCategoryHeader } from './BlogCategoryHeader';
 import { BlogLayout } from 'components/Layout/BlogLayout';

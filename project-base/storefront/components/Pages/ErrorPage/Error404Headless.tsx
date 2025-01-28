@@ -1,3 +1,5 @@
+'use client';
+
 import { ErrorPage, ErrorPageButtonLink, ErrorPageTextHeading, ErrorPageTextMain } from './ErrorPageElements';
 import image404 from '/public/images/404_m.png';
 import { Image } from 'components/Basic/Image/Image';

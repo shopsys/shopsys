@@ -1,3 +1,5 @@
+'use client';
+
 import { getCouldNotFindUserConsentPolicyArticleUrl } from './userConsentUtils';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import dynamic from 'next/dynamic';

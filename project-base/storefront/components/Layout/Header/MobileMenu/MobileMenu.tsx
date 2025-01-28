@@ -1,3 +1,5 @@
+'use client';
+
 import { MobileMenuContent } from './MobileMenuContent';
 import { HamburgerMenu } from 'components/Layout/Header/HamburgerMenu/HamburgerMenu';
 import { AnimatePresence, m } from 'framer-motion';

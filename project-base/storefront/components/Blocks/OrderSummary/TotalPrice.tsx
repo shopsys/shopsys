@@ -1,3 +1,5 @@
+'use client';
+
 import { OrderSummaryContent } from './OrderSummaryElements';
 import { TypePriceFragment } from 'graphql/requests/prices/fragments/PriceFragment.generated';
 import useTranslation from 'next-translate/useTranslation';

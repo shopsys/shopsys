@@ -1,3 +1,5 @@
+'use client';
+
 import { SkeletonModuleProductListItem } from './SkeletonModuleProductListItem';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 

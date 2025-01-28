@@ -1,3 +1,5 @@
+'use client';
+
 import { DeferredLoaders } from './DeferredLoaders';
 import { Fonts, ralewayFont } from './Fonts';
 import { PageHeadScripts } from './PageHeadScripts';

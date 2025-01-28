@@ -1,3 +1,5 @@
+'use client';
+
 import { ComplaintItem } from './ComplaintItem';
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { Pagination } from 'components/Blocks/Pagination/Pagination';

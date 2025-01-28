@@ -1,3 +1,5 @@
+'use client';
+
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useRouter } from 'next/router';
 import { useSessionStore } from 'store/useSessionStore';

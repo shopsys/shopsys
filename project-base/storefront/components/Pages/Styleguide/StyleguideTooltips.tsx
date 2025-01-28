@@ -1,3 +1,5 @@
+'use client';
+
 import { StyleguideSection } from './StyleguideElements';
 import { Placement } from '@floating-ui/react';
 import { Tooltip } from 'components/Basic/Tooltip/Tooltip';

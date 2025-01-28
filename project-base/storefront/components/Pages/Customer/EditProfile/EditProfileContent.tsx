@@ -1,3 +1,5 @@
+'use client';
+
 import { BillingAddress } from './BillingAddress';
 import { CompanyCustomer } from './CompanyCustomer';
 import { DeliveryAddress } from './DeliveryAddress';

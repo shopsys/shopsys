@@ -1,3 +1,5 @@
+'use client';
+
 import { MenuIcon } from 'components/Basic/Icon/MenuIcon';
 import { MouseEventHandler } from 'react';
 import { twJoin } from 'tailwind-merge';

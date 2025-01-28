@@ -1,3 +1,5 @@
+'use client';
+
 import { AnimateNavigationMenu } from 'components/Basic/Animations/AnimateNavigationMenu';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';

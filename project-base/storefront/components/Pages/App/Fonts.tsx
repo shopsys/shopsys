@@ -1,3 +1,5 @@
+'use client';
+
 import { Inter, Raleway } from 'next/font/google';
 
 const interFont = Inter({

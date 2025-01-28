@@ -1,3 +1,5 @@
+'use client';
+
 import { MenuIconicItemLink, MenuIconicItemUserPopover } from './MenuIconicElements';
 import { MenuIconicItemUserUnauthenticatedContent } from './MenuIconicItemUserUnauthenticatedContent';
 import { Drawer } from 'components/Basic/Drawer/Drawer';
