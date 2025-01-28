@@ -5,6 +5,7 @@ import BroadcastChannelProvider from './BroadcastChannelProvider';
 import { CookiesStoreProvider } from './CookiesStoreProvider';
 import { CookiesStoreSync } from './CookiesStoreSync';
 import { DomainConfigProvider } from './DomainConfigProvider';
+import { ProductListProvider } from './ProductListProvider';
 import ToastifyProvider from './ToastifyProvider';
 import { TranslationProvider } from './TranslationProvider';
 import { STATIC_REWRITE_PATHS } from 'app/_config/staticRewritePaths';
@@ -25,7 +26,11 @@ export default async function Providers({ children }: ProvidersProps) {
     const domainConfig = getDomainConfig(headers().get('host')!);
     const { defaultLocale: lang } = domainConfig;
     const dictionary = await getDictionary(lang);
-    const [user, settingsData] = await Promise.allSettled([getCurrentCustomerData(), getSettingsQuery()]);
+    const [user, settingsData, initialState] = await Promise.allSettled([
+        getCurrentCustomerData(),
+        getSettingsQuery(),
+        getProductListInitialState(),
+    ]);
 
     if (settingsData.status === 'rejected' || !settingsData.value?.settings) {
         throw new Error('Failed to fetch settings');
@@ -41,24 +46,31 @@ export default async function Providers({ children }: ProvidersProps) {
                 >
                     <TranslationProvider dictionary={dictionary} lang={lang}>
                         <AuthProvider user={user.status === 'fulfilled' ? user.value : undefined}>
-                            <html lang={lang}>
-                                <head>
-                                    <script async src="https://unpkg.com/react-scan/dist/auto.global.js" />
-                                </head>
-                                {/* suppressHydrationWarning for ignoring grammarly extension */}
-                                <body suppressHydrationWarning>
-                                    <AuthInfo isUserLoggedIn={!!user} />
-                                    <CookiesStoreSync />
-                                    <BroadcastChannelProvider />
-                                    {children}
-                                    <Portal />
-                                    <ToastifyProvider />
-                                </body>
-                            </html>
+                            <ProductListProvider
+                                initialState={initialState.status === 'fulfilled' ? initialState.value : undefined}
+                            >
+                                <html lang={lang}>
+                                    <head>
+                                        <script async src="https://unpkg.com/react-scan/dist/auto.global.js" />
+                                    </head>
+                                    {/* suppressHydrationWarning for ignoring grammarly extension */}
+                                    <body suppressHydrationWarning>
+                                        <AuthInfo isUserLoggedIn={!!user} />
+                                        <CookiesStoreSync />
+                                        <BroadcastChannelProvider />
+                                        {children}
+                                        <Portal />
+                                        <ToastifyProvider />
+                                    </body>
+                                </html>
+                            </ProductListProvider>
                         </AuthProvider>
                     </TranslationProvider>
                 </AppConfigProvider>
             </DomainConfigProvider>
         </CookiesStoreProvider>
     );
+}
+function getProductListInitialState(): any {
+    throw new Error('Function not implemented.');
 }
