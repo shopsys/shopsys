@@ -37,7 +37,7 @@ class CustomerUserRoleGroupGridFactory implements GridFactoryInterface
         $grid = $this->gridFactory->create('customerUserRoleGroupsList', $dataSource);
         $grid->setDefaultOrder('name');
 
-        $grid->addColumn('name', 'cugt.name', t('Role name'), true);
+        $grid->addColumn('name', 'cugt.name', t('Role group name'), true);
 
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addEditActionColumn('admin_superadmin_customer_user_role_group_edit', ['id' => 'cug.id']);

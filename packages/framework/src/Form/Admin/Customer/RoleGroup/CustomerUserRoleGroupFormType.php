@@ -31,7 +31,7 @@ class CustomerUserRoleGroupFormType extends AbstractType
     {
         $builder->add('names', LocalizedType::class, [
             'required' => true,
-            'label' => t('Role name'),
+            'label' => t('Role group name'),
             'entry_options' => [
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter role name']),
@@ -42,7 +42,7 @@ class CustomerUserRoleGroupFormType extends AbstractType
             ],
         ]);
         $builder->add('roles', ChoiceType::class, [
-            'label' => 'Roles',
+            'label' => t('Roles'),
             'required' => false,
             'multiple' => true,
             'expanded' => true,
