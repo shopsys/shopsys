@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User\Role;
 
 class CustomerUserRole
 {
-    public const string ROLE_API_LOGGED_CUSTOMER = 'ROLE_API_LOGGED_CUSTOMER';
     public const string ROLE_API_ALL = 'ROLE_API_ALL';
     public const string ROLE_API_CUSTOMER_SELF_MANAGE = 'ROLE_API_CUSTOMER_SELF_MANAGE';
     public const string ROLE_API_CUSTOMER_SEES_PRICES = 'ROLE_API_CUSTOMER_SEES_PRICES';

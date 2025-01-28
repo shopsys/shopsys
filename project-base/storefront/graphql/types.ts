@@ -964,7 +964,6 @@ export enum TypeCustomerUserRoleEnum {
   RoleApiAll = 'ROLE_API_ALL',
   RoleApiCustomerSeesPrices = 'ROLE_API_CUSTOMER_SEES_PRICES',
   RoleApiCustomerSelfManage = 'ROLE_API_CUSTOMER_SELF_MANAGE',
-  RoleApiLoggedCustomer = 'ROLE_API_LOGGED_CUSTOMER',
   RoleApiOrderFull = 'ROLE_API_ORDER_FULL',
   RoleApiOrderView = 'ROLE_API_ORDER_VIEW'
 }

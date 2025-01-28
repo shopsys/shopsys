@@ -11765,10 +11765,6 @@ Available customer user roles
 <td></td>
 </tr>
 <tr>
-<td valign="top"><strong>ROLE_API_LOGGED_CUSTOMER</strong></td>
-<td></td>
-</tr>
-<tr>
 <td valign="top"><strong>ROLE_API_ORDER_FULL</strong></td>
 <td></td>
 </tr>
