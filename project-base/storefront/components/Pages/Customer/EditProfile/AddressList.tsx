@@ -1,3 +1,5 @@
+'use client';
+
 import { EditIcon } from 'components/Basic/Icon/EditIcon';
 import { PhoneIcon } from 'components/Basic/Icon/PhoneIcon';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';

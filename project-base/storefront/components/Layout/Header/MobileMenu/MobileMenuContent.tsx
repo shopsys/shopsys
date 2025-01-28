@@ -1,3 +1,5 @@
+'use client';
+
 import { DropdownMenuListItem } from './MobileMenuListItem';
 import { SubMenu } from './MobileMenuSubItems';
 import { mapNavigationMenuItems } from './mobileMenuUtils';

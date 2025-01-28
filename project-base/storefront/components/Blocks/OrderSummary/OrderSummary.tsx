@@ -1,3 +1,5 @@
+'use client';
+
 import { PromoCode } from './PromoCode';
 import { SingleProduct } from './SingleProduct';
 import { TotalPrice } from './TotalPrice';

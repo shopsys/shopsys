@@ -1,3 +1,5 @@
+'use client';
+
 import { BlogSignpostItem } from './BlogSignpostItem';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';

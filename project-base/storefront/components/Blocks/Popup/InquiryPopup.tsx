@@ -1,3 +1,5 @@
+'use client';
+
 import { useInquiryForm } from 'components/Blocks/Product/Inquiry/inquiryFormMeta';
 import { useInquiryFormMeta } from 'components/Blocks/Product/Inquiry/inquiryFormMeta';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';

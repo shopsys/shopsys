@@ -1,3 +1,5 @@
+'use client';
+
 import { Webline } from 'components/Layout/Webline/Webline';
 
 type SimpleLayoutProps = {

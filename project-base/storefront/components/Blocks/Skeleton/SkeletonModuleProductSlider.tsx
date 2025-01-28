@@ -1,3 +1,5 @@
+'use client';
+
 import { SkeletonModuleProductListItem } from './SkeletonModuleProductListItem';
 import { VISIBLE_SLIDER_ITEMS } from 'components/Blocks/Product/ProductsSlider';
 import { twJoin } from 'tailwind-merge';

@@ -1,3 +1,5 @@
+'use client';
+
 import { SkeletonModuleArticleBlog } from './SkeletonModuleArticleBlog';
 import { SkeletonModuleBreadcrumbs } from './SkeletonModuleBreadcrumbs';
 import { Webline } from 'components/Layout/Webline/Webline';

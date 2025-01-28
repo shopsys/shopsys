@@ -1,3 +1,5 @@
+'use client';
+
 import { SkeletonPageArticle } from './SkeletonPageArticle';
 import { SkeletonPageBlogArticle } from './SkeletonPageBlogArticle';
 import { SkeletonPageBlogCategory } from './SkeletonPageBlogCategory';

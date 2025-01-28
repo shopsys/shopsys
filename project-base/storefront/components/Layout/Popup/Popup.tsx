@@ -1,3 +1,5 @@
+'use client';
+
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { TIDs } from 'cypress/tids';
 import { AnimatePresence, m } from 'framer-motion';

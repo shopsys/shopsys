@@ -1,3 +1,5 @@
+'use client';
+
 import { FormEvent, FormHTMLAttributes } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';

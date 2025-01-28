@@ -1,3 +1,5 @@
+'use client';
+
 import { PlayIcon } from 'components/Basic/Icon/PlayIcon';
 import { Image } from 'components/Basic/Image/Image';
 import { TypeFileFragment } from 'graphql/requests/files/fragments/FileFragment.generated';

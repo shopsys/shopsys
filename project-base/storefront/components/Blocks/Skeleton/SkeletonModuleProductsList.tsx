@@ -1,3 +1,5 @@
+'use client';
+
 import { SkeletonModuleProductListItem } from './SkeletonModuleProductListItem';
 import { productListTwClass } from 'components/Blocks/Product/ProductsList/ProductsList';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';

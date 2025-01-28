@@ -1,3 +1,5 @@
+'use client';
+
 import { BlogSignpostItem } from './BlogSignpostItem';
 import { ListedBlogCategoryRecursiveType } from 'types/blogCategory';
 

@@ -1,3 +1,5 @@
+'use client';
+
 import { Flag } from 'components/Basic/Flag/Flag';
 import { TypeProductPriceFragment } from 'graphql/requests/products/fragments/ProductPriceFragment.generated';
 import useTranslation from 'next-translate/useTranslation';

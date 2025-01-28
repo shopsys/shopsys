@@ -1,3 +1,5 @@
+'use client';
+
 import { CartInHeaderList } from './CartInHeaderList';
 import { CartInHeaderPopover } from './CartInHeaderPopover';
 import { Drawer } from 'components/Basic/Drawer/Drawer';

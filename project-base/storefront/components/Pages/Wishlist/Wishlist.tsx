@@ -1,3 +1,5 @@
+'use client';
+
 import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { ProductsList } from 'components/Blocks/Product/ProductsList/ProductsList';

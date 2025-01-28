@@ -1,3 +1,5 @@
+'use client';
+
 import { SkeletonModuleCustomer } from './SkeletonModuleCustomer';
 import Skeleton from 'react-loading-skeleton';
 

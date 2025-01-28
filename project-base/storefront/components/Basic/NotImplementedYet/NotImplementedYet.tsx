@@ -1,3 +1,5 @@
+'use client';
+
 import { SyntheticEvent, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';

@@ -1,3 +1,5 @@
+'use client';
+
 import { TypeSliderItemFragment } from 'graphql/requests/sliderItems/fragments/SliderItemFragment.generated';
 import { useEffect, useRef, useState } from 'react';
 import { twMergeCustom } from 'utils/twMerge';

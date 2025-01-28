@@ -1,3 +1,5 @@
+'use client';
+
 import { SocialNetworkLoginLink } from './SocialNetworkLoginLink';
 import { TypeLoginTypeEnum } from 'graphql/types';
 import React from 'react';

@@ -1,3 +1,5 @@
+'use client';
+
 import { ModalGalleryCarousel } from './ModalGalleryCarousel';
 import { AnimateSlideDiv } from 'components/Basic/Animations/AnimateSlideDiv';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';

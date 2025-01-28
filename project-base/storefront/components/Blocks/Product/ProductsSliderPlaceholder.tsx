@@ -1,3 +1,5 @@
+'use client';
+
 import { ProductPrice } from './ProductPrice';
 import { ProductItemProps } from './ProductsList/ProductListItem';
 import { ProductListItemPlaceholder } from './ProductsList/ProductListItemPlaceholder';

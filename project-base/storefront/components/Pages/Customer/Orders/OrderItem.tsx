@@ -1,3 +1,5 @@
+'use client';
+
 import { OrderPaymentStatusBar } from './OrderPaymentStatusBar';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';

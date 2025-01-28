@@ -1,3 +1,4 @@
+'use client';
 export const PlayIcon: SvgFC = (props) => (
     <svg {...props} fill="none" viewBox="0 0 9 11" xmlns="http://www.w3.org/2000/svg">
         <path

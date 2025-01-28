@@ -1,3 +1,5 @@
+'use client';
+
 import getConfig from 'next/config';
 import { Suspense } from 'react';
 

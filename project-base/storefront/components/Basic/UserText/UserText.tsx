@@ -1,3 +1,5 @@
+'use client';
+
 import { GrapesJs } from './GrapesJs';
 
 type UserTextProps = {

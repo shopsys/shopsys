@@ -1,3 +1,4 @@
+'use client';
 type FilteredProductsWrapperProps = {
     paginationScrollTargetRef: React.RefObject<HTMLDivElement>;
     children: React.ReactNode;

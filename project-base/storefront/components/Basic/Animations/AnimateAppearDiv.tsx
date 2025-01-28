@@ -1,3 +1,5 @@
+'use client';
+
 import { HTMLMotionProps, motion } from 'framer-motion';
 
 export const AnimateAppearDiv: FC<HTMLMotionProps<'div'> & { keyName?: string }> = ({

@@ -1,3 +1,5 @@
+'use client';
+
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { Button } from 'components/Forms/Button/Button';

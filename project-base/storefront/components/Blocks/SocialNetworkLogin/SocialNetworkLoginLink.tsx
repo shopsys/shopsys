@@ -1,3 +1,5 @@
+'use client';
+
 import { SocialNetworkIcon } from './SocialNetworkLoginLinkIcon';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { TypeLoginTypeEnum } from 'graphql/types';

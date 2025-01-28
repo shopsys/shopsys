@@ -1,3 +1,5 @@
+'use client';
+
 import { CartIcon } from 'components/Basic/Icon/CartIcon';
 import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';

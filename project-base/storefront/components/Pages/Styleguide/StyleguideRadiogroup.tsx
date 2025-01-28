@@ -1,3 +1,5 @@
+'use client';
+
 import { StyleguideSection } from './StyleguideElements';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormLine } from 'components/Forms/Lib/FormLine';

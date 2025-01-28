@@ -1,3 +1,5 @@
+'use client';
+
 import { FooterCopyright } from './FooterCopyright';
 import { FooterMenu } from './FooterMenu';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';

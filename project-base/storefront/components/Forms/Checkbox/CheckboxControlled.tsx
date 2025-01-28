@@ -1,3 +1,5 @@
+'use client';
+
 import { Checkbox, CheckboxProps } from './Checkbox';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { ChangeEventHandler, ReactElement } from 'react';

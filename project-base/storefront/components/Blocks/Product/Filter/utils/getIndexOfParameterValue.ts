@@ -1,3 +1,5 @@
+'use client';
+
 import { ParametersType } from 'types/productFilter';
 
 export const getIndexOfParameterValue = (

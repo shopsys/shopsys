@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { FooterContact } from './FooterContact';
 import { FooterMenuItem } from 'components/Layout/Footer/FooterMenuItem';
