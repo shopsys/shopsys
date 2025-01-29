@@ -12,9 +12,11 @@ class ParameterValueRepository
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
+        protected readonly OrderByCollationHelper $orderByCollationHelper,
     ) {
     }
 
@@ -34,7 +36,7 @@ class ParameterValueRepository
                 'parameterValues' => $parameterValues,
                 'locale' => $locale,
             ])
-            ->orderBy(OrderByCollationHelper::createOrderByForLocale('pv.text', $locale))->getQuery()->getResult();
+            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('pv.text', $locale))->getQuery()->getResult();
     }
 
     /**

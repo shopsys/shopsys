@@ -5,10 +5,19 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Model\Category;
 
 use PHPUnit\Framework\TestCase;
-use Shopsys\FrameworkBundle\Model\Category\CategoryNestedSetCalculator;
+use Shopsys\FrameworkBundle\Model\Category\CategoryNestedSetCalculatorHelper;
 
 class CategoryNestedSetCalculatorTest extends TestCase
 {
+    private CategoryNestedSetCalculatorHelper $categoryNestedSetCalculatorHelper;
+
+    protected function setUp(): void
+    {
+        $this->categoryNestedSetCalculatorHelper = new CategoryNestedSetCalculatorHelper();
+
+        parent::setUp();
+    }
+
     public function testCalculateNestedSet(): void
     {
         /*
@@ -41,7 +50,7 @@ class CategoryNestedSetCalculatorTest extends TestCase
             12 => null,
         ];
 
-        $actual = CategoryNestedSetCalculator::calculateNestedSetFromAdjacencyList($parentIdByCategoryId);
+        $actual = $this->categoryNestedSetCalculatorHelper->calculateNestedSetFromAdjacencyList($parentIdByCategoryId);
 
         // results are not ordered by ID by default
         usort($actual, fn ($a, $b) => $a['id'] <=> $b['id']);

@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Transport;
 use Doctrine\ORM\Mapping as ORM;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 
 /**
  * @ORM\Table(name="transport_translations")
@@ -75,7 +75,7 @@ class TransportTranslation extends AbstractTranslation
      */
     public function setName($name)
     {
-        $this->name = TransformString::getTrimmedStringOrNullOnEmpty($name);
+        $this->name = TransformStringHelper::getTrimmedStringOrNullOnEmpty($name);
     }
 
     /**
@@ -83,7 +83,7 @@ class TransportTranslation extends AbstractTranslation
      */
     public function setDescription($description)
     {
-        $this->description = TransformString::getTrimmedStringOrNullOnEmpty($description);
+        $this->description = TransformStringHelper::getTrimmedStringOrNullOnEmpty($description);
     }
 
     /**
@@ -91,7 +91,7 @@ class TransportTranslation extends AbstractTranslation
      */
     public function setInstructions($instructions)
     {
-        $this->instructions = TransformString::getTrimmedStringOrNullOnEmpty($instructions);
+        $this->instructions = TransformStringHelper::getTrimmedStringOrNullOnEmpty($instructions);
     }
 
     /**

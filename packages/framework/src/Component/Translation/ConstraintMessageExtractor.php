@@ -41,8 +41,12 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
 
     protected SplFileInfo $file;
 
-    public function __construct()
-    {
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Translation\PhpParserNodeHelper $phpParserNodeHelper
+     */
+    public function __construct(
+        protected readonly PhpParserNodeHelper $phpParserNodeHelper,
+    ) {
         $this->traverser = new NodeTraverser();
         $this->traverser->addVisitor(new NameResolver());
         $this->traverser->addVisitor($this);
@@ -51,7 +55,7 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
     /**
      * {@inheritdoc}
      */
-    public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast)
+    public function visitPhpFile(SplFileInfo $file, MessageCatalogue $catalogue, array $ast): void
     {
         $this->file = $file;
         $this->catalogue = $catalogue;
@@ -76,7 +80,7 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
      * @param \PhpParser\Node $node
      * @return bool
      */
-    protected function isConstraintClass(Node $node)
+    protected function isConstraintClass(Node $node): bool
     {
         return $node instanceof FullyQualified && is_subclass_of((string)$node, Constraint::class);
     }
@@ -84,12 +88,12 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
     /**
      * @param \PhpParser\Node $optionsNode
      */
-    protected function extractMessagesFromOptions(Node $optionsNode)
+    protected function extractMessagesFromOptions(Node $optionsNode): void
     {
         if ($optionsNode instanceof Array_) {
             foreach ($optionsNode->items as $optionItemNode) {
                 if ($this->isMessageOptionItem($optionItemNode)) {
-                    $messageId = PhpParserNodeHelper::getConcatenatedStringValue($optionItemNode->value, $this->file);
+                    $messageId = $this->phpParserNodeHelper->getConcatenatedStringValue($optionItemNode->value, $this->file);
 
                     $message = new Message($messageId, Translator::VALIDATOR_TRANSLATION_DOMAIN);
                     $message->addSource(new FileSource($this->file->getFilename(), $optionItemNode->getLine()));
@@ -104,7 +108,7 @@ class ConstraintMessageExtractor implements FileVisitorInterface, NodeVisitor
      * @param \PhpParser\Node\ArrayItem $node
      * @return bool
      */
-    protected function isMessageOptionItem(ArrayItem $node)
+    protected function isMessageOptionItem(ArrayItem $node): bool
     {
         return $node->key instanceof String_ && strtolower(substr($node->key->value, -7)) === 'message';
     }

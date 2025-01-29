@@ -10,6 +10,7 @@ use Shopsys\BrandFeed\LuigisBoxBundle\Model\LuigisBoxBrandFeedItemFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 
@@ -40,7 +41,7 @@ class LuigisBoxBrandFeedItemTest extends TestCase
         $imageFacadeMock->method('getImageUrl')
             ->with($defaultDomain, $brand)->willReturn(self::BRAND_IMAGE_URL);
 
-        $luigisBoxBrandFeedItemFactory = new LuigisBoxBrandFeedItemFactory($friendlyUrlFacadeMock, $imageFacadeMock);
+        $luigisBoxBrandFeedItemFactory = new LuigisBoxBrandFeedItemFactory($friendlyUrlFacadeMock, $imageFacadeMock, new ImageUrlWithSizeHelper());
         $luigisBoxBrandFeedItem = $luigisBoxBrandFeedItemFactory->create($brand, $defaultDomain);
 
         $this->assertSame(LuigisBoxBrandFeedItem::UNIQUE_BRAND_IDENTIFIER_PREFIX . '-' . self::BRAND_ID, $luigisBoxBrandFeedItem->getIdentity());

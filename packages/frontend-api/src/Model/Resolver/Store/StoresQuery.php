@@ -8,7 +8,6 @@ use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Transport\Transport;
-use Shopsys\FrontendApiBundle\Component\Validation\PageSizeValidator;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 use Shopsys\FrontendApiBundle\Model\Store\StoreFacade;
 use Shopsys\FrontendApiBundle\Model\Store\StoresFilterOptions;
@@ -31,7 +30,7 @@ class StoresQuery extends AbstractQuery
      */
     public function storesQuery(Argument $argument)
     {
-        PageSizeValidator::checkMaxPageSize($argument);
+        $this->pageSizeValidator->checkMaxPageSize($argument);
         $domainId = $this->domain->getId();
 
         /** @var string|null $searchText */

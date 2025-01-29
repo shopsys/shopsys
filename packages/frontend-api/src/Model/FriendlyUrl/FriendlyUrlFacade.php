@@ -6,15 +6,18 @@ namespace Shopsys\FrontendApiBundle\Model\FriendlyUrl;
 
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 
 class FriendlyUrlFacade
 {
     /**
      * @param \Shopsys\FrontendApiBundle\Model\FriendlyUrl\FriendlyUrlRepository $friendlyUrlRepository
+     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
      */
-    public function __construct(protected readonly FriendlyUrlRepository $friendlyUrlRepository)
-    {
+    public function __construct(
+        protected readonly FriendlyUrlRepository $friendlyUrlRepository,
+        protected readonly TransformStringHelper $transformStringHelper,
+    ) {
     }
 
     /**
@@ -28,7 +31,7 @@ class FriendlyUrlFacade
         $friendlyUrl = $this->friendlyUrlRepository->findFriendlyUrlBySlugAndRouteName($domainId, $routeName, $slug);
 
         if ($friendlyUrl === null) {
-            $modifiedSlug = TransformString::addOrRemoveTrailingSlashFromString($slug);
+            $modifiedSlug = $this->transformStringHelper->addOrRemoveTrailingSlashFromString($slug);
             $friendlyUrl = $this->friendlyUrlRepository->findFriendlyUrlBySlugAndRouteName(
                 $domainId,
                 $routeName,

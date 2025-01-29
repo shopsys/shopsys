@@ -6,18 +6,18 @@ namespace Shopsys\FrameworkBundle\Component\String;
 
 use Transliterator;
 
-class TransformString
+class TransformStringHelper
 {
     /**
      * @param string $string
      * @return string
      */
-    public static function safeFilename($string)
+    public function safeFilename(string $string): string
     {
         $string = preg_replace('~[^-\\.\\pL0-9_]+~u', '_', $string);
         $string = preg_replace('~[\\.]{2,}~u', '.', $string);
         $string = trim($string, '_');
-        $string = self::toAscii($string);
+        $string = $this->toAscii($string);
         $string = preg_replace('~[^-\\.a-zA-Z0-9_]+~', '', $string);
         $string = ltrim($string, '.');
 
@@ -25,10 +25,10 @@ class TransformString
     }
 
     /**
-     * @param string $value
+     * @param string|null $value
      * @return string|null
      */
-    public static function emptyToNull($value)
+    public static function emptyToNull(?string $value): ?string
     {
         return $value === '' ? null : $value;
     }
@@ -43,7 +43,7 @@ class TransformString
             return null;
         }
 
-        return static::emptyToNull(trim($value));
+        return self::emptyToNull(trim($value));
     }
 
     /**
@@ -51,12 +51,12 @@ class TransformString
      * @return string
      * @see http://php.vrana.cz/vytvoreni-pratelskeho-url.php
      */
-    public static function stringToFriendlyUrlSlug($string)
+    public function stringToFriendlyUrlSlug(string $string): string
     {
         $slug = $string;
         $slug = preg_replace('~[^\\pL0-9_]+~u', '-', $slug);
         $slug = trim($slug, '-');
-        $slug = self::toAscii($slug);
+        $slug = $this->toAscii($slug);
         $slug = strtolower($slug);
         $slug = preg_replace('~[^-a-z0-9_]+~', '', $slug);
 
@@ -67,9 +67,9 @@ class TransformString
      * @param string $string
      * @return string
      */
-    public static function addOrRemoveTrailingSlashFromString(string $string): string
+    public function addOrRemoveTrailingSlashFromString(string $string): string
     {
-        if (substr($string, -1) === '/') {
+        if (str_ends_with($string, '/')) {
             return rtrim($string, '/');
         }
 
@@ -83,12 +83,12 @@ class TransformString
      * @param string $string
      * @return string
      */
-    public static function stringToCamelCase($string)
+    public function stringToCamelCase(string $string): string
     {
         // convert everything apart from letters and numbers into spaces
         $string = preg_replace('~[^\\pL0-9]+~u', ' ', $string);
         // transliterate into ascii
-        $string = self::toAscii($string);
+        $string = $this->toAscii($string);
         // remove special characters after transliteration
         $string = preg_replace('~[^a-zA-Z0-9 ]~', '', $string);
         // preserve camel case by splitting words with spaces
@@ -107,7 +107,7 @@ class TransformString
      * @param string $string
      * @return string
      */
-    protected static function toAscii($string)
+    protected function toAscii(string $string): string
     {
         $transliteratorToLatin = Transliterator::create('Any-Latin');
         $transliteratorToAscii = Transliterator::create('Latin-ASCII');
@@ -122,7 +122,7 @@ class TransformString
      * @param string $path
      * @return string
      */
-    public static function removeDriveLetterFromPath($path)
+    public function removeDriveLetterFromPath(string $path): string
     {
         return preg_replace('#^[A-Z]:#', '', $path);
     }
@@ -134,20 +134,11 @@ class TransformString
      * @param int $limit
      * @return string
      */
-    public static function replaceOccurences(string $search, string $replace, string $subject, int $limit = 1): string
+    public function replaceOccurrences(string $search, string $replace, string $subject, int $limit = 1): string
     {
         $search = '/' . preg_quote($search, '/') . '/';
 
         return preg_replace($search, $replace, $subject, $limit);
-    }
-
-    /**
-     * @param string $string
-     * @return string
-     */
-    public static function replaceInvalidUtf8CharactersByQuestionMark(string $string): string
-    {
-        return mb_convert_encoding($string, 'UTF-8', 'UTF-8');
     }
 
     /**

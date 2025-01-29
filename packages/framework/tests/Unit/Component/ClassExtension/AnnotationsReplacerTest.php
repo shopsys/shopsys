@@ -13,6 +13,7 @@ use Roave\BetterReflection\Reflection\ReflectionProperty;
 use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap;
 use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer;
 use Shopsys\FrameworkBundle\Component\ClassExtension\DocBlockParser;
+use Shopsys\FrameworkBundle\Component\ClassExtension\TypehintHelper;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\DummyClassForAnnotationsReplacer;
 
 class AnnotationsReplacerTest extends TestCase
@@ -28,7 +29,7 @@ class AnnotationsReplacerTest extends TestCase
             'Shopsys\FrontendApiBundle\Model\Product\ProductRepository' => 'App\FrontendApi\Model\Product\ProductRepository',
         ]);
 
-        $this->annotationsReplacer = new AnnotationsReplacer($replacementMap, new DocBlockParser());
+        $this->annotationsReplacer = new AnnotationsReplacer($replacementMap, new DocBlockParser(), new TypehintHelper());
     }
 
     /**

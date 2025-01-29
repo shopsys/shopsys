@@ -32,6 +32,7 @@ class PriceQuery extends AbstractQuery
      * @param \Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade $orderApiFacade
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportPriceProvider $transportPriceProvider
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentPriceProvider $paymentPriceProvider
+     * @param \Shopsys\FrontendApiBundle\Component\GqlContext\GqlContextHelper $gqlContextHelper
      */
     public function __construct(
         protected readonly PaymentPriceCalculation $paymentPriceCalculation,
@@ -43,6 +44,7 @@ class PriceQuery extends AbstractQuery
         protected readonly OrderApiFacade $orderApiFacade,
         protected readonly TransportPriceProvider $transportPriceProvider,
         protected readonly PaymentPriceProvider $paymentPriceProvider,
+        protected readonly GqlContextHelper $gqlContextHelper,
     ) {
     }
 
@@ -57,8 +59,8 @@ class PriceQuery extends AbstractQuery
         ?string $cartUuid = null,
         ?ArrayObject $context = null,
     ): PriceInterface {
-        $cartUuid = $cartUuid ?? GqlContextHelper::getCartUuid($context);
-        $orderUuid = GqlContextHelper::getOrderUuid($context);
+        $cartUuid = $cartUuid ?? $this->gqlContextHelper->getCartUuid($context);
+        $orderUuid = $this->gqlContextHelper->getOrderUuid($context);
 
         if ($cartUuid === null && $orderUuid !== null) {
             $order = $this->orderApiFacade->getByUuid($orderUuid);
@@ -111,7 +113,7 @@ class PriceQuery extends AbstractQuery
         ?string $cartUuid = null,
         ?ArrayObject $context = null,
     ): PriceInterface {
-        $cartUuid = $cartUuid ?? GqlContextHelper::getCartUuid($context);
+        $cartUuid = $cartUuid ?? $this->gqlContextHelper->getCartUuid($context);
 
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 

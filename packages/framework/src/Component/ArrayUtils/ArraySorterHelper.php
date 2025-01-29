@@ -6,14 +6,14 @@ namespace Shopsys\FrameworkBundle\Component\ArrayUtils;
 
 use Collator;
 
-class ArraySorter
+class ArraySorterHelper
 {
     /**
      * @param string $valueKey
      * @param array $array
      * @param string $locale
      */
-    public static function sortArrayAlphabeticallyByValue(string $valueKey, array &$array, string $locale): void
+    public function sortArrayAlphabeticallyByValue(string $valueKey, array &$array, string $locale): void
     {
         $collator = new Collator($locale);
 

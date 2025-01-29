@@ -11,9 +11,9 @@ class OrderByCollationHelper
      * @param string $locale
      * @return string
      */
-    public static function createOrderByForLocale(string $sort, string $locale): string
+    public function createOrderByForLocale(string $sort, string $locale): string
     {
-        $collation = self::getCollationByLocale($locale);
+        $collation = $this->getCollationByLocale($locale);
 
         return 'COLLATE(' . $sort . ", '" . $collation . "')";
     }
@@ -22,7 +22,7 @@ class OrderByCollationHelper
      * @param string $locale
      * @return string
      */
-    public static function getCollationByLocale(string $locale): string
+    public function getCollationByLocale(string $locale): string
     {
         return $locale . '-x-icu';
     }

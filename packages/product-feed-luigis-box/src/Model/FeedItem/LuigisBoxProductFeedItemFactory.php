@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
@@ -20,6 +21,10 @@ use Shopsys\ProductFeed\LuigisBoxBundle\Model\Setting\LuigisBoxFeedSettingEnum;
 
 class LuigisBoxProductFeedItemFactory
 {
+    protected const int SMALL_IMAGE_SIZE = 100;
+    protected const int MEDIUM_IMAGE_SIZE = 200;
+    protected const int LARGE_IMAGE_SIZE = 600;
+
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
@@ -28,6 +33,7 @@ class LuigisBoxProductFeedItemFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade $productCachedAttributesFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
+     * @param \Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper $imageUrlWithSizeHelper
      */
     public function __construct(
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
@@ -37,6 +43,7 @@ class LuigisBoxProductFeedItemFactory
         protected readonly ProductCachedAttributesFacade $productCachedAttributesFacade,
         protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
         protected readonly Setting $setting,
+        protected readonly ImageUrlWithSizeHelper $imageUrlWithSizeHelper,
     ) {
     }
 
@@ -87,6 +94,8 @@ class LuigisBoxProductFeedItemFactory
             $mainVariantId = $product->getMainVariant()->getId();
         }
 
+        $imageUrl = $this->productUrlsBatchLoader->getProductImageUrl($product, $domainConfig);
+
         return new LuigisBoxProductFeedItem(
             $product->getId(),
             $product->getFullName($domainConfig->getLocale()),
@@ -107,8 +116,10 @@ class LuigisBoxProductFeedItemFactory
             $product->getCatnum(),
             $product->getBrand()?->getName(),
             $productDescription,
-            $this->productUrlsBatchLoader->getProductImageUrl($product, $domainConfig),
             $mainVariantId,
+            $imageUrl !== null ? $this->imageUrlWithSizeHelper->limitSizeInImageUrl($imageUrl, self::SMALL_IMAGE_SIZE, self::SMALL_IMAGE_SIZE) : null,
+            $imageUrl !== null ? $this->imageUrlWithSizeHelper->limitSizeInImageUrl($imageUrl, self::MEDIUM_IMAGE_SIZE, self::MEDIUM_IMAGE_SIZE) : null,
+            $imageUrl !== null ? $this->imageUrlWithSizeHelper->limitSizeInImageUrl($imageUrl, self::LARGE_IMAGE_SIZE, self::LARGE_IMAGE_SIZE) : null,
         );
     }
 

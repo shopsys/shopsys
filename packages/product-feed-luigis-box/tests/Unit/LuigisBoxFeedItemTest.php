@@ -9,6 +9,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -36,23 +37,23 @@ use Tests\FrameworkBundle\Test\IsMoneyEqual;
 class LuigisBoxFeedItemTest extends TestCase
 {
     private const int MOCKED_LUIGIS_BOX_RANK_SETTING = 8;
-    private const MAIN_CATEGORY_ID = 1;
-    private const MAIN_CATEGORY_NAME = 'Main category';
-    private const PRODUCT_IDENTITY = 'product-1';
-    private const FLAG_NAME = 'Flag name';
-    private const PRODUCT_NAME = 'product name';
-    private const PRODUCT_URL = 'https://example.com/product-1';
-    private const PRODUCT_EAN = 'ean123';
-    private const PRODUCT_PART_NO = 'partNo123';
-    private const PRODUCT_SKU = 'sku123';
-    private const PRODUCT_ID = 1;
-    private const PRODUCT_DESCRIPTION = 'product description';
-    private const EUR = 'EUR';
-    private const IMAGE_URL = 'https://example.com/img/product/1';
-    private const BRAND_NAME = 'brand name';
-    private const PARAMETER_NAME = 'parameter';
-    private const PARAMETER_VALUE = 'value';
-    private const DEFAULT_LOCALE = 'en';
+    private const int MAIN_CATEGORY_ID = 1;
+    private const string MAIN_CATEGORY_NAME = 'Main category';
+    private const string PRODUCT_IDENTITY = 'product-1';
+    private const string FLAG_NAME = 'Flag name';
+    private const string PRODUCT_NAME = 'product name';
+    private const string PRODUCT_URL = 'https://example.com/product-1';
+    private const string PRODUCT_EAN = 'ean123';
+    private const string PRODUCT_PART_NO = 'partNo123';
+    private const string PRODUCT_SKU = 'sku123';
+    private const int PRODUCT_ID = 1;
+    private const string PRODUCT_DESCRIPTION = 'product description';
+    private const string EUR = 'EUR';
+    private const string IMAGE_URL = 'https://example.com/img/product/1';
+    private const string BRAND_NAME = 'brand name';
+    private const string PARAMETER_NAME = 'parameter';
+    private const string PARAMETER_VALUE = 'value';
+    private const string DEFAULT_LOCALE = 'en';
 
     private ProductPriceCalculationForCustomerUser|MockObject $productPriceCalculationForCustomerUserMock;
 
@@ -279,6 +280,7 @@ class LuigisBoxFeedItemTest extends TestCase
             $productCachedAttributesFacade,
             $productAvailabilityFacade,
             $settingMock,
+            new ImageUrlWithSizeHelper(),
         );
     }
 

@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\AbstractUploadedFileF
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\AbstractUploadedFileLocator;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileRepositoryInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfigInterface;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileTypeConfig;
@@ -27,6 +28,7 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
     /**
      * @param \League\Flysystem\FilesystemOperator $filesystem
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRepository $uploadedFileRepository
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator $uploadedFileLocator
@@ -37,6 +39,7 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
     public function __construct(
         FilesystemOperator $filesystem,
         EntityManagerInterface $em,
+        TransformStringHelper $transformStringHelper,
         protected readonly UploadedFileConfig $uploadedFileConfig,
         protected readonly UploadedFileRepository $uploadedFileRepository,
         protected readonly UploadedFileLocator $uploadedFileLocator,
@@ -44,7 +47,7 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         protected readonly UploadedFileRelationFactory $uploadedFileRelationFactory,
         protected readonly UploadedFileRelationRepository $uploadedFileRelationRepository,
     ) {
-        parent::__construct($filesystem, $em);
+        parent::__construct($filesystem, $em, $transformStringHelper);
     }
 
     /**
@@ -341,7 +344,11 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
         }
 
         $file->setTranslatedNames($uploadedFileFormData->names);
-        $file->setNameAndSlug($uploadedFileFormData->name);
+
+        $filename = pathinfo($uploadedFileFormData->name, PATHINFO_FILENAME);
+
+        $file->setName($filename);
+        $file->setSlug($this->transformStringHelper->stringToFriendlyUrlSlug($filename));
 
         $this->updateRelationsForUploadedFileByEntities($file, Product::class, $uploadedFileFormData->products, UploadedFileTypeConfig::DEFAULT_TYPE_NAME);
 
@@ -450,7 +457,10 @@ class UploadedFileFacade extends AbstractUploadedFileFacade
             $relationFilename = $uploadedFileData->relationsFilenames[$key] ?? null;
 
             if ($relationFilename) {
-                $uploadedFile->setNameAndSlug($relationFilename);
+                $filename = pathinfo($relationFilename, PATHINFO_FILENAME);
+
+                $uploadedFile->setName($filename);
+                $uploadedFile->setSlug($this->transformStringHelper->stringToFriendlyUrlSlug($filename));
             }
 
             $uploadedFile->setTranslatedNames($uploadedFileData->relationsNames[$key] ?? []);

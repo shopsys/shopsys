@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Country;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
@@ -14,20 +15,20 @@ use Shopsys\FrameworkBundle\Model\Country\Exception\CountryNotFoundException;
 
 class CountryRepository
 {
-    protected EntityManagerInterface $em;
-
     /**
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper
      */
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->em = $entityManager;
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+        protected readonly OrderByCollationHelper $orderByCollationHelper,
+    ) {
     }
 
     /**
      * @return \Doctrine\ORM\EntityRepository
      */
-    protected function getCountryRepository()
+    protected function getCountryRepository(): EntityRepository
     {
         return $this->em->getRepository(Country::class);
     }
@@ -43,7 +44,7 @@ class CountryRepository
             ->join(CountryDomain::class, 'cd', Join::WITH, 'c.id = cd.country AND cd.domainId = :domainId')
             ->join(CountryTranslation::class, 'ct', Join::WITH, 'c.id = ct.translatable AND ct.locale = :locale')
             ->orderBy('cd.priority', 'desc')
-            ->addOrderBy(OrderByCollationHelper::createOrderByForLocale('ct.name', $locale), 'asc')
+            ->addOrderBy($this->orderByCollationHelper->createOrderByForLocale('ct.name', $locale), 'asc')
             ->setParameter('locale', $locale)
             ->setParameter('domainId', $domainId);
     }
@@ -52,7 +53,7 @@ class CountryRepository
      * @param int $countryId
      * @return \Shopsys\FrameworkBundle\Model\Country\Country|null
      */
-    public function findById($countryId): ?Country
+    public function findById(int $countryId): ?Country
     {
         return $this->getCountryRepository()->find($countryId);
     }
@@ -61,7 +62,7 @@ class CountryRepository
      * @param int $countryId
      * @return \Shopsys\FrameworkBundle\Model\Country\Country
      */
-    public function getById($countryId): Country
+    public function getById(int $countryId): Country
     {
         $country = $this->findById($countryId);
 

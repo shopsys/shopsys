@@ -7,6 +7,7 @@ namespace Tests\FrameworkBundle\Unit\Component\Cron;
 use DateTime;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
+use Shopsys\FrameworkBundle\Component\Bytes\BytesHelper;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
 use Shopsys\FrameworkBundle\Component\Cron\CronFacade;
@@ -119,8 +120,9 @@ class CronFacadeTest extends TestCase
     {
         /** @var \Symfony\Bridge\Monolog\Logger $loggerMock */
         $loggerMock = $this->createMock(Logger::class);
+        $bytesHelper = new BytesHelper();
 
-        $cronModuleExecutor = new CronModuleExecutor($cronConfig, $loggerMock);
+        $cronModuleExecutor = new CronModuleExecutor($cronConfig, $loggerMock, $bytesHelper);
 
         return new CronFacade($loggerMock, $cronConfig, $cronModuleFacade, $cronModuleExecutor);
     }

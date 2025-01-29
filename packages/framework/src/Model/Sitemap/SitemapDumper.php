@@ -8,7 +8,7 @@ use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use Presta\SitemapBundle\DependencyInjection\Configuration;
 use Presta\SitemapBundle\Service\Dumper;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
@@ -21,6 +21,7 @@ class SitemapDumper extends Dumper
      * @param \Symfony\Component\Filesystem\Filesystem $filesystem
      * @param \League\Flysystem\FilesystemOperator $abstractFilesystem
      * @param \League\Flysystem\MountManager $mountManager
+     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
      * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $urlGenerator
      * @param string $sitemapFilePrefix
      * @param int|null $itemsBySet
@@ -30,6 +31,7 @@ class SitemapDumper extends Dumper
         Filesystem $filesystem,
         protected readonly FilesystemOperator $abstractFilesystem,
         protected readonly MountManager $mountManager,
+        protected readonly TransformStringHelper $transformStringHelper,
         UrlGeneratorInterface $urlGenerator,
         string $sitemapFilePrefix = Configuration::DEFAULT_FILENAME,
         ?int $itemsBySet = null,
@@ -55,7 +57,7 @@ class SitemapDumper extends Dumper
 
         foreach ($sitemapFileFinder->getIterator() as $file) {
             $this->mountManager->move(
-                'local://' . TransformString::removeDriveLetterFromPath($file->getPathname()),
+                'local://' . $this->transformStringHelper->removeDriveLetterFromPath($file->getPathname()),
                 'main://' . $targetDir . '/' . $file->getBasename(),
             );
         }

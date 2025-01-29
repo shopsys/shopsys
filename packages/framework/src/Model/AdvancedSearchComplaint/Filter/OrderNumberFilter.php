@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint\Filter;
 
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterOperatorNotFoundException;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -13,6 +13,14 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 class OrderNumberFilter implements AdvancedSearchFilterInterface
 {
     public const string NAME = 'orderNumber';
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
+     */
+    public function __construct(
+        protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
+    ) {
+    }
 
     /**
      * {@inheritdoc}
@@ -52,7 +60,7 @@ class OrderNumberFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData): void
+    public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {
             if (
@@ -62,7 +70,7 @@ class OrderNumberFilter implements AdvancedSearchFilterInterface
                 if ($ruleData->value === null || $ruleData->value === '') {
                     $searchValue = '%';
                 } else {
-                    $searchValue = DatabaseSearching::getFullTextLikeSearchString($ruleData->value);
+                    $searchValue = $this->databaseSearchingHelper->getFullTextLikeSearchString($ruleData->value);
                 }
 
                 $dqlOperator = $this->getContainsDqlOperator($ruleData->operator);

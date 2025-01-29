@@ -6,16 +6,18 @@ namespace Shopsys\FrontendApiBundle\Model\Store;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Model\Store\Store;
 
 class StoreRepository
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
      */
     public function __construct(
         protected readonly EntityManagerInterface $entityManager,
+        protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
     ) {
     }
 
@@ -58,7 +60,7 @@ class StoreRepository
         if ($storesFilterOptions->getSearchText() !== null) {
             $queryBuilder
                 ->andWhere('(normalized(s.city) LIKE normalized(:searchText) OR normalized(s.postcode) LIKE normalized(:searchText))')
-                ->setParameter('searchText', DatabaseSearching::getFullTextLikeSearchString($storesFilterOptions->getSearchText()));
+                ->setParameter('searchText', $this->databaseSearchingHelper->getFullTextLikeSearchString($storesFilterOptions->getSearchText()));
         }
 
         return $queryBuilder;

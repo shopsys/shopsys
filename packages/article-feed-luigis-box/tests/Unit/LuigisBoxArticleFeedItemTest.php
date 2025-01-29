@@ -11,14 +11,15 @@ use Shopsys\ArticleFeed\LuigisBoxBundle\Model\LuigisBoxArticleFeedItemFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
+use Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper;
 use Shopsys\FrameworkBundle\Model\Article\Article;
 
 class LuigisBoxArticleFeedItemTest extends TestCase
 {
-    private const ARTICLE_NAME = 'Test article';
-    private const ARTICLE_URL = 'https://www.example.com/test-article';
-    private const ARTICLE_TEXT = 'Test article text';
-    private const ARTICLE_IMAGE_URL = 'https://www.example.com/test-article.jpg';
+    private const string ARTICLE_NAME = 'Test article';
+    private const string ARTICLE_URL = 'https://www.example.com/test-article';
+    private const string ARTICLE_TEXT = 'Test article text';
+    private const string ARTICLE_IMAGE_URL = 'https://www.example.com/test-article.jpg';
 
     private LuigisBoxArticleFeedItemFactory $luigisBoxArticleFeedItemFactory;
 
@@ -30,7 +31,7 @@ class LuigisBoxArticleFeedItemTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->luigisBoxArticleFeedItemFactory = new LuigisBoxArticleFeedItemFactory();
+        $this->luigisBoxArticleFeedItemFactory = new LuigisBoxArticleFeedItemFactory(new ImageUrlWithSizeHelper());
         $this->imageFacadeMock = $this->createMock(ImageFacade::class);
 
         $this->defaultDomain = $this->createDomainConfigMock(
@@ -68,7 +69,7 @@ class LuigisBoxArticleFeedItemTest extends TestCase
     #[DataProvider('articleFeedItemCreationDataProvider')]
     public function testArticleFeedItemCreation(array $articleData): void
     {
-        $luigisBoxArticleFeedItemFactory = new LuigisBoxArticleFeedItemFactory();
+        $luigisBoxArticleFeedItemFactory = new LuigisBoxArticleFeedItemFactory(new ImageUrlWithSizeHelper());
         $luigisBoxArticleFeedItem = $luigisBoxArticleFeedItemFactory->create($articleData);
 
         $this->assertSame($articleData['index'] . '-' . $articleData['id'], $luigisBoxArticleFeedItem->getIdentity());

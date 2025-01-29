@@ -6,6 +6,7 @@ namespace Tests\FrameworkBundle\Unit\Model\Blog\Article\Elasticsearch;
 
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchNoResultException;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchDataFetcher;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchRepository;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\FilterQueryFactory;
@@ -28,6 +29,7 @@ class BlogArticleElasticsearchRepositoryTest extends TestCase
         $this->blogArticleElasticsearchRepository = new BlogArticleElasticsearchRepository(
             $filterQueryFactoryMock,
             $blogArticleElasticsearchDataFetcherMock,
+            new TransformStringHelper(),
         );
         $this->expectException(BlogArticleNotFoundException::class);
     }

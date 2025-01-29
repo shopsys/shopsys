@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem;
 
-use Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper;
 use Shopsys\FrameworkBundle\Model\Feed\FeedItemInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
@@ -12,9 +11,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 class LuigisBoxProductFeedItem implements FeedItemInterface
 {
     public const string UNIQUE_IDENTIFIER_PREFIX = 'product';
-    protected const int SMALL_IMAGE_SIZE = 100;
-    protected const int MEDIUM_IMAGE_SIZE = 200;
-    protected const int LARGE_IMAGE_SIZE = 600;
     protected const int SELLABLE_PRODUCT_AVAILABILITY = 1;
 
     /**
@@ -37,8 +33,10 @@ class LuigisBoxProductFeedItem implements FeedItemInterface
      * @param string|null $catnum
      * @param string|null $brandName
      * @param string|null $description
-     * @param string|null $imgUrl
      * @param int|null $mainVariantId
+     * @param string|null $imageUrlS
+     * @param string|null $imageUrlM
+     * @param string|null $imageUrlL
      */
     public function __construct(
         protected readonly int $id,
@@ -60,8 +58,10 @@ class LuigisBoxProductFeedItem implements FeedItemInterface
         protected readonly ?string $catnum,
         protected readonly ?string $brandName,
         protected readonly ?string $description,
-        protected readonly ?string $imgUrl = null,
         protected readonly ?int $mainVariantId = null,
+        protected readonly ?string $imageUrlS = null,
+        protected readonly ?string $imageUrlM = null,
+        protected readonly ?string $imageUrlL = null,
     ) {
     }
 
@@ -118,11 +118,7 @@ class LuigisBoxProductFeedItem implements FeedItemInterface
      */
     public function getImageLinkS(): ?string
     {
-        if ($this->imgUrl === null) {
-            return null;
-        }
-
-        return ImageUrlWithSizeHelper::limitSizeInImageUrl($this->imgUrl, static::SMALL_IMAGE_SIZE, static::SMALL_IMAGE_SIZE);
+        return $this->imageUrlS;
     }
 
     /**
@@ -130,11 +126,7 @@ class LuigisBoxProductFeedItem implements FeedItemInterface
      */
     public function getImageLinkM(): ?string
     {
-        if ($this->imgUrl === null) {
-            return null;
-        }
-
-        return ImageUrlWithSizeHelper::limitSizeInImageUrl($this->imgUrl, static::MEDIUM_IMAGE_SIZE, static::MEDIUM_IMAGE_SIZE);
+        return $this->imageUrlM;
     }
 
     /**
@@ -142,11 +134,7 @@ class LuigisBoxProductFeedItem implements FeedItemInterface
      */
     public function getImageLinkL(): ?string
     {
-        if ($this->imgUrl === null) {
-            return null;
-        }
-
-        return ImageUrlWithSizeHelper::limitSizeInImageUrl($this->imgUrl, static::LARGE_IMAGE_SIZE, static::LARGE_IMAGE_SIZE);
+        return $this->imageUrlL;
     }
 
     /**

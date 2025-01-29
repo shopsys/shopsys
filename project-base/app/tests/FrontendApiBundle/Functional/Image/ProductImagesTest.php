@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Image;
 
 use App\DataFixtures\Demo\CategoryDataFixture;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFacade;
@@ -19,6 +19,11 @@ class ProductImagesTest extends GraphQlTestCase
      * @inject
      */
     private ProductFacade $productFacade;
+
+    /**
+     * @inject
+     */
+    private TransformStringHelper $transformStringHelper;
 
     protected function setUp(): void
     {
@@ -35,7 +40,7 @@ class ProductImagesTest extends GraphQlTestCase
         $responseData = $this->getResponseDataForGraphQlType($response, 'product');
 
         $helloKittyName = t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
-        $helloKittySlug = TransformString::stringToFriendlyUrlSlug($helloKittyName);
+        $helloKittySlug = $this->transformStringHelper->stringToFriendlyUrlSlug($helloKittyName);
 
         $expectedData = [
             'images' => [
@@ -61,19 +66,19 @@ class ProductImagesTest extends GraphQlTestCase
         $responseData = $this->getResponseDataForGraphQlType($response, 'products');
 
         $personalComputersAndAccessoriesName = t('Personal Computers & accessories', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
-        $personalComputersAndAccessoriesSlug = TransformString::stringToFriendlyUrlSlug($personalComputersAndAccessoriesName);
+        $personalComputersAndAccessoriesSlug = $this->transformStringHelper->stringToFriendlyUrlSlug($personalComputersAndAccessoriesName);
 
         $booksName = t('Books', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
-        $booksSlug = TransformString::stringToFriendlyUrlSlug($booksName);
+        $booksSlug = $this->transformStringHelper->stringToFriendlyUrlSlug($booksName);
 
         $helloKittyName = t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
-        $helloKittySlug = TransformString::stringToFriendlyUrlSlug($helloKittyName);
+        $helloKittySlug = $this->transformStringHelper->stringToFriendlyUrlSlug($helloKittyName);
 
         $electronicsName = t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
-        $electronicsSlug = TransformString::stringToFriendlyUrlSlug($electronicsName);
+        $electronicsSlug = $this->transformStringHelper->stringToFriendlyUrlSlug($electronicsName);
 
         $tvAudioName = t('TV, audio', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
-        $tvAudioSlug = TransformString::stringToFriendlyUrlSlug($tvAudioName);
+        $tvAudioSlug = $this->transformStringHelper->stringToFriendlyUrlSlug($tvAudioName);
 
         $expectedData = [
             'edges' => [

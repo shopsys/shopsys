@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacementsMap;
 use Shopsys\FrameworkBundle\Component\ClassExtension\AnnotationsReplacer;
 use Shopsys\FrameworkBundle\Component\ClassExtension\DocBlockParser;
 use Shopsys\FrameworkBundle\Component\ClassExtension\PropertyAnnotationsFactory;
+use Shopsys\FrameworkBundle\Component\ClassExtension\TypehintHelper;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\BaseClass;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\BaseClass2;
 use Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\BaseClass3;
@@ -35,9 +36,12 @@ class PropertyAnnotationsFactoryTest extends TestCase
             'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\BaseClass4' => 'Tests\FrameworkBundle\Unit\Component\ClassExtension\Source\PropertyAnnotationsFactoryTest\ChildClass4',
         ]);
 
+        $typehintHelper = new TypehintHelper();
+
         $this->propertyAnnotationsFactory = new PropertyAnnotationsFactory(
             $replacementMap,
-            new AnnotationsReplacer($replacementMap, new DocBlockParser()),
+            new AnnotationsReplacer($replacementMap, new DocBlockParser(), $typehintHelper),
+            $typehintHelper,
         );
     }
 

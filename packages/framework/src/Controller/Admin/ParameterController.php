@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\Exception\ParameterNotFoundE
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGridFactory;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,8 +32,11 @@ class ParameterController extends AdminBaseController
     ) {
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     #[Route(path: '/product/parameter/list/')]
-    public function listAction()
+    public function listAction(): Response
     {
         $grid = $this->parameterGridFactory->create();
 
@@ -131,9 +135,10 @@ class ParameterController extends AdminBaseController
     /**
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     #[Route(path: '/product/parameter/delete/{id}', requirements: ['id' => '\d+'])]
-    public function deleteAction($id)
+    public function deleteAction(int $id): RedirectResponse
     {
         try {
             $fullName = $this->parameterFacade->getById($id)->getName();

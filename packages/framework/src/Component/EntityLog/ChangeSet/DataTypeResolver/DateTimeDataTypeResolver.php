@@ -11,8 +11,15 @@ use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade;
 
 class DateTimeDataTypeResolver extends AbstractDataTypeResolver
 {
-    protected const DATE_TIME_FORMAT_WITH_TIMEZONE = 'c';
-    protected const DATE_TIME_FORMAT_FOR_HUMAN = 'd. m. Y H:i:s';
+    protected const string DATE_TIME_FORMAT_WITH_TIMEZONE = 'c';
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade $entityLogFacade
+     */
+    public function __construct(
+        protected readonly EntityLogFacade $entityLogFacade,
+    ) {
+    }
 
     /**
      * @param mixed $value
@@ -33,7 +40,7 @@ class DateTimeDataTypeResolver extends AbstractDataTypeResolver
         $newDateTime = $changes[1];
 
         return new ResolvedChanges(
-            EntityLogFacade::getEntityNameByEntity($oldDateTime ?? $newDateTime),
+            $this->entityLogFacade->getEntityNameByEntity($oldDateTime ?? $newDateTime),
             null,
             $oldDateTime?->format(static::DATE_TIME_FORMAT_WITH_TIMEZONE),
             null,

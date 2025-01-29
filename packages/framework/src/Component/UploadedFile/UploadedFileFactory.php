@@ -6,16 +6,19 @@ namespace Shopsys\FrameworkBundle\Component\UploadedFile;
 
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 
 class UploadedFileFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
+     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
      */
     public function __construct(
         protected readonly FileUpload $fileUpload,
         protected readonly EntityNameResolver $entityNameResolver,
+        protected readonly TransformStringHelper $transformStringHelper,
     ) {
     }
 
@@ -34,9 +37,12 @@ class UploadedFileFactory
 
         $entityClassName = $this->entityNameResolver->resolve(UploadedFile::class);
 
+        $uploadedFilename = pathinfo($uploadedFilename, PATHINFO_FILENAME);
+
         return new $entityClassName(
             pathinfo($temporaryFilepath, PATHINFO_BASENAME),
             $uploadedFilename,
+            $this->transformStringHelper->stringToFriendlyUrlSlug($uploadedFilename),
             $namesIndexedByLocale,
         );
     }

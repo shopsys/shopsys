@@ -20,10 +20,14 @@ class ReadyCategorySeoMixRepository
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
+     * @param \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper
+     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombinationFactory $selectedCategorySeoMixCombinationFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly InMemoryCache $inMemoryCache,
+        protected readonly OrderByCollationHelper $orderByCollationHelper,
+        protected readonly SelectedCategorySeoMixCombinationFactory $selectedCategorySeoMixCombinationFactory,
     ) {
     }
 
@@ -36,14 +40,14 @@ class ReadyCategorySeoMixRepository
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ChoseCategorySeoMixCombination $choseCategorySeoMixCombination
+     * @param \Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination
      * @return \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix|null
      */
-    public function findByChoseCategorySeoMixCombination(
-        ChoseCategorySeoMixCombination $choseCategorySeoMixCombination,
+    public function findBySelectedCategorySeoMixCombination(
+        SelectedCategorySeoMixCombination $selectedCategorySeoMixCombination,
     ): ?ReadyCategorySeoMix {
         return $this->getRepository()->findOneBy([
-            'choseCategorySeoMixCombinationJson' => $choseCategorySeoMixCombination->getInJson(),
+            'selectedCategorySeoMixCombinationJson' => $this->selectedCategorySeoMixCombinationFactory->createJsonFromSelectedCategorySeoMixCombination($selectedCategorySeoMixCombination),
         ]);
     }
 
@@ -106,7 +110,7 @@ class ReadyCategorySeoMixRepository
             $flagId = null;
         }
 
-        $combinationArray = ChoseCategorySeoMixCombination::getChoseCategorySeoMixCombinationArray(
+        $combinationArray = $this->selectedCategorySeoMixCombinationFactory->createArray(
             $domainConfig->getId(),
             $categoryId,
             $flagId,
@@ -125,7 +129,7 @@ class ReadyCategorySeoMixRepository
         $readyCategorySeoMix = $this->em->createQueryBuilder()
             ->select('rcsm')
             ->from(ReadyCategorySeoMix::class, 'rcsm')
-            ->andWhere('rcsm.choseCategorySeoMixCombinationJson = :combinationJson')
+            ->andWhere('rcsm.selectedCategorySeoMixCombinationJson = :combinationJson')
             ->setParameter('combinationJson', $combinationJson)
             ->getQuery()
             ->getOneOrNullResult();
@@ -163,7 +167,7 @@ class ReadyCategorySeoMixRepository
             self::READY_SEO_CATEGORY_SETUP_CACHE_NAMESPACE,
             function () use ($categoryId, $domainId): array {
                 $scalarData = $this->em->createQueryBuilder()
-                    ->select('rcsm.choseCategorySeoMixCombinationJson as json')
+                    ->select('rcsm.selectedCategorySeoMixCombinationJson as json')
                     ->from(ReadyCategorySeoMix::class, 'rcsm')
                     ->where('IDENTITY(rcsm.category) = :categoryId')
                     ->andWhere('rcsm.domainId = :domainId')
@@ -198,7 +202,7 @@ class ReadyCategorySeoMixRepository
             ->andWhere('rcsm.category IN(:categories)')
             ->andWhere('rcsm.domainId = :domainId')
             ->andWhere('rcsm.showInCategory = true')
-            ->orderBy(OrderByCollationHelper::createOrderByForLocale('rcsm.h1', $domainConfig->getLocale()), 'asc')
+            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('rcsm.h1', $domainConfig->getLocale()), 'asc')
             ->setParameters([
                 'categories' => $categoryIds,
                 'domainId' => $domainConfig->getId(),

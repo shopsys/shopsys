@@ -17,6 +17,7 @@ use Doctrine\Persistence\ObjectManager;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\Image\Image;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Blog\Article\BlogArticle;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Shopsys\FrameworkBundle\Model\Store\Store;
@@ -33,6 +34,7 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
      * @param \Symfony\Component\Filesystem\Filesystem $localFilesystem
      * @param \League\Flysystem\MountManager $mountManager
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
      * @param string $dataFixturesImagesDirectory
      * @param string $targetImagesDirectory
      * @param string $targetDomainImagesDirectory
@@ -42,11 +44,12 @@ class ImageDataFixture extends AbstractFileFixture implements DependentFixtureIn
         Filesystem $localFilesystem,
         MountManager $mountManager,
         EntityManagerInterface $em,
+        TransformStringHelper $transformStringHelper,
         private readonly string $dataFixturesImagesDirectory,
         private readonly string $targetImagesDirectory,
         private readonly string $targetDomainImagesDirectory,
     ) {
-        parent::__construct($filesystem, $localFilesystem, $mountManager, $em);
+        parent::__construct($filesystem, $localFilesystem, $mountManager, $em, $transformStringHelper);
     }
 
     /**

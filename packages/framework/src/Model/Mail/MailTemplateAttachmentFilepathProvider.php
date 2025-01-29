@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Mail;
 
 use League\Flysystem\MountManager;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 
@@ -16,11 +16,13 @@ class MailTemplateAttachmentFilepathProvider
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
      * @param \League\Flysystem\MountManager $mountManager
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade $uploadedFileFacade
+     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
      */
     public function __construct(
         protected readonly FileUpload $fileUpload,
         protected readonly MountManager $mountManager,
         protected readonly UploadedFileFacade $uploadedFileFacade,
+        protected readonly TransformStringHelper $transformStringHelper,
     ) {
     }
 
@@ -30,7 +32,7 @@ class MailTemplateAttachmentFilepathProvider
      */
     public function getTemporaryFilepath(UploadedFile $uploadedFile): string
     {
-        $temporaryFilepath = TransformString::removeDriveLetterFromPath(
+        $temporaryFilepath = $this->transformStringHelper->removeDriveLetterFromPath(
             $this->fileUpload->getAbsoluteTemporaryFilepath($uploadedFile->getFilename()),
         );
 

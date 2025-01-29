@@ -11,6 +11,7 @@ use PhpParser\ParserFactory;
 use PhpParser\PhpVersion;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Translation\ConstraintMessagePropertyExtractor;
+use Shopsys\FrameworkBundle\Component\Translation\PhpParserNodeHelper;
 use SplFileInfo;
 
 class ConstraintMessagePropertyExtractorTest extends TestCase
@@ -51,7 +52,7 @@ class ConstraintMessagePropertyExtractorTest extends TestCase
      */
     private function extract(SplFileInfo $file): MessageCatalogue
     {
-        $extractor = new ConstraintMessagePropertyExtractor();
+        $extractor = new ConstraintMessagePropertyExtractor(new PhpParserNodeHelper());
 
         $parserFactory = new ParserFactory();
         $parser = $parserFactory->createForVersion(PhpVersion::fromString('8.3'));

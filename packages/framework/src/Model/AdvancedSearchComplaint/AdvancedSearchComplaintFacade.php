@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint;
 
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchQueryBuilderExtender;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\RuleFormViewDataFactory;
@@ -25,6 +25,7 @@ class AdvancedSearchComplaintFacade
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\RuleFormViewDataFactory $ruleFormViewDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintRepository $complaintRepository
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
+     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
      */
     public function __construct(
         protected readonly ComplaintAdvancedSearchFormFactory $complaintAdvancedSearchFormFactory,
@@ -32,6 +33,7 @@ class AdvancedSearchComplaintFacade
         protected readonly RuleFormViewDataFactory $ruleFormViewDataFactory,
         protected readonly ComplaintRepository $complaintRepository,
         protected readonly Localization $localization,
+        protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
     ) {
     }
 
@@ -111,7 +113,7 @@ class AdvancedSearchComplaintFacade
                         OR
                         NORMALIZED(cu.lastName) LIKE NORMALIZED(:text)
                     )');
-            $querySearchText = DatabaseSearching::getFullTextLikeSearchString($quickSearchData->text);
+            $querySearchText = $this->databaseSearchingHelper->getFullTextLikeSearchString($quickSearchData->text);
             $queryBuilder->setParameter('text', $querySearchText);
         }
 

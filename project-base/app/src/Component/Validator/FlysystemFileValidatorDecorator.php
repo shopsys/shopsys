@@ -6,7 +6,7 @@ namespace App\Component\Validator;
 
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraint;
@@ -24,6 +24,7 @@ class FlysystemFileValidatorDecorator extends ConstraintValidator
      * @param \Symfony\Component\Filesystem\Filesystem $symfonyFilesystem
      * @param \League\Flysystem\MountManager $mountManager
      * @param \League\Flysystem\FilesystemOperator $filesystem
+     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
      */
     public function __construct(
         private readonly FileValidator $fileValidator,
@@ -31,6 +32,7 @@ class FlysystemFileValidatorDecorator extends ConstraintValidator
         private readonly Filesystem $symfonyFilesystem,
         private readonly MountManager $mountManager,
         private readonly FilesystemOperator $filesystem,
+        protected readonly TransformStringHelper $transformStringHelper,
     ) {
     }
 
@@ -58,7 +60,7 @@ class FlysystemFileValidatorDecorator extends ConstraintValidator
         $localPath = $this->getLocalTemporaryDirectory() . '/' . $value->getFilename();
 
         try {
-            $this->mountManager->copy('main://' . $value->getPathname(), 'local://' . TransformString::removeDriveLetterFromPath($localPath));
+            $this->mountManager->copy('main://' . $value->getPathname(), 'local://' . $this->transformStringHelper->removeDriveLetterFromPath($localPath));
             $this->fileValidator->validate(new File($localPath, false), $constraint);
         } finally {
             $this->symfonyFilesystem->remove($localPath);

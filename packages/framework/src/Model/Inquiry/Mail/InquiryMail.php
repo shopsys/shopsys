@@ -40,12 +40,14 @@ class InquiryMail
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Product\Image\ProductImageFacade $productImageFacade
+     * @param \Shopsys\FrameworkBundle\Component\Mailer\MailerHelper $mailerHelper
      */
     public function __construct(
         protected readonly Setting $setting,
         protected readonly DomainRouterFactory $domainRouterFactory,
         protected readonly Domain $domain,
         protected readonly ProductImageFacade $productImageFacade,
+        protected readonly MailerHelper $mailerHelper,
     ) {
     }
 
@@ -97,10 +99,10 @@ class InquiryMail
             self::VARIABLE_FULL_NAME => htmlspecialchars($inquiry->getFullName(), ENT_QUOTES),
             self::VARIABLE_EMAIL => htmlspecialchars($inquiry->getEmail(), ENT_QUOTES),
             self::VARIABLE_TELEPHONE => htmlspecialchars($inquiry->getTelephone(), ENT_QUOTES),
-            self::VARIABLE_COMPANY_NAME => MailerHelper::escapeOptionalString($inquiry->getCompanyName()),
-            self::VARIABLE_COMPANY_NUMBER => MailerHelper::escapeOptionalString($inquiry->getCompanyNumber()),
-            self::VARIABLE_COMPANY_TAX_NUMBER => MailerHelper::escapeOptionalString($inquiry->getCompanyTaxNumber()),
-            self::VARIABLE_PRODUCT_NAME => MailerHelper::escapeOptionalString($inquiry->getProduct()?->getName()),
+            self::VARIABLE_COMPANY_NAME => $this->mailerHelper->escapeOptionalString($inquiry->getCompanyName()),
+            self::VARIABLE_COMPANY_NUMBER => $this->mailerHelper->escapeOptionalString($inquiry->getCompanyNumber()),
+            self::VARIABLE_COMPANY_TAX_NUMBER => $this->mailerHelper->escapeOptionalString($inquiry->getCompanyTaxNumber()),
+            self::VARIABLE_PRODUCT_NAME => $this->mailerHelper->escapeOptionalString($inquiry->getProduct()?->getName()),
             self::VARIABLE_PRODUCT_CATALOG_NUMBER => htmlspecialchars($inquiry->getProductCatnum(), ENT_QUOTES),
         ];
     }
@@ -113,7 +115,7 @@ class InquiryMail
     {
         return [
             ...$this->getSubjectVariablesReplacements($inquiry),
-            self::VARIABLE_NOTE => MailerHelper::escapeOptionalString($inquiry->getNote()),
+            self::VARIABLE_NOTE => $this->mailerHelper->escapeOptionalString($inquiry->getNote()),
             self::VARIABLE_PRODUCT_URL => $this->getProductUrl($inquiry),
             self::VARIABLE_PRODUCT_IMAGE => $this->productImageFacade->getProductImageUrl($inquiry->getProduct(), $inquiry->getDomainId()),
         ];

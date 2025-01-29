@@ -11,7 +11,7 @@ use App\DataFixtures\Demo\ReadyCategorySeoDataFixture;
 use App\Model\Category\Category;
 use App\Model\Product\Flag\Flag;
 use App\Model\Product\Parameter\ParameterFacade;
-use Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorter;
+use Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorterHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
@@ -29,6 +29,11 @@ class CategorySeoTest extends GraphQlTestCase
      * @inject
      */
     private ParameterFacade $parameterFacade;
+
+    /**
+     * @inject
+     */
+    private ArraySorterHelper $arraySorterHelper;
 
     public function testGetReadyCategorySeoMixData(): void
     {
@@ -61,7 +66,7 @@ class CategorySeoTest extends GraphQlTestCase
             ],
         ];
 
-        ArraySorter::sortArrayAlphabeticallyByValue('name', $readyCategorySeoMixLinks, $this->getLocaleForFirstDomain());
+        $this->arraySorterHelper->sortArrayAlphabeticallyByValue('name', $readyCategorySeoMixLinks, $this->getLocaleForFirstDomain());
 
         $arrayExpected = [
             'name' => t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),

@@ -13,7 +13,7 @@ class PageSizeValidator
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param int $maxAllowedItems
      */
-    public static function checkMaxPageSize(
+    public function checkMaxPageSize(
         Argument $argument,
         int $maxAllowedItems = 100,
     ): void {

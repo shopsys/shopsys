@@ -7,6 +7,7 @@ namespace Tests\FrameworkBundle\Unit\Component\UploadedFile;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFactory;
 
@@ -30,7 +31,7 @@ class UploadedFileFactoryTest extends TestCase
             ->with($this->equalTo($temporaryFilename))
             ->willReturn($temporaryFilepath);
 
-        $uploadedFileFactory = new UploadedFileFactory($fileUploadMock, new EntityNameResolver([]));
+        $uploadedFileFactory = new UploadedFileFactory($fileUploadMock, new EntityNameResolver([]), new TransformStringHelper());
         $name = 'test-name';
         $nameLocale = 'en';
 

@@ -10,7 +10,7 @@ class MailerHelper
      * @param string|null $string
      * @return string
      */
-    public static function escapeOptionalString(?string $string): string
+    public function escapeOptionalString(?string $string): string
     {
         if ($string === null) {
             return '-';

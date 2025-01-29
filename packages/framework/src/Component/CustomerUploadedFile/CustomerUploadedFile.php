@@ -64,6 +64,7 @@ class CustomerUploadedFile extends AbstractUploadedFile
      * @param string $type
      * @param string $temporaryFilename
      * @param string $uploadedFilename
+     * @param string $slug
      * @param int $position
      * @param string $hash
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
@@ -74,6 +75,7 @@ class CustomerUploadedFile extends AbstractUploadedFile
         string $type,
         string $temporaryFilename,
         string $uploadedFilename,
+        string $slug,
         int $position,
         string $hash,
         ?CustomerUser $customerUser = null,
@@ -82,7 +84,8 @@ class CustomerUploadedFile extends AbstractUploadedFile
         $this->entityId = $entityId;
         $this->type = $type;
         $this->setTemporaryFilename($temporaryFilename);
-        $this->setNameAndSlug($uploadedFilename);
+        $this->name = $uploadedFilename;
+        $this->slug = $slug;
         $this->position = $position;
         $this->hash = $hash;
         $this->customerUser = $customerUser;

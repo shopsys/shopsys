@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade as BaseUpl
 
 /**
  * @property \App\Component\UploadedFile\UploadedFileRepository $uploadedFileRepository
- * @method __construct(\League\Flysystem\FilesystemOperator $filesystem, \Doctrine\ORM\EntityManagerInterface $em, \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig, \App\Component\UploadedFile\UploadedFileRepository $uploadedFileRepository, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator $uploadedFileLocator, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFactory $uploadedFileFactory, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRelationFactory $uploadedFileRelationFactory, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRelationRepository $uploadedFileRelationRepository)
+ * @method __construct(\League\Flysystem\FilesystemOperator $filesystem, \Doctrine\ORM\EntityManagerInterface $em, \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper, \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfig $uploadedFileConfig, \App\Component\UploadedFile\UploadedFileRepository $uploadedFileRepository, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator $uploadedFileLocator, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFactory $uploadedFileFactory, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRelationFactory $uploadedFileRelationFactory, \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRelationRepository $uploadedFileRelationRepository)
  */
 class UploadedFileFacade extends BaseUploadedFileFacade
 {

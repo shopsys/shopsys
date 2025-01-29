@@ -10,7 +10,6 @@ use Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface;
 use Shopsys\FrameworkBundle\Component\FileUpload\Exception\InvalidFileKeyException;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileForUpload;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileNamingConvention;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
 
 /**
  * @ORM\MappedSuperclass
@@ -101,17 +100,6 @@ abstract class AbstractUploadedFile implements EntityFileUploadInterface, Upload
         }
 
         $this->temporaryFilename = '';
-    }
-
-    /**
-     * @param string $temporaryFilename
-     */
-    public function setNameAndSlug(string $temporaryFilename): void
-    {
-        $filenameWithoutExtension = pathinfo($temporaryFilename, PATHINFO_FILENAME);
-
-        $this->setName($filenameWithoutExtension);
-        $this->setSlug(TransformString::stringToFriendlyUrlSlug($filenameWithoutExtension));
     }
 
     /**

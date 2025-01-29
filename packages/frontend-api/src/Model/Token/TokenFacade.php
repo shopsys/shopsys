@@ -39,11 +39,13 @@ class TokenFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
      * @param \Shopsys\FrontendApiBundle\Model\Token\JwtConfigurationProvider $jwtConfigurationProvider
+     * @param \Shopsys\FrontendApiBundle\Model\Token\TokenCustomerUserTransformer $tokenCustomerUserTransformer
      */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly CustomerUserFacade $customerUserFacade,
         protected readonly JwtConfigurationProvider $jwtConfigurationProvider,
+        protected readonly TokenCustomerUserTransformer $tokenCustomerUserTransformer,
     ) {
     }
 
@@ -62,7 +64,7 @@ class TokenFacade
             ->withClaim(FrontendApiUser::CLAIM_DEVICE_ID, $deviceId)
             ->withClaim(FrontendApiUser::CLAIM_ADMINISTRATOR_UUID, $administrator?->getUuid());
 
-        foreach (TokenCustomerUserTransformer::transform($customerUser) as $key => $value) {
+        foreach ($this->tokenCustomerUserTransformer->transform($customerUser) as $key => $value) {
             $tokenBuilder = $tokenBuilder->withClaim($key, $value);
         }
 

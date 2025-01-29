@@ -11,10 +11,11 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\FormTypeInterface;
 
 class ProductCategoryFilter implements AdvancedSearchFilterInterface
 {
-    public const NAME = 'productCategory';
+    public const string NAME = 'productCategory';
 
     protected ?Localization $localization = null;
 
@@ -40,7 +41,7 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getAllowedOperators()
+    public function getAllowedOperators(): array
     {
         return [
             self::OPERATOR_IS,
@@ -51,7 +52,7 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getValueFormType()
+    public function getValueFormType(): FormTypeInterface|string
     {
         return ChoiceType::class;
     }
@@ -59,7 +60,7 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getValueFormOptions()
+    public function getValueFormOptions(): array
     {
         return [
             'expanded' => false,
@@ -78,7 +79,7 @@ class ProductCategoryFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData)
+    public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
         $isCategory = [];
         $isNotCategory = [];

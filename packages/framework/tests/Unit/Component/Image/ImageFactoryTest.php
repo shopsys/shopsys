@@ -18,6 +18,7 @@ use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Image\ImageFactory;
 use Shopsys\FrameworkBundle\Component\Image\ImageRepository;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
 class ImageFactoryTest extends TestCase
@@ -76,6 +77,7 @@ class ImageFactoryTest extends TestCase
         $imageRepositoryMock = $this->createMock(ImageRepository::class);
         $customerUploadedFileRepositoryMock = $this->createMock(CustomerUploadedFileRepository::class);
         $inMemoryCache = new InMemoryCache();
+        $transformStringHelper = new TransformStringHelper();
 
         return new FileUpload(
             'temporaryDir',
@@ -87,6 +89,7 @@ class ImageFactoryTest extends TestCase
             $imageRepositoryMock,
             $customerUploadedFileRepositoryMock,
             $inMemoryCache,
+            $transformStringHelper,
         );
     }
 }

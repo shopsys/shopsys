@@ -360,9 +360,6 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig:
         alias: App\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig
 
-    Shopsys\FrameworkBundle\Model\Product\Filter\BrandFilterChoiceRepository:
-        alias: App\Model\Product\Filter\BrandFilterChoiceRepository
-
     Shopsys\FrameworkBundle\Model\Product\Filter\FlagFilterChoiceRepository:
         alias: App\Model\Product\Filter\FlagFilterChoiceRepository
 

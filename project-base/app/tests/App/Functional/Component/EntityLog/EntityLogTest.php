@@ -91,6 +91,11 @@ class EntityLogTest extends TransactionFunctionalTestCase
      */
     private Localization $localization;
 
+    /**
+     * @inject
+     */
+    private EntityLogFacade $entityLogFacade;
+
     public function testCreateEntity(): void
     {
         $order = $this->getNewOrder();
@@ -100,7 +105,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $this->assertCount(3, $orderFromDb->getItems());
 
         $logsQueryBuilder = $this->entityLogRepository->getQueryBuilderByEntityNameAndEntityId(
-            EntityLogFacade::getEntityNameByEntity($orderFromDb),
+            $this->entityLogFacade->getEntityNameByEntity($orderFromDb),
             $orderFromDb->getId(),
         );
 
@@ -131,7 +136,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $this->assertCount(3, $orderFromDb->getItems());
 
         $entityId = $orderFromDb->getId();
-        $entityName = EntityLogFacade::getEntityNameByEntity($orderFromDb);
+        $entityName = $this->entityLogFacade->getEntityNameByEntity($orderFromDb);
 
         $this->em->remove($orderFromDb);
         $this->em->flush();
@@ -156,7 +161,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $this->assertCount(3, $orderFromDb->getItems());
 
         $entityId = $orderFromDb->getId();
-        $entityName = EntityLogFacade::getEntityNameByEntity($orderFromDb);
+        $entityName = $this->entityLogFacade->getEntityNameByEntity($orderFromDb);
 
         $expectedOldCity = $orderFromDb->getCity();
         $expectedOldStatusName = $orderFromDb->getStatus()->getName($this->localization->getAdminLocale());
@@ -198,7 +203,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $orderFromDb = $this->orderRepository->getById($order->getId());
 
         $entityId = $orderFromDb->getId();
-        $entityName = EntityLogFacade::getEntityNameByEntity($orderFromDb);
+        $entityName = $this->entityLogFacade->getEntityNameByEntity($orderFromDb);
 
         $this->orderItemFacade->addProductToOrder($entityId, 72);
 
@@ -238,7 +243,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $orderFromDb = $this->orderRepository->getById($order->getId());
 
         $entityId = $orderFromDb->getId();
-        $entityName = EntityLogFacade::getEntityNameByEntity($orderFromDb);
+        $entityName = $this->entityLogFacade->getEntityNameByEntity($orderFromDb);
 
         $orderData = $this->orderDataFactory->createFromOrder($orderFromDb);
 

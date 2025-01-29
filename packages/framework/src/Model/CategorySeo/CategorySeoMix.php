@@ -92,25 +92,4 @@ class CategorySeoMix
     {
         $this->parameterValues[] = $parameterValue;
     }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter[] $parameters
-     * @return \Shopsys\FrameworkBundle\Model\CategorySeo\ChoseCategorySeoMixCombination
-     */
-    public function getChoseCategorySeoMixCombination(array $parameters): ChoseCategorySeoMixCombination
-    {
-        $parameterValueIdsByParameterIds = [];
-
-        foreach ($this->getParameterValues() as $index => $parameterValue) {
-            $parameterValueIdsByParameterIds[$parameters[$index]->getId()] = $parameterValue->getId();
-        }
-
-        return new ChoseCategorySeoMixCombination(
-            $this->getDomainId(),
-            $this->category->getId(),
-            $this->ordering,
-            $this->flag?->getId(),
-            $parameterValueIdsByParameterIds,
-        );
-    }
 }

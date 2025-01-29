@@ -8,7 +8,6 @@ use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
-use Shopsys\FrontendApiBundle\Component\Validation\PageSizeValidator;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class BlogArticlesQuery extends AbstractQuery
@@ -27,7 +26,7 @@ class BlogArticlesQuery extends AbstractQuery
      */
     public function blogArticlesQuery(Argument $argument)
     {
-        PageSizeValidator::checkMaxPageSize($argument);
+        $this->pageSizeValidator->checkMaxPageSize($argument);
         $onlyVisibleOnHomepage = $argument['onlyHomepageArticles'];
 
         $this->setDefaultFirstOffsetIfNecessary($argument);
@@ -45,7 +44,7 @@ class BlogArticlesQuery extends AbstractQuery
      */
     public function blogArticleByCategoryQuery(Argument $argument, BlogCategory $blogCategory)
     {
-        PageSizeValidator::checkMaxPageSize($argument);
+        $this->pageSizeValidator->checkMaxPageSize($argument);
         $onlyVisibleOnHomepage = $argument['onlyHomepageArticles'];
 
         $this->setDefaultFirstOffsetIfNecessary($argument);

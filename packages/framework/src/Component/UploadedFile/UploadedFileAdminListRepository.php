@@ -7,16 +7,19 @@ namespace Shopsys\FrameworkBundle\Component\UploadedFile;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 
 class UploadedFileAdminListRepository
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
      */
-    public function __construct(protected readonly EntityManagerInterface $em)
-    {
+    public function __construct(
+        protected readonly EntityManagerInterface $em,
+        protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
+    ) {
     }
 
     /**
@@ -42,7 +45,7 @@ class UploadedFileAdminListRepository
         QuickSearchFormData $quickSearchData,
     ): void {
         if ($quickSearchData->text !== null && $quickSearchData->text !== '') {
-            $querySearchText = DatabaseSearching::getFullTextLikeSearchString($quickSearchData->text);
+            $querySearchText = $this->databaseSearchingHelper->getFullTextLikeSearchString($quickSearchData->text);
 
             $queryBuilder
                 ->leftJoin('u.translations', 'ut_all')

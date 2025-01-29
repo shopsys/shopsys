@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Category;
 
-class CategoryNestedSetCalculator
+class CategoryNestedSetCalculatorHelper
 {
     /**
      * Calculates nested set values in the form usable in CategoryFacade::reorderByNestedSetValues() method
@@ -12,13 +12,13 @@ class CategoryNestedSetCalculator
      * @param array<int, int|null> $parentIdByCategoryId
      * @return array<int, array{id: int, parent_id: int|null, depth: int, left: int, right: int}>
      */
-    public static function calculateNestedSetFromAdjacencyList(array $parentIdByCategoryId): array
+    public function calculateNestedSetFromAdjacencyList(array $parentIdByCategoryId): array
     {
         $output = [];
         $count = 0;
         $lvl = -1;
 
-        self::calculate(null, $count, $lvl, null, $parentIdByCategoryId, $output);
+        $this->calculate(null, $count, $lvl, null, $parentIdByCategoryId, $output);
 
         return $output;
     }
@@ -31,7 +31,7 @@ class CategoryNestedSetCalculator
      * @param array<int, int|null> $parentIdByCategoryId
      * @param array<int, array{id: int|null, parent_id: int|null, depth: int, left: int, right: int}> $output
      */
-    protected static function calculate(
+    protected function calculate(
         ?int $root,
         int &$count,
         int $lvl,
@@ -41,7 +41,7 @@ class CategoryNestedSetCalculator
     ): void {
         $lft = $count++;
 
-        foreach (static::getChildren($parentIdByCategoryId, $root) as $id => $parentId) {
+        foreach ($this->getChildren($parentIdByCategoryId, $root) as $id => $parentId) {
             $depth = $lvl + 1;
             self::calculate($id, $count, $depth, $parentId, $parentIdByCategoryId, $output);
         }
@@ -64,7 +64,7 @@ class CategoryNestedSetCalculator
      * @param int|null $parentId
      * @return array<int, int|null>
      */
-    protected static function getChildren(array $parentIdByCategoryId, ?int $parentId): array
+    protected function getChildren(array $parentIdByCategoryId, ?int $parentId): array
     {
         return array_filter($parentIdByCategoryId, static function ($value) use ($parentId) {
             return $value === $parentId;

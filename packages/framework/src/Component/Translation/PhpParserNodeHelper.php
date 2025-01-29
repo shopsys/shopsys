@@ -13,21 +13,21 @@ use SplFileInfo;
 
 class PhpParserNodeHelper
 {
-    protected const TRANSLATOR_CLASS_FQN = '\Shopsys\FrameworkBundle\Component\Translation\Translator';
+    protected const string TRANSLATOR_CLASS_FQN = '\Shopsys\FrameworkBundle\Component\Translation\Translator';
 
     /**
      * @param \PhpParser\Node $node
      * @param \SplFileInfo $fileInfo
      * @return string
      */
-    public static function getConcatenatedStringValue(Node $node, SplFileInfo $fileInfo)
+    public function getConcatenatedStringValue(Node $node, SplFileInfo $fileInfo): string
     {
         if ($node instanceof String_) {
             return $node->value;
         }
 
         if ($node instanceof Concat) {
-            return self::getConcatenatedStringValue($node->left, $fileInfo) . self::getConcatenatedStringValue(
+            return $this->getConcatenatedStringValue($node->left, $fileInfo) . $this->getConcatenatedStringValue(
                 $node->right,
                 $fileInfo,
             );

@@ -12,7 +12,12 @@ interface UploadedFileInterface
     public function getFilename(): string;
 
     /**
-     * @param string $temporaryFilename
+     * @param mixed $name
      */
-    public function setNameAndSlug(string $temporaryFilename): void;
+    public function setName($name): void;
+
+    /**
+     * @param mixed $slug
+     */
+    public function setSlug($slug): void;
 }

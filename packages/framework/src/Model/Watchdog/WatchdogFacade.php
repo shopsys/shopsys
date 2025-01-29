@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Watchdog;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 
@@ -16,11 +16,13 @@ class WatchdogFacade
      * @param \Shopsys\FrameworkBundle\Model\Watchdog\WatchdogRepository $watchdogRepository
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Watchdog\WatchdogFactory $watchdogFactory
+     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
      */
     public function __construct(
         protected readonly WatchdogRepository $watchdogRepository,
         protected readonly EntityManagerInterface $em,
         protected readonly WatchdogFactory $watchdogFactory,
+        protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
     ) {
     }
 
@@ -89,7 +91,7 @@ class WatchdogFacade
                     OR
                     NORMALIZED(pt.name) LIKE NORMALIZED(:text)
                 )');
-            $querySearchText = DatabaseSearching::getFullTextLikeSearchString($quickSearchData->text);
+            $querySearchText = $this->databaseSearchingHelper->getFullTextLikeSearchString($quickSearchData->text);
             $queryBuilder->setParameter('text', $querySearchText);
         }
 
@@ -112,7 +114,7 @@ class WatchdogFacade
                 ->andWhere('(
                     NORMALIZED(w.email) LIKE NORMALIZED(:text)
                 )');
-            $querySearchText = DatabaseSearching::getFullTextLikeSearchString($quickSearchData->text);
+            $querySearchText = $this->databaseSearchingHelper->getFullTextLikeSearchString($quickSearchData->text);
             $queryBuilder->setParameter('text', $querySearchText);
         }
 

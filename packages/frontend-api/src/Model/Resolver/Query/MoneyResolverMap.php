@@ -16,9 +16,12 @@ class MoneyResolverMap extends ResolverMap
 {
     /**
      * @param \Symfony\Bundle\SecurityBundle\Security $security
+     * @param \Shopsys\FrontendApiBundle\Component\Price\MoneyFormatterHelper $moneyFormatterHelper
      */
-    public function __construct(protected readonly Security $security)
-    {
+    public function __construct(
+        protected readonly Security $security,
+        protected readonly MoneyFormatterHelper $moneyFormatterHelper,
+    ) {
     }
 
     /**
@@ -57,7 +60,7 @@ class MoneyResolverMap extends ResolverMap
     protected function serializeMoney(Money $money): string
     {
         if ($this->shouldShowAmount($money)) {
-            return MoneyFormatterHelper::formatWithMaxFractionDigits($money);
+            return $this->moneyFormatterHelper->formatWithMaxFractionDigits($money);
         }
 
         return HiddenMoney::HIDDEN_FORMAT;

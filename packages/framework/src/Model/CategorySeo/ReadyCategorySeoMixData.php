@@ -69,7 +69,7 @@ class ReadyCategorySeoMixData
     /**
      * @var string|null
      */
-    public $choseCategorySeoMixCombinationJson;
+    public $selectedCategorySeoMixCombinationJson;
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData

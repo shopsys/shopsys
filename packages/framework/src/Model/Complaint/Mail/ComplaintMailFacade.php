@@ -48,7 +48,7 @@ class ComplaintMailFacade
      */
     public function getMailTemplateByStatusAndDomainId(ComplaintStatus $complaintStatus, int $domainId): MailTemplate
     {
-        $templateName = ComplaintMail::getMailTemplateNameByStatus($complaintStatus);
+        $templateName = $this->complaintMail->getMailTemplateNameByStatus($complaintStatus);
 
         return $this->mailTemplateFacade->getWrappedWithGrapesJsBody($templateName, $domainId);
     }

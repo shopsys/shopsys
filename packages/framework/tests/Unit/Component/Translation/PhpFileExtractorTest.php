@@ -14,6 +14,7 @@ use PhpParser\PhpVersion;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Shopsys\FrameworkBundle\Component\Translation\PhpFileExtractorFactory;
+use Shopsys\FrameworkBundle\Component\Translation\PhpParserNodeHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use SplFileInfo;
 
@@ -72,7 +73,7 @@ class PhpFileExtractorTest extends TestCase
 
     private function getExtractor()
     {
-        $phpFileExtractorFactory = new PhpFileExtractorFactory($this->getDocParser());
+        $phpFileExtractorFactory = new PhpFileExtractorFactory($this->getDocParser(), new PhpParserNodeHelper());
 
         return $phpFileExtractorFactory->create();
     }

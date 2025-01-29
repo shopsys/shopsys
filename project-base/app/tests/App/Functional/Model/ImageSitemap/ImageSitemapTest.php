@@ -6,7 +6,7 @@ namespace Tests\App\Functional\Model\ImageSitemap;
 
 use Shopsys\FrameworkBundle\Component\DataFixture\DomainsForDataFixtureProvider;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\ImageSitemap\ImageSitemapFacade;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -28,6 +28,11 @@ class ImageSitemapTest extends ApplicationTestCase
      * @inject
      */
     private DomainsForDataFixtureProvider $domainsForDataFixtureProvider;
+
+    /**
+     * @inject
+     */
+    private TransformStringHelper $transformStringHelper;
 
     public function testCreateImageSitemapXml(): void
     {
@@ -56,8 +61,8 @@ class ImageSitemapTest extends ApplicationTestCase
     private function getExpectedXmlRegex(DomainConfig $domainConfig): string
     {
         $urlPattern = preg_quote($domainConfig->getUrl(), '~');
-        $television = TransformString::stringToFriendlyUrlSlug(t('Television', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale()));
-        $plasma = TransformString::stringToFriendlyUrlSlug(t('plasma', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale()));
+        $television = $this->transformStringHelper->stringToFriendlyUrlSlug(t('Television', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale()));
+        $plasma = $this->transformStringHelper->stringToFriendlyUrlSlug(t('plasma', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $domainConfig->getLocale()));
 
         return '~<url><loc>' . $urlPattern . '/' . $television . '-22-sencor-sle-22f46dm4-hello-kitty-' . $plasma . '</loc><image\:image><image\:loc>' . $urlPattern . '/content-test/images/product/22-sencor-sle-22f46dm4-hello-kitty_1\.jpg</image\:loc></image\:image></url>~';
     }

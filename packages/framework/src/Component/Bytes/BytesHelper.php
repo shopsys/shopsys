@@ -11,7 +11,7 @@ class BytesHelper
     /**
      * @return int
      */
-    public static function getPhpMemoryLimitInBytes(): int
+    public function getPhpMemoryLimitInBytes(): int
     {
         $memoryLimit = ini_get('memory_limit');
 
@@ -19,14 +19,14 @@ class BytesHelper
             return -1;
         }
 
-        return self::convertPhpStringByteDefinitionToBytes($memoryLimit);
+        return $this->convertPhpStringByteDefinitionToBytes($memoryLimit);
     }
 
     /**
      * @param string $memoryLimit
      * @return int
      */
-    public static function convertPhpStringByteDefinitionToBytes(string $memoryLimit): int
+    public function convertPhpStringByteDefinitionToBytes(string $memoryLimit): int
     {
         $memoryLimit = strtolower($memoryLimit);
         $max = ltrim($memoryLimit, '+');

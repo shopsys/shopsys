@@ -65,7 +65,7 @@ class ManyToOneRelatedEntityDataTypeResolver extends AbstractDataTypeResolver
         }
 
         return new ResolvedChanges(
-            EntityLogFacade::getEntityNameByEntity($oldValue ?? $newValue),
+            $this->entityLogFacade->getEntityNameByEntity($oldValue ?? $newValue),
             $oldReadableValue,
             $oldValue?->getId(),
             $newReadableValue,

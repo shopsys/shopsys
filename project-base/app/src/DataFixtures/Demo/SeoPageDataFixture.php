@@ -31,12 +31,14 @@ class SeoPageDataFixture extends AbstractReferenceFixture
      * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageRepository $seoPageRepository
      * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageFacade $seoPageFacade
      * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageDataFactory $seoPageDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageSlugTransformer $seoPageSlugTransformer
      */
     public function __construct(
         private readonly Domain $domain,
         private readonly SeoPageRepository $seoPageRepository,
         private readonly SeoPageFacade $seoPageFacade,
         private readonly SeoPageDataFactory $seoPageDataFactory,
+        private readonly SeoPageSlugTransformer $seoPageSlugTransformer,
     ) {
     }
 
@@ -111,7 +113,7 @@ class SeoPageDataFixture extends AbstractReferenceFixture
         $pageName = $seoPageData->pageName;
         $pageSlug = $seoPageData->pageSlugsIndexedByDomainId[$domainId];
 
-        $seoPageSlug = SeoPageSlugTransformer::transformFriendlyUrlToSeoPageSlug($pageSlug);
+        $seoPageSlug = $this->seoPageSlugTransformer->transformFriendlyUrlToSeoPageSlug($pageSlug);
 
         if ($seoPageSlug === SeoPage::SEO_PAGE_HOMEPAGE_SLUG || $seoPageId === null) {
             $canonicalUrl = $domainConfig->getUrl();

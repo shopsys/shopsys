@@ -5,19 +5,28 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\AdvancedSearchOrder\Filter;
 
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterOperatorNotFoundException;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormTypeInterface;
 
 class OrderLastNameFilter implements AdvancedSearchFilterInterface
 {
-    public const NAME = 'customerLastName';
+    public const string NAME = 'customerLastName';
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
+     */
+    public function __construct(
+        protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
+    ) {
+    }
 
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getName(): string
     {
         return self::NAME;
     }
@@ -25,7 +34,7 @@ class OrderLastNameFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getAllowedOperators()
+    public function getAllowedOperators(): array
     {
         return [
             self::OPERATOR_CONTAINS,
@@ -36,7 +45,7 @@ class OrderLastNameFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getValueFormType()
+    public function getValueFormType(): FormTypeInterface|string
     {
         return TextType::class;
     }
@@ -44,7 +53,7 @@ class OrderLastNameFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function getValueFormOptions()
+    public function getValueFormOptions(): array
     {
         return [];
     }
@@ -52,13 +61,13 @@ class OrderLastNameFilter implements AdvancedSearchFilterInterface
     /**
      * {@inheritdoc}
      */
-    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData)
+    public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {
             if ($ruleData->value === null || $ruleData->value === '') {
                 $searchValue = '%';
             } else {
-                $searchValue = DatabaseSearching::getLikeSearchString($ruleData->value) . '%';
+                $searchValue = $this->databaseSearchingHelper->getLikeSearchString($ruleData->value) . '%';
             }
             $dqlOperator = $this->getContainsDqlOperator($ruleData->operator);
             $parameterName = 'lastName_' . $index;
@@ -73,7 +82,7 @@ class OrderLastNameFilter implements AdvancedSearchFilterInterface
      * @param string $operator
      * @return string
      */
-    protected function getContainsDqlOperator($operator)
+    protected function getContainsDqlOperator(string $operator): string
     {
         switch ($operator) {
             case self::OPERATOR_CONTAINS:

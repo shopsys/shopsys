@@ -14,10 +14,12 @@ class FlagRepository
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository $flagRepository
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper
      */
     public function __construct(
         protected readonly BaseFlagRepository $flagRepository,
         protected readonly Domain $domain,
+        protected readonly OrderByCollationHelper $orderByCollationHelper,
     ) {
     }
 
@@ -31,7 +33,7 @@ class FlagRepository
             ->addSelect('ft')
             ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
             ->where('ft.name IN (:flagNames)')
-            ->orderBy(OrderByCollationHelper::createOrderByForLocale('ft.name', $this->domain->getLocale()), 'asc')
+            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('ft.name', $this->domain->getLocale()), 'asc')
             ->setParameter('flagNames', $flagNames)
             ->setParameter('locale', $this->domain->getLocale());
 

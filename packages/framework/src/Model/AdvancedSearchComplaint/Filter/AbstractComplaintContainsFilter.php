@@ -5,13 +5,21 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\AdvancedSearchComplaint\Filter;
 
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchFilterInterface;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Exception\AdvancedSearchFilterOperatorNotFoundException;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 abstract class AbstractComplaintContainsFilter implements AdvancedSearchFilterInterface
 {
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
+     */
+    public function __construct(
+        protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
+    ) {
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -52,13 +60,13 @@ abstract class AbstractComplaintContainsFilter implements AdvancedSearchFilterIn
     /**
      * {@inheritdoc}
      */
-    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData): void
+    public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
         foreach ($rulesData as $index => $ruleData) {
             if ($ruleData->value === null || $ruleData->value === '') {
                 $searchValue = '%';
             } else {
-                $searchValue = DatabaseSearching::getFullTextLikeSearchString($ruleData->value);
+                $searchValue = $this->databaseSearchingHelper->getFullTextLikeSearchString($ruleData->value);
             }
             $dqlOperator = $this->getContainsDqlOperator($ruleData->operator);
             $parameterName = $this->getFieldName() . '_' . $index;

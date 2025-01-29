@@ -6,7 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Inquiry;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 
 class InquiryFacade
@@ -15,11 +15,13 @@ class InquiryFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Inquiry\InquiryRepository $inquiryRepository
      * @param \Shopsys\FrameworkBundle\Model\Inquiry\InquiryFactory $inquiryFactory
+     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly InquiryRepository $inquiryRepository,
         protected readonly InquiryFactory $inquiryFactory,
+        protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
     ) {
     }
 
@@ -74,7 +76,7 @@ class InquiryFacade
                     OR
                     NORMALIZED(i.email) LIKE NORMALIZED(:text)
                 )');
-            $querySearchText = DatabaseSearching::getFullTextLikeSearchString($quickSearchData->text);
+            $querySearchText = $this->databaseSearchingHelper->getFullTextLikeSearchString($quickSearchData->text);
             $queryBuilder->setParameter('text', $querySearchText);
         }
 

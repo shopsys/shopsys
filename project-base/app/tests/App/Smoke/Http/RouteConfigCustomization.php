@@ -347,7 +347,7 @@ class RouteConfigCustomization
             ->customizeByRouteName('admin_categoryseo_readycombination', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Check route with data-fixture parameters.')
                     ->setParameter('categoryId', 8)
-                    ->setParameter('choseCategorySeoMixCombinationJson', '{"domainId":1,"categoryId":8,"flagId":1,"ordering":null,"parameterValueIdsByParameterIds":{"38":75,"40":79,"37":73,"39":77}}');
+                    ->setParameter('selectedCategorySeoMixCombinationJson', '{"domainId":1,"categoryId":8,"flagId":1,"ordering":null,"parameterValueIdsByParameterIds":{"38":75,"40":79,"37":73,"39":77}}');
             })
             ->customizeByRouteName('admin_unused_friendly_url_delete', function (RouteConfig $config) {
                 $config->changeDefaultRequestDataSet('Unused friendly URL may be deleted only when there is any and CSRF token is provided')

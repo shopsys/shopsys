@@ -6,6 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\CategorySeo\Exception;
 
 use Exception;
 
-class ChoseCategorySeoMixCombinationIsNotValidException extends Exception
+class SelectedCategorySeoMixCombinationIsNotValidException extends Exception
 {
 }

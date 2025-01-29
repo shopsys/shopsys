@@ -15,7 +15,7 @@ use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\EntityIdentifierException;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -37,6 +37,7 @@ class ImageFacade
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Shopsys\FrameworkBundle\Component\Cdn\CdnFacade $cdnFacade
      * @param \Symfony\Contracts\Cache\CacheInterface|\Symfony\Component\Cache\Adapter\AdapterInterface $cache
+     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
      */
     public function __construct(
         protected readonly string $imageUrlPrefix,
@@ -51,6 +52,7 @@ class ImageFacade
         protected readonly LoggerInterface $logger,
         protected readonly CdnFacade $cdnFacade,
         protected readonly CacheInterface|AdapterInterface $cache,
+        protected readonly TransformStringHelper $transformStringHelper,
     ) {
     }
 
@@ -339,6 +341,6 @@ class ImageFacade
             return null;
         }
 
-        return TransformString::stringToFriendlyUrlSlug($seoEntityName);
+        return $this->transformStringHelper->stringToFriendlyUrlSlug($seoEntityName);
     }
 }

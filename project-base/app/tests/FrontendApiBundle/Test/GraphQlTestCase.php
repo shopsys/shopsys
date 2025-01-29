@@ -41,6 +41,11 @@ abstract class GraphQlTestCase extends ApplicationTestCase
      */
     protected VatFacade $vatFacade;
 
+    /**
+     * @inject
+     */
+    protected MoneyFormatterHelper $moneyFormatterHelper;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -334,9 +339,9 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         $price = $this->getConvertedPriceToDomainDefaultCurrency($priceWithoutVat, $vat, $quantity);
 
         return [
-            'priceWithVat' => MoneyFormatterHelper::formatWithMaxFractionDigits($price->getPriceWithVat()),
-            'priceWithoutVat' => MoneyFormatterHelper::formatWithMaxFractionDigits($price->getPriceWithoutVat()),
-            'vatAmount' => MoneyFormatterHelper::formatWithMaxFractionDigits($price->getVatAmount()),
+            'priceWithVat' => $this->moneyFormatterHelper->formatWithMaxFractionDigits($price->getPriceWithVat()),
+            'priceWithoutVat' => $this->moneyFormatterHelper->formatWithMaxFractionDigits($price->getPriceWithoutVat()),
+            'vatAmount' => $this->moneyFormatterHelper->formatWithMaxFractionDigits($price->getVatAmount()),
         ];
     }
 
@@ -354,9 +359,9 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         $price = $this->getConvertedPriceToDomainDefaultCurrency($priceWithoutVat, $vat, $quantity);
 
         return '{
-            priceWithVat: "' . MoneyFormatterHelper::formatWithMaxFractionDigits($price->getPriceWithVat()) . '",
-            priceWithoutVat: "' . MoneyFormatterHelper::formatWithMaxFractionDigits($price->getPriceWithoutVat()) . '",
-            vatAmount: "' . MoneyFormatterHelper::formatWithMaxFractionDigits($price->getVatAmount()) . '"
+            priceWithVat: "' . $this->moneyFormatterHelper->formatWithMaxFractionDigits($price->getPriceWithVat()) . '",
+            priceWithoutVat: "' . $this->moneyFormatterHelper->formatWithMaxFractionDigits($price->getPriceWithoutVat()) . '",
+            vatAmount: "' . $this->moneyFormatterHelper->formatWithMaxFractionDigits($price->getVatAmount()) . '"
         }';
     }
 
@@ -373,7 +378,7 @@ abstract class GraphQlTestCase extends ApplicationTestCase
             Domain::FIRST_DOMAIN_ID,
         );
 
-        return MoneyFormatterHelper::formatWithMaxFractionDigits($money);
+        return $this->moneyFormatterHelper->formatWithMaxFractionDigits($money);
     }
 
     /**

@@ -11,8 +11,8 @@ use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Form\Admin\QuickSearch\QuickSearchFormData;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Exception\BlogArticleNotFoundException;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
@@ -22,10 +22,14 @@ class BlogArticleRepository
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
+     * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly Domain $domain,
+        protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
+        protected readonly TransformStringHelper $transformStringHelper,
     ) {
     }
 
@@ -115,9 +119,9 @@ class BlogArticleRepository
             $queryBuilder = $this->getBlogArticlesByDomainIdAndLocaleQueryBuilderIfInBlogCategory($domainId, $locale);
         }
 
-        if (TransformString::emptyToNull($searchData->text) !== null) {
+        if ($this->transformStringHelper->emptyToNull($searchData->text) !== null) {
             $queryBuilder->andWhere('NORMALIZED(bat.name) LIKE NORMALIZED(:searchData)')
-                ->setParameter('searchData', DatabaseSearching::getFullTextLikeSearchString($searchData->text));
+                ->setParameter('searchData', $this->databaseSearchingHelper->getFullTextLikeSearchString($searchData->text));
         }
 
         return $queryBuilder;

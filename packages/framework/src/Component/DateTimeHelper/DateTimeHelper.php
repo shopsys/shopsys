@@ -41,7 +41,7 @@ class DateTimeHelper
      * @param \DateTimeZone $dateTimeZone
      * @return \DateTimeImmutable
      */
-    public static function getCurrentRoundedTimeForIntervalAndTimezone(
+    public function getCurrentRoundedTimeForIntervalAndTimezone(
         int $intervalInMinutes,
         DateTimeZone $dateTimeZone,
     ): DateTimeImmutable {
@@ -56,7 +56,7 @@ class DateTimeHelper
      * @param string $hoursAndMinutes
      * @return \DateTimeImmutable
      */
-    public static function createDateTimeFromTime(string $hoursAndMinutes): DateTimeImmutable
+    public function createDateTimeFromTime(string $hoursAndMinutes): DateTimeImmutable
     {
         return new DateTimeImmutable(sprintf('1970-01-01 %s:00', $hoursAndMinutes));
     }

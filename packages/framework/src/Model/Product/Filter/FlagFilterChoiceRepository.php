@@ -17,9 +17,11 @@ class FlagFilterChoiceRepository
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
+     * @param \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper
      */
     public function __construct(
         protected readonly ProductRepository $productRepository,
+        protected readonly OrderByCollationHelper $orderByCollationHelper,
     ) {
     }
 
@@ -30,8 +32,12 @@ class FlagFilterChoiceRepository
      * @param \Shopsys\FrameworkBundle\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
-    public function getFlagFilterChoicesInCategory($domainId, PricingGroup $pricingGroup, $locale, Category $category)
-    {
+    public function getFlagFilterChoicesInCategory(
+        int $domainId,
+        PricingGroup $pricingGroup,
+        string $locale,
+        Category $category,
+    ): array {
         $productsQueryBuilder = $this->productRepository->getListableInCategoryQueryBuilder(
             $domainId,
             $pricingGroup,
@@ -86,8 +92,12 @@ class FlagFilterChoiceRepository
      * @param string|null $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
-    public function getFlagFilterChoicesForSearch($domainId, PricingGroup $pricingGroup, $locale, $searchText)
-    {
+    public function getFlagFilterChoicesForSearch(
+        int $domainId,
+        PricingGroup $pricingGroup,
+        string $locale,
+        ?string $searchText,
+    ): array {
         $productsQueryBuilder = $this->productRepository
             ->getListableBySearchTextQueryBuilder($domainId, $pricingGroup, $locale, $searchText);
 
@@ -99,7 +109,7 @@ class FlagFilterChoiceRepository
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Flag\Flag[]
      */
-    protected function getVisibleFlagsByProductsQueryBuilder(QueryBuilder $productsQueryBuilder, $locale)
+    protected function getVisibleFlagsByProductsQueryBuilder(QueryBuilder $productsQueryBuilder, string $locale): array
     {
         $clonedProductsQueryBuilder = clone $productsQueryBuilder;
 
@@ -116,7 +126,7 @@ class FlagFilterChoiceRepository
             ->from(Flag::class, 'f')
             ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
             ->andWhere($flagsQueryBuilder->expr()->exists($clonedProductsQueryBuilder))
-            ->orderBy(OrderByCollationHelper::createOrderByForLocale('ft.name', $locale), 'asc')
+            ->orderBy($this->orderByCollationHelper->createOrderByForLocale('ft.name', $locale), 'asc')
             ->setParameter('locale', $locale);
 
         foreach ($clonedProductsQueryBuilder->getParameters() as $parameter) {

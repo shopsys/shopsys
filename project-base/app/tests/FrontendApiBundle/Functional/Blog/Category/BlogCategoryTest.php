@@ -7,7 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Blog\Category;
 use App\DataFixtures\Demo\BlogArticleDataFixture;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -26,6 +26,11 @@ class BlogCategoryTest extends GraphQlTestCase
      * @inject
      */
     protected UrlGeneratorInterface $urlGenerator;
+
+    /**
+     * @inject
+     */
+    private TransformStringHelper $transformStringHelper;
 
     protected function setUp(): void
     {
@@ -76,7 +81,7 @@ class BlogCategoryTest extends GraphQlTestCase
     public function testGetBlogCategoryByUrlSlug(): void
     {
         $firstSubsectionName = t('First subsection %locale%', ['%locale%' => $this->getFirstDomainLocale()], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
-        $firstSubsectionSlug = TransformString::stringToFriendlyUrlSlug($firstSubsectionName);
+        $firstSubsectionSlug = $this->transformStringHelper->stringToFriendlyUrlSlug($firstSubsectionName);
 
         $query = '
             query {

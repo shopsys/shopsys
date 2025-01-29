@@ -6,42 +6,17 @@ namespace App\FrontendApi\Model\Category;
 
 use App\Model\Category\LinkedCategory\LinkedCategory;
 use Doctrine\ORM\Query\Expr\Join;
-use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrontendApiBundle\Model\Category\CategoryRepository as BaseCategoryRepository;
 
 /**
  * @property \App\Model\Category\CategoryRepository $categoryRepository
- * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Category\CategoryRepository $categoryRepository)
  * @method \App\Model\Category\Category[][] getVisibleCategoriesByIds(int[][] $categoriesIds, \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Category\CategoryRepository $categoryRepository, \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper)
+ * @method \App\Model\Category\Category[] getVisibleCategoriesBySearchText(string $searchText, string $locale, int $domainId, int $offset, int $limit)
  */
 class CategoryRepository extends BaseCategoryRepository
 {
-    /**
-     * @param string $searchText
-     * @param string $locale
-     * @param int $domainId
-     * @param int $offset
-     * @param int $limit
-     * @return \App\Model\Category\Category[]
-     */
-    public function getVisibleCategoriesBySearchText(
-        string $searchText,
-        string $locale,
-        int $domainId,
-        int $offset,
-        int $limit,
-    ): array {
-        $queryBuilder = $this->getVisibleCategoriesBySearchTextQueryBuilder($searchText, $locale, $domainId);
-
-        $queryBuilder
-            ->orderBy(OrderByCollationHelper::createOrderByForLocale('ct.name', $locale))
-            ->setFirstResult($offset)
-            ->setMaxResults($limit);
-
-        return $queryBuilder->getQuery()->execute();
-    }
-
     /**
      * @param \App\Model\Category\Category[] $categories
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig

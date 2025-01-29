@@ -24,10 +24,12 @@ class CronModuleExecutor
     /**
      * @param \Shopsys\FrameworkBundle\Component\Cron\Config\CronConfig $cronConfig
      * @param \Monolog\Logger $logger
+     * @param \Shopsys\FrameworkBundle\Component\Bytes\BytesHelper $bytesHelper
      */
     public function __construct(
         protected readonly CronConfig $cronConfig,
         protected readonly Logger $logger,
+        protected readonly BytesHelper $bytesHelper,
     ) {
         $this->startedAt = new DateTimeImmutable('now');
     }
@@ -85,7 +87,7 @@ class CronModuleExecutor
         );
 
         $memoryUsage = memory_get_usage(true);
-        $memoryLimit = BytesHelper::getPhpMemoryLimitInBytes();
+        $memoryLimit = $this->bytesHelper->getPhpMemoryLimitInBytes();
 
         if ($memoryLimit !== -1 && $memoryUsage >= $memoryLimit * 0.9) {
             $this->logger->info('Cron was running out of memory, so it was put to sleep to prevent failure.');

@@ -31,15 +31,18 @@ class UploadedFile extends AbstractUploadedFile implements TranslatableInterface
     /**
      * @param string $temporaryFilename
      * @param string $uploadedFilename
+     * @param string $slug
      * @param array<string, string> $namesIndexedByLocale
      */
     public function __construct(
         string $temporaryFilename,
         string $uploadedFilename,
+        string $slug,
         array $namesIndexedByLocale,
     ) {
         $this->setTemporaryFilename($temporaryFilename);
-        $this->setNameAndSlug($uploadedFilename);
+        $this->name = $uploadedFilename;
+        $this->slug = $slug;
         $this->translations = new ArrayCollection();
         $this->setTranslatedNames($namesIndexedByLocale);
     }

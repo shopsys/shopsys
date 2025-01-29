@@ -6,7 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Complaint;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\FrameworkBundle\Component\String\DatabaseSearching;
+use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -15,9 +15,11 @@ class ComplaintRepository
 {
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
+        protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
     ) {
     }
 
@@ -191,6 +193,6 @@ class ComplaintRepository
                     'NORMALIZED(oi.catnum) LIKE NORMALIZED(:search)',
                 ),
             )
-            ->setParameter('search', DatabaseSearching::getFullTextLikeSearchString($search));
+            ->setParameter('search', $this->databaseSearchingHelper->getFullTextLikeSearchString($search));
     }
 }

@@ -16,8 +16,8 @@ use Twig\TwigFunction;
 
 class ImageExtension extends AbstractExtension
 {
-    protected const NOIMAGE_FILENAME = 'noimage.png';
-    protected const NON_HTML_ATTRIBUTES = [
+    protected const string NOIMAGE_FILENAME = 'noimage.png';
+    protected const array NON_HTML_ATTRIBUTES = [
         'type',
     ];
 
@@ -29,13 +29,15 @@ class ImageExtension extends AbstractExtension
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageLocator $imageLocator
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageFacade $imageFacade
      * @param \Twig\Environment $twigEnvironment
+     * @param \Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper $imageUrlWithSizeHelper
      */
     public function __construct(
-        $frontDesignImageUrlPrefix,
+        string $frontDesignImageUrlPrefix,
         protected readonly Domain $domain,
         protected readonly ImageLocator $imageLocator,
         protected readonly ImageFacade $imageFacade,
         protected readonly Environment $twigEnvironment,
+        protected readonly ImageUrlWithSizeHelper $imageUrlWithSizeHelper,
     ) {
         $this->frontDesignImageUrlPrefix = rtrim($frontDesignImageUrlPrefix, '/');
     }
@@ -43,7 +45,7 @@ class ImageExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFunction[]
      */
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('image', $this->getImageHtml(...), ['is_safe' => ['html']]),
@@ -51,11 +53,11 @@ class ImageExtension extends AbstractExtension
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image|object $imageOrEntity
+     * @param object|\Shopsys\FrameworkBundle\Component\Image\Image $imageOrEntity
      * @param string|null $type
      * @return bool
      */
-    public function imageExists($imageOrEntity, ?string $type = null): bool
+    public function imageExists(object $imageOrEntity, ?string $type = null): bool
     {
         try {
             $image = $this->imageFacade->getImageByObject($imageOrEntity, $type);
@@ -71,7 +73,7 @@ class ImageExtension extends AbstractExtension
      * @param array $attributes
      * @return string
      */
-    protected function getImageUrl($imageOrEntity, array $attributes): string
+    protected function getImageUrl(object $imageOrEntity, array $attributes): string
     {
         $width = null;
         $height = null;
@@ -85,7 +87,7 @@ class ImageExtension extends AbstractExtension
         }
 
         try {
-            return ImageUrlWithSizeHelper::limitSizeInImageUrl($this->imageFacade->getImageUrl(
+            return $this->imageUrlWithSizeHelper->limitSizeInImageUrl($this->imageFacade->getImageUrl(
                 $this->domain->getCurrentDomainConfig(),
                 $imageOrEntity,
                 $attributes['type'],
@@ -100,7 +102,7 @@ class ImageExtension extends AbstractExtension
      * @param array $attributes
      * @return string
      */
-    public function getImageHtml($imageOrEntity, array $attributes = [])
+    public function getImageHtml(object $imageOrEntity, array $attributes = []): string
     {
         $this->preventDefault($attributes);
 

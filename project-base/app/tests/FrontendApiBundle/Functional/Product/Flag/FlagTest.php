@@ -7,7 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Product\Flag;
 use App\DataFixtures\Demo\FlagDataFixture;
 use App\Model\Product\Flag\Flag;
 use App\Model\Product\Flag\FlagFacade;
-use Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorter;
+use Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorterHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -17,12 +17,17 @@ class FlagTest extends GraphQlTestCase
     /**
      * @inject
      */
-    protected UrlGeneratorInterface $urlGenerator;
+    private UrlGeneratorInterface $urlGenerator;
 
     /**
      * @inject
      */
     protected FlagFacade $flagFacade;
+
+    /**
+     * @inject
+     */
+    private ArraySorterHelper $arraySorterHelper;
 
     public function testFlagByUuid(): void
     {
@@ -96,7 +101,7 @@ class FlagTest extends GraphQlTestCase
             ],
         ];
 
-        ArraySorter::sortArrayAlphabeticallyByValue('name', $products, $this->getLocaleForFirstDomain());
+        $this->arraySorterHelper->sortArrayAlphabeticallyByValue('name', $products, $this->getLocaleForFirstDomain());
 
         $productsWithNodes = [];
 

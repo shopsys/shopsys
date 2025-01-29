@@ -6,20 +6,30 @@ namespace Tests\FrontendApiBundle\Functional\Category;
 
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\Model\Category\Category;
-use Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorter;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorterHelper;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class CategoryTest extends GraphQlTestCase
 {
-    protected Category $category;
+    /**
+     * @inject
+     */
+    private ArraySorterHelper $arraySorterHelper;
+
+    private Category $category;
 
     /**
      * @inject
      */
     protected UrlGeneratorInterface $urlGenerator;
+
+    /**
+     * @inject
+     */
+    private TransformStringHelper $transformStringHelper;
 
     protected function setUp(): void
     {
@@ -62,10 +72,10 @@ class CategoryTest extends GraphQlTestCase
             ],
         ];
 
-        ArraySorter::sortArrayAlphabeticallyByValue('name', $readyCategorySeoMixLinks, $this->getLocaleForFirstDomain());
+        $this->arraySorterHelper->sortArrayAlphabeticallyByValue('name', $readyCategorySeoMixLinks, $this->getLocaleForFirstDomain());
 
         $electronicsName = t('Electronics', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
-        $electronicsSlug = '/' . TransformString::stringToFriendlyUrlSlug($electronicsName);
+        $electronicsSlug = '/' . $this->transformStringHelper->stringToFriendlyUrlSlug($electronicsName);
 
         $this->assertSame($electronicsName, $responseData['name']);
         $this->assertSame(t('Our electronics include devices used for entertainment (flat screen TVs, DVD players, DVD movies, iPods, video games, remote control cars, etc.), communications (telephones, cell phones, email-capable laptops, etc.) and home office activities (e.g., desktop computers, printers, paper shredders, etc.).', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()), $responseData['description']);

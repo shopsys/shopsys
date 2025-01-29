@@ -19,7 +19,7 @@ use App\Model\Product\Product;
 use DateTime;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Component\Xml\XmlNormalizer;
+use Shopsys\FrameworkBundle\Component\Xml\XmlNormalizerHelper;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintData;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintItem;
@@ -50,6 +50,11 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
      * @inject
      */
     private Environment $twigEnvironment;
+
+    /**
+     * @inject
+     */
+    private XmlNormalizerHelper $xmlNormalizerHelper;
 
     public function testExportXml(): void
     {
@@ -92,7 +97,7 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
             'watchdogs' => [$watchdog],
         ]);
 
-        $generatedXml = XmlNormalizer::normalizeXml($generatedXml);
+        $generatedXml = $this->xmlNormalizerHelper->normalizeXml($generatedXml);
 
         $this->assertXmlStringEqualsXmlFile(__DIR__ . '/Resources/' . self::EXPECTED_XML_FILE_NAME, $generatedXml);
     }

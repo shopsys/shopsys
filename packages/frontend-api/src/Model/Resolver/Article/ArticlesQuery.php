@@ -8,7 +8,6 @@ use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleElasticsearchFacade;
-use Shopsys\FrontendApiBundle\Component\Validation\PageSizeValidator;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class ArticlesQuery extends AbstractQuery
@@ -30,7 +29,7 @@ class ArticlesQuery extends AbstractQuery
      */
     public function articlesQuery(Argument $argument, array $placements)
     {
-        PageSizeValidator::checkMaxPageSize($argument);
+        $this->pageSizeValidator->checkMaxPageSize($argument);
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
         $paginator = new Paginator(function ($offset, $limit) use ($placements) {

@@ -7,7 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Brand;
 use Doctrine\ORM\Mapping as ORM;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 
 /**
  * @ORM\Table(name="brand_translations")
@@ -41,6 +41,6 @@ class BrandTranslation extends AbstractTranslation
      */
     public function setDescription($description)
     {
-        $this->description = TransformString::getTrimmedStringOrNullOnEmpty($description);
+        $this->description = TransformStringHelper::getTrimmedStringOrNullOnEmpty($description);
     }
 }

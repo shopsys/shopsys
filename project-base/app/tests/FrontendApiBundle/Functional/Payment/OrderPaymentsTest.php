@@ -12,7 +12,6 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
-use Shopsys\FrontendApiBundle\Component\Price\MoneyFormatterHelper;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class OrderPaymentsTest extends GraphQlTestCase
@@ -38,7 +37,7 @@ class OrderPaymentsTest extends GraphQlTestCase
         $orderPaymentsResponse = $this->getResponseDataForGraphQlType($response, 'orderPayments');
 
         foreach ($orderPaymentsResponse['availablePayments'] as $paymentData) {
-            $this->assertSame(MoneyFormatterHelper::formatWithMaxFractionDigits(Money::zero()), $paymentData['price']['priceWithoutVat']);
+            $this->assertSame($this->moneyFormatterHelper->formatWithMaxFractionDigits(Money::zero()), $paymentData['price']['priceWithoutVat']);
         }
     }
 

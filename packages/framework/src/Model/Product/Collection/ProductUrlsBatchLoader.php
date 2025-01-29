@@ -19,10 +19,12 @@ class ProductUrlsBatchLoader
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Collection\ProductCollectionFacade $productCollectionFacade
      * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
+     * @param \Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper $imageUrlWithSizeHelper
      */
     public function __construct(
         protected readonly ProductCollectionFacade $productCollectionFacade,
         protected readonly InMemoryCache $inMemoryCache,
+        protected readonly ImageUrlWithSizeHelper $imageUrlWithSizeHelper,
     ) {
     }
 
@@ -88,7 +90,7 @@ class ProductUrlsBatchLoader
     {
         $imageUrl = $this->getProductImageUrl($product, $domainConfig);
 
-        return $imageUrl !== null ? ImageUrlWithSizeHelper::limitSizeInImageUrl($imageUrl) : null;
+        return $imageUrl !== null ? $this->imageUrlWithSizeHelper->limitSizeInImageUrl($imageUrl) : null;
     }
 
     /**

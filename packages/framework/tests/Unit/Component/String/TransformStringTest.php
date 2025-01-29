@@ -6,10 +6,19 @@ namespace Tests\FrameworkBundle\Unit\Component\String;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 
 class TransformStringTest extends TestCase
 {
+    private TransformStringHelper $transformStringHelper;
+
+    protected function setUp(): void
+    {
+        $this->transformStringHelper = new TransformStringHelper();
+
+        parent::setUp();
+    }
+
     public static function safeFilenameProvider()
     {
         return [
@@ -55,7 +64,7 @@ class TransformStringTest extends TestCase
     #[DataProvider('safeFilenameProvider')]
     public function testSafeFilename($actual, $expected)
     {
-        $this->assertSame($expected, TransformString::safeFilename($actual));
+        $this->assertSame($expected, $this->transformStringHelper->safeFilename($actual));
     }
 
     public static function stringToFriendlyUrlSlugProvider()
@@ -99,7 +108,7 @@ class TransformStringTest extends TestCase
     #[DataProvider('stringToFriendlyUrlSlugProvider')]
     public function testStringToFriendlyUrlSlug($actual, $expected)
     {
-        $this->assertSame($expected, TransformString::stringToFriendlyUrlSlug($actual));
+        $this->assertSame($expected, $this->transformStringHelper->stringToFriendlyUrlSlug($actual));
     }
 
     public static function stringToCamelCaseProvider()
@@ -151,7 +160,7 @@ class TransformStringTest extends TestCase
     #[DataProvider('stringToCamelCaseProvider')]
     public function testStringToCamelCase($actual, $expected)
     {
-        $this->assertSame($expected, TransformString::stringToCamelCase($actual));
+        $this->assertSame($expected, $this->transformStringHelper->stringToCamelCase($actual));
     }
 
     /**
@@ -194,7 +203,7 @@ class TransformStringTest extends TestCase
     #[DataProvider('stringTrailingSlashesProvider')]
     public function testAddOrRemoveTrailingSlashFromString(string $string, string $expected): void
     {
-        static::assertSame($expected, TransformString::addOrRemoveTrailingSlashFromString($string));
+        static::assertSame($expected, $this->transformStringHelper->addOrRemoveTrailingSlashFromString($string));
     }
 
     /**
@@ -204,7 +213,7 @@ class TransformStringTest extends TestCase
     #[DataProvider('trimmedStringOrNullProvider')]
     public function testGetTrimmedStringOrNullOnEmpty(?string $original, ?string $expected): void
     {
-        static::assertSame($expected, TransformString::getTrimmedStringOrNullOnEmpty($original));
+        static::assertSame($expected, $this->transformStringHelper->getTrimmedStringOrNullOnEmpty($original));
     }
 
     /**
@@ -247,7 +256,7 @@ class TransformStringTest extends TestCase
     #[DataProvider('convertHtmlToPlainTextDataProvider')]
     public function testConvertHtmlToPlainText(?string $htmlString, ?string $expected): void
     {
-        $this->assertSame($expected, TransformString::convertHtmlToPlainText($htmlString));
+        $this->assertSame($expected, TransformStringHelper::convertHtmlToPlainText($htmlString));
     }
 
     /**

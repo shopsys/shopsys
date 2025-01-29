@@ -65,7 +65,7 @@ class OrderCustomerIdFilter implements AdvancedSearchFilterInterface
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\AdvancedSearchRuleData[] $rulesData
      */
-    public function extendQueryBuilder(QueryBuilder $queryBuilder, $rulesData): void
+    public function extendQueryBuilder(QueryBuilder $queryBuilder, array $rulesData): void
     {
         $customerIds = [];
 

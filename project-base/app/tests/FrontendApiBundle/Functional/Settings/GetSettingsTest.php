@@ -6,7 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Settings;
 
 use App\Model\Order\Order;
 use PHPUnit\Framework\Attributes\DataProvider;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -18,6 +18,11 @@ final class GetSettingsTest extends GraphQlTestCase
      * @inject
      */
     private readonly SeoSettingFacade $seoSettingFacade;
+
+    /**
+     * @inject
+     */
+    private TransformStringHelper $transformStringHelper;
 
     /**
      * @param string|null $robotsTxtContent
@@ -73,9 +78,9 @@ CONTENT,
                 'robotsTxtContent' => $data,
             ],
             'maxAllowedPaymentTransactions' => Order::MAX_TRANSACTION_COUNT,
-            'termsAndConditionsArticleUrl' => '/' . TransformString::stringToFriendlyUrlSlug(t('Terms and conditions of department stores', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
-            'privacyPolicyArticleUrl' => '/' . TransformString::stringToFriendlyUrlSlug(t('Privacy policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
-            'userConsentPolicyArticleUrl' => '/' . TransformString::stringToFriendlyUrlSlug(t('User consent policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
+            'termsAndConditionsArticleUrl' => '/' . $this->transformStringHelper->stringToFriendlyUrlSlug(t('Terms and conditions of department stores', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
+            'privacyPolicyArticleUrl' => '/' . $this->transformStringHelper->stringToFriendlyUrlSlug(t('Privacy policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
+            'userConsentPolicyArticleUrl' => '/' . $this->transformStringHelper->stringToFriendlyUrlSlug(t('User consent policy', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)),
         ];
     }
 }

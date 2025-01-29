@@ -6,7 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Category;
 
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\Model\Category\Category;
-use Shopsys\FrameworkBundle\Component\String\TransformString;
+use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -36,6 +36,11 @@ class CategoryHierarchyTest extends GraphQlTestCase
 
     private Category $categoryBooks;
 
+    /**
+     * @inject
+     */
+    private TransformStringHelper $transformStringHelper;
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -57,7 +62,7 @@ class CategoryHierarchyTest extends GraphQlTestCase
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
 
-        $printersSlug = TransformString::stringToFriendlyUrlSlug($this->categoryPrinters->getName($firstDomainLocale));
+        $printersSlug = $this->transformStringHelper->stringToFriendlyUrlSlug($this->categoryPrinters->getName($firstDomainLocale));
 
         $response = $this->getResponseContentForGql(self::QUERY_FOLDER . '/SingleCategoryQuery.graphql', [
             'urlSlug' => $printersSlug,

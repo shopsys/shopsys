@@ -13,7 +13,7 @@ class TypehintHelper
      * @param \Roave\BetterReflection\Reflection\ReflectionProperty $reflectionProperty
      * @return string|null
      */
-    public static function getPropertyTypeFromTypehint(ReflectionProperty $reflectionProperty): ?string
+    public function getPropertyTypeFromTypehint(ReflectionProperty $reflectionProperty): ?string
     {
         $type = $reflectionProperty->getType();
 
