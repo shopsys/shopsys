@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\Collector;
 
 use PharIo\Version\Version;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Shopsys\FrameworkBundle\ShopsysFrameworkBundle;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,12 +35,20 @@ class ShopsysFrameworkDataCollector extends DataCollector
             'version' => ShopsysFrameworkBundle::VERSION,
             'docsVersion' => $this->resolveDocsVersion(ShopsysFrameworkBundle::VERSION),
             'domains' => $this->domain->getAll(),
-            'currentDomainId' => $this->domain->getId(),
-            'currentDomainName' => $this->domain->getName(),
-            'currentDomainLocale' => $this->domain->getLocale(),
             'systemTimeZone' => date_default_timezone_get(),
-            'displayTimeZone' => $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($this->domain->getId())->getName(),
         ];
+
+        try {
+            $this->data['currentDomainId'] = $this->domain->getId();
+            $this->data['currentDomainName'] = $this->domain->getName();
+            $this->data['currentDomainLocale'] = $this->domain->getLocale();
+            $this->data['displayTimeZone'] = $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($this->domain->getId())->getName();
+        } catch (NoDomainSelectedException) {
+            $this->data['currentDomainId'] = 0;
+            $this->data['currentDomainName'] = '-';
+            $this->data['currentDomainLocale'] = '-';
+            $this->data['displayTimeZone'] = '-';
+        }
     }
 
     /**

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Maintenance;
 
-use Shopsys\FrameworkBundle\Component\Redis\RedisClientFacade;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -13,16 +12,12 @@ use Twig\Environment;
 
 class MaintenanceModeSubscriber implements EventSubscriberInterface
 {
-    public const MAINTENANCE_KEY = 'maintenance';
-
-    protected ?bool $isMaintenanceMode = null;
-
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Redis\RedisClientFacade $redisClientFacade
+     * @param \Shopsys\FrameworkBundle\Component\Maintenance\MaintenanceModeFacade $maintenanceModeFacade
      * @param \Twig\Environment $twigEnvironment
      */
     public function __construct(
-        protected readonly RedisClientFacade $redisClientFacade,
+        protected readonly MaintenanceModeFacade $maintenanceModeFacade,
         protected readonly Environment $twigEnvironment,
     ) {
     }
@@ -32,11 +27,7 @@ class MaintenanceModeSubscriber implements EventSubscriberInterface
      */
     public function enableMaintenanceOnRequest(RequestEvent $requestEvent): void
     {
-        if ($this->isMaintenanceMode === null) {
-            $this->isMaintenanceMode = $this->redisClientFacade->contains(self::MAINTENANCE_KEY);
-        }
-
-        if ($this->isMaintenanceMode === false
+        if ($this->maintenanceModeFacade->isEnabled() === false
             || in_array(PHP_SAPI, ['cli', 'cli-server', 'phpdbg'], true)
         ) {
             return;
@@ -64,7 +55,7 @@ class MaintenanceModeSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            KernelEvents::REQUEST => ['enableMaintenanceOnRequest', 1000000],
+            KernelEvents::REQUEST => ['enableMaintenanceOnRequest', 10000],
         ];
     }
 }
