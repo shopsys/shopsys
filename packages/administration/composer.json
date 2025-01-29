@@ -33,6 +33,7 @@
         "symfony/http-kernel": "^6.4",
         "symfony/routing": "^6.4",
         "symfony/translation": "^6.4",
+        "symfony/ux-icons": "^2.22",
         "twig/twig": "^3.14.0"
     },
     "require-dev": {
