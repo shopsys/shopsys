@@ -18,10 +18,10 @@ export const PromoCodeInfo: FC<PromoCodeInfoProps> = ({ onRemovePromoCodeCallbac
             <div className="flex items-center font-bold" tid={TIDs.blocks_promocode_promocodeinfo_code}>
                 <LabelLink className="gap-3" onClick={onRemovePromoCodeCallback}>
                     {promoCode.code}
-                    <RemoveIcon className=" w-3" />
+                    <RemoveIcon className="w-3" />
                 </LabelLink>
             </div>
-            <p className="text-textDisabled ">
+            <p className="text-textDisabled">
                 {promoCode.type === TypePromoCodeTypeEnum.FreeTransportPayment
                     ? t('The discount was applied to the order transport and payment.')
                     : t(

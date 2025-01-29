@@ -27,7 +27,7 @@ export const ProductCompareButton: FC<ProductCompareButtonProps> = ({
             onClick={toggleProductInComparison}
         >
             {isProductInComparison ? (
-                <CompareFilledIcon className="size-6  text-activeIconFull" />
+                <CompareFilledIcon className="size-6 text-activeIconFull" />
             ) : (
                 <CompareIcon className="size-6" />
             )}

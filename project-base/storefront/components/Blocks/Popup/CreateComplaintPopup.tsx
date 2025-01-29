@@ -186,7 +186,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid,
                         </FormBlockWrapper>
                         <FormBlockWrapper>
                             <FormHeading>{t('Delivery address')}</FormHeading>
-                            <div className="flex w-full flex-col space-y-5 ">
+                            <div className="flex w-full flex-col space-y-5">
                                 <RadiobuttonGroup
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}

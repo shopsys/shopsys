@@ -66,11 +66,11 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                 {(inputType === 'checkbox' || inputType === 'radio') && (
                     <div
                         className={twMergeCustom(
-                            'flex size-5 min-w-5 border border-inputBorder bg-inputBackground p-[3px] transition group-hover:bg-inputBackgroundHovered ',
+                            'flex size-5 min-w-5 border border-inputBorder bg-inputBackground p-[3px] transition group-hover:bg-inputBackgroundHovered',
                             inputType === 'checkbox' ? 'rounded' : 'rounded-full p-[5px]',
                             'active:scale-90',
                             checked
-                                ? 'border-inputBorderActive bg-inputBackgroundActive group-hover:bg-inputBackgroundActive '
+                                ? 'border-inputBorderActive bg-inputBackgroundActive group-hover:bg-inputBackgroundActive'
                                 : 'border-2 group-hover:border-inputBorderHovered group-active:border-inputBorderHovered',
                             disabled &&
                                 'border-inputBorderDisabled group-hover:border-inputBorderDisabled group-hover:bg-inputBackgroundDisabled group-active:border-inputBorderDisabled',

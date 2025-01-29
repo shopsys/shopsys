@@ -52,7 +52,7 @@ export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> =
         <Webline className="flex flex-col items-center">
             <h1 className="w-full max-w-3xl">{t('Personal data overview')}</h1>
             {contentSiteText && (
-                <div className="max-w-3xl [&_section]:mb-5 [&_section]:block [&_section]:text-justify ">
+                <div className="max-w-3xl [&_section]:mb-5 [&_section]:block [&_section]:text-justify">
                     <UserText htmlContent={contentSiteText} />
                 </div>
             )}

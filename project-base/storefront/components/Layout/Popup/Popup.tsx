@@ -68,7 +68,7 @@ export const Popup: FC<PopupProps> = ({ children, hideCloseButton, className, co
                         }}
                     >
                         {!hideCloseButton && (
-                            <div className="flex h-9 items-center justify-end ">
+                            <div className="flex h-9 items-center justify-end">
                                 <button
                                     className="flex size-9 cursor-pointer items-center justify-center rounded-full border-0 text-xs text-textAccent no-underline outline-none"
                                     onClick={() => updatePortalContent(null)}
