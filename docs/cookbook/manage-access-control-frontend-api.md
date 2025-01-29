@@ -11,6 +11,8 @@ By default, we have the following roles defined in `Shopsys\FrameworkBundle\Mode
 - `ROLE_API_CUSTOMER_SEES_PRICES`: This role allows a user to see prices.
 - `ROLE_API_CART_AND_ORDER_CREATION`: This role allows a user to manipulate with a cart and create an order.
 - `ROLE_API_COMPANY_ORDERS_VIEW`: This role allows a user to see information about all the company's orders (i.e. access the order list and detail pages of all orders created under the user's company).
+- `ROLE_API_COMPLAINT_CREATION`: This role allows a user to create a complaint.
+- `ROLE_API_COMPANY_COMPLAINTS_VIEW`: This role allows a user to see information about all the company's complaints (i.e. access the complaint list and detail pages of all complaints created under the user's company).
 
 ## 2. Granting Permissions for Query/Mutation
 

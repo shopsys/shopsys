@@ -26,5 +26,5 @@ This article describes functional behavior of a b2b domain. Article shortly summ
     - both can manage delivery addresses
     - the owner can see orders of all users, the user can see only his own orders
     - the limited user can't see prices
-    - the catalog user can't see prices, and moreover he can't access nor manipulate with a cart, nor can create an order
-    - the accountant can see orders of all users under the company, but he can't access nor manipulate with a cart, nor can create an order
+    - the catalog user can't see prices, and moreover he can't access nor manipulate with a cart, nor can create an order or complaint
+    - the accountant can see orders and complaints of all users under the company, but he can't access nor manipulate with a cart, nor can create an order or complaint

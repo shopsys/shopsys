@@ -63,6 +63,7 @@ class CustomerUserRoleGroupDataFixture extends AbstractReferenceFixture
             CustomerUserRole::ROLE_API_CUSTOMER_SELF_MANAGE,
             CustomerUserRole::ROLE_API_CUSTOMER_SEES_PRICES,
             CustomerUserRole::ROLE_API_CART_AND_ORDER_CREATION,
+            CustomerUserRole::ROLE_API_COMPLAINT_CREATION,
         ];
 
         $customerUserRoleGroup = $this->customerUserRoleGroupFacade->create($customerUserRoleGroupData);
@@ -79,6 +80,7 @@ class CustomerUserRoleGroupDataFixture extends AbstractReferenceFixture
         $customerUserRoleGroupData->roles = [
             CustomerUserRole::ROLE_API_CUSTOMER_SELF_MANAGE,
             CustomerUserRole::ROLE_API_CART_AND_ORDER_CREATION,
+            CustomerUserRole::ROLE_API_COMPLAINT_CREATION,
         ];
 
         $customerUserRoleGroup = $this->customerUserRoleGroupFacade->create($customerUserRoleGroupData);
@@ -111,6 +113,7 @@ class CustomerUserRoleGroupDataFixture extends AbstractReferenceFixture
             CustomerUserRole::ROLE_API_CUSTOMER_SELF_MANAGE,
             CustomerUserRole::ROLE_API_CUSTOMER_SEES_PRICES,
             CustomerUserRole::ROLE_API_COMPANY_ORDERS_VIEW,
+            CustomerUserRole::ROLE_API_COMPANY_COMPLAINTS_VIEW,
         ];
 
         $customerUserRoleGroup = $this->customerUserRoleGroupFacade->create($customerUserRoleGroupData);
