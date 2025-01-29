@@ -8,6 +8,7 @@ import { DeferredGtmHeadScript } from 'gtm/DeferredGtmHeadScript';
 import { NextComponentType, NextPageContext } from 'next';
 import dynamic from 'next/dynamic';
 import { ToastContainer } from 'react-toastify';
+import { twJoin } from 'tailwind-merge';
 import { useCookiesStoreSync } from 'utils/cookies/cookiesStore';
 import { ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 
@@ -47,7 +48,7 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }
     }
 
     return (
-        <div className={ralewayFont.variable}>
+        <div className={twJoin('h-full min-h-screen', ralewayFont.variable)}>
             <PageHeadScripts />
             <Fonts />
             <DeferredLoaders />

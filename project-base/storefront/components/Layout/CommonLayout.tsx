@@ -45,7 +45,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
     const isPageLoading = useSessionStore((s) => s.isPageLoading);
 
     return (
-        <>
+        <div className="flex h-full min-h-screen flex-col">
             <SeoMeta
                 canonicalQueryParams={canonicalQueryParams}
                 defaultDescription={description}
@@ -58,12 +58,14 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
             <NotificationBars />
 
             <Webline
-                className="relative mb-4"
+                className="relative"
                 wrapperClassName="bg-gradient-to-tr from-backgroundBrand to-backgroundBrandLess"
             >
                 <Header />
                 <DeferredNavigation />
             </Webline>
+
+            <Webline className="relative mb-4" />
 
             <Adverts withGapBottom withWebline positionName="header" />
 
@@ -83,10 +85,12 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
 
             <Adverts withGapBottom withGapTop withWebline positionName="footer" />
 
-            <Webline wrapperClassName="bg-backgroundAccentLess">
+            <Webline className="relative mb-4" />
+
+            <Webline wrapperClassName="mt-auto h-fit bg-backgroundAccentLess">
                 <DeferredNewsletterForm />
                 <DeferredFooter />
             </Webline>
-        </>
+        </div>
     );
 };
