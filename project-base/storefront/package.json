@@ -77,7 +77,7 @@
         "@graphql-codegen/typescript-operations": "~4.0.1",
         "@graphql-codegen/typescript-urql": "~4.0.0",
         "@mswjs/interceptors": "0.19.0",
-        "@testing-library/react": "~14.2.2",
+        "@testing-library/react": "~14.3.1",
         "@trivago/prettier-plugin-sort-imports": "~4.3.0",
         "@types/crypto-js": "~4.2.2",
         "@types/google-map-react": "^2.1.10",
