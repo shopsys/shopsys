@@ -1,6 +1,7 @@
 'use client';
 
 import * as Sentry from '@sentry/nextjs';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { useEffect } from 'react';
 
 const ErrorPage = ({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) => {
@@ -11,11 +12,11 @@ const ErrorPage = ({ error, reset }: { error: Error & { digest?: string }; reset
     return (
         <html>
             <body>
-                <div className="flex items-center justify-center">
-                    <h2>Something went wrong!</h2>
+                <Webline className="flex items-center justify-center">
+                    <h1>Something went wrong globally!</h1>
                     <p>{error.message}</p>
                     <button onClick={() => reset()}>Try again</button>
-                </div>
+                </Webline>
             </body>
         </html>
     );
