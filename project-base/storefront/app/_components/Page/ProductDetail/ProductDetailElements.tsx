@@ -1,5 +1,5 @@
 export const ProductDetailPrefix: FC = ({ children }) => (
-    <div className="mb-1 font-secondary text-textDisabled">{children}</div>
+    <div className="font-secondary text-text-disabled mb-1">{children}</div>
 );
 
-export const ProductDetailHeading: FC = ({ children }) => <h1>{children}</h1>;
+export const ProductDetailHeading: FC = ({ children }) => <h1 className="wrap-anywhere">{children}</h1>;

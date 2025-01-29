@@ -26,6 +26,7 @@ export function ProductDetailContent({ product }: ProductDetailContentProps) {
         <Webline className="flex flex-col gap-8">
             <div className="flex flex-col flex-wrap gap-6 lg:flex-row">
                 <ProductDetailGallery
+                    categoryName={product.categories[0]?.name}
                     flags={product.flags}
                     images={product.images}
                     percentageDiscount={product.price.percentageDiscount}
@@ -44,7 +45,7 @@ export function ProductDetailContent({ product }: ProductDetailContentProps) {
                         usps={product.usps}
                     />
 
-                    <div className="flex flex-col gap-4 rounded-xl bg-backgroundMore p-3 sm:p-6">
+                    <div className="bg-background-more flex flex-col gap-4 rounded-xl p-3 sm:p-6">
                         <ProductDetailPrice productPrice={product.price} />
 
                         <ProductDetailAvailability
@@ -52,6 +53,7 @@ export function ProductDetailContent({ product }: ProductDetailContentProps) {
                             availableStoresCount={product.availableStoresCount}
                             isInquiryType={product.isInquiryType}
                             isSellingDenied={product.isSellingDenied}
+                            productName={product.name}
                             storeAvailabilities={product.storeAvailabilities}
                         />
 

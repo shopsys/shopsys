@@ -8,8 +8,9 @@ import { TypeSimpleFlagFragment } from 'graphql/requests/flags/fragments/SimpleF
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { TypeVideoTokenFragment } from 'graphql/requests/products/fragments/VideoTokenFragment.generated';
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
+import { generateProductImageAlt } from 'utils/productAltText';
 
 const ModalGallery = dynamic(() =>
     import('components/Basic/ModalGallery/ModalGallery').then((component) => component.ModalGallery),
@@ -21,6 +22,7 @@ type ProductDetailGalleryProps = {
     flags: TypeSimpleFlagFragment[];
     videoIds?: TypeVideoTokenFragment[];
     percentageDiscount: number | null;
+    categoryName?: string;
 };
 
 const GALLERY_SHOWN_ITEMS_COUNT = 5;
@@ -31,6 +33,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
     productName,
     videoIds = [],
     percentageDiscount,
+    categoryName,
 }) => {
     const [firstImage, ...additionalImages] = images;
     const mainImage = images.length ? firstImage : undefined;
@@ -45,17 +48,17 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
         <>
             <div
                 key={productName}
-                className="flex w-full basis-1/2 flex-col items-start gap-6 vl:basis-3/5 vl:flex-row"
+                className="vl:basis-3/5 vl:flex-row flex w-full basis-1/2 flex-col items-start gap-6"
             >
                 <div
-                    className={twJoin('relative flex w-full justify-center vl:order-2')}
+                    className={twJoin('vl:order-2 relative flex w-full justify-center')}
                     data-src={mainImage?.url}
-                    tid={TIDs.product_detail_main_image}
+                    data-tid={TIDs.product_detail_main_image}
                 >
                     <Image
                         priority
-                        alt={mainImage?.name || productName}
-                        className="size-auto object-contain vl:size-[500px]"
+                        alt={generateProductImageAlt(productName, categoryName)}
+                        className="vl:size-[500px] size-auto object-contain"
                         height={500}
                         sizes="(max-width: 768px) 100vw, 50vw"
                         src={mainImage?.url}
@@ -72,7 +75,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                 </div>
 
                 {!!galleryItems.length && (
-                    <ul className="mx-auto flex w-full max-w-lg items-center justify-center gap-2 lg:relative vl:order-none vl:w-16 vl:flex-col">
+                    <ul className="vl:flex-col flex gap-1.5 sm:mx-auto sm:max-w-lg sm:gap-2">
                         {galleryItems.map((galleryItem, index) => {
                             const isImage = galleryItem.__typename === 'Image';
                             const isVideo = galleryItem.__typename === 'VideoToken';
@@ -86,46 +89,65 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                             }
 
                             return (
-                                <li
-                                    key={index}
-                                    className={twJoin(
-                                        'flex w-1/5 cursor-pointer items-center justify-center rounded-lg outline-1 outline-borderAccent hover:outline sm:h-16 vl:w-auto',
-                                        (isWithAdditionalImages || isVideo) && 'relative',
-                                    )}
-                                    onClick={() => setSelectedGalleryItemIndex(index + 1)}
-                                >
-                                    {isImage && (
-                                        <Image
-                                            alt={galleryItem.name || `${productName}-${index}`}
-                                            className="aspect-square max-h-full rounded-md bg-backgroundMore object-contain p-1 mix-blend-multiply"
-                                            height={90}
-                                            src={galleryItemThumbnail?.url}
-                                            tid={TIDs.product_gallery_image}
-                                            width={90}
-                                        />
-                                    )}
+                                <Fragment key={index}>
+                                    <li>
+                                        <button
+                                            aria-label={t('Open image gallery of {{ productName }}', { productName })}
+                                            tabIndex={0}
+                                            title={t('View product image')}
+                                            className={twJoin(
+                                                'outline-border-default bg-background-more flex size-12 cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:size-16',
+                                                (isWithAdditionalImages || isVideo) && 'relative',
+                                            )}
+                                            onClick={() => setSelectedGalleryItemIndex(index + 1)}
+                                        >
+                                            {isImage && (
+                                                <Image
+                                                    alt={`${productName}-${index}`}
+                                                    className="aspect-square object-contain object-center p-1 mix-blend-multiply"
+                                                    height={64}
+                                                    sizes="(max-width: 1023px) 60px, 56px"
+                                                    src={galleryItemThumbnail?.url}
+                                                    tid={TIDs.product_gallery_image}
+                                                    width={64}
+                                                />
+                                            )}
 
-                                    {isVideo && (
-                                        <>
-                                            <Image
-                                                alt={galleryItem.description}
-                                                className="max-h-full rounded-md"
-                                                height={90}
-                                                src={`https://img.youtube.com/vi/${galleryItem.token}/1.jpg`}
-                                                width={90}
-                                            />
-                                            <div className="absolute flex h-full w-full items-center justify-center overflow-hidden rounded-lg bg-imageOverlay">
-                                                <PlayIcon className="h-8 w-8 rounded-full text-textInverted" />
-                                            </div>
-                                        </>
-                                    )}
+                                            {isVideo && (
+                                                <>
+                                                    <Image
+                                                        alt={galleryItem.description ?? t('Product Video')}
+                                                        className="aspect-square object-contain object-center p-1 mix-blend-multiply"
+                                                        height={64}
+                                                        src={`https://img.youtube.com/vi/${galleryItem.token}/1.jpg`}
+                                                        width={64}
+                                                    />
+                                                    <span className="bg-overlay-image absolute flex h-full w-full items-center justify-center overflow-hidden rounded-lg">
+                                                        <PlayIcon className="text-text-inverted h-8 w-8 rounded-full" />
+                                                    </span>
+                                                </>
+                                            )}
+                                        </button>
+                                    </li>
 
                                     {isWithAdditionalImages && (
-                                        <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center rounded-lg bg-imageOverlay text-lg font-bold">
-                                            +{galleryAdditionalItemsCount}
-                                        </div>
+                                        <li>
+                                            <button
+                                                className="outline-border-default bg-background-more flex size-12 cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:size-16"
+                                                tabIndex={0}
+                                                title={t('View product image')}
+                                                aria-label={t('Open image gallery of {{ productName }}', {
+                                                    productName,
+                                                })}
+                                                onClick={() => setSelectedGalleryItemIndex(index + 2)}
+                                            >
+                                                <span className="text-text-accent font-secondary text-sm font-semibold">
+                                                    +{galleryAdditionalItemsCount}
+                                                </span>
+                                            </button>
+                                        </li>
                                     )}
-                                </li>
+                                </Fragment>
                             );
                         })}
                     </ul>
