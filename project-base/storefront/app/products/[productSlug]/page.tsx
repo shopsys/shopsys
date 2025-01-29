@@ -1,11 +1,11 @@
+import { ProductMetadataJsonLd } from 'app/_components/Basic/Head/ProductMetadataJsonLd';
+import { LastVisitedProducts } from 'app/_components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
+import { RecommendedProducts } from 'app/_components/Blocks/Product/RecommendedProducts/RecommendedProducts';
 import { Breadcrumbs } from 'app/_components/Layout/Breadcrumbs/Breadcrumbs';
+import { ProductDetailAccessories } from 'app/_components/Page/ProductDetail/ProductDetailAccessories';
+import { ProductDetailContent } from 'app/_components/Page/ProductDetail/ProductDetailContent';
+import { ProductDetailMainVariantContent } from 'app/_components/Page/ProductDetail/ProductDetailMainVariantContent';
 import { getProductQuery } from 'app/_queries/getProductQuery';
-import { ProductMetadataJsonLd } from 'components/Basic/Head/ProductMetadataJsonLd';
-import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
-import { RecommendedProducts } from 'components/Blocks/Product/RecommendedProducts/RecommendedProducts';
-import { ProductDetailAccessories } from 'components/Pages/ProductDetail/ProductDetailAccessories/ProductDetailAccessories';
-import { ProductDetailContent } from 'components/Pages/ProductDetail/ProductDetailContent';
-import { ProductDetailMainVariantContent } from 'components/Pages/ProductDetail/ProductDetailMainVariantContent';
 import { TypeRecommendationType } from 'graphql/types';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';

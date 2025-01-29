@@ -1,0 +1,106 @@
+'use client';
+
+import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
+import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
+import { Image } from 'components/Basic/Image/Image';
+import { Button } from 'components/Forms/Button/Button';
+import { useTranslation } from 'components/providers/TranslationProvider';
+import { TIDs } from 'cypress/tids';
+import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.ssr';
+import dynamic from 'next/dynamic';
+import { useSessionStore } from 'store/useSessionStore';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
+
+const Popup = dynamic(() => import('components/Layout/Popup/Popup').then((component) => component.Popup));
+
+type AddToCartPopupProps = {
+    addedCartItem: TypeCartItemFragment;
+    key: string;
+};
+
+export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { product, quantity } }) => {
+    const { t } = useTranslation();
+    const formatPrice = useFormatPrice();
+
+    // const { url, isLuigisBoxActive } = useDomainConfig(); // TODO: add recommended products with client side fetching
+    {
+        /* TODO: fix after cart is implemented */
+    }
+    // const { url } = useDomainConfig();
+    // const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
+    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+
+    const productUrl = (product.__typename === 'Variant' && product.mainVariant?.slug) || product.slug;
+
+    return (
+        <Popup key={key} hideCloseButton className="w-11/12 max-w-5xl" contentClassName="overflow-y-auto">
+            <div className="mb-4 flex w-full items-center md:mb-6">
+                <CheckmarkIcon className="mr-4 w-7 text-textSuccess" />
+                <div className="h2 text-textAccent">{t('Great choice! We have added your item to the cart')}</div>
+            </div>
+
+            <div className="mb-4 flex flex-col items-center rounded border border-borderAccent p-3 md:flex-row md:p-4">
+                {!!product.mainImage && (
+                    <div
+                        className="mb-4 flex h-12 w-24 items-center justify-center md:mb-0"
+                        tid={TIDs.add_to_cart_popup_image}
+                    >
+                        <Image
+                            alt={product.mainImage.name || product.fullName}
+                            className="max-h-12 w-auto"
+                            height={48}
+                            src={product.mainImage.url}
+                            width={72}
+                        />
+                    </div>
+                )}
+                <div className="w-full md:pl-4 lg:flex lg:items-center lg:justify-between">
+                    <div className="block break-words" tid={TIDs.blocks_product_addtocartpopup_product_name}>
+                        <ExtendedNextLink
+                            href={productUrl}
+                            type={product.__typename === 'RegularProduct' ? 'product' : 'productMainVariant'}
+                        >
+                            {product.fullName}
+                        </ExtendedNextLink>
+                    </div>
+
+                    <div className="mt-2 lg:mt-0 lg:w-5/12 lg:pl-4 lg:text-right">
+                        <div className="block text-price">
+                            {`${quantity} ${product.unit.name}`}
+                            {isPriceVisible(product.price.priceWithVat) &&
+                                `, ${formatPrice(quantity * mapPriceForCalculations(product.price.priceWithVat))}`}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* TODO: add recommended products with client side fetching */}
+            {/* {isLuigisBoxActive && (
+                <DeferredRecommendedProducts
+                    itemUuids={[product.uuid]}
+                    recommendationType={TypeRecommendationType.BasketPopup}
+                    render={(recommendedProductsContent) => (
+                        <div className="mb-6">
+                            <div className="h2 mb-3">{t('Recommended for you')}</div>
+                            {recommendedProductsContent}
+                        </div>
+                    )}
+                />
+            )} */}
+
+            <div className="flex flex-col text-center md:flex-row md:items-center md:justify-between md:p-0">
+                <Button className="mt-2 w-full md:w-auto" variant="inverted" onClick={() => updatePortalContent(null)}>
+                    {t('Back to shop')}
+                </Button>
+
+                {/* TODO: fix after cart is implemented */}
+                {/* <ExtendedNextLink className="mt-2 w-full md:w-auto" href={cartUrl} skeletonType="cart">
+                    <Button className="mt-2 w-full md:w-auto" tid={TIDs.popup_go_to_cart_button}>
+                        {t('To cart')}
+                    </Button>
+                </ExtendedNextLink> */}
+            </div>
+        </Popup>
+    );
+};
