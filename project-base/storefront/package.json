@@ -23,7 +23,7 @@
         "test--no-watch": "vitest run"
     },
     "dependencies": {
-        "@floating-ui/react": "~0.26.28",
+        "@floating-ui/react": "~0.27.3",
         "@hookform/resolvers": "~2.6.1",
         "@next/bundle-analyzer": "~14.2.20",
         "@sentry/nextjs": "~8.47.0",
