@@ -1309,6 +1309,9 @@ msgstr "Zobrazit pouze produkty skladem"
 msgid "Display personal information settings"
 msgstr "Nastavení zobrazení osobních údajů"
 
+msgid "Display products with special prices only"
+msgstr "Zobrazit pouze produkty se speciální cenou"
+
 msgid "Displaying"
 msgstr "Zobrazuji"
 
@@ -2877,6 +2880,9 @@ msgstr "Pouze zaškrtnuté zboží"
 
 msgid "Only products with \"Selling start date\" not older than %count% days are displayed"
 msgstr "Zobrazují se pouze produkty s datem vložení mladším než %count% dní"
+
+msgid "Only products with active special price from a price list be displayed"
+msgstr "Zobrazují se pouze produkty s aktivní speciální cenou z ceníku"
 
 msgid "Oops! Error occurred."
 msgstr "Jejda! Nastala chyba."

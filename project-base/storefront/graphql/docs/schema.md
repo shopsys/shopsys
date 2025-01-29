@@ -11732,6 +11732,10 @@ Category automated filter types
 <td valign="top"><strong>onStock</strong></td>
 <td></td>
 </tr>
+<tr>
+<td valign="top"><strong>specialPrices</strong></td>
+<td></td>
+</tr>
 </tbody>
 </table>
 

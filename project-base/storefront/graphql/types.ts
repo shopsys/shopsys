@@ -611,7 +611,8 @@ export type TypeCategoryProductsArgs = {
 /** Category automated filter types */
 export enum TypeCategoryAutomatedFilterEnum {
   NewProducts = 'newProducts',
-  OnStock = 'onStock'
+  OnStock = 'onStock',
+  SpecialPrices = 'specialPrices'
 }
 
 /** A connection to a list of items. */

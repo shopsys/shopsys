@@ -1309,6 +1309,9 @@ msgstr ""
 msgid "Display personal information settings"
 msgstr ""
 
+msgid "Display products with special prices only"
+msgstr ""
+
 msgid "Displaying"
 msgstr ""
 
@@ -2876,6 +2879,9 @@ msgid "Only checked products"
 msgstr ""
 
 msgid "Only products with \"Selling start date\" not older than %count% days are displayed"
+msgstr ""
+
+msgid "Only products with active special price from a price list be displayed"
 msgstr ""
 
 msgid "Oops! Error occurred."

@@ -233,6 +233,21 @@ class FilterQueryTest extends ParameterTransactionFunctionalTestCase
         $this->assertIdWithFilter($filter, [44, 144]);
     }
 
+    public function testFilterWithActiveSpecialPriceOnly(): void
+    {
+        $pricingGroup = $this->getReferenceForDomain(
+            PricingGroupDataFixture::PRICING_GROUP_ORDINARY,
+            Domain::FIRST_DOMAIN_ID,
+            PricingGroup::class,
+        );
+
+        $filter = $this->createFilter()
+            ->filterWithActiveSpecialPriceOnly($pricingGroup)
+            ->applyOrderingByIdAscending();
+
+        $this->assertIdWithFilter($filter, [19, 27, 28, 54, 69, 117]);
+    }
+
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery $filterQuery
      * @param int[] $ids

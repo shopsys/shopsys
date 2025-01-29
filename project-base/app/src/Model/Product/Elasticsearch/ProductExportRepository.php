@@ -53,6 +53,7 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
  * @method array extractPrices(int $domainId, \App\Model\Product\Product $product)
  * @method \Shopsys\FrameworkBundle\Component\Money\Money getMaximalVariantPriceForFilteringMinimalPrice(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int $domainId)
  * @method \Shopsys\FrameworkBundle\Component\Money\Money getMinimalVariantPriceForFilteringMaximalPrice(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int $domainId)
+ * @method array getVariantPrices(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int $domainId)
  */
 class ProductExportRepository extends BaseProductExportRepository
 {
