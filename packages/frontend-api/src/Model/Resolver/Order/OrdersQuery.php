@@ -16,7 +16,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
 use Shopsys\FrontendApiBundle\Model\Order\OrderFilterFactory;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
-use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
 use Symfony\Bundle\SecurityBundle\Security;
 
 class OrdersQuery extends AbstractQuery
@@ -47,11 +46,7 @@ class OrdersQuery extends AbstractQuery
 
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
-        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
-
-        if (!$customerUser) {
-            throw new InvalidTokenUserMessageException();
-        }
+        $customerUser = $this->currentCustomerUser->getCurrentCustomerUser();
 
         if ($this->security->isGranted(CustomerUserRole::ROLE_API_COMPANY_ORDERS_VIEW)) {
             return $this->getPaginatedCustomerOrders($customerUser->getCustomer(), $argument);
