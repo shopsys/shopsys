@@ -417,7 +417,13 @@ class RouteConfigCustomization
                 $config->addExtraRequestDataSet('Send reset password action should be OK.')
                     ->setParameter('id', 2)
                     ->setExpectedStatusCode(302);
-            });
+            })
+            ->customizeByRouteName('admin_searchadmin_search', function (RouteConfig $config) {
+                $config->changeDefaultRequestDataSet('Use search "prod" string')
+                    ->setParameter('search', 'prod')
+                    ->setExpectedStatusCode(200);
+            })
+        ;
     }
 
     /**

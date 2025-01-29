@@ -3511,6 +3511,9 @@ msgstr "Žádost o resetování hesla byla odeslána na adresu <strong>{{ email 
 msgid "Resolved"
 msgstr "Vyřízena"
 
+msgid "Results:"
+msgstr "Výsledky:"
+
 msgid "Return back"
 msgstr "Vrátit zpět"
 
@@ -3663,6 +3666,9 @@ msgstr "Vyhledat dle názvu, katalogového čísla nebo partno produktu..."
 
 msgid "Search by name..."
 msgstr "Vyhledat dle názvu..."
+
+msgid "Search by section name…"
+msgstr "Vyhledat dle názvu sekce…"
 
 msgid "Search by slug..."
 msgstr "Vyhledat podle slugu..."
@@ -4797,6 +4803,9 @@ msgstr "jednotky"
 
 msgid "unregistered customer"
 msgstr "neregistrovaný zákazník"
+
+msgid "use key tab or shift+tab"
+msgstr "použíj 'Tab' nebo 'Shift+Tab'"
 
 msgid "watchdogs"
 msgstr "hlídací psi"
