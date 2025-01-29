@@ -6,6 +6,7 @@ export default defineConfig({
     viewportHeight: 720,
     defaultCommandTimeout: 20000,
     screenshotsFolder: 'screenshots',
+    video: true,
     videosFolder: 'videos',
     trashAssetsBeforeRuns: true,
     env: {
