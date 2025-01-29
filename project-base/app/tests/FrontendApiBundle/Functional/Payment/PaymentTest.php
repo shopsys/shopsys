@@ -25,23 +25,13 @@ class PaymentTest extends GraphQlTestCase
 
     public function testPaymentNameByUuid(): void
     {
-        $query = '
-            query {
-                payment(uuid: "' . $this->payment->getUuid() . '") {
-                    name
-                }
-            }
-        ';
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/PaymentQuery.graphql', [
+            'uuid' => $this->payment->getUuid(),
+        ]);
 
-        $arrayExpected = [
-            'data' => [
-                'payment' => [
-                    'name' => t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                ],
-            ],
-        ];
+        $data = $this->getResponseDataForGraphQlType($response, 'payment');
 
-        $this->assertQueryWithExpectedArray($query, $arrayExpected);
+        $this->assertSame(t('Cash on delivery', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()), $data['name']);
     }
 
     public function testGetFreePayment(): void
@@ -55,26 +45,13 @@ class PaymentTest extends GraphQlTestCase
             'quantity' => 100,
         ]);
 
-        $query = '
-            query {
-                payment(uuid: "' . $this->payment->getUuid() . '") {
-                    price(cartUuid: "' . $cartUuid . '") {
-                        priceWithVat
-                    }
-                }
-            }
-        ';
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/PaymentQuery.graphql', [
+            'uuid' => $this->payment->getUuid(),
+            'cartUuid' => $cartUuid,
+        ]);
 
-        $arrayExpected = [
-            'data' => [
-                'payment' => [
-                    'price' => [
-                        'priceWithVat' => '0.000000',
-                    ],
-                ],
-            ],
-        ];
+        $data = $this->getResponseDataForGraphQlType($response, 'payment');
 
-        $this->assertQueryWithExpectedArray($query, $arrayExpected);
+        $this->assertSame('0.000000', $data['price']['priceWithVat']);
     }
 }

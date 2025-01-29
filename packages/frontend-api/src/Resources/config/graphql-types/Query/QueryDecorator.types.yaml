@@ -80,6 +80,7 @@ QueryDecorator:
             payment:
                 type: 'Payment'
                 resolve: "@=query('paymentQuery', args['uuid'])"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
                 args:
                     uuid:
                         type: "Uuid!"
@@ -95,6 +96,7 @@ QueryDecorator:
             transport:
                 type: 'Transport'
                 resolve: "@=query('transportByTransportUuidQuery', args['uuid'])"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
                 args:
                     uuid:
                         type: "Uuid!"

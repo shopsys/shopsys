@@ -1,0 +1,8 @@
+query PaymentQuery ($uuid: Uuid!, $cartUuid: Uuid) {
+    payment(uuid: $uuid) {
+        name
+        price (cartUuid: $cartUuid) {
+            priceWithVat
+        }
+    }
+}
