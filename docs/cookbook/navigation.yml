@@ -6,7 +6,6 @@ arrange:
     - adding-a-new-elasticsearch-index.md
     - adding-a-new-administration-page.md
     - adding-a-new-advert-position.md
-    - adding-an-icon-into-a-button.md
     - modifying-a-template-in-administration.md
     - adding-ajax-load-more-button-into-pagination.md
     - basic-data-import.md

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Twig;
 
+use Symfony\UX\Icons\Twig\UXIconRuntime;
+use Twig\DeprecatedCallableInfo;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -24,29 +26,19 @@ class IconExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('icon', $this->renderIcon(...), ['is_safe' => ['html']]),
+            new TwigFunction(
+                'icon',
+                [UXIconRuntime::class, 'renderIcon'],
+                [
+                    'is_safe' => ['html'],
+                    'deprecation_info' => new DeprecatedCallableInfo(
+                        'shopsys/framework',
+                        '17.0.0',
+                        'ux_icon',
+                        'symfony/ux-icons',
+                    ),
+                ],
+            ),
         ];
-    }
-
-    /**
-     * @param string $iconName
-     * @param array $attributes
-     * @param string|null $iconType
-     * @return string
-     */
-    public function renderIcon(string $iconName = '', array $attributes = [], ?string $iconType = 'svg-font'): string
-    {
-        $attributes['title'] = $attributes['title'] ?? null;
-        $attributes['class'] = $attributes['class'] ?? null;
-        $attributes['data'] = $attributes['data'] ?? [];
-
-        return $this->twigEnvironment->render(
-            '@ShopsysFramework/Components/Icon/icon.html.twig',
-            [
-                'name' => $iconName,
-                'attr' => $attributes,
-                'type' => $iconType,
-            ],
-        );
     }
 }

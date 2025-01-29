@@ -6,7 +6,6 @@
 - [Adding a New Elasticsearch Index](./adding-a-new-elasticsearch-index.md)
 - [Adding a New Administration Page](./adding-a-new-administration-page.md)
 - [Adding a New Advert Position](./adding-a-new-advert-position.md)
-- [Adding an Icon into a Button](./adding-an-icon-into-a-button.md)
 - [Modifying a Template in Administration](./modifying-a-template-in-administration.md)
 - [Adding Ajax Load More Button into Pagination](./adding-ajax-load-more-button-into-pagination.md)
 - [Implementing a Basic Data Import](./basic-data-import.md)
