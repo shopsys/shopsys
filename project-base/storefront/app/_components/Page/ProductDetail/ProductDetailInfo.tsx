@@ -1,7 +1,9 @@
-import { ProductDetailPrefix, ProductDetailHeading } from 'app/_components/Page/ProductDetail/ProductDetailElements';
-import { ProductDetailUsps } from 'app/_components/Page/ProductDetail/ProductDetailUsps';
+'use client';
+
+import { ProductDetailHeading, ProductDetailPrefix } from './ProductDetailElements';
+import { ProductDetailUsps } from './ProductDetailUsps';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { getServerT } from 'utils/getServerTranslation';
+import { useTranslation } from 'components/providers/TranslationProvider';
 
 type ProductDetailContentProps = {
     namePrefix: string | null;
@@ -16,7 +18,7 @@ type ProductDetailContentProps = {
     usps?: string[];
 };
 
-export async function ProductDetailInfo({
+export const ProductDetailInfo: FC<ProductDetailContentProps> = ({
     namePrefix,
     name,
     nameSuffix,
@@ -24,31 +26,38 @@ export async function ProductDetailInfo({
     catalogNumber,
     shortDescription,
     usps,
-}: ProductDetailContentProps) {
-    const t = await getServerT();
+}) => {
+    const { t } = useTranslation();
 
     return (
         <>
-            <div className="flex flex-col">
+            <div>
                 {namePrefix && <ProductDetailPrefix>{namePrefix}</ProductDetailPrefix>}
 
                 <ProductDetailHeading>
                     {name} {nameSuffix}
                 </ProductDetailHeading>
+            </div>
 
-                <div className="flex items-center gap-5 text-sm">
-                    {brand && (
-                        <div>
-                            <span>{t('Brand')}: </span>
-                            <ExtendedNextLink className="text-sm" href={brand.slug} type="brand">
-                                {brand.name}
-                            </ExtendedNextLink>
-                        </div>
-                    )}
-
+            <div className="flex items-center gap-5 text-sm">
+                {brand && (
                     <div>
-                        {t('Code')}: {catalogNumber}
+                        <span>{t('Brand')}: </span>
+
+                        <ExtendedNextLink
+                            aria-label={t('Go to brand page of {{ brandName }}', { brandName: brand.name })}
+                            className="text-sm"
+                            href={brand.slug}
+                            title={t('Go to brand page')}
+                            type="brand"
+                        >
+                            {brand.name}
+                        </ExtendedNextLink>
                     </div>
+                )}
+
+                <div>
+                    {t('Code')}: {catalogNumber}
                 </div>
             </div>
 
@@ -57,4 +66,4 @@ export async function ProductDetailInfo({
             {usps && !!usps.length && <ProductDetailUsps usps={usps} />}
         </>
     );
-}
+};

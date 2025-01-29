@@ -3,6 +3,7 @@
 import { ProductDetailAvailabilityList } from 'app/_components/Page/ProductDetail/ProductDetailAvailabilityList';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { Popup } from 'components/Layout/Popup/Popup';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { TypeStoreAvailabilityFragment } from 'graphql/requests/storeAvailabilities/fragments/StoreAvailabilityFragment.generated';
 import { TypeAvailability, TypeAvailabilityStatusEnum } from 'graphql/types';
 import { useSessionStore } from 'store/useSessionStore';
@@ -23,6 +24,7 @@ export const ProductDetailAvailability: FC<ProductDetailContentProps> = ({
     isInquiryType,
     storeAvailabilities,
 }) => {
+    const { t } = useTranslation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     if (isSellingDenied) {
@@ -35,13 +37,13 @@ export const ProductDetailAvailability: FC<ProductDetailContentProps> = ({
             availableStoresCount={availableStoresCount}
             isInquiryType={isInquiryType}
             className={twJoin(
-                'mr-1 flex items-center font-secondary',
-                availability.status === TypeAvailabilityStatusEnum.InStock && 'cursor-pointer',
+                'font-secondary mr-1 flex items-center',
+                availability.status === TypeAvailabilityStatusEnum.InStock && 'cursor-pointer hover:underline',
             )}
             onClick={() =>
                 availability.status === TypeAvailabilityStatusEnum.InStock &&
                 updatePortalContent(
-                    <Popup>
+                    <Popup contentClassName="overflow-auto" title={t('Availability in stores')}>
                         <ProductDetailAvailabilityList storeAvailabilities={storeAvailabilities} />
                     </Popup>,
                 )

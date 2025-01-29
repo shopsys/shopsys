@@ -13,6 +13,8 @@ import dynamic from 'next/dynamic';
 import { useRef } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
 import { useAddToCart } from 'utils/cart/useAddToCart';
+import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { mapPriceForCalculations } from 'utils/mappers/price';
 
 const AddToCartPopup = dynamic(
     () => import('app/_components/Blocks/Popup/AddToCartPopup').then((component) => component.AddToCartPopup),
@@ -38,6 +40,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
         GtmProductListNameType.product_detail,
     );
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const formatPrice = useFormatPrice();
 
     const onAddToCartHandler = async () => {
         if (!spinboxRef.current) {
@@ -58,7 +61,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
     };
 
     if (product.isSellingDenied) {
-        return <p className="text-textError">{t('This item can no longer be purchased')}</p>;
+        return <p className="text-text-error">{t('This item can no longer be purchased')}</p>;
     }
 
     if (product.isInquiryType) {
@@ -68,7 +71,14 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
         };
 
         return (
-            <Button className="w-fit" size="large" onClick={openInquiryPopup}>
+            <Button
+                aria-haspopup="dialog"
+                aria-label={t('Open inquiry popup')}
+                className="w-fit"
+                size="large"
+                title={t('Inquire popup')}
+                onClick={openInquiryPopup}
+            >
                 {t('Inquire')}
             </Button>
         );
@@ -78,19 +88,31 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
         (product.uuid && product.availability.status === TypeAvailabilityStatusEnum.OutOfStock) ||
         product.isSellingDenied;
 
+    const ariaLabel = t('Add to cart {{ productName }}, quantity {{ quantity }} {{ unit }} for {{ price }}', {
+        productName: product.name,
+        quantity: spinboxRef.current?.valueAsNumber,
+        unit: product.unit.name,
+        price: formatPrice(
+            (spinboxRef.current?.valueAsNumber ?? 1) * mapPriceForCalculations(product.price.priceWithVat),
+        ),
+    });
+
     return (
         <div className="flex items-center gap-2">
             <Spinbox defaultValue={1} id={product.uuid} min={1} ref={spinboxRef} step={1} />
 
             <div className="relative">
                 {isAddingToCart && (
-                    <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded bg-backgroundMore py-2 opacity-50" />
+                    <Loader className="z-overlay bg-background-more absolute inset-0 flex h-full w-full items-center justify-center rounded py-2 opacity-50" />
                 )}
 
                 <Button
+                    aria-haspopup="dialog"
+                    aria-label={ariaLabel}
                     className="whitespace-nowrap"
                     isDisabled={isAddingToCart}
                     size="large"
+                    title={t('Add to cart')}
                     tid={TIDs.pages_productdetail_addtocart_button}
                     variant={isWatchdogButtonVisible ? 'inverted' : 'primary'}
                     onClick={onAddToCartHandler}

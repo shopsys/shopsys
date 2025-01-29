@@ -13,15 +13,13 @@ export const ProductDetailAvailabilityList: FC<ProductDetailAvailabilityListProp
 
     return (
         <div className="vl:max-w-xl">
-            <div className="text-xl font-bold">{t('Availability in stores')}</div>
-
             <ul>
                 {storeAvailabilities.map(
                     (storeAvailability, index) =>
                         storeAvailability.store && (
                             <li
                                 key={index}
-                                className="flex w-full items-center justify-between gap-4 border-b border-borderAccent py-4"
+                                className="border-border-default flex w-full items-center justify-between gap-4 border-b py-4"
                             >
                                 <strong className="w-36">{storeAvailability.store.storeName}</strong>
 
@@ -29,9 +27,9 @@ export const ProductDetailAvailabilityList: FC<ProductDetailAvailabilityListProp
                                     className={twJoin(
                                         'flex-1 pr-3 text-sm',
                                         storeAvailability.availabilityStatus === TypeAvailabilityStatusEnum.InStock &&
-                                            'text-availabilityInStock',
+                                            'text-availability-in-stock',
                                         storeAvailability.availabilityStatus ===
-                                            TypeAvailabilityStatusEnum.OutOfStock && 'text-availabilityOutOfStock',
+                                            TypeAvailabilityStatusEnum.OutOfStock && 'text-availability-out-of-stock',
                                     )}
                                 >
                                     {storeAvailability.availabilityInformation}
@@ -41,6 +39,9 @@ export const ProductDetailAvailabilityList: FC<ProductDetailAvailabilityListProp
                                     className="ml-auto flex items-center"
                                     href={storeAvailability.store.slug}
                                     type="store"
+                                    aria-label={t('Store detail for {{storeName}}', {
+                                        storeName: storeAvailability.store.storeName,
+                                    })}
                                 >
                                     {t('Store detail')}
                                 </ExtendedNextLink>
