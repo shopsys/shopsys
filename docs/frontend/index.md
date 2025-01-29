@@ -16,4 +16,3 @@
 - [Page layout design](./page-layout-design.md)
 - [Stylelint settings](./stylelint-settings.md)
 - [hoverIntent component](./hover-intent.md)
-- [Icon function](./icon-function.md)

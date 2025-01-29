@@ -33,8 +33,6 @@ It can be assigned to a menu item in an event subscriber by calling, e.g.
 $menuItem->setExtra('icon', 'cart');
 ```
 
-A list of all supported icons can be found in `docs/generated/webfont-admin-svg.html` in your project (input the name without the `svg-` prefix).
-
 ## Superadmin access
 
 There is an extra boolean attribute `superadmin` supported to allow highlighting of restricted access of the menu.

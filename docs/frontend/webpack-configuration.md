@@ -4,8 +4,6 @@ Webpack configuration for CSS, Images, Svg font is devided by JS Comment `// Fro
 
 ## Config file content description
 
-`const generateWebFont = require('./assets/js/commands/svg/generateWebFont');` - plugin for generating SVG font from optimized SVG files
-
 `yaml = require('js-yaml');` - plugin for loading yaml files to usable array
 
 `fs = require('fs');` - plugin for file system functions (saving files)
@@ -34,88 +32,6 @@ We can specify different design for each domain. This is specified by `styles_di
 ```
 
 ## Encore configuration description
-
-```
-    .addPlugin(new EventHooksPlugin({
-        beforeRun: () => {
-            generateWebFont(
-                'frontend',
-                './assets/public/frontend/svg/*.svg'
-            );
-            generateWebFont(
-                'admin',
-                './assets/public/admin/svg/*.svg'
-            );
-        },
-```
-
-This part generates svg webfonts for admin and frontend. It uses local function `generateWebFont = require('./assets/js/commands/svg/generateWebFont')`. Lets look inside this function.
-
-```
-function generateWebFont (type, svgSourceFolder) {
-
-    optimizeSvg(svgSourceFolder).then(svgFilesPath => {
-        WebfontsGenerator({
-            files: svgFilesPath,
-            dest: 'assets/public/' + type + '/fonts',
-            cssDest: 'assets/public/' + type + '_svg.less',
-            cssFontsUrl: type + '/fonts',
-            fontName: 'svg',
-            fontHeight: '512',
-            fixedWidth: '512',
-            centerHorizontally: true,
-            normalize: true,
-            html: true,
-            htmlDest: 'docs/generated/webfont-' + type + '-svg.html',
-            templateOptions: {
-                baseSelector: '.svg',
-                classPrefix: 'svg-'
-            }
-        }, function (error) {
-            if (error) {
-                console.log(type + ' SVG Fail!', error);
-            } else {
-                console.log(type + ' SVG generated!');
-            }
-        });
-    });
-}
-```
-
-This function configures generating SVG font from optimized svg files.
-Files in this folders are optimized by `optimizeSvg` functions which returns array of files. This array is sent to WebfontsGenerator as `svgFilesPath` to apply this plugin for all svg files.
-
-```
-function optimizeSvg (svgSourceFolder) {
-    return new Promise((resolve, reject) => {
-        return glob(svgSourceFolder, null, (err, svgFiles) => {
-            if (err) {
-                reject(err);
-            }
-
-            svgFiles.forEach(svgFile => {
-                fs.readFile(svgFile, 'utf8', function (err, data) {
-                    if (err) {
-                        throw err;
-                    }
-                    svgo.optimize(data, { path: svgFile }).then(function (result) {
-                        fs.writeFile(svgFile, result.data, function (err) {
-                            if (err) {
-                                console.log('ERROR: SVG icon ' + svgFile + ' optimize failed');
-                                throw err;
-                            }
-                        });
-                    });
-                });
-            });
-
-            resolve(svgFiles);
-        });
-    });
-}
-```
-
-This part loads all svg files from `svgSourceFolder` and aplies `svgo.optimize` function and saves new file.
 
 ```
 Encore
