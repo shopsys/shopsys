@@ -66,7 +66,7 @@
         "use-supercluster": "^1.2.0",
         "uuid": "~9.0.1",
         "wonka": "~6.3.4",
-        "yup": "~1.4.0",
+        "yup": "~1.6.1",
         "zustand": "~4.4.7"
     },
     "devDependencies": {
