@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\FunctionalB2b\CustomerUser;
 
 use App\DataFixtures\Demo\CompanyDataFixture;
+use Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum;
 use Tests\FrontendApiBundle\Functional\Order\MinimalOrderAsAuthenticatedCustomerUserTest;
 use Tests\FrontendApiBundle\Test\GraphQlB2bDomainWithLoginTestCase;
 
@@ -12,6 +13,7 @@ class CustomerUserCatalogUserTest extends GraphQlB2bDomainWithLoginTestCase
 {
     public const string DEFAULT_USER_EMAIL = CompanyDataFixture::B2B_COMPANY_CATALOG_USER_EMAIL;
     protected const string FAKE_UUID = '00000000-0000-0000-0000-000000000000';
+    protected const string VALID_UUID = 'a5801a3e-48fe-40bb-a1af-f0719f40b632';
 
     public function testCartQueryIsNotAllowed(): void
     {
@@ -269,7 +271,8 @@ class CustomerUserCatalogUserTest extends GraphQlB2bDomainWithLoginTestCase
             __DIR__ . '/../../Functional/Complaint/graphql/CreateComplaintMutation.graphql',
             [
                 'input' => [
-                    'orderUuid' => self::FAKE_UUID,
+                    'orderUuid' => self::VALID_UUID,
+                    'resolution' => ComplaintResolutionEnum::FIX,
                     'email' => 'email',
                     'items' => [
                         [

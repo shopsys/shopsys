@@ -1,0 +1,4 @@
+ComplaintResolution:
+    type: object
+    inherits:
+        - 'ComplaintResolutionDecorator'

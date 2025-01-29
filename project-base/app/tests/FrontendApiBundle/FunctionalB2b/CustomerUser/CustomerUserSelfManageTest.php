@@ -11,6 +11,7 @@ use App\DataFixtures\Demo\CustomerUserRoleGroupDataFixture;
 use App\Model\Customer\User\CustomerUser;
 use App\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
+use Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup;
 use Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\Helper\ChangePersonalDataInputProvider;
 use Tests\FrontendApiBundle\Test\GraphQlB2bDomainWithLoginTestCase;
@@ -224,6 +225,7 @@ class CustomerUserSelfManageTest extends GraphQlB2bDomainWithLoginTestCase
             [
                 'input' => [
                     'orderUuid' => $order->getUuid(),
+                    'resolution' => ComplaintResolutionEnum::FIX,
                     'email' => self::COMPLAINT_EMAIL,
                     'items' => [
                         [

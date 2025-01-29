@@ -800,6 +800,8 @@ export type TypeCompanyCustomerUser = TypeBaseCustomerUser & {
 
 export type TypeComplaint = {
   __typename?: 'Complaint';
+  /** Number of the bank account if the resolution is money return */
+  bankAccountNumber: Maybe<Scalars['String']['output']>;
   /** Date and time when the complaint was created */
   createdAt: Scalars['DateTime']['output'];
   /** City name for delivery */
@@ -828,6 +830,8 @@ export type TypeComplaint = {
   number: Scalars['String']['output'];
   /** Order for which the complaint was created */
   order: Maybe<TypeOrder>;
+  /** Resolution of the complaint */
+  resolution: TypeComplaintResolution;
   /** Status of the complaint */
   status: Scalars['String']['output'];
   /** UUID */
@@ -855,6 +859,8 @@ export type TypeComplaintEdge = {
 };
 
 export type TypeComplaintInput = {
+  /** Bank account number for money return */
+  bankAccountNumber: InputMaybe<Scalars['String']['input']>;
   /** Delivery address */
   deliveryAddress: TypeDeliveryAddressInput;
   /** The customer's email address */
@@ -865,6 +871,8 @@ export type TypeComplaintInput = {
   manualDocumentNumber: InputMaybe<Scalars['String']['input']>;
   /** UUID of the order */
   orderUuid: InputMaybe<Scalars['Uuid']['input']>;
+  /** Chosen resolution from complaintResolutionQuery */
+  resolution: Scalars['String']['input'];
 };
 
 export type TypeComplaintItem = {
@@ -903,6 +911,14 @@ export type TypeComplaintItemInput = {
   orderItemUuid: InputMaybe<Scalars['Uuid']['input']>;
   /** Quantity of the complaint item */
   quantity: Scalars['Int']['input'];
+};
+
+export type TypeComplaintResolution = {
+  __typename?: 'ComplaintResolution';
+  /** Localized name of the resolution */
+  name: Scalars['String']['output'];
+  /** Constant string value of the resolution */
+  value: Scalars['String']['output'];
 };
 
 export type TypeContactFormInput = {
@@ -2635,6 +2651,8 @@ export type TypeQuery = {
   category: Maybe<TypeCategory>;
   /** Returns complaint filtered using UUID */
   complaint: TypeComplaint;
+  /** Returns complaint resolutions variants */
+  complaintResolution: Array<TypeComplaintResolution>;
   /** Returns list of complaints that can be paginated using `first`, `last`, `before` and `after` keywords */
   complaints: TypeComplaintConnection;
   /** Check if customer can be registered with provided data */

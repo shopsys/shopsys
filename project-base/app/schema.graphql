@@ -659,6 +659,8 @@ type CompanyCustomerUser implements BaseCustomerUser {
 }
 
 type Complaint {
+  "Number of the bank account if the resolution is money return"
+  bankAccountNumber: String
   "Date and time when the complaint was created"
   createdAt: DateTime!
   "City name for delivery"
@@ -687,6 +689,8 @@ type Complaint {
   number: String!
   "Order for which the complaint was created"
   order: Order
+  "Resolution of the complaint"
+  resolution: ComplaintResolution!
   "Status of the complaint"
   status: String!
   "UUID"
@@ -712,6 +716,8 @@ type ComplaintEdge {
 }
 
 input ComplaintInput {
+  "Bank account number for money return"
+  bankAccountNumber: String = null
   "Delivery address"
   deliveryAddress: DeliveryAddressInput!
   "The customer's email address"
@@ -722,6 +728,8 @@ input ComplaintInput {
   manualDocumentNumber: String = null
   "UUID of the order"
   orderUuid: Uuid = null
+  "Chosen resolution from complaintResolutionQuery"
+  resolution: String!
 }
 
 type ComplaintItem {
@@ -754,6 +762,13 @@ input ComplaintItemInput {
   orderItemUuid: Uuid
   "Quantity of the complaint item"
   quantity: Int!
+}
+
+type ComplaintResolution {
+  "Localized name of the resolution"
+  name: String!
+  "Constant string value of the resolution"
+  value: String!
 }
 
 input ContactFormInput {
@@ -2174,6 +2189,8 @@ type Query {
     "Complaint number"
     number: String!
   ): Complaint!
+  "Returns complaint resolutions variants"
+  complaintResolution: [ComplaintResolution!]!
   "Returns list of complaints that can be paginated using `first`, `last`, `before` and `after` keywords"
   complaints(after: String, before: String, first: Int, last: Int, searchInput: SearchInput): ComplaintConnection!
   "Check if customer can be registered with provided data"

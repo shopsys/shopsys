@@ -12,10 +12,12 @@ class ComplaintFactory
     /**
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade $complaintStatusFacade
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum $complaintResolutionEnum
      */
     public function __construct(
         protected readonly EntityNameResolver $entityNameResolver,
         protected readonly ComplaintStatusFacade $complaintStatusFacade,
+        protected readonly ComplaintResolutionEnum $complaintResolutionEnum,
     ) {
     }
 
@@ -33,6 +35,10 @@ class ComplaintFactory
         }
 
         $entityClassName = $this->entityNameResolver->resolve(Complaint::class);
+
+        if (!$this->complaintResolutionEnum->isMoneyReturn($complaintData->resolution)) {
+            $complaintData->bankAccountNumber = null;
+        }
 
         return new $entityClassName($complaintData, $complaintItems);
     }

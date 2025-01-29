@@ -20,5 +20,10 @@ mutation CreateComplaint($input: ComplaintInput!) {
         order {
             uuid
         }
+        resolution {
+            name
+            value
+        }
+        bankAccountNumber
     }
 }

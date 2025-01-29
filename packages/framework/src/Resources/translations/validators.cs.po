@@ -25,6 +25,12 @@ msgstr "Tato částka musí být větší než nula."
 msgid "At least two domains must be selected"
 msgstr "Musí být vybrány alespoň dvě domény"
 
+msgid "Bank account number can contain only letters, numbers, slashes and dashes"
+msgstr "Číslo bankovního účtu může obsahovat pouze písmena, čísla, lomítka a pomlčky"
+
+msgid "Bank account number cannot be longer than {{ limit }} characters"
+msgstr "Číslo bankovního účtu nesmí být delší než {{ limit }} znaků"
+
 msgid "Billing address company number {{ company_number }} already exists for domain {{ domain_id }}."
 msgstr "IČO {{ company_number }} již pro doménu {{ domain_id }} existuje."
 
@@ -259,6 +265,9 @@ msgstr "Vložte, prosím, alespoň jeden limit se slevou"
 msgid "Please enter at least one price"
 msgstr "Zadejte prosím aspoň jednu cenu"
 
+msgid "Please enter bank account number"
+msgstr "Prosím vyplňte číslo bankovního účtu"
+
 msgid "Please enter city"
 msgstr "Vyplňte prosím město"
 
@@ -317,7 +326,7 @@ msgid "Please enter email"
 msgstr "Vyplňte prosím e-mail"
 
 msgid "Please enter email address"
-msgstr ""
+msgstr "Vyplňte prosím e-mailovou adresu"
 
 msgid "Please enter email content"
 msgstr "Vyplňte prosím text e-mailu"

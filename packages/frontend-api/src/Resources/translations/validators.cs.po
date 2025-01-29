@@ -4,6 +4,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
 
+msgid "Bank account number can contain only letters, numbers, slashes and dashes"
+msgstr "Číslo bankovního účtu může obsahovat pouze písmena, čísla, lomítka a pomlčky"
+
+msgid "Bank account number cannot be longer than {{ limit }} characters"
+msgstr "Číslo bankovního účtu nesmí být delší než {{ limit }} znaků"
+
 msgid "Billing address company number {{ company_number }} already exists. Contact customer support."
 msgstr "Fakturační adresa s IČO {{ company_number }} již existuje. Kontaktujte zákaznickou podporu."
 
@@ -204,6 +210,15 @@ msgstr "Množství musí být celé číslo"
 
 msgid "Quantity must be greater than 0"
 msgstr "Množství musí být větší než 0"
+
+msgid "Resolution is required"
+msgstr "Způsob řešení je povinný"
+
+msgid "Selected complaint resolution is not supported"
+msgstr "Zvolený způsob řešení není podporován"
+
+msgid "Selected complaint resolution requires bank account number to be filled"
+msgstr "Zvolený způsob vyřešení vyžaduje vyplnění čísla bankovního účtu"
 
 msgid "Selected payment price has changed"
 msgstr "Cena vybrané dopravy se změnila"

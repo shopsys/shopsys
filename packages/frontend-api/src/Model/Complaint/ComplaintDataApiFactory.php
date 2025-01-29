@@ -34,6 +34,8 @@ class ComplaintDataApiFactory
      * @param string $number
      * @param \Shopsys\FrameworkBundle\Model\Order\Order|null $order
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData[] $complaintItems
+     * @param string $resolution
+     * @param string|null $bankAccountNumber
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Complaint\ComplaintData
      */
@@ -42,6 +44,8 @@ class ComplaintDataApiFactory
         string $number,
         ?Order $order,
         array $complaintItems,
+        string $resolution,
+        ?string $bankAccountNumber = null,
         ?CustomerUser $customerUser = null,
     ): ComplaintData {
         $input = $argument['input'];
@@ -51,6 +55,8 @@ class ComplaintDataApiFactory
         $complaintData->order = $order;
         $complaintData->manualDocumentNumber = $input['manualDocumentNumber'];
         $complaintData->domainId = $order?->getDomainId() ?? $this->domain->getId();
+        $complaintData->resolution = $resolution;
+        $complaintData->bankAccountNumber = $bankAccountNumber;
         $complaintData->customerUser = $customerUser;
         $complaintData->complaintItems = $complaintItems;
 

@@ -38,7 +38,7 @@ class Version20240910054629 extends AbstractMigration implements ContainerAwareI
                 'UPDATE mail_templates SET body = :body WHERE name = \'complaint_status_1\' AND domain_id = :domainId',
                 [
                     'body' => '<div style="box-sizing: border-box; padding: 10px;"><div class="gjs-text-ckeditor">' .
-                        t('Dear customer, <br /><br />Your complaint with number {complaint_number} from order number {order_number} created {date} is being processed. For more information, visit <a href="{complaint_detail_url}">complaint detail</a>.<br /><br />Do you need anything else? Visit our <a href="{url}">website</a>.', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale) .
+                        t('Dear customer, <br /><br />Your complaint with number {complaint_number} from order number {order_number} created {date} with preferred resolution {complaint_resolution} is being processed. For more information, visit <a href="{complaint_detail_url}">complaint detail</a>.<br /><br />Do you need anything else? Visit our <a href="{url}">website</a>.', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale) .
                         '</div></div>',
                     'domainId' => $domainId,
                 ],
@@ -54,7 +54,7 @@ class Version20240910054629 extends AbstractMigration implements ContainerAwareI
                 'UPDATE mail_templates SET body = :body WHERE name = \'complaint_status_2\' AND domain_id = :domainId',
                 [
                     'body' => '<div style="box-sizing: border-box; padding: 10px;"><div class="gjs-text-ckeditor">' .
-                        t('Dear customer, <br /><br />Your complaint with number {complaint_number} from order number {order_number} created {date} has been finished. For more information, visit <a href="{complaint_detail_url}">complaint detail</a>.<br /><br />Do you need anything else? Visit our <a href="{url}">website</a>.', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale) .
+                        t('Dear customer, <br /><br />Your complaint with number {complaint_number} from order number {order_number} created {date} with preferred resolution {complaint_resolution} has been finished. For more information, visit <a href="{complaint_detail_url}">complaint detail</a>.<br /><br />Do you need anything else? Visit our <a href="{url}">website</a>.', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $domainLocale) .
                         '</div></div>',
                     'domainId' => $domainId,
                 ],

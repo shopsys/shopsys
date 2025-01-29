@@ -13,8 +13,10 @@ use Shopsys\FrameworkBundle\Form\DisplayOnlyDomainIconType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyOrderType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\GroupType;
+use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintData;
+use Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
@@ -23,23 +25,28 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class ComplaintFormType extends AbstractType
 {
+    protected const string VALIDATION_GROUP_TYPE_MONEY_RETURN = 'typeMoneyReturn';
+
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusFacade $complaintStatusFacade
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum $complaintResolutionEnum
      */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
         protected readonly CountryFacade $countryFacade,
         protected readonly ComplaintStatusFacade $complaintStatusFacade,
+        protected readonly ComplaintResolutionEnum $complaintResolutionEnum,
     ) {
     }
 
@@ -69,6 +76,18 @@ class ComplaintFormType extends AbstractType
                     'novalidate' => 'novalidate',
                 ],
                 'constraints' => [new Constraints\Callback([$this, 'validateQuantityIsLessOrEqualThanOrdered'])],
+                'validation_groups' => function (FormInterface $form) {
+                    $validationGroups = [ValidationGroup::VALIDATION_GROUP_DEFAULT];
+
+                    /** @var \Shopsys\FrameworkBundle\Model\Complaint\ComplaintData $complaintData */
+                    $complaintData = $form->getData();
+
+                    if ($complaintData->resolution === $this->complaintResolutionEnum::MONEY_RETURN) {
+                        $validationGroups[] = static::VALIDATION_GROUP_TYPE_MONEY_RETURN;
+                    }
+
+                    return $validationGroups;
+                },
             ]);
     }
 
@@ -98,7 +117,6 @@ class ComplaintFormType extends AbstractType
                     'data' => $complaint->getDomainId(),
                 ]);
         }
-
         $builderBasicInformationGroup
             ->add('number', DisplayOnlyType::class, [
                 'label' => t('Complaint number'),
@@ -116,6 +134,39 @@ class ComplaintFormType extends AbstractType
                 'choice_value' => 'id',
                 'multiple' => false,
                 'expanded' => false,
+            ])
+            ->add('resolution', ChoiceType::class, [
+                'label' => t('Resolution'),
+                'required' => true,
+                'choices' => $this->complaintResolutionEnum->getAllIndexedByTranslations(),
+                'choice_translation_domain' => false,
+                'multiple' => false,
+                'expanded' => false,
+                'attr' => [
+                    'class' => 'js-complaint-resolution',
+                ],
+            ])
+            ->add('bankAccountNumber', TextType::class, [
+                'label' => t('Bank account number'),
+                'constraints' => [
+                    new Constraints\NotBlank([
+                        'message' => 'Please enter bank account number',
+                        'groups' => [static::VALIDATION_GROUP_TYPE_MONEY_RETURN],
+                    ]),
+                    new Constraints\Length([
+                        'max' => 34,
+                        'maxMessage' => 'Bank account number cannot be longer than {{ limit }} characters',
+                        'groups' => [static::VALIDATION_GROUP_TYPE_MONEY_RETURN],
+                    ]),
+                    new Constraints\Regex([
+                        'pattern' => '/^[a-zA-Z0-9\/\-]+$/',
+                        'message' => 'Bank account number can contain only letters, numbers, slashes and dashes',
+                        'groups' => [static::VALIDATION_GROUP_TYPE_MONEY_RETURN],
+                    ]),
+                ],
+                'attr' => [
+                    'class' => 'js-complaint-bank-account-number',
+                ],
             ])
             ->add('order', DisplayOnlyOrderType::class, [
                 'label' => t('Order or document number'),

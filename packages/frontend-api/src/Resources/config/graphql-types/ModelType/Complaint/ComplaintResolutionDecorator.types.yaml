@@ -1,0 +1,11 @@
+ComplaintResolutionDecorator:
+    type: object
+    decorator: true
+    config:
+        fields:
+            name:
+                type: "String!"
+                description: "Localized name of the resolution"
+            value:
+                type: "String!"
+                description: "Constant string value of the resolution"

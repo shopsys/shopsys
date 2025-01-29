@@ -1,0 +1,6 @@
+query GetComplaintResolutionQuery {
+    complaintResolution {
+        name
+        value
+    }
+}

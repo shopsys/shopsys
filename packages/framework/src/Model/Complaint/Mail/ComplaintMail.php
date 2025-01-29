@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
+use Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
 use Shopsys\FrameworkBundle\Model\Mail\MessageData;
@@ -24,18 +25,21 @@ class ComplaintMail implements MessageFactoryInterface
     public const string VARIABLE_DATE = '{date}';
     public const string VARIABLE_URL = '{url}';
     public const string VARIABLE_COMPLAINT_DETAIL_URL = '{complaint_detail_url}';
+    public const string VARIABLE_COMPLAINT_RESOLUTION = '{complaint_resolution}';
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum $complaintResolutionEnum
      */
     public function __construct(
         protected readonly Setting $setting,
         protected readonly DomainRouterFactory $domainRouterFactory,
         protected readonly Domain $domain,
         protected readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
+        protected readonly ComplaintResolutionEnum $complaintResolutionEnum,
     ) {
     }
 
@@ -85,6 +89,7 @@ class ComplaintMail implements MessageFactoryInterface
             self::VARIABLE_ORDER_NUMBER => htmlspecialchars($complaint->getOrderNumberOrManualDocumentNumber(), ENT_QUOTES),
             self::VARIABLE_DATE => $this->getFormattedDateTime($complaint),
             self::VARIABLE_URL => $router->generate('front_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL),
+            self::VARIABLE_COMPLAINT_RESOLUTION => array_search($complaint->getResolution(), $this->complaintResolutionEnum->getAllIndexedByTranslations(), true),
         ];
     }
 

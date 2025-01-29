@@ -9,17 +9,21 @@ use App\Model\Customer\User\CustomerUser;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
+use Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus;
 
 class ComplaintDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
     public const string COMPLAINT_PREFIX = 'complaint_';
+    public const string COMPLAINT_BANK_ACCOUNT_NUMBER = '6846460001/5500';
 
     /**
      * @param \App\DataFixtures\Demo\Helper\ComplaintHelper $complaintHelper
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum $complaintResolutionEnum
      */
     public function __construct(
         private readonly ComplaintHelper $complaintHelper,
+        private readonly ComplaintResolutionEnum $complaintResolutionEnum,
     ) {
     }
 
@@ -44,6 +48,7 @@ class ComplaintDataFixture extends AbstractReferenceFixture implements Dependent
             $customerUser1,
             $order1,
             $this->getReference(ComplaintStatusDataFixture::COMPLAINT_STATUS_NEW, ComplaintStatus::class),
+            $this->complaintResolutionEnum::FIX,
             [$complaintItem1, $complaintItem2],
         );
         $this->addReference(self::COMPLAINT_PREFIX . 1, $complaint1);
@@ -56,7 +61,9 @@ class ComplaintDataFixture extends AbstractReferenceFixture implements Dependent
             $customerUser1,
             $order2,
             $this->getReference(ComplaintStatusDataFixture::COMPLAINT_STATUS_RESOLVED, ComplaintStatus::class),
+            $this->complaintResolutionEnum::MONEY_RETURN,
             [$complaintItem2],
+            self::COMPLAINT_BANK_ACCOUNT_NUMBER,
         );
         $this->addReference(self::COMPLAINT_PREFIX . 2, $complaint2);
 
@@ -91,6 +98,7 @@ class ComplaintDataFixture extends AbstractReferenceFixture implements Dependent
             $customerUser,
             null,
             $this->getReference(ComplaintStatusDataFixture::COMPLAINT_STATUS_NEW, ComplaintStatus::class),
+            $this->complaintResolutionEnum::FIX,
             [$complaintItemData],
             '42',
         );

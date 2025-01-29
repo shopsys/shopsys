@@ -11,6 +11,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
+use Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus;
 
 class CompanyComplaintDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
@@ -20,9 +21,11 @@ class CompanyComplaintDataFixture extends AbstractReferenceFixture implements De
 
     /**
      * @param \App\DataFixtures\Demo\Helper\ComplaintHelper $complaintHelper
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum $complaintResolutionEnum
      */
     public function __construct(
         private readonly ComplaintHelper $complaintHelper,
+        private readonly ComplaintResolutionEnum $complaintResolutionEnum,
     ) {
     }
 
@@ -85,6 +88,7 @@ class CompanyComplaintDataFixture extends AbstractReferenceFixture implements De
             $customer,
             $order,
             $this->getReference(ComplaintStatusDataFixture::COMPLAINT_STATUS_NEW, ComplaintStatus::class),
+            $this->complaintResolutionEnum::FIX,
             [$complaintItem],
         );
 

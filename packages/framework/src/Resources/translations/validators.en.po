@@ -25,6 +25,12 @@ msgstr ""
 msgid "At least two domains must be selected"
 msgstr ""
 
+msgid "Bank account number can contain only letters, numbers, slashes and dashes"
+msgstr ""
+
+msgid "Bank account number cannot be longer than {{ limit }} characters"
+msgstr ""
+
 msgid "Billing address company number {{ company_number }} already exists for domain {{ domain_id }}."
 msgstr ""
 
@@ -257,6 +263,9 @@ msgid "Please enter at least one discount limit"
 msgstr ""
 
 msgid "Please enter at least one price"
+msgstr ""
+
+msgid "Please enter bank account number"
 msgstr ""
 
 msgid "Please enter city"
