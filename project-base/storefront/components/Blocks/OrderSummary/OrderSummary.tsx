@@ -33,7 +33,7 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoadin
                 <div className="h4 mb-3 font-bold">{t('Your order')}</div>
 
                 <div className="rounded bg-backgroundMore vl:m-0">
-                    <div className="relative flex flex-col px-5 py-3 ">
+                    <div className="relative flex flex-col px-5 py-3">
                         <div className="mb-5">
                             <ul>
                                 {cart.items.map((item) => (

@@ -34,7 +34,7 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
     return (
         <div className="flex w-full flex-row items-center gap-5">
             <div
-                className={twJoin('flex h-12  w-12 items-center', !image && 'hidden')}
+                className={twJoin('flex h-12 w-12 items-center', !image && 'hidden')}
                 tid={TIDs.transport_and_payment_list_item_image}
             >
                 <Image alt={image?.name ?? name} className="max-h-12 w-auto" height={48} src={image?.url} width={48} />
@@ -72,7 +72,7 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                 )}
 
                 {price && isPriceVisible(price.priceWithVat) && (
-                    <div className="block shrink-0 text-sm font-bold lg:hidden ">{formatPrice(price.priceWithVat)}</div>
+                    <div className="block shrink-0 text-sm font-bold lg:hidden">{formatPrice(price.priceWithVat)}</div>
                 )}
             </div>
 

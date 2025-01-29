@@ -17,7 +17,7 @@ export const ComplaintDetailBasicInfo: FC<ComplaintDetailBasicInfoProps> = ({ co
     return (
         <div className="my-6 flex flex-col gap-4 bg-background vl:mb-8">
             <div className="flex items-center justify-between gap-4 rounded-md bg-backgroundMore px-4 py-3 vl:px-6 vl:py-4">
-                <div className="flex  flex-wrap gap-6 gap-y-2 vl:gap-8">
+                <div className="flex flex-wrap gap-6 gap-y-2 vl:gap-8">
                     <ComplaintItemColumnInfo
                         tid={TIDs.complaint_detail_number}
                         title={t('Complaint number')}

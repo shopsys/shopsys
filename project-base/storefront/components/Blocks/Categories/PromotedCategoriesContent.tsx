@@ -37,7 +37,7 @@ export const PromotedCategoriesContent: FC<PromotedCategoriesContentProps> = ({ 
                             href={href}
                             type={linkType}
                             className={twMergeCustom(
-                                'flex cursor-pointer flex-col items-center gap-5 rounded-xl text-center no-underline transition ',
+                                'flex cursor-pointer flex-col items-center gap-5 rounded-xl text-center no-underline transition',
                                 'border border-backgroundMore bg-backgroundMore text-text',
                                 'hover:border-borderAccentLess hover:bg-background hover:text-text hover:no-underline',
                                 'px-6 py-2.5 md:py-4 vl:px-10',
@@ -50,7 +50,7 @@ export const PromotedCategoriesContent: FC<PromotedCategoriesContentProps> = ({ 
                                     tid={TIDs.simple_navigation_image}
                                     className={twJoin(
                                         'relative flex items-center justify-center',
-                                        'size-[60px] lg:size-[100px] vl:size-full ',
+                                        'size-[60px] lg:size-[100px] vl:size-full',
                                         isFirstItemLarge
                                             ? 'vl:max-h-[500px] vl:max-w-[500px]'
                                             : 'lg:max-h-[180px] lg:max-w-[180px]',

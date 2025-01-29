@@ -29,7 +29,7 @@ export const OrderAction: FC<OrderActionProps> = ({
     return (
         <div
             className={twJoin(
-                'flex flex-col flex-wrap items-center lg:w-full lg:flex-row lg:justify-between ',
+                'flex flex-col flex-wrap items-center lg:w-full lg:flex-row lg:justify-between',
                 withGapBottom && 'mb-12 lg:mb-24',
                 withGapTop && 'mt-8',
             )}

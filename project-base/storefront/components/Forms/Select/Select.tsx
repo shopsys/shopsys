@@ -79,7 +79,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
 
     return (
         <>
-            <div className={twMergeCustom('relative w-full ', className)} ref={wrapperRef}>
+            <div className={twMergeCustom('relative w-full', className)} ref={wrapperRef}>
                 <div
                     className={twMergeCustom(
                         'group flex h-14 rounded-md border-2 border-inputBorder bg-inputBackground text-inputText hover:border-inputBorderHovered',

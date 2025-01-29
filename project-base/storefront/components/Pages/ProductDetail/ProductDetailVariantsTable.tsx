@@ -40,7 +40,7 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = ({ variants }
             {variants.map((variant, index) => (
                 <li
                     key={variant.uuid}
-                    className="mx-auto flex w-full max-w-sm flex-col items-center justify-between gap-2 border border-borderAccent p-2 md:max-w-none lg:flex-row lg:border-0 "
+                    className="mx-auto flex w-full max-w-sm flex-col items-center justify-between gap-2 border border-borderAccent p-2 md:max-w-none lg:flex-row lg:border-0"
                     tid={TIDs.pages_productdetail_variant_ + variant.catalogNumber}
                 >
                     <div className="relative h-48 w-full lg:h-16 lg:w-16" tid={TIDs.product_detail_main_image}>
