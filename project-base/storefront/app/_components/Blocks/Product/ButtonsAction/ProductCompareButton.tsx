@@ -3,68 +3,74 @@
 import { addProductToListAction } from 'app/_actions/addProductToListAction';
 import { removeProductFromListAction } from 'app/_actions/removeProductFromListAction';
 import { useUpdateProductListUuid } from 'app/_utils/productLists/useUpdateProductListUuid';
-import { HeartFilledIcon } from 'components/Basic/Icon/HeartFilledIcon';
-import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
+import { CompareFilledIcon } from 'components/Basic/Icon/CompareFilledIcon';
+import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import { useProductList } from 'components/providers/ProductListProvider';
 import { useTranslation } from 'components/providers/TranslationProvider';
 import { TypeProductListTypeEnum } from 'graphql/types';
+import dynamic from 'next/dynamic';
 import { HTMLAttributes, useOptimistic, useTransition } from 'react';
+import { useSessionStore } from 'store/useSessionStore';
 import { ExtractNativePropsFromDefault } from 'types/ExtractNativePropsFromDefault';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 import { twMergeCustom } from 'utils/twMerge';
 
+const ProductComparePopup = dynamic(() =>
+    import('app/_components/Blocks/Popup/ProductComparePopup').then((component) => component.ProductComparePopup),
+);
 type NativeProps = ExtractNativePropsFromDefault<HTMLAttributes<HTMLDivElement>, never, 'className'>;
 
-type ProductWishlistButtonProps = {
+type ProductCompareButtonProps = {
     productUuid: string;
     isWithText?: boolean;
 };
 
-export const ProductWishlistButton: FC<ProductWishlistButtonProps & NativeProps> = ({ productUuid, isWithText }) => {
+export const ProductCompareButton: FC<ProductCompareButtonProps & NativeProps> = ({ productUuid, isWithText }) => {
     const { t } = useTranslation();
     const {
         products: wishedProducts,
         uuid: wishlistUuid,
         addToList,
         removeFromList,
-    } = useProductList(TypeProductListTypeEnum.Wishlist);
-    const isInWishlist = wishedProducts.has(productUuid);
-    const [optimisticIsInWishlist, addOptimisticWishlist] = useOptimistic(isInWishlist);
+    } = useProductList(TypeProductListTypeEnum.Comparison);
+    const isInComparison = wishedProducts.has(productUuid);
+    const [optimisticIsInComparison, addOptimisticComparison] = useOptimistic(isInComparison);
     const [isPending, startTransition] = useTransition();
+    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
-    const updateWishlistUuid = useUpdateProductListUuid(TypeProductListTypeEnum.Wishlist);
+    const updateComparisonUuid = useUpdateProductListUuid(TypeProductListTypeEnum.Comparison);
 
-    const handleAddToWishlist = () => {
+    const handleAddToComparison = () => {
         if (isPending) {
             return;
         }
 
         startTransition(async () => {
-            addOptimisticWishlist(!optimisticIsInWishlist);
+            addOptimisticComparison(!optimisticIsInComparison);
 
             const addProductToListResult = await addProductToListAction({
                 input: {
                     productUuid,
                     productListInput: {
                         uuid: wishlistUuid,
-                        type: TypeProductListTypeEnum.Wishlist,
+                        type: TypeProductListTypeEnum.Comparison,
                     },
                 },
             });
 
             if (addProductToListResult.error) {
-                showErrorMessage(t('Unable to add product to wishlist.'));
-                addOptimisticWishlist(!optimisticIsInWishlist);
+                showErrorMessage(t('Unable to add product to comparison.'));
+                addOptimisticComparison(!optimisticIsInComparison);
                 return;
             }
 
-            showSuccessMessage(t('The item has been added to your wishlist.'));
+            updatePortalContent(<ProductComparePopup />);
             addToList(productUuid);
 
             const newUuid = addProductToListResult.data?.AddProductToList.uuid;
             if (newUuid) {
-                updateWishlistUuid(newUuid);
+                updateComparisonUuid(newUuid);
             }
 
             // TODO: broadcast channel
@@ -72,35 +78,35 @@ export const ProductWishlistButton: FC<ProductWishlistButtonProps & NativeProps>
         });
     };
 
-    const handleRemoveFromWishlist = () => {
+    const handleRemoveFromComparison = () => {
         if (isPending) {
             return;
         }
 
         startTransition(async () => {
-            addOptimisticWishlist(!optimisticIsInWishlist);
+            addOptimisticComparison(!optimisticIsInComparison);
 
             const removeProductFromListResult = await removeProductFromListAction({
                 input: {
                     productUuid,
                     productListInput: {
                         uuid: wishlistUuid,
-                        type: TypeProductListTypeEnum.Wishlist,
+                        type: TypeProductListTypeEnum.Comparison,
                     },
                 },
             });
 
             if (removeProductFromListResult.error) {
-                showErrorMessage(t('Unable to remove product from wishlist.'));
-                addOptimisticWishlist(!optimisticIsInWishlist);
+                showErrorMessage(t('Unable to remove product from comparison.'));
+                addOptimisticComparison(!optimisticIsInComparison);
                 return;
             }
 
-            showSuccessMessage(t('The item has been removed from your wishlist.'));
+            showSuccessMessage(t('Product has been removed from your comparison.'));
             removeFromList(productUuid);
 
             if (!removeProductFromListResult.data?.RemoveProductFromList) {
-                updateWishlistUuid(null);
+                updateComparisonUuid(null);
             }
 
             // TODO: broadcast channel
@@ -111,21 +117,19 @@ export const ProductWishlistButton: FC<ProductWishlistButtonProps & NativeProps>
     return (
         <div
             aria-disabled={isPending}
-            title={optimisticIsInWishlist ? t('Remove product from wishlist') : t('Add product to wishlist')}
+            title={optimisticIsInComparison ? t('Remove product from comparison') : t('Add product to comparison')}
             className={twMergeCustom(
                 'flex cursor-pointer items-center gap-2 text-inputPlaceholder hover:text-inputPlaceholderHovered',
             )}
-            onClick={optimisticIsInWishlist ? handleRemoveFromWishlist : handleAddToWishlist}
+            onClick={optimisticIsInComparison ? handleRemoveFromComparison : handleAddToComparison}
         >
-            {optimisticIsInWishlist ? (
-                <HeartFilledIcon className="size-6 text-activeIconFull" />
+            {optimisticIsInComparison ? (
+                <CompareFilledIcon className="size-6 text-activeIconFull" />
             ) : (
-                <HeartIcon className="size-6" />
+                <CompareIcon className="size-6" />
             )}
             {isWithText && (
-                <span className="text-sm">
-                    {optimisticIsInWishlist ? t('Remove from wishlist') : t('Add to wishlist')}
-                </span>
+                <span className="text-sm">{optimisticIsInComparison ? t('Remove from comparison') : t('Compare')}</span>
             )}
         </div>
     );
