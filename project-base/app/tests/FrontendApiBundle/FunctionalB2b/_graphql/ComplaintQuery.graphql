@@ -1,0 +1,5 @@
+query ComplaintQuery($number: String!) {
+    complaint(number: $number) {
+        uuid
+    }
+}

@@ -1,0 +1,10 @@
+query ComplaintsQuery {
+    complaints {
+        totalCount
+        edges {
+            node {
+                uuid
+            }
+        }
+    }
+}

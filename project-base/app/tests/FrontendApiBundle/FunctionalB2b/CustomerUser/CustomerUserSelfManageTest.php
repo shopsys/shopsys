@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\FunctionalB2b\CustomerUser;
 
+use App\DataFixtures\Demo\CompanyComplaintDataFixture;
 use App\DataFixtures\Demo\CompanyDataFixture;
 use App\DataFixtures\Demo\CompanyOrderDataFixture;
 use App\DataFixtures\Demo\CustomerUserRoleGroupDataFixture;
 use App\Model\Customer\User\CustomerUser;
 use App\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup;
 use Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\Helper\ChangePersonalDataInputProvider;
 use Tests\FrontendApiBundle\Test\GraphQlB2bDomainWithLoginTestCase;
@@ -135,5 +137,48 @@ class CustomerUserSelfManageTest extends GraphQlB2bDomainWithLoginTestCase
 
         $this->assertSame('order-not-found', $extensions['userCode']);
         $this->assertSame(404, $extensions['code']);
+    }
+
+    /**
+     * @see \Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\CustomerUserOwnerTest::testGetAnotherUserComplaint()
+     */
+    public function testGetAnotherUserComplaintReturnsNotFound(): void
+    {
+        $complaint = $this->getReferenceForDomain(CompanyComplaintDataFixture::COMPANY_OWNER_COMPLAINT, $this->domain->getId(), Complaint::class);
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/ComplaintQuery.graphql', [
+            'number' => $complaint->getNumber(),
+        ]);
+
+        $this->assertResponseContainsArrayOfErrors($response);
+
+        $errors = $this->getErrorsFromResponse($response);
+
+        $this->assertArrayHasKey(0, $errors);
+        $this->assertArrayHasKey('extensions', $errors[0]);
+
+        $extensions = $errors[0]['extensions'];
+
+        $this->assertSame('complaint-not-found', $extensions['userCode']);
+        $this->assertSame(404, $extensions['code']);
+    }
+
+    /**
+     * @see \Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\CustomerUserOwnerTest::testGetComplaintsReturnsAllCompanyComplaints()
+     */
+    public function testGetComplaintsReturnsOwnComplaintsOnly(): void
+    {
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/ComplaintsQuery.graphql');
+        $responseData = $this->getResponseDataForGraphQlType($response, 'complaints');
+
+        $this->assertSame(1, $responseData['totalCount']);
+
+        $expectedComplaintsData = [
+            ['node' => ['uuid' => $this->getReferenceForDomain(CompanyComplaintDataFixture::COMPANY_USER_COMPLAINT, $this->domain->getId(), Complaint::class)->getUuid()]],
+        ];
+        $this->assertSame(
+            $expectedComplaintsData,
+            $responseData['edges'],
+        );
     }
 }

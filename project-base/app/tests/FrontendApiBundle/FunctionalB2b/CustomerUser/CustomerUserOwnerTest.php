@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\FunctionalB2b\CustomerUser;
 
+use App\DataFixtures\Demo\CompanyComplaintDataFixture;
 use App\DataFixtures\Demo\CompanyDataFixture;
 use App\DataFixtures\Demo\CompanyOrderDataFixture;
 use App\DataFixtures\Demo\CustomerUserDataFixture;
@@ -11,6 +12,7 @@ use App\DataFixtures\Demo\CustomerUserRoleGroupDataFixture;
 use App\Model\Customer\User\CustomerUser;
 use App\Model\Customer\User\CustomerUserDataFactory;
 use App\Model\Order\Order;
+use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup;
@@ -242,6 +244,40 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
 
         $this->assertSame($anotherUserOrder->getUuid(), $responseData['uuid']);
         $this->assertSame($anotherUserOrder->getEmail(), $responseData['email']);
+    }
+
+    /**
+     * @see \Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\CustomerUserSelfManageTest::testGetAnotherUserComplaintReturnsNotFound()
+     */
+    public function testGetAnotherUserComplaint(): void
+    {
+        $complaint = $this->getReferenceForDomain(CompanyComplaintDataFixture::COMPANY_USER_COMPLAINT, $this->domain->getId(), Complaint::class);
+
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/ComplaintQuery.graphql', [
+            'number' => $complaint->getNumber(),
+        ]);
+
+        $this->assertSame($complaint->getUuid(), $this->getResponseDataForGraphQlType($response, 'complaint')['uuid']);
+    }
+
+    /**
+     * @see \Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\CustomerUserSelfManageTest::testGetComplaintsReturnsOwnComplaintsOnly()
+     */
+    public function testGetComplaintsReturnsAllCompanyComplaints(): void
+    {
+        $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/ComplaintsQuery.graphql');
+        $responseData = $this->getResponseDataForGraphQlType($response, 'complaints');
+
+        $this->assertSame(2, $responseData['totalCount']);
+
+        $expectedComplaintsData = [
+            ['node' => ['uuid' => $this->getReferenceForDomain(CompanyComplaintDataFixture::COMPANY_USER_COMPLAINT, $this->domain->getId(), Complaint::class)->getUuid()]],
+            ['node' => ['uuid' => $this->getReferenceForDomain(CompanyComplaintDataFixture::COMPANY_OWNER_COMPLAINT, $this->domain->getId(), Complaint::class)->getUuid()]],
+        ];
+        $this->assertSame(
+            $expectedComplaintsData,
+            $responseData['edges'],
+        );
     }
 
     /**
