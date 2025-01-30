@@ -19,8 +19,7 @@
         "jquery-ui": "1.12.1",
         "jquery-ui-touch-punch": "^0.2.3",
         "magnific-popup": "^1.1.0",
-        "select2": "^4.0.12",
-        "waypoints": "^4.0.1"
+        "select2": "^4.0.12"
     },
     "devDependencies": {
         "@babel/preset-env": "^7.14.4",
