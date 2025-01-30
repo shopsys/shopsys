@@ -1,5 +1,6 @@
 import Register from '../../common/utils/Register';
 import Translator from 'bazinga-translator';
+import InfoCircle from 'icons/tabler/info-circle-filled.svg';
 
 export default class FormChangeInfo {
 
@@ -52,7 +53,7 @@ export default class FormChangeInfo {
             $fixedBarIn.prepend(
                 '<div class="window-fixed-bar__item">'
                     + '<div id="js-form-change-info" class="window-fixed-bar__item__cell">'
-                        + '<strong><i class="window-fixed-bar__item__cell__icon svg svg-info"></i>' + textToShow + '</strong>'
+                        + '<strong>' + InfoCircle + textToShow + '</strong>'
                     + '</div>'
                 + '</div>');
         } else {

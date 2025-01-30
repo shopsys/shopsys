@@ -1,6 +1,8 @@
 import '../../common/bootstrap/tooltip';
 import Register from '../../common/utils/Register';
 import Translator from 'bazinga-translator';
+import Check from 'icons/tabler/check.svg';
+import Denied from 'icons/tabler/circle-x-filled.svg';
 
 export default class PickerWindow {
     constructor ($addButton) {
@@ -20,7 +22,7 @@ export default class PickerWindow {
         $addButton
             .addClass('cursor-auto btn--success').removeClass('btn--plus btn--light')
             .find('.js-picker-label').text(Translator.trans('Added')).end()
-            .find('.js-picker-icon').addClass('svg svg-checked').empty().end()
+            .find('.js-picker-icon').html(Check).end()
             .on('click.removeItem', () => {
                 this.onClickOnAddedButton($addButton, originalLabelText, originalIconText);
             })
@@ -36,8 +38,8 @@ export default class PickerWindow {
                 title: Translator.trans('Not possible to assign to itself'),
                 placement: 'left'
             })
-            .find('.js-picker-label').text(Translator.trans('Unable to add'))
-            .find('.js-picker-icon').removeClass('svg-circle-plus in-icon in-icon--add').addClass('svg-circle-remove in-icon in-icon--denied').end()
+            .find('.js-picker-label').text(Translator.trans('Unable to add')).end()
+            .find('.js-picker-icon').html(Denied).end()
             .click(() => false);
     }
 
@@ -63,7 +65,7 @@ export default class PickerWindow {
         $addButton
             .addClass('btn--plus btn--light').removeClass('cursor-auto btn--success')
             .find('.js-picker-label').text(originalLabelText).end()
-            .find('.js-picker-icon').removeClass('svg svg-checked').text(originalIconText).end()
+            .find('.js-picker-icon').text(originalIconText).end()
             .on('click.addItem', (event) => this.onClickAddButton(event))
             .click(() => false);
     }

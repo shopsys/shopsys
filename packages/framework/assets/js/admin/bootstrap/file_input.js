@@ -1,4 +1,5 @@
 import Translator from 'bazinga-translator';
+import IconFolder from 'icons/tabler/folder-filled.svg';
 
 /*
   Bootstrap - File Input
@@ -40,7 +41,7 @@ import Translator from 'bazinga-translator';
 
             // Now we're going to wrap that input field with a Bootstrap button.
             // The input will actually still be there, it will just be float above and transparent (done with the CSS).
-            $elem.wrap('<a class="js-fileInputWrapper btn ' + className + '"></a>').parent().prepend($('<span></span>').html(buttonWord)).prepend($('<i class="svg svg-folder btn__icon"></i>'));
+            $elem.wrap('<a class="js-fileInputWrapper btn ' + className + '"></a>').parent().prepend($('<span></span>').html(buttonWord)).prepend($('<span class="btn__icon">' + IconFolder + '</span>'));
         })
 
         // After we have found all of the file inputs let's apply a listener for tracking the mouse movement.
