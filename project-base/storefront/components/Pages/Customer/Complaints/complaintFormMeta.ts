@@ -1,5 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
+    validateBankAccountNumber,
     validateCity,
     validateCompanyName,
     validateComplaintManualDocumentNumber,
@@ -11,6 +12,7 @@ import {
     validateManualComplaintItemCatnum,
     validateManualComplaintItemName,
     validatePostcode,
+    validateResolution,
     validateStreet,
     validateTelephoneRequired,
 } from 'components/Forms/validationRules';
@@ -18,6 +20,8 @@ import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 import { FieldError, UseFormReturn } from 'react-hook-form';
 import { ComplaintFormType } from 'types/form';
+import { SelectOptionType } from 'types/selectOptions';
+import { isResolutionMoneyReturn } from 'utils/complaints/isResolutionMoneyReturn';
 import { useShopsysForm } from 'utils/forms/useShopsysForm';
 import * as Yup from 'yup';
 
@@ -37,6 +41,12 @@ export const useComplaintForm = (
             files: validateImageFile(t),
             deliveryAddressUuid: Yup.string().nullable(),
             email: validateEmail(t),
+            resolution: validateResolution(t),
+            bankAccountNumber: Yup.string().when('resolution', {
+                is: (resolution: SelectOptionType) => isResolutionMoneyReturn(resolution),
+                then: () => validateBankAccountNumber(t),
+                otherwise: (schema) => schema,
+            }),
             firstName: Yup.string().when('deliveryAddressUuid', {
                 is: (deliveryAddressUuid: string) => deliveryAddressUuid === '',
                 then: () => validateFirstName(t),
@@ -104,6 +114,11 @@ export const useComplaintForm = (
         manualDocumentNumber: '',
         manualComplaintItemName: '',
         manualComplaintItemCatnum: '',
+        resolution: {
+            label: '',
+            value: '',
+        },
+        bankAccountNumber: '',
     };
 
     return [useShopsysForm<ComplaintFormType>(resolver, defaultValues), defaultValues];
@@ -215,11 +230,22 @@ export const useComplaintFormMeta = (formProviderMethods: UseFormReturn<Complain
                     label: t('Catalog number'),
                     errorMessage: errors.manualComplaintItemCatnum?.message,
                 },
+                resolution: {
+                    name: 'resolution' as const,
+                    label: t('Resolution'),
+                    errorMessage: errors.resolution?.message,
+                },
+                bankAccountNumber: {
+                    name: 'bankAccountNumber' as const,
+                    label: t('Bank account number'),
+                    errorMessage: errors.bankAccountNumber?.message,
+                },
             },
         }),
         [
             errors.quantity?.message,
             errors.description?.message,
+            errors.bankAccountNumber?.message,
             errors.files?.message,
             errors.email?.message,
             errors.firstName?.message,
@@ -233,6 +259,7 @@ export const useComplaintFormMeta = (formProviderMethods: UseFormReturn<Complain
             errors.manualDocumentNumber?.message,
             errors.manualComplaintItemName?.message,
             errors.manualComplaintItemCatnum?.message,
+            errors.resolution,
             t,
         ],
     );

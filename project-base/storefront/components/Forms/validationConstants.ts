@@ -16,4 +16,5 @@ export const VALIDATION_CONSTANTS = {
     complaintManualDocumentNumberMaxLength: 255,
     manualComplaintItemNameMaxLength: 255,
     manualComplaintItemCatnumMaxLength: 255,
+    maxBankAccountNumberLength: 34,
 } as const;

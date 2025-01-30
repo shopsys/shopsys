@@ -108,6 +108,7 @@ export type ComplaintFormType = {
     quantity: string;
     description: string;
     files: File[];
+    bankAccountNumber: string | null;
     deliveryAddressUuid: string | null;
     firstName: string;
     lastName: string;
@@ -116,6 +117,7 @@ export type ComplaintFormType = {
     street: string;
     city: string;
     postcode: string;
+    resolution: SelectOptionType;
     country: SelectOptionType;
 };
 

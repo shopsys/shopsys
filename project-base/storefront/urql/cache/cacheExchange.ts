@@ -34,6 +34,7 @@ export const cache = cacheExchange({
         CompanyCustomerUser: keyUuid,
         Complaint: keyNull,
         ComplaintItem: keyNull,
+        ComplaintResolution: keyNull,
         Country: keyCode,
         CustomerUser: keyUuid,
         CustomerUserRoleGroup: keyUuid,

@@ -3,6 +3,7 @@ import { TIDs } from 'cypress/tids';
 import { TypeComplaintDetailFragment } from 'graphql/requests/complaints/fragments/ComplaintDetailFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { ReactNode } from 'react';
+import { isResolutionMoneyReturn } from 'utils/complaints/isResolutionMoneyReturn';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -29,6 +30,10 @@ export const ComplaintDetailBasicInfo: FC<ComplaintDetailBasicInfoProps> = ({ co
                         value={formatDate(complaint.createdAt)}
                     />
                     <ComplaintItemColumnInfo title={t('Status')} value={complaint.status} />
+                    <ComplaintItemColumnInfo title={t('Resolution')} value={complaint.resolution.name} />
+                    {isResolutionMoneyReturn(complaint.resolution) && (
+                        <ComplaintItemColumnInfo title={t('Bank account number')} value={complaint.bankAccountNumber} />
+                    )}
                 </div>
             </div>
             <div className="rounded-md border-[5px] border-borderLess bg-background p-7">
