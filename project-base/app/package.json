@@ -58,7 +58,7 @@
     },
     "dependencies": {
         "@claviska/jquery-minicolors": "^2.3.4",
-        "@shopsys/framework": "17.0.0-dev.1",
+        "@shopsys/framework": "17.0.0-dev.2",
         "@yaireo/tagify": "^4.25.1",
         "bazinga-translator": "^2.6.6",
         "buffer": "^6.0.3",
