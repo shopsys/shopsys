@@ -32,18 +32,4 @@ class Flag extends BaseFlag
     {
         parent::setData($flagData);
     }
-
-    /**
-     * @return string[]
-     */
-    public function getNames(): array
-    {
-        $namesByLocale = [];
-
-        foreach ($this->translations as $translation) {
-            $namesByLocale[$translation->getLocale()] = $translation->getName();
-        }
-
-        return $namesByLocale;
-    }
 }

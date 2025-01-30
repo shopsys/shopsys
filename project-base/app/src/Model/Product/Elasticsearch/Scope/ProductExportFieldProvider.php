@@ -19,5 +19,4 @@ class ProductExportFieldProvider extends BaseProductExportFieldProvider
     public const string SLUG = 'slug';
     public const string RELATED_PRODUCTS = 'related_products';
     public const string BREADCRUMB = 'breadcrumb';
-    public const string PRODUCT_VIDEOS = 'product_videos';
 }

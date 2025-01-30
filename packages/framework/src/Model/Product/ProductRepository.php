@@ -521,4 +521,18 @@ class ProductRepository
 
         return $queryBuilder->getQuery()->getOneOrNullResult();
     }
+
+    /**
+     * @param string[] $catnums
+     * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
+     */
+    public function findAllByCatnums(array $catnums): array
+    {
+        $queryBuilder = $this->getProductRepository()
+            ->createQueryBuilder('p', 'p.catnum')
+            ->andWhere('p.catnum IN (:catnum)')
+            ->setParameter('catnum', $catnums);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
 }

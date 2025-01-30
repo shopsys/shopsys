@@ -106,6 +106,20 @@ class Flag extends AbstractTranslatableEntity
     }
 
     /**
+     * @return string[]
+     */
+    public function getNames()
+    {
+        $namesByLocale = [];
+
+        foreach ($this->translations as $translation) {
+            $namesByLocale[$translation->getLocale()] = $translation->getName();
+        }
+
+        return $namesByLocale;
+    }
+
+    /**
      * @return string
      */
     public function getRgbColor()

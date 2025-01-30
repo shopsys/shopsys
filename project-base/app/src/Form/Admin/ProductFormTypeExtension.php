@@ -7,10 +7,8 @@ namespace App\Form\Admin;
 use App\Model\Product\Product;
 use Shopsys\FrameworkBundle\Component\Form\FormBuilderHelper;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
-use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ProductsType;
 use Symfony\Component\Form\AbstractTypeExtension;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class ProductFormTypeExtension extends AbstractTypeExtension
@@ -36,7 +34,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         $this->setSeoGroup($builder);
         $this->setPricesGroup($builder, $product);
         $this->setRelatedProductsGroup($builder, $product);
-        $this->setVideoGroup($builder);
 
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
     }
@@ -62,29 +59,6 @@ class ProductFormTypeExtension extends AbstractTypeExtension
         $builderSeoGroup = $builder->get('seoGroup');
 
         $builderSeoGroup->remove('seoH1s');
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     */
-    private function setVideoGroup(FormBuilderInterface $builder)
-    {
-        $videosGroup = $builder->create('videosGroup', GroupType::class, [
-            'label' => t('Videos'),
-        ]);
-        $videosGroup
-            ->add(
-                $builder->create('productVideosData', CollectionType::class, [
-                    'entry_type' => VideoTokenType::class,
-                    'render_form_row' => false,
-                    'allow_add' => true,
-                    'allow_delete' => true,
-                    'label' => false,
-                    'required' => false,
-                ]),
-            );
-
-        $builder->add($videosGroup);
     }
 
     /**

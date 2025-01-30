@@ -46,6 +46,16 @@ class SliderItemData
      */
     public $opacity;
 
+    /**
+     * @var \DateTime|null
+     */
+    public $datetimeVisibleFrom;
+
+    /**
+     * @var \DateTime|null
+     */
+    public $datetimeVisibleTo;
+
     public function __construct()
     {
         $this->hidden = false;

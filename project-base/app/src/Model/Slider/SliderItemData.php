@@ -9,16 +9,6 @@ use Shopsys\FrameworkBundle\Model\Slider\SliderItemData as BaseSliderItemData;
 class SliderItemData extends BaseSliderItemData
 {
     /**
-     * @var \DateTime|null
-     */
-    public $datetimeVisibleFrom;
-
-    /**
-     * @var \DateTime|null
-     */
-    public $datetimeVisibleTo;
-
-    /**
      * @var \Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData
      */
     public $mobileImage;

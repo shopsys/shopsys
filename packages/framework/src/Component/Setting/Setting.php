@@ -28,6 +28,7 @@ class Setting
     public const string IMAGE_STRUCTURE_MIGRATED_FOR_PROXY = 'imageStructureMigratedForProxy';
     public const string CUSTOMER_USER_DEFAULT_GROUP_ROLE_ID = 'customerUserDefaultGroupRoleId';
     public const string FILE_STRUCTURE_MIGRATED_FOR_RELATIONS = 'fileStructureMigratedForRelations';
+    public const string CSP_HEADER = 'cspHeader';
 
     /**
      * @var \Shopsys\FrameworkBundle\Component\Setting\SettingValue[][]

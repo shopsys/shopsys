@@ -75,6 +75,18 @@ class SliderItem implements OrderableEntityInterface
     protected $opacity;
 
     /**
+     * @var \DateTime|null
+     * @ORM\Column(type="datetime",nullable=true)
+     */
+    protected $datetimeVisibleFrom;
+
+    /**
+     * @var \DateTime|null
+     * @ORM\Column(type="datetime",nullable=true)
+     */
+    protected $datetimeVisibleTo;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Slider\SliderItemData $sliderItemData
      */
     public function __construct(SliderItemData $sliderItemData)
@@ -102,6 +114,8 @@ class SliderItem implements OrderableEntityInterface
         $this->description = $sliderItemData->description;
         $this->rgbBackgroundColor = $sliderItemData->rgbBackgroundColor;
         $this->opacity = $sliderItemData->opacity;
+        $this->datetimeVisibleFrom = $sliderItemData->datetimeVisibleFrom;
+        $this->datetimeVisibleTo = $sliderItemData->datetimeVisibleTo;
     }
 
     /**
@@ -182,5 +196,37 @@ class SliderItem implements OrderableEntityInterface
     public function getOpacity()
     {
         return $this->opacity;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getDatetimeVisibleFrom()
+    {
+        return $this->datetimeVisibleFrom;
+    }
+
+    /**
+     * @param \DateTime|null $datetimeVisibleFrom
+     */
+    public function setDatetimeVisibleFrom($datetimeVisibleFrom)
+    {
+        $this->datetimeVisibleFrom = $datetimeVisibleFrom;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getDatetimeVisibleTo()
+    {
+        return $this->datetimeVisibleTo;
+    }
+
+    /**
+     * @param \DateTime|null $datetimeVisibleTo
+     */
+    public function setDatetimeVisibleTo($datetimeVisibleTo)
+    {
+        $this->datetimeVisibleTo = $datetimeVisibleTo;
     }
 }

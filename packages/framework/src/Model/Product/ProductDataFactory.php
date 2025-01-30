@@ -13,6 +13,8 @@ use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValueDataFactory;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
+use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoDataFactory;
+use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoRepository;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory;
 use Shopsys\FrameworkBundle\Model\Stock\ProductStockFacade;
 use Shopsys\FrameworkBundle\Model\Stock\StockFacade;
@@ -33,6 +35,8 @@ class ProductDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Stock\ProductStockDataFactory $productStockDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductInputPriceDataFactory $productInputPriceDataFactory
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileDataFactory $uploadedFileDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoDataFactory $productVideoDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoRepository $productVideoRepository
      */
     public function __construct(
         protected readonly UnitFacade $unitFacade,
@@ -48,6 +52,8 @@ class ProductDataFactory
         protected readonly ProductStockDataFactory $productStockDataFactory,
         protected readonly ProductInputPriceDataFactory $productInputPriceDataFactory,
         protected readonly UploadedFileDataFactory $uploadedFileDataFactory,
+        protected readonly ProductVideoDataFactory $productVideoDataFactory,
+        protected readonly ProductVideoRepository $productVideoRepository,
     ) {
     }
 
@@ -123,6 +129,7 @@ class ProductDataFactory
     {
         $productData = $this->createInstance();
         $this->fillFromProduct($productData, $product);
+        $this->fillProductVideosByProductId($productData, $product);
 
         return $productData;
     }
@@ -260,6 +267,17 @@ class ProductDataFactory
     {
         foreach ($this->stockFacade->getAllStocks() as $stock) {
             $productData->productStockData[$stock->getId()] = $this->productStockDataFactory->createFromStock($stock);
+        }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\ProductData $productData
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     */
+    protected function fillProductVideosByProductId(ProductData $productData, Product $product): void
+    {
+        foreach ($this->productVideoRepository->findByProductId($product->getId()) as $video) {
+            $productData->productVideosData[$video->getid()] = $this->productVideoDataFactory->createFromProductVideo($video);
         }
     }
 }

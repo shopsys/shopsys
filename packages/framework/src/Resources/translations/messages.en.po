@@ -7,6 +7,9 @@ msgstr ""
 msgid ""
 msgstr ""
 
+msgid "\"Valid to\" must be greater than \"Valid from\""
+msgstr ""
+
 msgid "%count% item from CSV file was imported successfully.|%count% items from CSV file were imported successfully."
 msgstr ""
 
@@ -82,6 +85,9 @@ msgstr ""
 msgid "<a href=\"%url%\">User consent policy article for domain %domainName% is not set.</a>"
 msgstr ""
 
+msgid "<strong><a href=\"{{ url }}\">Notification bar</a></strong> has been successfuly updated"
+msgstr ""
+
 msgid "<strong><a href=\"{{ url }}\">SEO category</a></strong> has been saved"
 msgstr ""
 
@@ -119,6 +125,9 @@ msgid "Add another parameter"
 msgstr ""
 
 msgid "Add another price with weight limit"
+msgstr ""
+
+msgid "Add another video"
 msgstr ""
 
 msgid "Add country"
@@ -430,6 +439,15 @@ msgstr ""
 msgid "Back to parameter selection"
 msgstr ""
 
+msgid "Background color"
+msgstr ""
+
+msgid "Banner"
+msgstr ""
+
+msgid "Banners"
+msgstr ""
+
 msgid "Basic"
 msgstr ""
 
@@ -571,6 +589,9 @@ msgstr ""
 msgid "By flag"
 msgstr ""
 
+msgid "CMS"
+msgstr ""
+
 msgid "CSS documentation"
 msgstr ""
 
@@ -629,9 +650,6 @@ msgid "Category <strong>{{ name }}</strong> deleted"
 msgstr ""
 
 msgid "Category description"
-msgstr ""
-
-msgid "Category guidepost on main page"
 msgstr ""
 
 msgid "Category name"
@@ -695,6 +713,9 @@ msgid "City"
 msgstr ""
 
 msgid "Clean Storefront Cache"
+msgstr ""
+
+msgid "Clean Storefront Query Cache"
 msgstr ""
 
 msgid "Click to go to product section"
@@ -838,6 +859,15 @@ msgstr ""
 msgid "Content"
 msgstr ""
 
+msgid "Content-Security-Policy header"
+msgstr ""
+
+msgid "Content-Security-Policy header has been set."
+msgstr ""
+
+msgid "Content-Security-Policy header setting"
+msgstr ""
+
 msgid "Convert values associated with parameter - %name%"
 msgstr ""
 
@@ -907,6 +937,9 @@ msgstr ""
 msgid "Create new article"
 msgstr ""
 
+msgid "Create new banner"
+msgstr ""
+
 msgid "Create new blog article"
 msgstr ""
 
@@ -943,9 +976,6 @@ msgstr ""
 msgid "Create new order status"
 msgstr ""
 
-msgid "Create new page"
-msgstr ""
-
 msgid "Create new parameter"
 msgstr ""
 
@@ -965,6 +995,9 @@ msgid "Create new store"
 msgstr ""
 
 msgid "Create new warehouse"
+msgstr ""
+
+msgid "Create notification bar"
 msgstr ""
 
 msgid "Create payment"
@@ -1396,7 +1429,13 @@ msgstr ""
 msgid "Do you really want to remove this holiday / internal day?"
 msgstr ""
 
+msgid "Do you really want to remove this language constant translation?"
+msgstr ""
+
 msgid "Do you really want to remove this navigation item?"
+msgstr ""
+
+msgid "Do you really want to remove this notification bar?"
 msgstr ""
 
 msgid "Do you really want to remove this page?"
@@ -1555,6 +1594,9 @@ msgstr ""
 msgid "Editing article - %name%"
 msgstr ""
 
+msgid "Editing banner"
+msgstr ""
+
 msgid "Editing bestseller"
 msgstr ""
 
@@ -1627,6 +1669,12 @@ msgstr ""
 msgid "Editing file"
 msgstr ""
 
+msgid "Editing flag"
+msgstr ""
+
+msgid "Editing flag - {{ name }}"
+msgstr ""
+
 msgid "Editing holiday / internal day - {{ name }}"
 msgstr ""
 
@@ -1634,6 +1682,9 @@ msgid "Editing item"
 msgstr ""
 
 msgid "Editing navigation item"
+msgstr ""
+
+msgid "Editing notification bar"
 msgstr ""
 
 msgid "Editing order"
@@ -1694,9 +1745,6 @@ msgid "Editing shipping"
 msgstr ""
 
 msgid "Editing shipping - %name%"
-msgstr ""
-
-msgid "Editing slider page"
 msgstr ""
 
 msgid "Editing slider page - %name%"
@@ -1975,9 +2023,6 @@ msgstr ""
 msgid "Fill missing settings to enable creating products."
 msgstr ""
 
-msgid "Filter by"
-msgstr ""
-
 msgid "Filter parameters"
 msgstr ""
 
@@ -1994,6 +2039,12 @@ msgid "First name"
 msgstr ""
 
 msgid "Flag"
+msgstr ""
+
+msgid "Flag <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
+msgstr ""
+
+msgid "Flag <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
 msgstr ""
 
 msgid "Flag <strong>{{ name }}</strong> deleted"
@@ -2116,6 +2167,9 @@ msgstr ""
 msgid "Group"
 msgstr ""
 
+msgid "Groups"
+msgstr ""
+
 msgid "HTML code"
 msgstr ""
 
@@ -2123,6 +2177,9 @@ msgid "Heading (H1)"
 msgstr ""
 
 msgid "Headline"
+msgstr ""
+
+msgid "Heureka"
 msgstr ""
 
 msgid "Heureka - Verified by Customer"
@@ -2179,7 +2236,16 @@ msgstr ""
 msgid "Holiday / internal day <strong>{{ name }}</strong> deleted"
 msgstr ""
 
+msgid "Holiday / internal day detail"
+msgstr ""
+
+msgid "Holidays and internal days"
+msgstr ""
+
 msgid "Holidays and internal days overview"
+msgstr ""
+
+msgid "Home page"
 msgstr ""
 
 msgid "Hreflang tags help search engines understand the language and regional targeting of your content. By selecting multiple domains, you ensure that hreflang tags will be properly rendered in sitemap and on the page. Search engines then properly index and display the correct versions of your content to users across different regions."
@@ -2296,6 +2362,9 @@ msgstr ""
 msgid "Instructions"
 msgstr ""
 
+msgid "Integrations"
+msgstr ""
+
 msgid "Internal note"
 msgstr ""
 
@@ -2303,6 +2372,9 @@ msgid "Invalid reset password hash for administrator"
 msgstr ""
 
 msgid "Invalid two-factor authentication code."
+msgstr ""
+
+msgid "It is highly recommended to test this setting on devel or CI server before it is applied in production!"
 msgstr ""
 
 msgid "It is not possible to update order and indentation of blog categories on specific domain tab. Please go to the category detail or blog category overview for all domains"
@@ -2320,7 +2392,25 @@ msgstr ""
 msgid "Keep empty if you do not want to limit the price by products' weight"
 msgstr ""
 
+msgid "Key"
+msgstr ""
+
 msgid "Language"
+msgstr ""
+
+msgid "Language constant translation"
+msgstr ""
+
+msgid "Language constant translation <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
+msgstr ""
+
+msgid "Language constant translation <strong>{{ name }}</strong> deleted"
+msgstr ""
+
+msgid "Language constant translation <strong>{{ name }}</strong> not found"
+msgstr ""
+
+msgid "Language constants"
 msgstr ""
 
 msgid "Language constants - full"
@@ -2368,9 +2458,6 @@ msgstr ""
 msgid "Legal conditions article setting - view"
 msgstr ""
 
-msgid "Legal conditions settings"
-msgstr ""
-
 msgid "Legal conditions settings modified."
 msgstr ""
 
@@ -2402,6 +2489,9 @@ msgid "Link to the personal information overview"
 msgstr ""
 
 msgid "LinkedIn URL"
+msgstr ""
+
+msgid "List of language constants"
 msgstr ""
 
 msgid "List of products in order (image, name, quantity, price per unit including VAT, total price per item including VAT)"
@@ -2473,9 +2563,6 @@ msgstr ""
 msgid "Main image"
 msgstr ""
 
-msgid "Main page products"
-msgstr "Promoted products"
-
 msgid "Main text"
 msgstr ""
 
@@ -2491,9 +2578,6 @@ msgstr ""
 msgid "Map coordinates"
 msgstr ""
 
-msgid "Marketing"
-msgstr ""
-
 msgid "Max duration (mm:ss)"
 msgstr ""
 
@@ -2501,6 +2585,12 @@ msgid "Maximal duration from all runs in last seven days"
 msgstr ""
 
 msgid "Maximum weight of products"
+msgstr ""
+
+msgid "Measurement units"
+msgstr ""
+
+msgid "Measurement units overview"
 msgstr ""
 
 msgid "Menu"
@@ -2608,6 +2698,9 @@ msgstr ""
 msgid "New article"
 msgstr ""
 
+msgid "New banner"
+msgstr ""
+
 msgid "New blog article"
 msgstr ""
 
@@ -2635,10 +2728,16 @@ msgstr ""
 msgid "New delivery address"
 msgstr ""
 
+msgid "New flag"
+msgstr ""
+
 msgid "New item"
 msgstr ""
 
 msgid "New navigation item"
+msgstr ""
+
+msgid "New notification bar"
 msgstr ""
 
 msgid "New orders"
@@ -2678,9 +2777,6 @@ msgid "New sales representative"
 msgstr ""
 
 msgid "New shipping"
-msgstr ""
-
-msgid "New slider page"
 msgstr ""
 
 msgid "New store"
@@ -2756,6 +2852,9 @@ msgid "No files found."
 msgstr ""
 
 msgid "No flags found. You have to create some first."
+msgstr ""
+
+msgid "No group"
 msgstr ""
 
 msgid "No inquiries found."
@@ -2836,10 +2935,19 @@ msgstr ""
 msgid "Nothing to choose from."
 msgstr ""
 
+msgid "Notification bar"
+msgstr ""
+
 msgid "Notification bar - full"
 msgstr ""
 
 msgid "Notification bar - view"
+msgstr ""
+
+msgid "Notification bar has been successfuly created"
+msgstr ""
+
+msgid "Notification bar has been successfuly deleted"
 msgstr ""
 
 msgid "Number of delivery days for out of stock products in XML feeds"
@@ -3008,6 +3116,9 @@ msgid "Orders value"
 msgstr ""
 
 msgid "Origin"
+msgstr ""
+
+msgid "Original translation"
 msgstr ""
 
 msgid "Out of stock"
@@ -3241,9 +3352,6 @@ msgstr ""
 msgid "Please wait until all files are uploaded and try again."
 msgstr ""
 
-msgid "Popular categories"
-msgstr ""
-
 msgid "Postcode"
 msgstr ""
 
@@ -3338,6 +3446,9 @@ msgid "Privacy policy article setting - full"
 msgstr ""
 
 msgid "Privacy policy article setting - view"
+msgstr ""
+
+msgid "Privacy policy settings"
 msgstr ""
 
 msgid "Product"
@@ -3452,6 +3563,12 @@ msgid "Promo codes - generated batches"
 msgstr ""
 
 msgid "Promo codes - view"
+msgstr ""
+
+msgid "Promoted categories"
+msgstr ""
+
+msgid "Promoted products"
 msgstr ""
 
 msgid "Quantity"
@@ -3778,6 +3895,9 @@ msgstr ""
 msgid "Selected navigation item does not exist."
 msgstr ""
 
+msgid "Selected notification bar does not exist"
+msgstr ""
+
 msgid "Selected order doesn't exist."
 msgstr ""
 
@@ -3943,19 +4063,10 @@ msgstr ""
 msgid "Slider items - view"
 msgstr ""
 
-msgid "Slider on main page"
-msgstr ""
-
-msgid "Slider page"
-msgstr ""
-
 msgid "Slider page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> created"
 msgstr ""
 
 msgid "Slider page <strong><a href=\"{{ url }}\">{{ name }}</a></strong> modified"
-msgstr ""
-
-msgid "Slider pages"
 msgstr ""
 
 msgid "Slug"
@@ -4012,6 +4123,9 @@ msgstr ""
 msgid "Status of orders <strong>{{ oldName }}</strong> replaced by status <strong>{{ newName }}</strong> and deleted."
 msgstr ""
 
+msgid "Stocking"
+msgstr ""
+
 msgid "Store"
 msgstr ""
 
@@ -4034,6 +4148,9 @@ msgid "Store list"
 msgstr ""
 
 msgid "Storefront queries cache has been cleaned."
+msgstr ""
+
+msgid "Stores"
 msgstr ""
 
 msgid "Stores - full"
@@ -4087,7 +4204,13 @@ msgstr ""
 msgid "Terms and conditions"
 msgstr ""
 
+msgid "Terms and conditions settings"
+msgstr ""
+
 msgid "Test email sent to %email%."
+msgstr ""
+
+msgid "Text"
 msgstr ""
 
 msgid "The current list of URL addresses can be found in the project's repository in the \"storefront/config/staticRewritePaths.js\" file."
@@ -4103,6 +4226,9 @@ msgid "The product has no specified name for the locale."
 msgstr ""
 
 msgid "The product is no longer in the catalog. This was the catalog number at the time of the inquiry."
+msgstr ""
+
+msgid "The selected flag cannot be deleted."
 msgstr ""
 
 msgid "The stock quantities are set for the product variants separately."
@@ -4130,6 +4256,9 @@ msgid "This currency can't be deleted, it is set as default or is saved with ord
 msgstr ""
 
 msgid "This email was sent from the contact form located below the panel of categories."
+msgstr ""
+
+msgid "This flag can not be deleted as it is used in definition of"
 msgstr ""
 
 msgid "This is the last customer user. It will remove all its related data. Do you really want to delete it ?"
@@ -4264,6 +4393,9 @@ msgstr ""
 msgid "Tuesday"
 msgstr ""
 
+msgid "Two factor authentication"
+msgstr ""
+
 msgid "Two factor authentication code"
 msgstr ""
 
@@ -4309,6 +4441,9 @@ msgstr ""
 msgid "Unable to add product"
 msgstr ""
 
+msgid "Unable to load list of language constants"
+msgstr ""
+
 msgid "Unavailable"
 msgstr ""
 
@@ -4336,16 +4471,13 @@ msgstr ""
 msgid "Unit price including VAT"
 msgstr ""
 
-msgid "Units"
-msgstr ""
-
 msgid "Units - full"
 msgstr ""
 
 msgid "Units - view"
 msgstr ""
 
-msgid "Units overview"
+msgid "Unlimited"
 msgstr ""
 
 msgid "Unsupported two factor authentication method"
@@ -4423,6 +4555,9 @@ msgstr ""
 msgid "User consent policy settings modified."
 msgstr ""
 
+msgid "User translation"
+msgstr ""
+
 msgid "Username"
 msgstr ""
 
@@ -4489,6 +4624,9 @@ msgstr ""
 msgid "Vats - view"
 msgstr ""
 
+msgid "Videos"
+msgstr ""
+
 msgid "Visibility"
 msgstr ""
 
@@ -4511,6 +4649,9 @@ msgid "Warehouse <strong>{{ name }}</strong> deleted"
 msgstr ""
 
 msgid "Warehouse <strong>{{ name }}</strong> was set as default."
+msgstr ""
+
+msgid "Warehouse detail"
 msgstr ""
 
 msgid "Warehouse overview"
@@ -4646,6 +4787,9 @@ msgid "You have unsaved changes!"
 msgstr ""
 
 msgid "You have unsaved changes, save them first, please."
+msgstr ""
+
+msgid "Youtube ID"
 msgstr ""
 
 msgid "Youtube URL"

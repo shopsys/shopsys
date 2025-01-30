@@ -160,6 +160,7 @@ final class ProductFormType extends AbstractType
         $builder->add($this->createImagesGroup($builder, $options));
         $builder->add($this->createFilesGroup($builder, $options));
         $builder->add($this->createAccessoriesGroup($builder, $product));
+        $builder->add($this->createVideosGroup($builder));
         $builder->add('save', SubmitType::class);
         $this->pluginDataFormExtensionFacade->extendForm($builder, 'product', 'pluginData');
     }
@@ -942,5 +943,29 @@ final class ProductFormType extends AbstractType
             ]);
 
         return $builderFileGroup;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    private function createVideosGroup(FormBuilderInterface $builder): FormBuilderInterface
+    {
+        $videosGroup = $builder->create('videosGroup', GroupType::class, [
+            'label' => t('Videos'),
+        ]);
+        $videosGroup
+            ->add(
+                $builder->create('productVideosData', CollectionType::class, [
+                    'entry_type' => VideoTokenType::class,
+                    'render_form_row' => false,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'label' => false,
+                    'required' => false,
+                ]),
+            );
+
+        return $videosGroup;
     }
 }

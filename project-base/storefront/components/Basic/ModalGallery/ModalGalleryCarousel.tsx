@@ -3,6 +3,7 @@ import { Image } from 'components/Basic/Image/Image';
 import { TypeFileFragment } from 'graphql/requests/files/fragments/FileFragment.generated';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { TypeVideoTokenFragment } from 'graphql/requests/products/fragments/VideoTokenFragment.generated';
+import useTranslation from 'next-translate/useTranslation';
 import { RefObject } from 'react';
 import { twJoin } from 'tailwind-merge';
 
@@ -21,6 +22,8 @@ export const ModalGalleryCarousel: FC<ModalGalleryCarouselProps> = ({
     galleryName,
     onSelectItem,
 }) => {
+    const { t } = useTranslation();
+
     return (
         <ul className="grid snap-x snap-mandatory auto-cols-[80px] grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] [&::-webkit-scrollbar]:hidden">
             {items.map((galleryItem, index) => {
@@ -55,7 +58,7 @@ export const ModalGalleryCarousel: FC<ModalGalleryCarouselProps> = ({
                         {isVideo && (
                             <div className="relative">
                                 <Image
-                                    alt={galleryItem.description}
+                                    alt={galleryItem.description ?? t('Product Video')}
                                     className="max-h-20 w-auto"
                                     draggable={false}
                                     height={80}

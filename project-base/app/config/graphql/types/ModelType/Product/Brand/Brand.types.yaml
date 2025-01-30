@@ -3,10 +3,6 @@ Brand:
     inherits:
         - 'BrandDecorator'
     config:
-        interfaces:
-            - 'Breadcrumb'
-            - 'Slug'
-            - 'ProductListable'
         fields:
             id:
                 type: "Int!"
@@ -27,18 +23,3 @@ Brand:
                     type:
                         type: "String"
                         defaultValue: null
-            slug:
-                type: "String!"
-                description: "Brand URL slug"
-            breadcrumb:
-                type: "[Link!]!"
-                description: "Hierarchy of the current element in relation to the structure"
-                resolve: '@=query("breadcrumbQuery", value.getId(), "front_brand_detail")'
-            products:
-                type: "ProductConnection!"
-                description: "Paginated and ordered products of brand"
-                argsBuilder:
-                    builder: "ProductPaginatorArgumentsBuilder"
-                    config:
-                        orderingModeType: 'ProductOrderingModeEnum'
-                resolve: '@=query("productsByBrandQuery", args, value)'

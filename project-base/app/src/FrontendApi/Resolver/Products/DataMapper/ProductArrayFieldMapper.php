@@ -17,7 +17,6 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFie
 
 /**
  * @property \App\Model\Category\CategoryFacade $categoryFacade
- * @property \App\Model\Product\Flag\FlagFacade $flagFacade
  * @property \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
  * @property \App\FrontendApi\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
  * @method \App\Model\Category\Category[] getCategories(array $data)
@@ -29,7 +28,7 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
 {
     /**
      * @param \App\Model\Category\CategoryFacade $categoryFacade
-     * @param \App\Model\Product\Flag\FlagFacade $flagFacade
+     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade $flagFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade $brandFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
      * @param \App\FrontendApi\Model\Parameter\ParameterWithValuesFactory $parameterWithValuesFactory
@@ -164,14 +163,5 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     public function isMainVariant(array $data): bool
     {
         return $data['is_main_variant'];
-    }
-
-    /**
-     * @param array $data
-     * @return array
-     */
-    public function getProductVideos(array $data): array
-    {
-        return $data['product_videos'];
     }
 }

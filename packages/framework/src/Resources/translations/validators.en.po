@@ -103,7 +103,7 @@ msgstr ""
 msgid "Flag \"{{ flagName }}\" is selected multiple times."
 msgstr ""
 
-msgid "Flag color in must be in valid hexadecimal code e.g. #3333ff"
+msgid "Flag color must be in valid hexadecimal code e.g. #3333ff"
 msgstr ""
 
 msgid "Flag name cannot be longer than {{ limit }} characters"
@@ -370,6 +370,9 @@ msgstr ""
 msgid "Please enter navigation item name"
 msgstr ""
 
+msgid "Please enter notification bar content"
+msgstr ""
+
 msgid "Please enter order status name in all languages"
 msgstr ""
 
@@ -470,6 +473,9 @@ msgid "Please enter valid from date"
 msgstr ""
 
 msgid "Please enter valid to date"
+msgstr ""
+
+msgid "Please enter video ID"
 msgstr ""
 
 msgid "Please enter warehouse name"

@@ -28,6 +28,7 @@ use Shopsys\FrameworkBundle\Model\Product\ProductVariantFacade;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationPriorityEnum;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Shopsys\FrameworkBundle\Twig\ProductExtension;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -322,6 +323,46 @@ class ProductController extends AdminBaseController
             'product' => $product,
             'domains' => $this->domain->getAdminEnabledDomains(),
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    #[Route(path: '/product/edit/catnum-exists')]
+    public function catnumExistsAction(Request $request): Response
+    {
+        $catnum = $request->get('catnum');
+        $currentProductCatnum = $request->get('currentProductCatnum');
+
+        if ($catnum === null || $catnum === $currentProductCatnum) {
+            return new JsonResponse(false);
+        }
+
+        $productByCatnum = $this->productFacade->findByCatnum($catnum);
+
+        return new JsonResponse($productByCatnum !== null);
+    }
+
+    /**
+     * This route is used by GrapesJS to load Names of products
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    #[Route(path: '/product/names-by-catnums', methods: ['post'], condition: 'request.isXmlHttpRequest()')]
+    public function productNamesByCatnumsAction(Request $request): JsonResponse
+    {
+        $catnums = $request->get('catnums');
+
+        $response = [];
+        $products = $this->productFacade->findAllByCatnums($catnums);
+
+        foreach ($products as $product) {
+            $response[$product->getCatnum()] = $product->getName();
+        }
+
+        return new JsonResponse($response);
     }
 
     /**

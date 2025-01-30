@@ -1,0 +1,27 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Shopsys\FrameworkBundle\Migrations;
+
+use Doctrine\DBAL\Schema\Schema;
+use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
+
+class Version20250124092957 extends AbstractMigration
+{
+    /**
+     * @param \Doctrine\DBAL\Schema\Schema $schema
+     */
+    public function up(Schema $schema): void
+    {
+        $this->sql('ALTER TABLE product_video_translations ALTER description DROP NOT NULL');
+        $this->sql('UPDATE product_video_translations SET description = NULL WHERE description = \'\'');
+    }
+
+    /**
+     * @param \Doctrine\DBAL\Schema\Schema $schema
+     */
+    public function down(Schema $schema): void
+    {
+    }
+}

@@ -42,6 +42,6 @@ class RedisController extends AdminBaseController
     #[Route(path: '/superadmin/redis/show-clean-storefront-query-cache')]
     public function showAction(Request $request): Response
     {
-        return $this->render('Admin/Content/StorefrontCache/clean.html.twig');
+        return $this->render('@ShopsysFramework/Admin/Content/StorefrontCache/clean.html.twig');
     }
 }

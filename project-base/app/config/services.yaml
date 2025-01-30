@@ -93,12 +93,6 @@ services:
 
     App\Model\Customer\User\CurrentCustomerUser: ~
 
-    App\Model\LanguageConstant\LanguageConstantFacade:
-        arguments:
-            $languageConstantsUrlPattern: '%env(LANGUAGE_CONSTANTS_URL_PATTERN)%'
-            $domainLocalesDirectory: '%shopsys.locale_file_dir%'
-        class: App\Model\LanguageConstant\LanguageConstantFacade
-
     App\Model\Mail\MailTemplateBuilder: ~
 
     App\Model\Order\Mail\OrderMail: ~
@@ -112,11 +106,6 @@ services:
     App\Model\Product\Search\FilterQueryFactory: ~
 
     App\Model\Product\Search\ProductElasticsearchConverter: ~
-
-    App\Model\Sitemap\SitemapFacade:
-        arguments:
-            - '%shopsys.sitemaps_dir%'
-            - '%shopsys.sitemaps_url_prefix%'
 
     App\Twig\:
         resource: '../src/Twig/'
@@ -151,11 +140,6 @@ services:
     Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender:
         alias: App\Component\Doctrine\QueryBuilderExtender
 
-    Shopsys\FrameworkBundle\Component\Domain\DomainAwareSecurityHeadersSetter:
-        class: App\Component\Domain\DomainAwareSecurityHeadersSetter
-        tags:
-            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
-
     Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassProviderInterface:
         alias: App\Model\MultidomainEntityClassProvider
 
@@ -173,24 +157,6 @@ services:
 
     Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileRepository:
         alias: App\Component\UploadedFile\UploadedFileRepository
-
-    Shopsys\FrameworkBundle\Controller\Admin\AdministratorController:
-        class: 'App\Controller\Admin\AdministratorController'
-
-    Shopsys\FrameworkBundle\Controller\Admin\CustomerController:
-        class: 'App\Controller\Admin\CustomerController'
-
-    Shopsys\FrameworkBundle\Controller\Admin\FlagController:
-        class: 'App\Controller\Admin\FlagController'
-
-    Shopsys\FrameworkBundle\Controller\Admin\MailController:
-        class: App\Controller\Admin\MailController
-
-    Shopsys\FrameworkBundle\Controller\Admin\ProductController:
-        class: 'App\Controller\Admin\ProductController'
-
-    Shopsys\FrameworkBundle\Controller\Front\PersonalDataController:
-        class: 'App\Controller\Front\PersonalDataController'
 
     Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade:
         alias: App\Model\Administrator\AdministratorFacade
@@ -381,15 +347,6 @@ services:
     Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactory:
         alias: App\Model\Product\Flag\FlagDataFactory
 
-    Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade:
-        alias: App\Model\Product\Flag\FlagFacade
-
-    Shopsys\FrameworkBundle\Model\Product\Flag\FlagGridFactory:
-        alias: App\Model\Product\Flag\FlagGridFactory
-
-    Shopsys\FrameworkBundle\Model\Product\Flag\FlagRepository:
-        alias: App\Model\Product\Flag\FlagRepository
-
     Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade:
         alias: App\Model\Product\Listing\ProductListOrderingModeForListFacade
 
@@ -440,9 +397,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade:
         alias: App\Model\Slider\SliderItemFacade
-
-    Shopsys\FrameworkBundle\Model\Slider\SliderItemRepository:
-        alias: App\Model\Slider\SliderItemRepository
 
     Shopsys\FrameworkBundle\Model\Transport\Grid\TransportGridFactory:
         alias: App\Model\Transport\Grid\TransportGridFactory

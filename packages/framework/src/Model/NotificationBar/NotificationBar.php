@@ -1,0 +1,143 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Shopsys\FrameworkBundle\Model\NotificationBar;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="notification_bars")
+ */
+class NotificationBar
+{
+    /**
+     * @var int
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    protected $id;
+
+    /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
+    protected $domainId;
+
+    /**
+     * @var string
+     * @ORM\Column(type="text")
+     */
+    protected $text;
+
+    /**
+     * @var \DateTime|null
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $validityFrom;
+
+    /**
+     * @var \DateTime|null
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $validityTo;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=7)
+     */
+    protected $rgbColor;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    protected $hidden;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarData $notificationBarData
+     */
+    public function __construct(NotificationBarData $notificationBarData)
+    {
+        $this->setData($notificationBarData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarData $notificationBarData
+     */
+    public function edit(NotificationBarData $notificationBarData): void
+    {
+        $this->setData($notificationBarData);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarData $notificationBarData
+     */
+    protected function setData(NotificationBarData $notificationBarData): void
+    {
+        $this->domainId = $notificationBarData->domainId;
+        $this->text = $notificationBarData->text;
+        $this->validityFrom = $notificationBarData->validityFrom;
+        $this->validityTo = $notificationBarData->validityTo;
+        $this->rgbColor = $notificationBarData->rgbColor;
+        $this->hidden = $notificationBarData->hidden;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDomainId()
+    {
+        return $this->domainId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRgbColor()
+    {
+        return $this->rgbColor;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getValidityFrom()
+    {
+        return $this->validityFrom;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getValidityTo()
+    {
+        return $this->validityTo;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isHidden()
+    {
+        return $this->hidden;
+    }
+}

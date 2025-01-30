@@ -9,6 +9,8 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
+use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
+use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Exception\FlagNotFoundException;
 
 class FlagRepository
@@ -16,10 +18,12 @@ class FlagRepository
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper
+     * @param \Shopsys\FrameworkBundle\Model\Product\Flag\FlagDependenciesDataFactory $flagDependenciesDataFactory
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly OrderByCollationHelper $orderByCollationHelper,
+        protected readonly FlagDependenciesDataFactory $flagDependenciesDataFactory,
     ) {
     }
 
@@ -198,5 +202,32 @@ class FlagRepository
         }
 
         return $flag;
+    }
+
+    /**
+     * @param int $flagId
+     * @return \Shopsys\FrameworkBundle\Model\Product\Flag\FlagDependenciesData
+     */
+    public function getFlagDependencies(int $flagId): FlagDependenciesData
+    {
+        $flagDependenciesData = $this->flagDependenciesDataFactory->create();
+
+        $flagsQueryBuilder = $this->getFlagRepository()->createQueryBuilder('f')
+            ->select('1')
+            ->join(PromoCodeFlag::class, 'pcf', Join::WITH, 'pcf.flag = f')
+            ->groupBy('f.id')
+            ->andWhere('f.id = :flagId')
+            ->setParameter('flagId', $flagId);
+        $flagDependenciesData->hasPromoCodeDependency = (bool)$flagsQueryBuilder->getQuery()->getOneOrNullResult();
+
+        $flagsQueryBuilder = $this->getFlagRepository()->createQueryBuilder('f')
+            ->select('1')
+            ->join(ReadyCategorySeoMix::class, 'rcsm', Join::WITH, 'rcsm.flag = f')
+            ->groupBy('f.id')
+            ->andWhere('f.id = :flagId')
+            ->setParameter('flagId', $flagId);
+        $flagDependenciesData->hasSeoMixDependency = (bool)$flagsQueryBuilder->getQuery()->getOneOrNullResult();
+
+        return $flagDependenciesData;
     }
 }

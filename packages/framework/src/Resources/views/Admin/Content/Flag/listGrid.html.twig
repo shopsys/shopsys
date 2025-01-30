@@ -9,9 +9,8 @@
     {{ parent() }}
 {% endblock %}
 
-{% block grid_inline_edit_add_button %}
-    {% set addEntity = 'Create flag'|trans %}
-    {{ parent() }}
+{% block grid_value_cell_id_name %}
+    <a href="{{ url('admin_flag_edit', { id: row.f.id }) }}">{{ value }}</a>
 {% endblock %}
 
 {% block grid_value_cell_id_rgbColor %}

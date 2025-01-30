@@ -8,5 +8,4 @@ use Shopsys\FrameworkBundle\Component\Setting\Setting as BaseSetting;
 
 class Setting extends BaseSetting
 {
-    public const CSP_HEADER = 'cspHeader';
 }

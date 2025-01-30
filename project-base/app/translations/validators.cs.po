@@ -10,17 +10,8 @@ msgstr "Pole hodnot (\"values\") není podporováno jako vstup pro parametry typ
 msgid "Email cannot be longer than {{ limit }} characters"
 msgstr "E-mail nesmí být delší než {{ limit }} znaků"
 
-msgid "Flag color must be in valid hexadecimal code e.g. #3333ff"
-msgstr "Barva příznaku musí mít správný formát hexadecimálního kódu, např.: #3333ff"
-
-msgid "Flag name cannot be longer than {{ limit }} characters"
-msgstr "Název příznaku nemůže být delší než {{ limit }} znaků"
-
 msgid "Image can be only in JPG or PNG format"
 msgstr "Obrázek může být pouze ve formátu JPG nebo PNG"
-
-msgid "Image can be only in JPG, GIF or PNG format"
-msgstr "Obrázek může být pouze ve formátu JPG, GIF nebo PNG"
 
 msgid "Minimal and maximal value are not supported as an input for other than \"slider\" type parameter. Use \"values\" instead."
 msgstr "Minimální a maximalní hodnota nejsou podporovány jako vstup pro parametry jiného typu než \"slider\". Namísto toho použijte \"values\"."
@@ -37,23 +28,11 @@ msgstr "Prosím vyplňte GTM ID"
 msgid "Please enter email"
 msgstr "Vyplňte prosím e-mail"
 
-msgid "Please enter flag color"
-msgstr "Vyplňte prosím barvu příznaku"
-
-msgid "Please enter flag name in all languages"
-msgstr "Prosím zadejte název příznaku ve všech jazycích"
-
 msgid "Please enter new password"
 msgstr "Vyplňte prosím nové heslo"
 
-msgid "Please enter notification bar content"
-msgstr "Vyplňte prosím obsah notifikační lišty"
-
 msgid "Please enter valid email"
 msgstr "Vyplňte prosím platný e-mail"
-
-msgid "Please enter video ID"
-msgstr "Prosím vyplňte ID videa"
 
 msgid "Please enter your email address"
 msgstr "Vyplňte prosím e-mail"

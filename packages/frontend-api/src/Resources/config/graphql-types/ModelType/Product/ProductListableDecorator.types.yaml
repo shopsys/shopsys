@@ -1,0 +1,13 @@
+ProductListableDecorator:
+    type: interface
+    decorator: true
+    config:
+        description: "Paginated and ordered products"
+        fields:
+            products:
+                type: "ProductConnection!"
+                description: "Paginated and ordered products"
+                argsBuilder:
+                    builder: "ProductPaginatorArgumentsBuilder"
+                    config:
+                        orderingModeType: 'ProductOrderingModeEnum'

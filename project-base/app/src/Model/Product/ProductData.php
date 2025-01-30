@@ -22,16 +22,10 @@ class ProductData extends BaseProductData
      */
     public array $relatedProducts;
 
-    /**
-     * @var \App\Model\ProductVideo\ProductVideoData[]
-     */
-    public $productVideosData;
-
     public function __construct()
     {
         parent::__construct();
 
         $this->relatedProducts = [];
-        $this->productVideosData = [];
     }
 }

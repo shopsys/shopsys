@@ -15,6 +15,8 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade;
+use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideo;
+use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory;
 
@@ -33,6 +35,7 @@ class ProductEntityFieldMapper
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductVisibilityFacade $productVisibilityFacade
      * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleByIdsBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleCountByIdsBatchLoader
+     * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository $productVideoTranslationsRepository
      */
     public function __construct(
         protected readonly Domain $domain,
@@ -47,6 +50,7 @@ class ProductEntityFieldMapper
         protected readonly ProductVisibilityFacade $productVisibilityFacade,
         protected readonly DataLoaderInterface $productsVisibleByIdsBatchLoader,
         protected readonly DataLoaderInterface $productsVisibleCountByIdsBatchLoader,
+        protected readonly ProductVideoTranslationsRepository $productVideoTranslationsRepository,
     ) {
     }
 
@@ -315,5 +319,21 @@ class ProductEntityFieldMapper
             $product,
             $this->domain->getId(),
         );
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return array
+     */
+    public function getProductVideos(Product $product): array
+    {
+        $locale = $this->domain->getLocale();
+
+        return array_map(function (ProductVideo $productVideo) use ($locale) {
+            return [
+                'token' => $productVideo->getVideoToken(),
+                'description' => $this->productVideoTranslationsRepository->findByProductVideoIdAndLocale($productVideo->getId(), $locale),
+            ];
+        }, $product->getProductVideos());
     }
 }
