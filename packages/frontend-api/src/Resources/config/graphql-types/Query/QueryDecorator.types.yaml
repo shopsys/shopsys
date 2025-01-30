@@ -315,6 +315,7 @@ QueryDecorator:
                         type: "String!"
                         description: "Complaint number"
                 resolve: "@=query('complaintQuery', args)"
+                access: "@=(isGranted('ROLE_API_COMPLAINT_CREATION') || isGranted('ROLE_API_COMPANY_COMPLAINTS_VIEW'))"
                 description: "Returns complaint filtered using UUID"
             complaints:
                 type: "ComplaintConnection!"
@@ -323,6 +324,7 @@ QueryDecorator:
                     searchInput:
                         type: "SearchInput"
                 resolve: "@=query('complaintsQuery', args)"
+                access: "@=(isGranted('ROLE_API_COMPLAINT_CREATION') || isGranted('ROLE_API_COMPANY_COMPLAINTS_VIEW'))"
                 complexity: "@=dynamicPaginationComplexity(args)"
                 description: "Returns list of complaints that can be paginated using `first`, `last`, `before` and `after` keywords"
             flags:

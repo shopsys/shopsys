@@ -14,7 +14,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
 use Shopsys\FrontendApiBundle\Model\Complaint\ComplaintApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
-use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
 use Symfony\Bundle\SecurityBundle\Security;
 
 class ComplaintsQuery extends AbstractQuery
@@ -39,13 +38,9 @@ class ComplaintsQuery extends AbstractQuery
     {
         $this->setDefaultFirstOffsetIfNecessary($argument);
 
-        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
+        $customerUser = $this->currentCustomerUser->getCurrentCustomerUser();
 
-        if (!$customerUser) {
-            throw new InvalidTokenUserMessageException();
-        }
-
-        if ($this->security->isGranted(CustomerUserRole::ROLE_API_ALL)) {
+        if ($this->security->isGranted(CustomerUserRole::ROLE_API_COMPANY_COMPLAINTS_VIEW)) {
             return $this->getPaginatedCustomerComplaints($customerUser->getCustomer(), $argument);
         }
 
