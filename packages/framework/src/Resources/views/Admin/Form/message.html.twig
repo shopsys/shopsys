@@ -2,7 +2,7 @@
 {% block message_widget %}
     <div class="form-line__line form-line__line--no-space">
         <div class="in-message in-message--{{ form.vars.message_level }}">
-            <span class="in-message__icon svg svg-{{ form.vars.message_level }}"></span>
+            {{ ux_icon(form.vars.message_level, {class: 'in-message__icon'}) }}
             {{ data|raw }}
         </div>
     </div>

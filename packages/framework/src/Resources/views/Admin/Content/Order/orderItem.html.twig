@@ -7,10 +7,10 @@
                 {{ form_errors(orderItemForm.name, {errors_attr: { inline: false }}) }}
                 {% if productItem and productItem.product %}
                     <a href="{{ path('admin_product_edit', { id: productItem.product.id }) }}" class="in-icon in-icon--after-input" target="_blank">
-                        <i class="svg svg-arrow-simple in-icon in-icon--detail"></i>
+                        {{ ux_icon('arrow-simple', { class: 'in-icon in-icon--detail' }) }}
                     </a>
                 {% elseif productItem and not productItem.product %}
-                    <i class="in-icon in-icon--after-input svg svg-question js-tooltip" data-toggle="tooltip" data-placement="top" title="{{ 'Product not in e-shop.'|trans }}"></i>
+                    {{ ux_icon('question', { class: 'in-icon in-icon--after-input js-tooltip', 'data-toggle': 'tooltip', 'data-placement': 'top', 'title': 'Product not in e-shop.'|trans }) }}
                 {% endif %}
             </div>
         </td>
@@ -39,7 +39,7 @@
         <td class="text-right">{{ self.calculablePriceWidget(orderItemForm.totalPriceWithVat) }}</td>
         <td class="text-right">{{ self.calculablePriceWidget(orderItemForm.totalPriceWithoutVat) }}</td>
         <td class="table-col-5 table-grid__cell--actions text-left">
-            <a href="#" class="js-order-item-remove table-action in-icon in-icon--delete"><i class="svg svg-trash"></i></a>
+            <a href="#" class="js-order-item-remove table-action in-icon in-icon--delete">{{ ux_icon('trash') }}</a>
         </td>
     </tr>
 {% endmacro %}
@@ -106,12 +106,7 @@
     <span class="text-no-wrap">
         {{ form_widget(priceWithVatForm, {attr: { class: 'input--small text-right'}}, {errors_attr: { class: 'in-message--pin' }}) }}
         <span class="display-inline-block text-normal-wrap">
-            <i
-            title="{{ 'Using price calculation has been disabled, don\'t forget to edit all prices.'|trans }}"
-            class="svg svg-warning js-setting-prices-manually-warning js-tooltip table-action cursor-help"
-            data-toggle="tooltip"
-            data-placement="top"
-            ></i>
+            {{ ux_icon('warning', { class: 'js-setting-prices-manually-warning js-tooltip table-action cursor-help', 'title': 'Using price calculation has been disabled, don\'t forget to edit all prices.'|trans, 'data-toggle': 'tooltip', 'data-placement': 'top' }) }}
         </span>
         {{ form_errors(priceWithVatForm, {errors_attr: { inline: false }}) }}
     </span>

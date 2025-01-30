@@ -4,7 +4,7 @@
             <td class="table-form__cell">
                 {% if sortable %}
                 <span class="js-picker-item-handle table-form__cell__move">
-                    <span class="in-icon in-icon--move svg svg-move"></span>
+                    <span class="in-icon in-icon--move">{{ ux_icon('move') }}</span>
                 </span>
                 {% endif %}
                 <span class="js-picker-item-name">
@@ -15,7 +15,7 @@
                            rel="noopener"
                            class="btn-link-style btn-link-style--iconic-l"
                         >
-                            <span>{{ item_name }}</span>&nbsp;<i class="svg svg-forward-page"></i>
+                            <span>{{ item_name }}</span>&nbsp;{{ ux_icon('forward-page') }}
                         </a>
                     {% else %}
                         <span>{{ item_name }}</span>
@@ -25,7 +25,7 @@
             </td>
             <td class="table-form__cell table-form__cell--actions">
             <span class="cursor-pointer js-picker-item-button-delete">
-                <span class="svg svg-delete-thin in-icon"></span>
+                <span class="in-icon">{{ ux_icon('delete') }}</span>
                 {{ form_widget(form, {attr: {class: 'js-picker-item-input'}}) }}
             </span>
             </td>

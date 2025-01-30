@@ -48,7 +48,7 @@
             <span class="js-refunded-amount">
             {{ paymentTransaction.refundedAmount|priceWithCurrency(order.currency) }}
             {% if paymentTransaction.refundable %}
-                <span class="in-icon in-icon--edit svg svg-pencil js-refunded-amount-edit" title="edit"></span>
+                <span class="in-icon in-icon--edit js-refunded-amount-edit" title="edit">{{ ux_icon('pencil') }}</span>
             {% endif %}
             </span>
             <span class="js-refunded-amount hide">

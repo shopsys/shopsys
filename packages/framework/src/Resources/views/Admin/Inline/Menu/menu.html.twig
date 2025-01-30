@@ -3,7 +3,7 @@
     <li class="js-toggle-menu-item navig__item navig__item--left navig--side--left">
         <div class="web__header__search js-header-search">
             <input type="text" name="search-input" class="js-search-input web__header__search--input input" placeholder="{{ "Search by section name…"|trans }}" data-search-callback-url="{{ url('admin_searchadmin_search') }}" />
-            <a href="#" class="js-search-results__close web__header__search--results__close"><i class="svg svg-delete-thin"></i></a>
+            <a href="#" class="js-search-results__close web__header__search--results__close">{{ ux_icon('delete') }}</a>
             <div class="js-search-results web__header__search--results">
                 <div class="web__header__search--results__search-term">
                     {{ 'Results: '|trans }} <span class="js-search-results__search"></span><span class="web__header__search--results__hint">{{ "use key tab or shift+tab"|trans }}</span>
@@ -13,7 +13,7 @@
         </div>
         <div class="box-dropdown js-search-icon web__header__search__icon">
             <div class="box-dropdown__select box-dropdown__select--menu" title="{{ "Search by section name…"|trans }}">
-                <i class="svg svg-search"></i>
+                {{ ux_icon('search') }}
             </div>
         </div>
     </li>
@@ -48,7 +48,7 @@
                             class="box-dropdown__select box-dropdown__select--menu"
                             title="{{ 'Domain filter'|trans }}"
                     >
-                        <i class="svg svg-filter"></i>
+                        {{ ux_icon('filter') }}
                         <span class="box-dropdown__select__text">
                             {{ 'Domain filter'|trans }}
                         </span>
@@ -67,7 +67,7 @@
                         class="box-dropdown__select box-dropdown__select--menu"
                         title="{{ 'Frontend'|trans }}"
                 >
-                    <i class="svg svg-forward-page"></i>
+                    {{ ux_icon('forward-page') }}
                     <span class="box-dropdown__select__text">
                         {{ 'Go to Frontend'|trans }}
                     </span>
@@ -93,7 +93,7 @@
                         class="box-dropdown__select"
                         title="{{ 'Account'|trans }}"
                 >
-                    <i class="svg svg-person-man"></i>
+                    {{ ux_icon('person-man') }}
                     <span class="box-dropdown__select__text">
                         {{ app.user.realName }}
                     </span>
@@ -117,5 +117,4 @@
             </div>
         </li>
     </div>
-
 </ul>

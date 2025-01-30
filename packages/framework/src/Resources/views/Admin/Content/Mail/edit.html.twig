@@ -6,7 +6,7 @@
     {% if mailSenderExists %}
         <div class="wrap-bar">
             <a href="#" class="js-mail-template-open-send-window btn wrap-bar__btn" data-url="{{ url('admin_mail_send', { mailTemplateId: entity.id }) }}">
-                {{ icon('letter') }}
+                {{ ux_icon('letter') }}
                 {{ 'Send test mail'|trans }}
             </a>
         </div>

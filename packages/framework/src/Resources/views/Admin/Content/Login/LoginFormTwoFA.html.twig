@@ -17,7 +17,7 @@
             {% endif %}
             <div class="in-message in-message--error">
                 {{ authenticationErrorMessage }}
-                <i class="in-message__icon svg svg-remove js-message-close"></i>
+                {{ ux_icon('remove', { class: 'in-message__icon js-message-close' }) }}
             </div>
         {% endif %}
 

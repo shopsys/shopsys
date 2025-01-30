@@ -9,7 +9,7 @@
             {{ form_widget(parameter.parameter, { isSimple: true} ) }}
         </td>
         <td class="table-form__cell table-form__cell--del">
-            <span class="svg svg-arrow-right"></span>
+            {{ ux_icon('arrow-right') }}
         </td>
         <td class="table-form__cell  table-form__cell--del-after">
             {% for locale, valueTextLocaleForm in parameter.valueTextsByLocale %}
@@ -24,7 +24,7 @@
             {% endfor %}
         </td>
         <td class="table-form__cell table-form__cell--actions">
-            <a href="#" class="js-parameters-item-remove table-form__action"><i class="svg svg-delete-thin in-icon"></i></a>
+            <a href="#" class="js-parameters-item-remove table-form__action">{{ ux_icon('delete', { class: 'in-icon' }) }}</a>
         </td>
     </tr>
 {% endmacro %}

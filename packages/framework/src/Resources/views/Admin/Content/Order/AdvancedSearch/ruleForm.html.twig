@@ -21,15 +21,12 @@
         </div>
 
         <div class="box-advanced-search__item__content box-advanced-search__item__content--small">
-            <i class="svg svg-circle-cross cursor-pointer js-advanced-search-remove-rule-button in-icon in-icon--remove"></i>
+            {{ ux_icon('circle-cross', { class: 'cursor-pointer js-advanced-search-remove-rule-button in-icon in-icon--remove' }) }}
         </div>
 
         <div class="box-advanced-search__item__content box-advanced-search__item__content--small box-advanced-search__item__content--last">
             {% if ruleForm.subject.vars.value == 'orderTotalPriceWithVat' %}
-                <i class="js-tooltip svg svg-info cursor-help in-icon in-icon--info"
-                    data-toggle="tooltip" data-placement="left"
-                    title="{{ 'Searching in all currencies'|trans }}"
-                ></i>
+                {{ ux_icon('tabler:info-circle-filled', { class: 'js-tooltip cursor-help in-icon in-icon--info', 'data-toggle': 'tooltip', 'data-placement': 'left', 'title': 'Searching in all currencies'|trans }) }}
             {% endif %}
         </div>
     </div>

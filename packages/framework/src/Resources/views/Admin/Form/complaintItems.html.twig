@@ -24,10 +24,10 @@
                                             {{ form_errors(complaintItemForm.productName, {errors_attr: { inline: false }}) }}
                                             {% if product %}
                                                 <a href="{{ path('admin_product_edit', { id: product.id }) }}" class="in-icon in-icon--after-input" target="_blank">
-                                                    <i class="svg svg-arrow-simple in-icon in-icon--detail"></i>
+                                                    {{ ux_icon('arrow-simple', { class: 'in-icon in-icon--detail' }) }}
                                                 </a>
                                             {% else %}
-                                                <i class="in-icon in-icon--after-input svg svg-question js-tooltip" data-toggle="tooltip" data-placement="top" title="{{ 'Product not in e-shop.'|trans }}"></i>
+                                                {{ ux_icon('question', { class: 'in-icon in-icon--after-input js-tooltip', 'data-toggle': 'tooltip', 'data-placement': 'top', 'title': 'Product not in e-shop.'|trans }) }}
                                             {% endif %}
                                         </div>
                                     </td>

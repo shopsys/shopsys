@@ -18,7 +18,7 @@
                         {{ inquiry.lastName }}
                         {% if inquiry.customerUser %}
                             <a class="padding-left-10" href="{{ url('admin_customer_user_edit', { id: inquiry.customerUser.id }) }}">
-                                {{ icon('forward-page') }} {{ 'Go to associated customer user'|trans }}
+                                {{ ux_icon('forward-page') }} {{ 'Go to associated customer user'|trans }}
                             </a>
                         {% endif %}
                     </td>

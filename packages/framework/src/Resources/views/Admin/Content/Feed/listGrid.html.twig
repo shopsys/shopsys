@@ -10,7 +10,7 @@
             data-toggle="tooltip"
             data-placement="top"
         >
-            <i class="svg svg-question"></i>
+            {{ ux_icon('question') }}
         </span>
     {% endif %}
 {% endmacro %}
@@ -43,7 +43,7 @@
             }
         ) }}" class="btn">{{ 'Schedule'|trans }}</a>
     {% else %}
-        <span style="color: green;"><i class="svg svg-checked"></i> {{ 'Scheduled'|trans }}</span>
+        <span style="color: green;">{{ ux_icon('checked') }} {{ 'Scheduled'|trans }}</span>
     {% endif %}
 
 {% endblock %}

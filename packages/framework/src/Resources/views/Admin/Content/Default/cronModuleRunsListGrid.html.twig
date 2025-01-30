@@ -45,9 +45,9 @@
 {% block grid_value_cell_id_status %}
     <strong style="line-break: inherit;">
         {% if row.status == constant('Shopsys\\FrameworkBundle\\Component\\Cron\\CronModule::CRON_STATUS_ERROR') %}
-            <span style="color: red;"><i class="svg svg-warning"></i> {{ 'Error'|trans }}</span>
+            <span style="color: red;">{{ ux_icon('warning') }} {{ 'Error'|trans }}</span>
         {% else %}
-            <span style="color: green;"><i class="svg svg-checked"></i> {{ 'Ok'|trans }}</span>
+            <span style="color: green;">{{ ux_icon('checked') }} {{ 'Ok'|trans }}</span>
         {% endif %}
     </strong>
 {% endblock %}

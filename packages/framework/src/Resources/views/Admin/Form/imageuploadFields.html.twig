@@ -19,15 +19,15 @@
                                         {{ 'Main image'|trans }}
                                     </span>
                                     <span class="js-file-upload-file-handle list-files__item__move" title="{{ 'Move'|trans }}">
-                                        {{ icon('move') }}
+                                        {{ ux_icon('move') }}
                                     </span>
                                 {% endif %}
                                 {% if not isRemoved and not hide_delete_button %}
                                     <button class="js-file-upload-delete-button btn-no-style list-files__item__remove" type="button" title="{{ 'Delete'|trans }}">
-                                        {{ icon('delete') }}
+                                        {{ ux_icon('delete') }}
                                     </button>
                                     <button class="btn-no-style js-file-upload-delete-revert-button display-none list-files__item__revert" type="button" title="{{ 'Return back'|trans }}">
-                                        {{ icon('forward-page') }}
+                                        {{ ux_icon('forward-page') }}
                                     </button>
                                 {% endif %}
                                 <span class="list-files__item__overlay {% if isRemoved %}list-files__item__overlay__show{% endif %} js-file-upload-file-overlay">
