@@ -22,6 +22,8 @@ use Tests\FrontendApiBundle\Test\GraphQlB2bDomainWithLoginTestCase;
 
 class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
 {
+    private const string COMPLAINT_EMAIL = 'no-reply@shopsys.com';
+
     /**
      * @inject
      */
@@ -278,6 +280,53 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
             $expectedComplaintsData,
             $responseData['edges'],
         );
+    }
+
+    /**
+     * @see \Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\CustomerUserSelfManageTest::testCreateComplaintForAnotherUserOrderIsNotAllowed()
+     */
+    public function testCreateComplaintMutationIsAllowedForAnotherUserOrder(): void
+    {
+        $anotherUserOrder = $this->getReference(CompanyOrderDataFixture::ORDER_PREFIX . 28, Order::class);
+        $orderItems = $anotherUserOrder->getItems();
+        $orderItem = reset($orderItems);
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/../../Functional/Complaint/graphql/CreateComplaintMutation.graphql',
+            [
+                'input' => [
+                    'orderUuid' => $anotherUserOrder->getUuid(),
+                    'email' => 'no-reply@shopsys.com',
+                    'items' => [
+                        [
+                            'quantity' => 1,
+                            'description' => 'Broken!!!',
+                            'orderItemUuid' => $orderItem->getUuid(),
+                            'files' => [null],
+                        ],
+                    ],
+                    'deliveryAddress' => [
+                        'firstName' => 'firstName',
+                        'lastName' => 'lastnName',
+                        'street' => 'street 1',
+                        'city' => 'Ostrava',
+                        'postcode' => '71200',
+                        'telephone' => '+420123456789',
+                        'country' => 'CZ',
+                    ],
+                ],
+            ],
+            [
+                1 => __DIR__ . '/../../Functional/Complaint/files/1.jpg',
+            ],
+            [
+                1 => ['variables.input.items.0.files.0'],
+            ],
+        );
+
+        $responseData = $this->getResponseDataForGraphQlType($response, 'CreateComplaint');
+
+        $this->assertArrayHasKey('email', $responseData);
+        $this->assertSame(self::COMPLAINT_EMAIL, $responseData['email']);
     }
 
     /**

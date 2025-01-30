@@ -262,4 +262,35 @@ class CustomerUserCatalogUserTest extends GraphQlB2bDomainWithLoginTestCase
 
         $this->assertAccessDeniedError($response);
     }
+
+    public function testCreateComplaintMutationIsNotAllowed(): void
+    {
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/../../Functional/Complaint/graphql/CreateComplaintMutation.graphql',
+            [
+                'input' => [
+                    'orderUuid' => self::FAKE_UUID,
+                    'email' => 'email',
+                    'items' => [
+                        [
+                            'quantity' => 1,
+                            'description' => 'Broken!!!',
+                            'orderItemUuid' => self::FAKE_UUID,
+                        ],
+                    ],
+                    'deliveryAddress' => [
+                        'firstName' => 'firstName',
+                        'lastName' => 'lastnName',
+                        'street' => 'street 1',
+                        'city' => 'Ostrava',
+                        'postcode' => '71200',
+                        'telephone' => '+420123456789',
+                        'country' => 'CZ',
+                    ],
+                ],
+            ],
+        );
+
+        $this->assertAccessDeniedError($response);
+    }
 }

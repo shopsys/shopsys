@@ -181,4 +181,51 @@ class CustomerUserSelfManageTest extends GraphQlB2bDomainWithLoginTestCase
             $responseData['edges'],
         );
     }
+
+    /**
+     * @see \Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\CustomerUserOwnerTest::testCreateComplaintMutationIsAllowedForAnotherUserOrder()
+     */
+    public function testCreateComplaintForAnotherUserOrderIsNotAllowed(): void
+    {
+        $anotherUserOrder = $this->getReference(CompanyOrderDataFixture::ORDER_PREFIX . 26, Order::class);
+        $orderItems = $anotherUserOrder->getItems();
+        $orderItem = reset($orderItems);
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/../../Functional/Complaint/graphql/CreateComplaintMutation.graphql',
+            [
+                'input' => [
+                    'orderUuid' => $anotherUserOrder->getUuid(),
+                    'email' => 'no-reply@shopsys.com',
+                    'items' => [
+                        [
+                            'quantity' => 1,
+                            'description' => 'Broken!!!',
+                            'orderItemUuid' => $orderItem->getUuid(),
+                            'files' => [null],
+                        ],
+                    ],
+                    'deliveryAddress' => [
+                        'firstName' => 'firstName',
+                        'lastName' => 'lastnName',
+                        'street' => 'street 1',
+                        'city' => 'Ostrava',
+                        'postcode' => '71200',
+                        'telephone' => '+420123456789',
+                        'country' => 'CZ',
+                    ],
+                ],
+            ],
+            [
+                1 => __DIR__ . '/../../Functional/Complaint/files/1.jpg',
+            ],
+            [
+                1 => ['variables.input.items.0.files.0'],
+            ],
+        );
+
+        $this->assertResponseContainsArrayOfErrors($response);
+        $errors = $this->getErrorsFromResponse($response);
+
+        $this->assertSame('invalid-access', $errors[0]['extensions']['userCode']);
+    }
 }

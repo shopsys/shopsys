@@ -102,7 +102,7 @@ class ComplaintApiFacadeTest extends TestCase
         $complaintData = $this->createMock(ComplaintData::class);
         $complaint = $this->createMock(Complaint::class);
 
-        $this->security->method('isGranted')->with(CustomerUserRole::ROLE_API_ALL)->willReturn(false);
+        $this->security->method('isGranted')->with(CustomerUserRole::ROLE_API_COMPANY_ORDERS_VIEW)->willReturn(false);
 
         $this->orderApiFacade->method('getByUuid')->with('order-uuid')->willReturn($order);
         $this->currentCustomerUser->method('findCurrentCustomerUser')->willReturn($customerUser);
@@ -135,7 +135,7 @@ class ComplaintApiFacadeTest extends TestCase
         $customerUser = $this->createMock(CustomerUser::class);
         $customerUser2 = $this->createMock(CustomerUser::class);
 
-        $this->security->method('isGranted')->with(CustomerUserRole::ROLE_API_ALL)->willReturn(false);
+        $this->security->method('isGranted')->with(CustomerUserRole::ROLE_API_COMPANY_ORDERS_VIEW)->willReturn(false);
 
         $this->orderApiFacade->method('getByUuid')->with('order-uuid')->willReturn($order);
         $this->currentCustomerUser->method('findCurrentCustomerUser')->willReturn($customerUser);
@@ -158,7 +158,7 @@ class ComplaintApiFacadeTest extends TestCase
         $complaintData = $this->createMock(ComplaintData::class);
         $complaint = $this->createMock(Complaint::class);
 
-        $this->security->method('isGranted')->with(CustomerUserRole::ROLE_API_ALL)->willReturn(true);
+        $this->security->method('isGranted')->with(CustomerUserRole::ROLE_API_COMPANY_ORDERS_VIEW)->willReturn(true);
 
         $customerUser->method('getCustomer')->willReturn($customer);
 
@@ -197,7 +197,7 @@ class ComplaintApiFacadeTest extends TestCase
         $orderCustomer = $this->createMock(Customer::class);
         $orderCustomer2 = $this->createMock(Customer::class);
 
-        $this->security->method('isGranted')->with(CustomerUserRole::ROLE_API_ALL)->willReturn(true);
+        $this->security->method('isGranted')->with(CustomerUserRole::ROLE_API_COMPANY_ORDERS_VIEW)->willReturn(true);
 
         $customerUser->method('getCustomer')->willReturn($orderCustomer);
 

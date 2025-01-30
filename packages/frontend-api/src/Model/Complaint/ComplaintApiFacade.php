@@ -108,10 +108,10 @@ class ComplaintApiFacade
         $orderCustomerUser = $order->getCustomerUser();
 
         $isSameCustomerUser = $customerUser !== null && $orderCustomerUser === $customerUser;
-        $isCustomerAccountOwner = $this->security->isGranted(CustomerUserRole::ROLE_API_ALL) &&
+        $hasAccessToAllCompanyOrders = $this->security->isGranted(CustomerUserRole::ROLE_API_COMPANY_ORDERS_VIEW) &&
             $customerUser->getCustomer() === $order->getCustomer();
 
-        if (!$isSameCustomerUser && !$isCustomerAccountOwner) {
+        if (!$isSameCustomerUser && !$hasAccessToAllCompanyOrders) {
             throw new InvalidAccessUserError('You are not allowed to create complaint for this order');
         }
 

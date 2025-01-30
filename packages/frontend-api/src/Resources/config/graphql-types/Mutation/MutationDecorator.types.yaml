@@ -240,6 +240,7 @@ MutationDecorator:
                         type: ComplaintInput!
                         validation: cascade
                 resolve: "@=mutation('createComplaintMutation', args, validator)"
+                access: "@=isGranted('ROLE_API_COMPLAINT_CREATION')"
             CreateWatchdog:
                 type: Boolean!
                 description: "Create a new watchdog or update validity of the current one"
