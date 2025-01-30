@@ -605,7 +605,7 @@ jobs:
                         -H "X-GitHub-Api-Version: 2022-11-28" \
                         /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels/regenerate%20screenshots
     translations-dump-check:
-        name: Check all translations are dumped
+        name: Check all translations and icons are dumped
         needs: build-php-fpm-image
         if: |
             always() && !failure() && !cancelled() &&
@@ -636,10 +636,23 @@ jobs:
                     docker compose exec -T storefront npm run translate
                     if [ -n "$(git status --porcelain)" ]; then
                         echo "Not all translations are dumped";
-                        git status
+                        git status -s
                         exit 1;
                     else
                         echo "All translations are dumped";
+                        exit 0;
+                    fi
+            -   name: Check icons are dumped and committed
+                run: |
+                    docker compose exec -T php-fpm composer install --optimize-autoloader --no-interaction
+                    docker compose exec -T php-fpm php bin/console ux:icons:lock
+                    docker compose cp php-fpm:/var/www/html/project-base/app/assets/icons/ ./project-base/app/assets/
+                    if [ -n "$(git status --porcelain)" ]; then
+                        echo "Not all icons are committed. Run 'bin/console ux:icons:lock' and commit the changes.";
+                        git status -s
+                        exit 1;
+                    else
+                        echo "All icons are present in the repository.";
                         exit 0;
                     fi
     check-console-commands:
