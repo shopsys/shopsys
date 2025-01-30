@@ -1,10 +1,16 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { ConfirmationPageContent } from 'components/Blocks/ConfirmationPage/ConfirmationPageContent';
+import { OrderCustomerInfo } from 'components/Blocks/OrderCustomerInfo/OrderCustomerInfo';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { GoPayGateway } from 'components/Pages/Order/PaymentConfirmation/Gateways/GoPayGateway';
+import { OrderConfirmationProducts } from 'components/Pages/OrderConfirmation/OrderConfirmationProducts';
+import { OrderConfirmationStepper } from 'components/Pages/OrderConfirmation/OrderConfirmationStepper';
+import { FlowTypesEnum } from 'components/Pages/OrderConfirmation/OrderConfirmationStepperFlows';
+import { OrderConfirmationSummary } from 'components/Pages/OrderConfirmation/OrderConfirmationSummary';
 import { RegistrationAfterOrder } from 'components/Pages/OrderConfirmation/RegistrationAfterOrder';
 import { TIDs } from 'cypress/tids';
+import { useOrderDetailByHashOrUuidQuery } from 'graphql/requests/orders/queries/OrderDetailByHashOrUuidQuery.generated';
 import {
     useOrderSentPageContentQuery,
     TypeOrderSentPageContentQueryVariables,
@@ -47,9 +53,25 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
         },
     );
 
+    const [{ data: orderData }] = useOrderDetailByHashOrUuidQuery({
+        variables: {
+            urlHash: orderUrlHash,
+            uuid: orderUuid,
+        },
+    });
+
     useEffect(() => {
         fetchCart();
     }, []);
+
+    if (!orderData?.order) {
+        return null;
+    }
+
+    const stepperFlow =
+        orderData.order.payment.type === PaymentTypeEnum.GoPay && orderData.order.isPaid
+            ? FlowTypesEnum.PaymentSuccess
+            : FlowTypesEnum.PaymentAwaiting;
 
     return (
         <>
@@ -69,12 +91,37 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
                             <GoPayGateway orderUuid={orderUuid!} />
                         ) : undefined}
                     </ConfirmationPageContent>
-                    <RegistrationAfterOrder
-                        companyNumber={companyNumber}
-                        orderEmail={orderEmail}
-                        orderUrlHash={orderUrlHash}
-                        orderUuid={orderUuid}
-                    />
+
+                    <OrderConfirmationStepper flow={stepperFlow} />
+
+                    <div className="grid gap-4 vl:grid-cols-3 vl:gap-10">
+                        <div className="flex flex-col-reverse gap-4 vl:col-span-2 vl:flex-col">
+                            <OrderCustomerInfo order={orderData.order} />
+
+                            <RegistrationAfterOrder
+                                companyNumber={companyNumber}
+                                orderEmail={orderEmail}
+                                orderUrlHash={orderUrlHash}
+                                orderUuid={orderUuid}
+                            />
+                        </div>
+
+                        <div className="flex flex-1 flex-col gap-2.5 vl:col-span-1">
+                            <OrderConfirmationProducts items={orderData.order.items} />
+
+                            <OrderConfirmationSummary
+                                totalPrice={orderData.order.totalPrice}
+                                payment={{
+                                    name: orderData.order.payment.name,
+                                    price: orderData.order.payment.price.priceWithVat,
+                                }}
+                                transport={{
+                                    name: orderData.order.transport.name,
+                                    price: orderData.order.transport.price.priceWithVat,
+                                }}
+                            />
+                        </div>
+                    </div>
                 </Webline>
             </CommonLayout>
         </>

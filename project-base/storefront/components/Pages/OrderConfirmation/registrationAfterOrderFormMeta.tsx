@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
-import { validatePassword, validatePrivacyPolicy } from 'components/Forms/validationRules';
+import { validatePassword, validatePasswordConfirm, validatePrivacyPolicy } from 'components/Forms/validationRules';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
@@ -18,10 +18,11 @@ export const useRegistrationAfterOrderForm = (): [
     const resolver = yupResolver(
         Yup.object().shape<Record<keyof RegistrationAfterOrderFormType, any>>({
             password: validatePassword(t),
+            passwordConfirm: validatePasswordConfirm(t),
             privacyPolicy: validatePrivacyPolicy(t),
         }),
     );
-    const defaultValues = { password: '', privacyPolicy: false };
+    const defaultValues = { password: '', passwordConfirm: '', privacyPolicy: false };
 
     return [useShopsysForm(resolver, defaultValues), defaultValues];
 };
@@ -29,14 +30,9 @@ export const useRegistrationAfterOrderForm = (): [
 type RegistrationAfterOrderFormMetaType = {
     formName: string;
     fields: {
-        privacyPolicy: {
-            name: 'privacyPolicy';
+        [key in keyof RegistrationAfterOrderFormType]: {
+            name: key;
             label: string | JSX.Element;
-            errorMessage: string | undefined;
-        };
-        password: {
-            name: 'password';
-            label: string;
             errorMessage: string | undefined;
         };
     };
@@ -59,6 +55,11 @@ export const useRegistrationAfterOrderFormMeta = (
                     label: t('Password'),
                     errorMessage: errors.password?.message,
                 },
+                passwordConfirm: {
+                    name: 'passwordConfirm' as const,
+                    label: t('Password again'),
+                    errorMessage: errors.passwordConfirm?.message,
+                },
                 privacyPolicy: {
                     name: 'privacyPolicy' as const,
                     label: (
@@ -67,7 +68,12 @@ export const useRegistrationAfterOrderFormMeta = (
                             i18nKey="I agree with terms and conditions and privacy policy"
                             components={{
                                 lnk1: termsAndConditionUrl ? (
-                                    <Link isExternal href={termsAndConditionUrl} target="_blank" />
+                                    <Link
+                                        isExternal
+                                        className="inline text-sm"
+                                        href={termsAndConditionUrl}
+                                        target="_blank"
+                                    />
                                 ) : (
                                     <span className={linkPlaceholderTwClass} />
                                 ),
@@ -78,7 +84,13 @@ export const useRegistrationAfterOrderFormMeta = (
                 },
             },
         }),
-        [errors.password?.message, errors.privacyPolicy?.message, termsAndConditionUrl, t],
+        [
+            errors.password?.message,
+            errors.passwordConfirm?.message,
+            errors.privacyPolicy?.message,
+            termsAndConditionUrl,
+            t,
+        ],
     );
 
     return formMeta;

@@ -1,30 +1,35 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { BillingAddressIcon } from 'components/Basic/Icon/BillingAddressIcon';
-import { MailIcon } from 'components/Basic/Icon/MailIcon';
-import { UserIcon } from 'components/Basic/Icon/UserIcon';
+import { BoxPackageHandIcon } from 'components/Basic/Icon/BoxPackageHandIcon';
+import { UserProfileCardsIcon } from 'components/Basic/Icon/UserProfileCardsIcon';
+import { WarehouseBoxPackageIcon } from 'components/Basic/Icon/WarehouseBoxPackageIcon';
 import { InformationCard } from 'components/Basic/InformationCard/InformationCard';
 import { TypeOrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
+import { twJoin } from 'tailwind-merge';
 import { isPacketeryTransport } from 'utils/packetery';
 
-type OrderDetailCustomerInfoProps = {
+type OrderCustomerInfoProps = {
     order: TypeOrderDetailFragment;
 };
 
-export const OrderDetailCustomerInfo: FC<OrderDetailCustomerInfoProps> = ({ order }) => {
+export const OrderCustomerInfo: FC<OrderCustomerInfoProps> = ({ order }) => {
     const { t } = useTranslation();
     const isPickupPlaceTransport =
         order.transport.isPersonalPickup || isPacketeryTransport(order.transport.transportTypeCode);
 
     return (
-        <div className="flex w-full flex-col gap-6 vl:flex-row vl:flex-wrap xl:flex-nowrap">
-            <InformationCard heading={t('Contact information')} icon={<UserIcon className="[&>path]:stroke-1" />}>
+        <div className="flex flex-col flex-wrap gap-2.5 rounded-xl bg-backgroundMore p-5 lg:flex-row xl:flex-nowrap">
+            <InformationCard heading={t('Contact information')} icon={<UserProfileCardsIcon className="size-8" />}>
                 <span>
                     {order.firstName} {order.lastName}
                 </span>
                 <ExtendedNextLink
-                    className="hover:text-greyDark text-textAccent underline hover:no-underline"
                     href={`mailto:${order.email}`}
+                    className={twJoin(
+                        'hover:text-greyDark text-sm underline hover:no-underline',
+                        'overflow-x-auto whitespace-nowrap text-text',
+                        '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-backgroundMost [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:h-1',
+                    )}
                 >
                     {order.email}
                 </ExtendedNextLink>
@@ -33,7 +38,7 @@ export const OrderDetailCustomerInfo: FC<OrderDetailCustomerInfoProps> = ({ orde
 
             <InformationCard
                 heading={isPickupPlaceTransport ? t('Pickup place') : t('Delivery address')}
-                icon={<MailIcon />}
+                icon={<BoxPackageHandIcon className="size-8" />}
             >
                 <span>
                     {order.deliveryCompanyName && `${order.deliveryCompanyName}, `} {order.deliveryFirstName}{' '}
@@ -41,24 +46,29 @@ export const OrderDetailCustomerInfo: FC<OrderDetailCustomerInfoProps> = ({ orde
                 </span>
                 <span>{order.deliveryTelephone}</span>
 
+                <span>{order.deliveryStreet}</span>
+
                 <span>
-                    {order.deliveryStreet}, {order.deliveryCity}, {order.deliveryPostcode}
+                    {order.deliveryCity}, {order.deliveryPostcode}
                 </span>
 
                 <span>{order.deliveryCountry?.name}</span>
             </InformationCard>
 
-            <InformationCard heading={t('Billing address')} icon={<BillingAddressIcon />}>
+            <InformationCard heading={t('Billing address')} icon={<WarehouseBoxPackageIcon className="size-8" />}>
                 <span>{order.companyName}</span>
 
+                <span>{order.street}</span>
+
                 <span>
-                    {order.street}, {order.city}, {order.postcode}
+                    {order.city}, {order.postcode}
                 </span>
 
-                <span>{order.companyNumber && `${t('Company number')}: ${order.companyNumber}`}</span>
-                <span>{order.companyTaxNumber && `${t('Tax number')}: ${order.companyTaxNumber}`}</span>
-
                 <span>{order.deliveryCountry?.name}</span>
+
+                <span>{order.companyNumber && `${t('Company number')}: ${order.companyNumber}`}</span>
+
+                <span>{order.companyTaxNumber && `${t('Tax number')}: ${order.companyTaxNumber}`}</span>
             </InformationCard>
         </div>
     );

@@ -1,5 +1,6 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { ConfirmationPageContent } from 'components/Blocks/ConfirmationPage/ConfirmationPageContent';
+import { OrderCustomerInfo } from 'components/Blocks/OrderCustomerInfo/OrderCustomerInfo';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { PaymentStatus } from 'components/Pages/Order/PaymentConfirmation/PaymentStatus';
@@ -7,12 +8,19 @@ import {
     getPaymentSessionExpiredErrorMessage,
     useUpdatePaymentStatus,
 } from 'components/Pages/Order/PaymentConfirmation/paymentConfirmationUtils';
+import { OrderConfirmationProducts } from 'components/Pages/OrderConfirmation/OrderConfirmationProducts';
+import { OrderConfirmationStepper } from 'components/Pages/OrderConfirmation/OrderConfirmationStepper';
+import { FlowTypesEnum } from 'components/Pages/OrderConfirmation/OrderConfirmationStepperFlows';
+import { OrderConfirmationSummary } from 'components/Pages/OrderConfirmation/OrderConfirmationSummary';
 import { RegistrationAfterOrder } from 'components/Pages/OrderConfirmation/RegistrationAfterOrder';
+import { PaymentsInOrderSelect } from 'components/PaymentsInOrderSelect/PaymentsInOrderSelect';
+import { useOrderDetailByHashQuery } from 'graphql/requests/orders/queries/OrderDetailByHashQuery.generated';
 import { useOrderPaymentFailedContentQuery } from 'graphql/requests/orders/queries/OrderPaymentFailedContentQuery.generated';
 import { useOrderPaymentSuccessfulContentQuery } from 'graphql/requests/orders/queries/OrderPaymentSuccessfulContentQuery.generated';
 import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
+import { PaymentTypeEnum } from 'types/payment';
 import { getStringFromUrlQuery } from 'utils/parsing/getStringFromUrlQuery';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
@@ -39,6 +47,11 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
 
     const paymentSessionExpiredErrorMessage = getPaymentSessionExpiredErrorMessage(isOrderPaymentFailedError, t);
 
+    const [{ data: orderData }] = useOrderDetailByHashQuery({
+        variables: { urlHash: orderUrlHash as string },
+        pause: !orderUrlHash,
+    });
+
     if (paymentSessionExpiredErrorMessage) {
         return (
             <CommonLayout
@@ -52,6 +65,7 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
                     <ConfirmationPageContent
                         content={paymentSessionExpiredErrorMessage}
                         heading={t('Your payment session expired')}
+                        headingClassName="text-textError"
                     />
                 </Webline>
             </CommonLayout>
@@ -61,24 +75,71 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
     const isFetchingData =
         !paymentStatusData || isOrderPaymentFailedContentFetching || isOrderPaymentSuccessfulContentFetching;
 
+    if (!orderData?.order) {
+        return null;
+    }
+
     return (
         <>
             <MetaRobots content="noindex" />
+
             <CommonLayout isFetchingData={isFetchingData} pageTypeOverride="order-confirmation" title={t('Order sent')}>
                 <Webline>
                     <PaymentStatus
                         failedContentData={failedContentData}
-                        orderUuid={orderUuid}
                         paymentStatusData={paymentStatusData}
                         successContentData={successContentData}
                     />
-                    {paymentStatusData?.UpdatePaymentStatus.isPaid && successContentData && (
-                        <RegistrationAfterOrder
-                            orderEmail={orderEmail as string | undefined}
-                            orderUrlHash={orderUrlHash as string | undefined}
-                            orderUuid={orderUuid}
-                        />
-                    )}
+
+                    <OrderConfirmationStepper
+                        flow={
+                            successContentData && paymentStatusData?.UpdatePaymentStatus.isPaid
+                                ? FlowTypesEnum.PaymentSuccess
+                                : FlowTypesEnum.PaymentFailed
+                        }
+                    />
+
+                    <div className="grid gap-4 vl:grid-cols-3 vl:gap-10">
+                        <div className="flex flex-col-reverse gap-4 vl:col-span-2 vl:flex-col">
+                            {failedContentData &&
+                                paymentStatusData?.UpdatePaymentStatus.payment.type === PaymentTypeEnum.GoPay && (
+                                    <PaymentsInOrderSelect
+                                        orderUuid={orderUuid}
+                                        paymentTransactionCount={
+                                            paymentStatusData.UpdatePaymentStatus.paymentTransactionsCount
+                                        }
+                                    />
+                                )}
+
+                            {successContentData && paymentStatusData?.UpdatePaymentStatus.isPaid && (
+                                <>
+                                    <OrderCustomerInfo order={orderData.order} />
+
+                                    <RegistrationAfterOrder
+                                        orderEmail={orderEmail as string | undefined}
+                                        orderUrlHash={orderUrlHash as string | undefined}
+                                        orderUuid={orderUuid}
+                                    />
+                                </>
+                            )}
+                        </div>
+
+                        <div className="flex flex-1 flex-col gap-2.5 vl:col-span-1">
+                            <OrderConfirmationProducts items={orderData.order.items} />
+
+                            <OrderConfirmationSummary
+                                totalPrice={orderData.order.totalPrice}
+                                payment={{
+                                    name: orderData.order.payment.name,
+                                    price: orderData.order.payment.price.priceWithVat,
+                                }}
+                                transport={{
+                                    name: orderData.order.transport.name,
+                                    price: orderData.order.transport.price.priceWithVat,
+                                }}
+                            />
+                        </div>
+                    </div>
                 </Webline>
             </CommonLayout>
         </>

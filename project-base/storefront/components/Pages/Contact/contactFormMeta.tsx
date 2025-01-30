@@ -89,7 +89,12 @@ export const useContactFormMeta = (formProviderMethods: UseFormReturn<ContactFor
                             i18nKey="GdprAgreementCheckbox"
                             components={{
                                 lnk1: privacyPolicyUrl ? (
-                                    <Link isExternal className="inline" href={privacyPolicyUrl} target="_blank" />
+                                    <Link
+                                        isExternal
+                                        className="inline text-sm"
+                                        href={privacyPolicyUrl}
+                                        target="_blank"
+                                    />
                                 ) : (
                                     <span className={linkPlaceholderTwClass} />
                                 ),

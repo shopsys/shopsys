@@ -189,6 +189,8 @@ describe('Create Order Tests', () => {
         checkOrderDetailFromOrderPageWithPromoCode(transport.czechPost.name, payment.onDelivery.name, orderNote);
     });
 
+    // HERE ---------------------------
+
     it(
         '[Register After Order] should register after order completion, and check that the just created order is in customer orders',
         { retries: { runMode: 0 } },
@@ -231,6 +233,8 @@ describe('Create Order Tests', () => {
             });
         },
     );
+
+    // HERE ---------------------------
 
     it(
         '[Logged Home Cash] should create order as logged-in user (transport to home, cash on delivery) and check it in order detail',

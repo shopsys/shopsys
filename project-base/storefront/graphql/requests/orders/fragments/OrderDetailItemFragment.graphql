@@ -28,5 +28,12 @@ fragment OrderDetailItemFragment on OrderItem {
         mainImage {
             ...ImageFragment
         }
+        price {
+            ...ProductPriceFragment
+        }
+        availability {
+            name
+            status
+        }
     }
 }

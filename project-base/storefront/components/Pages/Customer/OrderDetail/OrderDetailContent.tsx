@@ -1,5 +1,5 @@
 import { OrderDetailBasicInfo } from './OrderDetailBasicInfo';
-import { OrderDetailCustomerInfo } from './OrderDetailCustomerInfo';
+import { OrderCustomerInfo } from 'components/Blocks/OrderCustomerInfo/OrderCustomerInfo';
 import { OrderPaymentStatusBar } from 'components/Pages/Customer/Orders/OrderPaymentStatusBar';
 import { PaymentsInOrderSelect } from 'components/PaymentsInOrderSelect/PaymentsInOrderSelect';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
@@ -32,7 +32,7 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                     </div>
                 )}
             <OrderDetailBasicInfo order={order} />
-            <OrderDetailCustomerInfo order={order} />
+            <OrderCustomerInfo order={order} />
         </div>
     );
 };

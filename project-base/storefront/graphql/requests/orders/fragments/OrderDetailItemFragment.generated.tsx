@@ -1,125 +1,161 @@
 import * as Types from '../../../types';
-
-import gql from 'graphql-tag';
-import { PriceFragment } from '../../prices/fragments/PriceFragment.generated';
 import { ImageFragment } from '../../images/fragments/ImageFragment.generated';
-export type TypeOrderDetailItemFragment = { __typename: 'OrderItem', uuid: string, name: string, vatRate: string, quantity: number, unit: string | null, type: Types.TypeOrderItemTypeEnum, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, order: { __typename?: 'Order', uuid: string, number: string, creationDate: any, customerUser: { __typename?: 'CompanyCustomerUser', uuid: string } | { __typename?: 'CurrentCompanyCustomerUser', uuid: string } | { __typename?: 'CurrentRegularCustomerUser', uuid: string } | { __typename?: 'RegularCustomerUser', uuid: string } | null }, product: { __typename?: 'MainVariant', slug: string, isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean, mainImage: { __typename: 'Image', name: string | null, url: string } | null } | { __typename?: 'RegularProduct', slug: string, isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean, mainImage: { __typename: 'Image', name: string | null, url: string } | null } | { __typename?: 'Variant', slug: string, isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean, mainImage: { __typename: 'Image', name: string | null, url: string } | null } | null };
+import { PriceFragment } from '../../prices/fragments/PriceFragment.generated';
+import gql from 'graphql-tag';
 
-
-      export interface PossibleTypesResultData {
-        possibleTypes: {
-          [key: string]: string[]
-        }
-      }
-      const result: PossibleTypesResultData = {
-  "possibleTypes": {
-    "Advert": [
-      "AdvertCode",
-      "AdvertImage"
-    ],
-    "ArticleInterface": [
-      "ArticleSite",
-      "BlogArticle"
-    ],
-    "BaseCustomerUser": [
-      "CompanyCustomerUser",
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser",
-      "RegularCustomerUser"
-    ],
-    "Breadcrumb": [
-      "ArticleSite",
-      "BlogArticle",
-      "BlogCategory",
-      "Brand",
-      "Category",
-      "Flag",
-      "MainVariant",
-      "RegularProduct",
-      "Store",
-      "Variant"
-    ],
-    "CurrentCustomerUser": [
-      "CurrentCompanyCustomerUser",
-      "CurrentRegularCustomerUser"
-    ],
-    "Hreflang": [
-      "BlogArticle",
-      "BlogCategory",
-      "Brand",
-      "Flag",
-      "MainVariant",
-      "RegularProduct",
-      "SeoPage",
-      "Variant"
-    ],
-    "NotBlogArticleInterface": [
-      "ArticleLink",
-      "ArticleSite"
-    ],
-    "ParameterFilterOptionInterface": [
-      "ParameterCheckboxFilterOption",
-      "ParameterColorFilterOption",
-      "ParameterSliderFilterOption"
-    ],
-    "Product": [
-      "MainVariant",
-      "RegularProduct",
-      "Variant"
-    ],
-    "ProductListable": [
-      "Brand",
-      "Category",
-      "Flag"
-    ],
-    "Slug": [
-      "ArticleSite",
-      "BlogArticle",
-      "BlogCategory",
-      "Brand",
-      "Category",
-      "Flag",
-      "MainVariant",
-      "RegularProduct",
-      "Store",
-      "Variant"
-    ]
-  }
+export type TypeOrderDetailItemFragment = {
+    __typename: 'OrderItem';
+    uuid: string;
+    name: string;
+    vatRate: string;
+    quantity: number;
+    unit: string | null;
+    type: Types.TypeOrderItemTypeEnum;
+    unitPrice: { __typename: 'Price'; priceWithVat: string; priceWithoutVat: string; vatAmount: string };
+    totalPrice: { __typename: 'Price'; priceWithVat: string; priceWithoutVat: string; vatAmount: string };
+    order: {
+        __typename?: 'Order';
+        uuid: string;
+        number: string;
+        creationDate: any;
+        customerUser:
+            | { __typename?: 'CompanyCustomerUser'; uuid: string }
+            | { __typename?: 'CurrentCompanyCustomerUser'; uuid: string }
+            | { __typename?: 'CurrentRegularCustomerUser'; uuid: string }
+            | { __typename?: 'RegularCustomerUser'; uuid: string }
+            | null;
+    };
+    product:
+        | {
+              __typename?: 'MainVariant';
+              slug: string;
+              isVisible: boolean;
+              isSellingDenied: boolean;
+              isInquiryType: boolean;
+              mainImage: { __typename: 'Image'; name: string | null; url: string } | null;
+          }
+        | {
+              __typename?: 'RegularProduct';
+              slug: string;
+              isVisible: boolean;
+              isSellingDenied: boolean;
+              isInquiryType: boolean;
+              mainImage: { __typename: 'Image'; name: string | null; url: string } | null;
+          }
+        | {
+              __typename?: 'Variant';
+              slug: string;
+              isVisible: boolean;
+              isSellingDenied: boolean;
+              isInquiryType: boolean;
+              mainImage: { __typename: 'Image'; name: string | null; url: string } | null;
+          }
+        | null;
 };
-      export default result;
-    
+
+export interface PossibleTypesResultData {
+    possibleTypes: {
+        [key: string]: string[];
+    };
+}
+const result: PossibleTypesResultData = {
+    possibleTypes: {
+        Advert: ['AdvertCode', 'AdvertImage'],
+        ArticleInterface: ['ArticleSite', 'BlogArticle'],
+        BaseCustomerUser: [
+            'CompanyCustomerUser',
+            'CurrentCompanyCustomerUser',
+            'CurrentRegularCustomerUser',
+            'RegularCustomerUser',
+        ],
+        Breadcrumb: [
+            'ArticleSite',
+            'BlogArticle',
+            'BlogCategory',
+            'Brand',
+            'Category',
+            'Flag',
+            'MainVariant',
+            'RegularProduct',
+            'Store',
+            'Variant',
+        ],
+        CurrentCustomerUser: ['CurrentCompanyCustomerUser', 'CurrentRegularCustomerUser'],
+        Hreflang: [
+            'BlogArticle',
+            'BlogCategory',
+            'Brand',
+            'Flag',
+            'MainVariant',
+            'RegularProduct',
+            'SeoPage',
+            'Variant',
+        ],
+        NotBlogArticleInterface: ['ArticleLink', 'ArticleSite'],
+        ParameterFilterOptionInterface: [
+            'ParameterCheckboxFilterOption',
+            'ParameterColorFilterOption',
+            'ParameterSliderFilterOption',
+        ],
+        Product: ['MainVariant', 'RegularProduct', 'Variant'],
+        ProductListable: ['Brand', 'Category', 'Flag'],
+        Slug: [
+            'ArticleSite',
+            'BlogArticle',
+            'BlogCategory',
+            'Brand',
+            'Category',
+            'Flag',
+            'MainVariant',
+            'RegularProduct',
+            'Store',
+            'Variant',
+        ],
+    },
+};
+export default result;
+
 export const OrderDetailItemFragment = gql`
     fragment OrderDetailItemFragment on OrderItem {
-  __typename
-  uuid
-  name
-  unitPrice {
-    ...PriceFragment
-  }
-  totalPrice {
-    ...PriceFragment
-  }
-  vatRate
-  quantity
-  unit
-  type
-  order {
-    uuid
-    number
-    creationDate
-    customerUser {
-      uuid
+        __typename
+        uuid
+        name
+        unitPrice {
+            ...PriceFragment
+        }
+        totalPrice {
+            ...PriceFragment
+        }
+        vatRate
+        quantity
+        unit
+        type
+        order {
+            uuid
+            number
+            creationDate
+            customerUser {
+                uuid
+            }
+        }
+        product {
+            slug
+            isVisible
+            isSellingDenied
+            isInquiryType
+            mainImage {
+                ...ImageFragment
+            }
+            price {
+                ...ProductPriceFragment
+            }
+            availability {
+                name
+                status
+            }
+        }
     }
-  }
-  product {
-    slug
-    isVisible
-    isSellingDenied
-    isInquiryType
-    mainImage {
-      ...ImageFragment
-    }
-  }
-}
     ${PriceFragment}
-${ImageFragment}`;
+    ${ImageFragment}
+    ${ProductPriceFragment}
+`;

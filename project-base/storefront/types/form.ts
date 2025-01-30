@@ -9,6 +9,7 @@ export type NewsletterFormType = {
 
 export type RegistrationAfterOrderFormType = {
     password: string;
+    passwordConfirm: string;
     privacyPolicy: boolean;
 };
 

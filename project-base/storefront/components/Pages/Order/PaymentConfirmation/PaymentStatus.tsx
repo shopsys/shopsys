@@ -9,14 +9,10 @@ export const PaymentStatus: FC<{
     paymentStatusData: TypeUpdatePaymentStatusMutation | undefined;
     failedContentData: TypeOrderPaymentFailedContentQuery | undefined;
     successContentData: TypeOrderPaymentSuccessfulContentQuery | undefined;
-    orderUuid: string;
-}> = ({ paymentStatusData, failedContentData, successContentData, orderUuid }) => {
+}> = ({ paymentStatusData, failedContentData, successContentData }) => {
     if (paymentStatusData?.UpdatePaymentStatus.isPaid) {
         return successContentData ? (
-            <PaymentSuccess
-                orderPaymentSuccessfulContent={successContentData.orderPaymentSuccessfulContent}
-                orderUuid={orderUuid}
-            />
+            <PaymentSuccess orderPaymentSuccessfulContent={successContentData.orderPaymentSuccessfulContent} />
         ) : null;
     }
 
@@ -25,14 +21,7 @@ export const PaymentStatus: FC<{
     }
 
     if (paymentStatusData && failedContentData) {
-        return (
-            <PaymentFail
-                lastUsedOrderPaymentType={paymentStatusData.UpdatePaymentStatus.payment.type}
-                orderPaymentFailedContent={failedContentData.orderPaymentFailedContent}
-                orderUuid={orderUuid}
-                paymentTransactionCount={paymentStatusData.UpdatePaymentStatus.paymentTransactionsCount}
-            />
-        );
+        return <PaymentFail orderPaymentFailedContent={failedContentData.orderPaymentFailedContent} />;
     }
 
     return null;
