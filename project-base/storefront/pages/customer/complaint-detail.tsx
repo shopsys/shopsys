@@ -19,6 +19,7 @@ import { getStringFromUrlQuery } from 'utils/parsing/getStringFromUrlQuery';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { TypeCustomerUserRoleEnum } from 'graphql/types';
 
 const ComplaintDetailPage: FC = () => {
     const { t } = useTranslation();
@@ -77,6 +78,10 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
         context,
         authenticationConfig: {
             authenticationRequired: true,
+            authorizedRoles: [
+                TypeCustomerUserRoleEnum.RoleApiComplaintCreation,
+                TypeCustomerUserRoleEnum.RoleApiCompanyComplaintsView,
+            ],
         },
         prefetchedQueries: [
             { query: ComplaintQueryDocument, variables: { complaintNumber: context.query.complaintNumber } },

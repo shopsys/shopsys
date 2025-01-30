@@ -963,7 +963,9 @@ export type TypeCustomerUser = {
 export enum TypeCustomerUserRoleEnum {
   RoleApiAll = 'ROLE_API_ALL',
   RoleApiCartAndOrderCreation = 'ROLE_API_CART_AND_ORDER_CREATION',
+  RoleApiCompanyComplaintsView = 'ROLE_API_COMPANY_COMPLAINTS_VIEW',
   RoleApiCompanyOrdersView = 'ROLE_API_COMPANY_ORDERS_VIEW',
+  RoleApiComplaintCreation = 'ROLE_API_COMPLAINT_CREATION',
   RoleApiCustomerSeesPrices = 'ROLE_API_CUSTOMER_SEES_PRICES',
   RoleApiCustomerSelfManage = 'ROLE_API_CUSTOMER_SELF_MANAGE'
 }

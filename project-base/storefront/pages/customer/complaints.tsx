@@ -7,10 +7,7 @@ import { ComplaintsContent } from 'components/Pages/Customer/Complaints/Complain
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
-import {
-    ComplaintsQueryDocument,
-    TypeComplaintsQueryVariables,
-} from 'graphql/requests/complaints/queries/ComplaintsQuery.generated';
+import { ComplaintsQueryDocument, TypeComplaintsQueryVariables } from 'graphql/requests/complaints/queries/ComplaintsQuery.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
@@ -22,6 +19,7 @@ import { PAGE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { TypeCustomerUserRoleEnum } from 'graphql/types';
 
 const ComplaintsPage: FC = () => {
     const { t } = useTranslation();
@@ -88,6 +86,10 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 context,
                 authenticationConfig: {
                     authenticationRequired: true,
+                    authorizedRoles: [
+                        TypeCustomerUserRoleEnum.RoleApiComplaintCreation,
+                        TypeCustomerUserRoleEnum.RoleApiCompanyComplaintsView,
+                    ],
                 },
                 prefetchedQueries: [
                     {

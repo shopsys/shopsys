@@ -11761,7 +11761,15 @@ Available customer user roles
 <td></td>
 </tr>
 <tr>
+<td valign="top"><strong>ROLE_API_COMPANY_COMPLAINTS_VIEW</strong></td>
+<td></td>
+</tr>
+<tr>
 <td valign="top"><strong>ROLE_API_COMPANY_ORDERS_VIEW</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>ROLE_API_COMPLAINT_CREATION</strong></td>
 <td></td>
 </tr>
 <tr>
