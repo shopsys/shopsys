@@ -15,4 +15,8 @@ fragment CreateComplaintFragment on Complaint {
     items {
         ...ComplaintItemFragment
     }
+    resolution {
+        ...ComplaintResolutionFragment
+    }
+    bankAccountNumber
 }

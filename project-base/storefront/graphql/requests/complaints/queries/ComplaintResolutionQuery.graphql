@@ -1,0 +1,5 @@
+query ComplaintResolutionQuery {
+    complaintResolution {
+        ...ComplaintResolutionFragment
+    }
+}

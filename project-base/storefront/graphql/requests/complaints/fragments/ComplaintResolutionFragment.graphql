@@ -1,0 +1,4 @@
+fragment ComplaintResolutionFragment on ComplaintResolution {
+    name
+    value
+}
