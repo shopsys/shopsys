@@ -26,7 +26,7 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
             <NotificationBars />
 
             <Webline
-                className="relative mb-8"
+                className="relative mb-4 lg:pb-6"
                 wrapperClassName="bg-gradient-to-tr from-backgroundBrand to-backgroundBrandLess"
             >
                 <Header simpleHeader />

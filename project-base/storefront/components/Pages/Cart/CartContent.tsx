@@ -1,8 +1,8 @@
 import { CartList } from './CartList/CartList';
 import { CartSummary } from './CartSummary';
 import { useCartPageNavigation } from './cartUtils';
+import { CartSteps } from 'components/Blocks/CartSteps/CartSteps';
 import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
-import { OrderSteps } from 'components/Blocks/OrderSteps/OrderSteps';
 import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
@@ -21,7 +21,7 @@ export const CartContent: FC<CartContentProps> = ({ cart }) => {
 
     return (
         <Webline>
-            <OrderSteps activeStep={1} domainUrl={url} />
+            <CartSteps activeStep={1} domainUrl={url} />
 
             <CartList items={cart.items} />
 
