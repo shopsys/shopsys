@@ -5,13 +5,7 @@
         {{ value }}
     {% else %}
         {{ row.i.productCatnum }}
-        <span title="{{ 'The product is no longer in the catalog. This was the catalog number at the time of the inquiry.'|trans }}"
-              class="js-tooltip cursor-help in-icon in-icon--info"
-              data-toggle="tooltip"
-              data-placement="right"
-        >
-            {{ ux_icon('tabler:info-circle-filled') }}
-        </span>
+        {{ info_icon('The product is no longer in the catalog. This was the catalog number at the time of the inquiry.'|trans, tooltipPlacement: 'right') }}
     {% endif %}
     {% if row.productId %}
         <a href="{{ url('admin_product_edit', { id: row.productId }) }}">{{ ux_icon('forward-page') }}</a>
