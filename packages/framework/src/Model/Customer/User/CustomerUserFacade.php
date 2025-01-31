@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Customer\User;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\ArrayUtils\ArrayHelper;
 use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
@@ -495,7 +496,7 @@ class CustomerUserFacade
      */
     protected function areRolesChanged(array $customerUserCurrentRoles, array $customerUserOriginalRoles): bool
     {
-        return array_diff($customerUserCurrentRoles, $customerUserOriginalRoles) !== [] || array_diff($customerUserOriginalRoles, $customerUserCurrentRoles) !== [];
+        return ArrayHelper::haveArraysDifferentValues($customerUserCurrentRoles, $customerUserOriginalRoles);
     }
 
     /**

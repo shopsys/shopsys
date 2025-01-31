@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Customer\User\Role;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Shopsys\FrameworkBundle\Component\ArrayUtils\ArrayHelper;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade;
 
 class CustomerUserRoleGroupFacade
 {
@@ -14,6 +16,7 @@ class CustomerUserRoleGroupFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupDataFactory $customerUserRoleGroupDataFactory
      * @param \Doctrine\ORM\EntityManagerInterface $entityManager
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupFactory $customerUserRoleGroupFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade
      */
     public function __construct(
         protected readonly CustomerUserRoleGroupRepository $customerUserRoleGroupRepository,
@@ -21,6 +24,7 @@ class CustomerUserRoleGroupFacade
         protected readonly CustomerUserRoleGroupDataFactory $customerUserRoleGroupDataFactory,
         protected readonly EntityManagerInterface $entityManager,
         protected readonly CustomerUserRoleGroupFactory $customerUserRoleGroupFactory,
+        protected readonly CustomerUserRefreshTokenChainFacade $customerUserRefreshTokenChainFacade,
     ) {
     }
 
@@ -48,9 +52,19 @@ class CustomerUserRoleGroupFacade
         CustomerUserRoleGroupData $administratorRoleGroupData,
     ): CustomerUserRoleGroup {
         $customerUserRoleGroup = $this->customerUserRoleGroupRepository->getById($customerUserRoleGroupId);
+        $currentRoles = $customerUserRoleGroup->getRoles();
+        $newRoles = $administratorRoleGroupData->roles;
 
         $customerUserRoleGroup->edit($administratorRoleGroupData);
         $this->entityManager->flush();
+
+        $rolesChanged = ArrayHelper::haveArraysDifferentValues($currentRoles, $newRoles);
+
+        if ($rolesChanged) {
+            foreach ($this->customerUserRoleGroupRepository->iterateAllCustomerUsersByRoleGroup($customerUserRoleGroup) as $customerUser) {
+                $this->customerUserRefreshTokenChainFacade->removeAllCustomerUserRefreshTokenChains($customerUser);
+            }
+        }
 
         return $customerUserRoleGroup;
     }

@@ -103,13 +103,36 @@ class CustomerUserRoleGroupRepository
      */
     public function getCustomerUserCountByRoleGroup(int $id): int
     {
-        $queryBuilder = $this->em->createQueryBuilder();
-        $queryBuilder
-            ->select('COUNT(cu.id)')
-            ->from(CustomerUser::class, 'cu')
-            ->where('cu.roleGroup = :roleGroup')
-            ->setParameter('roleGroup', $id);
+        $queryBuilder = $this->getCustomerUsersByRoleGroupIdQueryBuilder($id);
+        $queryBuilder->select('COUNT(cu)');
 
         return $queryBuilder->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup $customerUserRoleGroup
+     * @return iterable<int, \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser>
+     */
+    public function iterateAllCustomerUsersByRoleGroup(CustomerUserRoleGroup $customerUserRoleGroup): iterable
+    {
+        return $this->getCustomerUsersByRoleGroupIdQueryBuilder($customerUserRoleGroup->getId())
+            ->getQuery()
+            ->toIterable();
+    }
+
+    /**
+     * @param int $customerUserRoleGroupId
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function getCustomerUsersByRoleGroupIdQueryBuilder(int $customerUserRoleGroupId): QueryBuilder
+    {
+        $queryBuilder = $this->em->createQueryBuilder();
+        $queryBuilder
+            ->select('cu')
+            ->from(CustomerUser::class, 'cu')
+            ->where('cu.roleGroup = :roleGroup')
+            ->setParameter('roleGroup', $customerUserRoleGroupId);
+
+        return $queryBuilder;
     }
 }
