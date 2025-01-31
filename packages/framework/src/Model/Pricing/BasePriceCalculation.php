@@ -28,41 +28,26 @@ class BasePriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
-    public function calculateBasePriceRoundedByCurrency(
+    public function calculateRoundedBasePrice(
         Money $inputPrice,
         int $inputPriceType,
         Vat $vat,
         Currency $currency,
     ): PriceInterface {
-        $basePriceWithVat = $this->getBasePriceWithVatRoundedByCurrency($inputPrice, $inputPriceType, $vat, $currency);
-        $vatAmount = $this->priceCalculation->getVatAmountByPriceWithVat($basePriceWithVat, $vat);
-        $basePriceWithoutVat = $this->rounding->roundPriceWithoutVat($basePriceWithVat->subtract($vatAmount));
-
-        return new Price($basePriceWithoutVat, $basePriceWithVat);
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $inputPrice
-     * @param int $inputPriceType
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
-     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
-     */
-    protected function getBasePriceWithVatRoundedByCurrency(
-        Money $inputPrice,
-        int $inputPriceType,
-        Vat $vat,
-        Currency $currency,
-    ): Money {
         switch ($inputPriceType) {
             case PricingSetting::INPUT_PRICE_TYPE_WITH_VAT:
-                return $this->rounding->roundPriceWithVatByCurrency($inputPrice, $currency);
+                $basePriceWithVat = $this->rounding->roundPriceWithVatByCurrency($inputPrice, $currency);
+                $vatAmount = $this->priceCalculation->getVatAmountByPriceWithVat($basePriceWithVat, $vat);
+                $basePriceWithoutVat = $this->rounding->roundPriceWithoutVat($basePriceWithVat->subtract($vatAmount));
+
+                return new Price($basePriceWithoutVat, $basePriceWithVat);
 
             case PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT:
-                return $this->rounding->roundPriceWithVatByCurrency(
-                    $this->priceCalculation->applyVatPercent($inputPrice, $vat),
-                    $currency,
-                );
+                $basePriceWithoutVat = $this->rounding->roundPriceWithoutVat($inputPrice);
+                $basePriceWithVat = $this->priceCalculation->applyVatPercent($basePriceWithoutVat, $vat);
+                $basePriceWithVat = $this->rounding->roundPriceWithVatByCurrency($basePriceWithVat, $currency);
+
+                return new Price($basePriceWithoutVat, $basePriceWithVat);
 
             default:
                 throw new InvalidInputPriceTypeException();

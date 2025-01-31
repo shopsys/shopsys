@@ -55,7 +55,7 @@ class SpecialPriceFactory
         string $priceListName,
         int $productId,
     ): SpecialPrice {
-        $price = $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
+        $price = $this->basePriceCalculation->calculateRoundedBasePrice(
             $specialPriceAmount,
             $this->pricingSetting->getInputPriceType(),
             $vat,

@@ -55,7 +55,7 @@ class PaymentPriceCalculation
      */
     public function calculateIndependentPrice(Payment $payment, Currency $currency, int $domainId): PriceInterface
     {
-        return $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
+        return $this->basePriceCalculation->calculateRoundedBasePrice(
             $payment->getPrice($domainId)->getPrice(),
             $this->pricingSetting->getInputPriceType(),
             $payment->getPaymentDomain($domainId)->getVat(),

@@ -65,7 +65,7 @@ class TransportPriceCalculation
         );
         $vat = $transportPrice->getTransport()->getTransportDomain($domainId)->getVat();
 
-        return $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
+        return $this->basePriceCalculation->calculateRoundedBasePrice(
             $transportPrice->getPrice(),
             $this->pricingSetting->getInputPriceType(),
             $vat,

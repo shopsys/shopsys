@@ -74,7 +74,7 @@ class BasePriceCalculationTest extends TestCase
         $currencyData->code = 'currency code';
         $currency = new Currency($currencyData);
 
-        $basePrice = $basePriceCalculation->calculateBasePriceRoundedByCurrency(
+        $basePrice = $basePriceCalculation->calculateRoundedBasePrice(
             $inputPrice,
             $inputPriceType,
             $vat,

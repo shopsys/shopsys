@@ -308,7 +308,7 @@ abstract class GraphQlTestCase extends ApplicationTestCase
         $currency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
         $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
 
-        $basePrice = $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
+        $basePrice = $this->basePriceCalculation->calculateRoundedBasePrice(
             $this->priceConverter->convertPriceWithoutVatToDomainDefaultCurrencyPrice(
                 Money::create($priceWithoutVat),
                 $currencyCzk,
@@ -319,7 +319,7 @@ abstract class GraphQlTestCase extends ApplicationTestCase
             $currency,
         );
 
-        return $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
+        return $this->basePriceCalculation->calculateRoundedBasePrice(
             $basePrice->getPriceWithVat()->multiply($quantity),
             PricingSetting::INPUT_PRICE_TYPE_WITH_VAT,
             $vat,
