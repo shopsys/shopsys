@@ -91,6 +91,9 @@ msgstr ""
 msgid "<strong><a href=\"{{ url }}\">SEO category</a></strong> has been saved"
 msgstr ""
 
+msgid "Access to all the complaints created under the user's company"
+msgstr ""
+
 msgid "Access to all the orders created under the user's company"
 msgstr ""
 
@@ -797,6 +800,9 @@ msgid "Complaint Nr."
 msgstr ""
 
 msgid "Complaint Nr. <strong><a href=\"{{ url }}\">{{ number }}</a></strong> modified"
+msgstr ""
+
+msgid "Complaint creation"
 msgstr ""
 
 msgid "Complaint detail URL"
