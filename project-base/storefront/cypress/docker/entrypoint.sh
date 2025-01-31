@@ -2,7 +2,6 @@
 echo "TYPE variable is set to: $TYPE"
 echo "COMMAND variable is set to: $COMMAND"
 echo "$COMMAND = 'generate'"
-echo "some new stuff"
 
 if [ "$COMMAND" = "generate" ]; then
     echo "Generating snapshots lookup table"
