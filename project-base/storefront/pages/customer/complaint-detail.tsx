@@ -10,6 +10,7 @@ import {
     TypeComplaintQueryVariables,
     useComplaintQuery,
 } from 'graphql/requests/complaints/queries/ComplaintQuery.generated';
+import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
@@ -19,7 +20,6 @@ import { getStringFromUrlQuery } from 'utils/parsing/getStringFromUrlQuery';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
-import { TypeCustomerUserRoleEnum } from 'graphql/types';
 
 const ComplaintDetailPage: FC = () => {
     const { t } = useTranslation();

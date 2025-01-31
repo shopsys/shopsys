@@ -2,6 +2,7 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { Image } from 'components/Basic/Image/Image';
 import { CreateComplaintPopup } from 'components/Blocks/Popup/CreateComplaintPopup';
 import { Button } from 'components/Forms/Button/Button';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
 import { TypeOrderItemTypeEnum } from 'graphql/types';
@@ -22,6 +23,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const isUserLoggedIn = useIsUserLoggedIn();
+    const { canCreateComplaint } = useAuthorization();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
 
     const openCreateComplaintPopup = (
@@ -75,7 +77,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
                     <span className="text-right font-bold">{formatPrice(orderItem.totalPrice.priceWithVat)}</span>
                 )}
 
-                {isUserLoggedIn && orderItem.type === TypeOrderItemTypeEnum.Product && (
+                {canCreateComplaint && isUserLoggedIn && orderItem.type === TypeOrderItemTypeEnum.Product && (
                     <Button
                         className="whitespace-nowrap"
                         size="small"

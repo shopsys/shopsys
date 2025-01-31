@@ -4,10 +4,15 @@ import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { SearchInput } from 'components/Forms/TextInput/SearchInput';
 import { CustomerLayout } from 'components/Layout/CustomerLayout';
 import { ComplaintsContent } from 'components/Pages/Customer/Complaints/ComplaintsContent';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
-import { ComplaintsQueryDocument, TypeComplaintsQueryVariables } from 'graphql/requests/complaints/queries/ComplaintsQuery.generated';
+import {
+    ComplaintsQueryDocument,
+    TypeComplaintsQueryVariables,
+} from 'graphql/requests/complaints/queries/ComplaintsQuery.generated';
+import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
@@ -19,11 +24,11 @@ import { PAGE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
-import { TypeCustomerUserRoleEnum } from 'graphql/types';
 
 const ComplaintsPage: FC = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
+    const { canCreateComplaint } = useAuthorization();
     const [customerComplaintsUrl, customerComplaintsNewUrl] = getInternationalizedStaticUrls(
         ['/customer/complaints', '/customer/new-complaint'],
         url,
@@ -48,15 +53,17 @@ const ComplaintsPage: FC = () => {
                 pageHeading={t('My complaints')}
                 title={t('My complaints')}
             >
-                <LinkButton
-                    size="small"
-                    type="complaintNew"
-                    href={{
-                        pathname: customerComplaintsNewUrl,
-                    }}
-                >
-                    {t('New complaint')}
-                </LinkButton>
+                {canCreateComplaint && (
+                    <LinkButton
+                        size="small"
+                        type="complaintNew"
+                        href={{
+                            pathname: customerComplaintsNewUrl,
+                        }}
+                    >
+                        {t('New complaint')}
+                    </LinkButton>
+                )}
                 <div className="my-5">
                     <SearchInput
                         className="w-full border border-inputBorder"

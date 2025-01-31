@@ -26,7 +26,8 @@ export const useUserMenuItems = (): UserMenuItemType[] => {
     const { url } = useDomainConfig();
     const { comparison } = useComparison();
     const { wishlist } = useWishlist();
-    const { canManageUsers, canCreateOrder, canViewCompanyOrders } = useAuthorization();
+    const { canManageUsers, canCreateOrder, canViewCompanyOrders, canCreateComplaint, canViewCompanyComplaints } =
+        useAuthorization();
     const [
         customerOrdersUrl,
         customerComplaintsUrl,
@@ -59,12 +60,14 @@ export const useUserMenuItems = (): UserMenuItemType[] => {
         });
     }
 
-    userMenuItems.push({
-        text: t('Complaints'),
-        link: customerComplaintsUrl,
-        type: 'complaintList',
-        iconComponent: ComplaintsIcon,
-    });
+    if (canCreateComplaint || canViewCompanyComplaints) {
+        userMenuItems.push({
+            text: t('Complaints'),
+            link: customerComplaintsUrl,
+            type: 'complaintList',
+            iconComponent: ComplaintsIcon,
+        });
+    }
 
     if (canManageUsers) {
         userMenuItems.push({
