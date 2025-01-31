@@ -18,6 +18,7 @@ use Tests\FrontendApiBundle\Test\GraphQlB2bDomainWithLoginTestCase;
 class CustomerUserSelfManageTest extends GraphQlB2bDomainWithLoginTestCase
 {
     public const string DEFAULT_USER_EMAIL = CompanyDataFixture::B2B_COMPANY_USER_EMAIL;
+    protected const string COMPLAINT_EMAIL = 'no-reply@shopsys.com';
 
     /**
      * @see \Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\CustomerUserOwnerTest::testChangePersonalDataMutation()
@@ -184,18 +185,46 @@ class CustomerUserSelfManageTest extends GraphQlB2bDomainWithLoginTestCase
 
     /**
      * @see \Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\CustomerUserOwnerTest::testCreateComplaintMutationIsAllowedForAnotherUserOrder()
+     * @see \Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\CustomerUserSelfManageTest::testCreateComplaintIsAllowedForOwnOrder()
      */
     public function testCreateComplaintForAnotherUserOrderIsNotAllowed(): void
     {
         $anotherUserOrder = $this->getReference(CompanyOrderDataFixture::ORDER_PREFIX . 26, Order::class);
-        $orderItems = $anotherUserOrder->getItems();
+        $response = $this->getCreateComplaintResponse($anotherUserOrder);
+
+        $this->assertAccessDeniedError($response);
+    }
+
+    /**
+     * @see \Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\CustomerUserOwnerTest::testCreateComplaintMutationIsAllowedForAnotherUserOrder()
+     * @see \Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\CustomerUserSelfManageTest::testCreateComplaintForAnotherUserOrderIsNotAllowed()
+     */
+    public function testCreateComplaintIsAllowedForOwnOrder(): void
+    {
+        $thisUserOrder = $this->getReference(CompanyOrderDataFixture::ORDER_PREFIX . 28, Order::class);
+        $response = $this->getCreateComplaintResponse($thisUserOrder);
+
+        $responseData = $this->getResponseDataForGraphQlType($response, 'CreateComplaint');
+
+        $this->assertArrayHasKey('email', $responseData);
+        $this->assertSame(self::COMPLAINT_EMAIL, $responseData['email']);
+    }
+
+    /**
+     * @param \App\Model\Order\Order $order
+     * @return array
+     */
+    private function getCreateComplaintResponse(Order $order): array
+    {
+        $orderItems = $order->getItems();
         $orderItem = reset($orderItems);
-        $response = $this->getResponseContentForGql(
+
+        return $this->getResponseContentForGql(
             __DIR__ . '/../../Functional/Complaint/graphql/CreateComplaintMutation.graphql',
             [
                 'input' => [
-                    'orderUuid' => $anotherUserOrder->getUuid(),
-                    'email' => 'no-reply@shopsys.com',
+                    'orderUuid' => $order->getUuid(),
+                    'email' => self::COMPLAINT_EMAIL,
                     'items' => [
                         [
                             'quantity' => 1,
@@ -222,10 +251,5 @@ class CustomerUserSelfManageTest extends GraphQlB2bDomainWithLoginTestCase
                 1 => ['variables.input.items.0.files.0'],
             ],
         );
-
-        $this->assertResponseContainsArrayOfErrors($response);
-        $errors = $this->getErrorsFromResponse($response);
-
-        $this->assertSame('invalid-access', $errors[0]['extensions']['userCode']);
     }
 }

@@ -284,6 +284,7 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
 
     /**
      * @see \Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\CustomerUserSelfManageTest::testCreateComplaintForAnotherUserOrderIsNotAllowed()
+     * @see \Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\CustomerUserSelfManageTest::testCreateComplaintIsAllowedForOwnOrder()
      */
     public function testCreateComplaintMutationIsAllowedForAnotherUserOrder(): void
     {
