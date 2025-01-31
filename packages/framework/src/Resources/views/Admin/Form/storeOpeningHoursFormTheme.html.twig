@@ -52,13 +52,7 @@
 {% block _store_form_userInformation_openingHours_label %}
     <label class="form-line__label" style="float: none">
         {{ label }}
-        <span class="cursor-help form-line__item form-line__item--info js-tooltip"
-              data-toggle="tooltip"
-              data-placement="bottom"
-              title="{{ 'Enter in the store local time'|trans }}"
-        >
-            {{ ux_icon('tabler:info-circle-filled', { class: 'in-icon' }) }}
-        </span>
+        {{ info_icon('Enter in the store local time'|trans, tooltipPlacement: 'bottom') }}
     </label>
 {% endblock _store_form_userInformation_openingHours_label %}
 

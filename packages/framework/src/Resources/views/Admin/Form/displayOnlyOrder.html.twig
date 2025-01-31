@@ -8,10 +8,7 @@
                 </a>
             {% else %}
                 {{ manualDocumentNumber }}
-                <span title="{{ 'Complaint was created manually without link to a particular order'|trans }}"
-                      class="js-tooltip cursor-help in-icon in-icon--info" data-toggle="tooltip" data-placement="right">
-                    {{ ux_icon('info') }}
-                </span>
+                {{ info_icon('Complaint was created manually without link to a particular order'|trans, tooltipPlacement: 'right') }}
             {% endif %}
         </div>
     </div>

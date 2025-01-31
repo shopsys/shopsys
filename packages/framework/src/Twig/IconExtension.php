@@ -39,6 +39,25 @@ class IconExtension extends AbstractExtension
                     ),
                 ],
             ),
+            new TwigFunction('info_icon', $this->getInfoIcon(...), ['is_safe' => ['html']]),
         ];
+    }
+
+    /**
+     * @param string $message
+     * @param string $tooltipPlacement
+     * @param string $additionalClasses
+     * @return string
+     */
+    protected function getInfoIcon(
+        string $message,
+        string $tooltipPlacement = 'top',
+        string $additionalClasses = '',
+    ): string {
+        return $this->twigEnvironment->render('@ShopsysFramework/Admin/Inline/Icon/info_icon.html.twig', [
+            'message' => $message,
+            'tooltipPlacement' => $tooltipPlacement,
+            'additionalClasses' => $additionalClasses,
+        ]);
     }
 }

@@ -24,7 +24,7 @@
                             placeholder: 'Search by name...'|trans
                         }
                     }) }}
-                    {{ ux_icon('tabler:info-circle-filled', { class: 'cursor-help js-tooltip box-quick-search__icon in-icon in-icon--info', 'data-toggle': 'tooltip', 'data-placement': 'top', 'title': 'Searching searches in name. It is possible to use wildcards * and ?.'|trans }) }}
+                    {{ info_icon('Searching searches in name. It is possible to use wildcards * and ?.'|trans, additionalClasses: 'box-quick-search__icon') }}
                 </div>
                 {{ form_widget(quickSearchForm.submit, { attr: { class : 'box-quick-search__btn' }, label: 'Search [verb]'|trans, full_name: ''}) }}
             </div>

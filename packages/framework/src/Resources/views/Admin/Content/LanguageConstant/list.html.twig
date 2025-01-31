@@ -19,7 +19,7 @@
                     <div class="box-quick-search">
                         <div class="box-quick-search__input">
                             {{ form_widget(quickSearchForm.text) }}
-                            {{ ux_icon('tabler:info-circle-filled', { class: 'cursor-help js-tooltip box-quick-search__icon in-icon in-icon--info', 'data-toggle': 'tooltip', 'data-placement': 'top' }) }}
+                            {{ info_icon('Searching searches in Key, Original translation and User translation.', additionalClasses: 'box-quick-search__icon') }}
                         </div>
                         {{ form_widget(quickSearchForm.submit, { attr: { class : 'box-quick-search__btn' }, label: 'Search [verb]'|trans, full_name: ''}) }}
                     </div>

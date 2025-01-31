@@ -26,7 +26,7 @@
 
         <div class="box-advanced-search__item__content box-advanced-search__item__content--small box-advanced-search__item__content--last">
             {% if ruleForm.subject.vars.value == 'orderTotalPriceWithVat' %}
-                {{ ux_icon('tabler:info-circle-filled', { class: 'js-tooltip cursor-help in-icon in-icon--info', 'data-toggle': 'tooltip', 'data-placement': 'left', 'title': 'Searching in all currencies'|trans }) }}
+                {{ info_icon('Searching in all currencies'|trans, tooltipPlacement: 'left') }}
             {% endif %}
         </div>
     </div>

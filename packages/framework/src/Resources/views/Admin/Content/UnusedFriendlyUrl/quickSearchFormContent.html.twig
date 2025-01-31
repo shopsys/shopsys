@@ -6,7 +6,7 @@
                     placeholder: 'Search by slug...'|trans
                 }
             })}}
-            {{ ux_icon('tabler:info-circle-filled', { class: 'cursor-help js-tooltip box-quick-search__icon in-icon in-icon--info', 'data-toggle': 'tooltip', 'data-placement': 'top', 'title': 'Searching searches in slugs. It is possible to use wildcards * and ?.'|trans }) }}
+            {{ info_icon('Searching searches in slugs. It is possible to use wildcards * and ?.'|trans, additionalClasses: 'box-quick-search__icon') }}
         </div>
         {{ form_widget(quickSearchForm.submit, { label: 'Search [verb]'|trans, attr: { class: 'box-quick-search__btn'}, full_name: '' }) }}
     </div>

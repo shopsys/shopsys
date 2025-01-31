@@ -9,10 +9,7 @@
         <a href="{{ url('admin_order_edit', { id: row.orderId }) }}">{{ value }}</a>
     {% else %}
         {{ row.cmp.manualDocumentNumber }}
-        <span title="{{ 'Complaint was created manually without link to a particular order'|trans }}"
-          class="js-tooltip cursor-help in-icon in-icon--info" data-toggle="tooltip" data-placement="right">
-            {{ icon('info') }}
-        </span>
+        {{ info_icon('Complaint was created manually without link to a particular order'|trans, tooltipPlacement: 'right') }}
     {% endif %}
 {% endblock %}
 
