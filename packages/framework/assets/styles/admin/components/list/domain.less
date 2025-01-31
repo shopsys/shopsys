@@ -24,6 +24,8 @@
             width: 40px;
             height: @list-domain-item-height;
             line-height: @list-domain-item-height;
+            position: relative;
+            top:3px;
 
             text-align: right;
 
@@ -44,17 +46,14 @@
         }
 
         &__name {
-            display: block;
+            display: flex;
+            align-items: center;
             margin: 0 40px 0 55px;
             height: @list-domain-item-height;
             line-height: @list-domain-item-height;
 
-            i {
-                position: relative;
-                top: 2px;
+            svg {
                 margin-left: 5px;
-
-                font-size: 12px;
                 text-decoration: none;
             }
         }
