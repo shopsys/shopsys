@@ -11,8 +11,8 @@ Once an application has received an Access Token, it will include that token as 
 
 You can read more about access tokens in [this article](https://auth0.com/docs/tokens/concepts/access-tokens).
 
-The access token has a short lifetime (15 minutes by default).
-In order to not force users to log in every 15 minutes, we have implemented refresh tokens that have a longer lifetime (14 days in the base).
+The access token has a short lifetime (5 minutes by default).
+In order to not force users to log in every 5 minutes, we have implemented refresh tokens that have a longer lifetime (14 days in the base).
 You can read more about refresh tokens [here](https://auth0.com/docs/tokens/concepts/refresh-tokens).
 
 Tokens are signed with a private key and verified with its public key in Shopsys Platform.
