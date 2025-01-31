@@ -13,21 +13,20 @@
         padding: 0;
         position: absolute;
         top: 1px;
-        right: 0px;
+        right: 0;
         width: 27px;
         height: @form-type-ang-go-height - 2px;
         line-height: @form-type-ang-go-height - 2px;
 
-        text-align: center;
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
 
-        i {
-            position: relative;
-            left: 1px;
-            top: 12px;
+        display: flex;
+        align-items: center;
 
-            font-size: 10px;
+        svg {
+            position: relative;
+            margin: 0 auto;
         }
     }
 }
