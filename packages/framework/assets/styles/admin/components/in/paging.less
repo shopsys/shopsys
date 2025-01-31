@@ -39,22 +39,16 @@
             background: @color-f;
         }
 
-        i {
+        svg {
+            --rotation: 90deg;
             position: relative;
-            top: calc(~"50% - 5px");
-
-            transform: rotate(90deg);
-            font-size: 10px;
-        }
-
-        &--next,
-        &--prev {
-            font-size: 10px;
+            top: 50%;
+            transform:  translateY(-48%) rotate(var(--rotation));
         }
 
         &--next {
-            i {
-                transform: rotate(-90deg);
+            svg {
+                --rotation: -90deg;
             }
         }
 
