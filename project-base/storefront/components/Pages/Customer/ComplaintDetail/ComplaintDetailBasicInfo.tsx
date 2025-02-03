@@ -32,7 +32,16 @@ export const ComplaintDetailBasicInfo: FC<ComplaintDetailBasicInfoProps> = ({ co
                     <ComplaintItemColumnInfo title={t('Status')} value={complaint.status} />
                     <ComplaintItemColumnInfo title={t('Resolution')} value={complaint.resolution.name} />
                     {isResolutionMoneyReturn(complaint.resolution) && (
-                        <ComplaintItemColumnInfo title={t('Bank account number')} value={complaint.bankAccountNumber} />
+                        <ComplaintItemColumnInfo
+                            tid={TIDs.complaint_detail_bank_account_number}
+                            title={t('Bank account number')}
+                            value={complaint.bankAccountNumber}
+                            valueClassName={twMergeCustom(
+                                'max-w-52 xxs:max-w-64 sm:max-w-fit overflow-x-auto overflow-y-hidden whitespace-nowrap',
+                                '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-backgroundMost',
+                                '[&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:h-1',
+                            )}
+                        />
                     )}
                 </div>
             </div>
