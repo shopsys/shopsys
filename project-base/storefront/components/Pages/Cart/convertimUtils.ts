@@ -244,6 +244,7 @@ export const mapStoresData = (
     dayNames: string[],
     cart: TypeCartFragment | undefined | null,
     transports?: TypeTransportWithAvailablePaymentsAndStoresFragment[],
+    personalPickupStoreImageUrl?: string | null,
 ): StoreData[] => {
     const cartItemsAvailabilityByStoreUuid = cart?.items
         .flatMap(getProductOnStoreAvailability)
@@ -268,6 +269,10 @@ export const mapStoresData = (
                     hours: mapOpeningHours(dayNames, store?.node?.openingHours),
                     availability: store?.node?.openingHours.status ?? '',
                     productOnStoreAvailability: cartItemsAvailabilityByStoreUuid?.get(store?.node?.identifier ?? ''),
+                    image:
+                        transport.transportTypeCode === TypeTransportTypeEnum.PersonalPickup
+                            ? personalPickupStoreImageUrl
+                            : null,
                 })) ?? [],
         ) ?? []
     );
