@@ -12,7 +12,7 @@ import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.g
 import { useRemoveCartMutation } from 'graphql/requests/cart/mutations/RemoveCartMutation.generated';
 import { useTransportsWithPaymentsAndStoresForConvertimQuery } from 'graphql/requests/transports/queries/TransportsWithPaymentsAndStoresForConvertimQuery.generated';
 import useTranslation from 'next-translate/useTranslation';
-import { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useLogout } from 'utils/auth/useLogout';
