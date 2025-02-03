@@ -1,4 +1,5 @@
 import { getGtm, mapCartData, mapPaymentsData, mapStoresData, mapTransportsData } from './convertimUtils';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import {
     ConvertimComponent,
     GetCartType,
@@ -6,11 +7,12 @@ import {
     GetStoresType,
     GetTransportsType,
 } from 'convertim-react-lib';
+import { deleteCookie, getCookie, setCookie } from 'cookies-next';
 import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { useRemoveCartMutation } from 'graphql/requests/cart/mutations/RemoveCartMutation.generated';
 import { useTransportsWithPaymentsAndStoresForConvertimQuery } from 'graphql/requests/transports/queries/TransportsWithPaymentsAndStoresForConvertimQuery.generated';
 import useTranslation from 'next-translate/useTranslation';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useLogout } from 'utils/auth/useLogout';
@@ -19,6 +21,7 @@ import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 type ConvertimProps = { cart?: TypeCartFragment | null; convertimProjectUuid: string };
 
 export const Convertim: FC<ConvertimProps> = ({ cart, convertimProjectUuid }) => {
+    const { url } = useDomainConfig();
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
@@ -40,14 +43,16 @@ export const Convertim: FC<ConvertimProps> = ({ cart, convertimProjectUuid }) =>
         t('Sunday'),
     ];
 
+    const personalPickupStoreImageUrl = url + '/images/logo-square.svg';
+
     const getCart = useCallback<GetCartType>((setData) => setData(mapCartData(cart, formatPrice)), [cart, formatPrice]);
     const getPayments = useCallback<GetPaymentsType>(
         (setData) => setData(mapPaymentsData(transportsData?.transports)),
         [transportsData],
     );
     const getStores = useCallback<GetStoresType>(
-        (setData) => setData(mapStoresData(dayNames, cart, transportsData?.transports)),
-        [dayNames, cart, transportsData],
+        (setData) => setData(mapStoresData(dayNames, cart, transportsData?.transports, personalPickupStoreImageUrl)),
+        [dayNames, cart, transportsData, personalPickupStoreImageUrl],
     );
     const getTransports = useCallback<GetTransportsType>(
         (setData) => setData(mapTransportsData(transportsData?.transports, t)),
@@ -62,6 +67,14 @@ export const Convertim: FC<ConvertimProps> = ({ cart, convertimProjectUuid }) =>
         await removeCartMutation({ cartUuid: isUserLoggedIn ? null : cart.uuid });
         updateCartUuid(null);
     };
+
+    useEffect(() => {
+        if (cart?.uuid && getCookie('cartUuid') !== cart.uuid) {
+            setCookie('cartUuid', cart.uuid);
+        } else if (isUserLoggedIn && getCookie('cartUuid')) {
+            deleteCookie('cartUuid');
+        }
+    }, [cart?.uuid]);
 
     if (isTransportsFetching) {
         return null;
