@@ -183,6 +183,12 @@ services:
             - elasticsearch-data:/usr/share/elasticsearch/data
         environment:
             - discovery.type=single-node
+            - bootstrap.memory_lock=true
+            - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+        deploy:
+            resources:
+                limits:
+                    memory: 2G
 
     kibana:
         image: docker.elastic.co/kibana/kibana:7.16.1
