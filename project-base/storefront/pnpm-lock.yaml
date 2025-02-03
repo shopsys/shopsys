@@ -30,8 +30,8 @@ importers:
         specifier: ~6.4.1
         version: 6.4.1(graphql@16.8.2)
       convertim-react-lib:
-        specifier: ^0.0.18
-        version: 0.0.18(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: ^0.1.5
+        version: 0.1.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       cookies-next:
         specifier: ~4.3.0
         version: 4.3.0
@@ -2498,8 +2498,8 @@ packages:
   convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
 
-  convertim-react-lib@0.0.18:
-    resolution: {integrity: sha512-YrNOm1quRTZvGIOm04XAmp+TtyH90KC84n54Ep65JSWkMET2DGEPeZf59Jz8L3fDVnapf6OFuciXHOziXsxNlQ==}
+  convertim-react-lib@0.1.5:
+    resolution: {integrity: sha512-pf6KJNcM1ThYVOU7XuDbN8x3BEkvADqcBpaZ6R09X/FMj70t9YCdzVCMBKqU6l485Ah9DdYcC8PdHoEP7ZoElA==}
     peerDependencies:
       react: ^18.2.0
       react-dom: ^18.2.0
@@ -2722,8 +2722,8 @@ packages:
   electron-to-chromium@1.5.73:
     resolution: {integrity: sha512-8wGNxG9tAG5KhGd3eeA0o6ixhiNdgr0DcHWm85XPCphwZgD1lIEoi6t3VERayWao7SF7AAZTw6oARGJeVjH8Kg==}
 
-  electron-to-chromium@1.5.88:
-    resolution: {integrity: sha512-K3C2qf1o+bGzbilTDCTBhTQcMS9KW60yTAaTeeXsfvQuTDDwlokLam/AdqlqcSy9u4UainDgsHV23ksXAOgamw==}
+  electron-to-chromium@1.5.90:
+    resolution: {integrity: sha512-C3PN4aydfW91Natdyd449Kw+BzhLmof6tzy5W1pFC5SpQxVXT+oyiyOG9AgYYSN9OdA/ik3YkCrpwqI8ug5Tug==}
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -7988,7 +7988,7 @@ snapshots:
   browserslist@4.24.4:
     dependencies:
       caniuse-lite: 1.0.30001696
-      electron-to-chromium: 1.5.88
+      electron-to-chromium: 1.5.90
       node-releases: 2.0.19
       update-browserslist-db: 1.1.2(browserslist@4.24.4)
 
@@ -8247,9 +8247,8 @@ snapshots:
 
   convert-source-map@2.0.0: {}
 
-  convertim-react-lib@0.0.18(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  convertim-react-lib@0.1.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
-      lodash: 4.17.21
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
@@ -8472,7 +8471,7 @@ snapshots:
 
   electron-to-chromium@1.5.73: {}
 
-  electron-to-chromium@1.5.88: {}
+  electron-to-chromium@1.5.90: {}
 
   emoji-regex@8.0.0: {}
 
