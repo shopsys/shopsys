@@ -6,7 +6,7 @@ export const STATIC_REWRITE_PATHS = {
     [(nextConfig?.publicRuntimeConfig?.domains?.[0]?.url || process.env.DOMAIN_HOSTNAME_1) as string]: {
         '/search': '/search',
         '/cart': '/cart',
-        '/contact': '/contact',
+        '/contact-form': '/contact-form',
         '/order/transport-and-payment': '/order/transport-and-payment',
         '/order/contact-information': '/order/contact-information',
         '/reset-password': '/reset-password',
@@ -43,7 +43,7 @@ export const STATIC_REWRITE_PATHS = {
     [(nextConfig?.publicRuntimeConfig?.domains?.[1]?.url || process.env.DOMAIN_HOSTNAME_2) as string]: {
         '/search': '/hledani',
         '/cart': '/kosik',
-        '/contact': '/kontakt',
+        '/contact-form': '/kontaktni-formular',
         '/order/transport-and-payment': '/objednavka/doprava-a-platba',
         '/order/contact-information': '/objednavka/kontaktni-udaje',
         '/reset-password': '/zapomenute-heslo',

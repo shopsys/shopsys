@@ -7,7 +7,7 @@ import React from 'react';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 
-const ContactPage: FC<ServerSidePropsType> = () => {
+const ContactFormPage: FC<ServerSidePropsType> = () => {
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.contact);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
@@ -24,4 +24,4 @@ export const getServerSideProps = getServerSidePropsWrapper(
             initServerSideProps({ context, redisClient, domainConfig, t }),
 );
 
-export default ContactPage;
+export default ContactFormPage;

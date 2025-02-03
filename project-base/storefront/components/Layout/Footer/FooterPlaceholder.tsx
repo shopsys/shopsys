@@ -10,7 +10,7 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 export const FooterPlaceholder: FC<FooterProps> = ({ simpleFooter, footerArticles }) => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
-    const [userConsentUrl, contactUrl] = getInternationalizedStaticUrls(['/user-consent', '/contact'], url);
+    const [userConsentUrl, contactUrl] = getInternationalizedStaticUrls(['/user-consent', '/contact-form'], url);
     const currentYear = new Date().getFullYear();
 
     return (
