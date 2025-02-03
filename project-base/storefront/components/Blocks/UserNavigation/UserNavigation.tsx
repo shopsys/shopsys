@@ -28,7 +28,7 @@ export const UserNavigation: FC = () => {
     const logoutHandler = useLogout();
 
     return (
-        <div className="flex h-fit min-w-[300px] flex-col overflow-hidden rounded-xl">
+        <div className="flex h-fit min-w-64 flex-col overflow-hidden rounded-xl xs:min-w-[300px]">
             <button
                 className={twJoin(
                     'flex items-center gap-4 bg-backgroundMore px-6 py-3 no-underline last:border-none lg:hidden',
