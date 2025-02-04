@@ -8,7 +8,7 @@ type NativeButtonProps = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'disabled
 export type ButtonBaseProps = {
     isDisabled?: boolean;
     isWithDisabledLook?: boolean;
-    size?: 'small' | 'medium' | 'large';
+    size?: 'small' | 'medium' | 'large' | 'xlarge';
     variant?: 'primary' | 'secondary' | 'inverted' | 'transparent';
 };
 
@@ -55,6 +55,7 @@ export const getButtonClassName = (
         size === 'small' && 'px-4 py-2 text-xs',
         size === 'medium' && 'p-2 text-xs sm:px-4 sm:text-sm',
         size === 'large' && 'px-5 py-3 text-lg',
+        size === 'xlarge' && 'px-4 py-2 text-sm sm:px-5 sm:py-3.5 sm:text-lg',
         variant === 'primary' && [
             'outline-actionPrimaryBorder bg-actionPrimaryBackground text-actionPrimaryText',
             !isDisabled &&

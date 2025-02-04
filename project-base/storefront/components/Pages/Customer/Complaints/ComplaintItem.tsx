@@ -24,8 +24,8 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
             <div className="flex flex-col gap-4 vl:flex-row vl:items-start vl:justify-between">
                 <Image
                     priority
-                    alt={complaintItem.items[0].product?.mainImage?.name || ''}
-                    className="h-[80px] max-h-full w-[80px] object-contain"
+                    alt={complaintItem.items[0].orderItem?.product?.mainImage?.name || ''}
+                    className="size-20 max-h-full object-contain"
                     height={80}
                     sizes="(max-width: 768px) 100vw, 50vw"
                     src={complaintItem.items[0].product?.mainImage?.url}

@@ -14,7 +14,7 @@ type SpinboxProps = {
     defaultValue: number;
     id: string;
     onChangeValueCallback?: (currentValue: number) => void;
-    size?: 'default' | 'small';
+    size?: 'small' | 'large';
 };
 
 export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
@@ -109,14 +109,13 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
         return (
             <div
                 className={twJoin(
-                    'inline-flex h-12 shrink-0 items-center overflow-hidden rounded-md border-2 border-inputBorder',
-                    'bg-inputBackground',
-                    'border-inputBorder',
-                    size === 'small' ? 'w-20' : 'w-28',
+                    'inline-flex h-fit w-auto shrink-0 items-center justify-center self-start overflow-hidden rounded-md bg-inputBackground outline outline-2 outline-offset-[-2px] outline-inputBorder',
+                    size === 'small' ? 'py-2.5' : 'py-3',
                 )}
             >
                 <SpinboxButton
                     disabled={value === min}
+                    size={size}
                     tid={TIDs.forms_spinbox_decrease}
                     title={t('Decrease')}
                     onClick={() => onChangeValueHandler(-step)}
@@ -129,18 +128,22 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
 
                 <input
                     aria-label={`${t('Quantity')} ${id}`}
-                    className="h-full min-w-0 flex-1 border-0 p-0 text-center font-secondary text-lg font-bold text-inputText outline-none"
                     defaultValue={defaultValue}
                     min={min}
                     ref={spinboxRef}
                     tid={TIDs.spinbox_input}
                     type="number"
+                    className={twJoin(
+                        'text-center font-secondary text-lg font-bold text-inputText outline-none',
+                        size === 'small' ? 'w-8' : 'w-10',
+                    )}
                     onBlur={onBlurHandler}
                     onInput={onInputHandler}
                 />
 
                 <SpinboxButton
                     disabled={false}
+                    size={size}
                     tid={TIDs.forms_spinbox_increase}
                     title={t('Increase')}
                     onClick={() => onChangeValueHandler(step)}
@@ -164,12 +167,14 @@ type SpinboxButtonProps = {
     onMouseLeave: () => void;
     title: string;
     disabled: boolean;
+    size?: 'small' | 'large';
 };
 
-const SpinboxButton: FC<SpinboxButtonProps> = ({ children, disabled, ...props }) => (
+const SpinboxButton: FC<SpinboxButtonProps> = ({ children, disabled, size, ...props }) => (
     <button
         className={twMergeCustom([
-            'flex min-h-0 cursor-pointer items-center justify-center border-none bg-none px-2 text-inputBorder outline-none hover:text-inputBorderHovered',
+            'text-inputBorder hover:text-inputBorderHovered',
+            size === 'small' ? 'w-7' : 'w-10',
             disabled && 'pointer-events-none text-inputBorderDisabled',
         ])}
         {...props}

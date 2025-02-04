@@ -141,13 +141,13 @@ describe('Cart Page Tests', () => {
 
     it('[Quantity Spinbox Decrease] min spinbox button should not be clickable if it cannot be used due to min quantity', function () {
         checkCartItemSpinboxDecreaseButtonIsDisabled(products.philips32PFL4308.catnum);
-        changeCartItemQuantityWithSpinboxInput(10000, products.philips32PFL4308.catnum);
+        changeCartItemQuantityWithSpinboxInput(998, products.philips32PFL4308.catnum);
         checkCartItemSpinboxDecreaseButtonIsEnabled(products.philips32PFL4308.catnum);
     });
 
     it('[Quantity Spinbox Increase] max spinbox button should be always clickable', function () {
         checkCartItemSpinboxIncreaseButtonIsEnabled(products.philips32PFL4308.catnum);
-        changeCartItemQuantityWithSpinboxInput(10000, products.philips32PFL4308.catnum);
+        changeCartItemQuantityWithSpinboxInput(998, products.philips32PFL4308.catnum);
         checkCartItemSpinboxIncreaseButtonIsEnabled(products.philips32PFL4308.catnum);
     });
 

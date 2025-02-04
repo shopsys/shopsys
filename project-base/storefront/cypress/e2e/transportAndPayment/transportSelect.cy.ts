@@ -168,7 +168,7 @@ describe('Transport Select Tests', () => {
             ],
         });
 
-        cy.addProductToCartForTest(products.helloKitty.uuid, 1099);
+        cy.addProductToCartForTest(products.helloKitty.uuid, 998);
         cy.visitAndWaitForStableAndInteractiveDOM(url.cart);
         takeSnapshotAndCompare(getSnapshotFullIndexAsString(), 'cart page with enough products', {
             blackout: [

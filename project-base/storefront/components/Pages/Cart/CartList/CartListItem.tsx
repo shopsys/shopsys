@@ -1,16 +1,16 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
+import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
+import { CartItemPrice } from 'components/Pages/Cart/CartItemPrice';
 import { RemoveCartItemButton } from 'components/Pages/Cart/RemoveCartItemButton';
 import { TIDs } from 'cypress/tids';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
-import { TypeAvailabilityStatusEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { MouseEventHandler, useEffect, useRef, useState } from 'react';
-import { twJoin } from 'tailwind-merge';
 import { AddToCart } from 'utils/cart/useAddToCart';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
-import { isPriceVisible, mapPriceForCalculations } from 'utils/mappers/price';
+import { isPriceVisible } from 'utils/mappers/price';
 import { useDebounce } from 'utils/useDebounce';
 
 type CartListItemProps = {
@@ -47,90 +47,74 @@ export const CartListItem: FC<CartListItemProps> = ({
 
     return (
         <div
-            className="relative flex flex-row flex-wrap items-center gap-4 border-b border-borderAccent py-5 vl:flex-nowrap"
+            className="relative flex flex-row flex-wrap items-center justify-between gap-4 rounded-xl bg-backgroundMore p-4 vl:flex-nowrap vl:p-5"
             tid={TIDs.pages_cart_list_item_ + product.catalogNumber}
         >
-            <div className="flex flex-1 basis-full gap-1 pr-8 vl:basis-auto vl:pr-0">
-                <div className="flex h-12 w-24 shrink-0">
+            <div className="flex basis-full gap-2.5 pr-8 pt-6 vl:basis-auto vl:items-center vl:pr-0 vl:pt-0">
+                <div className="flex size-20 shrink-0">
                     <ExtendedNextLink
-                        className="relative h-full w-full"
+                        className="relative"
                         href={productSlug}
                         tid={TIDs.cart_list_item_image}
                         type="product"
                     >
                         <Image
                             alt={product.mainImage?.name || product.fullName}
-                            className="mx-auto h-12 object-contain"
-                            height={48}
+                            className="size-20 object-contain"
+                            height={80}
                             src={product.mainImage?.url}
-                            width={84}
+                            width={80}
                         />
                     </ExtendedNextLink>
                 </div>
 
-                <div className="flex flex-col items-start gap-4 text-sm font-bold vl:flex-1 vl:flex-row vl:items-center">
-                    <div className="h-full text-left vl:w-[16.875rem]" tid={TIDs.pages_cart_list_item_name}>
+                <div className="flex flex-col items-start gap-2 vl:flex-1 vl:flex-row vl:items-center vl:gap-8 xl:gap-16">
+                    <div className="flex flex-col gap-2 tracking-wide vl:w-48" tid={TIDs.pages_cart_list_item_name}>
                         <ExtendedNextLink
-                            className="text-sm font-bold uppercase leading-4"
+                            className="font-secondary text-sm font-semibold text-text no-underline hover:text-textAccent hover:underline"
                             href={productSlug}
                             type="product"
                         >
                             {product.fullName}
                         </ExtendedNextLink>
 
-                        <div className="text-sm text-textDisabled">
+                        <div className="text-sm text-textSubtle">
                             {t('Code')}: {product.catalogNumber}
                         </div>
                     </div>
 
-                    <div
-                        className={twJoin(
-                            'block flex-1 vl:text-center',
-                            product.availability.status === TypeAvailabilityStatusEnum.OutOfStock &&
-                                'text-availabilityOutOfStock',
-                        )}
-                    >
-                        {product.availability.name}
-
-                        {!!product.availableStoresCount && (
-                            <span className="ml-1 inline font-normal vl:ml-0 vl:block">
-                                {t('or at {{ count }} stores', {
-                                    count: product.availableStoresCount,
-                                })}
-                            </span>
-                        )}
-                    </div>
+                    <ProductAvailability
+                        availability={product.availability}
+                        availableStoresCount={product.availableStoresCount}
+                        className="flex-1 xs:w-44"
+                        isInquiryType={product.isInquiryType}
+                    />
                 </div>
             </div>
 
-            <div className="flex w-28 items-center vl:w-36">
+            <div className="flex w-auto flex-col justify-between gap-2 vl:flex-row vl:items-center vl:gap-8 xl:gap-16">
                 <Spinbox
                     defaultValue={quantity}
                     id={uuid}
                     min={1}
                     ref={spinboxRef}
+                    size="small"
                     step={1}
                     onChangeValueCallback={setSpinboxValue}
                 />
+
+                {isPriceVisible(product.price.priceWithVat) && (
+                    <div className="whitespace-nowrap font-secondary vl:w-40">
+                        <span className="font-semibold">{formatPrice(product.price.priceWithVat)}</span>
+                        <span className="text-sm text-textSubtle">&nbsp;/&nbsp;{product.unit.name}</span>
+                    </div>
+                )}
             </div>
 
-            {isPriceVisible(product.price.priceWithVat) && (
-                <div className="flex items-center justify-end text-sm vl:w-32">
-                    {formatPrice(product.price.priceWithVat) + '\u00A0/\u00A0' + product.unit.name}
-                </div>
-            )}
-
-            {isPriceVisible(product.price.priceWithVat) && (
-                <div
-                    className="ml-auto flex items-center justify-end text-sm text-price lg:text-base vl:w-32"
-                    tid={TIDs.pages_cart_list_item_totalprice}
-                >
-                    {formatPrice(mapPriceForCalculations(product.price.priceWithVat) * quantity)}
-                </div>
-            )}
+            <CartItemPrice productPrice={product.price} quantity={quantity} />
 
             <RemoveCartItemButton
-                className="absolute right-0 top-5 flex items-center vl:static"
+                className="absolute right-2.5 top-2.5 flex items-center vl:static"
                 onRemoveFromCart={onRemoveFromCart}
             />
         </div>

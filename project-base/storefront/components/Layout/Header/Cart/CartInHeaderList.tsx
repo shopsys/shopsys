@@ -1,9 +1,8 @@
 import { CartInHeaderListItem } from './CartInHeaderListItem';
-import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { EmptyCartIcon } from 'components/Basic/Icon/EmptyCartIcon';
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
-import FreeTransportRange from 'components/Blocks/FreeTransport/FreeTransportRange';
-import { Button } from 'components/Forms/Button/Button';
+import { FreeTransportRange } from 'components/Blocks/FreeTransport/FreeTransportRange';
+import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import useTranslation from 'next-translate/useTranslation';
@@ -19,8 +18,6 @@ export const CartInHeaderList: FC = () => {
     const [cartUrl] = getInternationalizedStaticUrls(['/cart'], url);
     const { removeFromCart, isRemovingFromCart } = useRemoveFromCart(GtmProductListNameType.cart);
 
-    const shouldDisplayTransportBar = cart?.remainingAmountWithVatForFreeTransport !== null && cart?.items.length;
-
     if (!cart?.items.length) {
         return (
             <>
@@ -29,12 +26,13 @@ export const CartInHeaderList: FC = () => {
             </>
         );
     }
+
     return (
         <>
             <ul
                 className={twJoin(
-                    'relative m-0 flex max-h-[78dvh] w-[315px] list-none flex-col overflow-y-auto p-0',
-                    'overflow-auto lg:max-h-[50dvh] lg:w-[510px]',
+                    'relative m-0 flex list-none flex-col overflow-y-auto p-0',
+                    'overflow-auto md:w-[510px] lg:max-h-[50dvh]',
                 )}
             >
                 {isRemovingFromCart && <LoaderWithOverlay className="w-16" />}
@@ -46,13 +44,14 @@ export const CartInHeaderList: FC = () => {
                     />
                 ))}
             </ul>
-            <div className={twJoin('flex gap-4 pt-5', shouldDisplayTransportBar ? 'justify-between' : 'justify-end')}>
-                <FreeTransportRange />
-                <ExtendedNextLink href={cartUrl} skeletonType="cart">
-                    <Button className="rounded-lg" size="small">
-                        {t('Go to cart')}
-                    </Button>
-                </ExtendedNextLink>
+            <div className={twJoin('flex items-center justify-between gap-4 pt-5')}>
+                <div className="text-center md:text-left vl:max-w-[300px]">
+                    <FreeTransportRange />
+                </div>
+
+                <LinkButton className="ml-auto whitespace-nowrap" href={cartUrl} size="small" skeletonType="cart">
+                    {t('Go to cart')}
+                </LinkButton>
             </div>
         </>
     );
