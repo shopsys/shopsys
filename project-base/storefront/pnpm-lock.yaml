@@ -30,8 +30,8 @@ importers:
         specifier: ~6.4.1
         version: 6.4.1(graphql@16.8.2)
       convertim-react-lib:
-        specifier: ^0.1.5
-        version: 0.1.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: ^0.1.6
+        version: 0.1.6(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       cookies-next:
         specifier: ~4.3.0
         version: 4.3.0
@@ -2341,8 +2341,8 @@ packages:
   caniuse-lite@1.0.30001689:
     resolution: {integrity: sha512-CmeR2VBycfa+5/jOfnp/NpWPGd06nf1XYiefUvhXFfZE4GkRc9jv+eGPS4nT558WS/8lYCzV8SlANCIPvbWP1g==}
 
-  caniuse-lite@1.0.30001696:
-    resolution: {integrity: sha512-pDCPkvzfa39ehJtJ+OwGT/2yvT2SbjfHhiIW2LWOAcMQ7BzwxT/XuyUp4OTOd0XFWA6BKw0JalnBHgSi5DGJBQ==}
+  caniuse-lite@1.0.30001697:
+    resolution: {integrity: sha512-GwNPlWJin8E+d7Gxq96jxM6w0w+VFeyyXRsjU58emtkYqnbwHqXm5uT2uCmO0RQE9htWknOP4xtBlLmM/gWxvQ==}
 
   capital-case@1.0.4:
     resolution: {integrity: sha512-ds37W8CytHgwnhGGTi88pcPyR15qoNkOpYwmMMfnWqqWgESapLqvDx6huFjQ5vqWSn2Z06173XNA7LtMOeUh1A==}
@@ -2498,8 +2498,8 @@ packages:
   convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
 
-  convertim-react-lib@0.1.5:
-    resolution: {integrity: sha512-pf6KJNcM1ThYVOU7XuDbN8x3BEkvADqcBpaZ6R09X/FMj70t9YCdzVCMBKqU6l485Ah9DdYcC8PdHoEP7ZoElA==}
+  convertim-react-lib@0.1.6:
+    resolution: {integrity: sha512-F64AFj2TSeN7ThxHejSYzCqWD0138I409fSZ2fxGmzR7v1RWMaXdkDErTtUWxhJPbhwY1AcjHLvq0DjvnFQRQg==}
     peerDependencies:
       react: ^18.2.0
       react-dom: ^18.2.0
@@ -2722,8 +2722,8 @@ packages:
   electron-to-chromium@1.5.73:
     resolution: {integrity: sha512-8wGNxG9tAG5KhGd3eeA0o6ixhiNdgr0DcHWm85XPCphwZgD1lIEoi6t3VERayWao7SF7AAZTw6oARGJeVjH8Kg==}
 
-  electron-to-chromium@1.5.90:
-    resolution: {integrity: sha512-C3PN4aydfW91Natdyd449Kw+BzhLmof6tzy5W1pFC5SpQxVXT+oyiyOG9AgYYSN9OdA/ik3YkCrpwqI8ug5Tug==}
+  electron-to-chromium@1.5.91:
+    resolution: {integrity: sha512-sNSHHyq048PFmZY4S90ax61q+gLCs0X0YmcOII9wG9S2XwbVr+h4VW2wWhnbp/Eys3cCwTxVF292W3qPaxIapQ==}
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -7987,8 +7987,8 @@ snapshots:
 
   browserslist@4.24.4:
     dependencies:
-      caniuse-lite: 1.0.30001696
-      electron-to-chromium: 1.5.90
+      caniuse-lite: 1.0.30001697
+      electron-to-chromium: 1.5.91
       node-releases: 2.0.19
       update-browserslist-db: 1.1.2(browserslist@4.24.4)
 
@@ -8044,7 +8044,7 @@ snapshots:
 
   caniuse-lite@1.0.30001689: {}
 
-  caniuse-lite@1.0.30001696: {}
+  caniuse-lite@1.0.30001697: {}
 
   capital-case@1.0.4:
     dependencies:
@@ -8247,7 +8247,7 @@ snapshots:
 
   convert-source-map@2.0.0: {}
 
-  convertim-react-lib@0.1.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  convertim-react-lib@0.1.6(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -8471,7 +8471,7 @@ snapshots:
 
   electron-to-chromium@1.5.73: {}
 
-  electron-to-chromium@1.5.90: {}
+  electron-to-chromium@1.5.91: {}
 
   emoji-regex@8.0.0: {}
 
