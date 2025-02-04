@@ -484,7 +484,8 @@ security:
         - { path: ^/%admin_url%/uploaded-file/new, roles: ROLE_FILES_FULL }
         - { path: ^/%admin_url%/uploaded-file/edit, roles: ROLE_FILES_FULL, methods: [POST] }
         - { path: ^/%admin_url%/uploaded-file/delete, roles: ROLE_FILES_FULL }
-        - { path: ^/%admin_url%/uploaded-file/, roles: ROLE_FILES_VIEW }
+        - { path: ^/%admin_url%/file-upload/, roles: ROLE_ADMIN }
+        - { path: ^/%admin_url%/uploaded-file/, roles: ROLE_ADMIN }
         # special paths for file manager in wysiwyg, file picker, product picker, grid, domain selector, login as user.
         - { path: ^/%admin_url%/product-picker/, roles: ROLE_ADMIN }
         - { path: ^/%admin_url%/file-picker/, roles: ROLE_ADMIN }
