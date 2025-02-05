@@ -101,8 +101,12 @@ QueryDecorator:
                     uuid:
                         type: "Uuid!"
                 description: "Returns complete list of transport methods"
+            CompanyCustomerUser:
+                type: 'CompanyCustomerUser'
+            RegularCustomerUser:
+                type: 'RegularCustomerUser'
             currentCustomerUser:
-                type: 'CurrentCustomerUser!'
+                type: 'CustomerUser'
                 resolve: "@=query('currentCustomerUserQuery')"
                 description: "Returns currently logged in customer user"
             orders:

@@ -2,7 +2,6 @@ Query:
     type: object
     inherits:
         - 'QueryDecorator'
-        - 'CustomerUserQuery'
         - 'CategoryQuery'
         - 'SliderQuery'
         - 'OrderQuery'

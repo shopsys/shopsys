@@ -75,10 +75,6 @@ services:
         alias: App\FrontendApi\Resolver\Category\CategoriesQuery
         public: true
 
-    Shopsys\FrontendApiBundle\Model\Resolver\Customer\User\CurrentCustomerUserQuery:
-        alias: App\FrontendApi\Resolver\Customer\User\CurrentCustomerUserQuery
-        public: true
-
     Shopsys\FrontendApiBundle\Model\Resolver\Order\OrderQuery:
         alias: App\FrontendApi\Resolver\Order\OrderQuery
         public: true

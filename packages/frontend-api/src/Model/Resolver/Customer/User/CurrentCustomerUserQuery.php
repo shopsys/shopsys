@@ -23,17 +23,11 @@ class CurrentCustomerUserQuery extends AbstractQuery
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null
      */
-    public function currentCustomerUserQuery(): CustomerUser
+    public function currentCustomerUserQuery(): ?CustomerUser
     {
-        $currentCustomerUser = $this->currentCustomerUser->findCurrentCustomerUser();
-
-        if ($currentCustomerUser === null) {
-            throw new InvalidTokenUserMessageException('No customer user is currently logged in.');
-        }
-
-        return $currentCustomerUser;
+        return $this->currentCustomerUser->findCurrentCustomerUser();
     }
 
     /**
