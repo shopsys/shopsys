@@ -2,10 +2,8 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Mutation\PersonalData;
+namespace Shopsys\FrontendApiBundle\Model\Mutation\PersonalData;
 
-use App\FrontendApi\Mutation\PersonalData\Exception\InvalidPersonalDataRequestTypeUserError;
-use App\FrontendApi\Resolver\PersonalData\PersonalDataQuery;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Validator\InputValidator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -14,6 +12,8 @@ use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest;
 use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactory;
 use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade;
 use Shopsys\FrontendApiBundle\Model\Mutation\AbstractMutation;
+use Shopsys\FrontendApiBundle\Model\Mutation\PersonalData\Exception\InvalidPersonalDataRequestTypeUserError;
+use Shopsys\FrontendApiBundle\Model\Resolver\PersonalData\PersonalDataQuery;
 
 class PersonalDataMutation extends AbstractMutation
 {
@@ -22,14 +22,14 @@ class PersonalDataMutation extends AbstractMutation
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactory $personalDataAccessRequestDataFactory
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataAccessMailFacade $personalDataAccessMailFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \App\FrontendApi\Resolver\PersonalData\PersonalDataQuery $personalDataPageResolver
+     * @param \Shopsys\FrontendApiBundle\Model\Resolver\PersonalData\PersonalDataQuery $personalDataPageResolver
      */
     public function __construct(
-        private readonly PersonalDataAccessRequestFacade $personalDataAccessRequestFacade,
-        private readonly PersonalDataAccessRequestDataFactory $personalDataAccessRequestDataFactory,
-        private readonly PersonalDataAccessMailFacade $personalDataAccessMailFacade,
-        private readonly Domain $domain,
-        private readonly PersonalDataQuery $personalDataPageResolver,
+        protected readonly PersonalDataAccessRequestFacade $personalDataAccessRequestFacade,
+        protected readonly PersonalDataAccessRequestDataFactory $personalDataAccessRequestDataFactory,
+        protected readonly PersonalDataAccessMailFacade $personalDataAccessMailFacade,
+        protected readonly Domain $domain,
+        protected readonly PersonalDataQuery $personalDataPageResolver,
     ) {
     }
 

@@ -2,49 +2,48 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\PersonalData;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\PersonalData;
 
-use App\Component\Setting\Setting;
-use App\FrontendApi\Resolver\PersonalData\Exception\PersonalDataHashInvalidUserError;
-use App\Model\Customer\User\CustomerUserFacade;
-use App\Model\Order\OrderFacade;
-use App\Model\PersonalData\PersonalDataExportFacade;
 use Overblog\GraphQLBundle\Validator\InputValidator;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouter;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
-use Shopsys\FrameworkBundle\Component\Setting\Setting as BaseSetting;
+use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintFacade;
+use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade;
+use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
 use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest;
 use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade;
+use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataExportFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
+use Shopsys\FrontendApiBundle\Model\Resolver\PersonalData\Exception\PersonalDataHashInvalidUserError;
 
 class PersonalDataQuery extends AbstractQuery
 {
-    private DomainRouter $router;
+    protected DomainRouter $router;
 
     /**
-     * @param \App\Component\Setting\Setting $setting
+     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
-     * @param \App\Model\Customer\User\CustomerUserFacade $customerUserFacade
-     * @param \App\Model\Order\OrderFacade $orderFacade
+     * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade $customerUserFacade
+     * @param \Shopsys\FrameworkBundle\Model\Order\OrderFacade $orderFacade
      * @param \Shopsys\FrameworkBundle\Model\Newsletter\NewsletterFacade $newsletterFacade
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade $personalDataAccessRequestFacade
-     * @param \App\Model\PersonalData\PersonalDataExportFacade $personalDataExportFacade
+     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataExportFacade $personalDataExportFacade
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintFacade $complaintFacade
      */
     public function __construct(
-        private readonly Setting $setting,
-        private readonly Domain $domain,
+        protected readonly Setting $setting,
+        protected readonly Domain $domain,
         DomainRouterFactory $domainRouterFactory,
-        private readonly CustomerUserFacade $customerUserFacade,
-        private readonly OrderFacade $orderFacade,
-        private readonly NewsletterFacade $newsletterFacade,
-        private readonly PersonalDataAccessRequestFacade $personalDataAccessRequestFacade,
-        private readonly PersonalDataExportFacade $personalDataExportFacade,
-        private readonly ComplaintFacade $complaintFacade,
+        protected readonly CustomerUserFacade $customerUserFacade,
+        protected readonly OrderFacade $orderFacade,
+        protected readonly NewsletterFacade $newsletterFacade,
+        protected readonly PersonalDataAccessRequestFacade $personalDataAccessRequestFacade,
+        protected readonly PersonalDataExportFacade $personalDataExportFacade,
+        protected readonly ComplaintFacade $complaintFacade,
     ) {
         $this->router = $domainRouterFactory->getRouter($this->domain->getId());
     }
@@ -55,9 +54,9 @@ class PersonalDataQuery extends AbstractQuery
     public function personalDataPageQuery(): array
     {
         return [
-            'displaySiteContent' => $this->setting->getForDomain(BaseSetting::PERSONAL_DATA_DISPLAY_SITE_CONTENT, $this->domain->getId()),
+            'displaySiteContent' => $this->setting->getForDomain(Setting::PERSONAL_DATA_DISPLAY_SITE_CONTENT, $this->domain->getId()),
             'displaySiteSlug' => $this->router->generate('front_personal_data', []),
-            'exportSiteContent' => $this->setting->getForDomain(BaseSetting::PERSONAL_DATA_EXPORT_SITE_CONTENT, $this->domain->getId()),
+            'exportSiteContent' => $this->setting->getForDomain(Setting::PERSONAL_DATA_EXPORT_SITE_CONTENT, $this->domain->getId()),
             'exportSiteSlug' => $this->router->generate('front_personal_data_export', []),
         ];
     }

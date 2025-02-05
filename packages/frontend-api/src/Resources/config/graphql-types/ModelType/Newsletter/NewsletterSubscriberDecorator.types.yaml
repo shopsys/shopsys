@@ -1,0 +1,11 @@
+NewsletterSubscriberDecorator:
+    decorator: true
+    type: object
+    config:
+        fields:
+            email:
+                type: "String!"
+                description: "Subscribed email address"
+            createdAt:
+                type: "DateTime!"
+                description: "Date and time of subscription"

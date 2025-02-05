@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\FrontendApi\Resolver\PersonalData\Exception;
+namespace Shopsys\FrontendApiBundle\Model\Resolver\PersonalData\Exception;
 
 use Overblog\GraphQLBundle\Error\UserError;
 use Shopsys\FrontendApiBundle\Model\Error\UserErrorWithCodeInterface;
 
 class PersonalDataHashInvalidUserError extends UserError implements UserErrorWithCodeInterface
 {
-    private const CODE = 'personal-data-hash-invalid';
+    protected const string CODE = 'personal-data-hash-invalid';
 
     /**
      * {@inheritdoc}

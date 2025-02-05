@@ -2,12 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Model\PersonalData;
+namespace Shopsys\FrameworkBundle\Model\PersonalData;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
-use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactory;
-use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class PersonalDataExportFacade
@@ -19,10 +17,10 @@ class PersonalDataExportFacade
      * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade $personalDataAccessRequestFacade
      */
     public function __construct(
-        private Domain $domain,
-        private DomainRouterFactory $domainRouterFactory,
-        private PersonalDataAccessRequestDataFactory $personalDataAccessRequestDataFactory,
-        private PersonalDataAccessRequestFacade $personalDataAccessRequestFacade,
+        protected readonly Domain $domain,
+        protected readonly DomainRouterFactory $domainRouterFactory,
+        protected readonly PersonalDataAccessRequestDataFactory $personalDataAccessRequestDataFactory,
+        protected readonly PersonalDataAccessRequestFacade $personalDataAccessRequestFacade,
     ) {
     }
 

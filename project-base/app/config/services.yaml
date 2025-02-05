@@ -97,8 +97,6 @@ services:
 
     App\Model\Order\Mail\OrderMail: ~
 
-    App\Model\PersonalData\Mail\PersonalDataExportMail: ~
-
     App\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig: ~
 
     App\Model\Product\Search\FilterQuery: ~
@@ -310,9 +308,6 @@ services:
 
     Shopsys\FrameworkBundle\Model\Payment\PaymentRepository:
         alias: App\Model\Payment\PaymentRepository
-
-    Shopsys\FrameworkBundle\Model\PersonalData\Mail\PersonalDataExportMail:
-        alias: App\Model\PersonalData\Mail\PersonalDataExportMail
 
     Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactory:
         alias: App\Model\Product\Brand\BrandDataFactory

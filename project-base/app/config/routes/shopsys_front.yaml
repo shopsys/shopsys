@@ -21,7 +21,7 @@ front_download_uploaded_file:
 
 front_export_personal_data:
     defaults:
-        _controller: App\Controller\Front\PersonalDataController::exportXmlAction
+        _controller: Shopsys\FrameworkBundle\Controller\Front\PersonalDataController::exportXmlAction
         type: ~
     path: /personal-overview-export/xml/{hash}
 
