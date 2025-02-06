@@ -57,9 +57,10 @@ class MailTemplateBuilder
 
             $footerIconNameWithExtension = $footerIconName . '.png';
             $footerIconsHtml .= <<<EOT
-                <a href="{$footerIconUrl}" style="border:none;text-decoration:none;padding: 0 10px;" target="_blank">
-                    <img alt="{$footerIconName}" border="0" src="{$this->getMailImageSrc($domainId, $footerIconNameWithExtension)}" width="32" height="32" style="color: black; width: 32px; height: 32px;">
+                <a href="{$footerIconUrl}" style="border:none;text-decoration:none !important;padding: 0 10px;" target="_blank">
+                    <img alt="{$footerIconName}" border="0" src="{$this->getMailImageSrc($domainId, $footerIconNameWithExtension)}" width="32" height="32" style="width: 32px; height: 32px;">
                 </a>
+                &nbsp;
             EOT;
         }
 
@@ -75,179 +76,178 @@ class MailTemplateBuilder
     {
         return <<<EOT
             <head>
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <!--[if !mso]><!-->
+                <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                <!--<![endif]-->
+                <!--[if gte mso 9]>
+                <xml>
+                    <o:OfficeDocumentSettings>
+                        <o:AllowPNG/>
+                        <o:PixelsPerInch>96</o:PixelsPerInch>
+                    </o:OfficeDocumentSettings>
+                </xml>
+                <![endif]-->
                 <style type="text/css">
-                    body,
-                    html {
-                        margin: 0;
-                        padding: 0;
+                    /* Base reset */
+                    body, html {
+                        margin: 0 !important;
+                        padding: 0 !important;
                         width: 100% !important;
-                        background-color: #F2F2F2;
-                    }
-
-                    body,
-                    table,
-                    tbody,
-                    td,
-                    tr {
+                        background-color: #F2F2F2 !important;
                         -webkit-text-size-adjust: 100%;
                         -ms-text-size-adjust: 100%;
-                        box-sizing: border-box;
-                        margin: 0;
-                        padding: 0;
                     }
-
-
-                    h1,
-                    h2,
-                    h3,
-                    h4,
-                    h5,
-                    h6 {
-                        font-family: Arial, Helvetica, sans-serif;
-                        margin-top: 0;
-                        line-height: 1.1;
+                    
+                    /* Typography */
+                    h1, h2, h3, h4, h5, h6 {
+                        font-family: Arial, Helvetica, sans-serif !important;
+                        margin-top: 0 !important;
+                        margin-bottom: 10px !important;
+                        line-height: 1.1 !important;
+                        mso-line-height-rule: exactly;
                     }
-
-                    td,
-                    p,
-                    span,
-                    strong,
+                    
+                    td, p, span, strong, a {
+                        font-family: Arial, Helvetica, sans-serif !important;
+                        line-height: 1.3 !important;
+                        mso-line-height-rule: exactly;
+                        margin: 0 !important;
+                    }
+                    
                     a {
-                        font-family: Arial, Helvetica, sans-serif;
-                        line-height: 1.3;
+                        color: #000000 !important;
+                        text-decoration: underline !important;
                     }
-
-                    .container {
+                    
+                    /* Layout */
+                    .container-wrapper {
                         width: 100% !important;
                         max-width: 700px !important;
                         margin: 0 auto !important;
-                        display: block !important;
                     }
-
-                    .header {
-                        padding: 30px 30px 0 30px;
-                    }
-
-                    .main {
-                        padding: 30px;
-                    }
-
-                    .footer {
-                        padding: 30px 20px 0 20px;
-                    }
-
-                    .order-addresses {
-                        width: 100%;
-                        display: block;
-                    }
-
-                    .product-description {
-                        width: 100%;
-                        display: block;
-                    }
-
-                    .product-price {
-                        width: 100%;
-                        display: block;
-                    }
-
-                    .content {
+                    
+                    .content-block {
                         background-color: #ffffff !important;
                         color: #000000 !important;
-                        -webkit-box-shadow: 1px 4px 11px 0px rgba(0, 0, 0, 0.15);
-                        -moz-box-shadow: 1px 4px 11px 0px rgba(0, 0, 0, 0.15);
-                        box-shadow: 1px 4px 11px 0px rgba(0, 0, 0, 0.15);
+                        box-shadow: 1px 4px 11px 0px rgba(0,0,0,0.15);
                     }
-
-                    @media only screen and (min-width: 700px) {
-                        .order-addresses {
-                            width: 50% !important;
-                            display: table-cell !important;
-                        }
+                    
+                    /* Client-specific fixes */
+                    .ExternalClass, .ReadMsgBody { width: 100%; }
+                    .ExternalClass, .ExternalClass p, .ExternalClass span,
+                    .ExternalClass font, .ExternalClass td, .ExternalClass div { line-height: 100%; }
+                    #outlook a { padding:0; }
+                    table { mso-table-lspace:0pt; mso-table-rspace:0pt; border-collapse: collapse; }
+                    img { 
+                        -ms-interpolation-mode: bicubic;
+                        border: 0;
+                        height: auto;
+                        line-height: 100%;
+                        outline: none;
+                        text-decoration: none;
                     }
-
-                    @media only screen and (min-width: 700px) {
-                        .product-description {
-                            width: 70% !important;
-                            display: table-cell !important;
+                    
+                    /* Responsive */
+                    @media only screen and (max-width: 700px) {
+                        .mobile-full-width {
+                            width: 100% !important;
+                            display: block !important;
                         }
-
-                        .product-price {
-                            width: 30% !important;
-                            display: table-cell !important;
+                        .order-addresses, .product-description, .product-price {
+                            width: 100% !important;
+                            display: block !important;
                         }
                     }
                 </style>
+                <!--[if mso]>
+                <style type="text/css">
+                    .container-wrapper { width:700px !important; }
+                    h1 { font-size:22px !important; }
+                    h2 { font-size:20px !important; }
+                    h3 { font-size:18px !important; }
+                    p, td { font-size:16px !important; }
+                    .content-table { width:700px !important; }
+                </style>
+                <![endif]-->
             </head>
-            <body style="margin: 0;">
-                <div class="container">
-                    <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="width:100%;">
-                        <tbody>
-                            <tr>
-                                <td style="direction:ltr;font-size:0px;padding:10px;text-align:center;">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <body style="margin:0; padding:0; -webkit-text-size-adjust:none;">
+                <!--[if mso]>
+                <div style="mso-hide:all">
+                    <table role="presentation" cellpadding="0" cellspacing="0" width="700" align="center"><tr><td>
+                <![endif]-->
+                
+                <!-- Preheader -->
+                <div style="display:none; max-height:0; overflow:hidden; mso-hide:all;">
+                    &nbsp;
                 </div>
-                <div class="container">
-                    <div class="content">
-                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="; min-height: 100px;">
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="header">
-                                            <img src="{$this->getMailImageSrc($domainId, 'logo.png')}" style="height: 50px;">
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div data-gjs-type="editable" class="gjs-editable main">
-                                            {$content}
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="container">
-                    <div class="footer">
-                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%">
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"> 
-                                            <tr> 
-                                                <td style="text-align: center;">
-                                                    {$this->getFooterIcons($domainId)}
-                                                </td>
-                                            </tr> 
-                                        </table>
-                                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%"> 
-                                            <tr>
-                                                <td style="text-align: center; padding: 10px;">
+
+                <!-- Main container -->
+                <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td align="center" style="padding:20px 0;">
+                            <!--[if mso]>
+                            <table role="presentation" border="0" cellspacing="0" cellpadding="0" width="700">
+                            <tr><td>
+                            <![endif]-->
+                            
+                            <div class="container-wrapper">
+                                <table role="presentation" class="content-block" width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td style="padding:30px 0 0 30px;">
+                                            <img src="{$this->getMailImageSrc($domainId, 'logo.png')}" height="50" alt="Company Logo" style="display:block; height:50px; width:auto;">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:30px;">
+                                            <div style="max-width:600px; margin:0 auto;" data-gjs-type="editable" class="gjs-editable main">
+                                                <!--[if mso]>
+                                                <table role="presentation" border="0" cellspacing="0" cellpadding="0"><tr><td>
+                                                <![endif]-->
+                                                {$content}
+                                                <!--[if mso]>
+                                                </td></tr></table>
+                                                <![endif]-->
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td>
+                                            &nbsp;
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:10px; text-align:center;">
+                                            {$this->getFooterIcons($domainId)}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:10px; text-align:center;">
+                                            <div style="max-width:600px; margin:0 auto;">
+                                                <span style="font-size:12px; line-height:1.3; mso-line-height-rule:exactly;">
                                                     {$this->getFooterText($domainId)}
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <!--[if mso]>
+                            </td></tr></table>
+                            <![endif]-->
+                        </td>
+                    </tr>
+                </table>
+                
+                <!--[if mso]>
+                </td></tr></table>
                 </div>
-                <div class="container">
-                    <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="width:100%;">
-                        <tbody>
-                            <tr>
-                                <td style="direction:ltr;font-size:0px;padding:10px;text-align:center;">
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <![endif]-->
             </body>
         EOT;
     }
