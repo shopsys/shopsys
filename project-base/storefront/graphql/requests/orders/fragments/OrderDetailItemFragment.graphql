@@ -16,6 +16,9 @@ fragment OrderDetailItemFragment on OrderItem {
         uuid
         number
         creationDate
+        customerUser {
+            uuid
+        }
     }
     product {
         slug
