@@ -25,9 +25,6 @@ msgstr "Vyberte prosím obrázek"
 msgid "Please enter GTM ID"
 msgstr "Prosím vyplňte GTM ID"
 
-msgid "Please enter email"
-msgstr "Vyplňte prosím e-mail"
-
 msgid "Please enter new password"
 msgstr "Vyplňte prosím nové heslo"
 
