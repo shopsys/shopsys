@@ -246,6 +246,7 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
 
         $this->assertSame($anotherUserOrder->getUuid(), $responseData['uuid']);
         $this->assertSame($anotherUserOrder->getEmail(), $responseData['email']);
+        $this->assertSame($anotherUserOrder->getEmail(), $responseData['customerUser']['email']);
     }
 
     /**

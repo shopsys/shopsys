@@ -1418,6 +1418,8 @@ type Order {
   country: Country!
   "Date and time when the order was created"
   creationDate: DateTime!
+  "The registered customer user who made the order (or null if the order was made by an unregistered user)"
+  customerUser: BaseCustomerUser
   "City name for delivery"
   deliveryCity: String
   "Company name for delivery"

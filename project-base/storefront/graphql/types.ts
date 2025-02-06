@@ -1813,6 +1813,8 @@ export type TypeOrder = {
   country: TypeCountry;
   /** Date and time when the order was created */
   creationDate: Scalars['DateTime']['output'];
+  /** The registered customer user who made the order (or null if the order was made by an unregistered user) */
+  customerUser: Maybe<TypeBaseCustomerUser>;
   /** City name for delivery */
   deliveryCity: Maybe<Scalars['String']['output']>;
   /** Company name for delivery */

@@ -6327,6 +6327,15 @@ Date and time when the order was created
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>customerUser</strong></td>
+<td valign="top"><a href="#basecustomeruser">BaseCustomerUser</a></td>
+<td>
+
+The registered customer user who made the order (or null if the order was made by an unregistered user)
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>deliveryCity</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
