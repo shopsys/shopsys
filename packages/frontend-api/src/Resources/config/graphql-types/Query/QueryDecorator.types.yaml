@@ -105,8 +105,12 @@ QueryDecorator:
                 type: 'CompanyCustomerUser'
             RegularCustomerUser:
                 type: 'RegularCustomerUser'
+            CurrentCompanyCustomerUser:
+                type: 'CurrentCompanyCustomerUser'
+            CurrentRegularCustomerUser:
+                type: 'CurrentRegularCustomerUser'
             currentCustomerUser:
-                type: 'CustomerUser'
+                type: 'CurrentCustomerUser'
                 resolve: "@=query('currentCustomerUserQuery')"
                 description: "Returns currently logged in customer user"
             orders:
@@ -303,7 +307,7 @@ QueryDecorator:
                 resolve: "@=query('countriesQuery')"
                 description: "Returns available countries"
             customerUsers:
-                type: '[CustomerUser!]!'
+                type: '[BaseCustomerUser!]!'
                 resolve: "@=query('customerUsersQuery')"
                 access: "@=isGranted('ROLE_API_ALL')"
                 description: "Returns all customer users assigned to the current customer"

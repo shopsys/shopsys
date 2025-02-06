@@ -33,7 +33,7 @@ class CustomerUserResolverMap extends ResolverMap
      */
     protected function map(): array
     {
-        $commonCustomerResolverFields = [
+        $baseCustomerResolverFields = [
             'billingAddressUuid' => function (CustomerUser $customerUser) {
                 return $customerUser->getCustomer()->getBillingAddress()->getUuid();
             },
@@ -58,6 +58,15 @@ class CustomerUserResolverMap extends ResolverMap
             'pricingGroup' => function (CustomerUser $customerUser) {
                 return $customerUser->getPricingGroup()->getName();
             },
+            'roles' => function (CustomerUser $customerUser) {
+                return $this->customerUserRoleResolver->getRolesForCustomerUser($customerUser);
+            },
+            'newsletterSubscription' => function (CustomerUser $customerUser) {
+                return $this->newsletterFacade->isSubscribed($customerUser);
+            },
+        ];
+
+        $loggedCustomerUserFields = [
             'loginInfo' => function (CustomerUser $customerUser) {
                 $mostRecentLoginType = $this->customerUserLoginTypeFacade->findMostRecentLoginType($customerUser);
 
@@ -67,16 +76,22 @@ class CustomerUserResolverMap extends ResolverMap
 
                 return $this->loginInfoFactory->createFromCustomerUserLoginType($mostRecentLoginType);
             },
-            'roles' => function (CustomerUser $customerUser) {
-                return $this->customerUserRoleResolver->getRolesForCustomerUser($customerUser);
+        ];
+
+        $companyCustomerUserFields = [
+            'companyName' => function (CustomerUser $customerUser) {
+                return $customerUser->getCustomer()->getBillingAddress()->getCompanyName();
             },
-            'newsletterSubscription' => function (CustomerUser $customerUser) {
-                return $this->newsletterFacade->isSubscribed($customerUser);
+            'companyNumber' => function (CustomerUser $customerUser) {
+                return $customerUser->getCustomer()->getBillingAddress()->getCompanyNumber();
+            },
+            'companyTaxNumber' => function (CustomerUser $customerUser) {
+                return $customerUser->getCustomer()->getBillingAddress()->getCompanyTaxNumber();
             },
         ];
 
         return [
-            'CustomerUser' => [
+            'BaseCustomerUser' => [
                 self::RESOLVE_TYPE => function (CustomerUser $customerUser) {
                     if ($customerUser->getCustomer()->getBillingAddress()->isCompanyCustomer()) {
                         return 'CompanyCustomerUser';
@@ -85,18 +100,19 @@ class CustomerUserResolverMap extends ResolverMap
                     return 'RegularCustomerUser';
                 },
             ],
-            'RegularCustomerUser' => $commonCustomerResolverFields,
-            'CompanyCustomerUser' => $commonCustomerResolverFields + [
-                'companyName' => function (CustomerUser $customerUser) {
-                    return $customerUser->getCustomer()->getBillingAddress()->getCompanyName();
-                },
-                'companyNumber' => function (CustomerUser $customerUser) {
-                    return $customerUser->getCustomer()->getBillingAddress()->getCompanyNumber();
-                },
-                'companyTaxNumber' => function (CustomerUser $customerUser) {
-                    return $customerUser->getCustomer()->getBillingAddress()->getCompanyTaxNumber();
+            'CurrentCustomerUser' => [
+                self::RESOLVE_TYPE => function (CustomerUser $customerUser) {
+                    if ($customerUser->getCustomer()->getBillingAddress()->isCompanyCustomer()) {
+                        return 'CurrentCompanyCustomerUser';
+                    }
+
+                    return 'CurrentRegularCustomerUser';
                 },
             ],
+            'RegularCustomerUser' => $baseCustomerResolverFields,
+            'CompanyCustomerUser' => $baseCustomerResolverFields + $companyCustomerUserFields,
+            'CurrentRegularCustomerUser' => $baseCustomerResolverFields + $loggedCustomerUserFields,
+            'CurrentCompanyCustomerUser' => $baseCustomerResolverFields + $companyCustomerUserFields + $loggedCustomerUserFields,
         ];
     }
 }

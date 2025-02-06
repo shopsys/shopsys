@@ -251,6 +251,45 @@ export enum TypeAvailabilityStatusEnum {
   OutOfStock = 'OutOfStock'
 }
 
+/** Represents a basic interface for a customer user */
+export type TypeBaseCustomerUser = {
+  /** UUID */
+  billingAddressUuid: Scalars['Uuid']['output'];
+  /** city name */
+  city: Maybe<Scalars['String']['output']>;
+  /** Billing address country */
+  country: Maybe<TypeCountry>;
+  /** Default customer delivery addresses */
+  defaultDeliveryAddress: Maybe<TypeDeliveryAddress>;
+  /** List of delivery addresses */
+  deliveryAddresses: Array<TypeDeliveryAddress>;
+  /** Email address */
+  email: Scalars['String']['output'];
+  /** First name */
+  firstName: Maybe<Scalars['String']['output']>;
+  /** Whether the customer user has password set or not */
+  hasPasswordSet: Scalars['Boolean']['output'];
+  /** Last name */
+  lastName: Maybe<Scalars['String']['output']>;
+  /** Whether customer user receives newsletters or not */
+  newsletterSubscription: Scalars['Boolean']['output'];
+  /** zip code */
+  postcode: Maybe<Scalars['String']['output']>;
+  /** The name of the customer pricing group */
+  pricingGroup: Scalars['String']['output'];
+  /** The customer user role group */
+  roleGroup: TypeCustomerUserRoleGroup;
+  roles: Array<TypeCustomerUserRoleEnum>;
+  /** Sales representative assigned to customer */
+  salesRepresentative: Maybe<TypeSalesRepresentative>;
+  /** street name */
+  street: Maybe<Scalars['String']['output']>;
+  /** Phone number */
+  telephone: Maybe<Scalars['String']['output']>;
+  /** UUID */
+  uuid: Scalars['Uuid']['output'];
+};
+
 export type TypeBlogArticle = TypeArticleInterface & TypeBreadcrumb & TypeHreflang & TypeSlug & {
   __typename?: 'BlogArticle';
   /** The list of the blog article visible categories */
@@ -713,8 +752,8 @@ export type TypeChangeTransportInCartInput = {
   transportUuid: InputMaybe<Scalars['Uuid']['input']>;
 };
 
-/** Represents an currently logged customer user */
-export type TypeCompanyCustomerUser = TypeCustomerUser & {
+/** Represents a company customer user */
+export type TypeCompanyCustomerUser = TypeBaseCustomerUser & {
   __typename?: 'CompanyCustomerUser';
   /** UUID */
   billingAddressUuid: Scalars['Uuid']['output'];
@@ -740,8 +779,6 @@ export type TypeCompanyCustomerUser = TypeCustomerUser & {
   hasPasswordSet: Scalars['Boolean']['output'];
   /** Last name */
   lastName: Maybe<Scalars['String']['output']>;
-  /** Current login information */
-  loginInfo: TypeLoginInfo;
   /** Whether customer user receives newsletters or not */
   newsletterSubscription: Scalars['Boolean']['output'];
   /** zip code */
@@ -918,8 +955,98 @@ export type TypeCreateWatchdogInput = {
   productUuid: Scalars['Uuid']['input'];
 };
 
-/** Represents an currently logged customer user */
-export type TypeCustomerUser = {
+/** Represents a currently logged company customer user */
+export type TypeCurrentCompanyCustomerUser = TypeBaseCustomerUser & TypeCurrentCustomerUser & {
+  __typename?: 'CurrentCompanyCustomerUser';
+  /** UUID */
+  billingAddressUuid: Scalars['Uuid']['output'];
+  /** city name */
+  city: Maybe<Scalars['String']['output']>;
+  /** The customer’s company name (only when customer is a company) */
+  companyName: Maybe<Scalars['String']['output']>;
+  /** The customer’s company identification number (only when customer is a company) */
+  companyNumber: Maybe<Scalars['String']['output']>;
+  /** The customer’s company tax number (only when customer is a company) */
+  companyTaxNumber: Maybe<Scalars['String']['output']>;
+  /** Billing address country */
+  country: Maybe<TypeCountry>;
+  /** Default customer delivery addresses */
+  defaultDeliveryAddress: Maybe<TypeDeliveryAddress>;
+  /** List of delivery addresses */
+  deliveryAddresses: Array<TypeDeliveryAddress>;
+  /** Email address */
+  email: Scalars['String']['output'];
+  /** First name */
+  firstName: Maybe<Scalars['String']['output']>;
+  /** Whether the customer user has password set or not */
+  hasPasswordSet: Scalars['Boolean']['output'];
+  /** Last name */
+  lastName: Maybe<Scalars['String']['output']>;
+  /** Current login information */
+  loginInfo: TypeLoginInfo;
+  /** Whether customer user receives newsletters or not */
+  newsletterSubscription: Scalars['Boolean']['output'];
+  /** zip code */
+  postcode: Maybe<Scalars['String']['output']>;
+  /** The name of the customer pricing group */
+  pricingGroup: Scalars['String']['output'];
+  /** The customer user role group */
+  roleGroup: TypeCustomerUserRoleGroup;
+  roles: Array<TypeCustomerUserRoleEnum>;
+  /** Sales representative assigned to customer */
+  salesRepresentative: Maybe<TypeSalesRepresentative>;
+  /** street name */
+  street: Maybe<Scalars['String']['output']>;
+  /** Phone number */
+  telephone: Maybe<Scalars['String']['output']>;
+  /** UUID */
+  uuid: Scalars['Uuid']['output'];
+};
+
+/** Represents a common interface for a currently logged customer user (both company and regular) */
+export type TypeCurrentCustomerUser = {
+  /** UUID */
+  billingAddressUuid: Scalars['Uuid']['output'];
+  /** city name */
+  city: Maybe<Scalars['String']['output']>;
+  /** Billing address country */
+  country: Maybe<TypeCountry>;
+  /** Default customer delivery addresses */
+  defaultDeliveryAddress: Maybe<TypeDeliveryAddress>;
+  /** List of delivery addresses */
+  deliveryAddresses: Array<TypeDeliveryAddress>;
+  /** Email address */
+  email: Scalars['String']['output'];
+  /** First name */
+  firstName: Maybe<Scalars['String']['output']>;
+  /** Whether the customer user has password set or not */
+  hasPasswordSet: Scalars['Boolean']['output'];
+  /** Last name */
+  lastName: Maybe<Scalars['String']['output']>;
+  /** Current login information */
+  loginInfo: TypeLoginInfo;
+  /** Whether customer user receives newsletters or not */
+  newsletterSubscription: Scalars['Boolean']['output'];
+  /** zip code */
+  postcode: Maybe<Scalars['String']['output']>;
+  /** The name of the customer pricing group */
+  pricingGroup: Scalars['String']['output'];
+  /** The customer user role group */
+  roleGroup: TypeCustomerUserRoleGroup;
+  roles: Array<TypeCustomerUserRoleEnum>;
+  /** Sales representative assigned to customer */
+  salesRepresentative: Maybe<TypeSalesRepresentative>;
+  /** street name */
+  street: Maybe<Scalars['String']['output']>;
+  /** Phone number */
+  telephone: Maybe<Scalars['String']['output']>;
+  /** UUID */
+  uuid: Scalars['Uuid']['output'];
+};
+
+/** Represents a currently logged regular customer user */
+export type TypeCurrentRegularCustomerUser = TypeBaseCustomerUser & TypeCurrentCustomerUser & {
+  __typename?: 'CurrentRegularCustomerUser';
   /** UUID */
   billingAddressUuid: Scalars['Uuid']['output'];
   /** city name */
@@ -1313,7 +1440,7 @@ export type TypeMainVariantMainImageArgs = {
 export type TypeMutation = {
   __typename?: 'Mutation';
   /** Add new customer user to customer */
-  AddNewCustomerUser: TypeCustomerUser;
+  AddNewCustomerUser: TypeBaseCustomerUser;
   /** Fills cart based on a given order, possibly merging it with the current cart */
   AddOrderItemsToCart: TypeCart;
   /** Adds a product to a product list */
@@ -1323,15 +1450,15 @@ export type TypeMutation = {
   /** Apply new promo code for the future checkout */
   ApplyPromoCodeToCart: TypeCart;
   /** Changes customer user company data */
-  ChangeCompanyData: TypeCustomerUser;
+  ChangeCompanyData: TypeCurrentCustomerUser;
   /** Changes customer user password */
-  ChangePassword: TypeCustomerUser;
+  ChangePassword: TypeBaseCustomerUser;
   /** Add a payment to the cart, or remove a payment from the cart */
   ChangePaymentInCart: TypeCart;
   /** change payment in an order after the order creation (available for unpaid GoPay orders only) */
   ChangePaymentInOrder: TypeOrder;
   /** Changes customer user personal data */
-  ChangePersonalData: TypeCustomerUser;
+  ChangePersonalData: TypeCurrentCustomerUser;
   /** Add a transport to the cart, or remove a transport from the cart */
   ChangeTransportInCart: TypeCart;
   /** Send message to the site owner */
@@ -1349,7 +1476,7 @@ export type TypeMutation = {
   /** Delete delivery address by Uuid */
   DeleteDeliveryAddress: Array<TypeDeliveryAddress>;
   /** edit customer user to customer */
-  EditCustomerUserPersonalData: TypeCustomerUser;
+  EditCustomerUserPersonalData: TypeBaseCustomerUser;
   /** Edit delivery address by Uuid */
   EditDeliveryAddress: Array<TypeDeliveryAddress>;
   /** Login user and return login result data (consisting of access and refresh tokens, and information about cart merge) */
@@ -1383,7 +1510,7 @@ export type TypeMutation = {
   /** Request access to personal data */
   RequestPersonalDataAccess: TypePersonalDataPage;
   /** Set default delivery address by Uuid */
-  SetDefaultDeliveryAddress: TypeCustomerUser;
+  SetDefaultDeliveryAddress: TypeCurrentCustomerUser;
   /** check payment status of order after callback from payment service */
   UpdatePaymentStatus: TypeOrder;
 };
@@ -2135,7 +2262,7 @@ export type TypePersonalData = {
   /** Customer complaints */
   complaints: Array<TypeComplaint>;
   /** Customer user data */
-  customerUser: Maybe<TypeCustomerUser>;
+  customerUser: Maybe<TypeBaseCustomerUser>;
   /** A link for downloading the personal data in an XML file */
   exportLink: Scalars['String']['output'];
   /** Newsletter subscription */
@@ -2451,6 +2578,8 @@ export type TypeQuery = {
   ArticleLink: Maybe<TypeArticleLink>;
   ArticleSite: Maybe<TypeArticleSite>;
   CompanyCustomerUser: Maybe<TypeCompanyCustomerUser>;
+  CurrentCompanyCustomerUser: Maybe<TypeCurrentCompanyCustomerUser>;
+  CurrentRegularCustomerUser: Maybe<TypeCurrentRegularCustomerUser>;
   /** List of available banks for GoPay bank transfer payment */
   GoPaySwifts: Array<TypeGoPayBankSwift>;
   MainVariant: Maybe<TypeMainVariant>;
@@ -2503,11 +2632,11 @@ export type TypeQuery = {
   /** Returns available countries */
   countries: Array<TypeCountry>;
   /** Returns currently logged in customer user */
-  currentCustomerUser: Maybe<TypeCustomerUser>;
+  currentCustomerUser: Maybe<TypeCurrentCustomerUser>;
   /** Returns all customer user role groups */
   customerUserRoleGroups: Array<TypeCustomerUserRoleGroup>;
   /** Returns all customer users assigned to the current customer */
-  customerUsers: Array<TypeCustomerUser>;
+  customerUsers: Array<TypeBaseCustomerUser>;
   /** Returns a flag by uuid or url slug */
   flag: Maybe<TypeFlag>;
   /** Returns a complete list of the flags */
@@ -2912,8 +3041,8 @@ export type TypeRegistrationDataInput = {
   telephone: Scalars['String']['input'];
 };
 
-/** Represents an currently logged customer user */
-export type TypeRegularCustomerUser = TypeCustomerUser & {
+/** Represents a regular customer user */
+export type TypeRegularCustomerUser = TypeBaseCustomerUser & {
   __typename?: 'RegularCustomerUser';
   /** UUID */
   billingAddressUuid: Scalars['Uuid']['output'];
@@ -2933,8 +3062,6 @@ export type TypeRegularCustomerUser = TypeCustomerUser & {
   hasPasswordSet: Scalars['Boolean']['output'];
   /** Last name */
   lastName: Maybe<Scalars['String']['output']>;
-  /** Current login information */
-  loginInfo: TypeLoginInfo;
   /** Whether customer user receives newsletters or not */
   newsletterSubscription: Scalars['Boolean']['output'];
   /** zip code */

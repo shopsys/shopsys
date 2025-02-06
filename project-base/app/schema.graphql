@@ -206,6 +206,45 @@ enum AvailabilityStatusEnum {
   OutOfStock
 }
 
+"Represents a basic interface for a customer user"
+interface BaseCustomerUser {
+  "UUID"
+  billingAddressUuid: Uuid!
+  "city name"
+  city: String
+  "Billing address country"
+  country: Country
+  "Default customer delivery addresses"
+  defaultDeliveryAddress: DeliveryAddress
+  "List of delivery addresses"
+  deliveryAddresses: [DeliveryAddress!]!
+  "Email address"
+  email: String!
+  "First name"
+  firstName: String
+  "Whether the customer user has password set or not"
+  hasPasswordSet: Boolean!
+  "Last name"
+  lastName: String
+  "Whether customer user receives newsletters or not"
+  newsletterSubscription: Boolean!
+  "zip code"
+  postcode: String
+  "The name of the customer pricing group"
+  pricingGroup: String!
+  "The customer user role group"
+  roleGroup: CustomerUserRoleGroup!
+  roles: [CustomerUserRoleEnum!]!
+  "Sales representative assigned to customer"
+  salesRepresentative: SalesRepresentative
+  "street name"
+  street: String
+  "Phone number"
+  telephone: String
+  "UUID"
+  uuid: Uuid!
+}
+
 type BlogArticle implements Breadcrumb & Slug & ArticleInterface & Hreflang {
   "The list of the blog article visible categories"
   blogCategories: [BlogCategory!]!
@@ -574,8 +613,8 @@ input ChangeTransportInCartInput {
   transportUuid: Uuid
 }
 
-"Represents an currently logged customer user"
-type CompanyCustomerUser implements CustomerUser {
+"Represents a company customer user"
+type CompanyCustomerUser implements BaseCustomerUser {
   "UUID"
   billingAddressUuid: Uuid!
   "city name"
@@ -600,8 +639,6 @@ type CompanyCustomerUser implements CustomerUser {
   hasPasswordSet: Boolean!
   "Last name"
   lastName: String
-  "Current login information"
-  loginInfo: LoginInfo!
   "Whether customer user receives newsletters or not"
   newsletterSubscription: Boolean!
   "zip code"
@@ -767,8 +804,96 @@ input CreateWatchdogInput {
   productUuid: Uuid!
 }
 
-"Represents an currently logged customer user"
-interface CustomerUser {
+"Represents a currently logged company customer user"
+type CurrentCompanyCustomerUser implements BaseCustomerUser & CurrentCustomerUser {
+  "UUID"
+  billingAddressUuid: Uuid!
+  "city name"
+  city: String
+  "The customer’s company name (only when customer is a company)"
+  companyName: String
+  "The customer’s company identification number (only when customer is a company)"
+  companyNumber: String
+  "The customer’s company tax number (only when customer is a company)"
+  companyTaxNumber: String
+  "Billing address country"
+  country: Country
+  "Default customer delivery addresses"
+  defaultDeliveryAddress: DeliveryAddress
+  "List of delivery addresses"
+  deliveryAddresses: [DeliveryAddress!]!
+  "Email address"
+  email: String!
+  "First name"
+  firstName: String
+  "Whether the customer user has password set or not"
+  hasPasswordSet: Boolean!
+  "Last name"
+  lastName: String
+  "Current login information"
+  loginInfo: LoginInfo!
+  "Whether customer user receives newsletters or not"
+  newsletterSubscription: Boolean!
+  "zip code"
+  postcode: String
+  "The name of the customer pricing group"
+  pricingGroup: String!
+  "The customer user role group"
+  roleGroup: CustomerUserRoleGroup!
+  roles: [CustomerUserRoleEnum!]!
+  "Sales representative assigned to customer"
+  salesRepresentative: SalesRepresentative
+  "street name"
+  street: String
+  "Phone number"
+  telephone: String
+  "UUID"
+  uuid: Uuid!
+}
+
+"Represents a common interface for a currently logged customer user (both company and regular)"
+interface CurrentCustomerUser {
+  "UUID"
+  billingAddressUuid: Uuid!
+  "city name"
+  city: String
+  "Billing address country"
+  country: Country
+  "Default customer delivery addresses"
+  defaultDeliveryAddress: DeliveryAddress
+  "List of delivery addresses"
+  deliveryAddresses: [DeliveryAddress!]!
+  "Email address"
+  email: String!
+  "First name"
+  firstName: String
+  "Whether the customer user has password set or not"
+  hasPasswordSet: Boolean!
+  "Last name"
+  lastName: String
+  "Current login information"
+  loginInfo: LoginInfo!
+  "Whether customer user receives newsletters or not"
+  newsletterSubscription: Boolean!
+  "zip code"
+  postcode: String
+  "The name of the customer pricing group"
+  pricingGroup: String!
+  "The customer user role group"
+  roleGroup: CustomerUserRoleGroup!
+  roles: [CustomerUserRoleEnum!]!
+  "Sales representative assigned to customer"
+  salesRepresentative: SalesRepresentative
+  "street name"
+  street: String
+  "Phone number"
+  telephone: String
+  "UUID"
+  uuid: Uuid!
+}
+
+"Represents a currently logged regular customer user"
+type CurrentRegularCustomerUser implements BaseCustomerUser & CurrentCustomerUser {
   "UUID"
   billingAddressUuid: Uuid!
   "city name"
@@ -1121,7 +1246,7 @@ scalar Money
 
 type Mutation {
   "Add new customer user to customer"
-  AddNewCustomerUser(input: AddNewCustomerUserDataInput!): CustomerUser!
+  AddNewCustomerUser(input: AddNewCustomerUserDataInput!): BaseCustomerUser!
   "Fills cart based on a given order, possibly merging it with the current cart"
   AddOrderItemsToCart(input: AddOrderItemsToCartInput!): Cart!
   "Adds a product to a product list"
@@ -1131,15 +1256,15 @@ type Mutation {
   "Apply new promo code for the future checkout"
   ApplyPromoCodeToCart(input: ApplyPromoCodeToCartInput!): Cart!
   "Changes customer user company data"
-  ChangeCompanyData(input: ChangeCompanyDataInput!): CustomerUser!
+  ChangeCompanyData(input: ChangeCompanyDataInput!): CurrentCustomerUser!
   "Changes customer user password"
-  ChangePassword(input: ChangePasswordInput!): CustomerUser!
+  ChangePassword(input: ChangePasswordInput!): BaseCustomerUser!
   "Add a payment to the cart, or remove a payment from the cart"
   ChangePaymentInCart(input: ChangePaymentInCartInput!): Cart!
   "change payment in an order after the order creation (available for unpaid GoPay orders only)"
   ChangePaymentInOrder(input: ChangePaymentInOrderInput!): Order!
   "Changes customer user personal data"
-  ChangePersonalData(input: ChangePersonalDataInput!): CustomerUser!
+  ChangePersonalData(input: ChangePersonalDataInput!): CurrentCustomerUser!
   "Add a transport to the cart, or remove a transport from the cart"
   ChangeTransportInCart(input: ChangeTransportInCartInput!): Cart!
   "Send message to the site owner"
@@ -1157,7 +1282,7 @@ type Mutation {
   "Delete delivery address by Uuid"
   DeleteDeliveryAddress(deliveryAddressUuid: Uuid!): [DeliveryAddress!]!
   "edit customer user to customer"
-  EditCustomerUserPersonalData(input: EditCustomerUserPersonalDataInput!): CustomerUser!
+  EditCustomerUserPersonalData(input: EditCustomerUserPersonalDataInput!): BaseCustomerUser!
   "Edit delivery address by Uuid"
   EditDeliveryAddress(input: DeliveryAddressInput!): [DeliveryAddress!]!
   "Login user and return login result data (consisting of access and refresh tokens, and information about cart merge)"
@@ -1191,7 +1316,7 @@ type Mutation {
   "Request access to personal data"
   RequestPersonalDataAccess(input: PersonalDataAccessRequestInput!): PersonalDataPage!
   "Set default delivery address by Uuid"
-  SetDefaultDeliveryAddress(deliveryAddressUuid: Uuid!): CustomerUser!
+  SetDefaultDeliveryAddress(deliveryAddressUuid: Uuid!): CurrentCustomerUser!
   "check payment status of order after callback from payment service"
   UpdatePaymentStatus(orderPaymentStatusPageValidityHash: String, orderUuid: Uuid!): Order!
 }
@@ -1710,7 +1835,7 @@ type PersonalData {
   "Customer complaints"
   complaints: [Complaint!]!
   "Customer user data"
-  customerUser: CustomerUser
+  customerUser: BaseCustomerUser
   "A link for downloading the personal data in an XML file"
   exportLink: String!
   "Newsletter subscription"
@@ -2045,12 +2170,14 @@ type Query {
   couldBeCustomerRegisteredQuery(companyNumber: String = null, email: String!): Boolean!
   "Returns available countries"
   countries: [Country!]!
+  CurrentCompanyCustomerUser: CurrentCompanyCustomerUser
   "Returns currently logged in customer user"
-  currentCustomerUser: CustomerUser
+  currentCustomerUser: CurrentCustomerUser
+  CurrentRegularCustomerUser: CurrentRegularCustomerUser
   "Returns all customer user role groups"
   customerUserRoleGroups: [CustomerUserRoleGroup!]!
   "Returns all customer users assigned to the current customer"
-  customerUsers: [CustomerUser!]!
+  customerUsers: [BaseCustomerUser!]!
   "Returns a flag by uuid or url slug"
   flag(urlSlug: String, uuid: Uuid): Flag
   "Returns a complete list of the flags"
@@ -2217,8 +2344,8 @@ input RegistrationDataInput {
   telephone: String!
 }
 
-"Represents an currently logged customer user"
-type RegularCustomerUser implements CustomerUser {
+"Represents a regular customer user"
+type RegularCustomerUser implements BaseCustomerUser {
   "UUID"
   billingAddressUuid: Uuid!
   "city name"
@@ -2237,8 +2364,6 @@ type RegularCustomerUser implements CustomerUser {
   hasPasswordSet: Boolean!
   "Last name"
   lastName: String
-  "Current login information"
-  loginInfo: LoginInfo!
   "Whether customer user receives newsletters or not"
   newsletterSubscription: Boolean!
   "zip code"

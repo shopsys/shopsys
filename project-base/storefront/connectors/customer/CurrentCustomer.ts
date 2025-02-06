@@ -10,7 +10,7 @@ export const useCurrentCustomerData = (): CurrentCustomerType | undefined => {
     }
 
     const { currentCustomerUser } = currentCustomerUserData;
-    const isCompanyCustomer = currentCustomerUser.__typename === 'CompanyCustomerUser';
+    const isCompanyCustomer = currentCustomerUser.__typename === 'CurrentCompanyCustomerUser';
 
     return {
         ...currentCustomerUser,

@@ -7,7 +7,7 @@ PersonalDataDecorator:
                 type: "[Order!]!"
                 description: "Customer orders"
             customerUser:
-                type: "CustomerUser"
+                type: "BaseCustomerUser"
                 description: "Customer user data"
             newsletterSubscriber:
                 type: "NewsletterSubscriber"

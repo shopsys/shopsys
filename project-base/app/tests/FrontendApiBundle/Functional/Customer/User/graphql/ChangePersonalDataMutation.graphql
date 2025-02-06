@@ -41,7 +41,7 @@ mutation ChangePersonalDataMutation(
             code
         }
         postcode
-        ...on CompanyCustomerUser {
+        ...on CurrentCompanyCustomerUser {
             companyName
             companyNumber
             companyTaxNumber

@@ -1,4 +1,4 @@
-CustomerUser:
+CurrentCustomerUser:
     type: interface
     inherits:
         - 'CurrentCustomerUserDecorator'

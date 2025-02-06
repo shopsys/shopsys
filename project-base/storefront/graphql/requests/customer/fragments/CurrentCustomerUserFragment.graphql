@@ -1,0 +1,11 @@
+fragment CurrentCustomerUserFragment on CurrentCustomerUser {
+    ...BaseCustomerUserFragment
+    ... on CurrentCompanyCustomerUser {
+        companyName
+        companyNumber
+        companyTaxNumber
+    }
+    loginInfo {
+        ...LoginInfoFragment
+    }
+}

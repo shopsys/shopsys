@@ -100,15 +100,17 @@ const mapCurrentCustomerContactInformationApiData = (
         city: apiCurrentCustomerUserData.city ?? '',
         postcode: apiCurrentCustomerUserData.postcode ?? '',
         companyName:
-            apiCurrentCustomerUserData.__typename === 'CompanyCustomerUser' && apiCurrentCustomerUserData.companyName
+            apiCurrentCustomerUserData.__typename === 'CurrentCompanyCustomerUser' &&
+            apiCurrentCustomerUserData.companyName
                 ? apiCurrentCustomerUserData.companyName
                 : '',
         companyNumber:
-            apiCurrentCustomerUserData.__typename === 'CompanyCustomerUser' && apiCurrentCustomerUserData.companyNumber
+            apiCurrentCustomerUserData.__typename === 'CurrentCompanyCustomerUser' &&
+            apiCurrentCustomerUserData.companyNumber
                 ? apiCurrentCustomerUserData.companyNumber
                 : '',
         companyTaxNumber:
-            apiCurrentCustomerUserData.__typename === 'CompanyCustomerUser' &&
+            apiCurrentCustomerUserData.__typename === 'CurrentCompanyCustomerUser' &&
             apiCurrentCustomerUserData.companyTaxNumber
                 ? apiCurrentCustomerUserData.companyTaxNumber
                 : '',
@@ -119,7 +121,7 @@ const mapCurrentCustomerContactInformationApiData = (
         },
         deliveryAddressUuid: apiCurrentCustomerUserData.defaultDeliveryAddress?.uuid ?? '',
         customer:
-            apiCurrentCustomerUserData.__typename === 'CompanyCustomerUser'
+            apiCurrentCustomerUserData.__typename === 'CurrentCompanyCustomerUser'
                 ? CustomerTypeEnum.CompanyCustomer
                 : CustomerTypeEnum.CommonCustomer,
         note: '',

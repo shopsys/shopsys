@@ -41,6 +41,8 @@
     * [ComplaintItem](#complaintitem)
     * [Country](#country)
     * [CreateOrderResult](#createorderresult)
+    * [CurrentCompanyCustomerUser](#currentcompanycustomeruser)
+    * [CurrentRegularCustomerUser](#currentregularcustomeruser)
     * [CustomerUserRoleGroup](#customeruserrolegroup)
     * [DeliveryAddress](#deliveryaddress)
     * [File](#file)
@@ -174,8 +176,9 @@
   * [Interfaces](#interfaces)
     * [Advert](#advert)
     * [ArticleInterface](#articleinterface)
+    * [BaseCustomerUser](#basecustomeruser)
     * [Breadcrumb](#breadcrumb)
-    * [CustomerUser](#customeruser)
+    * [CurrentCustomerUser](#currentcustomeruser)
     * [Hreflang](#hreflang)
     * [NotBlogArticleInterface](#notblogarticleinterface)
     * [ParameterFilterOptionInterface](#parameterfilteroptioninterface)
@@ -628,13 +631,23 @@ Returns available countries
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>CurrentCompanyCustomerUser</strong></td>
+<td valign="top"><a href="#currentcompanycustomeruser">CurrentCompanyCustomerUser</a></td>
+<td></td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>currentCustomerUser</strong></td>
-<td valign="top"><a href="#customeruser">CustomerUser</a></td>
+<td valign="top"><a href="#currentcustomeruser">CurrentCustomerUser</a></td>
 <td>
 
 Returns currently logged in customer user
 
 </td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>CurrentRegularCustomerUser</strong></td>
+<td valign="top"><a href="#currentregularcustomeruser">CurrentRegularCustomerUser</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>customerUserRoleGroups</strong></td>
@@ -647,7 +660,7 @@ Returns all customer user role groups
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>customerUsers</strong></td>
-<td valign="top">[<a href="#customeruser">CustomerUser</a>!]!</td>
+<td valign="top">[<a href="#basecustomeruser">BaseCustomerUser</a>!]!</td>
 <td>
 
 Returns all customer users assigned to the current customer
@@ -1362,7 +1375,7 @@ Returns available transport methods based on the current cart state
 <tbody>
 <tr>
 <td colspan="2" valign="top"><strong>AddNewCustomerUser</strong></td>
-<td valign="top"><a href="#customeruser">CustomerUser</a>!</td>
+<td valign="top"><a href="#basecustomeruser">BaseCustomerUser</a>!</td>
 <td>
 
 Add new customer user to customer
@@ -1432,7 +1445,7 @@ Apply new promo code for the future checkout
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>ChangeCompanyData</strong></td>
-<td valign="top"><a href="#customeruser">CustomerUser</a>!</td>
+<td valign="top"><a href="#currentcustomeruser">CurrentCustomerUser</a>!</td>
 <td>
 
 Changes customer user company data
@@ -1446,7 +1459,7 @@ Changes customer user company data
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>ChangePassword</strong></td>
-<td valign="top"><a href="#customeruser">CustomerUser</a>!</td>
+<td valign="top"><a href="#basecustomeruser">BaseCustomerUser</a>!</td>
 <td>
 
 Changes customer user password
@@ -1488,7 +1501,7 @@ change payment in an order after the order creation (available for unpaid GoPay 
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>ChangePersonalData</strong></td>
-<td valign="top"><a href="#customeruser">CustomerUser</a>!</td>
+<td valign="top"><a href="#currentcustomeruser">CurrentCustomerUser</a>!</td>
 <td>
 
 Changes customer user personal data
@@ -1614,7 +1627,7 @@ Delete delivery address by Uuid
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>EditCustomerUserPersonalData</strong></td>
-<td valign="top"><a href="#customeruser">CustomerUser</a>!</td>
+<td valign="top"><a href="#basecustomeruser">BaseCustomerUser</a>!</td>
 <td>
 
 edit customer user to customer
@@ -1847,7 +1860,7 @@ Request access to personal data
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>SetDefaultDeliveryAddress</strong></td>
-<td valign="top"><a href="#customeruser">CustomerUser</a>!</td>
+<td valign="top"><a href="#currentcustomeruser">CurrentCustomerUser</a>!</td>
 <td>
 
 Set default delivery address by Uuid
@@ -3876,7 +3889,7 @@ UUID
 
 ### CompanyCustomerUser
 
-Represents an currently logged customer user
+Represents a company customer user
 
 <table>
 <thead>
@@ -3993,15 +4006,6 @@ Whether the customer user has password set or not
 <td>
 
 Last name
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>loginInfo</strong></td>
-<td valign="top"><a href="#logininfo">LoginInfo</a>!</td>
-<td>
-
-Current login information
 
 </td>
 </tr>
@@ -4458,6 +4462,401 @@ Localized country name
 <td colspan="2" valign="top"><strong>orderCreated</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
+</tr>
+</tbody>
+</table>
+
+### CurrentCompanyCustomerUser
+
+Represents a currently logged company customer user
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>billingAddressUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>city</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+city name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>companyName</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+The customer’s company name (only when customer is a company)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>companyNumber</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+The customer’s company identification number (only when customer is a company)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>companyTaxNumber</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+The customer’s company tax number (only when customer is a company)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>country</strong></td>
+<td valign="top"><a href="#country">Country</a></td>
+<td>
+
+Billing address country
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>defaultDeliveryAddress</strong></td>
+<td valign="top"><a href="#deliveryaddress">DeliveryAddress</a></td>
+<td>
+
+Default customer delivery addresses
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>deliveryAddresses</strong></td>
+<td valign="top">[<a href="#deliveryaddress">DeliveryAddress</a>!]!</td>
+<td>
+
+List of delivery addresses
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>email</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Email address
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>firstName</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+First name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>hasPasswordSet</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the customer user has password set or not
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Last name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>loginInfo</strong></td>
+<td valign="top"><a href="#logininfo">LoginInfo</a>!</td>
+<td>
+
+Current login information
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>newsletterSubscription</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether customer user receives newsletters or not
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>postcode</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+zip code
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>pricingGroup</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The name of the customer pricing group
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>roleGroup</strong></td>
+<td valign="top"><a href="#customeruserrolegroup">CustomerUserRoleGroup</a>!</td>
+<td>
+
+The customer user role group
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>roles</strong></td>
+<td valign="top">[<a href="#customeruserroleenum">CustomerUserRoleEnum</a>!]!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>salesRepresentative</strong></td>
+<td valign="top"><a href="#salesrepresentative">SalesRepresentative</a></td>
+<td>
+
+Sales representative assigned to customer
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>street</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+street name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Phone number
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### CurrentRegularCustomerUser
+
+Represents a currently logged regular customer user
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>billingAddressUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>city</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+city name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>country</strong></td>
+<td valign="top"><a href="#country">Country</a></td>
+<td>
+
+Billing address country
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>defaultDeliveryAddress</strong></td>
+<td valign="top"><a href="#deliveryaddress">DeliveryAddress</a></td>
+<td>
+
+Default customer delivery addresses
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>deliveryAddresses</strong></td>
+<td valign="top">[<a href="#deliveryaddress">DeliveryAddress</a>!]!</td>
+<td>
+
+List of delivery addresses
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>email</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Email address
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>firstName</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+First name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>hasPasswordSet</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the customer user has password set or not
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Last name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>loginInfo</strong></td>
+<td valign="top"><a href="#logininfo">LoginInfo</a>!</td>
+<td>
+
+Current login information
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>newsletterSubscription</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether customer user receives newsletters or not
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>postcode</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+zip code
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>pricingGroup</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The name of the customer pricing group
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>roleGroup</strong></td>
+<td valign="top"><a href="#customeruserrolegroup">CustomerUserRoleGroup</a>!</td>
+<td>
+
+The customer user role group
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>roles</strong></td>
+<td valign="top">[<a href="#customeruserroleenum">CustomerUserRoleEnum</a>!]!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>salesRepresentative</strong></td>
+<td valign="top"><a href="#salesrepresentative">SalesRepresentative</a></td>
+<td>
+
+Sales representative assigned to customer
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>street</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+street name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Phone number
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
+
+</td>
 </tr>
 </tbody>
 </table>
@@ -7213,7 +7612,7 @@ Customer complaints
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>customerUser</strong></td>
-<td valign="top"><a href="#customeruser">CustomerUser</a></td>
+<td valign="top"><a href="#basecustomeruser">BaseCustomerUser</a></td>
 <td>
 
 Customer user data
@@ -7710,7 +8109,7 @@ Type of the promo code
 
 ### RegularCustomerUser
 
-Represents an currently logged customer user
+Represents a regular customer user
 
 <table>
 <thead>
@@ -7800,15 +8199,6 @@ Whether the customer user has password set or not
 <td>
 
 Last name
-
-</td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>loginInfo</strong></td>
-<td valign="top"><a href="#logininfo">LoginInfo</a>!</td>
-<td>
-
-Current login information
 
 </td>
 </tr>
@@ -12351,6 +12741,181 @@ Represents entity that is considered to be an article on the eshop
 </tbody>
 </table>
 
+### BaseCustomerUser
+
+Represents a basic interface for a customer user
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>billingAddressUuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>city</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+city name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>country</strong></td>
+<td valign="top"><a href="#country">Country</a></td>
+<td>
+
+Billing address country
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>defaultDeliveryAddress</strong></td>
+<td valign="top"><a href="#deliveryaddress">DeliveryAddress</a></td>
+<td>
+
+Default customer delivery addresses
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>deliveryAddresses</strong></td>
+<td valign="top">[<a href="#deliveryaddress">DeliveryAddress</a>!]!</td>
+<td>
+
+List of delivery addresses
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>email</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Email address
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>firstName</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+First name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>hasPasswordSet</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether the customer user has password set or not
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Last name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>newsletterSubscription</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+Whether customer user receives newsletters or not
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>postcode</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+zip code
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>pricingGroup</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+The name of the customer pricing group
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>roleGroup</strong></td>
+<td valign="top"><a href="#customeruserrolegroup">CustomerUserRoleGroup</a>!</td>
+<td>
+
+The customer user role group
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>roles</strong></td>
+<td valign="top">[<a href="#customeruserroleenum">CustomerUserRoleEnum</a>!]!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>salesRepresentative</strong></td>
+<td valign="top"><a href="#salesrepresentative">SalesRepresentative</a></td>
+<td>
+
+Sales representative assigned to customer
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>street</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+street name
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Phone number
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td>
+
+UUID
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ### Breadcrumb
 
 Represents entity able to return breadcrumb
@@ -12377,9 +12942,9 @@ Hierarchy of the current element in relation to the structure
 </tbody>
 </table>
 
-### CustomerUser
+### CurrentCustomerUser
 
-Represents an currently logged customer user
+Represents a common interface for a currently logged customer user (both company and regular)
 
 <table>
 <thead>

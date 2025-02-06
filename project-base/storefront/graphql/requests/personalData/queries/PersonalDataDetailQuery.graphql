@@ -43,7 +43,7 @@ query PersonalDataDetailQuery($hash: String!) {
             }
         }
         customerUser {
-            ...CustomerUserFragment
+            ...BaseCustomerUserFragment
         }
         newsletterSubscriber {
             __typename
