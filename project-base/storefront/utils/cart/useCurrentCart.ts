@@ -1,3 +1,4 @@
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useCartQuery } from 'graphql/requests/cart/queries/CartQuery.generated';
 import { TypeTransportWithAvailablePaymentsAndStoresFragment } from 'graphql/requests/transports/fragments/TransportWithAvailablePaymentsAndStoresFragment.generated';
 import { Maybe } from 'graphql/types';
@@ -17,6 +18,7 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
     const isCartHydrated = useSessionStore((s) => s.isCartHydrated);
     const updatePageLoadingState = useSessionStore((s) => s.updatePageLoadingState);
     const isWithCart = isUserLoggedIn || !!cartUuid;
+    const { canCreateOrder } = useAuthorization();
 
     useEffect(() => {
         updatePageLoadingState({ isCartHydrated: true });
@@ -24,7 +26,7 @@ export const useCurrentCart = (fromCache = true): CurrentCartType => {
 
     const [{ data: fetchedCartData, fetching: isCartFetching }, fetchCart] = useCartQuery({
         variables: { cartUuid },
-        pause: !isCartHydrated || !isWithCart || authLoading !== null,
+        pause: !isCartHydrated || !isWithCart || authLoading !== null || !canCreateOrder,
         requestPolicy: fromCache ? 'cache-first' : 'network-only',
     });
 

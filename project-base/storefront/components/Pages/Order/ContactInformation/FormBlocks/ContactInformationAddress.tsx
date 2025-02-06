@@ -5,12 +5,12 @@ import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { Select } from 'components/Forms/Select/Select';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import useTranslation from 'next-translate/useTranslation';
 import { Controller, useFormContext } from 'react-hook-form';
 import { ContactInformation } from 'store/slices/createContactInformationSlice';
 import { usePersistStore } from 'store/usePersistStore';
 import { SelectOptionType } from 'types/selectOptions';
-import { useUserPermissions } from 'utils/auth/useUserPermissions';
 import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
 
 export const ContactInformationAddress: FC = () => {
@@ -19,7 +19,7 @@ export const ContactInformationAddress: FC = () => {
     const formProviderMethods = useFormContext<ContactInformation>();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const countriesAsSelectOptions = useCountriesAsSelectOptions();
-    const { canManageProfile } = useUserPermissions();
+    const { canManageProfile } = useAuthorization();
 
     return (
         <FormBlockWrapper>

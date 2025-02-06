@@ -4,11 +4,13 @@ This guide will walk you through the process of managing access control in the F
 
 ## 1. Default Roles
 
-By default, we have three roles defined in `Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole`:
+By default, we have the following roles defined in `Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole`:
 
-- `ROLE_API_LOGGED_CUSTOMER`: This role is assigned to a logged customer.
 - `ROLE_API_ALL`: This role is assigned to a user with all privileges.
 - `ROLE_API_CUSTOMER_SELF_MANAGE`: This role allows a user to manage only their own data.
+- `ROLE_API_CUSTOMER_SEES_PRICES`: This role allows a user to see prices.
+- `ROLE_API_CART_AND_ORDER_CREATION`: This role allows a user to manipulate with a cart and create an order.
+- `ROLE_API_COMPANY_ORDERS_VIEW`: This role allows a user to see information about all the company's orders (i.e. access the order list and detail pages of all orders created under the user's company).
 
 ## 2. Granting Permissions for Query/Mutation
 

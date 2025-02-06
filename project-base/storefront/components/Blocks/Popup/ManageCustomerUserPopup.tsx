@@ -10,6 +10,7 @@ import {
     useCustomerUserManageProfileForm,
     useCustomerUserManageProfileFormMeta,
 } from 'components/Pages/Customer/customerUserManageProfileFormMeta';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { getCustomerUser } from 'connectors/customer/CustomerUser';
 import { TypeSimpleCustomerUserFragment } from 'graphql/requests/customer/fragments/SimpleCustomerUserFragment.generated';
 import { useAddNewCustomerUserMutation } from 'graphql/requests/customer/mutations/AddNewCustomerUserMutation.generated';
@@ -18,7 +19,6 @@ import useTranslation from 'next-translate/useTranslation';
 import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { useSessionStore } from 'store/useSessionStore';
 import { CustomerUserManageProfileFormType } from 'types/form';
-import { useUserPermissions } from 'utils/auth/useUserPermissions';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 import { useCustomerUserGroupsAsSelectOptions } from 'utils/user/useCustomerUserGroupsAsSelectOptions';
@@ -33,7 +33,7 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
     const [, customerEditUser] = useEditCustomerUserPersonalDataMutation();
     const [, customerAddUser] = useAddNewCustomerUserMutation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
-    const { canManageProfile, currentCustomerUserUuid: uuid } = useUserPermissions();
+    const { canManageProfile, currentCustomerUserUuid: uuid } = useAuthorization();
     const customerUserRoleGroupsAsSelectOptions = useCustomerUserGroupsAsSelectOptions();
     const customerUserData = getCustomerUser(customerUser);
 

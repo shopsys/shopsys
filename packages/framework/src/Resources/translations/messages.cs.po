@@ -91,6 +91,9 @@ msgstr "<strong><a href=\"{{ url }}\">Notifikační lišta</a></strong> byla ús
 msgid "<strong><a href=\"{{ url }}\">SEO category</a></strong> has been saved"
 msgstr "<strong><a href=\"{{ url }}\">SEO kombinace kategorie</a></strong> byla uložena"
 
+msgid "Access to all the orders created under the user's company"
+msgstr "Přístup ke všem objednávkám vytvořeným pod firmou uživatele"
+
 msgid "Accessories"
 msgstr "Příslušenství"
 
@@ -615,6 +618,9 @@ msgstr "Soubor nelze načíst."
 
 msgid "Canonical URL"
 msgstr "Kanonická URL"
+
+msgid "Cart manipulation and order creation"
+msgstr "Manipulace s košíkem a vytváření objednávky"
 
 msgid "Catalog number"
 msgstr "Katalogové číslo"
@@ -3663,6 +3669,9 @@ msgstr "Skupina práv <strong>{{ roleGroupName }}</strong> nelze smazat, protož
 
 msgid "Role group cannot be deleted, because some administrators are using it: {{ names }}"
 msgstr "Skupina práv nelze smazat, prodože jí někteří administrátoři používají: {{ names }}"
+
+msgid "Role group name"
+msgstr "Název skupiny práv"
 
 msgid "Role group name <strong>{{ name }}</strong> is already used"
 msgstr "Skupina práv s názvem <strong>{{ name }}</strong> je již použita"

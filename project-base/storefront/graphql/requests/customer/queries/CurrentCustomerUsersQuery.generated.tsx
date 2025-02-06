@@ -7,7 +7,7 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeCurrentCustomerUsersQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type TypeCurrentCustomerUsersQuery = { __typename?: 'Query', customerUsers: Array<{ __typename: 'CompanyCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<string>, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } } | { __typename: 'RegularCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<string>, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } }> };
+export type TypeCurrentCustomerUsersQuery = { __typename?: 'Query', customerUsers: Array<{ __typename: 'CompanyCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<Types.TypeCustomerUserRoleEnum>, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } } | { __typename: 'RegularCustomerUser', uuid: string, firstName: string | null, lastName: string | null, email: string, telephone: string | null, roles: Array<Types.TypeCustomerUserRoleEnum>, roleGroup: { __typename: 'CustomerUserRoleGroup', uuid: string, name: string } }> };
 
 
       export interface PossibleTypesResultData {

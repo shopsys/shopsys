@@ -5,16 +5,16 @@ import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { Select } from 'components/Forms/Select/Select';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useCustomerChangeProfileFormMeta } from 'components/Pages/Customer/EditProfile/customerChangeProfileFormMeta';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import useTranslation from 'next-translate/useTranslation';
 import { useEffect } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 import { CustomerChangeProfileFormType } from 'types/form';
-import { useUserPermissions } from 'utils/auth/useUserPermissions';
 import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
 
 export const BillingAddress: FC = () => {
     const { t } = useTranslation();
-    const { canManageProfile } = useUserPermissions();
+    const { canManageProfile } = useAuthorization();
 
     const formProviderMethods = useFormContext<CustomerChangeProfileFormType>();
     const formMeta = useCustomerChangeProfileFormMeta(formProviderMethods);

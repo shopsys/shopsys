@@ -442,6 +442,9 @@ msgstr ""
 msgid "About us"
 msgstr ""
 
+msgid "Accountant"
+msgstr ""
+
 msgid "Action"
 msgstr ""
 
@@ -608,6 +611,9 @@ msgid "Cash on delivery"
 msgstr ""
 
 msgid "Catalog"
+msgstr ""
+
+msgid "Catalog user"
 msgstr ""
 
 msgid "Christmas Day"

@@ -1,22 +1,19 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
-import {
-    SkeletonCustomerUsersTable,
-    SkeletonModuleAddButton,
-} from 'components/Blocks/Skeleton/SkeletonModuleCustomerUsers';
 import { Button } from 'components/Forms/Button/Button';
 import { CustomerLayout } from 'components/Layout/CustomerLayout';
 import { CustomerUsersTable } from 'components/Pages/Customer/Users/CustomerUsersTable';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { TypeSimpleCustomerUserFragment } from 'graphql/requests/customer/fragments/SimpleCustomerUserFragment.generated';
+import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
-import { CustomerUserAreaEnum, CustomerUserRoleEnum } from 'types/customer';
-import { useUserPermissions } from 'utils/auth/useUserPermissions';
+import { CustomerUserAreaEnum } from 'types/customer';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
@@ -40,12 +37,12 @@ const UsersPage: FC = () => {
     const breadcrumbs: TypeBreadcrumbFragment[] = [
         { __typename: 'Link', name: t('Customer users'), slug: customerUsersUrl },
     ];
-    const { canManageUsers, isPermissionsFetching } = useUserPermissions();
+    const { canManageUsers } = useAuthorization();
     const { redirect } = useRedirectOnPermissionsChange();
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.other, breadcrumbs);
     useGtmPageViewEvent(gtmStaticPageViewEvent);
 
-    if (!isPermissionsFetching && canManageUsers === false) {
+    if (canManageUsers === false) {
         redirect();
     }
 
@@ -63,19 +60,12 @@ const UsersPage: FC = () => {
         <>
             <MetaRobots content="noindex" />
             <CustomerLayout breadcrumbs={breadcrumbs} pageHeading={t('Customer users')} title={t('Customer users')}>
-                {isPermissionsFetching ? (
-                    <div className="-mt-1 flex w-full flex-col">
-                        <SkeletonModuleAddButton />
-                        <SkeletonCustomerUsersTable />
-                    </div>
-                ) : (
-                    <div className="flex w-full flex-col gap-4">
-                        <Button className="w-fit" size="small" onClick={(e) => openManageCustomerUserPopup(e)}>
-                            {t('Add new user')}
-                        </Button>
-                        <CustomerUsersTable />
-                    </div>
-                )}
+                <div className="flex w-full flex-col gap-4">
+                    <Button className="w-fit" size="small" onClick={(e) => openManageCustomerUserPopup(e)}>
+                        {t('Add new user')}
+                    </Button>
+                    <CustomerUsersTable />
+                </div>
             </CustomerLayout>
         </>
     );
@@ -88,7 +78,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                 context,
                 authenticationConfig: {
                     authenticationRequired: true,
-                    authorizedRoles: [CustomerUserRoleEnum.ROLE_API_ALL],
+                    authorizedRoles: [TypeCustomerUserRoleEnum.RoleApiAll],
                     authorizedAreas: [CustomerUserAreaEnum.B2B],
                 },
                 redisClient,

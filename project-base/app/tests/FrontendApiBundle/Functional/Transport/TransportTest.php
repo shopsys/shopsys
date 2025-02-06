@@ -25,23 +25,13 @@ class TransportTest extends GraphQlTestCase
 
     public function testTransportNameByUuid(): void
     {
-        $query = '
-            query {
-                transport(uuid: "' . $this->transport->getUuid() . '") {
-                    name
-                }
-            }
-        ';
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/TransportQuery.graphql', [
+            'uuid' => $this->transport->getUuid(),
+        ]);
 
-        $arrayExpected = [
-            'data' => [
-                'transport' => [
-                    'name' => t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()),
-                ],
-            ],
-        ];
+        $data = $this->getResponseDataForGraphQlType($response, 'transport');
 
-        $this->assertQueryWithExpectedArray($query, $arrayExpected);
+        $this->assertSame(t('PPL', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain()), $data['name']);
     }
 
     public function testGetFreeTransport(): void
@@ -55,26 +45,13 @@ class TransportTest extends GraphQlTestCase
             'quantity' => 100,
         ]);
 
-        $query = '
-            query {
-                transport(uuid: "' . $this->transport->getUuid() . '") {
-                    price(cartUuid: "' . $cartUuid . '") {
-                        priceWithVat
-                    }
-                }
-            }
-        ';
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/TransportQuery.graphql', [
+            'uuid' => $this->transport->getUuid(),
+            'cartUuid' => $cartUuid,
+        ]);
 
-        $arrayExpected = [
-            'data' => [
-                'transport' => [
-                    'price' => [
-                        'priceWithVat' => '0.000000',
-                    ],
-                ],
-            ],
-        ];
+        $data = $this->getResponseDataForGraphQlType($response, 'transport');
 
-        $this->assertQueryWithExpectedArray($query, $arrayExpected);
+        $this->assertSame('0.000000', $data['price']['priceWithVat']);
     }
 }

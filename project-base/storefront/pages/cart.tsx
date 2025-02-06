@@ -2,6 +2,7 @@ import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { CartContent } from 'components/Pages/Cart/CartContent';
 import { EmptyCart } from 'components/Pages/Cart/EmptyCart';
+import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmCartViewEvent } from 'gtm/utils/pageViewEvents/useGtmCartViewEvent';
@@ -36,7 +37,15 @@ const CartPage: FC<ServerSidePropsType> = () => {
 export const getServerSideProps = getServerSidePropsWrapper(
     ({ redisClient, domainConfig, t }) =>
         async (context) =>
-            initServerSideProps({ context, redisClient, domainConfig, t }),
+            initServerSideProps({
+                context,
+                redisClient,
+                domainConfig,
+                t,
+                authenticationConfig: {
+                    authorizedRoles: [TypeCustomerUserRoleEnum.RoleApiCartAndOrderCreation],
+                },
+            }),
 );
 
 export default CartPage;

@@ -11,15 +11,20 @@ This article describes functional behavior of a b2b domain. Article shortly summ
 
 - on B2B domain, there are demo data for company with multiple customer users
 
-## Roles
+## Role groups
 
-- there are three roles on B2B domain: owner, user and limited user
-- based on the role, the user can use different features
+- the role groups are predefined sets of permissions (see [the description of the individual roles](../cookbook/manage-access-control-frontend-api.md#1-default-roles)) for detailed information
+- the role groups can be managed by an administrator and assigned to the user
+- in data fixtures, there are five role groups on B2B domain: owner, user, limited user, catalog user, and accountant
+- based on the role group assigned, the user can use different features
     - the owner can add a new user to the company
     - the owner can edit the user
     - the owner can delete the user
     - the owner can see the list of users
+    - the owner can see orders of all users under the company
     - the user can only edit his own profile, everything mentioned above is not possible
     - both can manage delivery addresses
     - the owner can see orders of all users, the user can see only his own orders
     - the limited user can't see prices
+    - the catalog user can't see prices, and moreover he can't access nor manipulate with a cart, nor can create an order
+    - the accountant can see orders of all users under the company, but he can't access nor manipulate with a cart, nor can create an order

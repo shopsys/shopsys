@@ -2,6 +2,7 @@ import { OrderDetailOrderItem } from './OrderDetailOrderItem';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Button } from 'components/Forms/Button/Button';
 import { OrderItemColumnInfo } from 'components/Pages/Customer/Orders/OrderItem';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeOrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
 import { TypeOrderItemTypeEnum } from 'graphql/types';
@@ -21,6 +22,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
     const formatPrice = useFormatPrice();
     const { formatDate } = useFormatDate();
     const addOrderItemsToEmptyCart = useAddOrderItemsToCart();
+    const { canCreateOrder } = useAuthorization();
     const orderRounding = order.items.find((orderItem) => orderItem.type === TypeOrderItemTypeEnum.Rounding);
     const orderTransport = order.items.find((orderItem) => orderItem.type === TypeOrderItemTypeEnum.Transport);
     const orderPayment = order.items.find((orderItem) => orderItem.type === TypeOrderItemTypeEnum.Payment);
@@ -32,9 +34,11 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
             ),
     );
 
-    const showRepeatOrderButton = filteredOrderItems.some(
-        (item) => item.product?.isVisible && !item.product.isSellingDenied && !item.product.isInquiryType,
-    );
+    const showRepeatOrderButton =
+        canCreateOrder &&
+        filteredOrderItems.some(
+            (item) => item.product?.isVisible && !item.product.isSellingDenied && !item.product.isInquiryType,
+        );
 
     return (
         <div className="my-6 flex flex-col gap-4 bg-background vl:mb-8">

@@ -15,7 +15,7 @@ use Tests\FrontendApiBundle\Test\GraphQlB2bDomainWithLoginTestCase;
 
 class CustomerUserSelfManageTest extends GraphQlB2bDomainWithLoginTestCase
 {
-    public const string DEFAULT_USER_EMAIL = CompanyDataFixture::B2B_COMPANY_SELF_MANAGE_USER_EMAIL;
+    public const string DEFAULT_USER_EMAIL = CompanyDataFixture::B2B_COMPANY_USER_EMAIL;
 
     /**
      * @see \Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\CustomerUserOwnerTest::testChangePersonalDataMutation()

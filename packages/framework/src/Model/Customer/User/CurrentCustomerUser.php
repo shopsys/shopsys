@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Customer\User;
 
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
+use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserIsNotLoggedException;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -75,5 +76,13 @@ class CurrentCustomerUser
         }
 
         return null;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser
+     */
+    public function getCurrentCustomerUser(): CustomerUser
+    {
+        return $this->findCurrentCustomerUser() ?? throw new CustomerUserIsNotLoggedException();
     }
 }

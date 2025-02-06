@@ -8,6 +8,7 @@ import {
     useCustomerChangeProfileForm,
     useCustomerChangeProfileFormMeta,
 } from 'components/Pages/Customer/EditProfile/customerChangeProfileFormMeta';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useChangeCompanyDataMutation } from 'graphql/requests/customer/mutations/ChangeCompanyDataMutation.generated';
 import { useChangePersonalDataMutation } from 'graphql/requests/customer/mutations/ChangePersonalDataMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -15,7 +16,6 @@ import useTranslation from 'next-translate/useTranslation';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { CurrentCustomerType } from 'types/customer';
 import { CustomerChangeProfileFormType } from 'types/form';
-import { useUserPermissions } from 'utils/auth/useUserPermissions';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
 import { useErrorPopup } from 'utils/forms/useErrorPopup';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
@@ -28,7 +28,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
     const { t } = useTranslation();
     const [, customerEditProfile] = useChangePersonalDataMutation();
     const [, companyEditProfile] = useChangeCompanyDataMutation();
-    const { canManageProfile } = useUserPermissions();
+    const { canManageProfile } = useAuthorization();
 
     const [formProviderMethods] = useCustomerChangeProfileForm({
         ...currentCustomerUser,

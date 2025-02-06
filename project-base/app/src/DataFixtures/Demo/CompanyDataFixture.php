@@ -28,8 +28,10 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
 
     public const string SHOPSYS_COMPANY = 'shopsys_company';
     public const string B2B_COMPANY_OWNER_EMAIL = 'jozef.novotny@shopsys.com';
-    public const string B2B_COMPANY_SELF_MANAGE_USER_EMAIL = 'marek.horvat@shopsys.com';
+    public const string B2B_COMPANY_USER_EMAIL = 'marek.horvat@shopsys.com';
     public const string B2B_COMPANY_LIMITED_USER_EMAIL = 'peter.kovac@shopsys.com';
+    public const string B2B_COMPANY_CATALOG_USER_EMAIL = 'jiri.katalogovy@shopsys.com';
+    public const string B2B_COMPANY_ACCOUNTANT_EMAIL = 'jana.ucetni@shopsys.com';
 
     private const string KEY_CUSTOMER_USER_DATA = 'customerUserData';
     private const string KEY_DELIVERY_ADDRESS = 'deliveryAddress';
@@ -93,6 +95,7 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
         return [
             CountryDataFixture::class,
             PricingGroupDataFixture::class,
+            CustomerUserRoleGroupDataFixture::class,
         ];
     }
 
@@ -237,10 +240,10 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
                 self::KEY_CUSTOMER_USER_DATA => [
                     self::KEY_CUSTOMER_USER_DATA_FIRST_NAME => 'Marek',
                     self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Horváth',
-                    self::KEY_CUSTOMER_USER_DATA_EMAIL => self::B2B_COMPANY_SELF_MANAGE_USER_EMAIL,
+                    self::KEY_CUSTOMER_USER_DATA_EMAIL => self::B2B_COMPANY_USER_EMAIL,
                     self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'user123',
                     self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '606060607',
-                    self::KEY_CUSTOMER_USER_REFERENCE => self::B2B_COMPANY_SELF_MANAGE_USER_EMAIL,
+                    self::KEY_CUSTOMER_USER_REFERENCE => self::B2B_COMPANY_USER_EMAIL,
                     self::KEY_CUSTOMER_ROLE_GROUP => $this->getReference(CustomerUserRoleGroupDataFixture::ROLE_GROUP_USER, CustomerUserRoleGroup::class),
                 ],
                 self::KEY_DELIVERY_ADDRESS => [
@@ -250,6 +253,46 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
                     self::KEY_ADDRESS_POSTCODE => '08001',
                     self::KEY_ADDRESS_STREET => 'Hlavná 55/65A',
                     self::KEY_ADDRESS_TELEPHONE => '758686320',
+                    self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA, Country::class),
+                ],
+            ],
+            [
+                self::KEY_CUSTOMER_USER_DATA => [
+                    self::KEY_CUSTOMER_USER_DATA_FIRST_NAME => 'Jiří',
+                    self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Katalogový',
+                    self::KEY_CUSTOMER_USER_DATA_EMAIL => self::B2B_COMPANY_CATALOG_USER_EMAIL,
+                    self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'user123',
+                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '606060608',
+                    self::KEY_CUSTOMER_USER_REFERENCE => self::B2B_COMPANY_CATALOG_USER_EMAIL,
+                    self::KEY_CUSTOMER_ROLE_GROUP => $this->getReference(CustomerUserRoleGroupDataFixture::ROLE_GROUP_CATALOG_USER, CustomerUserRoleGroup::class),
+                ],
+                self::KEY_DELIVERY_ADDRESS => [
+                    self::KEY_ADDRESS_FIRST_NAME => 'Jiří',
+                    self::KEY_ADDRESS_LAST_NAME => 'Katalogový',
+                    self::KEY_ADDRESS_CITY => 'Bratislava',
+                    self::KEY_ADDRESS_POSTCODE => '81101',
+                    self::KEY_ADDRESS_STREET => 'Revolučná 123',
+                    self::KEY_ADDRESS_TELEPHONE => '606060608',
+                    self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA, Country::class),
+                ],
+            ],
+            [
+                self::KEY_CUSTOMER_USER_DATA => [
+                    self::KEY_CUSTOMER_USER_DATA_FIRST_NAME => 'Jana',
+                    self::KEY_CUSTOMER_USER_DATA_LAST_NAME => 'Účetní',
+                    self::KEY_CUSTOMER_USER_DATA_EMAIL => self::B2B_COMPANY_ACCOUNTANT_EMAIL,
+                    self::KEY_CUSTOMER_USER_DATA_PASSWORD => 'user123',
+                    self::KEY_CUSTOMER_USER_DATA_TELEPHONE => '606060609',
+                    self::KEY_CUSTOMER_USER_REFERENCE => self::B2B_COMPANY_ACCOUNTANT_EMAIL,
+                    self::KEY_CUSTOMER_ROLE_GROUP => $this->getReference(CustomerUserRoleGroupDataFixture::ROLE_GROUP_ACCOUNTANT, CustomerUserRoleGroup::class),
+                ],
+                self::KEY_DELIVERY_ADDRESS => [
+                    self::KEY_ADDRESS_FIRST_NAME => 'Jana',
+                    self::KEY_ADDRESS_LAST_NAME => 'Účetní',
+                    self::KEY_ADDRESS_CITY => 'Bratislava',
+                    self::KEY_ADDRESS_POSTCODE => '81101',
+                    self::KEY_ADDRESS_STREET => 'Revolučná 123',
+                    self::KEY_ADDRESS_TELEPHONE => '606060609',
                     self::KEY_ADDRESS_COUNTRY => $this->getReference(CountryDataFixture::COUNTRY_SLOVAKIA, Country::class),
                 ],
             ],

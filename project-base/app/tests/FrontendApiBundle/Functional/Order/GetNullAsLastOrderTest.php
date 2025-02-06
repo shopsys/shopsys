@@ -13,15 +13,7 @@ class GetNullAsLastOrderTest extends GraphQlWithLoginTestCase
 
     public function testLastOrderOfUser(): void
     {
-        $query = '
-            {
-                lastOrder {
-                    number
-                }
-            }
-        ';
-
-        $response = $this->getResponseContentForQuery($query);
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/LastOrderQuery.graphql');
         $lastOrderData = $response['data']['lastOrder'];
 
         self::assertNull($lastOrderData);

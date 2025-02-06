@@ -11,6 +11,7 @@ import {
     TypeOrdersQueryVariables,
     OrdersQueryDocument,
 } from 'graphql/requests/orders/queries/OrdersQuery.generated';
+import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
@@ -67,7 +68,13 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
 
     return initServerSideProps<TypeOrdersQueryVariables>({
         context,
-        authenticationConfig: { authenticationRequired: true },
+        authenticationConfig: {
+            authenticationRequired: true,
+            authorizedRoles: [
+                TypeCustomerUserRoleEnum.RoleApiCartAndOrderCreation,
+                TypeCustomerUserRoleEnum.RoleApiCompanyOrdersView,
+            ],
+        },
         prefetchedQueries: [
             {
                 query: OrdersQueryDocument,

@@ -1,0 +1,8 @@
+query TransportQuery ($uuid: Uuid!, $cartUuid: Uuid) {
+    transport(uuid: $uuid) {
+        name
+        price (cartUuid: $cartUuid) {
+            priceWithVat
+        }
+    }
+}

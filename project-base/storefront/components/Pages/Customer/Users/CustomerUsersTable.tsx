@@ -3,6 +3,7 @@ import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { Cell, Row, Table } from 'components/Basic/Table/Table';
 import { SkeletonCustomerUsersTable } from 'components/Blocks/Skeleton/SkeletonModuleCustomerUsers';
 import { Button } from 'components/Forms/Button/Button';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TypeSimpleCustomerUserFragment } from 'graphql/requests/customer/fragments/SimpleCustomerUserFragment.generated';
 import { useRemoveCustomerUserMutation } from 'graphql/requests/customer/mutations/RemoveCustomerUserMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -10,7 +11,6 @@ import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
-import { useUserPermissions } from 'utils/auth/useUserPermissions';
 import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
@@ -41,7 +41,7 @@ export const CustomerUsersTable: FC = () => {
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const [, removeCustomerUser] = useRemoveCustomerUserMutation();
     const { customerUsers, customerUsersIsFetching } = useCurrentCustomerUsers();
-    const { currentCustomerUserUuid } = useUserPermissions();
+    const { currentCustomerUserUuid } = useAuthorization();
 
     const deleteItemHandler = async (customerUserUuid: string | undefined) => {
         if (customerUserUuid === undefined) {

@@ -10,6 +10,7 @@ import {
 import { RegistrationAfterOrder } from 'components/Pages/OrderConfirmation/RegistrationAfterOrder';
 import { useOrderPaymentFailedContentQuery } from 'graphql/requests/orders/queries/OrderPaymentFailedContentQuery.generated';
 import { useOrderPaymentSuccessfulContentQuery } from 'graphql/requests/orders/queries/OrderPaymentSuccessfulContentQuery.generated';
+import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { getStringFromUrlQuery } from 'utils/parsing/getStringFromUrlQuery';
@@ -101,6 +102,9 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
         redisClient,
         domainConfig,
         t,
+        authenticationConfig: {
+            authorizedRoles: [TypeCustomerUserRoleEnum.RoleApiCartAndOrderCreation],
+        },
     });
 });
 

@@ -75,10 +75,12 @@ QueryDecorator:
             payments:
                 type: '[Payment!]!'
                 resolve: "@=query('paymentsQuery')"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
                 description: "Returns complete list of payment methods"
             payment:
                 type: 'Payment'
                 resolve: "@=query('paymentQuery', args['uuid'])"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
                 args:
                     uuid:
                         type: "Uuid!"
@@ -86,6 +88,7 @@ QueryDecorator:
             transports:
                 type: '[Transport!]!'
                 resolve: "@=query('transportsQuery', args['cartUuid'])"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
                 args:
                     cartUuid:
                         type: "Uuid"
@@ -93,6 +96,7 @@ QueryDecorator:
             transport:
                 type: 'Transport'
                 resolve: "@=query('transportByTransportUuidQuery', args['uuid'])"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
                 args:
                     uuid:
                         type: "Uuid!"
@@ -105,6 +109,7 @@ QueryDecorator:
                 type: "OrderConnection"
                 argsBuilder: "Relay::Connection"
                 resolve: "@=query('ordersQuery', args)"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || isGranted('ROLE_API_COMPANY_ORDERS_VIEW'))"
                 args:
                     filter:
                         type: "OrderFilterInput"
@@ -113,6 +118,7 @@ QueryDecorator:
                 type: "OrderItemConnection!"
                 argsBuilder: "Relay::Connection"
                 resolve: "@=query('orderItemsQuery', args)"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || isGranted('ROLE_API_COMPANY_ORDERS_VIEW'))"
                 complexity: "@=dynamicPaginationComplexity(args)"
                 args:
                     filter:
@@ -121,6 +127,7 @@ QueryDecorator:
                 type: "OrderItemConnection!"
                 argsBuilder: "Relay::Connection"
                 resolve: "@=query('orderItemsSearchQuery', args)"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || isGranted('ROLE_API_COMPANY_ORDERS_VIEW'))"
                 complexity: "@=dynamicPaginationComplexity(args)"
                 args:
                     searchInput:
@@ -131,6 +138,7 @@ QueryDecorator:
             order:
                 type: 'Order'
                 resolve: "@=query('orderByUuidOrUrlHashQuery', args['uuid'], args['urlHash'])"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || isGranted('ROLE_API_COMPANY_ORDERS_VIEW') || not isAuthenticated())"
                 args:
                     uuid:
                         type: "Uuid"
@@ -260,6 +268,7 @@ QueryDecorator:
             orderPayments:
                 type: 'OrderPaymentsConfig!'
                 resolve: "@=query('orderPaymentsQuery', args['orderUuid'])"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
                 args:
                     orderUuid:
                         type: "Uuid!"
@@ -268,6 +277,7 @@ QueryDecorator:
                 type: "[GoPayBankSwift!]!"
                 description: "List of available banks for GoPay bank transfer payment"
                 resolve: "@=query('goPaySwiftsQuery', args['currencyCode'])"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
                 args:
                     currencyCode:
                         type: "String!"
@@ -278,6 +288,7 @@ QueryDecorator:
                         type: CartInput
                         validation: cascade
                 resolve: "@=query('cartQuery', args)"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
                 description: "Return cart of logged customer or cart by UUID for anonymous user"
             navigation:
                 type: '[NavigationItem!]!'
@@ -399,3 +410,32 @@ QueryDecorator:
                 type: '[NotificationBar!]'
                 resolve: "@=query('notificationBarsQuery')"
                 description: "Returns a list of notifications supposed to be displayed on all pages"
+            lastOrder:
+                type: 'Order'
+                resolve: "@=query('lastOrderQuery')"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || isGranted('ROLE_API_COMPANY_ORDERS_VIEW'))"
+                description: "Returns last order of the user or null if no order was placed yet"
+            orderSentPageContent:
+                type: "String!"
+                resolve: "@=query('orderSentPageContentQuery', args['orderUuid'])"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
+                args:
+                    orderUuid:
+                        type: "Uuid!"
+                description: "Returns HTML content for order sent page."
+            orderPaymentSuccessfulContent:
+                type: "String!"
+                resolve: "@=query('orderPaymentSuccessfulContentQuery', args['orderUuid'])"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
+                args:
+                    orderUuid:
+                        type: "Uuid!"
+                description: "Returns HTML content for order with successful payment."
+            orderPaymentFailedContent:
+                type: "String!"
+                resolve: "@=query('orderPaymentFailedContentQuery', args['orderUuid'])"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
+                args:
+                    orderUuid:
+                        type: "Uuid!"
+                description: "Returns HTML content for order with failed payment."

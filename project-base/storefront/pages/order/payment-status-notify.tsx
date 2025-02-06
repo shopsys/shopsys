@@ -1,4 +1,5 @@
 import { useUpdatePaymentStatusMutation } from 'graphql/requests/orders/mutations/UpdatePaymentStatusMutation.generated';
+import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
@@ -32,7 +33,15 @@ const PaymentStatusNotifyPage: FC<ServerSidePropsType> = () => {
 export const getServerSideProps = getServerSidePropsWrapper(
     ({ redisClient, domainConfig, t }) =>
         async (context) =>
-            initServerSideProps({ context, redisClient, domainConfig, t }),
+            initServerSideProps({
+                context,
+                redisClient,
+                domainConfig,
+                t,
+                authenticationConfig: {
+                    authorizedRoles: [TypeCustomerUserRoleEnum.RoleApiCartAndOrderCreation],
+                },
+            }),
 );
 
 export default PaymentStatusNotifyPage;

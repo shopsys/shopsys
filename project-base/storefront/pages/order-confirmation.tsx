@@ -10,6 +10,7 @@ import {
     TypeOrderSentPageContentQueryVariables,
     OrderSentPageContentQueryDocument,
 } from 'graphql/requests/orders/queries/OrderSentPageContentQuery.generated';
+import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
@@ -94,6 +95,9 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
 
     return initServerSideProps<TypeOrderSentPageContentQueryVariables>({
         context,
+        authenticationConfig: {
+            authorizedRoles: [TypeCustomerUserRoleEnum.RoleApiCartAndOrderCreation],
+        },
         prefetchedQueries: [
             {
                 query: OrderSentPageContentQueryDocument,

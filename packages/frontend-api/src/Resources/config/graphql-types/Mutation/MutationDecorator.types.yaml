@@ -11,6 +11,7 @@ MutationDecorator:
                         type: OrderInput!
                         validation: cascade
                 resolve: "@=mutation('createOrderMutation', args, validator)"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
             Login:
                 type: LoginResult!
                 description: "Login user and return login result data (consisting of access and refresh tokens, and information about cart merge)"
@@ -106,6 +107,7 @@ MutationDecorator:
                     orderUuid:
                         type: "Uuid!"
                 resolve: "@=mutation('payOrderMutation', args)"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
             UpdatePaymentStatus:
                 type: "Order!"
                 description: "check payment status of order after callback from payment service"
@@ -115,6 +117,7 @@ MutationDecorator:
                     orderPaymentStatusPageValidityHash:
                         type: "String"
                 resolve: "@=mutation('updatePaymentStatusMutation', args)"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
             ChangePaymentInOrder:
                 type: "Order!"
                 description: "change payment in an order after the order creation (available for unpaid GoPay orders only)"
@@ -123,6 +126,7 @@ MutationDecorator:
                         type: ChangePaymentInOrderInput!
                         validation: cascade
                 resolve: "@=mutation('changePaymentInOrderMutation', args)"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
             AddToCart:
                 type: AddToCartResult!
                 description: "Add product to cart for future checkout"
@@ -131,6 +135,7 @@ MutationDecorator:
                         type: AddToCartInput!
                         validation: cascade
                 resolve: "@=mutation('addToCartMutation', args, validator)"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
             RemoveFromCart:
                 type: Cart!
                 description: "Remove product from cart"
@@ -139,6 +144,7 @@ MutationDecorator:
                         type: RemoveFromCartInput!
                         validation: cascade
                 resolve: "@=mutation('removeFromCartMutation', args, validator)"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
             AddOrderItemsToCart:
                 type: Cart!
                 description: "Fills cart based on a given order, possibly merging it with the current cart"
@@ -147,6 +153,7 @@ MutationDecorator:
                         type: AddOrderItemsToCartInput!
                         validation: cascade
                 resolve: "@=mutation('addOrderItemsToCartMutation', args, validator)"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
             ChangePaymentInCart:
                 type: Cart!
                 description: "Add a payment to the cart, or remove a payment from the cart"
@@ -155,6 +162,7 @@ MutationDecorator:
                         type: ChangePaymentInCartInput!
                         validation: cascade
                 resolve: "@=mutation('changePaymentInCartMutation', args)"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
             ChangeTransportInCart:
                 type: Cart!
                 description: "Add a transport to the cart, or remove a transport from the cart"
@@ -163,6 +171,7 @@ MutationDecorator:
                         type: ChangeTransportInCartInput!
                         validation: cascade
                 resolve: "@=mutation('changeTransportInCartMutation', args)"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
             ApplyPromoCodeToCart:
                 type: Cart!
                 description: "Apply new promo code for the future checkout"
@@ -171,6 +180,7 @@ MutationDecorator:
                         type: ApplyPromoCodeToCartInput!
                         validation: cascade
                 resolve: "@=mutation('applyPromoCodeToCartMutation', args, validator)"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
             RemovePromoCodeFromCart:
                 type: Cart!
                 description: "Remove already used promo code from cart"
@@ -179,6 +189,7 @@ MutationDecorator:
                         type: RemovePromoCodeFromCartInput!
                         validation: cascade
                 resolve: "@=mutation('removePromoCodeFromCartMutation', args, validator)"
+                access: "@=(isGranted('ROLE_API_CART_AND_ORDER_CREATION') || not isAuthenticated())"
             ContactForm:
                 type: Boolean!
                 description: "Send message to the site owner"

@@ -9,7 +9,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Security\ResetPasswordInterface;
-use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
 use Shopsys\FrameworkBundle\Model\Security\TimelimitLoginInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -394,13 +393,7 @@ class CustomerUser implements UserInterface, TimelimitLoginInterface, PasswordAu
      */
     public function getRoles(): array
     {
-        $roles = [CustomerUserRole::ROLE_API_LOGGED_CUSTOMER];
-
-        foreach ($this->roleGroup->getRoles() as $role) {
-            $roles[] = $role;
-        }
-
-        return $roles;
+        return $this->roleGroup->getRoles();
     }
 
     /**

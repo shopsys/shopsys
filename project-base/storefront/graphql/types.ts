@@ -750,7 +750,7 @@ export type TypeCompanyCustomerUser = TypeCustomerUser & {
   pricingGroup: Scalars['String']['output'];
   /** The customer user role group */
   roleGroup: TypeCustomerUserRoleGroup;
-  roles: Array<Scalars['String']['output']>;
+  roles: Array<TypeCustomerUserRoleEnum>;
   /** Sales representative assigned to customer */
   salesRepresentative: Maybe<TypeSalesRepresentative>;
   /** street name */
@@ -948,7 +948,7 @@ export type TypeCustomerUser = {
   pricingGroup: Scalars['String']['output'];
   /** The customer user role group */
   roleGroup: TypeCustomerUserRoleGroup;
-  roles: Array<Scalars['String']['output']>;
+  roles: Array<TypeCustomerUserRoleEnum>;
   /** Sales representative assigned to customer */
   salesRepresentative: Maybe<TypeSalesRepresentative>;
   /** street name */
@@ -958,6 +958,15 @@ export type TypeCustomerUser = {
   /** UUID */
   uuid: Scalars['Uuid']['output'];
 };
+
+/** Available customer user roles */
+export enum TypeCustomerUserRoleEnum {
+  RoleApiAll = 'ROLE_API_ALL',
+  RoleApiCartAndOrderCreation = 'ROLE_API_CART_AND_ORDER_CREATION',
+  RoleApiCompanyOrdersView = 'ROLE_API_COMPANY_ORDERS_VIEW',
+  RoleApiCustomerSeesPrices = 'ROLE_API_CUSTOMER_SEES_PRICES',
+  RoleApiCustomerSelfManage = 'ROLE_API_CUSTOMER_SELF_MANAGE'
+}
 
 export type TypeCustomerUserRoleGroup = {
   __typename?: 'CustomerUserRoleGroup';
@@ -2932,7 +2941,7 @@ export type TypeRegularCustomerUser = TypeCustomerUser & {
   pricingGroup: Scalars['String']['output'];
   /** The customer user role group */
   roleGroup: TypeCustomerUserRoleGroup;
-  roles: Array<Scalars['String']['output']>;
+  roles: Array<TypeCustomerUserRoleEnum>;
   /** Sales representative assigned to customer */
   salesRepresentative: Maybe<TypeSalesRepresentative>;
   /** street name */
