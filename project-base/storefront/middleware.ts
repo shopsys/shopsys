@@ -41,10 +41,8 @@ export const middleware: NextMiddleware = async (request) => {
         const domainUrlFromStaticUrls = getDomainUrlFromStaticUrls(host);
         const staticUrlsAvailableForDomain = getStaticUrlsAvailableForDomain(domainUrlFromStaticUrls);
         const rewriteTargetUrl = getRewriteTargetPathname(request, staticUrlsAvailableForDomain);
-
-        if (rewriteTargetUrl) {
-            const rewriteUrlObject = new URL(`${origin}${rewriteTargetUrl}`);
-
+        if (rewriteTargetUrl || isHomePage(request)) {
+            const rewriteUrlObject = new URL(rewriteTargetUrl, request.url);
             addQueryParametersToRewriteUrlObject(rewriteUrlObject, request.nextUrl.search);
 
             return NextResponse.rewrite(rewriteUrlObject, response);
@@ -220,6 +218,8 @@ const getRewriteTargetPathname = (
 
     return rewriteTargetPathname;
 };
+
+const isHomePage = (request: NextRequest) => request.nextUrl.pathname === '/';
 
 const addQueryParametersToRewriteUrlObject = (rewriteUrlObject: URL, originalUrlQueryParams: string) => {
     rewriteUrlObject.search = originalUrlQueryParams;
