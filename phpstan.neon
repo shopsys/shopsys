@@ -50,9 +50,6 @@ parameters:
             message: '#^Service "test.service_container" is not registered in the container.$#'
             path: %currentWorkingDirectory%/*/tests/*
         -
-            message: '#^Service "snc_redis.test" is not registered in the container.$#'
-            path: %currentWorkingDirectory%/project-base/app/tests/App/Functional/Component/Redis/Redis*FacadeTest.php
-        -
             message: '#^Service "doctrine.orm.default_metadata_driver" is private.$#'
             path: %currentWorkingDirectory%/packages/framework/src/DependencyInjection/Compiler/RegisterExtendedEntitiesCompilerPass.php
         -
