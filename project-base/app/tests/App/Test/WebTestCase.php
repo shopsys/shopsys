@@ -195,7 +195,7 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
         $productRecalculationMessageHandler = $this->productRecalculationMessageHandler;
         $dispatchAllProductsMessageHandler = $this->dispatchAllProductsMessageHandler;
 
-        $envelopes = $regularPriorityTransport->getSent();
+        $envelopes = $highPriorityTransport->getSent();
 
         foreach ($envelopes as $envelope) {
             $message = $envelope->getMessage();

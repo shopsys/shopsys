@@ -39,32 +39,54 @@ class ProductRecalculationMessageHandler implements BatchHandlerInterface
      */
     protected function process(array $jobs): void
     {
-        $acknowledgers = [];
-        $exportScopesIndexedByProductId = [];
+        $priorities = [];
 
         /**
          * @var \Shopsys\FrameworkBundle\Model\Product\Recalculation\AbstractProductRecalculationMessage $message
          * @var \Symfony\Component\Messenger\Handler\Acknowledger $ack
          */
         foreach ($jobs as [$message, $ack]) {
-            $acknowledgers[] = $ack;
-            $exportScopesIndexedByProductId[$message->productId] = $message->exportScopes;
+            $priority = $this->getPriority($message);
+            $priorities[$priority]['productIds'][] = $message->productId;
+            $priorities[$priority]['acknowledgers'][] = $ack;
+        }
+
+        foreach ($priorities as $priority => $data) {
+            $this->processPriority($data['productIds'], $priority, $data['acknowledgers']);
+        }
+    }
+
+    /**
+     * @param int[] $productIds
+     * @param string $priority
+     * @param \Symfony\Component\Messenger\Handler\Acknowledger[] $acknowledgers
+     */
+    protected function processPriority(array $productIds, string $priority, array $acknowledgers): void
+    {
+        if (count($productIds) === 0) {
+            return;
         }
 
         try {
-            $this->productRecalculationFacade->recalculate($exportScopesIndexedByProductId);
+            $this->productRecalculationFacade->recalculate($productIds, $priority, $this->logger);
             $this->ackAll($acknowledgers);
         } catch (Throwable $e) {
             $this->logger->error($e->getMessage());
             $this->nackAll($acknowledgers, $e);
-
-            return;
         }
+    }
 
-        $this->logger->info('Product recalculated', [
-            'product_ids' => json_encode(array_keys($exportScopesIndexedByProductId), JSON_THROW_ON_ERROR),
-            'export_scopes' => json_encode($exportScopesIndexedByProductId, JSON_THROW_ON_ERROR),
-        ]);
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\AbstractProductRecalculationMessage $message
+     * @return string
+     */
+    protected function getPriority(AbstractProductRecalculationMessage $message): string
+    {
+        return match (true) {
+            $message instanceof ProductRecalculationPriorityHighMessage => ProductRecalculationPriorityEnum::HIGH,
+            $message instanceof ProductRecalculationPriorityRegularMessage => ProductRecalculationPriorityEnum::REGULAR,
+            default => throw new UnknownProductRecalculationPriorityException($message::class),
+        };
     }
 
     /**

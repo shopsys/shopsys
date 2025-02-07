@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Recalculation;
 
+use Nette\Utils\Json;
+use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade;
@@ -29,6 +31,7 @@ class ProductRecalculationFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductSellingDeniedRecalculator $productSellingDeniedRecalculator
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfigFacade $productExportScopeConfigFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider $productElasticsearchProvider
+     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDeduplicationFacade $productRecalculationDeduplicationFacade
      */
     public function __construct(
         protected readonly IndexFacade $indexFacade,
@@ -40,17 +43,33 @@ class ProductRecalculationFacade
         protected readonly ProductSellingDeniedRecalculator $productSellingDeniedRecalculator,
         protected readonly ProductExportScopeConfigFacade $productExportScopeConfigFacade,
         protected readonly ProductElasticsearchProvider $productElasticsearchProvider,
+        protected readonly ProductRecalculationDeduplicationFacade $productRecalculationDeduplicationFacade,
     ) {
     }
 
     /**
-     * @param array<int, string[]> $exportScopesIndexedByProductId
+     * @param int[] $productIds
+     * @param string $priority
+     * @param \Psr\Log\LoggerInterface|null $logger
      */
-    public function recalculate(array $exportScopesIndexedByProductId): void
+    public function recalculate(array $productIds, string $priority, ?LoggerInterface $logger = null): void
     {
+        $exportScopesIndexedByProductId = $this->productRecalculationDeduplicationFacade->getScopesIndexedByProductId($productIds, $priority);
+
         foreach ($this->groupProductIdsWithSameScopes($exportScopesIndexedByProductId) as $productIdsWithScopes) {
-            $idsToRecalculate = $this->productRecalculationRepository->getIdsToRecalculate($productIdsWithScopes[self::KEY_PRODUCT_IDS]);
+            $idsToRecalculate = $this->productRecalculationRepository->getIdsToRecalculateByMainVariantIds(
+                $productIdsWithScopes[self::KEY_PRODUCT_IDS],
+            );
+
             $this->recalculateWithScope($idsToRecalculate, $productIdsWithScopes[self::KEY_SCOPES]);
+
+            $logger?->info('Products recalculated', [
+                'product_ids' => Json::encode($idsToRecalculate),
+                'export_scopes' => Json::encode($productIdsWithScopes[self::KEY_SCOPES]),
+                'priority' => $priority,
+            ]);
+
+            $this->productRecalculationDeduplicationFacade->delete($idsToRecalculate, $priority);
         }
     }
 

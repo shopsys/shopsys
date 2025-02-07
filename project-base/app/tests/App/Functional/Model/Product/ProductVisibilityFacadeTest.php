@@ -44,7 +44,7 @@ class ProductVisibilityFacadeTest extends TransactionFunctionalTestCase
         $visibilityIndexedByProductId = $this->productVisibilityFacade->areProductsVisibleForDefaultPricingGroupOnEachDomainIndexedByProductId(
             [$productId],
         );
-        $this->assertTrue($visibilityIndexedByProductId[$productId]);
+        $this->assertTrue($visibilityIndexedByProductId[$productId], 'Product should be visible on all domains');
 
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productId);
         $productData = $this->productDataFactory->createFromProduct($product);
@@ -56,7 +56,7 @@ class ProductVisibilityFacadeTest extends TransactionFunctionalTestCase
         $visibilityIndexedByProductId = $this->productVisibilityFacade->areProductsVisibleForDefaultPricingGroupOnEachDomainIndexedByProductId(
             [$productId],
         );
-        $this->assertFalse($visibilityIndexedByProductId[$productId]);
+        $this->assertFalse($visibilityIndexedByProductId[$productId], 'Product was hidden on first domain, should not be visible on all domains');
 
         $visibilityIndexedByProductId = $this->productVisibilityFacade->areProductsVisibleForDefaultPricingGroupOnSomeDomainIndexedByProductId(
             [$productId],

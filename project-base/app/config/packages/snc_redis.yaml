@@ -50,6 +50,14 @@ snc_redis:
                 prefix: '%env(REDIS_PREFIX)%:%build-version%:cache:main_friendly_url_slugs:'
                 connection_timeout: 2
                 read_write_timeout: 5
+        product_recalculation_queue:
+            type: 'phpredis'
+            alias: 'product_recalculation_queue'
+            dsn: 'redis://%env(REDIS_HOST)%'
+            options:
+                prefix: '%env(REDIS_PREFIX)%:queue:recalculation:'
+                connection_timeout: 2
+                read_write_timeout: 5
         storefront_graphql_query:
             type: 'phpredis'
             alias: 'storefront_graphql_query'

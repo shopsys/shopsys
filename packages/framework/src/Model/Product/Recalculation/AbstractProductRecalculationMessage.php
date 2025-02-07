@@ -8,11 +8,9 @@ abstract class AbstractProductRecalculationMessage
 {
     /**
      * @param int $productId
-     * @param string[] $exportScopes
      */
     public function __construct(
         public readonly int $productId,
-        public readonly array $exportScopes = [],
     ) {
     }
 }

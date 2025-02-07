@@ -24,10 +24,14 @@ class DispatchAllProductsMessageHandler implements MessageHandlerInterface
      */
     public function __invoke(DispatchAllProductsMessage $message): void
     {
-        $productIds = $this->productFacade->iterateAllProductIds();
+        $productIds = $this->productFacade->iterateAllProductIdsExceptVariant();
 
         foreach ($productIds as $productId) {
-            $this->productRecalculationDispatcher->dispatchSingleProductId($productId['id'], ProductRecalculationPriorityEnum::REGULAR, $message->exportScopes);
+            $this->productRecalculationDispatcher->dispatchSingleProductId(
+                $productId['id'],
+                ProductRecalculationPriorityEnum::REGULAR,
+                $message->exportScopes,
+            );
         }
     }
 }
