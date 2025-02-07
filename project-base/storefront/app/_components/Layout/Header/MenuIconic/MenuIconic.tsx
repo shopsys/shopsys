@@ -1,20 +1,18 @@
 import { MenuIconicItem, MenuIconicItemLink } from './MenuIconicElements';
 import MenuIconicItemUserAuthentication from './MenuIconicItemUserAuthentication';
+import { getInternationalizedStaticUrlsServer } from 'app/_utils/staticUrls/getInternationalizedStaticUrlsServer';
 import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { MarkerIcon } from 'components/Basic/Icon/MarkerIcon';
-import { headers } from 'next/headers';
-import { getDomainConfig } from 'utils/domain/domainConfig';
 import { getServerT } from 'utils/getServerTranslation';
-import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 export async function MenuIconic() {
     const t = await getServerT();
-    const { url } = getDomainConfig(headers().get('host')!);
-    const [storesUrl, productComparisonUrl, wishlistUrl] = getInternationalizedStaticUrls(
-        ['/stores', '/product-comparison', '/wishlist'],
-        url,
-    );
+    const [storesUrl, productComparisonUrl, wishlistUrl] = getInternationalizedStaticUrlsServer([
+        '/stores',
+        '/product-comparison',
+        '/wishlist',
+    ]);
     // TODO: wishlist and comparison hooks
     // const { comparison } = useComparison();
     // const { wishlist } = useWishlist();

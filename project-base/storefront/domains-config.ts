@@ -3,8 +3,8 @@ import { CustomerUserAreaEnum } from 'types/customer';
 
 const domainsConfig = [
     {
-        publicGraphqlEndpoint: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_1 ?? '',
-        url: process.env.NEXT_PUBLIC_DOMAIN_HOSTNAME_1 ?? '',
+        publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_1 ?? '',
+        url: process.env.DOMAIN_HOSTNAME_1 ?? '',
         defaultLocale: 'en' as Locale,
         currencyCode: 'EUR',
         fallbackTimezone: 'Europe/Prague',
@@ -19,8 +19,8 @@ const domainsConfig = [
         type: CustomerUserAreaEnum.B2C,
     },
     {
-        publicGraphqlEndpoint: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_2 ?? '',
-        url: process.env.NEXT_PUBLIC_DOMAIN_HOSTNAME_2 ?? '',
+        publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_2 ?? '',
+        url: process.env.DOMAIN_HOSTNAME_2 ?? '',
         defaultLocale: 'cs' as Locale,
         currencyCode: 'CZK',
         fallbackTimezone: 'Europe/Prague',
