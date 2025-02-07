@@ -6,8 +6,8 @@ namespace Tests\FrontendApiBundle\Test;
 
 use App\DataFixtures\Demo\CompanyDataFixture;
 use App\Model\Customer\User\CustomerUser;
+use App\Model\Customer\User\CustomerUserFacade;
 use LogicException;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 
 abstract class GraphQlB2bDomainWithLoginTestCase extends CommonGraphQlWithLoginTestCase
 {
@@ -61,7 +61,6 @@ abstract class GraphQlB2bDomainWithLoginTestCase extends CommonGraphQlWithLoginT
      */
     protected function getCustomerUserByDefaultCredentials(): CustomerUser
     {
-        /** @var \App\Model\Customer\User\CustomerUser|null $currentCustomerUser */
         $currentCustomerUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(
             static::DEFAULT_USER_EMAIL,
             $this->domain->getId(),

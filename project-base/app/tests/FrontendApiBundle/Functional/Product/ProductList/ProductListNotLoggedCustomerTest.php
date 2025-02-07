@@ -9,13 +9,13 @@ use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\ProductListDataFixture;
 use App\Model\Customer\User\CustomerUser;
+use App\Model\Customer\User\CustomerUserFacade;
 use App\Model\Order\Order;
 use App\Model\Product\Product;
 use Iterator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\DataProviderExternal;
 use Ramsey\Uuid\Uuid;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Product\List\Exception\UnknownProductListTypeException;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListFacade;
 use Shopsys\FrameworkBundle\Model\Product\List\ProductListTypeEnum;
@@ -426,7 +426,6 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
             ProductListDataFixture::PRODUCT_LIST_COMPARISON_NOT_LOGGED_CUSTOMER_UUID,
         ];
         $this->getResponseContentForGql(__DIR__ . '/../../_graphql/mutation/RegistrationMutation.graphql', $registerQueryVariables);
-        /** @var \App\Model\Customer\User\CustomerUser $newRegisteredUser */
         $newRegisteredUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(
             $registerQueryVariables['email'],
             $this->domain->getId(),
@@ -455,7 +454,6 @@ class ProductListNotLoggedCustomerTest extends GraphQlTestCase
             ],
         ];
         $this->getResponseContentForGql(__DIR__ . '/../../_graphql/mutation/RegistrationByOrderMutation.graphql', $registerQueryVariables);
-        /** @var \App\Model\Customer\User\CustomerUser $newRegisteredUser */
         $newRegisteredUser = $this->customerUserFacade->findCustomerUserByEmailAndDomain(
             $order->getEmail(),
             $order->getDomainId(),

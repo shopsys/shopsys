@@ -6,7 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Customer\User;
 
 use App\DataFixtures\Demo\CustomerUserDataFixture;
 use App\Model\Customer\BillingAddress;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
+use App\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\LoginTypeEnum;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;

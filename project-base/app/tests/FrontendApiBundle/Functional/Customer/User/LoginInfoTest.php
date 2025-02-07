@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace FrontendApiBundle\Functional\Customer\User;
 
+use App\Model\Customer\User\CustomerUserFacade;
 use DateTime;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeDataFactory;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\CustomerUserLoginTypeFacade;
 use Shopsys\FrontendApiBundle\Model\Customer\User\LoginType\LoginTypeEnum;

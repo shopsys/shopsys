@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Customer\User;
 
 use App\DataFixtures\Demo\OrderDataFixture;
+use App\Model\Customer\User\CustomerUserFacade;
 use App\Model\Order\Order;
 use PHPUnit\Framework\Attributes\DataProvider;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class RegisterByOrderTest extends GraphQlTestCase

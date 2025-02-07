@@ -95,6 +95,8 @@ services:
 
     App\Model\Mail\MailTemplateBuilder: ~
 
+    App\Model\Mail\MailTemplateConfiguration: ~
+
     App\Model\Order\Mail\OrderMail: ~
 
     App\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig: ~
@@ -163,7 +165,7 @@ services:
         alias: App\Model\Administrator\AdministratorRepository
 
     Shopsys\FrameworkBundle\Model\Administrator\AdministratorTwoFactorAuthenticationFacade:
-        class: App\Model\Administrator\AdministratorTwoFactorAuthenticationFacade
+        alias: App\Model\Administrator\AdministratorTwoFactorAuthenticationFacade
 
     Shopsys\FrameworkBundle\Model\Administrator\Role\AdministratorRoleFacade:
         alias: App\Model\Administrator\Role\AdministratorRoleFacade
@@ -214,7 +216,7 @@ services:
         alias: App\Model\Customer\User\CustomerUserDataFactory
 
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade:
-        class: 'App\Model\Customer\User\CustomerUserFacade'
+        alias: App\Model\Customer\User\CustomerUserFacade
 
     Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade:
         alias: App\Model\Customer\User\CustomerUserPasswordFacade
@@ -238,10 +240,10 @@ services:
         alias: App\Model\Mail\Grid\MailTemplateGridFactory
 
     Shopsys\FrameworkBundle\Model\Mail\MailTemplateBuilder:
-        class: App\Model\Mail\MailTemplateBuilder
+        alias: App\Model\Mail\MailTemplateBuilder
 
     Shopsys\FrameworkBundle\Model\Mail\MailTemplateConfiguration:
-        class: App\Model\Mail\MailTemplateConfiguration
+        alias: App\Model\Mail\MailTemplateConfiguration
 
     Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactory:
         alias: App\Model\Mail\MailTemplateDataFactory
