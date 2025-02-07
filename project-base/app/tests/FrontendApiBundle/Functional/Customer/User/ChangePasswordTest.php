@@ -11,55 +11,30 @@ class ChangePasswordTest extends GraphQlWithLoginTestCase
 {
     public function testChangePassword(): void
     {
-        $query = '
-mutation {
-    ChangePassword(input: {
-        email: "no-reply@shopsys.com"
-        oldPassword: "user123"
-        newPassword: "user124"
-    }) {
-        firstName
-        lastName
-        email
-        telephone
-    }
-}';
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePasswordMutation.graphql', [
+            'email' => 'no-reply@shopsys.com',
+            'oldPassword' => 'user123',
+            'newPassword' => 'user124',
+        ]);
 
-        $jsonExpected = '
-{
-    "data": {
-        "ChangePassword": {
-            "firstName": "Jaromír",
-            "lastName": "Jágr",
-            "email": "no-reply@shopsys.com",
-            "telephone": "605000123"
-        }
-    }
-}';
-
-        $this->assertQueryWithExpectedJson($query, $jsonExpected);
+        $responseData = $this->getResponseDataForGraphQlType($response, 'ChangePassword');
+        $this->assertSame('Jaromír', $responseData['firstName']);
+        $this->assertSame('Jágr', $responseData['lastName']);
+        $this->assertSame('no-reply@shopsys.com', $responseData['email']);
+        $this->assertSame('605000123', $responseData['telephone']);
     }
 
     public function testChangePasswordWithWrongData(): void
     {
-        $query = '
-mutation {
-    ChangePassword(input: {
-        email: "no-reply@shopsys.com"
-        oldPassword: "user123"
-        newPassword: "user1"
-    }) {
-        firstName
-        lastName
-        email
-        telephone
-    }
-}';
         $expectedViolationMessages = [
             0 => t('New password must be at least {{ limit }} characters long', ['{{ limit }}' => 6], Translator::VALIDATOR_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
         ];
 
-        $response = $this->getResponseContentForQuery($query);
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePasswordMutation.graphql', [
+            'email' => 'no-reply@shopsys.com',
+            'oldPassword' => 'user123',
+            'newPassword' => 'user1',
+        ]);
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
         $responseData = $this->getErrorsExtensionValidationFromResponse($response);
 
@@ -72,5 +47,20 @@ mutation {
                 $i++;
             }
         }
+    }
+
+    public function testChangePasswordWithAnotherUserEmailReturnsAccessDenied(): void
+    {
+        $response = $this->getResponseContentForGql(__DIR__ . '/graphql/ChangePasswordMutation.graphql', [
+            'email' => 'no-reply.3@shopsys.com',
+            'oldPassword' => 'user123',
+            'newPassword' => 'user123',
+        ]);
+
+        $this->assertResponseContainsArrayOfErrors($response);
+        $errors = $this->getErrorsFromResponse($response);
+
+        $this->assertSame('access-denied', $errors[0]['extensions']['userCode']);
+        $this->assertSame(403, $errors[0]['extensions']['code']);
     }
 }
