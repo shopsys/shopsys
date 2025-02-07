@@ -24,6 +24,7 @@ module.exports = {
         '../pages/**/*.{ts,tsx}',
         '../store/**/*.{ts,tsx}',
         '../utils/**/*.{ts,tsx}',
+        '../app/**/*.{ts,tsx}',
     ],
     sort: true,
     verbose: false,
