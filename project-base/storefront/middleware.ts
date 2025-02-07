@@ -34,8 +34,7 @@ export const middleware: NextMiddleware = async (request) => {
         const domainUrlFromStaticUrls = getDomainUrlFromStaticUrls(host);
         const staticUrlsAvailableForDomain = getStaticUrlsAvailableForDomain(domainUrlFromStaticUrls);
         const rewriteTargetUrl = getRewriteTargetPathname(request, staticUrlsAvailableForDomain);
-
-        if (rewriteTargetUrl) {
+        if (rewriteTargetUrl || isHomePage(request)) {
             const rewriteUrlObject = new URL(rewriteTargetUrl, request.url);
             addQueryParametersToRewriteUrlObject(rewriteUrlObject, request.nextUrl.search);
 
@@ -121,6 +120,7 @@ export const middleware: NextMiddleware = async (request) => {
 export const config = {
     matcher: [
         '/((?!api|_next|favicon.ico|fonts|svg|images|locales|icons|grapesjs-template|grapesjs-homepage-article-template|grapesjs-article-template|robots).*)',
+        '/'
     ],
 };
 
@@ -214,6 +214,8 @@ const getRewriteTargetPathname = (
 
     return rewriteTargetPathname;
 };
+
+const isHomePage = (request: NextRequest) => request.nextUrl.pathname === '/';
 
 const addQueryParametersToRewriteUrlObject = (rewriteUrlObject: URL, originalUrlQueryParams: string) => {
     rewriteUrlObject.search = originalUrlQueryParams;
