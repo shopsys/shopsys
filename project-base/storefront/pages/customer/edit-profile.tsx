@@ -14,7 +14,7 @@ import { useUserProfileSectionLabel } from 'utils/user/useUserProfileSectionLabe
 
 const EditProfilePage: FC = () => {
     const { url } = useDomainConfig();
-    const [customerEditProfileUrl] = getInternationalizedStaticUrls(['/customer', '/customer/edit-profile'], url);
+    const [customerEditProfileUrl] = getInternationalizedStaticUrls(['/customer/edit-profile'], url);
     const currentCustomerUserData = useCurrentCustomerData();
     const userProfileSectionLabel = useUserProfileSectionLabel();
     const breadcrumbs: TypeBreadcrumbFragment[] = [

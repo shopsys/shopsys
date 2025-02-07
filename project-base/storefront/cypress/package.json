@@ -11,7 +11,8 @@
         "actual": "cypress run --env type=actual",
         "selected-actual": "./runSelectedTests.js type=actual",
         "selected-base": "./runSelectedTests.js type=base",
-        "generate-snapshots-table": "./generateSnapshotsInfoTable.js"
+        "generate-snapshots-table": "./generateSnapshotsInfoTable.js",
+        "smoke": "cypress run --spec ./smokeTests/smokeTests.cy.ts"
     },
     "devDependencies": {
         "cypress": "^14.0.1",

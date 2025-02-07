@@ -22,6 +22,7 @@ declare global {
                 pickupPlaceIdentifier?: string,
             ): Cypress.Chainable<Cypress.Response<any>>;
             preselectPaymentForTest(paymentUuid: string): Cypress.Chainable<Cypress.Response<any>>;
+            login(email?: string, password?: string): Cypress.Chainable<Cypress.Response<any>>;
             logout(): Cypress.Chainable<Cypress.Response<any>>;
             createOrder(createOrderInput: CreateOrderMutationVariables): Cypress.Chainable<{ urlHash: string }>;
             registerAsNewUser(

@@ -352,3 +352,7 @@ export const getSnapshotIndexingFunction = (snapshotGroupIndex: number, snapshot
         return `${snapshotGroupIndex}-${snapshotSubgroupIndex}-${snapshotCounter++}`;
     };
 };
+
+export const checktHeadlineText = (text: string) => {
+    return cy.get('h1').should('exist').and('be.visible').and('contain.text', text);
+};

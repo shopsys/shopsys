@@ -1,5 +1,27 @@
 import { defineConfig } from 'cypress';
 import getCompareSnapshotsPlugin from 'cypress-visual-regression/dist/plugin';
+import glob from 'glob';
+
+const getProjectPages = () => {
+    const files = glob.sync('**/*.tsx', { cwd: './pages', ignore: ['\\[...all].tsx', '_*.tsx', 'robots.txt.tsx'] });
+
+    /*
+        Transform filepaths to routes:
+            1. cart.tsx => /cart
+            2. index.tsx => /
+            3. personal-data-overview/index.tsx => /personal-data-overview
+            3. personal-data-overview/[hash].tsx => /personal-data-overview/:hash
+     */
+    return files.map((path) => {
+        const replacedPath = path
+            .replace('.tsx', '')
+            .replace('/index', '')
+            .replace('index', '')
+            .replace(/\[(.*[^\]])]/, ':$1');
+
+        return `/${replacedPath}`;
+    });
+};
 
 export default defineConfig({
     viewportWidth: 1280,
@@ -21,31 +43,38 @@ export default defineConfig({
 
             const glob = require('glob');
             const group = process.env.GROUP || 'default-group';
+            const isSmoke = process.env.COMMAND === 'smoke';
 
-            const patternsMap: { [key: string]: string[] } = {
-                authentication: ['e2e/authentication/*.cy.ts'],
-                cart: ['e2e/cart/*.cy.ts'],
-                order: ['e2e/order/*.cy.ts'],
-                transportAndPayment: ['e2e/transportAndPayment/*.cy.ts'],
-                visits: ['e2e/visits/*.cy.ts'],
-            };
+            if (isSmoke) {
+                config.specPattern = ['smokeTests/smokeTests.cy.ts'];
+            } else {
+                const patternsMap: { [key: string]: string[] } = {
+                    authentication: ['e2e/authentication/*.cy.ts'],
+                    cart: ['e2e/cart/*.cy.ts'],
+                    order: ['e2e/order/*.cy.ts'],
+                    transportAndPayment: ['e2e/transportAndPayment/*.cy.ts'],
+                    visits: ['e2e/visits/*.cy.ts'],
+                };
 
-            const usedPatterns = Object.values(patternsMap).flat();
+                const usedPatterns = Object.values(patternsMap).flat();
 
-            if (group === 'default-group') {
-                config.specPattern = ['e2e/**/*.cy.ts'];
-            } else if (group in patternsMap) {
-                config.specPattern = patternsMap[group];
-            } else if (group === 'others') {
-                const allFiles = glob.sync('e2e/**/*.cy.ts');
+                if (group === 'default-group') {
+                    config.specPattern = ['e2e/**/*.cy.ts'];
+                } else if (group in patternsMap) {
+                    config.specPattern = patternsMap[group];
+                } else if (group === 'others') {
+                    const allFiles = glob.sync('e2e/**/*.cy.ts');
 
-                const filteredFiles = allFiles.filter(
-                    (file: string) =>
-                        !usedPatterns.some((pattern) => new RegExp(pattern.replace('*', '.*')).test(file)),
-                );
+                    const filteredFiles = allFiles.filter(
+                        (file: string) =>
+                            !usedPatterns.some((pattern) => new RegExp(pattern.replace('*', '.*')).test(file)),
+                    );
 
-                config.specPattern = filteredFiles.length > 0 ? filteredFiles : ['e2e/matrix/matrixTest.cy.ts'];
+                    config.specPattern = filteredFiles.length > 0 ? filteredFiles : ['e2e/matrix/matrixTest.cy.ts'];
+                }
             }
+
+            config.env.projectPages = getProjectPages();
 
             return config;
         },
