@@ -2,7 +2,7 @@ import { cookies } from 'next/headers';
 import { v4 as uuidV4 } from 'uuid';
 import { createStore } from 'zustand';
 
-const userSnapEnabledDefaultValue = process.env.NEXT_PUBLIC_USERSNAP_STOREFRONT_ENABLED_BY_DEFAULT === '1';
+const userSnapEnabledDefaultValue = process.env.USERSNAP_STOREFRONT_ENABLED_BY_DEFAULT === '1';
 
 export type CookiesStoreState = {
     lastVisitedProductsCatnums: string[] | null;

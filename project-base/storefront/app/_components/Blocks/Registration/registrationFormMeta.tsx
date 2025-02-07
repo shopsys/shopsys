@@ -19,7 +19,7 @@ import {
     validateStreet,
     validateTelephoneRequired,
 } from 'components/Forms/validationRules';
-import { useSettings } from 'components/providers/SettingsProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
@@ -112,7 +112,7 @@ export const useRegistrationFormMeta = (
 ): RegistrationFormMetaType => {
     const { t } = useTranslation();
     const isEmailValid = formProviderMethods.formState.errors.email === undefined;
-    const { privacyPolicyArticleUrl } = useSettings();
+    const { privacyPolicyArticleUrl } = useAppConfig((settings) => settings.settings);
 
     const customerFieldName = 'customer' as const;
 

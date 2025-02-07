@@ -1,5 +1,5 @@
-import { getDomainConfig } from './domain/domainConfig';
 import { createTranslation } from './translation';
+import { getDomainConfigServer } from 'app/_utils/domain/domainConfigServer';
 import { Locale } from 'i18n-config';
 import { headers } from 'next/headers';
 import 'server-only';
@@ -14,7 +14,7 @@ export const getServerT = async (props?: {
     let dictionary = props?.defaultDictionary;
 
     if (!lang) {
-        const domainConfig = getDomainConfig(headers().get('host')!);
+        const domainConfig = getDomainConfigServer(headers().get('host')!);
         lang = domainConfig.defaultLocale;
     }
 
