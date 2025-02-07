@@ -180,6 +180,12 @@ services:
         arguments:
             $productSearchResultsProviders: !tagged 'shopsys.frontend_api.products_search_results_provider'
 
+    Shopsys\FrontendApiBundle\Model\Resolver\Store\StoreAvailabilityResolverMap:
+        arguments:
+            $storesBatchLoader: '@stores_batch_loader'
+        tags:
+            - { name: overblog_graphql.resolver_map, schema: default }
+
     Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkConfigFactory:
         arguments:
             $socialNetworkLoginConfig: '%social_network_login_config%'
@@ -196,9 +202,3 @@ services:
         exclude: '../../Voter/Exception'
         resource: '../../Voter/'
         tags: [ 'security.voter' ]
-
-    Shopsys\FrontendApiBundle\Model\Resolver\Store\StoreAvailabilityResolverMap:
-        arguments:
-            $storesBatchLoader: '@stores_batch_loader'
-        tags:
-            - { name: overblog_graphql.resolver_map, schema: default }
