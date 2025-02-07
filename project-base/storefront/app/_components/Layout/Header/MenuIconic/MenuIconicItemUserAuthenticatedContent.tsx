@@ -3,17 +3,17 @@
 import { MenuIconicItemUserAuthenticatedContentListItem, MenuIconicSubItemLink } from './MenuIconicElements';
 import { SalesRepresentative } from './SalesRepresentative';
 import { useLogout } from 'app/_hooks/useLogout';
+import { getInternationalizedStaticUrls } from 'app/_utils/staticUrls/getInternationalizedStaticUrls';
 import { ComplaintsIcon } from 'components/Basic/Icon/ComplaintsIcon';
 import { EditIcon } from 'components/Basic/Icon/EditIcon';
 import { ExitIcon } from 'components/Basic/Icon/ExitIcon';
 import { LockCheckIcon } from 'components/Basic/Icon/LockCheckIcon';
 import { SearchListIcon } from 'components/Basic/Icon/SearchListIcon';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { TIDs } from 'cypress/tids';
 import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 import { CurrentCustomerType } from 'types/customer';
-import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 type MenuIconicItemUserAuthenticatedContentProps = {
     currentCustomerUser: CurrentCustomerType;
@@ -27,7 +27,7 @@ export const MenuIconicItemUserAuthenticatedContent: FC<MenuIconicItemUserAuthen
 
     // TODO permisions
     // const { canManageUsers } = useUserPermissions();
-    const { url } = useDomainConfig();
+    const staticRewritePaths = useAppConfig((settings) => settings.staticRewritePaths);
     const [
         customerOrdersUrl,
         customerComplaintsUrl,
@@ -42,7 +42,7 @@ export const MenuIconicItemUserAuthenticatedContent: FC<MenuIconicItemUserAuthen
             '/customer/change-password',
             // '/customer/users',
         ],
-        url,
+        staticRewritePaths,
     );
 
     const user = currentCustomerUser;
