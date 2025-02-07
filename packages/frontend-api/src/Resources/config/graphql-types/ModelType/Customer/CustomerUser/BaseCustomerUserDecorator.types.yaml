@@ -1,8 +1,6 @@
 BaseCustomerUserDecorator:
     type: interface
     decorator: true
-    inherits:
-        - 'BillingAddressDecorator'
     config:
         description: "Represents a basic interface for a customer user"
         fields:
@@ -44,3 +42,18 @@ BaseCustomerUserDecorator:
             salesRepresentative:
                 type: "SalesRepresentative"
                 description: "Sales representative assigned to customer"
+            billingAddressUuid:
+                type: "Uuid!"
+                description: "UUID"
+            street:
+                type: "String"
+                description: "street name"
+            city:
+                type: "String"
+                description: "city name"
+            postcode:
+                type: "String"
+                description: "zip code"
+            country:
+                type: "Country"
+                description: "Billing address country"

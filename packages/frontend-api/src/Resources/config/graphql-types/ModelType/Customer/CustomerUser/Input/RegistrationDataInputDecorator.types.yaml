@@ -2,10 +2,10 @@ RegistrationDataInputDecorator:
     type: input-object
     decorator: true
     inherits:
-        - 'NameInputObjectDecorator'
-        - 'TelephoneInputObjectDecorator'
-        - 'BillingAddressInputObjectDecorator'
-        - 'CompanyInputObjectDecorator'
+        - 'NameInputObject'
+        - 'TelephoneInputObject'
+        - 'BillingAddressInputObject'
+        - 'CompanyInputObject'
     config:
         description: "Represents the main input object to register customer user"
         fields:

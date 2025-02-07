@@ -2,7 +2,7 @@ CompanyCustomerUserDecorator:
     type: object
     decorator: true
     inherits:
-        - 'BaseCustomerUserDecorator'
+        - 'BaseCustomerUser'
     config:
         description: "Represents a company customer user"
         interfaces:

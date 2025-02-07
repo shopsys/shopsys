@@ -2,8 +2,8 @@ CurrentCompanyCustomerUserDecorator:
     type: object
     decorator: true
     inherits:
-        - 'CompanyCustomerUserDecorator'
-        - 'CurrentCustomerUserDecorator'
+        - 'CompanyCustomerUser'
+        - 'CurrentCustomerUser'
     config:
         description: "Represents a currently logged company customer user"
         interfaces:

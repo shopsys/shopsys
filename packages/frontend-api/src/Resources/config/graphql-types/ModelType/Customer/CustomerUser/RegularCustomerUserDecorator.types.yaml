@@ -2,7 +2,7 @@ RegularCustomerUserDecorator:
     type: object
     decorator: true
     inherits:
-        - 'BaseCustomerUserDecorator'
+        - 'BaseCustomerUser'
     config:
         description: "Represents a regular customer user"
         interfaces:

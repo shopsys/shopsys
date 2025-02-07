@@ -2,7 +2,7 @@ CurrentCustomerUserDecorator:
     type: interface
     decorator: true
     inherits:
-        - 'BaseCustomerUserDecorator'
+        - 'BaseCustomerUser'
     config:
         description: "Represents a common interface for a currently logged customer user (both company and regular)"
         fields:

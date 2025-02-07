@@ -1,8 +1,8 @@
 CreateInquiryInputDecorator:
     type: input-object
     inherits:
-        - 'NameInputObjectDecorator'
-        - 'TelephoneInputObjectDecorator'
+        - 'NameInputObject'
+        - 'TelephoneInputObject'
     decorator: true
     config:
         fields:
