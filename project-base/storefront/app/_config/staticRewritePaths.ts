@@ -1,14 +1,12 @@
-import getConfig from 'next/config';
-
-const nextConfig = getConfig();
+import 'server-only';
 
 export const STATIC_REWRITE_PATHS = {
-    [(nextConfig?.publicRuntimeConfig?.domains?.[0]?.url || process.env.DOMAIN_HOSTNAME_1) as string]: {
+    [process.env.DOMAIN_HOSTNAME_1 as string]: {
         '/about': '/about',
         '/app': '/app',
         '/search': '/search',
         '/cart': '/cart',
-        '/contact-form': '/contact-form',
+        '/contact': '/contact',
         '/order/transport-and-payment': '/order/transport-and-payment',
         '/order/contact-information': '/order/contact-information',
         '/reset-password': '/reset-password',
@@ -42,12 +40,12 @@ export const STATIC_REWRITE_PATHS = {
         '/social-login': '/social-login',
         '/_feedback': '/_feedback',
     },
-    [(nextConfig?.publicRuntimeConfig?.domains?.[1]?.url || process.env.DOMAIN_HOSTNAME_2) as string]: {
+    [process.env.DOMAIN_HOSTNAME_2 as string]: {
         '/about': '/about',
         '/app': '/app',
         '/search': '/hledani',
         '/cart': '/kosik',
-        '/contact-form': '/kontaktni-formular',
+        '/contact': '/kontakt',
         '/order/transport-and-payment': '/objednavka/doprava-a-platba',
         '/order/contact-information': '/objednavka/kontaktni-udaje',
         '/reset-password': '/zapomenute-heslo',
@@ -82,6 +80,5 @@ export const STATIC_REWRITE_PATHS = {
         '/_feedback': '/_feedback',
     },
 } as const;
-console.log('🚀 -> STATIC_REWRITE_PATHS:', STATIC_REWRITE_PATHS);
 
 export type StaticRewritePathKeyType = keyof (typeof STATIC_REWRITE_PATHS)[string];

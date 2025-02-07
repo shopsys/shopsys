@@ -1,7 +1,7 @@
 import domainsConfig from 'domains-config';
 import { Locale } from 'i18n-config';
+import 'server-only';
 import { CustomerUserAreaEnum } from 'types/customer';
-import { isClient } from 'utils/isClient';
 
 export type DomainConfigType = {
     url: string;
@@ -20,10 +20,7 @@ export type DomainConfigType = {
     type: CustomerUserAreaEnum;
 };
 
-export function getDomainConfig(domainUrl: string): DomainConfigType {
-    if (isClient) {
-        throw new Error('getDomainConfig will not work properly on client side');
-    }
+export function getDomainConfigServer(domainUrl: string): DomainConfigType {
     const replacedDomain = domainUrl.replace(':3000', ':8000');
     const cdnDomain = process.env.CDN_DOMAIN ?? '';
 
