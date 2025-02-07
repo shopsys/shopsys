@@ -14,7 +14,7 @@ import { showInfoMessage } from 'utils/toasts/showInfoMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 interface AuthProviderProps {
-    isUserLoggedIn: boolean;
+    isUserLoggedIn: boolean | null;
 }
 
 export const AuthProvider: FC<AuthProviderProps> = ({ isUserLoggedIn, children }) => {
