@@ -1,5 +1,8 @@
 -   pathsToCheck:
-        - ./*.{yml,yaml,yml.dist,yaml.dist}
+        - ./*.yaml
+        - ./*.yaml.dist
+        - ./*.yml
+        - ./*.yml.dist
     checkers:
         -   pathToChecker: YamlStandards\Model\YamlIndent\YamlIndentChecker
             parameters:
@@ -13,16 +16,20 @@
                 depth: 3
                 prioritizedKeys: [ imports, _defaults::exact, resolverMaps::exact ]
     excludedPaths:
-        - ./**/*.types.{yaml,yml}
+        - ./**/*.types.yaml
+        - ./**/*.types.yml
         - ./**/docker*
         - ./**/gitlab*
-        - ./**/monolog.{yaml,yml}
-        - ./**/routing*.{yaml,yml}
+        - ./**/monolog.yaml
+        - ./**/monolog.yml
+        - ./**/routing*.yaml
+        - ./**/routing*.yml
         - ./config/cron.yaml
         - ./config/packages/security.yaml
         - ./config/packages/shopsys_framework.yaml
         - ./docker*
-        - ./migrations-lock.{yaml,yml}
+        - ./migrations-lock.yaml
+        - ./migrations-lock.yml
         - ./node_modules/*
         - ./var/*
         - ./vendor/*
