@@ -137,6 +137,8 @@ class DispatchRecalculationMessageCommand extends Command
         try {
             Assert::allNumeric($productIds, 'All product IDs must be numeric');
             Assert::notEmpty($productIds, 'You must specify at least one product ID');
+
+            $productIds = array_map('intval', $productIds);
         } catch (InvalidArgumentException $e) {
             $symfonyStyle->error($e->getMessage());
 
