@@ -135,7 +135,12 @@ class FilterQuery
             if (!params['_source']['prices'].isEmpty()) {
                 for (def price : params['_source']['prices']) {
                     if (price['pricing_group_id'] === params['pricing_group_id']) {
-                        finalPrice = Math.min(finalPrice, price['filtering_maximal_price']);
+                        finalPrice = Math.min(finalPrice, price['price_with_vat']);
+                        for (def variantPrice : price['variant_prices']) {
+                            if (variantPrice['price_with_vat'] < finalPrice) {
+                                finalPrice = variantPrice['price_with_vat'];
+                            }
+                        }
                         break;
                     }
                 }
@@ -158,7 +163,7 @@ class FilterQuery
                             }
 
                             finalPrice = Math.min(finalPrice, price['price_with_vat']);
-                            usedProductIds.add(price['product_id'])
+                            usedProductIds.add(price['product_id']);
                         }
                     }
                 }
@@ -189,11 +194,18 @@ class FilterQuery
         $scriptMaxValue = "
             double finalPrice = 0;
             DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern('yyyy-MM-dd HH:mm:ss').withZone(java.time.ZoneOffset.UTC);
+            int productId = params['_source']['id'];
 
             if (!params['_source']['prices'].isEmpty()) {
                 for (def price : params['_source']['prices']) {
                     if (price['pricing_group_id'] === params['pricing_group_id']) {
-                        finalPrice = Math.max(finalPrice, price['filtering_minimal_price']);
+                        finalPrice = Math.max(finalPrice, price['price_with_vat']);
+                        for (def variantPrice : price['variant_prices']) {
+                            if (variantPrice['price_with_vat'] > finalPrice) {
+                                finalPrice = variantPrice['price_with_vat'];
+                                productId = variantPrice['variant_id'];                            
+                            }
+                        }
                         break;
                     }
                 }
@@ -215,8 +227,12 @@ class FilterQuery
                                 continue;
                             }
 
-                            finalPrice = Math.max(finalPrice, price['price_with_vat']);
-                            usedProductIds.add(price['product_id'])
+                            if (productId != price['product_id']) {
+                                continue;
+                            }
+
+                            finalPrice = Math.min(finalPrice, price['price_with_vat']);
+                            usedProductIds.add(price['product_id']);
                         }
                     }
                 }
