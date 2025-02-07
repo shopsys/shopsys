@@ -38,7 +38,19 @@ When you need to recalculate visibility of all products, you should use the `Sho
 This method dispatches the special message "dispatch all" to the message broker, and this message is then handled by the async handler, which takes care of dispatching all product IDs to recalculation.
 That way, we may dispatch all products to recalculation during request without worrying about the size of the catalog – it's not necessary to load all products (nor their IDs) from the database, and the user interface is not blocked by this operation.
 
-## Dispatch recalculation message when indirect change is made
+## Product Deduplication and Batch Dispatching
+
+To optimize performance and avoid redundant processing, the recalculation dispatch mechanism incorporates product deduplication and batch dispatching strategies.
+Export scopes ([mentioned later in this article](#recalculation-scope)) are stored in Redis, allowing products to remain in the queue only once while still supporting the addition of new scopes dynamically.
+This ensures that if a product ID is already present in Redis, it will not be dispatched again, preventing unnecessary recalculations and improving efficiency.
+Additionally, if a product ID is not yet present in Redis, Shopsys Platform ensures that all scopes are exported, guaranteeing that all relevant data is properly processed.
+
+When a large number of product IDs, typically more than 2000, are dispatched at once due to i.e., [affected changes](#dispatch-recalculation-message-when-an-indirect-change-is-made), Shopsys Platform takes an optimized approach.
+Instead of dispatching all product IDs individually in a currently running request, a few messages are sent to trigger the dispatch, significantly enhancing performance in large-scale recalculations.
+
+These refinements effectively minimize redundant messages, making recalculations more efficient and well-suited for handling large product catalogs with frequent changes.
+
+## Dispatch recalculation message when an indirect change is made
 
 Sometimes it is necessary to trigger recalculation for product when some indirect change is made.
 For example, when a category is deleted, when the parameter translation of a product is changed, etc.
