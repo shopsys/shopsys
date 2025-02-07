@@ -1459,7 +1459,7 @@ Changes customer user company data
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>ChangePassword</strong></td>
-<td valign="top"><a href="#basecustomeruser">BaseCustomerUser</a>!</td>
+<td valign="top"><a href="#currentcustomeruser">CurrentCustomerUser</a>!</td>
 <td>
 
 Changes customer user password

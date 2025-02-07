@@ -1258,7 +1258,7 @@ type Mutation {
   "Changes customer user company data"
   ChangeCompanyData(input: ChangeCompanyDataInput!): CurrentCustomerUser!
   "Changes customer user password"
-  ChangePassword(input: ChangePasswordInput!): BaseCustomerUser!
+  ChangePassword(input: ChangePasswordInput!): CurrentCustomerUser!
   "Add a payment to the cart, or remove a payment from the cart"
   ChangePaymentInCart(input: ChangePaymentInCartInput!): Cart!
   "change payment in an order after the order creation (available for unpaid GoPay orders only)"

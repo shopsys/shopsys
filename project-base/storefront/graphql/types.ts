@@ -1452,7 +1452,7 @@ export type TypeMutation = {
   /** Changes customer user company data */
   ChangeCompanyData: TypeCurrentCustomerUser;
   /** Changes customer user password */
-  ChangePassword: TypeBaseCustomerUser;
+  ChangePassword: TypeCurrentCustomerUser;
   /** Add a payment to the cart, or remove a payment from the cart */
   ChangePaymentInCart: TypeCart;
   /** change payment in an order after the order creation (available for unpaid GoPay orders only) */

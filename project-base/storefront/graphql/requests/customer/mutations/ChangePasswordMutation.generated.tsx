@@ -10,7 +10,7 @@ export type TypeChangePasswordMutationVariables = Types.Exact<{
 }>;
 
 
-export type TypeChangePasswordMutation = { __typename?: 'Mutation', ChangePassword: { __typename?: 'CompanyCustomerUser', email: string } | { __typename?: 'CurrentCompanyCustomerUser', email: string } | { __typename?: 'CurrentRegularCustomerUser', email: string } | { __typename?: 'RegularCustomerUser', email: string } };
+export type TypeChangePasswordMutation = { __typename?: 'Mutation', ChangePassword: { __typename?: 'CurrentCompanyCustomerUser', email: string } | { __typename?: 'CurrentRegularCustomerUser', email: string } };
 
 
       export interface PossibleTypesResultData {
