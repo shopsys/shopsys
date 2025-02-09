@@ -1,4 +1,5 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
+import { CreateComplaintPopupButton } from 'components/Blocks/Complaint/CreateComplaintPopupButton';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
 import { LinkButton } from 'components/Forms/Button/LinkButton';
 import { SearchInput } from 'components/Forms/TextInput/SearchInput';
@@ -7,6 +8,7 @@ import { ComplaintsContent } from 'components/Pages/Customer/Complaints/Complain
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
+import { TIDs } from 'cypress/tids';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import {
     ComplaintsQueryDocument,
@@ -54,15 +56,23 @@ const ComplaintsPage: FC = () => {
                 title={t('My complaints')}
             >
                 {canCreateComplaint && (
-                    <LinkButton
-                        size="small"
-                        type="complaintNew"
-                        href={{
-                            pathname: customerComplaintsNewUrl,
-                        }}
-                    >
-                        {t('New complaint')}
-                    </LinkButton>
+                    <>
+                        <LinkButton
+                            size="small"
+                            type="complaintNew"
+                            href={{
+                                pathname: customerComplaintsNewUrl,
+                            }}
+                        >
+                            {t('New complaint')}
+                        </LinkButton>
+                        <CreateComplaintPopupButton
+                            label={t('Create complaint manually')}
+                            size="small"
+                            style={{ marginLeft: '10px' }}
+                            tid={TIDs.complaints_list_create_complaint_manually_button}
+                        />
+                    </>
                 )}
                 <div className="my-5">
                     <SearchInput

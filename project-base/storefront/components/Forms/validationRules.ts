@@ -230,3 +230,36 @@ export const validateImageFile = (t: Translate): Schema => {
             t('Maximum files count is {{ max }}', { max: VALIDATION_CONSTANTS.maxFilesCount }),
         );
 };
+
+export const validateComplaintManualDocumentNumber = (t: Translate): Schema => {
+    return Yup.string()
+        .required(t('Please enter order or document number'))
+        .max(
+            VALIDATION_CONSTANTS.complaintManualDocumentNumberMaxLength,
+            t('Order or document number must be at most {{ max }} characters', {
+                max: VALIDATION_CONSTANTS.complaintManualDocumentNumberMaxLength,
+            }),
+        );
+};
+
+export const validateManualComplaintItemName = (t: Translate): Schema => {
+    return Yup.string()
+        .required(t('Please enter complaint item name'))
+        .max(
+            VALIDATION_CONSTANTS.manualComplaintItemNameMaxLength,
+            t('Complaint item name must be at most {{ max }} characters', {
+                max: VALIDATION_CONSTANTS.manualComplaintItemNameMaxLength,
+            }),
+        );
+};
+
+export const validateManualComplaintItemCatnum = (t: Translate): Schema => {
+    return Yup.string()
+        .optional()
+        .max(
+            VALIDATION_CONSTANTS.manualComplaintItemCatnumMaxLength,
+            t('Complaint item catalog number must be at most {{ max }} characters', {
+                max: VALIDATION_CONSTANTS.manualComplaintItemCatnumMaxLength,
+            }),
+        );
+};

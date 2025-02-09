@@ -20,4 +20,5 @@ fragment ComplaintDetailFragment on Complaint {
     order {
         ...OrderDetailFragment
     }
+    manualDocumentNumber
 }

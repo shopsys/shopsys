@@ -3,8 +3,8 @@ import { Image } from 'components/Basic/Image/Image';
 import { ModalGallery } from 'components/Basic/ModalGallery/ModalGallery';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
+import { TypeComplaintDetailFragment } from 'graphql/requests/complaints/fragments/ComplaintDetailFragment.generated';
 import { TypeComplaintItemFragment } from 'graphql/requests/complaints/fragments/ComplaintItemFragment.generated';
-import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
@@ -12,15 +12,14 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 
 type ComplaintDetailComplaintItemProps = {
     complaintItem: TypeComplaintItemFragment;
+    complaint: TypeComplaintDetailFragment;
 };
 
 const GALLERY_SHOWN_ITEMS_COUNT = 5;
-export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps> = ({ complaintItem }) => {
+export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps> = ({ complaintItem, complaint }) => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [customerOrderDetailUrl] = getInternationalizedStaticUrls(['/customer/order-detail'], url);
-
-    const orderItem = complaintItem.orderItem as TypeOrderDetailItemFragment;
 
     const galleryLastShownItemIndex = GALLERY_SHOWN_ITEMS_COUNT - 1;
     const galleryAdditionalItemsCount = (complaintItem.files?.length ?? 0) - GALLERY_SHOWN_ITEMS_COUNT;
@@ -39,38 +38,48 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
             >
                 <div className="flex h-12 w-20 shrink-0">
                     <Image
-                        alt={orderItem.name}
+                        alt={complaintItem.productName}
                         className="object-contain"
                         height={48}
-                        src={orderItem.product?.mainImage?.url}
+                        src={complaintItem.product?.mainImage?.url}
                         width={80}
                     />
                 </div>
                 <div className="flex w-full flex-col flex-wrap justify-between gap-3 border-b border-b-borderLess last:border-none vl:flex-row vl:items-center vl:gap-5">
-                    <ExtendedNextLink className="w-fit" href={orderItem.product?.slug ?? ''} type="product">
-                        {orderItem.name}
-                    </ExtendedNextLink>
+                    {complaintItem.product?.isVisible ? (
+                        <ExtendedNextLink className="w-fit" href={complaintItem.product.slug} type="product">
+                            {complaintItem.productName}
+                        </ExtendedNextLink>
+                    ) : (
+                        complaintItem.productName
+                    )}
 
                     <span>
                         {t('Quantity')}: {complaintItem.quantity}
                     </span>
 
-                    <span>
-                        {t('Order number')}:{' '}
-                        {hasAccessToOrder ? (
-                            <ExtendedNextLink
-                                type="orderDetail"
-                                href={{
-                                    pathname: customerOrderDetailUrl,
-                                    query: { orderNumber: complaintOrder?.number },
-                                }}
-                            >
-                                {complaintOrder?.number}
-                            </ExtendedNextLink>
-                        ) : (
-                            complaintOrder?.number
-                        )}
-                    </span>
+                    {complaintOrder ? (
+                        <span>
+                            {t('Order number')}:{' '}
+                            {hasAccessToOrder ? (
+                                <ExtendedNextLink
+                                    type="orderDetail"
+                                    href={{
+                                        pathname: customerOrderDetailUrl,
+                                        query: { orderNumber: complaintOrder.number },
+                                    }}
+                                >
+                                    {complaintOrder.number}
+                                </ExtendedNextLink>
+                            ) : (
+                                complaintOrder.number
+                            )}
+                        </span>
+                    ) : (
+                        <span>
+                            {t('Order or document number')}: {complaint.manualDocumentNumber}
+                        </span>
+                    )}
                 </div>
             </div>
 
@@ -98,7 +107,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                             onClick={() => setSelectedGalleryItemIndex(imagePosition)}
                         >
                             <Image
-                                alt={file.anchorText || `${orderItem.name}-${index}`}
+                                alt={file.anchorText || `${complaintItem.productName}-${index}`}
                                 className="aspect-square max-h-full rounded-md bg-backgroundMore object-contain p-1 mix-blend-multiply"
                                 hash={file.url.split('?')[1]}
                                 height={90}
@@ -118,7 +127,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
 
             {selectedGalleryItemIndex !== undefined && complaintItem.files && complaintItem.files.length > 0 && (
                 <ModalGallery
-                    galleryName={orderItem.name}
+                    galleryName={complaintItem.productName}
                     initialIndex={selectedGalleryItemIndex}
                     items={complaintItem.files}
                     onCloseModal={() => setSelectedGalleryItemIndex(undefined)}

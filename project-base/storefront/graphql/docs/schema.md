@@ -12068,8 +12068,10 @@ Possible placements of an article (used as an input for 'articles' query)
 
 <table>
 <thead>
+<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
+</tr>
 </thead>
 <tbody>
 <tr>
@@ -12121,8 +12123,10 @@ Product Availability statuses
 
 <table>
 <thead>
+<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
+</tr>
 </thead>
 <tbody>
 <tr>
@@ -12150,8 +12154,10 @@ Category automated filter types
 
 <table>
 <thead>
+<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
+</tr>
 </thead>
 <tbody>
 <tr>
@@ -12175,8 +12181,10 @@ Available customer user roles
 
 <table>
 <thead>
+<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
+</tr>
 </thead>
 <tbody>
 <tr>
@@ -12216,8 +12224,10 @@ One of the possible methods of the customer user login
 
 <table>
 <thead>
+<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
+</tr>
 </thead>
 <tbody>
 <tr>
@@ -12249,8 +12259,10 @@ One of possible types of the order item
 
 <table>
 <thead>
+<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
+</tr>
 </thead>
 <tbody>
 <tr>
@@ -12282,8 +12294,10 @@ Status of order
 
 <table>
 <thead>
+<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
+</tr>
 </thead>
 <tbody>
 <tr>
@@ -12327,8 +12341,10 @@ One of two possible types for personal data access request
 
 <table>
 <thead>
+<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
+</tr>
 </thead>
 <tbody>
 <tr>
@@ -12356,8 +12372,10 @@ One of possible types of the product list
 
 <table>
 <thead>
+<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
+</tr>
 </thead>
 <tbody>
 <tr>
@@ -12377,8 +12395,10 @@ One of possible ordering modes for product
 
 <table>
 <thead>
+<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
+</tr>
 </thead>
 <tbody>
 <tr>
@@ -12438,8 +12458,10 @@ One of possible product types
 
 <table>
 <thead>
+<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
+</tr>
 </thead>
 <tbody>
 <tr>
@@ -12467,8 +12489,10 @@ One of possible promo code types
 
 <table>
 <thead>
+<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
+</tr>
 </thead>
 <tbody>
 <tr>
@@ -12502,8 +12526,10 @@ Discount type percent
 
 <table>
 <thead>
+<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
+</tr>
 </thead>
 <tbody>
 <tr>
@@ -12535,8 +12561,10 @@ Status of store opening
 
 <table>
 <thead>
+<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
+</tr>
 </thead>
 <tbody>
 <tr>
@@ -12580,8 +12608,10 @@ One of the possible methods of the transport type
 
 <table>
 <thead>
+<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
+</tr>
 </thead>
 <tbody>
 <tr>
