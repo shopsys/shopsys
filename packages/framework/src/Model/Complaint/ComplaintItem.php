@@ -48,8 +48,8 @@ class ComplaintItem
     protected $productName;
 
     /**
-     * @var string
-     * @ORM\Column(type="string")
+     * @var string|null
+     * @ORM\Column(type="string", nullable=true)
      */
     protected $catnum;
 

@@ -13,6 +13,15 @@ msgstr "Název města nesmí být delší než {{ limit }} znaků"
 msgid "Company name cannot be longer than {{ limit }} characters"
 msgstr "Název firmy nesmí být delší než {{ limit }} znaků"
 
+msgid "Complaint item catnum cannot be longer than {{ limit }} characters"
+msgstr "Katalogové číslo položky reklamace nesmí být delší než {{ limit }} znaků"
+
+msgid "Complaint item name cannot be longer than {{ limit }} characters"
+msgstr "Název položky reklamace nesmí být delší než {{ limit }} znaků"
+
+msgid "Complaint item name is required"
+msgstr "Název položky reklamace je povinný"
+
 msgid "Customer role group cannot be changed."
 msgstr "Skupinu rolí zákazníka nelze změnit."
 
@@ -60,6 +69,12 @@ msgstr "Objednávka je povinná"
 
 msgid "Order item is required"
 msgstr "Položka objednávky je povinná"
+
+msgid "Order or document number cannot be longer than {{ limit }} characters"
+msgstr "Číslo objednávky nebo dokladu nesmí být delší než {{ limit }} znaků"
+
+msgid "Order or document number is required"
+msgstr "Číslo objednávky nebo dokladu je povinné"
 
 msgid "Password must be at least {{ limit }} characters long"
 msgstr "Heslo musí mít minimálně {{ limit }} znaků"

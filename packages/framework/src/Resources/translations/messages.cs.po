@@ -826,6 +826,9 @@ msgstr "Stavy reklamací - zobrazení"
 msgid "Complaint statuses overview"
 msgstr "Přehled stavů reklamací"
 
+msgid "Complaint was created manually without link to a particular order"
+msgstr "Reklamace byla vytvořena ručně bez vazby na existující objednávku"
+
 msgid "Complaints"
 msgstr "Reklamace"
 
@@ -3081,6 +3084,9 @@ msgstr "Objednávka musí obsahovat alespoň jednu položku"
 
 msgid "Order number"
 msgstr "Číslo objednávky"
+
+msgid "Order or document number"
+msgstr "Číslo objednávkuy nebo dokumentu"
 
 msgid "Order saved"
 msgstr "Pořadí bylo uloženo"

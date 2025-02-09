@@ -70,6 +70,8 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid,
                 quantity: Number(complaintFormData.quantity),
                 description: complaintFormData.description,
                 files: complaintFormData.files.filter((image) => image instanceof File),
+                manualComplaintItemName: null,
+                manualComplaintItemCatnum: null,
             },
         ];
 
@@ -104,6 +106,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid,
                 items,
                 deliveryAddress,
                 email: complaintFormData.email,
+                manualDocumentNumber: null,
             },
         });
 

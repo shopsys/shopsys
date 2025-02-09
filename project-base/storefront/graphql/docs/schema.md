@@ -4201,6 +4201,15 @@ All items in the complaint
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>manualDocumentNumber</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Order or document number entered by customer (if the complaint was created without an order)
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>number</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
@@ -4211,7 +4220,7 @@ Unique complaint number
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>order</strong></td>
-<td valign="top"><a href="#order">Order</a>!</td>
+<td valign="top"><a href="#order">Order</a></td>
 <td>
 
 Order for which the complaint was created
@@ -4332,7 +4341,7 @@ The item at the end of the edge.
 <tbody>
 <tr>
 <td colspan="2" valign="top"><strong>catnum</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 Catalog number
@@ -10537,8 +10546,17 @@ All items in the complaint
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>manualDocumentNumber</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Order or document number (doesn't have to be from any existing order)
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>orderUuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
 UUID of the order
@@ -10578,8 +10596,26 @@ Files attached to the complaint item
 </td>
 </tr>
 <tr>
+<td colspan="2" valign="top"><strong>manualComplaintItemCatnum</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Catalog number of the complaint item entered by customer (if the complaint is created without an order, otherwise, the catalog number is taken from the order item)
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>manualComplaintItemName</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Name of the complaint item entered by customer (if the complaint is created without an order, otherwise, the name is taken from the order item)
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>orderItemUuid</strong></td>
-<td valign="top"><a href="#uuid">Uuid</a>!</td>
+<td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
 UUID of the order item
@@ -12032,10 +12068,8 @@ Possible placements of an article (used as an input for 'articles' query)
 
 <table>
 <thead>
-<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
-</tr>
 </thead>
 <tbody>
 <tr>
@@ -12087,10 +12121,8 @@ Product Availability statuses
 
 <table>
 <thead>
-<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
-</tr>
 </thead>
 <tbody>
 <tr>
@@ -12118,10 +12150,8 @@ Category automated filter types
 
 <table>
 <thead>
-<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
-</tr>
 </thead>
 <tbody>
 <tr>
@@ -12145,10 +12175,8 @@ Available customer user roles
 
 <table>
 <thead>
-<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
-</tr>
 </thead>
 <tbody>
 <tr>
@@ -12188,10 +12216,8 @@ One of the possible methods of the customer user login
 
 <table>
 <thead>
-<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
-</tr>
 </thead>
 <tbody>
 <tr>
@@ -12223,10 +12249,8 @@ One of possible types of the order item
 
 <table>
 <thead>
-<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
-</tr>
 </thead>
 <tbody>
 <tr>
@@ -12258,10 +12282,8 @@ Status of order
 
 <table>
 <thead>
-<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
-</tr>
 </thead>
 <tbody>
 <tr>
@@ -12305,10 +12327,8 @@ One of two possible types for personal data access request
 
 <table>
 <thead>
-<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
-</tr>
 </thead>
 <tbody>
 <tr>
@@ -12336,10 +12356,8 @@ One of possible types of the product list
 
 <table>
 <thead>
-<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
-</tr>
 </thead>
 <tbody>
 <tr>
@@ -12359,10 +12377,8 @@ One of possible ordering modes for product
 
 <table>
 <thead>
-<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
-</tr>
 </thead>
 <tbody>
 <tr>
@@ -12422,10 +12438,8 @@ One of possible product types
 
 <table>
 <thead>
-<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
-</tr>
 </thead>
 <tbody>
 <tr>
@@ -12453,10 +12467,8 @@ One of possible promo code types
 
 <table>
 <thead>
-<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
-</tr>
 </thead>
 <tbody>
 <tr>
@@ -12490,10 +12502,8 @@ Discount type percent
 
 <table>
 <thead>
-<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
-</tr>
 </thead>
 <tbody>
 <tr>
@@ -12525,10 +12535,8 @@ Status of store opening
 
 <table>
 <thead>
-<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
-</tr>
 </thead>
 <tbody>
 <tr>
@@ -12572,10 +12580,8 @@ One of the possible methods of the transport type
 
 <table>
 <thead>
-<tr>
 <th align="left">Value</th>
 <th align="left">Description</th>
-</tr>
 </thead>
 <tbody>
 <tr>

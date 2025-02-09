@@ -66,6 +66,7 @@ class ComplaintDataFactory
         $complaintData->deliveryPostcode = $complaint->getDeliveryPostcode();
         $complaintData->deliveryCountry = $complaint->getDeliveryCountry();
         $complaintData->email = $complaint->getEmail();
+        $complaintData->manualDocumentNumber = $complaint->getManualDocumentNumber();
 
         foreach ($complaint->getItems() as $complaintItem) {
             $complaintItemData = $this->complaintItemDataFactory->createFromComplaintItem($complaintItem);

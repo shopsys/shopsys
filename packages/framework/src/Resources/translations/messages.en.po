@@ -826,6 +826,9 @@ msgstr ""
 msgid "Complaint statuses overview"
 msgstr ""
 
+msgid "Complaint was created manually without link to a particular order"
+msgstr ""
+
 msgid "Complaints"
 msgstr ""
 
@@ -3080,6 +3083,9 @@ msgid "Order must contain at least one item"
 msgstr ""
 
 msgid "Order number"
+msgstr ""
+
+msgid "Order or document number"
 msgstr ""
 
 msgid "Order saved"

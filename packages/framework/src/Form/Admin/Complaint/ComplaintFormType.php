@@ -118,8 +118,9 @@ class ComplaintFormType extends AbstractType
                 'expanded' => false,
             ])
             ->add('order', DisplayOnlyOrderType::class, [
-                'label' => t('Order'),
+                'label' => t('Order or document number'),
                 'order' => $complaint->getOrder(),
+                'manualDocumentNumber' => $complaint->getManualDocumentNumber(),
             ])
             ->add('user', DisplayOnlyCustomerType::class, [
                 'label' => t('Customer'),

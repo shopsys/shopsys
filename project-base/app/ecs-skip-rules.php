@@ -53,6 +53,7 @@ return [
     ],
     CyclomaticComplexitySniff::class => [
         __DIR__ . '/src/DataFixtures/Demo/ProductDataFixture.php',
+        __DIR__ . '/src/DataFixtures/Demo/Helper/ComplaintHelper.php',
         __DIR__ . '/src/Model/Product/Elasticsearch/ProductExportRepository.php',
         __DIR__ . '/src/Model/Product/Search/ProductElasticsearchConverter.php',
     ],

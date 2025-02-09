@@ -822,10 +822,12 @@ export type TypeComplaint = {
   email: Scalars['String']['output'];
   /** All items in the complaint */
   items: Array<TypeComplaintItem>;
+  /** Order or document number entered by customer (if the complaint was created without an order) */
+  manualDocumentNumber: Maybe<Scalars['String']['output']>;
   /** Unique complaint number */
   number: Scalars['String']['output'];
   /** Order for which the complaint was created */
-  order: TypeOrder;
+  order: Maybe<TypeOrder>;
   /** Status of the complaint */
   status: Scalars['String']['output'];
   /** UUID */
@@ -859,14 +861,16 @@ export type TypeComplaintInput = {
   email: Scalars['String']['input'];
   /** All items in the complaint */
   items: Array<TypeComplaintItemInput>;
+  /** Order or document number (doesn't have to be from any existing order) */
+  manualDocumentNumber: InputMaybe<Scalars['String']['input']>;
   /** UUID of the order */
-  orderUuid: Scalars['Uuid']['input'];
+  orderUuid: InputMaybe<Scalars['Uuid']['input']>;
 };
 
 export type TypeComplaintItem = {
   __typename?: 'ComplaintItem';
   /** Catalog number */
-  catnum: Scalars['String']['output'];
+  catnum: Maybe<Scalars['String']['output']>;
   /** Description of the complaint order item */
   description: Scalars['String']['output'];
   /** Files attached to the complaint order item */
@@ -891,8 +895,12 @@ export type TypeComplaintItemInput = {
   description: Scalars['String']['input'];
   /** Files attached to the complaint item */
   files: InputMaybe<Array<Scalars['FileUpload']['input']>>;
+  /** Catalog number of the complaint item entered by customer (if the complaint is created without an order, otherwise, the catalog number is taken from the order item) */
+  manualComplaintItemCatnum: InputMaybe<Scalars['String']['input']>;
+  /** Name of the complaint item entered by customer (if the complaint is created without an order, otherwise, the name is taken from the order item) */
+  manualComplaintItemName: InputMaybe<Scalars['String']['input']>;
   /** UUID of the order item */
-  orderItemUuid: Scalars['Uuid']['input'];
+  orderItemUuid: InputMaybe<Scalars['Uuid']['input']>;
   /** Quantity of the complaint item */
   quantity: Scalars['Int']['input'];
 };

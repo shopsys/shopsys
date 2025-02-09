@@ -50,7 +50,13 @@ class CreateComplaintVoter extends Voter
 
         $input = $subject['input'];
         $currentCustomerUser = $this->currentCustomerUser->getCurrentCustomerUser();
-        $order = $this->orderApiFacade->getByUuid($input['orderUuid']);
+        $orderUuid = $input['orderUuid'];
+
+        if ($orderUuid === null) {
+            return true;
+        }
+
+        $order = $this->orderApiFacade->getByUuid($orderUuid);
 
         $isAllowedToCreateOrder = $this->security->isGranted(CustomerUserRole::ROLE_API_CART_AND_ORDER_CREATION);
         $isAllowedToAccessAllCompanyOrders = $this->security->isGranted(CustomerUserRole::ROLE_API_COMPANY_ORDERS_VIEW);

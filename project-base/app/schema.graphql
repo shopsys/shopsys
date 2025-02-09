@@ -681,10 +681,12 @@ type Complaint {
   email: String!
   "All items in the complaint"
   items: [ComplaintItem!]!
+  "Order or document number entered by customer (if the complaint was created without an order)"
+  manualDocumentNumber: String
   "Unique complaint number"
   number: String!
   "Order for which the complaint was created"
-  order: Order!
+  order: Order
   "Status of the complaint"
   status: String!
   "UUID"
@@ -716,13 +718,15 @@ input ComplaintInput {
   email: String!
   "All items in the complaint"
   items: [ComplaintItemInput!]!
+  "Order or document number (doesn't have to be from any existing order)"
+  manualDocumentNumber: String = null
   "UUID of the order"
-  orderUuid: Uuid!
+  orderUuid: Uuid = null
 }
 
 type ComplaintItem {
   "Catalog number"
-  catnum: String!
+  catnum: String
   "Description of the complaint order item"
   description: String!
   "Files attached to the complaint order item"
@@ -742,8 +746,12 @@ input ComplaintItemInput {
   description: String!
   "Files attached to the complaint item"
   files: [FileUpload!]
+  "Catalog number of the complaint item entered by customer (if the complaint is created without an order, otherwise, the catalog number is taken from the order item)"
+  manualComplaintItemCatnum: String = null
+  "Name of the complaint item entered by customer (if the complaint is created without an order, otherwise, the name is taken from the order item)"
+  manualComplaintItemName: String = null
   "UUID of the order item"
-  orderItemUuid: Uuid!
+  orderItemUuid: Uuid
   "Quantity of the complaint item"
   quantity: Int!
 }
