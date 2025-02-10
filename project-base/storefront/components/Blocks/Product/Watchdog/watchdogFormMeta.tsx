@@ -3,7 +3,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
 import { validateEmail, validatePrivacyPolicy } from 'components/Forms/validationRules';
-import { useSettings } from 'components/providers/SettingsProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { useTranslation } from 'components/providers/TranslationProvider';
 import Trans from 'next-translate/Trans';
 import { useMemo } from 'react';
@@ -45,7 +45,7 @@ type WatchdogFormMetaType = {
 
 export const useWatchdogFormMeta = (formProviderMethods: UseFormReturn<WatchdogFormType>): WatchdogFormMetaType => {
     const { t } = useTranslation();
-    const { privacyPolicyArticleUrl } = useSettings();
+    const { privacyPolicyArticleUrl } = useAppConfig((settings) => settings.settings);
 
     const errors = formProviderMethods.formState.errors;
 
