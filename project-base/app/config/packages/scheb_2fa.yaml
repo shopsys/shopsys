@@ -11,8 +11,8 @@ scheb_two_factor:
         digits: 6
         enabled: true
         issuer: Shopsys
+        leeway: 1
         server_name: Shopsys Platform
         template: '@ShopsysFramework/Admin/Content/Login/LoginFormTwoFA.html.twig'
-        leeway: 1
     security_tokens:
         - Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken

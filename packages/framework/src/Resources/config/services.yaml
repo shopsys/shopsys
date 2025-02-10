@@ -598,6 +598,10 @@ services:
         tags:
             - {name: shopsys.friendly_url_provider}
 
+    Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterFacade:
+        arguments:
+            $categoryAutomatedFilters: !tagged shopsys.category_automated_filter
+
     Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRepository:
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse, priority: 20 }
@@ -667,10 +671,6 @@ services:
     Shopsys\FrameworkBundle\Model\Mail\MailTemplateSender\MailTemplateSenderFacade:
         arguments:
             $mailTemplateSenders: !tagged_iterator shopsys.mail_template_sender
-
-    Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterFacade:
-        arguments:
-            $categoryAutomatedFilters: !tagged shopsys.category_automated_filter
 
     Shopsys\FrameworkBundle\Model\Mail\Mailer: ~
 
@@ -768,6 +768,8 @@ services:
     Shopsys\FrameworkBundle\Model\Transfer\TransferLoggerFactory:
         arguments:
             - '@monolog.logger.cron'
+
+    Shopsys\FrameworkBundle\Model\Watchdog\Mail\WatchdogMail: ~
 
     Shopsys\FrameworkBundle\Twig\CKEditorExtension:
         arguments:
@@ -904,5 +906,3 @@ services:
 
     twig.stringloader:
         class: Twig\Loader\ArrayLoader
-
-    Shopsys\FrameworkBundle\Model\Watchdog\Mail\WatchdogMail: ~

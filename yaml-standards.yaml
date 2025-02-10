@@ -1,5 +1,8 @@
 -   pathsToCheck:
-        - ./*.{yml,yaml,yml.dist,yaml.dist}
+        - ./*.yaml
+        - ./*.yaml.dist
+        - ./*.yml
+        - ./*.yml.dist
     checkers:
         -   pathToChecker: YamlStandards\Model\YamlIndent\YamlIndentChecker
             parameters:
@@ -13,14 +16,20 @@
                 depth: 3
                 prioritizedKeys: [ imports, _defaults::exact, Shopsys\FrameworkBundle\::exact, Shopsys\FrameworkBundle\Controller\::exact, Shopsys\Releaser\::exact, Shopsys\MigrationBundle\Command\::exact, Shopsys\FrontendApiBundle\::exact, resolverMaps::exact ]
     excludedPaths:
-        - ./**/*.types.{yaml,yml}
+        - ./**/*.types.yaml
+        - ./**/*.types.yml
         - ./**/docker*
         - ./**/gitlab*
-        - ./**/migrations-lock.{yaml,yml}
-        - ./**/monolog.{yaml,yml}
-        - ./**/navigation.{yaml,yml}
-        - ./**/routing*.{yaml,yml}
+        - ./**/migrations-lock.yaml
+        - ./**/migrations-lock.yml
+        - ./**/monolog.yaml
+        - ./**/monolog.yml
+        - ./**/navigation.yaml
+        - ./**/navigation.yml
+        - ./**/routing*.yaml
+        - ./**/routing*.yml
         - ./docker*
+        - ./node_modules/*
         - ./packages/framework/assets/node_modules/*
         - ./project-base/app/config/cron.yaml
         - ./project-base/app/config/packages/security.yaml
