@@ -1,7 +1,7 @@
 'use client';
 
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { useSettings } from 'components/providers/SettingsProvider';
 import { useTranslation } from 'components/providers/TranslationProvider';
 import { formatPrice } from 'utils/formaters/formatPrice';
 
@@ -9,7 +9,7 @@ export type FormatPriceFunctionType = (price: string | number, options?: { expli
 
 export const useFormatPrice = (): FormatPriceFunctionType => {
     const { t } = useTranslation();
-    const { pricing } = useSettings();
+    const { pricing } = useAppConfig((settings) => settings.settings);
     const { defaultLocale = 'en' } = useDomainConfig();
 
     const { minimumFractionDigits = 0, defaultCurrencyCode = 'CZK' } = pricing;
