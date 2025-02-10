@@ -61,7 +61,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
             const articleResponse: OperationResult<TypeArticleDetailQuery, TypeArticleDetailQueryVariables> =
                 await client!
                     .query(ArticleDetailQueryDocument, {
-                        urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
+                        urlSlug: getSlugFromServerSideUrl(context.req.url ?? '', context.req.headers),
                     })
                     .toPromise();
 

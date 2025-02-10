@@ -61,7 +61,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
 
             const storeResponse: OperationResult<TypeStoreDetailQuery, TypeStoreDetailQueryVariables> = await client!
                 .query(StoreDetailQueryDocument, {
-                    urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
+                    urlSlug: getSlugFromServerSideUrl(context.req.url ?? '', context.req.headers),
                 })
                 .toPromise();
 
