@@ -101,8 +101,16 @@ QueryDecorator:
                     uuid:
                         type: "Uuid!"
                 description: "Returns complete list of transport methods"
+            CompanyCustomerUser:
+                type: 'CompanyCustomerUser'
+            RegularCustomerUser:
+                type: 'RegularCustomerUser'
+            CurrentCompanyCustomerUser:
+                type: 'CurrentCompanyCustomerUser'
+            CurrentRegularCustomerUser:
+                type: 'CurrentRegularCustomerUser'
             currentCustomerUser:
-                type: 'CurrentCustomerUser!'
+                type: 'CurrentCustomerUser'
                 resolve: "@=query('currentCustomerUserQuery')"
                 description: "Returns currently logged in customer user"
             orders:
@@ -299,7 +307,7 @@ QueryDecorator:
                 resolve: "@=query('countriesQuery')"
                 description: "Returns available countries"
             customerUsers:
-                type: '[CustomerUser!]!'
+                type: '[BaseCustomerUser!]!'
                 resolve: "@=query('customerUsersQuery')"
                 access: "@=isGranted('ROLE_API_ALL')"
                 description: "Returns all customer users assigned to the current customer"
@@ -315,6 +323,7 @@ QueryDecorator:
                         type: "String!"
                         description: "Complaint number"
                 resolve: "@=query('complaintQuery', args)"
+                access: "@=(isGranted('ROLE_API_COMPLAINT_CREATION') || isGranted('ROLE_API_COMPANY_COMPLAINTS_VIEW'))"
                 description: "Returns complaint filtered using UUID"
             complaints:
                 type: "ComplaintConnection!"
@@ -323,6 +332,7 @@ QueryDecorator:
                     searchInput:
                         type: "SearchInput"
                 resolve: "@=query('complaintsQuery', args)"
+                access: "@=(isGranted('ROLE_API_COMPLAINT_CREATION') || isGranted('ROLE_API_COMPANY_COMPLAINTS_VIEW'))"
                 complexity: "@=dynamicPaginationComplexity(args)"
                 description: "Returns list of complaints that can be paginated using `first`, `last`, `before` and `after` keywords"
             flags:
@@ -439,3 +449,19 @@ QueryDecorator:
                     orderUuid:
                         type: "Uuid!"
                 description: "Returns HTML content for order with failed payment."
+            personalDataPage:
+                type: "PersonalDataPage"
+                resolve: "@=query('personalDataPageQuery')"
+                description: "Return personal data page content and URL"
+            accessPersonalData:
+                type: "PersonalData!"
+                description: "Access personal data using hash received in email from personal data access request"
+                args:
+                    hash:
+                        type: "String!"
+                        description: "Hash to securely recognize access"
+                        validation:
+                            -   Length:
+                                    min: 20
+                                    max: 20
+                resolve: "@=query('personalDataAccessQuery', args['hash'], validator)"

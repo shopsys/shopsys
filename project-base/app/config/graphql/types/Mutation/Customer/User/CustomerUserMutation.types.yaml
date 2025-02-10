@@ -26,11 +26,3 @@ CustomerUserMutation:
                         type: RecoverPasswordInput!
                         validation: cascade
                 resolve: "@=mutation('recoverPasswordMutation', args, validator)"
-            ChangePassword:
-                type: 'CustomerUser!'
-                description: "Changes customer user password"
-                args:
-                    input:
-                        type: ChangePasswordInput!
-                        validation: cascade
-                resolve: "@=mutation('changePasswordMutation', args, validator)"

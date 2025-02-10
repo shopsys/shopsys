@@ -17,7 +17,6 @@ use Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMailFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrontendApiBundle\Model\Complaint\Exception\InvalidQuantityUserError;
@@ -26,7 +25,6 @@ use Shopsys\FrontendApiBundle\Model\Complaint\Exception\OrderItemNotFoundUserErr
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
 use Shopsys\FrontendApiBundle\Model\Order\OrderItemApiFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\InvalidAccessUserError;
-use Symfony\Bundle\SecurityBundle\Security;
 
 class ComplaintApiFacade
 {
@@ -41,7 +39,6 @@ class ComplaintApiFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Shopsys\FrontendApiBundle\Model\Complaint\ComplaintDataApiFactory $complaintDataApiFactory
      * @param \Shopsys\FrontendApiBundle\Model\Complaint\ComplaintItemDataApiFactory $complaintItemDataApiFactory
-     * @param \Symfony\Bundle\SecurityBundle\Security $security
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMailFacade $complaintMailFacade
      * @param \Shopsys\FrontendApiBundle\Model\Complaint\ComplaintRepository $complaintRepository
      */
@@ -56,7 +53,6 @@ class ComplaintApiFacade
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly ComplaintDataApiFactory $complaintDataApiFactory,
         protected readonly ComplaintItemDataApiFactory $complaintItemDataApiFactory,
-        protected readonly Security $security,
         protected readonly ComplaintMailFacade $complaintMailFacade,
         protected readonly ComplaintRepository $complaintRepository,
     ) {
@@ -105,15 +101,6 @@ class ComplaintApiFacade
 
         $order = $this->orderApiFacade->getByUuid($input['orderUuid']);
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
-        $orderCustomerUser = $order->getCustomerUser();
-
-        $isSameCustomerUser = $customerUser !== null && $orderCustomerUser === $customerUser;
-        $isCustomerAccountOwner = $this->security->isGranted(CustomerUserRole::ROLE_API_ALL) &&
-            $customerUser->getCustomer() === $order->getCustomer();
-
-        if (!$isSameCustomerUser && !$isCustomerAccountOwner) {
-            throw new InvalidAccessUserError('You are not allowed to create complaint for this order');
-        }
 
         $complaintItemsData = $this->createComplaintItems($input['items'], $order);
 

@@ -26,7 +26,8 @@ export const useUserMenuItems = (): UserMenuItemType[] => {
     const { url } = useDomainConfig();
     const { comparison } = useComparison();
     const { wishlist } = useWishlist();
-    const { canManageUsers, canCreateOrder, canViewCompanyOrders } = useAuthorization();
+    const { canManageUsers, canCreateOrder, canViewCompanyOrders, canCreateComplaint, canViewCompanyComplaints } =
+        useAuthorization();
     const [
         customerOrdersUrl,
         customerComplaintsUrl,
@@ -48,43 +49,10 @@ export const useUserMenuItems = (): UserMenuItemType[] => {
         url,
     );
 
-    const userMenuItems: UserMenuItemType[] = [
-        {
-            text: t('Complaints'),
-            link: customerComplaintsUrl,
-            type: 'complaintList',
-            iconComponent: ComplaintsIcon,
-        },
-        {
-            text: t('Edit profile'),
-            link: customerEditProfileUrl,
-            type: 'editProfile',
-            iconComponent: EditIcon,
-        },
-        {
-            text: t('Change password'),
-            link: customerChangePasswordUrl,
-            type: 'changePassword',
-            iconComponent: LockCheckIcon,
-        },
-        {
-            text: t('Wishlist'),
-            link: wishlistUrl,
-            count: wishlist?.products.length,
-            type: 'wishlist',
-            iconComponent: HeartIcon,
-        },
-        {
-            text: t('Comparison'),
-            link: productComparisonUrl,
-            count: comparison?.products.length,
-            type: 'comparison',
-            iconComponent: CompareIcon,
-        },
-    ];
+    const userMenuItems: UserMenuItemType[] = [];
 
     if (canCreateOrder || canViewCompanyOrders) {
-        userMenuItems.splice(0, 0, {
+        userMenuItems.push({
             text: t('Orders'),
             link: customerOrdersUrl,
             type: 'orderList',
@@ -92,14 +60,53 @@ export const useUserMenuItems = (): UserMenuItemType[] => {
         });
     }
 
+    if (canCreateComplaint || canViewCompanyComplaints) {
+        userMenuItems.push({
+            text: t('Complaints'),
+            link: customerComplaintsUrl,
+            type: 'complaintList',
+            iconComponent: ComplaintsIcon,
+        });
+    }
+
     if (canManageUsers) {
-        userMenuItems.splice(2, 0, {
+        userMenuItems.push({
             text: t('Customer users'),
             link: customerUsersUrl,
             type: 'customer-users',
             iconComponent: UserIcon,
         });
     }
+
+    userMenuItems.push({
+        text: t('Edit profile'),
+        link: customerEditProfileUrl,
+        type: 'editProfile',
+        iconComponent: EditIcon,
+    });
+
+    userMenuItems.push({
+        text: t('Change password'),
+        link: customerChangePasswordUrl,
+        type: 'changePassword',
+        iconComponent: LockCheckIcon,
+    });
+
+    userMenuItems.push({
+        text: t('Wishlist'),
+        link: wishlistUrl,
+        count: wishlist?.products.length,
+        type: 'wishlist',
+        iconComponent: HeartIcon,
+    });
+
+    userMenuItems.push({
+        text: t('Comparison'),
+        link: productComparisonUrl,
+        count: comparison?.products.length,
+        type: 'comparison',
+        iconComponent: CompareIcon,
+    });
 
     return userMenuItems;
 };

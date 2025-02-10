@@ -39,7 +39,7 @@ MutationDecorator:
                         validation: cascade
                 resolve: "@=mutation('changePasswordMutation', args, validator)"
             ChangePersonalData:
-                type: 'CustomerUser!'
+                type: 'CurrentCustomerUser!'
                 description: "Changes customer user personal data"
                 args:
                     input:
@@ -47,7 +47,7 @@ MutationDecorator:
                         validation: cascade
                 resolve: "@=mutation('changePersonalDataMutation', args, validator)"
             ChangeCompanyData:
-                type: 'CustomerUser!'
+                type: 'CurrentCustomerUser!'
                 description: "Changes customer user company data"
                 args:
                     input:
@@ -207,7 +207,7 @@ MutationDecorator:
                         validation: cascade
                 resolve: "@=mutation('createInquiryMutation', args)"
             AddNewCustomerUser:
-                type: "CustomerUser!"
+                type: "BaseCustomerUser!"
                 description: "Add new customer user to customer"
                 args:
                     input:
@@ -216,7 +216,7 @@ MutationDecorator:
                 access: "@=isGranted('is_company_owner_voter', args)"
                 resolve: "@=mutation('addNewCustomerUserMutation', args, validator)"
             EditCustomerUserPersonalData:
-                type: "CustomerUser!"
+                type: "BaseCustomerUser!"
                 description: "edit customer user to customer"
                 args:
                     input:
@@ -240,6 +240,7 @@ MutationDecorator:
                         type: ComplaintInput!
                         validation: cascade
                 resolve: "@=mutation('createComplaintMutation', args, validator)"
+                access: "@=isGranted('create_complaint_voter', args)"
             CreateWatchdog:
                 type: Boolean!
                 description: "Create a new watchdog or update validity of the current one"

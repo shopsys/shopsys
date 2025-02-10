@@ -1,0 +1,20 @@
+PersonalDataDecorator:
+    decorator: true
+    type: object
+    config:
+        fields:
+            orders:
+                type: "[Order!]!"
+                description: "Customer orders"
+            customerUser:
+                type: "BaseCustomerUser"
+                description: "Customer user data"
+            newsletterSubscriber:
+                type: "NewsletterSubscriber"
+                description: "Newsletter subscription"
+            exportLink:
+                type: "String!"
+                description: "A link for downloading the personal data in an XML file"
+            complaints:
+                type: "[Complaint!]!"
+                description: "Customer complaints"

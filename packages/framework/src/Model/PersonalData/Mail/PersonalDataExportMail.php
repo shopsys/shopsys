@@ -11,7 +11,7 @@ use Shopsys\FrameworkBundle\Model\Mail\MailTemplate;
 use Shopsys\FrameworkBundle\Model\Mail\MessageData;
 use Shopsys\FrameworkBundle\Model\Mail\MessageFactoryInterface;
 use Shopsys\FrameworkBundle\Model\Mail\Setting\MailSetting;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataExportFacade;
 
 class PersonalDataExportMail implements MessageFactoryInterface
 {
@@ -23,11 +23,13 @@ class PersonalDataExportMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
+     * @param \Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataExportFacade $personalDataExportFacade
      */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly Setting $setting,
         protected readonly DomainRouterFactory $domainRouterFactory,
+        protected readonly PersonalDataExportFacade $personalDataExportFacade,
     ) {
     }
 
@@ -86,18 +88,8 @@ class PersonalDataExportMail implements MessageFactoryInterface
      * @param string $hash
      * @return string
      */
-    protected function getVariablePersonalDataAccessUrl($hash)
+    protected function getVariablePersonalDataAccessUrl(string $hash): string
     {
-        $router = $this->domainRouterFactory->getRouter($this->domain->getId());
-
-        $routeParameters = [
-            'hash' => $hash,
-        ];
-
-        return $router->generate(
-            'front_personal_data_access_export',
-            $routeParameters,
-            UrlGeneratorInterface::ABSOLUTE_URL,
-        );
+        return $this->personalDataExportFacade->getPersonalDataExportLink($hash);
     }
 }

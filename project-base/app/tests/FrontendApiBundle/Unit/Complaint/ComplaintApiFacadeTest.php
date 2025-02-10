@@ -19,7 +19,6 @@ use Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMailFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
-use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrontendApiBundle\Model\Complaint\ComplaintApiFacade;
 use Shopsys\FrontendApiBundle\Model\Complaint\ComplaintDataApiFactory;
@@ -27,8 +26,6 @@ use Shopsys\FrontendApiBundle\Model\Complaint\ComplaintItemDataApiFactory;
 use Shopsys\FrontendApiBundle\Model\Complaint\ComplaintRepository;
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
 use Shopsys\FrontendApiBundle\Model\Order\OrderItemApiFacade;
-use Shopsys\FrontendApiBundle\Model\Resolver\Order\Exception\InvalidAccessUserError;
-use Symfony\Bundle\SecurityBundle\Security;
 
 class ComplaintApiFacadeTest extends TestCase
 {
@@ -54,8 +51,6 @@ class ComplaintApiFacadeTest extends TestCase
 
     private MockObject $complaintItemDataApiFactory;
 
-    private MockObject $security;
-
     private MockObject $complaintMailFacade;
 
     private MockObject $complaintRepository;
@@ -72,7 +67,6 @@ class ComplaintApiFacadeTest extends TestCase
         $this->currentCustomerUser = $this->createMock(CurrentCustomerUser::class);
         $this->complaintDataApiFactory = $this->createMock(ComplaintDataApiFactory::class);
         $this->complaintItemDataApiFactory = $this->createMock(ComplaintItemDataApiFactory::class);
-        $this->security = $this->createMock(Security::class);
         $this->complaintMailFacade = $this->createMock(ComplaintMailFacade::class);
         $this->complaintRepository = $this->createMock(ComplaintRepository::class);
 
@@ -87,7 +81,6 @@ class ComplaintApiFacadeTest extends TestCase
             $this->currentCustomerUser,
             $this->complaintDataApiFactory,
             $this->complaintItemDataApiFactory,
-            $this->security,
             $this->complaintMailFacade,
             $this->complaintRepository,
         );
@@ -101,8 +94,6 @@ class ComplaintApiFacadeTest extends TestCase
         $customerUser = $this->createMock(CustomerUser::class);
         $complaintData = $this->createMock(ComplaintData::class);
         $complaint = $this->createMock(Complaint::class);
-
-        $this->security->method('isGranted')->with(CustomerUserRole::ROLE_API_ALL)->willReturn(false);
 
         $this->orderApiFacade->method('getByUuid')->with('order-uuid')->willReturn($order);
         $this->currentCustomerUser->method('findCurrentCustomerUser')->willReturn($customerUser);
@@ -127,25 +118,6 @@ class ComplaintApiFacadeTest extends TestCase
         $this->assertSame($complaint, $result);
     }
 
-    public function testCreateFromComplaintInputArgumentForCustomerUserInvalidAccessUserErrorMockObject(): void
-    {
-        $argument = self::getCreateFromComplaintInputArgument();
-
-        $order = $this->createMock(Order::class);
-        $customerUser = $this->createMock(CustomerUser::class);
-        $customerUser2 = $this->createMock(CustomerUser::class);
-
-        $this->security->method('isGranted')->with(CustomerUserRole::ROLE_API_ALL)->willReturn(false);
-
-        $this->orderApiFacade->method('getByUuid')->with('order-uuid')->willReturn($order);
-        $this->currentCustomerUser->method('findCurrentCustomerUser')->willReturn($customerUser);
-
-        $order->method('getCustomerUser')->willReturn($customerUser2);
-
-        $this->expectException(InvalidAccessUserError::class);
-        $this->complaintApiFacade->createFromComplaintInputArgument($argument);
-    }
-
     public function testCreateFromComplaintInputArgumentForCustomerSuccess(): void
     {
         $argument = self::getCreateFromComplaintInputArgument();
@@ -157,8 +129,6 @@ class ComplaintApiFacadeTest extends TestCase
 
         $complaintData = $this->createMock(ComplaintData::class);
         $complaint = $this->createMock(Complaint::class);
-
-        $this->security->method('isGranted')->with(CustomerUserRole::ROLE_API_ALL)->willReturn(true);
 
         $customerUser->method('getCustomer')->willReturn($customer);
 
@@ -185,30 +155,6 @@ class ComplaintApiFacadeTest extends TestCase
 
         $result = $this->complaintApiFacade->createFromComplaintInputArgument($argument);
         $this->assertSame($complaint, $result);
-    }
-
-    public function testCreateFromComplaintInputArgumentForCustomerInvalidAccessUserError(): void
-    {
-        $argument = self::getCreateFromComplaintInputArgument();
-
-        $order = $this->createMock(Order::class);
-        $customerUser = $this->createMock(CustomerUser::class);
-        $orderCustomerUser = $this->createMock(CustomerUser::class);
-        $orderCustomer = $this->createMock(Customer::class);
-        $orderCustomer2 = $this->createMock(Customer::class);
-
-        $this->security->method('isGranted')->with(CustomerUserRole::ROLE_API_ALL)->willReturn(true);
-
-        $customerUser->method('getCustomer')->willReturn($orderCustomer);
-
-        $this->orderApiFacade->method('getByUuid')->with('order-uuid')->willReturn($order);
-        $this->currentCustomerUser->method('findCurrentCustomerUser')->willReturn($customerUser);
-
-        $order->method('getCustomerUser')->willReturn($orderCustomerUser);
-        $order->method('getCustomer')->willReturn($orderCustomer2);
-
-        $this->expectException(InvalidAccessUserError::class);
-        $this->complaintApiFacade->createFromComplaintInputArgument($argument);
     }
 
     /**

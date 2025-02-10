@@ -133,3 +133,6 @@ OrderDecorator:
             productItems:
                 type: "[OrderItem!]!"
                 description: "All product items in the order"
+            customerUser:
+                type: "BaseCustomerUser"
+                description: "The registered customer user who made the order (or null if the order was made by an unregistered user)"

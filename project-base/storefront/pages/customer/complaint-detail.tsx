@@ -10,6 +10,7 @@ import {
     TypeComplaintQueryVariables,
     useComplaintQuery,
 } from 'graphql/requests/complaints/queries/ComplaintQuery.generated';
+import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
@@ -77,6 +78,10 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
         context,
         authenticationConfig: {
             authenticationRequired: true,
+            authorizedRoles: [
+                TypeCustomerUserRoleEnum.RoleApiComplaintCreation,
+                TypeCustomerUserRoleEnum.RoleApiCompanyComplaintsView,
+            ],
         },
         prefetchedQueries: [
             { query: ComplaintQueryDocument, variables: { complaintNumber: context.query.complaintNumber } },

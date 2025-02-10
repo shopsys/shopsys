@@ -28,7 +28,7 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
         $pricingGroupName = $customerUser->getPricingGroup()->getName();
 
         $expected = [
-            '__typename' => 'CompanyCustomerUser',
+            '__typename' => 'CurrentCompanyCustomerUser',
             'firstName' => 'Jaromír',
             'lastName' => 'Jágr',
             'email' => 'no-reply@shopsys.com',

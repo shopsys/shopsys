@@ -11,7 +11,6 @@ use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
 use Shopsys\FrontendApiBundle\Model\Complaint\ComplaintApiFacade;
 use Shopsys\FrontendApiBundle\Model\Complaint\Exception\ComplaintNotFoundUserError;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
-use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
 use Symfony\Bundle\SecurityBundle\Security;
 
 class ComplaintQuery extends AbstractQuery
@@ -34,15 +33,11 @@ class ComplaintQuery extends AbstractQuery
      */
     public function complaintQuery(Argument $argument): Complaint
     {
-        $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
-
-        if (!$customerUser) {
-            throw new InvalidTokenUserMessageException();
-        }
+        $customerUser = $this->currentCustomerUser->getCurrentCustomerUser();
 
         $complaintNumber = $argument['number'];
 
-        if ($this->security->isGranted(CustomerUserRole::ROLE_API_ALL)) {
+        if ($this->security->isGranted(CustomerUserRole::ROLE_API_COMPANY_COMPLAINTS_VIEW)) {
             $complaint = $this->complaintApiFacade->findByComplaintNumberAndCustomer(
                 $complaintNumber,
                 $customerUser->getCustomer(),

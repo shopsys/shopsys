@@ -31,6 +31,7 @@ use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\Exception\CustomerUse
 use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\Exception\InvalidAccountOrPasswordUserError;
 use Shopsys\FrontendApiBundle\Model\Mutation\Customer\User\Exception\LastCustomerUserWithDefaultRoleGroupError;
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
+use Shopsys\FrontendApiBundle\Model\Resolver\Customer\Error\CustomerUserAccessDeniedUserError;
 use Shopsys\FrontendApiBundle\Model\Security\LoginResultData;
 use Shopsys\FrontendApiBundle\Model\Security\LoginResultDataFactory;
 use Shopsys\FrontendApiBundle\Model\Security\TokensDataFactory;
@@ -108,6 +109,10 @@ class CustomerUserMutation extends BaseTokenMutation
             $customerUser = $this->frontendCustomerUserProvider->loadUserByUsername($input['email']);
         } catch (UserNotFoundException) {
             throw new InvalidAccountOrPasswordUserError('This account doesn\'t exist or password is incorrect');
+        }
+
+        if ($customerUser->getUuid() !== $user->getUuid()) {
+            throw new CustomerUserAccessDeniedUserError();
         }
 
         if (!$this->userPasswordHasher->isPasswordValid($customerUser, $input['oldPassword'])) {

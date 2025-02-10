@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures\Demo;
 
 use App\Model\Customer\User\CustomerUser;
+use App\Model\Customer\User\CustomerUserFacade;
 use App\Model\Customer\User\CustomerUserUpdateDataFactory;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,7 +17,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory;
-use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateData;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative;
@@ -93,7 +93,6 @@ class CustomerUserDataFixture extends AbstractReferenceFixture implements Depend
                 $customerUserUpdateData = $this->getCustomerUserUpdateData($domainId, $customerDataProvider);
                 $customerUserUpdateData->customerUserData->createdAt = $this->faker->dateTimeBetween('-1 week', 'now');
 
-                /** @var \App\Model\Customer\User\CustomerUser $customerUser */
                 $customerUser = $this->customerUserFacade->create($customerUserUpdateData);
 
                 $this->addReference(self::CUSTOMER_PREFIX . $customerUser->getId(), $customerUser);

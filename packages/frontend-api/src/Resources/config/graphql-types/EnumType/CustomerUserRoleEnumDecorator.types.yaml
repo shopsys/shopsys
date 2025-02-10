@@ -14,3 +14,7 @@ CustomerUserRoleEnumDecorator:
                 value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Customer\\User\\Role\\CustomerUserRole::ROLE_API_CART_AND_ORDER_CREATION")'
             ROLE_API_COMPANY_ORDERS_VIEW:
                 value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Customer\\User\\Role\\CustomerUserRole::ROLE_API_COMPANY_ORDERS_VIEW")'
+            ROLE_API_COMPLAINT_CREATION:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Customer\\User\\Role\\CustomerUserRole::ROLE_API_COMPLAINT_CREATION")'
+            ROLE_API_COMPANY_COMPLAINTS_VIEW:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Customer\\User\\Role\\CustomerUserRole::ROLE_API_COMPANY_COMPLAINTS_VIEW")'

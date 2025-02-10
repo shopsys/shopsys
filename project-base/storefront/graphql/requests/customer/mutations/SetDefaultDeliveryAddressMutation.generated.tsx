@@ -9,7 +9,7 @@ export type TypeSetDefaultDeliveryAddressMutationVariables = Types.Exact<{
 }>;
 
 
-export type TypeSetDefaultDeliveryAddressMutation = { __typename?: 'Mutation', SetDefaultDeliveryAddress: { __typename?: 'CompanyCustomerUser', uuid: string, defaultDeliveryAddress: { __typename: 'DeliveryAddress', uuid: string, companyName: string | null, street: string | null, city: string | null, postcode: string | null, telephone: string | null, firstName: string | null, lastName: string | null, country: { __typename: 'Country', name: string, code: string } | null } | null } | { __typename?: 'RegularCustomerUser', uuid: string, defaultDeliveryAddress: { __typename: 'DeliveryAddress', uuid: string, companyName: string | null, street: string | null, city: string | null, postcode: string | null, telephone: string | null, firstName: string | null, lastName: string | null, country: { __typename: 'Country', name: string, code: string } | null } | null } };
+export type TypeSetDefaultDeliveryAddressMutation = { __typename?: 'Mutation', SetDefaultDeliveryAddress: { __typename?: 'CurrentCompanyCustomerUser', uuid: string, defaultDeliveryAddress: { __typename: 'DeliveryAddress', uuid: string, companyName: string | null, street: string | null, city: string | null, postcode: string | null, telephone: string | null, firstName: string | null, lastName: string | null, country: { __typename: 'Country', name: string, code: string } | null } | null } | { __typename?: 'CurrentRegularCustomerUser', uuid: string, defaultDeliveryAddress: { __typename: 'DeliveryAddress', uuid: string, companyName: string | null, street: string | null, city: string | null, postcode: string | null, telephone: string | null, firstName: string | null, lastName: string | null, country: { __typename: 'Country', name: string, code: string } | null } | null } };
 
 
       export interface PossibleTypesResultData {
@@ -27,6 +27,12 @@ export type TypeSetDefaultDeliveryAddressMutation = { __typename?: 'Mutation', S
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -39,9 +45,9 @@ export type TypeSetDefaultDeliveryAddressMutation = { __typename?: 'Mutation', S
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",

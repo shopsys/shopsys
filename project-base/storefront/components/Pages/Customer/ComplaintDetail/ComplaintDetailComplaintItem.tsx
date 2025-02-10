@@ -1,6 +1,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { ModalGallery } from 'components/Basic/ModalGallery/ModalGallery';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeComplaintItemFragment } from 'graphql/requests/complaints/fragments/ComplaintItemFragment.generated';
 import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
@@ -24,6 +25,10 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
     const galleryLastShownItemIndex = GALLERY_SHOWN_ITEMS_COUNT - 1;
     const galleryAdditionalItemsCount = (complaintItem.files?.length ?? 0) - GALLERY_SHOWN_ITEMS_COUNT;
     const [selectedGalleryItemIndex, setSelectedGalleryItemIndex] = useState<number>();
+    const complaintOrder = complaintItem.orderItem?.order;
+    const { currentCustomerUserUuid, canViewCompanyOrders, canCreateOrder } = useAuthorization();
+    const complaintOrderBelongsToCurrentCustomer = complaintOrder?.customerUser?.uuid === currentCustomerUserUuid;
+    const hasAccessToOrder = canViewCompanyOrders || (canCreateOrder && complaintOrderBelongsToCurrentCustomer);
 
     return (
         <>
@@ -52,15 +57,19 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
 
                     <span>
                         {t('Order number')}:{' '}
-                        <ExtendedNextLink
-                            type="orderDetail"
-                            href={{
-                                pathname: customerOrderDetailUrl,
-                                query: { orderNumber: complaintItem.orderItem?.order.number },
-                            }}
-                        >
-                            {complaintItem.orderItem?.order.number}
-                        </ExtendedNextLink>
+                        {hasAccessToOrder ? (
+                            <ExtendedNextLink
+                                type="orderDetail"
+                                href={{
+                                    pathname: customerOrderDetailUrl,
+                                    query: { orderNumber: complaintOrder?.number },
+                                }}
+                            >
+                                {complaintOrder?.number}
+                            </ExtendedNextLink>
+                        ) : (
+                            complaintOrder?.number
+                        )}
                     </span>
                 </div>
             </div>

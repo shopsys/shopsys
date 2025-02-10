@@ -1,4 +1,4 @@
-fragment CustomerUserFragment on CustomerUser {
+fragment BaseCustomerUserFragment on BaseCustomerUser {
     __typename
     uuid
     firstName
@@ -23,9 +23,6 @@ fragment CustomerUserFragment on CustomerUser {
         companyName
         companyNumber
         companyTaxNumber
-    }
-    loginInfo {
-        ...LoginInfoFragment
     }
     pricingGroup
     hasPasswordSet

@@ -139,6 +139,22 @@ class CustomerUserCatalogUserTest extends GraphQlB2bDomainWithLoginTestCase
         $this->assertAccessDeniedWarning($response);
     }
 
+    public function testComplaintQueryIsNotAllowed(): void
+    {
+        $response = $this->getResponseContentForGql(__DIR__ . '/../../Functional/Complaint/graphql/GetComplaintQuery.graphql', [
+            'complaintNumber' => 'complaintNumber',
+        ]);
+
+        $this->assertAccessDeniedWarning($response);
+    }
+
+    public function testComplaintsQueryIsNotAllowed(): void
+    {
+        $response = $this->getResponseContentForGql(__DIR__ . '/../../Functional/Complaint/graphql/GetComplaintsQuery.graphql');
+
+        $this->assertAccessDeniedWarning($response);
+    }
+
     public function testCreateOrderMutationIsNotAllowed(): void
     {
         $response = $this->getResponseContentForGql(__DIR__ . '/../../Functional/Order/graphql/CreateMinimalOrderMutation.graphql', [
@@ -243,6 +259,37 @@ class CustomerUserCatalogUserTest extends GraphQlB2bDomainWithLoginTestCase
             'cartUuid' => self::FAKE_UUID,
             'promoCode' => 'promoCode',
         ]);
+
+        $this->assertAccessDeniedError($response);
+    }
+
+    public function testCreateComplaintMutationIsNotAllowed(): void
+    {
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/../../Functional/Complaint/graphql/CreateComplaintMutation.graphql',
+            [
+                'input' => [
+                    'orderUuid' => self::FAKE_UUID,
+                    'email' => 'email',
+                    'items' => [
+                        [
+                            'quantity' => 1,
+                            'description' => 'Broken!!!',
+                            'orderItemUuid' => self::FAKE_UUID,
+                        ],
+                    ],
+                    'deliveryAddress' => [
+                        'firstName' => 'firstName',
+                        'lastName' => 'lastnName',
+                        'street' => 'street 1',
+                        'city' => 'Ostrava',
+                        'postcode' => '71200',
+                        'telephone' => '+420123456789',
+                        'country' => 'CZ',
+                    ],
+                ],
+            ],
+        );
 
         $this->assertAccessDeniedError($response);
     }

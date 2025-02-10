@@ -1,4 +1,4 @@
-fragment SimpleCustomerUserFragment on CustomerUser {
+fragment SimpleCustomerUserFragment on BaseCustomerUser {
     __typename
     uuid
     firstName

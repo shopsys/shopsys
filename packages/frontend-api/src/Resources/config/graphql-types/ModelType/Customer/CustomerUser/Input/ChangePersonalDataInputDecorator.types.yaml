@@ -2,8 +2,8 @@ ChangePersonalDataInputDecorator:
     type: input-object
     decorator: true
     inherits:
-        - 'NameInputObjectDecorator'
-        - 'TelephoneInputObjectDecorator'
+        - 'NameInputObject'
+        - 'TelephoneInputObject'
     config:
         fields:
             newsletterSubscription:

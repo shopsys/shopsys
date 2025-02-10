@@ -11,5 +11,8 @@ query GetOrder($uuid: Uuid, $orderNumber: String, $urlHash: String) {
         trackingUrl
         paymentTransactionsCount
         isPaid
+        customerUser {
+            email
+        }
     }
 }

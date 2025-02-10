@@ -33,6 +33,15 @@ export const useAuthorization = () => {
         ? customerUserRoles.includes(TypeCustomerUserRoleEnum.RoleApiCompanyOrdersView)
         : true;
 
+    const canCreateComplaint = isCompanyUser
+        ? customerUserRoles.includes(TypeCustomerUserRoleEnum.RoleApiComplaintCreation) &&
+          (canCreateOrder || canViewCompanyOrders)
+        : true;
+
+    const canViewCompanyComplaints = isCompanyUser
+        ? customerUserRoles.includes(TypeCustomerUserRoleEnum.RoleApiCompanyComplaintsView)
+        : true;
+
     return {
         currentCustomerUserUuid: currentCustomerUser?.uuid,
         isB2B,
@@ -41,5 +50,7 @@ export const useAuthorization = () => {
         canManageProfile,
         canCreateOrder,
         canViewCompanyOrders,
+        canCreateComplaint,
+        canViewCompanyComplaints,
     };
 };

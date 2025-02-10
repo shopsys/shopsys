@@ -1,0 +1,10 @@
+CurrentRegularCustomerUserDecorator:
+    type: object
+    decorator: true
+    inherits:
+        - 'RegularCustomerUser'
+        - 'CurrentCustomerUser'
+    config:
+        description: "Represents a currently logged regular customer user"
+        interfaces:
+            - 'CurrentCustomerUser'

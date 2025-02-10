@@ -2,7 +2,7 @@ AddToCartInputDecorator:
     type: input-object
     decorator: true
     inherits:
-        - CartInputDecorator
+        - 'CartInput'
     config:
         fields:
             productUuid:

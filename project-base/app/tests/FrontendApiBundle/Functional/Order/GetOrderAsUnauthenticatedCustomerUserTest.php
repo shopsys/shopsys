@@ -53,6 +53,9 @@ class GetOrderAsUnauthenticatedCustomerUserTest extends GraphQlTestCase
 
             $this->assertArrayHasKey('isPaid', $responseData);
             $this->assertSame($expectedOrderData['isPaid'], $responseData['isPaid']);
+
+            $this->assertArrayHasKey('customerUser', $responseData);
+            $this->assertNull($responseData['customerUser']);
         }
     }
 

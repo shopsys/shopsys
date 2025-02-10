@@ -37,7 +37,7 @@ query CurrentCustomerUser {
             firstName
             lastName
         }
-        ... on CompanyCustomerUser {
+        ... on CurrentCompanyCustomerUser {
             companyName
             companyNumber
             companyTaxNumber

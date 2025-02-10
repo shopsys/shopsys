@@ -19,7 +19,8 @@ export const MenuIconicItemUserAuthenticatedContent: FC = () => {
     const { t } = useTranslation();
     const logout = useLogout();
     const user = useCurrentCustomerData();
-    const { canManageUsers, canCreateOrder, canViewCompanyOrders } = useAuthorization();
+    const { canManageUsers, canCreateOrder, canViewCompanyOrders, canCreateComplaint, canViewCompanyComplaints } =
+        useAuthorization();
     const { url } = useDomainConfig();
     const [
         customerOrdersUrl,
@@ -68,16 +69,18 @@ export const MenuIconicItemUserAuthenticatedContent: FC = () => {
                     </MenuIconicItemUserAuthenticatedContentListItem>
                 )}
 
-                <MenuIconicItemUserAuthenticatedContentListItem>
-                    <MenuIconicSubItemLink
-                        href={customerComplaintsUrl}
-                        tid={TIDs.header_my_complaints_link}
-                        type="complaintList"
-                    >
-                        <ComplaintsIcon className="size-6" />
-                        {t('My complaints')}
-                    </MenuIconicSubItemLink>
-                </MenuIconicItemUserAuthenticatedContentListItem>
+                {(canCreateComplaint || canViewCompanyComplaints) && (
+                    <MenuIconicItemUserAuthenticatedContentListItem>
+                        <MenuIconicSubItemLink
+                            href={customerComplaintsUrl}
+                            tid={TIDs.header_my_complaints_link}
+                            type="complaintList"
+                        >
+                            <ComplaintsIcon className="size-6" />
+                            {t('My complaints')}
+                        </MenuIconicSubItemLink>
+                    </MenuIconicItemUserAuthenticatedContentListItem>
+                )}
 
                 {canManageUsers && (
                     <MenuIconicItemUserAuthenticatedContentListItem>

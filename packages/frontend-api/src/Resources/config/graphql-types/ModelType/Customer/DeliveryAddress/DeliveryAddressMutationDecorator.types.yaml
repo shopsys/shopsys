@@ -19,7 +19,7 @@ DeliveryAddressMutationDecorator:
                         validation: cascade
                 resolve: "@=mutation('editDeliveryAddressMutation', args)"
             SetDefaultDeliveryAddress:
-                type: "CustomerUser!"
+                type: "CurrentCustomerUser!"
                 description: "Set default delivery address by Uuid"
                 args:
                     deliveryAddressUuid:

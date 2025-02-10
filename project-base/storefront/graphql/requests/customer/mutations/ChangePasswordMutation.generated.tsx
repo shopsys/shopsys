@@ -10,7 +10,7 @@ export type TypeChangePasswordMutationVariables = Types.Exact<{
 }>;
 
 
-export type TypeChangePasswordMutation = { __typename?: 'Mutation', ChangePassword: { __typename?: 'CompanyCustomerUser', email: string } | { __typename?: 'RegularCustomerUser', email: string } };
+export type TypeChangePasswordMutation = { __typename?: 'Mutation', ChangePassword: { __typename?: 'CurrentCompanyCustomerUser', email: string } | { __typename?: 'CurrentRegularCustomerUser', email: string } };
 
 
       export interface PossibleTypesResultData {
@@ -28,6 +28,12 @@ export type TypeChangePasswordMutation = { __typename?: 'Mutation', ChangePasswo
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -40,9 +46,9 @@ export type TypeChangePasswordMutation = { __typename?: 'Mutation', ChangePasswo
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",

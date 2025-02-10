@@ -1,8 +1,8 @@
 AddNewCustomerUserDataInputDecorator:
     type: input-object
     inherits:
-        - 'ChangePersonalDataInputDecorator'
-        - 'TelephoneInputObjectDecorator'
+        - 'ChangePersonalDataInput'
+        - 'TelephoneInputObject'
     config:
         fields:
             email:

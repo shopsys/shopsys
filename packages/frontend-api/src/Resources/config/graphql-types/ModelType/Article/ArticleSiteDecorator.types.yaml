@@ -2,7 +2,7 @@ ArticleSiteDecorator:
     type: object
     decorator: true
     inherits:
-        - 'ArticleDecorator'
+        - 'Article'
     config:
         interfaces:
             - 'Breadcrumb'

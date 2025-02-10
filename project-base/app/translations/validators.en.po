@@ -25,9 +25,6 @@ msgstr ""
 msgid "Please enter GTM ID"
 msgstr ""
 
-msgid "Please enter email"
-msgstr ""
-
 msgid "Please enter new password"
 msgstr ""
 

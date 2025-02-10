@@ -1,8 +1,8 @@
 EditCustomerUserPersonalDataInputDecorator:
     type: input-object
     inherits:
-        - 'ChangePersonalDataInputDecorator'
-        - 'TelephoneInputObjectDecorator'
+        - 'ChangePersonalDataInput'
+        - 'TelephoneInputObject'
     config:
         validation:
             -   Shopsys\FrontendApiBundle\Component\Constraints\CustomerUserRoleGroupAllowEdit:

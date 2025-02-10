@@ -1,0 +1,4 @@
+CompanyInputObject:
+    type: input-object
+    inherits:
+        - 'CompanyInputObjectDecorator'

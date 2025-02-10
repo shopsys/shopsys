@@ -1,9 +1,12 @@
 CompanyCustomerUserDecorator:
     type: object
     decorator: true
+    inherits:
+        - 'BaseCustomerUser'
     config:
+        description: "Represents a company customer user"
         interfaces:
-            - 'CustomerUser'
+            - 'BaseCustomerUser'
         fields:
             companyName:
                 type: "String"
