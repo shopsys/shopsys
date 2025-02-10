@@ -61,5 +61,5 @@ ux_icons:
         warning: 'tabler:alert-triangle'
     default_icon_attributes:
         fill: currentColor
-        width: 20
         height: 20
+        width: 20

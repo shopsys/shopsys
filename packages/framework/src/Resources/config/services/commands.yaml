@@ -26,10 +26,6 @@ services:
     Shopsys\FrameworkBundle\Command\ExtendedClassesAnnotationsCommand:
         autoconfigure: false
 
-    # the command is supposed to be used in DEV environment only so it is configured in services_dev.yaml
-    Shopsys\FrameworkBundle\Command\ReplaceObsoleteIconsCommand:
-        autoconfigure: false
-
     Shopsys\FrameworkBundle\Command\MigrateImagesCommand:
         arguments:
             - '%shopsys.image_dir%'
@@ -37,3 +33,7 @@ services:
     Shopsys\FrameworkBundle\Command\MigrateUploadedFilesCommand:
         arguments:
             - '%shopsys.uploaded_file_dir%'
+
+    # the command is supposed to be used in DEV environment only so it is configured in services_dev.yaml
+    Shopsys\FrameworkBundle\Command\ReplaceObsoleteIconsCommand:
+        autoconfigure: false
