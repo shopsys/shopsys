@@ -13,6 +13,7 @@ import { getCurrentCustomerData } from 'app/_queries/getCurrentCustomerData';
 import { getSettingsQuery } from 'app/_queries/getSettingsQuery';
 import { getCookieStoreStateFromServer } from 'app/_utils/getCookieStoreStateFromServer';
 import { getDomainConfig } from 'app/_utils/getDomainConfig';
+import { getInitialProductListState } from 'app/_utils/getInitalProductListState';
 import { Portal } from 'components/Basic/Portal/Portal';
 import { headers } from 'next/headers';
 import { getDictionary } from 'utils/getDictionary';
@@ -29,7 +30,7 @@ export default async function Providers({ children }: ProvidersProps) {
     const [user, settingsData, initialState] = await Promise.allSettled([
         getCurrentCustomerData(),
         getSettingsQuery(),
-        getProductListInitialState(),
+        getInitialProductListState(),
     ]);
 
     if (settingsData.status === 'rejected' || !settingsData.value?.settings) {
@@ -47,7 +48,7 @@ export default async function Providers({ children }: ProvidersProps) {
                     <TranslationProvider dictionary={dictionary} lang={lang}>
                         <AuthProvider user={user.status === 'fulfilled' ? user.value : undefined}>
                             <ProductListProvider
-                                initialState={initialState.status === 'fulfilled' ? initialState.value : undefined}
+                                initialState={initialState.status === 'fulfilled' ? initialState.value : {}}
                             >
                                 <html lang={lang}>
                                     <head>
@@ -70,7 +71,4 @@ export default async function Providers({ children }: ProvidersProps) {
             </DomainConfigProvider>
         </CookiesStoreProvider>
     );
-}
-function getProductListInitialState(): any {
-    throw new Error('Function not implemented.');
 }
