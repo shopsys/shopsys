@@ -25,7 +25,7 @@ export const ProductComparison: FC = () => {
             )}
 
             {!comparison?.products && !isProductListFetching && (
-                <div className="flex items-center">
+                <div className="my-28 flex items-center justify-center">
                     <InfoIcon className="mr-4 w-8" />
                     <div className="h3">{t('Comparison does not contain any products yet.')}</div>
                 </div>
