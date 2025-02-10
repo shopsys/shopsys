@@ -667,9 +667,6 @@ msgstr ""
 msgid "Construction"
 msgstr ""
 
-msgid "Contacts"
-msgstr ""
-
 msgid "Cooperation"
 msgstr ""
 

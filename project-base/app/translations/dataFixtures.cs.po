@@ -667,9 +667,6 @@ msgstr "Konektory"
 msgid "Construction"
 msgstr "Konstrukce"
 
-msgid "Contacts"
-msgstr "Kontakty"
-
 msgid "Cooperation"
 msgstr "Spolupráce"
 

@@ -198,19 +198,6 @@ class GetArticlesTest extends GraphQlTestCase
                 'seoMetaDescription' => null,
             ],
             [
-                'name' => t('Contacts', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                'placement' => Article::PLACEMENT_FOOTER_1,
-                'text' => '<div class="gjs-text-ckeditor">' . t(
-                    'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
-                    [],
-                    Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                    $firstDomainLocale,
-                ) . '</div>',
-                'seoH1' => null,
-                'seoTitle' => null,
-                'seoMetaDescription' => null,
-            ],
-            [
                 'name' => t('Goods care', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'placement' => Article::PLACEMENT_FOOTER_2,
                 'text' => '<div class="gjs-text-ckeditor">' . t(
