@@ -1,4 +1,4 @@
-import { OrderSteps } from 'components/Blocks/OrderSteps/OrderSteps';
+import { CartSteps } from 'components/Blocks/CartSteps/CartSteps';
 import { OrderSummary } from 'components/Blocks/OrderSummary/OrderSummary';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 
@@ -16,9 +16,9 @@ export const OrderContentWrapper: FC<OrderContentWrapperProps> = ({
 
     return (
         <>
-            <OrderSteps activeStep={activeStep} domainUrl={url} />
+            <CartSteps activeStep={activeStep} domainUrl={url} />
 
-            <div className="mb-24 flex w-full flex-col flex-wrap vl:mb-16 vl:mt-7 vl:flex-row">
+            <div className="mb-24 flex w-full flex-col flex-wrap vl:mb-16 vl:flex-row">
                 <div className="mb-16 w-full vl:mb-0 vl:min-h-[61vh] vl:flex-1 vl:pr-10">{children}</div>
                 <div className="w-full vl:max-w-md">
                     <OrderSummary isTransportOrPaymentLoading={isTransportOrPaymentLoading} />

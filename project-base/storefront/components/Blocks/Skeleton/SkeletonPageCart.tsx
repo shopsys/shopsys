@@ -5,7 +5,8 @@ import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 
 export const SkeletonPageCart: FC = () => (
     <Webline>
-        <Skeleton className="mb-6 h-10 w-full lg:mb-3" />
+        <Skeleton className="mx-auto mb-5 mt-1 h-11 w-full max-w-[840px] lg:mb-10 lg:mt-6" containerClassName="flex" />
+
         <div className="mb-6 lg:mb-8">
             {createEmptyArray(4).map((_, index) => (
                 <Skeleton key={index} className="h-[101px] w-full" />
