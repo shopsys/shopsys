@@ -11,10 +11,12 @@ export const getGtmProductListViewEvent = (
     pageSize: number,
     domainUrl: string,
     arePricesHidden: boolean,
+    isLuigisSlider: boolean = false,
 ): GtmProductListViewEventType => ({
     event: GtmEventType.product_list_view,
     ecommerce: {
         listName: gtmProductListName,
+        LuigiListName: isLuigisSlider ? 'user_click_based' : '',
         products: products.map((product, index) => {
             const listedProductIndex = (currentPageWithLoadMore - 1) * pageSize + index;
 

@@ -95,6 +95,7 @@ export type GtmProductListViewEventType = GtmEventInterface<
             listName: GtmProductListNameType;
             products: GtmListedProductType[] | undefined;
             arePricesHidden: boolean;
+            LuigiListName: string;
         };
     }
 >;

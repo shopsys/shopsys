@@ -10,6 +10,7 @@ import { useEffect, useRef } from 'react';
 export const useGtmSliderProductListViewEvent = (
     products: TypeListedProductFragment[] | undefined,
     gtmProuctListName: GtmProductListNameType,
+    isLuigisEnabled?: boolean,
 ): void => {
     const wasViewedRef = useRef(false);
     const { url } = useDomainConfig();
@@ -19,7 +20,9 @@ export const useGtmSliderProductListViewEvent = (
     useEffect(() => {
         if (isScriptLoaded && didPageViewRun && products?.length && !wasViewedRef.current) {
             wasViewedRef.current = true;
-            gtmSafePushEvent(getGtmProductListViewEvent(products, gtmProuctListName, 1, 0, url, !canSeePrices));
+            gtmSafePushEvent(
+                getGtmProductListViewEvent(products, gtmProuctListName, 1, 0, url, !canSeePrices, isLuigisEnabled),
+            );
         }
     }, [gtmProuctListName, products, url, didPageViewRun]);
 };

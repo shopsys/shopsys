@@ -4,6 +4,7 @@ import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
+import { useGtmSliderProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmSliderProductListViewEvent';
 import useTranslation from 'next-translate/useTranslation';
 import { RefObject, createRef, useEffect, useRef, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
@@ -30,6 +31,7 @@ export type ProductsSliderProps = {
     productItemProps?: Partial<ProductItemProps>;
     visibleSliderItems?: number;
     variant?: ProductsSliderVariant;
+    isLuigisEnabled?: boolean;
 };
 
 export const ProductsSlider: FC<ProductsSliderProps> = ({
@@ -42,6 +44,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     productItemProps,
     visibleSliderItems = VISIBLE_SLIDER_ITEMS,
     variant = 'default',
+    isLuigisEnabled,
 }) => {
     const { t } = useTranslation();
     const sliderRef = useRef<HTMLDivElement>(null);
@@ -131,6 +134,8 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
                 return '';
         }
     };
+
+    useGtmSliderProductListViewEvent(products, gtmProductListName, isLuigisEnabled);
 
     return (
         <div className="relative" tid={tid}>
