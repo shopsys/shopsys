@@ -11,7 +11,7 @@ use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class GetArticlesTest extends GraphQlTestCase
 {
-    private const ARTICLES_TOTAL_COUNT = 21;
+    private const ARTICLES_TOTAL_COUNT = 20;
     private const QUERY_PATH = __DIR__ . '/../_graphql/query/ArticlesQuery.graphql';
 
     public function testGetArticles(): void
@@ -24,13 +24,13 @@ class GetArticlesTest extends GraphQlTestCase
             $responseData = $this->getResponseDataForGraphQlType($response, $graphQlType);
 
             $this->assertArrayHasKey('edges', $responseData);
-            $this->assertCount(count($expectedArticlesData), $responseData['edges']);
+            $this->assertCount(count($expectedArticlesData), $responseData['edges'], '#' . $index);
 
             foreach ($responseData['edges'] as $edge) {
-                $this->assertArrayHasKey('node', $edge);
+                $this->assertArrayHasKey('node', $edge, '#' . $index);
 
-                $this->assertArrayHasKey('uuid', $edge['node']);
-                $this->assertTrue(Uuid::isValid($edge['node']['uuid']));
+                $this->assertArrayHasKey('uuid', $edge['node'], '#' . $index);
+                $this->assertTrue(Uuid::isValid($edge['node']['uuid']), '#' . $index);
 
                 $this->assertKeysAreSameAsExpected(
                     [
@@ -43,6 +43,7 @@ class GetArticlesTest extends GraphQlTestCase
                     ],
                     $edge['node'],
                     array_shift($expectedArticlesData),
+                    '#' . $index,
                 );
             }
         }
@@ -52,12 +53,13 @@ class GetArticlesTest extends GraphQlTestCase
      * @param array $keys
      * @param array $actual
      * @param array $expected
+     * @param string $message
      */
-    private function assertKeysAreSameAsExpected(array $keys, array $actual, array $expected): void
+    private function assertKeysAreSameAsExpected(array $keys, array $actual, array $expected, string $message): void
     {
         foreach ($keys as $key) {
-            $this->assertArrayHasKey($key, $actual);
-            $this->assertSame($expected[$key], $actual[$key]);
+            $this->assertArrayHasKey($key, $actual, $message);
+            $this->assertSame($expected[$key], $actual[$key], $message);
         }
     }
 
@@ -81,29 +83,29 @@ class GetArticlesTest extends GraphQlTestCase
             ],
             [
                 $this->getLastCountOfArticlesResponse(1),
-                array_slice($this->getExpectedArticles(), 17, 1),
+                array_slice($this->getExpectedArticles(), 16, 1),
             ],
             [
                 $this->getLastCountOfArticlesResponse(2),
-                array_slice($this->getExpectedArticles(), 16, 2),
+                array_slice($this->getExpectedArticles(), 15, 2),
             ],
             [
                 $this->getFirstArticlesCountResponse(1, [Article::PLACEMENT_FOOTER_4]),
-                array_slice($this->getExpectedArticles(), 12, 1),
+                array_slice($this->getExpectedArticles(), 11, 1),
             ],
             [
                 $this->getLastCountOfArticlesResponse(1, [Article::PLACEMENT_FOOTER_4]),
-                array_slice($this->getExpectedArticles(), 14, 1),
+                array_slice($this->getExpectedArticles(), 13, 1),
             ],
             [
                 $this->getFirstArticlesCountResponse(self::ARTICLES_TOTAL_COUNT, [Article::PLACEMENT_FOOTER_4]),
-                array_slice($this->getExpectedArticles(), 12, 3),
+                array_slice($this->getExpectedArticles(), 11, 3),
             ],
             [
                 $this->getFirstArticlesCountResponse(self::ARTICLES_TOTAL_COUNT, [Article::PLACEMENT_FOOTER_1, Article::PLACEMENT_FOOTER_4]),
                 [
-                    ...array_slice($this->getExpectedArticles(), 0, 5),
-                    ...array_slice($this->getExpectedArticles(), 12, 3),
+                    ...array_slice($this->getExpectedArticles(), 0, 4),
+                    ...array_slice($this->getExpectedArticles(), 11, 3),
                 ],
             ],
         ];
@@ -186,19 +188,6 @@ class GetArticlesTest extends GraphQlTestCase
             ],
             [
                 'name' => t('For press', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
-                'placement' => Article::PLACEMENT_FOOTER_1,
-                'text' => '<div class="gjs-text-ckeditor">' . t(
-                    'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
-                    [],
-                    Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
-                    $firstDomainLocale,
-                ) . '</div>',
-                'seoH1' => null,
-                'seoTitle' => null,
-                'seoMetaDescription' => null,
-            ],
-            [
-                'name' => t('Contacts', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'placement' => Article::PLACEMENT_FOOTER_1,
                 'text' => '<div class="gjs-text-ckeditor">' . t(
                     'Morbi posuere mauris dolor, quis accumsan dolor ullamcorper eget. Phasellus at elementum magna, et pretium neque. Praesent tristique lorem mi, eget varius quam aliquam eget. Vivamus ultrices interdum nisi, sed placerat lectus fermentum non. Phasellus ac quam vitae nisi aliquam vestibulum. Sed rhoncus tortor a arcu sagittis placerat. Nulla lectus nunc, ultrices ac faucibus sed, accumsan nec diam. Nam auctor neque quis tincidunt tempus. Nunc eget risus tristique, lobortis metus vitae, pellentesque leo. Vivamus placerat turpis ac dolor vehicula tincidunt. Sed venenatis, ante id ultrices convallis, lacus elit porttitor dolor, non porta risus ipsum ac justo. Integer id pretium quam, id placerat nulla.',
