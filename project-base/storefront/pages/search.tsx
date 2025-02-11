@@ -43,7 +43,7 @@ const SearchPage: FC<ServerSidePropsType> = () => {
 export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, domainConfig, t }) => async (context) => {
     const page = getNumberFromUrlQuery(context.query[PAGE_QUERY_PARAMETER_NAME], 1);
     const loadMore = getNumberFromUrlQuery(context.query[LOAD_MORE_QUERY_PARAMETER_NAME], 0);
-    const urlSlug = getSlugFromServerSideUrl(context.req.url ?? '');
+    const urlSlug = getSlugFromServerSideUrl(context.req.url ?? '', context.req.headers);
     const redirect = getRedirectWithOffsetPage(page, loadMore, urlSlug, context.query);
 
     if (redirect) {

@@ -73,7 +73,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
             const blogCategoryResponse: OperationResult<TypeBlogCategoryQuery, TypeBlogCategoryQueryVariables> =
                 await client!
                     .query(BlogCategoryQueryDocument, {
-                        urlSlug: getSlugFromServerSideUrl(context.req.url ?? ''),
+                        urlSlug: getSlugFromServerSideUrl(context.req.url ?? '', context.req.headers),
                     })
                     .toPromise();
 
