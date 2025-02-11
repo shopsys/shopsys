@@ -4,8 +4,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: cs\n"
 
+msgid "Back to overview"
+msgstr "Zpět na přehled"
+
+msgid "Create"
+msgstr "Vytvořit"
+
 msgid "No"
 msgstr "Ne"
+
+msgid "Save changes"
+msgstr "Uložit změny"
 
 msgid "Yes"
 msgstr "Ano"
