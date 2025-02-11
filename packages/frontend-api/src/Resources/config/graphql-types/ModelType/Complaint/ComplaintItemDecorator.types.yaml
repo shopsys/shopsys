@@ -10,7 +10,7 @@ ComplaintItemDecorator:
                 type: "String!"
                 description: "Product name"
             catnum:
-                type: "String!"
+                type: "String"
                 description: "Catalog number"
             quantity:
                 type: "Int!"

@@ -5,7 +5,15 @@
 {% endblock %}
 
 {% block grid_value_cell_id_order_number %}
-    <a href="{{ url('admin_order_edit', { id: row.orderId }) }}">{{ value }}</a>
+    {% if row.orderId is not null %}
+        <a href="{{ url('admin_order_edit', { id: row.orderId }) }}">{{ value }}</a>
+    {% else %}
+        {{ row.cmp.manualDocumentNumber }}
+        <span title="{{ 'Complaint was created manually without link to a particular order'|trans }}"
+          class="js-tooltip cursor-help in-icon in-icon--info" data-toggle="tooltip" data-placement="right">
+            {{ icon('info') }}
+        </span>
+    {% endif %}
 {% endblock %}
 
 {% block grid_value_cell_id_domain_id %}

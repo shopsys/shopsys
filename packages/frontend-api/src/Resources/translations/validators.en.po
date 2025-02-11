@@ -13,6 +13,15 @@ msgstr ""
 msgid "Company name cannot be longer than {{ limit }} characters"
 msgstr ""
 
+msgid "Complaint item catnum cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "Complaint item name cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "Complaint item name is required"
+msgstr ""
+
 msgid "Customer role group cannot be changed."
 msgstr ""
 
@@ -59,6 +68,12 @@ msgid "Order is required"
 msgstr ""
 
 msgid "Order item is required"
+msgstr ""
+
+msgid "Order or document number cannot be longer than {{ limit }} characters"
+msgstr ""
+
+msgid "Order or document number is required"
 msgstr ""
 
 msgid "Password must be at least {{ limit }} characters long"

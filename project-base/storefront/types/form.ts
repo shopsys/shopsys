@@ -101,6 +101,9 @@ export type DeliveryAddressFormType = Omit<DeliveryAddressType, 'uuid' | 'countr
 };
 
 export type ComplaintFormType = {
+    manualDocumentNumber: string | null;
+    manualComplaintItemName: string | null;
+    manualComplaintItemCatnum: string | null;
     email: string;
     quantity: string;
     description: string;

@@ -90,4 +90,9 @@ class ComplaintData
      * @var string|null
      */
     public $email;
+
+    /**
+     * @var string|null
+     */
+    public $manualDocumentNumber;
 }

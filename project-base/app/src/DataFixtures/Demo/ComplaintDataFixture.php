@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures\Demo;
 
 use App\DataFixtures\Demo\Helper\ComplaintHelper;
+use App\Model\Customer\User\CustomerUser;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
@@ -58,6 +59,8 @@ class ComplaintDataFixture extends AbstractReferenceFixture implements Dependent
             [$complaintItem2],
         );
         $this->addReference(self::COMPLAINT_PREFIX . 2, $complaint2);
+
+        $this->createComplaintWithoutOrder();
     }
 
     /**
@@ -69,5 +72,27 @@ class ComplaintDataFixture extends AbstractReferenceFixture implements Dependent
             OrderDataFixture::class,
             ComplaintStatusDataFixture::class,
         ];
+    }
+
+    private function createComplaintWithoutOrder(): void
+    {
+        $customerUser = $this->getReference(CustomerUserDataFixture::CUSTOMER_PREFIX . 5, CustomerUser::class);
+        $uploadedFile = $this->complaintHelper->createUploadedFile(__DIR__ . '/../resources/images/complaint/400.jpg');
+        $complaintItemData = $this->complaintHelper->createComplaintItemData(
+            null,
+            'This is not what I expected :(',
+            1,
+            [$uploadedFile],
+            'Hello Kitty',
+            '9177759',
+        );
+
+        $this->complaintHelper->createComplaint(
+            $customerUser,
+            null,
+            $this->getReference(ComplaintStatusDataFixture::COMPLAINT_STATUS_NEW, ComplaintStatus::class),
+            [$complaintItemData],
+            '42',
+        );
     }
 }

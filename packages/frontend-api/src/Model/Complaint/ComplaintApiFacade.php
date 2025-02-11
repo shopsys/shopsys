@@ -99,7 +99,12 @@ class ComplaintApiFacade
     {
         $input = $argument['input'];
 
-        $order = $this->orderApiFacade->getByUuid($input['orderUuid']);
+        $orderUuid = $input['orderUuid'];
+        $order = null;
+
+        if ($orderUuid !== null) {
+            $order = $this->orderApiFacade->getByUuid($orderUuid);
+        }
         $customerUser = $this->currentCustomerUser->findCurrentCustomerUser();
 
         $complaintItemsData = $this->createComplaintItems($input['items'], $order);
@@ -119,35 +124,20 @@ class ComplaintApiFacade
 
     /**
      * @param array $complaintItemsInputData
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order|null $order
      * @return \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData[]
      */
-    protected function createComplaintItems(array $complaintItemsInputData, Order $order): array
+    protected function createComplaintItems(array $complaintItemsInputData, ?Order $order): array
     {
         if (count($complaintItemsInputData) === 0) {
             throw new MissingComplaintItemsUserError('At least one complaint item must be provided');
         }
 
-        $orderItemUuids = array_map(fn ($item) => $item['orderItemUuid'], $complaintItemsInputData);
-        $orderItems = $this->orderItemApiFacade->findMappedByUuid($orderItemUuids);
-
-        $complaintItemsData = [];
-
-        foreach ($complaintItemsInputData as $item) {
-            $orderItemUuid = $item['orderItemUuid'];
-
-            if (!array_key_exists($orderItemUuid, $orderItems)) {
-                throw new OrderItemNotFoundUserError(sprintf('Order item with UUID "%s" not found', $orderItemUuid));
-            }
-
-            $orderItem = $orderItems[$orderItemUuid];
-
-            $this->validateComplaintItem($orderItem, $order, $item);
-
-            $complaintItemsData[] = $this->complaintItemDataApiFactory->createFromComplaintItemInput($orderItem, $item);
+        if ($order === null) {
+            return $this->createComplaintItemsWithoutOrder($complaintItemsInputData);
         }
 
-        return $complaintItemsData;
+        return $this->createComplaintItemsWithOrder($complaintItemsInputData, $order);
     }
 
     /**
@@ -244,5 +234,49 @@ class ComplaintApiFacade
         Customer $customer,
     ): ?Complaint {
         return $this->complaintRepository->findByComplaintNumberAndCustomer($complaintNumber, $customer);
+    }
+
+    /**
+     * @param array $complaintItemsInputData
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @return \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData[]
+     */
+    protected function createComplaintItemsWithOrder(array $complaintItemsInputData, Order $order): array
+    {
+        $orderItemUuids = array_map(fn ($item) => $item['orderItemUuid'], $complaintItemsInputData);
+        $orderItems = $this->orderItemApiFacade->findMappedByUuid($orderItemUuids);
+
+        $complaintItemsData = [];
+
+        foreach ($complaintItemsInputData as $item) {
+            $orderItemUuid = $item['orderItemUuid'];
+
+            if (!array_key_exists($orderItemUuid, $orderItems)) {
+                throw new OrderItemNotFoundUserError(sprintf('Order item with UUID "%s" not found', $orderItemUuid));
+            }
+
+            $orderItem = $orderItems[$orderItemUuid];
+
+            $this->validateComplaintItem($orderItem, $order, $item);
+
+            $complaintItemsData[] = $this->complaintItemDataApiFactory->createFromComplaintItemInput($item, $orderItem);
+        }
+
+        return $complaintItemsData;
+    }
+
+    /**
+     * @param array $complaintItemsInputData
+     * @return \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData[]
+     */
+    protected function createComplaintItemsWithoutOrder(array $complaintItemsInputData): array
+    {
+        $complaintItemsData = [];
+
+        foreach ($complaintItemsInputData as $item) {
+            $complaintItemsData[] = $this->complaintItemDataApiFactory->createFromComplaintItemInput($item);
+        }
+
+        return $complaintItemsData;
     }
 }

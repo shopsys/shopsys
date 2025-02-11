@@ -49,7 +49,7 @@ class ComplaintRepository
             ->addSelect('o.number as orderNumber')
             ->addSelect('o.id as orderId')
             ->addSelect('cu.id as customerUserId')
-            ->join('cmp.order', 'o')
+            ->leftJoin('cmp.order', 'o')
             ->addSelect(
                 '(CASE WHEN ba.companyName IS NOT NULL
                     THEN CONCAT(ba.companyName, \' - \', cu.lastName, \' \', cu.firstName)
@@ -63,11 +63,8 @@ class ComplaintRepository
             ->join('cu.customer', 'c')
             ->join('c.billingAddresses', 'ba', Join::WITH, $queryBuilder->expr()->in('ba.id', $subQuery->getDQL()))
             ->groupBy('cmp.id')
-            ->addGroupBy('o.companyName')
             ->addGroupBy('o.number')
             ->addGroupBy('o.id')
-            ->addGroupBy('o.lastName')
-            ->addGroupBy('o.firstName')
             ->addGroupBy('cu.id')
             ->addGroupBy('ba.id')
             ->setParameter('locale', $locale);

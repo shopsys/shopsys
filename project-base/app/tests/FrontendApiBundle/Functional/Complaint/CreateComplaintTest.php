@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Complaint;
 
 use App\DataFixtures\Demo\OrderDataFixture;
+use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Product\Product;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Tests\FrontendApiBundle\Test\GraphQlWithLoginTestCase;
 
 class CreateComplaintTest extends GraphQlWithLoginTestCase
@@ -92,6 +94,142 @@ class CreateComplaintTest extends GraphQlWithLoginTestCase
             $complaintItemFilesCount2,
             $product2,
         );
+    }
+
+    public function testCreateComplaintWithoutOrder(): void
+    {
+        $manualDocumentNumber = 'Whatever132';
+        $complaintItemManualName = 'Product name';
+        $complaintItemManualCatnum = 'Product catnum';
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/CreateComplaintMutation.graphql',
+            [
+                'input' => [
+                    'manualDocumentNumber' => $manualDocumentNumber,
+                    'email' => self::COMPLAINT_EMAIL,
+                    'items' => [
+                        [
+                            'quantity' => 1,
+                            'description' => 'Broken!!!',
+                            'manualComplaintItemName' => $complaintItemManualName,
+                            'manualComplaintItemCatnum' => $complaintItemManualCatnum,
+                            'files' => [null],
+                        ],
+                    ],
+                    'deliveryAddress' => [
+                        'firstName' => 'Jiří',
+                        'lastName' => 'Ševčík',
+                        'street' => 'První 1',
+                        'city' => 'Ostrava',
+                        'postcode' => '71200',
+                        'telephone' => '+420123456789',
+                        'country' => 'CZ',
+                    ],
+                ],
+            ],
+            [
+                1 => __DIR__ . '/files/1.jpg',
+            ],
+            [
+                1 => ['variables.input.items.0.files.0'],
+            ],
+        );
+
+        $responseData = $this->getResponseDataForGraphQlType($response, 'CreateComplaint');
+
+        $this->assertSame($manualDocumentNumber, $responseData['manualDocumentNumber']);
+        $this->assertNull($responseData['order']);
+        $this->assertNull($responseData['items'][0]['orderItem']);
+        $this->assertSame($complaintItemManualCatnum, $responseData['items'][0]['catnum']);
+        $this->assertSame($complaintItemManualName, $responseData['items'][0]['productName']);
+    }
+
+    public function testCreateComplaintWithoutOrderWithExistingCatnumCreatesBindingWithProduct(): void
+    {
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . 1, Product::class);
+        $manualDocumentNumber = 'Whatever132';
+        $complaintItemManualName = 'Product name';
+        $complaintItemManualCatnum = $product->getCatnum();
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/CreateComplaintMutation.graphql',
+            [
+                'input' => [
+                    'manualDocumentNumber' => $manualDocumentNumber,
+                    'email' => self::COMPLAINT_EMAIL,
+                    'items' => [
+                        [
+                            'quantity' => 1,
+                            'description' => 'Broken!!!',
+                            'manualComplaintItemName' => $complaintItemManualName,
+                            'manualComplaintItemCatnum' => $complaintItemManualCatnum,
+                            'files' => [null],
+                        ],
+                    ],
+                    'deliveryAddress' => [
+                        'firstName' => 'Jiří',
+                        'lastName' => 'Ševčík',
+                        'street' => 'První 1',
+                        'city' => 'Ostrava',
+                        'postcode' => '71200',
+                        'telephone' => '+420123456789',
+                        'country' => 'CZ',
+                    ],
+                ],
+            ],
+            [
+                1 => __DIR__ . '/files/1.jpg',
+            ],
+            [
+                1 => ['variables.input.items.0.files.0'],
+            ],
+        );
+
+        $responseData = $this->getResponseDataForGraphQlType($response, 'CreateComplaint');
+
+        $this->assertSame($product->getUuid(), $responseData['items'][0]['product']['uuid']);
+        $this->assertSame($complaintItemManualName, $responseData['items'][0]['productName']);
+    }
+
+    public function testCreateComplaintWithoutOrderRequiresDocumentNumberAndItemName(): void
+    {
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/graphql/CreateComplaintMutation.graphql',
+            [
+                'input' => [
+                    'email' => self::COMPLAINT_EMAIL,
+                    'items' => [
+                        [
+                            'quantity' => 1,
+                            'description' => 'Broken!!!',
+                            'files' => [null],
+                        ],
+                    ],
+                    'deliveryAddress' => [
+                        'firstName' => 'Jiří',
+                        'lastName' => 'Ševčík',
+                        'street' => 'První 1',
+                        'city' => 'Ostrava',
+                        'postcode' => '71200',
+                        'telephone' => '+420123456789',
+                        'country' => 'CZ',
+                    ],
+                ],
+            ],
+            [
+                1 => __DIR__ . '/files/1.jpg',
+            ],
+            [
+                1 => ['variables.input.items.0.files.0'],
+            ],
+        );
+
+        $errors = $this->getErrorsExtensionValidationFromResponse($response);
+
+        $this->assertArrayHasKey('input.manualDocumentNumber', $errors);
+        $this->assertSame(NotBlank::IS_BLANK_ERROR, $errors['input.manualDocumentNumber'][0]['code']);
+
+        $this->assertArrayHasKey('input.items[0].manualComplaintItemName', $errors);
+        $this->assertSame(NotBlank::IS_BLANK_ERROR, $errors['input.items[0].manualComplaintItemName'][0]['code']);
     }
 
     /**

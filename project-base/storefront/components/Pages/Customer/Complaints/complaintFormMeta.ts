@@ -2,11 +2,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import {
     validateCity,
     validateCompanyName,
+    validateComplaintManualDocumentNumber,
     validateCountry,
     validateEmail,
     validateFirstName,
     validateImageFile,
     validateLastName,
+    validateManualComplaintItemCatnum,
+    validateManualComplaintItemName,
     validatePostcode,
     validateStreet,
     validateTelephoneRequired,
@@ -21,6 +24,7 @@ import * as Yup from 'yup';
 export const useComplaintForm = (
     defaultDeliveryAddressChecked: string,
     defaultEmail: string,
+    isCreationWithoutOrder: boolean,
 ): [UseFormReturn<ComplaintFormType>, ComplaintFormType | undefined] => {
     const { t } = useTranslation();
 
@@ -68,6 +72,15 @@ export const useComplaintForm = (
                 is: (deliveryAddressUuid: string) => deliveryAddressUuid === '',
                 then: () => validateCountry(t),
             }),
+            manualDocumentNumber: isCreationWithoutOrder
+                ? validateComplaintManualDocumentNumber(t)
+                : Yup.string().optional(),
+            manualComplaintItemName: isCreationWithoutOrder
+                ? validateManualComplaintItemName(t)
+                : Yup.string().optional(),
+            manualComplaintItemCatnum: isCreationWithoutOrder
+                ? validateManualComplaintItemCatnum(t)
+                : Yup.string().optional(),
         }),
     );
 
@@ -88,6 +101,9 @@ export const useComplaintForm = (
             label: '',
             value: '',
         },
+        manualDocumentNumber: '',
+        manualComplaintItemName: '',
+        manualComplaintItemCatnum: '',
     };
 
     return [useShopsysForm<ComplaintFormType>(resolver, defaultValues), defaultValues];
@@ -184,6 +200,21 @@ export const useComplaintFormMeta = (formProviderMethods: UseFormReturn<Complain
                     label: t('Country'),
                     errorMessage: (errors.country as FieldError | undefined)?.message,
                 },
+                manualDocumentNumber: {
+                    name: 'manualDocumentNumber' as const,
+                    label: t('Order or document number'),
+                    errorMessage: errors.manualDocumentNumber?.message,
+                },
+                manualComplaintItemName: {
+                    name: 'manualComplaintItemName' as const,
+                    label: t('Item name'),
+                    errorMessage: errors.manualComplaintItemName?.message,
+                },
+                manualComplaintItemCatnum: {
+                    name: 'manualComplaintItemCatnum' as const,
+                    label: t('Catalog number'),
+                    errorMessage: errors.manualComplaintItemCatnum?.message,
+                },
             },
         }),
         [
@@ -199,6 +230,9 @@ export const useComplaintFormMeta = (formProviderMethods: UseFormReturn<Complain
             errors.city?.message,
             errors.postcode?.message,
             errors.country,
+            errors.manualDocumentNumber?.message,
+            errors.manualComplaintItemName?.message,
+            errors.manualComplaintItemCatnum?.message,
             t,
         ],
     );

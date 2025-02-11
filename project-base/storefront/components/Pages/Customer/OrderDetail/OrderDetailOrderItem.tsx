@@ -1,13 +1,11 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
-import { CreateComplaintPopup } from 'components/Blocks/Popup/CreateComplaintPopup';
-import { Button } from 'components/Forms/Button/Button';
+import { CreateComplaintPopupButton } from 'components/Blocks/Complaint/CreateComplaintPopupButton';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeOrderDetailItemFragment } from 'graphql/requests/orders/fragments/OrderDetailItemFragment.generated';
 import { TypeOrderItemTypeEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
-import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
@@ -24,16 +22,6 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
     const formatPrice = useFormatPrice();
     const isUserLoggedIn = useIsUserLoggedIn();
     const { canCreateComplaint } = useAuthorization();
-    const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
-
-    const openCreateComplaintPopup = (
-        e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-        orderUuid: string,
-        orderItem: TypeOrderDetailItemFragment,
-    ) => {
-        e.stopPropagation();
-        updatePortalContent(<CreateComplaintPopup orderItem={orderItem} orderUuid={orderUuid} />);
-    };
 
     return (
         <div
@@ -78,15 +66,15 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
                 )}
 
                 {canCreateComplaint && isUserLoggedIn && orderItem.type === TypeOrderItemTypeEnum.Product && (
-                    <Button
+                    <CreateComplaintPopupButton
                         className="whitespace-nowrap"
+                        label={t('Create complaint')}
+                        orderItem={orderItem}
+                        orderUuid={orderUuid}
                         size="small"
                         tid={TIDs.order_detail_create_complaint_button}
                         variant="inverted"
-                        onClick={(e) => openCreateComplaintPopup(e, orderUuid, orderItem)}
-                    >
-                        {t('Create complaint')}
-                    </Button>
+                    />
                 )}
             </div>
         </div>

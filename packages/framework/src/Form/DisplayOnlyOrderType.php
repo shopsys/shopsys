@@ -18,11 +18,13 @@ class DisplayOnlyOrderType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
-            ->setRequired(['order'])
-            ->setAllowedTypes('order', [Order::class])
+            ->setRequired(['order', 'manualDocumentNumber'])
+            ->setAllowedTypes('order', [Order::class, 'null'])
+            ->setAllowedTypes('manualDocumentNumber', ['string', 'null'])
             ->setDefaults([
                 'mapped' => false,
                 'required' => false,
+                'manualDocumentNumber' => null,
                 'attr' => [
                     'readonly' => 'readonly',
                 ],
@@ -37,5 +39,6 @@ class DisplayOnlyOrderType extends AbstractType
         parent::buildView($view, $form, $options);
 
         $view->vars['order'] = $options['order'];
+        $view->vars['manualDocumentNumber'] = $options['manualDocumentNumber'];
     }
 }

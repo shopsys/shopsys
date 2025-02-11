@@ -12,6 +12,13 @@ mutation CreateComplaint($input: ComplaintInput!) {
             orderItem {
                 name
             }
+            product {
+                uuid
+            }
+        }
+        manualDocumentNumber
+        order {
+            uuid
         }
     }
 }

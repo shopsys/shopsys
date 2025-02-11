@@ -43,8 +43,11 @@ ComplaintDecorator:
                 type: "String!"
                 description: "Status of the complaint"
             order:
-                type: "Order!"
+                type: "Order"
                 description: "Order for which the complaint was created"
+            manualDocumentNumber:
+                type: "String"
+                description: "Order or document number entered by customer (if the complaint was created without an order)"
             email:
                 type: "String!"
                 description: "The customer's email address"

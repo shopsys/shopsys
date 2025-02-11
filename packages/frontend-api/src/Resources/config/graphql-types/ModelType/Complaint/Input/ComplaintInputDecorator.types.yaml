@@ -4,11 +4,24 @@ ComplaintInputDecorator:
     config:
         fields:
             orderUuid:
-                type: "Uuid!"
+                type: "Uuid"
                 description: "UUID of the order"
+                defaultValue: null
                 validation:
                     -   NotBlank:
                             message: "Order is required"
+                            groups: "withOrder"
+            manualDocumentNumber:
+                type: "String"
+                defaultValue: null
+                description: "Order or document number (doesn't have to be from any existing order)"
+                validation:
+                    -   NotBlank:
+                            message: "Order or document number is required"
+                            groups: "withoutOrder"
+                    -   Length:
+                            max: 255
+                            maxMessage: "Order or document number cannot be longer than {{ limit }} characters"
             deliveryAddress:
                 type: "DeliveryAddressInput!"
                 description: "Delivery address"

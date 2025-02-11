@@ -13,6 +13,9 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 
 class CreateComplaintMutation extends BaseTokenMutation
 {
+    protected const string VALIDATION_GROUP_WITH_ORDER = 'withOrder';
+    protected const string VALIDATION_GROUP_WITHOUT_ORDER = 'withoutOrder';
+
     /**
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
      * @param \Shopsys\FrontendApiBundle\Model\Complaint\ComplaintApiFacade $complaintApiFacade
@@ -33,8 +36,27 @@ class CreateComplaintMutation extends BaseTokenMutation
     {
         $this->runCheckUserIsLogged();
 
-        $validator->validate();
+        $validationGroups = $this->computeValidationGroups($argument);
+        $validator->validate($validationGroups);
 
         return $this->complaintApiFacade->createFromComplaintInputArgument($argument);
+    }
+
+    /**
+     * @param \Overblog\GraphQLBundle\Definition\Argument $argument
+     * @return string[]
+     */
+    protected function computeValidationGroups(Argument $argument): array
+    {
+        $input = $argument['input'];
+        $validationGroups = ['Default'];
+
+        if ($input['orderUuid'] === null) {
+            $validationGroups[] = self::VALIDATION_GROUP_WITHOUT_ORDER;
+        } else {
+            $validationGroups[] = self::VALIDATION_GROUP_WITH_ORDER;
+        }
+
+        return $validationGroups;
     }
 }

@@ -29,11 +29,11 @@ import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 type CreateComplaintPopupProps = {
-    orderUuid: string;
-    orderItem: TypeOrderDetailItemFragment;
+    orderUuid?: string;
+    orderItem?: TypeOrderDetailItemFragment;
 };
 
-export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid, orderItem }) => {
+export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid = null, orderItem = null }) => {
     const router = useRouter();
     const { t } = useTranslation();
     const { url } = useDomainConfig();
@@ -42,7 +42,12 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid,
     const user = useCurrentCustomerData();
 
     const defaultDeliveryAddressChecked = user?.deliveryAddresses[0]?.uuid || '';
-    const [formProviderMethods] = useComplaintForm(defaultDeliveryAddressChecked, user?.email || '');
+    const isCreationWithoutOrder = orderUuid === null;
+    const [formProviderMethods] = useComplaintForm(
+        defaultDeliveryAddressChecked,
+        user?.email || '',
+        isCreationWithoutOrder,
+    );
     const isSubmitting = formProviderMethods.formState.isSubmitting;
     const { setValue } = formProviderMethods;
     const formMeta = useComplaintFormMeta(formProviderMethods);
@@ -66,10 +71,12 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid,
 
         const items = [
             {
-                orderItemUuid: orderItem.uuid,
+                orderItemUuid: orderItem?.uuid ?? null,
                 quantity: Number(complaintFormData.quantity),
                 description: complaintFormData.description,
                 files: complaintFormData.files.filter((image) => image instanceof File),
+                manualComplaintItemName: complaintFormData.manualComplaintItemName,
+                manualComplaintItemCatnum: complaintFormData.manualComplaintItemCatnum,
             },
         ];
 
@@ -104,6 +111,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid,
                 items,
                 deliveryAddress,
                 email: complaintFormData.email,
+                manualDocumentNumber: complaintFormData.manualDocumentNumber,
             },
         });
 
@@ -130,7 +138,49 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid,
                     <FormContentWrapper>
                         <FormBlockWrapper>
                             <FormHeading>{t('Create complaint')}</FormHeading>
-                            <h5 className="mb-2">{orderItem.name}</h5>
+                            {isCreationWithoutOrder && (
+                                <TextInputControlled
+                                    control={formProviderMethods.control}
+                                    formName={formMeta.formName}
+                                    name={formMeta.fields.manualDocumentNumber.name}
+                                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                    textInputProps={{
+                                        label: formMeta.fields.manualDocumentNumber.label,
+                                        required: true,
+                                        type: 'text',
+                                        disabled: isSubmitting,
+                                    }}
+                                />
+                            )}
+                            <h5 className="mb-2">{orderItem?.name ?? t('Complaint item')}</h5>
+                            {isCreationWithoutOrder && (
+                                <TextInputControlled
+                                    control={formProviderMethods.control}
+                                    formName={formMeta.formName}
+                                    name={formMeta.fields.manualComplaintItemName.name}
+                                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                    textInputProps={{
+                                        label: formMeta.fields.manualComplaintItemName.label,
+                                        required: true,
+                                        type: 'text',
+                                        disabled: isSubmitting,
+                                    }}
+                                />
+                            )}
+                            {isCreationWithoutOrder && (
+                                <TextInputControlled
+                                    control={formProviderMethods.control}
+                                    formName={formMeta.formName}
+                                    name={formMeta.fields.manualComplaintItemCatnum.name}
+                                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                    textInputProps={{
+                                        label: formMeta.fields.manualComplaintItemCatnum.label,
+                                        required: false,
+                                        type: 'text',
+                                        disabled: isSubmitting,
+                                    }}
+                                />
+                            )}
                             <TextInputControlled
                                 control={formProviderMethods.control}
                                 formName={formMeta.formName}

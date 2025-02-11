@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Complaint;
 
 use Overblog\GraphQLBundle\Definition\Argument;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintData;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintDataFactory;
@@ -18,18 +19,20 @@ class ComplaintDataApiFactory
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintDataFactory $complaintDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      */
     public function __construct(
         protected readonly ComplaintDataFactory $complaintDataFactory,
         protected readonly CountryFacade $countryFacade,
         protected readonly FileUpload $fileUpload,
+        protected readonly Domain $domain,
     ) {
     }
 
     /**
      * @param \Overblog\GraphQLBundle\Definition\Argument $argument
      * @param string $number
-     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order|null $order
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData[] $complaintItems
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser|null $customerUser
      * @return \Shopsys\FrameworkBundle\Model\Complaint\ComplaintData
@@ -37,7 +40,7 @@ class ComplaintDataApiFactory
     public function createFromComplaintInputArgument(
         Argument $argument,
         string $number,
-        Order $order,
+        ?Order $order,
         array $complaintItems,
         ?CustomerUser $customerUser = null,
     ): ComplaintData {
@@ -46,7 +49,8 @@ class ComplaintDataApiFactory
         $complaintData = $this->complaintDataFactory->create();
         $complaintData->number = $number;
         $complaintData->order = $order;
-        $complaintData->domainId = $order->getDomainId();
+        $complaintData->manualDocumentNumber = $input['manualDocumentNumber'];
+        $complaintData->domainId = $order?->getDomainId() ?? $this->domain->getId();
         $complaintData->customerUser = $customerUser;
         $complaintData->complaintItems = $complaintItems;
 

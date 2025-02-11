@@ -101,6 +101,8 @@ class AdvancedSearchComplaintFacade
                         OR
                         o.number LIKE :text
                         OR
+                        NORMALIZED(cmp.manualDocumentNumber) LIKE NORMALIZED(:text)
+                        OR
                         NORMALIZED(cmp.deliveryLastName) LIKE NORMALIZED(:text)
                         OR
                         NORMALIZED(cmp.deliveryCompanyName) LIKE NORMALIZED(:text)

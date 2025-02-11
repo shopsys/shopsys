@@ -7,6 +7,7 @@ namespace App\DataFixtures\Demo\Helper;
 use App\Model\Customer\User\CustomerUser;
 use App\Model\Order\Item\OrderItem;
 use App\Model\Order\Order;
+use App\Model\Product\ProductFacade;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileDataFactory;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
@@ -30,6 +31,7 @@ class ComplaintHelper
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintNumberSequenceRepository $complaintNumberSequenceRepository
      * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileDataFactory $customerUploadedFileDataFactory
      * @param \Shopsys\FrameworkBundle\Component\FileUpload\FileUpload $fileUpload
+     * @param \App\Model\Product\ProductFacade $productFacade
      */
     public function __construct(
         private readonly ComplaintDataFactory $complaintDataFactory,
@@ -38,64 +40,74 @@ class ComplaintHelper
         private readonly ComplaintNumberSequenceRepository $complaintNumberSequenceRepository,
         private readonly CustomerUploadedFileDataFactory $customerUploadedFileDataFactory,
         private readonly FileUpload $fileUpload,
+        private readonly ProductFacade $productFacade,
     ) {
     }
 
     /**
      * @param \App\Model\Customer\User\CustomerUser $customerUser
-     * @param \App\Model\Order\Order $order
+     * @param \App\Model\Order\Order|null $order
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus $status
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData[] $items
+     * @param string|null $manualDocumentNumber
      * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint
      */
     public function createComplaint(
         CustomerUser $customerUser,
-        Order $order,
+        ?Order $order,
         ComplaintStatus $status,
         array $items,
+        ?string $manualDocumentNumber = null,
     ): Complaint {
         $complaintData = $this->complaintDataFactory->create();
         $complaintData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, md5(serialize(func_get_args())))->toString();
         $complaintData->number = $this->complaintNumberSequenceRepository->getNextNumber();
-        $complaintData->domainId = $order->getDomainId();
+        $complaintData->domainId = $order?->getDomainId() ?? $customerUser->getDomainId();
         $complaintData->customerUser = $customerUser;
         $complaintData->order = $order;
+        $complaintData->manualDocumentNumber = $manualDocumentNumber;
         $complaintData->status = $status;
         $complaintData->complaintItems = $items;
         $complaintData->email = $customerUser->getEmail();
 
         $deliveryAddress = $customerUser->getDefaultDeliveryAddress();
-        $complaintData->deliveryFirstName = $deliveryAddress->getFirstName();
-        $complaintData->deliveryLastName = $deliveryAddress->getLastName();
-        $complaintData->deliveryStreet = $deliveryAddress->getStreet();
-        $complaintData->deliveryCity = $deliveryAddress->getCity();
-        $complaintData->deliveryPostcode = $deliveryAddress->getPostcode();
-        $complaintData->deliveryCountry = $deliveryAddress->getCountry();
-        $complaintData->deliveryTelephone = $deliveryAddress->getTelephone();
-        $complaintData->deliveryCompanyName = $deliveryAddress->getCompanyName();
+        $billingAddress = $customerUser->getCustomer()->getBillingAddress();
+
+        $complaintData->deliveryFirstName = $deliveryAddress?->getFirstName() ?? $customerUser->getFirstName();
+        $complaintData->deliveryLastName = $deliveryAddress?->getLastName() ?? $customerUser->getLastName();
+        $complaintData->deliveryStreet = $deliveryAddress?->getStreet() ?? $billingAddress->getStreet();
+        $complaintData->deliveryCity = $deliveryAddress?->getCity() ?? $billingAddress->getCity();
+        $complaintData->deliveryPostcode = $deliveryAddress?->getPostcode() ?? $billingAddress->getPostcode();
+        $complaintData->deliveryCountry = $deliveryAddress?->getCountry() ?? $billingAddress->getCountry();
+        $complaintData->deliveryTelephone = $deliveryAddress?->getTelephone();
+        $complaintData->deliveryCompanyName = $deliveryAddress?->getCompanyName();
 
         return $this->complaintApiFacade->create($complaintData);
     }
 
     /**
-     * @param \App\Model\Order\Item\OrderItem $orderItem
+     * @param \App\Model\Order\Item\OrderItem|null $orderItem
      * @param string $description
      * @param int $quantity
      * @param \Symfony\Component\HttpFoundation\File\UploadedFile[] $uploadedFiles
+     * @param string|null $manualComplaintItemName
+     * @param string|null $manualComplaintItemCatnum
      * @return \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData
      */
     public function createComplaintItemData(
-        OrderItem $orderItem,
+        ?OrderItem $orderItem,
         string $description,
         int $quantity,
         array $uploadedFiles,
+        ?string $manualComplaintItemName = null,
+        ?string $manualComplaintItemCatnum = null,
     ): ComplaintItemData {
         $item = $this->complaintItemDataFactory->create();
 
         $item->orderItem = $orderItem;
-        $item->product = $orderItem->getProduct();
-        $item->productName = $orderItem->getName();
-        $item->catnum = $orderItem->getCatnum();
+        $item->product = $orderItem?->getProduct() ?? $this->productFacade->findByCatnum($manualComplaintItemCatnum);
+        $item->productName = $orderItem?->getName() ?? $manualComplaintItemName;
+        $item->catnum = $orderItem?->getCatnum() ?? $manualComplaintItemCatnum;
         $item->description = $description;
         $item->quantity = $quantity;
         $item->files = $this->customerUploadedFileDataFactory->create();

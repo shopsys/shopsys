@@ -4,11 +4,31 @@ ComplaintItemInputDecorator:
     config:
         fields:
             orderItemUuid:
-                type: "Uuid!"
+                type: "Uuid"
                 description: "UUID of the order item"
                 validation:
                     -   NotBlank:
                             message: "Order item is required"
+                            groups: "withOrder"
+            manualComplaintItemName:
+                type: "String"
+                defaultValue: null
+                description: "Name of the complaint item entered by customer (if the complaint is created without an order, otherwise, the name is taken from the order item)"
+                validation:
+                    -   NotBlank:
+                            message: "Complaint item name is required"
+                            groups: "withoutOrder"
+                    -   Length:
+                            max: 255
+                            maxMessage: "Complaint item name cannot be longer than {{ limit }} characters"
+            manualComplaintItemCatnum:
+                type: "String"
+                defaultValue: null
+                description: "Catalog number of the complaint item entered by customer (if the complaint is created without an order, otherwise, the catalog number is taken from the order item)"
+                validation:
+                    -   Length:
+                            max: 255
+                            maxMessage: "Complaint item catnum cannot be longer than {{ limit }} characters"
             quantity:
                 type: "Int!"
                 description: "Quantity of the complaint item"

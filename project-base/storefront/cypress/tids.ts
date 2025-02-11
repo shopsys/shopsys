@@ -9,6 +9,7 @@ export enum TIDs {
     pages_cart_removecartitembutton = 'pages_cart_removecartitembutton',
     pages_cart_list_item_name = 'pages_cart_list_item_name',
     cart_page_empty_cart_text = 'cart_page_empty_cart_text',
+    complaints_list_create_complaint_manually_button = 'complaints_list_create_complaint_manually_button',
     blocks_promocode_add_button = 'blocks_promocode_add_button',
     blocks_promocode_apply_button = 'blocks_promocode_apply_button',
     blocks_promocode_promocodeinfo_code = 'blocks_promocode_promocodeinfo_code',

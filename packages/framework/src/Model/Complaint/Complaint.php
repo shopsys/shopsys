@@ -42,9 +42,9 @@ class Complaint
     protected $number;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Model\Order\Order
+     * @var \Shopsys\FrameworkBundle\Model\Order\Order|null
      * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Order\Order")
-     * @ORM\JoinColumn(nullable=false, name="order_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\JoinColumn(nullable=true, name="order_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $order;
 
@@ -142,6 +142,12 @@ class Complaint
     protected $email;
 
     /**
+     * @var string|null
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $manualDocumentNumber;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintData $complaintData
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItem[] $complaintItems
      */
@@ -205,7 +211,7 @@ class Complaint
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Model\Order\Order
+     * @return \Shopsys\FrameworkBundle\Model\Order\Order|null
      */
     public function getOrder()
     {
@@ -323,6 +329,7 @@ class Complaint
         $this->deliveryCountry = $complaintData->deliveryCountry;
         $this->status = $complaintData->status;
         $this->email = $complaintData->email;
+        $this->manualDocumentNumber = $complaintData->manualDocumentNumber;
     }
 
     /**
@@ -360,5 +367,21 @@ class Complaint
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getManualDocumentNumber()
+    {
+        return $this->manualDocumentNumber;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrderNumberOrManualDocumentNumber(): string
+    {
+        return $this->order?->getNumber() ?? $this->manualDocumentNumber;
     }
 }

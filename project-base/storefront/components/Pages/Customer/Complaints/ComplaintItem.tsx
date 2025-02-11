@@ -24,21 +24,21 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
             <div className="flex flex-col gap-4 vl:flex-row vl:items-start vl:justify-between">
                 <Image
                     priority
-                    alt={complaintItem.items[0].orderItem?.product?.mainImage?.name || ''}
+                    alt={complaintItem.items[0].product?.mainImage?.name || ''}
                     className="h-[80px] max-h-full w-[80px] object-contain"
                     height={80}
                     sizes="(max-width: 768px) 100vw, 50vw"
-                    src={complaintItem.items[0].orderItem?.product?.mainImage?.url}
+                    src={complaintItem.items[0].product?.mainImage?.url}
                     width={80}
                 />
                 <div className="flex flex-col gap-1">
                     <h5>
-                        {complaintItem.items[0].orderItem?.product?.isVisible ? (
-                            <ExtendedNextLink href={complaintItem.items[0].orderItem.product.slug} type="product">
-                                {complaintItem.items[0].orderItem.name}
+                        {complaintItem.items[0].product?.isVisible ? (
+                            <ExtendedNextLink href={complaintItem.items[0].product.slug} type="product">
+                                {complaintItem.items[0].productName}
                             </ExtendedNextLink>
                         ) : (
-                            complaintItem.items[0].orderItem?.name
+                            complaintItem.items[0].productName
                         )}
                     </h5>
                     <div className="flex flex-wrap gap-x-8 gap-y-2">

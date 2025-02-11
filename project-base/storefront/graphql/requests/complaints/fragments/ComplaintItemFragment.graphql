@@ -7,4 +7,13 @@ fragment ComplaintItemFragment on ComplaintItem {
     files {
         ...FileFragment
     }
+    product {
+        mainImage {
+            ...ImageFragment
+        }
+        slug
+        isVisible
+    }
+    catnum
+    productName
 }

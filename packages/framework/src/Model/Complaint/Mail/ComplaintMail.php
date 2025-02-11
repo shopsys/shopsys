@@ -82,7 +82,7 @@ class ComplaintMail implements MessageFactoryInterface
         return [
             self::VARIABLE_COMPLAINT_NUMBER => htmlspecialchars($complaint->getNumber(), ENT_QUOTES),
             self::VARIABLE_COMPLAINT_DETAIL_URL => $this->getComplaintDetailUrl($complaint),
-            self::VARIABLE_ORDER_NUMBER => htmlspecialchars($complaint->getOrder()->getNumber(), ENT_QUOTES),
+            self::VARIABLE_ORDER_NUMBER => htmlspecialchars($complaint->getOrderNumberOrManualDocumentNumber(), ENT_QUOTES),
             self::VARIABLE_DATE => $this->getFormattedDateTime($complaint),
             self::VARIABLE_URL => $router->generate('front_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL),
         ];
@@ -96,7 +96,7 @@ class ComplaintMail implements MessageFactoryInterface
     {
         return [
             self::VARIABLE_COMPLAINT_NUMBER => $complaint->getNumber(),
-            self::VARIABLE_ORDER_NUMBER => $complaint->getOrder()->getNumber(),
+            self::VARIABLE_ORDER_NUMBER => $complaint->getOrderNumberOrManualDocumentNumber(),
             self::VARIABLE_DATE => $this->getFormattedDateTime($complaint),
         ];
     }
