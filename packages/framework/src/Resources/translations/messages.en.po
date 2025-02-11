@@ -448,6 +448,9 @@ msgstr ""
 msgid "Background color"
 msgstr ""
 
+msgid "Bank account number"
+msgstr ""
+
 msgid "Banner"
 msgstr ""
 
@@ -1213,10 +1216,10 @@ msgstr ""
 msgid "Days until delivery"
 msgstr ""
 
-msgid "Dear customer, <br /><br />Your complaint with number {complaint_number} from order number {order_number} created {date} has been finished. For more information, visit <a href=\"{complaint_detail_url}\">complaint detail</a>.<br /><br />Do you need anything else? Visit our <a href=\"{url}\">website</a>."
+msgid "Dear customer, <br /><br />Your complaint with number {complaint_number} from order number {order_number} created {date} with preferred resolution {complaint_resolution} has been finished. For more information, visit <a href=\"{complaint_detail_url}\">complaint detail</a>.<br /><br />Do you need anything else? Visit our <a href=\"{url}\">website</a>."
 msgstr ""
 
-msgid "Dear customer, <br /><br />Your complaint with number {complaint_number} from order number {order_number} created {date} is being processed. For more information, visit <a href=\"{complaint_detail_url}\">complaint detail</a>.<br /><br />Do you need anything else? Visit our <a href=\"{url}\">website</a>."
+msgid "Dear customer, <br /><br />Your complaint with number {complaint_number} from order number {order_number} created {date} with preferred resolution {complaint_resolution} is being processed. For more information, visit <a href=\"{complaint_detail_url}\">complaint detail</a>.<br /><br />Do you need anything else? Visit our <a href=\"{url}\">website</a>."
 msgstr ""
 
 msgid "Default VAT rate"
@@ -1882,6 +1885,9 @@ msgstr ""
 msgid "Everyday at %hour%:%minutes%"
 msgstr ""
 
+msgid "Exchange"
+msgstr ""
+
 msgid "Exchange rate"
 msgstr ""
 
@@ -2051,6 +2057,9 @@ msgid "Finished at"
 msgstr ""
 
 msgid "First name"
+msgstr ""
+
+msgid "Fix"
 msgstr ""
 
 msgid "Flag"
@@ -2642,6 +2651,9 @@ msgid "Modules configuration modified"
 msgstr ""
 
 msgid "Monday"
+msgstr ""
+
+msgid "Money return"
 msgstr ""
 
 msgid "Move"
@@ -3647,6 +3659,9 @@ msgid "Reset password"
 msgstr ""
 
 msgid "Reset password request was sent to <strong>{{ email }}</strong>"
+msgstr ""
+
+msgid "Resolution"
 msgstr ""
 
 msgid "Resolved"

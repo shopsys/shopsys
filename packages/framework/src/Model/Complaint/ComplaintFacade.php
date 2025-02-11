@@ -17,12 +17,14 @@ class ComplaintFacade
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFacade $customerUploadedFileFacade
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Mail\ComplaintMailFacade $complaintMailFacade
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum $complaintResolutionEnum
      */
     public function __construct(
         protected readonly ComplaintRepository $complaintRepository,
         protected readonly EntityManagerInterface $em,
         protected readonly CustomerUploadedFileFacade $customerUploadedFileFacade,
         protected readonly ComplaintMailFacade $complaintMailFacade,
+        protected readonly ComplaintResolutionEnum $complaintResolutionEnum,
     ) {
     }
 
@@ -49,6 +51,10 @@ class ComplaintFacade
     {
         $complaint = $this->getById($id);
         $statusBefore = $complaint->getStatus();
+
+        if (!$this->complaintResolutionEnum->isMoneyReturn($complaintData->resolution)) {
+            $complaintData->bankAccountNumber = null;
+        }
 
         $complaint->edit($complaintData);
         $this->editItems($complaint, $complaintData->complaintItems);

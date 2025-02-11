@@ -11,6 +11,7 @@ import './CharactersCounter';
 import './CKEditorPreview';
 import './choiceControl';
 import './ColorPicker';
+import './Complaint';
 import './ConfirmDelete';
 import './CounterUp';
 import './DomainIcon';

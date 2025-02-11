@@ -27,6 +27,11 @@ query GetComplaintsQuery ($first: Int, $last: Int, $searchInput: SearchInput) {
                         uuid
                     }
                 }
+                resolution {
+                    name
+                    value
+                }
+                bankAccountNumber
             }
         }
     }

@@ -168,6 +168,8 @@ class ComplaintApiFacadeTest extends TestCase
                 'items' => [
                     ['orderItemUuid' => 'item-uuid', 'quantity' => 1],
                 ],
+                'resolution' => 'fix',
+                'bankAccountNumber' => null,
             ],
         ]);
     }

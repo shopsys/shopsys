@@ -79,6 +79,7 @@ export enum TIDs {
     complaint_detail_number_heading = 'complaint_detail_number_heading',
     complaint_detail_number = 'complaint_detail_number',
     complaint_detail_creation_date = 'complaint_detail_creation_date',
+    complaint_detail_bank_account_number = 'complaint_detail_bank_account_number',
     header = 'header',
     banners_slider = 'banners_slider',
     add_to_cart_popup_image = 'add_to_cart_popup_image',

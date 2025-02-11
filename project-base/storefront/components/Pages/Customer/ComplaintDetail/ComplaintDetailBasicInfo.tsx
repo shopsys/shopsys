@@ -3,6 +3,7 @@ import { TIDs } from 'cypress/tids';
 import { TypeComplaintDetailFragment } from 'graphql/requests/complaints/fragments/ComplaintDetailFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { ReactNode } from 'react';
+import { isResolutionMoneyReturn } from 'utils/complaints/isResolutionMoneyReturn';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { twMergeCustom } from 'utils/twMerge';
 
@@ -29,6 +30,19 @@ export const ComplaintDetailBasicInfo: FC<ComplaintDetailBasicInfoProps> = ({ co
                         value={formatDate(complaint.createdAt)}
                     />
                     <ComplaintItemColumnInfo title={t('Status')} value={complaint.status} />
+                    <ComplaintItemColumnInfo title={t('Resolution')} value={complaint.resolution.name} />
+                    {isResolutionMoneyReturn(complaint.resolution) && (
+                        <ComplaintItemColumnInfo
+                            tid={TIDs.complaint_detail_bank_account_number}
+                            title={t('Bank account number')}
+                            value={complaint.bankAccountNumber}
+                            valueClassName={twMergeCustom(
+                                'max-w-52 xxs:max-w-64 sm:max-w-fit overflow-x-auto overflow-y-hidden whitespace-nowrap',
+                                '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-backgroundMost',
+                                '[&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:h-1',
+                            )}
+                        />
+                    )}
                 </div>
             </div>
             <div className="rounded-md border-[5px] border-borderLess bg-background p-7">

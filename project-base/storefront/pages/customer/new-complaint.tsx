@@ -8,6 +8,7 @@ import { OrderedItemsContent } from 'components/Pages/Customer/OrderedItems/Orde
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { DEFAULT_ORDERED_ITEMS_FILTER, DEFAULT_PAGE_SIZE } from 'config/constants';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
+import { ComplaintResolutionQueryDocument } from 'graphql/requests/complaints/queries/ComplaintResolutionQuery.generated';
 import {
     OrderedItemsQueryDocument,
     TypeOrderedItemsQueryVariables,
@@ -133,6 +134,7 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
                     filter: DEFAULT_ORDERED_ITEMS_FILTER,
                 },
             },
+            { query: ComplaintResolutionQueryDocument },
         ],
         redisClient,
         domainConfig,

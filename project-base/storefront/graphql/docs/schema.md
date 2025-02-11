@@ -39,6 +39,7 @@
     * [ComplaintConnection](#complaintconnection)
     * [ComplaintEdge](#complaintedge)
     * [ComplaintItem](#complaintitem)
+    * [ComplaintResolution](#complaintresolution)
     * [Country](#country)
     * [CreateOrderResult](#createorderresult)
     * [CurrentCompanyCustomerUser](#currentcompanycustomeruser)
@@ -565,6 +566,15 @@ Returns complaint filtered using UUID
 <td>
 
 Complaint number
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>complaintResolution</strong></td>
+<td valign="top">[<a href="#complaintresolution">ComplaintResolution</a>!]!</td>
+<td>
+
+Returns complaint resolutions variants
 
 </td>
 </tr>
@@ -4102,6 +4112,15 @@ UUID
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong>bankAccountNumber</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Number of the bank account if the resolution is money return
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>createdAt</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a>!</td>
 <td>
@@ -4224,6 +4243,15 @@ Unique complaint number
 <td>
 
 Order for which the complaint was created
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>resolution</strong></td>
+<td valign="top"><a href="#complaintresolution">ComplaintResolution</a>!</td>
+<td>
+
+Resolution of the complaint
 
 </td>
 </tr>
@@ -4404,6 +4432,39 @@ Product name
 <td>
 
 Quantity of the order item
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ComplaintResolution
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>name</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Localized name of the resolution
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>value</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Constant string value of the resolution
 
 </td>
 </tr>
@@ -10519,6 +10580,15 @@ UUID of a transport that should be added to the cart. If this is set to null, th
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong>bankAccountNumber</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+Bank account number for money return
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>deliveryAddress</strong></td>
 <td valign="top"><a href="#deliveryaddressinput">DeliveryAddressInput</a>!</td>
 <td>
@@ -10560,6 +10630,15 @@ Order or document number (doesn't have to be from any existing order)
 <td>
 
 UUID of the order
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>resolution</strong></td>
+<td valign="top"><a href="#string">String</a>!</td>
+<td>
+
+Chosen resolution from complaintResolutionQuery
 
 </td>
 </tr>

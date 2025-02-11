@@ -48,16 +48,20 @@ class ComplaintHelper
      * @param \App\Model\Customer\User\CustomerUser $customerUser
      * @param \App\Model\Order\Order|null $order
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus $status
+     * @param string $resolution
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItemData[] $items
      * @param string|null $manualDocumentNumber
+     * @param string|null $bankAccountNumber
      * @return \Shopsys\FrameworkBundle\Model\Complaint\Complaint
      */
     public function createComplaint(
         CustomerUser $customerUser,
         ?Order $order,
         ComplaintStatus $status,
+        string $resolution,
         array $items,
         ?string $manualDocumentNumber = null,
+        ?string $bankAccountNumber = null,
     ): Complaint {
         $complaintData = $this->complaintDataFactory->create();
         $complaintData->uuid = Uuid::uuid5(self::UUID_NAMESPACE, md5(serialize(func_get_args())))->toString();
@@ -81,6 +85,9 @@ class ComplaintHelper
         $complaintData->deliveryCountry = $deliveryAddress?->getCountry() ?? $billingAddress->getCountry();
         $complaintData->deliveryTelephone = $deliveryAddress?->getTelephone();
         $complaintData->deliveryCompanyName = $deliveryAddress?->getCompanyName();
+
+        $complaintData->resolution = $resolution;
+        $complaintData->bankAccountNumber = $bankAccountNumber;
 
         return $this->complaintApiFacade->create($complaintData);
     }

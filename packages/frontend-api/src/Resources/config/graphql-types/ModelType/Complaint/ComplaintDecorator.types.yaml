@@ -51,3 +51,9 @@ ComplaintDecorator:
             email:
                 type: "String!"
                 description: "The customer's email address"
+            resolution:
+                type: "ComplaintResolution!"
+                description: "Resolution of the complaint"
+            bankAccountNumber:
+                type: "String"
+                description: "Number of the bank account if the resolution is money return"

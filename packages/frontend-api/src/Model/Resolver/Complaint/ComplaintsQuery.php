@@ -8,6 +8,7 @@ use GraphQL\Executor\Promise\Promise;
 use Overblog\GraphQLBundle\Definition\Argument;
 use Overblog\GraphQLBundle\Relay\Connection\ConnectionInterface;
 use Overblog\GraphQLBundle\Relay\Connection\Paginator;
+use Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -22,11 +23,13 @@ class ComplaintsQuery extends AbstractQuery
      * @param \Shopsys\FrontendApiBundle\Model\Complaint\ComplaintApiFacade $complaintApiFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Symfony\Bundle\SecurityBundle\Security $security
+     * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum $complaintResolutionEnum
      */
     public function __construct(
         protected readonly ComplaintApiFacade $complaintApiFacade,
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly Security $security,
+        protected readonly ComplaintResolutionEnum $complaintResolutionEnum,
     ) {
     }
 
@@ -45,6 +48,14 @@ class ComplaintsQuery extends AbstractQuery
         }
 
         return $this->getPaginatedCustomerUserComplaints($customerUser, $argument);
+    }
+
+    /**
+     * @return array
+     */
+    public function complaintResolutionQuery(): array
+    {
+        return $this->complaintResolutionEnum->serialize();
     }
 
     /**

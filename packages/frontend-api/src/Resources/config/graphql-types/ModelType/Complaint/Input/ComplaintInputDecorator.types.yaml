@@ -2,6 +2,8 @@ ComplaintInputDecorator:
     type: input-object
     decorator: true
     config:
+        validation:
+            -   Shopsys\FrontendApiBundle\Component\Constraints\ComplaintResolution: ~
         fields:
             orderUuid:
                 type: "Uuid"
@@ -41,3 +43,20 @@ ComplaintInputDecorator:
                     -   Length:
                             max: 255
                             maxMessage: "Email cannot be longer than {{ limit }} characters"
+            resolution:
+                type: "String!"
+                description: "Chosen resolution from complaintResolutionQuery"
+                validation:
+                    -   NotBlank:
+                            message: "Resolution is required"
+            bankAccountNumber:
+                type: "String"
+                description: "Bank account number for money return"
+                defaultValue: null
+                validation:
+                    -   Length:
+                            max: 34
+                            maxMessage: "Bank account number cannot be longer than {{ limit }} characters"
+                    -   Regex:
+                            pattern: '/^[a-zA-Z0-9\/\-]+$/'
+                            message: "Bank account number can contain only letters, numbers, slashes and dashes"

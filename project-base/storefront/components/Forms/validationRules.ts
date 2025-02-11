@@ -112,6 +112,38 @@ export const validateCountry = (t: Translate): Schema => {
         );
 };
 
+export const validateResolution = (t: Translate): Schema => {
+    return Yup.object()
+        .shape({
+            label: Yup.string().required(),
+            value: Yup.string().required(),
+        })
+        .required(t('Please enter resolution'))
+        .test(
+            'non-null-or-empty-string',
+            t('Please enter resolution'),
+            (value: { label: string; value: string }) => value.value !== '',
+        );
+};
+
+export const validateBankAccountNumber = (t: Translate): Schema => {
+    return (
+        Yup.string()
+            // first rule is for IBAN
+            .matches(
+                /^([A-Z]{2}[0-9]{2}[A-Z0-9]{1,30}|[0-9/-a-zA-Z]+)$/,
+                t('Please enter an IBAN or only capital letters, numbers, slashes, or dashes.'),
+            )
+            .test(
+                'less-than-or-eaquals-34',
+                t('This value must be max {{ bankAccountNumberLength }} characters long', {
+                    bankAccountNumberLength: VALIDATION_CONSTANTS.maxBankAccountNumberLength,
+                }),
+                (value) => value !== undefined && value.length <= VALIDATION_CONSTANTS.maxBankAccountNumberLength,
+            )
+    );
+};
+
 export const validateRoleGroup = (t: Translate): Schema => {
     return Yup.object()
         .shape({

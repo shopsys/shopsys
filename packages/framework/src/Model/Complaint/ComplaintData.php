@@ -95,4 +95,14 @@ class ComplaintData
      * @var string|null
      */
     public $manualDocumentNumber;
+
+    /**
+     * @var string|null
+     */
+    public $resolution;
+
+    /**
+     * @var string|null
+     */
+    public $bankAccountNumber;
 }

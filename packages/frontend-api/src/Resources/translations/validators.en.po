@@ -4,6 +4,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
+msgid "Bank account number can contain only letters, numbers, slashes and dashes"
+msgstr ""
+
+msgid "Bank account number cannot be longer than {{ limit }} characters"
+msgstr ""
+
 msgid "Billing address company number {{ company_number }} already exists. Contact customer support."
 msgstr ""
 
@@ -203,6 +209,15 @@ msgid "Quantity must be an integer"
 msgstr ""
 
 msgid "Quantity must be greater than 0"
+msgstr ""
+
+msgid "Resolution is required"
+msgstr ""
+
+msgid "Selected complaint resolution is not supported"
+msgstr ""
+
+msgid "Selected complaint resolution requires bank account number to be filled"
 msgstr ""
 
 msgid "Selected payment price has changed"

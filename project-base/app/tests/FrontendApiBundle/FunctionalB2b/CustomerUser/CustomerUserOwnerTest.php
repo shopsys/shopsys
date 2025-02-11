@@ -13,6 +13,7 @@ use App\Model\Customer\User\CustomerUser;
 use App\Model\Customer\User\CustomerUserDataFactory;
 use App\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
+use Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup;
@@ -297,6 +298,7 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
             [
                 'input' => [
                     'orderUuid' => $anotherUserOrder->getUuid(),
+                    'resolution' => ComplaintResolutionEnum::FIX,
                     'email' => 'no-reply@shopsys.com',
                     'items' => [
                         [

@@ -148,6 +148,18 @@ class Complaint
     protected $manualDocumentNumber;
 
     /**
+     * @var string
+     * @ORM\Column(type="string", length=20, nullable=false)
+     */
+    protected $resolution;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", length=34, nullable=true)
+     */
+    protected $bankAccountNumber;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintData $complaintData
      * @param \Shopsys\FrameworkBundle\Model\Complaint\ComplaintItem[] $complaintItems
      */
@@ -330,6 +342,8 @@ class Complaint
         $this->status = $complaintData->status;
         $this->email = $complaintData->email;
         $this->manualDocumentNumber = $complaintData->manualDocumentNumber;
+        $this->resolution = $complaintData->resolution;
+        $this->bankAccountNumber = $complaintData->bankAccountNumber;
     }
 
     /**
@@ -383,5 +397,21 @@ class Complaint
     public function getOrderNumberOrManualDocumentNumber(): string
     {
         return $this->order?->getNumber() ?? $this->manualDocumentNumber;
+    }
+
+    /**
+     * @return string
+     */
+    public function getResolution()
+    {
+        return $this->resolution;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getBankAccountNumber()
+    {
+        return $this->bankAccountNumber;
     }
 }

@@ -116,6 +116,8 @@ class ComplaintApiFacade
             $number,
             $order,
             $complaintItemsData,
+            $input['resolution'],
+            $input['bankAccountNumber'],
             $customerUser,
         );
 

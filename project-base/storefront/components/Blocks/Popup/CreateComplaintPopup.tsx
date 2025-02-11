@@ -21,6 +21,8 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { Controller, FormProvider, SubmitHandler, useWatch } from 'react-hook-form';
 import { ComplaintFormType } from 'types/form';
+import { isResolutionMoneyReturn } from 'utils/complaints/isResolutionMoneyReturn';
+import { useComplaintResolutionsAsSelectOptions } from 'utils/complaints/useComplaintResolutionsAsSelectOptions';
 import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
 import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 import { blurInput } from 'utils/forms/blurInput';
@@ -52,6 +54,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
     const { setValue } = formProviderMethods;
     const formMeta = useComplaintFormMeta(formProviderMethods);
     const countriesAsSelectOptions = useCountriesAsSelectOptions();
+    const complaintResolutionsAsOptions = useComplaintResolutionsAsSelectOptions();
 
     useEffect(() => {
         if (countriesAsSelectOptions.length > 0) {
@@ -64,7 +67,13 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
         control: formProviderMethods.control,
     });
 
+    const [resolution] = useWatch({
+        name: [formMeta.fields.resolution.name],
+        control: formProviderMethods.control,
+    });
+
     const isNewDeliveryAddressSelected = deliveryAddressUuid === '';
+    const isMoneyBackResolutionSelected = isResolutionMoneyReturn(resolution);
 
     const createComplaintHandler: SubmitHandler<ComplaintFormType> = async (complaintFormData) => {
         blurInput();
@@ -112,6 +121,8 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                 deliveryAddress,
                 email: complaintFormData.email,
                 manualDocumentNumber: complaintFormData.manualDocumentNumber,
+                resolution: complaintFormData.resolution.value,
+                bankAccountNumber: complaintFormData.bankAccountNumber ?? null,
             },
         });
 
@@ -233,6 +244,43 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                     autoComplete: 'email',
                                 }}
                             />
+                        </FormBlockWrapper>
+                        <FormBlockWrapper>
+                            <FormHeading>{t('Resolution')}</FormHeading>
+                            <Controller
+                                name={formMeta.fields.resolution.name}
+                                render={({ fieldState: { error }, field }) => (
+                                    <>
+                                        <Select
+                                            isRequired
+                                            className="mb-2.5"
+                                            isDisabled={isSubmitting}
+                                            label={formMeta.fields.resolution.label}
+                                            options={complaintResolutionsAsOptions}
+                                            tid={formMeta.formName + '-' + formMeta.fields.resolution.name}
+                                            activeOption={complaintResolutionsAsOptions.find(
+                                                (option) => option.value === field.value.value,
+                                            )}
+                                            onSelectOption={field.onChange}
+                                        />
+                                        <FormLineError error={error} inputType="select" />
+                                    </>
+                                )}
+                            />
+                            {isMoneyBackResolutionSelected && (
+                                <TextInputControlled
+                                    control={formProviderMethods.control}
+                                    formName={formMeta.formName}
+                                    name={formMeta.fields.bankAccountNumber.name}
+                                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                    textInputProps={{
+                                        label: formMeta.fields.bankAccountNumber.label,
+                                        required: true,
+                                        type: 'email',
+                                        autoComplete: 'email',
+                                    }}
+                                />
+                            )}
                         </FormBlockWrapper>
                         <FormBlockWrapper>
                             <FormHeading>{t('Delivery address')}</FormHeading>
