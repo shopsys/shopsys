@@ -4,7 +4,7 @@ import { useRegistrationFormMeta } from 'app/_components/Blocks/Registration/reg
 import { FormHeading, FormBlockWrapper } from 'components/Forms/Form/Form';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
-import useTranslation from 'next-translate/useTranslation';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { useFormContext } from 'react-hook-form';
 import { RegistrationFormType } from 'types/form';
 

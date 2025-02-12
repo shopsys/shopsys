@@ -2,16 +2,15 @@
 
 import { MenuIconicItemUserAuthenticatedContentListItem, MenuIconicSubItemLink } from './MenuIconicElements';
 import { SalesRepresentative } from './SalesRepresentative';
+import { useInternationalizedStaticUrls } from 'app/_hooks/useInternationalizedStaticUrls';
 import { useLogout } from 'app/_hooks/useLogout';
-import { getInternationalizedStaticUrls } from 'app/_utils/staticUrls/getInternationalizedStaticUrls';
 import { ComplaintsIcon } from 'components/Basic/Icon/ComplaintsIcon';
 import { EditIcon } from 'components/Basic/Icon/EditIcon';
 import { ExitIcon } from 'components/Basic/Icon/ExitIcon';
 import { LockCheckIcon } from 'components/Basic/Icon/LockCheckIcon';
 import { SearchListIcon } from 'components/Basic/Icon/SearchListIcon';
-import { useAppConfig } from 'components/providers/AppConfigProvider';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { TIDs } from 'cypress/tids';
-import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 import { CurrentCustomerType } from 'types/customer';
 
@@ -27,23 +26,19 @@ export const MenuIconicItemUserAuthenticatedContent: FC<MenuIconicItemUserAuthen
 
     // TODO permisions
     // const { canManageUsers } = useUserPermissions();
-    const staticRewritePaths = useAppConfig((settings) => settings.staticRewritePaths);
     const [
         customerOrdersUrl,
         customerComplaintsUrl,
         customerEditProfileUrl,
         customerChangePasswordUrl,
         // customerUsersUrl,
-    ] = getInternationalizedStaticUrls(
-        [
-            '/customer/orders',
-            '/customer/complaints',
-            '/customer/edit-profile',
-            '/customer/change-password',
-            // '/customer/users',
-        ],
-        staticRewritePaths,
-    );
+    ] = useInternationalizedStaticUrls([
+        '/customer/orders',
+        '/customer/complaints',
+        '/customer/edit-profile',
+        '/customer/change-password',
+        // '/customer/users',
+    ]);
 
     const user = currentCustomerUser;
 

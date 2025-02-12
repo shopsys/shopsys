@@ -20,7 +20,7 @@ export type DomainConfigType = {
     type: CustomerUserAreaEnum;
 };
 
-export function getDomainConfigServer(domainUrl: string): DomainConfigType {
+export function getDomainConfig(domainUrl: string): DomainConfigType {
     const replacedDomain = domainUrl.replace(':3000', ':8000');
     const cdnDomain = process.env.CDN_DOMAIN ?? '';
 

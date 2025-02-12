@@ -1,14 +1,14 @@
 import { MenuIconicItem, MenuIconicItemLink } from './MenuIconicElements';
 import MenuIconicItemUserAuthentication from './MenuIconicItemUserAuthentication';
-import { getInternationalizedStaticUrlsServer } from 'app/_utils/staticUrls/getInternationalizedStaticUrlsServer';
+import { getInternationalizedStaticUrls } from 'app/_utils/getInternationalizedStaticUrls';
+import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { MarkerIcon } from 'components/Basic/Icon/MarkerIcon';
-import { getServerT } from 'utils/getServerTranslation';
 
 export async function MenuIconic() {
-    const t = await getServerT();
-    const [storesUrl, productComparisonUrl, wishlistUrl] = getInternationalizedStaticUrlsServer([
+    const t = await getTranslation();
+    const [storesUrl, productComparisonUrl, wishlistUrl] = getInternationalizedStaticUrls([
         '/stores',
         '/product-comparison',
         '/wishlist',
