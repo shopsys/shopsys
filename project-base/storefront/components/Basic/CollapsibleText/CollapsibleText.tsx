@@ -1,5 +1,6 @@
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import DOMPurify from 'isomorphic-dompurify';
+import useTranslation from 'next-translate/useTranslation';
 import { RefObject, useEffect, useRef, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 
@@ -9,6 +10,7 @@ type CollapsibleTextProps = {
 };
 
 export const CollapsibleText: FC<CollapsibleTextProps> = ({ text, scrollTargetRef }) => {
+    const { t } = useTranslation();
     const [showFullDescription, setShowFullDescription] = useState(false);
     const [shouldShowButton, setShouldShowButton] = useState(false);
     const textRef = useRef<HTMLDivElement>(null);
@@ -50,7 +52,7 @@ export const CollapsibleText: FC<CollapsibleTextProps> = ({ text, scrollTargetRe
                     className={twJoin('underline hover:text-textAccent', showFullDescription && 'mt-2')}
                     onClick={handleButtonClick}
                 >
-                    {showFullDescription ? 'Close full description' : 'Open full description'}
+                    {showFullDescription ? t('Close full description') : t('Open full description')}
                     <ArrowSecondaryIcon
                         className={twJoin('ml-2 size-3 text-textDisabled', showFullDescription && 'rotate-180')}
                     />
