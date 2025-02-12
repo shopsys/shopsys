@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Customer;
 
+use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueBillingAddress;
 use Shopsys\FrameworkBundle\Form\CustomerUserListType;
 use Shopsys\FrameworkBundle\Form\DeliveryAddressListType;
 use Shopsys\FrameworkBundle\Form\OrderListType;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -40,7 +40,10 @@ class BillingAddressAndRelatedInfoFormType extends AbstractType
             ->add('orders', OrderListType::class, [
                 'customer' => $options['customer'],
             ])
-            ->add('save', SubmitType::class);
+            ->add('actionBar', ActionBarType::class, [
+                'back_route' => 'admin_customer_list',
+                'entity' => $options['customer'],
+            ]);
     }
 
     /**

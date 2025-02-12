@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Customer;
 
+use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
+use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddress;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -114,7 +115,11 @@ class DeliveryAddressFormType extends AbstractType
                 ],
                 'label' => t('Telephone'),
             ])
-            ->add('save', SubmitType::class);
+            ->add('actionBar', ActionBarType::class, [
+                'back_url' => $options['back_url'],
+                'back_label' => $options['back_url_text'],
+                'entity' => $options['delivery_address'],
+            ]);
     }
 
     /**
@@ -123,9 +128,13 @@ class DeliveryAddressFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
-            ->setRequired('domain_id')
+            ->setRequired(['domain_id', 'back_url', 'back_url_text', 'delivery_address'])
             ->addAllowedTypes('domain_id', 'int')
+            ->addAllowedTypes('back_url', 'string')
+            ->addAllowedTypes('back_url_text', 'string')
+            ->addAllowedTypes('delivery_address', [DeliveryAddress::class, 'null'])
             ->setDefaults([
+                'delivery_address' => null,
                 'data_class' => DeliveryAddressData::class,
                 'attr' => ['novalidate' => 'novalidate'],
             ]);

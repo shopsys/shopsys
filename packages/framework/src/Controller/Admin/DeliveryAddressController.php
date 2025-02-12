@@ -47,6 +47,8 @@ class DeliveryAddressController extends AdminBaseController
 
         $form = $this->createForm(DeliveryAddressFormType::class, $deliveryAddressData, [
             'domain_id' => $customer->getDomainId(),
+            'back_url' => $this->resolveBackUrl($customer),
+            'back_url_text' => $this->resolveBackUrlText($customer),
         ]);
         $form->handleRequest($request);
 
@@ -80,8 +82,6 @@ class DeliveryAddressController extends AdminBaseController
         return $this->render('@ShopsysFramework/Admin/Content/Customer/DeliveryAddress/new.html.twig', [
             'form' => $form->createView(),
             'customer' => $customer,
-            'backUrl' => $this->resolveBackUrl($customer),
-            'backUrlText' => $this->resolveBackUrlText($customer),
         ]);
     }
 
@@ -98,6 +98,9 @@ class DeliveryAddressController extends AdminBaseController
 
         $form = $this->createForm(DeliveryAddressFormType::class, $deliveryAddressData, [
             'domain_id' => $deliveryAddress->getCustomer()->getDomainId(),
+            'back_url' => $this->resolveBackUrl($deliveryAddress->getCustomer()),
+            'back_url_text' => $this->resolveBackUrlText($deliveryAddress->getCustomer()),
+            'delivery_address' => $deliveryAddress,
         ]);
         $form->handleRequest($request);
 
@@ -137,8 +140,6 @@ class DeliveryAddressController extends AdminBaseController
         return $this->render('@ShopsysFramework/Admin/Content/Customer/DeliveryAddress/edit.html.twig', [
             'form' => $form->createView(),
             'deliveryAddress' => $deliveryAddress,
-            'backUrl' => $this->resolveBackUrl($deliveryAddress->getCustomer()),
-            'backUrlText' => $this->resolveBackUrlText($deliveryAddress->getCustomer()),
         ]);
     }
 
