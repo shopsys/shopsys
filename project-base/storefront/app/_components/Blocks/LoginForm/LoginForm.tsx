@@ -34,12 +34,12 @@ export const LoginForm: FC<LoginFormProps> = ({
         settings: { socialNetworkLoginConfig },
         staticRewritePaths,
     } = useAppConfig();
+    const [resetPasswordUrl] = getInternationalizedStaticUrls(['/reset-password'], staticRewritePaths);
 
     const [formProviderMethods] = useLoginForm(defaultEmail);
     const formMeta = useLoginFormMeta(formProviderMethods);
 
     const handleLogin = useLogin({ shouldOverwriteCustomerUserCart });
-    const [resetPasswordUrl] = getInternationalizedStaticUrls(['/reset-password'], staticRewritePaths);
 
     return (
         <FormProvider {...formProviderMethods}>

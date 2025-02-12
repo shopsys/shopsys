@@ -82,6 +82,5 @@ export const STATIC_REWRITE_PATHS = {
         '/_feedback': '/_feedback',
     },
 } as const;
-console.log('🚀 -> STATIC_REWRITE_PATHS:', STATIC_REWRITE_PATHS);
 
 export type StaticRewritePathKeyType = keyof (typeof STATIC_REWRITE_PATHS)[string];
