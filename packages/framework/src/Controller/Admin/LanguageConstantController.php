@@ -116,7 +116,6 @@ class LanguageConstantController extends AdminBaseController
 
         return $this->render('@ShopsysFramework/Admin/Content/LanguageConstant/edit.html.twig', [
             'form' => $form->createView(),
-            'constant' => $constant,
         ]);
     }
 

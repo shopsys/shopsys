@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\LanguageConstant;
 
+use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantData;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,8 +16,7 @@ use Symfony\Component\Validator\Constraints;
 class LanguageConstantFormType extends AbstractType
 {
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param mixed[] $options
+     * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -43,11 +42,14 @@ class LanguageConstantFormType extends AbstractType
                     'class' => 'form-full__field__input',
                 ],
             ])
-            ->add('save', SubmitType::class);
+            ->add('actionBar', ActionBarType::class, [
+                'back_route' => 'admin_languageconstant_list',
+                'save_label' => t('Save changes'),
+            ]);
     }
 
     /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
