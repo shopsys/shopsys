@@ -12,7 +12,7 @@ use Tests\App\Test\Codeception\AcceptanceTester;
 class TransportImageUploadCest
 {
     private const IMAGE_UPLOAD_FIELD_ID = 'transport_form_image_image_file';
-    private const SAVE_BUTTON_NAME = 'transport_form[save]';
+    private const SAVE_BUTTON_NAME = 'transport_form[actionBar][save]';
 
     private const TEST_IMAGE_NAME = 'transportTestImage.png';
 
