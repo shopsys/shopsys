@@ -13,14 +13,5 @@
         </div>
     {% endif %}
 
-    {{ form_start(form) }}
-        {{ form_errors(form) }}
-
-        {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
-            {% block fixed_bar_content %}
-                <a href="{{ url('admin_stock_list') }}" class="btn-link-style">{{ 'Back to overview'|trans }}</a>
-                {{ form_save(stock|default(null), form) }}
-            {% endblock %}
-        {% endembed %}
-    {{ form_end(form) }}
+    {{ form(form) }}
 {% endblock %}
