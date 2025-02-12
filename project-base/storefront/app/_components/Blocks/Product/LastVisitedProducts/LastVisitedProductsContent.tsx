@@ -1,8 +1,10 @@
+import { ProductsList } from 'app/_components/Blocks/Product/ProductsList/ProductsList';
 import { getLastVisitedProductsQuery } from 'app/_queries/getLastVisitedProductsQuery';
-import { getProducsWithListStateQuery } from 'app/_queries/getProducsWithListStateQuery';
-import { ProductsSlider, VISIBLE_SLIDER_ITEMS_LAST_VISITED } from 'components/Blocks/Product/ProductsSlider';
+import { getTranslation } from 'app/_utils/translation/getTranslation';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import { getServerT } from 'utils/getServerTranslation';
+
+// import { ProductsSlider, VISIBLE_SLIDER_ITEMS_LAST_VISITED } from 'components/Blocks/Product/ProductsSlider';
 
 type LastVisitedProductsProps = {
     productsCatnums: string[];
@@ -10,7 +12,7 @@ type LastVisitedProductsProps = {
 
 export async function LastVisitedProductsContent({ productsCatnums }: LastVisitedProductsProps) {
     const [t, lastVisitedProductsResult] = await Promise.all([
-        getServerT(),
+        getTranslation(),
         getLastVisitedProductsQuery(productsCatnums),
     ]);
 
@@ -20,6 +22,7 @@ export async function LastVisitedProductsContent({ productsCatnums }: LastVisite
         return null;
     }
 
+    // TODO: SLIDER
     const productItemStyleProps = {
         size: 'small' as const,
         visibleItemsConfig: {
@@ -33,13 +36,11 @@ export async function LastVisitedProductsContent({ productsCatnums }: LastVisite
         textSize: 'xs' as const,
     };
 
-    const productsWithListState = await getProducsWithListStateQuery(lastVisitedProducts);
-
     return (
         <>
             <h5 className="mb-4">{t('Last visited products')}</h5>
 
-            <ProductsSlider
+            {/* <ProductsSlider
                 gtmProductListName={GtmProductListNameType.last_visited_products}
                 products={productsWithListState}
                 variant="lastVisited"
@@ -48,6 +49,12 @@ export async function LastVisitedProductsContent({ productsCatnums }: LastVisite
                     visibleItemsConfig: productItemStyleProps.visibleItemsConfig,
                     size: productItemStyleProps.size,
                 }}
+            /> */}
+
+            <ProductsList
+                gtmMessageOrigin={GtmMessageOriginType.product_detail_page}
+                gtmProductListName={GtmProductListNameType.last_visited_products}
+                products={lastVisitedProducts}
             />
         </>
     );

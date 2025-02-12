@@ -1,6 +1,3 @@
-'use client';
-
-import { createInquiryAction } from 'app/_actions/createInquiryAction';
 import { useInquiryForm } from 'components/Blocks/Product/Inquiry/inquiryFormMeta';
 import { useInquiryFormMeta } from 'components/Blocks/Product/Inquiry/inquiryFormMeta';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
@@ -10,9 +7,10 @@ import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { TextareaControlled } from 'components/Forms/Textarea/TextareaControlled';
 import { Popup } from 'components/Layout/Popup/Popup';
-import { useCurrentCustomerData } from 'components/providers/AuthProvider';
-import { useTranslation } from 'components/providers/TranslationProvider';
+import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
+import { useCreateInquiryMutation } from 'graphql/requests/inquiry/mutations/CreateInquiryMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
+import useTranslation from 'next-translate/useTranslation';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useSessionStore } from 'store/useSessionStore';
 import { InquiryFormType } from 'types/form';
@@ -29,6 +27,7 @@ export const InquiryPopup: FC<InquiryPopupProps> = ({ productUuid }) => {
     const { t } = useTranslation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const user = useCurrentCustomerData();
+    const [, createInquiry] = useCreateInquiryMutation();
 
     const [formProviderMethods] = useInquiryForm({
         email: user?.email ?? '',
@@ -46,7 +45,7 @@ export const InquiryPopup: FC<InquiryPopupProps> = ({ productUuid }) => {
     const inquiryHandler: SubmitHandler<InquiryFormType> = async (inquiryFormData) => {
         blurInput();
 
-        const createInquiryResult = await createInquiryAction({
+        const createInquiryResult = await createInquiry({
             input: {
                 ...inquiryFormData,
             },

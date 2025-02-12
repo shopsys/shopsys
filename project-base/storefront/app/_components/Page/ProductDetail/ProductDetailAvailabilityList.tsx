@@ -1,6 +1,6 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { useTranslation } from 'components/providers/TranslationProvider';
-import { TypeStoreAvailabilityFragment } from 'graphql/requests/storeAvailabilities/fragments/StoreAvailabilityFragment.generated';
+import { TypeStoreAvailabilityFragment } from 'graphql/requests/storeAvailabilities/fragments/StoreAvailabilityFragment.ssr';
 import { TypeAvailabilityStatusEnum } from 'graphql/types';
 import { twJoin } from 'tailwind-merge';
 

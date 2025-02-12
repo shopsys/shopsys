@@ -1,11 +1,9 @@
-'use client';
-
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
 import { validateEmail, validatePrivacyPolicy } from 'components/Forms/validationRules';
-import { useAppConfig } from 'components/providers/AppConfigProvider';
-import { useTranslation } from 'components/providers/TranslationProvider';
+import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
+import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { WatchdogFormType } from 'types/form';
@@ -44,7 +42,8 @@ type WatchdogFormMetaType = {
 
 export const useWatchdogFormMeta = (formProviderMethods: UseFormReturn<WatchdogFormType>): WatchdogFormMetaType => {
     const { t } = useTranslation();
-    const { privacyPolicyArticleUrl } = useAppConfig((settings) => settings.settings);
+    const [{ data: settingsData }] = useSettingsQuery();
+    const privacyPolicyArticleUrl = settingsData?.settings?.privacyPolicyArticleUrl;
 
     const errors = formProviderMethods.formState.errors;
 
