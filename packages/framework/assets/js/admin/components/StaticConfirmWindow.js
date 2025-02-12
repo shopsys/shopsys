@@ -12,10 +12,10 @@ export default class StaticConfirmWindow {
 
         // eslint-disable-next-line no-new
         new Window({
-            content: $(event.target).data('confirm-message'),
+            content: $(event.currentTarget).data('confirm-message'),
             buttonCancel: true,
             buttonContinue: true,
-            urlContinue: $(event.target).data('confirm-contiue-url')
+            urlContinue: $(event.currentTarget).data('confirm-contiue-url')
         });
     }
 
