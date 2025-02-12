@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Administrator;
 
+use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Form\RolesType;
+use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroup;
 use Shopsys\FrameworkBundle\Model\Administrator\RoleGroup\AdministratorRoleGroupData;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -34,7 +35,10 @@ class AdministratorRoleGroupFormType extends AbstractType
             'label' => 'Roles',
         ]);
 
-        $builder->add('save', SubmitType::class);
+        $builder->add('actionBar', ActionBarType::class, [
+            'back_route' => 'admin_administratorrolegroup_list',
+            'entity' => $options['administrator_role_group'],
+        ]);
     }
 
     /**
@@ -43,7 +47,10 @@ class AdministratorRoleGroupFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
+            ->setRequired(['administrator_role_group'])
+            ->setAllowedTypes('administrator_role_group', [AdministratorRoleGroup::class, 'null'])
             ->setDefaults([
+                'administrator_role_group' => null,
                 'data_class' => AdministratorRoleGroupData::class,
                 'attr' => ['novalidate' => 'novalidate'],
             ]);

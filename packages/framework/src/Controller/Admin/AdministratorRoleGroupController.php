@@ -114,7 +114,9 @@ class AdministratorRoleGroupController extends AdminBaseController
         $administratorRoleGroupData = new AdministratorRoleGroupData();
         $administratorRoleGroupData->fillFromEntity($administratorRoleGroup);
 
-        $form = $this->createForm(AdministratorRoleGroupFormType::class, $administratorRoleGroupData, []);
+        $form = $this->createForm(AdministratorRoleGroupFormType::class, $administratorRoleGroupData, [
+            'administrator_role_group' => $administratorRoleGroup,
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
