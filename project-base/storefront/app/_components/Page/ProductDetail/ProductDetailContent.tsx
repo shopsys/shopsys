@@ -8,7 +8,7 @@ import { ProductDetailInfo } from 'app/_components/Page/ProductDetail/ProductDet
 import { ProductDetailPrice } from 'app/_components/Page/ProductDetail/ProductDetailPrice';
 import { ProductDetailTabs } from 'app/_components/Page/ProductDetail/ProductDetailTabs/ProductDetailTabs';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
+import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.ssr';
 
 type ProductDetailContentProps = {
     product: TypeProductDetailFragment;

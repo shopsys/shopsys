@@ -1,15 +1,14 @@
 'use client';
 
 import { addToCartAction } from 'app/_actions/addToCartAction';
-import { TypeAddToCartMutation } from 'graphql/requests/cart/mutations/AddToCartMutation.generated';
+import { dispatchBroadcastChannel } from 'app/_hooks/useBroadcastChannel';
+import { useTranslation } from 'components/providers/TranslationProvider';
+import { TypeAddToCartMutation } from 'graphql/requests/cart/mutations/AddToCartMutation.ssr';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useState } from 'react';
 import { usePersistStore } from 'store/usePersistStore';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
-import { showInfoMessage } from 'utils/toasts/showInfoMessage';
-import { dispatchBroadcastChannel } from 'utils/useBroadcastChannel';
 
 export type AddToCart = (
     productUuid: string,
@@ -22,6 +21,7 @@ export const useAddToCart = (gtmMessageOrigin: GtmMessageOriginType, gtmProductL
     const { t } = useTranslation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
+
     const [isAddingToCart, setIsAddingToCart] = useState(false);
 
     // const domainConfig = useDomainConfig();
@@ -46,22 +46,6 @@ export const useAddToCart = (gtmMessageOrigin: GtmMessageOriginType, gtmProductL
 
         // EXTEND ADDING TO CART HERE
 
-        const addProductResult = addToCartActionResult.data?.AddToCart.addProductResult;
-
-        if (addProductResult && addProductResult.notOnStockQuantity > 0) {
-            const actualQuantity = addProductResult.cartItem.quantity;
-            const requestedQuantity = isAbsoluteQuantity ? quantity : initialQuantity + quantity;
-
-            if (actualQuantity < requestedQuantity) {
-                showInfoMessage(
-                    t('Product quantity was adjusted to available stock ({{ quantity }})', {
-                        quantity: actualQuantity,
-                    }),
-                    gtmMessageOrigin,
-                );
-            }
-        }
-
         if (addToCartActionResult.error) {
             showErrorMessage(t('Unable to add product to cart'), gtmMessageOrigin);
 
@@ -74,7 +58,7 @@ export const useAddToCart = (gtmMessageOrigin: GtmMessageOriginType, gtmProductL
             return null;
         }
 
-        dispatchBroadcastChannel('refetchCart', domainConfig.domainId);
+        dispatchBroadcastChannel('refetchCart');
 
         // TODO: GTM
         // const addedCartItem = addToCartResult.addProductResult.cartItem;
@@ -89,7 +73,7 @@ export const useAddToCart = (gtmMessageOrigin: GtmMessageOriginType, gtmProductL
         //         listIndex,
         //         gtmProductListName,
         //         !!currentCustomerData,
-        //         !canSeePrices,
+        //         !!currentCustomerData?.arePricesHidden,
         //     );
         // });
 

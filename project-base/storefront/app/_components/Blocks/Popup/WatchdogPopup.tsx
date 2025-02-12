@@ -1,23 +1,24 @@
+'use client';
+
+import { createWatchDogAction } from 'app/_actions/createWatchDogAction';
 import { useWatchdogFormMeta } from 'components/Blocks/Product/Watchdog/watchdogFormMeta';
 import { useWatchdogForm } from 'components/Blocks/Product/Watchdog/watchdogFormMeta';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
-import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
+import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { Popup } from 'components/Layout/Popup/Popup';
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
-import { useCreateWatchdogMutation } from 'graphql/requests/watchDog/mutations/CreateWatchdogMutation.generated';
+import { useCurrentCustomerData } from 'components/providers/AuthProvider';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { onGtmCreateWatchdotEventHandler } from 'gtm/handlers/onGtmCreateWatchdotEventHandler';
+import useTranslation from 'next-translate/useTranslation';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useSessionStore } from 'store/useSessionStore';
 import { WatchdogFormType } from 'types/form';
 import { blurInput } from 'utils/forms/blurInput';
-import { useScrollToFirstError } from 'utils/forms/useScrollToFirstError';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
@@ -29,7 +30,6 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ productUuid }) => {
     const { t } = useTranslation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
     const user = useCurrentCustomerData();
-    const [, createWatchdog] = useCreateWatchdogMutation();
 
     const [formProviderMethods] = useWatchdogForm({
         email: user?.email ?? '',
@@ -41,7 +41,7 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ productUuid }) => {
     const watchdogHandler: SubmitHandler<WatchdogFormType> = async (watchdogFormData) => {
         blurInput();
 
-        const createWatchdogResult = await createWatchdog({
+        const createWatchdogResult = await createWatchDogAction({
             input: {
                 email: watchdogFormData.email,
                 productUuid: watchdogFormData.productUuid,
@@ -60,22 +60,15 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ productUuid }) => {
         onGtmCreateWatchdotEventHandler(watchdogFormData);
     };
 
-    useScrollToFirstError(formMeta.formName, formProviderMethods);
-
     return (
-        <Popup
-            className="vl:w-auto w-11/12 overflow-x-auto lg:w-4/5"
-            title={t('Watchdog')}
-            ariaDescription={t(
-                'This product is on watchdog. Please fill in your email below to be notified when the product becomes available.',
-                { ns: 'accessibility' },
-            )}
-        >
+        <Popup className="w-11/12 overflow-x-auto lg:w-4/5 vl:w-auto">
             <FormProvider {...formProviderMethods}>
                 <Form onSubmit={formProviderMethods.handleSubmit(watchdogHandler)}>
                     <FormContentWrapper>
                         <FormBlockWrapper>
-                            <FormColumn>
+                            <FormHeading>{t('Watchdog')}</FormHeading>
+
+                            <FormColumn className="mt-4">
                                 <TextInputControlled
                                     control={formProviderMethods.control}
                                     formName={formMeta.formName}
@@ -102,11 +95,7 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ productUuid }) => {
                             />
 
                             <FormButtonWrapper>
-                                <SubmitButton
-                                    aria-label={t('Submit form to send your watchdog', { ns: 'accessibility' })}
-                                >
-                                    {t('Send')}
-                                </SubmitButton>
+                                <SubmitButton>{t('Send')}</SubmitButton>
                             </FormButtonWrapper>
                         </FormBlockWrapper>
                     </FormContentWrapper>

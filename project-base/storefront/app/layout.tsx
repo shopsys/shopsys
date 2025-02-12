@@ -1,6 +1,6 @@
-import { Footer } from './_components/Layout/Footer/Footer';
-import Header from './_components/Layout/Header/Header';
-import { NotificationBars } from './_components/Layout/NotificationBars/NotificationBars';
+import { Footer } from 'app/_components/Layout/Footer/Footer';
+import Header from 'app/_components/Layout/Header/Header';
+import { NotificationBars } from 'app/_components/Layout/NotificationBars/NotificationBars';
 import { Webline } from 'components/Layout/Webline/Webline';
 import Providers from 'components/providers/Providers';
 import 'nprogress/nprogress.css';

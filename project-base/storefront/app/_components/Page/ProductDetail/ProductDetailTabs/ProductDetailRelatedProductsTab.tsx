@@ -1,5 +1,7 @@
-import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
-import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
+import { ProductSlider } from 'app/_components/Blocks/Product/ProductSlider';
+import { ProductListItem } from 'app/_components/Blocks/Product/ProductsList/ProductListItem';
+import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.ssr';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 
 export type ProductDetailRelatedProductsTabProps = {
@@ -7,11 +9,16 @@ export type ProductDetailRelatedProductsTabProps = {
 };
 
 export const ProductDetailRelatedProductsTab: FC<ProductDetailRelatedProductsTabProps> = ({ relatedProducts }) => (
-    <div className="mt-10">
-        <ProductsSlider
-            ariaAnchorName="product-slider-related"
-            gtmProductListName={GtmProductListNameType.product_detail_related_products}
-            products={relatedProducts}
-        />
-    </div>
+    <ProductSlider ariaAnchorName="product-slider-related" totalItems={relatedProducts.length} variant="default">
+        {relatedProducts.map((product, index) => (
+            <ProductListItem
+                key={product.uuid}
+                isShownInSlider
+                gtmMessageOrigin={GtmMessageOriginType.product_detail_page}
+                gtmProductListName={GtmProductListNameType.product_detail_related_products}
+                listIndex={index}
+                product={product}
+            />
+        ))}
+    </ProductSlider>
 );

@@ -1,10 +1,10 @@
 'use client';
 
+import { ProductAvailability } from 'app/_components/Blocks/Product/ProductAvailability';
 import { ProductDetailAvailabilityList } from 'app/_components/Page/ProductDetail/ProductDetailAvailabilityList';
-import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { Popup } from 'components/Layout/Popup/Popup';
 import { useTranslation } from 'components/providers/TranslationProvider';
-import { TypeStoreAvailabilityFragment } from 'graphql/requests/storeAvailabilities/fragments/StoreAvailabilityFragment.generated';
+import { TypeStoreAvailabilityFragment } from 'graphql/requests/storeAvailabilities/fragments/StoreAvailabilityFragment.ssr';
 import { TypeAvailability, TypeAvailabilityStatusEnum } from 'graphql/types';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';

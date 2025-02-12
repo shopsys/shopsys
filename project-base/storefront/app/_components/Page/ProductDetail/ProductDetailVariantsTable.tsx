@@ -1,11 +1,9 @@
-'use client';
-
 import { ProductDetailAvailability } from './ProductDetailAvailability';
+import { ProductAction } from 'app/_components/Blocks/Product/ProductAction';
+import { ProductPrice } from 'app/_components/Blocks/Product/ProductPrice';
+import { WatchDogButton } from 'app/_components/Blocks/Product/Watchdog/WatchDogButton';
 import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { Image } from 'components/Basic/Image/Image';
-import { ProductAction } from 'components/Blocks/Product/ProductAction';
-import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
-import { WatchDogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
 import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
