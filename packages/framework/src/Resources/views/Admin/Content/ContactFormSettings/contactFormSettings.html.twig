@@ -19,12 +19,7 @@
             </div>
         </div>
 
-        {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
-            {% block fixed_bar_content %}
-                {{ form_widget(form.save, { label: 'Save changes'|trans}) }}
-            {% endblock %}
-        {% endembed %}
-
+        {{ form_widget(form.actionBar) }}
     {{ form_end(form) }}
 
 {% endblock %}
