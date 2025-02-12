@@ -1,19 +1,20 @@
-'use client';
-
 import { ProductListItemImage } from './ProductListItemImage';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { VariantIcon } from 'components/Basic/Icon/VariantIcon';
+import { ProductCompareButton } from 'components/Blocks/Product/ButtonsAction/ProductCompareButton';
+import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/ProductWishlistButton';
 import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { useTranslation } from 'components/providers/TranslationProvider';
+import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TIDs } from 'cypress/tids';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { onGtmProductClickEventHandler } from 'gtm/handlers/onGtmProductClickEventHandler';
+import useTranslation from 'next-translate/useTranslation';
 import { forwardRef } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { FunctionComponentProps } from 'types/globals';
@@ -140,8 +141,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                         />
                     )}
 
-                    {/* TODO: add product comparion and wishlist */}
-                    {/* {visibleItemsConfig.productListButtons && (
+                    {visibleItemsConfig.productListButtons && (
                         <>
                             <ProductCompareButton
                                 isProductInComparison={isProductInComparison}
@@ -152,7 +152,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                                 toggleProductInWishlist={toggleProductInWishlist}
                             />
                         </>
-                    )} */}
+                    )}
                 </div>
             </li>
         );

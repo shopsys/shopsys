@@ -1,9 +1,7 @@
-'use client';
-
 import { WatchdogIcon } from 'components/Basic/Icon/WatchdogIcon';
 import { Button } from 'components/Forms/Button/Button';
-import { useTranslation } from 'components/providers/TranslationProvider';
 import { TypeAvailability, TypeAvailabilityStatusEnum } from 'graphql/types';
+import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';

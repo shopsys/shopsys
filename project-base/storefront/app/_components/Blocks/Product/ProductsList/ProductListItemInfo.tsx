@@ -1,6 +1,6 @@
+import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { VariantIcon } from 'components/Basic/Icon/VariantIcon';
 import { twJoin } from 'tailwind-merge';
-import { getServerT } from 'utils/getServerTranslation';
 
 export type ProductListItemInfoProps = {
     fullName: string;
@@ -15,7 +15,7 @@ export const ProductListItemInfo: FC<ProductListItemInfoProps> = async ({
     typename,
     variantsCount,
 }) => {
-    const t = await getServerT();
+    const t = await getTranslation();
 
     return (
         <>

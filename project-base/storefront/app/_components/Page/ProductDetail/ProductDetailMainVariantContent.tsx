@@ -3,8 +3,8 @@ import { ProductDetailInfo } from 'app/_components/Page/ProductDetail/ProductDet
 import { ProductDetailTabs } from 'app/_components/Page/ProductDetail/ProductDetailTabs/ProductDetailTabs';
 import { ProductVariantsTable } from 'app/_components/Page/ProductDetail/ProductDetailVariantsTable';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
-import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
+import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.ssr';
+import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.ssr';
 import { useMemo } from 'react';
 
 type ProductDetailMainVariantContentProps = {
