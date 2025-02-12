@@ -1,20 +1,18 @@
 'use client';
 
 import { LoginForm } from 'app/_components/Blocks/LoginForm/LoginForm';
-import { getInternationalizedStaticUrls } from 'app/_utils/staticUrls/getInternationalizedStaticUrls';
+import { useInternationalizedStaticUrls } from 'app/_hooks/useInternationalizedStaticUrls';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { CheckmarkIcon } from 'components/Basic/Icon/CheckmarkIcon';
 import { Button } from 'components/Forms/Button/Button';
-import { useAppConfig } from 'components/providers/AppConfigProvider';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { TIDs } from 'cypress/tids';
-import useTranslation from 'next-translate/useTranslation';
 
 export const MenuIconicItemUserUnauthenticatedContent: FC = () => {
     const { t } = useTranslation();
-    const staticRewritePaths = useAppConfig((settings) => settings.staticRewritePaths);
 
-    const [registrationUrl] = getInternationalizedStaticUrls(['/registration'], staticRewritePaths);
+    const [registrationUrl] = useInternationalizedStaticUrls(['/registration']);
 
     return (
         <div className="flex w-full flex-col gap-8 vl:flex-row vl:p-5">

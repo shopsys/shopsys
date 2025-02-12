@@ -1,8 +1,8 @@
+import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { Error404Headless } from 'components/Pages/ErrorPage/Error404Headless';
-import { getServerT } from 'utils/getServerTranslation';
 
 export default async function NotFound() {
-    const t = await getServerT();
+    const t = await getTranslation();
 
     return (
         <Error404Headless

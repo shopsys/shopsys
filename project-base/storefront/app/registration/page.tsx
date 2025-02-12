@@ -1,12 +1,12 @@
 import { RegistrationForm } from 'app/_components/Blocks/Registration/RegistrationForm';
 import { Breadcrumbs } from 'app/_components/Layout/Breadcrumbs/Breadcrumbs';
 import { getCountriesQuery } from 'app/_queries/getCountries';
+import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.ssr';
-import { getServerT } from 'utils/getServerTranslation';
 
 export default async function RegistrationPage() {
-    const t = await getServerT();
+    const t = await getTranslation();
     const breadcrumbs: TypeBreadcrumbFragment[] = [{ __typename: 'Link', name: t('Registration'), slug: '' }];
 
     const { data: countriesData } = await getCountriesQuery();

@@ -9,8 +9,8 @@ import { TranslationProvider } from './TranslationProvider';
 import { STATIC_REWRITE_PATHS } from 'app/_config/staticRewritePaths';
 import { getIsUserLoggedInQuery } from 'app/_queries/getIsUserLoggedInQuery';
 import { getSettingsQuery } from 'app/_queries/getSettingsQuery';
-import { getDomainConfigServer } from 'app/_utils/domain/domainConfigServer';
 import { getCookieStoreStateFromServer } from 'app/_utils/getCookieStoreStateFromServer';
+import { getDomainConfig } from 'app/_utils/getDomainConfig';
 import { headers } from 'next/headers';
 import { getDictionary } from 'utils/getDictionary';
 
@@ -20,7 +20,7 @@ type ProvidersProps = {
 
 export default async function Providers({ children }: ProvidersProps) {
     const cookieStoreStateFromServer = getCookieStoreStateFromServer();
-    const domainConfig = getDomainConfigServer(headers().get('host')!);
+    const domainConfig = getDomainConfig(headers().get('host')!);
     const { defaultLocale: lang } = domainConfig;
     const dictionary = await getDictionary(lang);
     const [isUserLoggedIn, settingsData] = await Promise.allSettled([getIsUserLoggedInQuery(), getSettingsQuery()]);

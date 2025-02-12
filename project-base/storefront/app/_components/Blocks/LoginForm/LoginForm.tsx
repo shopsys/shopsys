@@ -2,8 +2,8 @@
 
 import { useLoginForm, useLoginFormMeta } from 'app/_components/Blocks/LoginForm/loginFormMeta';
 import { SocialNetworkLogin } from 'app/_components/Blocks/SocialNetworkLogin/SocialNetworkLogin';
+import { useInternationalizedStaticUrls } from 'app/_hooks/useInternationalizedStaticUrls';
 import { useLogin } from 'app/_hooks/useLogin';
-import { getInternationalizedStaticUrls } from 'app/_utils/staticUrls/getInternationalizedStaticUrls';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper, FormHeading } from 'components/Forms/Form/Form';
@@ -11,8 +11,8 @@ import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useAppConfig } from 'components/providers/AppConfigProvider';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { TIDs } from 'cypress/tids';
-import useTranslation from 'next-translate/useTranslation';
 import { FormProvider } from 'react-hook-form';
 
 export type LoginFormProps = {
@@ -29,12 +29,10 @@ export const LoginForm: FC<LoginFormProps> = ({
     formHeading,
 }) => {
     const { t } = useTranslation();
-
     const {
         settings: { socialNetworkLoginConfig },
-        staticRewritePaths,
     } = useAppConfig();
-    const [resetPasswordUrl] = getInternationalizedStaticUrls(['/reset-password'], staticRewritePaths);
+    const [resetPasswordUrl] = useInternationalizedStaticUrls(['/reset-password']);
 
     const [formProviderMethods] = useLoginForm(defaultEmail);
     const formMeta = useLoginFormMeta(formProviderMethods);
