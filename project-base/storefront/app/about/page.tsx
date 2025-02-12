@@ -1,5 +1,6 @@
 import { isNotFoundError } from 'app/_urql/errorExchange';
 import { createQuery } from 'app/_urql/urql-dto';
+import { getTranslation } from 'app/_utils/translation/getTranslation';
 import {
     BlogArticleDetailQueryDocument,
     TypeBlogArticleDetailQuery,
@@ -11,7 +12,6 @@ import {
     TypeCurrentCustomerUserQueryVariables,
 } from 'graphql/requests/customer/queries/CurrentCustomerUserQuery.ssr';
 import { notFound } from 'next/navigation';
-import { getServerT } from 'utils/getServerTranslation';
 
 async function getArticle() {
     return createQuery<TypeBlogArticleDetailQuery, TypeBlogArticleDetailQueryVariables>(
@@ -30,7 +30,7 @@ async function getCustomerUser() {
 }
 
 export default async function IndexPage() {
-    const t = await getServerT();
+    const t = await getTranslation();
     const [articleResponse, customerUserResponse] = await Promise.all([getArticle(), getCustomerUser()]);
 
     const { data: articleData, error: articleError } = articleResponse;
