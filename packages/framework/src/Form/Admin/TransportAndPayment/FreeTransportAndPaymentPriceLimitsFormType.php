@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\TransportAndPayment;
 
+use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Constraints\NotNegativeMoneyAmount;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -38,7 +38,9 @@ class FreeTransportAndPaymentPriceLimitsFormType extends AbstractType
     {
         $builder
             ->add($this->getPriceLimitsBuilder($builder))
-            ->add('save', SubmitType::class);
+            ->add('actionBar', ActionBarType::class, [
+                'save_label' => t('Save changes'),
+            ]);
     }
 
     /**

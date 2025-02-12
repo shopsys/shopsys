@@ -12,7 +12,7 @@ use Tests\App\Test\Codeception\AcceptanceTester;
 class PaymentImageUploadCest
 {
     private const IMAGE_UPLOAD_FIELD_ID = 'payment_form_image_image_file';
-    private const SAVE_BUTTON_NAME = 'payment_form[save]';
+    private const SAVE_BUTTON_NAME = 'payment_form[actionBar][save]';
 
     private const TEST_IMAGE_NAME = 'paymentTestImage.png';
 
