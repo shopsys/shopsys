@@ -40,7 +40,7 @@ export const OrderAction: FC<OrderActionProps> = ({
                     {buttonBack}
                 </Button>
             </div>
-            <div className="order-1 mb-8 w-auto lg:order-2 lg:mb-0" tid={TIDs.blocks_orderaction_next}>
+            <div className="order-1 mb-8 ml-auto w-auto lg:order-2 lg:mb-0" tid={TIDs.blocks_orderaction_next}>
                 <SubmitButton isWithDisabledLook={hasDisabledLook} onClick={nextStepClickHandler}>
                     {shouldShowSpinnerOnNextStepButton && <SpinnerIcon className="w-5" />}
                     <span>{buttonNext}</span>

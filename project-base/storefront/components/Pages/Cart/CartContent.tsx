@@ -1,8 +1,6 @@
 import { CartList } from './CartList/CartList';
 import { CartSummary } from './CartSummary';
-import { useCartPageNavigation } from './cartUtils';
 import { CartSteps } from 'components/Blocks/CartSteps/CartSteps';
-import { OrderAction } from 'components/Blocks/OrderAction/OrderAction';
 import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredRecommendedProducts';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
@@ -17,7 +15,6 @@ type CartContentProps = {
 export const CartContent: FC<CartContentProps> = ({ cart }) => {
     const { t } = useTranslation();
     const { url, isLuigisBoxActive } = useDomainConfig();
-    const { goToPreviousStepFromCartPage, goToNextStepFromCartPage } = useCartPageNavigation();
 
     return (
         <Webline>
@@ -26,16 +23,6 @@ export const CartContent: FC<CartContentProps> = ({ cart }) => {
             <CartList items={cart.items} />
 
             <CartSummary />
-
-            <OrderAction
-                withGapBottom
-                backStepClickHandler={goToPreviousStepFromCartPage}
-                buttonBack={t('Back')}
-                buttonNext={t('Transport and payment')}
-                hasDisabledLook={false}
-                nextStepClickHandler={goToNextStepFromCartPage}
-                withGapTop={false}
-            />
 
             {isLuigisBoxActive && (
                 <DeferredRecommendedProducts

@@ -69,7 +69,7 @@ export const useNewsletterFormMeta = (
                                 lnk1: privacyPolicyArticleUrl ? (
                                     <Link
                                         isExternal
-                                        className="inline"
+                                        className="inline text-sm"
                                         href={privacyPolicyArticleUrl}
                                         target="_blank"
                                     />

@@ -1,17 +1,15 @@
-import FreeTransportRange from 'components/Blocks/FreeTransport/FreeTransportRange';
+import { FreeTransportRange } from 'components/Blocks/FreeTransport/FreeTransportRange';
 import { PromoCode } from 'components/Blocks/PromoCode/PromoCode';
 import { CartPreview } from 'components/Pages/Cart/CartPreview';
 
 export const CartSummary: FC = () => (
-    <div className="mb-8 flex flex-col flex-wrap gap-2 lg:flex-row lg:gap-0 vl:items-baseline">
-        <div className="pr-0 lg:w-1/2 vl:mt-2 vl:w-4/12 vl:self-start vl:pr-4">
+    <div className="mt-5 flex flex-col gap-8 vl:mt-8 vl:flex-row vl:justify-between">
+        <div className="flex w-full flex-col gap-6 vl:max-w-[424px] vl:gap-10">
+            <FreeTransportRange />
+
             <PromoCode />
         </div>
-        <div className="ml-auto flex items-center justify-end lg:w-1/2 vl:w-5/12 vl:pr-8">
-            <FreeTransportRange />
-        </div>
-        <div className="lg:w-full vl:w-3/12">
-            <CartPreview />
-        </div>
+
+        <CartPreview />
     </div>
 );

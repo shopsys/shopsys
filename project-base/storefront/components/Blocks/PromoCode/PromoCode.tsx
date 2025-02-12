@@ -1,11 +1,7 @@
-import { PromoCodeInfo } from './PromoCodeInfo';
 import { usePromoCodeForm, usePromoCodeFormMeta } from './promoCodeFormMeta';
-import { MinusIcon } from 'components/Basic/Icon/MinusIcon';
-import { PlusIcon } from 'components/Basic/Icon/PlusIcon';
 import { Loader } from 'components/Basic/Loader/Loader';
-import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
-import { Button } from 'components/Forms/Button/Button';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
+import { Checkbox } from 'components/Forms/Checkbox/Checkbox';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { TIDs } from 'cypress/tids';
 import { AnimatePresence, m } from 'framer-motion';
@@ -15,7 +11,6 @@ import { FormProvider } from 'react-hook-form';
 import { collapseExpandAnimation } from 'utils/animations/animationVariants';
 import { useApplyPromoCodeToCart } from 'utils/cart/useApplyPromoCodeToCart';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
-import { useRemovePromoCodeFromCart } from 'utils/cart/useRemovePromoCodeFromCart';
 import { useErrorPopup } from 'utils/forms/useErrorPopup';
 
 export const PromoCode: FC = () => {
@@ -27,79 +22,66 @@ export const PromoCode: FC = () => {
         success: t('Promo code was added to the order.'),
         error: t('There was an error while adding a promo code to the order.'),
     });
-    const { removePromoCodeFromCart, isRemovingPromoCodeFromCart } = useRemovePromoCodeFromCart({
-        success: t('Promo code was removed from the order.'),
-        error: t('There was an error while removing the promo code from the order.'),
-    });
     useErrorPopup(formProviderMethods, formMeta.fields);
 
     const [isContentVisible, setIsContentVisible] = useState(!!defaultValues.promoCode);
 
+    if (promoCode !== null) {
+        return null;
+    }
     return (
-        <div>
-            {promoCode !== null ? (
-                <>
-                    {isRemovingPromoCodeFromCart && <LoaderWithOverlay className="w-5" />}
-                    <PromoCodeInfo
-                        promoCode={promoCode}
-                        onRemovePromoCodeCallback={() => removePromoCodeFromCart(promoCode.code)}
-                    />
-                </>
-            ) : (
-                <>
-                    <Button
-                        className="mb-3 text-sm max-sm:w-full"
-                        tid={TIDs.blocks_promocode_add_button}
-                        variant="inverted"
-                        onClick={() => setIsContentVisible(!isContentVisible)}
-                    >
-                        {isContentVisible ? <MinusIcon className="w-3" /> : <PlusIcon className="w-3" />}
-                        {t('I have a discount coupon')}
-                    </Button>
-                    <AnimatePresence initial={false}>
-                        {isContentVisible && (
-                            <FormProvider {...formProviderMethods}>
-                                <m.form
-                                    key="promo-code"
-                                    animate="open"
-                                    className="mt-15 !flex sm:mt-0"
-                                    exit="closed"
-                                    initial="closed"
-                                    variants={collapseExpandAnimation}
-                                    onSubmit={formProviderMethods.handleSubmit((promoCodeFormData) =>
-                                        applyPromoCodeToCart(promoCodeFormData.promoCode),
-                                    )}
-                                >
-                                    <div className="flex w-full sm:w-fit lg:max-w-sm">
-                                        <TextInputControlled
-                                            isWithoutFormLineError
-                                            control={formProviderMethods.control}
-                                            formName={formMeta.formName}
-                                            name={formMeta.fields.promoCode.name}
-                                            render={(textInput) => textInput}
-                                            textInputProps={{
-                                                label: formMeta.fields.promoCode.label,
-                                                required: true,
-                                                className: '!rounded-r-none border-r-0',
-                                            }}
-                                        />
-                                        <SubmitButton
-                                            className="h-auto !rounded-l-none !rounded-r !px-3"
-                                            isWithDisabledLook={!formProviderMethods.formState.isValid}
-                                            tid={TIDs.blocks_promocode_apply_button}
-                                            variant="inverted"
-                                        >
-                                            {isApplyingPromoCodeToCart && <Loader className="w-4" />}
+        <div className="flex flex-col gap-2.5">
+            <div tid={TIDs.blocks_promocode_add_button}>
+                <Checkbox
+                    id="promo-code"
+                    label={t('I have a discount coupon')}
+                    value={isContentVisible}
+                    onChange={() => setIsContentVisible(!isContentVisible)}
+                />
+            </div>
 
-                                            {t('Apply')}
-                                        </SubmitButton>
-                                    </div>
-                                </m.form>
-                            </FormProvider>
-                        )}
-                    </AnimatePresence>
-                </>
-            )}
+            <AnimatePresence initial={false}>
+                {isContentVisible && (
+                    <FormProvider {...formProviderMethods}>
+                        <m.form
+                            key="promo-code"
+                            animate="open"
+                            className="!flex flex-col gap-2.5 sm:flex-row"
+                            exit="closed"
+                            initial="closed"
+                            variants={collapseExpandAnimation}
+                            onSubmit={formProviderMethods.handleSubmit((promoCodeFormData) =>
+                                applyPromoCodeToCart(promoCodeFormData.promoCode),
+                            )}
+                        >
+                            <div className="max-w-60">
+                                <TextInputControlled
+                                    isWithoutFormLineError
+                                    control={formProviderMethods.control}
+                                    formName={formMeta.formName}
+                                    name={formMeta.fields.promoCode.name}
+                                    render={(textInput) => textInput}
+                                    textInputProps={{
+                                        label: formMeta.fields.promoCode.label,
+                                        required: true,
+                                    }}
+                                />
+                            </div>
+                            <SubmitButton
+                                className="self-start"
+                                isWithDisabledLook={!formProviderMethods.formState.isValid}
+                                size="xlarge"
+                                tid={TIDs.blocks_promocode_apply_button}
+                                variant="inverted"
+                            >
+                                {isApplyingPromoCodeToCart && <Loader className="w-4" />}
+
+                                {t('Apply code')}
+                            </SubmitButton>
+                        </m.form>
+                    </FormProvider>
+                )}
+            </AnimatePresence>
         </div>
     );
 };
