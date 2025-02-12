@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\UploadedFile;
 
+use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
 use Shopsys\FrameworkBundle\Form\BasicFileUploadType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Form\ProductsType;
 use Shopsys\FrameworkBundle\Model\UploadedFile\UploadedFileFormData;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -51,7 +51,10 @@ class UploadedFileFormType extends AbstractType
             ],
         ]);
 
-        $builder->add('save', SubmitType::class);
+        $builder->add('actionBar', ActionBarType::class, [
+            'back_route' => 'admin_uploadedfile_list',
+            'entity' => $options['uploaded_file'],
+        ]);
 
         $builder->add('files', BasicFileUploadType::class, [
             'required' => false,

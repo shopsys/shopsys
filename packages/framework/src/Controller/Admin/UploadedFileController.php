@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Controller\Admin;
 
+use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
 use Shopsys\FrameworkBundle\Component\UploadedFile\Exception\FileNotFoundException;
@@ -18,7 +19,6 @@ use Shopsys\FrameworkBundle\Form\MultiLocaleBasicFileUploadType;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorGridFacade;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\UploadedFile\UploadedFileFormDataFactory;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -126,8 +126,9 @@ class UploadedFileController extends AdminBaseController
             'required' => false,
             'multiple' => true,
             'label' => false,
-        ])->add('save', SubmitType::class, [
-            'label' => t('Upload'),
+        ])->add('actionBar', ActionBarType::class, [
+            'back_route' => 'admin_uploadedfile_list',
+            'save_label' => t('Upload'),
         ]);
 
         $form->handleRequest($request);
