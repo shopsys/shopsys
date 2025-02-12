@@ -216,13 +216,6 @@ class CategorySeoController extends AdminBaseController
 
         $this->storeJsonsToReadyCategorySeoMixData($readyCategorySeoMixData, $categorySeoFilterFormTypeAllQueries, $selectedCategorySeoMixCombination);
 
-        $readyCategorySeoCombinationFormType = $this->createForm(ReadyCategorySeoCombinationFormType::class, $readyCategorySeoMixData, [
-            'method' => 'POST',
-            'readyCategorySeoMix' => $selectedCategorySeoMixCombination !== null ? $this->readyCategorySeoMixFacade->findBySelectedCategorySeoMixCombination($selectedCategorySeoMixCombination) : null,
-        ]);
-
-        $readyCategorySeoCombinationFormType->handleRequest($request);
-
         if ($categorySeoFilterFormTypeAllQueries === null
             && $readyCategorySeoMixData->categorySeoFilterFormTypeAllQueriesJson !== null
         ) {
@@ -239,6 +232,14 @@ class CategorySeoController extends AdminBaseController
         } else {
             $newCombinationsUrl = $this->generateUrl('admin_categoryseo_list');
         }
+
+        $readyCategorySeoCombinationFormType = $this->createForm(ReadyCategorySeoCombinationFormType::class, $readyCategorySeoMixData, [
+            'method' => 'POST',
+            'new_combination_url' => $newCombinationsUrl,
+            'readyCategorySeoMix' => $selectedCategorySeoMixCombination !== null ? $this->readyCategorySeoMixFacade->findBySelectedCategorySeoMixCombination($selectedCategorySeoMixCombination) : null,
+        ]);
+
+        $readyCategorySeoCombinationFormType->handleRequest($request);
 
         if ($readyCategorySeoCombinationFormType->isSubmitted() && $readyCategorySeoCombinationFormType->isValid()) {
             $this->readyCategorySeoMixDataFactory->fillValuesFromSelectedCategorySeoMixCombination(
@@ -278,7 +279,6 @@ class CategorySeoController extends AdminBaseController
         return $this->render('@ShopsysFramework/Admin/Content/CategorySeo/readyCombination.html.twig', [
             'form' => $readyCategorySeoCombinationFormType->createView(),
             'categorySeoFilterFormTypeAllQueries' => $categorySeoFilterFormTypeAllQueries,
-            'newCombinationsUrl' => $newCombinationsUrl,
             'selectedCategorySeoMixCombination' => $selectedCategorySeoMixCombination,
             'flagName' => $selectedCategorySeoMixCombination->getFlagId() !== null ? $this->flagFacade->getById($selectedCategorySeoMixCombination->getFlagId())->getName() : '',
             'parameterValueNamesIndexedByParameterNames' => $this->parameterFacade->getParameterValueNamesIndexedByParameterNames(

@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\CategorySeo;
 
+use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\CategorySeo\CategorySeoFacade;
 use Shopsys\FrameworkBundle\Model\CategorySeo\CategorySeoFiltersData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -50,11 +50,10 @@ final class CategorySeoFilterFormType extends AbstractType
                 'expanded' => true,
                 'required' => false,
             ])
-            ->add('save', SubmitType::class, [
-                'label' => t('Show combinations'),
-                'attr' => [
-                    'class' => 'margin-top-20',
-                ],
+            ->add('actionBar', ActionBarType::class, [
+                'back_route' => 'admin_categoryseo_newcategory',
+                'back_label' => t('Back to category selection'),
+                'save_label' => t('Show combinations'),
             ]);
     }
 
