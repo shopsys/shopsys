@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\Mail;
 
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -68,7 +68,9 @@ class MailSettingFormType extends AbstractType
         $builder
             ->add($builderSettingsGroup)
             ->add($footerGroup)
-            ->add('save', SubmitType::class);
+            ->add('actionBar', ActionBarType::class, [
+                'save_label' => t('Save changes'),
+            ]);
     }
 
     /**
