@@ -10,17 +10,5 @@
         {{ 'Number of selected products is not limited, however only %limit% will be displayed on frontend.'|trans({'%limit%': productsFrontendLimit}) }}
     </div>
 
-    {{ form_start(form) }}
-
-        {{ form_errors(form) }}
-        <div class="wrap-divider">
-            {{ form_row(form.products, { label: 'Products'|trans }) }}
-        </div>
-        {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
-            {% block fixed_bar_content %}
-                {{ form_widget(form.save, { label: 'Save changes'|trans }) }}
-            {% endblock %}
-        {% endembed %}
-
-    {{ form_end(form) }}
+    {{ form(form) }}
 {% endblock %}
