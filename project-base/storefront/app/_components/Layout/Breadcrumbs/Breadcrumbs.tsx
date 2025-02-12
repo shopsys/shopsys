@@ -1,10 +1,10 @@
+import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { Fragment } from 'react';
-import { getServerT } from 'utils/getServerTranslation';
 import { twMergeCustom } from 'utils/twMerge';
 
 type BreadcrumbsProps = {
@@ -17,7 +17,7 @@ const breadcrumbsLinkTwClass =
     'hidden font-secondary text-sm font-semibold no-underline last-of-type:inline hover:no-underline lg:inline';
 
 export async function Breadcrumbs({ breadcrumbs, className }: BreadcrumbsProps) {
-    const t = await getServerT();
+    const t = await getTranslation();
 
     if (!breadcrumbs.length) {
         return null;
