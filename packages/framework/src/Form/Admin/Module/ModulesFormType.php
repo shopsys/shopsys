@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Module;
 
+use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Model\Module\ModuleList;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,7 +22,9 @@ class ModulesFormType extends AbstractType
     {
         $builder
             ->add('modules', FormType::class)
-            ->add('save', SubmitType::class);
+            ->add('actionBar', ActionBarType::class, [
+                'save_label' => t('Save changes'),
+            ]);
 
         /** @var \Shopsys\FrameworkBundle\Model\Module\ModuleList $moduleList */
         $moduleList = $options['module_list'];
