@@ -5,7 +5,6 @@ import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEven
 import useTranslation from 'next-translate/useTranslation';
 
 type PaymentSuccessProps = {
-    orderUuid: string;
     orderPaymentSuccessfulContent: string;
 };
 

@@ -1,14 +1,14 @@
 import { useRegistrationAfterOrderForm, useRegistrationAfterOrderFormMeta } from './registrationAfterOrderFormMeta';
-import { CheckmarkBadgeIcon } from 'components/Basic/Icon/CheckmarkBadgeIcon';
+import { ThumbUp } from 'components/Basic/Icon/ThumbUp';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
-import { Form, FormBlockWrapper, FormContentWrapper } from 'components/Forms/Form/Form';
+import { Form } from 'components/Forms/Form/Form';
+import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { TIDs } from 'cypress/tids';
 import { useCouldBeCustomerRegisteredQuery } from 'graphql/requests/customer/queries/CouldBeCustomerRegisteredQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
 import { OrderConfirmationUrlQuery } from 'pages/order-confirmation';
 import { useRef } from 'react';
@@ -18,7 +18,6 @@ import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useRegistration } from 'utils/auth/useRegistration';
 import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 import { blurInput } from 'utils/forms/blurInput';
-import { useErrorPopup } from 'utils/forms/useErrorPopup';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 
 export const RegistrationAfterOrder: FC<Partial<OrderConfirmationUrlQuery>> = ({
@@ -33,8 +32,6 @@ export const RegistrationAfterOrder: FC<Partial<OrderConfirmationUrlQuery>> = ({
     const { registerByOrder } = useRegistration();
     const isInvalidRegistrationRef = useRef(false);
     const isUserLoggedIn = useIsUserLoggedIn();
-
-    useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.order_confirmation_page);
 
     const [{ data: couldBeCustomerRegisteredData, fetching: isInformationAboutUserRegistrationFetching }] =
         useCouldBeCustomerRegisteredQuery({
@@ -80,77 +77,79 @@ export const RegistrationAfterOrder: FC<Partial<OrderConfirmationUrlQuery>> = ({
         return null;
     }
 
+    const registrationAfterOrderUsp = [
+        t('You will have an overview of your orders and complaints'),
+        t('Collecting points with every order'),
+        t('Possibility of purchases for better prices'),
+        t('Exclusive products as a part of the loyalty program'),
+    ];
+
     return (
-        <div className="relative mb-20 flex flex-col rounded border-2 border-borderAccent lg:flex-row">
-            <div className="w-full p-5 lg:w-1/2 lg:px-10 lg:py-8">
-                <div className="mb-5 text-4xl font-bold leading-10 [&>strong]:text-textAccent">
-                    <Trans
-                        components={{ 0: <br />, 1: <strong /> }}
-                        i18nKey="Finish registration to loyalty program."
+        <div className="flex flex-col rounded-xl bg-backgroundMore p-5">
+            <h2>{t('Finish registration to loyalty program.')}</h2>
+
+            <ul className="flex flex-col gap-2 py-5">
+                {registrationAfterOrderUsp.map((text) => (
+                    <li key={text} className="flex items-center gap-2">
+                        <ThumbUp className="size-6 text-textAccent" />
+                        <h5 className="text-textAccent">{text}</h5>
+                    </li>
+                ))}
+            </ul>
+
+            <FormProvider {...formProviderMethods}>
+                <Form
+                    className="flex flex-col gap-4"
+                    onSubmit={formProviderMethods.handleSubmit(onRegistrationHandler)}
+                >
+                    <h4>{t('Choose a password')}</h4>
+
+                    <FormColumn className="gap-3">
+                        <PasswordInputControlled
+                            control={formProviderMethods.control}
+                            formName={formMeta.formName}
+                            name={formMeta.fields.password.name}
+                            render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
+                            passwordInputProps={{
+                                label: formMeta.fields.password.label,
+                                autoComplete: 'new-password',
+                            }}
+                        />
+
+                        <PasswordInputControlled
+                            control={formProviderMethods.control}
+                            formName={formMeta.formName}
+                            name={formMeta.fields.passwordConfirm.name}
+                            render={(passwordInput) => <FormLine>{passwordInput}</FormLine>}
+                            passwordInputProps={{
+                                label: formMeta.fields.passwordConfirm.label,
+                                autoComplete: 'new-password-confirm',
+                            }}
+                        />
+                    </FormColumn>
+
+                    <CheckboxControlled
+                        control={formProviderMethods.control}
+                        formName={formMeta.formName}
+                        name={formMeta.fields.privacyPolicy.name}
+                        render={(checkbox) => <FormLine>{checkbox}</FormLine>}
+                        checkboxProps={{
+                            label: formMeta.fields.privacyPolicy.label,
+                            required: true,
+                        }}
                     />
-                </div>
 
-                <ul>
-                    {[
-                        t('You will have an overview of your orders and complaints'),
-                        t('Collecting points with every order'),
-                        t('Possibility of purchases for better prices'),
-                        t('Exclusive products as a part of the loyalty program'),
-                    ].map((text) => (
-                        <li key={text} className="relative mb-3 flex gap-2">
-                            <CheckmarkBadgeIcon className="min-w-4 text-textSuccess" />
-                            <span>{text}</span>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-
-            <div className="flex w-full flex-col items-center justify-center p-5 lg:w-1/2 lg:px-10 lg:py-8">
-                <div className="w-full lg:max-w-sm">
-                    <FormProvider {...formProviderMethods}>
-                        <Form
-                            className="flex flex-col gap-5"
-                            onSubmit={formProviderMethods.handleSubmit(onRegistrationHandler)}
-                        >
-                            <FormContentWrapper className="vl:px-5">
-                                <FormBlockWrapper>
-                                    <PasswordInputControlled
-                                        control={formProviderMethods.control}
-                                        formName={formMeta.formName}
-                                        name={formMeta.fields.password.name}
-                                        passwordInputProps={{
-                                            label: formMeta.fields.password.label,
-                                        }}
-                                        render={(passwordInput) => (
-                                            <div className="mb-7">
-                                                <FormLine>{passwordInput}</FormLine>
-                                            </div>
-                                        )}
-                                    />
-                                    <CheckboxControlled
-                                        control={formProviderMethods.control}
-                                        formName={formMeta.formName}
-                                        name={formMeta.fields.privacyPolicy.name}
-                                        render={(checkbox) => <FormLine>{checkbox}</FormLine>}
-                                        checkboxProps={{
-                                            label: formMeta.fields.privacyPolicy.label,
-                                            required: true,
-                                        }}
-                                    />
-                                </FormBlockWrapper>
-                            </FormContentWrapper>
-                            <SubmitButton
-                                className="w-full"
-                                isDisabled={isInvalidRegistrationRef.current}
-                                isWithDisabledLook={!formProviderMethods.formState.isValid}
-                                tid={TIDs.registration_after_order_submit_button}
-                            >
-                                {t('Create account')}
-                            </SubmitButton>
-                        </Form>
-                    </FormProvider>
-                </div>
-            </div>
+                    <SubmitButton
+                        className="self-start"
+                        isDisabled={isInvalidRegistrationRef.current}
+                        isWithDisabledLook={!formProviderMethods.formState.isValid}
+                        size="large"
+                        tid={TIDs.registration_after_order_submit_button}
+                    >
+                        {t('Create account')}
+                    </SubmitButton>
+                </Form>
+            </FormProvider>
         </div>
     );
 };

@@ -1,31 +1,30 @@
-import sentCartImage from '/public/images/sent-cart.svg';
-import { Image } from 'components/Basic/Image/Image';
 import { TIDs } from 'cypress/tids';
 
 type ConfirmationPageContentProps = {
     heading: string;
+    headingClassName?: string;
     content?: string;
 };
 
-export const ConfirmationPageContent: FC<ConfirmationPageContentProps> = ({ heading, content, children }) => {
+export const ConfirmationPageContent: FC<ConfirmationPageContentProps> = ({
+    heading,
+    headingClassName,
+    content,
+    children,
+}) => {
     return (
-        <div className="mb-10 mt-16 flex flex-col items-center justify-center lg:mb-24 lg:mt-16 lg:flex-row lg:items-start">
-            <div className="mb-0 w-40 shrink-0 lg:mr-32">
-                <Image alt={heading} src={sentCartImage} />
-            </div>
-            <div>
-                <div className="h1 mb-3">{heading}</div>
-                {!!content && (
-                    <>
-                        <div
-                            className="text-center lg:text-left"
-                            dangerouslySetInnerHTML={{ __html: content }}
-                            tid={TIDs.order_confirmation_page_text_wrapper}
-                        />
-                        {children}
-                    </>
-                )}
-            </div>
+        <div className="mt-1 lg:mt-6">
+            <h1 className={headingClassName}>{heading}</h1>
+
+            {!!content && (
+                <>
+                    <div
+                        dangerouslySetInnerHTML={{ __html: content }}
+                        tid={TIDs.order_confirmation_page_text_wrapper}
+                    />
+                    {children}
+                </>
+            )}
         </div>
     );
 };

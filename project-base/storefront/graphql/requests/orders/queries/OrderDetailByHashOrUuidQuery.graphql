@@ -1,0 +1,5 @@
+query OrderDetailByHashOrUuidQuery($urlHash: String, $uuid: Uuid) {
+    order(urlHash: $urlHash, uuid: $uuid) {
+        ...OrderDetailFragment
+    }
+}

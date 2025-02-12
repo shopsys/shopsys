@@ -112,6 +112,9 @@ export const fillRegistrationInfoAfterOrder = (password: string) => {
     cy.get('#registration-after-order-form-password')
         .should('have.attr', 'placeholder', placeholder.password)
         .type(password);
+    cy.get('#registration-after-order-form-passwordConfirm')
+        .should('have.attr', 'placeholder', placeholder.passwordConfirm)
+        .type(password);
     cy.get('[for="registration-after-order-form-privacyPolicy"]').find('div').first().click();
 };
 

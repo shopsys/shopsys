@@ -72,6 +72,7 @@ export const payment = {
 
 export const placeholder = {
     password: 'Password',
+    passwordConfirm: 'Password again',
     email: 'Your email',
     phone: 'Phone',
     firstName: 'First Name',
