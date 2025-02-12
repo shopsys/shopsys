@@ -3040,9 +3040,6 @@ msgstr "Otevírací doba"
 msgid "Opening time"
 msgstr "Čas od"
 
-msgid "Operator information"
-msgstr "Informace o provozovateli"
-
 msgid "Operator information - full"
 msgstr "Informace o provozovateli - vše"
 
