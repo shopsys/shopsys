@@ -31,6 +31,9 @@ msgstr "Sloupec 1"
 msgid "Column 2"
 msgstr "Sloupec 2"
 
+msgid "Column 3"
+msgstr "Sloupec 3"
+
 msgid "Columns"
 msgstr "Sloupce"
 
