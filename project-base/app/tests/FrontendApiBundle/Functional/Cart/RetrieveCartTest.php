@@ -332,7 +332,7 @@ class RetrieveCartTest extends GraphQlTestCase
                 'name' => t('pcs', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
             ],
             'availability' => [
-                'name' => t('In stock', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                'name' => t('In stock', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $firstDomainLocale),
                 'status' => AvailabilityStatusEnum::IN_STOCK,
             ],
             'stockQuantity' => 2700,
@@ -410,7 +410,7 @@ class RetrieveCartTest extends GraphQlTestCase
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                 $firstDomainLocale,
             ),
-            'orderingPriority' => 1,
+            'orderingPriority' => 9,
             'parameters' => [
                 [
                     'name' => t('Technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),

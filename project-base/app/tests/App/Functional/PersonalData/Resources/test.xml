@@ -66,7 +66,7 @@
           </item>
         </order_items>
         <order_other_data>
-          <order_status><![CDATA[New]]></order_status>
+          <order_status>{order_status}</order_status>
           <phone><![CDATA[+420987654321]]></phone>
           <email><![CDATA[no-reply@shopsys.com]]></email>
         </order_other_data>
@@ -90,14 +90,14 @@
         </complaint_addresses>
         <complaint_items>
           <item>
-            <item_name/>
+            <item_name><![CDATA[]]></item_name>
             <item_quantity/>
-            <item_catnum/>
-            <item_description/>
+            <item_catnum><![CDATA[]]></item_catnum>
+            <item_description><![CDATA[]]></item_description>
           </item>
         </complaint_items>
         <complaint_other_data>
-          <complaint_status><![CDATA[New]]></complaint_status>
+          <complaint_status>{complaint_status}</complaint_status>
         </complaint_other_data>
       </complaint>
     </customer_complaints>

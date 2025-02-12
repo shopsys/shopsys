@@ -1,4 +1,4 @@
-query multipleProducts ($urlSlug: String!) {
+query multipleProducts ($urlSlug: String!, $minimalPrice: Money!) {
     category(urlSlug: $urlSlug) {
         name
         products(first: 2, orderingMode: PRICE_DESC) {
@@ -8,7 +8,7 @@ query multipleProducts ($urlSlug: String!) {
                 }
             }
         }
-        productsStatic: products(first: 2, filter: {minimalPrice: "6000"}, orderingMode: PRICE_ASC) {
+        productsStatic: products(first: 2, filter: {minimalPrice: $minimalPrice}, orderingMode: PRICE_ASC) {
             edges {
                 node {
                     name

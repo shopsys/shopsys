@@ -101,7 +101,7 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
 
         $query = '
             query {
-                products (last: 2, filter: { maximalPrice: "' . $maximalPrice . '" }) {
+                products (last: 2, filter: { maximalPrice: "' . $maximalPrice . '" }, orderingMode: PRICE_DESC) {
                     edges {
                         node {
                             name
@@ -113,7 +113,7 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
 
         $productsExpected = [
             ['name' => t(
-                'ROCCAT Kone Pure Optical Gaming Mouse',
+                'Sencor SDB 4002M4',
                 [],
                 Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                 $this->firstDomainLocale,

@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Cart;
 
+use App\DataFixtures\Demo\CurrencyDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\SettingValueDataFixture;
 use App\Model\Product\Product;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Tests\FrontendApiBundle\Functional\Order\OrderTestTrait;
@@ -80,7 +82,11 @@ class RemainingToFreeTransportCartTest extends GraphQlTestCase
 
     public function testCorrectRemainingPriceIsReturned(): void
     {
-        $freeTransportAndPaymentLimit = Money::create(SettingValueDataFixture::FREE_TRANSPORT_AND_PAYMENT_LIMIT);
+        $freeTransportAndPaymentLimit = $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(
+            Money::create(SettingValueDataFixture::FREE_TRANSPORT_AND_PAYMENT_LIMIT),
+            $this->getReference(CurrencyDataFixture::CURRENCY_CZK),
+            Domain::FIRST_DOMAIN_ID,
+        );
 
         $mutation = 'mutation {
             AddToCart(

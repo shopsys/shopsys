@@ -4,6 +4,36 @@ query CartQuery(
     cart(cartInput: {
         cartUuid: $cartUuid
     }) {
+        items {
+            quantity
+            product {
+                name
+            }
+        }
+        transport {
+            name
+            description
+            instruction
+            position
+            daysUntilDelivery
+            transportTypeCode
+            price {
+                priceWithVat
+                priceWithoutVat
+                vatAmount
+            },
+            images {
+                url
+                name
+            }
+            stores {
+                edges {
+                    node {
+                        name
+                    }
+                }
+            }
+        }
         totalPriceWithoutDiscountTransportAndPayment {
             priceWithVat
             priceWithoutVat

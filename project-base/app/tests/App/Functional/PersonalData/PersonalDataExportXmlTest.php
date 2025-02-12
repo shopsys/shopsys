@@ -99,7 +99,11 @@ class PersonalDataExportXmlTest extends TransactionFunctionalTestCase
 
         $generatedXml = $this->xmlNormalizerHelper->normalizeXml($generatedXml);
 
-        $this->assertXmlStringEqualsXmlFile(__DIR__ . '/Resources/' . self::EXPECTED_XML_FILE_NAME, $generatedXml);
+        $expectedXml = file_get_contents(__DIR__ . '/Resources/' . self::EXPECTED_XML_FILE_NAME);
+        $expectedXml = str_replace(['{complaint_status}', '{order_status}'], [$complaint->getStatus()->getName($this->getFirstDomainLocale()), $status->getName($this->getFirstDomainLocale())], $expectedXml);
+        $expectedXml = $this->xmlNormalizerHelper->normalizeXml($expectedXml);
+
+        $this->assertSame($expectedXml, $generatedXml);
     }
 
     /**

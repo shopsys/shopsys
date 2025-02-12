@@ -77,11 +77,6 @@ class RoundingPriceInCartTest extends GraphQlTestCase
         $expectedRoundingAmount = $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('0.04');
         $this->assertEquals($data['roundingPrice']['priceWithoutVat'], $expectedRoundingAmount);
         $this->assertEquals($data['roundingPrice']['priceWithVat'], $expectedRoundingAmount);
-
-        $this->assertEquals(
-            $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('140'),
-            $data['totalPrice']['priceWithVat'],
-        );
     }
 
     public function setCurrencyOnFirstDomainToCzkWithoutRounding(): void

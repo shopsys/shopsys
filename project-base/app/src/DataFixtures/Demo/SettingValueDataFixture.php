@@ -18,22 +18,25 @@ use Shopsys\FrameworkBundle\Model\Heureka\HeurekaShopCertificationLocaleHelper;
 use Shopsys\FrameworkBundle\Model\Mail\Setting\MailSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 
 class SettingValueDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
 {
-    public const int FREE_TRANSPORT_AND_PAYMENT_LIMIT = 2000;
+    public const int FREE_TRANSPORT_AND_PAYMENT_LIMIT = 50000;
 
     /**
      * @param \App\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      * @param \Shopsys\FrameworkBundle\Model\Heureka\HeurekaShopCertificationLocaleHelper $heurekaShopCertificationLocaleHelper
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceConverter $priceConverter
      */
     public function __construct(
         private readonly Setting $setting,
         private readonly PricingSetting $pricingSetting,
         private readonly HeurekaShopCertificationLocaleHelper $heurekaShopCertificationLocaleHelper,
+        private readonly PriceConverter $priceConverter,
     ) {
     }
 
@@ -46,10 +49,18 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
             $domainId = $domainConfig->getId();
             $locale = $domainConfig->getLocale();
 
+            $this->setDomainDefaultCurrency($domainId);
+
             if ($domainId === 1) {
+                $freeTransportLimit = $this->priceConverter->convertPriceWithoutVatToDomainDefaultCurrencyPrice(
+                    Money::create(self::FREE_TRANSPORT_AND_PAYMENT_LIMIT),
+                    $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class),
+                    $domainId,
+                );
+
                 $this->pricingSetting->setFreeTransportAndPaymentPriceLimit(
                     $domainId,
-                    Money::create(self::FREE_TRANSPORT_AND_PAYMENT_LIMIT),
+                    $freeTransportLimit,
                 );
             }
 
@@ -133,8 +144,6 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
                 '["/@shopsys\\\\.com$/"]',
                 $domainId,
             );
-
-            $this->setDomainDefaultCurrency($domainId);
 
             if ($this->heurekaShopCertificationLocaleHelper->isDomainLocaleSupported($locale)) {
                 $this->setting->setForDomain(

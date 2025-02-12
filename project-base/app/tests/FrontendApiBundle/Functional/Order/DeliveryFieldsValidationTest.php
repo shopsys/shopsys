@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Order;
 
 use App\DataFixtures\Demo\CartDataFixture;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class DeliveryFieldsValidationTest extends GraphQlTestCase
@@ -101,7 +102,7 @@ class DeliveryFieldsValidationTest extends GraphQlTestCase
         $expectedValidations = [
             'input' => [
                 0 => [
-                    'message' => 'You must be logged in if you want to provide the delivery address UUID in the order input',
+                    'message' => t('You must be logged in if you want to provide the delivery address UUID in the order input', [], Translator::VALIDATOR_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
                     'code' => '9dcda0d3-7264-4c5f-9b35-f5b155f997f9',
                 ],
             ],

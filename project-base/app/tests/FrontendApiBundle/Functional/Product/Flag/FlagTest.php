@@ -6,7 +6,6 @@ namespace Tests\FrontendApiBundle\Functional\Product\Flag;
 
 use App\DataFixtures\Demo\FlagDataFixture;
 use App\Model\Product\Flag\Flag;
-use Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorterHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -23,11 +22,6 @@ class FlagTest extends GraphQlTestCase
      * @inject
      */
     protected FlagFacade $flagFacade;
-
-    /**
-     * @inject
-     */
-    private ArraySorterHelper $arraySorterHelper;
 
     public function testFlagByUuid(): void
     {
@@ -100,8 +94,6 @@ class FlagTest extends GraphQlTestCase
                 'name' => t('Book Computer for Dummies Digital Photography II', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
             ],
         ];
-
-        $this->arraySorterHelper->sortArrayAlphabeticallyByValue('name', $products, $this->getLocaleForFirstDomain());
 
         $productsWithNodes = [];
 

@@ -58,7 +58,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->partno = 'SLE 22F46DM4';
         $productData->ean = '8845781245930';
         $productData->weight = 3000;
-        $this->productDemoDataSetter->setOrderingPriority($productData, 1);
+        $this->productDemoDataSetter->setOrderingPriority($productData, 9);
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '2891.7');
         $this->productDemoDataSetter->setSellingFrom($productData, '16.1.2000');
         $this->productDemoDataSetter->setStocksQuantity($productData, 300);
@@ -111,6 +111,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->partno = '32PFL4308H';
         $productData->ean = '8845781245929';
         $productData->weight = 10500;
+        $this->productDemoDataSetter->setOrderingPriority($productData, 8);
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '8173.5');
         $this->productDemoDataSetter->setSellingFrom($productData, '15.1.2000');
         $this->productDemoDataSetter->setStocksQuantity($productData, 200);
@@ -220,6 +221,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
         $productData->partno = 'ME440CS';
         $productData->ean = '8845781245956';
         $productData->weight = 170;
+        $this->productDemoDataSetter->setOrderingPriority($productData, 4);
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '19000');
         $this->productDemoDataSetter->setSellingFrom($productData, '11.2.2014');
         $this->productDemoDataSetter->setStocksQuantity($productData, 10);
@@ -839,6 +841,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $productData->partno = '9788025117125';
         $productData->ean = '8845781245941';
+        $this->productDemoDataSetter->setOrderingPriority($productData, 3);
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '37');
         $this->productDemoDataSetter->setSellingFrom($productData, '27.1.2014');
         $this->productDemoDataSetter->setStocksQuantity($productData, 10);
@@ -899,6 +902,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $productData->partno = '9788025107805';
         $productData->ean = '8845781245943';
+        $this->productDemoDataSetter->setOrderingPriority($productData, 2);
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '44');
         $this->productDemoDataSetter->setSellingFrom($productData, '29.1.2014');
         $this->productDemoDataSetter->setStocksQuantity($productData, 10);
@@ -2078,7 +2082,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $productData->partno = 'TIC100';
         $productData->ean = '8845781243207';
-        $this->productDemoDataSetter->setOrderingPriority($productData, 2);
+        $this->productDemoDataSetter->setOrderingPriority($productData, 10);
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '100');
         $this->productDemoDataSetter->setSellingFrom($productData, '15.1.2000');
         $this->productDemoDataSetter->setStocksQuantity($productData, 100000);
@@ -2166,7 +2170,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $productData->partno = 'T27D590EY';
         $productData->ean = '8845781243205';
-        $this->productDemoDataSetter->setOrderingPriority($productData, 1);
+        $this->productDemoDataSetter->setOrderingPriority($productData, 8);
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '9173.5');
         $this->productDemoDataSetter->setSellingFrom($productData, '15.1.2000');
         $this->productDemoDataSetter->setStocksQuantity($productData, 200);
@@ -2231,7 +2235,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $productData->partno = '22MT44D';
         $productData->ean = '8845781245931';
-        $this->productDemoDataSetter->setOrderingPriority($productData, 1);
+        $this->productDemoDataSetter->setOrderingPriority($productData, 5);
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '3999');
         $this->productDemoDataSetter->setSellingFrom($productData, '14.1.2000');
         $this->productDemoDataSetter->setStocksQuantity($productData, 100);
@@ -2318,7 +2322,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $productData->partno = 'T27D590EY';
         $productData->ean = '8845781245939';
-        $this->productDemoDataSetter->setOrderingPriority($productData, 1);
+        $this->productDemoDataSetter->setOrderingPriority($productData, 7);
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '6199');
         $this->productDemoDataSetter->setSellingFrom($productData, '15.1.2000');
         $this->productDemoDataSetter->setStocksQuantity($productData, 100);
@@ -2350,7 +2354,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
 
         $productData->partno = 'T27D590EZ';
         $productData->ean = '8845781245940';
-        $this->productDemoDataSetter->setOrderingPriority($productData, 1);
+        $this->productDemoDataSetter->setOrderingPriority($productData, 6);
         $this->productDemoDataSetter->setPriceForAllPricingGroups($productData, '6399');
         $this->productDemoDataSetter->setSellingFrom($productData, '14.1.2000');
         $this->productDemoDataSetter->setStocksQuantity($productData, 100);

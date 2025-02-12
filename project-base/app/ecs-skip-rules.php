@@ -43,6 +43,7 @@ return [
         __DIR__ . '/src/Model/Mail/MailTemplateConfiguration.php',
         __DIR__ . '/tests/App/Functional/EntityExtension/EntityExtensionTest.php',
         __DIR__ . '/tests/App/Functional/Model/Product/ProductOnCurrentDomainElasticFacadeCountDataTest.php',
+        __DIR__ . '/tests/App/Functional/Twig/PriceExtensionTest.php',
         __DIR__ . '/tests/App/Smoke/Http/RouteConfigCustomization.php',
         __DIR__ . '/tests/FrontendApiBundle/Functional/*',
     ],

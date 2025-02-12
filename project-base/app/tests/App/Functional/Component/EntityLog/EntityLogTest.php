@@ -7,6 +7,9 @@ namespace Tests\App\Functional\Component\EntityLog;
 use App\DataFixtures\Demo\CountryDataFixture;
 use App\DataFixtures\Demo\CurrencyDataFixture;
 use App\DataFixtures\Demo\OrderStatusDataFixture;
+use App\DataFixtures\Demo\PaymentDataFixture;
+use App\DataFixtures\Demo\ProductDataFixture;
+use App\DataFixtures\Demo\TransportDataFixture;
 use App\Model\Order\OrderDataFactory;
 use App\Model\Order\Status\OrderStatus;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -14,6 +17,8 @@ use Shopsys\FrameworkBundle\Component\EntityLog\Enum\EntityLogActionEnum;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLog;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade;
 use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogRepository;
+use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Country\Country;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFacade;
@@ -23,10 +28,9 @@ use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
 use Shopsys\FrameworkBundle\Model\Order\PlaceOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
-use Shopsys\FrameworkBundle\Model\Payment\PaymentRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
-use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
-use Shopsys\FrameworkBundle\Model\Transport\TransportRepository;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
 class EntityLogTest extends TransactionFunctionalTestCase
@@ -50,21 +54,6 @@ class EntityLogTest extends TransactionFunctionalTestCase
      * @inject
      */
     private OrderRepository $orderRepository;
-
-    /**
-     * @inject
-     */
-    private ProductRepository $productRepository;
-
-    /**
-     * @inject
-     */
-    private TransportRepository $transportRepository;
-
-    /**
-     * @inject
-     */
-    private PaymentRepository $paymentRepository;
 
     /**
      * @inject
@@ -95,6 +84,11 @@ class EntityLogTest extends TransactionFunctionalTestCase
      * @inject
      */
     private EntityLogFacade $entityLogFacade;
+
+    /**
+     * @inject
+     */
+    private PriceConverter $priceConverter;
 
     public function testCreateEntity(): void
     {
@@ -195,7 +189,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
 
     public function testEditCollectionEntity(): void
     {
-        $productTicketName = '100 Czech crowns ticket';
+        $productTicketName = t('100 Czech crowns ticket', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale());
 
         $order = $this->getNewOrder();
 
@@ -235,7 +229,11 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $expectedName = 'XXXXX';
         $expectedQuantity = 2;
         $expectedVatPercent = '10.000000';
-        $expectedPriceWithoutVat = '127.24';
+        $expectedPriceWithoutVat = $this->priceConverter->convertPriceWithoutVatToDomainDefaultCurrencyPrice(
+            Money::create('2891.74')->multiply((string)((100 + (float)$expectedVatPercent) / 100)),
+            $this->getReference(CurrencyDataFixture::CURRENCY_CZK),
+            Domain::FIRST_DOMAIN_ID,
+        );
 
         $order = $this->getNewOrder();
 
@@ -266,7 +264,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $this->assertArrayHasKey('vatPercent', $changeSet);
         $this->assertArrayHasKey('quantity', $changeSet);
         $this->assertSame($expectedName, $changeSet['name']['newReadableValue']);
-        $this->assertSame($expectedPriceWithoutVat, $changeSet['unitPriceWithoutVat']['newReadableValue']);
+        $this->assertSame($expectedPriceWithoutVat->getAmount(), $changeSet['unitPriceWithoutVat']['newReadableValue']);
         $this->assertSame($expectedVatPercent, $changeSet['vatPercent']['newReadableValue']);
         $this->assertSame($expectedQuantity, $changeSet['quantity']['newReadableValue']);
     }
@@ -276,9 +274,9 @@ class EntityLogTest extends TransactionFunctionalTestCase
      */
     private function getNewOrder(): Order
     {
-        $product = $this->productRepository->getById(1);
-        $transport = $this->transportRepository->getById(3);
-        $payment = $this->paymentRepository->getById(1);
+        $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
+        $transport = $this->getReference(TransportDataFixture::TRANSPORT_PERSONAL);
+        $payment = $this->getReference(PaymentDataFixture::PAYMENT_CARD);
 
         $orderInput = $this->orderInputFactory->create($this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID));
         $orderInput->addProduct($product, 1);

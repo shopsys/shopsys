@@ -22,6 +22,7 @@ class MultipleProductsQueryTest extends GraphQlTestCase
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/multipleProductsQuery.graphql', [
             'urlSlug' => $slug,
+            'minimalPrice' => $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('150000'),
         ]);
         $data = $this->getResponseDataForGraphQlType($response, 'category');
 

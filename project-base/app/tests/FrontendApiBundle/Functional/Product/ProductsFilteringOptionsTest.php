@@ -47,8 +47,8 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     {
         $query = $this->getElectronicsQuery();
 
-        $minimalPrice = $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('319');
-        $maximalPrice = $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('9889.9');
+        $minimalPrice = $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('319');
+        $maximalPrice = $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('9889.9');
 
         $materials = [
             [
@@ -697,8 +697,8 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
           }
         }';
 
-        $minimalPrice = $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('3499');
-        $maximalPrice = $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('7258.79');
+        $minimalPrice = $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('3499');
+        $maximalPrice = $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('7258.79');
 
         $expectedResult = '{
           "data": {

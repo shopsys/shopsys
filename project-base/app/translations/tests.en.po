@@ -9,3 +9,6 @@ msgstr ""
 
 msgid "audio"
 msgstr ""
+
+msgid "Test image"
+msgstr ""
