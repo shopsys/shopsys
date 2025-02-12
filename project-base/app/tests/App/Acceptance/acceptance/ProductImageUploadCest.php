@@ -12,7 +12,7 @@ use Tests\App\Test\Codeception\AcceptanceTester;
 class ProductImageUploadCest
 {
     private const IMAGE_UPLOAD_FIELD_ID = 'product_form_imageGroup_images_file';
-    private const SAVE_BUTTON_NAME = 'product_form[save]';
+    private const SAVE_BUTTON_NAME = 'product_form[actionBar][save]';
 
     private const TEST_IMAGE_NAME = 'productTestImage.png';
 
