@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\PromoCode;
 
+use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\PromoCode\Constraint\UniqueFlags;
@@ -75,15 +76,24 @@ class PromoCodeFormType extends AbstractType
         $this->buildCategoriesWithSaleFormGroup($builder);
         $this->buildBrandsWithSaleFormGroup($builder);
 
+        $actionBar = $builder->create('actionBar', ActionBarType::class, [
+            'back_route' => 'admin_promocode_list',
+            'entity' => $this->promoCode,
+        ]);
+
         if ($options['mass_generate']) {
             $builder->add($this->addMassGenerationGroup($builder));
-            $builder->add('saveAndDownloadCsv', SubmitType::class, [
-                'label' => t('Create and download CSV'),
-            ]);
             $builder->remove('code');
+
+            $actionBar->add('saveAndDownloadCsv', SubmitType::class, [
+                'label' => t('Create and download CSV'),
+                'position' => [
+                    'before' => 'save',
+                ],
+            ]);
         }
 
-        $builder->add('save', SubmitType::class);
+        $builder->add($actionBar);
     }
 
     /**

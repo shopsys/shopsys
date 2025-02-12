@@ -205,7 +205,7 @@ class PromoCodeController extends AdminBaseController
             );
 
             /** @var \Symfony\Component\Form\SubmitButton $saveButton */
-            $saveButton = $form->get('saveAndDownloadCsv');
+            $saveButton = $form->get('actionBar')->get('saveAndDownloadCsv');
 
             if ($saveButton->isClicked()) {
                 return $this->redirectToRoute('admin_promocode_listmassgeneratebatch', ['downloadBatchId' => $promoCodeData->massGenerateBatchId]);
