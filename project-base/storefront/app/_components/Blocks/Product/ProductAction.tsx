@@ -1,7 +1,8 @@
+'use client';
+
+import { AddToCart } from 'app/_components/Blocks/Product/AddToCart';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { AddToCart } from 'components/Blocks/Product/AddToCart';
 import { Button } from 'components/Forms/Button/Button';
-import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useTranslation } from 'components/providers/TranslationProvider';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -10,7 +11,7 @@ import dynamic from 'next/dynamic';
 import { useSessionStore } from 'store/useSessionStore';
 
 const InquiryPopup = dynamic(
-    () => import('components/Blocks/Popup/InquiryPopup').then((component) => component.InquiryPopup),
+    () => import('app/_components/Blocks/Popup/InquiryPopup').then((component) => component.InquiryPopup),
     {
         ssr: false,
     },
@@ -37,7 +38,6 @@ export const ProductAction: FC<ProductActionProps> = ({
 }) => {
     const { t } = useTranslation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
-    const { canCreateOrder } = useAuthorization();
 
     if (product.isSellingDenied) {
         return <div className="max-w-[215px] text-center">{t('This item can no longer be purchased')}</div>;
@@ -53,10 +53,6 @@ export const ProductAction: FC<ProductActionProps> = ({
                 {t('Inquire')}
             </Button>
         );
-    }
-
-    if (!canCreateOrder) {
-        return null;
     }
 
     if (product.isMainVariant) {

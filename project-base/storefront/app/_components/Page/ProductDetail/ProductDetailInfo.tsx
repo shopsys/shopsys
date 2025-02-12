@@ -1,7 +1,7 @@
-import { ProductDetailPrefix, ProductDetailHeading } from 'app/_components/Page/ProductDetail/ProductDetailElements';
+import { ProductDetailHeading, ProductDetailPrefix } from 'app/_components/Page/ProductDetail/ProductDetailElements';
 import { ProductDetailUsps } from 'app/_components/Page/ProductDetail/ProductDetailUsps';
+import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { getServerT } from 'utils/getServerTranslation';
 
 type ProductDetailContentProps = {
     namePrefix: string | null;
@@ -25,7 +25,7 @@ export async function ProductDetailInfo({
     shortDescription,
     usps,
 }: ProductDetailContentProps) {
-    const t = await getServerT();
+    const t = await getTranslation();
 
     return (
         <>

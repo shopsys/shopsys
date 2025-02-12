@@ -1,6 +1,8 @@
-import { Flag } from 'components/Basic/Flag/Flag';
-import { TypeProductPriceFragment } from 'graphql/requests/products/fragments/ProductPriceFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
+'use client';
+
+import { Flag } from 'app/_components/Basic/Flag/Flag';
+import { useTranslation } from 'components/providers/TranslationProvider';
+import { TypeProductPriceFragment } from 'graphql/requests/products/fragments/ProductPriceFragment.ssr';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { isPriceVisible } from 'utils/mappers/price';
 import { twMergeCustom } from 'utils/twMerge';

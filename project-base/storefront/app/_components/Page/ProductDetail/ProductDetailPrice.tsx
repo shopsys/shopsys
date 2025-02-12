@@ -1,8 +1,8 @@
 'use client';
 
+import { Flag } from 'app/_components/Basic/Flag/Flag';
 import { Countdown } from 'app/_components/Page/ProductDetail/Countdown';
-import { Flag } from 'components/Basic/Flag/Flag';
-import { TypeProductPriceFragment } from 'graphql/requests/products/fragments/ProductPriceFragment.generated';
+import { TypeProductPriceFragment } from 'graphql/requests/products/fragments/ProductPriceFragment.ssr';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { isPriceVisible } from 'utils/mappers/price';
 import { twMergeCustom } from 'utils/twMerge';
