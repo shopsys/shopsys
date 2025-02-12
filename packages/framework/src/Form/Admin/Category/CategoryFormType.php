@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\Category;
 
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -26,7 +27,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -257,7 +257,10 @@ class CategoryFormType extends AbstractType
             ->add($builderSeoGroup)
             ->add($builderDescriptionGroup)
             ->add($builderImageGroup)
-            ->add('save', SubmitType::class);
+            ->add('actionBar', ActionBarType::class, [
+                'back_route' => 'admin_category_list',
+                'entity' => $options['category'],
+            ]);
 
         $this->pluginCrudExtensionFacade->extendForm($builder, 'category', 'pluginData');
 
