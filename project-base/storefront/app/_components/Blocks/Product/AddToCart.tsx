@@ -1,3 +1,6 @@
+'use client';
+
+import { useAddToCart } from 'app/_hooks/useAddToCart';
 import { Loader } from 'components/Basic/Loader/Loader';
 import { Button } from 'components/Forms/Button/Button';
 import { Spinbox } from 'components/Forms/Spinbox/Spinbox';
@@ -8,11 +11,10 @@ import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useRef } from 'react';
 import { useSessionStore } from 'store/useSessionStore';
-import { useAddToCart } from 'utils/cart/useAddToCart';
 import { twMergeCustom } from 'utils/twMerge';
 
 const AddToCartPopup = dynamic(() =>
-    import('components/Blocks/Popup/AddToCartPopup').then((component) => component.AddToCartPopup),
+    import('app/_components/Blocks/Popup/AddToCartPopup').then((component) => component.AddToCartPopup),
 );
 
 type AddToCartProps = {
@@ -72,7 +74,7 @@ export const AddToCart: FC<AddToCartProps> = ({
 
             <div className="relative">
                 {isAddingToCart && (
-                    <Loader className="z-overlay bg-backgroundMore absolute inset-0 flex h-full w-full items-center justify-center rounded-sm py-2 opacity-50" />
+                    <Loader className="absolute inset-0 z-overlay flex h-full w-full items-center justify-center rounded bg-backgroundMore py-2 opacity-50" />
                 )}
 
                 <Button

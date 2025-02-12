@@ -1,6 +1,8 @@
-import { Flag } from 'components/Basic/Flag/Flag';
-import { TypeProductPriceFragment } from 'graphql/requests/products/fragments/ProductPriceFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
+'use client';
+
+import { Flag } from 'app/_components/Basic/Flag/Flag';
+import { useTranslation } from 'components/providers/TranslationProvider';
+import { TypeProductPriceFragment } from 'graphql/requests/products/fragments/ProductPriceFragment.ssr';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { isPriceVisible } from 'utils/mappers/price';
 import { twMergeCustom } from 'utils/twMerge';
@@ -34,7 +36,7 @@ export const ProductPrice: FC<ProductPriceProps> = ({
         <div className={twMergeCustom('flex flex-wrap items-center gap-x-2 gap-y-0.5', className)}>
             <div
                 className={twMergeCustom(
-                    'font-secondary text-price text-lg font-bold whitespace-nowrap',
+                    'whitespace-nowrap font-secondary text-lg font-bold text-price',
                     textPriceSize === 'base' ? 'text-base' : 'text-lg',
                     isSpecialPrice && 'text-sm font-semibold text-priceBefore line-through',
                 )}
@@ -49,7 +51,7 @@ export const ProductPrice: FC<ProductPriceProps> = ({
 
                     <div
                         className={twMergeCustom(
-                            'font-secondary text-priceDiscounted font-bold whitespace-nowrap',
+                            'whitespace-nowrap font-secondary font-bold text-priceDiscounted',
                             textPriceSize === 'base' ? 'text-base' : 'text-lg',
                         )}
                     >

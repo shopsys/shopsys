@@ -1,8 +1,8 @@
 'use client';
 
-import { ProductFlag } from './ProductFlag';
-import { ProductVisibleItemsConfigType } from './ProductsList/ProductListItem';
 import { Flag } from 'app/_components/Basic/Flag/Flag';
+import { ProductFlag } from 'app/_components/Blocks/Product/ProductFlag';
+import { ProductVisibleItemsConfigType } from 'app/_components/Blocks/Product/ProductsList/ProductListItem';
 import { useTranslation } from 'components/providers/TranslationProvider';
 import { TypeSimpleFlagFragment } from 'graphql/requests/flags/fragments/SimpleFlagFragment.generated';
 import { twMergeCustom } from 'utils/twMerge';

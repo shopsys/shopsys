@@ -9,7 +9,7 @@ import { useSessionStore } from 'store/useSessionStore';
 import { twJoin } from 'tailwind-merge';
 
 const WatchdogPopup = dynamic(
-    () => import('components/Blocks/Popup/WatchdogPopup').then((component) => component.WatchdogPopup),
+    () => import('app/_components/Blocks/Popup/WatchdogPopup').then((component) => component.WatchdogPopup),
     {
         ssr: false,
     },
