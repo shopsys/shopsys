@@ -28,7 +28,7 @@ export const handleServerSideErrorResponseForFriendlyUrls = (
 
     if (error?.graphQLErrors.some((error) => error.extensions.code === 500)) {
         if (isWithErrorDebugging) {
-            throw new Error(JSON.stringify(mapGraphqlErrorForDevelopment(error.graphQLErrors[0])));
+            throw new Error(JSON.stringify(mapGraphqlErrorForDevelopment(error.graphQLErrors[0]), null, 2));
         }
 
         throw new Error('Internal Server Error');

@@ -1,16 +1,21 @@
 import { getBaseUrlWithLocale } from './domainUtils';
-import { Locale } from 'i18n-config';
 import { GetServerSidePropsContext, NextPageContext } from 'next';
+import getConfig from 'next/config';
 import { CustomerUserAreaEnum } from 'types/customer';
-import { getPublicConfigProperty } from 'utils/config/getNextConfig';
 
-const domainsConfig: DomainConfigType[] = getPublicConfigProperty('domains', []) as DomainConfigType[];
-const cdnDomain: string = getPublicConfigProperty('cdnDomain', '') as string;
+type PublicRuntimeConfig = { publicRuntimeConfig: { domains: DomainConfigType[]; cdnDomain: string } };
+
+const {
+    publicRuntimeConfig: { domains: domainsConfig, cdnDomain },
+} = getConfig() as PublicRuntimeConfig;
+
+// const domainsConfig: DomainConfigType[] = getPublicConfigProperty('domains', []) as DomainConfigType[];
+// const cdnDomain: string = getPublicConfigProperty('cdnDomain', '') as string;
 
 export type DomainConfigType = {
     url: string;
     publicGraphqlEndpoint: string;
-    defaultLocale: Locale;
+    defaultLocale: string;
     currencyCode: string;
     fallbackTimezone: string;
     domainId: number;
