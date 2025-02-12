@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Navigation;
 
+use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Locale\LocaleHelper;
 use Shopsys\FrameworkBundle\Form\DomainType;
@@ -14,7 +15,6 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Navigation\NavigationItem;
 use Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -75,7 +75,10 @@ class NavigationItemFormType extends AbstractType
                 ],
             ]);
         $this->addColumnFields($builder);
-        $builder->add('save', SubmitType::class);
+        $builder->add('actionBar', ActionBarType::class, [
+            'back_route' => 'admin_navigation_list',
+            'entity' => $options['navigationItem'],
+        ]);
     }
 
     /**
