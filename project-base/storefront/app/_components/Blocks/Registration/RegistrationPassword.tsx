@@ -5,7 +5,7 @@ import { FormHeading, FormBlockWrapper } from 'components/Forms/Form/Form';
 import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
-import useTranslation from 'next-translate/useTranslation';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { useFormContext } from 'react-hook-form';
 import { RegistrationFormType } from 'types/form';
 

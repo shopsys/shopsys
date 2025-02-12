@@ -5,8 +5,8 @@ import { MenuIconicItemUserUnauthenticatedContent } from './MenuIconicItemUserUn
 import { Drawer } from 'components/Basic/Drawer/Drawer';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { TIDs } from 'cypress/tids';
-import useTranslation from 'next-translate/useTranslation';
 import { useState, MouseEvent as ReactMouseEvent } from 'react';
 import { twMergeCustom } from 'utils/twMerge';
 import { useMediaMin } from 'utils/ui/useMediaMin';
