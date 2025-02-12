@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Pricing\Currency;
 
+use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
@@ -51,7 +51,9 @@ class CurrencySettingsFormType extends AbstractType
                     ],
                 ],
             ])
-            ->add('save', SubmitType::class);
+            ->add('actionBar', ActionBarType::class, [
+                'save_label' => t('Save changes'),
+            ]);
     }
 
     /**
