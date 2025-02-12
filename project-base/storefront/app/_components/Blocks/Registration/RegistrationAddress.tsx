@@ -7,7 +7,7 @@ import { FormLine } from 'components/Forms/Lib/FormLine';
 import { FormLineError } from 'components/Forms/Lib/FormLineError';
 import { Select } from 'components/Forms/Select/Select';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
-import useTranslation from 'next-translate/useTranslation';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { Controller, useFormContext } from 'react-hook-form';
 import { RegistrationFormType } from 'types/form';
 import { SelectOptionType } from 'types/selectOptions';

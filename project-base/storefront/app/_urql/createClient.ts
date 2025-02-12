@@ -1,6 +1,6 @@
 import { getUrqlExchanges } from './exchanges';
 import { registerUrql } from '@urql/next/rsc';
-import { getDomainConfigServer } from 'app/_utils/domain/domainConfigServer';
+import { getDomainConfig } from 'app/_utils/getDomainConfig';
 import getConfig from 'next/config';
 import { headers } from 'next/headers';
 import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'redis';
@@ -53,7 +53,7 @@ function getClient({
 }
 
 export async function createClient() {
-    const domainConfig = getDomainConfigServer(headers().get('host')!);
+    const domainConfig = getDomainConfig(headers().get('host')!);
 
     const publicGraphqlEndpoint = domainConfig.publicGraphqlEndpoint;
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import useTranslation from 'next-translate/useTranslation';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { LoginFormType } from 'types/form';

@@ -1,14 +1,14 @@
-import { Url } from './getInternationalizedStaticUrlsServer';
+import { Url } from 'app/_utils/getInternationalizedStaticUrls';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
 import { SameLengthOutput } from 'types/SameLengthOutput';
 
-export const getInternationalizedStaticUrls = <InputUrls extends Url[]>(
-    urls: [...InputUrls],
-    staticRewritePaths: Record<string, string>,
-) => {
+export const useInternationalizedStaticUrls = <InputUrls extends Url[]>(urls: [...InputUrls]) => {
+    const staticRewritePaths = useAppConfig((settings) => settings.staticRewritePaths);
+
     return urls.map((url) => getInternationalizedStaticUrl(url, staticRewritePaths)) as SameLengthOutput<InputUrls>;
 };
 
-export const getInternationalizedStaticUrl = (url: Url, staticRewritePaths: Record<string, string>) => {
+const getInternationalizedStaticUrl = (url: Url, staticRewritePaths: Record<string, string>) => {
     if (typeof url === 'string') {
         const internationalizedUrl = staticRewritePaths[url];
         return typeof internationalizedUrl !== 'undefined' ? internationalizedUrl : '';

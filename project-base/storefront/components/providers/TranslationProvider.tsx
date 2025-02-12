@@ -1,9 +1,9 @@
 'use client';
 
+import { createTranslation } from 'app/_utils/translation/translation';
 import { Locale } from 'i18n-config';
 import { ReactNode, createContext, useContext, useMemo } from 'react';
 import { Dictionary, Translate } from 'types/translation';
-import { createTranslation } from 'utils/translation';
 
 export type TranslationContext = {
     dictionary: Dictionary;
