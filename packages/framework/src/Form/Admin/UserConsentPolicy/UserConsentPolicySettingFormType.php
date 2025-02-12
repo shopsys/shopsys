@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\UserConsentPolicy;
 
+use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -53,7 +53,9 @@ class UserConsentPolicySettingFormType extends AbstractType
 
         $builder
             ->add($builderSettingsGroup)
-            ->add('save', SubmitType::class);
+            ->add('actionBar', ActionBarType::class, [
+                'save_label' => t('Save changes'),
+            ]);
     }
 
     /**
