@@ -91,7 +91,7 @@ class ClosedDayController extends AdminBaseController
         $closedDay = $this->closedDayFacade->getById($id);
         $closedDayData = $this->closedDayDataFactory->createFromClosedDay($closedDay);
 
-        $form = $this->createForm(ClosedDayFormType::class, $closedDayData)
+        $form = $this->createForm(ClosedDayFormType::class, $closedDayData, ['closed_day' => $closedDay])
             ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
