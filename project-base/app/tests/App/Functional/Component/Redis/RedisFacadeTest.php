@@ -14,6 +14,7 @@ class RedisFacadeTest extends FunctionalTestCase
 
     protected function setUp(): void
     {
+        /** @phpstan-ignore symfonyContainer.serviceNotFound (service is available only in test env) */
         $this->redisClient = self::getContainer()->get('snc_redis.test');
     }
 

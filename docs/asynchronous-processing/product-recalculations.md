@@ -38,9 +38,21 @@ When you need to recalculate visibility of all products, you should use the `Sho
 This method dispatches the special message "dispatch all" to the message broker, and this message is then handled by the async handler, which takes care of dispatching all product IDs to recalculation.
 That way, we may dispatch all products to recalculation during request without worrying about the size of the catalog – it's not necessary to load all products (nor their IDs) from the database, and the user interface is not blocked by this operation.
 
-## Dispatch recalculation message when indirect change is made
+## Product Deduplication and Batch Dispatching
 
-Sometimes it is necessary to trigger recalculation for product when some indirect change is made.
+To optimize performance and avoid redundant processing, the recalculation dispatch mechanism incorporates product deduplication and batch dispatching strategies.
+Export scopes ([mentioned later in this article](#recalculation-scope)) are stored in Redis, allowing products to remain in the queue only once while still supporting the addition of new scopes dynamically.
+This ensures that if a product ID is already present in Redis, it will not be dispatched again, preventing unnecessary recalculations and improving efficiency.
+Additionally, if a product ID is not yet present in Redis, Shopsys Platform ensures that all scopes are exported, guaranteeing that all relevant data is properly processed.
+
+When a large number of product IDs, typically more than 2000, are dispatched at once due to i.e., [affected changes](#dispatch-recalculation-message-when-an-indirect-change-is-made), Shopsys Platform takes an optimized approach.
+Instead of dispatching all product IDs individually in a currently running request, a few messages are sent to trigger the dispatch, significantly enhancing performance in large-scale recalculations.
+
+These refinements effectively minimize redundant messages, making recalculations more efficient and well-suited for handling large product catalogs with frequent changes.
+
+## Dispatch recalculation message when an indirect change is made
+
+Sometimes it is necessary to trigger recalculation for a product when some indirect change is made.
 For example, when a category is deleted, when the parameter translation of a product is changed, etc.
 
 For this situation, the `\Shopsys\FrameworkBundle\Model\Product\Recalculation\DispatchAffectedProductsSubscriber` subscriber is used.
@@ -76,7 +88,7 @@ You may disable this cron module if it doesn't suit your needs.
 
 ## Handle recalculations in tests
 
-In functional tests, you sometime need to trigger recalculations to be able to test some use-case.
+In functional tests, you sometimes need to trigger recalculations to be able to test some use-case.
 For example, when you need to test the change of a product visibility, you need to recalculate it after the change is made, so the data returned from GraphQL are accurate.
 
 You should use the `Tests\App\Test\WebTestCase::handleDispatchedRecalculationMessages()` method to process all dispatched recalculation messages.
@@ -117,10 +129,10 @@ That way we are sure the code works – the message is truly dispatched, thus th
 
 ## Recalculation scope
 
-In many occasions, to optimize the application, you might need to restrict the scope of a product recalculation and elastic export.
+On many occasions, to optimize the application, you might need to restrict the scope of a product recalculation and elastic export.
 Sometimes you do not need to recalculate visibility or selling denied, or you need to export just particular fields into Elasticsearch.
-For example, when launching a new domain, you need to export just the product URLs into Elasticsearch which takes significantly less time than the full recalculation and export.
-On the other hand, it might be hard to keep in mind all the dependencies (e.g. you need to know you need to recalculate visibility after you change `Product::$sellingFrom`,
+For example, when launching a new domain, you need to export just the product URLs into Elasticsearch, which takes significantly less time than the full recalculation and export.
+On the other hand, it might be hard to keep in mind all the dependencies (e.g., you need to know you need to recalculate visibility after you change `Product::$sellingFrom`,
 or you need to keep in mind that with a change of product URL, you always need to export `hreflang_links` into Elasticsearch as well, etc.).
 
 For this purpose, recalculation scopes are defined as an associative array in the `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfigFacade` class.
@@ -129,7 +141,7 @@ Each scope rule defines which fields should be exported to Elasticsearch togethe
 
 You can use `./bin/console shopsys:list:export-scopes` command to list and examine all the available scopes.
 
-The scope usage can be seen in action e.g. in `Shopsys\FrameworkBundle\Model\Product\Recalculation\DispatchAffectedProductsSubscriber` class:
+The scope usage can be seen in action e.g., in `Shopsys\FrameworkBundle\Model\Product\Recalculation\DispatchAffectedProductsSubscriber` class:
 
 ```php
 public function dispatchAffectedByBrand(BrandEvent $brandEvent): void
@@ -146,7 +158,7 @@ public function dispatchAffectedByBrand(BrandEvent $brandEvent): void
 
 Thanks to the usage of `SCOPE_BRAND` here, no visibility or selling denied recalculations are done after a brand is updated, only the brand-related fields (brand ID, name, and URL) are exported to Elasticsearch for the affected products.
 
-There are several methods that allow you to modify the scopes configuration further to suit your project needs.
+There are several methods that allow you to modify the scope configuration further to suit your project needs.
 
 - `addExportFieldsToExistingScopeRule()`
 - `addNewExportScopeRule()`

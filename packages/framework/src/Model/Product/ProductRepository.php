@@ -299,10 +299,12 @@ class ProductRepository
     /**
      * @return iterable<array{id: int}>
      */
-    public function iterateAllProductIds(): iterable
+    public function iterateAllProductIdsExceptVariant(): iterable
     {
         return $this->getAllProductsQueryBuilder()
             ->select('p.id')
+            ->where('p.variantType != :variantType')
+            ->setParameter('variantType', Product::VARIANT_TYPE_VARIANT)
             ->getQuery()
             ->toIterable();
     }

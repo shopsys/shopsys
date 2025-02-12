@@ -137,15 +137,18 @@ class DispatchRecalculationMessageCommand extends Command
         try {
             Assert::allNumeric($productIds, 'All product IDs must be numeric');
             Assert::notEmpty($productIds, 'You must specify at least one product ID');
+
+            $productIds = array_map('intval', $productIds);
         } catch (InvalidArgumentException $e) {
             $symfonyStyle->error($e->getMessage());
 
             return Command::FAILURE;
         }
 
-        $dispatchedProductIds = $this->productRecalculationDispatcher->dispatchProductIds($productIds, $priority, $scopes);
+        $this->productRecalculationDispatcher->dispatchProductIds($productIds, $priority, $scopes);
+
         $symfonyStyle->success([
-            'Dispatched message for IDs', implode(', ', $dispatchedProductIds),
+            'Dispatched message for IDs', implode(', ', $productIds),
             sprintf('Priority: %s', $priority),
             sprintf('Scopes: %s', count($scopes) > 0 ? implode(', ', $scopes) : '-'),
         ]);

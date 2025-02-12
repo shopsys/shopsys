@@ -22,9 +22,9 @@ class ProductRecalculationRepositoryTest extends TransactionFunctionalTestCase
     #[DataProvider('getProductsForRecalculationProvider')]
     public function testProperIdsAreReturned(array $inputIds, array $expectedIds): void
     {
-        $calculatedIds = $this->productRecalculationRepository->getIdsToRecalculate($inputIds);
+        $calculatedIds = $this->productRecalculationRepository->getIdsToRecalculateByMainVariantIds($inputIds);
 
-        $this->assertSame($expectedIds, $calculatedIds);
+        $this->assertEqualsCanonicalizing($expectedIds, $calculatedIds);
     }
 
     /**
@@ -37,29 +37,62 @@ class ProductRecalculationRepositoryTest extends TransactionFunctionalTestCase
             'expectedIds' => [1, 2, 3],
         ];
 
-        yield 'variant has also other Variants along with MainVariant' => [
-            'inputIds' => [153], // variant
-            'expectedIds' => [74, 75, 152, 153, 82], // variants first, then main variant
-        ];
-
         yield 'mainVariant has also Variants' => [
             'inputIds' => [69], // main variant
-            'expectedIds' => [53, 54, 148, 149, 150, 151, 69], // variants first, then main variant
+            'expectedIds' => [53, 54, 69, 148, 149, 150, 151], // main variant and its variants
         ];
 
-        yield 'variants and MainVariant in input does not duplicate ids' => [
-            'inputIds' => [148, 69, 151], // variant, main variant, variant
-            'expectedIds' => [53, 54, 148, 149, 150, 151, 69], // variants first, then main variant
+        yield 'multiple main variants returns all variants' => [
+            'inputIds' => [82, 69], // main variant, main variant
+            'expectedIds' => [53, 54, 69, 74, 75, 82, 148, 149, 150, 151, 152, 153], // main variants and their variants
         ];
 
-        yield 'ids are properly sorted for variants and main variant' => [
-            'inputIds' => [54, 53, 151, 69, 149, 150, 148], // randomized input order
-            'expectedIds' => [53, 54, 148, 149, 150, 151, 69], // variants first, then main variant
+        yield 'combination of multiple regular products, main variants' => [
+            'inputIds' => [2, 82, 3, 69], // regular product, main variant, regular product, main variant
+            'expectedIds' => [2, 3, 53, 54, 69, 74, 75, 82, 148, 149, 150, 151, 152, 153], // regular products, main variants, and their variants
+        ];
+    }
+
+    /**
+     * @param int[] $inputIds
+     * @param int[] $expectedIds
+     */
+    #[DataProvider('getIdsForVariantReplacementProvider')]
+    public function testVariantIdsAreReplaced(array $inputIds, array $expectedIds): void
+    {
+        $calculatedIds = $this->productRecalculationRepository->replaceVariantIdsWithMainVariantIds($inputIds);
+
+        $this->assertEqualsCanonicalizing($expectedIds, $calculatedIds);
+    }
+
+    /**
+     * @return iterable
+     */
+    public static function getIdsForVariantReplacementProvider(): iterable
+    {
+        yield 'regular products only' => [
+            'inputIds' => [1, 2, 3],
+            'expectedIds' => [1, 2, 3],
         ];
 
-        yield 'combination of multiple regular products, variants and main variant' => [
-            'inputIds' => [2, 75, 3, 69], // regular product, variant, regular product, main variant
-            'expectedIds' => [53, 54, 148, 149, 150, 151, 74, 75, 152, 153, 2, 3, 69, 82], // variants first, then regular products and main variant
+        yield 'variant is replaced' => [
+            'inputIds' => [151], // variant
+            'expectedIds' => [69], // main variant
+        ];
+
+        yield 'multiple variants with different main variant' => [
+            'inputIds' => [74, 150], // variants with different main variant
+            'expectedIds' => [69, 82], // main variant
+        ];
+
+        yield 'multiple variants with same main variant' => [
+            'inputIds' => [150, 151], // variants with the same main variant
+            'expectedIds' => [69], // main variant
+        ];
+
+        yield 'regular product with variant and main variant' => [
+            'inputIds' => [2, 151, 69], // regular product, variant, main variant
+            'expectedIds' => [2, 69], // regular product, main variant
         ];
     }
 }

@@ -11,11 +11,15 @@ use Shopsys\FrameworkBundle\Model\Product\Product;
 
 class ProductRecalculationDispatcher extends AbstractMessageDispatcher
 {
+    protected const int DISPATCH_BATCH_SIZE = 2000;
+
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig $productExportScopeConfig
+     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcherExecutor $productRecalculationDispatcherExecutor
      */
     public function __construct(
         protected readonly ProductExportScopeConfig $productExportScopeConfig,
+        protected readonly ProductRecalculationDispatcherExecutor $productRecalculationDispatcherExecutor,
     ) {
     }
 
@@ -23,14 +27,13 @@ class ProductRecalculationDispatcher extends AbstractMessageDispatcher
      * @param \Shopsys\FrameworkBundle\Model\Product\Product[] $products
      * @param string $productRecalculationPriorityEnum
      * @param string[] $exportScopes
-     * @return int[]
      */
     public function dispatchProducts(
         array $products,
         string $productRecalculationPriorityEnum = ProductRecalculationPriorityEnum::REGULAR,
         array $exportScopes = [],
-    ): array {
-        return $this->dispatchProductIds(
+    ): void {
+        $this->dispatchProductIds(
             array_map(static fn (Product $product) => $product->getId(), $products),
             $productRecalculationPriorityEnum,
             $exportScopes,
@@ -41,26 +44,38 @@ class ProductRecalculationDispatcher extends AbstractMessageDispatcher
      * @param int[] $productIds
      * @param string $productRecalculationPriorityEnum
      * @param string[] $exportScopes
-     * @return int[]
      */
     public function dispatchProductIds(
         array $productIds,
         string $productRecalculationPriorityEnum = ProductRecalculationPriorityEnum::REGULAR,
         array $exportScopes = [],
-    ): array {
+    ): void {
         $this->verifyExportScopes($exportScopes);
         $productIds = array_unique($productIds);
 
-        foreach ($productIds as $productId) {
-            $message = match ($productRecalculationPriorityEnum) {
-                ProductRecalculationPriorityEnum::HIGH => new ProductRecalculationPriorityHighMessage((int)$productId, $exportScopes),
-                ProductRecalculationPriorityEnum::REGULAR => new ProductRecalculationPriorityRegularMessage((int)$productId, $exportScopes),
-                default => throw new UnknownProductRecalculationPriorityException($productRecalculationPriorityEnum),
-            };
-            $this->messageBus->dispatch($message);
+        $productIdsCount = count($productIds);
+
+        if ($productIdsCount <= static::DISPATCH_BATCH_SIZE) {
+            $this->productRecalculationDispatcherExecutor->dispatchProductIds(
+                $productIds,
+                $productRecalculationPriorityEnum,
+                $exportScopes,
+            );
+
+            return;
         }
 
-        return $productIds;
+        for ($i = 0; $i < $productIdsCount; $i += static::DISPATCH_BATCH_SIZE) {
+            $productIdsBatch = array_slice($productIds, $i, static::DISPATCH_BATCH_SIZE);
+
+            $this->messageBus->dispatch(
+                new DispatchProductIdsBatchMessage(
+                    $productIdsBatch,
+                    $exportScopes,
+                    $productRecalculationPriorityEnum,
+                ),
+            );
+        }
     }
 
     /**

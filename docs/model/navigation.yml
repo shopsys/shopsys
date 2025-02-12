@@ -10,6 +10,5 @@ arrange:
     - custom-entities.md
     - elasticsearch.md
     - front-end-product-searching.md
-    - front-end-product-filtering.md
     - log-entity-changes.md
     - domain-limiting.md

@@ -269,9 +269,9 @@ class ProductFacade
     /**
      * @return iterable<array{id: int}>
      */
-    public function iterateAllProductIds(): iterable
+    public function iterateAllProductIdsExceptVariant(): iterable
     {
-        return $this->productRepository->iterateAllProductIds();
+        return $this->productRepository->iterateAllProductIdsExceptVariant();
     }
 
     /**
