@@ -1,12 +1,16 @@
-import domainsConfig from 'domains-config';
-import { Locale } from 'i18n-config';
+import getConfig from 'next/config';
 import { CustomerUserAreaEnum } from 'types/customer';
-import { isClient } from 'utils/isClient';
+
+type PublicRuntimeConfig = { publicRuntimeConfig: { domains: DomainConfigType[]; cdnDomain: string } };
+
+const {
+    publicRuntimeConfig: { domains: domainsConfig, cdnDomain },
+} = getConfig() as PublicRuntimeConfig;
 
 export type DomainConfigType = {
     url: string;
     publicGraphqlEndpoint: string;
-    defaultLocale: Locale;
+    defaultLocale: string;
     currencyCode: string;
     fallbackTimezone: string;
     domainId: number;
@@ -21,11 +25,7 @@ export type DomainConfigType = {
 };
 
 export function getDomainConfig(domainUrl: string): DomainConfigType {
-    if (isClient) {
-        throw new Error('getDomainConfig will not work properly on client side');
-    }
     const replacedDomain = domainUrl.replace(':3000', ':8000');
-    const cdnDomain = process.env.CDN_DOMAIN ?? '';
 
     for (const domain of domainsConfig) {
         const publicDomainUrl = new URL(domain.url || '').host;
