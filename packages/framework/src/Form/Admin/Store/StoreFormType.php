@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\Store;
 
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Form\Admin\Store\OpeningHours\OpeningHoursRangeCollectionFormType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Form\DomainType;
@@ -23,7 +24,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -63,7 +63,10 @@ class StoreFormType extends AbstractType
             ->add($this->createUserInformationGroup($builder))
             ->add($this->createMapGroup($builder))
             ->add($this->createImagesGroup($builder, $options))
-            ->add('save', SubmitType::class);
+            ->add('actionBar', ActionBarType::class, [
+                'back_route' => 'admin_store_list',
+                'entity' => $options['store'],
+            ]);
     }
 
     /**
