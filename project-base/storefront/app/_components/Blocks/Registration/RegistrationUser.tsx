@@ -6,7 +6,7 @@ import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { RadiobuttonGroup } from 'components/Forms/Radiobutton/RadiobuttonGroup';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
-import useTranslation from 'next-translate/useTranslation';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { useFormContext } from 'react-hook-form';
 import { CustomerTypeEnum } from 'types/customer';
 import { RegistrationFormType } from 'types/form';

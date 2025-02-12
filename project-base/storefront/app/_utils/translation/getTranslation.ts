@@ -1,12 +1,12 @@
-import { createTranslation } from './translation';
-import { getDomainConfigServer } from 'app/_utils/domain/domainConfigServer';
+import { getDomainConfig } from 'app/_utils/getDomainConfig';
+import { createTranslation } from 'app/_utils/translation/translation';
 import { Locale } from 'i18n-config';
 import { headers } from 'next/headers';
 import 'server-only';
 import { Dictionary, Translate } from 'types/translation';
 import { getDictionary } from 'utils/getDictionary';
 
-export const getServerT = async (props?: {
+export const getTranslation = async (props?: {
     defaultDictionary?: Dictionary;
     defaultLang?: Locale;
 }): Promise<Translate> => {
@@ -14,7 +14,7 @@ export const getServerT = async (props?: {
     let dictionary = props?.defaultDictionary;
 
     if (!lang) {
-        const domainConfig = getDomainConfigServer(headers().get('host')!);
+        const domainConfig = getDomainConfig(headers().get('host')!);
         lang = domainConfig.defaultLocale;
     }
 
