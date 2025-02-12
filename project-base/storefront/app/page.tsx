@@ -1,6 +1,3 @@
-import { getSettingsQuery } from './_queries/getSettingsQuery';
-import TransServer from 'app/_utils/translation/TransServer';
-import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
 import { SkeletonPageHome } from 'components/Blocks/Skeleton/SkeletonPageHome';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { Suspense } from 'react';

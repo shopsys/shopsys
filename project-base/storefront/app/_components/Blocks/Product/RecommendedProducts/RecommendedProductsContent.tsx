@@ -1,11 +1,12 @@
-import { getProducsWithListStateQuery } from 'app/_queries/getProducsWithListStateQuery';
+import { ProductsList } from 'app/_components/Blocks/Product/ProductsList/ProductsList';
 import { getRecommendedProductsQuery } from 'app/_queries/getRecommendedProductsQuery';
 import { getCookieStoreStateFromServer } from 'app/_utils/getCookieStoreStateFromServer';
 import { getRecommenderClientIdentifier } from 'app/_utils/recommender/getRecommenderClientIdentifier';
-import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
+import { getTranslation } from 'app/_utils/translation/getTranslation';
+// import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
 import { TypeRecommendationType } from 'graphql/types';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import { getServerT } from 'utils/getServerTranslation';
 
 export type RecommendedProductsContentProps = {
     recommendationType: TypeRecommendationType;
@@ -16,7 +17,7 @@ export const RecommendedProductsContent: FC<RecommendedProductsContentProps> = a
     recommendationType,
     itemUuids = [],
 }) => {
-    const [t] = await Promise.all([getServerT()]);
+    const [t] = await Promise.all([getTranslation()]);
     const { userIdentifier } = getCookieStoreStateFromServer();
 
     // TODO: new functionality for recommended products identifier
@@ -35,6 +36,7 @@ export const RecommendedProductsContent: FC<RecommendedProductsContentProps> = a
         return null;
     }
 
+    // TODO: SLIDER
     const productItemStyleProps = {
         size: recommendationType === TypeRecommendationType.BasketPopup ? ('medium' as const) : ('large' as const),
         visibleItemsConfig:
@@ -43,16 +45,20 @@ export const RecommendedProductsContent: FC<RecommendedProductsContentProps> = a
                 : undefined,
     };
 
-    const productsWithListState = await getProducsWithListStateQuery(recommendedProductsData.recommendedProducts);
-
     return (
         <>
             <h5 className="mb-4">{t('Recommended for you')}</h5>
 
-            <ProductsSlider
+            {/* <ProductsSlider
                 gtmProductListName={GtmProductListNameType.luigis_box_recommended_products}
                 productItemProps={productItemStyleProps}
                 products={productsWithListState}
+            /> */}
+
+            <ProductsList
+                gtmMessageOrigin={GtmMessageOriginType.product_detail_page}
+                gtmProductListName={GtmProductListNameType.luigis_box_recommended_products}
+                products={recommendedProductsData.recommendedProducts}
             />
         </>
     );

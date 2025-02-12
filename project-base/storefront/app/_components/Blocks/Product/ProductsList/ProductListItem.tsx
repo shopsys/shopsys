@@ -1,10 +1,10 @@
 import { ProductWishlistButton } from 'app/_components/Blocks/Product/ButtonsAction/ProductWishlistButton';
+import { ProductAction } from 'app/_components/Blocks/Product/ProductAction';
+import { ProductAvailability } from 'app/_components/Blocks/Product/ProductAvailability';
+import { ProductPrice } from 'app/_components/Blocks/Product/ProductPrice';
 import { ProductListItemImage } from 'app/_components/Blocks/Product/ProductsList/ProductListItemImage';
 import { ProductListItemInfo } from 'app/_components/Blocks/Product/ProductsList/ProductListItemInfo';
 import { ProductListItemWrapper } from 'app/_components/Blocks/Product/ProductsList/ProductListItemWrapper';
-import { ProductAction } from 'components/Blocks/Product/ProductAction';
-import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
-import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
 import { TIDs } from 'cypress/tids';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';

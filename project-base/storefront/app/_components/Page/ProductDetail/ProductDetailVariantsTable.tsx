@@ -1,21 +1,21 @@
 import { ProductDetailAvailability } from './ProductDetailAvailability';
+import { ProductAction } from 'app/_components/Blocks/Product/ProductAction';
+import { ProductPrice } from 'app/_components/Blocks/Product/ProductPrice';
+import { WatchDogButton } from 'app/_components/Blocks/Product/Watchdog/WatchDogButton';
+import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { Image } from 'components/Basic/Image/Image';
-import { ProductAction } from 'components/Blocks/Product/ProductAction';
-import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
-import { WatchDogButton } from 'components/Blocks/Product/Watchdog/WatchDogButton';
 import { TIDs } from 'cypress/tids';
 import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
 import { TypeAvailabilityStatusEnum } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import { getServerT } from 'utils/getServerTranslation';
 
 type ProductVariantsTableProps = {
     variants: TypeMainVariantDetailFragment['variants'];
 };
 
 export const ProductVariantsTable: FC<ProductVariantsTableProps> = async ({ variants }) => {
-    const t = await getServerT();
+    const t = await getTranslation();
 
     if (variants.length === 0) {
         return <p>{t('Currently, it is not possible to purchase any variant of this product.')}</p>;
@@ -26,7 +26,7 @@ export const ProductVariantsTable: FC<ProductVariantsTableProps> = async ({ vari
             {variants.map((variant, index) => (
                 <li
                     key={variant.uuid}
-                    className="mx-auto flex w-full max-w-sm flex-col items-center justify-between gap-2 border border-borderAccent p-2 md:max-w-none lg:flex-row lg:border-0 "
+                    className="mx-auto flex w-full max-w-sm flex-col items-center justify-between gap-2 border border-borderAccent p-2 md:max-w-none lg:flex-row lg:border-0"
                     tid={TIDs.pages_productdetail_variant_ + variant.catalogNumber}
                 >
                     <div className="relative h-48 w-full lg:h-16 lg:w-16" tid={TIDs.product_detail_main_image}>

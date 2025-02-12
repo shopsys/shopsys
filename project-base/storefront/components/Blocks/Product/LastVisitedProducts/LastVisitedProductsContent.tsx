@@ -1,44 +1,45 @@
-import { getLastVisitedProductsQuery } from 'app/_queries/getLastVisitedProductsQuery';
 import { ProductsSlider, VISIBLE_SLIDER_ITEMS_LAST_VISITED } from 'components/Blocks/Product/ProductsSlider';
+import { SkeletonModuleLastVisitedProducts } from 'components/Blocks/Skeleton/SkeletonModuleLastVisitedProducts';
+import { useProductsByCatnums } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import { getServerT } from 'utils/getServerTranslation';
 
 type LastVisitedProductsProps = {
     productsCatnums: string[];
 };
 
-export async function LastVisitedProductsContent({ productsCatnums }: LastVisitedProductsProps) {
-    const [t, lastVisitedProductsResult] = await Promise.all([
-        getServerT(),
-        getLastVisitedProductsQuery(productsCatnums),
-    ]);
+export const LastVisitedProductsContent: FC<LastVisitedProductsProps> = ({ productsCatnums }) => {
+    const [{ data: productsData, fetching: areProductsFetching }] = useProductsByCatnums({
+        variables: { catnums: productsCatnums },
+    });
 
-    const lastVisitedProducts = lastVisitedProductsResult.data?.productsByCatnums;
+    const lastVisitedProducts = productsData?.productsByCatnums;
 
-    if (!lastVisitedProducts) {
+    if (!lastVisitedProducts && !areProductsFetching) {
         return null;
     }
 
     const productItemStyleProps = {
         size: 'small' as const,
-        visibleItemsConfig: { price: false, addToCart: false, flags: false, discount: false, storeAvailability: false },
-        textSize: 'xs' as const,
+        visibleItemsConfig: { price: false, addToCart: false, flags: false, storeAvailability: false },
     };
 
     return (
         <>
-            <h5 className="mb-4">{t('Last visited products')}</h5>
-
-            <ProductsSlider
-                gtmProductListName={GtmProductListNameType.last_visited_products}
-                products={lastVisitedProducts}
-                variant="lastVisited"
-                visibleSliderItems={VISIBLE_SLIDER_ITEMS_LAST_VISITED}
-                productItemProps={{
-                    visibleItemsConfig: productItemStyleProps.visibleItemsConfig,
-                    size: productItemStyleProps.size,
-                }}
-            />
+            {lastVisitedProducts && !areProductsFetching ? (
+                <ProductsSlider
+                    gtmProductListName={GtmProductListNameType.last_visited_products}
+                    products={lastVisitedProducts}
+                    variant="lastVisited"
+                    visibleSliderItems={VISIBLE_SLIDER_ITEMS_LAST_VISITED}
+                    productItemProps={{
+                        visibleItemsConfig: productItemStyleProps.visibleItemsConfig,
+                        size: productItemStyleProps.size,
+                        textSize: 'xs',
+                    }}
+                />
+            ) : (
+                <SkeletonModuleLastVisitedProducts />
+            )}
         </>
     );
-}
+};

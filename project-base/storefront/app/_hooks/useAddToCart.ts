@@ -3,7 +3,7 @@
 import { addToCartAction } from 'app/_actions/addToCartAction';
 import { dispatchBroadcastChannel } from 'app/_hooks/useBroadcastChannel';
 import { useTranslation } from 'components/providers/TranslationProvider';
-import { TypeAddToCartMutation } from 'graphql/requests/cart/mutations/AddToCartMutation.generated';
+import { TypeAddToCartMutation } from 'graphql/requests/cart/mutations/AddToCartMutation.ssr';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { useState } from 'react';
@@ -21,6 +21,7 @@ export const useAddToCart = (gtmMessageOrigin: GtmMessageOriginType, gtmProductL
     const { t } = useTranslation();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
+
     const [isAddingToCart, setIsAddingToCart] = useState(false);
 
     // const domainConfig = useDomainConfig();
@@ -72,7 +73,7 @@ export const useAddToCart = (gtmMessageOrigin: GtmMessageOriginType, gtmProductL
         //         listIndex,
         //         gtmProductListName,
         //         !!currentCustomerData,
-        //         !canSeePrices,
+        //         !!currentCustomerData?.arePricesHidden,
         //     );
         // });
 

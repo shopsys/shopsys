@@ -1,6 +1,6 @@
+import { ProductFlags } from 'app/_components/Blocks/Product/ProductFlags';
 import { ProductItemProps } from 'app/_components/Blocks/Product/ProductsList/ProductListItem';
 import { Image } from 'components/Basic/Image/Image';
-import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import { TIDs } from 'cypress/tids';
 import { twJoin } from 'tailwind-merge';
 
