@@ -20,12 +20,6 @@
                 </div>
             </div>
         </div>
-        {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
-            {% block fixed_bar_content %}
-                {{ form_widget(form.save, {label: 'Save'|trans}) }}
-                <a href="{{ url('admin_bestsellingproduct_list') }}" class="btn-link-style">{{ 'Back to overview'|trans }}</a>
-            {% endblock %}
-        {% endembed %}
     {{ form_end(form) }}
 
 {% endblock %}
