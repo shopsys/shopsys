@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\SalesRepresentative;
 
+use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
@@ -13,7 +14,6 @@ use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentative;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -116,7 +116,10 @@ class SalesRepresentativeFormType extends AbstractType
         $builder
             ->add($builderPersonalDataGroup)
             ->add($builderImageGroup)
-            ->add('save', SubmitType::class);
+            ->add('actionBar', ActionBarType::class, [
+                'back_route' => 'admin_salesrepresentative_list',
+                'entity' => $options['salesRepresentative'],
+            ]);
     }
 
     /**
