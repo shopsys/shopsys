@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Product\Parameter\Value;
 
+use Shopsys\FormTypesBundle\ActionBarType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -31,7 +31,10 @@ class SliderParameterValuesUpdateFormType extends AbstractType
                 'data' => $options['data'],
             ]));
 
-        $builder->add('save', SubmitType::class);
+        $builder->add('actionBar', ActionBarType::class, [
+            'back_route' => 'admin_parameter_list',
+            'save_label' => t('Save changes'),
+        ]);
     }
 
     /**
