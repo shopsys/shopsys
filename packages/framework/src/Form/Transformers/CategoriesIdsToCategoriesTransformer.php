@@ -36,7 +36,7 @@ class CategoriesIdsToCategoriesTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param int[] $categoriesIds
+     * @param string[] $categoriesIds
      * @return \Shopsys\FrameworkBundle\Model\Category\Category[]
      */
     public function reverseTransform($categoriesIds): array
@@ -46,7 +46,7 @@ class CategoriesIdsToCategoriesTransformer implements DataTransformerInterface
         if (is_array($categoriesIds)) {
             foreach ($categoriesIds as $categoryId) {
                 try {
-                    $categories[] = $this->categoryRepository->getById($categoryId);
+                    $categories[] = $this->categoryRepository->getById((int)$categoryId);
                 } catch (CategoryNotFoundException $e) {
                     throw new TransformationFailedException('Category not found', 0, $e);
                 }
