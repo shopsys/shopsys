@@ -8,7 +8,7 @@ export type TypeUpdatePaymentStatusMutationVariables = Types.Exact<{
 }>;
 
 
-export type TypeUpdatePaymentStatusMutation = { __typename?: 'Mutation', UpdatePaymentStatus: { __typename?: 'Order', isPaid: boolean, paymentTransactionsCount: number, payment: { __typename?: 'Payment', type: string } } };
+export type TypeUpdatePaymentStatusMutation = { __typename?: 'Mutation', UpdatePaymentStatus: { __typename?: 'Order', isPaid: boolean, paymentTransactionsCount: number, hasPaymentInProcess: boolean, urlHash: string, payment: { __typename?: 'Payment', type: string } } };
 
 
       export interface PossibleTypesResultData {
@@ -99,6 +99,8 @@ export const UpdatePaymentStatusMutationDocument = gql`
     payment {
       type
     }
+    hasPaymentInProcess
+    urlHash
   }
 }
     `;
