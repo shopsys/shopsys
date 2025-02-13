@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { BlogArticleDetailFragment } from '../fragments/BlogArticleDetailFragment.ssr';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeBlogArticleDetailQueryVariables = Types.Exact<{
-  urlSlug: Types.InputMaybe<Types.Scalars['String']['input']>;
+  urlSlug?: Types.InputMaybe<Types.Scalars['String']['input']>;
 }>;
 
 

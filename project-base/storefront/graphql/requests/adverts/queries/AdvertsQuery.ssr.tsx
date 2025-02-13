@@ -4,8 +4,8 @@ import gql from 'graphql-tag';
 import { AdvertsFragment } from '../fragments/AdvertsFragment.ssr';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeAdvertsQueryVariables = Types.Exact<{
-  categoryUuid: Types.InputMaybe<Types.Scalars['Uuid']['input']>;
-  positionNames: Types.InputMaybe<Array<Types.Scalars['String']['input']> | Types.Scalars['String']['input']>;
+  categoryUuid?: Types.InputMaybe<Types.Scalars['Uuid']['input']>;
+  positionNames?: Types.InputMaybe<Array<Types.Scalars['String']['input']> | Types.Scalars['String']['input']>;
 }>;
 
 
