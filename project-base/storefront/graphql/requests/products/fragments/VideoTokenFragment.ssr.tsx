@@ -1,7 +1,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-export type TypeVideoTokenFragment = { __typename: 'VideoToken', description: string, token: string };
+export type TypeVideoTokenFragment = { __typename: 'VideoToken', description: string | null, token: string };
 
 
       export interface PossibleTypesResultData {
