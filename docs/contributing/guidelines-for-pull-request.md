@@ -45,7 +45,7 @@ git rebase origin/master
 
 ### Note about targeting pull requests
 
-As we [support multiple versions](./backward-compatibility-promise.md#current-release-plan) of Shopsys Platform while keeping [Backward Compatibility Promise](./backward-compatibility-promise.md), it is important to think about proper targeting of your pull request.
+As we [support multiple versions](https://www.shopsys.com/product-roadmap/) of Shopsys Platform while keeping [Backward Compatibility Promise](./backward-compatibility-promise.md), it is important to think about proper targeting of your pull request.
 
 If your pull request:
 

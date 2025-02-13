@@ -16,7 +16,7 @@ For operating Shopsys Platform it is needed to have correctly set connections to
 
 Environment variables are really handy to configure the right setting in the desired application environment.
 You may want to set some settings in a different way (such as production, test, or CI servers).
-[Setting environment variables](/introduction/setting-environment-variables) depends on environment of your application.
+[Setting environment variables](../introduction/setting-environment-variables.md) depends on environment of your application.
 
 !!! tip
 
