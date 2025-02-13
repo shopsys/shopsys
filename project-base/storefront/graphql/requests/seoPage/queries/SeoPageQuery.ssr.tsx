@@ -26,6 +26,12 @@ export type TypeSeoPageQuery = { __typename?: 'Query', seoPage: { __typename: 'S
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -38,9 +44,9 @@ export type TypeSeoPageQuery = { __typename?: 'Query', seoPage: { __typename: 'S
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",

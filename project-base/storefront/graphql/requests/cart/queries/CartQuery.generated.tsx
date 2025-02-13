@@ -5,7 +5,7 @@ import { CartFragment } from '../fragments/CartFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeCartQueryVariables = Types.Exact<{
-  cartUuid: Types.InputMaybe<Types.Scalars['Uuid']['input']>;
+  cartUuid?: Types.InputMaybe<Types.Scalars['Uuid']['input']>;
 }>;
 
 

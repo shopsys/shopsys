@@ -26,6 +26,12 @@ export type TypeTransportsQuery = { __typename?: 'Query', transports: Array<{ __
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -38,9 +44,9 @@ export type TypeTransportsQuery = { __typename?: 'Query', transports: Array<{ __
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",

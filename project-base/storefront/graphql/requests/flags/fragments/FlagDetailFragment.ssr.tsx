@@ -22,6 +22,12 @@ export type TypeFlagDetailFragment = { __typename: 'Flag', uuid: string, slug: s
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -34,9 +40,9 @@ export type TypeFlagDetailFragment = { __typename: 'Flag', uuid: string, slug: s
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",

@@ -3,7 +3,8 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import { CountryFragment } from '../../countries/fragments/CountryFragment.ssr';
 import { ComplaintItemFragment } from './ComplaintItemFragment.ssr';
-export type TypeCreateComplaintFragment = { __typename?: 'Complaint', uuid: string, number: string, deliveryFirstName: string, deliveryLastName: string, deliveryCompanyName: string | null, deliveryTelephone: string, deliveryStreet: string, deliveryCity: string, deliveryPostcode: string, createdAt: any, deliveryCountry: { __typename: 'Country', name: string, code: string }, items: Array<{ __typename?: 'ComplaintItem', quantity: number, description: string, orderItem: { __typename: 'OrderItem', uuid: string, name: string, vatRate: string, quantity: number, unit: string | null, type: Types.TypeOrderItemTypeEnum, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, order: { __typename?: 'Order', uuid: string, number: string, creationDate: any }, product: { __typename?: 'MainVariant', slug: string, isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean, mainImage: { __typename: 'Image', name: string | null, url: string } | null } | { __typename?: 'RegularProduct', slug: string, isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean, mainImage: { __typename: 'Image', name: string | null, url: string } | null } | { __typename?: 'Variant', slug: string, isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean, mainImage: { __typename: 'Image', name: string | null, url: string } | null } | null } | null, files: Array<{ __typename: 'File', anchorText: string, url: string }> | null }> };
+import { ComplaintResolutionFragment } from './ComplaintResolutionFragment.ssr';
+export type TypeCreateComplaintFragment = { __typename?: 'Complaint', uuid: string, number: string, deliveryFirstName: string, deliveryLastName: string, deliveryCompanyName: string | null, deliveryTelephone: string, deliveryStreet: string, deliveryCity: string, deliveryPostcode: string, createdAt: any, bankAccountNumber: string | null, deliveryCountry: { __typename: 'Country', name: string, code: string }, items: Array<{ __typename?: 'ComplaintItem', quantity: number, description: string, catnum: string | null, productName: string, orderItem: { __typename: 'OrderItem', uuid: string, name: string, vatRate: string, quantity: number, unit: string | null, type: Types.TypeOrderItemTypeEnum, unitPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, totalPrice: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, order: { __typename?: 'Order', uuid: string, number: string, creationDate: any, customerUser: { __typename?: 'CompanyCustomerUser', uuid: string } | { __typename?: 'CurrentCompanyCustomerUser', uuid: string } | { __typename?: 'CurrentRegularCustomerUser', uuid: string } | { __typename?: 'RegularCustomerUser', uuid: string } | null }, product: { __typename?: 'MainVariant', slug: string, isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean, mainImage: { __typename: 'Image', name: string | null, url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: any | null, percentageDiscount: number | null, basicPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, availability: { __typename?: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum } } | { __typename?: 'RegularProduct', slug: string, isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean, mainImage: { __typename: 'Image', name: string | null, url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: any | null, percentageDiscount: number | null, basicPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, availability: { __typename?: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum } } | { __typename?: 'Variant', slug: string, isVisible: boolean, isSellingDenied: boolean, isInquiryType: boolean, mainImage: { __typename: 'Image', name: string | null, url: string } | null, price: { __typename: 'ProductPrice', priceWithVat: string, priceWithoutVat: string, vatAmount: string, isPriceFrom: boolean, nextPriceChange: any | null, percentageDiscount: number | null, basicPrice: { __typename?: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string } }, availability: { __typename?: 'Availability', name: string, status: Types.TypeAvailabilityStatusEnum } } | null } | null, files: Array<{ __typename: 'File', anchorText: string, url: string }> | null, product: { __typename?: 'MainVariant', slug: string, isVisible: boolean, mainImage: { __typename: 'Image', name: string | null, url: string } | null } | { __typename?: 'RegularProduct', slug: string, isVisible: boolean, mainImage: { __typename: 'Image', name: string | null, url: string } | null } | { __typename?: 'Variant', slug: string, isVisible: boolean, mainImage: { __typename: 'Image', name: string | null, url: string } | null } | null }>, resolution: { __typename?: 'ComplaintResolution', name: string, value: string } };
 
 
       export interface PossibleTypesResultData {
@@ -21,6 +22,12 @@ export type TypeCreateComplaintFragment = { __typename?: 'Complaint', uuid: stri
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -33,9 +40,9 @@ export type TypeCreateComplaintFragment = { __typename?: 'Complaint', uuid: stri
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -100,6 +107,11 @@ export const CreateComplaintFragment = gql`
   items {
     ...ComplaintItemFragment
   }
+  resolution {
+    ...ComplaintResolutionFragment
+  }
+  bankAccountNumber
 }
     ${CountryFragment}
-${ComplaintItemFragment}`;
+${ComplaintItemFragment}
+${ComplaintResolutionFragment}`;

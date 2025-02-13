@@ -7,7 +7,7 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeBlogCategoryArticlesVariables = Types.Exact<{
   uuid: Types.Scalars['Uuid']['input'];
   endCursor: Types.Scalars['String']['input'];
-  pageSize: Types.InputMaybe<Types.Scalars['Int']['input']>;
+  pageSize?: Types.InputMaybe<Types.Scalars['Int']['input']>;
 }>;
 
 

@@ -20,6 +20,12 @@ export type TypeProductListFragment = { __typename: 'ProductList', uuid: string,
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -32,9 +38,9 @@ export type TypeProductListFragment = { __typename: 'ProductList', uuid: string,
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -80,7 +86,7 @@ export type TypeProductListFragment = { __typename: 'ProductList', uuid: string,
   }
 };
       export default result;
-
+    
 export const ProductListFragment = gql`
     fragment ProductListFragment on ProductList {
   __typename

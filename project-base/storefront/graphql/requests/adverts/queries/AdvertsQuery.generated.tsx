@@ -5,8 +5,8 @@ import { AdvertsFragment } from '../fragments/AdvertsFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeAdvertsQueryVariables = Types.Exact<{
-  categoryUuid: Types.InputMaybe<Types.Scalars['Uuid']['input']>;
-  positionNames: Types.InputMaybe<Array<Types.Scalars['String']['input']> | Types.Scalars['String']['input']>;
+  categoryUuid?: Types.InputMaybe<Types.Scalars['Uuid']['input']>;
+  positionNames?: Types.InputMaybe<Array<Types.Scalars['String']['input']> | Types.Scalars['String']['input']>;
 }>;
 
 

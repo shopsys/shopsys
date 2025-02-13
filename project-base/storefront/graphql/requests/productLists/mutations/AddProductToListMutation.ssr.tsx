@@ -26,6 +26,12 @@ export type TypeAddProductToListMutation = { __typename?: 'Mutation', AddProduct
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -38,9 +44,9 @@ export type TypeAddProductToListMutation = { __typename?: 'Mutation', AddProduct
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -86,7 +92,7 @@ export type TypeAddProductToListMutation = { __typename?: 'Mutation', AddProduct
   }
 };
       export default result;
-
+    
 
 export const AddProductToListMutationDocument = gql`
     mutation AddProductToListMutation($input: ProductListUpdateInput!) {

@@ -30,6 +30,12 @@ export type TypeRecommendedProductsQuery = { __typename?: 'Query', recommendedPr
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -42,9 +48,9 @@ export type TypeRecommendedProductsQuery = { __typename?: 'Query', recommendedPr
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -90,7 +96,7 @@ export type TypeRecommendedProductsQuery = { __typename?: 'Query', recommendedPr
   }
 };
       export default result;
-
+    
 
 export const RecommendedProductsQueryDocument = gql`
     query RecommendedProductsQuery($userIdentifier: Uuid!, $recommendationType: RecommendationType!, $recommenderClientIdentifier: String, $limit: Int, $itemUuids: [Uuid!]) {
