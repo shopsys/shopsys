@@ -55,7 +55,6 @@ export const middleware: NextMiddleware = async (request) => {
                 domainId: getDomainIdFromHostname(request.headers.get('Host') as string),
             }),
         });
-
         if (!pageTypeResponse.ok) {
             const is400Error = isInRange(pageTypeResponse.status, 400, 499);
             const is500Error = isInRange(pageTypeResponse.status, 500, 599);
@@ -78,7 +77,6 @@ export const middleware: NextMiddleware = async (request) => {
 
         const pageTypeParsedResponse: { route: FriendlyPageTypesValue; redirectTo: string; redirectCode: number } =
             await pageTypeResponse.json();
-
         if (pageTypeParsedResponse.redirectTo && pageTypeParsedResponse.redirectTo !== request.url) {
             return NextResponse.redirect(
                 new URL(
@@ -130,7 +128,15 @@ const rewriteDynamicPages = (pageType: FriendlyPageTypesValue, rewriteUrl: strin
 
     const host = new URL(rewriteUrl).origin;
     if (pageTypeKey) {
-        return NextResponse.rewrite(new URL(`${FriendlyPagesDestinations[pageTypeKey]}${queryParams}`, host));
+        const friendlySlug = new URL(rewriteUrl).pathname.split('/').pop();
+        const asPath = `/${friendlySlug}${queryParams}`;
+
+        return NextResponse.rewrite(new URL(`${FriendlyPagesDestinations[pageTypeKey]}${queryParams}`, host), {
+            headers: [
+                ['x-friendly-slug', friendlySlug || ''],
+                ['x-asPath', asPath],
+            ],
+        });
     }
 
     return NextResponse.rewrite(new URL(ERROR_PAGE_ROUTE, host), {
@@ -289,6 +295,7 @@ const gqlQueryFetch = (body: any, accessToken?: string) => {
         },
         body: JSON.stringify(body),
         method: 'POST',
+        cache: 'no-store',
     });
 };
 

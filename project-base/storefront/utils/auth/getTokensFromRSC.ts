@@ -1,18 +1,15 @@
 'use server';
 
 import { getCookie } from 'cookies-next';
-import { cookies, headers } from 'next/headers';
+import { cookies } from 'next/headers';
 import { OptionalTokenType } from 'urql/types';
-import { getIsHttps, getProtocolFromServer } from 'utils/requestProtocol';
 
 export const getTokensRSC = async (): Promise<OptionalTokenType> => {
     let accessToken = await getCookie('accessToken', {
         cookies,
-        secure: getIsHttps(getProtocolFromServer(headers().get('host')!)),
     });
     let refreshToken = await getCookie('refreshToken', {
         cookies,
-        secure: getIsHttps(getProtocolFromServer(headers().get('host')!)),
     });
 
     if (typeof accessToken !== 'string' || accessToken.length === 0) {
