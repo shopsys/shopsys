@@ -1,5 +1,5 @@
-import domainsConfig, { cdnDomain } from "domains-config";
-import { CustomerUserAreaEnum } from "types/customer";
+import domainsConfig, { cdnDomain } from 'domains-config';
+import { CustomerUserAreaEnum } from 'types/customer';
 
 export type DomainConfigType = {
     url: string;
