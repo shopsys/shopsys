@@ -189,10 +189,17 @@
             padding-right: 10px;
 
             .btn__icon {
-                left: 1px;
                 top: calc(~"50% - 7px");
-
                 font-size: 15px;
+
+                &.in-icon--denied {
+                    top: calc(50% - 10px);
+                    left: 1px;
+
+                    + span {
+                        font-weight: normal;
+                    }
+                }
             }
         }
     }
