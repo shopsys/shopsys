@@ -5,7 +5,7 @@ import { TransportWithAvailablePaymentsAndStoresFragment } from '../fragments/Tr
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeTransportsFullQueryVariables = Types.Exact<{
-  cartUuid: Types.InputMaybe<Types.Scalars['Uuid']['input']>;
+  cartUuid?: Types.InputMaybe<Types.Scalars['Uuid']['input']>;
 }>;
 
 

@@ -30,6 +30,12 @@ export type TypeListedProductFragment = TypeListedProductFragment_MainVariant_ |
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -42,9 +48,9 @@ export type TypeListedProductFragment = TypeListedProductFragment_MainVariant_ |
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -90,7 +96,7 @@ export type TypeListedProductFragment = TypeListedProductFragment_MainVariant_ |
   }
 };
       export default result;
-
+    
 export const ListedProductFragment = gql`
     fragment ListedProductFragment on Product {
   __typename

@@ -28,6 +28,12 @@ export type TypeCategoryDetailQuery = { __typename?: 'Query', category: { __type
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -40,9 +46,9 @@ export type TypeCategoryDetailQuery = { __typename?: 'Query', category: { __type
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -88,7 +94,7 @@ export type TypeCategoryDetailQuery = { __typename?: 'Query', category: { __type
   }
 };
       export default result;
-
+    
 
 export const CategoryDetailQueryDocument = gql`
     query CategoryDetailQuery($urlSlug: String, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter) @friendlyUrl {

@@ -7,7 +7,7 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeLoginMutationVariables = Types.Exact<{
   email: Types.Scalars['String']['input'];
   password: Types.Scalars['Password']['input'];
-  previousCartUuid: Types.InputMaybe<Types.Scalars['Uuid']['input']>;
+  previousCartUuid?: Types.InputMaybe<Types.Scalars['Uuid']['input']>;
   productListsUuids: Array<Types.Scalars['Uuid']['input']> | Types.Scalars['Uuid']['input'];
   shouldOverwriteCustomerUserCart?: Types.InputMaybe<Types.Scalars['Boolean']['input']>;
 }>;
