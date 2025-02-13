@@ -1,6 +1,8 @@
 import { Locale } from 'i18n-config';
 import { CustomerUserAreaEnum } from 'types/customer';
 
+export const cdnDomain = process.env.CDN_DOMAIN ?? '';
+
 const domainsConfig = [
     {
         publicGraphqlEndpoint: process.env.PUBLIC_GRAPHQL_ENDPOINT_HOSTNAME_1 ?? '',

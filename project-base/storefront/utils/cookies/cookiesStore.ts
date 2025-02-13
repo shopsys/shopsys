@@ -2,7 +2,6 @@ import { getCookies, setCookie } from 'cookies-next';
 import { GetServerSidePropsContext } from 'next';
 import { useEffect } from 'react';
 import { useCookiesStore } from 'store/useCookiesStore';
-import { getProtocol, getIsHttps } from 'utils/requestProtocol';
 import { v4 as uuidV4 } from 'uuid';
 import { createStore } from 'zustand/vanilla';
 
@@ -37,7 +36,7 @@ const getDefaultInitState = (): CookiesStoreState => ({
 });
 
 export const getCookiesStoreState = (context?: GetServerSidePropsContext): CookiesStoreState => {
-    const { cookiesStore } = getCookies({ ...context, secure: getIsHttps(getProtocol(context)) }) as CookiesType;
+    const { cookiesStore } = getCookies({ ...context }) as CookiesType;
     const newState = getDefaultInitState();
 
     if (!cookiesStore) {
@@ -77,7 +76,7 @@ export const useCookiesStoreSync = () => {
     const { setCookiesStoreState, ...storeValues } = useCookiesStore((state) => state);
 
     useEffect(() => {
-        setCookie(COOKIES_STORE_NAME, storeValues, { maxAge: THIRTY_DAYS_IN_SECONDS, secure: getIsHttps() });
+        setCookie(COOKIES_STORE_NAME, storeValues, { maxAge: THIRTY_DAYS_IN_SECONDS });
     }, [storeValues]);
 };
 

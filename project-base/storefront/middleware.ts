@@ -8,7 +8,6 @@ import {
 } from 'types/friendlyUrl';
 import { getDomainIdFromHostname } from 'utils/domain/getDomainIdFromHostname';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const ERROR_PAGE_ROUTE = '/404';
 const MIDDLEWARE_STATUS_CODE_KEY = 'middleware-status-code';
 const MIDDLEWARE_STATUS_MESSAGE_KEY = 'middleware-status-message';
@@ -56,7 +55,6 @@ export const middleware: NextMiddleware = async (request) => {
                 domainId: getDomainIdFromHostname(request.headers.get('Host') as string),
             }),
         });
-
         if (!pageTypeResponse.ok) {
             const is400Error = isInRange(pageTypeResponse.status, 400, 499);
             const is500Error = isInRange(pageTypeResponse.status, 500, 599);
@@ -79,7 +77,6 @@ export const middleware: NextMiddleware = async (request) => {
 
         const pageTypeParsedResponse: { route: FriendlyPageTypesValue; redirectTo: string; redirectCode: number } =
             await pageTypeResponse.json();
-
         if (pageTypeParsedResponse.redirectTo && pageTypeParsedResponse.redirectTo !== request.url) {
             return NextResponse.redirect(
                 new URL(
@@ -130,10 +127,17 @@ const rewriteDynamicPages = (pageType: FriendlyPageTypesValue, rewriteUrl: strin
     const pageTypeKey = (Object.keys(FriendlyPagesTypes) as FriendlyPagesTypesKey[]).find(
         (key) => FriendlyPagesTypes[key] === pageType,
     );
-
     const host = new URL(rewriteUrl).origin;
     if (pageTypeKey) {
-        return NextResponse.rewrite(new URL(`${FriendlyPagesDestinations[pageTypeKey]}${queryParams}`, host));
+        const friendlySlug = new URL(rewriteUrl).pathname.split('/').pop();
+        const asPath = `/${friendlySlug}${queryParams}`;
+
+        return NextResponse.rewrite(new URL(`${FriendlyPagesDestinations[pageTypeKey]}${queryParams}`, host), {
+            headers: [
+                ['x-friendly-slug', friendlySlug || ''],
+                ['x-asPath', asPath],
+            ],
+        });
     }
 
     return NextResponse.rewrite(new URL(ERROR_PAGE_ROUTE, host), {
@@ -289,6 +293,7 @@ const gqlQueryFetch = (body: any, accessToken?: string) => {
         },
         body: JSON.stringify(body),
         method: 'POST',
+        cache: 'no-store',
     });
 };
 
