@@ -20,7 +20,7 @@ export const middleware: NextMiddleware = async (request) => {
         }
 
         const domainInfo = getHostAndDomainFromRequest(request);
-        const { search, origin: baseOrigin } = new URL(request.url);
+        const { search } = new URL(request.url);
 
         let pathname = request.nextUrl.pathname;
         if (pathname.startsWith('/')) {
@@ -35,7 +35,6 @@ export const middleware: NextMiddleware = async (request) => {
 
         const { host, domainId, currentLocale } = domainInfo;
 
-        const origin = getBaseUrlWithLocale(baseOrigin, currentLocale);
         const response = await validateAuthTokens(request);
 
         const domainUrlFromStaticUrls = getDomainUrlFromStaticUrls(host);
@@ -67,7 +66,6 @@ export const middleware: NextMiddleware = async (request) => {
                 domainId,
             }),
         });
-
         if (!pageTypeResponse.ok) {
             const is400Error = isInRange(pageTypeResponse.status, 400, 499);
             const is500Error = isInRange(pageTypeResponse.status, 500, 599);
@@ -90,7 +88,6 @@ export const middleware: NextMiddleware = async (request) => {
 
         const pageTypeParsedResponse: { route: FriendlyPageTypesValue; redirectTo: string; redirectCode: number } =
             await pageTypeResponse.json();
-
         if (pageTypeParsedResponse.redirectTo && pageTypeParsedResponse.redirectTo !== request.url) {
             return NextResponse.redirect(
                 new URL(
@@ -148,7 +145,15 @@ const rewriteDynamicPages = (
     const origin = getBaseUrlWithLocale(new URL(rewriteUrl).origin, currentLocale);
 
     if (pageTypeKey) {
-        return NextResponse.rewrite(new URL(`${origin}${FriendlyPagesDestinations[pageTypeKey]}${queryParams}`));
+        const friendlySlug = new URL(rewriteUrl).pathname.split('/').pop();
+        const asPath = `/${friendlySlug}${queryParams}`;
+
+        return NextResponse.rewrite(new URL(`${FriendlyPagesDestinations[pageTypeKey]}${queryParams}`), {
+            headers: [
+                ['x-friendly-slug', friendlySlug || ''],
+                ['x-asPath', asPath],
+            ],
+        });
     }
 
     return NextResponse.rewrite(new URL(origin + ERROR_PAGE_ROUTE), {
@@ -296,6 +301,7 @@ const gqlQueryFetch = (body: any, accessToken?: string) => {
         },
         body: JSON.stringify(body),
         method: 'POST',
+        cache: 'no-store',
     });
 };
 

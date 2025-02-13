@@ -3,7 +3,6 @@ import { GetServerSidePropsContext, NextPageContext } from 'next';
 import { OptionalTokenType } from 'urql/types';
 import { getCookieName } from 'utils/cookies/cookieNaming';
 import { DomainConfigType } from 'utils/domain/domainConfig';
-import { getProtocol, getIsHttps } from 'utils/requestProtocol';
 
 export const getTokensFromCookies = (
     domainConfig: DomainConfigType,
@@ -12,12 +11,10 @@ export const getTokensFromCookies = (
     let accessToken = getCookie(getCookieName('accessToken', domainConfig.domainId), {
         req: context?.req,
         res: context?.res,
-        secure: getIsHttps(getProtocol(context)),
     });
     let refreshToken = getCookie(getCookieName('refreshToken', domainConfig.domainId), {
         req: context?.req,
         res: context?.res,
-        secure: getIsHttps(getProtocol(context)),
     });
 
     if (typeof accessToken !== 'string' || accessToken.length === 0) {

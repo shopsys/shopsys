@@ -4,7 +4,6 @@ import { PageHeadScripts } from './PageHeadScripts';
 import { Portal } from 'components/Basic/Portal/Portal';
 import { DeferredSymfonyDebugToolbar } from 'components/Basic/SymfonyDebugToolbar/DeferredSymfonyDebugToolbar';
 import { DeferredUserConsent } from 'components/Blocks/UserConsent/DeferredUserConsent';
-import { DeferredGtmHeadScript } from 'gtm/DeferredGtmHeadScript';
 import { NextComponentType, NextPageContext } from 'next';
 import dynamic from 'next/dynamic';
 import { Slide, ToastContainer } from 'react-toastify';
@@ -57,7 +56,7 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }
             <DeferredSymfonyDebugToolbar />
             <DeferredUserConsent url={pageProps.domainConfig.url} />
             <Portal />
-            <DeferredGtmHeadScript gtmId={pageProps.domainConfig.gtmId} />
+            {/* <DeferredGtmHeadScript /> */}
         </div>
     );
 };
