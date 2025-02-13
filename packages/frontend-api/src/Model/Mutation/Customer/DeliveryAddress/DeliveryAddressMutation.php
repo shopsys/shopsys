@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Mutation\Customer\DeliveryAddress;
 
 use Overblog\GraphQLBundle\Definition\Argument;
+use Shopsys\FrameworkBundle\Model\Country\Exception\CountryNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\DeliveryAddressNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserUpdateDataFactory;
+use Shopsys\FrontendApiBundle\Model\Country\Exception\CountryNotFoundUserError;
 use Shopsys\FrontendApiBundle\Model\Mutation\BaseTokenMutation;
 use Shopsys\FrontendApiBundle\Model\Mutation\Customer\DeliveryAddress\Exception\DeliveryAddressNotFoundUserError;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -57,8 +59,12 @@ class DeliveryAddressMutation extends BaseTokenMutation
         $user = $this->runCheckUserIsLogged();
         $customerUser = $this->customerUserFacade->getByUuid($user->getUuid());
 
-        $deliveryAddress = $this->deliveryAddressDataApiFactory
-            ->createFromDeliveryInputArgumentAndCustomer($argument, $customerUser->getCustomer());
+        try {
+            $deliveryAddress = $this->deliveryAddressDataApiFactory
+                ->createFromDeliveryInputArgumentAndCustomer($argument, $customerUser->getCustomer());
+        } catch (CountryNotFoundException $e) {
+            throw new CountryNotFoundUserError($e->getMessage());
+        }
 
         $this->deliveryAddressFacade->editByCustomer($customerUser->getCustomer(), $deliveryAddress);
 
@@ -97,8 +103,12 @@ class DeliveryAddressMutation extends BaseTokenMutation
         $user = $this->runCheckUserIsLogged();
         $customerUser = $this->customerUserFacade->getByUuid($user->getUuid());
 
-        $deliveryAddressData = $this->deliveryAddressDataApiFactory
-            ->createFromDeliveryInputArgumentAndCustomer($argument, $customerUser->getCustomer());
+        try {
+            $deliveryAddressData = $this->deliveryAddressDataApiFactory
+                ->createFromDeliveryInputArgumentAndCustomer($argument, $customerUser->getCustomer());
+        } catch (CountryNotFoundException $e) {
+            throw new CountryNotFoundUserError($e->getMessage());
+        }
 
         $deliveryAddressData->addressFilled = true;
         $this->deliveryAddressFacade->createIfAddressFilled($deliveryAddressData);

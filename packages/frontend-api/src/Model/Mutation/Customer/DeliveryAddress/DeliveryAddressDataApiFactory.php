@@ -47,7 +47,7 @@ class DeliveryAddressDataApiFactory
             throw new InvalidArgumentException('DeliveryAddressInput is not valid.');
         }
 
-        $country = $this->countryFacade->findByCode($input['country']);
+        $country = $this->countryFacade->getByCode($input['country']);
 
         $deliveryAddressData = $this->deliveryAddressDataFactory->create();
         $deliveryAddressData->uuid = $input['uuid'];

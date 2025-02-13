@@ -128,4 +128,19 @@ class CountryRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    /**
+     * @param string $countryCode
+     * @return \Shopsys\FrameworkBundle\Model\Country\Country
+     */
+    public function getByCode(string $countryCode): Country
+    {
+        $country = $this->findByCode($countryCode);
+
+        if ($country === null) {
+            throw new CountryNotFoundException('Country with code ' . $countryCode . ' not found.');
+        }
+
+        return $country;
+    }
 }
