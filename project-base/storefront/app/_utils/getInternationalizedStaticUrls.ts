@@ -1,10 +1,15 @@
-import { STATIC_REWRITE_PATHS, StaticRewritePathKeyType } from 'config/staticRewritePaths';
+import { STATIC_REWRITE_PATHS, StaticRewritePathKeyType } from 'app/_config/staticRewritePaths';
+import { getDomainConfig } from 'app/_utils/getDomainConfig';
 import { headers } from 'next/headers';
-import { getDomainConfig } from 'utils/domain/domainConfig';
+import { SameLengthOutput } from 'types/SameLengthOutput';
 
 export type Url = StaticRewritePathKeyType | { url: StaticRewritePathKeyType; param: string | undefined | null };
 
-export const getInternationalizedStaticUrl = (url: Url) => {
+export const getInternationalizedStaticUrls = <InputUrls extends Url[]>(urls: [...InputUrls]) => {
+    return urls.map((url) => getInternationalizedStaticUrl(url)) as SameLengthOutput<InputUrls>;
+};
+
+const getInternationalizedStaticUrl = (url: Url) => {
     const domainConfig = getDomainConfig(headers().get('host')!);
 
     const urlsOnDomain = STATIC_REWRITE_PATHS[domainConfig.url];

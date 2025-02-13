@@ -4,8 +4,8 @@ import gql from 'graphql-tag';
 import { SimpleNotBlogArticleFragment } from '../fragments/SimpleNotBlogArticleFragment.ssr';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeArticlesQueryVariables = Types.Exact<{
-  placement: Types.InputMaybe<Array<Types.TypeArticlePlacementTypeEnum> | Types.TypeArticlePlacementTypeEnum>;
-  first: Types.InputMaybe<Types.Scalars['Int']['input']>;
+  placement?: Types.InputMaybe<Array<Types.TypeArticlePlacementTypeEnum> | Types.TypeArticlePlacementTypeEnum>;
+  first?: Types.InputMaybe<Types.Scalars['Int']['input']>;
 }>;
 
 

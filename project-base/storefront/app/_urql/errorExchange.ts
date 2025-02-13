@@ -1,11 +1,11 @@
 import { captureException } from '@sentry/nextjs';
+import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { Translate as NextTranslate } from 'next-translate';
 import { Translate } from 'types/translation';
 import { AnyVariables, CombinedError, Operation } from 'urql';
 import { isNoLogError } from 'utils/errors/applicationErrors';
 import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 import { mapGraphqlErrorForDevelopment } from 'utils/errors/mapGraphqlErrorForDevelopment';
-import { getServerT } from 'utils/getServerTranslation';
 import { isEnvironment } from 'utils/isEnvironment';
 
 const isWithConsoleErrorDebugging = process.env.ERROR_DEBUGGING_LEVEL === 'console';
@@ -25,7 +25,7 @@ export const getErrorExchange = async <Data, Variables extends AnyVariables>(
     if (isWithErrorDebugging) {
         handleErrorMessagesForDevelopment(error);
     } else {
-        const t = await getServerT();
+        const t = await getTranslation();
         handleErrorMessagesForUsers(error, t);
     }
     handleErrorMessagesForDevelopment(error);

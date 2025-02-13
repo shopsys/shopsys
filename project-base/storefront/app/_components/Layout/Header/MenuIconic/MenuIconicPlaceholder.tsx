@@ -1,12 +1,11 @@
+import { getInternationalizedStaticUrls } from 'app/_utils/getInternationalizedStaticUrls';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { CompareIcon } from 'components/Basic/Icon/CompareIcon';
 import { HeartIcon } from 'components/Basic/Icon/HeartIcon';
 import { MarkerIcon } from 'components/Basic/Icon/MarkerIcon';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import useTranslation from 'next-translate/useTranslation';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import Skeleton from 'react-loading-skeleton';
-import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { twMergeCustom } from 'utils/twMerge';
 
 const placeholderItemTwClass =
@@ -14,8 +13,7 @@ const placeholderItemTwClass =
 
 export const MenuIconicPlaceholder: FC = () => {
     const { t } = useTranslation();
-    const { url } = useDomainConfig();
-    const [storesUrl] = getInternationalizedStaticUrls(['/stores'], url);
+    const [storesUrl] = getInternationalizedStaticUrls(['/stores']);
 
     return (
         <ul className="flex lg:gap-7">

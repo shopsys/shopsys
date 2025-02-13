@@ -2,6 +2,7 @@
 
 import { useLoginForm, useLoginFormMeta } from 'app/_components/Blocks/LoginForm/loginFormMeta';
 import { SocialNetworkLogin } from 'app/_components/Blocks/SocialNetworkLogin/SocialNetworkLogin';
+import { useInternationalizedStaticUrls } from 'app/_hooks/useInternationalizedStaticUrls';
 import { useLogin } from 'app/_hooks/useLogin';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { SubmitButton } from 'components/Forms/Button/SubmitButton';
@@ -9,12 +10,10 @@ import { Form, FormBlockWrapper, FormButtonWrapper, FormContentWrapper, FormHead
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { PasswordInputControlled } from 'components/Forms/TextInput/PasswordInputControlled';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { useSettings } from 'components/providers/SettingsProvider';
+import { useAppConfig } from 'components/providers/AppConfigProvider';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { TIDs } from 'cypress/tids';
-import useTranslation from 'next-translate/useTranslation';
 import { FormProvider } from 'react-hook-form';
-import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 export type LoginFormProps = {
     defaultEmail?: string;
@@ -30,10 +29,10 @@ export const LoginForm: FC<LoginFormProps> = ({
     formHeading,
 }) => {
     const { t } = useTranslation();
-    const { url } = useDomainConfig();
-    const [resetPasswordUrl] = getInternationalizedStaticUrls(['/reset-password'], url);
-
-    const { socialNetworkLoginConfig } = useSettings();
+    const {
+        settings: { socialNetworkLoginConfig },
+    } = useAppConfig();
+    const [resetPasswordUrl] = useInternationalizedStaticUrls(['/reset-password']);
 
     const [formProviderMethods] = useLoginForm(defaultEmail);
     const formMeta = useLoginFormMeta(formProviderMethods);

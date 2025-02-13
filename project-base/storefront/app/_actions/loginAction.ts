@@ -14,9 +14,7 @@ type LoginActionResult = {
     showCartMergeInfo: boolean;
 };
 // TODO: implement rewirteUrl prop
-export async function loginAction(
-    variables: TypeLoginMutationVariables,
-): Promise<LoginActionResult> {
+export async function loginAction(variables: TypeLoginMutationVariables): Promise<LoginActionResult> {
     const response = await createMutation<TypeLoginMutation, TypeLoginMutationVariables>(
         LoginMutationDocument,
         variables,

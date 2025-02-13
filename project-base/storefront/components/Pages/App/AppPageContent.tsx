@@ -4,7 +4,6 @@ import { PageHeadScripts } from './PageHeadScripts';
 import { Portal } from 'components/Basic/Portal/Portal';
 import { DeferredSymfonyDebugToolbar } from 'components/Basic/SymfonyDebugToolbar/DeferredSymfonyDebugToolbar';
 import { DeferredUserConsent } from 'components/Blocks/UserConsent/DeferredUserConsent';
-import { DeferredGtmHeadScript } from 'gtm/DeferredGtmHeadScript';
 import { NextComponentType, NextPageContext } from 'next';
 import dynamic from 'next/dynamic';
 import { ToastContainer } from 'react-toastify';
@@ -52,7 +51,7 @@ export const AppPageContent: FC<AppPageContentProps> = ({ Component, pageProps }
             <PageHeadScripts />
             <Fonts />
             <DeferredLoaders />
-            <DeferredGtmHeadScript />
+            {/* <DeferredGtmHeadScript /> */}
             <ToastContainer autoClose={6000} position="top-center" theme="colored" />
             <Component {...pageProps} />
             <DeferredSymfonyDebugToolbar />

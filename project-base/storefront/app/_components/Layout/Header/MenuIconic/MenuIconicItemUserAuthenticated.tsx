@@ -5,8 +5,8 @@ import { MenuIconicItemUserAuthenticatedContent } from './MenuIconicItemUserAuth
 import { Drawer } from 'components/Basic/Drawer/Drawer';
 import { UserIcon } from 'components/Basic/Icon/UserIcon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { TIDs } from 'cypress/tids';
-import useTranslation from 'next-translate/useTranslation';
 import { useState } from 'react';
 import { CurrentCustomerType } from 'types/customer';
 import { twMergeCustom } from 'utils/twMerge';

@@ -1,14 +1,14 @@
 import imageLogo from '/public/images/logo.svg';
+import { getDomainConfig } from 'app/_utils/getDomainConfig';
+import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { Image } from 'components/Basic/Image/Image';
 import { headers } from 'next/headers';
-import { getDomainConfig } from 'utils/domain/domainConfig';
 import { getDictionary } from 'utils/getDictionary';
-import { getServerT } from 'utils/getServerTranslation';
 
 export default async function FooterCopyright() {
     const { defaultLocale: lang } = getDomainConfig(headers().get('host')!);
     const dictionary = await getDictionary(lang);
-    const t = await getServerT({ defaultLang: lang, defaultDictionary: dictionary });
+    const t = await getTranslation({ defaultLang: lang, defaultDictionary: dictionary });
 
     const currentYear = new Date().getFullYear();
 
