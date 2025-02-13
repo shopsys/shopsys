@@ -27,6 +27,12 @@ export type TypeProductDetailQuery = { __typename?: 'Query', product: { __typena
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -39,9 +45,9 @@ export type TypeProductDetailQuery = { __typename?: 'Query', product: { __typena
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -87,7 +93,7 @@ export type TypeProductDetailQuery = { __typename?: 'Query', product: { __typena
   }
 };
       export default result;
-
+    
 
 export const ProductDetailQueryDocument = gql`
     query ProductDetailQuery($urlSlug: String) @friendlyUrl {

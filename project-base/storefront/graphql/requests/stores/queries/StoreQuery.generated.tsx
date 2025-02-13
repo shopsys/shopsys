@@ -5,7 +5,7 @@ import { ListedStoreFragment } from '../fragments/ListedStoreFragment.generated'
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeStoreQueryVariables = Types.Exact<{
-  uuid: Types.InputMaybe<Types.Scalars['Uuid']['input']>;
+  uuid?: Types.InputMaybe<Types.Scalars['Uuid']['input']>;
 }>;
 
 
