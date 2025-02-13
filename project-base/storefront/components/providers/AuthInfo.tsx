@@ -2,13 +2,11 @@
 
 import { getCookies } from 'cookies-next';
 import useTranslation from 'next-translate/useTranslation';
-import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import { usePersistStore } from 'store/usePersistStore';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
-import { getIsHttps } from 'utils/requestProtocol';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showInfoMessage } from 'utils/toasts/showInfoMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
@@ -27,7 +25,7 @@ export const AuthInfo: FC<AuthInfoProps> = ({ isUserLoggedIn }) => {
     const slug = getUrlWithoutGetParameters(asPath);
 
     useEffect(() => {
-        const cookies = getCookies({ secure: getIsHttps() });
+        const cookies = getCookies();
         const isWithUserTokens = !!(cookies.accessToken && cookies.refreshToken);
 
         if ((isUserLoggedIn && !isWithUserTokens) || (!isUserLoggedIn && isWithUserTokens)) {
