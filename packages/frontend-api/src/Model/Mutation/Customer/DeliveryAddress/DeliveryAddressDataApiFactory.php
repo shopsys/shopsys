@@ -10,16 +10,19 @@ use Shopsys\FrameworkBundle\Model\Country\CountryFacade;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory;
+use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade;
 
 class DeliveryAddressDataApiFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Country\CountryFacade $countryFacade
      * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory $deliveryAddressDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressFacade $deliveryAddressFacade
      */
     public function __construct(
         protected readonly CountryFacade $countryFacade,
         protected readonly DeliveryAddressDataFactory $deliveryAddressDataFactory,
+        protected readonly DeliveryAddressFacade $deliveryAddressFacade,
     ) {
     }
 
@@ -49,7 +52,21 @@ class DeliveryAddressDataApiFactory
 
         $country = $this->countryFacade->getByCode($input['country']);
 
-        $deliveryAddressData = $this->deliveryAddressDataFactory->create();
+        $deliveryAddressUuid = $input['uuid'];
+        $deliveryAddressData = null;
+
+        if ($deliveryAddressUuid !== null) {
+            $deliveryAddress = $this->deliveryAddressFacade->findByUuidAndCustomer($deliveryAddressUuid, $customer);
+
+            if ($deliveryAddress !== null) {
+                $deliveryAddressData = $this->deliveryAddressDataFactory->createFromDeliveryAddress($deliveryAddress);
+            }
+        }
+
+        if ($deliveryAddressData === null) {
+            $deliveryAddressData = $this->deliveryAddressDataFactory->create();
+        }
+
         $deliveryAddressData->uuid = $input['uuid'];
         $deliveryAddressData->firstName = $input['firstName'];
         $deliveryAddressData->lastName = $input['lastName'];
