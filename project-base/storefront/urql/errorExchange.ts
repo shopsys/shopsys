@@ -41,7 +41,9 @@ export const getErrorExchange =
 
                     if (isClient && hasFriendlyUrlQueryFailedWith500(operation, error)) {
                         if (isWithErrorDebugging) {
-                            throw new Error(JSON.stringify(mapGraphqlErrorForDevelopment(error.graphQLErrors[0]), null, 2));
+                            throw new Error(
+                                JSON.stringify(mapGraphqlErrorForDevelopment(error.graphQLErrors[0]), null, 2),
+                            );
                         }
 
                         throw new Error('Internal Server Error');
