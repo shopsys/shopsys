@@ -1,18 +1,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { TokenFragments } from '../fragments/TokensFragment.ssr';
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type TypeLoginMutationVariables = Types.Exact<{
-  email: Types.Scalars['String']['input'];
-  password: Types.Scalars['Password']['input'];
-  previousCartUuid?: Types.InputMaybe<Types.Scalars['Uuid']['input']>;
-  productListsUuids: Array<Types.Scalars['Uuid']['input']> | Types.Scalars['Uuid']['input'];
-  shouldOverwriteCustomerUserCart?: Types.InputMaybe<Types.Scalars['Boolean']['input']>;
-}>;
-
-
-export type TypeLoginMutation = { __typename?: 'Mutation', Login: { __typename?: 'LoginResult', showCartMergeInfo: boolean, tokens: { __typename?: 'Token', accessToken: string, refreshToken: string } } };
+export type TypePromoCodeFragment = { __typename: 'PromoCode', code: string, type: Types.TypePromoCodeTypeEnum };
 
 
       export interface PossibleTypesResultData {
@@ -91,16 +80,10 @@ export type TypeLoginMutation = { __typename?: 'Mutation', Login: { __typename?:
 };
       export default result;
     
-
-export const LoginMutationDocument = gql`
-    mutation LoginMutation($email: String!, $password: Password!, $previousCartUuid: Uuid, $productListsUuids: [Uuid!]!, $shouldOverwriteCustomerUserCart: Boolean = false) {
-  Login(
-    input: {email: $email, password: $password, cartUuid: $previousCartUuid, productListsUuids: $productListsUuids, shouldOverwriteCustomerUserCart: $shouldOverwriteCustomerUserCart}
-  ) {
-    tokens {
-      ...TokenFragments
-    }
-    showCartMergeInfo
-  }
+export const PromoCodeFragment = gql`
+    fragment PromoCodeFragment on PromoCode {
+  __typename
+  code
+  type
 }
-    ${TokenFragments}`;
+    `;
