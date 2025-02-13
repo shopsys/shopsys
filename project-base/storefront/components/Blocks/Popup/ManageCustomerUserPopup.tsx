@@ -20,6 +20,7 @@ import { Controller, FormProvider, SubmitHandler } from 'react-hook-form';
 import { useSessionStore } from 'store/useSessionStore';
 import { CustomerUserManageProfileFormType } from 'types/form';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
+import { useScrollToFirstError } from 'utils/forms/useScrollToFirstError';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 import { useCustomerUserGroupsAsSelectOptions } from 'utils/user/useCustomerUserGroupsAsSelectOptions';
 
@@ -100,6 +101,8 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
 
         handleFormErrors(addUserResult.error, formProviderMethods, t, formMeta.messages.error);
     };
+
+    useScrollToFirstError(formMeta.formName, formProviderMethods);
 
     return (
         <Popup className="w-11/12 lg:w-4/5 vl:w-auto" contentClassName="overflow-y-auto">

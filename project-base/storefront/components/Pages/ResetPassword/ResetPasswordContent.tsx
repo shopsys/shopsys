@@ -6,7 +6,6 @@ import { TextInputControlled } from 'components/Forms/TextInput/TextInputControl
 import { Webline } from 'components/Layout/Webline/Webline';
 import { usePasswordRecoveryMutation } from 'graphql/requests/passwordRecovery/mutations/PasswordRecoveryMutation.generated';
 import { GtmFormType } from 'gtm/enums/GtmFormType';
-import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { onGtmSendFormEventHandler } from 'gtm/handlers/onGtmSendFormEventHandler';
 import useTranslation from 'next-translate/useTranslation';
 import { useCallback } from 'react';
@@ -15,7 +14,6 @@ import { PasswordResetFormType } from 'types/form';
 import { blurInput } from 'utils/forms/blurInput';
 import { clearForm } from 'utils/forms/clearForm';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
-import { useErrorPopup } from 'utils/forms/useErrorPopup';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 export const ResetPasswordContent: FC = () => {
@@ -23,8 +21,6 @@ export const ResetPasswordContent: FC = () => {
     const [, resetPassword] = usePasswordRecoveryMutation();
     const [formProviderMethods, defaultValues] = usePasswordResetForm();
     const formMeta = usePasswordResetFormMeta(formProviderMethods);
-
-    useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.other);
 
     const {
         fieldState: { invalid },

@@ -26,6 +26,7 @@ import { useComplaintResolutionsAsSelectOptions } from 'utils/complaints/useComp
 import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
 import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 import { blurInput } from 'utils/forms/blurInput';
+import { useScrollToFirstError } from 'utils/forms/useScrollToFirstError';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
@@ -128,6 +129,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
 
         if (createComplaintResult.error !== undefined) {
             const { applicationError } = getUserFriendlyErrors(createComplaintResult.error, t);
+
             if (applicationError !== undefined) {
                 showErrorMessage(applicationError.message, GtmMessageOriginType.other);
             } else {
@@ -141,6 +143,8 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
 
         showSuccessMessage(t('Complaint has been created'));
     };
+
+    useScrollToFirstError(formMeta.formName, formProviderMethods);
 
     return (
         <Popup className="w-11/12 lg:w-4/5" contentClassName="overflow-y-auto">
