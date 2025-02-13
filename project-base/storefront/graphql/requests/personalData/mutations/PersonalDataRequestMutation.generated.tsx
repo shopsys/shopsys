@@ -5,7 +5,7 @@ import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypePersonalDataRequestMutationVariables = Types.Exact<{
   email: Types.Scalars['String']['input'];
-  type: Types.InputMaybe<Types.TypePersonalDataAccessRequestTypeEnum>;
+  type?: Types.InputMaybe<Types.TypePersonalDataAccessRequestTypeEnum>;
 }>;
 
 
