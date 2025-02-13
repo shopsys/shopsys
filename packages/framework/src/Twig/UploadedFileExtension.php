@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileFacade;
 use Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator;
 use Shopsys\FrameworkBundle\Twig\FileThumbnail\FileThumbnailExtension;
+use Symfony\UX\Icons\IconRendererInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -27,6 +28,7 @@ class UploadedFileExtension extends AbstractExtension
      * @param \Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFileLocator $uploadedFileLocator
      * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFacade $customerUploadedFileFacade
      * @param \Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileLocator $customerUploadedFileLocator
+     * @param \Symfony\UX\Icons\IconRendererInterface $iconRenderer
      */
     public function __construct(
         protected readonly Domain $domain,
@@ -35,6 +37,7 @@ class UploadedFileExtension extends AbstractExtension
         protected readonly UploadedFileLocator $uploadedFileLocator,
         protected readonly CustomerUploadedFileFacade $customerUploadedFileFacade,
         protected readonly CustomerUploadedFileLocator $customerUploadedFileLocator,
+        protected readonly IconRendererInterface $iconRenderer,
     ) {
     }
 
@@ -107,16 +110,12 @@ class UploadedFileExtension extends AbstractExtension
      */
     protected function getUploadedFileIconHtml(string $uploadedFileIconType): string
     {
-        $classes = [
-            'svg',
-            'svg-file-' . $uploadedFileIconType,
-            'list-files__item__file__type',
-            'list-files__item__file__type--' . $uploadedFileIconType,
-            'text-no-decoration',
-            'cursor-pointer',
-        ];
-
-        return '<i class="' . implode(' ', $classes) . '"></i>';
+        return
+            '<span class="list-files__item__file__type list-files__item__file__type--' .
+            $uploadedFileIconType .
+            ' text-no-decoration cursor-pointer">' .
+            $this->iconRenderer->renderIcon('file-' . $uploadedFileIconType) .
+            '</span>';
     }
 
     /**

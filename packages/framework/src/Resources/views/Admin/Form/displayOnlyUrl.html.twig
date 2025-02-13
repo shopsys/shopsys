@@ -10,7 +10,7 @@
 
             <a href="{{ url }}" target="{{ link_target }}">
                 {% apply spaceless %}
-                    <i class="svg svg-forward-page in-icon in-icon--link ml5 mr5"></i>
+                    {{ ux_icon('forward-page', { class: 'in-icon in-icon--link ml5 mr5' }) }}
                     {% if route_label is not empty %}
                         {{ route_label }}
                     {% else %}

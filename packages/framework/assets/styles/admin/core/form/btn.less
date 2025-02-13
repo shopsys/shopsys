@@ -13,7 +13,7 @@
     height: @btn-height;
     padding: @btn-padding-vertical @btn-padding-horizontal;
     line-height: @btn-height - 9;
-    vertical-align:middle;
+    vertical-align: middle;
     display: inline-block;
 
     border: 0;
@@ -189,10 +189,17 @@
             padding-right: 10px;
 
             .btn__icon {
-                left: 1px;
                 top: calc(~"50% - 7px");
-
                 font-size: 15px;
+
+                &.in-icon--denied {
+                    top: calc(50% - 10px);
+                    left: 1px;
+
+                    + span {
+                        font-weight: normal;
+                    }
+                }
             }
         }
     }
@@ -205,6 +212,10 @@
 
     &--disabled {
         cursor: not-allowed;
+    }
+
+    svg {
+        vertical-align: middle;
     }
 }
 
@@ -238,13 +249,8 @@
     &--iconic-l {
         text-decoration: none;
 
-        i {
-            margin-right: 3px;
-            position: relative;
-            top: 2px;
-            left: 3px;
-
-            font-size: 16px;
+        svg {
+            vertical-align: middle;
         }
 
         span {

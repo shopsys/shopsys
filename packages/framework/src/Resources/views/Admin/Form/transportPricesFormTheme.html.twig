@@ -48,7 +48,7 @@
             {% endif %}
         </td>
         <td class="table-form__cell table-form__cell--actions">
-            <a href="#" class="js-transport-prices-item-remove table-form__action"><i class="svg svg-delete-thin in-icon"></i></a>
+            <a href="#" class="js-transport-prices-item-remove table-form__action">{{ ux_icon('delete', { class: 'in-icon' }) }}</a>
         </td>
     </tr>
 {% endmacro %}
@@ -65,7 +65,7 @@
                     <span title="{{ 'Keep empty if you do not want to limit the price by products\' weight'|trans }}"
                           class="js-tooltip cursor-help in-icon in-icon--info" data-toggle="tooltip" data-placement="top"
                     >
-                        {{ icon('info') }}
+                        {{ ux_icon('info') }}
                     </span>
                 </th>
                 <th class="table-form__cell table-form__cell--del-before table-form__cell--label">{{ 'Calculated price excluding VAT'|trans }}</th>

@@ -6,3 +6,4 @@
     - [Grid Data Sources](./grid-data-sources.md)
 - [Admin rights](./admin-rights.md)
 - [Disabling form fields](./disabling-form-fields.md)
+- [Icons](./icons.md)

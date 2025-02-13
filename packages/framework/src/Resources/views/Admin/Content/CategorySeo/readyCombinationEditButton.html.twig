@@ -1,8 +1,8 @@
-<a title="{{ 'Edit'|trans }}" class="in-icon seo-icon--{{ existsReadyCategorySeoMix ? '' : 'in' }}active svg svg-pencil" href="{{ url(
+<a title="{{ 'Edit'|trans }}" class="in-icon seo-icon--{{ existsReadyCategorySeoMix ? '' : 'in' }}active" href="{{ url(
     'admin_categoryseo_readycombination',
     {
         'categoryId': categoryId,
         'categorySeoFilterFormTypeAllQueries': categorySeoFilterFormTypeAllQueries,
         'selectedCategorySeoMixCombinationJson': selectedCategorySeoMixCombinationJson
     }
-) }}"></a>
+) }}">{{ ux_icon('pencil') }}</a>

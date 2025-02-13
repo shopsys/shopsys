@@ -15,13 +15,13 @@
 {% block grid_value_cell_id_status %}
     <strong style="line-break: inherit;">
         {% if row.enabled == false %}
-            <span style="color: grey;"><i class="svg svg-circle-remove"></i> {{ 'Disabled'|trans }}</span>
+            <span style="color: grey;">{{ ux_icon('circle-remove') }} {{ 'Disabled'|trans }}</span>
         {% elseif row.status == constant('Shopsys\\FrameworkBundle\\Component\\Cron\\CronModule::CRON_STATUS_RUNNING') %}
-            <span style="color: lightskyblue;"><i class="svg svg-gear"></i> {{ 'Running'|trans }}</span>
+            <span style="color: lightskyblue;">{{ ux_icon('gear') }} {{ 'Running'|trans }}</span>
         {% elseif row.status == constant('Shopsys\\FrameworkBundle\\Component\\Cron\\CronModule::CRON_STATUS_ERROR') %}
-            <span style="color: red;"><i class="svg svg-warning"></i> {{ 'Error'|trans }}</span>
+            <span style="color: red;">{{ ux_icon('warning') }} {{ 'Error'|trans }}</span>
         {% else %}
-            <span style="color: green;"><i class="svg svg-checked"></i> {{ 'Ok'|trans }}</span>
+            <span style="color: green;">{{ ux_icon('checked') }} {{ 'Ok'|trans }}</span>
         {% endif %}
     </strong>
 {% endblock %}
@@ -32,7 +32,7 @@
             'admin_default_schedulecron', {
                 serviceId: row.id,
             }
-        ) }}" class="in-icon in-icon--edit svg svg-schedule" title="{{ 'Schedule'|trans }}"></a>
+        ) }}" class="in-icon in-icon--edit" title="{{ 'Schedule'|trans }}">{{ ux_icon('schedule') }}</a>
     {% endif %}
 
     {% if row.enabled == false %}
@@ -40,13 +40,13 @@
             'admin_default_cronenable', {
                 serviceId: row.id
             }
-        ) }}" class="in-icon in-icon--edit svg svg-power" style="color: red;" title="{{ 'Enable'|trans }}"></a>
+        ) }}" class="in-icon in-icon--edit" style="color: red;" title="{{ 'Enable'|trans }}">{{ ux_icon('power') }}</a>
     {% else %}
         <a href="{{ url(
             'admin_default_crondisable', {
                 serviceId: row.id
             }
-        ) }}" class="in-icon in-icon--edit svg svg-power" style="color: green;" title="{{ 'Disable'|trans }}"></a>
+        ) }}" class="in-icon in-icon--edit" style="color: green;" title="{{ 'Disable'|trans }}">{{ ux_icon('power') }}</a>
     {% endif %}
 {% endblock %}
 
@@ -61,21 +61,21 @@
 {% block grid_title_cell_id_minimalDuration %}
     {{ gridView.renderBlock('grid_title_cell', { column:column }) }}
     <span title="" class="js-tooltip cursor-help" data-toggle="tooltip" data-placement="top" data-original-title="{{ 'Minimal duration from all runs in last seven days'|trans }}">
-        <i class="svg svg-question"></i>
+        {{ ux_icon('question') }}
     </span>
 {% endblock %}
 
 {% block grid_title_cell_id_maximalDuration %}
     {{ gridView.renderBlock('grid_title_cell', { column:column }) }}
     <span title="" class="js-tooltip cursor-help" data-toggle="tooltip" data-placement="top" data-original-title="{{ 'Maximal duration from all runs in last seven days'|trans }}">
-        <i class="svg svg-question"></i>
+        {{ ux_icon('question') }}
     </span>
 {% endblock %}
 
 {% block grid_title_cell_id_averageDuration %}
     {{ gridView.renderBlock('grid_title_cell', { column:column }) }}
     <span title="" class="js-tooltip cursor-help" data-toggle="tooltip" data-placement="top" data-original-title="{{ 'Average duration from all runs in last seven days'|trans }}">
-        <i class="svg svg-question"></i>
+        {{ ux_icon('question') }}
     </span>
 {% endblock %}
 

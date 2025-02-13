@@ -52,10 +52,7 @@
 {% block _store_form_userInformation_openingHours_label %}
     <label class="form-line__label" style="float: none">
         {{ label }}
-        <i class="svg svg-info in-icon cursor-help form-line__item form-line__item--info js-tooltip"
-           data-toggle="tooltip" data-placement="bottom"
-           title="{{ 'Enter in the store local time'|trans }}"
-        ></i>
+        {{ info_icon('Enter in the store local time'|trans, tooltipPlacement: 'bottom') }}
     </label>
 {% endblock _store_form_userInformation_openingHours_label %}
 
@@ -74,7 +71,7 @@
             </div>
         </td>
         <td class="table-form__cell table-form__cell--actions">
-            <a href="#" class="js-opening-hours-item-remove table-form__action"><i class="svg svg-delete-thin in-icon"></i></a>
+            <a href="#" class="js-opening-hours-item-remove table-form__action">{{ ux_icon('delete', { class: 'in-icon' }) }}</a>
         </td>
     </tr>
 {% endmacro %}

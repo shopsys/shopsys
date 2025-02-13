@@ -19,10 +19,11 @@
                                 <th class="table-col-135px text-center">
                                     <span class="display-inline-block min-width-80">
                                         {{ 'Set prices manually'|trans }}
-                                        <i class="svg svg-info cursor-help js-tooltip"
-                                           data-toggle="tooltip" data-placement="bottom"
-                                           title="{{ 'All prices have to be handled manually if checked, otherwise the unit price without VAT and the total prices for that item will be recalculated automatically.'|trans }}"
-                                        ></i>
+                                        <span class="cursor-help js-tooltip"
+                                            data-toggle="tooltip"
+                                            data-placement="bottom"
+                                            title="{{ 'All prices have to be handled manually if checked, otherwise the unit price without VAT and the total prices for that item will be recalculated automatically.'|trans }}"
+                                        >{{ ux_icon('info') }}</span>
                                     </span>
                                 </th>
                                 <th class="table-col-130px text-right">{{ 'Unit price excluding VAT'|trans }} ({{ currencySymbolByCurrencyId(order.currency.id) }})</th>

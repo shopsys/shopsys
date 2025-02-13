@@ -27,6 +27,10 @@ Encore
     .configureBabel(null, {
         includeNodeModules: ['@shopsys'],
     })
+    .addRule({
+        test: /\.svg/,
+        type: 'asset/source'
+    })
     .enableBuildNotifications()
     .configureWatchOptions(function (watchOptions) {
         watchOptions.ignored = '**/*.json';
@@ -46,9 +50,6 @@ Encore
             {
                 from: 'assets/public',
                 to: '../../web/public',
-                globOptions: {
-                    ignore: ['assets/public/admin/svg/**/*']
-                },
                 force: true
             },
             {
@@ -82,6 +83,7 @@ config.resolve.alias = {
     'jquery': path.resolve(path.join(__dirname, 'node_modules', 'jquery')),
     'jquery-ui-styles': path.resolve(path.join(__dirname, 'node_modules', 'jquery-ui')),
     'bazinga-translator': path.resolve(path.join(__dirname, 'node_modules', 'bazinga-translator')),
-    'jquery-ui-nested-sortable': path.resolve(path.join(__dirname, 'node_modules', 'nestedSortable'))
+    'jquery-ui-nested-sortable': path.resolve(path.join(__dirname, 'node_modules', 'nestedSortable')),
+    'icons': path.resolve(path.join(__dirname, 'assets/icons'))
 };
 module.exports = config;

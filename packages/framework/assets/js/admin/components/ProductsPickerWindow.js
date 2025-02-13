@@ -1,6 +1,8 @@
 import '../../common/bootstrap/tooltip';
 import Register from '../../common/utils/Register';
 import Translator from 'bazinga-translator';
+import Check from 'icons/tabler/check.svg';
+import Denied from 'icons/tabler/circle-x-filled.svg';
 
 export default class ProductsPickerWindow {
 
@@ -23,7 +25,7 @@ export default class ProductsPickerWindow {
         $addButton
             .addClass('cursor-auto btn--success').removeClass('btn--plus btn--light')
             .find('.js-products-picker-label').text(Translator.trans('Added')).end()
-            .find('.js-products-picker-icon').addClass('svg svg-checked').empty().end()
+            .find('.js-products-picker-icon').html(Check).end()
             .on('click.removeProduct', () => {
                 this.onClickOnAddedButton($addButton, originalLabelText, originalIconText);
             })
@@ -39,8 +41,8 @@ export default class ProductsPickerWindow {
                 title: Translator.trans('Not possible to assign product to itself'),
                 placement: 'left'
             })
-            .find('.js-products-picker-label').text(Translator.trans('Unable to add'))
-            .find('.js-products-picker-icon').removeClass('svg-circle-plus in-icon in-icon--add').addClass('svg-circle-remove in-icon in-icon--denied').end()
+            .find('.js-products-picker-label').text(Translator.trans('Unable to add')).end()
+            .find('.js-products-picker-icon').removeClass('in-icon--add').addClass('in-icon--denied').html(Denied).end()
             .click(() => false);
     }
 
@@ -69,7 +71,7 @@ export default class ProductsPickerWindow {
         $addButton
             .addClass('btn--plus btn--light').removeClass('cursor-auto btn--success')
             .find('.js-products-picker-label').text(originalLabelText).end()
-            .find('.js-products-picker-icon').removeClass('svg svg-checked').text(originalIconText).end()
+            .find('.js-products-picker-icon').text(originalIconText).end()
             .on('click.addProduct', (event) => this.onClickAddButton(event))
             .click(() => false);
     }

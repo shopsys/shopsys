@@ -202,12 +202,13 @@
         }
 
         &--info {
-            position: absolute;
-            top: 14px;
+            @media @query-mobile {
+                position: absolute;
+                top: 20px;
+            }
 
             @media @query-md {
-                position: relative;
-                top: 0;
+                vertical-align: middle;
             }
 
             .form-line__side & {

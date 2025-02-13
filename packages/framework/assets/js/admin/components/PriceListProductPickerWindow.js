@@ -3,6 +3,7 @@ import Translator from 'bazinga-translator';
 import Register from '../../common/utils/Register';
 import Ajax from '../../common/utils/Ajax';
 import Window from '../utils/Window';
+import Check from 'icons/tabler/check.svg';
 
 export default class PriceListProductPickerWindow {
 
@@ -23,7 +24,7 @@ export default class PriceListProductPickerWindow {
         $addButton
             .addClass('cursor-auto btn--success').removeClass('btn--plus btn--light')
             .find('.js-products-picker-label').text(Translator.trans('Added')).end()
-            .find('.js-products-picker-icon').addClass('svg svg-checked').empty().end()
+            .find('.js-products-picker-icon').html(Check).end()
             .on('click.removeProduct', () => {
                 this.onClickOnAddedButton($addButton, originalLabelText, originalIconText);
             })
@@ -81,7 +82,7 @@ export default class PriceListProductPickerWindow {
         $addButton
             .addClass('btn--plus btn--light').removeClass('cursor-auto btn--success')
             .find('.js-products-picker-label').text(originalLabelText).end()
-            .find('.js-products-picker-icon').removeClass('svg svg-checked').text(originalIconText).end()
+            .find('.js-products-picker-icon').text(originalIconText).end()
             .on('click.addProduct', (event) => this.onClickAddButton(event))
             .click(() => false);
     }

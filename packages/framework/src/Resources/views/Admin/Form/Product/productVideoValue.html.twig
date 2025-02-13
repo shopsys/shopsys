@@ -1,16 +1,11 @@
-{% macro productVideoRow(formData, escape) %}
-    <tr class='table-form__row'>
+{% macro productVideoRow(formData) %}
+    <tr class="table-form__row">
         <td>
-            {%  if escape %}
-                {{ form_errors(formData, { errors_attr: { class: 'table-form__cell__error'}})|escape }}
-                {{ form_widget(formData, { attr: { class: 'form-line__item' } })|escape }}
-            {% else %}
-                {{ form_errors(formData, { errors_attr: { class: 'table-form__cell__error' }})}}
-                {{ form_widget(formData, { attr: { class: 'form-line__item' } })}}
-            {% endif %}
+            {{ form_errors(formData, { errors_attr: { class: 'table-form__cell__error'}}) }}
+            {{ form_widget(formData, { attr: { class: 'form-line__item' } }) }}
         </td>
         <td>
-            <span class='js-remove-row'><i class='svg svg-delete-thin in-icon'></i></span>
+            <span class="js-remove-row">{{ ux_icon('delete', { class: 'in-icon' }) }}</span>
         </td>
     </tr>
 {% endmacro %}
@@ -19,10 +14,10 @@
 {% block _product_form_videosGroup_widget %}
     <div class="js-form-group form-group">
         <table class="table-form">
-            <tbody class="js-videos-collection" data-prototype="{{ _self.productVideoRow(form.children.productVideosData.vars.prototype, true)}}"
+            <tbody class="js-videos-collection" data-prototype="{{ _self.productVideoRow(form.children.productVideosData.vars.prototype)|escape }}"
             data-index="{{ form.children.productVideosData.children|length }}">
                 {% for productVideosDataRow in form.children.productVideosData %}
-                    {{ _self.productVideoRow(productVideosDataRow, false) }}
+                    {{ _self.productVideoRow(productVideosDataRow) }}
                 {% endfor %}
             </tbody>
         </table>

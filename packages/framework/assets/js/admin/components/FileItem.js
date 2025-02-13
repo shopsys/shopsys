@@ -1,4 +1,9 @@
 import { forceValidateElement } from '../../common/validation/validationHelpers';
+import IconPdf from 'icons/tabler/file-type-pdf.svg';
+import IconDoc from 'icons/tabler/file-type-doc.svg';
+import IconXml from 'icons/tabler/file-type-xml.svg';
+import IconXls from 'icons/tabler/file-type-xls.svg';
+import IconText from 'icons/tabler/file-text.svg';
 
 export default class FileItem {
 
@@ -12,13 +17,12 @@ export default class FileItem {
         this.$progressBar = $file.find('.js-file-upload-progress-bar');
         this.$progressBarValue = $file.find('.js-file-upload-progress-bar-value');
         this.$input = $file.find('.js-file-upload-input');
-        this.$iconType = $file.find('.js-file-upload-icon-type');
+        this.$itemContainer = $file.find('.js-list-files-item');
         this.$imageThumbnail = $file.find('.js-file-upload-file-thumbnail');
 
         this.$progress.hide();
         this.$deleteButton.click(() => this.deleteItem());
         if (loaded !== true) {
-            this.$iconType.hide();
             this.$imageThumbnail.hide();
         }
     }
@@ -66,9 +70,18 @@ export default class FileItem {
 
     setIconType (iconType) {
         if (iconType !== null) {
-            this.$iconType
-                .attr('class', this.$iconType.attr('class').replace(/__icon-type__/g, iconType))
-                .show();
+            const iconMap = {
+                pdf: IconPdf,
+                word: IconDoc,
+                xml: IconXml,
+                excel: IconXls
+            };
+
+            const icon = iconMap[iconType] || IconText;
+
+            const $icon = $('<span class="list-files__item__file__type list-files__item__file__type--' + iconType + ' text-no-decoration cursor-pointer">' + icon + '</span>');
+
+            this.$itemContainer.prepend($icon);
         }
     }
 

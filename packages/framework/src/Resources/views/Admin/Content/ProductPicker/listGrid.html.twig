@@ -14,15 +14,9 @@
 
 {% block grid_value_cell_id_select %}
     {%- if not allowMainVariants and row.variantType == VARIANT_TYPE_MAIN %}
-        <i class="in-icon in-icon--info svg svg-info cursor-help js-tooltip"
-            data-toggle="tooltip" data-placement="left"
-            title="" data-original-title="{{ 'You cannot choose product that is main variant'|trans }}"
-        ></i>
+        {{ info_icon('You cannot choose product that is main variant'|trans, tooltipPlacement: 'left') }}
     {% elseif not allowVariants and row.variantType == VARIANT_TYPE_VARIANT %}
-        <i class="in-icon in-icon--info svg svg-info cursor-help js-tooltip"
-            data-toggle="tooltip" data-placement="left" title=""
-            data-original-title="{{ 'You cannot choose product that is variant'|trans }}"
-        ></i>
+        {{ info_icon('You cannot choose product that is variant'|trans, tooltipPlacement: 'left') }}
     {% elseif isMultiple %}
         <a
             class="{% if withPrice %}js-price-list-product-picker-window-add-product{% else %}js-products-picker-window-add-product{% endif %} btn btn--light btn--plus btn--small"

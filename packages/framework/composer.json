@@ -110,6 +110,7 @@
         "symfony/security-bundle": "^6.4",
         "symfony/serializer": "^6.4",
         "symfony/service-contracts": "^2.5.2",
+        "symfony/ux-icons": "^2.22",
         "symfony-cmf/routing": "^3.0.3",
         "symfony-cmf/routing-bundle": "^3.0.3",
         "symfony/polyfill-php80": "^1.24.0",

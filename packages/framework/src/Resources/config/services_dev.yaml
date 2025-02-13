@@ -11,6 +11,10 @@ services:
         arguments:
             - '%kernel.project_dir%'
 
+    Shopsys\FrameworkBundle\Command\ReplaceObsoleteIconsCommand:
+        arguments:
+            - '%kernel.project_dir%'
+
     Shopsys\FrameworkBundle\Component\ClassExtension\ClassExtensionRegistry:
         arguments:
             $entityExtensionMap: '%shopsys.entity_extension.map%'

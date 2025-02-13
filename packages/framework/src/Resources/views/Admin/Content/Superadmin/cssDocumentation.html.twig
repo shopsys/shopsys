@@ -224,18 +224,18 @@
             </div>
             <div class="in-message in-message--error in-message--block">
                 Error message - block with the close button, for closing, the close button can be used only with block error messages
-                <div class="in-message__close"><i class="svg svg-circle-cross"></i></div>
+                <div class="in-message__close">{{ ux_icon('circle-cross') }}</div>
             </div>
             <div class="in-message in-message--success in-message--block in-message--small">
                 Positive message - block with smaller space around text and smaller text
-                <div class="in-message__close"><i class="svg svg-circle-cross"></i></div>
+                <div class="in-message__close">{{ ux_icon('circle-cross') }}</div>
             </div>
             <div class="in-message in-message--warning in-message--block">
-                <i class="in-message__icon svg svg-warning"></i>
+                {{ ux_icon('warning', { class: 'in-message__icon' }) }}
                 Warning message - block with icon
             </div>
             <div class="in-message in-message--error in-message--block in-message--small">
-                <i class="in-message__icon svg svg-warning"></i>
+                {{ ux_icon('warning', { class: 'in-message__icon' }) }}
                 Error message - block with icon, small
             </div>
         </div>
@@ -327,7 +327,7 @@
             </button>
             <br><br>
             <button href="#" class="btn-link-style btn-link-style--iconic-l" type="button">
-                <i class="svg svg-pencil"></i>
+                {{ ux_icon('pencil') }}
                 <span>
                     Button that looks like link with not underlined icon
                 </span>
@@ -597,14 +597,14 @@
                             <input type="text" class="input" value="Input">
                         </td>
                         <td class="table-form__cell table-form__cell--del">
-                            <i class="svg svg-arrow-right"></i>
+                            {{ ux_icon('arrow-right') }}
                         </td>
                         <td class="table-form__cell table-form__cell--del-after">
                             <input type="text" class="input" value="Input">
                         </td>
                         <th class="table-form__cell text-right">
                             <a href="#" class="table-form__action">
-                                <i class="svg svg-delete-thin"></i>
+                                {{ ux_icon('delete') }}
                             </a>
                         </th>
                     </tr>
@@ -729,7 +729,7 @@
                     <tr class="table-form__row">
                         <td class="table-form__cell">
                             <span class="table-form__cell__move">
-                                <span class="in-icon in-icon--move svg svg-move"></span>
+                                <span class="in-icon in-icon--move">{{ ux_icon('move') }}</span>
                             </span>
                             Table text
                         </td>
@@ -739,7 +739,7 @@
                     <tr class="table-form__row">
                         <td class="table-form__cell">
                             <span class="table-form__cell__move">
-                                <span class="in-icon in-icon--move svg svg-move"></span>
+                                <span class="in-icon in-icon--move">{{ ux_icon('move') }}</span>
                             </span>
                             Table text
                         </td>
@@ -823,7 +823,7 @@
                 <div class="input__wrap">
                     <input type="text" class="input input--iconic" value="Input with icon">
                     <div class="in-icon in-icon--after-input">
-                        <i class="svg svg-phone"></i>
+                        {{ ux_icon('phone') }}
                     </div>
                 </div>
             </div>
@@ -953,7 +953,7 @@
                     </label>
                     domain icon only in checkbox list, it is possible to add action icon
                     <a href="#" class="form-choice-list__item__action form-choice-list__item__action--link text-no-decoration">
-                        <i class="svg svg-forward-page"></i>
+                        {{ ux_icon('forward-page') }}
                     </a>
                 </label>
             </div>
@@ -1222,7 +1222,7 @@
                         <input type="text" class="input">
                     </div>
                     <div class="form-line__item form-line__item--text">
-                        <i class="svg svg-info in-icon in-icon--info"></i>
+                        {{ ux_icon('info', { class: 'in-icon in-icon--info' }) }}
                     </div>
                 </div>
             </div>
@@ -1235,7 +1235,7 @@
                         <input type="text" class="input">
                     </div>
                     <div class="form-line__item form-line__item--right form-line__item--text">
-                        <i class="svg svg-info in-icon in-icon--info"></i>
+                        {{ ux_icon('info', { class: 'in-icon in-icon--info' }) }}
                     </div>
                 </div>
             </div>
@@ -1249,7 +1249,7 @@
                         <input type="text" class="input">
                     </div>
                     <div class="form-line__item form-line__item--left form-line__item--text">
-                        <i class="svg svg-info in-icon in-icon--info"></i>
+                        {{ ux_icon('info', { class: 'in-icon in-icon--info' }) }}
                     </div>
                 </div>
             </div>
@@ -1257,7 +1257,7 @@
             <div class="form-line">
                 <label class="form-line__label">
                     Input with icon by label
-                    <i class="svg svg-info in-icon in-icon--info"></i>
+                    {{ ux_icon('info', { class: 'in-icon in-icon--info' }) }}
                 </label>
                 <div class="form-line__side">
                     <div class="form-line__item">
@@ -1285,7 +1285,7 @@
                         Kč
                     </div>
                     <div class="form-line__item form-line__item--text">
-                        <i class="svg svg-info in-icon in-icon--info"></i>
+                        {{ ux_icon('info', { class: 'in-icon in-icon--info' }) }}
                     </div>
                 </div>
             </div>
@@ -1301,7 +1301,7 @@
                         Euro
                     </div>
                     <div class="form-line__item form-line__item--text">
-                        <i class="svg svg-info in-icon in-icon--info"></i>
+                        {{ ux_icon('info', { class: 'in-icon in-icon--info' }) }}
                     </div>
                 </div>
             </div>
@@ -1355,7 +1355,7 @@
                         <input type="text" class="input">
                     </div>
                     <div class="form-line__item form-line__item--text">
-                        <i class="svg svg-info in-icon in-icon--info"></i>
+                        {{ ux_icon('info', { class: 'in-icon in-icon--info' }) }}
                     </div>
                 </div>
             </div>
@@ -1367,7 +1367,7 @@
                     <div class="form-line__item form-line__item--text form-line__item--input-size">
                     </div>
                     <div class="form-line__item form-line__item--text">
-                        <i class="svg svg-info in-icon in-icon--info"></i>
+                        {{ ux_icon('info', { class: 'in-icon in-icon--info' }) }}
                     </div>
                 </div>
             </div>

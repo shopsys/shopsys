@@ -1,4 +1,6 @@
 import Ajax from '../../common/utils/Ajax';
+import IconPlus from 'icons/tabler/circle-plus.svg';
+import IconMinus from 'icons/tabler/circle-minus.svg';
 
 export default class CategoryTreeFormItem {
 
@@ -62,14 +64,16 @@ export default class CategoryTreeFormItem {
     }
 
     updateStatusIcon () {
-        this.$statusIcon.removeClass('svg svg-circle-plus svg-circle-remove sprite sprite-level cursor-pointer form-tree__item__icon--level');
+        this.$statusIcon.removeClass('sprite sprite-level cursor-pointer form-tree__item__icon--level');
         switch (this.status) {
             case CategoryTreeFormItem.STATUS_OPENED:
             case CategoryTreeFormItem.STATUS_LOADING:
-                this.$statusIcon.addClass('svg svg-circle-remove cursor-pointer');
+                this.$statusIcon.html(IconMinus);
+                this.$statusIcon.addClass('cursor-pointer');
                 break;
             case CategoryTreeFormItem.STATUS_CLOSED:
-                this.$statusIcon.addClass('svg svg-circle-plus cursor-pointer');
+                this.$statusIcon.html(IconPlus);
+                this.$statusIcon.addClass('cursor-pointer');
                 break;
             case CategoryTreeFormItem.STATUS_NONE:
                 this.$statusIcon.addClass('sprite sprite-level form-tree__item__icon--level');

@@ -5,7 +5,7 @@
 
 {% macro statisticNumberWithPercent(number, percent) %}
     <div class="box-overview__item__percent box-overview__item__percent--{% if percent > 0 %}up{% elseif percent < 0 %}down{% else %}same{% endif %}">
-        <i class="svg svg-arrow"></i>
+        {{ ux_icon('arrow') }}
         <span class="box-overview__item__percent__value js-counter">{{ percent|abs }}</span>%
     </div>
 

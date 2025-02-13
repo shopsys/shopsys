@@ -88,7 +88,7 @@
                         <span>
                             {{ product.getName(getDomain().getDomainConfigById(domainId).getLocale()) }}
                         </span>&nbsp;
-                        <i class="svg svg-forward-page"></i>
+                        {{ ux_icon('forward-page') }}
                     </a>
                 {% endif %}
             </span>
@@ -129,7 +129,7 @@
         </td>
         <td class="table-form__cell table-form__cell--actions">
             <span class="cursor-pointer js-price-list-product-picker-item-button-delete">
-                <span class="svg svg-delete-thin in-icon"></span>
+                <span class="in-icon">{{ ux_icon('delete') }}</span>
                 {{ form_widget(form.product, {attr: {class: 'js-price-list-product-picker-item-input js-price-list-product-picker-item-input-reorder', 'data-name': 'product'}}) }}
                 {{ form_widget(form.basicPrice, {attr: {class: 'js-price-list-product-picker-item-base-price-input js-price-list-product-picker-item-input-reorder', 'data-name': 'basicPrice'}}) }}
             </span>

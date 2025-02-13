@@ -39,7 +39,7 @@
                             {% if showActionColumn %}
                                 <td>
                                     {% if allowEdit %}
-                                        <a class="in-icon in-icon--edit svg svg-pencil table-action" href="{{ url('admin_customer_user_edit', {id: customerUser.id}) }}" title="{{ 'Edit'|trans }}"></a>
+                                        <a class="in-icon in-icon--edit table-action" href="{{ url('admin_customer_user_edit', {id: customerUser.id}) }}" title="{{ 'Edit'|trans }}">{{ ux_icon('pencil') }}</a>
                                     {% endif %}
                                     {% if allowDelete %}
                                         {% if customerUserCount > 1 %}
@@ -49,11 +49,11 @@
                                                 (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
                                             }) %}
                                             <a
-                                                class="in-icon in-icon--delete svg svg-trash table-action"
+                                                class="in-icon in-icon--delete table-action"
                                                     data-confirm-window
                                                     data-confirm-message="{{ deleteConfirmMessage }}"
                                                     data-confirm-contiue-url="{{ deleteUrl }}"
-                                            ></a>
+                                            >{{ ux_icon('trash') }}</a>
                                         {% else %}
                                             {% set customerId = customerUser.customer.id %}
                                             {%set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_customer_delete_all' %}
@@ -61,28 +61,33 @@
                                                 id: customerId,
                                                 (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
                                             }) %}
-                                            <a class="in-icon in-icon--delete svg svg-trash table-action"
+                                            <a class="in-icon in-icon--delete table-action"
                                                href="{{ deleteUrl }}"
                                                title={{ 'Delete'|trans }}
                                                data-confirm-window=""
                                                data-confirm-message="{{ 'This is the last customer user. It will remove all its related data. Do you really want to delete it ?'|trans }}"
-                                               data-confirm-contiue-url="{{ deleteUrl }}"></a>
+                                               data-confirm-contiue-url="{{ deleteUrl }}">{{ ux_icon('trash') }}</a>
                                         {% endif %}
                                     {%endif %}
-                                    <a class="in-icon svg svg-forward-page btn-link-style" href="{{ getSsoLoginAsUserUrl(customerUser) }}" target="_blank"  title="{{ 'Log in as user'|trans }}"></a>
+                                    <a class="in-icon table-action"
+                                       href="{{ getSsoLoginAsUserUrl(customerUser) }}"
+                                       target="_blank"
+                                       title="{{ 'Log in as user'|trans }}"
+                                    >{{ ux_icon('forward-page') }}</a>
+
                                     {% set customerId = customerUser.id %}
                                     {%set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_customer_send_reset_password' %}
                                     {% set sendResetPasswordUrl = url('admin_customer_send_reset_password', {
                                         id: customerId,
                                         (constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_REQUEST_PARAMETER')): csrf_token(csrfTokenId)
                                     }) %}
-                                    <a class="in-icon svg svg-letter table-action"
+                                    <a class="in-icon table-action"
                                        href="{{ sendResetPasswordUrl }}"
                                        title="{{ 'Send reset password'|trans }}"
                                        data-confirm-window=""
                                        data-confirm-message="{{ 'This will send an email to customer user for resetting password. Do you really want to send it ?'|trans }}"
-                                       data-confirm-contiue-url="{{ sendResetPasswordUrl }}">
-                                    </a>
+                                       data-confirm-contiue-url="{{ sendResetPasswordUrl }}"
+                                    >{{ ux_icon('letter') }}</a>
                                 </td>
                             {% endif %}
                         </tr>

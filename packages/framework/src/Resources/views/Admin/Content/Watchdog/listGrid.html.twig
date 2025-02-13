@@ -10,10 +10,10 @@
               data-toggle="tooltip"
               data-placement="right"
         >
-            {{ icon('info') }}
+            {{ ux_icon('info') }}
         </span>
     {% endif %}
-    <a href="{{ url('admin_product_edit', { id: row.productId }) }}">{{ icon('forward-page') }}</a>
+    <a href="{{ url('admin_product_edit', { id: row.productId }) }}">{{ ux_icon('forward-page') }}</a>
 {% endblock %}
 
 {% block grid_no_data %}

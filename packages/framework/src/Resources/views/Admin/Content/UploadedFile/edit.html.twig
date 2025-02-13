@@ -56,7 +56,7 @@
            data-confirm-message="{{ 'Do you really want to delete this file? It will be permanently deleted and unassigned from related records.'|trans }}"
            data-confirm-contiue-url="{{ deleteUrl }}"
         >
-            <i class="svg svg-trash btn__icon"></i>{{ 'Delete file'|trans }}
+            {{ ux_icon('trash', { class: 'btn__icon' }) }}{{ 'Delete file'|trans }}
         </a>
     </div>
 {% endblock %}

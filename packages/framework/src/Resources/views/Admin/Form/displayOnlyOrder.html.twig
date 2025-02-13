@@ -4,14 +4,11 @@
             {% if order is not null %}
                 <a href="{{ path('admin_order_edit', { id: order.id }) }}" target="_blank">
                     {{ order.number }}
-                    <i class="svg svg-forward-page"></i>
+                    {{ ux_icon('forward-page') }}
                 </a>
             {% else %}
                 {{ manualDocumentNumber }}
-                <span title="{{ 'Complaint was created manually without link to a particular order'|trans }}"
-                      class="js-tooltip cursor-help in-icon in-icon--info" data-toggle="tooltip" data-placement="right">
-                    {{ icon('info') }}
-                </span>
+                {{ info_icon('Complaint was created manually without link to a particular order'|trans, tooltipPlacement: 'right') }}
             {% endif %}
         </div>
     </div>

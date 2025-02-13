@@ -26,7 +26,7 @@
                         <span class="js-category-tree-item-line  js-category-tree-item-handle form-tree__item__name">{{ categoryWithPreloadedChildren.category.name }}</span>
                         <span class="js-category-tree-item-icons form-tree__item__controls">
                             <a href="{{ url('admin_category_edit', {id: categoryWithPreloadedChildren.category.id}) }}" class="form-tree__item__control">
-                                {{ icon('pencil') }}
+                                {{ ux_icon('pencil') }}
                             </a>
                             {% set csrfTokenId = constant('Shopsys\\FrameworkBundle\\Component\\Router\\Security\\RouteCsrfProtector::CSRF_TOKEN_ID_PREFIX') ~ 'admin_category_delete' %}
                             {% set categoryDeleteUrl = url('admin_category_delete', {
@@ -37,7 +37,7 @@
                                 class="form-tree__item__control {{ categoryHasSeoMix ? 'js-category-with-seomix-delete-confirm' : 'js-category-delete-confirm' }}"
                                 data-delete-url="{{categoryDeleteUrl}}"
                             >
-                                {{ icon('trash') }}
+                                {{ ux_icon('trash') }}
                             </a>
                         </span>
                     </div>
@@ -72,7 +72,7 @@
         {% if disabledFormFields == false %}
             <div class="in-message in-message--info">
                 {{ 'In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains'|trans }}
-                <i class="in-message__icon svg svg-remove js-message-close"></i>
+                {{ ux_icon('remove', { class: 'in-message__icon js-message-close' }) }}
             </div>
         {% endif %}
         <div class="wrap-divider">

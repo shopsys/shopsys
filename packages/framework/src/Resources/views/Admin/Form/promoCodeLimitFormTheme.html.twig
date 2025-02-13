@@ -5,14 +5,14 @@
             {{ form_errors(limit.fromPriceWithVat, { errors_attr: { class: 'table-limits__cell__error' } } ) }}
         </td>
         <td class="table-form__cell table-form__cell--del">
-            <span class="svg svg-arrow-right"></span>
+            {{ ux_icon('arrow-right') }}
         </td>
         <td class="table-form__cell table-form__cell--del-before">
             {{ form_widget(limit.discount, { isSimple: true} ) }}
             {{ form_errors(limit.discount, { errors_attr: { class: 'table-limits__cell__error' } } ) }}
         </td>
         <td class="table-form__cell table-form__cell--actions">
-            <a href="#" class="js-limits-item-remove table-form__action"><i class="svg svg-delete-thin in-icon"></i></a>
+            <a href="#" class="js-limits-item-remove table-form__action">{{ ux_icon('delete', { class: 'in-icon' }) }}</a>
         </td>
     </tr>
 {% endmacro %}
