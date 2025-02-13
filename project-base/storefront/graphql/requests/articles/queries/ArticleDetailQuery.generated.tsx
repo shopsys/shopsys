@@ -5,7 +5,7 @@ import { ArticleDetailFragment } from '../../articlesInterface/articles/fragment
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeArticleDetailQueryVariables = Types.Exact<{
-  urlSlug: Types.InputMaybe<Types.Scalars['String']['input']>;
+  urlSlug?: Types.InputMaybe<Types.Scalars['String']['input']>;
 }>;
 
 

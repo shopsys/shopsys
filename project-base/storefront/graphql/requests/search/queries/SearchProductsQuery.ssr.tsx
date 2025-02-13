@@ -34,6 +34,12 @@ export type TypeSearchProductsQuery = { __typename?: 'Query', productsSearch: { 
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -46,9 +52,9 @@ export type TypeSearchProductsQuery = { __typename?: 'Query', productsSearch: { 
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -94,7 +100,7 @@ export type TypeSearchProductsQuery = { __typename?: 'Query', productsSearch: { 
   }
 };
       export default result;
-
+    
 
 export const SearchProductsQueryDocument = gql`
     query SearchProductsQuery($endCursor: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter, $search: String!, $pageSize: Int, $isAutocomplete: Boolean!, $userIdentifier: Uuid!, $parameters: [Uuid!] = []) {

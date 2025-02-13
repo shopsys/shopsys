@@ -26,6 +26,12 @@ export type TypeProductsByCatnums = { __typename?: 'Query', productsByCatnums: A
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -38,9 +44,9 @@ export type TypeProductsByCatnums = { __typename?: 'Query', productsByCatnums: A
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -86,7 +92,7 @@ export type TypeProductsByCatnums = { __typename?: 'Query', productsByCatnums: A
   }
 };
       export default result;
-
+    
 
 export const ProductsByCatnumsDocument = gql`
     query ProductsByCatnums($catnums: [String!]!) {

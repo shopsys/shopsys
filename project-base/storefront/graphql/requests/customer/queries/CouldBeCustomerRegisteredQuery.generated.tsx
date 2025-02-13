@@ -5,7 +5,7 @@ import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeCouldBeCustomerRegisteredQueryVariables = Types.Exact<{
   email: Types.Scalars['String']['input'];
-  companyNumber: Types.InputMaybe<Types.Scalars['String']['input']>;
+  companyNumber?: Types.InputMaybe<Types.Scalars['String']['input']>;
 }>;
 
 
