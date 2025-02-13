@@ -7,10 +7,10 @@ import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeSearchProductsQueryVariables = Types.Exact<{
   endCursor: Types.Scalars['String']['input'];
-  orderingMode: Types.InputMaybe<Types.TypeProductOrderingModeEnum>;
-  filter: Types.InputMaybe<Types.TypeProductFilter>;
+  orderingMode?: Types.InputMaybe<Types.TypeProductOrderingModeEnum>;
+  filter?: Types.InputMaybe<Types.TypeProductFilter>;
   search: Types.Scalars['String']['input'];
-  pageSize: Types.InputMaybe<Types.Scalars['Int']['input']>;
+  pageSize?: Types.InputMaybe<Types.Scalars['Int']['input']>;
   isAutocomplete: Types.Scalars['Boolean']['input'];
   userIdentifier: Types.Scalars['Uuid']['input'];
   parameters?: Types.InputMaybe<Array<Types.Scalars['Uuid']['input']> | Types.Scalars['Uuid']['input']>;

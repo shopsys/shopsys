@@ -5,9 +5,9 @@ import { CategoryDetailFragment } from '../fragments/CategoryDetailFragment.gene
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeCategoryDetailQueryVariables = Types.Exact<{
-  urlSlug: Types.InputMaybe<Types.Scalars['String']['input']>;
-  orderingMode: Types.InputMaybe<Types.TypeProductOrderingModeEnum>;
-  filter: Types.InputMaybe<Types.TypeProductFilter>;
+  urlSlug?: Types.InputMaybe<Types.Scalars['String']['input']>;
+  orderingMode?: Types.InputMaybe<Types.TypeProductOrderingModeEnum>;
+  filter?: Types.InputMaybe<Types.TypeProductFilter>;
 }>;
 
 

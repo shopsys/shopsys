@@ -30,6 +30,12 @@ export type TypeFlagProductsQuery = { __typename?: 'Query', products: { __typena
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -42,9 +48,9 @@ export type TypeFlagProductsQuery = { __typename?: 'Query', products: { __typena
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -90,7 +96,7 @@ export type TypeFlagProductsQuery = { __typename?: 'Query', products: { __typena
   }
 };
       export default result;
-
+    
 
 export const FlagProductsQueryDocument = gql`
     query FlagProductsQuery($endCursor: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter, $urlSlug: String, $pageSize: Int) {

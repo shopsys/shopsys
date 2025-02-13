@@ -5,8 +5,8 @@ import { BlogArticleConnectionFragment } from '../fragments/BlogArticleConnectio
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeBlogArticlesQueryVariables = Types.Exact<{
-  first: Types.InputMaybe<Types.Scalars['Int']['input']>;
-  onlyHomepageArticles: Types.InputMaybe<Types.Scalars['Boolean']['input']>;
+  first?: Types.InputMaybe<Types.Scalars['Int']['input']>;
+  onlyHomepageArticles?: Types.InputMaybe<Types.Scalars['Boolean']['input']>;
 }>;
 
 

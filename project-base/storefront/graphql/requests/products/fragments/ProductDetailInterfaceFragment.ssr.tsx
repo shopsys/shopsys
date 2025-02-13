@@ -36,6 +36,12 @@ export type TypeProductDetailInterfaceFragment = TypeProductDetailInterfaceFragm
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -48,9 +54,9 @@ export type TypeProductDetailInterfaceFragment = TypeProductDetailInterfaceFragm
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -96,7 +102,7 @@ export type TypeProductDetailInterfaceFragment = TypeProductDetailInterfaceFragm
   }
 };
       export default result;
-
+    
 export const ProductDetailInterfaceFragment = gql`
     fragment ProductDetailInterfaceFragment on Product {
   __typename

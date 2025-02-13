@@ -7,9 +7,9 @@ export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeRecommendedProductsQueryVariables = Types.Exact<{
   userIdentifier: Types.Scalars['Uuid']['input'];
   recommendationType: Types.TypeRecommendationType;
-  recommenderClientIdentifier: Types.InputMaybe<Types.Scalars['String']['input']>;
-  limit: Types.InputMaybe<Types.Scalars['Int']['input']>;
-  itemUuids: Types.InputMaybe<Array<Types.Scalars['Uuid']['input']> | Types.Scalars['Uuid']['input']>;
+  recommenderClientIdentifier?: Types.InputMaybe<Types.Scalars['String']['input']>;
+  limit?: Types.InputMaybe<Types.Scalars['Int']['input']>;
+  itemUuids?: Types.InputMaybe<Array<Types.Scalars['Uuid']['input']> | Types.Scalars['Uuid']['input']>;
 }>;
 
 

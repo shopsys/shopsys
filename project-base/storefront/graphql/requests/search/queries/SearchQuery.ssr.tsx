@@ -37,6 +37,12 @@ export type TypeSearchQuery = { __typename?: 'Query', articlesSearch: Array<{ __
       "ArticleSite",
       "BlogArticle"
     ],
+    "BaseCustomerUser": [
+      "CompanyCustomerUser",
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser",
+      "RegularCustomerUser"
+    ],
     "Breadcrumb": [
       "ArticleSite",
       "BlogArticle",
@@ -49,9 +55,9 @@ export type TypeSearchQuery = { __typename?: 'Query', articlesSearch: Array<{ __
       "Store",
       "Variant"
     ],
-    "CustomerUser": [
-      "CompanyCustomerUser",
-      "RegularCustomerUser"
+    "CurrentCustomerUser": [
+      "CurrentCompanyCustomerUser",
+      "CurrentRegularCustomerUser"
     ],
     "Hreflang": [
       "BlogArticle",
@@ -97,7 +103,7 @@ export type TypeSearchQuery = { __typename?: 'Query', articlesSearch: Array<{ __
   }
 };
       export default result;
-
+    
 
 export const SearchQueryDocument = gql`
     query SearchQuery($search: String!, $isAutocomplete: Boolean!, $userIdentifier: Uuid!, $endCursor: String!, $orderingMode: ProductOrderingModeEnum, $filter: ProductFilter, $pageSize: Int, $parameters: [Uuid!] = []) {

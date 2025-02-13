@@ -10,8 +10,8 @@ import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeAutocompleteSearchQueryVariables = Types.Exact<{
   search: Types.Scalars['String']['input'];
-  maxProductCount: Types.InputMaybe<Types.Scalars['Int']['input']>;
-  maxCategoryCount: Types.InputMaybe<Types.Scalars['Int']['input']>;
+  maxProductCount?: Types.InputMaybe<Types.Scalars['Int']['input']>;
+  maxCategoryCount?: Types.InputMaybe<Types.Scalars['Int']['input']>;
   isAutocomplete: Types.Scalars['Boolean']['input'];
   userIdentifier: Types.Scalars['Uuid']['input'];
 }>;

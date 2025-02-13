@@ -13,9 +13,9 @@ export type TypeSearchQueryVariables = Types.Exact<{
   isAutocomplete: Types.Scalars['Boolean']['input'];
   userIdentifier: Types.Scalars['Uuid']['input'];
   endCursor: Types.Scalars['String']['input'];
-  orderingMode: Types.InputMaybe<Types.TypeProductOrderingModeEnum>;
-  filter: Types.InputMaybe<Types.TypeProductFilter>;
-  pageSize: Types.InputMaybe<Types.Scalars['Int']['input']>;
+  orderingMode?: Types.InputMaybe<Types.TypeProductOrderingModeEnum>;
+  filter?: Types.InputMaybe<Types.TypeProductFilter>;
+  pageSize?: Types.InputMaybe<Types.Scalars['Int']['input']>;
   parameters?: Types.InputMaybe<Array<Types.Scalars['Uuid']['input']> | Types.Scalars['Uuid']['input']>;
 }>;
 
