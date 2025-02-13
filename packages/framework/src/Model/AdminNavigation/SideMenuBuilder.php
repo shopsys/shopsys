@@ -702,7 +702,7 @@ class SideMenuBuilder
     protected function createIntegrationsMenu(): ItemInterface
     {
         $integrationsMenu = $this->menuFactory->createItem('integrations', ['label' => t('Integrations')]);
-        $integrationsMenu->setExtra('icon', 'gear');
+        $integrationsMenu->setExtra('icon', 'puzzle');
 
         $integrationsMenu->addChild('feeds', ['route' => 'admin_feed_list', 'label' => t('XML Feeds')]);
 
