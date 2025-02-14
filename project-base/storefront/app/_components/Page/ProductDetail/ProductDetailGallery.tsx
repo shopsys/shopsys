@@ -108,7 +108,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                                     {isVideo && (
                                         <>
                                             <Image
-                                                alt={galleryItem.description}
+                                                alt={galleryItem.description || ''}
                                                 className="max-h-full rounded-md"
                                                 height={90}
                                                 src={`https://img.youtube.com/vi/${galleryItem.token}/1.jpg`}
