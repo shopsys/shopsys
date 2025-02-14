@@ -13,6 +13,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 import { useLogout } from 'utils/auth/useLogout';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { useUserProfileSectionLabel } from 'utils/user/useUserProfileSectionLabel';
 
 export const CustomerContent: FC = () => {
     const { t } = useTranslation();
@@ -35,6 +36,7 @@ export const CustomerContent: FC = () => {
         ],
         url,
     );
+    const userProfileSectionLabel = useUserProfileSectionLabel();
 
     return (
         <>
@@ -72,7 +74,7 @@ export const CustomerContent: FC = () => {
                     <CustomerListItem>
                         <ExtendedNextLink href={customerEditProfileUrl} type="editProfile">
                             <EditIcon className="mr-5 size-6" />
-                            {t('Edit profile')}
+                            {userProfileSectionLabel}
                         </ExtendedNextLink>
                     </CustomerListItem>
 

@@ -172,7 +172,8 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
                                                 (option) => option.value === field.value.value,
                                             )}
                                             isDisabled={
-                                                !canManageCompanyData || (mode === 'edit' && customerUser?.uuid === uuid)
+                                                !canManageCompanyData ||
+                                                (mode === 'edit' && customerUser?.uuid === uuid)
                                             }
                                             onSelectOption={field.onChange}
                                         />

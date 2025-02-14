@@ -12,6 +12,7 @@ import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { useComparison } from 'utils/productLists/comparison/useComparison';
 import { useWishlist } from 'utils/productLists/wishlist/useWishlist';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { useUserProfileSectionLabel } from 'utils/user/useUserProfileSectionLabel';
 
 type UserMenuItemType = {
     link: string;
@@ -48,6 +49,7 @@ export const useUserMenuItems = (): UserMenuItemType[] => {
         ],
         url,
     );
+    const userProfileSectionLabel = useUserProfileSectionLabel();
 
     const userMenuItems: UserMenuItemType[] = [];
 
@@ -79,7 +81,7 @@ export const useUserMenuItems = (): UserMenuItemType[] => {
     }
 
     userMenuItems.push({
-        text: t('Edit profile'),
+        text: userProfileSectionLabel,
         link: customerEditProfileUrl,
         type: 'editProfile',
         iconComponent: EditIcon,

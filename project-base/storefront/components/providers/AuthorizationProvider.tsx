@@ -24,6 +24,7 @@ export const useAuthorization = () => {
 
     const canManageUsers = isCompanyUser && customerUserRoles.includes(TypeCustomerUserRoleEnum.RoleApiAll);
     const canManageCompanyData = !isCompanyUser || customerUserRoles.includes(TypeCustomerUserRoleEnum.RoleApiAll);
+    const canManagePersonalData = customerUserRoles.includes(TypeCustomerUserRoleEnum.RoleApiCustomerSelfManage);
 
     const canCreateOrder = isCompanyUser
         ? customerUserRoles.includes(TypeCustomerUserRoleEnum.RoleApiCartAndOrderCreation)
@@ -48,6 +49,7 @@ export const useAuthorization = () => {
         isCompanyUser,
         canManageUsers,
         canManageCompanyData,
+        canManagePersonalData,
         canCreateOrder,
         canViewCompanyOrders,
         canCreateComplaint,
