@@ -14,7 +14,7 @@ import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelec
 
 export const BillingAddress: FC = () => {
     const { t } = useTranslation();
-    const { canManageProfile } = useAuthorization();
+    const { canManageCompanyData } = useAuthorization();
 
     const formProviderMethods = useFormContext<CustomerChangeProfileFormType>();
     const formMeta = useCustomerChangeProfileFormMeta(formProviderMethods);
@@ -47,7 +47,7 @@ export const BillingAddress: FC = () => {
                     required: true,
                     type: 'text',
                     autoComplete: 'street-address',
-                    disabled: !canManageProfile,
+                    disabled: !canManageCompanyData,
                 }}
             />
             <FormColumn>
@@ -61,7 +61,7 @@ export const BillingAddress: FC = () => {
                         required: true,
                         type: 'text',
                         autoComplete: 'address-level2',
-                        disabled: !canManageProfile,
+                        disabled: !canManageCompanyData,
                     }}
                 />
                 <TextInputControlled
@@ -78,7 +78,7 @@ export const BillingAddress: FC = () => {
                         required: true,
                         type: 'text',
                         autoComplete: 'postal-code',
-                        disabled: !canManageProfile,
+                        disabled: !canManageCompanyData,
                     }}
                 />
             </FormColumn>
@@ -89,7 +89,7 @@ export const BillingAddress: FC = () => {
                         <>
                             <Select
                                 isRequired
-                                isDisabled={!canManageProfile}
+                                isDisabled={!canManageCompanyData}
                                 label={formMeta.fields.country.label}
                                 options={countriesAsSelectOptions}
                                 tid={formMeta.formName + '-' + formMeta.fields.country.name}

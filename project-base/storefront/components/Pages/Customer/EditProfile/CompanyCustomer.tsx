@@ -11,7 +11,7 @@ export const CompanyCustomer: FC = () => {
     const { t } = useTranslation();
     const formProviderMethods = useFormContext<CustomerChangeProfileFormType>();
     const formMeta = useCustomerChangeProfileFormMeta(formProviderMethods);
-    const { canManageProfile } = useAuthorization();
+    const { canManageCompanyData } = useAuthorization();
 
     return (
         <FormBlockWrapper>
@@ -27,7 +27,7 @@ export const CompanyCustomer: FC = () => {
                         required: true,
                         type: 'text',
                         autoComplete: 'organization',
-                        disabled: !canManageProfile,
+                        disabled: !canManageCompanyData,
                     }}
                 />
                 <TextInputControlled
@@ -39,7 +39,7 @@ export const CompanyCustomer: FC = () => {
                         label: formMeta.fields.companyNumber.label,
                         required: true,
                         type: 'text',
-                        disabled: !canManageProfile,
+                        disabled: !canManageCompanyData,
                     }}
                 />
                 <TextInputControlled
@@ -51,7 +51,7 @@ export const CompanyCustomer: FC = () => {
                         label: formMeta.fields.companyTaxNumber.label,
                         required: false,
                         type: 'text',
-                        disabled: !canManageProfile,
+                        disabled: !canManageCompanyData,
                     }}
                 />
             </>
