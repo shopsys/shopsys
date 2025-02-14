@@ -36,7 +36,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
     const { canManagePersonalData } = useAuthorization();
 
     const deliveryAddressesRadiobuttons = [
-        ...(user?.deliveryAddresses.map((deliveryAddress) => ({
+        ...(user?.deliveryAddresses.map((deliveryAddress, index) => ({
             label: (
                 <p className="flex flex-col">
                     <strong className="mr-1">
@@ -51,7 +51,7 @@ export const ContactInformationDeliveryAddress: FC = () => {
                 </p>
             ),
             value: deliveryAddress.uuid,
-            id: deliveryAddress.uuid,
+            id: index.toString(),
             labelWrapperClassName: 'flex-row-reverse',
         })) ?? []),
     ];

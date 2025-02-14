@@ -21,8 +21,25 @@ export const CartPreview: FC = () => {
         error: t('There was an error while removing the promo code from the order.'),
     });
 
-    if (!cart?.items.length || !isPriceVisible(cart.totalItemsPrice.priceWithVat)) {
+    const buttonContinue = (
+        <Button
+            className="mt-4"
+            size="xlarge"
+            tid={TIDs.blocks_orderaction_next}
+            variant="primary"
+            onClick={goToNextStepFromCartPage}
+        >
+            {t('Continue with order')}
+            <ArrowSecondaryIcon className="size-4 -rotate-90" />
+        </Button>
+    );
+
+    if (!cart?.items.length) {
         return null;
+    }
+
+    if (!isPriceVisible(cart.totalItemsPrice.priceWithVat)) {
+        return buttonContinue;
     }
 
     return (
@@ -73,16 +90,7 @@ export const CartPreview: FC = () => {
                 </span>
             </div>
 
-            <Button
-                className="mt-4"
-                size="xlarge"
-                tid={TIDs.blocks_orderaction_next}
-                variant="primary"
-                onClick={goToNextStepFromCartPage}
-            >
-                {t('Continue with order')}
-                <ArrowSecondaryIcon className="size-4 -rotate-90" />
-            </Button>
+            {buttonContinue}
         </div>
     );
 };
