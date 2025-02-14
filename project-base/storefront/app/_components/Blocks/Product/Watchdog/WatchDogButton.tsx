@@ -1,6 +1,6 @@
 'use client';
 
-import { WatchdogIcon } from 'components/Basic/Icon/Watchdog';
+import { WatchdogIcon } from 'components/Basic/Icon/WatchdogIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { useTranslation } from 'components/providers/TranslationProvider';
 import { TypeAvailability, TypeAvailabilityStatusEnum } from 'graphql/types';
