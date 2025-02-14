@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\FunctionalB2b\CustomerUser;
 use App\DataFixtures\Demo\CompanyDataFixture;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum;
 use Tests\FrontendApiBundle\Functional\Order\MinimalOrderAsAuthenticatedCustomerUserTest;
+use Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\Helper\ChangePersonalAndCompanyDataInputProvider;
 use Tests\FrontendApiBundle\Test\GraphQlB2bDomainWithLoginTestCase;
 
 class CustomerUserCatalogUserTest extends GraphQlB2bDomainWithLoginTestCase
@@ -292,6 +293,16 @@ class CustomerUserCatalogUserTest extends GraphQlB2bDomainWithLoginTestCase
                     ],
                 ],
             ],
+        );
+
+        $this->assertAccessDeniedError($response);
+    }
+
+    public function testChangePersonalDataMutationIsNotAllowed(): void
+    {
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/../_graphql/ChangePersonalDataMutation.graphql',
+            ChangePersonalAndCompanyDataInputProvider::PERSONAL_DATA_INPUT_ARRAY,
         );
 
         $this->assertAccessDeniedError($response);

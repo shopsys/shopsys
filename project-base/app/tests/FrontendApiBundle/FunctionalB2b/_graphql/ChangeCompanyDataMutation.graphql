@@ -1,8 +1,4 @@
-mutation ChangePersonalDataMutation(
-    $firstName: String!
-    $lastName: String!
-    $telephone: String!
-    $newsletterSubscription: Boolean!
+mutation ChangeCompanyData(
     $street: String!
     $city: String!
     $country: String!
@@ -12,19 +8,6 @@ mutation ChangePersonalDataMutation(
     $companyNumber: String
     $companyTaxNumber: String
 ) {
-    ChangePersonalData(input: {
-        telephone: $telephone
-        firstName: $firstName
-        lastName: $lastName
-        newsletterSubscription: $newsletterSubscription
-    }) {
-        firstName
-        lastName,
-        telephone,
-        email
-        newsletterSubscription
-    }
-
     ChangeCompanyData(input: {
         street: $street
         city: $city

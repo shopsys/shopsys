@@ -46,6 +46,7 @@ MutationDecorator:
                         type: ChangePersonalDataInput!
                         validation: cascade
                 resolve: "@=mutation('changePersonalDataMutation', args, validator)"
+                access: "@=isGranted('ROLE_API_CUSTOMER_SELF_MANAGE')"
             ChangeCompanyData:
                 type: 'CurrentCustomerUser!'
                 description: "Changes customer user company data"

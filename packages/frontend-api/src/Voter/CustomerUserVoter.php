@@ -61,10 +61,6 @@ class CustomerUserVoter extends AbstractB2bVoter
             return $this->isRoleApiAllGranted($inputData, $token);
         }
 
-        if ($this->security->isGranted('ROLE_API_CUSTOMER_SELF_MANAGE')) {
-            return $this->isRoleApiCustomerSelfManageGranted($inputData, $token);
-        }
-
         return false;
     }
 
@@ -96,20 +92,5 @@ class CustomerUserVoter extends AbstractB2bVoter
         }
 
         return $loggedCustomerUser->getCustomer()->getId() === $editedCustomerUser->getCustomer()->getId();
-    }
-
-    /**
-     * @param array $inputData
-     * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
-     * @return bool
-     */
-    protected function isRoleApiCustomerSelfManageGranted(array $inputData, TokenInterface $token): bool
-    {
-        /** @var \Shopsys\FrontendApiBundle\Model\User\FrontendApiUser $loggedUser */
-        $loggedUser = $token->getUser();
-        $loggedUserUuid = $loggedUser->getUuid();
-        $editedUserUuid = $inputData['customerUserUuid'];
-
-        return $loggedUserUuid === $editedUserUuid;
     }
 }

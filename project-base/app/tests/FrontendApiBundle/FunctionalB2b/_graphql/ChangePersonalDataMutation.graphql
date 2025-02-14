@@ -1,0 +1,19 @@
+mutation ChangePersonalData(
+    $firstName: String!
+    $lastName: String!
+    $telephone: String!
+    $newsletterSubscription: Boolean!
+) {
+    ChangePersonalData(input: {
+        telephone: $telephone
+        firstName: $firstName
+        lastName: $lastName
+        newsletterSubscription: $newsletterSubscription
+    }) {
+        firstName
+        lastName,
+        telephone,
+        email
+        newsletterSubscription
+    }
+}

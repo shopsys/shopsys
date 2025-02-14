@@ -7,13 +7,11 @@ namespace Tests\FrontendApiBundle\FunctionalB2b\CustomerUser;
 use App\DataFixtures\Demo\CompanyComplaintDataFixture;
 use App\DataFixtures\Demo\CompanyDataFixture;
 use App\DataFixtures\Demo\CompanyOrderDataFixture;
-use App\DataFixtures\Demo\CustomerUserRoleGroupDataFixture;
 use App\Model\Customer\User\CustomerUser;
 use App\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum;
-use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup;
-use Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\Helper\ChangePersonalDataInputProvider;
+use Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\Helper\ChangePersonalAndCompanyDataInputProvider;
 use Tests\FrontendApiBundle\Test\GraphQlB2bDomainWithLoginTestCase;
 
 class CustomerUserSelfManageTest extends GraphQlB2bDomainWithLoginTestCase
@@ -22,13 +20,13 @@ class CustomerUserSelfManageTest extends GraphQlB2bDomainWithLoginTestCase
     protected const string COMPLAINT_EMAIL = 'no-reply@shopsys.com';
 
     /**
-     * @see \Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\CustomerUserOwnerTest::testChangePersonalDataMutation()
+     * @see \Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\CustomerUserOwnerTest::testChangePersonalAndCompanyDataMutation()
      */
-    public function testChangePersonalDataMutationIsNotAllowed(): void
+    public function testChangeCompanyDataMutationIsNotAllowed(): void
     {
         $response = $this->getResponseContentForGql(
-            __DIR__ . '/../../Functional/Customer/User/graphql/ChangePersonalDataMutation.graphql',
-            ChangePersonalDataInputProvider::INPUT_ARRAY,
+            __DIR__ . '/../_graphql/ChangeCompanyDataMutation.graphql',
+            ChangePersonalAndCompanyDataInputProvider::COMPANY_DATA_INPUT_ARRAY,
         );
 
         $this->assertAccessDeniedError($response);
@@ -59,7 +57,7 @@ class CustomerUserSelfManageTest extends GraphQlB2bDomainWithLoginTestCase
 
     /**
      * @see \Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\CustomerUserOwnerTest::testEditAnotherCustomerUserPersonalData()
-     * @see \Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\CustomerUserSelfManageTest::testEditSelfCustomerUserPersonalData()
+     * @see \Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\CustomerUserSelfManageTest::testEditSelfCustomerUserPersonalDataIsNotAllowed()
      */
     public function testEditAnotherCustomerUserPersonalDataIsNotAllowed(): void
     {
@@ -76,36 +74,15 @@ class CustomerUserSelfManageTest extends GraphQlB2bDomainWithLoginTestCase
      * @see \Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\CustomerUserSelfManageTest::testEditAnotherCustomerUserPersonalDataIsNotAllowed()
      * @see \Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\CustomerUserOwnerTest::testEditAnotherCustomerUserPersonalData()
      */
-    public function testEditSelfCustomerUserPersonalData(): void
+    public function testEditSelfCustomerUserPersonalDataIsNotAllowed(): void
     {
         $currentCustomerUser = $this->getCustomerUserByDefaultCredentials();
-        $newRoleGroup = $this->getReference(CustomerUserRoleGroupDataFixture::ROLE_GROUP_USER, CustomerUserRoleGroup::class);
-
-        $editedFirstName = 'Edited first name';
-        $editedLastName = 'Edited last name';
-        $editedTelephone = '001122456';
-        $editedRoleGroupUuid = $newRoleGroup->getUuid();
 
         $response = $this->getResponseContentForGql(__DIR__ . '/../_graphql/EditCustomerUserPersonalDataMutation.graphql', [
             'customerUserUuid' => $currentCustomerUser->getUuid(),
-            'firstName' => $editedFirstName,
-            'lastName' => $editedLastName,
-            'telephone' => $editedTelephone,
-            'roleGroupUuid' => $editedRoleGroupUuid,
         ]);
 
-        $responseData = $this->getResponseDataForGraphQlType($response, 'EditCustomerUserPersonalData');
-
-        $this->assertSame($editedFirstName, $responseData['firstName']);
-        $this->assertSame($editedLastName, $responseData['lastName']);
-        $this->assertSame($editedTelephone, $responseData['telephone']);
-        $this->assertSame($editedRoleGroupUuid, $responseData['roleGroup']['uuid']);
-
-        $refreshedCurrentCustomerUser = $this->customerUserFacade->getCustomerUserById($currentCustomerUser->getId());
-        $this->assertSame($editedFirstName, $refreshedCurrentCustomerUser->getFirstName());
-        $this->assertSame($editedLastName, $refreshedCurrentCustomerUser->getLastName());
-        $this->assertSame($editedTelephone, $refreshedCurrentCustomerUser->getTelephone());
-        $this->assertSame($newRoleGroup->getUuid(), $refreshedCurrentCustomerUser->getRoleGroup()->getUuid());
+        $this->assertAccessDeniedError($response);
     }
 
     /**

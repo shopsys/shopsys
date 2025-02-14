@@ -94,9 +94,7 @@ class CustomerUserRoleGroupDataFixture extends AbstractReferenceFixture
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataLocales() as $locale) {
             $customerUserRoleGroupData->names[$locale] = t('Catalog user', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
         }
-        $customerUserRoleGroupData->roles = [
-            CustomerUserRole::ROLE_API_CUSTOMER_SELF_MANAGE,
-        ];
+        $customerUserRoleGroupData->roles = [];
 
         $customerUserRoleGroup = $this->customerUserRoleGroupFacade->create($customerUserRoleGroupData);
         $this->addReference(self::ROLE_GROUP_CATALOG_USER, $customerUserRoleGroup);
