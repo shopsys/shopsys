@@ -1,6 +1,5 @@
 import { ProductDetailGallery } from 'app/_components/Page/ProductDetail/ProductDetailGallery';
 import { ProductDetailInfo } from 'app/_components/Page/ProductDetail/ProductDetailInfo';
-import { ProductDetailTabs } from 'app/_components/Page/ProductDetail/ProductDetailTabs/ProductDetailTabs';
 import { ProductVariantsTable } from 'app/_components/Page/ProductDetail/ProductDetailVariantsTable';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.ssr';
@@ -49,13 +48,6 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
             />
 
             <ProductVariantsTable variants={product.variants} />
-
-            <ProductDetailTabs
-                description={product.description}
-                files={product.files}
-                parameters={product.parameters}
-                relatedProducts={product.relatedProducts}
-            />
         </Webline>
     );
 };
