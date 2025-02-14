@@ -307,4 +307,67 @@ class CustomerUserCatalogUserTest extends GraphQlB2bDomainWithLoginTestCase
 
         $this->assertAccessDeniedError($response);
     }
+
+    public function testDeleteDeliveryAddressMutationIsNotAllowed(): void
+    {
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/../../Functional/_graphql/mutation/DeleteDeliveryAddressMutation.graphql',
+            [
+                'uuid' => self::FAKE_UUID,
+            ],
+        );
+
+        $this->assertAccessDeniedError($response);
+    }
+
+    public function testEditDeliveryAddressMutationIsNotAllowed(): void
+    {
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/../../Functional/_graphql/mutation/EditDeliveryAddressMutation.graphql',
+            [
+                'uuid' => self::FAKE_UUID,
+                'firstName' => 'firstName',
+                'lastName' => 'lastName',
+                'street' => 'street',
+                'city' => 'city',
+                'postcode' => '12345',
+                'country' => 'CZ',
+                'companyName' => 'Shopsys',
+                'telephone' => '777777777',
+            ],
+        );
+
+        $this->assertAccessDeniedError($response);
+    }
+
+    public function testSetDefaultDeliveryAddressMutationIsNotAllowed(): void
+    {
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/../../Functional/_graphql/mutation/SetDefaultDeliveryAddressMutation.graphql',
+            [
+                'deliveryAddressUuid' => self::FAKE_UUID,
+            ],
+        );
+
+        $this->assertAccessDeniedError($response);
+    }
+
+    public function testCreateDeliveryAddressMutationIsNotAllowed(): void
+    {
+        $response = $this->getResponseContentForGql(
+            __DIR__ . '/../../Functional/_graphql/mutation/CreateDeliveryAddressMutation.graphql',
+            [
+                'firstName' => 'firstName',
+                'lastName' => 'lastName',
+                'street' => 'street',
+                'city' => 'city',
+                'postcode' => '12345',
+                'country' => 'CZ',
+                'companyName' => 'Shopsys',
+                'telephone' => '777777777',
+            ],
+        );
+
+        $this->assertAccessDeniedError($response);
+    }
 }

@@ -1,0 +1,5 @@
+mutation DeleteDeliveryAddress($uuid: Uuid!) {
+    DeleteDeliveryAddress(deliveryAddressUuid: $uuid) {
+        uuid
+    }
+}
