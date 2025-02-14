@@ -3,6 +3,7 @@
 import { ProductFlags } from 'app/_components/Blocks/Product/ProductFlags';
 import { PlayIcon } from 'components/Basic/Icon/PlayIcon';
 import { Image } from 'components/Basic/Image/Image';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeSimpleFlagFragment } from 'graphql/requests/flags/fragments/SimpleFlagFragment.ssr';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.ssr';
@@ -35,6 +36,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
     percentageDiscount,
     categoryName,
 }) => {
+    const { t } = useTranslation();
     const [firstImage, ...additionalImages] = images;
     const mainImage = images.length ? firstImage : undefined;
 
