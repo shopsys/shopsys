@@ -54,7 +54,6 @@ export type CurrentCustomerType = {
     pricingGroup: string;
     hasPasswordSet: boolean;
     loginInfo: TypeLoginInfo;
-    arePricesHidden: boolean;
     roles: string[];
     roleGroup: TypeCustomerUserRoleGroup;
     salesRepresentative?: TypeSalesRepresentative | null;

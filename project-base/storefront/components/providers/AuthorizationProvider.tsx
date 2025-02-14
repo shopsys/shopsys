@@ -22,6 +22,7 @@ export const useAuthorization = () => {
     const isB2B = type === CustomerUserAreaEnum.B2B;
     const isCompanyUser = isB2B && currentCustomerUser?.companyCustomer;
 
+    const canSeePrices = customerUserRoles.includes(TypeCustomerUserRoleEnum.RoleApiCustomerSeesPrices);
     const canManageUsers = isCompanyUser && customerUserRoles.includes(TypeCustomerUserRoleEnum.RoleApiAll);
     const canManageCompanyData = !isCompanyUser || customerUserRoles.includes(TypeCustomerUserRoleEnum.RoleApiAll);
     const canManagePersonalData = customerUserRoles.includes(TypeCustomerUserRoleEnum.RoleApiCustomerSelfManage);
@@ -54,5 +55,6 @@ export const useAuthorization = () => {
         canViewCompanyOrders,
         canCreateComplaint,
         canViewCompanyComplaints,
+        canSeePrices,
     };
 };

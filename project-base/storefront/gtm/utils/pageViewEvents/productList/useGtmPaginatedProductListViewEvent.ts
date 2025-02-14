@@ -1,6 +1,6 @@
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { useGtmContext } from 'gtm/context/GtmProvider';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
@@ -21,7 +21,7 @@ export const useGtmPaginatedProductListViewEvent = (
     const { url } = useDomainConfig();
     const stringifiedProducts = JSON.stringify(paginatedProducts);
     const { didPageViewRun, isScriptLoaded } = useGtmContext();
-    const currentCustomerData = useCurrentCustomerData();
+    const { canSeePrices } = useAuthorization();
 
     useEffect(() => {
         if (
@@ -45,7 +45,7 @@ export const useGtmPaginatedProductListViewEvent = (
                     currentPage + currentLoadMore,
                     DEFAULT_PAGE_SIZE,
                     url,
-                    !!currentCustomerData?.arePricesHidden,
+                    !canSeePrices,
                 ),
             );
         }

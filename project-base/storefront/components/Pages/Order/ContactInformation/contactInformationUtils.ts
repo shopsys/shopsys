@@ -7,6 +7,7 @@ import {
     getFormValuesWithoutDeliveryInfo,
     getSelectedDeliveryAddressForLoggedInUser,
 } from './deliveryAddressUtils';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { handleCartModifications } from 'connectors/cart/Cart';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
@@ -211,6 +212,7 @@ const useHandleEventsAfterOrderCreation = () => {
     const { cart, payment, promoCode } = useCurrentCart();
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
     const resetContactInformation = usePersistStore((store) => store.resetContactInformation);
+    const { canSeePrices } = useAuthorization();
 
     const handleEventsAfterOrderCreation = (orderNumber: string) => {
         if (cart && payment) {
@@ -234,7 +236,7 @@ const useHandleEventsAfterOrderCreation = () => {
             onGtmCreateOrderEventHandler(
                 gtmCreateOrderEventOrderPart,
                 gtmCreateOrderEventUserPart,
-                !!user?.arePricesHidden,
+                !canSeePrices,
                 isPaymentSuccessful,
             );
         }

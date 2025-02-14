@@ -1,5 +1,5 @@
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import {
     TypeAddToCartMutation,
     useAddToCartMutation,
@@ -28,7 +28,7 @@ export const useAddToCart = (gtmMessageOrigin: GtmMessageOriginType, gtmProductL
     const domainConfig = useDomainConfig();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
-    const currentCustomerData = useCurrentCustomerData();
+    const { canSeePrices } = useAuthorization();
 
     const addToCart: AddToCart = async (productUuid, quantity, listIndex, isAbsoluteQuantity = false) => {
         const itemToBeAdded = cart?.items.find((item) => item.product.uuid === productUuid);
@@ -69,7 +69,7 @@ export const useAddToCart = (gtmMessageOrigin: GtmMessageOriginType, gtmProductL
                 listIndex,
                 gtmProductListName,
                 isUserLoggedIn,
-                !!currentCustomerData?.arePricesHidden,
+                !canSeePrices,
             );
         });
 
