@@ -25,7 +25,6 @@ class Setting
     public const string FEED_ITEM_ID_TO_CONTINUE = 'feedItemIdToContinue';
     public const string TRANSFER_DAYS_BETWEEN_STOCKS = 'transferDaysBetweenStocks';
     public const string FEED_DELIVERY_DAYS_FOR_OUT_OF_STOCK_PRODUCTS = 'feedDeliveryDaysForOutOfStockProducts';
-    public const string IMAGE_STRUCTURE_MIGRATED_FOR_PROXY = 'imageStructureMigratedForProxy';
     public const string CUSTOMER_USER_DEFAULT_GROUP_ROLE_ID = 'customerUserDefaultGroupRoleId';
     public const string FILE_STRUCTURE_MIGRATED_FOR_RELATIONS = 'fileStructureMigratedForRelations';
     public const string CSP_HEADER = 'cspHeader';
