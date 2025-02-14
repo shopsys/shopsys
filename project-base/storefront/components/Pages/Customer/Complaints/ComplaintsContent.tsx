@@ -36,6 +36,7 @@ export const ComplaintsContent: FC<ComplaintsContentProps> = ({ isFetching, item
                     <ComplaintItem key={item.uuid} complaintItem={item} />
                 ))}
             </div>
+
             <Pagination paginationScrollTargetRef={paginationScrollTargetRef} totalCount={totalCount || 0} />
         </div>
     );
