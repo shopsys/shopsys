@@ -129,6 +129,7 @@
         "psr/event-dispatcher": "^1.0.0",
         "shopsys/coding-standards": "17.0.x-dev",
         "sspooky13/yaml-standards": "^9.0",
+        "symfony/maker-bundle": "^1.62" ,
         "symfony/var-dumper": "^6.4"
     },
     "extra": {
