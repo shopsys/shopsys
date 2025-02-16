@@ -52,7 +52,7 @@ Symfony's voter system is a powerful tool for managing access control. There is 
 
 ### 4.1 Voter Implementation
 
-The `can_manage_customer_user_voter` voter is implemented in `Shopsys\FrontendApiBundle\Voter\CustomerUserVoter`. This voter extends `Shopsys\FrontendApiBundle\Voter\AbstractB2bVoter`, which by default only allows access for B2B domains. For more information on setting up domain type, refer to the [Shopsys documentation](https://docs.shopsys.com/en/14.0/introduction/start-building-your-application/#set-up-domain-type).
+The `can_manage_customer_user_voter` voter is implemented in `Shopsys\FrontendApiBundle\Voter\CustomerUserVoter`. This voter extends `Shopsys\FrontendApiBundle\Voter\AbstractB2bVoter`, which by default only allows access for B2B domains. For more information on setting up domain type, refer to the [Start Building Your Application](../introduction/start-building-your-application.md#set-up-domain-type) article.
 
 ### 4.2 Overriding the Voter
 
