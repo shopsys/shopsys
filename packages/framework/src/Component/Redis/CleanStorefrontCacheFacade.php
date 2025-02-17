@@ -14,6 +14,7 @@ class CleanStorefrontCacheFacade
     public const string ARTICLES_QUERY_KEY_PART = 'ArticlesQuery';
     public const string SETTINGS_QUERY_KEY_PART = 'SettingsQuery';
     public const string SLIDER_ITEMS_QUERY_KEY_PART = 'SliderItemsQuery';
+    public const string NOTIFICATION_BARS_QUERY_KEY_PART = 'NotificationBars';
 
     /**
      * @param \Redis $storefrontGraphqlQueryClient
