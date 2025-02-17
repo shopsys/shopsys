@@ -212,6 +212,7 @@
         "squizlabs/php_codesniffer": "^3.6.2",
         "sspooky13/yaml-standards": "^9.0",
         "symfony/maker-bundle": "^1.62",
+        "symfony/process": "^6.4",
         "symfony/var-dumper": "^6.4",
         "symplify/easy-coding-standard": "^12.2.0",
         "zalas/phpunit-injector": "2.5.x-dev as 2.5.1"
