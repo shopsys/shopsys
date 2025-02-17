@@ -95,6 +95,7 @@ class StoreFormType extends AbstractType
                     'route_name' => StoreFriendlyUrlProvider::ROUTE_NAME,
                     'entity_id' => $store->getId(),
                     'label' => t('URL settings'),
+                    'limit_domains_by_ids' => [$store->getDomainId()],
                 ]);
         }
 
@@ -112,6 +113,7 @@ class StoreFormType extends AbstractType
             ->add('domainId', DomainType::class, [
                 'required' => true,
                 'label' => t('Display on'),
+                'disabled' => $store !== null,
             ])
             ->add('externalId', TextType::class, [
                 'required' => false,

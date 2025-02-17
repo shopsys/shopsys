@@ -156,6 +156,7 @@ class Store implements OrderableEntityInterface
         $this->position = static::GEDMO_SORTABLE_LAST_POSITION;
         $this->uuid = $storeData->uuid ?: Uuid::uuid4()->toString();
         $this->openingHours = new ArrayCollection();
+        $this->domainId = $storeData->domainId;
         $this->setData($storeData);
     }
 
@@ -192,7 +193,6 @@ class Store implements OrderableEntityInterface
         $this->specialMessage = $storeData->specialMessage;
         $this->latitude = $storeData->latitude;
         $this->longitude = $storeData->longitude;
-        $this->domainId = $storeData->domainId;
         $this->email = $storeData->email;
         $this->phone = $storeData->phone;
         $this->directions = $storeData->directions;

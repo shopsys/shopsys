@@ -65,14 +65,12 @@ class StoreDataFactory
         $storeData->longitude = $store->getLongitude();
         $storeData->image = $this->imageUploadDataFactory->createFromEntityAndType($store);
 
-        foreach ($this->domain->getAllIds() as $domainId) {
-            $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl(
-                $domainId,
-                StoreFriendlyUrlProvider::ROUTE_NAME,
-                $store->getId(),
-            );
-            $storeData->urls->mainFriendlyUrlsByDomainId[$domainId] = $mainFriendlyUrl;
-        }
+        $mainFriendlyUrl = $this->friendlyUrlFacade->findMainFriendlyUrl(
+            $store->getDomainId(),
+            StoreFriendlyUrlProvider::ROUTE_NAME,
+            $store->getId(),
+        );
+        $storeData->urls->mainFriendlyUrlsByDomainId[$store->getDomainId()] = $mainFriendlyUrl;
 
         return $storeData;
     }
