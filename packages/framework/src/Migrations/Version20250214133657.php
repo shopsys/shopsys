@@ -15,6 +15,7 @@ class Version20250214133657 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $this->sql('DELETE FROM setting_values WHERE name = \'imageStructureMigratedForProxy\'');
+        $this->sql('DELETE FROM migrations WHERE version = \'Shopsys\FrameworkBundle\Migrations\Version20231020173331\'');
     }
 
     /**
