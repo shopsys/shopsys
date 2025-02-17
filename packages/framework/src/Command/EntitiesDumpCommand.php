@@ -18,7 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class EntitiesDumpCommand extends Command
 {
-    private const OUTPUT_FILE = 'entities-dump.json';
+    public const string OUTPUT_FILE = 'entities-dump.json';
 
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em

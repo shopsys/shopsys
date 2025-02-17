@@ -11,6 +11,7 @@ use Shopsys\CodingStandards\Sniffs\ForbiddenDumpSniff;
 use Shopsys\CodingStandards\Sniffs\ForbiddenSuperGlobalSniff;
 use Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff;
 use Shopsys\CodingStandards\Sniffs\ValidVariableNameSniff;
+use Shopsys\FrameworkBundle\Command\EntitiesDumpCommand;
 use SlevomatCodingStandard\Sniffs\Classes\ClassLengthSniff;
 use SlevomatCodingStandard\Sniffs\Commenting\DeprecatedAnnotationDeclarationSniff;
 use SlevomatCodingStandard\Sniffs\Functions\FunctionLengthSniff;
@@ -98,7 +99,7 @@ return [
         __DIR__ . '/tests/App/Functional/Controller/CdnTest.php',
     ],
     PropertyTypeHintSniff::class => [
-        ...json_decode(file_get_contents(__DIR__ . '/var/cache/entities-dump.json'), true, 512, JSON_THROW_ON_ERROR),
+        ...json_decode(file_get_contents(__DIR__ . '/var/cache/dev/' . EntitiesDumpCommand::OUTPUT_FILE), true, 512, JSON_THROW_ON_ERROR),
         __DIR__ . '/tests/App/Functional/EntityExtension/Model/*',
         '**Data.php',
     ],
