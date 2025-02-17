@@ -8,7 +8,7 @@ use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\ColorPickerType;
-use Shopsys\FrameworkBundle\Form\DatePickerType;
+use Shopsys\FrameworkBundle\Form\DateTimeType;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Shopsys\FrameworkBundle\Form\ImageUploadType;
@@ -66,14 +66,14 @@ class NotificationBarFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('validityFrom', DatePickerType::class, [
+            ->add('validityFrom', DateTimeType::class, [
                 'required' => false,
                 'label' => t('Valid from'),
                 'attr' => [
                     'autocomplete' => 'off',
                 ],
             ])
-            ->add('validityTo', DatePickerType::class, [
+            ->add('validityTo', DateTimeType::class, [
                 'required' => false,
                 'label' => t('Valid to'),
                 'attr' => [

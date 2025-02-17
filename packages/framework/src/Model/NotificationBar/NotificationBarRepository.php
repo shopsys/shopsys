@@ -50,16 +50,13 @@ class NotificationBarRepository
      */
     public function findVisibleAndValidByDomainId(int $domainId): ?array
     {
-        $dateTodayMidnight = new DateTime();
-        $dateTodayMidnight = $dateTodayMidnight->format('Y-m-d 00:00:00');
-
         return $this->getAllByDomainIdQueryBuilder($domainId)
             ->andWhere('nb.validityFrom IS NULL OR nb.validityFrom <= :now')
             ->andWhere('nb.validityTo IS NULL OR nb.validityTo >= :now')
             ->andWhere('nb.hidden = FALSE')
             ->setParameters([
                 'domainId' => $domainId,
-                'now' => $dateTodayMidnight,
+                'now' => new DateTime(),
             ])
             ->getQuery()->execute();
     }

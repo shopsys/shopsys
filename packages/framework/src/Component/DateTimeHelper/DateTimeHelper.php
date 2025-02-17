@@ -72,4 +72,17 @@ class DateTimeHelper
             $this->displayTimeZoneProvider->getDisplayTimeZoneByDomainId($domainId),
         ))->format('N');
     }
+
+    /**
+     * @param string $dateTimeString
+     * @param \DateTimeZone $dateTimeZone
+     * @return \DateTime
+     */
+    public function createUtcDateTimeByTimeZoneAndString(string $dateTimeString, DateTimeZone $dateTimeZone): DateTime
+    {
+        $dateTime = new DateTime($dateTimeString, $dateTimeZone);
+        $dateTime->setTimezone(new DateTimeZone('UTC'));
+
+        return $dateTime;
+    }
 }
