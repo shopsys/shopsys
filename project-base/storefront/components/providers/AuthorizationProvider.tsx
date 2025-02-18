@@ -4,7 +4,7 @@ import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import { createContext, useContext } from 'react';
 import { CustomerUserAreaEnum } from 'types/customer';
 
-export const CustomerUserRolesContext = createContext<TypeCustomerUserRoleEnum[]>([]);
+export const CustomerUserRolesContext = createContext<TypeCustomerUserRoleEnum[] | null>(null);
 
 type AuthorizationProviderProps = {
     customerUserRoles: TypeCustomerUserRoleEnum[];
@@ -17,6 +17,11 @@ export const AuthorizationProvider: FC<AuthorizationProviderProps> = ({ customer
 export const useAuthorization = () => {
     const { type } = useDomainConfig();
     const customerUserRoles = useContext(CustomerUserRolesContext);
+
+    if (!customerUserRoles) {
+        throw new Error(`useAuthorization must be use within AuthorizationProvider`);
+    }
+
     const currentCustomerUser = useCurrentCustomerData();
 
     const isB2B = type === CustomerUserAreaEnum.B2B;
