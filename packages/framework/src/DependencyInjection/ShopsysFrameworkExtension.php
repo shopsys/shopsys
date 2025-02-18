@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface;
 use Shopsys\FrameworkBundle\Component\HttpFoundation\TransactionalMasterRequestConditionProviderInterface;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlDataProviderInterface;
+use Shopsys\FrameworkBundle\Maker\BaseMaker;
 use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterInterface;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateSender\MailTemplateSenderInterface;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessingStack;
@@ -79,6 +80,9 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
 
         $container->registerForAutoconfiguration(CategoryAutomatedFilterInterface::class)
             ->addTag('shopsys.category_automated_filter');
+
+        $container->registerForAutoconfiguration(BaseMaker::class)
+            ->addTag('maker.command');
     }
 
     /**

@@ -14,7 +14,7 @@ services:
 
     Shopsys\FrameworkBundle\:
         exclude: '../../{Command,Controller,DependencyInjection,Form,Migrations,Resources,Twig}'
-        resource: '../../**/*{CategoryAutomatedFilter,Calculation,Dispatcher,Enum,Executor,Facade,Factory,Formatter,Generator,Handler,Helper,InlineEdit,Listener,Loader,Mapper,Middleware,Parser,Provider,Recalculator,Registry,Repository,Resolver,Sender,Service,Scheduler,Subscriber,Transformer,DataFetcher}.php'
+        resource: '../../**/*{CategoryAutomatedFilter,Calculation,Dispatcher,Enum,Executor,Facade,Factory,Formatter,Generator,Handler,Helper,InlineEdit,Listener,Loader,Maker,Mapper,Middleware,Parser,Provider,Recalculator,Registry,Repository,Resolver,Sender,Service,Scheduler,Subscriber,Transformer,DataFetcher}.php'
 
     Shopsys\FrameworkBundle\Controller\:
         resource: '../../Controller/'
@@ -525,18 +525,6 @@ services:
     Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainsValidator:
         tags:
             - { name: validator.constraint_validator, alias: Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainsValidator }
-
-    Shopsys\FrameworkBundle\Maker\DataFixtureMaker:
-        tags:
-            - { name: maker.command }
-
-    Shopsys\FrameworkBundle\Maker\FacadeMaker:
-        tags:
-            - { name: maker.command }
-
-    Shopsys\FrameworkBundle\Maker\RepositoryMaker:
-        tags:
-            - { name: maker.command }
 
     Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider: ~
 
