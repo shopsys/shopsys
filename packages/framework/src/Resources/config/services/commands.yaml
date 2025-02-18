@@ -26,10 +26,6 @@ services:
     Shopsys\FrameworkBundle\Command\ExtendedClassesAnnotationsCommand:
         autoconfigure: false
 
-    Shopsys\FrameworkBundle\Command\MigrateImagesCommand:
-        arguments:
-            - '%shopsys.image_dir%'
-
     Shopsys\FrameworkBundle\Command\MigrateUploadedFilesCommand:
         arguments:
             - '%shopsys.uploaded_file_dir%'

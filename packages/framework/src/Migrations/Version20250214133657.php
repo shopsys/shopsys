@@ -7,16 +7,15 @@ namespace Shopsys\FrameworkBundle\Migrations;
 use Doctrine\DBAL\Schema\Schema;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
-class Version20231020173331 extends AbstractMigration
+class Version20250214133657 extends AbstractMigration
 {
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
     public function up(Schema $schema): void
     {
-        $this->sql('INSERT INTO setting_values (name, domain_id, value, type) VALUES
-            (\'imageStructureMigratedForProxy\', 0, \'false\', \'boolean\')
-        ');
+        $this->sql('DELETE FROM setting_values WHERE name = \'imageStructureMigratedForProxy\'');
+        $this->sql('DELETE FROM migrations WHERE version = \'Shopsys\FrameworkBundle\Migrations\Version20231020173331\'');
     }
 
     /**
