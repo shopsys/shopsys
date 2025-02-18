@@ -1,9 +1,10 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { MailIcon } from 'components/Basic/Icon/MailIcon';
-import { UserIcon } from 'components/Basic/Icon/UserIcon';
+import { BoxPackageHandIcon } from 'components/Basic/Icon/BoxPackageHandIcon';
+import { UserProfileCardsIcon } from 'components/Basic/Icon/UserProfileCardsIcon';
 import { InformationCard } from 'components/Basic/InformationCard/InformationCard';
 import { TypeComplaintDetailFragment } from 'graphql/requests/complaints/fragments/ComplaintDetailFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
+import { twJoin } from 'tailwind-merge';
 
 type ComplaintDetailCustomerInfoProps = {
     complaint: TypeComplaintDetailFragment;
@@ -13,15 +14,19 @@ export const ComplaintDetailCustomerInfo: FC<ComplaintDetailCustomerInfoProps> =
     const { t } = useTranslation();
 
     return (
-        <div className="flex w-full flex-col gap-6 vl:flex-row vl:flex-wrap xl:flex-nowrap">
-            <InformationCard heading={t('Contact information')} icon={<UserIcon className="[&>path]:stroke-1" />}>
+        <div className="flex flex-col flex-wrap gap-2.5 rounded-xl bg-backgroundMore p-5 lg:flex-row xl:flex-nowrap">
+            <InformationCard heading={t('Contact information')} icon={<UserProfileCardsIcon className="size-8" />}>
                 <span>
                     {complaint.deliveryFirstName} {complaint.deliveryLastName}
                 </span>
 
                 <ExtendedNextLink
-                    className="hover:text-greyDark text-textAccent underline hover:no-underline"
                     href={`mailto:${complaint.email}`}
+                    className={twJoin(
+                        'hover:text-greyDark text-sm underline hover:no-underline',
+                        'overflow-x-auto whitespace-nowrap text-text',
+                        '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-backgroundMost [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:h-1',
+                    )}
                 >
                     {complaint.email}
                 </ExtendedNextLink>
@@ -29,11 +34,13 @@ export const ComplaintDetailCustomerInfo: FC<ComplaintDetailCustomerInfoProps> =
                 <span>{complaint.deliveryTelephone}</span>
             </InformationCard>
 
-            <InformationCard heading={t('Delivery address')} icon={<MailIcon />}>
-                <span>{complaint.deliveryCompanyName && `${complaint.deliveryCompanyName}, `} </span>
+            <InformationCard heading={t('Delivery address')} icon={<BoxPackageHandIcon className="size-8" />}>
+                <span>{complaint.deliveryCompanyName && `${complaint.deliveryCompanyName}, `}</span>
+
+                <span>{complaint.deliveryStreet}</span>
 
                 <span>
-                    {complaint.deliveryStreet}, {complaint.deliveryCity}, {complaint.deliveryPostcode}
+                    {complaint.deliveryCity}, {complaint.deliveryPostcode}
                 </span>
 
                 <span>{complaint.deliveryCountry.name}</span>

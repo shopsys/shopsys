@@ -31,6 +31,7 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
                     src={complaintItem.items[0].product?.mainImage?.url}
                     width={80}
                 />
+
                 <div className="flex flex-col gap-1">
                     <h5>
                         {complaintItem.items[0].product?.isVisible ? (
@@ -41,6 +42,7 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
                             complaintItem.items[0].productName
                         )}
                     </h5>
+
                     <div className="flex flex-wrap gap-x-8 gap-y-2">
                         <ComplaintItemColumnInfo
                             title={t('Complaint number')}
@@ -56,10 +58,12 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
                                 </ExtendedNextLink>
                             }
                         />
+
                         <ComplaintItemColumnInfo
                             title={t('Creation date')}
                             value={formatDate(complaintItem.createdAt)}
                         />
+
                         <ComplaintItemColumnInfo
                             title={t('Status')}
                             value={complaintItem.status}
@@ -67,19 +71,18 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
                         />
                     </div>
                 </div>
-                <div className="flex items-center gap-2 md:ml-auto">
-                    <LinkButton
-                        className="w-full whitespace-nowrap md:w-auto"
-                        size="small"
-                        type="complaintDetail"
-                        href={{
-                            pathname: customerComplaintDetailUrl,
-                            query: { complaintNumber: complaintItem.number },
-                        }}
-                    >
-                        {t('Complaint detail')}
-                    </LinkButton>
-                </div>
+
+                <LinkButton
+                    className="w-full whitespace-nowrap md:ml-auto md:w-auto"
+                    size="small"
+                    type="complaintDetail"
+                    href={{
+                        pathname: customerComplaintDetailUrl,
+                        query: { complaintNumber: complaintItem.number },
+                    }}
+                >
+                    {t('Complaint detail')}
+                </LinkButton>
             </div>
         </div>
     );

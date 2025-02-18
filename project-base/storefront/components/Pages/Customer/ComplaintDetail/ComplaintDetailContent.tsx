@@ -10,6 +10,7 @@ export const ComplaintDetailContent: FC<ComplaintDetailContentProps> = ({ compla
     return (
         <>
             <ComplaintDetailBasicInfo complaint={complaint} />
+
             <ComplaintDetailCustomerInfo complaint={complaint} />
         </>
     );

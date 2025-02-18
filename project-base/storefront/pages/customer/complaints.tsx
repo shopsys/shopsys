@@ -66,6 +66,7 @@ const ComplaintsPage: FC = () => {
                         >
                             {t('New complaint')}
                         </LinkButton>
+
                         <CreateComplaintPopupButton
                             label={t('Create complaint manually')}
                             size="small"
@@ -74,6 +75,7 @@ const ComplaintsPage: FC = () => {
                         />
                     </>
                 )}
+
                 <div className="my-5">
                     <SearchInput
                         className="w-full border border-inputBorder"
@@ -84,6 +86,7 @@ const ComplaintsPage: FC = () => {
                         onClear={() => setSearchQueryValue('')}
                     />
                 </div>
+
                 <ComplaintsContent
                     isFetching={complaintsDataFetching}
                     items={mappedComplaints}
