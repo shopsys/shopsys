@@ -9,3 +9,6 @@ msgstr "kniha"
 
 msgid "audio"
 msgstr "audio"
+
+msgid "Test image"
+msgstr "Testovací obrázek"

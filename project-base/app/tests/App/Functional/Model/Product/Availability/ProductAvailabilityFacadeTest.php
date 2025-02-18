@@ -157,8 +157,8 @@ class ProductAvailabilityFacadeTest extends TransactionFunctionalTestCase
         $this->em->refresh($product);
 
         $expected = match ($expectedWeekCount) {
-            -1 => t('Out of stock', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
-            0 => t('In stock', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+            -1 => t('Out of stock', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
+            0 => t('In stock', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
         };
 
         $this->assertSame($expected, $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, self::FIRST_DOMAIN_ID));

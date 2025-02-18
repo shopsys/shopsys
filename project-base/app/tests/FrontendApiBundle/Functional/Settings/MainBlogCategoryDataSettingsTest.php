@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Settings;
 
 use App\DataFixtures\Demo\BlogArticleDataFixture;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -26,7 +27,7 @@ class MainBlogCategoryDataSettingsTest extends GraphQlTestCase
             'mainBlogCategoryData' => [
                 'mainBlogCategoryUrl' => $expectedBlogUrl,
                 'mainBlogCategoryMainImage' => [
-                    'name' => 'Main blog page - en',
+                    'name' => t('Main blog page - %locale%', ['%locale%' => $this->getFirstDomainLocale()], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale()),
                     'url' => $this->getFullUrlPath('/content-test/images/blogCategory/500.jpg'),
                 ],
             ],

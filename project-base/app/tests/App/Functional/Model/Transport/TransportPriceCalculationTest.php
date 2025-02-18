@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Functional\Model\Transport;
 
+use App\DataFixtures\Demo\CurrencyDataFixture;
 use App\DataFixtures\Demo\SettingValueDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\Model\Transport\Transport;
@@ -51,7 +52,7 @@ class TransportPriceCalculationTest extends TransactionFunctionalTestCase
 
         $expectedTransportPriceWithoutVat = $this->priceConverter->convertPriceWithoutVatToDomainDefaultCurrencyPrice(
             Money::create($expectedMoneyAmountWithoutVat),
-            $this->currencyFacade->getDomainDefaultCurrencyByDomainId(Domain::FIRST_DOMAIN_ID),
+            $this->getReference(CurrencyDataFixture::CURRENCY_CZK),
             Domain::FIRST_DOMAIN_ID,
         );
 
@@ -66,11 +67,11 @@ class TransportPriceCalculationTest extends TransactionFunctionalTestCase
         return [
             'cart total weight is in the 1st price level' => [
                 'cartTotalWeight' => 0,
-                'expectedMoneyAmountWithoutVat' => 4,
+                'expectedMoneyAmountWithoutVat' => 100,
             ],
             'cart total weight is in the 2nd price level' => [
                 'cartTotalWeight' => 5001,
-                'expectedMoneyAmountWithoutVat' => 8,
+                'expectedMoneyAmountWithoutVat' => 200,
             ],
         ];
     }

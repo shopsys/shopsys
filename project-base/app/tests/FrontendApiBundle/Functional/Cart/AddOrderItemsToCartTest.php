@@ -127,10 +127,10 @@ class AddOrderItemsToCartTest extends GraphQlWithLoginTestCase
 
         $expectedProducts = [
             [
-                'product' => ['name' => '22" Sencor SLE 22F46DM4 HELLO KITTY'],
+                'product' => ['name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale())],
                 'quantity' => $firstAddedProductQuantity + 2,
             ], [
-                'product' => ['name' => 'Apple iPhone 5S 64GB, gold'],
+                'product' => ['name' => t('Apple iPhone 5S 64GB, gold', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getFirstDomainLocale())],
                 'quantity' => $secondAddedProductQuantity,
             ],
         ];

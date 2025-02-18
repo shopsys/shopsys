@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Cart;
 
+use App\DataFixtures\Demo\CurrencyDataFixture;
 use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\PromoCodeDataFixture;
@@ -14,7 +15,10 @@ use App\Model\Order\PromoCode\PromoCode;
 use App\Model\Payment\Payment;
 use App\Model\Product\Product;
 use App\Model\Transport\Transport;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Store\Store;
+use Tests\FrameworkBundle\Test\IsMoneyEqual;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 use Tests\FrontendApiBundle\Test\PromoCodeAssertionTrait;
 
@@ -33,9 +37,9 @@ class PriceWithoutDiscountTransportAndPaymentTest extends GraphQlTestCase
         $voucherQuantity = 3;
         $newlyCreatedCart = $this->addTestingProductToCart($testingProductVoucher, $voucherQuantity);
 
-        $testingProductBook = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '26', Product::class);
-        $bookQuantity = 5;
-        $this->addTestingProductToCart($testingProductBook, $bookQuantity, $newlyCreatedCart['uuid']);
+        $testingProductHelloKitty = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . '1', Product::class);
+        $helloKittyQuantity = 5;
+        $this->addTestingProductToCart($testingProductHelloKitty, $helloKittyQuantity, $newlyCreatedCart['uuid']);
 
         $promoCode = $this->getReferenceForDomain(PromoCodeDataFixture::VALID_PROMO_CODE, 1, PromoCode::class);
 
@@ -68,9 +72,9 @@ class PriceWithoutDiscountTransportAndPaymentTest extends GraphQlTestCase
         );
         $responseData = $this->getResponseDataForGraphQlType($response, 'cart');
 
-        $expectedPriceWithVat = '23.470000';
+        $expectedPriceWithVat = $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(Money::create('17858'), $this->getReference(CurrencyDataFixture::CURRENCY_CZK), Domain::FIRST_DOMAIN_ID);
 
-        self::assertEquals($expectedPriceWithVat, $responseData['totalPriceWithoutDiscountTransportAndPayment']['priceWithVat']);
+        self::assertThat(Money::create($responseData['totalPriceWithoutDiscountTransportAndPayment']['priceWithVat']), new IsMoneyEqual($expectedPriceWithVat));
     }
 
     /**

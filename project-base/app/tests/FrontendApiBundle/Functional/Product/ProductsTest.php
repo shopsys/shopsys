@@ -29,19 +29,19 @@ class ProductsTest extends ProductsGraphQlTestCase
         $productsExpected = [
             ['name' => t('100 Czech crowns ticket', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
             ['name' => t('22" Sencor SLE 22F46DM4 HELLO KITTY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
+            ['name' => t('32" Philips 32PFL4308', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
             ['name' => t('27" Hyundai T27D590EY', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
             ['name' => t('27" Hyundai T27D590EZ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
-            ['name' => t('30" Hyundai 22MT44D', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale)],
         ];
 
         $this->assertProducts($query, 'products', $productsExpected);
     }
 
-    public function testFifthProductWithAllAttributes(): void
+    public function testSixthProductWithAllAttributes(): void
     {
         $query = '
             query {
-                products (first: 1, after: "YXJyYXljb25uZWN0aW9uOjM=") {
+                products (first: 1, after: "YXJyYXljb25uZWN0aW9uOjQ=") {
                     edges {
                         node {
                             name
@@ -102,7 +102,7 @@ class ProductsTest extends ProductsGraphQlTestCase
             }
         ';
 
-        $arrayExpected = $this->getExpectedDataForFifthProduct();
+        $arrayExpected = $this->getExpectedDataForSixthProduct();
 
         $graphQlType = 'products';
         $response = $this->getResponseContentForQuery($query);
@@ -124,7 +124,7 @@ class ProductsTest extends ProductsGraphQlTestCase
     /**
      * @return array
      */
-    private function getExpectedDataForFifthProduct(): array
+    private function getExpectedDataForSixthProduct(): array
     {
         $firstDomainLocale = $this->getLocaleForFirstDomain();
         $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $this->domain->getId(), Vat::class);
@@ -146,7 +146,7 @@ class ProductsTest extends ProductsGraphQlTestCase
                     'name' => t('pcs', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
                 ],
                 'availability' => [
-                    'name' => t('In stock', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),
+                    'name' => t('In stock', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $firstDomainLocale),
                     'status' => AvailabilityStatusEnum::IN_STOCK,
                 ],
                 'stockQuantity' => 900,
@@ -171,7 +171,7 @@ class ProductsTest extends ProductsGraphQlTestCase
                     Translator::DATA_FIXTURES_TRANSLATION_DOMAIN,
                     $firstDomainLocale,
                 ),
-                'orderingPriority' => 1,
+                'orderingPriority' => 5,
                 'parameters' => [
                     [
                         'name' => t('Technology', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $firstDomainLocale),

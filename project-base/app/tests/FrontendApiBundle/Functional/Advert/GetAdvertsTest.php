@@ -229,7 +229,7 @@ class GetAdvertsTest extends GraphQlTestCase
                             $this->currentDomainUrl,
                             $testImage->getId(),
                         ),
-                        'name' => 'Test image',
+                        'name' => t('Test image', [], Translator::TESTS_TRANSLATION_DOMAIN, $firstDomainLocale),
                     ],
                 ],
                 'link' => 'https://shopsys.com',

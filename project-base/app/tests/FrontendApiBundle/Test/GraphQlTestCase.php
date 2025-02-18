@@ -382,6 +382,22 @@ abstract class GraphQlTestCase extends ApplicationTestCase
     }
 
     /**
+     * @param string $price
+     * @return string
+     */
+    protected function getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency(string $price): string
+    {
+        $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
+        $money = $this->priceConverter->convertPriceWithVatToDomainDefaultCurrencyPrice(
+            Money::create($price),
+            $currencyCzk,
+            Domain::FIRST_DOMAIN_ID,
+        );
+
+        return $this->moneyFormatterHelper->formatWithMaxFractionDigits($money);
+    }
+
+    /**
      * Compare the expected array while ignoring the order of the elements
      *
      * @param array $expectedArray

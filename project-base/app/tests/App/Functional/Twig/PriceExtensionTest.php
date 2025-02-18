@@ -57,27 +57,35 @@ class PriceExtensionTest extends FunctionalTestCase
         return [
             [
                 'input' => Money::create(12),
+                'locale' => 'en',
                 'result' => 'CZK12.00',
             ], [
                 'input' => Money::create('12.00'),
+                'locale' => 'en',
                 'result' => 'CZK12.00',
             ], [
                 'input' => Money::create('12.600'),
+                'locale' => 'en',
                 'result' => 'CZK12.60',
             ], [
                 'input' => Money::create('12.630000'),
+                'locale' => 'en',
                 'result' => 'CZK12.63',
             ], [
                 'input' => Money::create('12.638000'),
+                'locale' => 'en',
                 'result' => 'CZK12.638',
             ], [
                 'input' => Money::create('12.630000'),
+                'locale' => 'en',
                 'result' => 'CZK12.63',
             ], [
                 'input' => Money::create('123456789.123456789'),
+                'locale' => 'en',
                 'result' => 'CZK123,456,789.123456789',
             ], [
                 'input' => Money::create('123456789.123456789123456789'),
+                'locale' => 'en',
                 'result' => 'CZK123,456,789.1234567891',
             ],
         ];
@@ -86,14 +94,15 @@ class PriceExtensionTest extends FunctionalTestCase
     /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $input
      * @param string $result
+     * @param string $locale
      */
     #[DataProvider('priceFilterSingledomainDataProvider')]
     #[Group('multidomain')]
-    public function testPriceFilterSingledomain(Money $input, string $result): void
+    public function testPriceFilterSingledomain(Money $input, string $locale, string $result): void
     {
         $this->domain->switchDomainById(Domain::FIRST_DOMAIN_ID);
 
-        $priceExtension = $this->getPriceExtensionWithMockedConfiguration();
+        $priceExtension = $this->getPriceExtensionWithMockedConfiguration(Domain::FIRST_DOMAIN_ID, $locale);
 
         $this->assertSame($result, $priceExtension->priceFilter($input));
     }
@@ -104,48 +113,64 @@ class PriceExtensionTest extends FunctionalTestCase
     public static function priceFilterMultidomainDataProvider(): array
     {
         return [
-            ['input' => Money::create(12), 'domainId' => Domain::FIRST_DOMAIN_ID, 'result' => 'CZK12.00'],
-            ['input' => Money::create('12.00'), 'domainId' => Domain::FIRST_DOMAIN_ID, 'result' => 'CZK12.00'],
-            ['input' => Money::create('12.600'), 'domainId' => Domain::FIRST_DOMAIN_ID, 'result' => 'CZK12.60'],
-            ['input' => Money::create('12.630000'), 'domainId' => Domain::FIRST_DOMAIN_ID, 'result' => 'CZK12.63'],
-            ['input' => Money::create('12.638000'), 'domainId' => Domain::FIRST_DOMAIN_ID, 'result' => 'CZK12.638'],
-            ['input' => Money::create('12.630000'), 'domainId' => Domain::FIRST_DOMAIN_ID, 'result' => 'CZK12.63'],
+            ['input' => Money::create(12), 'domainId' => Domain::FIRST_DOMAIN_ID,
+                'locale' => 'en', 'result' => 'CZK12.00'],
+            ['input' => Money::create('12.00'), 'domainId' => Domain::FIRST_DOMAIN_ID,
+                'locale' => 'en', 'result' => 'CZK12.00'],
+            ['input' => Money::create('12.600'), 'domainId' => Domain::FIRST_DOMAIN_ID,
+                'locale' => 'en', 'result' => 'CZK12.60'],
+            ['input' => Money::create('12.630000'), 'domainId' => Domain::FIRST_DOMAIN_ID,
+                'locale' => 'en', 'result' => 'CZK12.63'],
+            ['input' => Money::create('12.638000'), 'domainId' => Domain::FIRST_DOMAIN_ID,
+                'locale' => 'en', 'result' => 'CZK12.638'],
+            ['input' => Money::create('12.630000'), 'domainId' => Domain::FIRST_DOMAIN_ID,
+                'locale' => 'en', 'result' => 'CZK12.63'],
             [
                 'input' => Money::create('123456789.123456789'),
                 'domainId' => Domain::FIRST_DOMAIN_ID,
+                'locale' => 'en',
                 'result' => 'CZK123,456,789.123456789',
             ],
             [
                 'input' => Money::create('123456789.123456789123456789'),
                 'domainId' => Domain::FIRST_DOMAIN_ID,
+                'locale' => 'en',
                 'result' => 'CZK123,456,789.1234567891',
             ],
             ['input' => Money::create(
                 12,
-            ), 'domainId' => Domain::SECOND_DOMAIN_ID, 'result' => '12,00' . self::NBSP . '€'],
+            ), 'domainId' => Domain::SECOND_DOMAIN_ID,
+                'locale' => 'cs', 'result' => '12,00' . self::NBSP . '€'],
             ['input' => Money::create(
                 '12.00',
-            ), 'domainId' => Domain::SECOND_DOMAIN_ID, 'result' => '12,00' . self::NBSP . '€'],
+            ), 'domainId' => Domain::SECOND_DOMAIN_ID,
+                'locale' => 'cs', 'result' => '12,00' . self::NBSP . '€'],
             ['input' => Money::create(
                 '12.600',
-            ), 'domainId' => Domain::SECOND_DOMAIN_ID, 'result' => '12,60' . self::NBSP . '€'],
+            ), 'domainId' => Domain::SECOND_DOMAIN_ID,
+                'locale' => 'cs', 'result' => '12,60' . self::NBSP . '€'],
             ['input' => Money::create(
                 '12.630000',
-            ), 'domainId' => Domain::SECOND_DOMAIN_ID, 'result' => '12,63' . self::NBSP . '€'],
+            ), 'domainId' => Domain::SECOND_DOMAIN_ID,
+                'locale' => 'cs', 'result' => '12,63' . self::NBSP . '€'],
             ['input' => Money::create(
                 '12.638000',
-            ), 'domainId' => Domain::SECOND_DOMAIN_ID, 'result' => '12,638' . self::NBSP . '€'],
+            ), 'domainId' => Domain::SECOND_DOMAIN_ID,
+                'locale' => 'cs', 'result' => '12,638' . self::NBSP . '€'],
             ['input' => Money::create(
                 '12.630000',
-            ), 'domainId' => Domain::SECOND_DOMAIN_ID, 'result' => '12,63' . self::NBSP . '€'],
+            ), 'domainId' => Domain::SECOND_DOMAIN_ID,
+                'locale' => 'cs', 'result' => '12,63' . self::NBSP . '€'],
             [
                 'input' => Money::create('123456789.123456789'),
                 'domainId' => Domain::SECOND_DOMAIN_ID,
+                'locale' => 'cs',
                 'result' => '123' . self::NBSP . '456' . self::NBSP . '789,123456789' . self::NBSP . '€',
             ],
             [
                 'input' => Money::create('123456789.123456789123456789'),
                 'domainId' => Domain::SECOND_DOMAIN_ID,
+                'locale' => 'cs',
                 'result' => '123' . self::NBSP . '456' . self::NBSP . '789,1234567891' . self::NBSP . '€',
             ],
         ];
@@ -154,23 +179,26 @@ class PriceExtensionTest extends FunctionalTestCase
     /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $input
      * @param int $domainId
+     * @param string $locale
      * @param string $result
      */
     #[DataProvider('priceFilterMultidomainDataProvider')]
     #[Group('multidomain')]
-    public function testPriceFilterMultidomain(Money $input, int $domainId, string $result): void
+    public function testPriceFilterMultidomain(Money $input, int $domainId, string $locale, string $result): void
     {
         $this->domain->switchDomainById($domainId);
 
-        $priceExtension = $this->getPriceExtensionWithMockedConfiguration();
+        $priceExtension = $this->getPriceExtensionWithMockedConfiguration($domainId, $locale);
 
         $this->assertSame($result, $priceExtension->priceFilter($input));
     }
 
     /**
+     * @param int $domainId
+     * @param string $locale
      * @return \Shopsys\FrameworkBundle\Twig\PriceExtension
      */
-    private function getPriceExtensionWithMockedConfiguration(): PriceExtension
+    private function getPriceExtensionWithMockedConfiguration(int $domainId, string $locale): PriceExtension
     {
         $domain1DefaultCurrencyData = $this->currencyDataFactory->create();
         $domain1DefaultCurrencyData->name = 'Czech crown';
@@ -207,11 +235,18 @@ class PriceExtensionTest extends FunctionalTestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $localization = new Localization($this->domain, ['en'], $administratorFrontSecurityFacadeMock);
+        $domain = $this->getMockBuilder(Domain::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $domain->method('getLocale')->willReturn($locale);
+        $domain->method('getId')->willReturn($domainId);
+
+        $localization = new Localization($domain, ['en'], $administratorFrontSecurityFacadeMock);
 
         return new PriceExtension(
             $currencyFacadeMock,
-            $this->domain,
+            $domain,
             $localization,
             $this->intlCurrencyRepository,
             $this->currencyFormatterFactory,
