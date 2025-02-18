@@ -530,6 +530,10 @@ services:
         tags:
             - { name: maker.command }
 
+    Shopsys\FrameworkBundle\Maker\FacadeMaker:
+        tags:
+            - { name: maker.command }
+
     Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider: ~
 
     Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder:
