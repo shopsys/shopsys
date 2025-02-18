@@ -28,7 +28,7 @@ class FriendlyUrlGeneratorFacade
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-    public function generateUrlsForSupportedEntities(OutputInterface $output)
+    public function generateUrlsForSupportedEntities(OutputInterface $output): void
     {
         foreach ($this->domain->getAll() as $domainConfig) {
             $output->writeln(' Start of generating friendly urls for domain ' . $domainConfig->getUrl());
@@ -48,12 +48,18 @@ class FriendlyUrlGeneratorFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return int
      */
-    protected function generateUrlsByDomainConfig(OutputInterface $output, DomainConfig $domainConfig)
+    protected function generateUrlsByDomainConfig(OutputInterface $output, DomainConfig $domainConfig): int
     {
         $totalCountOfCreatedUrls = 0;
         $friendlyUrlRouter = $this->domainRouterFactory->getFriendlyUrlRouter($domainConfig);
 
         foreach ($friendlyUrlRouter->getRouteCollection() as $routeName => $route) {
+            $isMultidomain = $route->getOption('multidomain') ?? true;
+
+            if ($isMultidomain === false) {
+                continue;
+            }
+
             $countOfCreatedUrls = $this->generateUrlsByRoute($domainConfig, $routeName);
             $totalCountOfCreatedUrls += $countOfCreatedUrls;
 
@@ -73,7 +79,7 @@ class FriendlyUrlGeneratorFacade
      * @param string $routeName
      * @return int
      */
-    protected function generateUrlsByRoute(DomainConfig $domainConfig, $routeName)
+    protected function generateUrlsByRoute(DomainConfig $domainConfig, string $routeName): int
     {
         $countOfCreatedUrls = 0;
 

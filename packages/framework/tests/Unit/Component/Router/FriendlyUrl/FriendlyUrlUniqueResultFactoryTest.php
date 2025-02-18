@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
+use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFactory;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlUniqueResultFactory;
@@ -35,9 +36,10 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
         $settingMock = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
         $domain = new Domain($this->getDomainConfigs(), $settingMock, $administratorFacadeMock);
+        $domainRouterFactoryMock = $this->createMock(DomainRouterFactory::class);
 
         $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(
-            new FriendlyUrlFactory($domain, new EntityNameResolver([]), new TransformStringHelper()),
+            new FriendlyUrlFactory($domain, new EntityNameResolver([]), new TransformStringHelper(), $domainRouterFactoryMock),
         );
 
         $attempt = 1;
@@ -59,9 +61,10 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
         $settingMock = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
         $domain = new Domain($this->getDomainConfigs(), $settingMock, $administratorFacadeMock);
+        $domainRouterFactoryMock = $this->createMock(DomainRouterFactory::class);
 
         $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(
-            new FriendlyUrlFactory($domain, new EntityNameResolver([]), new TransformStringHelper()),
+            new FriendlyUrlFactory($domain, new EntityNameResolver([]), new TransformStringHelper(), $domainRouterFactoryMock),
         );
 
         $attempt = 1;
@@ -86,9 +89,10 @@ class FriendlyUrlUniqueResultFactoryTest extends TestCase
         $settingMock = $this->createMock(Setting::class);
         $administratorFacadeMock = $this->createMock(AdministratorFacade::class);
         $domain = new Domain($this->getDomainConfigs(), $settingMock, $administratorFacadeMock);
+        $domainRouterFactoryMock = $this->createMock(DomainRouterFactory::class);
 
         $friendlyUrlUniqueResultFactory = new FriendlyUrlUniqueResultFactory(
-            new FriendlyUrlFactory($domain, new EntityNameResolver([]), new TransformStringHelper()),
+            new FriendlyUrlFactory($domain, new EntityNameResolver([]), new TransformStringHelper(), $domainRouterFactoryMock),
         );
 
         $attempt = 3;

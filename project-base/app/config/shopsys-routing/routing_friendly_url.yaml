@@ -24,6 +24,8 @@ front_category_seo:
 
 front_stores_detail:
     path: friendly-url
+    options:
+        multidomain: false
 
 front_flag_detail:
     path: friendly-url
