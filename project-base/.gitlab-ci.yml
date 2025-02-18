@@ -293,6 +293,7 @@ security:check:
         - service
     needs:
         - build
+        - build-storefront
     rules:
         -   if: '$CI_COMMIT_BRANCH == "master" && $CI_PIPELINE_SOURCE != "schedule"'
     script:
