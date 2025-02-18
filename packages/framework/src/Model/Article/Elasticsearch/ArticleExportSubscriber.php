@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractExportSubscriber;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexFacade;
+use Symfony\Component\Console\ConsoleEvents;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class ArticleExportSubscriber extends AbstractExportSubscriber
@@ -46,6 +47,9 @@ class ArticleExportSubscriber extends AbstractExportSubscriber
     {
         return [
             KernelEvents::RESPONSE => [
+                ['exportScheduledRows', -30],
+            ],
+            ConsoleEvents::TERMINATE => [
                 ['exportScheduledRows', -30],
             ],
         ];

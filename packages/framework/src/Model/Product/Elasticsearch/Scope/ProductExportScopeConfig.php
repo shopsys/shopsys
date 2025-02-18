@@ -24,6 +24,8 @@ class ProductExportScopeConfig
     public const string SCOPE_PRICE = 'product_price_scope';
     public const string SCOPE_CATEGORIES = 'product_categories_scope';
 
+    public const string SCOPE_DOMAIN_URL = 'product_domain_url_scope';
+
     public const string PRECONDITION_VISIBILITY_RECALCULATION = 'visibility_recalculation';
     public const string PRECONDITION_SELLING_DENIED_RECALCULATION = 'selling_denied_recalculation';
 
@@ -141,6 +143,11 @@ class ProductExportScopeConfig
         ], [
             self::PRECONDITION_VISIBILITY_RECALCULATION,
             self::PRECONDITION_SELLING_DENIED_RECALCULATION,
+        ]);
+        $this->addNewExportScopeRule(self::SCOPE_DOMAIN_URL, [
+            ProductExportFieldProvider::DESCRIPTION,
+            ProductExportFieldProvider::SEO_META_DESCRIPTION,
+            ProductExportFieldProvider::SHORT_DESCRIPTION,
         ]);
     }
 

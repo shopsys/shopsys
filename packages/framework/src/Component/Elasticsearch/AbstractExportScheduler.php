@@ -22,6 +22,14 @@ abstract class AbstractExportScheduler implements ResetInterface
     }
 
     /**
+     * @param int[] $rowIds
+     */
+    public function scheduleRowIdsForImmediateExport(array $rowIds): void
+    {
+        $this->rowIds = array_merge($this->rowIds, $rowIds);
+    }
+
+    /**
      * @return bool
      */
     public function hasAnyRowIdsForImmediateExport(): bool

@@ -170,4 +170,18 @@ class ArticleRepository
             ->andWhere('a.placement = :placement')->setParameter('placement', $placement)
             ->orderBy('a.position, a.id');
     }
+
+    /**
+     * @param int $domainId
+     * @return int[]
+     */
+    public function getAllIdsByDomainId(int $domainId): array
+    {
+        $result = $this->getArticlesByDomainIdQueryBuilder($domainId)
+            ->select('a.id')
+            ->getQuery()
+            ->execute();
+
+        return array_column($result, 'id');
+    }
 }

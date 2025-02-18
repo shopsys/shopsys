@@ -186,4 +186,13 @@ class ArticleFacade
             t('without positioning') => Article::PLACEMENT_NONE,
         ];
     }
+
+    /**
+     * @param int $domainId
+     * @return int[]
+     */
+    public function getAllIdsByDomainId(int $domainId): array
+    {
+        return $this->articleRepository->getAllIdsByDomainId($domainId);
+    }
 }
