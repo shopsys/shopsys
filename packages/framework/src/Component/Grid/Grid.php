@@ -269,10 +269,10 @@ class Grid
     }
 
     /**
-     * @param int $rowId
+     * @param int|string $rowId
      * @return \Shopsys\FrameworkBundle\Component\Grid\GridView
      */
-    public function createViewWithOneRow(int $rowId): GridView
+    public function createViewWithOneRow(int|string $rowId): GridView
     {
         $gridView = $this->createViewWithoutRows();
         $this->loadRowsWithOneRow($rowId);
