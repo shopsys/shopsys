@@ -1,5 +1,10 @@
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useChangePaymentInOrderMutation } from 'graphql/requests/orders/mutations/ChangePaymentInOrderMutation.generated';
+import { onGtmPaymentTryEventHandler } from 'gtm/handlers/onGtmPaymentEventHandler';
+import {
+    getGtmPaymentEventFromLocalStorage,
+    removeGtmPaymentEventFromLocalStorage,
+} from 'gtm/utils/gtmPaymentEventLocalStorage';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
@@ -22,6 +27,7 @@ export const useChangePaymentInOrder = () => {
     const changePaymentInOrderHandler = async (
         orderUuid: string,
         paymentUuid: string,
+        paymentName: string,
         paymentGoPayBankSwift?: string | null,
         withRedirectAfterChanging = true,
     ) => {
@@ -42,14 +48,23 @@ export const useChangePaymentInOrder = () => {
             return changePaymentInOrderData;
         }
 
+        let redirectPromise: Promise<boolean>;
+
         if (isUserLoggedIn) {
-            router.push({
+            redirectPromise = router.push({
                 pathname: customerOrderDetailUrl,
                 query: { orderNumber: editedOrder.number },
             });
         } else {
-            router.push(orderByHashUrl + editedOrder.urlHash);
+            redirectPromise = router.push(orderByHashUrl + editedOrder.urlHash);
         }
+
+        redirectPromise.then(() => {
+            const { gtmPaymentEvent } = getGtmPaymentEventFromLocalStorage();
+            const retryCount = gtmPaymentEvent ? gtmPaymentEvent.ecommerce.paymentRetryCount + 1 : 0;
+            onGtmPaymentTryEventHandler(editedOrder.number, paymentName, true, undefined, retryCount);
+            removeGtmPaymentEventFromLocalStorage();
+        });
 
         return changePaymentInOrderData;
     };

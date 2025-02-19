@@ -12,6 +12,7 @@ export enum GtmEventType {
     autocomplete_result_click = 'ec.autocomplete_result_click',
     transport_change = 'ec.transport_change',
     contact_information_page_view = 'ec.contact_information_view',
+    payment = 'ec.payment',
     payment_change = 'ec.payment_change',
     payment_fail = 'ec.payment_fail',
     create_order = 'ec.create_order',

@@ -56,6 +56,7 @@ export const PaymentsInOrderSelect: FC<PaymentsInOrderSelectProps> = ({
             const changePaymentInOrderData = await changePaymentInOrderHandler(
                 orderUuid,
                 selectedPaymentForChange.uuid,
+                selectedPaymentForChange.name,
                 selectedPaymentSwiftForChange,
                 selectedPaymentForChange.type !== PaymentTypeEnum.GoPay && withRedirectAfterChanging,
             );

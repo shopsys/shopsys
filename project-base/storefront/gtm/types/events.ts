@@ -193,6 +193,19 @@ export type GtmContactInformationPageViewEventType = GtmEventInterface<
     }
 >;
 
+export type GtmPaymentEventType = GtmEventInterface<
+    GtmEventType.payment,
+    {
+        ecommerce: {
+            id: string;
+            isPaymentSuccessful: boolean;
+            paymentRetryCount: number;
+            PaymentFalseReason?: string | null;
+            paymentType: string;
+        };
+    }
+>;
+
 export type GtmPaymentChangeEventType = GtmEventInterface<
     GtmEventType.payment_change,
     {
