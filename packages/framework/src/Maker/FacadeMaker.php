@@ -62,7 +62,7 @@ class FacadeMaker extends BaseMaker
     protected function getConstructorDependencies(): array
     {
         return [
-            EntityManagerInterface::class,
+            'em' => EntityManagerInterface::class,
             $this->entityFullyQualifiedName . 'Repository',
         ];
     }

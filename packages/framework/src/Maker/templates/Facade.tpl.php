@@ -20,8 +20,8 @@ class <?= $class_name; ?>
     {
         $<?= lcfirst($entity_name); ?> = new <?= $entity_name; ?>($<?= lcfirst($entity_name); ?>Data);
 
-        $this->entityManagerInterface->persist($<?= lcfirst($entity_name); ?>);
-        $this->entityManagerInterface->flush();
+        $this->em->persist($<?= lcfirst($entity_name); ?>);
+        $this->em->flush();
 
         return $<?= lcfirst($entity_name); ?>;
     }
@@ -31,7 +31,7 @@ class <?= $class_name; ?>
         $<?= lcfirst($entity_name); ?> = $this->getById($<?= lcfirst($entity_name); ?>Id);
         $<?= lcfirst($entity_name); ?>->edit($<?= lcfirst($entity_name); ?>Data);
 
-        $this->entityManagerInterface->flush();
+        $this->em->flush();
 
         return $<?= lcfirst($entity_name); ?>;
     }
@@ -50,7 +50,7 @@ class <?= $class_name; ?>
     {
         $<?= lcfirst($entity_name); ?> = $this->getById($<?= lcfirst($entity_name); ?>Id);
 
-        $this->entityManagerInterface->remove($<?= lcfirst($entity_name); ?>);
-        $this->entityManagerInterface->flush();
+        $this->em->remove($<?= lcfirst($entity_name); ?>);
+        $this->em->flush();
     }
 }

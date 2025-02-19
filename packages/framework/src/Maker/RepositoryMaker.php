@@ -64,7 +64,7 @@ class RepositoryMaker extends BaseMaker
     protected function getConstructorDependencies(): array
     {
         return [
-            EntityManagerInterface::class,
+            'em' => EntityManagerInterface::class,
         ];
     }
 }

@@ -18,7 +18,7 @@ class <?= $class_name; ?>
 
     protected function get<?= $entity_name; ?>Repository(): EntityRepository
     {
-        return $this->entityManagerInterface->getRepository(<?= $entity_name; ?>::class);
+        return $this->em->getRepository(<?= $entity_name; ?>::class);
     }
 
     public function getById(int $<?= lcfirst($entity_name); ?>Id): <?= $entity_name; ?>

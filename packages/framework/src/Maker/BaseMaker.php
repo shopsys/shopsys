@@ -126,9 +126,10 @@ abstract class BaseMaker extends AbstractMaker
     {
         $formattedDependencies = [];
 
-        foreach ($this->getConstructorDependencies() as $dependency) {
+        foreach ($this->getConstructorDependencies() as $key => $dependency) {
             $dependencyType = basename(str_replace('\\', '/', $dependency));
-            $formattedDependencies[] = sprintf('%s $%s', $dependencyType, lcfirst($dependencyType));
+            $dependencyName = is_string($key) ? $key : lcfirst($dependencyType);
+            $formattedDependencies[] = sprintf('%s $%s', $dependencyType, $dependencyName);
         }
 
         return $formattedDependencies;
