@@ -65,7 +65,7 @@ class DataFixtureMaker extends BaseMaker
             AbstractReferenceFixture::class,
             ObjectManager::class,
             DependentFixtureInterface::class,
-            $this->entityFullyQualifiedName . 'Data',
+            $this->entityConfig->getEntityFullyQualifiedName() . 'Data',
         ];
     }
 
@@ -76,8 +76,8 @@ class DataFixtureMaker extends BaseMaker
     protected function getConstructorDependencies(): array
     {
         return [
-            $this->entityFullyQualifiedName . 'Facade',
-            $this->entityFullyQualifiedName . 'DataFactory',
+            $this->entityConfig->getEntityFullyQualifiedName() . 'Facade',
+            $this->entityConfig->getEntityFullyQualifiedName() . 'DataFactory',
         ];
     }
 }

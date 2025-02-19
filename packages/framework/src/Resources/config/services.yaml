@@ -526,6 +526,8 @@ services:
         tags:
             - { name: validator.constraint_validator, alias: Shopsys\FrameworkBundle\Form\Constraints\UniqueSlugsOnDomainsValidator }
 
+    Shopsys\FrameworkBundle\Maker\BaseMakerDependency: ~
+
     Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider: ~
 
     Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder:

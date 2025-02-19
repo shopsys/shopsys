@@ -51,7 +51,7 @@ class FacadeMaker extends BaseMaker
     protected function getUseStatements(): array
     {
         return [
-            $this->entityFullyQualifiedName . 'Data',
+            $this->entityConfig->getEntityFullyQualifiedName() . 'Data',
         ];
     }
 
@@ -63,7 +63,7 @@ class FacadeMaker extends BaseMaker
     {
         return [
             'em' => EntityManagerInterface::class,
-            $this->entityFullyQualifiedName . 'Repository',
+            $this->entityConfig->getEntityFullyQualifiedName() . 'Repository',
         ];
     }
 }

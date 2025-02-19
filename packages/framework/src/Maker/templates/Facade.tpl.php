@@ -1,4 +1,5 @@
 <?= "<?php\n"; ?>
+<?php /** @var \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityConfig $entity_config */ $entity_config ?>
 
 declare(strict_types=1);
 
@@ -16,41 +17,41 @@ class <?= $class_name; ?>
     ) {
     }
 
-    public function create(<?= $entity_name; ?>Data $<?= lcfirst($entity_name); ?>Data): <?= $entity_name; ?>
+    public function create(<?= $entity_config->entityName; ?>Data $<?= lcfirst($entity_config->entityName); ?>Data): <?= $entity_config->entityName; ?>
     {
-        $<?= lcfirst($entity_name); ?> = new <?= $entity_name; ?>($<?= lcfirst($entity_name); ?>Data);
+        $<?= lcfirst($entity_config->entityName); ?> = new <?= $entity_config->entityName; ?>($<?= lcfirst($entity_config->entityName); ?>Data);
 
-        $this->em->persist($<?= lcfirst($entity_name); ?>);
+        $this->em->persist($<?= lcfirst($entity_config->entityName); ?>);
         $this->em->flush();
 
-        return $<?= lcfirst($entity_name); ?>;
+        return $<?= lcfirst($entity_config->entityName); ?>;
     }
 
-    public function edit(int $<?= lcfirst($entity_name); ?>Id, <?= $entity_name; ?>Data $<?= lcfirst($entity_name); ?>Data): <?= $entity_name; ?>
+    public function edit(int $<?= lcfirst($entity_config->entityName); ?>Id, <?= $entity_config->entityName; ?>Data $<?= lcfirst($entity_config->entityName); ?>Data): <?= $entity_config->entityName; ?>
     {
-        $<?= lcfirst($entity_name); ?> = $this->getById($<?= lcfirst($entity_name); ?>Id);
-        $<?= lcfirst($entity_name); ?>->edit($<?= lcfirst($entity_name); ?>Data);
+        $<?= lcfirst($entity_config->entityName); ?> = $this->getById($<?= lcfirst($entity_config->entityName); ?>Id);
+        $<?= lcfirst($entity_config->entityName); ?>->edit($<?= lcfirst($entity_config->entityName); ?>Data);
 
         $this->em->flush();
 
-        return $<?= lcfirst($entity_name); ?>;
+        return $<?= lcfirst($entity_config->entityName); ?>;
     }
 
-    public function getById(int $<?= lcfirst($entity_name); ?>Id): <?= $entity_name; ?>
+    public function getById(int $<?= lcfirst($entity_config->entityName); ?>Id): <?= $entity_config->entityName; ?>
     {
-        return $this-><?= lcfirst($entity_name); ?>Repository->getById($<?= lcfirst($entity_name); ?>Id);
+        return $this-><?= lcfirst($entity_config->entityName); ?>Repository->getById($<?= lcfirst($entity_config->entityName); ?>Id);
     }
 
-    public function findById(int $<?= lcfirst($entity_name); ?>Id): ?<?= $entity_name; ?>
+    public function findById(int $<?= lcfirst($entity_config->entityName); ?>Id): ?<?= $entity_config->entityName; ?>
     {
-        return $this-><?= lcfirst($entity_name); ?>Repository->findById($<?= lcfirst($entity_name); ?>Id);
+        return $this-><?= lcfirst($entity_config->entityName); ?>Repository->findById($<?= lcfirst($entity_config->entityName); ?>Id);
     }
 
-    public function delete(int $<?= lcfirst($entity_name); ?>Id): void
+    public function delete(int $<?= lcfirst($entity_config->entityName); ?>Id): void
     {
-        $<?= lcfirst($entity_name); ?> = $this->getById($<?= lcfirst($entity_name); ?>Id);
+        $<?= lcfirst($entity_config->entityName); ?> = $this->getById($<?= lcfirst($entity_config->entityName); ?>Id);
 
-        $this->em->remove($<?= lcfirst($entity_name); ?>);
+        $this->em->remove($<?= lcfirst($entity_config->entityName); ?>);
         $this->em->flush();
     }
 }

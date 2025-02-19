@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Maker;
 
 use Shopsys\FrameworkBundle\Command\EntitiesDumpCommand;
+use Shopsys\FrameworkBundle\Maker\EntityConfig\EntityConfig;
+use Shopsys\FrameworkBundle\Maker\EntityConfig\EntityConfigFactory;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\DependencyBuilder;
@@ -14,27 +16,35 @@ use Symfony\Bundle\MakerBundle\Maker\AbstractMaker;
 use Symfony\Bundle\MakerBundle\Util\ClassNameDetails;
 use Symfony\Bundle\MakerBundle\Util\UseStatementGenerator;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Process\Process;
+use Symfony\Contracts\Service\Attribute\Required;
 
 abstract class BaseMaker extends AbstractMaker
 {
-    protected const string ENTITY_NAMESPACE_PATTERN = 'App\\Model\\%s\\';
+    public const string ENTITY_NAME_ARGUMENT = 'entityName';
 
-    protected string $entityName;
+    protected EntityConfig $entityConfig;
 
-    protected string $entityNamespace;
+    protected EntityConfigFactory $entityConfigFactory;
 
-    protected string $entityFullyQualifiedName;
+    protected KernelInterface $kernel;
 
     /**
-     * @param \Symfony\Component\HttpKernel\KernelInterface $kernel
+     * Set mandatory dependencies with setter injection to keep constructor clean for extending classes
+     *
+     * @param \Shopsys\FrameworkBundle\Maker\BaseMakerDependency $baseMakerDependency
+     * @internal This method is public only for the purpose of setter injection
      */
-    public function __construct(protected readonly KernelInterface $kernel)
+    #[Required]
+    public function setDependencies(BaseMakerDependency $baseMakerDependency): void
     {
+        $this->kernel = $baseMakerDependency->kernel;
+        $this->entityConfigFactory = $baseMakerDependency->entityConfigFactory;
     }
 
     /**
@@ -43,7 +53,17 @@ abstract class BaseMaker extends AbstractMaker
     public function configureCommand(Command $command, InputConfiguration $inputConfig)
     {
         $command
-            ->addArgument('name', InputArgument::REQUIRED, 'The entity name (e.g. <fg=yellow>Kitty</>)');
+            ->addArgument(self::ENTITY_NAME_ARGUMENT, InputArgument::REQUIRED, 'The entity name (e.g. <fg=yellow>Kitty</>)');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function interact(InputInterface $input, ConsoleStyle $io, Command $command)
+    {
+        parent::interact($input, $io, $command);
+
+        $this->entityConfig = $this->entityConfigFactory->createWithEntityNameOnly($input);
     }
 
     /**
@@ -51,10 +71,6 @@ abstract class BaseMaker extends AbstractMaker
      */
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator): void
     {
-        $this->entityName = $input->getArgument('name');
-        $this->entityNamespace = sprintf(self::ENTITY_NAMESPACE_PATTERN, ucfirst($this->entityName));
-        $this->entityFullyQualifiedName = $this->entityNamespace . $this->entityName;
-
         $classNameDetails = $this->createClassNameDetails($generator);
 
         $classFile = $generator->generateClass(
@@ -63,12 +79,12 @@ abstract class BaseMaker extends AbstractMaker
             [
                 'use_statements' => $this->getUseStatementsGenerator(),
                 'constructor_dependencies' => $this->getFormattedConstructorDependencies(),
-                'entity_name' => $this->entityName,
+                'entity_config' => $this->entityConfig,
             ],
         );
         $generator->writeChanges();
 
-        $this->fixStandards($classFile, $input);
+        $this->fixStandards($classFile);
         $this->writeSuccessMessage($io);
     }
 
@@ -79,7 +95,7 @@ abstract class BaseMaker extends AbstractMaker
     protected function createClassNameDetails(Generator $generator): ClassNameDetails
     {
         return $generator->createClassNameDetails(
-            $this->entityName,
+            $this->entityConfig->entityName,
             preg_replace('/\bApp\\\\/', '', $this->getGeneratedClassNamespace(), 1),
             $this->getGeneratedClassSuffix(),
         );
@@ -90,18 +106,17 @@ abstract class BaseMaker extends AbstractMaker
      */
     protected function getGeneratedClassNamespace(): string
     {
-        return $this->entityNamespace;
+        return $this->entityConfig->getEntityNamespace();
     }
 
     /**
      * @param string $fileName
-     * @param \Symfony\Component\Console\Input\InputInterface $input
      */
-    protected function fixStandards(string $fileName, InputInterface $input): void
+    protected function fixStandards(string $fileName): void
     {
         if (!file_exists($this->kernel->getCacheDir() . '/' . EntitiesDumpCommand::OUTPUT_FILE)) {
             $application = new Application($this->kernel);
-            $application->find(EntitiesDumpCommand::getDefaultName())->run($input, new NullOutput());
+            $application->find(EntitiesDumpCommand::getDefaultName())->run(new ArrayInput([]), new NullOutput());
         }
 
         $process = new Process(['php', 'vendor/bin/ecs', 'check', '--fix', $fileName]);

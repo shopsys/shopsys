@@ -6,6 +6,13 @@ namespace Shopsys\FrameworkBundle\Command;
 
 use Exception;
 use RuntimeException;
+use Shopsys\FrameworkBundle\Maker\BaseMaker;
+use Shopsys\FrameworkBundle\Maker\DataFixtureMaker;
+use Shopsys\FrameworkBundle\Maker\EntityConfig\EntityConfigFactory;
+use Shopsys\FrameworkBundle\Maker\EntityMaker;
+use Shopsys\FrameworkBundle\Maker\FacadeMaker;
+use Shopsys\FrameworkBundle\Maker\NotFoundExceptionMaker;
+use Shopsys\FrameworkBundle\Maker\RepositoryMaker;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -15,18 +22,25 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
-    name: 'shopsys:generate-entity-agenda',
+    name: 'make:shopsys:entity-agenda',
     description: 'Generates entity, data object, data object factory, facade, repository, and data fixture classes for the given entity name',
 )]
 class GenerateEntityAgendaCommand extends Command
 {
     /**
+     * @param \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityConfigFactory $entityConfigFactory
+     */
+    public function __construct(protected readonly EntityConfigFactory $entityConfigFactory)
+    {
+        parent::__construct();
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function configure(): void
     {
-        $this
-            ->addArgument('name', InputArgument::REQUIRED, 'The name of the entity to generate the agenda for');
+        $this->addArgument(BaseMaker::ENTITY_NAME_ARGUMENT, InputArgument::REQUIRED, 'The entity name (e.g. <fg=yellow>Kitty</>)');
     }
 
     /**
@@ -35,7 +49,7 @@ class GenerateEntityAgendaCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $entityName = $input->getArgument('name');
+        $entityConfig = $this->entityConfigFactory->create($input, $io);
 
         $application = $this->getApplication();
 
@@ -44,17 +58,29 @@ class GenerateEntityAgendaCommand extends Command
         }
 
         $commandNames = [
-            'make:shopsys:repository',
-            'make:shopsys:facade',
-            'make:shopsys:not-found-exception',
-            'make:shopsys:data-fixture',
+            EntityMaker::getCommandName(),
+            RepositoryMaker::getCommandName(),
+            FacadeMaker::getCommandName(),
+            NotFoundExceptionMaker::getCommandName(),
+            DataFixtureMaker::getCommandName(),
         ];
 
         foreach ($commandNames as $commandName) {
-            $commandInput = new ArrayInput([
+            $commandInputParameters = [
                 'command' => $commandName,
-                'name' => $entityName,
-            ]);
+                BaseMaker::ENTITY_NAME_ARGUMENT => $entityConfig->entityName,
+            ];
+
+            if ($commandName === EntityMaker::getCommandName()) {
+                $commandInputParameters += [
+                    '--' . EntityMaker::TABLE_NAME_OPTION => $entityConfig->tableName,
+                    '--' . EntityMaker::IS_TRANSLATABLE_OPTION => $entityConfig->isTranslatable,
+                    '--' . EntityMaker::HAS_ID_OPTION => $entityConfig->hasId,
+                    '--' . EntityMaker::HAS_UUID_OPTION => $entityConfig->hasUuid,
+                ];
+            }
+
+            $commandInput = new ArrayInput($commandInputParameters);
 
             try {
                 $application->doRun($commandInput, $output);

@@ -53,7 +53,7 @@ class RepositoryMaker extends BaseMaker
     {
         return [
             EntityRepository::class,
-            $this->entityNamespace . 'Exception\\' . $this->entityName . 'NotFoundException',
+            $this->entityConfig->getEntityNamespace() . 'Exception\\' . $this->entityConfig->entityName . 'NotFoundException',
         ];
     }
 
