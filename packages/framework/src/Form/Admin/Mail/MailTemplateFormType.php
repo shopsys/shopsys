@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Mail;
 
+use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Form\Admin\GrapesJsMailType;
 use Shopsys\FrameworkBundle\Form\Constraints\Contains;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
@@ -16,7 +17,6 @@ use Shopsys\FrameworkBundle\Model\Watchdog\Mail\WatchdogMail;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -87,7 +87,10 @@ class MailTemplateFormType extends AbstractType
             ]);
         }
 
-        $builder->add('save', SubmitType::class);
+        $builder->add('actionBar', ActionBarType::class, [
+            'back_route' => 'admin_mail_template',
+            'entity' => $options['entity'],
+        ]);
     }
 
     /**

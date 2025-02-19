@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Seo;
 
+use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueSeoPageSlug;
@@ -13,7 +14,6 @@ use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPage;
 use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageData;
 use Shopsys\FrameworkBundle\Model\Seo\Page\SeoPageFacade;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
@@ -47,7 +47,10 @@ class SeoPageFormType extends AbstractType
             ->add($builderMainGroup)
             ->add($builderAttributesGroup)
             ->add($builderImageGroup)
-            ->add('save', SubmitType::class);
+            ->add('actionBar', ActionBarType::class, [
+                'back_route' => 'admin_seopage_list',
+                'entity' => $options['seoPage'],
+            ]);
     }
 
     /**

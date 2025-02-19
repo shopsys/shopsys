@@ -135,6 +135,8 @@ class CustomerController extends AdminBaseController
         $form = $this->createForm(CustomerUserFormType::class, $customerUserUpdateData->customerUserData, [
             'customerUser' => $customerUser,
             'domain_id' => $this->adminDomainTabsFacade->getSelectedDomainId(),
+            'back_url' => $this->resolveBackUrl($customerUser->getCustomer()),
+            'back_url_text' => $this->resolveBackUrlText($customerUser->getCustomer()),
             'renderSaveButton' => true,
         ]);
         $form->handleRequest($request);
@@ -170,8 +172,6 @@ class CustomerController extends AdminBaseController
             'customerUser' => $customerUser,
             'orders' => $orders,
             'ssoLoginAsUserUrl' => $this->loginAdministratorAsUserUrlProvider->getSsoLoginAsCustomerUserUrl($customerUser),
-            'backUrl' => $this->resolveBackUrl($customerUser->getCustomer()),
-            'backUrlText' => $this->resolveBackUrlText($customerUser->getCustomer()),
         ]);
     }
 
@@ -286,6 +286,8 @@ class CustomerController extends AdminBaseController
             'domain_id' => $customer->getDomainId(),
             'renderSaveButton' => true,
             'allowEditSystemData' => false,
+            'back_url' => $this->resolveBackUrl($customer),
+            'back_url_text' => $this->resolveBackUrlText($customer),
         ]);
         $form->handleRequest($request);
 
@@ -316,8 +318,6 @@ class CustomerController extends AdminBaseController
         return $this->render('@ShopsysFramework/Admin/Content/Customer/User/new.html.twig', [
             'form' => $form->createView(),
             'billingAddress' => $billingAddress,
-            'backUrl' => $this->resolveBackUrl($customer),
-            'backUrlText' => $this->resolveBackUrlText($customer),
         ]);
     }
 

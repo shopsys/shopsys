@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\PriceList;
 
+use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\BasicFileUploadType;
 use Shopsys\FrameworkBundle\Form\Constraints\MustUploadFile;
@@ -14,7 +15,6 @@ use Shopsys\FrameworkBundle\Model\PriceList\PriceListCsvColumnsEnum;
 use Shopsys\FrameworkBundle\Model\PriceList\PriceListFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -123,10 +123,10 @@ final class ImportPriceListFormType extends AbstractType
                 'label' => t('CSV file'),
             ]);
 
-        $builder
-            ->add('save', SubmitType::class, [
-                'label' => t('Import'),
-            ]);
+        $builder->add('actionBar', ActionBarType::class, [
+            'back_route' => 'admin_pricelist_list',
+            'save_label' => t('Import'),
+        ]);
     }
 
     /**

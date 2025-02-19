@@ -10,7 +10,6 @@ use Shopsys\FrameworkBundle\Form\Admin\Module\ModulesFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Superadmin\InputPriceTypeFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Superadmin\MailWhitelistFormType;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
-use Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider;
 use Shopsys\FrameworkBundle\Model\Mail\Setting\MailSettingFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
 use Shopsys\FrameworkBundle\Model\Module\ModuleList;
@@ -30,7 +29,6 @@ class SuperadminController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      * @param \Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory $localizedRouterFactory
      * @param \Shopsys\FrameworkBundle\Model\Mail\Setting\MailSettingFacade $mailSettingFacade
-     * @param \Shopsys\FrameworkBundle\Model\Mail\MailerSettingProvider $mailerSettingProvider
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      */
     public function __construct(
@@ -41,7 +39,6 @@ class SuperadminController extends AdminBaseController
         protected readonly Localization $localization,
         protected readonly LocalizedRouterFactory $localizedRouterFactory,
         protected readonly MailSettingFacade $mailSettingFacade,
-        protected readonly MailerSettingProvider $mailerSettingProvider,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
     ) {
     }
@@ -168,7 +165,6 @@ class SuperadminController extends AdminBaseController
 
         return $this->render('@ShopsysFramework/Admin/Content/Superadmin/mailWhitelist.html.twig', [
             'form' => $form->createView(),
-            'isWhitelistForced' => $this->mailerSettingProvider->isWhitelistForced(),
         ]);
     }
 }

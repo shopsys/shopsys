@@ -7,26 +7,14 @@
 
 {% block main_content %}
     <div class="js-mail-template">
-        {{ form_start(form, { 'attr': {'class': 'js-mail-template'} }) }}
-            {{ form_errors(form) }}
+        {{ form(form, { 'attr': {'class': 'js-mail-template'}}) }}
 
-            {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
-                {% block fixed_bar_content %}
-                    <a href="{{ url('admin_mail_template') }}" class="btn-link-style">{{ 'Back to overview'|trans }}</a>
-                    {{ form_save(entity|default(null), form) }}
-                {% endblock %}
-            {% endembed %}
+        {% if subjectVariables %}
+            {{ applicableVariablesMacro.applicableVariables('Applicable variables for Subject'|trans, subjectVariables, requiredSubjectVariables, labeledVariables) }}
+        {% endif %}
 
-            {{ form_rest(form) }}
-
-            {% if subjectVariables %}
-                {{ applicableVariablesMacro.applicableVariables('Applicable variables for Subject'|trans, subjectVariables, requiredSubjectVariables, labeledVariables) }}
-            {% endif %}
-
-            {% if bodyVariables %}
-                {{ applicableVariablesMacro.applicableVariables('Applicable variables for Content'|trans, bodyVariables, requiredBodyVariables, labeledVariables) }}
-            {% endif %}
-
-        {{ form_end(form) }}
+        {% if bodyVariables %}
+            {{ applicableVariablesMacro.applicableVariables('Applicable variables for Content'|trans, bodyVariables, requiredBodyVariables, labeledVariables) }}
+        {% endif %}
     </div>
 {% endblock %}

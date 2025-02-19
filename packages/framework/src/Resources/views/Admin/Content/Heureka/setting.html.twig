@@ -7,14 +7,7 @@
     {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainController::domainTabsAction')) }}
 
     {% if form is not null %}
-        {{ form_start(form) }}
-
-            {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
-                {% block fixed_bar_content %}
-                    {{ form_widget(form.save, { label: 'Save changes'|trans }) }}
-                {% endblock %}
-            {% endembed %}
-        {{ form_end(form) }}
+        {{ form(form) }}
     {% else %}
         <div class="in-message in-message--info">
             {{ 'Heureka - Verified by Customer service does not support the language of this domain.'|trans }}

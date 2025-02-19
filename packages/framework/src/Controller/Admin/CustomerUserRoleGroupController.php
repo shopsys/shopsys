@@ -97,7 +97,9 @@ class CustomerUserRoleGroupController extends AdminBaseController
         $customerUserRoleGroup = $this->customerUserRoleGroupFacade->getById($id);
         $administratorRoleGroupData = $this->customerUserRoleGroupDataFactory->createFromCustomerUserRoleGroup($customerUserRoleGroup);
 
-        $form = $this->createForm(CustomerUserRoleGroupFormType::class, $administratorRoleGroupData);
+        $form = $this->createForm(CustomerUserRoleGroupFormType::class, $administratorRoleGroupData, [
+            'customer_user_role_group' => $customerUserRoleGroup,
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

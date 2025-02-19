@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Seo;
 
+use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Count;
@@ -63,7 +63,9 @@ class HreflangSettingFormType extends AbstractType
                     new Callback(['callback' => [$this, 'validateDomainUniqueness']]),
                 ],
             ])
-            ->add('save', SubmitType::class);
+            ->add('actionBar', ActionBarType::class, [
+                'save_label' => t('Save changes'),
+            ]);
 
         $builder->get(self::FIELD_HREFLANG_COLLECTION)->addModelTransformer($this->domainConfigCollectionToDomainIdsTransformer);
     }

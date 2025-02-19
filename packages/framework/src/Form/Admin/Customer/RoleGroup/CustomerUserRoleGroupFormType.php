@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Customer\RoleGroup;
 
+use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
+use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroupData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
@@ -50,7 +51,10 @@ class CustomerUserRoleGroupFormType extends AbstractType
             'choice_translation_domain' => false,
         ]);
 
-        $builder->add('save', SubmitType::class);
+        $builder->add('actionBar', ActionBarType::class, [
+            'back_route' => 'admin_superadmin_customer_user_role_group_list',
+            'entity' => $options['customer_user_role_group'],
+        ]);
     }
 
     /**
@@ -59,7 +63,10 @@ class CustomerUserRoleGroupFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
+            ->setRequired('customer_user_role_group')
+            ->setAllowedTypes('customer_user_role_group', [CustomerUserRoleGroup::class, 'null'])
             ->setDefaults([
+                'customer_user_role_group' => null,
                 'data_class' => CustomerUserRoleGroupData::class,
                 'attr' => ['novalidate' => 'novalidate'],
             ]);

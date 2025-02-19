@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Category\TopCategory;
 
+use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Form\SortableValuesType;
 use Shopsys\FrameworkBundle\Form\Transformers\CategoriesIdsToCategoriesTransformer;
 use Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -42,13 +42,16 @@ class TopCategoriesFormType extends AbstractType
             ->add(
                 $builder
                     ->create('categories', SortableValuesType::class, [
+                        'label' => t('Category'),
                         'labels_by_value' => $categoryPaths,
                         'required' => false,
                     ])
                     ->addViewTransformer($this->removeDuplicatesTransformer)
                     ->addModelTransformer($this->categoriesIdsToCategoriesTransformer),
             )
-            ->add('save', SubmitType::class);
+            ->add('actionBar', ActionBarType::class, [
+                'save_label' => t('Save changes'),
+            ]);
     }
 
     /**

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Customer\User;
 
+use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Constraints\Email;
 use Shopsys\FrameworkBundle\Form\Constraints\FieldsAreNotIdentical;
@@ -26,7 +27,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -228,7 +228,11 @@ class CustomerUserFormType extends AbstractType
             ->add($builderPersonalDataGroup);
 
         if ($options['renderSaveButton']) {
-            $builder->add('save', SubmitType::class);
+            $builder->add('actionBar', ActionBarType::class, [
+                'back_url' => $options['back_url'],
+                'back_label' => $options['back_url_text'],
+                'entity' => $options['customerUser'],
+            ]);
         }
     }
 
@@ -266,12 +270,14 @@ class CustomerUserFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
-            ->setRequired(['customerUser', 'domain_id'])
+            ->setRequired(['customerUser', 'domain_id', 'back_url', 'back_url_text'])
             ->setDefined(['renderSaveButton', 'allowEditSystemData'])
             ->setAllowedTypes('customerUser', [CustomerUser::class, 'null'])
             ->setAllowedTypes('domain_id', 'int')
             ->setAllowedTypes('renderSaveButton', 'bool')
             ->setAllowedTypes('allowEditSystemData', 'bool')
+            ->setAllowedTypes('back_url', ['string', 'null'])
+            ->setAllowedTypes('back_url_text', ['string', 'null'])
             ->setDefaults([
                 'data_class' => CustomerUserData::class,
                 'attr' => ['novalidate' => 'novalidate'],
@@ -291,6 +297,8 @@ class CustomerUserFormType extends AbstractType
                 ],
                 'renderSaveButton' => false,
                 'allowEditSystemData' => true,
+                'back_url' => null,
+                'back_url_text' => null,
             ]);
     }
 }

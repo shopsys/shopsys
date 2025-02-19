@@ -1081,6 +1081,20 @@
     {% endif %}
 {% endblock %}
 
+{% block action_bar_row %}
+    {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
+        {% block fixed_bar_content %}
+            {% for child in form %}
+                {{- form_widget(child) -}}
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+{% endblock%}
+
+{% block link_widget %}
+    <a href="{{ link }}" class="btn-link-style">{{ label }}</a>
+{% endblock %}
+
 {% macro icon(attr) %}
     {% if attr.icon is defined %}
         {{ info_icon(attr.iconTitle|default(''),

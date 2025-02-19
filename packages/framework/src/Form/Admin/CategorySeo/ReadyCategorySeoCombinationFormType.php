@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\CategorySeo;
 
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\UrlListType;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMix;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -74,11 +74,10 @@ final class ReadyCategorySeoCombinationFormType extends AbstractType
             ])
             ->add('categorySeoFilterFormTypeAllQueriesJson', HiddenType::class)
             ->add('selectedCategorySeoMixCombinationJson', HiddenType::class)
-            ->add('save', SubmitType::class, [
-                'label' => t('Save'),
-                'attr' => [
-                    'class' => 'margin-top-20',
-                ],
+            ->add('actionBar', ActionBarType::class, [
+                'back_url' => $options['new_combination_url'],
+                'back_label' => t('Back to overview of available combinations'),
+                'save_label' => t('Save'),
             ]);
     }
 
@@ -88,8 +87,9 @@ final class ReadyCategorySeoCombinationFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
-            ->setRequired('readyCategorySeoMix')
+            ->setRequired(['readyCategorySeoMix', 'new_combination_url'])
             ->addAllowedTypes('readyCategorySeoMix', [ReadyCategorySeoMix::class, 'null'])
+            ->addAllowedTypes('new_combination_url', 'string')
             ->setDefaults([
                 'data_class' => ReadyCategorySeoMixData::class,
                 'attr' => ['novalidate' => 'novalidate'],

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Product;
 
+use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Form\ProductsType;
 use Shopsys\FrameworkBundle\Form\ProductType;
 use Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
@@ -45,8 +45,9 @@ class VariantFormType extends AbstractType
                     ])
                     ->addModelTransformer(new RemoveDuplicatesFromArrayTransformer()),
             )
-            ->add('save', SubmitType::class, [
-                'label' => t('Create'),
+            ->add('actionBar', ActionBarType::class, [
+                'back_route' => 'admin_product_list',
+                'save_label' => t('Create'),
             ]);
     }
 

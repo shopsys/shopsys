@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Product\Parameter;
 
+use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
@@ -11,7 +12,6 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupData;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupFacade;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
@@ -47,7 +47,10 @@ class ParameterGroupFormType extends AbstractType
                     ],
                 ],
             ])
-            ->add('save', SubmitType::class);
+            ->add('actionBar', ActionBarType::class, [
+                'back_route' => 'admin_parametergroup_list',
+                'entity' => $options['parameterGroup'],
+            ]);
     }
 
     /**

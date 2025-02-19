@@ -4,8 +4,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n"
 
+msgid "Back to overview"
+msgstr ""
+
+msgid "Create"
+msgstr ""
+
 msgid "No"
 msgstr "No"
+
+msgid "Save changes"
+msgstr ""
 
 msgid "Yes"
 msgstr "Yes"

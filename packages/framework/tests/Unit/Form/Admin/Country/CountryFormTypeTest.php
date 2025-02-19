@@ -6,6 +6,7 @@ namespace Tests\FrameworkBundle\Unit\Form\Admin\Country;
 
 use DateTimeZone;
 use ReflectionClass;
+use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -20,6 +21,7 @@ use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\PreloadedExtension;
 use Symfony\Component\Form\Test\TypeTestCase;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Validator\Validation;
 use Tests\FrameworkBundle\Test\SetTranslatorTrait;
 
@@ -33,13 +35,17 @@ class CountryFormTypeTest extends TypeTestCase
 
     private CountryFacade $countryFacade;
 
+    private UrlGeneratorInterface $urlGenerator;
+
     /**
      * @return array
      */
     private function getFullCountryFormData(): array
     {
         return [
-            'save' => '',
+            'actionBar' => [
+                'save' => '',
+            ],
             'names' => [
                 'en' => 'Czech republic',
                 'cs' => 'Česká republika',
@@ -154,6 +160,9 @@ class CountryFormTypeTest extends TypeTestCase
         $this->countryFacade->method('findByCode')->willReturnMap([['CZ', null], ['UZ', $country]]);
         $this->countryFacade->method('getAll')->willReturn([$country]);
 
+        $this->urlGenerator = $this->createMock(UrlGeneratorInterface::class);
+        $this->urlGenerator->method('generate')->willReturn('https://example.com');
+
         parent::setUp();
     }
 
@@ -170,6 +179,7 @@ class CountryFormTypeTest extends TypeTestCase
                     new LocalizedType($this->localization),
                     new DomainsType($this->domain),
                     new MultidomainType($this->domain),
+                    new ActionBarType($this->urlGenerator),
                 ],
                 [],
             ),

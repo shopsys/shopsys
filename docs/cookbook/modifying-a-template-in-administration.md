@@ -44,17 +44,7 @@ The template before the modification:
     ...
     {% block main_content %}
 
-        {{ form_start(form) }}
-            {{ form_errors(form) }}
-
-            {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
-                {% block fixed_bar_content %}
-                    <a href="{{ url('admin_product_list') }}" class="btn-link-style">{{ 'Back to overview'|trans }}</a>
-                    {{ form_save(product|default(null), form) }}
-                {% endblock %}
-            {% endembed %}
-
-        {{ form_end(form) }}
+        {{ form(form) }}
 
     {% endblock %}
     ...
@@ -99,17 +89,7 @@ The template after the modification:
             </div>
         </div>
 
-        {{ form_start(form) }}
-            {{ form_errors(form) }}
-
-            {% embed '@ShopsysFramework/Admin/Inline/FixedBar/fixedBar.html.twig' %}
-                {% block fixed_bar_content %}
-                    <a href="{{ url('admin_product_list') }}" class="btn-link-style">{{ 'Back to overview'|trans }}</a>
-                    {{ form_save(product|default(null), form) }}
-                {% endblock %}
-            {% endembed %}
-
-        {{ form_end(form) }}
+        {{ form(form) }}
 
     {% endblock %}
     ...

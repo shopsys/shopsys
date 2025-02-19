@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\NotificationBar;
 
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\ColorPickerType;
 use Shopsys\FrameworkBundle\Form\DatePickerType;
@@ -14,7 +15,6 @@ use Shopsys\FrameworkBundle\Form\ImageUploadType;
 use Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBar;
 use Shopsys\FrameworkBundle\Model\NotificationBar\NotificationBarData;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
@@ -94,7 +94,7 @@ class NotificationBarFormType extends AbstractType
                         'mimeTypesMessage' => 'Image can be only in JPG, GIF or PNG format',
                         'maxSize' => '15M',
                         'maxSizeMessage' => 'Uploaded image is to large ({{ size }} {{ suffix }}). '
-                          . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
+                            . 'Maximum size of an image is {{ limit }} {{ suffix }}.',
                     ]),
                 ],
                 'entity' => $options['notification_bar'],
@@ -104,7 +104,10 @@ class NotificationBarFormType extends AbstractType
 
         $builder
             ->add($builderSettingsGroup)
-            ->add('save', SubmitType::class);
+            ->add('actionBar', ActionBarType::class, [
+                'back_route' => 'admin_notificationbar_list',
+                'entity' => $options['notification_bar'],
+            ]);
     }
 
     /**
