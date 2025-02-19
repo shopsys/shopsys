@@ -1,0 +1,10 @@
+services:
+    _defaults:
+        autoconfigure: true
+        autowire: true
+        public: false
+
+    Shopsys\AdministrationBundle\:
+        exclude:
+            - '../src/DependencyInjection/'
+        resource: '../src/'
