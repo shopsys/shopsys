@@ -6,19 +6,21 @@ export const getGtmAutocompleteResultsViewEvent = (
     searchResult: TypeAutocompleteSearchQuery,
     keyword: string,
 ): GtmAutocompleteResultsViewEventType => {
-    const resultsCount =
-        searchResult.categoriesSearch.totalCount +
-        searchResult.productsSearch.totalCount +
-        searchResult.brandSearch.length +
-        searchResult.articlesSearch.length;
+    const category = searchResult.categoriesSearch.edges?.length ?? 0;
+    const product = searchResult.productsSearch.edges?.length ?? 0;
+    const brand = searchResult.brandSearch.length;
+    const article = searchResult.articlesSearch.length;
+
+    const results = category + product + brand + article;
+
     const suggestResult: GtmAutocompleteResultsViewEventType['autocompleteResults'] = {
         keyword,
-        results: resultsCount,
+        results,
         sections: {
-            category: searchResult.categoriesSearch.totalCount,
-            product: searchResult.productsSearch.totalCount,
-            brand: searchResult.brandSearch.length,
-            article: searchResult.articlesSearch.length,
+            category,
+            product,
+            brand,
+            article,
         },
     };
 

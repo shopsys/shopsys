@@ -69,6 +69,7 @@ export const DeferredRecommendedProducts: FC<DeferredRecommendedProductsProps> =
             {shouldRender
                 ? render(
                       <ProductsSlider
+                          isLuigisEnabled
                           gtmProductListName={GtmProductListNameType.luigis_box_recommended_products}
                           productItemProps={productItemStyleProps}
                           products={recommendedProductsData.recommendedProducts}
