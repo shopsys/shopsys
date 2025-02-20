@@ -86,6 +86,8 @@ services:
         container_name: shopsys-framework-cypress
         volumes:
             - ./storefront/cypress:/app:delegated
+            - ./storefront/config:/app/config
+            - ./storefront/pages:/app/pages
             - node_modules:/app/node_modules
         profiles:
             - storefront-acceptance-tests
