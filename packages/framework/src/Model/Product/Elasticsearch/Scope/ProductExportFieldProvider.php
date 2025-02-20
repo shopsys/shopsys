@@ -17,7 +17,7 @@ class ProductExportFieldProvider
     public const string SHORT_DESCRIPTION = 'short_description';
     public const string BRAND = 'brand';
     public const string BRAND_NAME = 'brand_name';
-    public const string BRAND_URL = 'brand_url';
+    public const string BRAND_SLUG = 'brand_slug';
     public const string FLAGS = 'flags';
     public const string CATEGORIES = 'categories';
     public const string MAIN_CATEGORY_ID = 'main_category_id';
@@ -31,7 +31,7 @@ class ProductExportFieldProvider
     public const string AVAILABILITY = 'availability';
     public const string IS_MAIN_VARIANT = 'is_main_variant';
     public const string IS_VARIANT = 'is_variant';
-    public const string DETAIL_URL = 'detail_url';
+    public const string SLUG = 'slug';
     public const string VISIBILITY = 'visibility';
     public const string UUID = 'uuid';
     public const string UNIT = 'unit';

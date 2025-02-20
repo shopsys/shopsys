@@ -6,12 +6,14 @@ namespace App\FrontendApi\Resolver\Products\DataMapper;
 
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider;
+use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductArrayFieldMapper as BaseProductArrayFieldMapper;
 
@@ -37,6 +39,8 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
      * @param \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleByIdsBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleCountByIdsBatchLoader
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
      * @param \Overblog\DataLoader\DataLoaderInterface $categoriesBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $flagsBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $brandsBatchLoader
@@ -52,6 +56,8 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
         CurrentCustomerUser $currentCustomerUser,
         DataLoaderInterface $productsVisibleByIdsBatchLoader,
         DataLoaderInterface $productsVisibleCountByIdsBatchLoader,
+        Domain $domain,
+        HreflangLinksFacade $hreflangLinksFacade,
         private DataLoaderInterface $categoriesBatchLoader,
         private DataLoaderInterface $flagsBatchLoader,
         private DataLoaderInterface $brandsBatchLoader,
@@ -67,6 +73,8 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
             $currentCustomerUser,
             $productsVisibleByIdsBatchLoader,
             $productsVisibleCountByIdsBatchLoader,
+            $domain,
+            $hreflangLinksFacade,
         );
     }
 
@@ -86,15 +94,6 @@ class ProductArrayFieldMapper extends BaseProductArrayFieldMapper
     public function getCatalogNumber(array $data): string
     {
         return $data['catnum'];
-    }
-
-    /**
-     * @param array $data
-     * @return string
-     */
-    public function getSlug(array $data): string
-    {
-        return '/' . $data['slug'];
     }
 
     /**

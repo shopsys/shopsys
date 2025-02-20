@@ -53,6 +53,7 @@ use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\ProductEntityFi
  * @method array getStoreAvailabilities(\App\Model\Product\Product $product)
  * @method int|null getAvailableStoresCount(\App\Model\Product\Product $product)
  * @method array getProductVideos(\App\Model\Product\Product $product)
+ * @method string getSlug(\App\Model\Product\Product $product)
  */
 class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
 {
@@ -92,7 +93,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         DataLoaderInterface $productsVisibleByIdsBatchLoader,
         DataLoaderInterface $productsVisibleCountByIdsBatchLoader,
         ProductVideoTranslationsRepository $productVideoTranslationsRepository,
-        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
+        FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly ProductRepository $productRepository,
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         protected readonly ParameterRepository $parameterRepository,
@@ -114,6 +115,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
             $productsVisibleByIdsBatchLoader,
             $productsVisibleCountByIdsBatchLoader,
             $productVideoTranslationsRepository,
+            $friendlyUrlFacade,
         );
     }
 
@@ -211,15 +213,6 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
         $productParameterValuesData = $this->parameterRepository->getProductParameterValuesDataByProducts($products, $this->domain->getLocale());
 
         return $this->parameterWithValuesFactory->createParametersArrayFromProductArray(['parameters' => $productParameterValuesData]);
-    }
-
-    /**
-     * @param \App\Model\Product\Product $product
-     * @return string
-     */
-    public function getSlug(Product $product): string
-    {
-        return '/' . $this->friendlyUrlFacade->getMainFriendlyUrlSlug($this->domain->getId(), 'front_product_detail', $product->getId());
     }
 
     /**
