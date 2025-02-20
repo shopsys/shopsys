@@ -17,7 +17,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
-use Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository as BaseProductExportRepository;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider as BaseProductExportFieldProvider;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
@@ -37,7 +36,7 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
  * @property \App\Model\Product\ProductRepository $productRepository
  * @method array extractResult(\App\Model\Product\Product $product, int $domainId, string $locale, string[] $fields)
  * @method int[] extractVariantIds(\App\Model\Product\Product $product)
- * @method string extractDetailUrl(int $domainId, \App\Model\Product\Product $product)
+ * @method string extractDetailSlug(int $domainId, \App\Model\Product\Product $product)
  * @method int[] extractFlags(int $domainId, \App\Model\Product\Product $product)
  * @method int[] extractCategories(int $domainId, \App\Model\Product\Product $product)
  * @method array extractParameters(string $locale, \App\Model\Product\Product $product)
@@ -51,6 +50,7 @@ use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
  * @method array extractSpecialPrices(int $domainId, \App\Model\Product\Product $product)
  * @method array extractPrices(int $domainId, \App\Model\Product\Product $product)
  * @method array getVariantPrices(\App\Model\Product\Product $product, \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup $pricingGroup, int $domainId)
+ * @method string extractBrandDetailSlug(int $domainId, \App\Model\Product\Product $product)
  */
 class ProductExportRepository extends BaseProductExportRepository
 {
@@ -63,7 +63,6 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \App\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade $brandCachedFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
      * @param \App\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider $productExportFieldProvider
@@ -84,7 +83,6 @@ class ProductExportRepository extends BaseProductExportRepository
         FriendlyUrlFacade $friendlyUrlFacade,
         CategoryFacade $categoryFacade,
         ProductAccessoryFacade $productAccessoryFacade,
-        BrandCachedFacade $brandCachedFacade,
         ProductAvailabilityFacade $productAvailabilityFacade,
         HreflangLinksFacade $hreflangLinksFacade,
         BaseProductExportFieldProvider $productExportFieldProvider,
@@ -105,7 +103,6 @@ class ProductExportRepository extends BaseProductExportRepository
             $friendlyUrlFacade,
             $categoryFacade,
             $productAccessoryFacade,
-            $brandCachedFacade,
             $productAvailabilityFacade,
             $hreflangLinksFacade,
             $productExportFieldProvider,
@@ -139,7 +136,6 @@ class ProductExportRepository extends BaseProductExportRepository
             ProductExportFieldProvider::SEARCHING_EANS => $this->extractSearchingEans($product, $domainId),
             ProductExportFieldProvider::SEARCHING_PARTNOS => $this->extractSearchingPartnos($product, $domainId),
             ProductExportFieldProvider::SEARCHING_SHORT_DESCRIPTIONS => $this->extractSearchingShortDescriptions($product, $domainId),
-            ProductExportFieldProvider::SLUG => $this->friendlyUrlFacade->getMainFriendlyUrl($domainId, 'front_product_detail', $product->getId())->getSlug(),
             ProductExportFieldProvider::RELATED_PRODUCTS => $this->extractRelatedProductsId($product),
             ProductExportFieldProvider::BREADCRUMB => $this->extractBreadcrumb($product, $domainId, $locale),
             default => parent::getExportedFieldValue($domainId, $product, $locale, $field),

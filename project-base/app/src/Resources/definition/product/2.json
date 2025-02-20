@@ -151,7 +151,7 @@
             "brand_name": {
                 "type": "text"
             },
-            "brand_url": {
+            "brand_slug": {
                 "type": "text"
             },
             "flags": {
@@ -300,9 +300,6 @@
             },
             "is_variant": {
                 "type": "boolean"
-            },
-            "detail_url": {
-                "type": "text"
             },
             "visibility": {
                 "type": "nested",

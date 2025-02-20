@@ -72,7 +72,7 @@ class ProductExportScopeConfig
         $this->addNewExportScopeRule(self::SCOPE_BRAND, [
             ProductExportFieldProvider::BRAND,
             ProductExportFieldProvider::BRAND_NAME,
-            ProductExportFieldProvider::BRAND_URL,
+            ProductExportFieldProvider::BRAND_SLUG,
         ]);
         $this->addNewExportScopeRule(self::SCOPE_STOCKS, [
             ProductExportFieldProvider::AVAILABILITY,
@@ -84,7 +84,7 @@ class ProductExportScopeConfig
             ProductExportFieldProvider::AVAILABILITY_STATUS,
         ]);
         $this->addNewExportScopeRule(self::SCOPE_URL, [
-            ProductExportFieldProvider::DETAIL_URL,
+            ProductExportFieldProvider::SLUG,
             ProductExportFieldProvider::HREFLANG_LINKS,
         ]);
         $this->addNewExportScopeRule(self::SCOPE_FLAGS, [
@@ -95,7 +95,7 @@ class ProductExportScopeConfig
         ]);
         $this->addNewExportScopeRule(self::SCOPE_NAME, [
             ProductExportFieldProvider::NAME,
-            ProductExportFieldProvider::DETAIL_URL,
+            ProductExportFieldProvider::SLUG,
             ProductExportFieldProvider::HREFLANG_LINKS,
             ProductExportFieldProvider::NAME_PREFIX,
             ProductExportFieldProvider::NAME_SUFFIX,

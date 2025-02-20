@@ -21,7 +21,7 @@ class ProductElasticsearchConverter
         $result[ProductExportFieldProvider::AVAILABILITY] = $product[ProductExportFieldProvider::AVAILABILITY] ?? '';
         $result[ProductExportFieldProvider::CATNUM] = $product[ProductExportFieldProvider::CATNUM] ?? '';
         $result[ProductExportFieldProvider::DESCRIPTION] = $product[ProductExportFieldProvider::DESCRIPTION] ?? '';
-        $result[ProductExportFieldProvider::DETAIL_URL] = $product[ProductExportFieldProvider::DETAIL_URL] ?? '';
+        $result[ProductExportFieldProvider::SLUG] = $product[ProductExportFieldProvider::SLUG] ?? '';
         $result[ProductExportFieldProvider::EAN] = $product[ProductExportFieldProvider::EAN] ?? '';
         $result[ProductExportFieldProvider::NAME] = $product[ProductExportFieldProvider::NAME] ?? '';
         $result[ProductExportFieldProvider::PARTNO] = $product[ProductExportFieldProvider::PARTNO] ?? '';
@@ -49,7 +49,7 @@ class ProductElasticsearchConverter
         // unknown default value, used for filtering only
         $result[ProductExportFieldProvider::BRAND] = $product[ProductExportFieldProvider::BRAND] ?? null;
         $result[ProductExportFieldProvider::BRAND_NAME] = $product[ProductExportFieldProvider::BRAND_NAME] ?? '';
-        $result[ProductExportFieldProvider::BRAND_URL] = $product[ProductExportFieldProvider::BRAND_URL] ?? '';
+        $result[ProductExportFieldProvider::BRAND_SLUG] = $product[ProductExportFieldProvider::BRAND_SLUG] ?? '';
         $result[ProductExportFieldProvider::MAIN_CATEGORY_ID] = $product[ProductExportFieldProvider::MAIN_CATEGORY_ID] ?? null;
 
         $result[ProductExportFieldProvider::SEO_H1] = $product[ProductExportFieldProvider::SEO_H1] ?? null;

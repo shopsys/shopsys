@@ -63,8 +63,9 @@ Following product attributes are exported into Elasticsearch (i.e. the search or
 - selling_denied (true/false value whether the product can be sold)
 - availability (translation of product availability)
 - main_variant (true/false value whether the product is main variant or not. You can find more about behavior of variants [here](../functional/behavior-of-product-variants.md))
-- detail_url (absolute url to page with products detail)
+- slug (relative url to page with products detail)
 - visibility (all visibilities for all pricing groups and domains)
+- and more, see `Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductExportRepository` for more information
 
 Data of all products are exported into Elasticsearch by CRON module (`ProductExportCronModule.php`) every 5 minutes.
 Alternatively, you can force the export manually using `elasticsearch-export -D elasticsearch.index=product` Phing target.
