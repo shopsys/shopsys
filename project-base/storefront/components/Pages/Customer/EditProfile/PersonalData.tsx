@@ -4,6 +4,7 @@ import { FormColumn } from 'components/Forms/Lib/FormColumn';
 import { FormLine } from 'components/Forms/Lib/FormLine';
 import { TextInputControlled } from 'components/Forms/TextInput/TextInputControlled';
 import { useCustomerChangeProfileFormMeta } from 'components/Pages/Customer/EditProfile/customerChangeProfileFormMeta';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import useTranslation from 'next-translate/useTranslation';
 import { useFormContext } from 'react-hook-form';
 import { CustomerChangeProfileFormType } from 'types/form';
@@ -12,6 +13,7 @@ export const PersonalData: FC = () => {
     const { t } = useTranslation();
     const formProviderMethods = useFormContext<CustomerChangeProfileFormType>();
     const formMeta = useCustomerChangeProfileFormMeta(formProviderMethods);
+    const { canManagePersonalData } = useAuthorization();
 
     return (
         <FormBlockWrapper>
@@ -45,6 +47,7 @@ export const PersonalData: FC = () => {
                     textInputProps={{
                         label: formMeta.fields.firstName.label,
                         required: true,
+                        disabled: !canManagePersonalData,
                         type: 'text',
                         autoComplete: 'given-name',
                     }}
@@ -57,6 +60,7 @@ export const PersonalData: FC = () => {
                     textInputProps={{
                         label: formMeta.fields.lastName.label,
                         required: true,
+                        disabled: !canManagePersonalData,
                         type: 'text',
                         autoComplete: 'family-name',
                     }}
@@ -70,6 +74,7 @@ export const PersonalData: FC = () => {
                 textInputProps={{
                     label: formMeta.fields.telephone.label,
                     required: true,
+                    disabled: !canManagePersonalData,
                     type: 'tel',
                     autoComplete: 'tel',
                 }}
@@ -81,6 +86,7 @@ export const PersonalData: FC = () => {
                 render={(checkbox) => <FormLine>{checkbox}</FormLine>}
                 checkboxProps={{
                     label: formMeta.fields.newsletterSubscription.label,
+                    disabled: !canManagePersonalData,
                 }}
             />
         </FormBlockWrapper>

@@ -3,8 +3,8 @@ import { ProductAvailability } from 'components/Blocks/Product/ProductAvailabili
 import { ProductFlags } from 'components/Blocks/Product/ProductFlags';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
 import { ProductListItemImage } from 'components/Blocks/Product/ProductsList/ProductListItemImage';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TIDs } from 'cypress/tids';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
@@ -23,7 +23,7 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
     listIndex,
 }) => {
     const { url } = useDomainConfig();
-    const currentCustomerData = useCurrentCustomerData();
+    const { canSeePrices } = useAuthorization();
 
     const productUrl = (product.__typename === 'Variant' && product.mainVariant?.slug) || product.slug;
 
@@ -33,16 +33,8 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
             draggable={false}
             href={productUrl}
             type={product.__typename === 'RegularProduct' ? 'product' : 'productMainVariant'}
+            onClick={() => onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url, !canSeePrices)}
             onClickExtended={disableClickWhenTextSelected}
-            onClick={() =>
-                onGtmProductClickEventHandler(
-                    product,
-                    gtmProductListName,
-                    listIndex,
-                    url,
-                    !!currentCustomerData?.arePricesHidden,
-                )
-            }
         >
             <div className="flex w-20 shrink-0">
                 <ProductListItemImage

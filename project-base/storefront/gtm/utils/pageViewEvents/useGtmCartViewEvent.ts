@@ -1,4 +1,4 @@
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useGtmContext } from 'gtm/context/GtmProvider';
 import { getGtmCartViewEvent } from 'gtm/factories/getGtmCartViewEvent';
 import { GtmPageViewEventType } from 'gtm/types/events';
@@ -9,7 +9,7 @@ export const useGtmCartViewEvent = (gtmPageViewEvent: GtmPageViewEventType): voi
     const wasViewedRef = useRef(false);
     const previousPromoCodes = useRef(JSON.stringify(gtmPageViewEvent.cart?.promoCodes));
     const { didPageViewRun, isScriptLoaded } = useGtmContext();
-    const currentCustomerData = useCurrentCustomerData();
+    const { canSeePrices } = useAuthorization();
 
     useEffect(() => {
         if (
@@ -28,7 +28,7 @@ export const useGtmCartViewEvent = (gtmPageViewEvent: GtmPageViewEventType): voi
                     gtmPageViewEvent.cart.valueWithoutVat,
                     gtmPageViewEvent.cart.valueWithVat,
                     gtmPageViewEvent.cart.products,
-                    !!currentCustomerData?.arePricesHidden,
+                    !canSeePrices,
                 ),
             );
         }

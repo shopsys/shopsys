@@ -19,7 +19,7 @@ export const ContactInformationAddress: FC = () => {
     const formProviderMethods = useFormContext<ContactInformation>();
     const formMeta = useContactInformationFormMeta(formProviderMethods);
     const countriesAsSelectOptions = useCountriesAsSelectOptions();
-    const { canManageProfile } = useAuthorization();
+    const { canManageCompanyData } = useAuthorization();
 
     return (
         <FormBlockWrapper>
@@ -31,7 +31,7 @@ export const ContactInformationAddress: FC = () => {
                     name={formMeta.fields.street.name}
                     render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
                     textInputProps={{
-                        disabled: !canManageProfile,
+                        disabled: !canManageCompanyData,
                         label: formMeta.fields.street.label,
                         required: true,
                         type: 'text',
@@ -47,7 +47,7 @@ export const ContactInformationAddress: FC = () => {
                     name={formMeta.fields.city.name}
                     render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
                     textInputProps={{
-                        disabled: !canManageProfile,
+                        disabled: !canManageCompanyData,
                         label: formMeta.fields.city.label,
                         required: true,
                         type: 'text',
@@ -65,7 +65,7 @@ export const ContactInformationAddress: FC = () => {
                         </FormLine>
                     )}
                     textInputProps={{
-                        disabled: !canManageProfile,
+                        disabled: !canManageCompanyData,
                         label: formMeta.fields.postcode.label,
                         required: true,
                         type: 'text',

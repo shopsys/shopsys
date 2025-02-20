@@ -18,7 +18,7 @@ use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\CustomerUserNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleGroup;
 use Shopsys\FrontendApiBundle\Component\Constraints\UniqueBillingAddressApi;
-use Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\Helper\ChangePersonalDataInputProvider;
+use Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\Helper\ChangePersonalAndCompanyDataInputProvider;
 use Tests\FrontendApiBundle\Test\GraphQlB2bDomainWithLoginTestCase;
 
 class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
@@ -37,11 +37,11 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
     {
         $existingBillingAddress = $this->getReferenceForDomain(CompanyDataFixture::SHOPSYS_COMPANY, $this->domain->getId(), Customer::class)->getBillingAddress();
 
-        $input = ChangePersonalDataInputProvider::INPUT_ARRAY;
+        $input = ChangePersonalAndCompanyDataInputProvider::INPUT_ARRAY;
         $input['companyNumber'] = $existingBillingAddress->getCompanyNumber();
 
         $response = $this->getResponseContentForGql(
-            __DIR__ . '/../../Functional/Customer/User/graphql/ChangePersonalDataMutation.graphql',
+            __DIR__ . '/../../Functional/Customer/User/graphql/ChangePersonalAndCompanyDataMutation.graphql',
             $input,
         );
         $this->assertResponseContainsArrayOfExtensionValidationErrors($response);
@@ -51,13 +51,13 @@ class CustomerUserOwnerTest extends GraphQlB2bDomainWithLoginTestCase
     }
 
     /**
-     * @see \Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\CustomerUserSelfManageTest::testChangePersonalDataMutationIsNotAllowed()
+     * @see \Tests\FrontendApiBundle\FunctionalB2b\CustomerUser\CustomerUserSelfManageTest::testChangeCompanyDataMutationIsNotAllowed()
      */
-    public function testChangePersonalDataMutation(): void
+    public function testChangePersonalAndCompanyDataMutation(): void
     {
-        $personalData = ChangePersonalDataInputProvider::INPUT_ARRAY;
+        $personalData = ChangePersonalAndCompanyDataInputProvider::INPUT_ARRAY;
         $response = $this->getResponseContentForGql(
-            __DIR__ . '/../../Functional/Customer/User/graphql/ChangePersonalDataMutation.graphql',
+            __DIR__ . '/../../Functional/Customer/User/graphql/ChangePersonalAndCompanyDataMutation.graphql',
             $personalData,
         );
         $responseData = [

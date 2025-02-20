@@ -28,7 +28,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
     const { t } = useTranslation();
     const [, customerEditProfile] = useChangePersonalDataMutation();
     const [, companyEditProfile] = useChangeCompanyDataMutation();
-    const { canManageProfile } = useAuthorization();
+    const { canManageCompanyData, canManagePersonalData } = useAuthorization();
 
     const [formProviderMethods] = useCustomerChangeProfileForm({
         ...currentCustomerUser,
@@ -61,7 +61,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
 
         let isCompanyDataChanged = true;
 
-        if (canManageProfile) {
+        if (canManageCompanyData) {
             const changeCompanyDataResult = await companyEditProfile({
                 input: {
                     billingAddressUuid: currentCustomerUser.billingAddressUuid,
@@ -105,9 +105,11 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
                         deliveryAddresses={currentCustomerUser.deliveryAddresses}
                     />
 
-                    <FormButtonWrapper className="mt-0 pb-6">
-                        <SubmitButton isDisabled={isSubmitting}>{t('Save profile')}</SubmitButton>
-                    </FormButtonWrapper>
+                    {canManagePersonalData && (
+                        <FormButtonWrapper className="mt-0 pb-6">
+                            <SubmitButton isDisabled={isSubmitting}>{t('Save profile')}</SubmitButton>
+                        </FormButtonWrapper>
+                    )}
                 </FormContentWrapper>
             </Form>
         </FormProvider>

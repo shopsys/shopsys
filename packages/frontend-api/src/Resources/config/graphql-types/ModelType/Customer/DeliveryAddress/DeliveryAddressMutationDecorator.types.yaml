@@ -10,6 +10,7 @@ DeliveryAddressMutationDecorator:
                     deliveryAddressUuid:
                         type: Uuid!
                 resolve: "@=mutation('deleteDeliveryAddressMutation', args)"
+                access: "@=isGranted('ROLE_API_CUSTOMER_SELF_MANAGE')"
             EditDeliveryAddress:
                 type: "[DeliveryAddress!]!"
                 description: "Edit delivery address by Uuid"
@@ -18,6 +19,7 @@ DeliveryAddressMutationDecorator:
                         type: DeliveryAddressInput!
                         validation: cascade
                 resolve: "@=mutation('editDeliveryAddressMutation', args)"
+                access: "@=isGranted('ROLE_API_CUSTOMER_SELF_MANAGE')"
             SetDefaultDeliveryAddress:
                 type: "CurrentCustomerUser!"
                 description: "Set default delivery address by Uuid"
@@ -25,6 +27,7 @@ DeliveryAddressMutationDecorator:
                     deliveryAddressUuid:
                         type: Uuid!
                 resolve: "@=mutation('setDefaultDeliveryAddressMutation', args['deliveryAddressUuid'])"
+                access: "@=isGranted('ROLE_API_CUSTOMER_SELF_MANAGE')"
             CreateDeliveryAddress:
                 type: "[DeliveryAddress!]!"
                 description: "Create a new delivery address"
@@ -33,3 +36,4 @@ DeliveryAddressMutationDecorator:
                         type: DeliveryAddressInput!
                         validation: cascade
                 resolve: "@=mutation('createDeliveryAddressMutation', args)"
+                access: "@=isGranted('ROLE_API_CUSTOMER_SELF_MANAGE')"

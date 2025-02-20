@@ -126,7 +126,7 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
     public function testChangePersonalData(): void
     {
         $response = $this->getResponseContentForGql(
-            __DIR__ . '/graphql/ChangePersonalDataMutation.graphql',
+            __DIR__ . '/graphql/ChangePersonalAndCompanyDataMutation.graphql',
             $this->getJohnDoeBaseData(),
         );
         $data = [
@@ -140,7 +140,7 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
     public function testEditCustomerCompany(): void
     {
         $response = $this->getResponseContentForGql(
-            __DIR__ . '/graphql/ChangePersonalDataMutation.graphql',
+            __DIR__ . '/graphql/ChangePersonalAndCompanyDataMutation.graphql',
             [
                 ...$this->getJohnDoeBaseData(),
                 'companyCustomer' => true,
@@ -181,7 +181,7 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
         $companyNumber = $existingBillingAddress->getCompanyNumber();
 
         $response = $this->getResponseContentForGql(
-            __DIR__ . '/graphql/ChangePersonalDataMutation.graphql',
+            __DIR__ . '/graphql/ChangePersonalAndCompanyDataMutation.graphql',
             [
                 ...$this->getJohnDoeBaseData(),
                 'companyCustomer' => true,
@@ -212,7 +212,7 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
     public function testChangePersonalDataWithWrongData(): void
     {
         $response = $this->getResponseContentForGql(
-            __DIR__ . '/graphql/ChangePersonalDataMutation.graphql',
+            __DIR__ . '/graphql/ChangePersonalAndCompanyDataMutation.graphql',
             [
                 'telephone' => '1234567890123456789012345678901',
                 'firstName' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent suscipit ultrices molestie. Donec s',
@@ -263,7 +263,7 @@ class CurrentCustomerUserTest extends GraphQlWithLoginTestCase
     public function testChangePersonalDataWithWrongCompanyData(): void
     {
         $response = $this->getResponseContentForGql(
-            __DIR__ . '/graphql/ChangePersonalDataMutation.graphql',
+            __DIR__ . '/graphql/ChangePersonalAndCompanyDataMutation.graphql',
             [
                 ...$this->getJohnDoeBaseData(),
                 'companyCustomer' => true,

@@ -6,8 +6,8 @@ import { ProductWishlistButton } from 'components/Blocks/Product/ButtonsAction/P
 import { ProductAction } from 'components/Blocks/Product/ProductAction';
 import { ProductAvailability } from 'components/Blocks/Product/ProductAvailability';
 import { ProductPrice } from 'components/Blocks/Product/ProductPrice';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TIDs } from 'cypress/tids';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -68,7 +68,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
     ) => {
         const { url } = useDomainConfig();
         const { t } = useTranslation();
-        const currentCustomerData = useCurrentCustomerData();
+        const { canSeePrices } = useAuthorization();
 
         return (
             <li
@@ -88,13 +88,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                     type={product.isMainVariant ? 'productMainVariant' : 'product'}
                     onClickExtended={disableClickWhenTextSelected}
                     onMouseUp={() => {
-                        onGtmProductClickEventHandler(
-                            product,
-                            gtmProductListName,
-                            listIndex,
-                            url,
-                            !!currentCustomerData?.arePricesHidden,
-                        );
+                        onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url, !canSeePrices);
                         onClick?.(product, listIndex);
                     }}
                 >

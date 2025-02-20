@@ -1,4 +1,4 @@
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useGtmContext } from 'gtm/context/GtmProvider';
 import { getGtmContactInformationPageViewEvent } from 'gtm/factories/getGtmContactInformationPageViewEvent';
 import { GtmPageViewEventType } from 'gtm/types/events';
@@ -8,7 +8,7 @@ import { useEffect, useRef } from 'react';
 export const useGtmContactInformationPageViewEvent = (gtmPageViewEvent: GtmPageViewEventType): void => {
     const wasViewedRef = useRef(false);
     const { didPageViewRun, isScriptLoaded } = useGtmContext();
-    const currentCustomerData = useCurrentCustomerData();
+    const { canSeePrices } = useAuthorization();
 
     useEffect(() => {
         if (
@@ -19,9 +19,7 @@ export const useGtmContactInformationPageViewEvent = (gtmPageViewEvent: GtmPageV
             !wasViewedRef.current
         ) {
             wasViewedRef.current = true;
-            gtmSafePushEvent(
-                getGtmContactInformationPageViewEvent(gtmPageViewEvent.cart, !!currentCustomerData?.arePricesHidden),
-            );
+            gtmSafePushEvent(getGtmContactInformationPageViewEvent(gtmPageViewEvent.cart, !canSeePrices));
         }
     }, [gtmPageViewEvent._isLoaded, gtmPageViewEvent.cart, didPageViewRun]);
 };

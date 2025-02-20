@@ -1,4 +1,4 @@
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { useChangePaymentInCartMutation } from 'graphql/requests/cart/mutations/ChangePaymentInCartMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -20,7 +20,7 @@ export const useChangePaymentInCart = () => {
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const { t } = useTranslation();
     const { gtmCartInfo } = useGtmCartInfo();
-    const currentCustomerData = useCurrentCustomerData();
+    const { canSeePrices } = useAuthorization();
 
     const gtmCart = useLatest(gtmCartInfo);
 
@@ -57,7 +57,7 @@ export const useChangePaymentInCart = () => {
                 onGtmPaymentChangeEventHandler(
                     gtmCart.current,
                     changePaymentResult.data?.ChangePaymentInCart.payment ?? null,
-                    !!currentCustomerData?.arePricesHidden,
+                    !canSeePrices,
                 );
             });
 

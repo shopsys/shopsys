@@ -7,18 +7,18 @@ import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/B
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
-import useTranslation from 'next-translate/useTranslation';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps } from 'utils/serverSide/initServerSideProps';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { useUserProfileSectionLabel } from 'utils/user/useUserProfileSectionLabel';
 
 const EditProfilePage: FC = () => {
-    const { t } = useTranslation();
     const { url } = useDomainConfig();
     const [customerEditProfileUrl] = getInternationalizedStaticUrls(['/customer', '/customer/edit-profile'], url);
     const currentCustomerUserData = useCurrentCustomerData();
+    const userProfileSectionLabel = useUserProfileSectionLabel();
     const breadcrumbs: TypeBreadcrumbFragment[] = [
-        { __typename: 'Link', name: t('Edit profile'), slug: customerEditProfileUrl },
+        { __typename: 'Link', name: userProfileSectionLabel, slug: customerEditProfileUrl },
     ];
 
     const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.other, breadcrumbs);
@@ -30,8 +30,8 @@ const EditProfilePage: FC = () => {
             <CustomerLayout
                 breadcrumbs={breadcrumbs}
                 breadcrumbsType="account"
-                pageHeading={t('Edit profile')}
-                title={t('Edit profile')}
+                pageHeading={userProfileSectionLabel}
+                title={userProfileSectionLabel}
             >
                 {currentCustomerUserData !== undefined && (
                     <EditProfileContent currentCustomerUser={currentCustomerUserData} />

@@ -2,8 +2,8 @@ import { SortingBarItem } from './SortingBarItem';
 import { SortIcon } from 'components/Basic/Icon/SortIcon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { Button } from 'components/Forms/Button/Button';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { DEFAULT_SORT } from 'config/constants';
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TypeProductOrderingModeEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
@@ -31,8 +31,8 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
     const asPathWithoutQueryParams = router.asPath.split('?')[0];
     const currentSort = useCurrentSortQuery();
     const updateSort = useUpdateSortQuery();
-    const currentCustomerUser = useCurrentCustomerData();
     const [isSortMenuOpen, setIsSortMenuOpen] = useState(false);
+    const { canSeePrices } = useAuthorization();
 
     const sortOptionsLabels = {
         [TypeProductOrderingModeEnum.Priority]: t('Priority'),
@@ -44,7 +44,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
     };
 
     const sortOptions = (customSortOptions || DEFAULT_SORT_OPTIONS).filter((sortOption) =>
-        currentCustomerUser?.arePricesHidden ? !getIsPriceRelatedSortOption(sortOption) : true,
+        !canSeePrices ? !getIsPriceRelatedSortOption(sortOption) : true,
     );
     const selectedSortOption = currentSort || sorting || DEFAULT_SORT;
 

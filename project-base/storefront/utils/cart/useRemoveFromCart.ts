@@ -1,5 +1,5 @@
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TypeCartFragment } from 'graphql/requests/cart/fragments/CartFragment.generated';
 import { TypeCartItemFragment } from 'graphql/requests/cart/fragments/CartItemFragment.generated';
 import { useRemoveFromCartMutation } from 'graphql/requests/cart/mutations/RemoveFromCartMutation.generated';
@@ -18,7 +18,7 @@ export const useRemoveFromCart = (gtmProductListName: GtmProductListNameType) =>
     const { url, currencyCode } = useDomainConfig();
     const cartUuid = usePersistStore((store) => store.cartUuid);
     const { fetchCart } = useCurrentCart();
-    const currentCustomerData = useCurrentCustomerData();
+    const { canSeePrices } = useAuthorization();
 
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
 
@@ -41,7 +41,7 @@ export const useRemoveFromCart = (gtmProductListName: GtmProductListNameType) =>
                     listIndex,
                     gtmProductListName,
                     url,
-                    !!currentCustomerData?.arePricesHidden,
+                    !canSeePrices,
                 );
             });
 

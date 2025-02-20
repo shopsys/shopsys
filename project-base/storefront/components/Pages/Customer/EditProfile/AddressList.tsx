@@ -3,6 +3,7 @@ import { PhoneIcon } from 'components/Basic/Icon/PhoneIcon';
 import { RemoveIcon } from 'components/Basic/Icon/RemoveIcon';
 import { DeliveryAddressPopup } from 'components/Blocks/Popup/DeliveryAddressPopup';
 import { Button } from 'components/Forms/Button/Button';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDeleteDeliveryAddressMutation } from 'graphql/requests/customer/mutations/DeleteDeliveryAddressMutation.generated';
 import { useSetDefaultDeliveryAddressMutation } from 'graphql/requests/customer/mutations/SetDefaultDeliveryAddressMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -35,6 +36,7 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
     const [, deleteDeliveryAddress] = useDeleteDeliveryAddressMutation();
     const [, setDefaultDeliveryAddress] = useSetDefaultDeliveryAddressMutation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
+    const { canManagePersonalData } = useAuthorization();
 
     const deleteItemHandler = async (deliveryAddressUuid: string | undefined) => {
         if (deliveryAddressUuid === undefined) {
@@ -65,6 +67,9 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
     };
 
     const setDefaultItemHandler = async (deliveryAddressUuid: string) => {
+        if (!canManagePersonalData) {
+            return;
+        }
         if (defaultDeliveryAddress?.uuid === deliveryAddressUuid) {
             return;
         }
@@ -105,7 +110,9 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                         'relative flex w-full justify-between rounded-md border-2 border-borderAccentLess bg-background p-4',
                         defaultDeliveryAddress?.uuid === address.uuid
                             ? 'border-borderAccent bg-backgroundAccentLess'
-                            : 'cursor-pointer',
+                            : canManagePersonalData
+                              ? 'cursor-pointer'
+                              : '',
                     )}
                     onClick={() => setDefaultItemHandler(address.uuid)}
                 >
@@ -124,24 +131,26 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
                                 <PhoneIcon className="w-4" />
                             </div>
                         )}
-                        <div className="space-between mt-auto flex gap-2 pt-2">
-                            <Button
-                                className="flex-1"
-                                size="small"
-                                variant="inverted"
-                                onClick={(e) => openDeleteAddressPopup(e, address.uuid)}
-                            >
-                                <RemoveIcon className="size-4" /> {t('Delete')}
-                            </Button>
-                            <Button
-                                className="flex-1"
-                                size="small"
-                                variant="inverted"
-                                onClick={(e) => openDeliveryAddressPopup(e, address)}
-                            >
-                                <EditIcon className="size-4" /> {t('Edit')}
-                            </Button>
-                        </div>
+                        {canManagePersonalData && (
+                            <div className="space-between mt-auto flex gap-2 pt-2">
+                                <Button
+                                    className="flex-1"
+                                    size="small"
+                                    variant="inverted"
+                                    onClick={(e) => openDeleteAddressPopup(e, address.uuid)}
+                                >
+                                    <RemoveIcon className="size-4" /> {t('Delete')}
+                                </Button>
+                                <Button
+                                    className="flex-1"
+                                    size="small"
+                                    variant="inverted"
+                                    onClick={(e) => openDeliveryAddressPopup(e, address)}
+                                >
+                                    <EditIcon className="size-4" /> {t('Edit')}
+                                </Button>
+                            </div>
+                        )}
                     </div>
                 </div>
             ))}

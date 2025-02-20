@@ -2,6 +2,7 @@ import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
 import { CheckboxControlled } from 'components/Forms/Checkbox/CheckboxControlled';
 import { ChoiceFormLine } from 'components/Forms/Lib/ChoiceFormLine';
 import { useContactInformationFormMeta } from 'components/Pages/Order/ContactInformation/contactInformationFormMeta';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useSettingsQuery } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import Trans from 'next-translate/Trans';
 import { useFormContext, useWatch } from 'react-hook-form';
@@ -12,6 +13,7 @@ import { twJoin } from 'tailwind-merge';
 export const ContactInformationSendOrderButton: FC = () => {
     const formProviderMethods = useFormContext<ContactInformation>();
     const updateContactInformation = usePersistStore((store) => store.updateContactInformation);
+    const { canManagePersonalData } = useAuthorization();
 
     const { formState } = formProviderMethods;
 
@@ -55,18 +57,20 @@ export const ContactInformationSendOrderButton: FC = () => {
                     }}
                 />
             )}
-            <CheckboxControlled
-                control={formProviderMethods.control}
-                formName={formMeta.formName}
-                name={formMeta.fields.newsletterSubscription.name}
-                render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
-                checkboxProps={{
-                    label: formMeta.fields.newsletterSubscription.label,
-                }}
-                onChange={(event) =>
-                    updateContactInformation({ newsletterSubscription: Boolean(event.currentTarget.value) })
-                }
-            />
+            {canManagePersonalData && (
+                <CheckboxControlled
+                    control={formProviderMethods.control}
+                    formName={formMeta.formName}
+                    name={formMeta.fields.newsletterSubscription.name}
+                    render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
+                    checkboxProps={{
+                        label: formMeta.fields.newsletterSubscription.label,
+                    }}
+                    onChange={(event) =>
+                        updateContactInformation({ newsletterSubscription: Boolean(event.currentTarget.value) })
+                    }
+                />
+            )}
         </div>
     );
 };

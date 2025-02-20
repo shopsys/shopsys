@@ -33,7 +33,7 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
     const [, customerEditUser] = useEditCustomerUserPersonalDataMutation();
     const [, customerAddUser] = useAddNewCustomerUserMutation();
     const updatePortalContent = useSessionStore((s) => s.updatePortalContent);
-    const { canManageProfile, currentCustomerUserUuid: uuid } = useAuthorization();
+    const { canManageCompanyData, currentCustomerUserUuid: uuid } = useAuthorization();
     const customerUserRoleGroupsAsSelectOptions = useCustomerUserGroupsAsSelectOptions();
     const customerUserData = getCustomerUser(customerUser);
 
@@ -172,7 +172,8 @@ export const ManageCustomerUserPopup: FC<ManageCustomerUserPopupProps> = ({ cust
                                                 (option) => option.value === field.value.value,
                                             )}
                                             isDisabled={
-                                                !canManageProfile || (mode === 'edit' && customerUser?.uuid === uuid)
+                                                !canManageCompanyData ||
+                                                (mode === 'edit' && customerUser?.uuid === uuid)
                                             }
                                             onSelectOption={field.onChange}
                                         />

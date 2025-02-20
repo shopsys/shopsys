@@ -14,6 +14,7 @@ import useTranslation from 'next-translate/useTranslation';
 import { twJoin } from 'tailwind-merge';
 import { useLogout } from 'utils/auth/useLogout';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
+import { useUserProfileSectionLabel } from 'utils/user/useUserProfileSectionLabel';
 
 export const MenuIconicItemUserAuthenticatedContent: FC = () => {
     const { t } = useTranslation();
@@ -38,6 +39,7 @@ export const MenuIconicItemUserAuthenticatedContent: FC = () => {
         ],
         url,
     );
+    const userProfileSectionLabel = useUserProfileSectionLabel();
 
     return (
         <>
@@ -98,7 +100,7 @@ export const MenuIconicItemUserAuthenticatedContent: FC = () => {
                         type="editProfile"
                     >
                         <EditIcon className="size-6" />
-                        {t('Edit profile')}
+                        {userProfileSectionLabel}
                     </MenuIconicSubItemLink>
                 </MenuIconicItemUserAuthenticatedContentListItem>
 
