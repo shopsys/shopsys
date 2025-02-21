@@ -28,7 +28,7 @@ final class CrudRouteProvider
             'entityId' => false,
         ],
         ActionType::DETAIL->value => [
-            'path' => '/{id}',
+            'path' => '/{id}/detail',
             'routeName' => 'detailAction',
             'entityId' => true,
         ],
