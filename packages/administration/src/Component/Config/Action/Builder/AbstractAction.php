@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Component\Config\Action\Builder;
 
 use Closure;
-use Shopsys\AdministrationBundle\Component\Config\Action\ActionData;
-use Shopsys\AdministrationBundle\Component\Config\Action\Builder\ActionRoute\ActionRouteInterface;
 
 abstract class AbstractAction
 {
@@ -15,8 +13,6 @@ abstract class AbstractAction
     protected ?string $icon = null;
 
     protected string $cssClass = '';
-
-    protected ?ActionRouteInterface $actionRoute = null;
 
     /**
      * @var null|\Closure(?object $entity): bool
@@ -31,12 +27,31 @@ abstract class AbstractAction
     abstract public static function create(string $name, string $label): self;
 
     /**
+     * @return string
+     */
+    abstract protected function getTemplate(): string;
+
+    /**
+     * @param object|null $entity
+     * @return array<string, mixed>
+     */
+    abstract protected function getTemplateParameters(?object $entity): array;
+
+    /**
      * @param string $name
      * @param string $label
      */
     protected function __construct(protected string $name, string $label)
     {
         $this->label = $label;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
     }
 
     /**
@@ -92,18 +107,18 @@ abstract class AbstractAction
     }
 
     /**
-     * @return \Shopsys\AdministrationBundle\Component\Config\Action\ActionData
+     * @param object|null $entity
+     * @return array|null
      */
-    public function getData(): ActionData
+    public function renderData(?object $entity): ?array
     {
-        return new ActionData(
-            $this->name,
-            $this->label,
-            $this->icon,
-            $this->cssClass,
-            $this->openInNewTab,
-            $this->actionRoute,
-            $this->displayIf,
-        );
+        if ($this->displayIf !== null && call_user_func($this->displayIf, $entity) === false) {
+            return null;
+        }
+
+        return [
+            'template' => $this->getTemplate(),
+            'parameters' => $this->getTemplateParameters($entity),
+        ];
     }
 }

@@ -52,16 +52,14 @@ class ActionsConfig
      * Add action to be displayed on specific page (ActionType)
      *
      * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $actionType
-     * @param \Shopsys\AdministrationBundle\Component\Config\Action\Builder\AbstractAction $actionBuilder
+     * @param \Shopsys\AdministrationBundle\Component\Config\Action\Builder\AbstractAction $action
      * @return $this
      */
-    public function add(ActionType $actionType, AbstractAction $actionBuilder): self
+    public function add(ActionType $actionType, AbstractAction $action): self
     {
-        $actionData = $actionBuilder->getData();
+        Assert::keyNotExists($this->actions[$actionType->value], $action->getName(), 'Action already exists. Use `ActionsConfig::update()` method or create action with different name');
 
-        Assert::keyNotExists($this->actions[$actionType->value], $actionData->name, 'Action already exists. Use `ActionsConfig::update()` method or create action with different name');
-
-        $this->actions[$actionType->value][$actionData->name] = $actionBuilder;
+        $this->actions[$actionType->value][$action->getName()] = $action;
 
         return $this;
     }

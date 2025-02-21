@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Component\Config\Action\Builder;
 
 use Closure;
+use Shopsys\AdministrationBundle\Component\Config\Action\Builder\ActionRoute\ActionRouteInterface;
 use Shopsys\AdministrationBundle\Component\Config\Action\Builder\ActionRoute\CrudActionRouteData;
 use Shopsys\AdministrationBundle\Component\Config\Action\Builder\ActionRoute\RouteActionRouteData;
 use Shopsys\AdministrationBundle\Component\Config\Action\Builder\ActionRoute\UrlActionRouteData;
@@ -14,6 +15,8 @@ use Webmozart\Assert\Assert;
 
 final class Action extends AbstractAction
 {
+    private ?ActionRouteInterface $actionRoute = null;
+
     private bool $openInNewTab = false;
 
     /**
@@ -84,5 +87,30 @@ final class Action extends AbstractAction
         $this->actionRoute = new CrudActionRouteData($crudController, $actionType, $id);
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getTemplate(): string
+    {
+        return '@ShopsysAdministration/crud/inline/action.html.twig';
+    }
+
+    /**
+     * @param object|null $entity
+     * @return array
+     */
+    protected function getTemplateParameters(?object $entity): array
+    {
+        return [
+            'name' => $this->name,
+            'label' => $this->label,
+            'icon' => $this->icon,
+            'cssClass' => $this->cssClass,
+            'openInNewTab' => $this->openInNewTab,
+            'actionRoute' => $this->actionRoute,
+            'entity' => $entity,
+        ];
     }
 }

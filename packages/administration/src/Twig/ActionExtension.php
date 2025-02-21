@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\AdministrationBundle\Component\Config\Action;
+namespace Shopsys\AdministrationBundle\Twig;
 
 use InvalidArgumentException;
+use Override;
 use Shopsys\AdministrationBundle\Component\Config\Action\Builder\ActionRoute\ActionRouteInterface;
 use Shopsys\AdministrationBundle\Component\Config\Action\Builder\ActionRoute\CrudActionRouteData;
 use Shopsys\AdministrationBundle\Component\Config\Action\Builder\ActionRoute\RouteActionRouteData;
@@ -12,8 +13,10 @@ use Shopsys\AdministrationBundle\Component\Config\Action\Builder\ActionRoute\Url
 use Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry;
 use Shopsys\AdministrationBundle\Component\Router\CrudRouteProvider;
 use Symfony\Component\Routing\RouterInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-final class ActionsFactory
+class ActionExtension extends AbstractExtension
 {
     /**
      * @param \Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry $crudControllerDefinitionRegistry
@@ -28,66 +31,30 @@ final class ActionsFactory
     }
 
     /**
-     * @param \Shopsys\AdministrationBundle\Component\Config\Action\Builder\AbstractAction[] $actions
-     * @param object $entity
-     * @return \Shopsys\AdministrationBundle\Component\Config\Action\ActionData[]
+     * @return \Twig\TwigFunction[]
      */
-    public function processActions(array $actions, ?object $entity = null): array
+    #[Override]
+    public function getFunctions()
     {
-        $actionsToReturn = [];
-
-        foreach ($actions as $action) {
-            $actionData = $this->processAction($action->getData(), $entity);
-
-            if ($actionData !== null) {
-                $actionsToReturn[] = $actionData;
-            }
-        }
-
-        return $actionsToReturn;
+        return [
+            new TwigFunction(
+                'action_url',
+                $this->generateActionUrl(...),
+            ),
+        ];
     }
 
     /**
-     * @param \Shopsys\AdministrationBundle\Component\Config\Action\ActionData $actionData
-     * @param object|null $entity
-     * @return \Shopsys\AdministrationBundle\Component\Config\Action\ActionData|null
-     */
-    private function processAction(
-        ActionData $actionData,
-        ?object $entity = null,
-    ): ?ActionData {
-        if ($this->checkActionVisibility($actionData, $entity) === false) {
-            return null;
-        }
-
-        if ($actionData->actionRoute === null) {
-            return $actionData;
-        }
-
-        $actionData->setUrl($this->generateUrl($actionData->actionRoute, $entity));
-
-        return $actionData;
-    }
-
-    /**
-     * @param \Shopsys\AdministrationBundle\Component\Config\Action\ActionData $actionData
-     * @param object|null $entity
-     * @return bool
-     */
-    private function checkActionVisibility(
-        ActionData $actionData,
-        ?object $entity = null,
-    ): bool {
-        return $actionData->displayIf === null || call_user_func($actionData->displayIf, $entity) !== false;
-    }
-
-    /**
-     * @param \Shopsys\AdministrationBundle\Component\Config\Action\Builder\ActionRoute\ActionRouteInterface $actionRoute
+     * @param \Shopsys\AdministrationBundle\Component\Config\Action\Builder\ActionRoute\ActionRouteInterface|null $actionRoute
      * @param object|null $entity
      * @return string
      */
-    private function generateUrl(ActionRouteInterface $actionRoute, ?object $entity): string
+    private function generateActionUrl(?ActionRouteInterface $actionRoute, ?object $entity): string
     {
+        if ($actionRoute === null) {
+            return 'javascript:void(0)';
+        }
+
         if ($actionRoute instanceof UrlActionRouteData) {
             return $actionRoute->getUrl($entity);
         }
