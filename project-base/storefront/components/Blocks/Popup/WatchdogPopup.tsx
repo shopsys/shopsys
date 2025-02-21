@@ -17,6 +17,7 @@ import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { useSessionStore } from 'store/useSessionStore';
 import { WatchdogFormType } from 'types/form';
 import { blurInput } from 'utils/forms/blurInput';
+import { useScrollToFirstError } from 'utils/forms/useScrollToFirstError';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
@@ -58,6 +59,8 @@ export const WatchdogPopup: FC<WatchdogPopupProps> = ({ productUuid }) => {
 
         onGtmCreateWatchdotEventHandler(watchdogFormData);
     };
+
+    useScrollToFirstError(formMeta.formName, formProviderMethods);
 
     return (
         <Popup className="w-11/12 overflow-x-auto lg:w-4/5 vl:w-auto">

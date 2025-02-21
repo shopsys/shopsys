@@ -21,6 +21,7 @@ import { DeliveryAddressType } from 'types/customer';
 import { DeliveryAddressFormType } from 'types/form';
 import { useCountriesAsSelectOptions } from 'utils/countries/useCountriesAsSelectOptions';
 import { blurInput } from 'utils/forms/blurInput';
+import { useScrollToFirstError } from 'utils/forms/useScrollToFirstError';
 import { showErrorMessage } from 'utils/toasts/showErrorMessage';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
@@ -106,6 +107,8 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
 
         showSuccessMessage(t('Your delivery address has been created'));
     };
+
+    useScrollToFirstError(formMeta.formName, formProviderMethods);
 
     return (
         <Popup className="w-11/12 lg:w-4/5 vl:w-auto" contentClassName="overflow-y-auto">

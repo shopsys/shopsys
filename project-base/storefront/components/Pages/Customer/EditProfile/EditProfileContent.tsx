@@ -11,13 +11,12 @@ import {
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useChangeCompanyDataMutation } from 'graphql/requests/customer/mutations/ChangeCompanyDataMutation.generated';
 import { useChangePersonalDataMutation } from 'graphql/requests/customer/mutations/ChangePersonalDataMutation.generated';
-import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import useTranslation from 'next-translate/useTranslation';
 import { FormProvider, SubmitHandler } from 'react-hook-form';
 import { CurrentCustomerType } from 'types/customer';
 import { CustomerChangeProfileFormType } from 'types/form';
 import { handleFormErrors } from 'utils/forms/handleFormErrors';
-import { useErrorPopup } from 'utils/forms/useErrorPopup';
+import { useScrollToFirstError } from 'utils/forms/useScrollToFirstError';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 type EditProfileContentProps = {
@@ -88,7 +87,7 @@ export const EditProfileContent: FC<EditProfileContentProps> = ({ currentCustome
         handleFormErrors(changeProfileResult.error, formProviderMethods, t, formMeta.messages.error);
     };
 
-    useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.other);
+    useScrollToFirstError(formMeta.formName, formProviderMethods);
 
     return (
         <FormProvider {...formProviderMethods}>

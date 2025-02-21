@@ -29,8 +29,6 @@ export const RegistrationContent: FC = () => {
     const formMeta = useRegistrationFormMeta(formProviderMethods);
     const { register } = useRegistration();
 
-    useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.other);
-
     const onRegistrationHandler: SubmitHandler<RegistrationFormType> = async (registrationFormData) => {
         blurInput();
         const registrationError = await register({
@@ -47,6 +45,8 @@ export const RegistrationContent: FC = () => {
     };
 
     const customerValue = useWatch({ name: formMeta.fields.customer.name, control: formProviderMethods.control });
+
+    useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.other);
 
     return (
         <Webline className="flex flex-col items-center">
