@@ -72,6 +72,7 @@ class EntityMaker extends BaseMaker
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator): void
     {
         $this->createEntityClass($generator);
+        $this->createEntityDataClass($generator);
 
         foreach ($generator->getGeneratedFiles() as $file) {
             $this->fixStandards($file);
@@ -152,6 +153,28 @@ class EntityMaker extends BaseMaker
             [
                 'use_statements' => $this->getUseStatementsGenerator(),
                 'constructor_dependencies' => $this->getFormattedConstructorDependencies(),
+                'entity_config' => $this->entityConfig,
+                'entity_properties' => $this->entityFieldsConfiguration->getProperties(),
+            ],
+        );
+        $generator->writeChanges();
+    }
+
+    /**
+     * @param \Symfony\Bundle\MakerBundle\Generator $generator
+     */
+    protected function createEntityDataClass(Generator $generator): void
+    {
+        $classNameDetails = $generator->createClassNameDetails(
+            $this->entityConfig->entityName,
+            preg_replace('/\bApp\\\\/', '', $this->getGeneratedClassNamespace(), 1),
+            'Data',
+        );
+
+        $generator->generateClass(
+            $classNameDetails->getFullName(),
+            __DIR__ . '/templates/EntityData.tpl.php',
+            [
                 'entity_config' => $this->entityConfig,
                 'entity_properties' => $this->entityFieldsConfiguration->getProperties(),
             ],
