@@ -13,3 +13,4 @@ Crud controller is built using known Shopsys components like [Grid](../grid.md) 
 
 ## Reference
 - [Configuration](reference/crud-controller.md)
+- [Actions](reference/actions.md)
