@@ -1,6 +1,6 @@
 <a href="{{ action_url(actionRoute, entity) }}"
-   class="btn wrap-bar__btn {{ cssClass }}"
    {% if openInNewTab %}target="_blank"{% endif %}
+    {{ attributes|raw }}
 >
     {% if icon is not null %}
         {{ ux_icon(icon) }}

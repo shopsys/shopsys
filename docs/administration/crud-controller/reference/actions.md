@@ -116,7 +116,9 @@ protected function configureActions(ActionsConfig $actions): ActionsConfig
         // You can also set an icon if you want
         ->setIcon('eye')
         // If the icon is not enough, you can also set your custom CSS class
-        ->setCssClass('bg-green')
+        ->setAttribute('class', 'btn--primary', true)
+        // or any other attribute
+        ->setAttribute('data-attribute', 'value')
         // You can conditionally display action only when you need it
         ->displayIf(fn (Article $entity) => $article->isPublished() === false)
     ;
