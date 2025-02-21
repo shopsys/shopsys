@@ -86,7 +86,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
 
                         {!!product.usps.length && <ProductDetailUsps usps={product.usps} />}
 
-                        <div className="flex flex-col gap-4 rounded-xl bg-backgroundMore p-3 sm:p-6">
+                        <div className="bg-backgroundMore flex flex-col gap-4 rounded-xl p-3 sm:p-6">
                             <ProductDetailPrice productPrice={product.price} />
 
                             {!product.isSellingDenied && (
@@ -95,7 +95,7 @@ export const ProductDetailContent: FC<ProductDetailContentProps> = ({ product, i
                                     availableStoresCount={product.availableStoresCount}
                                     isInquiryType={product.isInquiryType}
                                     className={twJoin(
-                                        'mr-1 flex items-center font-secondary',
+                                        'font-secondary mr-1 flex items-center',
                                         product.availability.status === TypeAvailabilityStatusEnum.InStock &&
                                             'cursor-pointer',
                                     )}

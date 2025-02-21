@@ -49,7 +49,7 @@ export const Popup: FC<PopupProps> = ({ children, hideCloseButton, className, co
                         tid={TIDs.layout_popup}
                         transition={{ duration: 0.2 }}
                         className={twMergeCustom(
-                            'fixed z-aboveOverlay flex max-h-[80vh] max-w-screen-lg cursor-auto flex-col rounded bg-background p-1 shadow-2xl',
+                            'z-aboveOverlay bg-background fixed flex max-h-[80vh] max-w-screen-lg cursor-auto flex-col rounded-sm p-1 shadow-2xl',
                             className,
                         )}
                         initial={{
@@ -70,7 +70,7 @@ export const Popup: FC<PopupProps> = ({ children, hideCloseButton, className, co
                         {!hideCloseButton && (
                             <div className="flex h-9 items-center justify-end">
                                 <button
-                                    className="flex size-9 cursor-pointer items-center justify-center rounded-full border-0 text-xs text-textAccent no-underline outline-none"
+                                    className="text-textAccent flex size-9 cursor-pointer items-center justify-center rounded-full border-0 text-xs no-underline outline-hidden"
                                     onClick={() => updatePortalContent(null)}
                                 >
                                     <RemoveIcon className="w-6" />

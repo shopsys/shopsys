@@ -20,12 +20,12 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
             {articles.map((article) => (
                 <ArticleLink
                     key={article.uuid}
-                    className="flex min-w-96 max-w-[410px] snap-start flex-col gap-5 no-underline hover:no-underline vl:flex-row"
+                    className="vl:flex-row flex max-w-[410px] min-w-96 snap-start flex-col gap-5 no-underline hover:no-underline"
                     href={article.link}
                 >
                     <Image
                         alt={article.mainImage?.name || article.name}
-                        className="aspect-video rounded-xl object-cover vl:h-24 vl:w-36"
+                        className="vl:h-24 vl:w-36 aspect-video rounded-xl object-cover"
                         height={220}
                         sizes="(max-width: 600px) 90vw, (max-width: 1024px) 40vw, 10vw"
                         src={article.mainImage?.url}
@@ -43,7 +43,7 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
                             ) : (
                                 <>
                                     <span
-                                        className="mr-4 font-secondary text-sm font-semibold text-inputPlaceholder"
+                                        className="font-secondary text-inputPlaceholder mr-4 text-sm font-semibold"
                                         tid={TIDs.blog_article_publication_date}
                                     >
                                         {formatDate(article.publishDate, 'l')}
@@ -70,7 +70,7 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
 
                         <h5 className="text-textInverted">{article.name}</h5>
 
-                        <p className={twJoin('font-normal text-textInverted', !isPlaceholder && 'hidden')}>
+                        <p className={twJoin('text-textInverted font-normal', !isPlaceholder && 'hidden')}>
                             {article.perex}
                         </p>
                     </div>

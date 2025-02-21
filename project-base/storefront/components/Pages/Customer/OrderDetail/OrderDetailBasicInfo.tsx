@@ -41,9 +41,9 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
         );
 
     return (
-        <div className="my-6 flex flex-col gap-4 bg-background vl:mb-8">
+        <div className="bg-background vl:mb-8 my-6 flex flex-col gap-4">
             <OrderRowWrapper className="flex items-center justify-between gap-4">
-                <div className="flex flex-wrap gap-6 gap-y-2 vl:gap-8">
+                <div className="vl:gap-8 flex flex-wrap gap-6 gap-y-2">
                     <OrderItemColumnInfo
                         tid={TIDs.order_detail_number}
                         title={t('Order number')}
@@ -109,7 +109,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                     )}
                 </OrderRowWrapper>
             )}
-            <div className="rounded-md border-[5px] border-borderLess bg-background p-7" tid={TIDs.order_detail_items}>
+            <div className="border-borderLess bg-background rounded-md border-[5px] p-7" tid={TIDs.order_detail_items}>
                 {filteredOrderItems.map((orderItem) => (
                     <OrderDetailOrderItem
                         key={orderItem.name}
@@ -132,7 +132,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
 
 export const OrderRowWrapper: FC = ({ children, className, tid }) => {
     return (
-        <div className={twMergeCustom('rounded-md bg-backgroundMore px-4 py-3 vl:px-6 vl:py-4', className)} tid={tid}>
+        <div className={twMergeCustom('bg-backgroundMore vl:px-6 vl:py-4 rounded-md px-4 py-3', className)} tid={tid}>
             {children}
         </div>
     );

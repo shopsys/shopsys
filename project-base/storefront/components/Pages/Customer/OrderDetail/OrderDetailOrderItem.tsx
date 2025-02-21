@@ -26,8 +26,8 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
     return (
         <div
             className={twJoin(
-                'flex items-center gap-3 first:border-none first:pt-0 last:pb-0 vl:gap-5',
-                isDiscount ? 'pb-5' : 'border-t border-t-borderAccentLess py-5',
+                'vl:gap-5 flex items-center gap-3 first:border-none first:pt-0 last:pb-0',
+                isDiscount ? 'pb-5' : 'border-t-borderAccentLess border-t py-5',
             )}
         >
             {isDiscount ? (
@@ -43,11 +43,11 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
                     />
                 </div>
             )}
-            <div className="flex w-full flex-wrap items-center justify-between gap-3 border-b border-b-borderLess last:border-none vl:grid vl:grid-cols-[4fr_1fr_2fr_1fr] vl:gap-5">
+            <div className="border-b-borderLess vl:grid vl:grid-cols-[4fr_1fr_2fr_1fr] vl:gap-5 flex w-full flex-wrap items-center justify-between gap-3 border-b last:border-none">
                 {isDiscount ? (
                     <span>{orderItem.name}</span>
                 ) : orderItem.product?.isVisible ? (
-                    <ExtendedNextLink className="w-full vl:w-fit" href={orderItem.product.slug} skeletonType="product">
+                    <ExtendedNextLink className="vl:w-fit w-full" href={orderItem.product.slug} skeletonType="product">
                         {orderItem.name}
                     </ExtendedNextLink>
                 ) : (

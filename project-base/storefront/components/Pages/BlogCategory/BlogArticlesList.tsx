@@ -26,7 +26,7 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles, isLo
                         href={blogArticle.link}
                         type="blogArticle"
                         className={twJoin(
-                            'group flex w-full flex-col gap-y-6 rounded-xl border border-backgroundMore p-5 transition-colors md:flex-row md:gap-x-6 md:gap-y-0',
+                            'border-backgroundMore group flex w-full flex-col gap-y-6 rounded-xl border p-5 transition-colors md:flex-row md:gap-x-6 md:gap-y-0',
                             'bg-backgroundMore no-underline',
                             'hover:border-borderAccentLess hover:bg-background hover:no-underline',
                         )}
@@ -45,7 +45,7 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles, isLo
                         <div className="flex flex-1 flex-col gap-y-3">
                             <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
                                 <span
-                                    className="font-secondary text-sm font-semibold text-textSubtle"
+                                    className="font-secondary text-textSubtle text-sm font-semibold"
                                     tid={TIDs.blog_article_publication_date}
                                 >
                                     {new Date(blogArticle.publishDate).toLocaleDateString(defaultLocale)}
@@ -67,12 +67,12 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles, isLo
                                 </div>
                             </div>
 
-                            <h2 className="h5 mb-0 !font-bold text-text group-hover:text-link group-hover:underline max-md:text-base">
+                            <h2 className="h5 text-text group-hover:text-link mb-0 !font-bold group-hover:underline max-md:text-base">
                                 {blogArticle.name}
                             </h2>
 
                             {!!blogArticle.perex && (
-                                <p className="mb-0 font-secondary text-base max-md:text-sm">{blogArticle.perex}</p>
+                                <p className="font-secondary mb-0 text-base max-md:text-sm">{blogArticle.perex}</p>
                             )}
                         </div>
                     </ExtendedNextLink>

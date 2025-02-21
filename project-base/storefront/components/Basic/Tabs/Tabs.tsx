@@ -46,7 +46,7 @@ export const TabsListItem: TabFC<Partial<PropsWithRef<TabProps>>> = ({ children,
     <Tab
         selectedClassName="isActive"
         className={twJoin(
-            'cursor-pointer select-none rounded-2xl bg-backgroundMore px-3 py-2 font-secondary text-sm font-semibold outline-1 outline-borderAccentSuccess [&.isActive]:bg-textInverted [&.isActive]:outline',
+            'bg-backgroundMore font-secondary outline-borderAccentSuccess [&.isActive]:bg-textInverted cursor-pointer rounded-2xl px-3 py-2 text-sm font-semibold select-none [&.isActive]:outline-1',
             className,
         )}
         {...props}
@@ -74,12 +74,12 @@ export const TabsContent: TabFC<TabsContentProps & Partial<PropsWithRef<TabPanel
             {...props}
         >
             <div
-                className="flex w-full cursor-pointer items-center justify-between rounded-xl bg-backgroundMore p-3 font-secondary text-sm font-semibold lg:hidden"
+                className="bg-backgroundMore font-secondary flex w-full cursor-pointer items-center justify-between rounded-xl p-3 text-sm font-semibold lg:hidden"
                 onClick={mobileTab}
             >
                 {headingTextMobile}
                 <AnimateRotateDiv className="flex items-start" condition={isActiveOnMobile}>
-                    <ArrowIcon className={twJoin('size-4 rotate-0 text-text transition')} />
+                    <ArrowIcon className={twJoin('text-text size-4 rotate-0 transition')} />
                 </AnimateRotateDiv>
             </div>
 

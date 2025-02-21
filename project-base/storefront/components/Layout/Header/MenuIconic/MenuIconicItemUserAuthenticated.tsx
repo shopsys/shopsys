@@ -25,7 +25,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                 onMouseLeave={() => isDesktop && setIsActive(false)}
             >
                 <MenuIconicItemLink
-                    className="cursor-pointer text-nowrap rounded-t transition-all"
+                    className="cursor-pointer rounded-t text-nowrap transition-all"
                     type="account"
                     onClick={() => !isDesktop && setIsActive(!isActive)}
                     onTouchEnd={(e) => {
@@ -35,7 +35,7 @@ export const MenuIconicItemUserAuthenticated: FC = () => {
                 >
                     <div className="relative">
                         <UserIcon className="size-6" />
-                        <div className="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full bg-actionPrimaryBackground" />
+                        <div className="bg-actionPrimaryBackground absolute -top-1 -right-1 h-2.5 w-2.5 rounded-full" />
                     </div>
                     <span className="hidden lg:inline-block">{t('My account')}</span>
                 </MenuIconicItemLink>

@@ -28,8 +28,8 @@ export const CartStep: FC<CartStepProps> = ({
             <button
                 disabled={isDisabled}
                 className={twJoin(
-                    'group flex max-w-[70px] flex-col items-center gap-2.5 outline-none md:max-w-none lg:flex-row lg:gap-5',
-                    isDisabled && 'cursor-default',
+                    'group flex max-w-[70px] flex-col items-center gap-2.5 outline-hidden md:max-w-none lg:flex-row lg:gap-5',
+                    isDisabled ? 'cursor-default' : 'cursor-pointer',
                 )}
                 onClick={() => onClickHandler(step, url, pageType)(activeStep)}
             >

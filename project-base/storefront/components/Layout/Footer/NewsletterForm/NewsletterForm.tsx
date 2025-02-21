@@ -41,8 +41,8 @@ export const NewsletterForm: FC = () => {
     );
 
     return (
-        <div className="relative flex flex-col pb-7 pt-8 lg:flex-row lg:items-center">
-            <div className="mb-3 break-words text-lg font-bold lg:mb-0 lg:pr-5 lg:text-2xl">
+        <div className="relative flex flex-col pt-8 pb-7 lg:flex-row lg:items-center">
+            <div className="mb-3 text-lg font-bold break-words lg:mb-0 lg:pr-5 lg:text-2xl">
                 {t('Sign up for our newsletter and get 35% discount on running apparel')}
             </div>
 

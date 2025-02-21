@@ -17,7 +17,7 @@ export const ToggleSwitch = forwardRef<HTMLInputElement, ToggleSwitchProps>(
         <div className="relative">
             <input
                 checked={value}
-                className="peer z-above h-6 w-11 rounded"
+                className="z-above peer h-6 w-11 rounded"
                 id={id}
                 name={name}
                 ref={toggleSwitchForwardedRef}
@@ -28,7 +28,7 @@ export const ToggleSwitch = forwardRef<HTMLInputElement, ToggleSwitchProps>(
             <label
                 htmlFor={id}
                 className={twJoin(
-                    "absolute left-0 top-0 h-6 w-11 cursor-pointer rounded after:my-[2px] after:ml-[2px] after:block after:h-5 after:w-5 after:rounded after:shadow-sm after:transition-all after:content-[''] peer-checked:after:ml-5.5 peer-checked:after:block",
+                    "absolute top-0 left-0 h-6 w-11 cursor-pointer rounded-sm after:my-[2px] after:ml-[2px] after:block after:h-5 after:w-5 after:rounded-sm after:shadow-xs after:transition-all after:content-[''] peer-checked:after:ml-5.5 peer-checked:after:block",
                     'bg-inputBorder after:bg-inputTextInverted',
                     'peer-checked:bg-inputBorderActive',
                 )}

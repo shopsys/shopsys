@@ -58,7 +58,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
             <Button
                 variant="inverted"
                 className={twJoin(
-                    'relative w-full flex-1 justify-start sm:w-auto vl:hidden',
+                    'vl:hidden relative w-full flex-1 justify-start sm:w-auto',
                     isSortMenuOpen && 'z-aboveOverlay',
                 )}
                 onClick={() => setIsSortMenuOpen(!isSortMenuOpen)}
@@ -70,9 +70,9 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
             </Button>
             <div
                 className={twJoin(
-                    'flex-col rounded-xl bg-background vl:flex vl:flex-row vl:gap-2.5',
+                    'bg-background vl:flex vl:flex-row vl:gap-2.5 flex-col rounded-xl',
                     isSortMenuOpen
-                        ? 'absolute right-0 top-full z-aboveOverlay mt-1 flex w-[60%] divide-y divide-borderAccentLess px-5 py-2.5'
+                        ? 'z-aboveOverlay divide-borderAccentLess absolute top-full right-0 mt-1 flex w-[60%] divide-y px-5 py-2.5'
                         : 'hidden',
                 )}
             >
@@ -98,7 +98,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
                     );
                 })}
             </div>
-            <div className="hidden font-secondary text-xs text-inputPlaceholder vl:block">
+            <div className="font-secondary text-inputPlaceholder vl:block hidden text-xs">
                 {totalCount} {t('products count', { count: totalCount })}
             </div>
             {isSortMenuOpen && <Overlay isActive={isSortMenuOpen} onClick={() => setIsSortMenuOpen(false)} />}

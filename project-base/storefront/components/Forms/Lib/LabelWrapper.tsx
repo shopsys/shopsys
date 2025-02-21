@@ -12,7 +12,6 @@ type LabelWrapperProps = NativeProps & {
     required?: boolean;
     checked?: boolean;
     disabled?: boolean;
-    selectBoxLabelIsFloated?: boolean;
 };
 
 export const LabelWrapper: FC<LabelWrapperProps> = ({
@@ -22,12 +21,11 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
     required,
     checked,
     disabled,
-    selectBoxLabelIsFloated,
     htmlFor,
     children,
     className,
 }) => (
-    <div className="relative w-full select-none font-secondary">
+    <div className="font-secondary relative w-full select-none">
         {children}
         {!!label && (
             <label
@@ -38,27 +36,23 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                     inputType === 'text-input' &&
                         'pointer-events-none top-2 text-sm peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-base peer-placeholder-shown:font-semibold peer-focus:top-2 peer-focus:text-sm peer-focus:font-normal',
                     (inputType === 'text-input' || inputType === 'selectbox' || inputType === 'textarea') &&
-                        'absolute left-3 z-[2] block text-inputPlaceholder transition-all peer-hover:text-inputPlaceholderHovered peer-focus:text-inputPlaceholderActive peer-disabled:text-inputPlaceholderDisabled',
-                    (inputType === 'text-input' || inputType === 'selectbox' || inputType === 'textarea') &&
-                        (selectBoxLabelIsFloated === undefined || selectBoxLabelIsFloated === true) &&
-                        'transform-none peer-placeholder-shown:-translate-y-1/2 peer-focus:transform-none',
+                        'text-inputPlaceholder peer-hover:text-inputPlaceholderHovered peer-focus:text-inputPlaceholderActive peer-disabled:text-inputPlaceholderDisabled absolute left-3 z-[2] block transform-none transition-all peer-placeholder-shown:-translate-y-1/2 peer-focus:translate-none',
                     (inputType === 'checkbox' || inputType === 'radio') && [
                         'group relative flex w-full cursor-pointer items-center gap-2 text-sm font-semibold',
                         checked
                             ? 'text-inputTextActive hover:text-inputTextActive'
                             : 'text-inputText hover:text-inputTextHovered',
-                        disabled && 'cursor-no-drop text-inputTextDisabled opacity-60 hover:text-inputTextDisabled',
+                        disabled && 'text-inputTextDisabled hover:text-inputTextDisabled cursor-no-drop opacity-60',
                     ],
                     inputType === 'checkbox' && [
                         '[&>a]:text-link [&>a]:hover:text-linkHovered [&>a]:focus:text-linkHovered [&>a]:active:text-linkHovered',
                     ],
                     inputType === 'selectbox' && [
                         'top-1/2 -translate-y-1/2',
-                        selectBoxLabelIsFloated && 'top-[9px] text-sm',
                         disabled && '!text-inputPlaceholderDisabled',
                     ],
                     inputType === 'textarea' &&
-                        'top-1 bg-background pr-1 text-sm peer-placeholder-shown:top-6 peer-placeholder-shown:text-base peer-placeholder-shown:font-semibold peer-focus:top-1 peer-focus:text-sm peer-focus:font-normal',
+                        'bg-background top-1 pr-1 text-sm peer-placeholder-shown:top-6 peer-placeholder-shown:text-base peer-placeholder-shown:font-semibold peer-focus:top-1 peer-focus:text-sm peer-focus:font-normal',
                     disabled && 'text-inputTextDisabled',
                     className,
                 )}
@@ -66,12 +60,12 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                 {(inputType === 'checkbox' || inputType === 'radio') && (
                     <div
                         className={twMergeCustom(
-                            'flex size-5 min-w-5 border border-inputBorder bg-inputBackground p-[3px] transition group-hover:bg-inputBackgroundHovered',
-                            inputType === 'checkbox' ? 'rounded' : 'rounded-full p-[5px]',
+                            'border-inputBorder bg-inputBackground group-hover:bg-inputBackgroundHovered flex size-5 min-w-5 border p-[3px] transition',
+                            inputType === 'checkbox' ? 'rounded-sm' : 'rounded-full p-[5px]',
                             'active:scale-90',
                             checked
                                 ? 'border-inputBorderActive bg-inputBackgroundActive group-hover:bg-inputBackgroundActive'
-                                : 'border-2 group-hover:border-inputBorderHovered group-active:border-inputBorderHovered',
+                                : 'group-hover:border-inputBorderHovered group-active:border-inputBorderHovered border-2',
                             disabled &&
                                 'border-inputBorderDisabled group-hover:border-inputBorderDisabled group-hover:bg-inputBackgroundDisabled group-active:border-inputBorderDisabled',
                             disabled && checked && 'bg-inputBorderDisabled group-hover:bg-inputBorderDisabled',
@@ -80,7 +74,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                         {inputType === 'checkbox' ? (
                             <CheckmarkIcon
                                 className={twMergeCustom(
-                                    'h-full text-inputTextInverted opacity-0 transition',
+                                    'text-inputTextInverted h-full opacity-0 transition',
                                     checked && 'opacity-100',
                                     disabled && 'text-inputTextDisabled',
                                 )}
@@ -88,7 +82,7 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                         ) : (
                             <span
                                 className={twMergeCustom(
-                                    'h-full w-full rounded-full bg-inputTextInverted opacity-0 transition',
+                                    'bg-inputTextInverted h-full w-full rounded-full opacity-0 transition',
                                     checked && 'opacity-100',
                                 )}
                             />
@@ -99,10 +93,10 @@ export const LabelWrapper: FC<LabelWrapperProps> = ({
                 <div className="flex w-full justify-between">
                     <div className="w-full">
                         {label}
-                        {required && <span className="ml-1 text-textError">*</span>}
+                        {required && <span className="text-textError ml-1">*</span>}
                     </div>
 
-                    {!!count && !checked && <div className="ml-auto font-normal text-inputPlaceholder">({count})</div>}
+                    {!!count && !checked && <div className="text-inputPlaceholder ml-auto font-normal">({count})</div>}
                 </div>
             </label>
         )}

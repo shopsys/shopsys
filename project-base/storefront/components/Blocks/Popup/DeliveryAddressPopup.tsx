@@ -111,7 +111,7 @@ export const DeliveryAddressPopup: FC<DeliveryAddressPopupProps> = ({ deliveryAd
     useScrollToFirstError(formMeta.formName, formProviderMethods);
 
     return (
-        <Popup className="w-11/12 lg:w-4/5 vl:w-auto" contentClassName="overflow-y-auto">
+        <Popup className="vl:w-auto w-11/12 lg:w-4/5" contentClassName="overflow-y-auto">
             <FormProvider {...formProviderMethods}>
                 <Form onSubmit={formProviderMethods.handleSubmit(deliveryAddressHandler)}>
                     <FormContentWrapper>

@@ -14,16 +14,16 @@ export const ProductComparisonHeadSticky: FC<ProductComparisonHeadStickyProps> =
     return (
         <div
             className={twJoin(
-                'fixed left-0 top-0 z-menu w-full overflow-hidden border-b-2 border-borderAccentLess bg-tableBackgroundContrast px-5',
+                'z-menu border-borderAccentLess bg-tableBackgroundContrast fixed top-0 left-0 w-full overflow-hidden border-b-2 px-5',
                 tableStickyHeadActive ? 'flex' : 'hidden',
             )}
         >
             <div className="mx-auto flex w-full max-w-7xl flex-nowrap overflow-hidden">
-                <div className="border-r-1 static flex h-full min-w-[115px] max-w-[182px] shrink-0 sm:w-auto sm:min-w-[220px] sm:max-w-none md:min-w-[265px] md:max-w-none lg:min-w-[270px] vl:min-w-[290px]" />
+                <div className="vl:min-w-[290px] static flex h-full max-w-[182px] min-w-[115px] shrink-0 border-r-1 sm:w-auto sm:max-w-none sm:min-w-[220px] md:max-w-none md:min-w-[265px] lg:min-w-[270px]" />
                 {props.comparedProducts.map((product, index) => (
                     <div
                         key={`headSticky-${product.uuid}`}
-                        className="border-r-1 flex min-w-[calc(182px+12px*2)] max-w-[calc(182px+12px*2)] shrink-0 basis-64 items-center px-1 py-3 sm:min-w-[calc(205px+20px*2)] sm:max-w-[calc(205px+20px*2)]"
+                        className="flex max-w-[calc(182px+12px*2)] min-w-[calc(182px+12px*2)] shrink-0 basis-64 items-center border-r-1 px-1 py-3 sm:max-w-[calc(205px+20px*2)] sm:min-w-[calc(205px+20px*2)]"
                         style={index === 0 ? { marginLeft: -props.tableMarginLeft } : undefined}
                     >
                         <a className="relative h-16 w-16" href={product.slug}>

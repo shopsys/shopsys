@@ -16,11 +16,11 @@ export const BannerImage: FC<BannerImageProps> = ({
     isFirst,
     children,
 }) => (
-    <div className="relative h-[250px] w-full grow md:h-[345px] vl:h-[425px]">
+    <div className="vl:h-[425px] relative h-[250px] w-full grow md:h-[345px]">
         <Image
             fill
             alt={desktopAlt}
-            className="hidden h-full w-full object-cover vl:block"
+            className="vl:block hidden h-full w-full object-cover"
             loader={({ src }) => `${src}?width=936`}
             priority={isFirst}
             sizes="(max-width: 1023px) 100vw, 1400px"
@@ -30,7 +30,7 @@ export const BannerImage: FC<BannerImageProps> = ({
         <Image
             fill
             alt={mobileAlt}
-            className="block h-full w-full object-cover vl:hidden"
+            className="vl:hidden block h-full w-full object-cover"
             loader={({ src }) => `${src}?width=991`}
             priority={isFirst}
             sizes="(max-width: 1023px) 100vw, 50vw"

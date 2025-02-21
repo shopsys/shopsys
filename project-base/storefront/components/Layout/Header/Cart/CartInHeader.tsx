@@ -46,7 +46,7 @@ export const CartInHeader: FC = ({ className }) => {
     return (
         <>
             <div
-                className={twMergeCustom('group relative vl:flex', isActive && 'z-aboveOverlay', className)}
+                className={twMergeCustom('vl:flex group relative', isActive && 'z-aboveOverlay', className)}
                 tid={TIDs.header_cart}
                 onClick={() => !isDesktop && setIsActive(!isActive)}
                 onMouseEnter={() => isDesktop && setIsActive(true)}
@@ -61,8 +61,8 @@ export const CartInHeader: FC = ({ className }) => {
                 {isCartFetchingOrUnavailable && (
                     <Loader
                         className={twJoin(
-                            'absolute inset-0 z-overlay flex h-full w-full items-center',
-                            'justify-center rounded-lg bg-backgroundMore py-2 opacity-50',
+                            'z-overlay absolute inset-0 flex h-full w-full items-center',
+                            'bg-backgroundMore justify-center rounded-lg py-2 opacity-50',
                         )}
                     />
                 )}
@@ -72,7 +72,7 @@ export const CartInHeader: FC = ({ className }) => {
                     skeletonType="cart"
                     tid={TIDs.header_cart_link}
                     className={twJoin(
-                        'hidden h-11 cursor-pointer items-center justify-center gap-x-2 rounded-lg border px-3 no-underline transition-all hover:no-underline group-hover:shadow-lg vl:flex',
+                        'vl:flex hidden h-11 cursor-pointer items-center justify-center gap-x-2 rounded-lg border px-3 no-underline transition-all group-hover:shadow-lg hover:no-underline',
                         cart?.items.length ? nonEmptyCartTwClassName : emptyCartTwClassName,
                         !isPriceVisible(cart?.totalItemsPrice.priceWithVat) && cart?.items.length
                             ? 'min-w-14'
@@ -85,7 +85,7 @@ export const CartInHeader: FC = ({ className }) => {
                     </span>
 
                     {isPriceVisibleOrEmtpyCart && (
-                        <span className={twJoin('hidden font-secondary text-sm font-bold vl:block')}>
+                        <span className={twJoin('font-secondary vl:block hidden text-sm font-bold')}>
                             {cart?.items.length
                                 ? formatPrice(cart.totalItemsPrice.priceWithVat, {
                                       explicitZero: true,
@@ -95,7 +95,7 @@ export const CartInHeader: FC = ({ className }) => {
                     )}
                 </ExtendedNextLink>
 
-                <div className="flex cursor-pointer items-center justify-center text-lg outline-none vl:hidden">
+                <div className="vl:hidden flex cursor-pointer items-center justify-center text-lg outline-hidden">
                     <div
                         className={twJoin(
                             'relative flex h-full w-full items-center justify-center rounded-md border p-3 no-underline transition-colors hover:no-underline',
@@ -126,7 +126,7 @@ export const CartInHeader: FC = ({ className }) => {
 };
 
 const CartCount: FC = ({ children }) => (
-    <span className="absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-backgroundAccent px-0.5 font-secondary text-[10px] font-bold leading-normal text-textInverted vl:-right-2 vl:-top-[6.5px]">
+    <span className="bg-backgroundAccent font-secondary text-textInverted vl:-right-2 vl:-top-[6.5px] absolute top-1 right-1 flex h-4 min-w-4 items-center justify-center rounded-full px-0.5 text-[10px] leading-normal font-bold">
         {children}
     </span>
 );

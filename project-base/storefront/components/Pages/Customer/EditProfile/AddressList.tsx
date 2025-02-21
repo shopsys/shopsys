@@ -102,12 +102,12 @@ export const AddressList: FC<AddressListProps> = ({ defaultDeliveryAddress, deli
     }, [defaultDeliveryAddress, deliveryAddresses]);
 
     return (
-        <div className="grid w-full gap-4 vl:grid-cols-2">
+        <div className="vl:grid-cols-2 grid w-full gap-4">
             {deliveryAddresses.map((address) => (
                 <div
                     key={address.uuid}
                     className={twJoin(
-                        'relative flex w-full justify-between rounded-md border-2 border-borderAccentLess bg-background p-4',
+                        'border-borderAccentLess bg-background relative flex w-full justify-between rounded-md border-2 p-4',
                         defaultDeliveryAddress?.uuid === address.uuid
                             ? 'border-borderAccent bg-backgroundAccentLess'
                             : canManagePersonalData

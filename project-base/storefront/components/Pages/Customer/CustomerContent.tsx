@@ -100,8 +100,8 @@ export const CustomerContent: FC = () => {
 const CustomerListItem: FC = ({ children }) => (
     <li
         className={twJoin(
-            'block flex-1 cursor-pointer rounded-xl text-lg transition [&_a]:block [&_a]:h-full [&_a]:w-full [&_a]:p-5 [&_a]:text-text [&_a]:no-underline hover:[&_a]:text-textAccent hover:[&_a]:no-underline',
-            'border border-background bg-backgroundMore hover:border-borderAccentLess hover:bg-background',
+            '[&_a]:text-text hover:[&_a]:text-textAccent block flex-1 cursor-pointer rounded-xl text-lg transition [&_a]:block [&_a]:h-full [&_a]:w-full [&_a]:p-5 [&_a]:no-underline hover:[&_a]:no-underline',
+            'border-background bg-backgroundMore hover:border-borderAccentLess hover:bg-background border',
         )}
     >
         {children}

@@ -34,17 +34,17 @@ export const BannersDot: FC<BannersDotProps> = ({ index, isActive, sliderItem, m
             key={sliderItem.uuid}
             ref={dotRef}
             className={twMergeCustom(
-                'group relative block size-4 cursor-pointer rounded-full bg-labelLinkBackground transition',
+                'bg-labelLinkBackground group relative block size-4 cursor-pointer rounded-full transition',
                 'vl:flex vl:h-auto vl:w-full vl:rounded-none vl:bg-backgroundMore vl:px-5 vl:py-2 vl:text-left vl:text-text',
                 'vl:after:absolute vl:after:inset-0 vl:after:border-b-[1px] vl:after:border-l-[1px] vl:after:border-t-[1px] vl:after:border-borderAccentLess vl:after:content-[""] vl:after:first-of-type:rounded-bl-md vl:after:last-of-type:rounded-br-md vl:after:last-of-type:border-r-[1px]',
                 isActive && 'bg-textAccent vl:bg-background vl:text-textAccent',
             )}
             onClick={() => moveToSlide(index)}
         >
-            <h6 className="hidden vl:line-clamp-4">{sliderItem.name}</h6>
+            <h6 className="vl:line-clamp-4 hidden">{sliderItem.name}</h6>
             <div
                 className={twMergeCustom(
-                    'absolute left-0 top-0 z-above hidden h-[3px] w-0 bg-textAccent transition-all duration-[0s] ease-linear vl:block',
+                    'z-above bg-textAccent vl:block absolute top-0 left-0 hidden h-[3px] w-0 transition-all duration-[0s] ease-linear',
                 )}
                 style={
                     isActive && start ? { transitionDuration: `${slideInterval / 1000}s`, width: '100%' } : undefined

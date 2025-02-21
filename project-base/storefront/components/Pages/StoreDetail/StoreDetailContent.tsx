@@ -80,7 +80,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                     </InfoItem>
                 </div>
                 <div className="w-full lg:basis-1/2">
-                    <div className="mt-5 flex aspect-square w-full rounded-xl bg-backgroundMore p-5 lg:mt-0">
+                    <div className="bg-backgroundMore mt-5 flex aspect-square w-full rounded-xl p-5 lg:mt-0">
                         <GoogleMap
                             isDetail
                             defaultZoom={15}
@@ -99,7 +99,7 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
             </div>
 
             {store.storeImages.length > 0 && (
-                <div className="mt-10 grid snap-x snap-mandatory gap-4 overflow-y-hidden overscroll-x-contain max-vl:grid-flow-col max-lg:overflow-x-auto lg:flex lg:flex-wrap vl:gap-8">
+                <div className="max-vl:grid-flow-col vl:gap-8 mt-10 grid snap-x snap-mandatory gap-4 overflow-y-hidden overscroll-x-contain max-lg:overflow-x-auto lg:flex lg:flex-wrap">
                     {store.storeImages.map((image, index) => (
                         <div
                             key={image.url}

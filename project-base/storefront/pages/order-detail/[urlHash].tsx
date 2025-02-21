@@ -56,7 +56,7 @@ const OrderDetailByHashPage: FC = () => {
                     <Webline>
                         {!!orderData?.order && (
                             <>
-                                <h1 className="mt-0 vl:mt-4" tid={TIDs.order_detail_number_heading}>
+                                <h1 className="vl:mt-4 mt-0" tid={TIDs.order_detail_number_heading}>
                                     {t('Your order')} {orderData.order.number}
                                 </h1>
                                 <OrderDetailContent order={orderData.order} />

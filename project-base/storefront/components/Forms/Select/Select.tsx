@@ -82,10 +82,10 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
             <div className={twMergeCustom('relative w-full', className)} ref={wrapperRef}>
                 <div
                     className={twMergeCustom(
-                        'group flex h-14 rounded-md border-2 border-inputBorder bg-inputBackground text-inputText hover:border-inputBorderHovered',
+                        'border-inputBorder bg-inputBackground text-inputText hover:border-inputBorderHovered group flex h-14 rounded-md border-2',
                         isOpen && 'rounded-b-none',
                         (isDisabled || isLoading) &&
-                            'pointer-events-none cursor-no-drop border-inputBorderDisabled bg-inputBackgroundDisabled text-inputTextDisabled',
+                            'border-inputBorderDisabled bg-inputBackgroundDisabled text-inputTextDisabled pointer-events-none cursor-no-drop',
                         selectClassName,
                     )}
                 >
@@ -97,7 +97,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                                 tid={tid}
                                 value={comboBoxConfig.searchValue}
                                 className={twJoin(
-                                    'h-full w-full bg-transparent px-3 !text-base focus-visible:outline-none',
+                                    'h-full w-full bg-transparent px-3 !text-base focus-visible:outline-hidden',
                                     'placeholder:text-inputPlaceholder placeholder:hover:text-inputPlaceholderHovered placeholder:focus:text-inputPlaceholderActive placeholder:disabled:text-inputPlaceholderDisabled',
                                     comboBoxConfig.searchInputClassName,
                                 )}
@@ -106,14 +106,14 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                             />
 
                             {activeOption?.count !== undefined && (
-                                <span className="flex items-center whitespace-nowrap font-normal">
+                                <span className="flex items-center font-normal whitespace-nowrap">
                                     ({activeOption.count})
                                 </span>
                             )}
                         </>
                     ) : (
                         <button
-                            className="w-full px-3 pt-5 text-left focus-visible:outline-none"
+                            className="w-full px-3 pt-5 text-left focus-visible:outline-hidden"
                             disabled={isDisabled}
                             id={tid}
                             tid={tid}
@@ -122,7 +122,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                         >
                             <div
                                 className={twJoin(
-                                    'absolute font-secondary text-inputPlaceholder transition-all group-hover:text-inputPlaceholderHovered',
+                                    'font-secondary text-inputPlaceholder group-hover:text-inputPlaceholderHovered absolute transition-all',
                                     isOpen || activeOption
                                         ? 'top-[9px] text-sm'
                                         : 'top-1/2 -translate-y-1/2 text-base font-semibold',
@@ -130,11 +130,11 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                             >
                                 {label}
 
-                                {isRequired && <span className="ml-1 text-textError">*</span>}
+                                {isRequired && <span className="text-textError ml-1">*</span>}
                             </div>
 
                             {activeOption?.label && (
-                                <div className="font-secondary font-semibold text-inputText">{activeOption.label}</div>
+                                <div className="font-secondary text-inputText font-semibold">{activeOption.label}</div>
                             )}
                         </button>
                     )}
@@ -152,7 +152,7 @@ export const Select = <T extends string | number | undefined | Record<any, any> 
                     )}
 
                     <button
-                        className="pr-3 focus-visible:outline-none"
+                        className="pr-3 focus-visible:outline-hidden"
                         disabled={isDisabled}
                         type="button"
                         onClick={() => onSelectToggleOpenHandler(!isOpen)}

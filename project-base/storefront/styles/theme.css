@@ -1,0 +1,174 @@
+@import 'tailwindcss';
+@import './base.css';
+@import './user-text.css';
+@import './utilities.css';
+
+@theme inline {
+    --font-default: var(--font-inter);
+    --font-secondary: var(--font-raleway);
+}
+
+@theme {
+    --breakpoint-xxs: 20em; /* 320px / 16 = 20 */
+    --breakpoint-xs: 23.4375em; /* 375px / 16 = 23.4375 */
+    --breakpoint-sm: 30em; /* 480px / 16 = 30 */
+    --breakpoint-md: 37.5em; /* 600px / 16 = 37.5 */
+    --breakpoint-lg: 48.0625em; /* 769px / 16 = 48.0625 */
+    --breakpoint-vl: 64em; /* 1024px / 16 = 64 */
+    --breakpoint-xl: 77.5em; /* 1240px / 16 = 77.5 */
+    --breakpoint-xxl: 97.5em; /* 1560px / 16 = 97.5 */
+
+    --color-text: #25283d;
+    --color-textAccent: #004eb6;
+    --color-textInverted: #ffffff;
+    --color-textDisabled: #727588;
+    --color-textSuccess: #00cdbe;
+    --color-textSubtle: #7892bc;
+    --color-textError: #ec5353;
+
+    --color-link: #004eb6;
+    --color-linkDisabled: #7aa1d5;
+    --color-linkHovered: #003479;
+    --color-linkInverted: #ffffff;
+    --color-linkInvertedDisabled: #727588;
+    --color-linkInvertedHovered: #fff0c4;
+
+    --color-borderLess: #fafafa;
+    --color-borderAccent: #7892bc;
+    --color-borderAccentLess: #e0e0e0;
+    --color-borderAccentSuccess: #20d3c6;
+    --color-borderAccentError: #ec5353;
+
+    --color-background: #ffffff;
+    --color-backgroundMore: #fafafa;
+    --color-backgroundMost: #ececec;
+    --color-backgroundBrand: #0f00a0;
+    --color-backgroundBrandLess: #065fdb;
+    --color-backgroundAccent: #009aff;
+    --color-backgroundAccentLess: #f4faff;
+    --color-backgroundAccentMore: #008ae5;
+    --color-backgroundDark: #25283d;
+    --color-backgroundError: #ec5353;
+    --color-backgroundSuccess: #20d3c6;
+    --color-backgroundSuccessMore: #149f96;
+    --color-backgroundWarning: #fcbd46;
+    --color-backgroundWarningMore: #d58b00;
+
+    --color-price: #004eb6;
+    --color-priceBefore: #7892bc;
+    --color-priceDiscounted: #ec5353;
+
+    --color-actionPrimaryText: #ffffff;
+    --color-actionPrimaryTextActive: #ffffff;
+    --color-actionPrimaryTextDisabled: #7892bc;
+    --color-actionPrimaryTextHovered: #ffffff;
+    --color-actionPrimaryBackground: #00c8b7;
+    --color-actionPrimaryBackgroundActive: #00beb0;
+    --color-actionPrimaryBackgroundDisabled: #ccf5f2;
+    --color-actionPrimaryBackgroundHovered: #27e8da;
+    --color-actionPrimaryBorder: #00c8b7;
+    --color-actionPrimaryBorderActive: #00beb0;
+    --color-actionPrimaryBorderDisabled: #ccf5f2;
+    --color-actionPrimaryBorderHovered: #27e8da;
+
+    --color-actionSecondaryText: #ffffff;
+    --color-actionSecondaryTextActive: #ffffff;
+    --color-actionSecondaryTextDisabled: #ffffff;
+    --color-actionSecondaryTextHovered: #ffffff;
+    --color-actionSecondaryBackground: #004eb6;
+    --color-actionSecondaryBackgroundActive: #00439c;
+    --color-actionSecondaryBackgroundDisabled: #a1b5cf;
+    --color-actionSecondaryBackgroundHovered: #4081d6;
+    --color-actionSecondaryBorder: #004eb6;
+    --color-actionSecondaryBorderActive: #00439c;
+    --color-actionSecondaryBorderDisabled: #a1b5cf;
+    --color-actionSecondaryBorderHovered: #4081d6;
+
+    --color-actionInvertedText: #004eb6;
+    --color-actionInvertedTextActive: #25283d;
+    --color-actionInvertedTextDisabled: #a3acbd;
+    --color-actionInvertedTextHovered: #7892bc;
+    --color-actionInvertedBackground: transparent;
+    --color-actionInvertedBackgroundActive: #ffffff;
+    --color-actionInvertedBackgroundDisabled: #fafafa;
+    --color-actionInvertedBackgroundHovered: #ffffff;
+    --color-actionInvertedBorder: #004eb6;
+    --color-actionInvertedBorderActive: #25283d;
+    --color-actionInvertedBorderDisabled: #a3acbd;
+    --color-actionInvertedBorderHovered: #7892bc;
+
+    --color-actionTransparentText: #ffffff;
+    --color-actionTransparentTextActive: #ffffff;
+    --color-actionTransparentTextDisabled: #ffffff66;
+    --color-actionTransparentTextHovered: #ffffff;
+    --color-actionTransparentBackground: transparent;
+    --color-actionTransparentBackgroundActive: #ffffff33;
+    --color-actionTransparentBackgroundDisabled: transparent;
+    --color-actionTransparentBackgroundHovered: #ffffff66;
+    --color-actionTransparentBorder: #ffffff;
+    --color-actionTransparentBorderActive: #ffffff;
+    --color-actionTransparentBorderDisabled: #ffffff66;
+    --color-actionTransparentBorderHovered: #ffffff;
+
+    --color-activeIconFull: #ec5353;
+
+    --color-availabilityInStock: #00cdbe;
+    --color-availabilityOutOfStock: #ec5353;
+
+    --color-openingStatusOpen: #00cdbe;
+    --color-openingStatusClosed: #ec5353;
+    --color-openingStatusOpenToday: #fcbd46;
+
+    --color-inputText: #25283d;
+    --color-inputTextActive: #004eb6;
+    --color-inputTextDisabled: #727588;
+    --color-inputTextHovered: #25283d;
+    --color-inputTextInverted: #ffffff;
+    --color-inputPlaceholder: #7892bc;
+    --color-inputPlaceholderActive: #3967b2;
+    --color-inputPlaceholderDisabled: #afbbcf;
+    --color-inputPlaceholderHovered: #5c81be;
+    --color-inputBackground: #ffffff;
+    --color-inputBackgroundActive: #004eb6;
+    --color-inputBackgroundDisabled: #ffffff;
+    --color-inputBackgroundHovered: #f4faff;
+    --color-inputBorder: #7892bc;
+    --color-inputBorderActive: #004eb6;
+    --color-inputBorderDisabled: #afbbcf;
+    --color-inputBorderHovered: #004eb6;
+    --color-inputError: #ec5353;
+
+    --color-tableBackground: #ffffff;
+    --color-tableBackgroundContrast: #fafafa;
+    --color-tableBackgroundHeader: #3967b2;
+    --color-tableText: #25283d;
+    --color-tableTextHeader: #ffffff;
+    --color-tableCross: #a3acbd;
+    --color-tableCrossHover: #7892bc;
+    --color-tableCrossHoverBg: #fafafa;
+
+    --color-labelLinkText: #ffffff;
+    --color-labelLinkTextActive: #ffffff;
+    --color-labelLinkTextDisabled: #e3e3e3;
+    --color-labelLinkTextHovered: #ffffff;
+    --color-labelLinkBackground: #7892bc;
+    --color-labelLinkBackgroundActive: #3967b2;
+    --color-labelLinkBackgroundDisabled: #afbbcf;
+    --color-labelLinkBackgroundHovered: #3967b2;
+    --color-labelLinkBorder: #7892bc;
+    --color-labelLinkBorderActive: #3967b2;
+    --color-labelLinkBorderDisabled: #afbbcf;
+    --color-labelLinkBorderHovered: #3967b2;
+
+    --color-imageOverlay: rgba(201, 201, 201, 0.5);
+    --color-overlay: rgba(37, 40, 61, 0.5);
+    --color-transparent: transparent;
+
+    /* extends */
+    --radius-sm: 0.1875rem;
+    --text-zero: [0, 0];
+    --keyframes-fadeIn: fadeIn 0.2s ease-in-out;
+    --animation-fadeIn: fadeIn 0.2s ease-in-out;
+    --spacing-5.5: 1.375rem;
+    --aspect-16/11: 16 / 11;
+}

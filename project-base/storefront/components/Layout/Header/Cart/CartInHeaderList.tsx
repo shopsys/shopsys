@@ -45,7 +45,7 @@ export const CartInHeaderList: FC = () => {
                 ))}
             </ul>
             <div className={twJoin('flex items-center justify-between gap-4 pt-5')}>
-                <div className="text-center md:text-left vl:max-w-[300px]">
+                <div className="vl:max-w-[300px] text-center md:text-left">
                     <FreeTransportRange />
                 </div>
 

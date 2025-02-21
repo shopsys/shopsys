@@ -19,7 +19,7 @@ export const ProductsSliderPlaceholder: FC<ProductsSliderPlaceholderProps> = ({
     return (
         <div className="relative">
             {products.length > VISIBLE_SLIDER_ITEMS && (
-                <div className="absolute -top-10 right-0 hidden items-center justify-center gap-2 vl:flex">
+                <div className="vl:flex absolute -top-10 right-0 hidden items-center justify-center gap-2">
                     <SliderButtonPlaceholder type="prev" />
                     <SliderButtonPlaceholder type="next" />
                 </div>
@@ -28,7 +28,7 @@ export const ProductsSliderPlaceholder: FC<ProductsSliderPlaceholderProps> = ({
             <ul
                 className={twJoin(
                     "grid snap-x snap-mandatory grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] [&::-webkit-scrollbar]:hidden",
-                    'auto-cols-[225px] sm:auto-cols-[60%] md:auto-cols-[45%] lg:auto-cols-[30%] vl:auto-cols-[25%] xl:auto-cols-[20%]',
+                    'vl:auto-cols-[25%] auto-cols-[225px] sm:auto-cols-[60%] md:auto-cols-[45%] lg:auto-cols-[30%] xl:auto-cols-[20%]',
                 )}
             >
                 {products.map((product, index) =>
@@ -55,7 +55,7 @@ export const ProductsSliderPlaceholder: FC<ProductsSliderPlaceholderProps> = ({
 type SliderButtonPlaceholderProps = { type: 'prev' | 'next' };
 
 const SliderButtonPlaceholder: FC<SliderButtonPlaceholderProps> = ({ type }) => (
-    <button className="cursor-pointer rounded border-none p-1 text-text outline-none transition hover:text-textAccent disabled:cursor-auto disabled:text-textDisabled">
+    <button className="text-text hover:text-textAccent disabled:text-textDisabled cursor-pointer rounded-sm border-none p-1 outline-hidden transition disabled:cursor-auto">
         <ArrowSecondaryIcon className={twJoin('w-5', type === 'prev' ? 'rotate-90' : '-rotate-90')} />
     </button>
 );

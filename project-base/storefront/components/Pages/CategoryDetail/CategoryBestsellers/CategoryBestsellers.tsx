@@ -24,12 +24,12 @@ export const CategoryBestsellers: FC<CategoryBestsellersProps> = ({ products }) 
     const showMoreCount = products.length - NUMBER_OF_VISIBLE_ITEMS;
 
     return (
-        <div className="relative mb-5 rounded-xl bg-backgroundMore p-5">
-            <div className="mb-3 break-words text-center font-secondary text-lg font-semibold">
+        <div className="bg-backgroundMore relative mb-5 rounded-xl p-5">
+            <div className="font-secondary mb-3 text-center text-lg font-semibold break-words">
                 {t('Do not want to choose? Choose certainty')}
             </div>
 
-            <div className="mb-3 flex flex-col divide-y divide-borderAccentLess">
+            <div className="divide-borderAccentLess mb-3 flex flex-col divide-y">
                 <AnimatePresence initial={false}>
                     {shownProducts.map((product, index) => (
                         <AnimateCollapseDiv key={product.uuid} className={twJoin('!block')} keyName={product.uuid}>
@@ -47,7 +47,7 @@ export const CategoryBestsellers: FC<CategoryBestsellersProps> = ({ products }) 
             {products.length > NUMBER_OF_VISIBLE_ITEMS && (
                 <div className="text-center">
                     <button
-                        className="font-secondary text-sm font-semibold text-link underline hover:text-linkHovered"
+                        className="font-secondary text-link hover:text-linkHovered cursor-pointer text-sm font-semibold underline"
                         onClick={() => setIsCollapsed((prev) => !prev)}
                     >
                         {isCollapsed ? (

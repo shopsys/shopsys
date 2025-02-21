@@ -14,16 +14,16 @@ export const NavigationPlaceholder: FC<NavigationProps> = ({ navigation, skeleto
                         href={navigationItem.link}
                         skeletonType={skeletonType}
                         className={twJoin(
-                            'relative m-0 flex items-center p-5 font-secondary text-sm font-bold group-first-of-type:pl-0 vl:text-base',
+                            'font-secondary vl:text-base relative m-0 flex items-center p-5 text-sm font-bold group-first-of-type:pl-0',
                             'text-linkInverted no-underline',
-                            'hover:text-linkInvertedHovered hover:no-underline group-hover:text-linkInvertedHovered group-hover:no-underline',
+                            'hover:text-linkInvertedHovered group-hover:text-linkInvertedHovered group-hover:no-underline hover:no-underline',
                             'active:text-linkInvertedHovered',
                             'disabled:text-linkInvertedDisabled',
                         )}
                     >
                         {navigationItem.name}
                         {hasChildren && (
-                            <ArrowIcon className="ml-2 size-5 text-linkInverted group-hover:rotate-180 group-hover:text-linkInvertedHovered" />
+                            <ArrowIcon className="text-linkInverted group-hover:text-linkInvertedHovered ml-2 size-5 group-hover:rotate-180" />
                         )}
                     </ExtendedNextLink>
                 </li>

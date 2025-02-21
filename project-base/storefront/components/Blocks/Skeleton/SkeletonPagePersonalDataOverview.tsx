@@ -3,7 +3,7 @@ import Skeleton from 'react-loading-skeleton';
 
 export const SkeletonPagePersonalDataOverview: FC = () => (
     <Webline>
-        <Skeleton className="w-100 h-36" />
-        <Skeleton className="w-100 h-96" />
+        <Skeleton className="h-36 w-100" />
+        <Skeleton className="h-96 w-100" />
     </Webline>
 );

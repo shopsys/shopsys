@@ -109,7 +109,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
         return (
             <div
                 className={twJoin(
-                    'inline-flex h-fit w-auto shrink-0 items-center justify-center self-start overflow-hidden rounded-md bg-inputBackground outline outline-2 outline-offset-[-2px] outline-inputBorder',
+                    'bg-inputBackground outline-inputBorder inline-flex h-fit w-auto shrink-0 items-center justify-center self-start overflow-hidden rounded-md outline outline-2 outline-offset-[-2px]',
                     size === 'small' ? 'py-2.5' : 'py-3.5',
                 )}
             >
@@ -134,7 +134,7 @@ export const Spinbox = forwardRef<HTMLInputElement, SpinboxProps>(
                     tid={TIDs.spinbox_input}
                     type="number"
                     className={twJoin(
-                        'text-center font-secondary text-lg font-bold text-inputText outline-none',
+                        'font-secondary text-inputText text-center text-lg font-bold outline-hidden',
                         size === 'small' ? 'w-8' : 'w-10',
                     )}
                     onBlur={onBlurHandler}
@@ -173,9 +173,9 @@ type SpinboxButtonProps = {
 const SpinboxButton: FC<SpinboxButtonProps> = ({ children, disabled, size, ...props }) => (
     <button
         className={twMergeCustom([
-            'text-inputBorder hover:text-inputBorderHovered',
+            'text-inputBorder hover:text-inputBorderHovered cursor-pointer border-none outline-none',
             size === 'small' ? 'w-7' : 'w-10',
-            disabled && 'pointer-events-none text-inputBorderDisabled',
+            disabled && 'text-inputBorderDisabled pointer-events-none',
         ])}
         {...props}
     >

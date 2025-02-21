@@ -17,7 +17,7 @@ export const PromotedCategoriesContent: FC<PromotedCategoriesContentProps> = ({ 
         <ul
             className={twMergeCustom(
                 'overflow-x-auto overflow-y-hidden overscroll-x-contain',
-                'grid auto-cols-[150px] grid-flow-col gap-3 lg:auto-cols-[200px] vl:grid-flow-row vl:grid-cols-4 vl:gap-5',
+                'vl:grid-flow-row vl:grid-cols-4 vl:gap-5 grid auto-cols-[150px] grid-flow-col gap-3 lg:auto-cols-[200px]',
                 categoriesLength > 4 ? 'vl:grid-rows-2' : 'vl:grid-rows-1',
                 '[-ms-overflow-style:"none"] [scrollbar-width:"none"] [&::-webkit-scrollbar]:hidden',
             )}
@@ -38,9 +38,9 @@ export const PromotedCategoriesContent: FC<PromotedCategoriesContentProps> = ({ 
                             type={linkType}
                             className={twMergeCustom(
                                 'flex cursor-pointer flex-col items-center gap-5 rounded-xl text-center no-underline transition',
-                                'border border-backgroundMore bg-backgroundMore text-text',
+                                'border-backgroundMore bg-backgroundMore text-text border',
                                 'hover:border-borderAccentLess hover:bg-background hover:text-text hover:no-underline',
-                                'px-6 py-2.5 md:py-4 vl:px-10',
+                                'vl:px-10 px-6 py-2.5 md:py-4',
                                 'aspect-square size-full max-h-[150px] lg:max-h-[200px]',
                                 isFirstItemLarge ? 'vl:max-h-[590px] vl:py-5' : 'vl:max-h-[285px] vl:py-7',
                             )}
@@ -50,7 +50,7 @@ export const PromotedCategoriesContent: FC<PromotedCategoriesContentProps> = ({ 
                                     tid={TIDs.simple_navigation_image}
                                     className={twJoin(
                                         'relative flex items-center justify-center',
-                                        'size-[60px] lg:size-[100px] vl:size-full',
+                                        'vl:size-full size-[60px] lg:size-[100px]',
                                         isFirstItemLarge
                                             ? 'vl:max-h-[500px] vl:max-w-[500px]'
                                             : 'lg:max-h-[180px] lg:max-w-[180px]',
@@ -70,7 +70,7 @@ export const PromotedCategoriesContent: FC<PromotedCategoriesContentProps> = ({ 
                                 </div>
                             )}
 
-                            <h4 className="line-clamp-2 vl:line-clamp-1">{category.name}</h4>
+                            <h4 className="vl:line-clamp-1 line-clamp-2">{category.name}</h4>
                         </ExtendedNextLink>
                     </li>
                 );

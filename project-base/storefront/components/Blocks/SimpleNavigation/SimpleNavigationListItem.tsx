@@ -30,7 +30,7 @@ export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({
                 href={href}
                 type={linkType}
                 className={twMergeCustom(
-                    'relative flex h-full w-full cursor-pointer items-center gap-5 rounded-xl border border-backgroundMore bg-backgroundMore px-5 py-2.5 no-underline transition lg:justify-start lg:gap-3 lg:px-3 lg:py-2',
+                    'border-backgroundMore bg-backgroundMore relative flex h-full w-full cursor-pointer items-center gap-5 rounded-xl border px-5 py-2.5 no-underline transition lg:justify-start lg:gap-3 lg:px-3 lg:py-2',
                     'text-text hover:border-borderAccentLess hover:bg-background hover:text-text hover:no-underline',
                     className,
                 )}
@@ -52,7 +52,7 @@ export const SimpleNavigationListItem: FC<SimpleNavigationListItemProps> = ({
 
                 <div className="z-above text-sm font-semibold">{listedItem.name}</div>
                 {'totalCount' in listedItem && listedItem.totalCount !== undefined && (
-                    <span className="ml-2 whitespace-nowrap text-sm">({listedItem.totalCount})</span>
+                    <span className="ml-2 text-sm whitespace-nowrap">({listedItem.totalCount})</span>
                 )}
             </ExtendedNextLink>
         </li>

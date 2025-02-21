@@ -24,7 +24,7 @@ export const SearchProducts: FC = () => {
 
     return (
         <>
-            <h5 className="mb-2 mt-5 lg:my-9">{t('Found products')}</h5>
+            <h5 className="mt-5 mb-2 lg:my-9">{t('Found products')}</h5>
 
             <FilteredProductsWrapper paginationScrollTargetRef={paginationScrollTargetRef}>
                 <DeferredFilterPanel
@@ -37,7 +37,7 @@ export const SearchProducts: FC = () => {
                 />
 
                 <div className="flex flex-1 flex-col" ref={paginationScrollTargetRef}>
-                    <div className="flex flex-col-reverse vl:flex-col">
+                    <div className="vl:flex-col flex flex-col-reverse">
                         <FilterSelectedParameters filterOptions={searchProductsData.productFilterOptions} />
 
                         <DeferredFilterAndSortingBar

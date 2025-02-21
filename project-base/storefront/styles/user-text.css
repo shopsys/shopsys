@@ -1,5 +1,3 @@
-@tailwind components;
-
 @layer components {
     .user-text {
         ul {
@@ -11,7 +9,7 @@
         }
 
         img {
-            @apply block h-auto rounded;
+            @apply block h-auto rounded-sm;
         }
 
         iframe {
@@ -28,7 +26,7 @@
 
         .gjs-table-custom {
             max-width: 100%;
-            overflow-x: auto; 
+            overflow-x: auto;
         }
 
         table {
@@ -44,7 +42,7 @@
             }
 
             th {
-                @apply text-left font-bold leading-[26px] text-tableText;
+                @apply text-tableText text-left leading-[26px] font-bold;
                 @apply lg:text-xl;
             }
 
@@ -53,14 +51,14 @@
             }
 
             &.secondary {
-                @apply border border-tableBackground;
+                @apply border-tableBackground border;
 
                 tr {
-                    @apply bg-[transparent] first:bg-tableBackgroundContrast first:[&_td]:font-bold;
+                    @apply first:bg-tableBackgroundContrast bg-[transparent] first:[&_td]:font-bold;
                 }
 
                 td {
-                    @apply border border-tableBackground text-left;
+                    @apply border-tableBackground border text-left;
                 }
             }
         }
@@ -88,7 +86,7 @@
                 @apply flex flex-wrap items-start gap-5 lg:flex-nowrap;
 
                 & img {
-                    @apply !w-full flex-shrink-0 lg:max-w-sm;
+                    @apply !w-full shrink-0 lg:max-w-sm;
                 }
 
                 &.gjs-text-with-image-float-right {

@@ -31,7 +31,7 @@ export const BlogArticleDetailContent: FC<BlogArticleDetailContentProps> = ({ bl
                 )}
 
                 <div
-                    className="mb-2 text-left text-xs font-semibold text-textDisabled"
+                    className="text-textDisabled mb-2 text-left text-xs font-semibold"
                     tid={TIDs.blog_article_publication_date}
                 >
                     {formatDate(blogArticle.publishDate, 'l')}

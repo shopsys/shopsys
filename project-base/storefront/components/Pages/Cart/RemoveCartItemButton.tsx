@@ -17,7 +17,7 @@ export const RemoveCartItemButton: FC<RemoveCartItemButtonProps> = ({ onRemoveFr
             title={t('Remove from cart')}
             onClick={onRemoveFromCart}
         >
-            <RemoveIcon className="size-6 text-inputPlaceholder hover:text-inputPlaceholderActive" />
+            <RemoveIcon className="text-inputPlaceholder hover:text-inputPlaceholderActive size-6" />
         </button>
     );
 };

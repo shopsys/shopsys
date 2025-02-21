@@ -8,14 +8,14 @@ type FooterMenuProps = {
 
 export const FooterMenu: FC<FooterMenuProps> = ({ footerArticles }) => {
     return (
-        <div className="flex w-full flex-col flex-wrap gap-6 text-center lg:flex-row lg:justify-center lg:text-left vl:flex-nowrap vl:justify-between">
+        <div className="vl:flex-nowrap vl:justify-between flex w-full flex-col flex-wrap gap-6 text-center lg:flex-row lg:justify-center lg:text-left">
             {footerArticles.map((item) => (
                 <div key={item.key} className="flex-1">
                     <FooterMenuItem items={item.items} title={item.title} />
                 </div>
             ))}
 
-            <div className="flex basis-full flex-col items-center vl:flex-1">
+            <div className="vl:flex-1 flex basis-full flex-col items-center">
                 <FooterContact />
             </div>
         </div>

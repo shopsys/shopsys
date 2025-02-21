@@ -46,7 +46,7 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
         <div
             ref={itemRef}
             className={twMergeCustom(
-                'cursor-pointer rounded-xl border border-transparent bg-backgroundMore px-5 py-2.5',
+                'bg-backgroundMore cursor-pointer rounded-xl border border-transparent px-5 py-2.5',
                 isExpanded && 'border-borderAccent',
             )}
             onClick={() => {
@@ -62,7 +62,7 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
                         </p>
                     </div>
                     {store.distance && (
-                        <p className="text-xs text-inputPlaceholder max-xl:hidden">
+                        <p className="text-inputPlaceholder text-xs max-xl:hidden">
                             {t('{{ distance }} km from you', {
                                 distance: (store.distance / 1000).toFixed(0),
                             })}

@@ -31,8 +31,8 @@ export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeI
                         variant="secondary"
                         className={twJoin(
                             'relative w-full justify-between !text-base',
-                            'xl:pointer-events-none xl:bg-transparent xl:p-0 xl:font-semibold xl:text-text xl:outline-none',
-                            'max-xl:z-aboveOverlay max-xl:py-2.5 max-xl:font-default',
+                            'xl:text-text xl:pointer-events-none xl:bg-transparent xl:p-0 xl:font-semibold xl:outline-hidden',
+                            'max-xl:z-aboveOverlay max-xl:font-default max-xl:py-2.5',
                         )}
                         onClick={() => setIsBlogSignpostOpen(!isBlogSignpostOpen)}
                     >
@@ -48,7 +48,7 @@ export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeI
                         className={twJoin(
                             'flex w-full flex-col gap-y-2.5',
                             isBlogSignpostOpen
-                                ? 'max-xl:absolute max-xl:top-full max-xl:z-aboveOverlay max-xl:mt-1 max-xl:rounded-2xl max-xl:bg-background max-xl:p-5'
+                                ? 'max-xl:z-aboveOverlay max-xl:bg-background max-xl:absolute max-xl:top-full max-xl:mt-1 max-xl:rounded-2xl max-xl:p-5'
                                 : 'max-xl:hidden',
                         )}
                     >

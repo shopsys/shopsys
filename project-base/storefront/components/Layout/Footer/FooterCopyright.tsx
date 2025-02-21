@@ -10,12 +10,12 @@ export const FooterCopyright: FC = () => {
     return (
         <>
             <div
-                className="flex items-center justify-center text-center text-sm text-textDisabled"
+                className="text-textDisabled flex items-center justify-center text-center text-sm"
                 tid={TIDs.footer_copyright}
             >
                 {t('footerCopyright', { currentYear })}
             </div>
-            <div className="flex items-center justify-center text-sm text-textDisabled">
+            <div className="text-textDisabled flex items-center justify-center text-sm">
                 {t('Customized E-shop by')}
                 <a className="ml-2 flex w-20" href="https://www.shopsys.com" rel="noreferrer" target="_blank">
                     <Image alt="footer logo" src={imageLogo} />

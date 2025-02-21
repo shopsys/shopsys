@@ -13,9 +13,9 @@ export const CartInHeaderPopover: FC<CartInHeaderPopoverProps> = ({ children, is
             {isActive && (
                 <AnimateAppearDiv
                     className={twMergeCustom(
-                        'pointer-events-auto absolute right-[-15px] top-[54px] z-cart hidden p-5 vl:block',
-                        'right-0 h-auto min-w-[315px] origin-top-right rounded-lg bg-background',
-                        isCartEmpty ? 'hidden w-96 flex-nowrap items-center justify-center vl:flex' : 'w-[548px]',
+                        'z-cart vl:block pointer-events-auto absolute top-[54px] right-[-15px] hidden p-5',
+                        'bg-background right-0 h-auto min-w-[315px] origin-top-right rounded-lg',
+                        isCartEmpty ? 'vl:flex hidden w-96 flex-nowrap items-center justify-center' : 'w-[548px]',
                     )}
                 >
                     {children}

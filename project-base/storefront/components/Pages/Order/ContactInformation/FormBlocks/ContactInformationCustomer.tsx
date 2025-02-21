@@ -20,7 +20,7 @@ export const ContactInformationCustomer: FC = () => {
     return (
         <FormBlockWrapper className={isCompanyUser ? 'hidden' : ''}>
             <FormHeading>{formMeta.fields.customer.label}</FormHeading>
-            <FormColumn className="gap-2 vl:gap-0">
+            <FormColumn className="vl:gap-0 gap-2">
                 <RadiobuttonGroup
                     control={formProviderMethods.control}
                     formName={formMeta.formName}

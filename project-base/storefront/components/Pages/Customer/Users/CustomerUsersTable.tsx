@@ -99,23 +99,23 @@ export const CustomerUsersTable: FC = () => {
             {customerUsers.map((user) => (
                 <Row
                     key={user.uuid}
-                    className="mb-2 flex flex-col rounded-md border-none bg-tableBackgroundContrast vl:table-row vl:bg-tableBackground vl:odd:bg-tableBackgroundContrast"
+                    className="bg-tableBackgroundContrast vl:table-row vl:bg-tableBackground vl:odd:bg-tableBackgroundContrast mb-2 flex flex-col rounded-md border-none"
                 >
-                    <Cell className="py-2 text-left text-sm font-bold uppercase leading-5">
+                    <Cell className="py-2 text-left text-sm leading-5 font-bold uppercase">
                         {user.lastName} {user.firstName} {currentCustomerUserUuid === user.uuid && `(${t('You')})`}
                     </Cell>
 
                     <Cell
                         className={twJoin(
-                            'py-2 text-left text-sm leading-5 vl:table-cell',
-                            'max-w-64 overflow-x-auto whitespace-nowrap sm:max-w-full vl:max-w-56',
-                            '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-backgroundMost [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:h-1',
+                            'vl:table-cell py-2 text-left text-sm leading-5',
+                            'vl:max-w-56 max-w-64 overflow-x-auto whitespace-nowrap sm:max-w-full',
+                            '[&::-webkit-scrollbar-thumb]:bg-backgroundMost [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent',
                         )}
                     >
                         {user.email}
                     </Cell>
-                    <Cell className="py-2 text-left text-sm leading-5 vl:table-cell">{user.roleGroup.name}</Cell>
-                    <Cell align="right" className="flex flex-row-reverse gap-2 py-2 vl:flex-row vl:justify-end">
+                    <Cell className="vl:table-cell py-2 text-left text-sm leading-5">{user.roleGroup.name}</Cell>
+                    <Cell align="right" className="vl:flex-row vl:justify-end flex flex-row-reverse gap-2 py-2">
                         <Button
                             className="flex-1"
                             size="small"

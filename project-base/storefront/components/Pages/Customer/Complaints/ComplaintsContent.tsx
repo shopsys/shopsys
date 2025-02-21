@@ -22,7 +22,7 @@ export const ComplaintsContent: FC<ComplaintsContentProps> = ({ isFetching, item
 
     if (!items?.length) {
         return (
-            <div className="flex gap-2 text-lg vl:text-xl">
+            <div className="vl:text-xl flex gap-2 text-lg">
                 <InfoIcon className="w-5" />
                 {t('You have no complaints')}
             </div>

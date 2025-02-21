@@ -3,10 +3,10 @@ import { AnyProps, PointFeature } from 'supercluster';
 import { twJoin } from 'tailwind-merge';
 
 const ClusterMarker: FC<{ onClick: () => void }> = ({ onClick, children }) => (
-    <div className="absolute h-[30px] w-6 -translate-x-1/2 -translate-y-full text-backgroundBrand" onClick={onClick}>
+    <div className="text-backgroundBrand absolute h-[30px] w-6 -translate-x-1/2 -translate-y-full" onClick={onClick}>
         <GoogleMapMarkerIcon className={twJoin('h-[30px] w-6')} />
 
-        <div className="absolute inset-0 flex justify-center pt-1 text-xs font-bold text-textInverted">{children}</div>
+        <div className="text-textInverted absolute inset-0 flex justify-center pt-1 text-xs font-bold">{children}</div>
     </div>
 );
 
@@ -19,7 +19,7 @@ const SingleMarker: FC<{ onClick: () => void; isActive: boolean; isDetail?: bool
         <GoogleMapMarkerIcon
             isSingle
             className={twJoin(
-                'h-[26px] w-5 text-backgroundBrand',
+                'text-backgroundBrand h-[26px] w-5',
                 isActive && 'origin-bottom scale-125',
                 isDetail ? 'cursor-default' : 'cursor-pointer',
             )}

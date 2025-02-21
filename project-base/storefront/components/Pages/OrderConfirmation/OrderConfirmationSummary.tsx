@@ -21,7 +21,7 @@ export const OrderConfirmationSummary: FC<OrderConfirmationSummaryProps> = ({ pa
     const { t } = useTranslation();
 
     return (
-        <div className="flex flex-col gap-4 rounded-xl bg-backgroundMore p-8 font-secondary text-sm font-semibold">
+        <div className="bg-backgroundMore font-secondary flex flex-col gap-4 rounded-xl p-8 text-sm font-semibold">
             <div className="flex items-center justify-between gap-4">
                 <span>
                     {t('Transport')}&nbsp;- {transport.name}
@@ -36,11 +36,11 @@ export const OrderConfirmationSummary: FC<OrderConfirmationSummaryProps> = ({ pa
             </div>
 
             {isPriceVisible(totalPrice.priceWithVat) && (
-                <div className="flex items-center justify-between gap-4 border-t-[3px] border-borderAccentLess pt-4">
+                <div className="border-borderAccentLess flex items-center justify-between gap-4 border-t-[3px] pt-4">
                     <span>{t('Total')}</span>
                     <div className="flex flex-col gap-2">
-                        <span className="text-lg font-bold text-price">{formatPrice(totalPrice.priceWithVat)}</span>
-                        <span className="whitespace-nowrap text-sm font-semibold tracking-wide text-textSubtle">
+                        <span className="text-price text-lg font-bold">{formatPrice(totalPrice.priceWithVat)}</span>
+                        <span className="text-textSubtle text-sm font-semibold tracking-wide whitespace-nowrap">
                             {formatPrice(totalPrice.priceWithoutVat)} {t('without VAT')}
                         </span>
                     </div>

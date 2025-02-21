@@ -34,7 +34,7 @@ export const FlagDetailContent: FC<FlagDetailContentProps> = ({ flag }) => {
                 />
 
                 <div className="flex flex-1 flex-col">
-                    <div className="flex flex-col-reverse vl:flex-col">
+                    <div className="vl:flex-col flex flex-col-reverse">
                         <FilterSelectedParameters filterOptions={flag.products.productFilterOptions} />
 
                         <DeferredFilterAndSortingBar

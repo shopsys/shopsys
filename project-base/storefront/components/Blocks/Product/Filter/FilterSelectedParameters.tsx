@@ -39,8 +39,8 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
     return (
         <AnimatePresence initial={false}>
             {!currentFilter && !getHasDefaultFilters(defaultProductFiltersMap) ? null : (
-                <AnimateCollapseDiv className="mt-5 !block vl:mb-5 vl:mt-0" keyName="selected-parameters">
-                    <h6 className="mb-5 vl:mb-2">{t('Selected filters')}</h6>
+                <AnimateCollapseDiv className="vl:mb-5 vl:mt-0 mt-5 !block" keyName="selected-parameters">
+                    <h6 className="vl:mb-2 mb-5">{t('Selected filters')}</h6>
 
                     <div className="flex flex-wrap items-center gap-y-2">
                         <AnimatePresence initial={false}>
@@ -201,7 +201,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                                                     >
                                                         {selectedValue.rgbHex && selectedValue.rgbHex !== '' && (
                                                             <div
-                                                                className="mr-2 h-4 w-4 rounded border border-text"
+                                                                className="border-text mr-2 h-4 w-4 rounded-sm border"
                                                                 style={{ backgroundColor: selectedValue.rgbHex }}
                                                             />
                                                         )}
@@ -216,7 +216,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                         </AnimatePresence>
 
                         <div
-                            className="cursor-pointer font-secondary text-sm font-semibold text-link underline hover:text-linkHovered"
+                            className="font-secondary text-link hover:text-linkHovered cursor-pointer text-sm font-semibold underline"
                             onClick={resetAllFilterQueries}
                         >
                             {t('Clear all')}
@@ -228,7 +228,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
     );
 };
 
-const SelectedParametersIcon: FC = () => <RemoveIcon className="ml-3 w-3 cursor-pointer group-hover:text-textError" />;
+const SelectedParametersIcon: FC = () => <RemoveIcon className="group-hover:text-textError ml-3 w-3 cursor-pointer" />;
 
 const getCheckedFlags = (
     defaultProductFiltersMap: DefaultProductFiltersMapType,

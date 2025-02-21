@@ -14,8 +14,8 @@ export const MenuIconicItemUserUnauthenticatedContent: FC = () => {
     const [registrationUrl] = getInternationalizedStaticUrls(['/registration'], url);
 
     return (
-        <div className="flex w-full flex-col gap-8 vl:flex-row vl:p-5">
-            <div className="order-2 mb-auto rounded-xl bg-backgroundBrandLess p-5 text-textInverted vl:order-1 vl:w-1/2 vl:p-9">
+        <div className="vl:flex-row vl:p-5 flex w-full flex-col gap-8">
+            <div className="bg-backgroundBrandLess text-textInverted vl:order-1 vl:w-1/2 vl:p-9 order-2 mb-auto rounded-xl p-5">
                 <h4>{t('Benefits of registration')}</h4>
                 <div className="my-4">
                     <p className="text-textInverted">
@@ -43,7 +43,7 @@ export const MenuIconicItemUserUnauthenticatedContent: FC = () => {
                     </Button>
                 </ExtendedNextLink>
             </div>
-            <div className="order-1 w-full vl:order-2 vl:w-[364px]">
+            <div className="vl:order-2 vl:w-[364px] order-1 w-full">
                 <LoginForm formHeading={t('Log in')} />
             </div>
         </div>

@@ -36,13 +36,13 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
         );
 
     return (
-        <div className="flex flex-col gap-5 rounded-md bg-backgroundMore p-4 vl:p-6">
+        <div className="bg-backgroundMore vl:p-6 flex flex-col gap-5 rounded-md p-4">
             <OrderPaymentStatusBar
                 orderHasPaymentInProcess={order.hasPaymentInProcess}
                 orderIsPaid={order.isPaid}
                 orderPaymentType={order.payment.type}
             />
-            <div className="flex flex-col gap-6 vl:flex-row vl:items-start vl:justify-between">
+            <div className="vl:flex-row vl:items-start vl:justify-between flex flex-col gap-6">
                 <div className="flex flex-col gap-5">
                     <div className="flex flex-wrap gap-x-8 gap-y-2">
                         <OrderItemColumnInfo
@@ -157,7 +157,7 @@ export const OrderItemColumnInfo: FC<OrderItemColumnInfoProps> = ({
         <div className={twMergeCustom('flex items-end gap-4', wrapperClassName)}>
             <div className="flex flex-col gap-1">
                 <span className="text-sm">{title}</span>
-                <span className={twMergeCustom('font-bold leading-none', valueClassName)} tid={tid}>
+                <span className={twMergeCustom('leading-none font-bold', valueClassName)} tid={tid}>
                     {value}
                 </span>
             </div>
@@ -175,7 +175,7 @@ export const OrderItemRowInfo: FC<OrderItemRowInfoProps> = ({ title, value, rowV
     return (
         <div className="grid grid-cols-[85px_1fr]">
             <span className="text-sm">{title}</span>
-            <span className={twMergeCustom('font-bold leading-5 [overflow-wrap:anywhere]', rowValueClassName)}>
+            <span className={twMergeCustom('leading-5 font-bold [overflow-wrap:anywhere]', rowValueClassName)}>
                 {value}
             </span>
         </div>
