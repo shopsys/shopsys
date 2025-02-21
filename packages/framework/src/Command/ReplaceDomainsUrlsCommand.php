@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\DomainUrlReplacer;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Article\ArticleFacade;
-use Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleExportScheduler;
+use Shopsys\FrameworkBundle\Model\Article\Messenger\ArticleExportMessageDispatcher;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleExportQueueFacade;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
@@ -29,7 +29,7 @@ class ReplaceDomainsUrlsCommand extends Command
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      * @param \Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleExportQueueFacade $blogArticleExportQueueFacade
-     * @param \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleExportScheduler $articleExportScheduler
+     * @param \Shopsys\FrameworkBundle\Model\Article\Messenger\ArticleExportMessageDispatcher $articleExportMessageDispatcher
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFacade $articleFacade
      */
     public function __construct(
@@ -38,7 +38,7 @@ class ReplaceDomainsUrlsCommand extends Command
         private readonly Setting $setting,
         private readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
         private readonly BlogArticleExportQueueFacade $blogArticleExportQueueFacade,
-        private readonly ArticleExportScheduler $articleExportScheduler,
+        private readonly ArticleExportMessageDispatcher $articleExportMessageDispatcher,
         private readonly ArticleFacade $articleFacade,
     ) {
         parent::__construct();
@@ -63,7 +63,7 @@ class ReplaceDomainsUrlsCommand extends Command
                 $this->domainUrlReplacer->replaceUrlInStringColumns($domainConfigUrl, $domainSettingUrl);
 
                 $this->blogArticleExportQueueFacade->addAll($domainConfig->getId());
-                $this->articleExportScheduler->scheduleRowIdsForImmediateExport($this->articleFacade->getAllIdsByDomainId($domainConfig->getId()));
+                $this->articleExportMessageDispatcher->dispatchArticleExportMessages($this->articleFacade->getAllIdsByDomainId($domainConfig->getId()), $domainConfig->getId());
                 $dispatchProducts = true;
 
                 $output->writeln('<fg=green>URL successfully replaced.</fg=green>');
