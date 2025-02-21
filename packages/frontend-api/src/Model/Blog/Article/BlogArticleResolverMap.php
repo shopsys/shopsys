@@ -8,16 +8,19 @@ use DateTime;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade;
+use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 
 class BlogArticleResolverMap extends ResolverMap
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade $blogCategoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
      */
     public function __construct(
         protected readonly BlogCategoryFacade $blogCategoryFacade,
         protected readonly Domain $domain,
+        protected readonly HreflangLinksFacade $hreflangLinksFacade,
     ) {
     }
 
@@ -40,11 +43,11 @@ class BlogArticleResolverMap extends ResolverMap
                 'slug' => static function (array $blogArticleData) {
                     return '/' . $blogArticleData['mainSlug'];
                 },
-                'link' => static function (array $blogArticleData) {
-                    return $blogArticleData['url'];
+                'link' => function (array $blogArticleData) {
+                    return $this->domain->getUrl() . '/' . $blogArticleData['mainSlug'];
                 },
                 'hreflangLinks' => function (array $blogArticleData) {
-                    return $blogArticleData['hreflangLinks'];
+                    return $this->hreflangLinksFacade->getHreflangLinksWithIncludedDomainUrl($blogArticleData['hreflangLinks']);
                 },
                 'mainBlogCategoryUuid' => function (array $blogArticleData) {
                     return $blogArticleData['mainBlogCategoryUuid'];
