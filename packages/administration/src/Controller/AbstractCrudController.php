@@ -103,6 +103,18 @@ abstract class AbstractCrudController extends AbstractController
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    public function detailAction(int $id): Response
+    {
+        return $this->render('@ShopsysAdministration/crud/detail.html.twig', [
+            'title' => $this->getConfig()->getTitle(ActionType::DETAIL),
+            'topActions' => $this->getConfiguredActions(ActionType::DETAIL),
+        ]);
+    }
+
+    /**
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function editAction(int $id): Response
     {
         return $this->render('@ShopsysAdministration/crud/edit.html.twig', [
