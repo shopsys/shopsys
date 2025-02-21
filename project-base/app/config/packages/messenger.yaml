@@ -14,6 +14,7 @@ framework:
             Shopsys\FrameworkBundle\Model\Product\Recalculation\DispatchProductIdsBatchMessage: product_recalculation_priority_high
             Shopsys\FrameworkBundle\Model\Order\Messenger\PlacedOrderMessage: placed_order_transport
             Symfony\Component\Mailer\Messenger\SendEmailMessage: send_email_transport
+            Shopsys\FrameworkBundle\Model\Article\Messenger\ArticleExportMessage: article_export_transport
         transports:
             failed: 'doctrine://default?queue_name=failed'
             product_recalculation_priority_regular:
@@ -56,3 +57,12 @@ framework:
                         type: direct
                     queues:
                         send_email: ~
+            article_export_transport:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    vhost: '%env(MESSENGER_TRANSPORT_VHOST)%'
+                    exchange:
+                        name: article_exchange
+                        type: direct
+                    queues:
+                        article_export: ~

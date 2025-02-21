@@ -193,6 +193,7 @@ We can configure the consumer to run automatically in the background by just add
             placed_order_transport \
             send_email_transport \
 +           product_notification_transport \
+            article_export_transport \
             --time-limit=$TIME_LIMIT
         sleep 2
     done
