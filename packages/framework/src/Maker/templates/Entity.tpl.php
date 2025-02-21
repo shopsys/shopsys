@@ -1,5 +1,6 @@
 <?= "<?php\n"; ?>
-<?php /** @var \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityConfig $entity_config */ $entity_config ?>
+<?php /** @var \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityConfig $entity_config */ ?>
+<?php /** @var \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityProperty[] $entity_properties */ ?>
 
 declare(strict_types=1);
 
@@ -39,6 +40,14 @@ class <?= $class_name; ?><?php if ($entity_config->isTranslatable): ?> extends A
     protected $translations;
 <?php endif ?>
 
+<?php foreach ($entity_properties as $property): ?>
+    /**<?= PHP_EOL; ?>
+     * <?= implode(PHP_EOL . '     * ', $property->getAnnotationLines()) . PHP_EOL; ?>
+     */<?= PHP_EOL; ?>
+    private <?= $property->getTypeHint() ?> $<?= $property->propertyName; ?>;
+    <?= PHP_EOL; ?>
+<?php endforeach; ?>
+
     public function __construct(<?= $entity_config->entityName; ?>Data $<?= lcfirst($entity_config->entityName); ?>Data)
     {
 <?php if ($entity_config->hasUuid): ?>
@@ -61,7 +70,10 @@ class <?= $class_name; ?><?php if ($entity_config->isTranslatable): ?> extends A
 <?php if ($entity_config->isTranslatable): ?>
         $this->setTranslations($<?= lcfirst($entity_config->entityName); ?>Data);
 <?php endif ?>
-        // TODO set data here
+
+<?php foreach ($entity_properties as $property): ?>
+        $this-><?= $property->propertyName; ?> = $<?= lcfirst($entity_config->entityName); ?>Data-><?= $property->propertyName; ?>;
+<?php endforeach; ?>
     }
 
 <?php if ($entity_config->isTranslatable): ?>
@@ -80,16 +92,24 @@ class <?= $class_name; ?><?php if ($entity_config->isTranslatable): ?> extends A
 <?php endif ?>
 
 <?php if ($entity_config->hasId): ?>
-    private function getId(): int
+    public function getId(): int
     {
         return $this->id;
     }
 <?php endif ?>
 
 <?php if ($entity_config->hasUuid): ?>
-    private function getUuid(): string
+    public function getUuid(): string
     {
         return $this->uuid;
     }
 <?php endif ?>
+
+<?php foreach ($entity_properties as $property): ?>
+    public function <?= $property->getGetterName(); ?>: <?= $property->getTypeHint(); ?>
+    {
+        return $this-><?= $property->propertyName; ?>;
+    }
+    <?= PHP_EOL; ?>
+<?php endforeach; ?>
 }

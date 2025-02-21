@@ -528,6 +528,10 @@ services:
 
     Shopsys\FrameworkBundle\Maker\BaseMakerDependency: ~
 
+    Shopsys\FrameworkBundle\Maker\EntityConfig\EntityFieldsConfigurator:
+        arguments:
+            $managerRegistry: '@doctrine'
+
     Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider: ~
 
     Shopsys\FrameworkBundle\Model\AdminNavigation\SideMenuBuilder:

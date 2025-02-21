@@ -7,8 +7,11 @@ namespace Shopsys\FrameworkBundle\Maker;
 use Doctrine\Common\Collections\ArrayCollection;
 use Override;
 use Ramsey\Uuid\Uuid;
+use Shopsys\FrameworkBundle\Maker\EntityConfig\EntityFieldsConfiguration;
+use Shopsys\FrameworkBundle\Maker\EntityConfig\EntityFieldsConfigurator;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
+use Symfony\Bundle\MakerBundle\Generator;
 use Symfony\Bundle\MakerBundle\InputConfiguration;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -20,6 +23,15 @@ class EntityMaker extends BaseMaker
     public const string IS_TRANSLATABLE_OPTION = 'isTranslatable';
     public const string HAS_ID_OPTION = 'hasId';
     public const string HAS_UUID_OPTION = 'hasUuid';
+
+    protected EntityFieldsConfiguration $entityFieldsConfiguration;
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityFieldsConfigurator $entityFieldsConfigurator
+     */
+    public function __construct(protected readonly EntityFieldsConfigurator $entityFieldsConfigurator)
+    {
+    }
 
     /**
      * {@inheritdoc}
@@ -53,12 +65,28 @@ class EntityMaker extends BaseMaker
     }
 
     /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Bundle\MakerBundle\ConsoleStyle $io
+     * @param \Symfony\Bundle\MakerBundle\Generator $generator
+     */
+    public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator): void
+    {
+        $this->createEntityClass($generator);
+
+        foreach ($generator->getGeneratedFiles() as $file) {
+            $this->fixStandards($file);
+        }
+        $this->writeSuccessMessage($io);
+    }
+
+    /**
      * {@inheritdoc}
      */
     #[Override]
     public function interact(InputInterface $input, ConsoleStyle $io, Command $command)
     {
         $this->entityConfig = $this->entityConfigFactory->create($input, $io);
+        $this->entityFieldsConfiguration = $this->entityFieldsConfigurator->configureEntityFields($this->entityConfig, $io);
     }
 
     /**
@@ -109,5 +137,25 @@ class EntityMaker extends BaseMaker
     protected function getConstructorDependencies(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Symfony\Bundle\MakerBundle\Generator $generator
+     */
+    protected function createEntityClass(Generator $generator): void
+    {
+        $classNameDetails = $this->createClassNameDetails($generator);
+
+        $generator->generateClass(
+            $classNameDetails->getFullName(),
+            $this->getTemplateName(),
+            [
+                'use_statements' => $this->getUseStatementsGenerator(),
+                'constructor_dependencies' => $this->getFormattedConstructorDependencies(),
+                'entity_config' => $this->entityConfig,
+                'entity_properties' => $this->entityFieldsConfiguration->getProperties(),
+            ],
+        );
+        $generator->writeChanges();
     }
 }
