@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Maker;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Override;
+use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Maker\EntityConfig\EntityFieldsConfiguration;
 use Shopsys\FrameworkBundle\Maker\EntityConfig\EntityFieldsConfigurator;
@@ -13,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\Generator;
 use Symfony\Bundle\MakerBundle\InputConfiguration;
+use Symfony\Bundle\MakerBundle\Util\UseStatementGenerator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -73,6 +75,7 @@ class EntityMaker extends BaseMaker
     {
         $this->createEntityClass($generator);
         $this->createEntityDataClass($generator);
+        $this->createEntityDataFactoryClass($generator);
 
         foreach ($generator->getGeneratedFiles() as $file) {
             $this->fixStandards($file);
@@ -174,6 +177,28 @@ class EntityMaker extends BaseMaker
         $generator->generateClass(
             $classNameDetails->getFullName(),
             __DIR__ . '/templates/EntityData.tpl.php',
+            [
+                'entity_config' => $this->entityConfig,
+                'entity_properties' => $this->entityFieldsConfiguration->getProperties(),
+            ],
+        );
+        $generator->writeChanges();
+    }
+
+    /**
+     * @param \Symfony\Bundle\MakerBundle\Generator $generator
+     */
+    protected function createEntityDataFactoryClass(Generator $generator): void
+    {
+        $classNameDetails = $generator->createClassNameDetails(
+            $this->entityConfig->entityName,
+            preg_replace('/\bApp\\\\/', '', $this->getGeneratedClassNamespace(), 1),
+            'DataFactory',
+        );
+
+        $generator->generateClass(
+            $classNameDetails->getFullName(),
+            __DIR__ . '/templates/EntityDataFactory.tpl.php',
             [
                 'entity_config' => $this->entityConfig,
                 'entity_properties' => $this->entityFieldsConfiguration->getProperties(),
