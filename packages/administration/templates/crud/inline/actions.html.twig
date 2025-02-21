@@ -1,15 +1,11 @@
-{% macro render(actions) %}
+{% macro render(actions, entity = null) %}
     <div class="wrap-bar__buttons">
         {% for action in actions %}
-            <a href="{{ action.url }}"
-               class="btn wrap-bar__btn {{ action.cssClass }}"
-               {% if action.openInNewTab %}target="_blank"{% endif %}
-            >
-                {% if action.icon is not null %}
-                    {{ ux_icon(action.icon) }}
-                {% endif %}
-                {{ action.label }}
-            </a>
+            {% set actionData = action.renderData(entity) %}
+
+            {% if actionData is not null %}
+                {{ include(actionData.template, actionData.parameters) }}
+            {% endif %}
         {% endfor %}
     </div>
 {% endmacro %}

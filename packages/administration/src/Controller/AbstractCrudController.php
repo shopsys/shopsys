@@ -9,7 +9,6 @@ use ReflectionClass;
 use RuntimeException;
 use Shopsys\AdministrationBundle\Component\Attributes\CrudController;
 use Shopsys\AdministrationBundle\Component\Config\Action\ActionsConfig;
-use Shopsys\AdministrationBundle\Component\Config\Action\ActionsFactory;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfigData;
@@ -26,9 +25,6 @@ abstract class AbstractCrudController extends AbstractController
     private ?CrudConfigData $config = null;
 
     private ?ActionsConfig $actions = null;
-
-    #[Required]
-    public ActionsFactory $actionsFactory;
 
     #[Required]
     public DatagridFactory $datagridFactory;
@@ -99,7 +95,7 @@ abstract class AbstractCrudController extends AbstractController
         return $this->render('@ShopsysAdministration/crud/list.html.twig', [
             'title' => $this->getConfig()->getTitle(ActionType::LIST),
             'grid' => $datagrid->createView(),
-            'topActions' => $this->actionsFactory->processActions($this->getConfiguredActions(ActionType::LIST)),
+            'topActions' => $this->getConfiguredActions(ActionType::LIST),
         ]);
     }
 
@@ -111,7 +107,7 @@ abstract class AbstractCrudController extends AbstractController
     {
         return $this->render('@ShopsysAdministration/crud/edit.html.twig', [
             'title' => $this->getConfig()->getTitle(ActionType::EDIT),
-            'topActions' => $this->actionsFactory->processActions($this->getConfiguredActions(ActionType::EDIT)),
+            'topActions' => $this->getConfiguredActions(ActionType::EDIT),
         ]);
     }
 
@@ -122,7 +118,7 @@ abstract class AbstractCrudController extends AbstractController
     {
         return $this->render('@ShopsysAdministration/crud/new.html.twig', [
             'title' => $this->getConfig()->getTitle(ActionType::CREATE),
-            'topActions' => $this->actionsFactory->processActions($this->getConfiguredActions(ActionType::CREATE)),
+            'topActions' => $this->getConfiguredActions(ActionType::CREATE),
         ]);
     }
 
