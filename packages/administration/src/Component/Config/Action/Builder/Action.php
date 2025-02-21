@@ -20,6 +20,14 @@ final class Action extends AbstractAction
     private bool $openInNewTab = false;
 
     /**
+     * @var array<string, ?string>
+     */
+    protected array $forbiddenAttributes = [
+        'href' => 'Use one of the "linkTo*" methods to generate href link instead',
+        'target' => 'Use `setOpenInNewTab` method to open link in new tab',
+    ];
+
+    /**
      * @param string $name
      * @param string $label
      * @return self
@@ -107,7 +115,6 @@ final class Action extends AbstractAction
             'name' => $this->name,
             'label' => $this->label,
             'icon' => $this->icon,
-            'cssClass' => $this->cssClass,
             'openInNewTab' => $this->openInNewTab,
             'actionRoute' => $this->actionRoute,
             'entity' => $entity,

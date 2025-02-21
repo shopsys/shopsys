@@ -100,6 +100,7 @@ return ECSConfig::configure()
             CamelCapsFunctionNameSniff::class => [
                 __DIR__ . '/packages/framework/src/Component/Doctrine/MoneyType.php',
                 __DIR__ . '/packages/framework/src/Component/EntityExtension/QueryBuilder.php',
+                __DIR__ . '/packages/administration/src/Component/Config/Action/Builder/AbstractAction.php',
             ],
             ClassLengthSniff::class => [
                 __DIR__ . '/packages/framework/src/Form/Admin/Product/ProductFormType.php',
