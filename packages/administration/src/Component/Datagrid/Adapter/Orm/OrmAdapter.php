@@ -41,7 +41,7 @@ final class OrmAdapter implements AdapterInterface
      */
     public function getDatasource(string $identificationName, array $fields): DataSourceInterface
     {
-        foreach ($fields as $name => $field) {
+        foreach ($fields as $field) {
             if ($field->getSelectProperty() === null) {
                 continue;
             }

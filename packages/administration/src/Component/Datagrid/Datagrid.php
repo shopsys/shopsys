@@ -230,7 +230,7 @@ final class Datagrid
      */
     public function createView(): GridView
     {
-        $query = $this->adapter->getDatasource($this->identificationName, $this->fields->toArray());
+        $query = $this->adapter->getDatasource($this->identificationName, $this->fields->getValues());
         $grid = $this->datagridManager->createGrid($this->options['name'], $query);
 
         foreach ($this->fields as $field) {
