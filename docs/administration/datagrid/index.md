@@ -30,7 +30,7 @@ The `Shopsys\AdministrationBundle\Component\Datagrid\Datagrid` class is the main
 
 ## Define Datagrid
 
-To define a datagrid that is prepare for configuration you need to do two steps:
+To define a datagrid that is prepared for configuration you need to do two steps:
 
 1. Create your adapter via Factory:
 
