@@ -25,7 +25,7 @@ final class OrmAdapterFactory
 
     /**
      * @param class-string $entityClass FQCN of entity. Entity class will be resolved by EntityNameResolver inside the adapter.
-     * @param null|\Closure(\Doctrine\ORM\QueryBuilder $configureQuery): void $configureQuery
+     * @param null|\Closure(\Doctrine\ORM\QueryBuilder $queryBuilder): void $configureQuery
      * @return \Shopsys\AdministrationBundle\Component\Datagrid\Adapter\Orm\OrmAdapter
      */
     public function create(string $entityClass, ?Closure $configureQuery = null): OrmAdapter
