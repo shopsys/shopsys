@@ -18,7 +18,7 @@ class ArticleExportMessageDispatcher extends AbstractMessageDispatcher
     }
 
     /**
-     * @param array $articleIds
+     * @param int[] $articleIds
      * @param int $domainId
      */
     public function dispatchArticleExportMessages(array $articleIds, int $domainId): void
