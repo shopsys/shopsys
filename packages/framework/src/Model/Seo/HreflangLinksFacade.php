@@ -239,7 +239,7 @@ class HreflangLinksFacade
      * @param int $currentDomainId
      * @return int[]
      */
-    public function getRelevantDomainIds(int $currentDomainId): array
+    protected function getRelevantDomainIds(int $currentDomainId): array
     {
         $alternativeDomainIds = $this->seoSettingFacade->getAlternativeDomainsForDomain($currentDomainId);
 
