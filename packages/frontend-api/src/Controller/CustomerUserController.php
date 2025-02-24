@@ -31,6 +31,7 @@ class CustomerUserController extends AdminBaseController
             return $this->render('@ShopsysFrontendApi/Admin/Content/Login/loginAsCustomerUser.html.twig', [
                 'tokens' => $this->loginAsUserFacade->loginAdministratorAsCustomerUserAndGetAccessAndRefreshToken($customerUserId),
                 'url' => $this->generateUrl('front_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL),
+                'showCartMergeInfo' => 'false',
             ]);
         } catch (CustomerUserNotFoundException) {
             $this->addErrorFlash(t('Customer not found.'));
