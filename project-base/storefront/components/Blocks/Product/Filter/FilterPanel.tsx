@@ -54,7 +54,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
             <div className="h-full overflow-y-scroll px-5 vl:static vl:overflow-visible vl:px-0">
                 {shouldDisplayInStockFilter && <FilterGroupInStock inStockCount={filterOptions.inStock} />}
 
-                <div className="divide-y divide-borderAccent">
+                <div className="divide-y divide-borderAccentLess">
                     {isPriceVisible(filterOptions.minimalPrice) && (
                         <FilterGroupPrice
                             initialMaxPrice={filterOptions.maximalPrice}
@@ -103,12 +103,12 @@ export const FilterPanel: FC<FilterPanelProps> = ({
                 </div>
             </div>
 
-            <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-2 bg-backgroundMore p-5 vl:hidden">
-                <Button className="ml:auto" size="small" onClick={() => setIsFilterPanelOpen(false)}>
+            <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-2 bg-backgroundMore px-5 py-4 vl:hidden">
+                <Button className="ml:auto" size="large" onClick={() => setIsFilterPanelOpen(false)}>
                     {t('Show')} {totalCount} {t('products count', { count: totalCount })}
                 </Button>
                 {currentFilter !== null && (
-                    <Button size="small" variant="inverted" onClick={resetAllFilterQueries}>
+                    <Button size="large" variant="inverted" onClick={resetAllFilterQueries}>
                         {t('Clear all')}
                     </Button>
                 )}

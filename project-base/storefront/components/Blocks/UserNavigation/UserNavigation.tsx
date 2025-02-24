@@ -71,7 +71,7 @@ export const UserNavigation: FC = () => {
                     tid={TIDs.customer_page_logout}
                     className={twJoin(
                         getMenuItemTwClass(),
-                        'font-primary justify-start bg-transparent !px-4 text-sm font-normal leading-5 !text-text !outline-none hover:bg-transparent hover:text-textAccent hover:underline',
+                        'font-primary justify-start bg-transparent !px-4 !py-3 text-sm font-normal leading-5 !text-text !outline-none hover:bg-transparent hover:text-textAccent hover:underline',
                     )}
                     onClick={logoutHandler}
                 >
