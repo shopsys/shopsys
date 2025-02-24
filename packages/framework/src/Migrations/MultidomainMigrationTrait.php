@@ -43,6 +43,14 @@ trait MultidomainMigrationTrait
     }
 
     /**
+     * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
+     */
+    protected function getAllDomainConfigs(): array
+    {
+        return $this->getDomain()->getAllIncludingDomainConfigsWithoutDataCreated();
+    }
+
+    /**
      * @param int $domainId
      * @return string
      */
