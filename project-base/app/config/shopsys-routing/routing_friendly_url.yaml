@@ -3,6 +3,8 @@
 
 front_article_detail:
     path: friendly-url
+    options:
+        multidomain: false
 
 front_product_detail:
     path: friendly-url
