@@ -6,10 +6,11 @@ namespace App\Controller\Admin;
 
 use App\Model\Order\Order;
 use Doctrine\ORM\QueryBuilder;
+use Shopsys\AdministrationBundle\Component\Action\AbstractAction;
+use Shopsys\AdministrationBundle\Component\Action\Action;
+use Shopsys\AdministrationBundle\Component\Action\RowAction;
 use Shopsys\AdministrationBundle\Component\Attributes\CrudController;
-use Shopsys\AdministrationBundle\Component\Config\Action\ActionsConfig;
-use Shopsys\AdministrationBundle\Component\Config\Action\Builder\AbstractAction;
-use Shopsys\AdministrationBundle\Component\Config\Action\Builder\Action;
+use Shopsys\AdministrationBundle\Component\Config\ActionsConfig;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
@@ -38,8 +39,8 @@ class TestController extends AbstractCrudController
     }
 
     /**
-     * @param \Shopsys\AdministrationBundle\Component\Config\Action\ActionsConfig $actions
-     * @return \Shopsys\AdministrationBundle\Component\Config\Action\ActionsConfig
+     * @param \Shopsys\AdministrationBundle\Component\Config\ActionsConfig $actions
+     * @return \Shopsys\AdministrationBundle\Component\Config\ActionsConfig
      */
     protected function configureActions(ActionsConfig $actions): ActionsConfig
     {
@@ -165,9 +166,13 @@ class TestController extends AbstractCrudController
             'sortable' => false,
         ]);
 
-        $datagrid->actions()->update('edit', [
-            'label' => 'Test',
-        ]);
+        $datagrid->rowActions()->add(
+            RowAction::create('link', 'Link to Google', 'forward-page')
+                ->linkToUrl(fn (array $row) => 'https://www.google.com/search?q=' . $row['city'])
+                ->setConfirmMessage('Are you sure you want to go to Google?'),
+        );
+
+        $datagrid->rowActions()->update('edit', fn (RowAction $rowAction) => $rowAction->setLabel('Edit Order'));
 
         $datagrid->remove('customerUser.firstName');
 

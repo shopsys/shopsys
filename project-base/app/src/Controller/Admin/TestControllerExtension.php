@@ -19,6 +19,8 @@ class TestControllerExtension extends AbstractCrudControllerExtension
     {
         $datagrid->remove('number');
 
+        $datagrid->rowActions()->reorder(['delete', 'link']);
+
         return $datagrid;
     }
 }
