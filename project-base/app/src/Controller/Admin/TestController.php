@@ -97,7 +97,6 @@ class TestController extends AbstractCrudController
     public function configureDatagrid(Datagrid $datagrid): Datagrid
     {
         $datagrid
-            ->addIdentifier('id')
             ->add('preview', [
                 'label' => t('Preview'),
                 'property' => 'id',
@@ -176,7 +175,7 @@ class TestController extends AbstractCrudController
 
         $datagrid->remove('customerUser.firstName');
 
-        $datagrid->reorder(['preview', 'id', 'customerUser.customer.id']);
+        $datagrid->reorder(['preview', 'customerUser.customer.id']);
 
         return $datagrid;
     }
