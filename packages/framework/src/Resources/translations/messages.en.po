@@ -1462,9 +1462,6 @@ msgstr ""
 msgid "Do you really want to remove this parameter groups? By deleting this parameter group you will unset all groups by associated parameters. This step is irreversible!"
 msgstr ""
 
-msgid "Do you really want to remove this parameter? By deleting this parameter you will remove this parameter from a product where the parameter is assigned. This step is irreversible!"
-msgstr ""
-
 msgid "Do you really want to remove this parameter? Deleting the parameter will remove this parameter from the products and the possible landing page of the extended SEO category where the parameter is assigned. This step is irreversible!"
 msgstr ""
 
