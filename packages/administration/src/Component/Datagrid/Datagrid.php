@@ -86,13 +86,15 @@ final class Datagrid
 
     /**
      * @param string $name
+     * @param bool $visible
      * @return self
      */
-    public function addIdentifier($name): self
+    public function addIdentifier($name, bool $visible = false): self
     {
         $field = new FieldDescriptor($name, [
             'label' => t('ID'),
             'sortable' => true,
+            'visible' => $visible,
         ]);
 
         $this->fields->set($name, $field);
@@ -234,6 +236,10 @@ final class Datagrid
     {
         $datasource = $this->adapter->getDatasource($this->identificationName, $this->fields->getValues());
         $grid = $this->gridFactory->create($this->options['name'], $datasource);
+
+        if ($this->fields->count() === 1 && $this->fields->first()->isVisible() === false) {
+            return $grid->createView();
+        }
 
         foreach ($this->fields as $field) {
             if ($field->isVisible() === false) {
