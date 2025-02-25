@@ -9,7 +9,7 @@ namespace App\Controller\Admin;
 
 use App\Model\Article\Article;
 use Shopsys\AdministrationBundle\Component\Attributes\CrudController;
-use Shopsys\AdministrationBundle\Component\Config\Action\ActionsConfig;
+use Shopsys\AdministrationBundle\Component\Config\ActionsConfig;
 use Shopsys\AdministrationBundle\Controller\AbstractCrudController;
 
 #[CrudController(Article::class)]
@@ -48,22 +48,22 @@ The Crud Controller provides a set of default actions that are displayed based o
 
 ## Custom actions
 
-You can add, update or remove actions in the `configureActions()` method. 
+You can add, update or remove actions in the `configureActions()` method.
 
 ```php
 // ...
 
 use App\Model\Article\Article;
-use Shopsys\AdministrationBundle\Component\Config\Action\ActionsConfig;
-use Shopsys\AdministrationBundle\Component\Config\Action\Builder\AbstractAction;
-use Shopsys\AdministrationBundle\Component\Config\Action\Builder\Action;
+use Shopsys\AdministrationBundle\Component\Action\AbstractAction;
+use Shopsys\AdministrationBundle\Component\Action\Action;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
+use Shopsys\AdministrationBundle\Component\Config\ActionsConfig;
 
 // ...
 
 /**
- * @param \Shopsys\AdministrationBundle\Component\Config\Action\ActionsConfig $actions
- * @return \Shopsys\AdministrationBundle\Component\Config\Action\ActionsConfig
+ * @param \Shopsys\AdministrationBundle\Component\Config\ActionsConfig $actions
+ * @return \Shopsys\AdministrationBundle\Component\Config\ActionsConfig
  */
 protected function configureActions(ActionsConfig $actions): ActionsConfig
 {
@@ -92,7 +92,7 @@ protected function configureActions(ActionsConfig $actions): ActionsConfig
 
 !!! note
 
-    You can implement your own reusable actions by extending the `Shopsys\AdministrationBundle\Component\Config\Action\Builder\AbstractAction` class.
+    You can implement your own reusable actions by extending the `Shopsys\AdministrationBundle\Component\Action\AbstractAction` class.
 
 ### Configuration
 
@@ -101,9 +101,9 @@ protected function configureActions(ActionsConfig $actions): ActionsConfig
 
 use App\Controller\Admin\ArticleController;
 use App\Model\Article\Article;
-use Shopsys\AdministrationBundle\Component\Config\Action\ActionsConfig;
-use Shopsys\AdministrationBundle\Component\Config\Action\Builder\Action;
+use Shopsys\AdministrationBundle\Component\Action\Action;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
+use Shopsys\AdministrationBundle\Component\Config\ActionsConfig;
 
 // ...
 
@@ -128,8 +128,8 @@ protected function configureActions(ActionsConfig $actions): ActionsConfig
     $newAction
         // Creates a link to a specific route. As the second argument you can specify parameters with an array or Closure
         ->linkToRoute('admin_default_dashboard')
-        // Use this in case you need to create an action to an external page
-        ->linkToUrl(fn () => 'https://www.shopsys.com')
+        // Use this in case you need to create an action to an external page.
+        ->linkToUrl('https://www.shopsys.com')
         // Creates a link between CRUD controllers
         ->linkToCrud(ArticleController::class, ActionType::List)     
         // Use in case your page is too important to lose it  

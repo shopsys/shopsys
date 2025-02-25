@@ -6,7 +6,7 @@ This component is built on top of the [Grid](./internal-grid/index.md) component
 
 - [Configuration](./configuration.md)
   - [Fields](./fields.md)
-  - [Actions](./actions.md)
+  - [Row actions](./row-actions.md)
 
 ## Architecture
 

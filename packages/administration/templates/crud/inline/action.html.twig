@@ -1,5 +1,4 @@
-<a href="{{ action_url(actionRoute, entity) }}"
-   {% if openInNewTab %}target="_blank"{% endif %}
+<a href="{{ action_url(actionRoute, data) }}"
     {{ attributes|raw }}
 >
     {% if icon is not null %}

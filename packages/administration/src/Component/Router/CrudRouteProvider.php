@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace Shopsys\AdministrationBundle\Component\Router;
 
-use ReflectionClass;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfigProvider;
 use Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionItem;
-use Shopsys\AdministrationBundle\Controller\AbstractCrudController;
 use Symfony\Component\Routing\Route;
-use Webmozart\Assert\Assert;
 
 final class CrudRouteProvider
 {
@@ -72,21 +69,6 @@ final class CrudRouteProvider
             routeName: $this->generateRouteName($item->controllerName, $pageType),
             pageType: $pageType,
         );
-    }
-
-    /**
-     * @param class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController> $crudController
-     * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $actionType
-     * @return string
-     */
-    public function generateCrudRoute(string $crudController, ActionType $actionType): string
-    {
-        Assert::subclassOf($crudController, AbstractCrudController::class);
-
-        $reflectionClass = new ReflectionClass($crudController);
-        $crudControllerName = $reflectionClass->getShortName();
-
-        return $this->generateRouteName($crudControllerName, $actionType);
     }
 
     /**

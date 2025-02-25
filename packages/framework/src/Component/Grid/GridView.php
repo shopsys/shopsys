@@ -149,22 +149,37 @@ class GridView
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Grid\ActionColumn $actionColumn
+     * @param \Shopsys\FrameworkBundle\Component\Grid\ActionColumn|\Shopsys\FrameworkBundle\Component\Grid\GridRowActionInterface $actionColumn
      * @param array $row
      */
-    public function renderActionCell(ActionColumn $actionColumn, array $row): void
+    public function renderActionCell(ActionColumn|GridRowActionInterface $actionColumn, array $row): void
     {
-        $possibleBlocks = [
-            'grid_action_cell_type_' . $actionColumn->getType(),
-            'grid_action_cell',
-        ];
+        if ($actionColumn instanceof ActionColumn) {
+            $possibleBlocks = [
+                'grid_action_cell_type_' . $actionColumn->getType(),
+                'grid_action_cell',
+            ];
 
-        foreach ($possibleBlocks as $blockName) {
-            if ($this->blockExists($blockName)) {
-                $this->renderBlock($blockName, ['actionColumn' => $actionColumn, 'row' => $row]);
+            foreach ($possibleBlocks as $blockName) {
+                if ($this->blockExists($blockName)) {
+                    $this->renderBlock($blockName, ['actionColumn' => $actionColumn, 'row' => $row]);
 
-                break;
+                    break;
+                }
             }
+
+            return;
+        }
+
+        if ($actionColumn instanceof GridRowActionInterface) {
+            if ($actionColumn->validate($row) === false) {
+                return;
+            }
+
+            $renderData = $actionColumn->renderData();
+            echo $this->twig->render($renderData['template'], [...$renderData['parameters'], 'row' => $row]);
+
+            return;
         }
     }
 

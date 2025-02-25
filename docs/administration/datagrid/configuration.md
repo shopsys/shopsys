@@ -15,6 +15,10 @@ You can configure the datagrid using the `Datagrid` class. The `Datagrid` class 
 All methods are chainable, so you can call them one after another.
 
 ```php
+// ...
+use Shopsys\AdministrationBundle\Component\Action\RowAction
+
+//...
 
 // Enable/disable pagination
 $datagrid->setPagination(true);
@@ -42,31 +46,12 @@ $datagrid->update('name', [
 // Remove column from the datagrid
 $datagrid->remove('name');
 
-// Access to action configuration
-$actions = $datagrid->actions();
-
-// Add action to the datagrid
-$actions->add('print', [
-    'label' => t('Print'),
-    'icon' => 'print',
-    'routeName' => 'route_name', // `id` parameter is automatically passed to the URL
-    'confirmMessage' => t('Are you sure you want to print this item?'), // If not set, no confirmation dialog is displayed
-    'additionalParameters' => [
-        'invoice' => true,
-    ],
-]);
-
-// Edit already defined action (update label)
-$actions->update('print', [
-    'label' => t('Print invoice'),
-]);
-
-// Remove action from the datagrid
-$actions->remove('print');
+// Access to row actions configuration. More information in the "Row actions" section
+$actions = $datagrid->rowActions();
 
 ```
 
 More information about configuration-specific sections can be found in the following sections:
 
 - [Fields](./fields.md)
-- [Actions](./actions.md)
+- [Row Actions](./row-actions.md)
