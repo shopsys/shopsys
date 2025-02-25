@@ -1,3 +1,7 @@
 controllers:
     resource: '../src/Controller/'
     type: attribute
+
+crud_controllers:
+    resource: .
+    type: crud_controller
