@@ -1,6 +1,5 @@
 <?= "<?php\n"; ?>
 <?php /** @var \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityConfig $entity_config */ ?>
-<?php /** @var \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityFieldsConfiguration $entity_fields_configuration */ ?>
 
 declare(strict_types=1);
 
@@ -37,13 +36,13 @@ class <?= $class_name; ?>
             $translations = $<?= lcfirst($entity_config->entityName); ?>->getTranslations();
 
             foreach ($translations as $translate) {
-                <?php foreach ($entity_fields_configuration->getTranslationPropertiesOnly() as $translationProperty): ?>
+                <?php foreach ($entity_config->getTranslationPropertiesOnly() as $translationProperty): ?>
                     $<?= lcfirst($entity_config->entityName); ?>Data-><?= $translationProperty->propertyName; ?>[$translate->getLocale()] = $translate-><?= $translationProperty->getGetterName(); ?>();
                 <?php endforeach; ?>
             }
         <?php endif; ?>
 
-        <?php foreach ($entity_fields_configuration->getEntityPropertiesOnly() as $property): ?>
+        <?php foreach ($entity_config->getEntityPropertiesOnly() as $property): ?>
             $<?= lcfirst($entity_config->entityName); ?>Data-><?= $property->propertyName; ?> = $<?= lcfirst($entity_config->entityName); ?>-><?= $property->getGetterName(); ?>();
         <?php endforeach; ?>
 
@@ -60,7 +59,7 @@ class <?= $class_name; ?>
         // TODO set default values here if necessary
         <?php if ($entity_config->isTranslatable): ?>
             foreach ($this->domain->getAllLocales() as $locale) {
-                <?php foreach ($entity_fields_configuration->getTranslationPropertiesOnly() as $translationProperty): ?>
+                <?php foreach ($entity_config->getTranslationPropertiesOnly() as $translationProperty): ?>
                     $<?= lcfirst($entity_config->entityName); ?>Data-><?= $translationProperty->propertyName; ?>[$locale] = null;
                 <?php endforeach; ?>
             }

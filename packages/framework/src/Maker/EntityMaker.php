@@ -9,7 +9,6 @@ use Override;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Maker\EntityConfig\EntityFieldsConfiguration;
 use Shopsys\FrameworkBundle\Maker\EntityConfig\EntityFieldsConfigurator;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
@@ -26,8 +25,6 @@ class EntityMaker extends BaseMaker
     public const string IS_TRANSLATABLE_OPTION = 'isTranslatable';
     public const string HAS_ID_OPTION = 'hasId';
     public const string HAS_UUID_OPTION = 'hasUuid';
-
-    protected EntityFieldsConfiguration $entityFieldsConfiguration;
 
     /**
      * @param \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityFieldsConfigurator $entityFieldsConfigurator
@@ -98,7 +95,7 @@ class EntityMaker extends BaseMaker
     public function interact(InputInterface $input, ConsoleStyle $io, Command $command)
     {
         $this->entityConfig = $this->entityConfigFactory->create($input, $io);
-        $this->entityFieldsConfiguration = $this->entityFieldsConfigurator->configureEntityFields($this->entityConfig, $io);
+        $this->entityFieldsConfigurator->configureEntityFields($this->entityConfig, $io);
     }
 
     /**
@@ -165,7 +162,6 @@ class EntityMaker extends BaseMaker
                 'use_statements' => $this->getUseStatementsGenerator(),
                 'constructor_dependencies' => $this->getFormattedConstructorDependencies(),
                 'entity_config' => $this->entityConfig,
-                'entity_fields_configuration' => $this->entityFieldsConfiguration,
             ],
         );
         $generator->writeChanges();
@@ -187,7 +183,6 @@ class EntityMaker extends BaseMaker
             __DIR__ . '/templates/EntityData.tpl.php',
             [
                 'entity_config' => $this->entityConfig,
-                'entity_fields_configuration' => $this->entityFieldsConfiguration,
             ],
         );
         $generator->writeChanges();
@@ -209,7 +204,6 @@ class EntityMaker extends BaseMaker
             __DIR__ . '/templates/EntityDataFactory.tpl.php',
             [
                 'entity_config' => $this->entityConfig,
-                'entity_fields_configuration' => $this->entityFieldsConfiguration,
                 'use_statements' => new UseStatementGenerator([
                     Domain::class,
                 ]),
@@ -234,7 +228,6 @@ class EntityMaker extends BaseMaker
             __DIR__ . '/templates/EntityTranslation.tpl.php',
             [
                 'entity_config' => $this->entityConfig,
-                'translation_properties' => $this->entityFieldsConfiguration->getTranslationPropertiesOnly(),
                 'use_statements' => new UseStatementGenerator([
                     'Doctrine\ORM\Mapping as ORM',
                     'Prezent\Doctrine\Translatable\Annotation as Prezent',

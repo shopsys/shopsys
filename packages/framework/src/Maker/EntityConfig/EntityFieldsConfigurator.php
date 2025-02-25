@@ -31,12 +31,9 @@ class EntityFieldsConfigurator
     /**
      * @param \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityConfig $entityConfig
      * @param \Symfony\Bundle\MakerBundle\ConsoleStyle $io
-     * @return \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityFieldsConfiguration
      */
-    public function configureEntityFields(EntityConfig $entityConfig, ConsoleStyle $io): EntityFieldsConfiguration
+    public function configureEntityFields(EntityConfig $entityConfig, ConsoleStyle $io): void
     {
-        $entityFieldsConfiguration = new EntityFieldsConfiguration();
-
         $configurePropertiesMessage = sprintf('<info>Let\'s configure the properties of <comment>%s</comment> entity.</info>', $entityConfig->entityName);
 
         if ($entityConfig->isTranslatable) {
@@ -44,14 +41,12 @@ class EntityFieldsConfigurator
         }
 
         $io->writeln($configurePropertiesMessage);
-        $this->askForFields($io, $entityConfig, $entityFieldsConfiguration, PropertyTargetEnum::ENTITY);
+        $this->askForFields($io, $entityConfig, PropertyTargetEnum::ENTITY);
 
         if ($entityConfig->isTranslatable) {
             $io->writeln(sprintf('<info>Now let\'s configure the properties of <comment>%s</comment> entity.</info>', $entityConfig->entityName . 'Translation'));
-            $this->askForFields($io, $entityConfig, $entityFieldsConfiguration, PropertyTargetEnum::TRANSLATION);
+            $this->askForFields($io, $entityConfig, PropertyTargetEnum::TRANSLATION);
         }
-
-        return $entityFieldsConfiguration;
     }
 
     /**
@@ -268,13 +263,11 @@ class EntityFieldsConfigurator
     /**
      * @param \Symfony\Bundle\MakerBundle\ConsoleStyle $io
      * @param \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityConfig $entityConfig
-     * @param \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityFieldsConfiguration $entityFieldsConfiguration
      * @param \Shopsys\FrameworkBundle\Maker\EntityConfig\PropertyTargetEnum $propertyTarget
      */
     private function askForFields(
         ConsoleStyle $io,
         EntityConfig $entityConfig,
-        EntityFieldsConfiguration $entityFieldsConfiguration,
         PropertyTargetEnum $propertyTarget,
     ): void {
         $isFirstField = true;
@@ -294,7 +287,7 @@ class EntityFieldsConfigurator
 
             $currentFields[] = $newField->propertyName;
             $newField->propertyTarget = $propertyTarget;
-            $entityFieldsConfiguration->addProperty($newField);
+            $entityConfig->addProperty($newField);
         }
     }
 }

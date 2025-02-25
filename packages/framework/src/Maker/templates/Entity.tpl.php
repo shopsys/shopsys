@@ -1,6 +1,5 @@
 <?= "<?php\n"; ?>
 <?php /** @var \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityConfig $entity_config */ ?>
-<?php /** @var \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityFieldsConfiguration $entity_fields_configuration */ ?>
 
 declare(strict_types=1);
 
@@ -44,7 +43,7 @@ class <?= $class_name; ?><?php if ($entity_config->isTranslatable): ?> extends A
     protected $translations;
 <?php endif ?>
 
-<?php foreach ($entity_fields_configuration->getEntityPropertiesOnly() as $property): ?>
+<?php foreach ($entity_config->getEntityPropertiesOnly() as $property): ?>
     /**<?= PHP_EOL; ?>
      * <?= implode(PHP_EOL . '     * ', $property->getAnnotationLines()) . PHP_EOL; ?>
      */<?= PHP_EOL; ?>
@@ -75,7 +74,7 @@ class <?= $class_name; ?><?php if ($entity_config->isTranslatable): ?> extends A
         $this->setTranslations($<?= lcfirst($entity_config->entityName); ?>Data);
 <?php endif ?>
 
-<?php foreach ($entity_fields_configuration->getEntityPropertiesOnly() as $property): ?>
+<?php foreach ($entity_config->getEntityPropertiesOnly() as $property): ?>
         $this-><?= $property->propertyName; ?> = $<?= lcfirst($entity_config->entityName); ?>Data-><?= $property->propertyName; ?>;
 <?php endforeach; ?>
     }
@@ -88,7 +87,7 @@ class <?= $class_name; ?><?php if ($entity_config->isTranslatable): ?> extends A
 
     private function setTranslations(<?= $entity_config->entityName; ?>Data $<?= lcfirst($entity_config->entityName); ?>Data): void
     {
-    <?php foreach ($entity_fields_configuration->getTranslationPropertiesOnly() as $property): ?>
+    <?php foreach ($entity_config->getTranslationPropertiesOnly() as $property): ?>
         foreach ($<?= lcfirst($entity_config->entityName); ?>Data-><?= $property->propertyName; ?> as $locale => $<?= $property->propertyName; ?>) {
             $this->translation($locale)->set<?= ucfirst($property->propertyName); ?>($<?= $property->propertyName; ?>);
         }
@@ -110,7 +109,7 @@ class <?= $class_name; ?><?php if ($entity_config->isTranslatable): ?> extends A
     }
 <?php endif ?>
 
-<?php foreach ($entity_fields_configuration->getAllProperties() as $property): ?>
+<?php foreach ($entity_config->getAllProperties() as $property): ?>
     public function <?= $property->getGetterName(); ?>(<?php if ($property->isForTranslation()): ?>?string $locale = null<?php endif ?>): <?= $property->getTypeHint(); ?>
     {
         <?php if ($property->isForTranslation()): ?>

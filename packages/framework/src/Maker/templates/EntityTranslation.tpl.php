@@ -1,6 +1,5 @@
 <?= "<?php\n"; ?>
 <?php /** @var \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityConfig $entity_config */ ?>
-<?php /** @var \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityProperty[] $translation_properties */ ?>
 
 declare(strict_types=1);
 
@@ -20,7 +19,7 @@ class <?= $class_name; ?> extends AbstractTranslation
      */
     protected $translatable;
 
-<?php foreach ($translation_properties as $property): ?>
+<?php foreach ($entity_config->getTranslationPropertiesOnly() as $property): ?>
     /**<?= PHP_EOL; ?>
      * <?= implode(PHP_EOL . '     * ', $property->getAnnotationLines()) . PHP_EOL; ?>
      */<?= PHP_EOL; ?>
@@ -28,14 +27,14 @@ class <?= $class_name; ?> extends AbstractTranslation
     <?= PHP_EOL; ?>
 <?php endforeach; ?>
 
-<?php foreach ($translation_properties as $property): ?>
+<?php foreach ($entity_config->getTranslationPropertiesOnly() as $property): ?>
     public function <?= $property->getGetterName(); ?>(): <?= $property->getTypeHint(); ?>
     {
         return $this-><?= $property->propertyName; ?>;
     }
 <?php endforeach; ?>
 
-<?php foreach ($translation_properties as $property): ?>
+<?php foreach ($entity_config->getTranslationPropertiesOnly() as $property): ?>
     public function set<?= ucfirst($property->propertyName); ?>(<?= $property->getTypeHint() ?> $<?= $property->propertyName; ?>): void
     {
         $this-><?= $property->propertyName; ?> = $<?= $property->propertyName; ?>;
