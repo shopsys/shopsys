@@ -54,10 +54,10 @@ class DistanceFunction extends FunctionNode
         return "
             ( {$earthRadius} * ATAN2(
                 SQRT(
-                    POW(COS(RADIANS(CAST({$this->latitudeTo->dispatch($sqlWalker)} AS NUMERIC))) * SIN(RADIANS(CAST({$this->longitudeTo->dispatch($sqlWalker)} AS NUMERIC)) - RADIANS(CAST({$this->longitudeFrom->dispatch($sqlWalker)} AS NUMERIC))), 2) +
-                    POW(COS(RADIANS(CAST({$this->latitudeFrom->dispatch($sqlWalker)} AS NUMERIC))) * SIN(RADIANS(CAST({$this->latitudeTo->dispatch($sqlWalker)} AS NUMERIC))) - SIN(RADIANS(CAST({$this->latitudeFrom->dispatch($sqlWalker)} AS NUMERIC))) * COS(RADIANS(CAST({$this->latitudeTo->dispatch($sqlWalker)} AS NUMERIC))) * COS(RADIANS(CAST({$this->longitudeTo->dispatch($sqlWalker)} AS NUMERIC)) - RADIANS(CAST({$this->longitudeFrom->dispatch($sqlWalker)} AS NUMERIC))), 2)
+                    POW(COS(RADIANS({$this->latitudeTo->dispatch($sqlWalker)})) * SIN(RADIANS({$this->longitudeTo->dispatch($sqlWalker)}) - RADIANS({$this->longitudeFrom->dispatch($sqlWalker)})), 2) +
+                    POW(COS(RADIANS({$this->latitudeFrom->dispatch($sqlWalker)})) * SIN(RADIANS({$this->latitudeTo->dispatch($sqlWalker)})) - SIN(RADIANS({$this->latitudeFrom->dispatch($sqlWalker)})) * COS(RADIANS({$this->latitudeTo->dispatch($sqlWalker)})) * COS(RADIANS({$this->longitudeTo->dispatch($sqlWalker)}) - RADIANS({$this->longitudeFrom->dispatch($sqlWalker)})), 2)
                 ),
-                SIN(RADIANS(CAST({$this->latitudeFrom->dispatch($sqlWalker)} AS NUMERIC))) * SIN(RADIANS(CAST({$this->latitudeTo->dispatch($sqlWalker)} AS NUMERIC))) + COS(RADIANS(CAST({$this->latitudeFrom->dispatch($sqlWalker)} AS NUMERIC))) * COS(RADIANS(CAST({$this->latitudeTo->dispatch($sqlWalker)} AS NUMERIC))) * COS(RADIANS(CAST({$this->longitudeTo->dispatch($sqlWalker)} AS NUMERIC)) - RADIANS(CAST({$this->longitudeFrom->dispatch($sqlWalker)} AS NUMERIC)))
+                SIN(RADIANS({$this->latitudeFrom->dispatch($sqlWalker)})) * SIN(RADIANS({$this->latitudeTo->dispatch($sqlWalker)})) + COS(RADIANS({$this->latitudeFrom->dispatch($sqlWalker)})) * COS(RADIANS({$this->latitudeTo->dispatch($sqlWalker)})) * COS(RADIANS({$this->longitudeTo->dispatch($sqlWalker)}) - RADIANS({$this->longitudeFrom->dispatch($sqlWalker)}))
             ))
         ";
     }
