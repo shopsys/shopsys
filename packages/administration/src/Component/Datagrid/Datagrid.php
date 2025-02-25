@@ -12,6 +12,7 @@ use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfigData;
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface;
 use Shopsys\AdministrationBundle\Component\Datagrid\Field\FieldDescriptor;
+use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -47,12 +48,12 @@ final class Datagrid
 
     /**
      * @param \Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface $adapter
-     * @param \Shopsys\AdministrationBundle\Component\Datagrid\DatagridManager $datagridManager
+     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      * @param DatagridOptions $options
      */
     public function __construct(
         private readonly AdapterInterface $adapter,
-        private readonly DatagridManager $datagridManager,
+        private readonly GridFactory $gridFactory,
         array $options,
     ) {
         $this->fields = new ArrayCollection();
@@ -227,8 +228,8 @@ final class Datagrid
      */
     public function createView(): GridView
     {
-        $query = $this->adapter->getDatasource($this->identificationName, $this->fields->getValues());
-        $grid = $this->datagridManager->createGrid($this->options['name'], $query);
+        $datasource = $this->adapter->getDatasource($this->identificationName, $this->fields->getValues());
+        $grid = $this->gridFactory->create($this->options['name'], $datasource);
 
         if ($this->fields->count() === 1 && $this->fields->first()->isVisible() === false) {
             return $grid->createView();

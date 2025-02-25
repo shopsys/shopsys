@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Component\Datagrid;
 
 use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface;
+use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 
 /**
  * @phpstan-type DatagridOptions array{
@@ -16,10 +17,10 @@ use Shopsys\AdministrationBundle\Component\Datagrid\Adapter\AdapterInterface;
 final class DatagridFactory
 {
     /**
-     * @param \Shopsys\AdministrationBundle\Component\Datagrid\DatagridManager $datagridManager
+     * @param \Shopsys\FrameworkBundle\Component\Grid\GridFactory $gridFactory
      */
     public function __construct(
-        private readonly DatagridManager $datagridManager,
+        private readonly GridFactory $gridFactory,
     ) {
     }
 
@@ -30,6 +31,6 @@ final class DatagridFactory
      */
     public function create(AdapterInterface $adapter, array $options = []): Datagrid
     {
-        return new Datagrid($adapter, $this->datagridManager, $options);
+        return new Datagrid($adapter, $this->gridFactory, $options);
     }
 }
