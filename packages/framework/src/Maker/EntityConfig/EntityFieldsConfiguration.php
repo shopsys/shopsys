@@ -22,8 +22,33 @@ class EntityFieldsConfiguration
     /**
      * @return \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityProperty[]
      */
-    public function getProperties(): array
+    public function getAllProperties(): array
     {
         return $this->properties;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityProperty[]
+     */
+    public function getTranslationPropertiesOnly(): array
+    {
+        return $this->filterPropertiesByTarget(PropertyTargetEnum::TRANSLATION);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityProperty[]
+     */
+    public function getEntityPropertiesOnly(): array
+    {
+        return $this->filterPropertiesByTarget(PropertyTargetEnum::ENTITY);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Maker\EntityConfig\PropertyTargetEnum $propertyTargetEnum
+     * @return \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityProperty[]
+     */
+    private function filterPropertiesByTarget(PropertyTargetEnum $propertyTargetEnum): array
+    {
+        return array_filter($this->properties, static fn (EntityProperty $property) => $property->propertyTarget === $propertyTargetEnum);
     }
 }

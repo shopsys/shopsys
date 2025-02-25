@@ -96,7 +96,7 @@ abstract class BaseMaker extends AbstractMaker
     {
         return $generator->createClassNameDetails(
             $this->entityConfig->entityName,
-            preg_replace('/\bApp\\\\/', '', $this->getGeneratedClassNamespace(), 1),
+            $this->getGeneratedClassNamespaceWithoutAppPrefix(),
             $this->getGeneratedClassSuffix(),
         );
     }
@@ -110,11 +110,20 @@ abstract class BaseMaker extends AbstractMaker
     }
 
     /**
-     * @param string $fileName
+     * @return string
      */
-    protected function fixStandards(string $fileName): void
+    protected function getGeneratedClassNamespaceWithoutAppPrefix(): string
     {
-        if (!file_exists($this->kernel->getCacheDir() . '/' . EntitiesDumpCommand::OUTPUT_FILE)) {
+        return preg_replace('/\bApp\\\\/', '', $this->getGeneratedClassNamespace(), 1);
+    }
+
+    /**
+     * @param string $fileName
+     * @param bool $forceEntitiesDump
+     */
+    protected function fixStandards(string $fileName, bool $forceEntitiesDump = false): void
+    {
+        if ($forceEntitiesDump || !file_exists($this->kernel->getCacheDir() . '/' . EntitiesDumpCommand::OUTPUT_FILE)) {
             $application = new Application($this->kernel);
             $application->find(EntitiesDumpCommand::getDefaultName())->run(new ArrayInput([]), new NullOutput());
         }

@@ -1,13 +1,22 @@
 <?= "<?php\n"; ?>
 <?php /** @var \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityConfig $entity_config */ ?>
-<?php /** @var \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityProperty[] $entity_properties */ ?>
+<?php /** @var \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityFieldsConfiguration $entity_fields_configuration */ ?>
 
 declare(strict_types=1);
 
 namespace <?= $namespace; ?>;
 
+<?= $use_statements; ?>
+
 class <?= $class_name; ?>
 {
+    <?php if ($entity_config->isTranslatable): ?>
+        public function __construct(
+            private readonly Domain $domain,
+        ) {
+        }
+    <?php endif; ?>
+
     public function create(): <?= $entity_config->entityName; ?>Data
     {
         $<?= lcfirst($entity_config->entityName); ?>Data = $this->createInstance();
@@ -23,8 +32,19 @@ class <?= $class_name; ?>
         <?php if ($entity_config->hasUuid): ?>
             $<?= lcfirst($entity_config->entityName); ?>Data->uuid = $<?= lcfirst($entity_config->entityName); ?>->getUuid();
         <?php endif; ?>
-        <?php foreach ($entity_properties as $property): ?>
-            $<?= lcfirst($entity_config->entityName); ?>Data-><?= $property->propertyName; ?> = $<?= lcfirst($entity_config->entityName); ?>-><?= $property->getGetterName(); ?>;
+
+        <?php if ($entity_config->isTranslatable): ?>
+            $translations = $<?= lcfirst($entity_config->entityName); ?>->getTranslations();
+
+            foreach ($translations as $translate) {
+                <?php foreach ($entity_fields_configuration->getTranslationPropertiesOnly() as $translationProperty): ?>
+                    $<?= lcfirst($entity_config->entityName); ?>Data-><?= $translationProperty->propertyName; ?>[$translate->getLocale()] = $translate-><?= $translationProperty->getGetterName(); ?>();
+                <?php endforeach; ?>
+            }
+        <?php endif; ?>
+
+        <?php foreach ($entity_fields_configuration->getEntityPropertiesOnly() as $property): ?>
+            $<?= lcfirst($entity_config->entityName); ?>Data-><?= $property->propertyName; ?> = $<?= lcfirst($entity_config->entityName); ?>-><?= $property->getGetterName(); ?>();
         <?php endforeach; ?>
 
         return $<?= lcfirst($entity_config->entityName); ?>Data;
@@ -38,5 +58,12 @@ class <?= $class_name; ?>
     private function fillNew(<?= $entity_config->entityName; ?>Data $<?= lcfirst($entity_config->entityName); ?>Data): void
     {
         // TODO set default values here if necessary
+        <?php if ($entity_config->isTranslatable): ?>
+            foreach ($this->domain->getAllLocales() as $locale) {
+                <?php foreach ($entity_fields_configuration->getTranslationPropertiesOnly() as $translationProperty): ?>
+                    $<?= lcfirst($entity_config->entityName); ?>Data-><?= $translationProperty->propertyName; ?>[$locale] = null;
+                <?php endforeach; ?>
+            }
+        <?php endif; ?>
     }
 }

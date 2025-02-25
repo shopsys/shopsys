@@ -36,24 +36,19 @@ class EntityFieldsConfigurator
     public function configureEntityFields(EntityConfig $entityConfig, ConsoleStyle $io): EntityFieldsConfiguration
     {
         $entityFieldsConfiguration = new EntityFieldsConfiguration();
-        $currentFields = $this->getPropertyNames($entityConfig->getEntityFullyQualifiedName());
 
-        $isFirstField = true;
+        $configurePropertiesMessage = sprintf('<info>Let\'s configure the properties of <comment>%s</comment> entity.</info>', $entityConfig->entityName);
 
-        while (true) {
-            $newField = $this->askForNextField($io, $currentFields, $isFirstField);
-            $isFirstField = false;
+        if ($entityConfig->isTranslatable) {
+            $configurePropertiesMessage .= sprintf(' <info>We will configure the properties of <comment>%s</comment> entity afterward.</info>', $entityConfig->entityName . 'Translation');
+        }
 
-            if ($newField === null) {
-                break;
-            }
+        $io->writeln($configurePropertiesMessage);
+        $this->askForFields($io, $entityConfig, $entityFieldsConfiguration, PropertyTargetEnum::ENTITY);
 
-            if (!($newField instanceof EntityProperty)) {
-                throw new Exception('Invalid value');
-            }
-
-            $currentFields[] = $newField->propertyName;
-            $entityFieldsConfiguration->addProperty($newField);
+        if ($entityConfig->isTranslatable) {
+            $io->writeln(sprintf('<info>Now let\'s configure the properties of <comment>%s</comment> entity.</info>', $entityConfig->entityName . 'Translation'));
+            $this->askForFields($io, $entityConfig, $entityFieldsConfiguration, PropertyTargetEnum::TRANSLATION);
         }
 
         return $entityFieldsConfiguration;
@@ -268,5 +263,38 @@ class EntityFieldsConfigurator
         $reflectionClass = new ReflectionClass($class);
 
         return array_map(static fn (ReflectionProperty $prop) => $prop->getName(), $reflectionClass->getProperties());
+    }
+
+    /**
+     * @param \Symfony\Bundle\MakerBundle\ConsoleStyle $io
+     * @param \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityConfig $entityConfig
+     * @param \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityFieldsConfiguration $entityFieldsConfiguration
+     * @param \Shopsys\FrameworkBundle\Maker\EntityConfig\PropertyTargetEnum $propertyTarget
+     */
+    private function askForFields(
+        ConsoleStyle $io,
+        EntityConfig $entityConfig,
+        EntityFieldsConfiguration $entityFieldsConfiguration,
+        PropertyTargetEnum $propertyTarget,
+    ): void {
+        $isFirstField = true;
+        $currentFields = $this->getPropertyNames($entityConfig->getEntityFullyQualifiedName());
+
+        while (true) {
+            $newField = $this->askForNextField($io, $currentFields, $isFirstField);
+            $isFirstField = false;
+
+            if ($newField === null) {
+                break;
+            }
+
+            if (!($newField instanceof EntityProperty)) {
+                throw new Exception('Invalid value');
+            }
+
+            $currentFields[] = $newField->propertyName;
+            $newField->propertyTarget = $propertyTarget;
+            $entityFieldsConfiguration->addProperty($newField);
+        }
     }
 }

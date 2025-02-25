@@ -17,6 +17,7 @@ class EntityProperty
     /**
      * @param string $propertyName
      * @param string $type
+     * @param \Shopsys\FrameworkBundle\Maker\EntityConfig\PropertyTargetEnum $propertyTarget
      * @param int|null $length
      * @param bool|null $nullable
      * @param array $options
@@ -28,6 +29,7 @@ class EntityProperty
     public function __construct(
         public string $propertyName,
         public string $type,
+        public PropertyTargetEnum $propertyTarget = PropertyTargetEnum::ENTITY,
         public ?int $length = null,
         public ?bool $nullable = null,
         public array $options = [],
@@ -103,7 +105,7 @@ class EntityProperty
             'array' => ['array', 'simple_array', 'json'],
             'object' => ['object'],
             '\\' . DateTime::class => ['datetime', 'datetimetz', 'date', 'time'],
-            '\\' . DateTimeImmutable::class => ['datetime_immutable', 'datetimetz_immutable', 'date_immutable', 'time_immutable',],
+            '\\' . DateTimeImmutable::class => ['datetime_immutable', 'datetimetz_immutable', 'date_immutable', 'time_immutable'],
             '\\' . DateInterval::class => ['dateinterval'],
         ];
 
@@ -123,6 +125,14 @@ class EntityProperty
     {
         $prefix = $this->type === 'boolean' ? 'is' : 'get';
 
-        return  $prefix . ucfirst($this->propertyName) . '()';
+        return $prefix . ucfirst($this->propertyName);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isForTranslation(): bool
+    {
+        return $this->propertyTarget === PropertyTargetEnum::TRANSLATION;
     }
 }
