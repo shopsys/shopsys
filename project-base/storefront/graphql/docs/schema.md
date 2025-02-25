@@ -6204,6 +6204,24 @@ Message of the notification
 
 </td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong>validityFrom</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
+<td>
+
+Notification bar validity from
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>validityTo</strong></td>
+<td valign="top"><a href="#datetime">DateTime</a></td>
+<td>
+
+Notification bar validity to
+
+</td>
+</tr>
 </tbody>
 </table>
 
