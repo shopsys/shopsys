@@ -119,7 +119,7 @@ class PriceListDataFixture extends AbstractReferenceFixture implements Dependent
         Vat $vat,
     ): PriceListProductPriceData {
         $product = $this->getReference(ProductDataFixture::PRODUCT_PREFIX . $productId, Product::class);
-        $priceAmount = $this->priceConverter->convertPriceToInputPriceWithoutVatInDomainDefaultCurrency(
+        $priceAmount = $this->priceConverter->convertPriceToInputPriceInDomainDefaultCurrency(
             Money::create($priceValue),
             $currency,
             $vat->getPercent(),

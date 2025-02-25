@@ -27,9 +27,9 @@ class BasePriceCalculationTest extends TestCase
                 'inputPriceType' => PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT,
                 'inputPrice' => Money::create(6999),
                 'vatPercent' => '21',
-                'basePriceWithoutVat' => Money::create('6999.17'),
+                'basePriceWithoutVat' => Money::create(6999),
                 'basePriceWithVat' => Money::create(8469),
-                'basePriceVatAmount' => Money::create('1469.83'),
+                'basePriceVatAmount' => Money::create(1470),
             ],
             [
                 'inputPriceType' => PricingSetting::INPUT_PRICE_TYPE_WITH_VAT,

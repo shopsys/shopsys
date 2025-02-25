@@ -11,8 +11,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 
 class PriceConverter
 {
-    protected const DEFAULT_SCALE = 2;
-
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Rounding $rounding
@@ -82,7 +80,7 @@ class PriceConverter
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    public function convertPriceToInputPriceWithoutVatInDomainDefaultCurrency(
+    public function convertPriceToInputPriceInDomainDefaultCurrency(
         Money $price,
         Currency $currency,
         string $vatPercent,

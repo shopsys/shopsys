@@ -47,7 +47,7 @@ class OrderItemPriceCalculation
         $vat = $this->vatFactory->create($vatData, $domainId);
         $vatAmount = $this->priceCalculation->getVatAmountByPriceWithVat($orderItemData->unitPriceWithVat, $vat);
 
-        return $this->rounding->roundPriceWithoutVat($orderItemData->unitPriceWithVat->subtract($vatAmount));
+        return $orderItemData->unitPriceWithVat->subtract($vatAmount);
     }
 
     /**

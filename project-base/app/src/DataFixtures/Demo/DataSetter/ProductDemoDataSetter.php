@@ -144,7 +144,7 @@ class ProductDemoDataSetter
                     continue;
                 }
 
-                $money = $this->priceConverter->convertPriceToInputPriceWithoutVatInDomainDefaultCurrency(
+                $money = $this->priceConverter->convertPriceToInputPriceInDomainDefaultCurrency(
                     Money::create($price),
                     $currencyCzk,
                     $highVat->getPercent(),
