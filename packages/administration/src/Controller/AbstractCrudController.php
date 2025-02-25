@@ -8,7 +8,7 @@ use Doctrine\ORM\QueryBuilder;
 use ReflectionClass;
 use RuntimeException;
 use Shopsys\AdministrationBundle\Component\Attributes\CrudController;
-use Shopsys\AdministrationBundle\Component\Config\Action\ActionsConfig;
+use Shopsys\AdministrationBundle\Component\Config\ActionsConfig;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfigData;
@@ -45,8 +45,8 @@ abstract class AbstractCrudController extends AbstractController
     }
 
     /**
-     * @param \Shopsys\AdministrationBundle\Component\Config\Action\ActionsConfig $actions
-     * @return \Shopsys\AdministrationBundle\Component\Config\Action\ActionsConfig
+     * @param \Shopsys\AdministrationBundle\Component\Config\ActionsConfig $actions
+     * @return \Shopsys\AdministrationBundle\Component\Config\ActionsConfig
      */
     protected function configureActions(ActionsConfig $actions): ActionsConfig
     {
@@ -145,9 +145,9 @@ abstract class AbstractCrudController extends AbstractController
 
     /**
      * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $actionType
-     * @return \Shopsys\AdministrationBundle\Component\Config\Action\Builder\AbstractAction[]
+     * @return \Shopsys\AdministrationBundle\Component\Action\AbstractAction[]
      */
-    private function getConfiguredActions(ActionType $actionType): array
+    final protected function getConfiguredActions(ActionType $actionType): array
     {
         if ($this->actions === null) {
             $this->actions = $this->configureActions(new ActionsConfig(static::class, $this->getConfig()->getActions()));

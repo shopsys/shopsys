@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\AdministrationBundle\Component\Config\Action\Builder\ActionRoute;
+namespace Shopsys\AdministrationBundle\Component\Action\RouteData;
 
 use Closure;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
@@ -12,7 +12,7 @@ class CrudActionRouteData implements ActionRouteInterface
     /**
      * @param class-string<\Shopsys\AdministrationBundle\Controller\AbstractCrudController> $crudController
      * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $actionType
-     * @param null|\Closure(?object $entity): int $id
+     * @param null|\Closure(mixed): int $id
      */
     public function __construct(
         private readonly string $crudController,
@@ -38,15 +38,15 @@ class CrudActionRouteData implements ActionRouteInterface
     }
 
     /**
-     * @param object|null $entity
+     * @param mixed $data
      * @return int|null
      */
-    public function getId(?object $entity = null): ?int
+    public function getId(mixed $data = null): ?int
     {
         if ($this->id === null) {
             return null;
         }
 
-        return call_user_func($this->id, $entity);
+        return call_user_func($this->id, $data);
     }
 }

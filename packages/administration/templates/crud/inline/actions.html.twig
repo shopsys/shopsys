@@ -1,9 +1,8 @@
-{% macro render(actions, entity = null) %}
+{% macro render(actions, data = null) %}
     <div class="wrap-bar__buttons">
         {% for action in actions %}
-            {% set actionData = action.renderData(entity) %}
-
-            {% if actionData is not null %}
+            {% if action.validate(data) %}
+                {% set actionData = action.renderData %}
                 {{ include(actionData.template, actionData.parameters) }}
             {% endif %}
         {% endfor %}

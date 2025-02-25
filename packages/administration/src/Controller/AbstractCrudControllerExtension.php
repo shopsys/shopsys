@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Controller;
 
 use Doctrine\ORM\QueryBuilder;
-use Shopsys\AdministrationBundle\Component\Config\Action\ActionsConfig;
+use Shopsys\AdministrationBundle\Component\Config\ActionsConfig;
 use Shopsys\AdministrationBundle\Component\Config\CrudConfig;
 use Shopsys\AdministrationBundle\Component\Datagrid\Datagrid;
 
@@ -21,8 +21,8 @@ abstract class AbstractCrudControllerExtension
     }
 
     /**
-     * @param \Shopsys\AdministrationBundle\Component\Config\Action\ActionsConfig $actions
-     * @return \Shopsys\AdministrationBundle\Component\Config\Action\ActionsConfig
+     * @param \Shopsys\AdministrationBundle\Component\Config\ActionsConfig $actions
+     * @return \Shopsys\AdministrationBundle\Component\Config\ActionsConfig
      */
     public function configureActions(ActionsConfig $actions): ActionsConfig
     {

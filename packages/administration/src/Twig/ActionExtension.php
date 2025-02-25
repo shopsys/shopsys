@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Shopsys\AdministrationBundle\Twig;
 
 use InvalidArgumentException;
-use Shopsys\AdministrationBundle\Component\Config\Action\Builder\ActionRoute\ActionRouteInterface;
-use Shopsys\AdministrationBundle\Component\Config\Action\Builder\ActionRoute\CrudActionRouteData;
-use Shopsys\AdministrationBundle\Component\Config\Action\Builder\ActionRoute\RouteActionRouteData;
-use Shopsys\AdministrationBundle\Component\Config\Action\Builder\ActionRoute\UrlActionRouteData;
+use Shopsys\AdministrationBundle\Component\Action\RouteData\ActionRouteInterface;
+use Shopsys\AdministrationBundle\Component\Action\RouteData\CrudActionRouteData;
+use Shopsys\AdministrationBundle\Component\Action\RouteData\RouteActionRouteData;
+use Shopsys\AdministrationBundle\Component\Action\RouteData\UrlActionRouteData;
 use Shopsys\AdministrationBundle\Component\Registry\CrudControllerDefinitionRegistry;
 use Shopsys\AdministrationBundle\Component\Router\CrudRouteProvider;
 use Symfony\Component\Routing\RouterInterface;
@@ -43,18 +43,18 @@ class ActionExtension extends AbstractExtension
     }
 
     /**
-     * @param \Shopsys\AdministrationBundle\Component\Config\Action\Builder\ActionRoute\ActionRouteInterface|null $actionRoute
-     * @param object|null $entity
+     * @param \Shopsys\AdministrationBundle\Component\Action\RouteData\ActionRouteInterface|null $actionRoute
+     * @param mixed $data
      * @return string
      */
-    private function generateActionUrl(?ActionRouteInterface $actionRoute, ?object $entity): string
+    private function generateActionUrl(?ActionRouteInterface $actionRoute, mixed $data): string
     {
         if ($actionRoute === null) {
             return 'javascript:void(0)';
         }
 
         if ($actionRoute instanceof UrlActionRouteData) {
-            return $actionRoute->getUrl($entity);
+            return $actionRoute->getUrl($data);
         }
 
         if ($actionRoute instanceof CrudActionRouteData) {
@@ -63,13 +63,13 @@ class ActionExtension extends AbstractExtension
                 $actionRoute->getActionType(),
             );
 
-            $parameters = $actionRoute->getId($entity) !== null ? ['id' => $actionRoute->getId($entity)] : [];
+            $parameters = $actionRoute->getId($data) !== null ? ['id' => $actionRoute->getId($data)] : [];
 
             return $this->router->generate($routeItem->getRouteName(), $parameters);
         }
 
         if ($actionRoute instanceof RouteActionRouteData) {
-            return $this->router->generate($actionRoute->getRouteName(), $actionRoute->getRouteParameters($entity));
+            return $this->router->generate($actionRoute->getRouteName(), $actionRoute->getRouteParameters($data));
         }
 
         throw new InvalidArgumentException('Action has invalid route type');

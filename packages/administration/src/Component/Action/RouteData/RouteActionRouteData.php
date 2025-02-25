@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\AdministrationBundle\Component\Config\Action\Builder\ActionRoute;
+namespace Shopsys\AdministrationBundle\Component\Action\RouteData;
 
 use Closure;
 
@@ -10,7 +10,7 @@ class RouteActionRouteData implements ActionRouteInterface
 {
     /**
      * @param string $routeName
-     * @param array|\Closure(?object $entity): array $routeParameters
+     * @param array|\Closure(mixed): array $routeParameters
      */
     public function __construct(
         private readonly string $routeName,
@@ -27,15 +27,15 @@ class RouteActionRouteData implements ActionRouteInterface
     }
 
     /**
-     * @param object|null $entity
+     * @param mixed $data
      * @return array
      */
-    public function getRouteParameters(?object $entity = null): array
+    public function getRouteParameters(mixed $data = null): array
     {
         if (is_array($this->routeParameters)) {
             return $this->routeParameters;
         }
 
-        return call_user_func($this->routeParameters, $entity);
+        return call_user_func($this->routeParameters, $data);
     }
 }

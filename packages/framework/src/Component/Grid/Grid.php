@@ -25,7 +25,7 @@ class Grid
     protected array $columnsById = [];
 
     /**
-     * @var \Shopsys\FrameworkBundle\Component\Grid\ActionColumn[]
+     * @var \Shopsys\FrameworkBundle\Component\Grid\GridRowColumnInterface[]
      */
     protected array $actionColumns = [];
 
@@ -211,6 +211,17 @@ class Grid
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Component\Grid\GridRowActionInterface $rowAction
+     * @return \Shopsys\FrameworkBundle\Component\Grid\GridRowActionInterface
+     */
+    public function addRowAction(GridRowActionInterface $rowAction): GridRowActionInterface
+    {
+        $this->actionColumns[] = $rowAction;
+
+        return $rowAction;
+    }
+
+    /**
      * @param \Shopsys\FrameworkBundle\Component\Grid\InlineEdit\GridInlineEditInterface $inlineEditService
      */
     public function setInlineEditService(GridInlineEditInterface $inlineEditService): void
@@ -363,7 +374,7 @@ class Grid
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Component\Grid\ActionColumn[]
+     * @return \Shopsys\FrameworkBundle\Component\Grid\GridRowColumnInterface[]
      */
     public function getActionColumns(): array
     {

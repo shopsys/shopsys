@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\AdministrationBundle\Component\Config\Action\Builder;
+namespace Shopsys\AdministrationBundle\Component\Action;
 
 use Closure;
 use InvalidArgumentException;
@@ -10,10 +10,6 @@ use function sprintf;
 
 abstract class AbstractAction
 {
-    protected ?string $label = null;
-
-    protected ?string $icon = null;
-
     /**
      * @var array<string, mixed>
      */
@@ -22,52 +18,9 @@ abstract class AbstractAction
     ];
 
     /**
-     * Forbidden attributes that can not be set by user. If user tries to set them, exception will be thrown.
-     * Key is attribute name, value is message that will be shown in exception.
-     *
-     * @var array<string, ?string>
-     */
-    protected array $forbiddenAttributes = [];
-
-    /**
-     * @var null|\Closure(?object $entity): bool
+     * @var null|\Closure(mixed): bool
      */
     protected ?Closure $displayIf = null;
-
-    /**
-     * @param string $name
-     * @param string $label
-     * @return $this
-     */
-    abstract public static function create(string $name, string $label): self;
-
-    /**
-     * @return string
-     */
-    abstract protected function getTemplate(): string;
-
-    /**
-     * @param object|null $entity
-     * @return array<string, mixed>
-     */
-    abstract protected function getTemplateParameters(?object $entity): array;
-
-    /**
-     * @param string $name
-     * @param string $label
-     */
-    protected function __construct(protected string $name, string $label)
-    {
-        $this->label = $label;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
-    {
-        return $this->name;
-    }
 
     /**
      * Set name of action that will be shown to the users
@@ -98,7 +51,7 @@ abstract class AbstractAction
     /**
      * Set function that will determine if action should be displayed
      *
-     * @param \Closure(?object $entity): bool $function Function must return boolean value. If function returns false, action will not be displayed
+     * @param \Closure(): bool $function Function must return boolean value. If function returns false, action will not be displayed
      * @return $this
      */
     public function displayIf(Closure $function): self
@@ -119,8 +72,8 @@ abstract class AbstractAction
      */
     public function setAttribute(string $name, mixed $value, bool $append = false): self
     {
-        if (array_key_exists($name, $this->forbiddenAttributes)) {
-            throw new InvalidArgumentException(sprintf('Attribute "%s" is forbidden to set. %s', $name, $this->forbiddenAttributes[$name]));
+        if (array_key_exists($name, $this->getForbiddenAttributes())) {
+            throw new InvalidArgumentException(sprintf('Attribute "%s" is forbidden to set. %s', $name, $this->getForbiddenAttributes()[$name]));
         }
 
         if ($value === null) {
@@ -139,19 +92,71 @@ abstract class AbstractAction
     }
 
     /**
-     * @param object|null $entity
-     * @return array|null
+     * @param string $name
+     * @param string $label
+     * @param string|null $icon
+     * @return $this
      */
-    public function renderData(?object $entity): ?array
-    {
-        if ($this->displayIf !== null && call_user_func($this->displayIf, $entity) === false) {
-            return null;
-        }
+    abstract public static function create(string $name, string $label, ?string $icon): self;
 
+    /**
+     * @param string $name
+     * @param string $label
+     * @param string|null $icon
+     */
+    protected function __construct(protected string $name, protected string $label, protected ?string $icon = null)
+    {
+    }
+
+    /**
+     * @return string
+     */
+    abstract protected function getTemplate(): string;
+
+    /**
+     * @return array<string, mixed>
+     */
+    abstract protected function getTemplateParameters(): array;
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * Forbidden attributes that can not be set by user. If user tries to set them, exception will be thrown.
+     * Key is attribute name, value is message that will be shown in exception.
+     *
+     * @return array<string, string|null>
+     */
+    protected function getForbiddenAttributes(): array
+    {
+        return [];
+    }
+
+    /**
+     * Validate action configuration before rendering
+     *
+     * @param mixed $data
+     * @return bool
+     */
+    public function validate(mixed $data): bool
+    {
+        return $this->displayIf === null || call_user_func($this->displayIf, $data) !== false;
+    }
+
+    /**
+     * @return array
+     */
+    final public function renderData(): ?array
+    {
         return [
             'template' => $this->getTemplate(),
             'parameters' => [
-                ...$this->getTemplateParameters($entity),
+                ...$this->getTemplateParameters(),
                 'attributes' => $this->parseAttributesToHTML(),
             ],
         ];
@@ -164,7 +169,7 @@ abstract class AbstractAction
     {
         return array_reduce(
             array_keys($this->attributes),
-            function (string $carry, string $key) {
+            function (string $carry, string $key): string {
                 $value = $this->attributes[$key];
 
                 if ($value === null) {

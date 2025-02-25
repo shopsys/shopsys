@@ -8,7 +8,7 @@ use Shopsys\FrameworkBundle\Component\Router\Security\RouteCsrfProtector;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 
-class ActionColumn
+class ActionColumn implements GridRowColumnInterface
 {
     public const string TYPE_DELETE = 'delete';
     public const string TYPE_EDIT = 'edit';

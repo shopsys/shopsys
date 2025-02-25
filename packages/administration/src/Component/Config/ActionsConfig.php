@@ -2,18 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Shopsys\AdministrationBundle\Component\Config\Action;
+namespace Shopsys\AdministrationBundle\Component\Config;
 
 use Closure;
-use Shopsys\AdministrationBundle\Component\Config\Action\Builder\AbstractAction;
-use Shopsys\AdministrationBundle\Component\Config\Action\Builder\Action;
-use Shopsys\AdministrationBundle\Component\Config\ActionType;
+use Shopsys\AdministrationBundle\Component\Action\AbstractAction;
+use Shopsys\AdministrationBundle\Component\Action\Action;
 use Webmozart\Assert\Assert;
 
 class ActionsConfig
 {
     /**
-     * @var \Shopsys\AdministrationBundle\Component\Config\Action\Builder\AbstractAction[][]
+     * @var \Shopsys\AdministrationBundle\Component\Action\AbstractAction[][]
      */
     private array $actions = [
         ActionType::CREATE->value => [],
@@ -52,7 +51,7 @@ class ActionsConfig
      * Add action to be displayed on specific page (ActionType)
      *
      * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $actionType
-     * @param \Shopsys\AdministrationBundle\Component\Config\Action\Builder\AbstractAction $action
+     * @param \Shopsys\AdministrationBundle\Component\Action\AbstractAction $action
      * @return $this
      */
     public function add(ActionType $actionType, AbstractAction $action): self
@@ -69,7 +68,7 @@ class ActionsConfig
      *
      * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $actionType
      * @param string $actionName
-     * @param \Closure(\Shopsys\AdministrationBundle\Component\Config\Action\Builder\AbstractAction $action): \Shopsys\AdministrationBundle\Component\Config\Action\Builder\AbstractAction $callable
+     * @param \Closure(\Shopsys\AdministrationBundle\Component\Action\AbstractAction): \Shopsys\AdministrationBundle\Component\Action\AbstractAction $callable
      * @return $this
      */
     public function update(ActionType $actionType, string $actionName, Closure $callable): self
@@ -101,7 +100,7 @@ class ActionsConfig
 
     /**
      * @param \Shopsys\AdministrationBundle\Component\Config\ActionType $actionType
-     * @return \Shopsys\AdministrationBundle\Component\Config\Action\Builder\AbstractAction[]
+     * @return \Shopsys\AdministrationBundle\Component\Action\AbstractAction[]
      */
     public function getActions(ActionType $actionType): array
     {

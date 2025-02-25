@@ -9,7 +9,7 @@ namespace App\Controller\Admin;
 
 use App\Model\Article\Article;
 use Shopsys\AdministrationBundle\Component\Attributes\CrudController;
-use Shopsys\AdministrationBundle\Component\Config\Action\ActionsConfig;
+use Shopsys\AdministrationBundle\Component\Config\ActionsConfig;
 use Shopsys\AdministrationBundle\Controller\AbstractCrudController;
 
 #[CrudController(Article::class)]
@@ -48,22 +48,22 @@ The Crud Controller provides a set of default actions that are displayed based o
 
 ## Custom actions
 
-You can add, update or remove actions in the `configureActions()` method. 
+You can add, update or remove actions in the `configureActions()` method.
 
 ```php
 // ...
 
 use App\Model\Article\Article;
-use Shopsys\AdministrationBundle\Component\Config\Action\ActionsConfig;
-use Shopsys\AdministrationBundle\Component\Config\Action\Builder\AbstractAction;
-use Shopsys\AdministrationBundle\Component\Config\Action\Builder\Action;
+use Shopsys\AdministrationBundle\Component\Action\AbstractAction;
+use Shopsys\AdministrationBundle\Component\Action\Action;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
+use Shopsys\AdministrationBundle\Component\Config\ActionsConfig;
 
 // ...
 
 /**
- * @param \Shopsys\AdministrationBundle\Component\Config\Action\ActionsConfig $actions
- * @return \Shopsys\AdministrationBundle\Component\Config\Action\ActionsConfig
+ * @param \Shopsys\AdministrationBundle\Component\Config\ActionsConfig $actions
+ * @return \Shopsys\AdministrationBundle\Component\Config\ActionsConfig
  */
 protected function configureActions(ActionsConfig $actions): ActionsConfig
 {
@@ -92,7 +92,7 @@ protected function configureActions(ActionsConfig $actions): ActionsConfig
 
 !!! note
 
-    You can implement your own reusable actions by extending the `Shopsys\AdministrationBundle\Component\Config\Action\Builder\AbstractAction` class.
+    You can implement your own reusable actions by extending the `Shopsys\AdministrationBundle\Component\Action\AbstractAction` class.
 
 ### Configuration
 
@@ -101,9 +101,9 @@ protected function configureActions(ActionsConfig $actions): ActionsConfig
 
 use App\Controller\Admin\ArticleController;
 use App\Model\Article\Article;
-use Shopsys\AdministrationBundle\Component\Config\Action\ActionsConfig;
-use Shopsys\AdministrationBundle\Component\Config\Action\Builder\Action;
+use Shopsys\AdministrationBundle\Component\Action\Action;
 use Shopsys\AdministrationBundle\Component\Config\ActionType;
+use Shopsys\AdministrationBundle\Component\Config\ActionsConfig;
 
 // ...
 

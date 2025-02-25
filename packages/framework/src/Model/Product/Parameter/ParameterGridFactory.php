@@ -6,7 +6,6 @@ namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Join;
-use Shopsys\FrameworkBundle\Component\Grid\ActionColumn;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactory;
 use Shopsys\FrameworkBundle\Component\Grid\GridFactoryInterface;
 use Shopsys\FrameworkBundle\Component\Grid\QueryBuilderDataSource;
@@ -71,20 +70,13 @@ class ParameterGridFactory implements GridFactoryInterface
         $grid->setActionColumnClassAttribute('table-col table-col-10');
 
         $grid->addDeleteActionColumn('admin_parameter_delete', ['id' => 'p.id'])
-            ->setConfirmMessage(t('Do you really want to remove this parameter? By deleting this parameter you will '
-                . 'remove this parameter from a product where the parameter is assigned. This step is irreversible!'));
+            ->setConfirmMessage(t(
+                'Do you really want to remove this parameter?'
+                . ' Deleting the parameter will remove this parameter from the products and the possible landing page'
+                . ' of the extended SEO category where the parameter is assigned. This step is irreversible!',
+            ));
 
         $grid->setTheme('@ShopsysFramework/Admin/Content/Parameter/listGrid.html.twig');
-
-        foreach ($grid->getActionColumns() as $actionColumn) {
-            if ($actionColumn->getType() === ActionColumn::TYPE_DELETE) {
-                $actionColumn->setConfirmMessage(t(
-                    'Do you really want to remove this parameter?'
-                    . ' Deleting the parameter will remove this parameter from the products and the possible landing page'
-                    . ' of the extended SEO category where the parameter is assigned. This step is irreversible!',
-                ));
-            }
-        }
 
         return $grid;
     }
