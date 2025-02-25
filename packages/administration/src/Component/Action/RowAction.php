@@ -14,12 +14,7 @@ final class RowAction extends AbstractAction implements GridRowActionInterface
 {
     use ActionRouteTrait;
 
-    /**
-     * @var array<string, mixed>
-     */
-    protected array $attributes = [
-        'class' => 'in-icon in-icon--edit table-action',
-    ];
+    private const string DEFAULT_CLASSES = 'in-icon in-icon--edit table-action';
 
     private bool $renderTooltip = true;
 
@@ -109,6 +104,8 @@ final class RowAction extends AbstractAction implements GridRowActionInterface
      */
     protected function getTemplateParameters(): array
     {
+        $this->attributes['class'] = self::DEFAULT_CLASSES;
+
         if ($this->openInNewTab === true) {
             $this->attributes['target'] = '_blank';
         }
@@ -147,7 +144,7 @@ final class RowAction extends AbstractAction implements GridRowActionInterface
     {
         return [
             ...$this->actionRouteForbiddenAttributes,
-            'class' => 'There are specific classes that are required for proper functionality of row action. Use "additionClass" method to add custom classes.',
+            'class' => 'There are specific classes that are required for proper functionality of row action. Use "setAdditionalClass" method to add custom classes.',
             'title' => 'Title is set automatically based on label.',
 
             // Tooltip attributes
