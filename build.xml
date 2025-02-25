@@ -474,7 +474,7 @@
             <arg value="--bundle=ShopsysAdministrationBundle"/>
             <arg value="--dir=${path.packages}/administration/src"/>
             <arg value="--output-format=po"/>
-            <arg value="--output-dir=${path.packages}/administration/src/Resources/translations"/>
+            <arg value="--output-dir=${path.packages}/administration/translations"/>
             <arg line="${domains-info.locales}"/>
         </exec>
     </target>
