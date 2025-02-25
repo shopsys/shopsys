@@ -35,30 +35,11 @@ Now you can implement `configure()` method that allows you to customize some gen
 protected function configure(CrudConfig $config): CrudConfig
 {
     return $config
-        ->setTitle(PageType::LIST, t('My new Crud Controller'))
-        ->setMenuSection('customers')
-        ->disableAction(ActionType::DELETE)
+        ->setTitle(PageType::LIST, t('My new Crud Controller')) // Set the title of the list page
+        ->setMenuSection('customers') // Set the menu section where the controller will be placed
+        ->disableAction(ActionType::DELETE) // You can disable some actions
     ;
 }
 ```
 
-## 3. Define Datagrid
-
-The next step is to define a Datagrid that will be used to display the list of records. The list of methods that can be used to configure Datagrid can be found in the [Datagrid Methods Configuration](../../datagrid/configuration.md#methods-configuration) reference.
-
-```php
-
-public function configureDatagrid(Datagrid $datagrid): Datagrid
-{
-    $datagrid
-        ->addIdentifier('id')
-        ->add('name', [
-            'label' => t('Name'),
-        ])
-    ;
-
-    return $datagrid;
-}
-```
-
-Every column can be configured by passing an array with options. The list of available options can be found in the [Fields Configuration](../../datagrid/fields.md) reference.
+As a next step, you can continue with [Configuring List Page](configure-list-page.md) guide.
