@@ -12,7 +12,12 @@
         "trans": "node ./assets/js/bin/trans.js",
         "trans:dump": "node ./assets/js/bin/transDump.js",
         "tests": "npm run tests:unit",
-        "tests:unit": "jest assets"
+        "tests:unit": "jest assets",
+        "eslint": "eslint --color ./assets --config .eslintrc.json --ignore-path .eslintignore",
+        "eslint-fix": "eslint --fix --color ./assets --config .eslintrc.json --ignore-path .eslintignore",
+        "format-graphql": "LANG=en_US.UTF-8 format-graphql --write schema.graphql",
+        "stylelint": "stylelint --color assets/styles",
+        "stylelint-fix": "stylelint --color --fix assets/styles"
     },
     "preferGlobal": false,
     "devDependencies": {
