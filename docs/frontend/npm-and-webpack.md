@@ -12,7 +12,6 @@ A [webpack encore](https://github.com/symfony/webpack-encore) is powerful API fo
 ## What do we use them for?
 
 We use npm to manage and install frontend packages.
-We use npm also for maintain common scripts at [@shopsys/framework](https://www.npmjs.com/org/shopsys).
 
 To compile the code into something the browser understands we bundle the code through Webpack.
 These build/compile operations are provided as npm script to make them easy to run.

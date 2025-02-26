@@ -31,8 +31,6 @@ Follow the instructions in relevant sections, e.g. `shopsys/coding-standards` or
         - e.g., `"shopsys/framework": "v7.0.0"`
     - follow upgrade notes in the _Composer dependencies_ section (related with `composer.json`)
     - run `composer update shopsys/* --with-dependencies`
-    - update the `@shopsys/framework` package in your `package.json` (in "dependencies" section) to the version you are upgrading to
-        - eg. `"@shopsys/framework": "9.0.4",`
     - run `npm install` to update the NPM dependencies
     - follow all upgrade notes you have not done yet
     - run `php phing clean`
