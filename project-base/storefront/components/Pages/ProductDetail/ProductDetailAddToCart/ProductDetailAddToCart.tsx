@@ -94,7 +94,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
                 <Button
                     className="whitespace-nowrap"
                     isDisabled={isAddingToCart}
-                    size="large"
+                    size="xlarge"
                     tid={TIDs.pages_productdetail_addtocart_button}
                     variant={isWatchdogButtonVisible ? 'inverted' : 'primary'}
                     onClick={onAddToCartHandler}

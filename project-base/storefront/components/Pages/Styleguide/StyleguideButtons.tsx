@@ -4,19 +4,20 @@ import { Button } from 'components/Forms/Button/Button';
 export const StyleguideButtons: FC = () => {
     return (
         <StyleguideSection className="flex flex-col gap-5" title="Buttons">
-            <StyleguideSubSection className="flex flex-wrap items-center gap-3" title="Variants">
+            <StyleguideSubSection className="flex flex-wrap gap-3" title="Variants">
                 <Button>Primary</Button>
                 <Button variant="secondary">Secondary</Button>
                 <Button variant="inverted">Inverted</Button>
             </StyleguideSubSection>
 
-            <StyleguideSubSection className="flex flex-wrap items-center gap-3" title="Sizes">
+            <StyleguideSubSection className="flex flex-wrap gap-3" title="Sizes">
                 <Button size="small">Small</Button>
                 <Button>Default</Button>
                 <Button size="large">Large</Button>
+                <Button size="xlarge">Large</Button>
             </StyleguideSubSection>
 
-            <StyleguideSubSection className="flex flex-wrap items-center gap-3" title="Disabled">
+            <StyleguideSubSection className="flex flex-wrap gap-3" title="Disabled">
                 <Button isDisabled variant="primary">
                     Primary
                 </Button>

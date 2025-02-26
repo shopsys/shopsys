@@ -5,7 +5,7 @@ import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { LabelLink } from 'components/Basic/LabelLink/LabelLink';
 import { twJoin } from 'tailwind-merge';
 
-export const FilterGroupWrapper: FC = ({ children }) => <div className="py-5">{children}</div>;
+export const FilterGroupWrapper: FC = ({ children }) => <div className="py-4 vl:py-5">{children}</div>;
 
 export const FilterGroupTitle: FC<{ isOpen: boolean; title: string; onClick: () => void; isActive: boolean }> = ({
     isOpen,
@@ -17,17 +17,17 @@ export const FilterGroupTitle: FC<{ isOpen: boolean; title: string; onClick: () 
         className="flex cursor-pointer items-center justify-between font-secondary font-semibold uppercase text-text"
         onClick={onClick}
     >
-        <div className="flex items-center gap-2.5">
+        <h6 className="flex items-center gap-2.5">
             {title}
             {isActive && <div className="ml- size-2 rounded-full bg-textSuccess vl:hidden" />}
-        </div>
+        </h6>
         <ArrowIcon className={twJoin('size-5 rotate-0 select-none text-xs transition', isOpen && 'rotate-180')} />
     </div>
 );
 
 export const FilterGroupContent: FC<{ keyName?: string }> = ({ children, keyName }) => (
     <AnimateCollapseDiv className="!block" keyName={keyName}>
-        <div className="!flex flex-col flex-wrap gap-2.5 pt-2.5">{children}</div>
+        <div className="!flex flex-col flex-wrap gap-2.5 pb-1 pt-4 vl:pb-0 vl:pt-2.5">{children}</div>
     </AnimateCollapseDiv>
 );
 
