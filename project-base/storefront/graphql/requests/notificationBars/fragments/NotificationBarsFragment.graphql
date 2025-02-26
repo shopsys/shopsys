@@ -2,6 +2,8 @@ fragment NotificationBarsFragment on NotificationBar {
     __typename
     text
     rgbColor
+    validityFrom
+    validityTo
     mainImage {
         ...ImageFragment
     }

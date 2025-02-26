@@ -3,6 +3,8 @@ import duration from 'dayjs/plugin/duration';
 import { useRouter } from 'next/router';
 import { useState, useEffect, useCallback } from 'react';
 
+dayjs.extend(duration);
+
 interface TimeState {
     days: string;
     hours: string;
@@ -30,7 +32,11 @@ const calculateTimeLeft = (duration: duration.Duration): Omit<TimeState, 'isLoad
     };
 };
 
-export const useCountdown = (endTime: CountdownTime): TimeState => {
+export const useCountdown = (
+    endTime: CountdownTime,
+    callback: () => void = () => router.reload(),
+    interval = 1000,
+): TimeState => {
     const router = useRouter();
 
     const [time, setTime] = useState<TimeState>({
@@ -44,7 +50,7 @@ export const useCountdown = (endTime: CountdownTime): TimeState => {
     const updateTime = useCallback(
         (duration: duration.Duration) => {
             if (duration.asMilliseconds() <= 0) {
-                router.reload();
+                callback();
                 return false;
             }
 
@@ -68,7 +74,6 @@ export const useCountdown = (endTime: CountdownTime): TimeState => {
 
         const diffTime = endTimeDayjs.diff(currentTime);
         let duration = dayjs.duration(diffTime);
-        const interval = 1000;
 
         const intervalId = setInterval(() => {
             duration = duration.subtract(interval);
