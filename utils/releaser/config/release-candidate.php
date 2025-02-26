@@ -14,7 +14,6 @@ use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\CreateBranchReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\DumpTranslationsReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\ForceYourBranchSplitReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\GenerateApiaryBlueprintReleaseWorker;
-use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\ReleaseNewNodeModulePackageVersion;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\ResolveDocsTodoReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\SendBranchForReviewAndTestsReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\ReleaseCandidate\SetFrameworkBundleVersionReleaseWorker;
@@ -48,7 +47,6 @@ return [
     UpdateUpgradeReleaseWorker::class,
     UpdateLicenseAcknowledgementsReleaseWorker::class,
     CheckCopyrightYearReleaseWorker::class,
-    ReleaseNewNodeModulePackageVersion::class,
     SetMutualDependenciesToVersionReleaseWorker::class,
     TestYourBranchLocallyReleaseWorker::class,
     ForceYourBranchSplitReleaseWorker::class,
