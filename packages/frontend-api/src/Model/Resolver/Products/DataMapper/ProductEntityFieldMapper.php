@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
@@ -36,6 +37,7 @@ class ProductEntityFieldMapper
      * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleByIdsBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleCountByIdsBatchLoader
      * @param \Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoTranslationsRepository $productVideoTranslationsRepository
+     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      */
     public function __construct(
         protected readonly Domain $domain,
@@ -51,6 +53,7 @@ class ProductEntityFieldMapper
         protected readonly DataLoaderInterface $productsVisibleByIdsBatchLoader,
         protected readonly DataLoaderInterface $productsVisibleCountByIdsBatchLoader,
         protected readonly ProductVideoTranslationsRepository $productVideoTranslationsRepository,
+        protected readonly FriendlyUrlFacade $friendlyUrlFacade,
     ) {
     }
 
@@ -75,6 +78,15 @@ class ProductEntityFieldMapper
         );
 
         return $absoluteUrlsIndexedByProductId[$product->getId()];
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return string
+     */
+    public function getSlug(Product $product): string
+    {
+        return '/' . $this->friendlyUrlFacade->getMainFriendlyUrlSlug($this->domain->getId(), 'front_product_detail', $product->getId());
     }
 
     /**

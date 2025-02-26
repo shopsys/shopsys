@@ -127,7 +127,6 @@ class BlogArticleExportRepository
         return [
             'name' => $blogArticle->getName($locale),
             'text' => $this->grapesJsParser->parse($blogArticle->getDescription($locale)),
-            'url' => $this->friendlyUrlFacade->getAbsoluteUrlByFriendlyUrl($mainFriendlyUrl),
             'uuid' => $blogArticle->getUuid(),
             'createdAt' => $blogArticle->getCreatedAt()->format('Y-m-d H:i:s'),
             'visibleOnHomepage' => $blogArticle->isVisibleOnHomepage(),
@@ -141,7 +140,7 @@ class BlogArticleExportRepository
             'mainSlug' => $mainFriendlyUrl->getSlug(),
             'breadcrumb' => $this->breadcrumbFacade->getBreadcrumbOnDomain($blogArticle->getId(), 'front_blogarticle_detail', $domainId, $locale),
             'imageUrl' => $imageUrl,
-            'hreflangLinks' => $this->hreflangLinksFacade->getForBlogArticle($blogArticle, $domainId),
+            'hreflangLinks' => $this->hreflangLinksFacade->getForBlogArticle($blogArticle, $domainId, false),
             'mainBlogCategoryUuid' => $this->blogCategoryFacade->getBlogArticleMainBlogCategoryOnDomain(
                 $blogArticle,
                 $domainId,

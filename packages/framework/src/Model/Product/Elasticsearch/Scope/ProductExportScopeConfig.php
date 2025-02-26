@@ -24,6 +24,8 @@ class ProductExportScopeConfig
     public const string SCOPE_PRICE = 'product_price_scope';
     public const string SCOPE_CATEGORIES = 'product_categories_scope';
 
+    public const string SCOPE_DOMAIN_URL = 'product_domain_url_scope';
+
     public const string PRECONDITION_VISIBILITY_RECALCULATION = 'visibility_recalculation';
     public const string PRECONDITION_SELLING_DENIED_RECALCULATION = 'selling_denied_recalculation';
 
@@ -72,7 +74,7 @@ class ProductExportScopeConfig
         $this->addNewExportScopeRule(self::SCOPE_BRAND, [
             ProductExportFieldProvider::BRAND,
             ProductExportFieldProvider::BRAND_NAME,
-            ProductExportFieldProvider::BRAND_URL,
+            ProductExportFieldProvider::BRAND_SLUG,
         ]);
         $this->addNewExportScopeRule(self::SCOPE_STOCKS, [
             ProductExportFieldProvider::AVAILABILITY,
@@ -84,7 +86,7 @@ class ProductExportScopeConfig
             ProductExportFieldProvider::AVAILABILITY_STATUS,
         ]);
         $this->addNewExportScopeRule(self::SCOPE_URL, [
-            ProductExportFieldProvider::DETAIL_URL,
+            ProductExportFieldProvider::SLUG,
             ProductExportFieldProvider::HREFLANG_LINKS,
         ]);
         $this->addNewExportScopeRule(self::SCOPE_FLAGS, [
@@ -95,7 +97,7 @@ class ProductExportScopeConfig
         ]);
         $this->addNewExportScopeRule(self::SCOPE_NAME, [
             ProductExportFieldProvider::NAME,
-            ProductExportFieldProvider::DETAIL_URL,
+            ProductExportFieldProvider::SLUG,
             ProductExportFieldProvider::HREFLANG_LINKS,
             ProductExportFieldProvider::NAME_PREFIX,
             ProductExportFieldProvider::NAME_SUFFIX,
@@ -141,6 +143,11 @@ class ProductExportScopeConfig
         ], [
             self::PRECONDITION_VISIBILITY_RECALCULATION,
             self::PRECONDITION_SELLING_DENIED_RECALCULATION,
+        ]);
+        $this->addNewExportScopeRule(self::SCOPE_DOMAIN_URL, [
+            ProductExportFieldProvider::DESCRIPTION,
+            ProductExportFieldProvider::SEO_META_DESCRIPTION,
+            ProductExportFieldProvider::SHORT_DESCRIPTION,
         ]);
     }
 

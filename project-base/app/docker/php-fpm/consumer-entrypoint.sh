@@ -10,6 +10,7 @@ while true; do
         product_recalculation_priority_regular \
         placed_order_transport \
         send_email_transport \
+        article_export_transport \
         --time-limit=$TIME_LIMIT
     sleep 2
 done

@@ -80,16 +80,10 @@ class ArticleExportRepository
         $articleId = $article->getId();
         $mainFriendlyUrl = $this->friendlyUrlFacade->getMainFriendlyUrl($domainId, 'front_article_detail', $articleId);
 
-        if ($article->isLinkType()) {
-            $url = $article->getUrl();
-        } else {
-            $url = $this->friendlyUrlFacade->getAbsoluteUrlByFriendlyUrl($mainFriendlyUrl);
-        }
-
         return [
             'name' => $article->getName(),
             'text' => $this->grapesJsParser->parse($article->getText()),
-            'url' => $url,
+            'url' => $article->getUrl(),
             'uuid' => $article->getUuid(),
             'placement' => $article->getPlacement(),
             'seoH1' => $article->getSeoH1(),

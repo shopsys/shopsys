@@ -17,7 +17,6 @@ class ProductElasticsearchConverter extends BaseProductElasticsearchConverter
     {
         $result = parent::fillEmptyFields($product);
         $result[ProductExportFieldProvider::USPS] = $product[ProductExportFieldProvider::USPS] ?? [];
-        $result[ProductExportFieldProvider::SLUG] = $product[ProductExportFieldProvider::SLUG] ?? '';
         $result[ProductExportFieldProvider::RELATED_PRODUCTS] = $product[ProductExportFieldProvider::RELATED_PRODUCTS] ?? [];
         $result[ProductExportFieldProvider::SEARCHING_NAMES] = $product[ProductExportFieldProvider::SEARCHING_NAMES] ?? '';
         $result[ProductExportFieldProvider::SEARCHING_CATNUMS] = $product[ProductExportFieldProvider::SEARCHING_CATNUMS] ?? '';

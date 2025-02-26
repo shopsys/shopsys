@@ -144,9 +144,9 @@
 
     <target name="build-deploy-part-2-db-dependent" depends="check-migrate-uploaded-files,elasticsearch-index-migrate,redis-check,db-migrations,domains-data-create,friendly-urls-generate,domains-urls-replace,migrate-uploaded-files-force,error-pages-generate,warmup" description="Second part of application build for production preserving your DB (must be run with maintenance page when containing DB migrations)."/>
 
-    <target name="build-dev" depends="build-version-generate,clean,composer-dev,timezones-check,dirs-create,test-dirs-create,assets,npm,db-migrations,domains-data-create,friendly-urls-generate,friendly-url-entity-mapping-check,domains-urls-replace,elasticsearch-index-recreate,elasticsearch-export,error-pages-generate,tests-acceptance-build,clean-redis-old,checks" description="Builds application for development preserving your DB and runs checks on changed files."/>
+    <target name="build-dev" depends="build-version-generate,clean,composer-dev,timezones-check,dirs-create,test-dirs-create,assets,npm,db-migrations,domains-data-create,friendly-urls-generate,friendly-url-entity-mapping-check,elasticsearch-index-recreate,elasticsearch-export,error-pages-generate,tests-acceptance-build,clean-redis-old,checks" description="Builds application for development preserving your DB and runs checks on changed files."/>
 
-    <target name="build-dev-quick" depends="build-version-generate,clean,composer-dev,dirs-create,test-dirs-create,assets,npm,db-migrations,domains-data-create,friendly-urls-generate,friendly-url-entity-mapping-check,domains-urls-replace,elasticsearch-index-migrate,clean-redis-old" description="Builds application for development preserving your DB while skipping nonessential steps."/>
+    <target name="build-dev-quick" depends="build-version-generate,clean,composer-dev,dirs-create,test-dirs-create,assets,npm,db-migrations,domains-data-create,friendly-urls-generate,friendly-url-entity-mapping-check,elasticsearch-index-migrate,clean-redis-old" description="Builds application for development preserving your DB while skipping nonessential steps."/>
 
     <target name="build-new" depends="production-protection,wipe,build-version-generate,composer-prod,redis-check,dirs-create,assets,npm,db-rebuild,elasticsearch-index-recreate,error-pages-generate,warmup,clean-redis-old" description="Builds application for production with clean DB (with base data only)."/>
 
@@ -325,7 +325,7 @@
         </exec>
     </target>
 
-    <target name="db-demo" depends="production-protection,frontend-api-generate-new-keys,db-wipe-public-schema,clean,clean-redis,db-import-basic-structure,db-migrations,domains-data-create,db-fixtures-demo,plugin-demo-data-load,friendly-urls-generate,friendly-url-entity-mapping-check,domains-urls-replace" description="Creates DB and fills it with demo data" hidden="true"/>
+    <target name="db-demo" depends="production-protection,frontend-api-generate-new-keys,db-wipe-public-schema,clean,clean-redis,db-import-basic-structure,db-migrations,domains-data-create,db-fixtures-demo,plugin-demo-data-load,friendly-urls-generate,friendly-url-entity-mapping-check" description="Creates DB and fills it with demo data" hidden="true"/>
 
     <target name="db-fixtures-demo" depends="production-protection" description="Loads demo data fixtures." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
@@ -416,9 +416,9 @@
         </exec>
     </target>
 
-    <target name="db-performance" depends="production-protection,db-wipe-public-schema,clean,clean-redis,db-import-basic-structure,db-migrations,domains-data-create,db-fixtures-demo,plugin-demo-data-load,friendly-urls-generate,friendly-url-entity-mapping-check,domains-urls-replace,db-fixtures-performance" description="Drops all data in main database and creates a new one with performance data."/>
+    <target name="db-performance" depends="production-protection,db-wipe-public-schema,clean,clean-redis,db-import-basic-structure,db-migrations,domains-data-create,db-fixtures-demo,plugin-demo-data-load,friendly-urls-generate,friendly-url-entity-mapping-check,db-fixtures-performance" description="Drops all data in main database and creates a new one with performance data."/>
 
-    <target name="db-rebuild" depends="production-protection,db-wipe-public-schema,db-import-basic-structure,db-migrations,domains-data-create,friendly-urls-generate,friendly-url-entity-mapping-check,domains-urls-replace" description="Drops all data in database and creates a new one with base data only."/>
+    <target name="db-rebuild" depends="production-protection,db-wipe-public-schema,db-import-basic-structure,db-migrations,domains-data-create,friendly-urls-generate,friendly-url-entity-mapping-check" description="Drops all data in database and creates a new one with base data only."/>
 
     <target name="db-wipe-public-schema" depends="production-protection" description="Drops and creates public database schema." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
@@ -442,7 +442,7 @@
         </exec>
     </target>
 
-    <target name="demo-data" depends="production-protection,db-wipe-public-schema,db-import-basic-structure,db-migrations,domains-data-create,db-fixtures-demo,plugin-demo-data-load,friendly-urls-generate,domains-urls-replace,elasticsearch-index-recreate,elasticsearch-export" description="Wipes Postgres DB, recreates structure, fills with demo data and then exports data to Elasticsearch"/>
+    <target name="demo-data" depends="production-protection,db-wipe-public-schema,db-import-basic-structure,db-migrations,domains-data-create,db-fixtures-demo,plugin-demo-data-load,friendly-urls-generate,elasticsearch-index-recreate,elasticsearch-export" description="Wipes Postgres DB, recreates structure, fills with demo data and then exports data to Elasticsearch"/>
 
     <target name="diff-files" description="Finds changed files (against origin/master) and saves them into properties." hidden="true">
         <exec executable="${path.git.executable}" outputProperty="git.status.output" returnProperty="git.status.returnCode">
@@ -1130,7 +1130,7 @@
         </exec>
     </target>
 
-    <target name="test-db-demo" depends="production-protection,clean,test-clean-redis,test-db-wipe-public-schema,test-db-import-basic-structure,test-db-migrations,test-domains-data-create,test-db-fixtures-demo,test-friendly-urls-generate,test-friendly-url-entity-mapping-check,test-plugin-demo-data-load,test-domains-urls-replace" description="Drops all data in test database and creates a new one with demo data." hidden="true"/>
+    <target name="test-db-demo" depends="production-protection,clean,test-clean-redis,test-db-wipe-public-schema,test-db-import-basic-structure,test-db-migrations,test-domains-data-create,test-db-fixtures-demo,test-friendly-urls-generate,test-friendly-url-entity-mapping-check,test-plugin-demo-data-load" description="Drops all data in test database and creates a new one with demo data." hidden="true"/>
 
     <target name="test-db-dump" depends="production-protection" description="Dumps current test database into a file to be used in acceptance tests." hidden="true">
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
@@ -1235,15 +1235,6 @@
             <arg value="${path.bin-console}"/>
             <arg value="shopsys:domains-db-functions:create"/>
             <arg value="--env=test"/>
-            <arg value="--verbose"/>
-        </exec>
-    </target>
-
-    <target name="test-domains-urls-replace" depends="production-protection" description="Replaces domains urls in test database by urls in configuration." hidden="true">
-        <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
-            <arg value="${path.bin-console}"/>
-            <arg value="--env=test"/>
-            <arg value="shopsys:domains-urls:replace"/>
             <arg value="--verbose"/>
         </exec>
     </target>

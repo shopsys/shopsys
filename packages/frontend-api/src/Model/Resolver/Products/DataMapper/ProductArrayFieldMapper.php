@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper;
 
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
@@ -14,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductElasticsearchProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
+use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
 use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory;
 
 class ProductArrayFieldMapper
@@ -29,6 +31,8 @@ class ProductArrayFieldMapper
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
      * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleByIdsBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $productsVisibleCountByIdsBatchLoader
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
      */
     public function __construct(
         protected readonly CategoryFacade $categoryFacade,
@@ -41,6 +45,8 @@ class ProductArrayFieldMapper
         protected readonly CurrentCustomerUser $currentCustomerUser,
         protected readonly DataLoaderInterface $productsVisibleByIdsBatchLoader,
         protected readonly DataLoaderInterface $productsVisibleCountByIdsBatchLoader,
+        protected readonly Domain $domain,
+        protected readonly HreflangLinksFacade $hreflangLinksFacade,
     ) {
     }
 
@@ -59,7 +65,16 @@ class ProductArrayFieldMapper
      */
     public function getLink(array $data): string
     {
-        return $data['detail_url'];
+        return $this->domain->getUrl() . '/' . $data['slug'];
+    }
+
+    /**
+     * @param array $data
+     * @return string
+     */
+    public function getSlug(array $data): string
+    {
+        return '/' . $data['slug'];
     }
 
     /**
@@ -228,7 +243,7 @@ class ProductArrayFieldMapper
      */
     public function getHreflangLinks(array $data): array
     {
-        return $data['hreflang_links'];
+        return $this->hreflangLinksFacade->getHreflangLinksWithIncludedDomainUrl($data['hreflang_links']);
     }
 
     /**

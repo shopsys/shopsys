@@ -18,7 +18,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
-use Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculation;
@@ -45,7 +44,6 @@ class ProductExportRepository
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Accessory\ProductAccessoryFacade $productAccessoryFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\Brand\BrandCachedFacade $brandCachedFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade $hreflangLinksFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider $productExportFieldProvider
@@ -65,7 +63,6 @@ class ProductExportRepository
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly CategoryFacade $categoryFacade,
         protected readonly ProductAccessoryFacade $productAccessoryFacade,
-        protected readonly BrandCachedFacade $brandCachedFacade,
         protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
         protected readonly HreflangLinksFacade $hreflangLinksFacade,
         protected readonly ProductExportFieldProvider $productExportFieldProvider,
@@ -169,7 +166,7 @@ class ProductExportRepository
             ProductExportFieldProvider::SHORT_DESCRIPTION => $product->getShortDescription($domainId),
             ProductExportFieldProvider::BRAND => $product->getBrand() ? $product->getBrand()->getId() : '',
             ProductExportFieldProvider::BRAND_NAME => $product->getBrand() ? $product->getBrand()->getName() : '',
-            ProductExportFieldProvider::BRAND_URL => $this->getBrandUrlForDomainByProduct($product, $domainId),
+            ProductExportFieldProvider::BRAND_SLUG => $this->extractBrandDetailSlug($domainId, $product),
             ProductExportFieldProvider::FLAGS => $this->extractFlags($domainId, $product),
             ProductExportFieldProvider::CATEGORIES => $this->extractCategories($domainId, $product),
             ProductExportFieldProvider::MAIN_CATEGORY_ID => $this->categoryFacade->getProductMainCategoryByDomainId(
@@ -186,7 +183,7 @@ class ProductExportRepository
             ProductExportFieldProvider::AVAILABILITY => $this->productAvailabilityFacade->getProductAvailabilityInformationByDomainId($product, $domainId),
             ProductExportFieldProvider::IS_MAIN_VARIANT => $product->isMainVariant(),
             ProductExportFieldProvider::IS_VARIANT => $product->isVariant(),
-            ProductExportFieldProvider::DETAIL_URL => $this->extractDetailUrl($domainId, $product),
+            ProductExportFieldProvider::SLUG => $this->friendlyUrlFacade->getMainFriendlyUrlSlug($domainId, 'front_product_detail', $product->getId()),
             ProductExportFieldProvider::VISIBILITY => $this->extractVisibility($domainId, $product),
             ProductExportFieldProvider::UUID => $product->getUuid(),
             ProductExportFieldProvider::UNIT => $product->getUnit()->getName($locale),
@@ -197,7 +194,7 @@ class ProductExportRepository
             ProductExportFieldProvider::SEO_TITLE => $product->getSeoTitle($domainId),
             ProductExportFieldProvider::SEO_META_DESCRIPTION => $product->getSeoMetaDescription($domainId),
             ProductExportFieldProvider::ACCESSORIES => $this->extractAccessoriesIds($product),
-            ProductExportFieldProvider::HREFLANG_LINKS => $this->hreflangLinksFacade->getForProduct($product, $domainId),
+            ProductExportFieldProvider::HREFLANG_LINKS => $this->hreflangLinksFacade->getForProduct($product, $domainId, false),
             ProductExportFieldProvider::PRODUCT_TYPE => $this->extractProductType($product, $domainId),
             ProductExportFieldProvider::PRIORITY_BY_PRODUCT_TYPE => $this->extractPriorityByProductType($product, $domainId),
             ProductExportFieldProvider::AVAILABLE_STORES_COUNT => $this->productAvailabilityFacade->getAvailableStoresCount($product, $domainId),
@@ -236,15 +233,23 @@ class ProductExportRepository
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @return string
      */
-    protected function extractDetailUrl(int $domainId, Product $product): string
+    protected function extractBrandDetailSlug(int $domainId, Product $product): string
     {
-        $friendlyUrl = $this->friendlyUrlRepository->getMainFriendlyUrl(
-            $domainId,
-            'front_product_detail',
-            $product->getId(),
-        );
+        if ($product->getBrand() === null) {
+            return '';
+        }
 
-        return $this->friendlyUrlFacade->getAbsoluteUrlByFriendlyUrl($friendlyUrl);
+        return $this->friendlyUrlFacade->getMainFriendlyUrlSlug($domainId, 'front_brand_detail', $product->getBrand()->getId());
+    }
+
+    /**
+     * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
+     * @return string
+     */
+    protected function extractDetailSlug(int $domainId, Product $product): string
+    {
+        return $this->friendlyUrlFacade->getMainFriendlyUrlSlug($domainId, 'front_product_detail', $product->getId());
     }
 
     /**
@@ -466,22 +471,6 @@ class ProductExportRepository
         }
 
         return $visibility;
-    }
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
-     * @param int $domainId
-     * @return string
-     */
-    protected function getBrandUrlForDomainByProduct(Product $product, int $domainId): string
-    {
-        $brand = $product->getBrand();
-
-        if ($brand === null) {
-            return '';
-        }
-
-        return $this->brandCachedFacade->getBrandUrlByDomainId($brand->getId(), $domainId);
     }
 
     /**

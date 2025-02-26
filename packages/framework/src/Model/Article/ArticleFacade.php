@@ -9,7 +9,7 @@ use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
-use Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleExportScheduler;
+use Shopsys\FrameworkBundle\Model\Article\Messenger\ArticleExportMessageDispatcher;
 
 class ArticleFacade
 {
@@ -19,8 +19,8 @@ class ArticleFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Shopsys\FrameworkBundle\Model\Article\ArticleFactory $articleFactory
-     * @param \Shopsys\FrameworkBundle\Model\Article\Elasticsearch\ArticleExportScheduler $articleExportScheduler
      * @param \Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade $cleanStorefrontCacheFacade
+     * @param \Shopsys\FrameworkBundle\Model\Article\Messenger\ArticleExportMessageDispatcher $articleExportMessageDispatcher
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -28,8 +28,8 @@ class ArticleFacade
         protected readonly Domain $domain,
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly ArticleFactory $articleFactory,
-        protected readonly ArticleExportScheduler $articleExportScheduler,
         protected readonly CleanStorefrontCacheFacade $cleanStorefrontCacheFacade,
+        protected readonly ArticleExportMessageDispatcher $articleExportMessageDispatcher,
     ) {
     }
 
@@ -90,7 +90,7 @@ class ArticleFacade
         );
         $this->em->flush();
 
-        $this->articleExportScheduler->scheduleRowIdForImmediateExport($article->getId());
+        $this->articleExportMessageDispatcher->dispatchArticleExportMessage($article->getId(), $article->getDomainId());
         $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::ARTICLES_QUERY_KEY_PART);
 
         return $article;
@@ -119,7 +119,7 @@ class ArticleFacade
         }
         $this->em->flush();
 
-        $this->articleExportScheduler->scheduleRowIdForImmediateExport($article->getId());
+        $this->articleExportMessageDispatcher->dispatchArticleExportMessage($article->getId(), $article->getDomainId());
         $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::ARTICLES_QUERY_KEY_PART);
 
         return $article;
@@ -135,7 +135,7 @@ class ArticleFacade
         $this->em->remove($article);
         $this->em->flush();
 
-        $this->articleExportScheduler->scheduleRowIdForImmediateExport((int)$articleId);
+        $this->articleExportMessageDispatcher->dispatchArticleExportMessage($articleId, $article->getDomainId());
         $this->cleanStorefrontCacheFacade->cleanStorefrontGraphqlQueryCache(CleanStorefrontCacheFacade::ARTICLES_QUERY_KEY_PART);
     }
 
@@ -153,7 +153,7 @@ class ArticleFacade
                 }
 
                 if ($article->getPosition() !== $position || $article->getPlacement() !== $gridId) {
-                    $this->articleExportScheduler->scheduleRowIdForImmediateExport($article->getId());
+                    $this->articleExportMessageDispatcher->dispatchArticleExportMessage($article->getId(), $article->getDomainId());
                 }
 
                 $article->setPosition($position);
@@ -185,5 +185,14 @@ class ArticleFacade
             t('Articles in footer') . ' 4' => Article::PLACEMENT_FOOTER_4,
             t('without positioning') => Article::PLACEMENT_NONE,
         ];
+    }
+
+    /**
+     * @param int $domainId
+     * @return int[]
+     */
+    public function getAllIdsByDomainId(int $domainId): array
+    {
+        return $this->articleRepository->getAllIdsByDomainId($domainId);
     }
 }
