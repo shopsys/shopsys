@@ -132,7 +132,7 @@ function merge() {
         "product-recalculation:product_recalculation_priority_high product_recalculation_priority_regular:1"
         "placed-order:placed_order_transport:1"
         "send-email:send_email_transport:1"
-        "article_export:article_export_transport:1"
+        "article-export:article_export_transport:1"
     )
 
     source "${BASE_PATH}/vendor/shopsys/deployment/deploy/functions.sh"
