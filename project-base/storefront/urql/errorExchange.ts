@@ -33,7 +33,7 @@ export const getErrorExchange =
                     }
 
                     if (isWithErrorDebugging && operation.kind === 'mutation') {
-                        handleErrorMessagesForMutation(error);
+                        handleErrorMessagesForMutation(error, t);
 
                         return;
                     }
@@ -81,12 +81,16 @@ const handleErrorMessagesForDevelopment = (error: CombinedError, t: Translate) =
     }
 };
 
-const handleErrorMessagesForMutation = (error: CombinedError) => {
-    logException({
-        message: error.message,
-        originalError: JSON.stringify(error),
-        location: 'getErrorExchange.handleErrorMessagesForMutation',
-    });
+const handleErrorMessagesForMutation = (error: CombinedError, t: Translate) => {
+    const parsedErrors = getUserFriendlyErrors(error, t);
+
+    if (!isNoLogError(parsedErrors.applicationError?.type ?? '')) {
+        logException({
+            message: error.message,
+            originalError: JSON.stringify(error),
+            location: 'getErrorExchange.handleErrorMessagesForMutation',
+        });
+    }
 
     if (isWithToastAndConsoleErrorDebugging) {
         error.graphQLErrors
@@ -102,22 +106,17 @@ const handleErrorMessagesForUsers = (error: CombinedError, t: Translate, operati
     const parsedErrors = getUserFriendlyErrors(error, t);
     const isCartError = operation.query === CartQueryDocument;
 
-    if (parsedErrors.userError) {
-        logException({
-            message: error.message,
-            parsedUserError: parsedErrors.userError,
-            originalError: JSON.stringify(error),
-            location: 'getErrorExchange.handleErrorMessagesForUsers',
-        });
-    }
-
     if (isCartError) {
         handleCartErrorMessages(parsedErrors);
-
         return;
     }
 
     if (!parsedErrors.applicationError) {
+        return;
+    }
+
+    if (isFlashMessageError(parsedErrors.applicationError.type)) {
+        showErrorMessage(parsedErrors.applicationError.message);
         return;
     }
 
@@ -128,10 +127,6 @@ const handleErrorMessagesForUsers = (error: CombinedError, t: Translate, operati
             originalError: JSON.stringify(error),
             location: 'getErrorExchange.handleErrorMessagesForUsers',
         });
-    }
-
-    if (isFlashMessageError(parsedErrors.applicationError.type)) {
-        showErrorMessage(parsedErrors.applicationError.message);
     }
 };
 
