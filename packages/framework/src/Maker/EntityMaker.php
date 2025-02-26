@@ -305,4 +305,15 @@ class EntityMaker extends BaseMaker
         );
         $generator->writeChanges();
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    #[Override]
+    protected function writeSuccessMessage(ConsoleStyle $io)
+    {
+        parent::writeSuccessMessage($io);
+
+        $io->writeln('<info>You will need to generate a new migration using <comment>db-migrations-generate</comment> phing target when you are ready.</info>');
+    }
 }
