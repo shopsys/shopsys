@@ -2,9 +2,8 @@ import grapesjs from 'grapesjs';
 import Translator from 'bazinga-translator';
 
 export default grapesjs.plugins.add('custom-blocks', (editor, options) => {
-
     editor.Components.addType('text-ckeditor', {
-        isComponent: element => element.classList && element.classList.contains('gjs-text-ckeditor'),
+        isComponent: (element) => element.classList && element.classList.contains('gjs-text-ckeditor'),
         extend: 'text',
         model: {
             defaults: {
@@ -33,6 +32,19 @@ export default grapesjs.plugins.add('custom-blocks', (editor, options) => {
         attributes: { class: 'gjs-fonts gjs-f-b2' },
         content: `
             <div class="row" data-gjs-droppable=".column">
+                <div class="column"></div>
+                <div class="column"></div>
+            </div>
+        `
+    });
+
+    editor.Blocks.add('column3', {
+        label: Translator.trans('Column 3'),
+        category: Translator.trans('Basic objects'),
+        attributes: { class: 'gjs-fonts gjs-f-b3' },
+        content: `
+            <div class="row" data-gjs-droppable=".column">
+                <div class="column"></div>
                 <div class="column"></div>
                 <div class="column"></div>
             </div>
