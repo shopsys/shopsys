@@ -34,19 +34,20 @@ class EntityFieldsConfigurator
      */
     public function configureEntityFields(EntityConfig $entityConfig, ConsoleStyle $io): void
     {
-        $configurePropertiesMessage = sprintf('<info>Let\'s configure the properties of <comment>%s</comment> entity.</info>', $entityConfig->entityName);
-
-        if ($entityConfig->isTranslatable) {
-            $configurePropertiesMessage .= sprintf(' <info>We will configure the properties of <comment>%s</comment> entity afterward.</info>', $entityConfig->entityName . 'Translation');
-        }
-
-        $io->writeln($configurePropertiesMessage);
+        $io->writeln($this->getConfigurePropertiesMessage($entityConfig));
         $this->askForFields($io, $entityConfig, PropertyTargetEnum::ENTITY);
 
         if ($entityConfig->isTranslatable) {
             $io->writeln(sprintf('<info>Now let\'s configure the properties of <comment>%s</comment> entity.</info>', $entityConfig->entityName . 'Translation'));
             $this->askForFields($io, $entityConfig, PropertyTargetEnum::TRANSLATION);
         }
+
+        if (!$entityConfig->isMultiDomain) {
+            return;
+        }
+
+        $io->writeln(sprintf('<info>Now let\'s configure the properties of <comment>%s</comment> entity.</info>', $entityConfig->entityName . 'Domain'));
+        $this->askForFields($io, $entityConfig, PropertyTargetEnum::DOMAIN);
     }
 
     /**
@@ -289,5 +290,42 @@ class EntityFieldsConfigurator
             $newField->propertyTarget = $propertyTarget;
             $entityConfig->addProperty($newField);
         }
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityConfig $entityConfig
+     * @return string
+     */
+    private function getConfigurePropertiesMessage(EntityConfig $entityConfig): string
+    {
+        $configurePropertiesMessage = sprintf('<info>Let\'s configure the properties of <comment>%s</comment> entity.</info>', $entityConfig->entityName);
+
+        $additionalEntitiesNames = [];
+
+        if ($entityConfig->isTranslatable) {
+            $additionalEntitiesNames[] = sprintf(
+                '<comment>%sTranslation</comment>',
+                $entityConfig->entityName,
+            );
+        }
+
+        if ($entityConfig->isMultiDomain) {
+            $additionalEntitiesNames[] = sprintf(
+                '<comment>%sDomain</comment>',
+                $entityConfig->entityName,
+            );
+        }
+
+        if (count($additionalEntitiesNames) > 0) {
+            $entityLabel = count($additionalEntitiesNames) > 1 ? 'entities' : 'entity';
+
+            $configurePropertiesMessage .= sprintf(
+                ' <info>We will configure the properties of %s %s afterward.</info>',
+                implode(' and ', $additionalEntitiesNames),
+                $entityLabel,
+            );
+        }
+
+        return $configurePropertiesMessage;
     }
 }

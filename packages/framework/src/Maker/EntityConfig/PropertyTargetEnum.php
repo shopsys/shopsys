@@ -8,4 +8,5 @@ enum PropertyTargetEnum
 {
     case ENTITY;
     case TRANSLATION;
+    case DOMAIN;
 }

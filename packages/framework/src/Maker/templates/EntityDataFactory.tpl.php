@@ -9,7 +9,7 @@ namespace <?= $namespace; ?>;
 
 class <?= $class_name; ?>
 {
-    <?php if ($entity_config->isTranslatable): ?>
+    <?php if ($entity_config->isTranslatable || $entity_config->isMultiDomain): ?>
         public function __construct(
             private readonly Domain $domain,
         ) {
@@ -42,6 +42,14 @@ class <?= $class_name; ?>
             }
         <?php endif; ?>
 
+        <?php if ($entity_config->isMultiDomain): ?>
+            foreach ($this->domain->getAllIds() as $domainId) {
+            <?php foreach ($entity_config->getDomainPropertiesOnly() as $domainProperty): ?>
+                $<?= lcfirst($entity_config->entityName); ?>Data-><?= $domainProperty->propertyName; ?>[$domainId] = $<?= lcfirst($entity_config->entityName); ?>-><?= $domainProperty->getGetterName(); ?>($domainId);
+            <?php endforeach; ?>
+            }
+        <?php endif; ?>
+
         <?php foreach ($entity_config->getEntityPropertiesOnly() as $property): ?>
             $<?= lcfirst($entity_config->entityName); ?>Data-><?= $property->propertyName; ?> = $<?= lcfirst($entity_config->entityName); ?>-><?= $property->getGetterName(); ?>();
         <?php endforeach; ?>
@@ -62,6 +70,14 @@ class <?= $class_name; ?>
                 <?php foreach ($entity_config->getTranslationPropertiesOnly() as $translationProperty): ?>
                     $<?= lcfirst($entity_config->entityName); ?>Data-><?= $translationProperty->propertyName; ?>[$locale] = null;
                 <?php endforeach; ?>
+            }
+        <?php endif; ?>
+
+        <?php if ($entity_config->isMultiDomain): ?>
+            foreach ($this->domain->getAllIds() as $domainId) {
+            <?php foreach ($entity_config->getDomainPropertiesOnly() as $domainProperty): ?>
+                $<?= lcfirst($entity_config->entityName); ?>Data-><?= $domainProperty->propertyName; ?>[$domainId] = null;
+            <?php endforeach; ?>
             }
         <?php endif; ?>
     }

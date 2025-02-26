@@ -14,6 +14,8 @@ class EntityConfig
 
     public bool $isTranslatable;
 
+    public bool $isMultiDomain;
+
     public bool $hasId;
 
     public bool $hasUuid;
@@ -69,6 +71,28 @@ class EntityConfig
     public function getEntityPropertiesOnly(): array
     {
         return $this->filterPropertiesByTarget(PropertyTargetEnum::ENTITY);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityProperty[]
+     */
+    public function getDomainPropertiesOnly(): array
+    {
+        return $this->filterPropertiesByTarget(PropertyTargetEnum::DOMAIN);
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityProperty|null
+     */
+    public function findFirstDomainProperty(): ?EntityProperty
+    {
+        $domainPropertiesOnly = $this->getDomainPropertiesOnly();
+
+        if (count($domainPropertiesOnly) === 0) {
+            return null;
+        }
+
+        return reset($domainPropertiesOnly);
     }
 
     /**

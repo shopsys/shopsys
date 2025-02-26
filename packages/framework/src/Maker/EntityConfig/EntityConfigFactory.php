@@ -21,6 +21,7 @@ class EntityConfigFactory
         $entityConfig = $this->createWithEntityNameOnly($input);
         $entityConfig->tableName = $this->findOptionValue($input, EntityMaker::TABLE_NAME_OPTION) ?? $io->ask('What is the table name?', $this->convertEntityNameToTableName($entityConfig->entityName));
         $entityConfig->isTranslatable = $this->findOptionValue($input, EntityMaker::IS_TRANSLATABLE_OPTION) ?? $io->confirm('Is the entity translatable?', false);
+        $entityConfig->isMultiDomain = $this->findOptionValue($input, EntityMaker::IS_MULTI_DOMAIN_OPTION) ?? $io->confirm('Is the entity multi domain?', false);
         $entityConfig->hasId = $this->findOptionValue($input, EntityMaker::HAS_ID_OPTION) ?? $io->confirm('Does the entity have an ID?');
         $entityConfig->hasUuid = $this->findOptionValue($input, EntityMaker::HAS_UUID_OPTION) ?? $io->confirm('Does the entity have a UUID?');
 

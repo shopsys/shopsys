@@ -135,4 +135,12 @@ class EntityProperty
     {
         return $this->propertyTarget === PropertyTargetEnum::TRANSLATION;
     }
+
+    /**
+     * @return bool
+     */
+    public function isForDomain(): bool
+    {
+        return $this->propertyTarget === PropertyTargetEnum::DOMAIN;
+    }
 }

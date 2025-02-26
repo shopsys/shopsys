@@ -75,6 +75,7 @@ class GenerateEntityAgendaCommand extends Command
                 $commandInputParameters += [
                     '--' . EntityMaker::TABLE_NAME_OPTION => $entityConfig->tableName,
                     '--' . EntityMaker::IS_TRANSLATABLE_OPTION => $entityConfig->isTranslatable,
+                    '--' . EntityMaker::IS_MULTI_DOMAIN_OPTION => $entityConfig->isMultiDomain,
                     '--' . EntityMaker::HAS_ID_OPTION => $entityConfig->hasId,
                     '--' . EntityMaker::HAS_UUID_OPTION => $entityConfig->hasUuid,
                 ];

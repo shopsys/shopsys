@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Maker;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Exception;
 use Override;
 use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 use Ramsey\Uuid\Uuid;
@@ -23,14 +25,16 @@ class EntityMaker extends BaseMaker
 {
     public const string TABLE_NAME_OPTION = 'tableName';
     public const string IS_TRANSLATABLE_OPTION = 'isTranslatable';
+    public const string IS_MULTI_DOMAIN_OPTION = 'isMultiDomain';
     public const string HAS_ID_OPTION = 'hasId';
     public const string HAS_UUID_OPTION = 'hasUuid';
 
     /**
      * @param \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityFieldsConfigurator $entityFieldsConfigurator
      */
-    public function __construct(protected readonly EntityFieldsConfigurator $entityFieldsConfigurator)
-    {
+    public function __construct(
+        protected readonly EntityFieldsConfigurator $entityFieldsConfigurator,
+    ) {
     }
 
     /**
@@ -60,6 +64,7 @@ class EntityMaker extends BaseMaker
         $command
             ->addOption(self::TABLE_NAME_OPTION, null, InputOption::VALUE_REQUIRED, 'The database table name')
             ->addOption(self::IS_TRANSLATABLE_OPTION, null, InputOption::VALUE_REQUIRED, 'Is the entity translatable?')
+            ->addOption(self::IS_MULTI_DOMAIN_OPTION, null, InputOption::VALUE_REQUIRED, 'Is the entity multi domain?')
             ->addOption(self::HAS_ID_OPTION, null, InputOption::VALUE_REQUIRED, 'Does the entity have an ID?')
             ->addOption(self::HAS_UUID_OPTION, null, InputOption::VALUE_REQUIRED, 'Does the entity have a UUID?');
     }
@@ -77,6 +82,11 @@ class EntityMaker extends BaseMaker
 
         if ($this->entityConfig->isTranslatable) {
             $this->createEntityTranslationClass($generator);
+        }
+
+        if ($this->entityConfig->isMultiDomain) {
+            $this->createEntityDomainClass($generator);
+            $this->createEntityDomainNotFoundExceptionClass($generator);
         }
 
         $forceEntitiesDump = true;
@@ -130,6 +140,12 @@ class EntityMaker extends BaseMaker
             $useStatements[] = AbstractTranslatableEntity::class;
             $useStatements[] = ArrayCollection::class;
             $useStatements[] = 'Prezent\Doctrine\Translatable\Annotation as Prezent';
+        }
+
+        if ($this->entityConfig->isMultiDomain) {
+            $useStatements[] = ArrayCollection::class;
+            $useStatements[] = Collection::class;
+            $useStatements[] = $this->entityConfig->getEntityNamespace() . 'Exception\\' . $this->entityConfig->entityName . 'DomainNotFoundException';
         }
 
         if ($this->entityConfig->hasUuid) {
@@ -199,14 +215,18 @@ class EntityMaker extends BaseMaker
             'DataFactory',
         );
 
+        $useStatements = [];
+
+        if ($this->entityConfig->isTranslatable || $this->entityConfig->isMultiDomain) {
+            $useStatements[] = Domain::class;
+        }
+
         $generator->generateClass(
             $classNameDetails->getFullName(),
             __DIR__ . '/templates/EntityDataFactory.tpl.php',
             [
                 'entity_config' => $this->entityConfig,
-                'use_statements' => new UseStatementGenerator([
-                    Domain::class,
-                ]),
+                'use_statements' => new UseStatementGenerator($useStatements),
             ],
         );
         $generator->writeChanges();
@@ -232,6 +252,54 @@ class EntityMaker extends BaseMaker
                     'Doctrine\ORM\Mapping as ORM',
                     'Prezent\Doctrine\Translatable\Annotation as Prezent',
                     AbstractTranslation::class,
+                ]),
+            ],
+        );
+        $generator->writeChanges();
+    }
+
+    /**
+     * @param \Symfony\Bundle\MakerBundle\Generator $generator
+     */
+    protected function createEntityDomainClass(Generator $generator): void
+    {
+        $classNameDetails = $generator->createClassNameDetails(
+            $this->entityConfig->entityName,
+            $this->getGeneratedClassNamespaceWithoutAppPrefix(),
+            'Domain',
+        );
+
+        $generator->generateClass(
+            $classNameDetails->getFullName(),
+            __DIR__ . '/templates/EntityDomain.tpl.php',
+            [
+                'entity_config' => $this->entityConfig,
+                'use_statements' => new UseStatementGenerator([
+                    'Doctrine\ORM\Mapping as ORM',
+                ]),
+            ],
+        );
+        $generator->writeChanges();
+    }
+
+    /**
+     * @param \Symfony\Bundle\MakerBundle\Generator $generator
+     */
+    protected function createEntityDomainNotFoundExceptionClass(Generator $generator): void
+    {
+        $classNameDetails = $generator->createClassNameDetails(
+            $this->entityConfig->entityName,
+            $this->getGeneratedClassNamespaceWithoutAppPrefix() . 'Exception',
+            'DomainNotFoundException',
+        );
+
+        $generator->generateClass(
+            $classNameDetails->getFullName(),
+            __DIR__ . '/templates/EntityDomainNotFoundException.tpl.php',
+            [
+                'entity_config' => $this->entityConfig,
+                'use_statements' => new UseStatementGenerator([
+                    Exception::class,
                 ]),
             ],
         );

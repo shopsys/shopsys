@@ -43,6 +43,14 @@ class <?= $class_name; ?><?php if ($entity_config->isTranslatable): ?> extends A
     protected $translations;
 <?php endif ?>
 
+<?php if ($entity_config->isMultiDomain): ?>
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \<?= $entity_config->getEntityFullyQualifiedName(); ?>Domain>
+     * @ORM\OneToMany(targetEntity="<?= $entity_config->getEntityFullyQualifiedName(); ?>Domain", mappedBy="<?= lcfirst($entity_config->entityName) ?>", cascade={"persist"}, fetch="EXTRA_LAZY")
+     */
+    private Collection $domains;
+<?php endif ?>
+
 <?php foreach ($entity_config->getEntityPropertiesOnly() as $property): ?>
     /**<?= PHP_EOL; ?>
      * <?= implode(PHP_EOL . '     * ', $property->getAnnotationLines()) . PHP_EOL; ?>
@@ -59,12 +67,19 @@ class <?= $class_name; ?><?php if ($entity_config->isTranslatable): ?> extends A
 <?php if ($entity_config->isTranslatable): ?>
         $this->translations = new ArrayCollection();
 <?php endif ?>
+<?php if ($entity_config->isMultiDomain): ?>
+        $this->domains = new ArrayCollection();
+        $this->createDomains($<?= lcfirst($entity_config->entityName); ?>Data);
+<?php endif ?>
 
         $this->setData($<?= lcfirst($entity_config->entityName); ?>Data);
     }
 
     public function edit(<?= $entity_config->entityName; ?>Data $<?= lcfirst($entity_config->entityName); ?>Data): void
     {
+<?php if ($entity_config->isMultiDomain): ?>
+        $this->setDomains($<?= lcfirst($entity_config->entityName); ?>Data);
+<?php endif ?>
         $this->setData($<?= lcfirst($entity_config->entityName); ?>Data);
     }
 
@@ -95,6 +110,43 @@ class <?= $class_name; ?><?php if ($entity_config->isTranslatable): ?> extends A
     }
 <?php endif ?>
 
+<?php if ($entity_config->isMultiDomain): ?>
+    private function setDomains(<?= $entity_config->entityName; ?>Data $<?= lcfirst($entity_config->entityName); ?>Data): void
+    {
+        foreach ($this->domains as $<?= lcfirst($entity_config->entityName); ?>Domain) {
+            $domainId = $<?= lcfirst($entity_config->entityName); ?>Domain->getDomainId();
+            <?php foreach ($entity_config->getDomainPropertiesOnly() as $property): ?>
+                $<?= lcfirst($entity_config->entityName); ?>Domain->set<?= ucfirst($property->propertyName); ?>($<?= lcfirst($entity_config->entityName); ?>Data-><?= $property->propertyName; ?>[$domainId]);
+            <?php endforeach; ?>
+        }
+    }
+
+    private function createDomains(<?= $entity_config->entityName; ?>Data $<?= lcfirst($entity_config->entityName); ?>Data): void
+    {
+    <?php if (count($entity_config->getDomainPropertiesOnly()) > 0): ?>
+            $domainIds = array_keys($<?= lcfirst($entity_config->entityName); ?>Data-><?= $entity_config->findFirstDomainProperty()?->propertyName; ?>);
+
+            foreach ($domainIds as $domainId) {
+                $<?= lcfirst($entity_config->entityName); ?>Domain = new <?= $entity_config->entityName; ?>Domain($this, $domainId);
+                $this->domains->add($<?= lcfirst($entity_config->entityName); ?>Domain);
+            }
+
+            $this->setDomains($<?= lcfirst($entity_config->entityName); ?>Data);
+    <?php endif; ?>
+    }
+
+    private function get<?= $entity_config->entityName; ?>Domain(int $domainId):  <?= $entity_config->entityName; ?>Domain
+    {
+        foreach ($this->domains as $<?= lcfirst($entity_config->entityName); ?>Domain) {
+            if ($<?= lcfirst($entity_config->entityName); ?>Domain->getDomainId() === $domainId) {
+                return $<?= lcfirst($entity_config->entityName); ?>Domain;
+            }
+        }
+
+        throw new <?= $entity_config->entityName; ?>DomainNotFoundException($domainId, $this->id);
+    }
+<?php endif; ?>
+
 <?php if ($entity_config->hasId): ?>
     public function getId(): int
     {
@@ -110,10 +162,12 @@ class <?= $class_name; ?><?php if ($entity_config->isTranslatable): ?> extends A
 <?php endif ?>
 
 <?php foreach ($entity_config->getAllProperties() as $property): ?>
-    public function <?= $property->getGetterName(); ?>(<?php if ($property->isForTranslation()): ?>?string $locale = null<?php endif ?>): <?= $property->getTypeHint(); ?>
+    public function <?= $property->getGetterName(); ?>(<?php if ($property->isForTranslation()): ?>?string $locale = null<?php elseif ($property->isForDomain()): ?>int $domainId<?php endif ?>): <?= $property->getTypeHint(); ?>
     {
         <?php if ($property->isForTranslation()): ?>
             return $this->translation($locale)-><?= $property->getGetterName(); ?>();
+        <?php elseif ($property->isForDomain()): ?>
+            return $this->get<?= $entity_config->entityName; ?>Domain($domainId)-><?= $property->getGetterName(); ?>();
         <?php else: ?>
             return $this-><?= $property->propertyName; ?>;
         <?php endif ?>
