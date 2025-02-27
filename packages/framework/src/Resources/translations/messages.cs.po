@@ -3727,6 +3727,9 @@ msgstr "Zaokrouhlení"
 msgid "Rounding item with 0 % VAT will be added to your order. It is used for payment in cash."
 msgstr "Do objednávky bude přidána zaokrouhlovací položka s 0% DPH. Používá se pro platbu v hotovosti."
 
+msgid "Rounding places of price without VAT and VAT amount"
+msgstr "Počet desetinných míst pro zaokrouhlování ceny bez DPH a částky DPH"
+
 msgid "Rounding type"
 msgstr "Typ zaokrouhlení"
 

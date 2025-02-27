@@ -47,7 +47,7 @@ class DiscountCalculation
             return null;
         }
 
-        $priceVatAmount = $this->priceCalculation->getVatAmountByPriceWithVatForVatPercent($priceWithVat, $vatPercent);
+        $priceVatAmount = $this->priceCalculation->getVatAmountByPriceWithVatForVatPercent($priceWithVat, $vatPercent, $currency);
         $priceWithoutVat = $priceWithVat->subtract($priceVatAmount);
 
         return new Price($priceWithoutVat, $priceWithVat);
@@ -56,13 +56,15 @@ class DiscountCalculation
     /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
      * @param float $vatPercent
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
     public function calculateNominalDiscount(
         Money $priceWithVat,
         float $vatPercent,
+        Currency $currency,
     ): PriceInterface {
-        $priceVatAmount = $this->priceCalculation->getVatAmountByPriceWithVatForVatPercent($priceWithVat, $vatPercent);
+        $priceVatAmount = $this->priceCalculation->getVatAmountByPriceWithVatForVatPercent($priceWithVat, $vatPercent, $currency);
         $priceWithoutVat = $priceWithVat->subtract($priceVatAmount);
 
         return new Price($priceWithoutVat, $priceWithVat);

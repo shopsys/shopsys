@@ -37,7 +37,7 @@ class PriceConverter
         $domainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
         $price = $this->convertPriceToPriceInDomainDefaultCurrency($price, $priceCurrency, $domainDefaultCurrency);
 
-        return $this->rounding->roundPriceWithoutVat($price);
+        return $this->rounding->roundPriceWithoutVat($price, $domainDefaultCurrency);
     }
 
     /**

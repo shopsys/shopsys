@@ -45,5 +45,6 @@ class CurrencyDataFactory
         $currencyData->exchangeRate = $currency->getExchangeRate();
         $currencyData->minFractionDigits = $currency->getMinFractionDigits();
         $currencyData->roundingType = $currency->getRoundingType();
+        $currencyData->roundingPlacesPriceWithoutVat = $currency->getRoundingPlacesPriceWithoutVat();
     }
 }

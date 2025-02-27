@@ -31,10 +31,16 @@ class CurrencyData
      */
     public $roundingType;
 
+    /**
+     * @var int|null
+     */
+    public $roundingPlacesPriceWithoutVat;
+
     public function __construct()
     {
         $this->exchangeRate = Currency::DEFAULT_EXCHANGE_RATE;
         $this->minFractionDigits = Currency::DEFAULT_MIN_FRACTION_DIGITS;
         $this->roundingType = Currency::DEFAULT_ROUNDING_TYPE;
+        $this->roundingPlacesPriceWithoutVat = Currency::DEFAULT_ROUNDING_PLACES_PRICE_WITHOUT_VAT;
     }
 }

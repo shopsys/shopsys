@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\Item;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemHasNoIdException;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidInputPriceTypeException;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation;
@@ -24,6 +25,7 @@ class OrderItemPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory $vatDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Rounding $rounding
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      */
     public function __construct(
         protected readonly PriceCalculation $priceCalculation,
@@ -31,6 +33,7 @@ class OrderItemPriceCalculation
         protected readonly VatDataFactory $vatDataFactory,
         protected readonly PricingSetting $pricingSetting,
         protected readonly Rounding $rounding,
+        protected readonly CurrencyFacade $currencyFacade,
     ) {
     }
 
@@ -45,7 +48,7 @@ class OrderItemPriceCalculation
         $vatData->name = 'orderItemVat';
         $vatData->percent = $orderItemData->vatPercent;
         $vat = $this->vatFactory->create($vatData, $domainId);
-        $vatAmount = $this->priceCalculation->getVatAmountByPriceWithVat($orderItemData->unitPriceWithVat, $vat);
+        $vatAmount = $this->priceCalculation->getVatAmountByPriceWithVat($orderItemData->unitPriceWithVat, $vat, $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId));
 
         return $orderItemData->unitPriceWithVat->subtract($vatAmount);
     }
@@ -88,7 +91,7 @@ class OrderItemPriceCalculation
         switch ($this->pricingSetting->getInputPriceType()) {
             case PricingSetting::INPUT_PRICE_TYPE_WITH_VAT:
                 $totalPriceWithVat = $orderItem->getUnitPriceWithVat()->multiply($orderItem->getQuantity());
-                $totalVatAmount = $this->priceCalculation->getVatAmountByPriceWithVat($totalPriceWithVat, $vat);
+                $totalVatAmount = $this->priceCalculation->getVatAmountByPriceWithVat($totalPriceWithVat, $vat, $currency);
                 $totalPriceWithoutVat = $totalPriceWithVat->subtract($totalVatAmount);
 
                 return new Price($totalPriceWithoutVat, $totalPriceWithVat);
@@ -96,6 +99,7 @@ class OrderItemPriceCalculation
             case PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT:
                 $totalPriceWithoutVat = $this->rounding->roundPriceWithoutVat(
                     $orderItem->getUnitPriceWithoutVat()->multiply($orderItem->getQuantity()),
+                    $currency,
                 );
 
                 $totalPriceWithVat = $this->rounding->roundPriceWithVatByCurrency(

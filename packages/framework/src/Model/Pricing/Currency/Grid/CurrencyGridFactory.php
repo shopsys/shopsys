@@ -43,6 +43,7 @@ class CurrencyGridFactory implements GridFactoryInterface
         $grid->addColumn('minFractionDigits', 'c.minFractionDigits', t('Min fraction digits'), true);
         $grid->addColumn('roundingType', 'c.roundingType', t('Rounding type'), true);
         $grid->addColumn('exchangeRate', 'c.exchangeRate', t('Exchange rate'), true);
+        $grid->addColumn('roundingPlacesPriceWithoutVat', 'c.roundingPlacesPriceWithoutVat', t('Rounding places of price without VAT and VAT amount'), true);
         $grid->setActionColumnClassAttribute('table-col table-col-10');
         $grid->addDeleteActionColumn('admin_currency_deleteconfirm', ['id' => 'c.id'])
             ->setAjaxConfirm();

@@ -36,19 +36,21 @@ class Rounding
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithoutVat
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    public function roundPriceWithoutVat(Money $priceWithoutVat): Money
+    public function roundPriceWithoutVat(Money $priceWithoutVat, Currency $currency): Money
     {
-        return $priceWithoutVat->round(2);
+        return $priceWithoutVat->round($currency->getRoundingPlacesPriceWithoutVat());
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $vatAmount
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    public function roundVatAmount(Money $vatAmount): Money
+    public function roundVatAmount(Money $vatAmount, Currency $currency): Money
     {
-        return $vatAmount->round(2);
+        return $vatAmount->round($currency->getRoundingPlacesPriceWithoutVat());
     }
 }
