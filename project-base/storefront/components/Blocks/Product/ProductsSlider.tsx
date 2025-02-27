@@ -50,8 +50,14 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     const sliderRef = useRef<HTMLDivElement>(null);
     const [productElementRefs, setProductElementRefs] = useState<Array<RefObject<HTMLLIElement>>>();
     const [activeIndex, setActiveIndex] = useState(0);
-    const isWithControls = products.length > visibleSliderItems && isWithArrows;
     const isMobile = !useMediaMin('vl');
+    const isSmallDesktop = !useMediaMin('xl') && !isMobile;
+    const minimumVisibleItemsOnSmallDesktop = 3;
+    const currentVisibleItems =
+        isSmallDesktop && visibleSliderItems > minimumVisibleItemsOnSmallDesktop
+            ? visibleSliderItems - 1
+            : visibleSliderItems;
+    const isWithControls = products.length > currentVisibleItems && isWithArrows;
 
     useEffect(() => {
         setProductElementRefs(
@@ -90,7 +96,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
             return;
         }
 
-        const newActiveIndex = isFirstSlide ? productElementRefs!.length - visibleSliderItems : prevIndex;
+        const newActiveIndex = isFirstSlide ? productElementRefs!.length - currentVisibleItems : prevIndex;
 
         if (!isTextSelected()) {
             setActiveIndex(newActiveIndex);
@@ -99,7 +105,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
 
     const handleNext = () => {
         const nextIndex = activeIndex + 1;
-        const isEndSlide = nextIndex > productElementRefs!.length - visibleSliderItems;
+        const isEndSlide = nextIndex > productElementRefs!.length - currentVisibleItems;
 
         if (isMobile && isEndSlide) {
             return;
@@ -123,9 +129,9 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
             case 'default':
                 return 'auto-cols-[225px] sm:auto-cols-[60%]  md:auto-cols-[45%] lg:auto-cols-[30%] vl:auto-cols-[25%] xl:auto-cols-[20%]';
             case 'blog':
-                return 'auto-cols-[80%] lg:auto-cols-[45%] xl:auto-cols-[33.33%]';
+                return 'auto-cols-[80%] sm:auto-cols-[60%] md:auto-cols-[45%] lg:auto-cols-[30%] vl:auto-cols-[33.33%]';
             case 'article':
-                return 'auto-cols-[80%] sm:auto-cols-[60%] md:auto-cols-[45%] lg:auto-cols-[31%] vl:auto-cols-[33.33%] xl:auto-cols-[25%]';
+                return 'auto-cols-[80%] sm:auto-cols-[60%] md:auto-cols-[45%] lg:auto-cols-[30%] vl:auto-cols-[33.33%] xl:auto-cols-[25%]';
             case 'lastVisited':
                 return 'auto-cols-[140px] sm:auto-cols-[30%] lg:auto-cols-[19.5%] vl:auto-cols-[14.5%] xl:auto-cols-[12.5%]';
             case 'autocomplete':
@@ -140,12 +146,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     return (
         <div className="relative" tid={tid}>
             {isWithControls && (
-                <div
-                    className={twMergeCustom(
-                        'absolute -top-10 right-0 hidden items-center justify-center gap-2',
-                        visibleSliderItems === VISIBLE_SLIDER_ITEMS_BLOG ? 'xl:flex' : 'vl:flex',
-                    )}
-                >
+                <div className="vl:flex absolute -top-10 right-0 hidden items-center justify-center gap-2">
                     <SliderButton title={t('Previous products')} type="prev" onClick={handlePrevious} />
                     <SliderButton title={t('Next products')} type="next" onClick={handleNext} />
                 </div>
@@ -165,7 +166,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
                     ])}
                     productItemProps={{
                         className: twMergeCustom(
-                            'snap-center md:snap-start mx-1 md:mx-2 first:ml-0 last:mr-0',
+                            'snap-center md:snap-start mr-2 md:mr-4 last:mr-0',
                             productItemProps?.className,
                         ),
                         ...productItemProps,
