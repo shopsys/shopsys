@@ -44,11 +44,6 @@ services:
         tags:
             - { name: shopsys.cron, hours: '3', minutes: '0', instanceName: service, readableName: 'Delete old product lists' }
 
-    # This module should run as last because it creates multiple kernels and fake requests.
-    Shopsys\FrameworkBundle\Component\Error\ErrorPageCronModule:
-        tags:
-            - { name: shopsys.cron, hours: '21', minutes: '10', instanceName: service, readableName: 'Generate Error pages' }
-
     # Export
 
     Shopsys\FrameworkBundle\Model\Feed\FeedCronModule:

@@ -9,9 +9,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 use Twig\Error\RuntimeError;
 
-class ExceptionListener
+final class ExceptionListener
 {
-    protected ?Throwable $lastThrowable;
+    private ?Throwable $lastThrowable;
 
     /**
      * @param \Symfony\Component\HttpKernel\Event\ExceptionEvent $event
