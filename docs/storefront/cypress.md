@@ -377,3 +377,105 @@ The best thing you can do is to install a plugin that allows you to see highligh
 ### Commiting flow
 
 By using tools such as those mentioned above, you can simply run cypress tests in the `base` mode, and then check the changed pixels. With this, you avoid the unnecessary step of running the tests in the `actual` mode, but still keep the option of checking exactly which parts of the application have changed.
+
+## How to work with smoke tests
+
+Smoke tests are a type of testing that quickly verifies the application's basic functionality. Our codebase uses smoke tests to ensure that all pages load without errors and meet basic expectations.
+
+### Understanding smoke tests structure
+
+Our smoke tests are located in the `cypress/smokeTests` directory, with the main implementation in `smokeTests.cy.ts`. These tests:
+
+1. Check all defined routes in the application
+2. Ensure pages load without JS errors or console errors
+3. Verify specific elements or content for each page
+4. Support both static and dynamic routes
+
+The smoke tests utilize a configuration object called `filteredRoutes` that defines the behavior for each route:
+
+```ts
+const filteredRoutes: Record<string, RoutesForSmokeTestsType> = {
+    // Example configuration for a route
+    ['/customer/edit-profile']: {
+        skip: false, // whether to skip this test
+        logged: true, // whether the user needs to be logged in
+        test: () => {
+            // custom validation function
+            checktHeadlineText('Edit profile');
+        },
+    },
+    // more routes...
+};
+```
+
+Each route configuration can have these properties:
+
+- `skip`: Boolean to determine if the test should be skipped
+- `logged`: Boolean to specify if the test requires a logged-in user
+- `test`: Optional function that performs custom validation
+- `loginCredentials`: Optional credentials for logged-in tests
+- `params`: Optional parameters for dynamic routes
+
+### Adding a new smoke test
+
+To add a new smoke test for a route:
+
+1. Identify the route you want to test
+2. Add an entry to the `filteredRoutes` object in `smokeTests.cy.ts`
+3. Configure the test options based on your requirements
+
+Example of adding a new route to test:
+
+```ts
+['/my-new-page']: {
+    skip: false,
+    logged: false,
+    test: () => {
+        checktHeadlineText('My New Page');
+        // or use other assertions
+        cy.getByTID([TIDs.some_element]).should('be.visible');
+    },
+}
+```
+
+### Running smoke tests
+
+To run smoke tests, don't forget to setup your Docker file with volumes correctly first, and then use the dedicated make command:
+
+```
+make run-smoke-tests
+```
+
+This command will properly set up the necessary environment and execute the smoke tests in a consistent manner.
+
+### Maintaining smoke tests
+
+When maintaining smoke tests, consider these best practices:
+
+1. **Keep tests focused**: Each test should check one specific aspect of the page
+2. **Handle dynamic content**: Use blackout techniques for elements with dynamic content
+3. **Use robust selectors**: Prefer TIDs (test IDs) over CSS or XPath selectors
+4. **Test both logged-in and anonymous states** when relevant
+5. **Keep test configurations up-to-date** as routes change
+
+If you need to update routes in your application, make sure to update:
+
+1. The route configuration in your application (`config/routes.ts`)
+2. The corresponding smoke test configuration in `smokeTests.cy.ts`
+
+### Troubleshooting smoke tests
+
+Common issues with smoke tests include:
+
+1. **Missing route configuration**: If you see an error like "Missing smoke test configuration for route", add the route to the `filteredRoutes` object
+2. **JS or console errors**: The tests detect and report JS errors and console.error calls
+3. **Blank pages**: Tests will fail if the page is blank, showing relevant JS errors if present
+4. **Dynamic content changing**: Use blackout techniques or adjust your tests to handle dynamic content
+
+When a smoke test fails, the error message will indicate:
+
+- The route that failed
+- The type of error (JS error, console error, blank page, etc.)
+- The specific assertion that failed
+
+By analyzing these details, you can quickly identify and fix the issue.
