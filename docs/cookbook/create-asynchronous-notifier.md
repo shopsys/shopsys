@@ -194,7 +194,7 @@ We can configure the consumer to run automatically in the background by just add
             send_email_transport \
 +           product_notification_transport \
             article_export_transport \
-            --time-limit=$TIME_LIMIT
+            --time-limit=$TIME_LIMIT  --quiet
         sleep 2
     done
 ```
