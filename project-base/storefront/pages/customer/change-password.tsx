@@ -27,6 +27,7 @@ const ChangePasswordPage: FC = () => {
     return (
         <>
             <MetaRobots content="noindex" />
+
             <CustomerLayout
                 breadcrumbs={breadcrumbs}
                 breadcrumbsType="account"

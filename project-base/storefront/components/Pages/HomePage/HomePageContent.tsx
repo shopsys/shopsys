@@ -7,6 +7,7 @@ import { DeferredRecommendedProducts } from 'components/Blocks/Product/DeferredR
 import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
 import { UpsList } from 'components/Blocks/UpsList/UpsList';
 import { CommonLayout } from 'components/Layout/CommonLayout';
+import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeRecommendationType } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
@@ -24,30 +25,33 @@ export const HomePageContent: FC = () => {
     return (
         <>
             <SearchMetadata />
+
             <CommonLayout>
-                <Banners />
+                <VerticalStack gap="lg">
+                    <Banners />
 
-                <UpsList />
+                    <UpsList />
 
-                <PromotedCategories />
+                    <PromotedCategories />
 
-                {isLuigisBoxActive && (
-                    <DeferredRecommendedProducts
-                        recommendationType={TypeRecommendationType.Personalized}
-                        render={(recommendedProductsContent) => (
-                            <>
-                                <h3 className="mb-4">{t('Recommended for you')}</h3>
-                                {recommendedProductsContent}
-                            </>
-                        )}
-                    />
-                )}
+                    {isLuigisBoxActive && (
+                        <DeferredRecommendedProducts
+                            recommendationType={TypeRecommendationType.Personalized}
+                            render={(recommendedProductsContent) => (
+                                <section>
+                                    <h3 className="mb-3">{t('Recommended for you')}</h3>
+                                    {recommendedProductsContent}
+                                </section>
+                            )}
+                        />
+                    )}
 
-                <DeferredPromotedProducts />
+                    <DeferredPromotedProducts />
 
-                <DeferredBlogPreview />
+                    <DeferredBlogPreview />
 
-                <DeferredLastVisitedProducts />
+                    <DeferredLastVisitedProducts />
+                </VerticalStack>
             </CommonLayout>
         </>
     );

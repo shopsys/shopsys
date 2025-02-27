@@ -47,6 +47,7 @@ const OrderDetailPage: FC = () => {
     return (
         <>
             <MetaRobots content="noindex" />
+
             <PageGuard errorRedirectUrl={customerOrdersUrl} isWithAccess={!orderDetailError}>
                 <CustomerLayout
                     breadcrumbs={breadcrumbs}
@@ -58,6 +59,7 @@ const OrderDetailPage: FC = () => {
                             <h1 tid={TIDs.order_detail_number_heading}>
                                 {t('Your order')} {orderData.order.number}
                             </h1>
+
                             <OrderDetailContent order={orderData.order} />
                         </>
                     )}

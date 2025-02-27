@@ -29,9 +29,10 @@ export const CartContent: FC<CartContentProps> = ({ cart }) => {
                     itemUuids={cart.items.map((item) => item.uuid)}
                     recommendationType={TypeRecommendationType.Basket}
                     render={(recommendedProductsContent) => (
-                        <div className="mb-6 px-0">
-                            <div className="h2 mb-3">{t('Recommended for you')}</div> {recommendedProductsContent}
-                        </div>
+                        <section>
+                            <h3 className="mb-3">{t('Recommended for you')}</h3>
+                            {recommendedProductsContent}
+                        </section>
                     )}
                 />
             )}

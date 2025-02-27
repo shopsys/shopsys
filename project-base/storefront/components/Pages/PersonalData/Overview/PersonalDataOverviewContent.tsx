@@ -49,13 +49,15 @@ export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> =
     );
 
     return (
-        <Webline className="flex flex-col items-center">
-            <h1 className="w-full max-w-3xl">{t('Personal data overview')}</h1>
+        <Webline width="lg">
+            <h1 className="mb-4">{t('Personal data overview')}</h1>
+
             {contentSiteText && (
-                <div className="max-w-3xl [&_section]:mb-5 [&_section]:block [&_section]:text-justify">
+                <div className="mb-4 [&_section]:text-justify">
                     <UserText htmlContent={contentSiteText} />
                 </div>
             )}
+
             <FormProvider {...formProviderMethods}>
                 <Form
                     className="flex w-full justify-center"

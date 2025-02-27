@@ -49,13 +49,15 @@ export const PersonalDataExportContent: FC<PersonalDataExportContentProps> = ({ 
     );
 
     return (
-        <Webline className="flex flex-col items-center">
-            <h1 className="w-full max-w-3xl">{t('Personal data export')}</h1>
+        <Webline width="lg">
+            <h1 className="mb-4">{t('Personal data export')}</h1>
+
             {!!contentSiteText && (
-                <div className="mb-5 block max-w-3xl text-justify">
+                <div className="mb-4 text-justify">
                     <UserText htmlContent={contentSiteText} />
                 </div>
             )}
+
             <FormProvider {...formProviderMethods}>
                 <Form
                     className="flex w-full justify-center"

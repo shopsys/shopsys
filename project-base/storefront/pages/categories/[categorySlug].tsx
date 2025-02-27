@@ -1,6 +1,5 @@
 import { MetaRobots } from 'components/Basic/Head/MetaRobots';
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
-import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { PageDefer } from 'components/Layout/PageDefer';
 import { CategoryDetailContent } from 'components/Pages/CategoryDetail/CategoryDetailContent';
@@ -70,7 +69,6 @@ const CategoryDetailPage: NextPage<ServerSidePropsType> = () => {
                 {!!categoryData && (
                     <CategoryDetailContent category={categoryData} isFetchingVisible={isFetchingVisible} />
                 )}
-                <LastVisitedProducts />
             </CommonLayout>
         </PageDefer>
     );

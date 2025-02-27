@@ -44,7 +44,7 @@ export const DeferredRecommendedProducts: FC<DeferredRecommendedProductsProps> =
 
     if (areRecommendedProductsFetching) {
         return (
-            <Webline className="mb-10">
+            <Webline>
                 <SkeletonModuleProductSlider
                     isWithSimpleCards={recommendationType === TypeRecommendationType.BasketPopup}
                 />
@@ -65,7 +65,7 @@ export const DeferredRecommendedProducts: FC<DeferredRecommendedProductsProps> =
     };
 
     return (
-        <Webline className="mb-10">
+        <Webline>
             {shouldRender
                 ? render(
                       <ProductsSlider

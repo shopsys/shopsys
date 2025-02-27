@@ -1,6 +1,5 @@
 import { StoresWrapper } from 'components/Blocks/StoreList/StoresWrapper';
 import { CommonLayout } from 'components/Layout/CommonLayout';
-import { SimpleLayout } from 'components/Layout/SimpleLayout/SimpleLayout';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { useStoresQuery, StoresQueryDocument } from 'graphql/requests/stores/queries/StoresQuery.generated';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
@@ -20,9 +19,7 @@ const StoresPage: FC<ServerSidePropsType> = () => {
 
     return (
         <CommonLayout breadcrumbs={breadcrumbs} isFetchingData={isStoresFetching} title={t('Stores')}>
-            <SimpleLayout standardWidth heading={t('Stores')}>
-                {storesData?.stores && <StoresWrapper />}
-            </SimpleLayout>
+            {storesData?.stores && <StoresWrapper />}
         </CommonLayout>
     );
 };

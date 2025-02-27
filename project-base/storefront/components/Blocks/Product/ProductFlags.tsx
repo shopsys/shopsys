@@ -31,7 +31,7 @@ export const ProductFlags: FC<ProductFlagsProps> = ({
 
     const variantTwClass = {
         list: 'top-5 right-2.5 sm:right-5 items-end z-above',
-        detail: 'top-3 left-4',
+        detail: 'top-3 right-0 items-end',
         comparison: 'top-3 left-0',
         bestsellers: 'flex-row relative flex-wrap mb-1 gap-2',
     };

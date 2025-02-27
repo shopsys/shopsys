@@ -1,27 +1,23 @@
-import { SkeletonModuleProductSlider } from './SkeletonModuleProductSlider';
 import { Webline } from 'components/Layout/Webline/Webline';
 import Skeleton from 'react-loading-skeleton';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 
 export const SkeletonPageCart: FC = () => (
     <Webline>
-        <Skeleton className="mx-auto mt-1 mb-5 h-11 w-full max-w-[840px] lg:mt-6 lg:mb-10" containerClassName="flex" />
+        <Skeleton
+            className="vl:h-11 mx-auto mt-1 mb-5 h-16 w-full max-w-[840px] lg:mt-6 lg:mb-10"
+            containerClassName="flex"
+        />
 
-        <div className="mb-6 lg:mb-8">
-            {createEmptyArray(4).map((_, index) => (
-                <Skeleton key={index} className="h-[101px] w-full" />
+        <div className="flex flex-col gap-4">
+            {createEmptyArray(3).map((_, index) => (
+                <Skeleton key={index} className="vl:h-32 h-60 w-full" />
             ))}
         </div>
-        <div className="vl:flex-row mb-8 flex flex-col justify-between">
-            <Skeleton className="vl:w-52 h-10 w-full" />
-            <Skeleton className="vl:w-40 h-10 w-full" />
-            <Skeleton className="vl:w-44 h-10 w-full" />
+
+        <div className="vl:mt-8 vl:flex-row vl:justify-between mt-5 flex flex-col gap-8">
+            <Skeleton className="h-20 w-full" containerClassName="vl:max-w-[424px] w-full" />
+            <Skeleton className="h-52 w-full" containerClassName="vl:max-w-[495px] w-full w-full" />
         </div>
-        <div className="mb-12 flex flex-col items-center justify-between lg:mb-24 lg:flex-row">
-            <Skeleton className="h-8 w-20 lg:h-14" containerClassName="order-2 lg:order-1" />
-            <Skeleton className="h-14 w-64" containerClassName="order-1 lg:order-2 mb-8 lg:mb-0" />
-        </div>
-        <Skeleton className="mb-3 h-8 w-60 lg:w-72" />
-        <SkeletonModuleProductSlider />
     </Webline>
 );

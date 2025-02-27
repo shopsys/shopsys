@@ -43,6 +43,7 @@ const ComplaintDetailPage: FC = () => {
     return (
         <>
             <MetaRobots content="noindex" />
+
             <PageGuard errorRedirectUrl={customerComplaintsUrl} isWithAccess={!complaintDetailError}>
                 <CustomerLayout
                     breadcrumbs={breadcrumbs}
@@ -55,6 +56,7 @@ const ComplaintDetailPage: FC = () => {
                             <h1 tid={TIDs.complaint_detail_number_heading}>
                                 {t('Your complaint')} {complaintData.complaint.number}
                             </h1>
+
                             <ComplaintDetailContent complaint={complaintData.complaint} />
                         </>
                     )}

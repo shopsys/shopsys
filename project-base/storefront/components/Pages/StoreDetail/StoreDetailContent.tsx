@@ -4,12 +4,12 @@ import { Infobox } from 'components/Basic/Infobox/Infobox';
 import { OpeningHours } from 'components/Blocks/OpeningHours/OpeningHours';
 import { OpeningStatus } from 'components/Blocks/OpeningHours/OpeningStatus';
 import { StoreContact } from 'components/Blocks/StoreList/StoreContact';
+import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeStoreDetailFragment } from 'graphql/requests/stores/fragments/StoreDetailFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
-import { twJoin } from 'tailwind-merge';
 
 const ModalGallery = dynamic(() =>
     import('components/Basic/ModalGallery/ModalGallery').then((component) => component.ModalGallery),
@@ -25,100 +25,93 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
     const [selectedGalleryItemIndex, setSelectedGalleryItemIndex] = useState<number>();
 
     return (
-        <Webline className="mb-10">
-            <div className="flex w-full flex-col lg:flex-row lg:gap-5">
-                <div className="w-full lg:basis-1/2">
-                    <div className="mb-5 lg:flex lg:items-center">
-                        <h1>{store.storeName}</h1>
+        <VerticalStack gap="sm">
+            <Webline>
+                <div className="flex flex-col gap-2.5 lg:flex-row lg:items-center lg:gap-5">
+                    <h1>{store.storeName}</h1>
 
-                        <div className="lg:mb-5 lg:ml-5">
-                            <OpeningStatus status={store.openingHours.status} />
-                        </div>
-                    </div>
-
-                    {!!store.specialMessage && (
-                        <InfoItem>
-                            <Infobox message={store.specialMessage} />
-                        </InfoItem>
-                    )}
-
-                    {!!store.description && (
-                        <InfoItem>
-                            <StoreHeading text={t('Store description')} />
-                            <p dangerouslySetInnerHTML={{ __html: store.description }} />
-                        </InfoItem>
-                    )}
-                    <InfoItem>
-                        <StoreHeading text={t('Store address')} />
-                        <p>
-                            {store.street}
-                            <br />
-                            {store.city}
-                            <br />
-                            {store.postcode}
-                            <br />
-                            {store.country.name}
-                        </p>
-                    </InfoItem>
-
-                    {!!store.directions && (
-                        <InfoItem>
-                            <StoreHeading text={t('How to reach us')} />
-                            <p dangerouslySetInnerHTML={{ __html: store.directions }} />
-                        </InfoItem>
-                    )}
-
-                    {store.phone || store.email ? (
-                        <InfoItem>
-                            <StoreContact email={store.email} phone={store.phone} />
-                        </InfoItem>
-                    ) : null}
-
-                    <InfoItem className="flex-1">
-                        <StoreHeading text={t('Opening hours')} />
-                        <OpeningHours className="mx-auto" openingHours={store.openingHours} />
-                    </InfoItem>
+                    <OpeningStatus status={store.openingHours.status} />
                 </div>
-                <div className="w-full lg:basis-1/2">
-                    <div className="bg-backgroundMore mt-5 flex aspect-square w-full rounded-xl p-5 lg:mt-0">
-                        <GoogleMap
-                            isDetail
-                            defaultZoom={15}
-                            latitude={store.latitude}
-                            longitude={store.longitude}
-                            markers={[
-                                {
-                                    identifier: store.uuid,
-                                    latitude: store.latitude,
-                                    longitude: store.longitude,
-                                },
-                            ]}
-                        />
-                    </div>
-                </div>
-            </div>
+            </Webline>
 
-            {store.storeImages.length > 0 && (
-                <div className="max-vl:grid-flow-col vl:gap-8 mt-10 grid snap-x snap-mandatory gap-4 overflow-y-hidden overscroll-x-contain max-lg:overflow-x-auto lg:flex lg:flex-wrap">
-                    {store.storeImages.map((image, index) => (
-                        <div
-                            key={image.url}
-                            className="lightboxItem m-0.5 flex h-[190px] w-[280px] snap-start justify-center overflow-hidden rounded-xl"
-                            data-src={image.url}
-                            title={store.storeName}
-                            onClick={() => setSelectedGalleryItemIndex(index)}
-                        >
-                            <Image
-                                alt={image.name || `${store.storeName}-${index}`}
-                                className="cursor-pointer object-cover"
-                                height={190}
-                                loading="lazy"
-                                src={image.url}
-                                width={280}
+            <Webline>
+                <div className="flex w-full flex-col gap-5 lg:flex-row">
+                    <div className="flex w-full flex-col gap-8 lg:basis-1/2">
+                        {!!store.specialMessage && <Infobox message={store.specialMessage} />}
+
+                        {!!store.description && (
+                            <StoreSection title={t('Store description')}>
+                                <p dangerouslySetInnerHTML={{ __html: store.description }} />
+                            </StoreSection>
+                        )}
+
+                        <StoreSection title={t('Store address')}>
+                            <p>
+                                {store.street}
+                                <br />
+                                {store.city}
+                                <br />
+                                {store.postcode}
+                                <br />
+                                {store.country.name}
+                            </p>
+                        </StoreSection>
+
+                        {!!store.directions && (
+                            <StoreSection title={t('How to reach us')}>
+                                <p dangerouslySetInnerHTML={{ __html: store.directions }} />
+                            </StoreSection>
+                        )}
+
+                        {store.phone || store.email ? <StoreContact email={store.email} phone={store.phone} /> : null}
+
+                        <StoreSection title={t('Opening hours')}>
+                            <OpeningHours className="mx-auto" openingHours={store.openingHours} />
+                        </StoreSection>
+                    </div>
+                    <div className="w-full lg:basis-1/2">
+                        <div className="bg-backgroundMore flex aspect-square w-full rounded-xl p-5">
+                            <GoogleMap
+                                isDetail
+                                defaultZoom={15}
+                                latitude={store.latitude}
+                                longitude={store.longitude}
+                                markers={[
+                                    {
+                                        identifier: store.uuid,
+                                        latitude: store.latitude,
+                                        longitude: store.longitude,
+                                    },
+                                ]}
                             />
                         </div>
-                    ))}
+                    </div>
                 </div>
+            </Webline>
+
+            {store.storeImages.length > 0 && (
+                <Webline>
+                    <div className="max-vl:grid-flow-col vl:gap-8 grid snap-x snap-mandatory gap-4 overflow-y-hidden overscroll-x-contain max-lg:overflow-x-auto lg:flex lg:flex-wrap">
+                        {store.storeImages.map((image, index) => (
+                            <div
+                                key={image.url}
+                                className="lightboxItem m-0.5 flex h-[190px] w-[280px] snap-start justify-center overflow-hidden rounded-xl"
+                                data-src={image.url}
+                                title={store.storeName}
+                                onClick={() => setSelectedGalleryItemIndex(index)}
+                            >
+                                <Image
+                                    alt={image.name || `${store.storeName}-${index}`}
+                                    className="cursor-pointer object-cover"
+                                    height={190}
+                                    loading="lazy"
+                                    src={image.url}
+                                    width={280}
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </Webline>
             )}
 
             {selectedGalleryItemIndex !== undefined && (
@@ -129,10 +122,15 @@ export const StoreDetailContent: FC<StoreDetailContentProps> = ({ store }) => {
                     onCloseModal={() => setSelectedGalleryItemIndex(undefined)}
                 />
             )}
-        </Webline>
+        </VerticalStack>
     );
 };
 
-const StoreHeading: FC<{ text: string }> = ({ text }) => <div className="h5 mb-2">{text}</div>;
-
-const InfoItem: FC = ({ children, className }) => <div className={twJoin('mb-7', className)}>{children}</div>;
+const StoreSection: FC<{ title: string }> = ({ title, children }) => {
+    return (
+        <div>
+            <h5 className="mb-2">{title}</h5>
+            {children}
+        </div>
+    );
+};

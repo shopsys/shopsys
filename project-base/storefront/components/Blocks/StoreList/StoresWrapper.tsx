@@ -1,6 +1,7 @@
 import { GoogleMap } from 'components/Basic/GoogleMap/GoogleMap';
 import { StoreList } from 'components/Blocks/StoreList/StoreList';
 import { SearchInput } from 'components/Forms/TextInput/SearchInput';
+import { Webline } from 'components/Layout/Webline/Webline';
 import { TIDs } from 'cypress/tids';
 import { useStoresQuery } from 'graphql/requests/stores/queries/StoresQuery.generated';
 import { TypeCoordinates } from 'graphql/types';
@@ -49,9 +50,11 @@ export const StoresWrapper: FC = () => {
     }
 
     return (
-        <div className="flex w-full flex-col lg:flex-row lg:gap-5">
-            <div className="w-full max-lg:order-2 max-lg:mt-5 lg:basis-1/2">
-                <div className="mb-2.5">
+        <Webline>
+            <h1 className="mb-4">{t('Stores')}</h1>
+
+            <div className="flex flex-col-reverse gap-5 lg:flex-row">
+                <div className="basis-1/2">
                     <SearchInput
                         label={t('City or postcode')}
                         shouldShowSpinnerInInput={isFetching}
@@ -59,19 +62,19 @@ export const StoresWrapper: FC = () => {
                         onChange={(e) => setSearchTextValue(e.currentTarget.value)}
                         onClear={() => setSearchTextValue('')}
                     />
+                    <StoreList selectedStoreUuid={selectedStore} stores={mappedStores} />
                 </div>
-                <StoreList selectedStoreUuid={selectedStore} stores={mappedStores} />
-            </div>
-            <div className="w-full max-lg:order-1 lg:basis-1/2" tid={TIDs.stores_map}>
-                <div className="bg-backgroundMore mt-5 flex aspect-square w-full rounded-xl p-5 lg:sticky lg:top-5 lg:mt-0">
-                    <GoogleMap
-                        activeMarkerHandler={(uuid) => clickOnMarkerHandler(uuid)}
-                        markers={mappedStores}
-                        shouldCenterToUserCoordinates={debouncedSearchTextValue === ''}
-                        userCoordinates={userCoordinates}
-                    />
+                <div className="basis-1/2" tid={TIDs.stores_map}>
+                    <div className="bg-backgroundMore flex aspect-square rounded-xl p-5 lg:sticky lg:top-5">
+                        <GoogleMap
+                            activeMarkerHandler={(uuid) => clickOnMarkerHandler(uuid)}
+                            markers={mappedStores}
+                            shouldCenterToUserCoordinates={debouncedSearchTextValue === ''}
+                            userCoordinates={userCoordinates}
+                        />
+                    </div>
                 </div>
             </div>
-        </div>
+        </Webline>
     );
 };

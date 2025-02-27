@@ -1,3 +1,4 @@
+import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { SkeletonPagePersonalDataOverview } from 'components/Blocks/Skeleton/SkeletonPagePersonalDataOverview';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
@@ -26,7 +27,10 @@ const PersonalDataOverviewByHashPage: NextPage = () => {
         <PersonalDataDetailContent personalDataDetail={personalDataDetailData} />
     ) : (
         <Webline>
-            <p className="my-28 text-center text-2xl">{t('Could not find personal data overview.')}</p>
+            <div className="my-28 flex items-center justify-center">
+                <InfoIcon className="mr-4 w-8" />
+                <div className="h3">{t('Could not find personal data overview.')}</div>
+            </div>
         </Webline>
     );
 

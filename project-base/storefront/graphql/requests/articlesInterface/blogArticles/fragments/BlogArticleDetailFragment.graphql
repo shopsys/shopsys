@@ -20,4 +20,7 @@ fragment BlogArticleDetailFragment on BlogArticle {
         ...HreflangLinksFragment
     }
     mainBlogCategoryUuid
+    blogCategories {
+        ...SimpleBlogCategoryFragment
+    }
 }

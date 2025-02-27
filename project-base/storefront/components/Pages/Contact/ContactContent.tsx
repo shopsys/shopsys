@@ -50,74 +50,71 @@ export const ContactContent: FC = () => {
     );
 
     return (
-        <div className="mb-8">
-            <Webline>
-                <h1>{t('Write to us')}</h1>
-                {settingsData?.settings?.contactFormMainText !== undefined && (
-                    <div
-                        className="mb-4"
-                        dangerouslySetInnerHTML={{ __html: settingsData.settings.contactFormMainText }}
-                    />
-                )}
-                <FormProvider {...formProviderMethods}>
-                    <Form onSubmit={formProviderMethods.handleSubmit(onSubmitHandler)}>
-                        <FormContentWrapper>
-                            <FormBlockWrapper>
-                                <TextInputControlled
-                                    control={formProviderMethods.control}
-                                    formName={formMeta.formName}
-                                    name={formMeta.fields.name.name}
-                                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                                    textInputProps={{
-                                        label: formMeta.fields.name.label,
-                                        required: true,
-                                        type: 'text',
-                                        autoComplete: 'name',
-                                    }}
-                                />
-                                <TextInputControlled
-                                    control={formProviderMethods.control}
-                                    formName={formMeta.formName}
-                                    name={formMeta.fields.email.name}
-                                    render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
-                                    textInputProps={{
-                                        label: formMeta.fields.email.label,
-                                        required: true,
-                                        type: 'email',
-                                        autoComplete: 'email',
-                                    }}
-                                />
-                                <TextareaControlled
-                                    control={formProviderMethods.control}
-                                    formName={formMeta.formName}
-                                    name={formMeta.fields.message.name}
-                                    render={(textarea) => <FormLine bottomGap>{textarea}</FormLine>}
-                                    textareaProps={{
-                                        label: formMeta.fields.message.label,
-                                        required: true,
-                                        rows: 4,
-                                    }}
-                                />
-                                <CheckboxControlled
-                                    control={formProviderMethods.control}
-                                    formName={formMeta.formName}
-                                    name={formMeta.fields.privacyPolicy.name}
-                                    render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
-                                    checkboxProps={{
-                                        label: formMeta.fields.privacyPolicy.label,
-                                        required: true,
-                                    }}
-                                />
-                                <FormButtonWrapper>
-                                    <SubmitButton isWithDisabledLook={!formProviderMethods.formState.isValid}>
-                                        {t('Send message')}
-                                    </SubmitButton>
-                                </FormButtonWrapper>
-                            </FormBlockWrapper>
-                        </FormContentWrapper>
-                    </Form>
-                </FormProvider>
-            </Webline>
-        </div>
+        <Webline width="lg">
+            <h1 className="mb-4">{t('Write to us')}</h1>
+
+            {settingsData?.settings?.contactFormMainText !== undefined && (
+                <div className="mb-4" dangerouslySetInnerHTML={{ __html: settingsData.settings.contactFormMainText }} />
+            )}
+
+            <FormProvider {...formProviderMethods}>
+                <Form onSubmit={formProviderMethods.handleSubmit(onSubmitHandler)}>
+                    <FormContentWrapper>
+                        <FormBlockWrapper>
+                            <TextInputControlled
+                                control={formProviderMethods.control}
+                                formName={formMeta.formName}
+                                name={formMeta.fields.name.name}
+                                render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                textInputProps={{
+                                    label: formMeta.fields.name.label,
+                                    required: true,
+                                    type: 'text',
+                                    autoComplete: 'name',
+                                }}
+                            />
+                            <TextInputControlled
+                                control={formProviderMethods.control}
+                                formName={formMeta.formName}
+                                name={formMeta.fields.email.name}
+                                render={(textInput) => <FormLine bottomGap>{textInput}</FormLine>}
+                                textInputProps={{
+                                    label: formMeta.fields.email.label,
+                                    required: true,
+                                    type: 'email',
+                                    autoComplete: 'email',
+                                }}
+                            />
+                            <TextareaControlled
+                                control={formProviderMethods.control}
+                                formName={formMeta.formName}
+                                name={formMeta.fields.message.name}
+                                render={(textarea) => <FormLine bottomGap>{textarea}</FormLine>}
+                                textareaProps={{
+                                    label: formMeta.fields.message.label,
+                                    required: true,
+                                    rows: 4,
+                                }}
+                            />
+                            <CheckboxControlled
+                                control={formProviderMethods.control}
+                                formName={formMeta.formName}
+                                name={formMeta.fields.privacyPolicy.name}
+                                render={(checkbox) => <ChoiceFormLine>{checkbox}</ChoiceFormLine>}
+                                checkboxProps={{
+                                    label: formMeta.fields.privacyPolicy.label,
+                                    required: true,
+                                }}
+                            />
+                            <FormButtonWrapper>
+                                <SubmitButton isWithDisabledLook={!formProviderMethods.formState.isValid}>
+                                    {t('Send message')}
+                                </SubmitButton>
+                            </FormButtonWrapper>
+                        </FormBlockWrapper>
+                    </FormContentWrapper>
+                </Form>
+            </FormProvider>
+        </Webline>
     );
 };

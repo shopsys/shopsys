@@ -1,3 +1,4 @@
+import { ArticleDate } from 'components/Basic/ArticleDate/ArticleDate';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Flag } from 'components/Basic/Flag/Flag';
 import { Image } from 'components/Basic/Image/Image';
@@ -21,7 +22,7 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles, isLo
     return (
         <ul className="flex w-full flex-col gap-y-5">
             {blogArticles.map((blogArticle) => (
-                <li key={blogArticle.uuid} className="w-full xl:max-w-[784px]">
+                <li key={blogArticle.uuid} className="w-full">
                     <ExtendedNextLink
                         href={blogArticle.link}
                         type="blogArticle"
@@ -44,12 +45,11 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles, isLo
 
                         <div className="flex flex-1 flex-col gap-y-3">
                             <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-                                <span
-                                    className="font-secondary text-textSubtle text-sm font-semibold"
+                                <ArticleDate
+                                    date={new Date(blogArticle.publishDate).toLocaleDateString(defaultLocale)}
                                     tid={TIDs.blog_article_publication_date}
-                                >
-                                    {new Date(blogArticle.publishDate).toLocaleDateString(defaultLocale)}
-                                </span>
+                                />
+
                                 <div className="flex flex-wrap gap-2">
                                     {blogArticle.blogCategories.map((blogArticleCategory) => (
                                         <>

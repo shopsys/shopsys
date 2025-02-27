@@ -6,8 +6,10 @@ export const SkeletonPageArticle: FC = () => (
     <Webline>
         <SkeletonModuleBreadcrumbs count={2} />
 
-        <Skeleton className="mb-5 h-12 w-full" />
-        <Skeleton className="mb-5 h-6 w-28" />
-        <Skeleton className="mb-5 h-96 w-full" />
+        <div className="flex flex-col gap-4">
+            <Skeleton className="h-10" containerClassName="w-1/2" />
+            <Skeleton className="h-5" containerClassName="w-28" />
+            <Skeleton className="h-96" containerClassName="w-full" />
+        </div>
     </Webline>
 );

@@ -1,3 +1,4 @@
+import { Webline } from 'components/Layout/Webline/Webline';
 import {
     ProductDetailAccessories,
     ProductDetailAccessoriesProps,
@@ -21,13 +22,14 @@ export const DeferredProductDetailAccessories: FC<ProductDetailAccessoriesProps>
     }
 
     return (
-        <div>
-            <div className="text-xl font-bold">{t('You can also buy')}</div>
+        <Webline>
+            <h5 className="mb-3">{t('You can also buy')}</h5>
+
             {shouldRender ? (
                 <ProductDetailAccessories accessories={accessories} />
             ) : (
                 <ProductsSliderPlaceholder products={accessories} />
             )}
-        </div>
+        </Webline>
     );
 };

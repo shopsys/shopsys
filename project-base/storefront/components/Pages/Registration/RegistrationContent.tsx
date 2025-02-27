@@ -49,8 +49,9 @@ export const RegistrationContent: FC = () => {
     useErrorPopup(formProviderMethods, formMeta.fields, undefined, GtmMessageOriginType.other);
 
     return (
-        <Webline className="flex flex-col items-center">
-            <h1 className="w-full max-w-3xl">{t('New customer registration')}</h1>
+        <Webline width="lg">
+            <h1 className="mb-4">{t('New customer registration')}</h1>
+
             <FormProvider {...formProviderMethods}>
                 <Form
                     className="flex w-full max-w-3xl justify-center"

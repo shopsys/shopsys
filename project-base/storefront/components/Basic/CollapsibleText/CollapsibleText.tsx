@@ -27,7 +27,10 @@ export const CollapsibleText: FC<CollapsibleTextProps> = ({ text, scrollTargetRe
     const handleButtonClick = () => {
         setShowFullDescription((prev) => {
             if (prev) {
-                scrollTargetRef.current?.scrollIntoView({ behavior: 'smooth' });
+                if (scrollTargetRef.current) {
+                    scrollTargetRef.current.style.scrollMarginTop = '116px';
+                    scrollTargetRef.current.scrollIntoView({ behavior: 'smooth' });
+                }
             }
 
             return !prev;

@@ -1,5 +1,6 @@
 import { Link } from 'components/Basic/Link/Link';
 import { Cell, CellHead, CellMinor, Row, Table } from 'components/Basic/Table/Table';
+import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypePersonalDataDetailQuery } from 'graphql/requests/personalData/queries/PersonalDataDetailQuery.generated';
 import { TypeOrderItemTypeEnum } from 'graphql/types';
@@ -24,17 +25,19 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
     const complaints = personalDataDetail.accessPersonalData.complaints;
 
     return (
-        <>
-            <div className="text-center">
-                <h1>{t('Personal data')}</h1>
+        <VerticalStack gap="md">
+            <Webline>
+                <h1 className="mb-4">{t('Personal data')}</h1>
+
                 <Link isButton isExternal href={exportLink} size="small">
                     {t('Download as XML')}
                 </Link>
-            </div>
+            </Webline>
 
             {!!userData && (
-                <Webline className="mt-6">
-                    <div className="h2 mt-6 mb-3">{t('Billing address')}</div>
+                <Webline>
+                    <h2 className="mb-3">{t('Billing address')}</h2>
+
                     <Table>
                         <Row className="flex flex-col md:flex-row">
                             <Cell className="flex-1">
@@ -101,7 +104,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
 
                     {userData.deliveryAddresses.length > 0 && (
                         <>
-                            <div className="h2 mt-6 mb-3">{t('Delivery addresses')}</div>
+                            <h2 className="h2 mb-3">{t('Delivery addresses')}</h2>
                             <Table>
                                 {userData.deliveryAddresses.map((address) => (
                                     <Row key={address.uuid}>
@@ -119,7 +122,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                 </Webline>
             )}
 
-            <Webline className="mt-6">
+            <Webline>
                 <h2 className="mb-3">{t('My orders')}</h2>
 
                 {orders.length ? (
@@ -233,7 +236,7 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                 )}
             </Webline>
 
-            <Webline className="mt-6">
+            <Webline>
                 <h2 className="mb-3">{t('My complaints')}</h2>
 
                 {complaints.length ? (
@@ -314,26 +317,25 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                 )}
             </Webline>
 
-            <Webline className="mt-6">
-                {newsLetterSubscriber && (
-                    <>
-                        <div className="h2 mt-6 mb-3">{t('Newsletter')}</div>
-                        <Table
-                            head={
-                                <Row>
-                                    <CellHead>{t('Newsletter subscription')}</CellHead>
-                                    <CellHead className="text-right">{t('Subscribed from')}</CellHead>
-                                </Row>
-                            }
-                        >
+            {newsLetterSubscriber && (
+                <Webline>
+                    <h2 className="mb-3">{t('Newsletter')}</h2>
+
+                    <Table
+                        head={
                             <Row>
-                                <CellMinor>{newsLetterSubscriber.email}</CellMinor>
-                                <td className="text-right">{formatDate(newsLetterSubscriber.createdAt)}</td>
+                                <CellHead>{t('Newsletter subscription')}</CellHead>
+                                <CellHead className="text-right">{t('Subscribed from')}</CellHead>
                             </Row>
-                        </Table>
-                    </>
-                )}
-            </Webline>
-        </>
+                        }
+                    >
+                        <Row>
+                            <CellMinor>{newsLetterSubscriber.email}</CellMinor>
+                            <td className="text-right">{formatDate(newsLetterSubscriber.createdAt)}</td>
+                        </Row>
+                    </Table>
+                </Webline>
+            )}
+        </VerticalStack>
     );
 };

@@ -1,17 +1,18 @@
 import { ProductDetailAccessories } from './ProductDetailAccessories/ProductDetailAccessories';
-import { ProductDetailPrefix, ProductDetailHeading } from './ProductDetailElements';
 import { ProductDetailGallery } from './ProductDetailGallery';
+import { ProductDetailInfo } from './ProductDetailInfo';
 import { ProductDetailTabs } from './ProductDetailTabs/ProductDetailTabs';
 import { ProductVariantsTable } from './ProductDetailVariantsTable';
 import { ProductMetadata } from 'components/Basic/Head/ProductMetadata';
+import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
 import { useLastVisitedProductView } from 'components/Blocks/Product/LastVisitedProducts/lastVisitedProductsUtils';
+import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeImageFragment } from 'graphql/requests/images/fragments/ImageFragment.generated';
 import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
 import { useGtmProductDetailViewEvent } from 'gtm/utils/pageViewEvents/useGtmProductDetailViewEvent';
-import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParameters';
@@ -26,7 +27,6 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
     isProductDetailFetching,
 }) => {
     const router = useRouter();
-    const { t } = useTranslation();
     const mainVariantImagesWithVariantImages = useMemo(() => {
         const variantImages = product.variants.reduce((mappedVariantImages, variant) => {
             if (variant.mainImage) {
@@ -48,26 +48,23 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
         <>
             <ProductMetadata product={product} />
 
-            <Webline className="flex flex-col gap-8">
-                <ProductDetailGallery
-                    flags={product.flags}
-                    images={mainVariantImagesWithVariantImages}
-                    percentageDiscount={product.price.percentageDiscount}
-                    productName={product.name}
-                    videoIds={product.productVideos}
+            <VerticalStack gap="md">
+                <Webline>
+                    <ProductDetailGallery
+                        flags={product.flags}
+                        images={mainVariantImagesWithVariantImages}
+                        percentageDiscount={product.price.percentageDiscount}
+                        productName={product.name}
+                        videoIds={product.productVideos}
+                    />
+                </Webline>
+
+                <ProductDetailInfo
+                    catalogNumber={product.catalogNumber}
+                    name={product.name}
+                    namePrefix={product.namePrefix}
+                    nameSuffix={product.nameSuffix}
                 />
-
-                <div className="gap-2">
-                    <ProductDetailPrefix>{product.namePrefix}</ProductDetailPrefix>
-
-                    <ProductDetailHeading>
-                        {product.name} {product.nameSuffix}
-                    </ProductDetailHeading>
-
-                    <div className="text-sm">
-                        {t('Code')}: {product.catalogNumber}
-                    </div>
-                </div>
 
                 <ProductVariantsTable variants={product.variants} />
 
@@ -79,7 +76,9 @@ export const ProductDetailMainVariantContent: FC<ProductDetailMainVariantContent
                 />
 
                 {!!product.accessories.length && <ProductDetailAccessories accessories={product.accessories} />}
-            </Webline>
+
+                <DeferredLastVisitedProducts currentProductCatnum={product.catalogNumber} />
+            </VerticalStack>
         </>
     );
 };

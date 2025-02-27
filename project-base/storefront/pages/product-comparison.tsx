@@ -1,4 +1,3 @@
-import { LastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { ProductComparison } from 'components/Pages/ProductComparison/ProductComparison';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
@@ -25,8 +24,6 @@ const ProductComparisonPage: NextPage<ServerSidePropsType> = () => {
     return (
         <CommonLayout breadcrumbs={breadcrumbs} title={t('Product comparison')}>
             <ProductComparison />
-
-            <LastVisitedProducts />
         </CommonLayout>
     );
 };

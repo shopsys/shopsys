@@ -26,7 +26,7 @@ export const BlogPreview: FC<BlogPreviewProps> = ({ blogArticles, blogUrl, fetch
     const isDesktop = useMediaMin('vl');
 
     return (
-        <div className="z-above relative mx-auto w-full max-w-7xl px-5">
+        <div className="z-above xxl:px-[100px] relative mx-auto w-full px-5">
             <div className="mb-5 flex items-center justify-between">
                 <h3 className="text-textInverted">{t('Magazine')}</h3>
 

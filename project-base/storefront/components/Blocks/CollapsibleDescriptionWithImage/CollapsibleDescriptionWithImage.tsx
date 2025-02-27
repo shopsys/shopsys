@@ -1,8 +1,10 @@
 import { CollapsibleText } from 'components/Basic/CollapsibleText/CollapsibleText';
 import { Image } from 'components/Basic/Image/Image';
+import { Webline } from 'components/Layout/Webline/Webline';
+import { useRef } from 'react';
 
 type CollapsibleDescriptionWithImageProps = {
-    scrollTargetRef: React.RefObject<HTMLDivElement>;
+    title: string | null | undefined;
     description: string | null;
     currentPage: number;
     imageName: string;
@@ -10,31 +12,37 @@ type CollapsibleDescriptionWithImageProps = {
 };
 
 export const CollapsibleDescriptionWithImage: FC<CollapsibleDescriptionWithImageProps> = ({
-    scrollTargetRef,
+    title,
     description,
     currentPage,
     imageName,
     imageUrl,
 }) => {
-    return (
-        <div className="vl:flex-row flex w-full flex-col-reverse justify-between gap-5">
-            {!!description && currentPage === 1 && (
-                <CollapsibleText scrollTargetRef={scrollTargetRef} text={description} />
-            )}
+    const scrollTargetRef = useRef<HTMLDivElement>(null);
 
-            {imageUrl && currentPage === 1 && (
-                <div className="h-full shrink-0 sm:h-32">
-                    <Image
-                        priority
-                        alt={imageName}
-                        className="vl:size-[130px] h-[262px] w-full rounded-lg object-contain sm:h-[130px] sm:w-fit"
-                        height={262}
-                        sizes="50vw"
-                        src={imageUrl}
-                        width={262}
-                    />
-                </div>
-            )}
-        </div>
+    return (
+        <Webline>
+            {!!title && <h1 className="mb-4">{title}</h1>}
+
+            <section className="vl:flex-row flex w-full flex-col-reverse justify-between gap-5" ref={scrollTargetRef}>
+                {!!description && currentPage === 1 && (
+                    <CollapsibleText scrollTargetRef={scrollTargetRef} text={description} />
+                )}
+
+                {imageUrl && currentPage === 1 && (
+                    <div className="h-full shrink-0 sm:h-32">
+                        <Image
+                            priority
+                            alt={imageName}
+                            className="vl:size-[130px] h-[262px] w-full rounded-lg object-contain sm:h-[130px] sm:w-fit"
+                            height={262}
+                            sizes="50vw"
+                            src={imageUrl}
+                            width={262}
+                        />
+                    </div>
+                )}
+            </section>
+        </Webline>
     );
 };

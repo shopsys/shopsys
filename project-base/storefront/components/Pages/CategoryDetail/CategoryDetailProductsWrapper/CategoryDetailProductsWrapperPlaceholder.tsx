@@ -5,7 +5,7 @@ import { CategoryDetailContentMessage } from 'components/Pages/CategoryDetail/Ca
 import { twJoin } from 'tailwind-merge';
 
 export const productListTwClass = twJoin(
-    'relative mb-5 grid gap-2.5 sm:gap-x-5 sm:gap-y-6 pt-5',
+    'relative grid gap-2.5 sm:gap-x-5 sm:gap-y-6',
     'grid-cols-1',
     'xs:grid-cols-2',
     'lg:grid-cols-3',

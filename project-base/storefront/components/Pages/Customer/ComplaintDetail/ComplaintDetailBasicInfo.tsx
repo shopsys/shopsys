@@ -16,7 +16,7 @@ export const ComplaintDetailBasicInfo: FC<ComplaintDetailBasicInfoProps> = ({ co
     const { formatDate } = useFormatDate();
 
     return (
-        <div className="bg-background vl:mb-8 my-6 flex flex-col gap-4">
+        <>
             <div className="bg-backgroundMore vl:px-6 vl:py-4 flex items-center justify-between gap-4 rounded-md px-4 py-3">
                 <div className="vl:gap-8 flex flex-wrap gap-6 gap-y-2">
                     <ComplaintItemColumnInfo
@@ -50,7 +50,7 @@ export const ComplaintDetailBasicInfo: FC<ComplaintDetailBasicInfoProps> = ({ co
                     <ComplaintDetailComplaintItem key={index} complaint={complaint} complaintItem={complaintItem} />
                 ))}
             </div>
-        </div>
+        </>
     );
 };
 

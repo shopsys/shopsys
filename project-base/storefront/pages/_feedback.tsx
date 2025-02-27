@@ -1,6 +1,7 @@
 import { LoaderWithOverlay } from 'components/Basic/Loader/LoaderWithOverlay';
 import { Button } from 'components/Forms/Button/Button';
 import { CommonLayout } from 'components/Layout/CommonLayout';
+import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { Webline } from 'components/Layout/Webline/Webline';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
@@ -34,14 +35,19 @@ const Feedback: FC<ServerSidePropsType> = () => {
 
     return (
         <CommonLayout title={t('Reporting feedback')}>
-            <Webline className="mt-6">
-                <h1 className="mb-4">{t('Reporting feedback')}</h1>
-                <Button className="w-fit" onClick={handleTurnOffUserSnap}>
-                    {isUserSnapEnabled
-                        ? t('Turn off the feedback tool for you')
-                        : t('Turn on the feedback tool for you')}
-                </Button>
-            </Webline>
+            <VerticalStack gap="md">
+                <Webline>
+                    <h1>{t('Reporting feedback')}</h1>
+                </Webline>
+
+                <Webline>
+                    <Button className="w-fit" onClick={handleTurnOffUserSnap}>
+                        {isUserSnapEnabled
+                            ? t('Turn off the feedback tool for you')
+                            : t('Turn on the feedback tool for you')}
+                    </Button>
+                </Webline>
+            </VerticalStack>
             {isLoadingOverlayVisible && <LoaderWithOverlay className="w-8" />}
         </CommonLayout>
     );

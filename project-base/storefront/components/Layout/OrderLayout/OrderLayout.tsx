@@ -1,5 +1,4 @@
 import { SeoMeta } from 'components/Basic/Head/SeoMeta';
-import { Adverts } from 'components/Blocks/Adverts/Adverts';
 import { SkeletonManager } from 'components/Blocks/Skeleton/SkeletonManager';
 import { Footer } from 'components/Layout/Footer/Footer';
 import { Header } from 'components/Layout/Header/Header';
@@ -20,35 +19,37 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
     const isPageLoading = useSessionStore((s) => s.isPageLoading);
 
     return (
-        <div className="h-full">
+        <>
             <SeoMeta defaultTitle={t('Order')} />
 
-            <NotificationBars />
+            <div className="flex h-full min-h-screen flex-col">
+                <NotificationBars />
 
-            <Webline
-                className="relative mb-4 lg:pb-6"
-                wrapperClassName="bg-linear-to-tr/srgb from-backgroundBrand to-backgroundBrandLess"
-            >
-                <Header simpleHeader />
-            </Webline>
+                <header>
+                    <Webline
+                        className="relative"
+                        wrapperClassName="bg-linear-to-tr/srgb from-backgroundBrand to-backgroundBrandLess lg:pb-6"
+                    >
+                        <Header simpleHeader />
+                    </Webline>
+                </header>
 
-            <Adverts withGapBottom withWebline positionName="header" />
+                <main className="mt-4 mb-10 flex flex-col">
+                    <SkeletonManager
+                        isFetchingData={!canContentBeDisplayed || isFetchingData}
+                        isPageLoading={isPageLoading}
+                        pageTypeOverride={page}
+                    >
+                        <Webline>{children}</Webline>
+                    </SkeletonManager>
+                </main>
 
-            <div className="h-full min-h-[70vh]">
-                <SkeletonManager
-                    isFetchingData={!canContentBeDisplayed || isFetchingData}
-                    isPageLoading={isPageLoading}
-                    pageTypeOverride={page}
-                >
-                    <Webline>{children}</Webline>
-                </SkeletonManager>
+                <footer>
+                    <Webline wrapperClassName="bg-backgroundAccentLess">
+                        <Footer simpleFooter />
+                    </Webline>
+                </footer>
             </div>
-
-            <Adverts withGapBottom withWebline positionName="footer" />
-
-            <Webline wrapperClassName="bg-backgroundAccentLess">
-                <Footer simpleFooter />
-            </Webline>
-        </div>
+        </>
     );
 };

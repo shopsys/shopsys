@@ -17,6 +17,7 @@ export const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => (
                         className="text-text hover:text-text block text-sm no-underline hover:underline"
                         href={item.__typename === 'ArticleSite' ? item.slug : item.url}
                         rel={item.external ? 'nofollow noreferrer noopener' : undefined}
+                        skeletonType="article"
                         target={item.external ? '_blank' : undefined}
                         type="article"
                     >

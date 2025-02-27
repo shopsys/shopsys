@@ -3,9 +3,10 @@ import { CollapsibleDescriptionWithImage } from 'components/Blocks/CollapsibleDe
 import { FilteredProductsWrapper } from 'components/Blocks/FilteredProductsWrapper/FilteredProductsWrapper';
 import { DeferredFilterPanel } from 'components/Blocks/Product/Filter/DeferredFilterPanel';
 import { FilterSelectedParameters } from 'components/Blocks/Product/Filter/FilterSelectedParameters';
+import { DeferredLastVisitedProducts } from 'components/Blocks/Product/LastVisitedProducts/DeferredLastVisitedProducts';
 import { SimpleNavigation } from 'components/Blocks/SimpleNavigation/SimpleNavigation';
 import { DeferredFilterAndSortingBar } from 'components/Blocks/SortingBar/DeferredFilterAndSortingBar';
-import { Webline } from 'components/Layout/Webline/Webline';
+import { VerticalStack } from 'components/Layout/VerticalStack/VerticalStack';
 import { TypeCategoryDetailFragment } from 'graphql/requests/categories/fragments/CategoryDetailFragment.generated';
 import { useGtmFriendlyPageViewEvent } from 'gtm/factories/useGtmFriendlyPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
@@ -28,7 +29,6 @@ type CategoryDetailContentProps = {
 };
 
 export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category, isFetchingVisible }) => {
-    const scrollTargetRef = useRef<HTMLDivElement>(null);
     const paginationScrollTargetRef = useRef<HTMLDivElement>(null);
     const currentPage = useCurrentPageQuery();
 
@@ -38,23 +38,16 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
     useGtmPageViewEvent(pageViewEvent, isFetchingVisible);
 
     return (
-        <Webline>
-            <h1 ref={scrollTargetRef}>{title}</h1>
-
+        <VerticalStack gap="md">
             <CollapsibleDescriptionWithImage
                 currentPage={currentPage}
                 description={category.description}
                 imageName={category.images[0]?.name || category.name}
                 imageUrl={category.images[0]?.url}
-                scrollTargetRef={scrollTargetRef}
+                title={title}
             />
 
-            <SimpleNavigation
-                isWithoutSlider
-                className="my-7"
-                linkTypeOverride="category"
-                listedItems={category.children}
-            />
+            <SimpleNavigation isWithoutSlider linkTypeOverride="category" listedItems={category.children} />
 
             <FilteredProductsWrapper paginationScrollTargetRef={paginationScrollTargetRef}>
                 <DeferredFilterPanel
@@ -67,7 +60,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                     totalCount={category.products.totalCount}
                 />
 
-                <div className="flex flex-1 flex-col">
+                <div className="flex flex-1 flex-col gap-5">
                     {!!category.bestsellers.length && <CategoryBestsellers products={category.bestsellers} />}
 
                     <div className="vl:flex-col flex flex-col-reverse">
@@ -89,6 +82,8 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
             {!!category.readyCategorySeoMixLinks.length && (
                 <AdvancedSeoCategories readyCategorySeoMixLinks={category.readyCategorySeoMixLinks} />
             )}
-        </Webline>
+
+            <DeferredLastVisitedProducts />
+        </VerticalStack>
     );
 };
