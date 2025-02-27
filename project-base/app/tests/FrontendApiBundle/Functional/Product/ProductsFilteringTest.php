@@ -74,7 +74,7 @@ class ProductsFilteringTest extends ProductsGraphQlTestCase
 
     public function testFilterByMinimalPrice(): void
     {
-        $minimalPrice = $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('75000');
+        $minimalPrice = $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('75000');
 
         $query = '
             query {

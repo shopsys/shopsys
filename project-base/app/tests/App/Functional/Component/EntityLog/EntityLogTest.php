@@ -28,8 +28,8 @@ use Shopsys\FrameworkBundle\Model\Order\OrderRepository;
 use Shopsys\FrameworkBundle\Model\Order\PlaceOrderFacade;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderInputFactory;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessor;
-use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
+use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Tests\App\Test\TransactionFunctionalTestCase;
 
@@ -229,11 +229,15 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $expectedName = 'XXXXX';
         $expectedQuantity = 2;
         $expectedVatPercent = '10.000000';
-        $expectedPriceWithoutVat = $this->priceConverter->convertPriceWithoutVatToDomainDefaultCurrencyPrice(
-            Money::create('2891.74')->multiply((string)((100 + (float)$expectedVatPercent) / 100)),
+        $money = Money::create('2891.74');
+
+        $expectedPrice = $this->priceConverter->convertPriceWithoutVatToDomainDefaultCurrencyPrice(
+            $money,
             $this->getReference(CurrencyDataFixture::CURRENCY_CZK),
             Domain::FIRST_DOMAIN_ID,
         );
+
+        $expectedPrice = $expectedPrice->multiply((string)(100 + (float)$expectedVatPercent))->divide(100, 6)->round(2);
 
         $order = $this->getNewOrder();
 
@@ -260,11 +264,18 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $changeSet = reset($logs)->getChangeSet();
 
         $this->assertArrayHasKey('name', $changeSet);
-        $this->assertArrayHasKey('unitPriceWithoutVat', $changeSet);
+
+        if ($this->setting->get(PricingSetting::INPUT_PRICE_TYPE) === PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT) {
+            $this->assertArrayHasKey('unitPriceWithVat', $changeSet);
+            $this->assertSame($expectedPrice->getAmount(), $changeSet['unitPriceWithVat']['newReadableValue']);
+        } else {
+            $this->assertArrayHasKey('unitPriceWithoutVat', $changeSet);
+            $this->assertSame($expectedPrice->getAmount(), $changeSet['unitPriceWithoutVat']['newReadableValue']);
+        }
+
         $this->assertArrayHasKey('vatPercent', $changeSet);
         $this->assertArrayHasKey('quantity', $changeSet);
         $this->assertSame($expectedName, $changeSet['name']['newReadableValue']);
-        $this->assertSame($expectedPriceWithoutVat->getAmount(), $changeSet['unitPriceWithoutVat']['newReadableValue']);
         $this->assertSame($expectedVatPercent, $changeSet['vatPercent']['newReadableValue']);
         $this->assertSame($expectedQuantity, $changeSet['quantity']['newReadableValue']);
     }

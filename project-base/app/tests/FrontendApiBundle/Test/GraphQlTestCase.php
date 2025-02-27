@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Test;
 
 use App\DataFixtures\Demo\CurrencyDataFixture;
+use App\DataFixtures\Demo\VatDataFixture;
 use Nette\Utils\Json;
 use Override;
 use RuntimeException;
@@ -46,6 +47,11 @@ abstract class GraphQlTestCase extends ApplicationTestCase
      * @inject
      */
     protected MoneyFormatterHelper $moneyFormatterHelper;
+
+    /**
+     * @inject
+     */
+    protected PricingSetting $pricingSetting;
 
     #[Override]
     protected function setUp(): void
@@ -319,8 +325,14 @@ abstract class GraphQlTestCase extends ApplicationTestCase
             $currency,
         );
 
+        $basePrice = $basePrice->multiply($quantity);
+
+        if ($this->pricingSetting->getInputPriceType() === PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT) {
+            return $basePrice;
+        }
+
         return $this->basePriceCalculation->calculateRoundedBasePrice(
-            $basePrice->getPriceWithVat()->multiply($quantity),
+            $basePrice->getPriceWithVat(),
             PricingSetting::INPUT_PRICE_TYPE_WITH_VAT,
             $vat,
             $currency,
@@ -374,9 +386,12 @@ abstract class GraphQlTestCase extends ApplicationTestCase
     protected function getFormattedMoneyAmountConvertedToDomainDefaultCurrency(string $price): string
     {
         $currencyCzk = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
-        $money = $this->priceConverter->convertPriceWithoutVatToDomainDefaultCurrencyPrice(
+        $vatHigh = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, Domain::FIRST_DOMAIN_ID, Vat::class);
+
+        $money = $this->priceConverter->convertPriceToInputPriceInDomainDefaultCurrency(
             Money::create($price),
             $currencyCzk,
+            $vatHigh->getPercent(),
             Domain::FIRST_DOMAIN_ID,
         );
 

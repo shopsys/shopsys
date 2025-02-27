@@ -21,11 +21,6 @@ class RemainingToFreeTransportCartTest extends GraphQlTestCase
 
     private Product $testingProduct;
 
-    /**
-     * @inject
-     */
-    private PricingSetting $pricingSetting;
-
     #[Override]
     protected function setUp(): void
     {

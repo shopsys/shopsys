@@ -11,16 +11,10 @@ use App\Model\Payment\Payment;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class OrderPaymentsTest extends GraphQlTestCase
 {
-    /**
-     * @inject
-     */
-    private PricingSetting $pricingSetting;
-
     public function testOrderPaymentsPricesWhenFreePriceLimitIsMet(): void
     {
         // make sure the payment and transport is free
