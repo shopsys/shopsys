@@ -55,9 +55,9 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                     <Image
                         priority
                         alt={mainImage?.name || productName}
-                        className="vl:size-[500px] size-auto object-contain"
+                        className="h-[320px] w-full object-contain lg:h-[500px] vl:size-[500px]"
                         height={500}
-                        sizes="(max-width: 768px) 100vw, 50vw"
+                        sizes="50vw"
                         src={mainImage?.url}
                         width={500}
                         onClickCapture={() => setSelectedGalleryItemIndex(0)}
