@@ -262,7 +262,7 @@ jobs:
             -   name: Check standards
                 run: |
                     docker compose exec -T php-fpm touch ./project-base/app/DEVELOPMENT
-                    docker compose exec -T php-fpm php phing -D production.confirm.action=y composer-dev standards
+                    docker compose exec -T php-fpm php phing -D production.confirm.action=y composer-dev npm-install-dependencies standards
             -   name: Check GraphQl schema
                 run: docker compose exec -T php-fpm project-base/app/check-schema.sh
     standards-storefront:
@@ -296,6 +296,7 @@ jobs:
                     docker compose exec storefront sh check-next-public-variable.sh
             -   name: Check graphql schema files are up to date
                 run: |
+                    docker compose exec php-fpm npm install format-graphql
                     docker compose exec php-fpm php phing frontend-api-generate-graphql-schema
                     docker compose cp php-fpm:/var/www/html/project-base/app/schema.graphql /tmp/schema.graphql
                     docker compose cp /tmp/schema.graphql storefront:/home/node/app/schema.graphql
@@ -363,7 +364,7 @@ jobs:
                 run: |
                     docker compose pull --parallel postgres webserver elasticsearch redis php-fpm
                     docker compose up -d postgres webserver elasticsearch redis php-fpm
-                    docker compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change test-dirs-create test-db-create frontend-api-generate-new-keys
+                    docker compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change test-dirs-create test-db-create frontend-api-generate-new-keys npm-install-dependencies
             -   name: Run tests
                 run: docker compose exec -T php-fpm php phing -D production.confirm.action=y tests
             -   name: PHP-FPM container logs
@@ -405,7 +406,7 @@ jobs:
                     docker compose up -d postgres webserver elasticsearch redis php-fpm
                     docker compose cp ./project-base/app/config/domains.yaml php-fpm:/var/www/html/project-base/app/config/domains.yaml
                     docker compose cp ./project-base/app/src/DataFixtures/Demo/SettingValueDataFixture.php php-fpm:/var/www/html/project-base/app/src/DataFixtures/Demo/SettingValueDataFixture.php
-                    docker compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change test-dirs-create test-db-create frontend-api-generate-new-keys
+                    docker compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change test-dirs-create test-db-create frontend-api-generate-new-keys npm-install-dependencies
             -   name: Run tests
                 run: docker compose exec -T php-fpm php phing -D production.confirm.action=y tests
             -   name: PHP-FPM container logs
@@ -671,7 +672,7 @@ jobs:
             -   name: Check translations are dumped
                 run: |
                     docker compose exec -T php-fpm composer install --optimize-autoloader --no-interaction
-                    docker compose exec -T php-fpm php phing translations-dump
+                    docker compose exec -T php-fpm php phing npm-install-dependencies translations-dump
                     docker compose cp php-fpm:/var/www/html/ .
                     cp -a ./html/. ./
                     rm -rf ./html
@@ -818,6 +819,7 @@ jobs:
                     docker compose exec storefront sh check-next-public-variable.sh
             -   name: Check graphql schema files are up to date
                 run: |
+                    docker compose exec php-fpm npm install format-graphql
                     docker compose exec php-fpm php phing frontend-api-generate-graphql-schema
                     docker compose cp php-fpm:/var/www/html/project-base/app/schema.graphql /tmp/schema.graphql
                     docker compose cp /tmp/schema.graphql storefront:/home/node/app/schema.graphql

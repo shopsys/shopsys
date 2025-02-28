@@ -39,11 +39,10 @@
             <arg value="graphql"/>
             <arg value="--modern"/>
         </exec>
-        <exec executable="node" passthru="true" checkreturn="true">
-            <env key="LANG" value="en_US.UTF-8"/>
-            <arg value="${path.node_modules.bin}/format-graphql"/>
-            <arg value="--write"/>
-            <arg value="${path.root}/schema.graphql"/>
+
+        <exec executable="${path.npm.executable}" logoutput="true" passthru="true" checkreturn="true">
+            <arg value="run"/>
+            <arg value="format-graphql"/>
         </exec>
     </target>
 </project>
