@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PaymentController extends AdminBaseController
@@ -35,9 +36,10 @@ class PaymentController extends AdminBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/payment/new/')]
-    public function newAction(Request $request)
+    public function newAction(Request $request): Response
     {
         $paymentData = $this->paymentDataFactory->create();
 
@@ -73,9 +75,10 @@ class PaymentController extends AdminBaseController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/payment/edit/{id}', requirements: ['id' => '\d+'])]
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, int $id): Response
     {
         $payment = $this->paymentFacade->getById($id);
         $paymentData = $this->paymentDataFactory->createFromPayment($payment);
@@ -115,9 +118,10 @@ class PaymentController extends AdminBaseController
     /**
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/payment/delete/{id}', requirements: ['id' => '\d+'])]
-    public function deleteAction($id)
+    public function deleteAction(int $id): Response
     {
         try {
             $paymentName = $this->paymentFacade->getById($id)->getName();
@@ -137,7 +141,10 @@ class PaymentController extends AdminBaseController
         return $this->redirectToRoute('admin_transportandpayment_list');
     }
 
-    public function listAction()
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function listAction(): Response
     {
         $grid = $this->paymentGridFactory->create();
 

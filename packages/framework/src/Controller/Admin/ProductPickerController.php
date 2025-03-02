@@ -50,12 +50,12 @@ class ProductPickerController extends AdminBaseController
     #[Route(path: '/product-picker/pick-multiple/{jsInstanceId}/{allowMainVariants}/{allowVariants}/{withPrice}/{domainId}')]
     public function pickMultipleAction(
         Request $request,
-        $jsInstanceId,
+        string $jsInstanceId,
         bool $allowMainVariants = true,
         bool $allowVariants = true,
         bool $withPrice = false,
         int $domainId = Domain::FIRST_DOMAIN_ID,
-    ) {
+    ): Response {
         return $this->getPickerResponse(
             $request,
             [
@@ -75,9 +75,10 @@ class ProductPickerController extends AdminBaseController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $parentInstanceId
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product-picker/pick-single/{parentInstanceId}/', defaults: ['parentInstanceId' => '__instance_id__'])]
-    public function pickSingleAction(Request $request, $parentInstanceId)
+    public function pickSingleAction(Request $request, string $parentInstanceId): Response
     {
         return $this->getPickerResponse(
             $request,
@@ -97,8 +98,9 @@ class ProductPickerController extends AdminBaseController
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param array $viewParameters
      * @param array $gridViewParameters
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    protected function getPickerResponse(Request $request, array $viewParameters, array $gridViewParameters)
+    protected function getPickerResponse(Request $request, array $viewParameters, array $gridViewParameters): Response
     {
         $advancedSearchForm = $this->advancedSearchProductFacade->createAdvancedSearchForm($request);
         $advancedSearchData = $advancedSearchForm->getData();

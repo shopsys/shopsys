@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Form\Admin\ContactForm\ContactFormSettingsFormType;
 use Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsDataFactory;
 use Shopsys\FrameworkBundle\Model\ContactForm\ContactFormSettingsFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ContactFormSettingsController extends AdminBaseController
@@ -27,9 +28,10 @@ class ContactFormSettingsController extends AdminBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/contact-form/')]
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
         $contactFormSettingsData = $this->contactFormSettingsDataFactory->createFromSettingsByDomainId($domainId);

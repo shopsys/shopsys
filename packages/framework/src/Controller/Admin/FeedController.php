@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Feed\FeedModuleRepository;
 use Shopsys\FrameworkBundle\Model\Feed\FeedRegistry;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class FeedController extends AdminBaseController
@@ -37,9 +38,10 @@ class FeedController extends AdminBaseController
     /**
      * @param string $feedName
      * @param int $domainId
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/feed/generate/{feedName}/{domainId}', requirements: ['domainId' => '\d+'])]
-    public function generateAction($feedName, $domainId)
+    public function generateAction(string $feedName, int $domainId): Response
     {
         $domainConfig = $this->domain->getDomainConfigById((int)$domainId);
 
@@ -95,8 +97,11 @@ class FeedController extends AdminBaseController
         return $this->redirectToRoute('admin_feed_list');
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     #[Route(path: '/feed/list/')]
-    public function listAction()
+    public function listAction(): Response
     {
         $feedsData = [];
         $feedConfigs = $this->feedRegistry->getAllFeedConfigs();

@@ -179,7 +179,7 @@ class PromoCodeController extends AdminBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/promo-code/new-mass-generate')]
     public function newMassGenerateAction(Request $request): Response
@@ -225,7 +225,7 @@ class PromoCodeController extends AdminBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/promo-code/list-mass-generate-batch')]
     public function listMassGenerateBatchAction(Request $request): Response
@@ -243,13 +243,13 @@ class PromoCodeController extends AdminBaseController
 
     /**
      * @param int $batchId
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/promo-code/download-mass-generate-batch/{batchId}')]
     public function downloadMassGenerateBatchAction(int $batchId): Response
     {
         $tempFileName = tempnam(sys_get_temp_dir(), 'promoCodesCsv');
-        file_put_contents($tempFileName, $this->generateCsvFromPromoCodeFromBatchId((int)$batchId));
+        file_put_contents($tempFileName, $this->generateCsvFromPromoCodeFromBatchId($batchId));
 
         $fileName = 'promoCodesBatch-' . $batchId;
 

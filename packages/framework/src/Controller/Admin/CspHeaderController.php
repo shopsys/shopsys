@@ -15,8 +15,9 @@ class CspHeaderController extends AdminBaseController
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      */
-    public function __construct(protected readonly Setting $setting)
-    {
+    public function __construct(
+        protected readonly Setting $setting,
+    ) {
     }
 
     /**

@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\Transport\Grid\TransportGridFactory;
 use Shopsys\FrameworkBundle\Model\Transport\TransportDataFactory;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class TransportController extends AdminBaseController
@@ -35,9 +36,10 @@ class TransportController extends AdminBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/transport/new/')]
-    public function newAction(Request $request)
+    public function newAction(Request $request): Response
     {
         $transportData = $this->transportDataFactory->create();
 
@@ -73,9 +75,10 @@ class TransportController extends AdminBaseController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/transport/edit/{id}', requirements: ['id' => '\d+'])]
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, int $id): Response
     {
         $transport = $this->transportFacade->getById($id);
         $transportData = $this->transportDataFactory->createFromTransport($transport);
@@ -117,9 +120,10 @@ class TransportController extends AdminBaseController
     /**
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/transport/delete/{id}', requirements: ['id' => '\d+'])]
-    public function deleteAction($id)
+    public function deleteAction(int $id): Response
     {
         try {
             $transportName = $this->transportFacade->getById($id)->getName();
@@ -139,7 +143,10 @@ class TransportController extends AdminBaseController
         return $this->redirectToRoute('admin_transportandpayment_list');
     }
 
-    public function listAction()
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function listAction(): Response
     {
         $grid = $this->transportGridFactory->create();
 

@@ -36,7 +36,10 @@ class DomainController extends AdminBaseController
     ) {
     }
 
-    public function domainTabsAction()
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function domainTabsAction(): Response
     {
         return $this->render('@ShopsysFramework/Admin/Inline/Domain/tabs.html.twig', [
             'domainConfigs' => $this->domain->getAdminEnabledDomains(),
@@ -46,13 +49,12 @@ class DomainController extends AdminBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param mixed $id
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/multidomain/select-domain/{id}', requirements: ['id' => '\d+'])]
-    public function selectDomainAction(Request $request, $id)
+    public function selectDomainAction(Request $request, int $id): Response
     {
-        $id = (int)$id;
-
         $this->adminDomainTabsFacade->setSelectedDomainId($id);
 
         $referer = $request->server->get('HTTP_REFERER');
@@ -64,8 +66,11 @@ class DomainController extends AdminBaseController
         return $this->redirect($referer);
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     #[Route(path: '/domain/list')]
-    public function listAction()
+    public function listAction(): Response
     {
         $dataSource = new ArrayDataSource($this->loadData(), 'id');
 
@@ -85,11 +90,11 @@ class DomainController extends AdminBaseController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/domain/edit/{id}', requirements: ['id' => '\d+'], condition: 'request.isXmlHttpRequest()')]
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, int $id): Response
     {
-        $id = (int)$id;
         $domain = $this->domain->getDomainConfigById($id);
 
         $form = $this->createForm(DomainFormType::class, null, [
@@ -154,7 +159,10 @@ class DomainController extends AdminBaseController
         ]);
     }
 
-    protected function loadData()
+    /**
+     * @return array<int ,array{id: int, name: string, locale: string, icon: string|null}>
+     */
+    protected function loadData(): array
     {
         $data = [];
 
