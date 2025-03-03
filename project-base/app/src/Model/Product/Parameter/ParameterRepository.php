@@ -44,7 +44,7 @@ class ParameterRepository extends BaseParameterRepository
             $this->em->flush();
         }
 
-        if ($parameterValue->getRgbHex() !== $parameterValueData->rgbHex) {
+        if ($parameterValueData->rgbHex !== null && $parameterValue->getRgbHex() !== $parameterValueData->rgbHex) {
             $parameterValue->edit($parameterValueData);
             $this->em->flush();
         }
