@@ -1,7 +1,7 @@
 'use client';
 
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { useCurrentCustomerData } from 'components/providers/AuthProvider';
+import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
@@ -15,8 +15,8 @@ export type ProductItemProps = {
 };
 
 export const ProductListItemWrapper: FC<ProductItemProps> = ({ children, product, gtmProductListName, listIndex }) => {
-    const { url } = useDomainConfig();
-    const currentCustomerData = useCurrentCustomerData();
+    // const { url } = useDomainConfig();
+    // const { canSeePrices } = useAuthorization();
 
     return (
         <ExtendedNextLink
@@ -26,13 +26,7 @@ export const ProductListItemWrapper: FC<ProductItemProps> = ({ children, product
             type={product.isMainVariant ? 'productMainVariant' : 'product'}
             onClickExtended={disableClickWhenTextSelected}
             onMouseUp={() => {
-                onGtmProductClickEventHandler(
-                    product,
-                    gtmProductListName,
-                    listIndex,
-                    url,
-                    !!currentCustomerData?.arePricesHidden,
-                );
+                // onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url, !canSeePrices);
                 // onClick?.(product, listIndex);
             }}
         >
