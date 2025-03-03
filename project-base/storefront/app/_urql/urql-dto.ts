@@ -49,7 +49,7 @@ export async function readQuery<Data = any, Variables extends AnyVariables = Any
     context?: Partial<OperationContext>,
 ): Promise<OperationResultSource<OperationResult<Data, Variables>>> {
     const client = await getClient();
-    const response = await client.readQuery(query, variables, context);
+    const response = client.readQuery(query, variables, context);
 
     if (!response) {
         return { data: null } as OperationResult<Data, Variables>;

@@ -51,7 +51,7 @@ export const Popup: FC<PopupProps> = ({ children, hideCloseButton, className, co
                         tid={TIDs.layout_popup}
                         transition={{ duration: 0.2 }}
                         className={twMergeCustom(
-                            'fixed z-aboveOverlay flex max-h-[80vh] max-w-screen-lg cursor-auto flex-col rounded bg-background p-1 shadow-2xl',
+                            'fixed z-aboveOverlay flex max-h-[80vh] max-w-screen-lg cursor-auto flex-col rounded-sm bg-background p-1 shadow-2xl',
                             className,
                         )}
                         initial={{

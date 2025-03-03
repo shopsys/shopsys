@@ -28,7 +28,7 @@ const THIRTY_DAYS_IN_SECONDS = 60 * 60 * 24 * 30;
 // TODO: env
 // const { publicRuntimeConfig } = getConfig();
 // const userSnapEnabledDefaultValue = publicRuntimeConfig.userSnapEnabledDefaultValue;
-const userSnapEnabledDefaultValue = process.env.NEXT_PUBLIC_USERSNAP_STOREFRONT_ENABLED_BY_DEFAULT === '1';
+const userSnapEnabledDefaultValue = process.env.USERSNAP_STOREFRONT_ENABLED_BY_DEFAULT === '1';
 
 const getDefaultInitState = (): CookiesStoreState => ({
     lastVisitedProductsCatnums: null,

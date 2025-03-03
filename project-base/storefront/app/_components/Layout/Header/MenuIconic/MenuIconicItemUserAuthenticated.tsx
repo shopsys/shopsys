@@ -32,7 +32,7 @@ export const MenuIconicItemUserAuthenticated: FC<MenuIconicItemUserAuthenticated
                 onMouseLeave={() => isDesktop && setIsActive(false)}
             >
                 <MenuIconicItemLink
-                    className="cursor-pointer text-nowrap rounded-t transition-all"
+                    className="cursor-pointer text-nowrap rounded-sm-t transition-all"
                     type="account"
                     onClick={() => !isDesktop && setIsActive(!isActive)}
                     onTouchEnd={(e) => {
