@@ -20,7 +20,7 @@ export const getCurrentCustomerData = async () => {
     }
 
     const { currentCustomerUser } = result.data;
-    const isCompanyCustomer = currentCustomerUser.__typename === 'CompanyCustomerUser';
+    const isCompanyCustomer = currentCustomerUser.__typename === 'CurrentCompanyCustomerUser';
 
     return {
         ...currentCustomerUser,
@@ -46,7 +46,6 @@ export const getCurrentCustomerData = async () => {
         oldPassword: '',
         newPassword: '',
         newPasswordConfirm: '',
-        arePricesHidden: !currentCustomerUser.roles.includes('ROLE_API_CUSTOMER_SEES_PRICES'),
         country: currentCustomerUser.country ?? {
             __typename: 'Country',
             name: '',

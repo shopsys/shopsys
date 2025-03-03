@@ -24,7 +24,7 @@ export const NavigationSubItem: FC<NavigationSubItemProps> = ({
                 {columnCategories.categories.map((columnCategory, columnCategoryIndex) => (
                     <li key={columnCategoryIndex}>
                         <ExtendedNextLink
-                            className="mb-4 flex justify-center rounded bg-backgroundMore p-2"
+                            className="mb-4 flex justify-center rounded-sm bg-backgroundMore p-2"
                             href={columnCategory.slug}
                             skeletonType={skeletonType}
                             onClick={onLinkClick}

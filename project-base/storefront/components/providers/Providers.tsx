@@ -1,6 +1,7 @@
 import { AppConfigProvider } from './AppConfigProvider';
 import { AuthInfo } from './AuthInfo';
 import { AuthProvider } from './AuthProvider';
+import { AuthorizationProvider } from './AuthorizationProvider';
 import BroadcastChannelProvider from './BroadcastChannelProvider';
 import { CookiesStoreProvider } from './CookiesStoreProvider';
 import { CookiesStoreSync } from './CookiesStoreSync';
@@ -10,6 +11,7 @@ import ToastifyProvider from './ToastifyProvider';
 import { TranslationProvider } from './TranslationProvider';
 import { STATIC_REWRITE_PATHS } from 'app/_config/staticRewritePaths';
 import { getCurrentCustomerData } from 'app/_queries/getCurrentCustomerData';
+import { getCurrentCustomerUserRoles } from 'app/_queries/getCurrentCustomerUserRoles';
 import { getSettingsQuery } from 'app/_queries/getSettingsQuery';
 import { getCookieStoreStateFromServer } from 'app/_utils/getCookieStoreStateFromServer';
 import { getDomainConfig } from 'app/_utils/getDomainConfig';
@@ -33,6 +35,8 @@ export default async function Providers({ children }: ProvidersProps) {
         getInitialProductListState(),
     ]);
 
+    const customerUserRoles = await getCurrentCustomerUserRoles();
+
     if (settingsData.status === 'rejected' || !settingsData.value?.settings) {
         throw new Error('Failed to fetch settings');
     }
@@ -47,24 +51,26 @@ export default async function Providers({ children }: ProvidersProps) {
                 >
                     <TranslationProvider dictionary={dictionary} lang={lang}>
                         <AuthProvider user={user.status === 'fulfilled' ? user.value : undefined}>
-                            <ProductListProvider
-                                initialState={initialState.status === 'fulfilled' ? initialState.value : {}}
-                            >
-                                <html lang={lang}>
-                                    <head>
-                                        <script async src="https://unpkg.com/react-scan/dist/auto.global.js" />
-                                    </head>
-                                    {/* suppressHydrationWarning for ignoring grammarly extension */}
-                                    <body suppressHydrationWarning>
-                                        <AuthInfo isUserLoggedIn={!!user} />
-                                        <CookiesStoreSync />
-                                        <BroadcastChannelProvider />
-                                        {children}
-                                        <Portal />
-                                        <ToastifyProvider />
-                                    </body>
-                                </html>
-                            </ProductListProvider>
+                            <AuthorizationProvider customerUserRoles={customerUserRoles}>
+                                <ProductListProvider
+                                    initialState={initialState.status === 'fulfilled' ? initialState.value : {}}
+                                >
+                                    <html lang={lang}>
+                                        <head>
+                                            <script async src="https://unpkg.com/react-scan/dist/auto.global.js" />
+                                        </head>
+                                        {/* suppressHydrationWarning for ignoring grammarly extension */}
+                                        <body suppressHydrationWarning>
+                                            <AuthInfo isUserLoggedIn={!!user} />
+                                            <CookiesStoreSync />
+                                            <BroadcastChannelProvider />
+                                            {children}
+                                            <Portal />
+                                            <ToastifyProvider />
+                                        </body>
+                                    </html>
+                                </ProductListProvider>
+                            </AuthorizationProvider>
                         </AuthProvider>
                     </TranslationProvider>
                 </AppConfigProvider>
