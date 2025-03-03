@@ -1,3 +1,5 @@
+'use client';
+
 import { useDomainConfig } from './DomainConfigProvider';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
 import { TypeCustomerUserRoleEnum } from 'graphql/types';

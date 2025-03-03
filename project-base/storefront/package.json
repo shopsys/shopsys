@@ -30,8 +30,8 @@
         "@urql/devtools": "~2.0.3",
         "@urql/exchange-auth": "~2.1.6",
         "@urql/exchange-graphcache": "~6.4.1",
-        "cookies-next": "~4.3.0",
         "@urql/next": "^1.1.2",
+        "cookies-next": "~4.3.0",
         "crypto-js": "~4.2.0",
         "dayjs": "~1.11.13",
         "framer-motion": "^11.14.4",
@@ -42,8 +42,8 @@
         "js-base64": "~3.7.7",
         "jwt-decode": "~4.0.0",
         "lz-string": "~1.5.0",
-        "next": "~14.2.20",
         "negotiator": "^1.0.0",
+        "next": "~14.2.20",
         "next-translate": "~2.6.2",
         "next-translate-plugin": "~2.6.2",
         "next-urql": "~5.0.2",
@@ -84,8 +84,8 @@
         "@trivago/prettier-plugin-sort-imports": "~4.3.0",
         "@types/crypto-js": "~4.2.2",
         "@types/google-map-react": "^2.1.10",
-        "@types/node": "~20.11.30",
         "@types/negotiator": "^0.6.3",
+        "@types/node": "~20.11.30",
         "@types/nprogress": "~0.2.3",
         "@types/react": "~18.2.79",
         "@types/react-dom": "~18.2.25",
@@ -114,5 +114,10 @@
         "typescript": "~5.3.3",
         "vite-tsconfig-paths": "~4.3.2",
         "vitest": "~0.33.0"
+    },
+    "pnpm": {
+        "onlyBuiltDependencies": [
+            "next-translate-plugin"
+        ]
     }
 }
