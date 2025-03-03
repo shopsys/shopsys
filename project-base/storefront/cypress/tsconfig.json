@@ -4,6 +4,9 @@
         "lib": ["es5", "dom"],
         "types": ["cypress", "node", "cypress-visual-regression", "cypress-real-events"],
         "baseUrl": ".",
+        "paths": {
+            "../../config/*": ["../../config/*.ts"]
+        },
         "skipLibCheck": true,
         "strict": true,
         "jsx": "preserve",
@@ -11,5 +14,11 @@
         "incremental": true,
         "esModuleInterop": true
     },
-    "include": ["**/*.ts", "**/*.cy.ts", "../../graphql/types.ts", "../../graphql/**/*.generated.*"]
+    "include": [
+        "**/*.ts",
+        "**/*.cy.ts",
+        "../../graphql/types.ts",
+        "../../graphql/**/*.generated.*",
+        "../../config/*.ts"
+    ]
 }

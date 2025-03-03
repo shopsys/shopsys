@@ -105,3 +105,13 @@ generate-snapshots-info-table:
 	docker rm -f shopsys-framework-storefront-cypress
 	docker compose up -d storefront
 	docker compose exec php-fpm php phing -D change.environment=dev environment-change
+
+.PHONY: run-smoke-tests
+run-smoke-tests:
+	$(call prepare-data-for-acceptance-tests)
+	docker compose stop storefront
+	docker compose up -d --wait storefront-cypress --force-recreate
+	-docker compose run --rm -e TYPE=null -e COMMAND=smoke cypress;
+	docker rm -f shopsys-framework-storefront-cypress
+	docker compose up -d storefront
+	docker compose exec php-fpm php phing -D change.environment=dev environment-change

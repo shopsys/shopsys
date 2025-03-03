@@ -103,4 +103,5 @@ export enum TIDs {
     opening_hours_status = 'opening_hours_status',
     blog_article_publication_date = 'blog_article_publication_date',
     footer_copyright = 'footer_copyright',
+    error_page = 'error_page',
 }

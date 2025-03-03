@@ -10,12 +10,12 @@ export const useRedirectOnPermissionsChange = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
     const { push } = useRouter();
-    const [customerUrl] = getInternationalizedStaticUrls(['/customer'], url);
+    const [customerEditProfileUrl] = getInternationalizedStaticUrls(['/customer/edit-profile'], url);
 
     const redirect = (message?: string) => {
         showErrorMessage(message ?? t('Your permissions have changed. You are being redirected'));
         setTimeout(() => {
-            push(customerUrl);
+            push(customerEditProfileUrl);
         }, REDIRECT_TIMEOUT);
     };
 

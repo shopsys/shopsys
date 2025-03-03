@@ -15,7 +15,7 @@ import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationa
 const ChangePasswordPage: FC = () => {
     const { t } = useTranslation();
     const { url } = useDomainConfig();
-    const [changePasswordUrl] = getInternationalizedStaticUrls(['/customer', '/customer/change-password'], url);
+    const [changePasswordUrl] = getInternationalizedStaticUrls(['/customer/change-password'], url);
     const currentCustomerUserData = useCurrentCustomerData();
     const breadcrumbs: TypeBreadcrumbFragment[] = [
         { __typename: 'Link', name: t('Change password'), slug: changePasswordUrl },

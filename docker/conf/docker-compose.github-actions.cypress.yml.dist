@@ -93,6 +93,8 @@ services:
             - ./videos:/app/videos
             - ./screenshots:/app/screenshots
             - ./snapshotDiffs:/app/snapshotDiffs
+            - ./project-base/storefront/config:/app/config
+            - ./project-base/storefront/pages:/app/pages
         network_mode: "host"
 
     cypress-regenerate:

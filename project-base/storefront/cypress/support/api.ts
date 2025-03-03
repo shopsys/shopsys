@@ -1,7 +1,7 @@
 import { TypeCreateOrderMutationVariables } from '../../graphql/requests/orders/mutations/CreateOrderMutation.generated';
 import { TypeRegistrationDataInput } from '../../graphql/types';
 import 'cypress-real-events';
-import { PERSIST_STORE_NAME, products } from 'fixtures/demodata';
+import { PERSIST_STORE_NAME, products, user } from 'fixtures/demodata';
 
 Cypress.Commands.add('addProductToCartForTest', (productUuid?: string, quantity?: number) => {
     const currentAppStoreAsString = window.localStorage.getItem(PERSIST_STORE_NAME);
@@ -229,6 +229,62 @@ Cypress.Commands.add('registerAsNewUser', (registrationInput: TypeRegistrationDa
                 });
             }
         });
+});
+
+let accessToken = null as string | null;
+let refreshToken = null as string | null;
+Cypress.Commands.add('login', (email = user.email, password = user.password) => {
+    if (accessToken === null || refreshToken === null) {
+        cy.request({
+            method: 'POST',
+            url: '/graphql/',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: {
+                query: `mutation LoginMutation($email: String!, $password: Password!, $previousCartUuid: Uuid, $productListsUuids: [Uuid!]!) {
+                        Login(
+                            input: {email: $email, password: $password, cartUuid: $previousCartUuid, productListsUuids: $productListsUuids}
+                        ) {
+                            tokens {
+                                accessToken
+                                refreshToken
+                                __typename
+                            }
+                            showCartMergeInfo
+                            __typename
+                        }
+                    }
+               `,
+                variables: {
+                    email,
+                    password,
+                    previousCartUuid: null,
+                    productListsUuids: [],
+                },
+            },
+        })
+            // .its('body.data')
+            .then((res) => {
+                console.log(res);
+                accessToken = res.body.data.Login.tokens.accessToken;
+                refreshToken = res.body.data.Login.tokens.refreshToken;
+
+                cy.log('Customer login - ' + user.email);
+                if (accessToken) {
+                    cy.setCookie('accessToken', accessToken, { log: false });
+                }
+                if (refreshToken) {
+                    cy.setCookie('refreshToken', refreshToken, { log: false });
+                }
+            });
+
+        return;
+    }
+
+    cy.log('Customer login - ' + user.email);
+    cy.setCookie('accessToken', accessToken, { log: false });
+    cy.setCookie('refreshToken', refreshToken, { log: false });
 });
 
 Cypress.Commands.add('logout', () => {

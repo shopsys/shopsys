@@ -7,6 +7,12 @@ export const buttonName = {
 
 export const password = 'user123';
 
+export const user = {
+    email: 'no-reply@shopsys.com',
+    password: password,
+    uuid: '7b817d8b-41a3-4fc0-8570-08c9989f6dd9',
+};
+
 export const customer1 = {
     email: 'no-reply123@shopsys.com',
     emailRegistered: 'no-reply@shopsys.com',

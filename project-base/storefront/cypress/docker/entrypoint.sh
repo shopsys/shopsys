@@ -1,11 +1,13 @@
 #!/bin/sh
 echo "TYPE variable is set to: $TYPE"
 echo "COMMAND variable is set to: $COMMAND"
-echo "$COMMAND = 'generate'"
 
 if [ "$COMMAND" = "generate" ]; then
     echo "Generating snapshots lookup table"
     npm run generate-snapshots-table
+elif [ "$COMMAND" = "smoke" ]; then
+    echo "Running smoke tests"
+    npm run smoke
 elif [ "$COMMAND" = "open" ]; then
     echo "DISPLAY variable is set to: $DISPLAY"
     if [ "$TYPE" = "actual" ]; then
