@@ -7436,15 +7436,6 @@ snapshots:
     '@img/sharp-win32-ia32@0.34.3':
         optional: true
 
-  '@isaacs/cliui@8.0.2':
-    dependencies:
-      string-width: 5.1.2
-      string-width-cjs: string-width@4.2.3
-      strip-ansi: 7.1.0
-      strip-ansi-cjs: strip-ansi@6.0.1
-      wrap-ansi: 8.1.0
-      wrap-ansi-cjs: wrap-ansi@7.0.0
-
   '@jest/schemas@29.6.3':
     dependencies:
       '@sinclair/typebox': 0.27.8
@@ -7778,9 +7769,6 @@ snapshots:
     dependencies:
       '@opentelemetry/api': 1.9.0
       '@opentelemetry/core': 1.30.1(@opentelemetry/api@1.9.0)
-
-  '@pkgjs/parseargs@0.11.0':
-    optional: true
 
   '@polka/url@1.0.0-next.28': {}
 
@@ -9217,11 +9205,9 @@ snapshots:
 
   ansi-regex@5.0.1: {}
 
-  ansi-regex@6.1.0: {}
-
-    '@sentry-internal/browser-utils@9.38.0':
-        dependencies:
-            '@sentry/core': 9.38.0
+  ansi-styles@4.3.0:
+    dependencies:
+      color-convert: 2.0.1
 
     '@sentry-internal/feedback@9.38.0':
         dependencies:
@@ -10092,16 +10078,10 @@ snapshots:
         dependencies:
             color-convert: 2.0.1
 
-  ansi-styles@6.2.1: {}
-
-  any-promise@1.3.0: {}
-
   anymatch@3.1.3:
     dependencies:
       normalize-path: 3.0.0
       picomatch: 2.3.1
-
-  arg@5.0.2: {}
 
   argparse@2.0.1: {}
 
@@ -10183,16 +10163,6 @@ snapshots:
   attr-accept@2.2.5: {}
 
   auto-bind@4.0.0: {}
-
-  autoprefixer@10.4.20(postcss@8.4.49):
-    dependencies:
-      browserslist: 4.24.4
-      caniuse-lite: 1.0.30001697
-      fraction.js: 4.3.7
-      normalize-range: 0.1.2
-      picocolors: 1.1.1
-      postcss: 8.4.49
-      postcss-value-parser: 4.2.0
 
   available-typed-arrays@1.0.7:
     dependencies:
@@ -10351,8 +10321,6 @@ snapshots:
     dependencies:
       pascal-case: 3.1.2
       tslib: 2.6.3
-
-  camelcase-css@2.0.1: {}
 
   camelcase@5.3.1: {}
 
@@ -10805,442 +10773,33 @@ snapshots:
 
   doctrine@3.0.0:
     dependencies:
-      esutils: 2.0.3
-
-  dom-accessibility-api@0.5.16: {}
-
-  dom-serializer@2.0.0:
-    dependencies:
-      domelementtype: 2.3.0
-      domhandler: 5.0.3
-      entities: 4.5.0
-
-  domelementtype@2.3.0: {}
-
-  domhandler@5.0.3:
-    dependencies:
-      domelementtype: 2.3.0
-
-  dompurify@3.2.3:
-    optionalDependencies:
-      '@types/trusted-types': 2.0.7
-
-  domutils@3.1.0:
-    dependencies:
-      dom-serializer: 2.0.0
-      domelementtype: 2.3.0
-      domhandler: 5.0.3
-
-  dot-case@3.0.4:
-    dependencies:
-      no-case: 3.0.4
-      tslib: 2.8.1
-
-  dotenv@16.4.7: {}
-
-  dset@3.1.4: {}
-
-  dunder-proto@1.0.0:
-    dependencies:
-      call-bind-apply-helpers: 1.0.1
+      es-define-property: 1.0.1
       es-errors: 1.3.0
       gopd: 1.2.0
 
-    duplexer@0.1.2: {}
+  define-properties@1.2.1:
+    dependencies:
+      define-data-property: 1.1.4
+      has-property-descriptors: 1.0.2
+      object-keys: 1.1.1
 
-    eastasianwidth@0.2.0: {}
+  delayed-stream@1.0.0: {}
 
-    electron-to-chromium@1.5.73: {}
+  dependency-graph@0.11.0: {}
 
-    emoji-regex@8.0.0: {}
+  dequal@2.0.3: {}
 
-    emoji-regex@9.2.2: {}
+  detect-indent@6.1.0: {}
 
-    encoding-sniffer@0.2.0:
-        dependencies:
-            iconv-lite: 0.6.3
-            whatwg-encoding: 3.1.1
+  detect-libc@1.0.3: {}
 
-    enhanced-resolve@5.17.1:
-        dependencies:
-            graceful-fs: 4.2.11
-            tapable: 2.2.1
+  detect-node-es@1.1.0: {}
 
-    ensure-posix-path@1.1.1: {}
+  diff-sequences@29.6.3: {}
 
-    entities@4.5.0: {}
-
-    eol@0.9.1: {}
-
-    error-ex@1.3.2:
-        dependencies:
-            is-arrayish: 0.2.1
-
-    es-abstract@1.23.6:
-        dependencies:
-            array-buffer-byte-length: 1.0.1
-            arraybuffer.prototype.slice: 1.0.4
-            available-typed-arrays: 1.0.7
-            call-bind: 1.0.8
-            call-bound: 1.0.3
-            data-view-buffer: 1.0.1
-            data-view-byte-length: 1.0.1
-            data-view-byte-offset: 1.0.0
-            es-define-property: 1.0.1
-            es-errors: 1.3.0
-            es-object-atoms: 1.0.0
-            es-set-tostringtag: 2.0.3
-            es-to-primitive: 1.3.0
-            function.prototype.name: 1.1.7
-            get-intrinsic: 1.2.6
-            get-symbol-description: 1.0.2
-            globalthis: 1.0.4
-            gopd: 1.2.0
-            has-property-descriptors: 1.0.2
-            has-proto: 1.2.0
-            has-symbols: 1.1.0
-            hasown: 2.0.2
-            internal-slot: 1.1.0
-            is-array-buffer: 3.0.4
-            is-callable: 1.2.7
-            is-data-view: 1.0.2
-            is-negative-zero: 2.0.3
-            is-regex: 1.2.1
-            is-shared-array-buffer: 1.0.3
-            is-string: 1.1.1
-            is-typed-array: 1.1.13
-            is-weakref: 1.1.0
-            math-intrinsics: 1.0.0
-            object-inspect: 1.13.3
-            object-keys: 1.1.1
-            object.assign: 4.1.5
-            regexp.prototype.flags: 1.5.3
-            safe-array-concat: 1.1.3
-            safe-regex-test: 1.1.0
-            string.prototype.trim: 1.2.10
-            string.prototype.trimend: 1.0.9
-            string.prototype.trimstart: 1.0.8
-            typed-array-buffer: 1.0.2
-            typed-array-byte-length: 1.0.1
-            typed-array-byte-offset: 1.0.3
-            typed-array-length: 1.0.7
-            unbox-primitive: 1.1.0
-            which-typed-array: 1.1.16
-
-    es-define-property@1.0.1: {}
-
-    es-errors@1.3.0: {}
-
-    es-get-iterator@1.1.3:
-        dependencies:
-            call-bind: 1.0.8
-            get-intrinsic: 1.2.6
-            has-symbols: 1.1.0
-            is-arguments: 1.2.0
-            is-map: 2.0.3
-            is-set: 2.0.3
-            is-string: 1.1.1
-            isarray: 2.0.5
-            stop-iteration-iterator: 1.1.0
-
-    es-iterator-helpers@1.2.0:
-        dependencies:
-            call-bind: 1.0.8
-            define-properties: 1.2.1
-            es-abstract: 1.23.6
-            es-errors: 1.3.0
-            es-set-tostringtag: 2.0.3
-            function-bind: 1.1.2
-            get-intrinsic: 1.2.6
-            globalthis: 1.0.4
-            gopd: 1.2.0
-            has-property-descriptors: 1.0.2
-            has-proto: 1.2.0
-            has-symbols: 1.1.0
-            internal-slot: 1.1.0
-            iterator.prototype: 1.1.4
-            safe-array-concat: 1.1.3
-
-    es-module-lexer@1.5.4: {}
-
-    es-object-atoms@1.0.0:
-        dependencies:
-            es-errors: 1.3.0
-
-    es-set-tostringtag@2.0.3:
-        dependencies:
-            get-intrinsic: 1.2.6
-            has-tostringtag: 1.0.2
-            hasown: 2.0.2
-
-    es-shim-unscopables@1.0.2:
-        dependencies:
-            hasown: 2.0.2
-
-    es-to-primitive@1.3.0:
-        dependencies:
-            is-callable: 1.2.7
-            is-date-object: 1.1.0
-            is-symbol: 1.1.1
-
-    esbuild@0.18.20:
-        optionalDependencies:
-            '@esbuild/android-arm': 0.18.20
-            '@esbuild/android-arm64': 0.18.20
-            '@esbuild/android-x64': 0.18.20
-            '@esbuild/darwin-arm64': 0.18.20
-            '@esbuild/darwin-x64': 0.18.20
-            '@esbuild/freebsd-arm64': 0.18.20
-            '@esbuild/freebsd-x64': 0.18.20
-            '@esbuild/linux-arm': 0.18.20
-            '@esbuild/linux-arm64': 0.18.20
-            '@esbuild/linux-ia32': 0.18.20
-            '@esbuild/linux-loong64': 0.18.20
-            '@esbuild/linux-mips64el': 0.18.20
-            '@esbuild/linux-ppc64': 0.18.20
-            '@esbuild/linux-riscv64': 0.18.20
-            '@esbuild/linux-s390x': 0.18.20
-            '@esbuild/linux-x64': 0.18.20
-            '@esbuild/netbsd-x64': 0.18.20
-            '@esbuild/openbsd-x64': 0.18.20
-            '@esbuild/sunos-x64': 0.18.20
-            '@esbuild/win32-arm64': 0.18.20
-            '@esbuild/win32-ia32': 0.18.20
-            '@esbuild/win32-x64': 0.18.20
-
-    esbuild@0.23.1:
-        optionalDependencies:
-            '@esbuild/aix-ppc64': 0.23.1
-            '@esbuild/android-arm': 0.23.1
-            '@esbuild/android-arm64': 0.23.1
-            '@esbuild/android-x64': 0.23.1
-            '@esbuild/darwin-arm64': 0.23.1
-            '@esbuild/darwin-x64': 0.23.1
-            '@esbuild/freebsd-arm64': 0.23.1
-            '@esbuild/freebsd-x64': 0.23.1
-            '@esbuild/linux-arm': 0.23.1
-            '@esbuild/linux-arm64': 0.23.1
-            '@esbuild/linux-ia32': 0.23.1
-            '@esbuild/linux-loong64': 0.23.1
-            '@esbuild/linux-mips64el': 0.23.1
-            '@esbuild/linux-ppc64': 0.23.1
-            '@esbuild/linux-riscv64': 0.23.1
-            '@esbuild/linux-s390x': 0.23.1
-            '@esbuild/linux-x64': 0.23.1
-            '@esbuild/netbsd-x64': 0.23.1
-            '@esbuild/openbsd-arm64': 0.23.1
-            '@esbuild/openbsd-x64': 0.23.1
-            '@esbuild/sunos-x64': 0.23.1
-            '@esbuild/win32-arm64': 0.23.1
-            '@esbuild/win32-ia32': 0.23.1
-            '@esbuild/win32-x64': 0.23.1
-
-    escalade@3.2.0: {}
-
-    escape-string-regexp@1.0.5: {}
-
-    escape-string-regexp@4.0.0: {}
-
-    eslint-config-prettier@9.1.0(eslint@8.56.0):
-        dependencies:
-            eslint: 8.56.0
-
-    eslint-plugin-no-relative-import-paths@1.5.5: {}
-
-    eslint-plugin-react-hooks@4.6.2(eslint@8.56.0):
-        dependencies:
-            eslint: 8.56.0
-
-    eslint-plugin-react@7.33.2(eslint@8.56.0):
-        dependencies:
-            array-includes: 3.1.8
-            array.prototype.flatmap: 1.3.3
-            array.prototype.tosorted: 1.1.4
-            doctrine: 2.1.0
-            es-iterator-helpers: 1.2.0
-            eslint: 8.56.0
-            estraverse: 5.3.0
-            jsx-ast-utils: 3.3.5
-            minimatch: 3.1.2
-            object.entries: 1.1.8
-            object.fromentries: 2.0.8
-            object.hasown: 1.1.4
-            object.values: 1.2.0
-            prop-types: 15.8.1
-            resolve: 2.0.0-next.5
-            semver: 6.3.1
-            string.prototype.matchall: 4.0.11
-
-    eslint-plugin-unused-imports@3.0.0(@typescript-eslint/eslint-plugin@6.20.0(@typescript-eslint/parser@6.20.0(eslint@8.56.0)(typescript@5.3.3))(eslint@8.56.0)(typescript@5.3.3))(eslint@8.56.0):
-        dependencies:
-            eslint: 8.56.0
-            eslint-rule-composer: 0.3.0
-        optionalDependencies:
-            '@typescript-eslint/eslint-plugin': 6.20.0(@typescript-eslint/parser@6.20.0(eslint@8.56.0)(typescript@5.3.3))(eslint@8.56.0)(typescript@5.3.3)
-
-    eslint-rule-composer@0.3.0: {}
-
-    eslint-scope@5.1.1:
-        dependencies:
-            esrecurse: 4.3.0
-            estraverse: 4.3.0
-
-    eslint-scope@7.2.2:
-        dependencies:
-            esrecurse: 4.3.0
-            estraverse: 5.3.0
-
-    eslint-visitor-keys@3.4.3: {}
-
-    eslint@8.56.0:
-        dependencies:
-            '@eslint-community/eslint-utils': 4.4.1(eslint@8.56.0)
-            '@eslint-community/regexpp': 4.12.1
-            '@eslint/eslintrc': 2.1.4
-            '@eslint/js': 8.56.0
-            '@humanwhocodes/config-array': 0.11.14
-            '@humanwhocodes/module-importer': 1.0.1
-            '@nodelib/fs.walk': 1.2.8
-            '@ungap/structured-clone': 1.2.1
-            ajv: 6.12.6
-            chalk: 4.1.2
-            cross-spawn: 7.0.6
-            debug: 4.4.0
-            doctrine: 3.0.0
-            escape-string-regexp: 4.0.0
-            eslint-scope: 7.2.2
-            eslint-visitor-keys: 3.4.3
-            espree: 9.6.1
-            esquery: 1.6.0
-            esutils: 2.0.3
-            fast-deep-equal: 3.1.3
-            file-entry-cache: 6.0.1
-            find-up: 5.0.0
-            glob-parent: 6.0.2
-            globals: 13.24.0
-            graphemer: 1.4.0
-            ignore: 5.3.2
-            imurmurhash: 0.1.4
-            is-glob: 4.0.3
-            is-path-inside: 3.0.3
-            js-yaml: 4.1.0
-            json-stable-stringify-without-jsonify: 1.0.1
-            levn: 0.4.1
-            lodash.merge: 4.6.2
-            minimatch: 3.1.2
-            natural-compare: 1.4.0
-            optionator: 0.9.4
-            strip-ansi: 6.0.1
-            text-table: 0.2.0
-        transitivePeerDependencies:
-            - supports-color
-
-    espree@9.6.1:
-        dependencies:
-            acorn: 8.14.0
-            acorn-jsx: 5.3.2(acorn@8.14.0)
-            eslint-visitor-keys: 3.4.3
-
-    esquery@1.6.0:
-        dependencies:
-            estraverse: 5.3.0
-
-    esrecurse@4.3.0:
-        dependencies:
-            estraverse: 5.3.0
-
-    estraverse@4.3.0: {}
-
-    estraverse@5.3.0: {}
-
-    estree-walker@2.0.2: {}
-
-    esutils@2.0.3: {}
-
-    event-target-shim@5.0.1: {}
-
-    eventemitter3@4.0.7: {}
-
-    events@3.3.0: {}
-
-    external-editor@3.1.0:
-        dependencies:
-            chardet: 0.7.0
-            iconv-lite: 0.4.24
-            tmp: 0.0.33
-
-    extract-files@11.0.0: {}
-
-    fast-decode-uri-component@1.0.1: {}
-
-    fast-deep-equal@3.1.3: {}
-
-    fast-fifo@1.3.2: {}
-
-    fast-glob@3.3.2:
-        dependencies:
-            '@nodelib/fs.stat': 2.0.5
-            '@nodelib/fs.walk': 1.2.8
-            glob-parent: 5.1.2
-            merge2: 1.4.1
-            micromatch: 4.0.8
-
-    fast-json-stable-stringify@2.1.0: {}
-
-    fast-levenshtein@2.0.6: {}
-
-    fast-querystring@1.1.2:
-        dependencies:
-            fast-decode-uri-component: 1.0.1
-
-    fast-uri@3.0.3: {}
-
-    fastq@1.17.1:
-        dependencies:
-            reusify: 1.0.4
-
-    fb-watchman@2.0.2:
-        dependencies:
-            bser: 2.1.1
-
-    fbjs-css-vars@1.0.2: {}
-
-    fbjs@3.0.5:
-        dependencies:
-            cross-fetch: 3.1.8
-            fbjs-css-vars: 1.0.2
-            loose-envify: 1.4.0
-            object-assign: 4.1.1
-            promise: 7.3.1
-            setimmediate: 1.0.5
-            ua-parser-js: 1.0.39
-        transitivePeerDependencies:
-            - encoding
-
-    fdir@6.4.2(picomatch@4.0.2):
-        optionalDependencies:
-            picomatch: 4.0.2
-
-    figures@3.2.0:
-        dependencies:
-            escape-string-regexp: 1.0.5
-
-    file-entry-cache@6.0.1:
-        dependencies:
-            flat-cache: 3.2.0
-
-    file-selector@2.1.2:
-        dependencies:
-            tslib: 2.8.1
-
-    fill-range@7.1.1:
-        dependencies:
-            to-regex-range: 5.0.1
-
-    find-up@4.1.0:
-        dependencies:
-            locate-path: 5.0.0
-            path-exists: 4.0.0
+  dir-glob@3.0.1:
+    dependencies:
+      path-type: 4.0.0
 
   doctrine@2.1.0:
     dependencies:
@@ -11337,8 +10896,8 @@ snapshots:
       globalthis: 1.0.4
       gopd: 1.2.0
       has-property-descriptors: 1.0.2
-      has-proto: 1.0.3
-      has-symbols: 1.0.3
+      has-proto: 1.2.0
+      has-symbols: 1.1.0
       hasown: 2.0.2
       internal-slot: 1.1.0
       is-array-buffer: 3.0.5
@@ -11369,9 +10928,7 @@ snapshots:
       unbox-primitive: 1.1.0
       which-typed-array: 1.1.19
 
-  es-define-property@1.0.0:
-    dependencies:
-      get-intrinsic: 1.2.4
+  es-define-property@1.0.1: {}
 
   es-errors@1.3.0: {}
 
@@ -11385,7 +10942,7 @@ snapshots:
       is-set: 2.0.3
       is-string: 1.1.1
       isarray: 2.0.5
-      stop-iteration-iterator: 1.0.0
+      stop-iteration-iterator: 1.1.0
 
   es-iterator-helpers@1.2.1:
     dependencies:
@@ -11423,11 +10980,11 @@ snapshots:
     dependencies:
       hasown: 2.0.2
 
-  es-to-primitive@1.2.1:
+  es-to-primitive@1.3.0:
     dependencies:
       is-callable: 1.2.7
-      is-date-object: 1.0.5
-      is-symbol: 1.0.4
+      is-date-object: 1.1.0
+      is-symbol: 1.1.1
 
   esbuild@0.21.5:
     optionalDependencies:
@@ -11481,8 +11038,6 @@ snapshots:
       '@esbuild/win32-arm64': 0.23.1
       '@esbuild/win32-ia32': 0.23.1
       '@esbuild/win32-x64': 0.23.1
-
-  escalade@3.1.2: {}
 
   escalade@3.2.0: {}
 
@@ -11609,7 +11164,7 @@ snapshots:
       acorn-jsx: 5.3.2(acorn@8.14.1)
       eslint-visitor-keys: 4.2.0
 
-  esquery@1.5.0:
+  esquery@1.6.0:
     dependencies:
       estraverse: 5.3.0
 
@@ -11647,7 +11202,7 @@ snapshots:
       '@nodelib/fs.walk': 1.2.8
       glob-parent: 5.1.2
       merge2: 1.4.1
-      micromatch: 4.0.5
+      micromatch: 4.0.8
 
   fast-json-stable-stringify@2.1.0: {}
 
@@ -11698,10 +11253,6 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  fill-range@7.0.1:
-    dependencies:
-      to-regex-range: 5.0.1
-
   fill-range@7.1.1:
     dependencies:
       to-regex-range: 5.0.1
@@ -11711,11 +11262,10 @@ snapshots:
       locate-path: 5.0.0
       path-exists: 4.0.0
 
-    flat-cache@3.2.0:
-        dependencies:
-            flatted: 3.3.2
-            keyv: 4.5.4
-            rimraf: 3.0.2
+  find-up@5.0.0:
+    dependencies:
+      locate-path: 6.0.0
+      path-exists: 4.0.0
 
   flat-cache@4.0.1:
     dependencies:
@@ -11860,30 +11410,21 @@ snapshots:
 
   glob-to-regexp@0.4.1: {}
 
-    glob@10.4.5:
-        dependencies:
-            foreground-child: 3.3.0
-            jackspeak: 3.4.3
-            minimatch: 9.0.5
-            minipass: 7.1.2
-            package-json-from-dist: 1.0.1
-            path-scurry: 1.11.1
+  glob@7.2.3:
+    dependencies:
+      fs.realpath: 1.0.0
+      inflight: 1.0.6
+      inherits: 2.0.4
+      minimatch: 3.1.2
+      once: 1.4.0
+      path-is-absolute: 1.0.1
 
-    glob@7.2.3:
-        dependencies:
-            fs.realpath: 1.0.0
-            inflight: 1.0.6
-            inherits: 2.0.4
-            minimatch: 3.1.2
-            once: 1.4.0
-            path-is-absolute: 1.0.1
-
-    glob@9.3.5:
-        dependencies:
-            fs.realpath: 1.0.0
-            minimatch: 8.0.4
-            minipass: 4.2.8
-            path-scurry: 1.11.1
+  glob@9.3.5:
+    dependencies:
+      fs.realpath: 1.0.0
+      minimatch: 8.0.4
+      minipass: 4.2.8
+      path-scurry: 1.11.1
 
   globals@11.12.0: {}
 
@@ -11891,10 +11432,10 @@ snapshots:
 
   globals@16.0.0: {}
 
-    globalthis@1.0.4:
-        dependencies:
-            define-properties: 1.2.1
-            gopd: 1.2.0
+  globalthis@1.0.4:
+    dependencies:
+      define-properties: 1.2.1
+      gopd: 1.2.0
 
   globby@11.1.0:
     dependencies:
@@ -11916,7 +11457,7 @@ snapshots:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-    gopd@1.2.0: {}
+  gopd@1.2.0: {}
 
   graceful-fs@4.2.11: {}
 
@@ -11994,19 +11535,19 @@ snapshots:
 
   has-flag@4.0.0: {}
 
-    has-property-descriptors@1.0.2:
-        dependencies:
-            es-define-property: 1.0.1
+  has-property-descriptors@1.0.2:
+    dependencies:
+      es-define-property: 1.0.1
 
   has-proto@1.2.0:
     dependencies:
       dunder-proto: 1.0.1
 
-    has-symbols@1.1.0: {}
+  has-symbols@1.1.0: {}
 
-    has-tostringtag@1.0.2:
-        dependencies:
-            has-symbols: 1.1.0
+  has-tostringtag@1.0.2:
+    dependencies:
+      has-symbols: 1.1.0
 
   hasown@2.0.2:
     dependencies:
@@ -12049,26 +11590,26 @@ snapshots:
       domutils: 3.2.2
       entities: 4.5.0
 
-    http-proxy-agent@7.0.2:
-        dependencies:
-            agent-base: 7.1.3
-            debug: 4.4.0
-        transitivePeerDependencies:
-            - supports-color
+  http-proxy-agent@7.0.2:
+    dependencies:
+      agent-base: 7.1.3
+      debug: 4.4.0
+    transitivePeerDependencies:
+      - supports-color
 
-    https-proxy-agent@5.0.1:
-        dependencies:
-            agent-base: 6.0.2
-            debug: 4.4.0
-        transitivePeerDependencies:
-            - supports-color
+  https-proxy-agent@5.0.1:
+    dependencies:
+      agent-base: 6.0.2
+      debug: 4.4.0
+    transitivePeerDependencies:
+      - supports-color
 
-    https-proxy-agent@7.0.6:
-        dependencies:
-            agent-base: 7.1.3
-            debug: 4.4.0
-        transitivePeerDependencies:
-            - supports-color
+  https-proxy-agent@7.0.6:
+    dependencies:
+      agent-base: 7.1.3
+      debug: 4.4.0
+    transitivePeerDependencies:
+      - supports-color
 
   i18next-parser@9.0.2:
     dependencies:
@@ -12106,7 +11647,7 @@ snapshots:
 
   ieee754@1.2.1: {}
 
-    ignore@5.3.2: {}
+  ignore@5.3.2: {}
 
   immutable@3.7.6: {}
 
@@ -12153,11 +11694,11 @@ snapshots:
       through: 2.3.8
       wrap-ansi: 6.2.0
 
-    internal-slot@1.1.0:
-        dependencies:
-            es-errors: 1.3.0
-            hasown: 2.0.2
-            side-channel: 1.1.0
+  internal-slot@1.1.0:
+    dependencies:
+      es-errors: 1.3.0
+      hasown: 2.0.2
+      side-channel: 1.1.0
 
   invariant@2.2.4:
     dependencies:
@@ -12168,15 +11709,16 @@ snapshots:
       is-relative: 1.0.0
       is-windows: 1.0.2
 
-    is-arguments@1.2.0:
-        dependencies:
-            call-bound: 1.0.3
-            has-tostringtag: 1.0.2
+  is-arguments@1.2.0:
+    dependencies:
+      call-bound: 1.0.3
+      has-tostringtag: 1.0.2
 
-    is-array-buffer@3.0.4:
-        dependencies:
-            call-bind: 1.0.8
-            get-intrinsic: 1.2.6
+  is-array-buffer@3.0.5:
+    dependencies:
+      call-bind: 1.0.8
+      call-bound: 1.0.3
+      get-intrinsic: 1.2.7
 
   is-arrayish@0.2.1: {}
 
@@ -12363,13 +11905,7 @@ snapshots:
       has-symbols: 1.1.0
       set-function-name: 2.0.2
 
-    jackspeak@3.4.3:
-        dependencies:
-            '@isaacs/cliui': 8.0.2
-        optionalDependencies:
-            '@pkgjs/parseargs': 0.11.0
-
-    javascript-natural-sort@0.7.1: {}
+  javascript-natural-sort@0.7.1: {}
 
   jest-worker@27.5.1:
     dependencies:
@@ -12447,9 +11983,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-    jsesc@2.5.2: {}
-
-    jsesc@3.1.0: {}
+  jsesc@2.5.2: {}
 
   jsesc@3.1.0: {}
 
@@ -12468,7 +12002,7 @@ snapshots:
       remedial: 1.0.8
       remove-trailing-spaces: 1.0.9
 
-    json5@2.2.3: {}
+  json5@2.2.3: {}
 
   jsonfile@4.0.0:
     optionalDependencies:
@@ -12568,16 +12102,16 @@ snapshots:
             call-bound: 1.0.4
             get-intrinsic: 1.3.0
 
-    listr2@4.0.5:
-        dependencies:
-            cli-truncate: 2.1.0
-            colorette: 2.0.20
-            log-update: 4.0.0
-            p-map: 4.0.0
-            rfdc: 1.4.1
-            rxjs: 7.8.1
-            through: 2.3.8
-            wrap-ansi: 7.0.0
+  listr2@4.0.5:
+    dependencies:
+      cli-truncate: 2.1.0
+      colorette: 2.0.20
+      log-update: 4.0.0
+      p-map: 4.0.0
+      rfdc: 1.4.1
+      rxjs: 7.8.1
+      through: 2.3.8
+      wrap-ansi: 7.0.0
 
   loader-runner@4.3.0: {}
 
@@ -12915,13 +12449,7 @@ snapshots:
 
   mute-stream@0.0.8: {}
 
-    mz@2.7.0:
-        dependencies:
-            any-promise: 1.3.0
-            object-assign: 4.1.1
-            thenify-all: 1.6.0
-
-    nanoid@3.3.8: {}
+  nanoid@3.3.8: {}
 
   natural-compare@1.4.0: {}
 
@@ -12998,11 +12526,9 @@ snapshots:
 
   normalize-path@3.0.0: {}
 
-    normalize-range@0.1.2: {}
-
-    now-and-later@3.0.0:
-        dependencies:
-            once: 1.4.0
+  now-and-later@3.0.0:
+    dependencies:
+      once: 1.4.0
 
   npm-normalize-package-bin@1.0.1: {}
 
@@ -13016,16 +12542,14 @@ snapshots:
 
   nwsapi@2.2.20: {}
 
-    object-assign@4.1.1: {}
+  object-assign@4.1.1: {}
 
   object-inspect@1.13.4: {}
 
-    object-inspect@1.13.3: {}
-
-    object-is@1.1.6:
-        dependencies:
-            call-bind: 1.0.8
-            define-properties: 1.2.1
+  object-is@1.1.6:
+    dependencies:
+      call-bind: 1.0.8
+      define-properties: 1.2.1
 
   object-keys@1.1.1: {}
 
@@ -13069,14 +12593,14 @@ snapshots:
 
   opener@1.5.2: {}
 
-    optionator@0.9.4:
-        dependencies:
-            deep-is: 0.1.4
-            fast-levenshtein: 2.0.6
-            levn: 0.4.1
-            prelude-ls: 1.2.1
-            type-check: 0.4.0
-            word-wrap: 1.2.5
+  optionator@0.9.4:
+    dependencies:
+      deep-is: 0.1.4
+      fast-levenshtein: 2.0.6
+      levn: 0.4.1
+      prelude-ls: 1.2.1
+      type-check: 0.4.0
+      word-wrap: 1.2.5
 
   ora@5.4.1:
     dependencies:
@@ -13150,7 +12674,7 @@ snapshots:
     dependencies:
       aggregate-error: 3.1.0
 
-    p-try@2.2.0: {}
+  p-try@2.2.0: {}
 
     node-fetch@2.7.0:
         dependencies:
@@ -13325,60 +12849,25 @@ snapshots:
 
   picomatch@4.0.2: {}
 
-    pify@2.3.0: {}
-
-    pirates@4.0.6: {}
-
-    pkg-types@1.2.1:
-        dependencies:
-            confbox: 0.1.8
-            mlly: 1.7.3
-            pathe: 1.1.2
+  pkg-types@1.3.1:
+    dependencies:
+      confbox: 0.1.8
+      mlly: 1.7.4
+      pathe: 2.0.2
 
   possible-typed-array-names@1.0.0: {}
 
-    postcss-import@15.1.0(postcss@8.4.49):
-        dependencies:
-            postcss: 8.4.49
-            postcss-value-parser: 4.2.0
-            read-cache: 1.0.0
-            resolve: 1.22.9
+  postcss@8.4.31:
+    dependencies:
+      nanoid: 3.3.8
+      picocolors: 1.1.1
+      source-map-js: 1.2.1
 
-    postcss-js@4.0.1(postcss@8.4.49):
-        dependencies:
-            camelcase-css: 2.0.1
-            postcss: 8.4.49
-
-    postcss-load-config@4.0.2(postcss@8.4.49):
-        dependencies:
-            lilconfig: 3.1.3
-            yaml: 2.6.1
-        optionalDependencies:
-            postcss: 8.4.49
-
-    postcss-nested@6.2.0(postcss@8.4.49):
-        dependencies:
-            postcss: 8.4.49
-            postcss-selector-parser: 6.1.2
-
-    postcss-selector-parser@6.1.2:
-        dependencies:
-            cssesc: 3.0.0
-            util-deprecate: 1.0.2
-
-    postcss-value-parser@4.2.0: {}
-
-    postcss@8.4.31:
-        dependencies:
-            nanoid: 3.3.8
-            picocolors: 1.1.1
-            source-map-js: 1.2.1
-
-    postcss@8.4.49:
-        dependencies:
-            nanoid: 3.3.8
-            picocolors: 1.1.1
-            source-map-js: 1.2.1
+  postcss@8.5.3:
+    dependencies:
+      nanoid: 3.3.8
+      picocolors: 1.1.1
+      source-map-js: 1.2.1
 
   postgres-array@2.0.0: {}
 
@@ -13548,10 +13037,6 @@ snapshots:
     dependencies:
       loose-envify: 1.4.0
 
-  read-cache@1.0.0:
-    dependencies:
-      pify: 2.3.0
-
   readable-stream@2.3.8:
     dependencies:
       core-util-is: 1.0.3
@@ -13654,12 +13139,6 @@ snapshots:
   resolve-options@2.0.0:
     dependencies:
       value-or-function: 4.0.0
-
-  resolve@1.22.10:
-    dependencies:
-      is-core-module: 2.16.1
-      path-parse: 1.0.7
-      supports-preserve-symlinks-flag: 1.0.0
 
   resolve@1.22.8:
     dependencies:
@@ -14344,10 +13823,6 @@ snapshots:
     dependencies:
       ansi-regex: 5.0.1
 
-  strip-ansi@7.1.0:
-    dependencies:
-      ansi-regex: 6.1.0
-
   strip-json-comments@3.1.1: {}
 
   strip-literal@1.3.0:
@@ -14393,9 +13868,7 @@ snapshots:
 
   tabbable@6.2.0: {}
 
-  tailwind-merge@2.2.2:
-    dependencies:
-      '@babel/runtime': 7.26.7
+  tailwind-merge@3.0.2: {}
 
     querystringify@2.2.0: {}
 
@@ -15104,11 +14577,9 @@ snapshots:
 
   thenify-all@1.6.0:
     dependencies:
-      thenify: 3.3.1
+      b4a: 1.6.7
 
-  thenify@3.3.1:
-    dependencies:
-      any-promise: 1.3.0
+  text-table@0.2.0: {}
 
   throttle-debounce@2.3.0: {}
 
@@ -15181,8 +14652,6 @@ snapshots:
   ts-api-utils@1.4.3(typescript@5.3.3):
     dependencies:
       typescript: 5.3.3
-
-  ts-interface-checker@0.1.13: {}
 
   ts-log@2.2.7: {}
 

@@ -40,7 +40,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
                 <div className="h2 text-textAccent">{t('Great choice! We have added your item to the cart')}</div>
             </div>
 
-            <div className="mb-4 flex flex-col items-center rounded border border-borderAccent p-3 md:flex-row md:p-4">
+            <div className="mb-4 flex flex-col items-center rounded-sm border border-borderAccent p-3 md:flex-row md:p-4">
                 {!!product.mainImage && (
                     <div
                         className="mb-4 flex h-12 w-24 items-center justify-center md:mb-0"

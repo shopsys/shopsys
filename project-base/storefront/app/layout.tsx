@@ -5,8 +5,8 @@ import { Webline } from 'components/Layout/Webline/Webline';
 import Providers from 'components/providers/Providers';
 import 'nprogress/nprogress.css';
 import 'react-loading-skeleton/dist/skeleton.css';
-import 'styles/globals.css';
-import 'styles/user-text.css';
+import 'react-toastify/dist/ReactToastify.css';
+import 'styles/theme.css';
 
 type RootLayoutProps = {
     children: React.ReactNode;

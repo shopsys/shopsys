@@ -73,7 +73,7 @@ export const useAddToCart = (gtmMessageOrigin: GtmMessageOriginType, gtmProductL
         //         listIndex,
         //         gtmProductListName,
         //         !!currentCustomerData,
-        //         !!currentCustomerData?.arePricesHidden,
+        //         !canSeePrices,
         //     );
         // });
 
