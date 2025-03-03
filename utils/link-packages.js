@@ -18,7 +18,8 @@ const path = require('path');
         }
 
         const rootPkg = require(rootPkgPath);
-        const workspaces = rootPkg.workspaces || [];
+        let workspaces = rootPkg.workspaces || [];
+        workspaces.push('!project-base/app/var/')
 
         // Find all workspaces
         const workspacePaths = await globby(workspaces, {
