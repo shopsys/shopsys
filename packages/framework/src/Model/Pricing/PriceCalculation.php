@@ -59,7 +59,17 @@ class PriceCalculation
      */
     public function applyVatPercent(Money $priceWithoutVat, Vat $vat): Money
     {
-        $multiplier = (string)(1 + (float)$vat->getPercent() / 100);
+        return $this->applyVatByPercent($priceWithoutVat, (float)$vat->getPercent());
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithoutVat
+     * @param float $vatPercent
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     */
+    public function applyVatByPercent(Money $priceWithoutVat, float $vatPercent): Money
+    {
+        $multiplier = (string)(1 + $vatPercent / 100);
 
         return $priceWithoutVat->multiply($multiplier);
     }

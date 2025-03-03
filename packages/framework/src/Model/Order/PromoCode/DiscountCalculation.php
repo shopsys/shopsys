@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
+use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Rounding;
 
 class DiscountCalculation
@@ -16,10 +17,12 @@ class DiscountCalculation
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Rounding $rounding
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation $priceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      */
     public function __construct(
         protected readonly Rounding $rounding,
         protected readonly PriceCalculation $priceCalculation,
+        protected readonly PricingSetting $pricingSetting,
     ) {
     }
 
@@ -54,19 +57,35 @@ class DiscountCalculation
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $priceWithVat
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $discount
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $totalPrice
      * @param float $vatPercent
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
     public function calculateNominalDiscount(
-        Money $priceWithVat,
+        Money $discount,
+        PriceInterface $totalPrice,
         float $vatPercent,
         Currency $currency,
     ): PriceInterface {
-        $priceVatAmount = $this->priceCalculation->getVatAmountByPriceWithVatForVatPercent($priceWithVat, $vatPercent, $currency);
-        $priceWithoutVat = $priceWithVat->subtract($priceVatAmount);
+        if ($this->pricingSetting->getInputPriceType() === PricingSetting::INPUT_PRICE_TYPE_WITH_VAT) {
+            if ($discount->isGreaterThan($totalPrice->getPriceWithVat())) {
+                return $totalPrice;
+            }
 
-        return new Price($priceWithoutVat, $priceWithVat);
+            $priceVatAmount = $this->priceCalculation->getVatAmountByPriceWithVatForVatPercent($discount, $vatPercent, $currency);
+            $priceWithoutVat = $discount->subtract($priceVatAmount);
+
+            return new Price($priceWithoutVat, $discount);
+        }
+
+        if ($discount->isGreaterThan($totalPrice->getPriceWithoutVat())) {
+            return $totalPrice;
+        }
+
+        $priceWithVat = $this->priceCalculation->applyVatByPercent($discount, $vatPercent);
+
+        return new Price($discount, $priceWithVat);
     }
 }
