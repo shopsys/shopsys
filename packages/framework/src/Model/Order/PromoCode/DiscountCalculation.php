@@ -50,8 +50,15 @@ class DiscountCalculation
             return null;
         }
 
-        $priceVatAmount = $this->priceCalculation->getVatAmountByPriceWithVatForVatPercent($priceWithVat, $vatPercent, $currency);
-        $priceWithoutVat = $priceWithVat->subtract($priceVatAmount);
+        if ($this->pricingSetting->getInputPriceType() === PricingSetting::INPUT_PRICE_TYPE_WITH_VAT) {
+            $priceVatAmount = $this->priceCalculation->getVatAmountByPriceWithVatForVatPercent($priceWithVat, $vatPercent, $currency);
+            $priceWithoutVat = $priceWithVat->subtract($priceVatAmount);
+        } else {
+            $priceWithoutVat = $this->rounding->roundPriceWithoutVat(
+                $totalItemPrice->getPriceWithoutVat()->multiply($multiplier),
+                $currency,
+            );
+        }
 
         return new Price($priceWithoutVat, $priceWithVat);
     }
