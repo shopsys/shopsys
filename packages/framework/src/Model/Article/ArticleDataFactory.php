@@ -70,14 +70,12 @@ class ArticleDataFactory
         $articleData->type = $article->getType();
         $articleData->url = $article->getUrl();
 
-        foreach ($this->domain->getAll() as $domainConfig) {
-            $articleData->urls->mainFriendlyUrlsByDomainId[$domainConfig->getId()] =
-                $this->friendlyUrlFacade->findMainFriendlyUrl(
-                    $domainConfig->getId(),
-                    'front_article_detail',
-                    $article->getId(),
-                );
-        }
+        $articleData->urls->mainFriendlyUrlsByDomainId[$article->getDomainId()] =
+            $this->friendlyUrlFacade->findMainFriendlyUrl(
+                $article->getDomainId(),
+                'front_article_detail',
+                $article->getId(),
+            );
     }
 
     /**

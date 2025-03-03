@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
 class FriendlyUrlType extends AbstractType
@@ -23,7 +24,9 @@ class FriendlyUrlType extends AbstractType
         $builder->add(UrlListData::FIELD_DOMAIN, DomainType::class, [
             'displayUrl' => true,
             'required' => true,
+            'limit_domains_by_ids' => $options['limit_domains_by_ids'],
         ]);
+
         $builder->add(UrlListData::FIELD_SLUG, TextType::class, [
             'required' => true,
             'constraints' => [
@@ -31,5 +34,17 @@ class FriendlyUrlType extends AbstractType
                 new Constraints\Regex(static::SLUG_REGEX),
             ],
         ]);
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver
+            ->setDefaults([
+                'limit_domains_by_ids' => [],
+            ])
+            ->setAllowedTypes('limit_domains_by_ids', 'array');
     }
 }

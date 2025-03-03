@@ -6,7 +6,10 @@ namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
+use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
+use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlIsNotMultidomainException;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
 class FriendlyUrlFactory
 {
@@ -14,11 +17,13 @@ class FriendlyUrlFactory
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver $entityNameResolver
      * @param \Shopsys\FrameworkBundle\Component\String\TransformStringHelper $transformStringHelper
+     * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly EntityNameResolver $entityNameResolver,
         protected readonly TransformStringHelper $transformStringHelper,
+        protected readonly DomainRouterFactory $domainRouterFactory,
     ) {
     }
 
@@ -78,6 +83,10 @@ class FriendlyUrlFactory
     ): array {
         $friendlyUrls = [];
 
+        if ($this->isRouteMultidomain($routeName) === false) {
+            throw new FriendlyUrlIsNotMultidomainException($routeName);
+        }
+
         foreach ($this->domain->getAll() as $domainConfig) {
             if (array_key_exists($domainConfig->getLocale(), $namesByLocale)) {
                 $friendlyUrl = $this->createIfValid(
@@ -94,5 +103,22 @@ class FriendlyUrlFactory
         }
 
         return $friendlyUrls;
+    }
+
+    /**
+     * @param string $routeName
+     * @return bool
+     */
+    protected function isRouteMultidomain(string $routeName): bool
+    {
+        $friendlyUrlRouter = $this->domainRouterFactory->getFriendlyUrlRouter($this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID));
+        $routeCollection = $friendlyUrlRouter->getRouteCollection();
+        $route = $routeCollection->get($routeName);
+
+        if ($route === null) {
+            throw new RouteNotFoundException('Route "' . $routeName . '" not found.');
+        }
+
+        return $route->getOption('multidomain') ?? true;
     }
 }

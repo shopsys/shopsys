@@ -169,7 +169,11 @@ Displays select box with all domain names or domain URLs.
 Defaults to `false`.  
 If you set this option to `true`, domain url will be shown instead of domain name.
 
-### [FileUploadType](https://github.com/shopsys/shopsys/blob/HEAD/packages/framework/src/Form/FileUploadType.php)
+#### limit_domains_by_ids
+
+Limits list of displayed domains to provided ids.
+
+### [FileUploadType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/FileUploadType.php)
 
 Uses `AbstractFileUploadType` to display a widget for files upload and to work with them (similar as `ImageUploadType`).
 After a file or files are uploaded it shows box for every file and lets you to downloads, order or delete files.
@@ -219,7 +223,11 @@ Extends `BasicFileUploadType` with additional support for translated file names.
 Displays a select box with domain urls and text field that lets you to create friendly url on selected domain with your valid slug.
 Uses `DomainType` to display select box with domain urls.
 
-### [UrlListType](https://github.com/shopsys/shopsys/blob/HEAD/packages/framework/src/Form/UrlListType.php)
+#### limit_domains_by_ids
+
+Limits list of displayed domains to provided ids.
+
+### [UrlListType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/UrlListType.php)
 
 Uses `FriendlyUrlType` to display a list of friendly URLs for each domain that lets you delete and create friendly URLs with unique slugs and select which URL should be the main for the domain.
 
@@ -231,7 +239,11 @@ Defines which route should the URLs go into.
 
 Defines what is the entity ID that the URLs are assigned to.
 
-### [ImageUploadType](https://github.com/shopsys/shopsys/blob/HEAD/packages/framework/src/Form/ImageUploadType.php)
+#### limit_domains_by_ids
+
+Limits list of displayed domains to provided ids.
+
+### [ImageUploadType](https://github.com/shopsys/shopsys/blob/master/packages/framework/src/Form/ImageUploadType.php)
 
 Uses `AbstractFileUploadType` to display a widget for images upload and to work with them (same as `FileUploadType`).
 

@@ -51,13 +51,16 @@ class ArticleFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        /** @var \Shopsys\FrameworkBundle\Model\Article\Article|null $article */
+        $article = $options['article'];
+
         $seoMetaDescriptionAttributes = $this->getSeoMetaDescriptionAttributes($options);
 
         $builderArticleData = $builder->create('articleData', GroupType::class, [
             'label' => t('Article data'),
         ]);
 
-        if ($options['article'] === null) {
+        if ($article === null) {
             $builderArticleData
                 ->add('domainId', DomainType::class, [
                     'required' => true,
@@ -76,11 +79,11 @@ class ArticleFormType extends AbstractType
         } else {
             $builderArticleData
                 ->add('id', DisplayOnlyType::class, [
-                    'data' => $options['article']->getId(),
+                    'data' => $article->getId(),
                     'label' => t('ID'),
                 ])
                 ->add('domain', DisplayOnlyType::class, [
-                    'data' => $this->domain->getDomainConfigById($options['article']->getDomainId())->getName(),
+                    'data' => $this->domain->getDomainConfigById($article->getDomainId())->getName(),
                     'label' => t('Domain'),
                 ]);
         }
@@ -176,12 +179,13 @@ class ArticleFormType extends AbstractType
                 'label' => t('Heading (H1)'),
             ]);
 
-        if ($options['article'] !== null) {
+        if ($article !== null) {
             $builderSeoData
                 ->add('urls', UrlListType::class, [
                     'label' => t('URL addresses'),
                     'route_name' => 'front_article_detail',
-                    'entity_id' => $options['article']->getId(),
+                    'entity_id' => $article->getId(),
+                    'limit_domains_by_ids' => [$article->getDomainId()],
                 ]);
         }
 
@@ -190,7 +194,7 @@ class ArticleFormType extends AbstractType
             ->add($builderSeoData)
             ->add('actionBar', ActionBarType::class, [
                 'back_route' => 'admin_article_list',
-                'entity' => $options['article'],
+                'entity' => $article,
             ]);
     }
 

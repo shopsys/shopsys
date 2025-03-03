@@ -29,7 +29,7 @@ class DomainType extends AbstractType
      */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
-        $view->vars['domainConfigs'] = $this->getSortedDomainConfigsByAdminDomainTabs();
+        $view->vars['domainConfigs'] = $this->getSortedDomainConfigsByAdminDomainTabs($options['limit_domains_by_ids']);
         $view->vars['displayUrl'] = $options['displayUrl'];
     }
 
@@ -38,22 +38,26 @@ class DomainType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            'displayUrl' => false,
-        ]);
+        $resolver
+            ->setDefaults([
+                'displayUrl' => false,
+                'limit_domains_by_ids' => [],
+            ])
+            ->setAllowedTypes('limit_domains_by_ids', 'array');
     }
 
     /**
+     * @param int[] $limitDomainsByIds
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
      */
-    private function getSortedDomainConfigsByAdminDomainTabs(): array
+    private function getSortedDomainConfigsByAdminDomainTabs(array $limitDomainsByIds): array
     {
         $selectedDomainId = $this->adminDomainTabsFacade->getSelectedDomainId();
 
         $list = [];
         $list[] = $this->adminDomainTabsFacade->getSelectedDomainConfig();
 
-        foreach ($this->domain->getAdminEnabledDomains() as $domainConfig) {
+        foreach ($this->domain->getAdminEnabledDomains($limitDomainsByIds) as $domainConfig) {
             if ($domainConfig->getId() !== $selectedDomainId) {
                 $list[] = $domainConfig;
             }

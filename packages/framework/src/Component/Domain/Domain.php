@@ -236,23 +236,31 @@ class Domain implements DomainIdsProviderInterface
     }
 
     /**
+     * @param int[] $limitDomainsByIds
      * @return int[]
      */
-    public function getAdminEnabledDomainIds(): array
+    public function getAdminEnabledDomainIds(array $limitDomainsByIds = []): array
     {
         $selectedDomainIds = $this->administratorFacade->getCurrentlyLoggedAdministrator()->getDisplayOnlyDomainIds();
 
-        return count($selectedDomainIds) > 0 ? $selectedDomainIds : $this->getAllIds();
+        $domainIds = count($selectedDomainIds) > 0 ? $selectedDomainIds : $this->getAllIds();
+
+        if (count($limitDomainsByIds) > 0) {
+            return array_intersect($domainIds, $limitDomainsByIds);
+        }
+
+        return $domainIds;
     }
 
     /**
+     * @param int[] $limitDomainsByIds
      * @return \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig[]
      */
-    public function getAdminEnabledDomains(): array
+    public function getAdminEnabledDomains(array $limitDomainsByIds = []): array
     {
         $domains = [];
 
-        foreach ($this->getAdminEnabledDomainIds() as $selectedDomainId) {
+        foreach ($this->getAdminEnabledDomainIds($limitDomainsByIds) as $selectedDomainId) {
             $domains[$selectedDomainId] = $this->getDomainConfigById($selectedDomainId);
         }
 
