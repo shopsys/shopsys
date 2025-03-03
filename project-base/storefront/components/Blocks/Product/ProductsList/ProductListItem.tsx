@@ -75,14 +75,14 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 ref={ref}
                 tid={TIDs.blocks_product_list_listeditem_ + product.catalogNumber}
                 className={twMergeCustom(
-                    'group relative flex select-text flex-col gap-2.5 rounded-xl border border-backgroundMore bg-backgroundMore py-5 text-left transition',
+                    'border-backgroundMore bg-backgroundMore group relative flex flex-col gap-2.5 rounded-xl border py-5 text-left transition select-text',
                     size === 'small' && 'gap-0 py-2.5',
                     'hover:border-borderAccentLess hover:bg-background',
                     className,
                 )}
             >
                 <ExtendedNextLink
-                    className="flex grow select-text text-text no-underline hover:text-link hover:no-underline"
+                    className="text-text hover:text-link flex grow no-underline select-text hover:no-underline"
                     draggable={false}
                     href={product.slug}
                     type={product.isMainVariant ? 'productMainVariant' : 'product'}
@@ -97,7 +97,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
 
                         <div
                             className={twJoin(
-                                'grow overflow-hidden break-words font-secondary font-semibold group-hover:text-link group-hover:underline',
+                                'font-secondary group-hover:text-link grow overflow-hidden font-semibold break-words group-hover:underline',
                                 textSize === 'xs' ? 'text-xs' : 'text-sm',
                             )}
                         >
@@ -105,8 +105,8 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                         </div>
 
                         {product.__typename === 'MainVariant' && (
-                            <div className="flex w-fit items-center gap-1.5 whitespace-nowrap rounded-md bg-background px-2.5 py-1.5 font-secondary text-xs group-hover:text-text">
-                                <VariantIcon className="size-3 text-textAccent" />
+                            <div className="bg-background font-secondary group-hover:text-text flex w-fit items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs whitespace-nowrap">
+                                <VariantIcon className="text-textAccent size-3" />
                                 {product.variantsCount} {t('variants count', { count: product.variantsCount })}
                             </div>
                         )}
@@ -124,7 +124,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                             <ProductAvailability
                                 availability={product.availability}
                                 availableStoresCount={product.availableStoresCount}
-                                className="min-h-10 xs:min-h-[60px] sm:min-h-10"
+                                className="xs:min-h-[60px] min-h-10 sm:min-h-10"
                                 isInquiryType={product.isInquiryType}
                             />
                         )}

@@ -13,7 +13,7 @@ export const SkeletonPageStores: FC = () => (
             <div className="w-full max-lg:order-2 max-lg:mt-5 lg:basis-1/2">
                 <div className="flex h-[614px] flex-col gap-2.5 overflow-hidden">
                     {createEmptyArray(5).map((_, index) => (
-                        <div key={index} className="rounded-xl bg-backgroundMore px-5 py-2.5">
+                        <div key={index} className="bg-backgroundMore rounded-xl px-5 py-2.5">
                             <div className="flex items-center justify-between gap-2.5">
                                 <div className="w-full">
                                     <div className="max-vl:mb-2.5">
@@ -32,7 +32,7 @@ export const SkeletonPageStores: FC = () => (
             </div>
 
             <div className="w-full max-lg:order-1 lg:basis-1/2">
-                <div className="mt-5 flex aspect-square w-full rounded-xl bg-backgroundMore p-5 lg:mt-0">
+                <div className="bg-backgroundMore mt-5 flex aspect-square w-full rounded-xl p-5 lg:mt-0">
                     <Skeleton className="h-full w-full" containerClassName="w-full" />
                 </div>
             </div>

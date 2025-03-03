@@ -15,7 +15,7 @@ export const ArticleDetailContent: FC<ArticleDetailContentProps> = ({ article })
     return (
         <Webline>
             <ArticleTitle>{article.seoH1 || article.articleName}</ArticleTitle>
-            <p className="mb-2 px-5 text-left text-xs font-semibold text-textDisabled">
+            <p className="text-textDisabled mb-2 px-5 text-left text-xs font-semibold">
                 {formatDate(article.createdAt)}
             </p>
             {article.text !== null && (

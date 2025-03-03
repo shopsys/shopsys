@@ -29,10 +29,10 @@ export const OrderSummary: FC<OrderSummaryProps> = ({ isTransportOrPaymentLoadin
     return (
         <>
             <Adverts withGapBottom positionName="cartPreview" />
-            <div className="w-full vl:max-w-md">
-                <div className="h4 mb-3 font-bold">{t('Your order')}</div>
+            <div className="vl:max-w-md w-full">
+                <h4 className="mb-3">{t('Your order')}</h4>
 
-                <div className="rounded bg-backgroundMore vl:m-0">
+                <div className="bg-backgroundMore vl:m-0 rounded-sm">
                     <div className="relative flex flex-col px-5 py-3">
                         <div className="mb-5">
                             <ul>

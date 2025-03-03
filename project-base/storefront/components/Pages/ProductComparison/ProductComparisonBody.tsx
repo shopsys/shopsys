@@ -33,7 +33,7 @@ export const ProductComparisonBody: FC<ProductComparisonBodyProps> = ({ compared
                         <BodyItem key={`availability-${product.uuid}`}>
                             <div
                                 className={twJoin(
-                                    'break-words text-sm font-bold sm:text-base',
+                                    'text-sm font-bold break-words sm:text-base',
                                     product.availability.status === TypeAvailabilityStatusEnum.InStock &&
                                         'text-availabilityInStock',
                                     product.availability.status === TypeAvailabilityStatusEnum.OutOfStock &&
@@ -68,8 +68,8 @@ export const ProductComparisonBody: FC<ProductComparisonBodyProps> = ({ compared
 const BodyItem: FC<{ isSticky?: boolean }> = ({ children, isSticky }) => (
     <td
         className={twJoin(
-            'w-[182px] break-words bg-tableBackground p-3 text-sm sm:w-[207px] sm:px-5 sm:text-base',
-            isSticky && 'sticky left-0 z-above text-base text-textAccent',
+            'bg-tableBackground w-[182px] p-3 text-sm break-words sm:w-[207px] sm:px-5 sm:text-base',
+            isSticky && 'z-above text-textAccent sticky left-0 text-base',
         )}
     >
         {children}

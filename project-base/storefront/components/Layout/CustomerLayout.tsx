@@ -16,10 +16,10 @@ export const CustomerLayout: FC<CustomerLayoutProps> = ({ pageHeading, children,
             <Webline>
                 <Breadcrumbs key="breadcrumb" breadcrumbs={breadcrumbs ?? []} type={props.breadcrumbsType} />
             </Webline>
-            <Webline className="mt-8 flex flex-col gap-6 lg:mt-4 lg:flex-row vl:mt-12">
+            <Webline className="vl:mt-12 mt-8 flex flex-col gap-6 lg:mt-4 lg:flex-row">
                 <UserNavigation />
                 <div className="w-full">
-                    {pageHeading && <h1 className={isUserLoggedIn ? '' : 'mt-0 vl:mt-4'}>{pageHeading}</h1>}
+                    {pageHeading && <h1 className={isUserLoggedIn ? '' : 'vl:mt-4 mt-0'}>{pageHeading}</h1>}
                     {children}
                 </div>
             </Webline>

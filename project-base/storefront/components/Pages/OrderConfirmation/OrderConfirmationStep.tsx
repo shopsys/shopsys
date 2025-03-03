@@ -14,7 +14,7 @@ export const OrderConfirmationStep: FC<OrderConfirmationStepProps> = ({ step: { 
                         'flex size-8 items-center justify-center rounded-full sm:size-11',
                         state === FlowTypeStateEnum.Active && 'bg-textAccent text-textInverted',
                         state === FlowTypeStateEnum.Inactive &&
-                            'border border-borderAccent bg-background text-textAccent',
+                            'border-borderAccent bg-background text-textAccent border',
                         state === FlowTypeStateEnum.Error && 'bg-backgroundError text-textInverted',
                     )}
                 >

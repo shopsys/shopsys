@@ -21,7 +21,7 @@ const BannerContent: FC<{ banner: TypeSliderItemFragment }> = ({ banner, classNa
             backgroundColor: getRGBColorString(banner.rgbBackgroundColor, banner.opacity),
         }}
     >
-        <h1 className={twJoin('mb-2.5 vl:mb-5', getYIQContrastTextColor(banner.rgbBackgroundColor))}>{banner.name}</h1>
+        <h1 className={twJoin('vl:mb-5 mb-2.5', getYIQContrastTextColor(banner.rgbBackgroundColor))}>{banner.name}</h1>
         {banner.description && (
             <p className={getYIQContrastTextColor(banner.rgbBackgroundColor)}>{banner.description}</p>
         )}
@@ -32,7 +32,7 @@ export const Banner: FC<BannerProps> = ({ banner, bannerSliderState, index, numI
     return (
         <div
             key={banner.link}
-            className="flex flex-[1_0_100%] basis-full flex-col vl:flex-row"
+            className="vl:flex-row flex flex-[1_0_100%] basis-full flex-col"
             style={{
                 order: getBannerOrderCSSProperty(index, bannerSliderState.sliderPosition, numItems),
             }}

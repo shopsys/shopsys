@@ -33,7 +33,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
         <>
             <div
                 className={twJoin(
-                    'flex flex-col gap-3 first:border-none first:pt-0 last:pb-0 vl:flex-row vl:items-center vl:gap-5',
+                    'vl:flex-row vl:items-center vl:gap-5 flex flex-col gap-3 first:border-none first:pt-0 last:pb-0',
                 )}
             >
                 <div className="flex h-12 w-20 shrink-0">
@@ -45,7 +45,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                         width={80}
                     />
                 </div>
-                <div className="flex w-full flex-col flex-wrap justify-between gap-3 border-b border-b-borderLess last:border-none vl:flex-row vl:items-center vl:gap-5">
+                <div className="border-b-borderLess vl:flex-row vl:items-center vl:gap-5 flex w-full flex-col flex-wrap justify-between gap-3 border-b last:border-none">
                     {complaintItem.product?.isVisible ? (
                         <ExtendedNextLink className="w-fit" href={complaintItem.product.slug} type="product">
                             {complaintItem.productName}
@@ -101,14 +101,14 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                         <li
                             key={index}
                             className={twJoin(
-                                'flex w-1/5 cursor-pointer items-center justify-center rounded-lg outline-1 outline-borderAccent hover:outline sm:h-16 vl:w-auto',
+                                'outline-borderAccent vl:w-auto flex w-1/5 cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:h-16',
                                 isWithAdditionalImages && 'relative',
                             )}
                             onClick={() => setSelectedGalleryItemIndex(imagePosition)}
                         >
                             <Image
                                 alt={file.anchorText || `${complaintItem.productName}-${index}`}
-                                className="aspect-square max-h-full rounded-md bg-backgroundMore object-contain p-1 mix-blend-multiply"
+                                className="bg-backgroundMore aspect-square max-h-full rounded-md object-contain p-1 mix-blend-multiply"
                                 hash={file.url.split('?')[1]}
                                 height={90}
                                 src={file.url.split('?')[0]}
@@ -116,7 +116,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                             />
 
                             {isWithAdditionalImages && (
-                                <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center rounded-lg bg-imageOverlay text-lg font-bold">
+                                <div className="bg-imageOverlay absolute top-0 left-0 flex h-full w-full items-center justify-center rounded-lg text-lg font-bold">
                                     +{galleryAdditionalItemsCount}
                                 </div>
                             )}

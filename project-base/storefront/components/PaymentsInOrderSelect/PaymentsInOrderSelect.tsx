@@ -85,7 +85,7 @@ export const PaymentsInOrderSelect: FC<PaymentsInOrderSelectProps> = ({
                             ? t('Repeat payment or change your payment method')
                             : t('Change order payment')}
                     </h3>
-                    <div className="flex w-full flex-col overflow-hidden rounded-md bg-backgroundMore">
+                    <div className="bg-backgroundMore flex w-full flex-col overflow-hidden rounded-md">
                         <ul className="w-full">
                             {isPaymentByCardAvailable && (
                                 <PaymentsInOrderSelectItem
@@ -115,7 +115,7 @@ export const PaymentsInOrderSelect: FC<PaymentsInOrderSelectProps> = ({
                             />
                         ) : (
                             <>
-                                <span className="flex items-center gap-2 text-sm text-textDisabled vl:text-base">
+                                <span className="text-textDisabled vl:text-base flex items-center gap-2 text-sm">
                                     {t('The price of your order may change by the price of the payment')}
                                     <InfoIcon />
                                 </span>

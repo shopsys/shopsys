@@ -27,7 +27,7 @@ export const OrderLayout: FC<OrderLayoutProps> = ({ children, page, isFetchingDa
 
             <Webline
                 className="relative mb-4 lg:pb-6"
-                wrapperClassName="bg-gradient-to-tr from-backgroundBrand to-backgroundBrandLess"
+                wrapperClassName="bg-linear-to-tr/srgb from-backgroundBrand to-backgroundBrandLess"
             >
                 <Header simpleHeader />
             </Webline>

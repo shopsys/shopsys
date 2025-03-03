@@ -7,10 +7,10 @@ export const SkeletonPageProductDetailMainVariant: FC = () => (
     <Webline>
         <SkeletonModuleBreadcrumbs count={3} />
 
-        <div className="flex flex-col gap-y-6 vl:flex-row">
+        <div className="vl:flex-row flex flex-col gap-y-6">
             <Skeleton className="h-[460px] w-[460px]" containerClassName="flex justify-center vl:order-2 w-full" />
 
-            <div className="flex justify-center gap-2 vl:flex-col vl:justify-start">
+            <div className="vl:flex-col vl:justify-start flex justify-center gap-2">
                 {createEmptyArray(5).map((_, index) => (
                     <Skeleton
                         key={index}
@@ -23,7 +23,7 @@ export const SkeletonPageProductDetailMainVariant: FC = () => (
 
         <Skeleton className="mt-8 h-14 w-[460px]" containerClassName="flex vl:order-2 w-full" />
 
-        <div className="mt-8 grid grid-cols-1 gap-2 divide-borderAccent md:grid-cols-2 lg:grid-cols-1 lg:gap-0 lg:divide-y">
+        <div className="divide-borderAccent mt-8 grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-1 lg:gap-0 lg:divide-y">
             {createEmptyArray(8).map((_, index) => (
                 <Skeleton key={index} className="h-96 w-full lg:h-16" containerClassName="p-2" />
             ))}

@@ -44,7 +44,7 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
         <th className="relative px-3 pb-3 align-top font-semibold sm:px-5 sm:pb-5" id="js-table-compare-product">
             <div className="flex w-[182px] flex-col gap-2 sm:w-[205px]">
                 <div className="flex flex-col gap-2">
-                    <div className="flex h-[185px] w-full items-center justify-center pb-3 pt-4">
+                    <div className="flex h-[185px] w-full items-center justify-center pt-4 pb-3">
                         <Image
                             alt={product.mainImage?.name || product.fullName}
                             className="max-h-full w-auto"
@@ -64,7 +64,7 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
                             )
                         }
                     >
-                        <span className="line-clamp-4 min-h-[5rem] font-secondary text-sm">{product.fullName}</span>
+                        <span className="font-secondary line-clamp-4 min-h-[5rem] text-sm">{product.fullName}</span>
                     </ExtendedNextLink>
                     <span className="text-xs">
                         {t('Code')}: {product.catalogNumber}
@@ -78,7 +78,7 @@ export const ProductComparisonHeadItem: FC<ProductComparisonItemProps> = ({
                 />
             </div>
             <Button
-                className="absolute right-3 top-0 bg-background p-2 sm:right-5"
+                className="bg-background absolute top-0 right-3 p-2 sm:right-5"
                 variant="inverted"
                 onClick={() => {
                     toggleProductInComparison();

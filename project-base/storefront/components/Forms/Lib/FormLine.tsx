@@ -23,7 +23,7 @@ export const FormLine: FC<FormLineProps> = ({
             'flex-1',
             bottomGap && 'pb-2.5',
             isHalfWidthInput && 'vl:w-1/2 vl:pr-1.5',
-            isSmallInput && 'w-[150px] flex-none vl:w-[220px]',
+            isSmallInput && 'vl:w-[220px] w-[150px] flex-none',
             className,
         )}
         {...props}

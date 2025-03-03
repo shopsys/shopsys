@@ -29,19 +29,19 @@ export const ColorLabelWrapper: FC<ColorLabelWrapperProps> = ({
         <label
             htmlFor={htmlFor}
             className={twMergeCustom(
-                'group relative flex w-full cursor-pointer items-center gap-2 text-sm font-semibold text-inputText',
-                disabled && 'cursor-no-drop text-inputTextDisabled opacity-60',
+                'text-inputText group relative flex w-full cursor-pointer items-center gap-2 text-sm font-semibold',
+                disabled && 'text-inputTextDisabled cursor-no-drop opacity-60',
             )}
         >
             <div
                 style={{ backgroundColor: bgColor }}
                 className={twMergeCustom(
-                    'flex size-7 shrink-0 justify-center rounded border border-text bg-inputBackground transition',
+                    'border-text bg-inputBackground flex size-7 shrink-0 justify-center rounded-sm border transition',
                     checked
                         ? 'border-text'
                         : 'group-hover:border-inputBorderHovered group-active:border-inputBorderHovered',
                     disabled &&
-                        'border-inputBorderDisabled outline-0 active:scale-100 group-hover:border-inputBorderDisabled group-hover:bg-inputBorderDisabled group-active:border-inputBorderDisabled group-active:outline-0',
+                        'border-inputBorderDisabled group-hover:border-inputBorderDisabled group-hover:bg-inputBorderDisabled group-active:border-inputBorderDisabled outline-0 group-active:outline-0 active:scale-100',
                     disabled && checked && 'bg-inputBorderDisabled group-hover:bg-inputBorderDisabled',
                 )}
             >
@@ -56,7 +56,7 @@ export const ColorLabelWrapper: FC<ColorLabelWrapperProps> = ({
             </div>
             <div className="flex w-full justify-between">
                 <div className="w-full">{label}</div>
-                {!!count && !checked && <div className="ml-auto font-normal text-inputPlaceholder">({count})</div>}
+                {!!count && !checked && <div className="text-inputPlaceholder ml-auto font-normal">({count})</div>}
             </div>
         </label>
     </div>

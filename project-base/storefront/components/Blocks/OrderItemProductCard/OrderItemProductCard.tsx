@@ -23,7 +23,7 @@ export const OrderItemProductCard: FC<OrderItemProductCardProps> = ({
     availability,
 }) => {
     return (
-        <li className="flex flex-col gap-1 rounded-xl bg-backgroundMore p-4 font-secondary">
+        <li className="bg-backgroundMore font-secondary flex flex-col gap-1 rounded-xl p-4">
             <div className="flex items-center gap-2.5">
                 <Image
                     alt={mainImage?.name || fullName}
@@ -47,7 +47,7 @@ export const OrderItemProductCard: FC<OrderItemProductCardProps> = ({
                             {availability.name}
                         </span>
                     </div>
-                    <span className="whitespace-nowrap text-sm font-semibold">
+                    <span className="text-sm font-semibold whitespace-nowrap">
                         {quantity} {unit}
                     </span>
                 </div>

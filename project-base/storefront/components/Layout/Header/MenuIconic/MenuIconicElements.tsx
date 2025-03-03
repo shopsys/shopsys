@@ -87,7 +87,7 @@ MenuIconicItemLink.displayName = 'MenuIconicItemLink';
 export const MenuIconicItemUserAuthenticatedContentListItem: FC = ({ children }) => (
     <li
         className={twJoin(
-            'h-14 rounded-xl border border-background bg-backgroundMore',
+            'border-background bg-backgroundMore h-14 rounded-xl border',
             'hover:border-borderAccentLess hover:bg-background',
         )}
     >
@@ -120,8 +120,8 @@ export const MenuIconicItemUserPopover: FC<MenuIconicItemUserPopoverProps> = ({
             {isHovered && (
                 <AnimateAppearDiv
                     className={twMergeCustom(
-                        `pointer-events-auto absolute top-[54px] z-cart hidden origin-top`,
-                        'rounded-xl bg-background p-5 vl:block',
+                        `z-cart pointer-events-auto absolute top-[54px] hidden origin-top`,
+                        'bg-background vl:block rounded-xl p-5',
                         'before:absolute before:-top-2.5 before:left-0 before:h-2.5 before:w-full',
                         positionClasses,
                     )}

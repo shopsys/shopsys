@@ -45,17 +45,17 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
         <>
             <div
                 key={productName}
-                className="flex w-full basis-1/2 flex-col items-start gap-6 vl:basis-3/5 vl:flex-row"
+                className="vl:basis-3/5 vl:flex-row flex w-full basis-1/2 flex-col items-start gap-6"
             >
                 <div
-                    className={twJoin('relative flex w-full justify-center vl:order-2')}
+                    className={twJoin('vl:order-2 relative flex w-full justify-center')}
                     data-src={mainImage?.url}
                     tid={TIDs.product_detail_main_image}
                 >
                     <Image
                         priority
                         alt={mainImage?.name || productName}
-                        className="size-auto object-contain vl:size-[500px]"
+                        className="vl:size-[500px] size-auto object-contain"
                         height={500}
                         sizes="(max-width: 768px) 100vw, 50vw"
                         src={mainImage?.url}
@@ -72,7 +72,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                 </div>
 
                 {!!galleryItems.length && (
-                    <ul className="mx-auto flex w-full max-w-lg items-center justify-center gap-2 lg:relative vl:order-none vl:w-16 vl:flex-col">
+                    <ul className="vl:order-none vl:w-16 vl:flex-col mx-auto flex w-full max-w-lg items-center justify-center gap-2 lg:relative">
                         {galleryItems.map((galleryItem, index) => {
                             const isImage = galleryItem.__typename === 'Image';
                             const isVideo = galleryItem.__typename === 'VideoToken';
@@ -89,7 +89,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                                 <li
                                     key={index}
                                     className={twJoin(
-                                        'flex w-1/5 cursor-pointer items-center justify-center rounded-lg outline-1 outline-borderAccent hover:outline sm:h-16 vl:w-auto',
+                                        'outline-borderAccent vl:w-auto flex w-1/5 cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:h-16',
                                         (isWithAdditionalImages || isVideo) && 'relative',
                                     )}
                                     onClick={() => setSelectedGalleryItemIndex(index + 1)}
@@ -97,7 +97,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                                     {isImage && (
                                         <Image
                                             alt={galleryItem.name || `${productName}-${index}`}
-                                            className="aspect-square max-h-full rounded-md bg-backgroundMore object-contain p-1 mix-blend-multiply"
+                                            className="bg-backgroundMore aspect-square max-h-full rounded-md object-contain p-1 mix-blend-multiply"
                                             height={90}
                                             src={galleryItemThumbnail?.url}
                                             tid={TIDs.product_gallery_image}
@@ -114,14 +114,14 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                                                 src={`https://img.youtube.com/vi/${galleryItem.token}/1.jpg`}
                                                 width={90}
                                             />
-                                            <div className="absolute flex h-full w-full items-center justify-center overflow-hidden rounded-lg bg-imageOverlay">
-                                                <PlayIcon className="h-8 w-8 rounded-full text-textInverted" />
+                                            <div className="bg-imageOverlay absolute flex h-full w-full items-center justify-center overflow-hidden rounded-lg">
+                                                <PlayIcon className="text-textInverted h-8 w-8 rounded-full" />
                                             </div>
                                         </>
                                     )}
 
                                     {isWithAdditionalImages && (
-                                        <div className="absolute left-0 top-0 flex h-full w-full items-center justify-center rounded-lg bg-imageOverlay text-lg font-bold">
+                                        <div className="bg-imageOverlay absolute top-0 left-0 flex h-full w-full items-center justify-center rounded-lg text-lg font-bold">
                                             +{galleryAdditionalItemsCount}
                                         </div>
                                     )}

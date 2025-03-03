@@ -26,13 +26,13 @@ export const BlogPreview: FC<BlogPreviewProps> = ({ blogArticles, blogUrl, fetch
     const isDesktop = useMediaMin('vl');
 
     return (
-        <div className="relative z-above mx-auto w-full max-w-7xl px-5">
+        <div className="z-above relative mx-auto w-full max-w-7xl px-5">
             <div className="mb-5 flex items-center justify-between">
                 <h3 className="text-textInverted">{t('Magazine')}</h3>
 
                 {!!blogUrl && (
                     <ExtendedNextLink
-                        className="font-secondary text-sm font-semibold tracking-wide text-textInverted no-underline hover:text-textInverted hover:underline"
+                        className="font-secondary text-textInverted hover:text-textInverted text-sm font-semibold tracking-wide no-underline hover:underline"
                         href={blogUrl}
                         type="blogCategory"
                     >
@@ -46,7 +46,7 @@ export const BlogPreview: FC<BlogPreviewProps> = ({ blogArticles, blogUrl, fetch
             {!fetchingArticles && !!(blogMainItems || blogSideItems) && (
                 <div
                     className={twJoin(
-                        'grid snap-x snap-mandatory grid-flow-col gap-5 overflow-x-auto overscroll-x-contain vl:flex vl:justify-between vl:gap-16',
+                        'vl:flex vl:justify-between vl:gap-16 grid snap-x snap-mandatory grid-flow-col gap-5 overflow-x-auto overscroll-x-contain',
                         'auto-cols-[60%] md:auto-cols-[40%] lg:auto-cols-[30%]',
                         "[-ms-overflow-style:'none'] [scrollbar-width:'none'] [&::-webkit-scrollbar]:hidden",
                     )}

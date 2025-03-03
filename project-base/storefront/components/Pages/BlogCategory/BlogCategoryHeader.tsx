@@ -9,9 +9,9 @@ type BlogCategoryHeaderProps = {
 
 export const BlogCategoryHeader: FC<BlogCategoryHeaderProps> = ({ title, description, image }) => {
     return (
-        <Webline className="mb-6 md:mb-10 xxl:max-w-[1432px]">
+        <Webline className="xxl:max-w-[1432px] mb-6 md:mb-10">
             <div
-                className="rounded-xl bg-textAccent"
+                className="bg-textAccent rounded-xl"
                 style={
                     image?.url
                         ? {
@@ -20,8 +20,8 @@ export const BlogCategoryHeader: FC<BlogCategoryHeaderProps> = ({ title, descrip
                         : undefined
                 }
             >
-                <div className="px-5 py-[60px] xxl:mx-auto xxl:max-w-7xl xxl:px-4">
-                    <h1 className="mb-3 text-textInverted">{title}</h1>
+                <div className="xxl:mx-auto xxl:max-w-7xl xxl:px-4 px-5 py-[60px]">
+                    <h1 className="text-textInverted mb-3">{title}</h1>
                     {description && (
                         <p
                             className="text-textInverted [&_*]:text-textInverted [&_*]:hover:text-textInverted"

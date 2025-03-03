@@ -64,7 +64,7 @@ export const InquiryPopup: FC<InquiryPopupProps> = ({ productUuid }) => {
     useScrollToFirstError(formMeta.formName, formProviderMethods);
 
     return (
-        <Popup className="w-11/12 overflow-x-auto lg:w-4/5 vl:w-auto">
+        <Popup className="vl:w-auto w-11/12 overflow-x-auto lg:w-4/5">
             <FormProvider {...formProviderMethods}>
                 <Form onSubmit={formProviderMethods.handleSubmit(inquiryHandler)}>
                     <FormContentWrapper>

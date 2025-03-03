@@ -1,0 +1,27 @@
+@utility z-flag {
+    z-index: 10;
+}
+
+@utility z-above {
+    z-index: 11;
+}
+
+@utility z-menu {
+    z-index: 1010;
+}
+
+@utility z-overlay {
+    z-index: 1030;
+}
+
+@utility z-cart {
+    z-index: 6000;
+}
+
+@utility z-aboveOverlay {
+    z-index: 10001;
+}
+
+@utility z-maximum {
+    z-index: 10100;
+}

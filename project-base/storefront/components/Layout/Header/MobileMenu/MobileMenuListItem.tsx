@@ -15,7 +15,7 @@ export const DropdownMenuListItem: FC<DropdownMenuListProps> = ({ navigationItem
     return (
         <div key={navigationItem.link + navigationItem.name} className="flex py-3">
             <ExtendedNextLink
-                className="flex-1 font-bold uppercase text-text no-underline"
+                className="text-text flex-1 font-bold uppercase no-underline"
                 href={navigationItem.link}
                 skeletonType={DEFAULT_SKELETON_TYPE}
                 onClick={onNavigate}
@@ -24,7 +24,7 @@ export const DropdownMenuListItem: FC<DropdownMenuListProps> = ({ navigationItem
             </ExtendedNextLink>
 
             {isWithChildren && (
-                <span className="flex w-11 cursor-pointer items-center justify-center text-text" onClick={onExpand}>
+                <span className="text-text flex w-11 cursor-pointer items-center justify-center" onClick={onExpand}>
                     <ArrowIcon className="size-5 -rotate-90" />
                 </span>
             )}

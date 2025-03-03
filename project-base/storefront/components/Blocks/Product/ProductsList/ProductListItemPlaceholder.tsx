@@ -23,21 +23,21 @@ export const ProductListItemPlaceholder: FC<ProductListItemPlaceholderProps> = (
     return (
         <li
             className={twMergeCustom(
-                'group relative flex select-none flex-col gap-2.5 rounded-xl border border-backgroundMore bg-backgroundMore px-2.5 py-5 text-left transition sm:px-5',
+                'border-backgroundMore bg-backgroundMore group relative flex flex-col gap-2.5 rounded-xl border px-2.5 py-5 text-left transition select-none sm:px-5',
                 size === 'small' && 'p-5',
                 'hover:border-borderAccentLess hover:bg-background',
                 className,
             )}
         >
             <ExtendedNextLink
-                className="flex select-none flex-col gap-2.5 text-text no-underline hover:text-link hover:no-underline"
+                className="text-text hover:text-link flex flex-col gap-2.5 no-underline select-none hover:no-underline"
                 draggable={false}
                 href={product.slug}
                 type={product.isMainVariant ? 'productMainVariant' : 'product'}
             >
                 <ProductListItemImage product={product} size={size} visibleItemsConfig={visibleItemsConfig} />
 
-                <div className="line-clamp-3 min-h-[3.75rem] font-secondary text-sm font-semibold group-hover:text-link group-hover:underline">
+                <div className="font-secondary group-hover:text-link line-clamp-3 min-h-[3.75rem] text-sm font-semibold group-hover:underline">
                     {product.fullName}
                 </div>
 
@@ -53,7 +53,7 @@ export const ProductListItemPlaceholder: FC<ProductListItemPlaceholderProps> = (
                     <ProductAvailability
                         availability={product.availability}
                         availableStoresCount={product.availableStoresCount}
-                        className="min-h-10 xs:min-h-[60px] sm:min-h-10"
+                        className="xs:min-h-[60px] min-h-10 sm:min-h-10"
                         isInquiryType={product.isInquiryType}
                     />
                 )}

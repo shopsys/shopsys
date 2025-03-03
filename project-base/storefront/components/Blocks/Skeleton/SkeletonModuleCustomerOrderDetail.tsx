@@ -10,7 +10,7 @@ export const SkeletonModuleCustomerOrderDetail: FC = () => (
             <Skeleton className="h-14 w-full" />
             <Skeleton className="h-32 w-full" />
 
-            <div className="my-6 flex w-full flex-col gap-6 vl:grid vl:grid-cols-3">
+            <div className="vl:grid vl:grid-cols-3 my-6 flex w-full flex-col gap-6">
                 <Skeleton className="h-24 w-full" />
                 <Skeleton className="h-24 w-full" />
                 <Skeleton className="h-24 w-full" />

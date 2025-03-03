@@ -49,7 +49,7 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                         {name}
                     </div>
 
-                    {description && <div className="text-sm text-textDisabled">{description}</div>}
+                    {description && <div className="text-textDisabled text-sm">{description}</div>}
                 </div>
 
                 {pickupPlaceDetail && (
@@ -66,7 +66,7 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                 )}
 
                 {daysUntilDelivery !== undefined && (
-                    <div className="text-sm text-textAccent lg:ml-auto lg:basis-36 lg:text-right">
+                    <div className="text-textAccent text-sm lg:ml-auto lg:basis-36 lg:text-right">
                         {getDeliveryMessage(daysUntilDelivery, !!pickupPlaceDetail, t)}
                     </div>
                 )}

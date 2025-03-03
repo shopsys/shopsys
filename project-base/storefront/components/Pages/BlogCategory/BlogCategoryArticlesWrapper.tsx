@@ -37,7 +37,7 @@ export const BlogCategoryArticlesWrapper: FC<BlogCategoryArticlesWrapperProps> =
     );
 
     return (
-        <div className="order-2 flex w-full flex-col gap-y-6 md:gap-y-10 vl:order-1 vl:flex-1">
+        <div className="vl:order-1 vl:flex-1 order-2 flex w-full flex-col gap-y-6 md:gap-y-10">
             {areBlogCategoryArticlesFetching ? (
                 <div className="flex flex-col gap-y-5">
                     {createEmptyArray(DEFAULT_BLOG_PAGE_SIZE).map((_, index) => (

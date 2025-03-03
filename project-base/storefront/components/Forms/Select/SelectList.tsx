@@ -53,9 +53,9 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
             tabIndex={option.isDisabled ? -1 : 0}
             tid={`${tid}${index}`}
             className={twMergeCustom(
-                'list-none font-semibold hover:bg-inputBackgroundHovered focus-visible:outline-none',
+                'hover:bg-inputBackgroundHovered list-none font-semibold focus-visible:outline-hidden',
                 option.isDisabled &&
-                    'pointer-events-none cursor-no-drop bg-inputBackgroundDisabled text-inputTextDisabled',
+                    'bg-inputBackgroundDisabled text-inputTextDisabled pointer-events-none cursor-no-drop',
                 'focus:bg-inputBackgroundHovered',
             )}
             onClick={!option.isDisabled ? () => onSelectOption(option) : undefined}
@@ -64,7 +64,7 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
             <button
                 type="button"
                 className={twJoin(
-                    'flex w-full items-center justify-between gap-2 p-3 font-secondary',
+                    'font-secondary flex w-full items-center justify-between gap-2 p-3',
                     option.value === activeOption?.value && 'text-inputTextActive',
                     option.isDisabled && 'text-inputTextDisabled',
                 )}
@@ -74,7 +74,7 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
                 {option.label}
 
                 {option.count !== undefined && (
-                    <span className="whitespace-nowrap font-secondary font-normal text-inputPlaceholder">
+                    <span className="font-secondary text-inputPlaceholder font-normal whitespace-nowrap">
                         ({option.count})
                     </span>
                 )}
@@ -87,7 +87,7 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
     if (infinityScrollConfig && infinityScrollConfig.dataLength >= infinityScrollConfig.pageSize) {
         return (
             <AnimateCollapseDiv
-                className="absolute left-0 right-0 z-above !block rounded-b-md border-2 border-t-0 border-inputBorder bg-background hover:border-inputBorderHovered"
+                className="z-above border-inputBorder bg-background hover:border-inputBorderHovered absolute right-0 left-0 !block rounded-b-md border-2 border-t-0"
                 keyName={tid}
             >
                 <InfiniteScroll
@@ -117,9 +117,9 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
             keyName={tid}
             className={twMergeCustom(
                 '!overflow-y-auto',
-                'absolute left-0 right-0 z-above !block max-h-[144px] rounded-b-md bg-background lg:max-h-[200px]',
-                'border-2 border-t-0 border-inputBorder hover:border-inputBorderHovered',
-                '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-inputPlaceholder [&::-webkit-scrollbar]:h-[0px] [&::-webkit-scrollbar]:w-2',
+                'z-above bg-background absolute right-0 left-0 !block max-h-[144px] rounded-b-md lg:max-h-[200px]',
+                'border-inputBorder hover:border-inputBorderHovered border-2 border-t-0',
+                '[&::-webkit-scrollbar-thumb]:bg-inputPlaceholder [&::-webkit-scrollbar]:h-[0px] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full',
                 listClassName,
             )}
         >

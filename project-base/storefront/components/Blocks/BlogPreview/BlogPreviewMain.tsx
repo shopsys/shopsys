@@ -24,7 +24,7 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false
                 >
                     <Image
                         alt={article.mainImage?.name || article.name}
-                        className="aspect-video size-auto rounded-xl object-cover vl:aspect-16/11"
+                        className="vl:aspect-16/11 aspect-video size-auto rounded-xl object-cover"
                         height={220}
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 35vw"
                         src={article.mainImage?.url}
@@ -42,7 +42,7 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false
                             ) : (
                                 <>
                                     <span
-                                        className="mr-4 font-secondary text-sm font-semibold text-inputPlaceholder"
+                                        className="font-secondary text-inputPlaceholder mr-4 text-sm font-semibold"
                                         tid={TIDs.blog_article_publication_date}
                                     >
                                         {formatDate(article.publishDate, 'l')}
@@ -69,7 +69,7 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false
 
                         <h4 className="text-textInverted">{article.name}</h4>
 
-                        <p className="font-normal text-textInverted">{article.perex}</p>
+                        <p className="text-textInverted font-normal">{article.perex}</p>
                     </div>
                 </ArticleLink>
             ))}

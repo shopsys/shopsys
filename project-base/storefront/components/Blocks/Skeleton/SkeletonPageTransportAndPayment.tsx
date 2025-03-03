@@ -3,17 +3,17 @@ import Skeleton from 'react-loading-skeleton';
 
 export const SkeletonPageTransportAndPayment: FC = () => (
     <Webline>
-        <Skeleton className="mx-auto mb-5 mt-1 h-11 w-full max-w-[840px] lg:mb-10 lg:mt-6" containerClassName="flex" />
+        <Skeleton className="mx-auto mt-1 mb-5 h-11 w-full max-w-[840px] lg:mt-6 lg:mb-10" containerClassName="flex" />
 
-        <div className="mb-24 flex w-full flex-col flex-wrap vl:mb-16 vl:flex-row">
-            <div className="mb-16 w-full vl:mb-0 vl:min-h-[61vh] vl:flex-1 vl:pr-10">
+        <div className="vl:mb-16 vl:flex-row mb-24 flex w-full flex-col flex-wrap">
+            <div className="vl:mb-0 vl:min-h-[61vh] vl:flex-1 vl:pr-10 mb-16 w-full">
                 <Skeleton className="h-80 w-full" />
-                <div className="mt-8 flex flex-col justify-between gap-3 vl:flex-row">
-                    <Skeleton className="h-12 w-full vl:w-40" />
-                    <Skeleton className="h-12 w-full vl:w-52" />
+                <div className="vl:flex-row mt-8 flex flex-col justify-between gap-3">
+                    <Skeleton className="vl:w-40 h-12 w-full" />
+                    <Skeleton className="vl:w-52 h-12 w-full" />
                 </div>
             </div>
-            <div className="w-full vl:max-w-md">
+            <div className="vl:max-w-md w-full">
                 <Skeleton className="h-40 w-full" />
             </div>
         </div>

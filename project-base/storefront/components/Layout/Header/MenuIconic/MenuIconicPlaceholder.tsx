@@ -38,7 +38,7 @@ export const MenuIconicPlaceholder: FC = () => {
 
             <li className={twMergeCustom(placeholderItemTwClass, 'lg:w-[72px]')}>
                 <UserIcon className="size-6" />
-                <Skeleton className="w-16" containerClassName="max-lg:hidden" />
+                <Skeleton className="w-full" containerClassName="w-16 max-lg:hidden" />
             </li>
         </ul>
     );

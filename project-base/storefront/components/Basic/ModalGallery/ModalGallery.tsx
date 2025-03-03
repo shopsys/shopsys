@@ -75,10 +75,10 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
     });
 
     return (
-        <div className="fixed inset-0 z-maximum flex select-none flex-col bg-background p-2" onClick={onCloseModal}>
+        <div className="z-maximum bg-background fixed inset-0 flex flex-col p-2 select-none" onClick={onCloseModal}>
             <div className="flex w-full flex-1 flex-col justify-center">
                 <div className="relative my-auto flex max-h-[80dvh] flex-1 items-center justify-center" {...handlers}>
-                    <SpinnerIcon className="absolute -z-above w-16 text-textInverted opacity-50" />
+                    <SpinnerIcon className="-z-above text-textInverted absolute w-16 opacity-50" />
                     <AnimatePresence initial={false}>
                         {isImage && (
                             <AnimateSlideDiv
@@ -142,7 +142,7 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
                 </div>
 
                 {isImage && selectedGalleryItem.name && (
-                    <div className="mt-2 text-center text-textInverted">{selectedGalleryItem.name}</div>
+                    <div className="text-textInverted mt-2 text-center">{selectedGalleryItem.name}</div>
                 )}
 
                 <div className="mt-4 flex items-center justify-center gap-8">
@@ -174,7 +174,7 @@ const FloatingButton: FC<FloatingButtonProps> = ({ className, children, onClick,
     <button
         type="button"
         className={twMergeCustom(
-            'inline-flex items-center justify-center rounded-full bg-backgroundAccentLess p-2 text-text transition-all hover:cursor-pointer hover:text-textAccent',
+            'bg-backgroundAccentLess text-text hover:text-textAccent inline-flex cursor-pointer items-center justify-center rounded-full p-2 transition-all',
             className,
         )}
         onClick={(e) => {
@@ -211,7 +211,7 @@ const ButtonArrow: FC<FloatingButtonProps & { position: 'left' | 'right' }> = ({
 };
 
 const ButtonClose: FC<FloatingButtonProps> = (floatingButtonProps) => (
-    <FloatingButton className="absolute right-2 top-2" {...floatingButtonProps}>
+    <FloatingButton className="absolute top-2 right-2" {...floatingButtonProps}>
         <svg
             className="h-6 w-6"
             fill="none"

@@ -46,7 +46,7 @@ export const BrandDetailContent: FC<BrandDetailContentProps> = ({ brand }) => {
                 />
 
                 <div className="flex flex-1 flex-col">
-                    <div className="flex flex-col-reverse vl:flex-col">
+                    <div className="vl:flex-col flex flex-col-reverse">
                         <FilterSelectedParameters filterOptions={brand.products.productFilterOptions} />
 
                         <DeferredFilterAndSortingBar

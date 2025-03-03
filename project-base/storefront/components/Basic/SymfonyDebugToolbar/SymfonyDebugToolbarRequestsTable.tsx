@@ -15,7 +15,7 @@ export const RequestsTable: FC<RequestsTableProps> = ({ responses }) => {
     }, [responsesRefs]);
 
     return (
-        <div className="max-h-[40vh] overflow-y-scroll bg-tableBackground">
+        <div className="bg-tableBackground max-h-[40vh] overflow-y-scroll">
             <table>
                 <thead>
                     <tr>
@@ -45,7 +45,7 @@ export const RequestsTable: FC<RequestsTableProps> = ({ responses }) => {
 };
 
 const TableHeaderCell: FC = ({ children }) => (
-    <th className="bg-tableBackgroundHeader px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-tableTextHeader">
+    <th className="bg-tableBackgroundHeader text-tableTextHeader px-5 py-3 text-left text-xs font-semibold tracking-wider uppercase">
         {children}
     </th>
 );

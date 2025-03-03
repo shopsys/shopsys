@@ -99,8 +99,8 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
                         }
                     />
 
-                    <div className="grid gap-4 vl:grid-cols-3 vl:gap-10">
-                        <div className="flex flex-col-reverse gap-4 vl:col-span-2 vl:flex-col">
+                    <div className="vl:grid-cols-3 vl:gap-10 grid gap-4">
+                        <div className="vl:col-span-2 vl:flex-col flex flex-col-reverse gap-4">
                             {failedContentData &&
                                 paymentStatusData?.UpdatePaymentStatus.payment.type === PaymentTypeEnum.GoPay && (
                                     <PaymentsInOrderSelect
@@ -124,7 +124,7 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
                             )}
                         </div>
 
-                        <div className="flex flex-1 flex-col gap-2.5 vl:col-span-1">
+                        <div className="vl:col-span-1 flex flex-1 flex-col gap-2.5">
                             <OrderConfirmationProducts items={orderData.order.items} />
 
                             <OrderConfirmationSummary

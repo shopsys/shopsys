@@ -4,7 +4,7 @@ import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 
 export const AutocompleteSkeleton: FC = () => {
     return (
-        <div className="flex flex-col gap-5 vl:gap-6">
+        <div className="vl:gap-6 flex flex-col gap-5">
             <div>
                 <Skeleton className="mb-2 h-5 w-[100px]" />
                 <div className="flex gap-4 overflow-hidden lg:grid lg:grid-cols-5 lg:gap-5">
@@ -23,7 +23,7 @@ export const AutocompleteSkeleton: FC = () => {
             </div>
 
             <div className="flex justify-center">
-                <Skeleton className="h-[52px] w-full vl:w-[186px]" containerClassName="w-full vl:w-fit" />
+                <Skeleton className="vl:w-[186px] h-[52px] w-full" containerClassName="w-full vl:w-fit" />
             </div>
         </div>
     );

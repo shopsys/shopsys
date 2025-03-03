@@ -26,10 +26,20 @@ export const getServerSideProps = getServerSidePropsWrapper(({ redisClient, doma
         const pathModule = await import('path');
         iconList = fsModule.readdirSync(pathModule.join(process.cwd(), '/components/Basic/Icon'));
 
-        const resolveConfig = await import('tailwindcss/resolveConfig');
-        const tailwindConfigRaw = await import('tailwind.config.js');
-        const fullConfig = resolveConfig.default(tailwindConfigRaw);
-        tailwindColors = fullConfig.theme.backgroundColor;
+        const cssContent = fsModule.readFileSync(pathModule.join(process.cwd(), '/styles/theme.css'));
+        tailwindColors = cssContent
+            .toString()
+            .split('\n')
+            .filter((line) => line.trim().startsWith('--color-'))
+            .reduce((acc, line) => {
+                const [key, value] = line.split(':').map((part) => part.trim());
+                const cleanKey = key.replace('--color-', '');
+
+                return {
+                    ...acc,
+                    [cleanKey]: value.replace(';', ''),
+                };
+            }, {});
     }
 
     return await initServerSideProps({

@@ -28,11 +28,11 @@ export const UserNavigation: FC = () => {
     const logoutHandler = useLogout();
 
     return (
-        <div className="flex h-fit min-w-64 flex-col overflow-hidden rounded-xl xs:min-w-[300px]">
+        <div className="xs:min-w-[300px] flex h-fit min-w-64 flex-col overflow-hidden rounded-xl">
             <button
                 className={twJoin(
-                    'flex items-center gap-4 bg-backgroundMore px-6 py-3 no-underline last:border-none lg:hidden',
-                    isExpanded && 'border-b border-borderAccent',
+                    'bg-backgroundMore flex cursor-pointer items-center gap-4 px-6 py-3 no-underline last:border-none lg:hidden',
+                    isExpanded && 'border-borderAccent border-b',
                 )}
                 onClick={() => setIsExpanded((prev) => !prev)}
             >
@@ -43,7 +43,7 @@ export const UserNavigation: FC = () => {
             <m.div
                 key="user-navigation"
                 animate={isExpanded ? 'open' : 'closed'}
-                className="!flex flex-col bg-backgroundMore lg:!h-auto"
+                className="bg-backgroundMore !flex flex-col lg:!h-auto"
                 initial={false}
                 variants={collapseExpandAnimation}
             >
@@ -59,7 +59,7 @@ export const UserNavigation: FC = () => {
                         {menuItem.count !== undefined && (
                             <div
                                 className={twJoin(
-                                    'ml-auto flex min-h-[24px] min-w-[24px] items-center justify-center rounded-full bg-backgroundDark px-1 text-sm text-textInverted',
+                                    'bg-backgroundDark text-textInverted ml-auto flex min-h-[24px] min-w-[24px] items-center justify-center rounded-full px-1 text-sm',
                                 )}
                             >
                                 {menuItem.count}
@@ -71,7 +71,7 @@ export const UserNavigation: FC = () => {
                     tid={TIDs.customer_page_logout}
                     className={twJoin(
                         getMenuItemTwClass(),
-                        'font-primary justify-start bg-transparent !px-4 !py-3 text-sm font-normal leading-5 !text-text !outline-none hover:bg-transparent hover:text-textAccent hover:underline',
+                        'font-primary !text-text hover:text-textAccent justify-start bg-transparent !px-4 !py-3 text-sm leading-5 font-normal !outline-none hover:bg-transparent hover:underline',
                     )}
                     onClick={logoutHandler}
                 >

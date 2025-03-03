@@ -39,9 +39,9 @@ export const NavigationItem: FC<NavigationItemProps> = ({
                 href={navigationItem.link}
                 skeletonType={skeletonType}
                 className={twJoin(
-                    'relative m-0 flex items-center p-5 font-secondary text-sm font-bold group-first-of-type:pl-0 vl:text-base',
+                    'font-secondary vl:text-base relative m-0 flex items-center p-5 text-sm font-bold group-first-of-type:pl-0',
                     'text-linkInverted no-underline',
-                    'hover:text-linkInvertedHovered hover:no-underline group-hover:text-linkInvertedHovered group-hover:no-underline',
+                    'hover:text-linkInvertedHovered group-hover:text-linkInvertedHovered group-hover:no-underline hover:no-underline',
                     'active:text-linkInvertedHovered',
                     'disabled:text-linkInvertedDisabled',
                 )}
@@ -56,7 +56,7 @@ export const NavigationItem: FC<NavigationItemProps> = ({
                         >
                             <ArrowIcon
                                 className={twJoin(
-                                    'size-5 text-linkInverted',
+                                    'text-linkInverted size-5',
                                     isMenuOpenedDelayed && 'group-hover:text-linkInvertedHovered',
                                 )}
                             />
@@ -68,7 +68,7 @@ export const NavigationItem: FC<NavigationItemProps> = ({
             <AnimatePresence initial={false}>
                 {hasChildren && isMenuOpenedDelayed && (
                     <AnimateNavigationMenu
-                        className="absolute left-0 right-0 z-menu !grid grid-cols-4 gap-11 bg-background px-10 shadow-md"
+                        className="z-menu bg-background absolute right-0 left-0 !grid grid-cols-4 gap-11 px-10 shadow-md"
                         disableAnimation={isAnimationDisabled}
                     >
                         <NavigationItemColumn

@@ -3,7 +3,7 @@ import { twJoin } from 'tailwind-merge';
 export const OrderSummaryContent: FC = ({ children }) => <div className="relative flex flex-col">{children}</div>;
 
 export const OrderSummaryRowWrapper: FC = ({ children }) => (
-    <div className={twJoin('mb-5 w-full border-b border-borderAccent pb-3')}>{children}</div>
+    <div className={twJoin('border-borderAccent mb-5 w-full border-b pb-3')}>{children}</div>
 );
 
 export const OrderSummaryRow: FC = ({ children }) => <div className="flex w-full justify-between">{children}</div>;

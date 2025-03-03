@@ -13,13 +13,13 @@ export const SkeletonPageStore: FC = () => (
                 </div>
 
                 <Skeleton className="mb-4 h-6 w-60" />
-                <Skeleton className="mb-2 h-4 w-40 rounded" count={5} />
+                <Skeleton className="mb-2 h-4 w-40 rounded-sm" count={5} />
 
-                <Skeleton className="mb-4 mt-8 h-6 w-60" />
-                <Skeleton className="mb-2 h-6 w-1/2 rounded" count={7} />
+                <Skeleton className="mt-8 mb-4 h-6 w-60" />
+                <Skeleton className="mb-2 h-6 w-1/2 rounded-sm" count={7} />
             </div>
             <div className="w-full lg:basis-1/2">
-                <div className="mt-5 flex aspect-square w-full rounded-xl bg-backgroundMore p-5 lg:mt-0">
+                <div className="bg-backgroundMore mt-5 flex aspect-square w-full rounded-xl p-5 lg:mt-0">
                     <Skeleton className="h-full w-full" containerClassName="w-full" />
                 </div>
             </div>

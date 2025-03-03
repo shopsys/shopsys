@@ -11,7 +11,7 @@ type OrderPaymentStatusBarProps = {
 
 const OrderPaymentStatusContent: FC<{ title: string; iconClassName?: string }> = ({ title, iconClassName }) => (
     <div className="flex items-center gap-2">
-        <InfoIconInCircle className={twMergeCustom('size-4 text-backgroundWarningMore', iconClassName)} />
+        <InfoIconInCircle className={twMergeCustom('text-backgroundWarningMore size-4', iconClassName)} />
         {title}
     </div>
 );

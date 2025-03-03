@@ -24,7 +24,7 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
     return (
         <li
             key={uuid}
-            className="relative flex h-auto w-full flex-row flex-wrap items-center gap-x-6 border-b border-borderAccentLess py-3 last:border-b-[3px] lg:flex-nowrap"
+            className="border-borderAccentLess relative flex h-auto w-full flex-row flex-wrap items-center gap-x-6 border-b py-3 last:border-b-[3px] lg:flex-nowrap"
         >
             <div className="flex min-h-20 w-full flex-row items-center gap-x-6">
                 <ExtendedNextLink
@@ -43,7 +43,7 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                 </ExtendedNextLink>
 
                 <ExtendedNextLink
-                    className="flex-1 cursor-pointer font-secondary text-sm font-semibold text-tableText no-underline outline-none hover:text-link hover:underline"
+                    className="font-secondary text-tableText hover:text-link flex-1 cursor-pointer text-sm font-semibold no-underline outline-hidden hover:underline"
                     href={productSlug}
                     type="product"
                 >
@@ -51,18 +51,18 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                 </ExtendedNextLink>
             </div>
             <div className="mt-2 flex flex-row gap-x-6 lg:mt-0 lg:w-auto">
-                <div className="w-20 text-center font-secondary text-sm font-semibold">
+                <div className="font-secondary w-20 text-center text-sm font-semibold">
                     {quantity + ' ' + product.unit.name}
                 </div>
 
                 {isProductPriceVisible && (
-                    <div className="w-28 break-words font-secondary font-bold text-price lg:text-right">
+                    <div className="font-secondary text-price w-28 font-bold break-words lg:text-right">
                         {formatPrice(mapPriceForCalculations(product.price.priceWithVat) * quantity)}
                     </div>
                 )}
             </div>
             <RemoveCartItemButton
-                className="absolute right-0 top-2 lg:relative lg:right-0 lg:top-0"
+                className="absolute top-2 right-0 cursor-pointer lg:relative lg:top-0 lg:right-0"
                 onRemoveFromCart={onRemoveFromCart}
             />
         </li>

@@ -67,7 +67,7 @@ export const RegistrationUser: FC = () => {
                     autoComplete: 'tel',
                 }}
             />
-            <FormColumn className="gap-2 vl:gap-0">
+            <FormColumn className="vl:gap-0 gap-2">
                 <RadiobuttonGroup
                     control={formProviderMethods.control}
                     formName={formMeta.formName}

@@ -5,17 +5,17 @@ import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 
 export const SkeletonPageCart: FC = () => (
     <Webline>
-        <Skeleton className="mx-auto mb-5 mt-1 h-11 w-full max-w-[840px] lg:mb-10 lg:mt-6" containerClassName="flex" />
+        <Skeleton className="mx-auto mt-1 mb-5 h-11 w-full max-w-[840px] lg:mt-6 lg:mb-10" containerClassName="flex" />
 
         <div className="mb-6 lg:mb-8">
             {createEmptyArray(4).map((_, index) => (
                 <Skeleton key={index} className="h-[101px] w-full" />
             ))}
         </div>
-        <div className="mb-8 flex flex-col justify-between vl:flex-row">
-            <Skeleton className="h-10 w-full vl:w-52" />
-            <Skeleton className="h-10 w-full vl:w-40" />
-            <Skeleton className="h-10 w-full vl:w-44" />
+        <div className="vl:flex-row mb-8 flex flex-col justify-between">
+            <Skeleton className="vl:w-52 h-10 w-full" />
+            <Skeleton className="vl:w-40 h-10 w-full" />
+            <Skeleton className="vl:w-44 h-10 w-full" />
         </div>
         <div className="mb-12 flex flex-col items-center justify-between lg:mb-24 lg:flex-row">
             <Skeleton className="h-8 w-20 lg:h-14" containerClassName="order-2 lg:order-1" />

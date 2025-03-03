@@ -63,7 +63,7 @@ export const NotificationBars: FC = memo(function NotificationBars() {
             {loggedAsUserEmail && (
                 <div className="bg-backgroundError py-2">
                     <Webline>
-                        <div className="flex items-center justify-center text-center text-sm font-bold text-text">
+                        <div className="text-text flex items-center justify-center text-center text-sm font-bold">
                             <Trans
                                 defaultTrans="Warning! You are logged in as a customer with the email {{ email }} <button>Log out</button>"
                                 i18nKey="adminLoggedInAsCustomerWarning"

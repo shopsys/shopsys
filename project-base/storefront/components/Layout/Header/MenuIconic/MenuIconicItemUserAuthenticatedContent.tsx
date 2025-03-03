@@ -43,15 +43,15 @@ export const MenuIconicItemUserAuthenticatedContent: FC = () => {
 
     return (
         <>
-            <div className="mb-2 flex flex-col gap-1 rounded-xl bg-backgroundAccentLess px-3 py-4">
+            <div className="bg-backgroundAccentLess mb-2 flex flex-col gap-1 rounded-xl px-3 py-4">
                 <h5>
                     {user?.firstName} {user?.lastName}
                 </h5>
                 {user?.companyName && <h6 className="text-textSubtle">{user.companyName}</h6>}
                 <span
                     className={twJoin(
-                        'max-w-64 overflow-x-auto whitespace-nowrap text-sm font-semibold',
-                        '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-backgroundMost [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:h-1',
+                        'max-w-64 overflow-x-auto text-sm font-semibold whitespace-nowrap',
+                        '[&::-webkit-scrollbar-thumb]:bg-backgroundMost [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent',
                     )}
                 >
                     {user?.email}

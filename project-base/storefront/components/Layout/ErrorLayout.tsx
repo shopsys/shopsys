@@ -6,7 +6,7 @@ export const ErrorLayout: FC = ({ children }) => (
     <div className="flex h-full min-h-screen flex-col">
         <Webline
             className="relative mb-4"
-            wrapperClassName="bg-gradient-to-tr from-backgroundBrand to-backgroundBrandLess"
+            wrapperClassName="bg-linear-to-tr/srgb from-backgroundBrand to-backgroundBrandLess"
         >
             <Header simpleHeader />
         </Webline>

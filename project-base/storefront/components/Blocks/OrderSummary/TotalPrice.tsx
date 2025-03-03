@@ -21,7 +21,7 @@ export const TotalPrice: FC<TotalPriceProps> = ({ totalPrice }) => {
             <OrderSummaryContent>
                 <div className="flex justify-end">
                     <span className="mr-4 inline-flex items-end">{t('Total price')}</span>
-                    <strong className="text-2xl text-price">{formatPrice(totalPrice.priceWithVat)}</strong>
+                    <strong className="text-price text-2xl">{formatPrice(totalPrice.priceWithVat)}</strong>
                 </div>
             </OrderSummaryContent>
         </div>

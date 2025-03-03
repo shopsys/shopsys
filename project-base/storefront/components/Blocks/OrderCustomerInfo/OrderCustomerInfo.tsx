@@ -18,7 +18,7 @@ export const OrderCustomerInfo: FC<OrderCustomerInfoProps> = ({ order }) => {
         order.transport.isPersonalPickup || isPacketeryTransport(order.transport.transportTypeCode);
 
     return (
-        <div className="flex flex-col flex-wrap gap-2.5 rounded-xl bg-backgroundMore p-5 lg:flex-row xl:flex-nowrap">
+        <div className="bg-backgroundMore flex flex-col flex-wrap gap-2.5 rounded-xl p-5 lg:flex-row xl:flex-nowrap">
             <InformationCard heading={t('Contact information')} icon={<UserProfileCardsIcon className="size-8" />}>
                 <span>
                     {order.firstName} {order.lastName}
@@ -27,8 +27,8 @@ export const OrderCustomerInfo: FC<OrderCustomerInfoProps> = ({ order }) => {
                     href={`mailto:${order.email}`}
                     className={twJoin(
                         'hover:text-greyDark text-sm underline hover:no-underline',
-                        'overflow-x-auto whitespace-nowrap text-text',
-                        '[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-backgroundMost [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar]:h-1',
+                        'text-text overflow-x-auto whitespace-nowrap',
+                        '[&::-webkit-scrollbar-thumb]:bg-backgroundMost [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent',
                     )}
                 >
                     {order.email}

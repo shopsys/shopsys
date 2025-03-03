@@ -16,9 +16,9 @@ export const ComplaintDetailBasicInfo: FC<ComplaintDetailBasicInfoProps> = ({ co
     const { formatDate } = useFormatDate();
 
     return (
-        <div className="my-6 flex flex-col gap-4 bg-background vl:mb-8">
-            <div className="flex items-center justify-between gap-4 rounded-md bg-backgroundMore px-4 py-3 vl:px-6 vl:py-4">
-                <div className="flex flex-wrap gap-6 gap-y-2 vl:gap-8">
+        <div className="bg-background vl:mb-8 my-6 flex flex-col gap-4">
+            <div className="bg-backgroundMore vl:px-6 vl:py-4 flex items-center justify-between gap-4 rounded-md px-4 py-3">
+                <div className="vl:gap-8 flex flex-wrap gap-6 gap-y-2">
                     <ComplaintItemColumnInfo
                         tid={TIDs.complaint_detail_number}
                         title={t('Complaint number')}
@@ -45,7 +45,7 @@ export const ComplaintDetailBasicInfo: FC<ComplaintDetailBasicInfoProps> = ({ co
                     )}
                 </div>
             </div>
-            <div className="rounded-md border-[5px] border-borderLess bg-background p-7">
+            <div className="border-borderLess bg-background rounded-md border-[5px] p-7">
                 {complaint.items.map((complaintItem, index) => (
                     <ComplaintDetailComplaintItem key={index} complaint={complaint} complaintItem={complaintItem} />
                 ))}
@@ -73,7 +73,7 @@ export const ComplaintItemColumnInfo: FC<ComplaintItemColumnInfoProps> = ({
         <div className={twMergeCustom('flex items-end gap-4', wrapperClassName)}>
             <div className="flex flex-col gap-1">
                 <span className="text-sm">{title}</span>
-                <span className={twMergeCustom('font-bold leading-none', valueClassName)} tid={tid}>
+                <span className={twMergeCustom('leading-none font-bold', valueClassName)} tid={tid}>
                     {value}
                 </span>
             </div>

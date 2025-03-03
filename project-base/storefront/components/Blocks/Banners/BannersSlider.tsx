@@ -86,7 +86,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
         <div className="flex flex-col" tid={TIDs.banners_slider}>
             <div {...handlers}>
                 <ExtendedNextLink
-                    className="select-text !no-underline"
+                    className="!no-underline select-text"
                     draggable={false}
                     href={sliderItems[bannerSliderState.sliderPosition].link}
                     title={sliderItems[bannerSliderState.sliderPosition].name}
@@ -99,7 +99,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
                         startInterval();
                     }}
                 >
-                    <div className="w-full overflow-hidden rounded-xl vl:rounded-b-none">
+                    <div className="vl:rounded-b-none w-full overflow-hidden rounded-xl">
                         <div
                             className={twJoin(
                                 'flex',
@@ -128,7 +128,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
                 className={twJoin(
                     'relative',
                     sliderItems.length > 4 &&
-                        "vl:after:absolute vl:after:right-0 vl:after:top-0 vl:after:block vl:after:h-full vl:after:w-3 vl:after:bg-backgroundDark vl:after:bg-gradient-to-r vl:after:from-background vl:after:to-transparent vl:after:opacity-25 vl:after:content-['']",
+                        "vl:after:absolute vl:after:right-0 vl:after:top-0 vl:after:block vl:after:h-full vl:after:w-3 vl:after:bg-backgroundDark vl:after:bg-linear-to-r/srgb vl:after:from-background vl:after:to-transparent vl:after:opacity-25 vl:after:content-['']",
                 )}
             >
                 <div

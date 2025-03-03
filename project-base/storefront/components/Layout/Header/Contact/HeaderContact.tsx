@@ -12,17 +12,17 @@ export const HeaderContact: FC = () => {
         <div className="order-2 ml-auto flex">
             <div className="relative flex flex-1 flex-col items-start py-4 pr-4 lg:flex-row lg:items-center lg:justify-between">
                 <div className="flex flex-wrap items-center gap-3 lg:flex-1 xl:justify-center">
-                    <PhoneIcon className="w-5 text-textInverted" />
+                    <PhoneIcon className="text-textInverted w-5" />
 
                     <a
-                        className="font-bold text-textInverted no-underline hover:text-textInverted"
+                        className="text-textInverted hover:text-textInverted font-bold no-underline"
                         href={'tel:' + dummyData.phone}
                         tid={TIDs.simple_header_contact}
                     >
                         {dummyData.phone}
                     </a>
 
-                    <p className="hidden text-sm text-textInverted lg:block"> {dummyData.opening}</p>
+                    <p className="text-textInverted hidden text-sm lg:block"> {dummyData.opening}</p>
                 </div>
             </div>
         </div>
