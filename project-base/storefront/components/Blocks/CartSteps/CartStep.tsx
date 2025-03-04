@@ -1,5 +1,5 @@
-import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { twJoin } from 'tailwind-merge';
+import { PageType } from 'types/simpleNavigation';
 import { useCartStepNavigation } from 'utils/cart/useCartStepNavigation';
 
 type CartStepProps = {

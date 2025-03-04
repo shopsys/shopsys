@@ -3,11 +3,12 @@ import * as Types from '../../../types';
 import gql from 'graphql-tag';
 import { PricingSettingFragment } from '../fragments/PricingSettingFragment.ssr';
 import { SeoSettingFragment } from '../fragments/SeoSettingFragment.ssr';
+import { MainBlogCategorySettingFragment } from '../fragments/MainBlogCategorySettingFragment.ssr';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeSettingsQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type TypeSettingsQuery = { __typename?: 'Query', settings: { __typename?: 'Settings', contactFormMainText: string, maxAllowedPaymentTransactions: number, displayTimezone: string, heurekaEnabled: boolean, privacyPolicyArticleUrl: string | null, termsAndConditionsArticleUrl: string | null, userConsentPolicyArticleUrl: string | null, socialNetworkLoginConfig: Array<Types.TypeLoginTypeEnum>, pricing: { __typename: 'PricingSetting', defaultCurrencyCode: string, minimumFractionDigits: number }, seo: { __typename: 'SeoSetting', title: string, titleAddOn: string, metaDescription: string }, mainBlogCategoryData: { __typename?: 'MainBlogCategoryData', mainBlogCategoryUrl: string | null, mainBlogCategoryMainImage: { __typename?: 'Image', url: string } | null } } | null };
+export type TypeSettingsQuery = { __typename?: 'Query', settings: { __typename?: 'Settings', contactFormMainText: string, maxAllowedPaymentTransactions: number, displayTimezone: string, heurekaEnabled: boolean, privacyPolicyArticleUrl: string | null, termsAndConditionsArticleUrl: string | null, userConsentPolicyArticleUrl: string | null, socialNetworkLoginConfig: Array<Types.TypeLoginTypeEnum>, pricing: { __typename: 'PricingSetting', defaultCurrencyCode: string, minimumFractionDigits: number }, seo: { __typename: 'SeoSetting', title: string, titleAddOn: string, metaDescription: string }, mainBlogCategoryData: { __typename: 'MainBlogCategoryData', mainBlogCategoryUrl: string | null, mainBlogCategoryMainImage: { __typename: 'Image', name: string | null, url: string } | null } } | null };
 
 
       export interface PossibleTypesResultData {
@@ -107,10 +108,7 @@ export const SettingsQueryDocument = gql`
     displayTimezone
     heurekaEnabled
     mainBlogCategoryData {
-      mainBlogCategoryUrl
-      mainBlogCategoryMainImage {
-        url
-      }
+      ...MainBlogCategorySettingFragment
     }
     privacyPolicyArticleUrl
     termsAndConditionsArticleUrl
@@ -119,4 +117,5 @@ export const SettingsQueryDocument = gql`
   }
 }
     ${PricingSettingFragment}
-${SeoSettingFragment}`;
+${SeoSettingFragment}
+${MainBlogCategorySettingFragment}`;

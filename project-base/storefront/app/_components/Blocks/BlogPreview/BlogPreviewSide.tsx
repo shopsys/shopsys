@@ -1,41 +1,39 @@
-'use client';
-
 import { ArticleLink } from './BlogPreviewElements';
-import { ArticleDate } from 'components/Basic/ArticleDate/ArticleDate';
-import { Flag } from 'components/Basic/Flag/Flag';
+import { Flag } from 'app/_components/Basic/Flag/Flag';
+import { getFormatDate } from 'app/_utils/formatting/getFormatDate';
 import { Image } from 'components/Basic/Image/Image';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { TIDs } from 'cypress/tids';
-import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
-import { useFormatDate } from 'utils/formatting/useFormatDate';
+import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.ssr';
+import { twJoin } from 'tailwind-merge';
 
-type MainProps = {
+type SideProps = {
     articles: TypeListedBlogArticleFragment[];
     isPlaceholder?: boolean;
 };
 
-export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false }) => {
-    const { formatDate } = useFormatDate();
+export async function BlogPreviewSide({ articles, isPlaceholder = false }: SideProps) {
+    const { formatDate } = await getFormatDate();
 
     return (
-        <>
+        <div className="flex flex-col gap-6">
             {articles.map((article) => (
                 <ArticleLink
                     key={article.uuid}
-                    className="flex max-w-80 snap-start flex-col gap-5 no-underline hover:no-underline"
+                    className="vl:flex-row flex max-w-[410px] min-w-96 snap-start flex-col gap-5 no-underline hover:no-underline"
                     href={article.link}
                 >
                     <Image
                         alt={article.mainImage?.name || article.name}
-                        className="vl:aspect-16/11 aspect-video size-auto rounded-xl object-cover"
+                        className="vl:h-24 vl:w-36 aspect-video rounded-xl object-cover"
                         height={220}
-                        sizes="(max-width: 600px) 52vw, (max-width: 768px) 35vw, (max-width: 1024px) 28vw, 320px"
+                        sizes="(max-width: 1023px) 0px, 144px"
                         src={article.mainImage?.url}
                         tid={TIDs.blog_preview_image}
                         width={320}
                     />
 
-                    <div className="flex flex-col items-start gap-2.5">
+                    <div className="flex flex-col items-start gap-2">
                         <div className="flex flex-wrap items-center gap-2 whitespace-nowrap">
                             {isPlaceholder ? (
                                 <>
@@ -44,10 +42,12 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false
                                 </>
                             ) : (
                                 <>
-                                    <ArticleDate
-                                        date={formatDate(article.publishDate, 'l')}
+                                    <span
+                                        className="font-secondary text-inputPlaceholder mr-4 text-sm font-semibold"
                                         tid={TIDs.blog_article_publication_date}
-                                    />
+                                    >
+                                        {formatDate(article.publishDate, 'l')}
+                                    </span>
 
                                     {article.blogCategories.map((blogPreviewCategory) => {
                                         if (!blogPreviewCategory.parent) {
@@ -68,12 +68,14 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false
                             )}
                         </div>
 
-                        <h4 className="text-textInverted">{article.name}</h4>
+                        <h5 className="text-textInverted">{article.name}</h5>
 
-                        <p className="text-textInverted font-normal">{article.perex}</p>
+                        <p className={twJoin('text-textInverted font-normal', !isPlaceholder && 'hidden')}>
+                            {article.perex}
+                        </p>
                     </div>
                 </ArticleLink>
             ))}
-        </>
+        </div>
     );
-};
+}

@@ -4,7 +4,7 @@ import { getLinkType } from './simpleNavigationUtils';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Image } from 'components/Basic/Image/Image';
 import { TIDs } from 'cypress/tids';
-import { PageType } from 'store/slices/createPageLoadingStateSlice';
+import { PageType } from 'types/simpleNavigation';
 import { ListedItemPropType } from 'types/simpleNavigation';
 import { getStringWithoutTrailingSlash } from 'utils/parsing/stringWIthoutSlash';
 import { twMergeCustom } from 'utils/twMerge';

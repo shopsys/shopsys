@@ -19,7 +19,6 @@ import { SkeletonPageCustomerOrderDetail } from './SkeletonPageCustomerOrderDeta
 import { SkeletonPageCustomerOrderList } from './SkeletonPageCustomerOrderList';
 import { SkeletonPageCustomerUsers } from './SkeletonPageCustomerUsers';
 import { SkeletonPageFlag } from './SkeletonPageFlag';
-import { SkeletonPageForgotPassword } from './SkeletonPageForgotPassword';
 import { SkeletonPageHome } from './SkeletonPageHome';
 import { SkeletonPageProductDetail } from './SkeletonPageProductDetail';
 import { SkeletonPageProductDetailMainVariant } from './SkeletonPageProductDetailMainVariant';
@@ -30,8 +29,8 @@ import { SkeletonPageStores } from './SkeletonPageStores';
 import { SkeletonPageTransportAndPayment } from './SkeletonPageTransportAndPayment';
 import { SkeletonPageWishlist } from './SkeletonPageWishlist';
 import { useEffect } from 'react';
-import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { useSessionStore } from 'store/useSessionStore';
+import { PageType } from 'types/simpleNavigation';
 import { SkeletonEnum } from 'types/skeletons';
 
 type SkeletonManagerProps = {
@@ -105,8 +104,6 @@ export const SkeletonManager: FC<SkeletonManagerProps> = ({
             return <SkeletonPageCustomerChangePassword />;
         case SkeletonEnum.Flag:
             return <SkeletonPageFlag />;
-        case SkeletonEnum.ForgotPassword:
-            return <SkeletonPageForgotPassword />;
         case SkeletonEnum.Homepage:
             return <SkeletonPageHome />;
         case SkeletonEnum.OrderConfirmation:

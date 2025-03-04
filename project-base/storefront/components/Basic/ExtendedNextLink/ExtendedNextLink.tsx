@@ -4,7 +4,6 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 // eslint-disable-next-line no-restricted-imports
 import NextLink, { LinkProps } from 'next/link';
 import { ComponentPropsWithoutRef, MouseEventHandler } from 'react';
-import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { useSessionStore } from 'store/useSessionStore';
 import {
     FriendlyPagesDestinations,
@@ -12,6 +11,7 @@ import {
     FriendlyPagesTypesKey,
     FriendlyPagesTypesKeys,
 } from 'types/friendlyUrl';
+import { PageType } from 'types/simpleNavigation';
 import { UrlObject } from 'url';
 import { SLUG_TYPE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
 import { isTextSelected } from 'utils/ui/isTextSelected';

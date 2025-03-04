@@ -3,7 +3,7 @@
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import useTranslation from 'next-translate/useTranslation';
-import { PageType } from 'store/slices/createPageLoadingStateSlice';
+import { PageType } from 'types/simpleNavigation';
 import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 import { useLogout } from 'utils/auth/useLogout';
 import { useComparison } from 'utils/productLists/comparison/useComparison';

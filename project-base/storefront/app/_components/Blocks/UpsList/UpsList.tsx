@@ -1,17 +1,15 @@
-'use client';
-
 import { UpsListItem } from './UpsListItem';
+import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { UpsFifthIcon } from 'components/Basic/Icon/UpsFifthIcon';
 import { UpsFirstIcon } from 'components/Basic/Icon/UpsFirstIcon';
 import { UpsFourthIcon } from 'components/Basic/Icon/UpsFourthIcon';
 import { UpsSecondIcon } from 'components/Basic/Icon/UpsSecondIcon';
 import { UpsThirdIcon } from 'components/Basic/Icon/UpsThirdIcon';
 import { Webline } from 'components/Layout/Webline/Webline';
-import useTranslation from 'next-translate/useTranslation';
 import { twMergeCustom } from 'utils/twMerge';
 
-export const UpsList: FC = () => {
-    const { t } = useTranslation();
+export async function UpsList() {
+    const t = await getTranslation();
 
     return (
         <Webline
@@ -43,4 +41,4 @@ export const UpsList: FC = () => {
             </UpsListItem>
         </Webline>
     );
-};
+}

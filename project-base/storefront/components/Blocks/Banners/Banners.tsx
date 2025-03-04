@@ -1,21 +1,12 @@
-'use client';
-
 import { BannersSlider } from './BannersSlider';
-import { SkeletonModuleBanners } from 'components/Blocks/Skeleton/SkeletonModuleBanners';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { useSliderItemsQuery } from 'graphql/requests/sliderItems/queries/SliderItemsQuery.generated';
+import { TypeSliderItemsQuery } from 'graphql/requests/sliderItems/queries/SliderItemsQuery.ssr';
 
-export const Banners: FC = () => {
-    const [{ data: sliderItemsData, fetching: areSliderItemsFetching }] = useSliderItemsQuery();
+export type BannersProps = {
+    sliderItemsData: TypeSliderItemsQuery | null | undefined;
+};
 
-    if (areSliderItemsFetching) {
-        return (
-            <Webline width="xxl">
-                <SkeletonModuleBanners />
-            </Webline>
-        );
-    }
-
+export function Banners({ sliderItemsData }: BannersProps) {
     if (!sliderItemsData?.sliderItems.length) {
         return null;
     }
@@ -25,4 +16,4 @@ export const Banners: FC = () => {
             <BannersSlider sliderItems={sliderItemsData.sliderItems} />
         </Webline>
     );
-};
+}
