@@ -397,8 +397,8 @@ type Cart {
   paymentGoPayBankSwift: String
   "Applied promo code if provided"
   promoCode: PromoCode
-  "Remaining amount for free transport and payment; null = transport cannot be free"
-  remainingAmountWithVatForFreeTransport: Money
+  "Remaining amount for free transport and payment; null = transport cannot be free. Amount is with VAT if input price type is set to price with vat and vice versa."
+  remainingAmountForFreeTransport: Money
   "Rounding amount if payment has rounding allowed"
   roundingPrice: Price
   "Selected pickup place identifier if provided"
@@ -408,7 +408,7 @@ type Cart {
   totalItemsPrice: Price!
   "Total price including transport and payment"
   totalPrice: Price!
-  "Total price (exluding discount, transport and payment)"
+  "Total price (excluding discount, transport and payment)"
   totalPriceWithoutDiscountTransportAndPayment: Price!
   "Selected transport if transport provided"
   transport: Transport

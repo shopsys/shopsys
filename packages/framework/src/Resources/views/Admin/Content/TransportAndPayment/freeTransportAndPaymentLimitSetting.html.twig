@@ -21,8 +21,8 @@
                             {% endif %}
                             <th>{{ 'Use'|trans }}</th>
                             <th>
-                                {{ 'Free from order value with VAT'|trans }}
-                                {{ info_icon('Value of bought products with VAT after application of all discounts and promo codes without price of shipping and payment'|trans) }}
+                                {{ 'Free from order value'|trans }} {{ priceVatLabel({ isSimple: true }) }}
+                                {{ info_icon('Value of bought products after application of all discounts and promo codes without price of shipping and payment'|trans) }}
                             </th>
                         </thead>
                         <tbody>

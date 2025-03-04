@@ -25,6 +25,6 @@ mutation ApplyPromoCodeToCart(
                 vatAmount
             }
         }
-        remainingAmountWithVatForFreeTransport
+        remainingAmountForFreeTransport
     }
 }

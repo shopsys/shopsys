@@ -40,7 +40,7 @@ class PaymentPriceCalculation
         int $domainId,
         bool $forceFreePayment,
     ): PriceInterface {
-        if ($this->freeTransportAndPaymentFacade->isFree($productsPrice->getPriceWithVat(), $domainId, $forceFreePayment)) {
+        if ($this->freeTransportAndPaymentFacade->isFree($productsPrice, $domainId, $forceFreePayment)) {
             return Price::zero();
         }
 

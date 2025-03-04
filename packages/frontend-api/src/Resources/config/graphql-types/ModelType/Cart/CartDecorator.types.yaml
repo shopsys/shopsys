@@ -33,10 +33,10 @@ CartDecorator:
                 type: "Price!"
             totalPriceWithoutDiscountTransportAndPayment:
                 type: "Price!"
-                description: "Total price (exluding discount, transport and payment)"
-            remainingAmountWithVatForFreeTransport:
+                description: "Total price (excluding discount, transport and payment)"
+            remainingAmountForFreeTransport:
                 type: "Money"
-                description: "Remaining amount for free transport and payment; null = transport cannot be free"
+                description: "Remaining amount for free transport and payment; null = transport cannot be free. Amount is with VAT if input price type is set to price with vat and vice versa."
             paymentGoPayBankSwift:
                 type: "String"
                 description: "Selected bank swift code of goPay payment bank transfer"

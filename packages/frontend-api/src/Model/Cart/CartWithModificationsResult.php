@@ -73,7 +73,7 @@ class CartWithModificationsResult
 
     protected ?PriceInterface $totalPriceWithoutDiscountTransportAndPayment = null;
 
-    protected ?Money $remainingAmountWithVatForFreeTransport = null;
+    protected ?Money $remainingAmountForFreeTransport = null;
 
     protected ?PriceInterface $roundingPrice = null;
 
@@ -240,17 +240,17 @@ class CartWithModificationsResult
     /**
      * @return \Shopsys\FrameworkBundle\Component\Money\Money|null
      */
-    public function getRemainingAmountWithVatForFreeTransport(): ?Money
+    public function getRemainingAmountForFreeTransport(): ?Money
     {
-        return $this->remainingAmountWithVatForFreeTransport;
+        return $this->remainingAmountForFreeTransport;
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $remainingAmountWithVatForFreeTransport
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $remainingAmountForFreeTransport
      */
-    public function setRemainingAmountWithVatForFreeTransport(Money $remainingAmountWithVatForFreeTransport): void
+    public function setRemainingAmountForFreeTransport(Money $remainingAmountForFreeTransport): void
     {
-        $this->remainingAmountWithVatForFreeTransport = $remainingAmountWithVatForFreeTransport;
+        $this->remainingAmountForFreeTransport = $remainingAmountForFreeTransport;
     }
 
     /**

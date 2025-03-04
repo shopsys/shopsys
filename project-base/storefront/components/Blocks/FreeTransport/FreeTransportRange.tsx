@@ -8,9 +8,9 @@ export const FreeTransportRange: FC = () => {
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
 
-    const shouldDisplayTransportBar = cart?.remainingAmountWithVatForFreeTransport !== null;
+    const shouldDisplayTransportBar = cart?.remainingAmountForFreeTransport !== null;
     const totalItemPrice = Number(cart?.totalItemsPrice.priceWithVat);
-    const totalPriceRemaining = Number(cart?.remainingAmountWithVatForFreeTransport);
+    const totalPriceRemaining = Number(cart?.remainingAmountForFreeTransport);
     const totalPriceRemainingPercents =
         totalItemPrice && totalPriceRemaining ? (totalItemPrice / (totalItemPrice + totalPriceRemaining)) * 100 : 0;
 

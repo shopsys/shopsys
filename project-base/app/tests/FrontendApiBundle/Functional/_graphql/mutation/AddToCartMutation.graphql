@@ -87,7 +87,7 @@ mutation AddToCart(
                     }
                 }
             }
-            remainingAmountWithVatForFreeTransport
+            remainingAmountForFreeTransport
             promoCode {
                 code
             }

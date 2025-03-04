@@ -16,7 +16,7 @@ fragment CartFragment on Cart {
     modifications {
         ...CartModificationsFragment
     }
-    remainingAmountWithVatForFreeTransport
+    remainingAmountForFreeTransport
     transport {
         ...TransportWithAvailablePaymentsAndStoresFragment,
     }
