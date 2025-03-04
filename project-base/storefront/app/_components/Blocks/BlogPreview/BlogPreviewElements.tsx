@@ -1,5 +1,3 @@
-'use client';
-
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { twJoin } from 'tailwind-merge';
 

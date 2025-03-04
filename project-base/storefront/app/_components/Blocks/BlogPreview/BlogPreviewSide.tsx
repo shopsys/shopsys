@@ -1,13 +1,11 @@
-'use client';
-
 import { ArticleLink } from './BlogPreviewElements';
-import { ArticleDate } from 'components/Basic/ArticleDate/ArticleDate';
-import { Flag } from 'components/Basic/Flag/Flag';
+import { Flag } from 'app/_components/Basic/Flag/Flag';
+import { getFormatDate } from 'app/_utils/formatting/getFormatDate';
+import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { Image } from 'components/Basic/Image/Image';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { TIDs } from 'cypress/tids';
-import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
-import useTranslation from 'next-translate/useTranslation';
+import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.ssr';
 import { twJoin } from 'tailwind-merge';
 
 type SideProps = {
@@ -15,8 +13,9 @@ type SideProps = {
     isPlaceholder?: boolean;
 };
 
-export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false }) => {
-    const { t } = useTranslation();
+export async function BlogPreviewSide({ articles, isPlaceholder = false }: SideProps) {
+    const { formatDate } = await getFormatDate();
+    const t = await getTranslation();
 
     return (
         <div className="flex flex-col gap-6">
@@ -43,11 +42,18 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
                                 </>
                             ) : (
                                 <>
-                                    <ArticleDate
+                                    {/* TODO: add ArticleDate */}
+                                    {/* <ArticleDate
                                         className="mr-3.5"
                                         date={article.publishDate}
                                         tid={TIDs.blog_article_publication_date}
-                                    />
+                                    /> */}
+                                    <span
+                                        className="font-secondary text-inputPlaceholder mr-4 text-sm font-semibold"
+                                        tid={TIDs.blog_article_publication_date}
+                                    >
+                                        {formatDate(article.publishDate, 'l')}
+                                    </span>
 
                                     {article.blogCategories.map((blogPreviewCategory) => {
                                         if (!blogPreviewCategory.parent) {
@@ -81,4 +87,4 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
             ))}
         </div>
     );
-};
+}

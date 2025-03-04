@@ -13,10 +13,10 @@ import { SkeletonManager } from 'components/Blocks/Skeleton/SkeletonManager';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import { TypeHreflangLink } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
-import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { useSessionStore } from 'store/useSessionStore';
 import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
 import { OgTypeEnum } from 'types/seo';
+import { PageType } from 'types/simpleNavigation';
 import { CanonicalQueryParameters } from 'utils/seo/generateCanonicalUrl';
 
 export type CommonLayoutProps = {
