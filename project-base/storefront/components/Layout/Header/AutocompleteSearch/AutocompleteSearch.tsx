@@ -68,7 +68,7 @@ export const AutocompleteSearch: FC = () => {
                 pathname: searchUrl,
                 query: { q: searchQueryValue },
             });
-            setIsSearchResultsPopupOpen(false);
+            setSearchQueryValue('');
         }
     };
 
