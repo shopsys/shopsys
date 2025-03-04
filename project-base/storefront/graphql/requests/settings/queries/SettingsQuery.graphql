@@ -11,10 +11,7 @@ query SettingsQuery @redisCache(ttl: 3600) {
         displayTimezone
         heurekaEnabled
         mainBlogCategoryData {
-            mainBlogCategoryUrl
-            mainBlogCategoryMainImage {
-                url
-            }
+            ...MainBlogCategorySettingFragment
         }
         privacyPolicyArticleUrl
         termsAndConditionsArticleUrl

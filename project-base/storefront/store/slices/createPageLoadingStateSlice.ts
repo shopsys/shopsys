@@ -1,33 +1,5 @@
-import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
+import { PageType } from 'types/simpleNavigation';
 import { StateCreator } from 'zustand';
-
-const CUSTOM_PAGE_TYPES = [
-    'cart',
-    'comparison',
-    'contact-information',
-    'homepage',
-    'order-confirmation',
-    'orderDetail',
-    'orderList',
-    'complaintNew',
-    'complaintDetail',
-    'complaintList',
-    'editProfile',
-    'changePassword',
-    'account',
-    'productMainVariant',
-    'registration',
-    'stores',
-    'transport-and-payment',
-    'contact-information',
-    'cart',
-    'order-confirmation',
-    'contact',
-    'wishlist',
-    'customer-users',
-] as const;
-
-export type PageType = FriendlyPagesTypesKey | (typeof CUSTOM_PAGE_TYPES)[number];
 
 export type PageLoadingStateSlice = {
     hadClientSideNavigation: boolean;
