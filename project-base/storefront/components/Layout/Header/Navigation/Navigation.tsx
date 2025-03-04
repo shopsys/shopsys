@@ -3,7 +3,7 @@
 import { NavigationItem } from './NavigationItem';
 import { TypeCategoriesByColumnFragment } from 'graphql/requests/navigation/fragments/CategoriesByColumnsFragment.generated';
 import { useState } from 'react';
-import { PageType } from 'store/slices/createPageLoadingStateSlice';
+import { PageType } from 'types/simpleNavigation';
 
 export type NavigationProps = {
     navigation: TypeCategoriesByColumnFragment[];

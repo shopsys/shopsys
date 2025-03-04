@@ -7,8 +7,8 @@ import { TIDs } from 'cypress/tids';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
 import { Fragment } from 'react';
-import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
+import { PageType } from 'types/simpleNavigation';
 import { twMergeCustom } from 'utils/twMerge';
 
 type BreadcrumbsProps = {

@@ -7,8 +7,8 @@ import { NavigationItemColumn } from 'components/Layout/Header/Navigation/Naviga
 import { AnimatePresence, m } from 'framer-motion';
 import { TypeCategoriesByColumnFragment } from 'graphql/requests/navigation/fragments/CategoriesByColumnsFragment.generated';
 import { useState } from 'react';
-import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { twJoin } from 'tailwind-merge';
+import { PageType } from 'types/simpleNavigation';
 import { useDebounce } from 'utils/useDebounce';
 
 type NavigationItemProps = {

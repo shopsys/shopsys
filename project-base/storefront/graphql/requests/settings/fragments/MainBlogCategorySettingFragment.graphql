@@ -1,0 +1,7 @@
+fragment MainBlogCategorySettingFragment on MainBlogCategoryData {
+    __typename
+    mainBlogCategoryUrl
+    mainBlogCategoryMainImage {
+      ...ImageFragment
+    }
+}

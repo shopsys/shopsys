@@ -2,7 +2,7 @@
 
 import { SimpleNavigationListItem } from './SimpleNavigationListItem';
 import { TIDs } from 'cypress/tids';
-import { PageType } from 'store/slices/createPageLoadingStateSlice';
+import { PageType } from 'types/simpleNavigation';
 import { ListedItemPropType } from 'types/simpleNavigation';
 import { twMergeCustom } from 'utils/twMerge';
 

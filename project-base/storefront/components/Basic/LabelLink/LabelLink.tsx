@@ -2,7 +2,7 @@
 
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ReactElement } from 'react';
-import { PageType } from 'store/slices/createPageLoadingStateSlice';
+import { PageType } from 'types/simpleNavigation';
 import { twMergeCustom } from 'utils/twMerge';
 
 type LabelLinkProps = {

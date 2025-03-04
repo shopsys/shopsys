@@ -29,8 +29,8 @@ import { SkeletonPageStores } from './SkeletonPageStores';
 import { SkeletonPageTransportAndPayment } from './SkeletonPageTransportAndPayment';
 import { SkeletonPageWishlist } from './SkeletonPageWishlist';
 import { useEffect } from 'react';
-import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { useSessionStore } from 'store/useSessionStore';
+import { PageType } from 'types/simpleNavigation';
 
 type SkeletonManagerProps = {
     isFetchingData?: boolean;
