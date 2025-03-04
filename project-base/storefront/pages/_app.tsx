@@ -1,6 +1,9 @@
+import { AppConfigProvider } from 'components/providers/AppConfigProvider';
 import { AuthorizationProvider } from 'components/providers/AuthorizationProvider';
 import { CookiesStoreProvider } from 'components/providers/CookiesStoreProvider';
 import { DomainConfigProvider } from 'components/providers/DomainConfigProvider';
+import { TranslationProvider } from 'components/providers/TranslationProvider';
+import { STATIC_REWRITE_PATHS } from 'config/staticRewritePaths';
 import { LazyMotion } from 'framer-motion';
 import { GtmProvider } from 'gtm/context/GtmProvider';
 import i18nConfig from 'i18n';
@@ -50,7 +53,7 @@ const Error500ContentWithBoundary = dynamic(
 );
 
 function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
-    const { defaultLocale } = pageProps.domainConfig;
+    const { defaultLocale, url } = pageProps.domainConfig;
     initDayjsLocale(defaultLocale);
 
     return (
@@ -63,13 +66,21 @@ function MyApp({ Component, pageProps }: AppProps): ReactElement | null {
             <UrqlWrapper pageProps={pageProps}>
                 <CookiesStoreProvider cookieStoreStateFromServer={pageProps.cookiesStore}>
                     <DomainConfigProvider domainConfig={pageProps.domainConfig}>
-                        <AuthorizationProvider customerUserRoles={pageProps.customerUserRoles}>
-                            <GtmProvider>
-                                <LazyMotion features={framerMotionPlugins}>
-                                    <AppPageContent Component={Component} pageProps={pageProps} />
-                                </LazyMotion>
-                            </GtmProvider>
-                        </AuthorizationProvider>
+                        <AppConfigProvider
+                            domainConfig={pageProps.domainConfig}
+                            settings={pageProps.settings}
+                            staticRewritePaths={STATIC_REWRITE_PATHS[url]}
+                        >
+                            <TranslationProvider dictionary={pageProps.dict} lang={defaultLocale}>
+                                <AuthorizationProvider customerUserRoles={pageProps.customerUserRoles}>
+                                    <GtmProvider>
+                                        <LazyMotion features={framerMotionPlugins}>
+                                            <AppPageContent Component={Component} pageProps={pageProps} />
+                                        </LazyMotion>
+                                    </GtmProvider>
+                                </AuthorizationProvider>
+                            </TranslationProvider>
+                        </AppConfigProvider>
                     </DomainConfigProvider>
                 </CookiesStoreProvider>
             </UrqlWrapper>
