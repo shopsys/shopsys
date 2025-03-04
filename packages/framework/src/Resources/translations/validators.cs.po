@@ -380,7 +380,10 @@ msgid "Please enter navigation item name"
 msgstr "Zadejte prosím název položky navigace"
 
 msgid "Please enter notification bar content"
-msgstr ""
+msgstr "Vyplňte prosím obsah notifikační lišty"
+
+msgid "Please enter number of rounding places for price without VAT"
+msgstr "Vyplňte prosím počet desetinných míst pro zaokrouhlování ceny bez DPH"
 
 msgid "Please enter order status name in all languages"
 msgstr "Vyplňte prosím název stavu objednávky ve všech jazycích"

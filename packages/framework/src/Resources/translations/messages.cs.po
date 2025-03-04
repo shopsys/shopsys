@@ -2131,8 +2131,8 @@ msgstr "Kategorie čtvrtého sloupce"
 msgid "Free"
 msgstr "Zdarma"
 
-msgid "Free from order value with VAT"
-msgstr "Zdarma od hodnoty objednávky s DPH"
+msgid "Free from order value"
+msgstr "Zdarma od hodnoty objednávky"
 
 msgid "Free shipping and payment"
 msgstr "Doprava a platba zdarma"
@@ -4657,8 +4657,8 @@ msgstr "Platnost do"
 msgid "Value"
 msgstr "Hodnota"
 
-msgid "Value of bought products with VAT after application of all discounts and promo codes without price of shipping and payment"
-msgstr "Jde o hodnotu nakoupeného zboží s DPH po uplatnění všech slev a slevových kupónů bez hodnoty dopravy a platby"
+msgid "Value of bought products after application of all discounts and promo codes without price of shipping and payment"
+msgstr "Hodnota nakoupených produktů po aplikaci všech slev a promo kódů bez ceny dopravy a platby"
 
 msgid "Variant"
 msgstr "Varianta"

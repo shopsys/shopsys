@@ -382,6 +382,9 @@ msgstr ""
 msgid "Please enter notification bar content"
 msgstr ""
 
+msgid "Please enter number of rounding places for price without VAT"
+msgstr ""
+
 msgid "Please enter order status name in all languages"
 msgstr ""
 

@@ -2131,7 +2131,7 @@ msgstr ""
 msgid "Free"
 msgstr ""
 
-msgid "Free from order value with VAT"
+msgid "Free from order value"
 msgstr ""
 
 msgid "Free shipping and payment"
@@ -4657,7 +4657,7 @@ msgstr ""
 msgid "Value"
 msgstr ""
 
-msgid "Value of bought products with VAT after application of all discounts and promo codes without price of shipping and payment"
+msgid "Value of bought products after application of all discounts and promo codes without price of shipping and payment"
 msgstr ""
 
 msgid "Variant"
