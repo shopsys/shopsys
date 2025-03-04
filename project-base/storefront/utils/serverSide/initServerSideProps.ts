@@ -20,11 +20,13 @@ import {
     SettingsQueryDocument,
 } from 'graphql/requests/settings/queries/SettingsQuery.generated';
 import { TypeArticlePlacementTypeEnum, TypeCustomerUserRoleEnum } from 'graphql/types';
+import { Locale } from 'i18n-config';
 import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { Translate } from 'next-translate';
 import loadNamespaces from 'next-translate/loadNamespaces';
 import { RedisClientType, RedisFunctions, RedisModules, RedisScripts } from 'redis';
 import { CustomerUserAreaEnum } from 'types/customer';
+import { Dictionary } from 'types/translation';
 import { Client, SSRData, SSRExchange, ssrExchange } from 'urql';
 import { createClient } from 'urql/createClient';
 import { getCurrentCustomerUserRoles } from 'utils/auth/getCurrentCustomerUserRoles';
@@ -38,6 +40,13 @@ import { getUrlWithoutGetParameters } from 'utils/parsing/getUrlWithoutGetParame
 import { extractSeoPageSlugFromUrl } from 'utils/seo/extractSeoPageSlugFromUrl';
 import { getServerSideInternationalizedStaticUrl } from 'utils/staticUrls/getServerSideInternationalizedStaticUrl';
 
+const dictionaries = {
+    en: () => import('../../public/locales/en/common.json').then((module) => module.default),
+    sk: () => import('../../public/locales/sk/common.json').then((module) => module.default),
+    cs: () => import('../../public/locales/cs/common.json').then((module) => module.default),
+};
+
+const getDictionary = async (lang: Locale): Promise<Dictionary> => (await dictionaries[lang]()) as Dictionary;
 export type ServerSidePropsType = {
     urqlState: SSRData;
     isMaintenance: boolean;
@@ -45,6 +54,7 @@ export type ServerSidePropsType = {
     customerUserRoles: TypeCustomerUserRoleEnum[];
     domainConfig: DomainConfigType;
     cookiesStore: CookiesStoreState;
+    dict: Dictionary;
 } & Record<string, any>;
 
 type QueriesArray<VariablesType> = { query: string | DocumentNode; variables?: VariablesType }[];
@@ -117,7 +127,6 @@ export const initServerSideProps = async <VariablesType extends Variables>({
             },
         },
         { query: AdvertsQueryDocument, variables: { positionNames: ['header', 'footer'], categoryUuid: null } },
-        { query: SettingsQueryDocument },
         ...(seoPageSlug
             ? [
                   {
@@ -139,6 +148,7 @@ export const initServerSideProps = async <VariablesType extends Variables>({
         | VariablesType
     > = [
         { query: CurrentCustomerUserQueryDocument },
+        { query: SettingsQueryDocument },
         ...(isRedirectedFromSsr ? queriesNotToBeFetchedDuringClientSideNavigation : []),
         ...additionalPrefetchQueries,
     ];
@@ -198,6 +208,10 @@ export const initServerSideProps = async <VariablesType extends Variables>({
         context.res.statusCode = 503;
     }
 
+    const dict = await getDictionary(domainConfig.defaultLocale as Locale);
+    const settingsResult = resolvedQueries.find((query) => !!query.data?.settings);
+    const parsedSettings = settingsResult?.data.settings;
+
     return {
         props: {
             ...(await loadNamespaces({
@@ -211,6 +225,8 @@ export const initServerSideProps = async <VariablesType extends Variables>({
             isMaintenance,
             isForbidden,
             customerUserRoles,
+            dict,
+            settings: parsedSettings ?? null,
             ...additionalProps,
         },
     };
