@@ -1,40 +1,38 @@
-'use client';
-
 import { ArticleLink } from './BlogPreviewElements';
-import { ArticleDate } from 'components/Basic/ArticleDate/ArticleDate';
-import { Flag } from 'components/Basic/Flag/Flag';
+import { Flag } from 'app/_components/Basic/Flag/Flag';
+import { getFormatDate } from 'app/_utils/formatting/getFormatDate';
+import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { Image } from 'components/Basic/Image/Image';
 import { Skeleton } from 'components/Basic/Skeleton/Skeleton';
 import { TIDs } from 'cypress/tids';
-import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.generated';
-import { twJoin } from 'tailwind-merge';
-import useTranslation from 'utils/i18n/useTranslationWrapper';
+import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.ssr';
 
-type SideProps = {
+type MainProps = {
     articles: TypeListedBlogArticleFragment[];
     isPlaceholder?: boolean;
 };
 
-export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false }) => {
-    const { t } = useTranslation();
+export async function BlogPreviewMain({ articles, isPlaceholder = false }: MainProps) {
+    const { formatDate } = await getFormatDate();
+    const t = await getTranslation();
 
     return (
-        <div className="flex flex-col gap-6">
+        <>
             {articles.map((article) => (
-                <div key={article.uuid} className="vl:flex-row flex max-w-[410px] min-w-96 snap-start flex-col gap-5">
-                    <ArticleLink href={article.link} tabIndex={-1} title={t('Blog article')}>
+                <div key={article.uuid} className="flex max-w-80 snap-start flex-col gap-5">
+                    <ArticleLink href={article.link} tabIndex={-1} title={t('Article page')}>
                         <Image
                             alt={article.mainImage?.name || article.name}
-                            className="vl:h-24 vl:w-36 aspect-video rounded-xl object-cover"
+                            className="vl:aspect-16/11 aspect-video size-full rounded-xl object-cover"
                             height={220}
-                            sizes="(max-width: 1023px) 0px, 144px"
+                            sizes="(max-width: 600px) 52vw, (max-width: 768px) 35vw, (max-width: 1024px) 28vw, 320px"
                             src={article.mainImage?.url}
                             tid={TIDs.blog_preview_image}
                             width={320}
                         />
                     </ArticleLink>
 
-                    <div className="flex flex-col items-start gap-2">
+                    <div className="flex flex-col items-start gap-2.5">
                         <div className="flex flex-wrap items-center gap-x-1.5 gap-y-2 whitespace-nowrap">
                             {isPlaceholder ? (
                                 <>
@@ -43,11 +41,19 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
                                 </>
                             ) : (
                                 <>
-                                    <ArticleDate
+                                    {/* TODO: add ArticleDate */}
+                                    {/* <ArticleDate
                                         className="mr-3.5"
                                         date={article.publishDate}
                                         tid={TIDs.blog_article_publication_date}
-                                    />
+                                    /> */}
+
+                                    <span
+                                        className="font-secondary text-inputPlaceholder mr-4 text-sm font-semibold"
+                                        tid={TIDs.blog_article_publication_date}
+                                    >
+                                        {formatDate(article.publishDate, 'l')}
+                                    </span>
 
                                     {article.blogCategories.map((blogPreviewCategory) => {
                                         if (!blogPreviewCategory.parent) {
@@ -65,7 +71,7 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
                         </div>
 
                         <ArticleLink
-                            className="h5 text-text-inverted"
+                            className="h4 text-text-inverted"
                             href={article.link}
                             title={t('Blog article')}
                             ariaLabel={t('Go to article page of {{ articleName }}', {
@@ -76,12 +82,10 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
                             {article.name}
                         </ArticleLink>
 
-                        <p className={twJoin('text-text-inverted font-normal', !isPlaceholder && 'hidden')}>
-                            {article.perex}
-                        </p>
+                        <p className="text-text-inverted font-normal">{article.perex}</p>
                     </div>
                 </div>
             ))}
-        </div>
+        </>
     );
-};
+}

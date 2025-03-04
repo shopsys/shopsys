@@ -1,7 +1,7 @@
 'use client';
 
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
+import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.ssr';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { disableClickWhenTextSelected } from 'utils/ui/disableClickWhenTextSelected';
 

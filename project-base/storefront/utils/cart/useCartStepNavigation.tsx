@@ -3,8 +3,8 @@ import { getTransportAndPaymentValidationMessages } from 'components/Pages/Order
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
-import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { useSessionStore } from 'store/useSessionStore';
+import { PageType } from 'types/simpleNavigation';
 import { useCurrentCart } from 'utils/cart/useCurrentCart';
 import { hasValidationErrors } from 'utils/errors/hasValidationErrors';
 import useTranslation from 'utils/i18n/useTranslationWrapper';

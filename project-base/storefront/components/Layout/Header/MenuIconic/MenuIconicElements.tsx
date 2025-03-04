@@ -5,8 +5,8 @@ import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNext
 import { AnimatePresence } from 'framer-motion';
 import { forwardRef } from 'react';
 import { TouchEvent as ReactTouchEvent } from 'react';
-import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { twJoin } from 'tailwind-merge';
+import { PageType } from 'types/simpleNavigation';
 import { twMergeCustom } from 'utils/twMerge';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 

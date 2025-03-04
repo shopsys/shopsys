@@ -1,6 +1,8 @@
+'use client';
+
 import { LinkButton } from 'components/Forms/Button/LinkButton';
-import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { twJoin } from 'tailwind-merge';
+import { PageType } from 'types/simpleNavigation';
 
 type ErrorPageProps = { isWithoutImage?: boolean };
 

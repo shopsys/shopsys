@@ -1,7 +1,4 @@
-'use client';
-
-import { PageType } from 'store/slices/createPageLoadingStateSlice';
-import { ListedItemPropTypeTypename } from 'types/simpleNavigation';
+import { ListedItemPropTypeTypename, PageType } from 'types/simpleNavigation';
 
 export const getLinkType = (type: ListedItemPropTypeTypename | undefined): PageType | undefined => {
     switch (type) {
