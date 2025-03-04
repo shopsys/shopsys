@@ -66,6 +66,10 @@ export const getErrorExchange =
 const handleErrorMessagesForDevelopment = (error: CombinedError, t: Translate) => {
     const parsedErrors = getUserFriendlyErrors(error, t);
 
+    if (parsedErrors.userError) {
+        return;
+    }
+
     if (!parsedErrors.applicationError || !isNoLogError(parsedErrors.applicationError.type)) {
         logException({
             message: error.message,
