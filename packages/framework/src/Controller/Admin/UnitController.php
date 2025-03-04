@@ -28,8 +28,11 @@ class UnitController extends AdminBaseController
     ) {
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     #[Route(path: '/product/unit/list/')]
-    public function listAction()
+    public function listAction(): Response
     {
         $unitInlineEdit = $this->unitInlineEdit;
 
@@ -43,9 +46,10 @@ class UnitController extends AdminBaseController
     /**
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/unit/delete-confirm/{id}', requirements: ['id' => '\d+'])]
-    public function deleteConfirmAction($id)
+    public function deleteConfirmAction(int $id): Response
     {
         try {
             $unit = $this->unitFacade->getById($id);
@@ -88,9 +92,10 @@ class UnitController extends AdminBaseController
      * @CsrfProtection
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/unit/delete/{id}', requirements: ['id' => '\d+'])]
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, int $id): Response
     {
         $newId = $request->get('newId');
 
@@ -125,9 +130,10 @@ class UnitController extends AdminBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/unit/setting/')]
-    public function settingAction(Request $request)
+    public function settingAction(Request $request): Response
     {
         try {
             $defaultUnit = $this->unitFacade->getDefaultUnit();

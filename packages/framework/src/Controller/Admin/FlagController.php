@@ -37,8 +37,11 @@ class FlagController extends AdminBaseController
     ) {
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     #[Route(path: '/product/flag/list/')]
-    public function listAction()
+    public function listAction(): Response
     {
         $grid = $this->flagGridFactory->create();
 
@@ -170,7 +173,7 @@ class FlagController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/flag/delete/{id}', requirements: ['id' => '\d+'])]
-    public function deleteAction($id): Response
+    public function deleteAction(int $id): Response
     {
         try {
             $flag = $this->flagFacade->getById($id);

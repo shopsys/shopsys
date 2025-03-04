@@ -16,6 +16,7 @@ use Shopsys\FrameworkBundle\Model\Slider\SliderItem;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class SliderController extends AdminBaseController
@@ -38,8 +39,11 @@ class SliderController extends AdminBaseController
     ) {
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     #[Route(path: '/slider/list/')]
-    public function listAction()
+    public function listAction(): Response
     {
         $queryBuilder = $this->entityManager->createQueryBuilder()
             ->select('s')
@@ -68,9 +72,10 @@ class SliderController extends AdminBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/slider/item/new/')]
-    public function newAction(Request $request)
+    public function newAction(Request $request): Response
     {
         $sliderItemData = $this->sliderItemDataFactory->create();
         $sliderItemData->domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
@@ -108,9 +113,10 @@ class SliderController extends AdminBaseController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/slider/item/edit/{id}', requirements: ['id' => '\d+'])]
-    public function editAction(Request $request, $id)
+    public function editAction(Request $request, int $id): Response
     {
         $sliderItem = $this->sliderItemFacade->getById($id);
         $sliderItemData = $this->sliderItemDataFactory->createFromSliderItem($sliderItem);
@@ -152,9 +158,10 @@ class SliderController extends AdminBaseController
     /**
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/slider/item/delete/{id}', requirements: ['id' => '\d+'])]
-    public function deleteAction($id)
+    public function deleteAction(int $id): Response
     {
         try {
             $name = $this->sliderItemFacade->getById($id)->getName();

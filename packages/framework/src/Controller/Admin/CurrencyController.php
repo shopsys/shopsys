@@ -32,8 +32,11 @@ class CurrencyController extends AdminBaseController
     ) {
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     #[Route(path: '/currency/list/')]
-    public function listAction()
+    public function listAction(): Response
     {
         $grid = $this->currencyInlineEdit->getGrid();
 
@@ -45,9 +48,10 @@ class CurrencyController extends AdminBaseController
     /**
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/currency/delete-confirm/{id}', requirements: ['id' => '\d+'])]
-    public function deleteConfirmAction($id)
+    public function deleteConfirmAction(int $id): Response
     {
         try {
             $currency = $this->currencyFacade->getById($id);
@@ -65,9 +69,10 @@ class CurrencyController extends AdminBaseController
     /**
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/currency/delete/{id}', requirements: ['id' => '\d+'])]
-    public function deleteAction($id)
+    public function deleteAction(int $id): Response
     {
         try {
             $fullName = $this->currencyFacade->getById($id)->getName();
@@ -92,8 +97,9 @@ class CurrencyController extends AdminBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function settingsAction(Request $request)
+    public function settingsAction(Request $request): Response
     {
         $domainNames = [];
 

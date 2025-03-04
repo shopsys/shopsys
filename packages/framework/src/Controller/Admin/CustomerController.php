@@ -71,9 +71,10 @@ class CustomerController extends AdminBaseController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/customer/edit/{id}', requirements: ['id' => '\d+'])]
-    public function editAction(Request $request, int $id)
+    public function editAction(Request $request, int $id): Response
     {
         $customerUser = $this->customerUserFacade->getCustomerUserById($id);
         $customer = $customerUser->getCustomer();
@@ -177,9 +178,10 @@ class CustomerController extends AdminBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/customer/list/')]
-    public function listAction(Request $request)
+    public function listAction(Request $request): Response
     {
         $quickSearchForm = $this->createForm(QuickSearchFormType::class, new QuickSearchFormData());
         $quickSearchForm->handleRequest($request);
@@ -232,9 +234,10 @@ class CustomerController extends AdminBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/customer/new/')]
-    public function newAction(Request $request)
+    public function newAction(Request $request): Response
     {
         $customerUserUpdateData = $this->customerUserUpdateDataFactory->create();
         $selectedDomainId = $this->adminDomainTabsFacade->getSelectedDomainId();
@@ -324,9 +327,10 @@ class CustomerController extends AdminBaseController
     /**
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/customer/delete/{id}', requirements: ['id' => '\d+'])]
-    public function deleteAction(int $id)
+    public function deleteAction(int $id): Response
     {
         $customerUser = $this->customerUserFacade->getCustomerUserById($id);
         $customer = $customerUser->getCustomer();

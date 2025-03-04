@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Form\Admin\Heureka\HeurekaShopCertificationFormType;
 use Shopsys\FrameworkBundle\Model\Heureka\HeurekaFacade;
 use Shopsys\FrameworkBundle\Model\Heureka\HeurekaSetting;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HeurekaController extends AdminBaseController
@@ -27,9 +28,10 @@ class HeurekaController extends AdminBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/heureka/setting/')]
-    public function settingAction(Request $request)
+    public function settingAction(Request $request): Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
         $domainConfig = $this->adminDomainTabsFacade->getSelectedDomainConfig();

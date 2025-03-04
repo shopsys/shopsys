@@ -29,7 +29,7 @@ class FileUploadController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     #[Route(path: '/file-upload/')]
-    public function uploadAction(Request $request)
+    public function uploadAction(Request $request): JsonResponse
     {
         $actionResult = [
             'status' => 'error',
@@ -67,7 +67,7 @@ class FileUploadController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     #[Route(path: '/file-upload/delete-temporary-file/')]
-    public function deleteTemporaryFileAction(Request $request)
+    public function deleteTemporaryFileAction(Request $request): JsonResponse
     {
         $filename = $request->get('filename');
 

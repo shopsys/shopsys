@@ -87,7 +87,7 @@ class TransferIssueController extends AdminBaseController
     public function deleteAction(int $id): RedirectResponse
     {
         try {
-            $this->transferIssueFacade->deleteById((int)$id);
+            $this->transferIssueFacade->deleteById($id);
 
             $this->addSuccessFlashTwig(
                 t('Transfer problem has been marked as resolved'),

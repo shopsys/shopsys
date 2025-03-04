@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Form\Admin\Product\TopProduct\TopProductsFormType;
 use Shopsys\FrameworkBundle\Model\Product\ProductFrontendLimitProvider;
 use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class TopProductController extends AdminBaseController
@@ -27,9 +28,10 @@ class TopProductController extends AdminBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/top-product/list/')]
-    public function listAction(Request $request)
+    public function listAction(Request $request): Response
     {
         $domainId = $this->adminDomainTabsFacade->getSelectedDomainId();
         $formData = [
@@ -57,7 +59,7 @@ class TopProductController extends AdminBaseController
      * @param int $domainId
      * @return \Shopsys\FrameworkBundle\Model\Product\Product[]
      */
-    protected function getProductsForDomain($domainId)
+    protected function getProductsForDomain(int $domainId): array
     {
         $topProducts = $this->topProductFacade->getAll($domainId);
         $products = [];

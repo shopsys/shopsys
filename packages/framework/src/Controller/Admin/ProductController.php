@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Doctrine\ORM\QueryBuilder;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\Grid\Grid;
 use Shopsys\FrameworkBundle\Component\Router\Security\Annotation\CsrfProtection;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
@@ -160,9 +161,10 @@ class ProductController extends AdminBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/list/')]
-    public function listAction(Request $request)
+    public function listAction(Request $request): Response
     {
         $advancedSearchForm = $this->advancedSearchProductFacade->createAdvancedSearchForm($request);
         $advancedSearchData = $advancedSearchForm->getData();
@@ -248,9 +250,10 @@ class ProductController extends AdminBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/get-advanced-search-rule-form/', methods: ['post'])]
-    public function getRuleFormAction(Request $request)
+    public function getRuleFormAction(Request $request): Response
     {
         $ruleForm = $this->advancedSearchProductFacade->createRuleForm(
             $request->get('filterName'),
@@ -264,9 +267,10 @@ class ProductController extends AdminBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/create-variant/')]
-    public function createVariantAction(Request $request)
+    public function createVariantAction(Request $request): Response
     {
         $form = $this->createForm(VariantFormType::class);
         $form->handleRequest($request);
@@ -306,16 +310,17 @@ class ProductController extends AdminBaseController
      * @param \Doctrine\ORM\QueryBuilder $queryBuilder
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
-    protected function getGrid(QueryBuilder $queryBuilder)
+    protected function getGrid(QueryBuilder $queryBuilder): Grid
     {
         return $this->productGridFactory->getProductControllerGrid($queryBuilder);
     }
 
     /**
      * @param int $productId
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/product/visibility/{productId}')]
-    public function visibilityAction($productId)
+    public function visibilityAction(int $productId): Response
     {
         $product = $this->productFacade->getById($productId);
 
@@ -368,7 +373,7 @@ class ProductController extends AdminBaseController
     /**
      * @return bool
      */
-    protected function productCanBeCreated()
+    protected function productCanBeCreated(): bool
     {
         return $this->unitFacade->isAtLeastOneUnitCreated()
             && $this->setting->get(Setting::DEFAULT_UNIT) !== 0;
@@ -379,8 +384,6 @@ class ProductController extends AdminBaseController
      */
     protected function setSellingToUntilEndOfDay(?ProductData $productData): void
     {
-        if ($productData->sellingTo !== null) {
-            $productData->sellingTo->modify('+1 day -1 second');
-        }
+        $productData?->sellingTo?->modify('+1 day -1 second');
     }
 }

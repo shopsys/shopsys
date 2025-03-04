@@ -47,7 +47,7 @@ class SuperadminController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/superadmin/errors/')]
-    public function errorsAction()
+    public function errorsAction(): Response
     {
         return $this->render('@ShopsysFramework/Admin/Content/Superadmin/errors.html.twig');
     }
@@ -57,7 +57,7 @@ class SuperadminController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/superadmin/pricing/')]
-    public function pricingAction(Request $request)
+    public function pricingAction(Request $request): Response
     {
         $pricingSettingData = [
             'type' => $this->pricingSetting->getInputPriceType(),
@@ -85,7 +85,7 @@ class SuperadminController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/superadmin/urls/')]
-    public function urlsAction()
+    public function urlsAction(): Response
     {
         return $this->render('@ShopsysFramework/Admin/Content/Superadmin/urlsListGrid.html.twig');
     }
@@ -95,7 +95,7 @@ class SuperadminController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/superadmin/modules/')]
-    public function modulesAction(Request $request)
+    public function modulesAction(Request $request): Response
     {
         $formData = [];
 
@@ -127,7 +127,7 @@ class SuperadminController extends AdminBaseController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/superadmin/css-documentation/')]
-    public function cssDocumentationAction()
+    public function cssDocumentationAction(): Response
     {
         return $this->render('@ShopsysFramework/Admin/Content/Superadmin/cssDocumentation.html.twig');
     }

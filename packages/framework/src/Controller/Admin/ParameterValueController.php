@@ -70,7 +70,7 @@ class ParameterValueController extends AdminBaseController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/parameter-value/edit/{id}', name: 'admin_parametervalue_edit', requirements: ['id' => '\d+'])]
     public function editAction(Request $request, int $id): Response

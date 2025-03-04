@@ -31,8 +31,11 @@ class VatController extends AdminBaseController
     ) {
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     #[Route(path: '/vat/list/')]
-    public function listAction()
+    public function listAction(): Response
     {
         $grid = $this->vatInlineEdit->getGrid();
 
@@ -44,9 +47,10 @@ class VatController extends AdminBaseController
     /**
      * @CsrfProtection
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/vat/delete-confirm/{id}', requirements: ['id' => '\d+'])]
-    public function deleteConfirmAction(int $id)
+    public function deleteConfirmAction(int $id): Response
     {
         try {
             $vat = $this->vatFacade->getById($id);
@@ -81,9 +85,10 @@ class VatController extends AdminBaseController
      * @CsrfProtection
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     #[Route(path: '/vat/delete/{id}', requirements: ['id' => '\d+'])]
-    public function deleteAction(Request $request, $id)
+    public function deleteAction(Request $request, int $id): Response
     {
         $newId = $request->get('newId');
 
@@ -118,8 +123,9 @@ class VatController extends AdminBaseController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function settingsAction(Request $request)
+    public function settingsAction(Request $request): Response
     {
         $vatSettingsFormData = [
             'defaultVat' => $this->vatFacade->getDefaultVatForDomain(

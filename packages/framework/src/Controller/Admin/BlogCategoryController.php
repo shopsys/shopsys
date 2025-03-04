@@ -150,7 +150,7 @@ class BlogCategoryController extends AdminBaseController
     public function applySortingAction(Request $request): Response
     {
         $categoriesOrderingDataJson = $request->request->get('categoriesOrderingData');
-        $categoriesOrderingData = Json::decode($categoriesOrderingDataJson, Json::FORCE_ARRAY);
+        $categoriesOrderingData = Json::decode($categoriesOrderingDataJson, true);
 
         $this->blogCategoryFacade->reorderByNestedSetValues($categoriesOrderingData);
 
