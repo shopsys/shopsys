@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\Navigation;
 
 use Shopsys\FormTypesBundle\ActionBarType;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Locale\LocaleHelper;
 use Shopsys\FrameworkBundle\Form\DomainType;
 use Shopsys\FrameworkBundle\Form\SortableValuesType;
 use Shopsys\FrameworkBundle\Form\Transformers\CategoriesIdsToCategoriesTransformer;
 use Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Navigation\NavigationItem;
 use Shopsys\FrameworkBundle\Model\Navigation\NavigationItemData;
 use Symfony\Component\Form\AbstractType;
@@ -20,24 +19,20 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints;
 
-class NavigationItemFormType extends AbstractType
+final class NavigationItemFormType extends AbstractType
 {
-    /**
-     * @var string[]
-     */
-    private array $categoryPaths;
-
     /**
      * @param \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer
      * @param \Shopsys\FrameworkBundle\Form\Transformers\CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
+     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
         private readonly RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer,
         private readonly CategoriesIdsToCategoriesTransformer $categoriesIdsToCategoriesTransformer,
-        CategoryFacade $categoryFacade,
+        private readonly CategoryFacade $categoryFacade,
+        private readonly Localization $localization,
     ) {
-        $this->categoryPaths = $categoryFacade->getFullPathsIndexedByIdsForDomain(Domain::FIRST_DOMAIN_ID, LocaleHelper::LOCALE_CS);
     }
 
     /**
@@ -49,7 +44,6 @@ class NavigationItemFormType extends AbstractType
     }
 
     /**
-     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
@@ -99,6 +93,7 @@ class NavigationItemFormType extends AbstractType
      * @param string $fieldName
      * @param string $label
      * @param int $index
+     * @param array $categoryPaths
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @return \Symfony\Component\Form\FormBuilderInterface
      */
@@ -106,13 +101,14 @@ class NavigationItemFormType extends AbstractType
         string $fieldName,
         string $label,
         int $index,
+        array $categoryPaths,
         FormBuilderInterface $builder,
     ): FormBuilderInterface {
         return $builder
             ->create($fieldName, SortableValuesType::class, [
                 'label' => $label,
                 'property_path' => sprintf('categoriesByColumnNumber[%d]', $index),
-                'labels_by_value' => $this->categoryPaths,
+                'labels_by_value' => $categoryPaths,
                 'required' => false,
             ])
             ->addViewTransformer($this->removeDuplicatesTransformer)
@@ -124,37 +120,46 @@ class NavigationItemFormType extends AbstractType
      */
     private function addColumnFields(FormBuilderInterface $builder): void
     {
-        $builder->add(
-            $this->createCategoryColumnBuilder(
-                'categoriesInFirstColumn',
-                'Kategorie prvního sloupce',
-                1,
-                $builder,
-            ),
-        )
-        ->add(
-            $this->createCategoryColumnBuilder(
-                'categoriesInSecondColumn',
-                'Kategorie druhého sloupce',
-                2,
-                $builder,
-            ),
-        )
-        ->add(
-            $this->createCategoryColumnBuilder(
-                'categoriesInThirdColumn',
-                'Kategorie třetího sloupce',
-                3,
-                $builder,
-            ),
-        )
-        ->add(
-            $this->createCategoryColumnBuilder(
-                'categoriesInFourthColumn',
-                'Kategorie čtvrtého sloupce',
-                4,
-                $builder,
-            ),
+        $categoryPaths = $this->categoryFacade->getFullPathsIndexedByIds(
+            $this->localization->getAdminLocale(),
         );
+
+        $builder
+            ->add(
+                $this->createCategoryColumnBuilder(
+                    'categoriesInFirstColumn',
+                    t('First column categories'),
+                    1,
+                    $categoryPaths,
+                    $builder,
+                ),
+            )
+            ->add(
+                $this->createCategoryColumnBuilder(
+                    'categoriesInSecondColumn',
+                    t('Second column categories'),
+                    2,
+                    $categoryPaths,
+                    $builder,
+                ),
+            )
+            ->add(
+                $this->createCategoryColumnBuilder(
+                    'categoriesInThirdColumn',
+                    t('Third column categories'),
+                    3,
+                    $categoryPaths,
+                    $builder,
+                ),
+            )
+            ->add(
+                $this->createCategoryColumnBuilder(
+                    'categoriesInFourthColumn',
+                    t('Fourth column categories'),
+                    4,
+                    $categoryPaths,
+                    $builder,
+                ),
+            );
     }
 }

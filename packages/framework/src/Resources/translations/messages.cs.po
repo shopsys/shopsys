@@ -2056,6 +2056,9 @@ msgstr "Dokončit přiřazování"
 msgid "Finished at"
 msgstr "Konec"
 
+msgid "First column categories"
+msgstr "Kategorie prvního sloupce"
+
 msgid "First name"
 msgstr "Jméno"
 
@@ -2115,6 +2118,9 @@ msgstr "Zaslání zapomenutého hesla administrátora"
 
 msgid "Forgotten password sending"
 msgstr "Zaslání zapomenutého hesla"
+
+msgid "Fourth column categories"
+msgstr "Kategorie čtvrtého sloupce"
 
 msgid "Free"
 msgstr "Zdarma"
@@ -3865,6 +3871,9 @@ msgstr "Vyhledávání hledá v názvu produktu, katalogovém čísle produktu, 
 msgid "Searching searches in slugs. It is possible to use wildcards * and ?."
 msgstr "Vyhledávání hledá ve sluzích. Je možné používat operátory * a ?."
 
+msgid "Second column categories"
+msgstr "Kategorie druhého sloupce"
+
 msgid "Select new value"
 msgstr "Zvolte novou hodnotu"
 
@@ -4281,6 +4290,9 @@ msgstr "Žádný sklad na této doméně zatím nebyl vytvořen."
 
 msgid "There was an error while saving. The order isn't saved."
 msgstr "Během ukládání došlo k chybě. Pořadí nebylo uloženo."
+
+msgid "Third column categories"
+msgstr "Kategorie třetího sloupce"
 
 msgid "This SEO page cannot be deleted."
 msgstr "Tato SEO stránka nemůže být smazána."
