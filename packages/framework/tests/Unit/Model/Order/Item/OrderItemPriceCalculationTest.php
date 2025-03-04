@@ -13,6 +13,8 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation;
+use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
+use Shopsys\FrameworkBundle\Model\Pricing\Rounding;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFactory;
 use Tests\FrameworkBundle\Test\IsMoneyEqual;
@@ -28,6 +30,8 @@ class OrderItemPriceCalculationTest extends TestCase
         $priceCalculationMock->expects($this->once())->method('getVatAmountByPriceWithVat')->willReturn(
             Money::create(100),
         );
+        $pricingSettingMock = $this->createMock(PricingSetting::class);
+        $roundingMock = $this->createMock(Rounding::class);
 
         $orderItemData = new OrderItemData();
         $orderItemData->unitPriceWithVat = Money::create(1000);
@@ -37,8 +41,10 @@ class OrderItemPriceCalculationTest extends TestCase
             $priceCalculationMock,
             new VatFactory(new EntityNameResolver([])),
             new VatDataFactory(),
+            $pricingSettingMock,
+            $roundingMock,
         );
-        $priceWithoutVat = $orderItemPriceCalculation->calculatePriceWithoutVat(
+        $priceWithoutVat = $orderItemPriceCalculation->calculatePriceWithoutVatForInputPriceWithVat(
             $orderItemData,
             Domain::FIRST_DOMAIN_ID,
         );
@@ -55,11 +61,15 @@ class OrderItemPriceCalculationTest extends TestCase
         $priceCalculationMock->expects($this->once())->method('getVatAmountByPriceWithVat')->willReturn(
             Money::create(10),
         );
+        $pricingSettingMock = $this->createMock(PricingSetting::class);
+        $roundingMock = $this->createMock(Rounding::class);
 
         $orderItemPriceCalculation = new OrderItemPriceCalculation(
             $priceCalculationMock,
             new VatFactory(new EntityNameResolver([])),
             new VatDataFactory(),
+            $pricingSettingMock,
+            $roundingMock,
         );
 
         $order = $this->getMockBuilder(Order::class)

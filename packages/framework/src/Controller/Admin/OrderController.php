@@ -27,6 +27,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFacade;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\OrderDataFactory;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -49,6 +50,7 @@ class OrderController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\EntityLog\Model\Grid\EntityLogGridFactory $entityLogGridFactory
      * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
      * @param \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFacade $entityLogFacade
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      */
     public function __construct(
         protected readonly OrderFacade $orderFacade,
@@ -64,6 +66,7 @@ class OrderController extends AdminBaseController
         protected readonly EntityLogGridFactory $entityLogGridFactory,
         protected readonly InMemoryCache $inMemoryCache,
         protected readonly EntityLogFacade $entityLogFacade,
+        protected readonly PricingSetting $pricingSetting,
     ) {
     }
 
@@ -148,6 +151,7 @@ class OrderController extends AdminBaseController
             'order' => $order,
             'orderItem' => $orderItem,
             'orderItemTotalPricesById' => $orderItemTotalPricesById,
+            'inputPriceType' => $this->pricingSetting->getInputPriceType(),
         ]);
     }
 

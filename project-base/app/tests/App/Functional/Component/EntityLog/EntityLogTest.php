@@ -307,7 +307,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $orderData->deliveryCountry = $this->getReference(CountryDataFixture::COUNTRY_CZECH_REPUBLIC, Country::class);
         $orderData->note = 'note';
         $orderData->domainId = Domain::FIRST_DOMAIN_ID;
-        $orderData->currency = $this->getReference(CurrencyDataFixture::CURRENCY_CZK, Currency::class);
+        $orderData->currency = $this->getFirstDomainCurrency();
 
         $orderData = $this->orderProcessor->process(
             $orderInput,
