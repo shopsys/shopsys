@@ -30,11 +30,11 @@ export type ProductItemProps = {
     listIndex: number;
     gtmProductListName: GtmProductListNameType;
     gtmMessageOrigin: GtmMessageOriginType;
-    isProductInComparison: boolean;
     visibleItemsConfig?: ProductVisibleItemsConfigType;
     size?: 'extraSmall' | 'small' | 'medium' | 'large' | 'extraLarge';
     textSize?: 'xs' | 'sm';
     textSizePrice?: 'base' | 'lg';
+    isShownInSlider?: boolean;
 } & FunctionComponentProps;
 
 export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
@@ -49,6 +49,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
             size = 'large',
             textSize = 'sm',
             textSizePrice = 'lg',
+            isShownInSlider = false,
         },
         ref,
     ) => {
@@ -57,9 +58,9 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 ref={ref}
                 tid={TIDs.blocks_product_list_listeditem_ + product.catalogNumber}
                 className={twMergeCustom(
-                    'group relative flex select-text flex-col gap-2.5 rounded-xl border border-backgroundMore bg-backgroundMore py-5 text-left transition',
+                    'group border-backgroundMore bg-backgroundMore hover:border-borderAccentLess hover:bg-background relative flex flex-col gap-2.5 rounded-xl border py-5 text-left transition select-text',
                     size === 'small' && 'gap-0 py-2.5',
-                    'hover:border-borderAccentLess hover:bg-background',
+                    isShownInSlider && 'mr-2 snap-center last:mr-0 md:mr-4 md:snap-start',
                     className,
                 )}
             >
@@ -87,7 +88,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                             <ProductAvailability
                                 availability={product.availability}
                                 availableStoresCount={product.availableStoresCount}
-                                className="min-h-10 xs:min-h-[60px] sm:min-h-10"
+                                className="xs:min-h-[60px] min-h-10 sm:min-h-10"
                                 isInquiryType={product.isInquiryType}
                             />
                         )}
