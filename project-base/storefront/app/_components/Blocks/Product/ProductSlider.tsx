@@ -1,70 +1,70 @@
-import { ProductItemProps } from './ProductsList/ProductListItem';
-import { ProductsListContent } from './ProductsList/ProductsListContent';
+'use client';
+
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
-import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
-import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
-import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import { useGtmSliderProductListViewEvent } from 'gtm/utils/pageViewEvents/productList/useGtmSliderProductListViewEvent';
-import useTranslation from 'next-translate/useTranslation';
-import { RefObject, createRef, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'components/providers/TranslationProvider';
+import { useEffect, useRef, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { twJoin } from 'tailwind-merge';
 import { twMergeCustom } from 'utils/twMerge';
-import { isTextSelected } from 'utils/ui/isTextSelected';
+import { isTextSelected } from 'utils/ui/disableClickWhenTextSelected';
 import { isWholeElementVisible } from 'utils/ui/isWholeElementVisible';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 import { wait } from 'utils/wait';
 
-export const VISIBLE_SLIDER_ITEMS = 5;
-export const VISIBLE_SLIDER_ITEMS_LAST_VISITED = 8;
-export const VISIBLE_SLIDER_ITEMS_ARTICLE = 3;
-export const VISIBLE_SLIDER_ITEMS_AUTOCOMPLETE = 5;
+export const getVisibleItemsByVariant = (variant: ProductsSliderVariant): number => {
+    switch (variant) {
+        case 'default':
+            return 5;
+        case 'lastVisited':
+            return 8;
+        case 'blog':
+            return 3;
+        case 'article':
+            return 4;
+        case 'autocomplete':
+            return 5;
+        default:
+            return 5;
+    }
+};
 
-type ProductsSliderVariant = 'default' | 'article' | 'lastVisited' | 'autocomplete';
-export type ProductsSliderProps = {
-    products: TypeListedProductFragment[];
-    gtmProductListName: GtmProductListNameType;
-    gtmMessageOrigin?: GtmMessageOriginType;
+type ProductsSliderVariant = 'default' | 'blog' | 'article' | 'lastVisited' | 'autocomplete';
+
+type ProductSliderProps = {
+    children: React.ReactNode;
+    totalItems: number;
+    // products: TypeListedProductFragment[];
+    // gtmProductListName: GtmProductListNameType;
+    // gtmMessageOrigin?: GtmMessageOriginType;
     isWithArrows?: boolean;
-    wrapperClassName?: string;
-    productItemProps?: Partial<ProductItemProps>;
-    visibleSliderItems?: number;
-    variant?: ProductsSliderVariant;
+    variant: ProductsSliderVariant;
     isLuigisEnabled?: boolean;
 };
 
-export const ProductsSlider: FC<ProductsSliderProps> = ({
-    products,
-    gtmProductListName,
-    gtmMessageOrigin = GtmMessageOriginType.other,
+export const ProductSlider: FC<ProductSliderProps> = ({
+    children,
+    totalItems,
+    // gtmProductListName,
+    // gtmMessageOrigin = GtmMessageOriginType.other,
     tid,
-    wrapperClassName,
     isWithArrows = true,
-    productItemProps,
-    visibleSliderItems = VISIBLE_SLIDER_ITEMS,
     variant = 'default',
-    isLuigisEnabled,
+    isLuigisEnabled, // TODO: luigis box
 }) => {
     const { t } = useTranslation();
     const sliderRef = useRef<HTMLDivElement>(null);
-    const [productElementRefs, setProductElementRefs] = useState<Array<RefObject<HTMLLIElement>>>();
     const [activeIndex, setActiveIndex] = useState(0);
     const isMobile = !useMediaMin('vl');
+
     const isSmallDesktop = !useMediaMin('xl') && !isMobile;
     const minimumVisibleItemsOnSmallDesktop = 3;
+
+    const visibleSliderItems = getVisibleItemsByVariant(variant);
     const currentVisibleItems =
         isSmallDesktop && visibleSliderItems > minimumVisibleItemsOnSmallDesktop
             ? visibleSliderItems - 1
             : visibleSliderItems;
-    const isWithControls = products.length > currentVisibleItems && isWithArrows;
-
-    useEffect(() => {
-        setProductElementRefs(
-            Array(products.length)
-                .fill(null)
-                .map(() => createRef()),
-        );
-    }, [products.length]);
+    const isWithControls = totalItems > currentVisibleItems && isWithArrows;
 
     useEffect(() => {
         if (!isMobile) {
@@ -73,14 +73,19 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
     }, [activeIndex]);
 
     const handleScroll = async (selectedActiveIndex: number) => {
-        const selectedElement = productElementRefs?.[selectedActiveIndex]?.current;
+        if (!sliderRef.current) {
+            return;
+        }
 
-        if (selectedElement && !isWholeElementVisible(selectedElement)) {
-            sliderRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+        const items = Array.from(sliderRef.current.children[0].children) as HTMLLIElement[];
+        const selectedElement = items[selectedActiveIndex];
+
+        if (!isWholeElementVisible(selectedElement)) {
+            sliderRef.current.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
             await wait(350);
         }
 
-        selectedElement?.scrollIntoView({
+        selectedElement.scrollIntoView({
             behavior: 'smooth',
             block: 'nearest',
             inline: 'start',
@@ -95,7 +100,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
             return;
         }
 
-        const newActiveIndex = isFirstSlide ? productElementRefs!.length - currentVisibleItems : prevIndex;
+        const newActiveIndex = isFirstSlide ? totalItems - currentVisibleItems : prevIndex;
 
         if (!isTextSelected()) {
             setActiveIndex(newActiveIndex);
@@ -104,7 +109,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
 
     const handleNext = () => {
         const nextIndex = activeIndex + 1;
-        const isEndSlide = nextIndex > productElementRefs!.length - currentVisibleItems;
+        const isEndSlide = nextIndex > totalItems - currentVisibleItems;
 
         if (isMobile && isEndSlide) {
             return;
@@ -127,8 +132,10 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
         switch (variant) {
             case 'default':
                 return 'auto-cols-[225px] sm:auto-cols-[60%]  md:auto-cols-[45%] lg:auto-cols-[30%] vl:auto-cols-[25%] xl:auto-cols-[20%]';
-            case 'article':
+            case 'blog':
                 return 'auto-cols-[80%] sm:auto-cols-[60%] md:auto-cols-[45%] lg:auto-cols-[30%] vl:auto-cols-[33.33%]';
+            case 'article':
+                return 'auto-cols-[80%] sm:auto-cols-[60%] md:auto-cols-[45%] lg:auto-cols-[30%] vl:auto-cols-[33.33%] xl:auto-cols-[25%]';
             case 'lastVisited':
                 return 'auto-cols-[140px] sm:auto-cols-[30%] lg:auto-cols-[19.5%] vl:auto-cols-[14.5%] xl:auto-cols-[12.5%]';
             case 'autocomplete':
@@ -138,7 +145,7 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
         }
     };
 
-    useGtmSliderProductListViewEvent(products, gtmProductListName, isLuigisEnabled);
+    // useGtmSliderProductListViewEvent(products, gtmProductListName, isLuigisEnabled);
 
     return (
         <div className="relative" tid={tid}>
@@ -150,25 +157,15 @@ export const ProductsSlider: FC<ProductsSliderProps> = ({
             )}
 
             <div ref={sliderRef}>
-                <ProductsListContent
-                    gtmMessageOrigin={gtmMessageOrigin}
-                    gtmProductListName={gtmProductListName}
-                    productRefs={productElementRefs}
-                    products={products}
-                    swipeHandlers={handlers}
+                <ul
                     className={twMergeCustom([
                         "grid snap-x snap-mandatory grid-flow-col overflow-x-auto overscroll-x-contain [-ms-overflow-style:'none'] [scrollbar-width:'none'] [&::-webkit-scrollbar]:hidden",
                         productSliderTwClass(variant),
-                        wrapperClassName,
                     ])}
-                    productItemProps={{
-                        className: twMergeCustom(
-                            'snap-center md:snap-start mx-1 md:mx-2 first:ml-0 last:mr-0',
-                            productItemProps?.className,
-                        ),
-                        ...productItemProps,
-                    }}
-                />
+                    {...handlers}
+                >
+                    {children}
+                </ul>
             </div>
         </div>
     );
