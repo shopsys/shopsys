@@ -538,4 +538,13 @@ class CategoryFacade
 
         return $sortedCategories;
     }
+
+    /**
+     * @param string $locale
+     * @return string[]
+     */
+    public function getFullPathsIndexedByIds(string $locale): array
+    {
+        return $this->categoryRepository->getFullPathsIndexedByIds($locale);
+    }
 }

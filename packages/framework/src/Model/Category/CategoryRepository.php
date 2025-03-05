@@ -108,6 +108,26 @@ class CategoryRepository extends NestedTreeRepository
     {
         $queryBuilder = $this->getPreOrderTreeTraversalForAllCategoriesByDomainQueryBuilder($domainId, $locale);
 
+        return $this->getFullPathsByQueryBuilder($queryBuilder);
+    }
+
+    /**
+     * @param string $locale
+     * @return string[]
+     */
+    public function getFullPathsIndexedByIds(string $locale): array
+    {
+        $queryBuilder = $this->getPreOrderTreeTraversalForAllCategoriesQueryBuilder($locale);
+
+        return $this->getFullPathsByQueryBuilder($queryBuilder);
+    }
+
+    /**
+     * @param \Doctrine\ORM\QueryBuilder $queryBuilder
+     * @return string[]
+     */
+    protected function getFullPathsByQueryBuilder(QueryBuilder $queryBuilder): array
+    {
         $rows = $queryBuilder->select('c.id, IDENTITY(c.parent) AS parentId, ct.name')->getQuery()->getScalarResult();
 
         $fullPathsById = [];
@@ -121,6 +141,22 @@ class CategoryRepository extends NestedTreeRepository
         }
 
         return $fullPathsById;
+    }
+
+    /**
+     * @param string $locale
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function getPreOrderTreeTraversalForAllCategoriesQueryBuilder(string $locale): QueryBuilder
+    {
+        $queryBuilder = $this->getAllQueryBuilder();
+        $this->addTranslation($queryBuilder, $locale);
+
+        $queryBuilder
+            ->andWhere('c.level >= 1')
+            ->orderBy('c.lft');
+
+        return $queryBuilder;
     }
 
     /**

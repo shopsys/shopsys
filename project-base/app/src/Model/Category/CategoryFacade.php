@@ -166,15 +166,6 @@ class CategoryFacade extends BaseCategoryFacade
     }
 
     /**
-     * @param string $locale
-     * @return string[]
-     */
-    public function getFullPathsIndexedByIds(string $locale): array
-    {
-        return $this->categoryRepository->getFullPathsIndexedByIds($locale);
-    }
-
-    /**
      * @param \App\Model\Category\Category $category
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
      * @return \App\Model\Category\Category[]

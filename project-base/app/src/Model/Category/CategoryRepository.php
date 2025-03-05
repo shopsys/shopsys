@@ -82,45 +82,6 @@ class CategoryRepository extends BaseCategoryRepository
     }
 
     /**
-     * @param string $locale
-     * @return string[]
-     */
-    public function getFullPathsIndexedByIds(string $locale): array
-    {
-        $queryBuilder = $this->getPreOrderTreeTraversalForAllCategoriesQueryBuilder($locale);
-
-        $rows = $queryBuilder->select('c.id, IDENTITY(c.parent) AS parentId, ct.name')->getQuery()->getScalarResult();
-
-        $fullPathsById = [];
-
-        foreach ($rows as $row) {
-            if (array_key_exists($row['parentId'], $fullPathsById)) {
-                $fullPathsById[$row['id']] = $fullPathsById[$row['parentId']] . ' - ' . $row['name'];
-            } else {
-                $fullPathsById[$row['id']] = $row['name'];
-            }
-        }
-
-        return $fullPathsById;
-    }
-
-    /**
-     * @param string $locale
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    private function getPreOrderTreeTraversalForAllCategoriesQueryBuilder(string $locale): QueryBuilder
-    {
-        $queryBuilder = $this->getAllQueryBuilder();
-        $this->addTranslation($queryBuilder, $locale);
-
-        $queryBuilder
-            ->andWhere('c.level >= 1')
-            ->orderBy('c.lft');
-
-        return $queryBuilder;
-    }
-
-    /**
      * Thanks to joining "c.domains" instead of "CategoryDomain::class",
      * the category domains can be eager loaded (by adding "cd" to "select" part), but are still excluded from the result array
      *

@@ -2056,6 +2056,9 @@ msgstr ""
 msgid "Finished at"
 msgstr ""
 
+msgid "First column categories"
+msgstr ""
+
 msgid "First name"
 msgstr ""
 
@@ -2114,6 +2117,9 @@ msgid "Forgotten administrator password sending"
 msgstr ""
 
 msgid "Forgotten password sending"
+msgstr ""
+
+msgid "Fourth column categories"
 msgstr ""
 
 msgid "Free"
@@ -3865,6 +3871,9 @@ msgstr ""
 msgid "Searching searches in slugs. It is possible to use wildcards * and ?."
 msgstr ""
 
+msgid "Second column categories"
+msgstr ""
+
 msgid "Select new value"
 msgstr ""
 
@@ -4280,6 +4289,9 @@ msgid "There is no warehouse on this domain yet."
 msgstr ""
 
 msgid "There was an error while saving. The order isn't saved."
+msgstr ""
+
+msgid "Third column categories"
 msgstr ""
 
 msgid "This SEO page cannot be deleted."
