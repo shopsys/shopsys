@@ -1,5 +1,5 @@
 import { FooterCopyright } from './FooterCopyright';
-import { getFooterArticles } from 'app/_queries/getFooterArticles';
+import { getFooterArticlesQuery } from 'app/_queries/getFooterArticlesQuery';
 import { createQuery } from 'app/_urql/urql-dto';
 import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
@@ -34,7 +34,7 @@ export const Footer: FC<FooterProps> = async ({ simpleFooter }) => {
         {},
     );
 
-    const footerArticles = await getFooterArticles();
+    const footerArticles = await getFooterArticlesQuery();
     const [userConsentUrl] = getInternationalizedStaticUrls(['/user-consent'], url);
 
     return (

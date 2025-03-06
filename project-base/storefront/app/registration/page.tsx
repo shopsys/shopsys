@@ -1,6 +1,6 @@
 import { RegistrationForm } from 'app/_components/Blocks/Registration/RegistrationForm';
 import { Breadcrumbs } from 'app/_components/Layout/Breadcrumbs/Breadcrumbs';
-import { getCountriesQuery } from 'app/_queries/getCountries';
+import { getCountriesQuery } from 'app/_queries/getCountriesQuery';
 import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.ssr';

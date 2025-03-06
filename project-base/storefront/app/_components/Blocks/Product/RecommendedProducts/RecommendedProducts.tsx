@@ -19,10 +19,16 @@ export const RecommendedProducts: FC<RecommendedProductsProps> = ({ recommendati
     }
 
     return (
-        <Webline>
-            <Suspense fallback={<SkeletonModuleRecommendedProducts />}>
+        <Suspense
+            fallback={
+                <Webline>
+                    <SkeletonModuleRecommendedProducts />
+                </Webline>
+            }
+        >
+            <Webline>
                 <RecommendedProductsContent itemUuids={itemUuids} recommendationType={recommendationType} />
-            </Suspense>
-        </Webline>
+            </Webline>
+        </Suspense>
     );
 };
