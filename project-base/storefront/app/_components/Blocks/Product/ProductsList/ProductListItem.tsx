@@ -1,3 +1,4 @@
+import { ProductCompareButton } from 'app/_components/Blocks/Product/ButtonsAction/ProductCompareButton';
 import { ProductWishlistButton } from 'app/_components/Blocks/Product/ButtonsAction/ProductWishlistButton';
 import { ProductAction } from 'app/_components/Blocks/Product/ProductAction';
 import { ProductAvailability } from 'app/_components/Blocks/Product/ProductAvailability';
@@ -107,10 +108,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
 
                     {visibleItemsConfig.productListButtons && (
                         <>
-                            {/* <ProductCompareButton
-                                isProductInComparison={product.listState.isInComparison}
-                                // toggleProductInComparison={toggleProductInComparison}
-                            /> */}
+                            <ProductCompareButton productUuid={product.uuid} />
                             <ProductWishlistButton productUuid={product.uuid} />
                         </>
                     )}
