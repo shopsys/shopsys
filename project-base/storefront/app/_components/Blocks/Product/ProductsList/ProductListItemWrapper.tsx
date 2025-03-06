@@ -1,11 +1,8 @@
 'use client';
 
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { useAuthorization } from 'components/providers/AuthorizationProvider';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
-import { onGtmProductClickEventHandler } from 'gtm/handlers/onGtmProductClickEventHandler';
 import { disableClickWhenTextSelected } from 'utils/ui/disableClickWhenTextSelected';
 
 export type ProductItemProps = {
@@ -20,7 +17,7 @@ export const ProductListItemWrapper: FC<ProductItemProps> = ({ children, product
 
     return (
         <ExtendedNextLink
-            className="flex grow select-text text-text no-underline hover:text-link hover:no-underline"
+            className="text-text hover:text-link flex grow no-underline select-text hover:no-underline"
             draggable={false}
             href={product.slug}
             type={product.isMainVariant ? 'productMainVariant' : 'product'}
