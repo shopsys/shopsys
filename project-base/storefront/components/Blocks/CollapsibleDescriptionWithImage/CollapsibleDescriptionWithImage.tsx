@@ -17,7 +17,7 @@ export const CollapsibleDescriptionWithImage: FC<CollapsibleDescriptionWithImage
     imageUrl,
 }) => {
     return (
-        <div className="vl:flex-row mb-7 flex w-full flex-col-reverse justify-between gap-5">
+        <div className="vl:flex-row flex w-full flex-col-reverse justify-between gap-5">
             {!!description && currentPage === 1 && (
                 <CollapsibleText scrollTargetRef={scrollTargetRef} text={description} />
             )}
@@ -25,11 +25,13 @@ export const CollapsibleDescriptionWithImage: FC<CollapsibleDescriptionWithImage
             {imageUrl && currentPage === 1 && (
                 <div className="h-full shrink-0 sm:h-32">
                     <Image
+                        priority
                         alt={imageName}
-                        className="h-auto w-full rounded-lg sm:h-full sm:w-auto"
-                        height={500}
+                        className="vl:size-[130px] h-[262px] w-full rounded-lg object-contain sm:h-[130px] sm:w-fit"
+                        height={262}
+                        sizes="50vw"
                         src={imageUrl}
-                        width={500}
+                        width={262}
                     />
                 </div>
             )}

@@ -14,7 +14,7 @@ export const SkeletonModuleCartInHeader: FC = () => {
                 </span>
                 <span className="font-secondary hidden text-sm font-bold lg:block">{t('Empty')}</span>
             </div>
-            <div className="flex cursor-pointer items-center justify-center text-lg outline-none vl:hidden">
+            <div className="vl:hidden flex cursor-pointer items-center justify-center text-lg outline-none">
                 <div
                     className={twJoin(
                         'relative flex h-full w-full items-center justify-center rounded-md border p-3 no-underline transition-colors hover:no-underline',

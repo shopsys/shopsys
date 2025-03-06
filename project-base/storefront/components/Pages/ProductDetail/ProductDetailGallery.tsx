@@ -55,7 +55,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                     <Image
                         priority
                         alt={mainImage?.name || productName}
-                        className="h-[320px] w-full object-contain lg:h-[500px] vl:size-[500px]"
+                        className="vl:size-[500px] h-[320px] w-full object-contain lg:h-[500px]"
                         height={500}
                         sizes="50vw"
                         src={mainImage?.url}
