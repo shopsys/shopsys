@@ -7,8 +7,8 @@ import {
     TypeSliderItemsQueryVariables,
 } from 'graphql/requests/sliderItems/queries/SliderItemsQuery.ssr';
 
-export async function getSliderItems() {
+export const getSliderItemsQuery = async () => {
     const result = await createQuery<TypeSliderItemsQuery, TypeSliderItemsQueryVariables>(SliderItemsQueryDocument, {});
 
     return result.data;
-}
+};

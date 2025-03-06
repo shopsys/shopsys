@@ -20,10 +20,16 @@ export const LastVisitedProducts = async ({ currentProductCatnum }: LastVisitedP
     );
 
     return (
-        <Webline>
-            <Suspense fallback={<SkeletonModuleLastVisitedProducts />}>
+        <Suspense
+            fallback={
+                <Webline>
+                    <SkeletonModuleLastVisitedProducts />
+                </Webline>
+            }
+        >
+            <Webline>
                 <LastVisitedProductsContent productsCatnums={lastVisitedProductsWithoutCurrentProduct} />
-            </Suspense>
-        </Webline>
+            </Webline>
+        </Suspense>
     );
 };

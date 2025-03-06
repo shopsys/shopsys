@@ -1,19 +1,20 @@
-import { BannersSlider } from './BannersSlider';
+import { BannersContent } from './BannersContent';
+import { SkeletonModuleBanners } from 'components/Blocks/Skeleton/SkeletonModuleBanners';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { TypeSliderItemsQuery } from 'graphql/requests/sliderItems/queries/SliderItemsQuery.ssr';
+import { Suspense } from 'react';
 
-export type BannersProps = {
-    sliderItemsData: TypeSliderItemsQuery | null | undefined;
-};
-
-export function Banners({ sliderItemsData }: BannersProps) {
-    if (!sliderItemsData?.sliderItems.length) {
-        return null;
-    }
-
+export function Banners() {
     return (
-        <Webline width="xxl">
-            <BannersSlider sliderItems={sliderItemsData.sliderItems} />
-        </Webline>
+        <Suspense
+            fallback={
+                <Webline width="xxl">
+                    <SkeletonModuleBanners />
+                </Webline>
+            }
+        >
+            <Webline width="xxl">
+                <BannersContent />
+            </Webline>
+        </Suspense>
     );
 }
