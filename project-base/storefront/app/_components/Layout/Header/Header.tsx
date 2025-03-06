@@ -8,7 +8,7 @@ import { TIDs } from 'cypress/tids';
 
 export const Header = () => {
     return (
-        <header className="from-backgroundBrand to-backgroundBrandLess mb-4 bg-gradient-to-tr" tid={TIDs.header}>
+        <header className="from-backgroundBrand to-backgroundBrandLess bg-gradient-to-tr" tid={TIDs.header}>
             <Webline className="mb-0">
                 <div className="flex flex-wrap items-center gap-y-3 pt-3 pb-4 lg:gap-x-7 lg:pt-6 lg:pb-1">
                     <Logo />

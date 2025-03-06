@@ -18,8 +18,8 @@ export const PromotedCategoriesContent: FC = async () => {
     const categoriesLength = promotedCategoriesData.promotedCategories.length;
 
     return (
-        <>
-            <h3 className="mb-4">{t('Shop by category')}</h3>
+        <section>
+            <h3 className="mb-3">{t('Shop by category')}</h3>
             <ul
                 className={twMergeCustom(
                     'overflow-x-auto overflow-y-hidden overscroll-x-contain',
@@ -82,6 +82,6 @@ export const PromotedCategoriesContent: FC = async () => {
                     );
                 })}
             </ul>
-        </>
+        </section>
     );
 };

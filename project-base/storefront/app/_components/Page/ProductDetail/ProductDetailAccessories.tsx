@@ -1,7 +1,6 @@
 import { ProductSlider } from 'app/_components/Blocks/Product/ProductSlider';
 import { ProductListItem } from 'app/_components/Blocks/Product/ProductsList/ProductListItem';
 import { getTranslation } from 'app/_utils/translation/getTranslation';
-import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.ssr';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
@@ -18,8 +17,8 @@ export async function ProductDetailAccessories({ accessories }: ProductDetailAcc
     }
 
     return (
-        <Webline>
-            <h5 className="mb-3">{t('You can also buy')}</h5>
+        <section>
+            <h3 className="mb-3">{t('You can also buy')}</h3>
 
             <ProductSlider totalItems={accessories.length} variant="default">
                 {accessories.map((product, index) => (
@@ -33,6 +32,6 @@ export async function ProductDetailAccessories({ accessories }: ProductDetailAcc
                     />
                 ))}
             </ProductSlider>
-        </Webline>
+        </section>
     );
 }

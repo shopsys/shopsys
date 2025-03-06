@@ -7,7 +7,7 @@ type WeblineProps = {
 };
 
 export const Webline: FC<WeblineProps> = ({ children, tid, wrapperClassName, className }) => {
-    const weblineClassName = 'px-5 xl:mx-auto xl:w-full xl:max-w-screen-xl mb-10';
+    const weblineClassName = 'px-5 xl:mx-auto xl:w-full xl:max-w-screen-xl';
 
     if (!wrapperClassName) {
         return (

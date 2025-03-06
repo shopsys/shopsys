@@ -1,20 +1,21 @@
 import { BannersContent } from './BannersContent';
 import { SkeletonModuleBanners } from 'components/Blocks/Skeleton/SkeletonModuleBanners';
-import { Webline } from 'components/Layout/Webline/Webline';
 import { Suspense } from 'react';
 
 export function Banners() {
+    const weblineTwClasses = 'xxl:-mx-[100px]';
+
     return (
         <Suspense
             fallback={
-                <Webline className="mb-14 xl:max-w-[1432px]">
+                <section className={weblineTwClasses}>
                     <SkeletonModuleBanners />
-                </Webline>
+                </section>
             }
         >
-            <Webline className="mb-14 xl:max-w-[1432px]">
+            <section className={weblineTwClasses}>
                 <BannersContent />
-            </Webline>
+            </section>
         </Suspense>
     );
 }
