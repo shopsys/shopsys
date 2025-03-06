@@ -3,7 +3,7 @@ import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { TypeSimpleNotBlogArticleFragment } from 'graphql/requests/articlesInterface/articles/fragments/SimpleNotBlogArticleFragment.generated';
 import { TypeArticlePlacementTypeEnum } from 'graphql/types';
 
-export const getFooterArticles = async () => {
+export const getFooterArticlesQuery = async () => {
     const t = await getTranslation();
     const articlesData = await getArticlesQuery({
         placement: [
