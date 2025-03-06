@@ -35,7 +35,7 @@ export const ProductDetailAvailability: FC<ProductDetailContentProps> = ({
             availableStoresCount={availableStoresCount}
             isInquiryType={isInquiryType}
             className={twJoin(
-                'mr-1 flex items-center font-secondary',
+                'font-secondary mr-1 flex items-center',
                 availability.status === TypeAvailabilityStatusEnum.InStock && 'cursor-pointer',
             )}
             onClick={() =>

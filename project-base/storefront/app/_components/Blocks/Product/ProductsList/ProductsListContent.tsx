@@ -10,7 +10,6 @@ type ProductsListProps = {
     products: TypeListedProductFragment[];
     gtmProductListName: GtmProductListNameType;
     gtmMessageOrigin: GtmMessageOriginType;
-    // ref?: RefObject<HTMLUListElement>;
     productRefs?: RefObject<HTMLLIElement>[];
     swipeHandlers?: SwipeableHandlers;
     className?: string;
@@ -23,7 +22,6 @@ export const ProductsListContent: FC<ProductsListProps> = async ({
     gtmProductListName,
     gtmMessageOrigin = GtmMessageOriginType.other,
     productRefs,
-    // ref,
     children,
     swipeHandlers,
     productItemProps,
@@ -40,7 +38,6 @@ export const ProductsListContent: FC<ProductsListProps> = async ({
                     key={product.uuid}
                     gtmMessageOrigin={gtmMessageOrigin}
                     gtmProductListName={gtmProductListName}
-                    isProductInComparison={false}
                     listIndex={(currentPage - 1) * DEFAULT_PAGE_SIZE + index}
                     product={product}
                     ref={productRefs?.[index]}
