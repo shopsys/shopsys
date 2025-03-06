@@ -1,7 +1,6 @@
 import { LastVisitedProductsContent } from './LastVisitedProductsContent';
 import { getCookieStoreStateFromServer } from 'app/_utils/getCookieStoreStateFromServer';
 import { SkeletonModuleLastVisitedProducts } from 'components/Blocks/Skeleton/SkeletonModuleLastVisitedProducts';
-import { Webline } from 'components/Layout/Webline/Webline';
 import { Suspense } from 'react';
 
 export type LastVisitedProductsProps = {
@@ -22,14 +21,12 @@ export const LastVisitedProducts = async ({ currentProductCatnum }: LastVisitedP
     return (
         <Suspense
             fallback={
-                <Webline>
+                <section>
                     <SkeletonModuleLastVisitedProducts />
-                </Webline>
+                </section>
             }
         >
-            <Webline>
-                <LastVisitedProductsContent productsCatnums={lastVisitedProductsWithoutCurrentProduct} />
-            </Webline>
+            <LastVisitedProductsContent productsCatnums={lastVisitedProductsWithoutCurrentProduct} />
         </Suspense>
     );
 };

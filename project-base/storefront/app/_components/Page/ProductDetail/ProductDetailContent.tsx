@@ -7,7 +7,6 @@ import { ProductDetailGallery } from 'app/_components/Page/ProductDetail/Product
 import { ProductDetailInfo } from 'app/_components/Page/ProductDetail/ProductDetailInfo';
 import { ProductDetailPrice } from 'app/_components/Page/ProductDetail/ProductDetailPrice';
 import { ProductDetailTabs } from 'app/_components/Page/ProductDetail/ProductDetailTabs/ProductDetailTabs';
-import { Webline } from 'components/Layout/Webline/Webline';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.ssr';
 
 type ProductDetailContentProps = {
@@ -15,16 +14,14 @@ type ProductDetailContentProps = {
 };
 
 export function ProductDetailContent({ product }: ProductDetailContentProps) {
-    // const router = useRouter();
-
     // const pageViewEvent = useGtmFriendlyPageViewEvent(product);
     // useGtmPageViewEvent(pageViewEvent, isProductDetailFetching);
     // useLastVisitedProductView(product.catalogNumber);
     // useGtmProductDetailViewEvent(product, getUrlWithoutGetParameters(router.asPath), isProductDetailFetching);
 
     return (
-        <Webline className="flex flex-col gap-8">
-            <div className="flex flex-col flex-wrap gap-6 lg:flex-row">
+        <>
+            <section className="flex flex-col flex-wrap gap-6 lg:flex-row">
                 <ProductDetailGallery
                     categoryName={product.categories[0]?.name}
                     flags={product.flags}
@@ -73,7 +70,7 @@ export function ProductDetailContent({ product }: ProductDetailContentProps) {
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
             <ProductDetailTabs
                 description={product.description}
@@ -81,6 +78,6 @@ export function ProductDetailContent({ product }: ProductDetailContentProps) {
                 parameters={product.parameters}
                 relatedProducts={product.relatedProducts}
             />
-        </Webline>
+        </>
     );
 }

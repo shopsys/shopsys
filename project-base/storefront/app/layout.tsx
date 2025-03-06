@@ -1,7 +1,6 @@
 import { Footer } from 'app/_components/Layout/Footer/Footer';
 import { Header } from 'app/_components/Layout/Header/Header';
 import { NotificationBars } from 'app/_components/Layout/NotificationBars/NotificationBars';
-import { Webline } from 'components/Layout/Webline/Webline';
 import Providers from 'components/providers/Providers';
 import { Metadata } from 'next';
 import 'nprogress/nprogress.css';
@@ -34,12 +33,9 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
             <div className="flex min-h-dvh flex-col">
                 <Header />
 
-                <main className="flex-1">{children}</main>
+                <main className="mt-4 mb-10 flex flex-1 flex-col gap-4">{children}</main>
 
-                <Webline wrapperClassName="bg-backgroundAccentLess">
-                    {/* <DeferredNewsletterForm /> */}
-                    <Footer />
-                </Webline>
+                <Footer />
             </div>
         </Providers>
     );

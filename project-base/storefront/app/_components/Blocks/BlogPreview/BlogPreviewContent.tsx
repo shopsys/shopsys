@@ -5,7 +5,6 @@ import { getBlogArticlesQuery } from 'app/_queries/getBlogArticlesQuery';
 import { getSettingsQuery } from 'app/_queries/getSettingsQuery';
 import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
-import { Webline } from 'components/Layout/Webline/Webline';
 import { BLOG_PREVIEW_VARIABLES } from 'config/constants';
 import { TypeListedBlogArticleFragment } from 'graphql/requests/articlesInterface/blogArticles/fragments/ListedBlogArticleFragment.ssr';
 import { mapConnectionEdges } from 'utils/mappers/connection';
@@ -34,7 +33,7 @@ export const BlogPreviewContent = async () => {
     const blogSideItems = blogItems?.slice(2);
 
     return (
-        <Webline className="relative px-0 xl:max-w-[1400px]">
+        <section className="xxl:-mx-[100px] relative -mx-5">
             <div
                 className={twMergeCustom(
                     'bg-cover bg-center py-16 xl:rounded-xl',
@@ -44,7 +43,7 @@ export const BlogPreviewContent = async () => {
                     backgroundImage: `url(${mainBlogCategoryData?.settings?.mainBlogCategoryData.mainBlogCategoryMainImage?.url})`,
                 }}
             >
-                <div className="z-above relative mx-auto w-full max-w-7xl px-5">
+                <div className="z-above xxl:px-[100px] relative mx-auto w-full px-5">
                     <div className="mb-5 flex items-center justify-between">
                         <h3 className="text-textInverted">{t('Magazine')}</h3>
 
@@ -66,6 +65,6 @@ export const BlogPreviewContent = async () => {
                     />
                 </div>
             </div>
-        </Webline>
+        </section>
     );
 };
