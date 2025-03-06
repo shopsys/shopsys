@@ -40,6 +40,7 @@ export const middleware: NextMiddleware = async (request) => {
         const domainUrlFromStaticUrls = getDomainUrlFromStaticUrls(host);
         const staticUrlsAvailableForDomain = getStaticUrlsAvailableForDomain(domainUrlFromStaticUrls);
         const rewriteTargetUrl = getRewriteTargetPathname(request, staticUrlsAvailableForDomain);
+
         if (rewriteTargetUrl || isHomePage(request)) {
             const rewriteUrlObject = new URL(rewriteTargetUrl, request.url);
             addQueryParametersToRewriteUrlObject(rewriteUrlObject, request.nextUrl.search);
@@ -66,11 +67,13 @@ export const middleware: NextMiddleware = async (request) => {
                 domainId,
             }),
         });
+
         if (!pageTypeResponse.ok) {
             const is400Error = isInRange(pageTypeResponse.status, 400, 499);
             const is500Error = isInRange(pageTypeResponse.status, 500, 599);
 
             let statusMessage = 'Unknown middleware error for ' + request.url;
+
             if (is400Error) {
                 statusMessage = 'Friendly URL page not found for ' + request.url;
             } else if (is500Error) {
@@ -88,6 +91,7 @@ export const middleware: NextMiddleware = async (request) => {
 
         const pageTypeParsedResponse: { route: FriendlyPageTypesValue; redirectTo: string; redirectCode: number } =
             await pageTypeResponse.json();
+
         if (pageTypeParsedResponse.redirectTo && pageTypeParsedResponse.redirectTo !== request.url) {
             return NextResponse.redirect(
                 new URL(
@@ -143,6 +147,7 @@ const rewriteDynamicPages = (
     const pageTypeKey = getPageTypeKey(pageType);
 
     const origin = getBaseUrlWithLocale(new URL(rewriteUrl).origin, currentLocale);
+    const host = new URL(rewriteUrl).origin;
 
     if (pageTypeKey) {
         const friendlySlug = new URL(rewriteUrl).pathname.split('/').pop();
@@ -150,6 +155,7 @@ const rewriteDynamicPages = (
 
         return NextResponse.rewrite(new URL(`${FriendlyPagesDestinations[pageTypeKey]}${queryParams}`), {
             headers: [
+                ['x-pathname', FriendlyPagesDestinations[pageTypeKey]],
                 ['x-friendly-slug', friendlySlug || ''],
                 ['x-asPath', asPath],
             ],
@@ -236,8 +242,11 @@ function isFriendlyPageTypesValue(value: string): value is FriendlyPageTypesValu
     return Object.values(FriendlyPagesTypes).includes(value as FriendlyPageTypesValue);
 }
 const validateAuthTokens = async (request: NextRequest) => {
-    const response = NextResponse.next();
+    const response = NextResponse.next({
+        headers: [['x-pathname', request.nextUrl.pathname]],
+    });
     const accessToken = request.cookies.get('accessToken')?.value;
+
     if (!accessToken) {
         return response;
     }
