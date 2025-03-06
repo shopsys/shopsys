@@ -4,5 +4,5 @@ import Skeleton from 'react-loading-skeleton';
 import { twMergeCustom } from 'utils/twMerge';
 
 export const SkeletonModuleBanners: FC = ({ className }) => (
-    <Skeleton className={twMergeCustom('vl:h-[460px] h-80 w-full', className)} />
+    <Skeleton className={twMergeCustom('vl:h-[460px] h-80 w-full', className)} containerClassName="xxl:-mx-[100px]" />
 );

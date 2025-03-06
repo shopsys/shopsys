@@ -5,14 +5,13 @@ import { UpsFirstIcon } from 'components/Basic/Icon/UpsFirstIcon';
 import { UpsFourthIcon } from 'components/Basic/Icon/UpsFourthIcon';
 import { UpsSecondIcon } from 'components/Basic/Icon/UpsSecondIcon';
 import { UpsThirdIcon } from 'components/Basic/Icon/UpsThirdIcon';
-import { Webline } from 'components/Layout/Webline/Webline';
 import { twMergeCustom } from 'utils/twMerge';
 
 export async function UpsList() {
     const t = await getTranslation();
 
     return (
-        <Webline className="mb-14">
+        <section>
             <div
                 className={twMergeCustom([
                     'vl:flex vl:justify-around',
@@ -41,6 +40,6 @@ export async function UpsList() {
                     <h6>{t('Stores and collection points throughout the Czech Republic')}</h6>
                 </UpsListItem>
             </div>
-        </Webline>
+        </section>
     );
 }

@@ -72,6 +72,7 @@ export const ProductDetailParametersTab: FC<ProductDetailParametersTabProps> = a
             {sortedIndividualParameters.length > 0 && (
                 <Fragment key="other-parameters">
                     {!!sortedGroupParameters.length && <h4 className="py-5">{t('Other parameters')}</h4>}
+
                     <Table>
                         {sortedIndividualParameters.map((parameter) => (
                             <Fragment key={parameter.uuid}>

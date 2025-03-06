@@ -1,3 +1,4 @@
+import { Container } from './_components/Layout/Container/Container';
 import { HomepageMetadataJsonLd } from 'app/_components/Basic/Head/HomepageMetadataJsonLd';
 import { BlogPreview } from 'app/_components/Blocks/BlogPreview/BlogPreview';
 import { PromotedCategories } from 'app/_components/Blocks/Categories/PromotedCategories';
@@ -20,19 +21,21 @@ const HomePage = async () => {
         <>
             <HomepageMetadataJsonLd url={domainConfig.url} />
 
-            <Banners />
+            <Container gap="large">
+                <Banners />
 
-            <UpsList />
+                <UpsList />
 
-            <PromotedCategories />
+                <PromotedCategories />
 
-            <RecommendedProducts recommendationType={TypeRecommendationType.Personalized} />
+                <RecommendedProducts recommendationType={TypeRecommendationType.Personalized} />
 
-            <PromotedProducts />
+                <PromotedProducts />
 
-            <BlogPreview />
+                <BlogPreview />
 
-            <LastVisitedProducts />
+                <LastVisitedProducts />
+            </Container>
         </>
     );
 };

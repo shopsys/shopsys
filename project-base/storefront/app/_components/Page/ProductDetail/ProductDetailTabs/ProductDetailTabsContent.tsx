@@ -27,54 +27,56 @@ export const ProductDetailTabsContent: FC<ProductDetailTabsContentProps> = ({
     const filesTabIndex = files ? ++tabIndex : -1;
 
     return (
-        <Tabs
-            className="flex flex-col gap-4 lg:gap-0"
-            selectedIndex={selectedTab}
-            onSelect={(index) => {
-                setSkipInitialAnimation(false);
-                setSelectedTab(index);
-            }}
-        >
-            <TabsList>
-                <TabsListItem>{t('Overview')}</TabsListItem>
+        <section>
+            <Tabs
+                className="flex flex-col gap-5"
+                selectedIndex={selectedTab}
+                onSelect={(index) => {
+                    setSkipInitialAnimation(false);
+                    setSelectedTab(index);
+                }}
+            >
+                <TabsList>
+                    <TabsListItem>{t('Overview')}</TabsListItem>
 
-                {parameters && <TabsListItem>{t('Parameters')}</TabsListItem>}
+                    {parameters && <TabsListItem>{t('Parameters')}</TabsListItem>}
 
-                {relatedProducts && <TabsListItem>{t('Related Products')}</TabsListItem>}
+                    {relatedProducts && <TabsListItem>{t('Related Products')}</TabsListItem>}
 
-                {files && <TabsListItem>{t('Files')}</TabsListItem>}
-            </TabsList>
+                    {files && <TabsListItem>{t('Files')}</TabsListItem>}
+                </TabsList>
 
-            {description && (
-                <TabsContent
-                    headingTextMobile={t('Overview')}
-                    isActive={selectedTab === 0}
-                    skipInitialAnimation={skipInitialAnimation}
-                >
-                    {description}
-                </TabsContent>
-            )}
+                {description && (
+                    <TabsContent
+                        headingTextMobile={t('Overview')}
+                        isActive={selectedTab === 0}
+                        skipInitialAnimation={skipInitialAnimation}
+                    >
+                        {description}
+                    </TabsContent>
+                )}
 
-            {parameters && (
-                <TabsContent headingTextMobile={t('Parameters')} isActive={selectedTab === parametersTabIndex}>
-                    {parameters}
-                </TabsContent>
-            )}
+                {parameters && (
+                    <TabsContent headingTextMobile={t('Parameters')} isActive={selectedTab === parametersTabIndex}>
+                        {parameters}
+                    </TabsContent>
+                )}
 
-            {relatedProducts && (
-                <TabsContent
-                    headingTextMobile={t('Related Products')}
-                    isActive={selectedTab === relatedProductsTabIndex}
-                >
-                    {relatedProducts}
-                </TabsContent>
-            )}
+                {relatedProducts && (
+                    <TabsContent
+                        headingTextMobile={t('Related Products')}
+                        isActive={selectedTab === relatedProductsTabIndex}
+                    >
+                        {relatedProducts}
+                    </TabsContent>
+                )}
 
-            {files && (
-                <TabsContent headingTextMobile={t('Files')} isActive={selectedTab === filesTabIndex}>
-                    {files}
-                </TabsContent>
-            )}
-        </Tabs>
+                {files && (
+                    <TabsContent headingTextMobile={t('Files')} isActive={selectedTab === filesTabIndex}>
+                        {files}
+                    </TabsContent>
+                )}
+            </Tabs>
+        </section>
     );
 };

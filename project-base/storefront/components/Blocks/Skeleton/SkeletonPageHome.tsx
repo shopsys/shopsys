@@ -4,17 +4,25 @@ import { SkeletonModuleBanners } from './SkeletonModuleBanners';
 import { SkeletonModuleMagazine } from './SkeletonModuleMagazine';
 import { SkeletonModulePromotedCategories } from './SkeletonModulePromotedCategories';
 import { SkeletonModulePromotedProducts } from './SkeletonModulePromotedProducts';
-import { Webline } from 'components/Layout/Webline/Webline';
+import { Container } from 'app/_components/Layout/Container/Container';
 import Skeleton from 'react-loading-skeleton';
 
 export const SkeletonPageHome: FC = () => (
-    <Webline>
-        <SkeletonModuleBanners className="mb-14" />
-        <Skeleton className="mb-14 h-32 w-full" />
-        <Skeleton className="mb-4 h-8 w-72" />
-        <SkeletonModulePromotedCategories className="mb-10" />
-        <Skeleton className="mb-4 h-8 w-72" />
-        <SkeletonModulePromotedProducts className="mb-10" />
+    <Container gap="large">
+        <SkeletonModuleBanners />
+
+        <Skeleton className="h-56 w-full" />
+
+        <div className="flex flex-col gap-3">
+            <Skeleton className="h-8" containerClassName="w-72" />
+            <SkeletonModulePromotedCategories />
+        </div>
+
+        <div className="flex flex-col gap-3">
+            <Skeleton className="h-8" containerClassName="w-72" />
+            <SkeletonModulePromotedProducts />
+        </div>
+
         <SkeletonModuleMagazine />
-    </Webline>
+    </Container>
 );

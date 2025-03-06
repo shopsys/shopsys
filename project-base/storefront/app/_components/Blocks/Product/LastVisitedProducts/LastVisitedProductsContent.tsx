@@ -35,7 +35,7 @@ export const LastVisitedProductsContent = async ({ productsCatnums }: LastVisite
 
     return (
         <section>
-            <h5 className="mb-3">{t('Last visited products')}</h5>
+            <h3 className="mb-3">{t('Last visited products')}</h3>
 
             <ProductSlider totalItems={lastVisitedProducts.length} variant="lastVisited">
                 {lastVisitedProducts.map((product, index) => (
