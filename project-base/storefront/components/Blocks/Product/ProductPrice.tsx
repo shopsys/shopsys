@@ -36,7 +36,7 @@ export const ProductPrice: FC<ProductPriceProps> = ({
                 className={twMergeCustom(
                     'font-secondary text-price text-lg font-bold whitespace-nowrap',
                     textPriceSize === 'base' ? 'text-base' : 'text-lg',
-                    isSpecialPrice && 'text-sm font-semibold text-priceBefore line-through',
+                    isSpecialPrice && 'text-priceBefore text-sm font-semibold line-through',
                 )}
             >
                 {productPrice.isPriceFrom && isPriceFromVisible && t('From') + '\u00A0'}

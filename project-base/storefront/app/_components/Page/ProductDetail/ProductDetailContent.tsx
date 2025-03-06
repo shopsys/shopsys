@@ -44,7 +44,7 @@ export function ProductDetailContent({ product }: ProductDetailContentProps) {
                         usps={product.usps}
                     />
 
-                    <div className="flex flex-col gap-4 rounded-xl bg-backgroundMore p-3 sm:p-6">
+                    <div className="bg-backgroundMore flex flex-col gap-4 rounded-xl p-3 sm:p-6">
                         <ProductDetailPrice productPrice={product.price} />
 
                         <ProductDetailAvailability

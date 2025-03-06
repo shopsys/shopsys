@@ -16,8 +16,8 @@ export const FooterCopyright = async () => {
 
     return (
         <div className="flex flex-col items-center py-4 text-center">
-            <div className="flex items-center text-sm text-textDisabled">{currentYear}</div>
-            <div className="flex items-center text-sm text-textDisabled">
+            <div className="text-textDisabled flex items-center text-sm">{currentYear}</div>
+            <div className="text-textDisabled flex items-center text-sm">
                 {t('Customized E-shop by')}
                 <a className="ml-2 flex w-20" href="https://www.shopsys.com" rel="noreferrer" target="_blank">
                     <Image alt="footer logo" src={imageLogo} />
