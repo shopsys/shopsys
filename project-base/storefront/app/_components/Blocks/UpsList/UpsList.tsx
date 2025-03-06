@@ -5,7 +5,6 @@ import { UpsFirstIcon } from 'components/Basic/Icon/UpsFirstIcon';
 import { UpsFourthIcon } from 'components/Basic/Icon/UpsFourthIcon';
 import { UpsSecondIcon } from 'components/Basic/Icon/UpsSecondIcon';
 import { UpsThirdIcon } from 'components/Basic/Icon/UpsThirdIcon';
-import { Webline } from 'components/Layout/Webline/Webline';
 import { twMergeCustom } from 'utils/twMerge';
 
 export async function UpsList() {

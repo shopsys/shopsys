@@ -2,6 +2,7 @@ import { ProductMetadataJsonLd } from 'app/_components/Basic/Head/ProductMetadat
 import { LastVisitedProducts } from 'app/_components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { RecommendedProducts } from 'app/_components/Blocks/Product/RecommendedProducts/RecommendedProducts';
 import { Breadcrumbs } from 'app/_components/Layout/Breadcrumbs/Breadcrumbs';
+import { Container } from 'app/_components/Layout/Container/Container';
 import { ProductDetailAccessories } from 'app/_components/Page/ProductDetail/ProductDetailAccessories';
 import { ProductDetailContent } from 'app/_components/Page/ProductDetail/ProductDetailContent';
 import { ProductDetailMainVariantContent } from 'app/_components/Page/ProductDetail/ProductDetailMainVariantContent';
@@ -37,19 +38,24 @@ const ProductPage = async () => {
 
     return (
         <>
-            <Breadcrumbs breadcrumbs={product.breadcrumb} />
-
             <ProductMetadataJsonLd product={product} />
 
-            {product.__typename === 'RegularProduct' && <ProductDetailContent product={product} />}
+            <Breadcrumbs breadcrumbs={product.breadcrumb} />
 
-            {product.__typename === 'MainVariant' && <ProductDetailMainVariantContent product={product} />}
+            <Container>
+                {product.__typename === 'RegularProduct' && <ProductDetailContent product={product} />}
 
-            <ProductDetailAccessories accessories={product.accessories} />
+                {product.__typename === 'MainVariant' && <ProductDetailMainVariantContent product={product} />}
 
-            <RecommendedProducts itemUuids={[product.uuid]} recommendationType={TypeRecommendationType.ItemDetail} />
+                <ProductDetailAccessories accessories={product.accessories} />
 
-            <LastVisitedProducts currentProductCatnum={product.catalogNumber} />
+                <RecommendedProducts
+                    itemUuids={[product.uuid]}
+                    recommendationType={TypeRecommendationType.ItemDetail}
+                />
+
+                <LastVisitedProducts currentProductCatnum={product.catalogNumber} />
+            </Container>
         </>
     );
 };

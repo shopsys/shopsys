@@ -14,7 +14,7 @@ export const PromotedProductsContent = async () => {
 
     return (
         <section>
-            <h5 className="mb-3">{t('News on offer')}</h5>
+            <h3 className="mb-3">{t('News on offer')}</h3>
 
             <ProductSlider totalItems={promotedProductsResult.promotedProducts.length} variant="default">
                 {promotedProductsResult.promotedProducts.map((product, index) => (

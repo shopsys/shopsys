@@ -5,6 +5,7 @@ import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { getCouldNotFindUserConsentPolicyArticleUrl } from 'components/Blocks/UserConsent/userConsentUtils';
 import { FooterMenu } from 'components/Layout/Footer/FooterMenu';
+import { Webline } from 'components/Layout/Webline/Webline';
 import {
     SettingsQueryDocument,
     TypeSettingsQuery,
@@ -38,24 +39,30 @@ export const Footer: FC<FooterProps> = async ({ simpleFooter }) => {
     const [userConsentUrl] = getInternationalizedStaticUrls(['/user-consent'], url);
 
     return (
-        <div className="relative mt-auto">
-            <div className="flex flex-col pt-5 pb-11 lg:py-11">
-                {!simpleFooter && (
-                    <>
-                        {!!footerArticles.length && (
-                            <div className="vl:mb-24 vl:flex mb-12">
-                                <FooterMenu footerArticles={footerArticles} />
-                            </div>
+        <footer>
+            <Webline wrapperClassName="bg-backgroundAccentLess">
+                {/* <DeferredNewsletterForm /> */}
+
+                <div className="relative mt-auto">
+                    <div className="flex flex-col pt-5 pb-11 lg:py-11">
+                        {!simpleFooter && (
+                            <>
+                                {!!footerArticles.length && (
+                                    <div className="vl:mb-24 vl:flex mb-12">
+                                        <FooterMenu footerArticles={footerArticles} />
+                                    </div>
+                                )}
+                            </>
                         )}
-                    </>
-                )}
-                <FooterCopyright />
-                {!getCouldNotFindUserConsentPolicyArticleUrl(settingsResponse) && (
-                    <ExtendedNextLink className="self-center transition" href={userConsentUrl}>
-                        {t('User consent update')}
-                    </ExtendedNextLink>
-                )}
-            </div>
-        </div>
+                        <FooterCopyright />
+                        {!getCouldNotFindUserConsentPolicyArticleUrl(settingsResponse) && (
+                            <ExtendedNextLink className="self-center transition" href={userConsentUrl}>
+                                {t('User consent update')}
+                            </ExtendedNextLink>
+                        )}
+                    </div>
+                </div>
+            </Webline>
+        </footer>
     );
 };

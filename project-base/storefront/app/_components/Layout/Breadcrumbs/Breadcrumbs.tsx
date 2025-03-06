@@ -30,7 +30,7 @@ export const Breadcrumbs = async ({ breadcrumbs, className }: BreadcrumbsProps) 
     // TODO: add breadcrumbs metadata
 
     return (
-        <Webline className="mb-4">
+        <Webline>
             {/* <BreadcrumbsMetadata breadcrumbs={breadcrumbs} /> */}
 
             <div className={twMergeCustom(breadcrumbsTwClass, className)}>
