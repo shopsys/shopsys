@@ -34,20 +34,20 @@ export const Breadcrumbs = async ({ breadcrumbs, className }: BreadcrumbsProps) 
             {/* <BreadcrumbsMetadata breadcrumbs={breadcrumbs} /> */}
 
             <div className={twMergeCustom(breadcrumbsTwClass, className)}>
-                <ArrowIcon className="mr-3 size-4 rotate-90 text-borderAccent lg:hidden" />
+                <ArrowIcon className="text-borderAccent mr-3 size-4 rotate-90 lg:hidden" />
 
                 <ExtendedNextLink className={breadcrumbsLinkTwClass} href="/">
                     {t('Home page')}
                 </ExtendedNextLink>
 
-                <ArrowIcon className="hidden size-4 -rotate-90 text-borderAccent lg:flex" />
+                <ArrowIcon className="text-borderAccent hidden size-4 -rotate-90 lg:flex" />
 
                 {linkedBreadcrumbs.map((linkedBreadcrumb, index) => (
                     <Fragment key={index}>
                         <ExtendedNextLink className={breadcrumbsLinkTwClass} href={linkedBreadcrumb.slug}>
                             {linkedBreadcrumb.name}
                         </ExtendedNextLink>
-                        <ArrowIcon className="hidden size-4 -rotate-90 text-borderAccent lg:flex" />
+                        <ArrowIcon className="text-borderAccent hidden size-4 -rotate-90 lg:flex" />
                     </Fragment>
                 ))}
 
