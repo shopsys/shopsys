@@ -8,7 +8,7 @@ export type LastVisitedProductsProps = {
     currentProductCatnum?: string;
 };
 
-export async function LastVisitedProducts({ currentProductCatnum }: LastVisitedProductsProps) {
+export const LastVisitedProducts = async ({ currentProductCatnum }: LastVisitedProductsProps) => {
     const { lastVisitedProductsCatnums } = getCookieStoreStateFromServer();
 
     if (!lastVisitedProductsCatnums) {
@@ -26,4 +26,4 @@ export async function LastVisitedProducts({ currentProductCatnum }: LastVisitedP
             </Suspense>
         </Webline>
     );
-}
+};
