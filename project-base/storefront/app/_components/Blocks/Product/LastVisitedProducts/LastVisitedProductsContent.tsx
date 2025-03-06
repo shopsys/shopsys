@@ -9,13 +9,13 @@ type LastVisitedProductsProps = {
     productsCatnums: string[];
 };
 
-export async function LastVisitedProductsContent({ productsCatnums }: LastVisitedProductsProps) {
+export const LastVisitedProductsContent = async ({ productsCatnums }: LastVisitedProductsProps) => {
     const [t, lastVisitedProductsResult] = await Promise.all([
         getTranslation(),
         getLastVisitedProductsQuery(productsCatnums),
     ]);
 
-    const lastVisitedProducts = lastVisitedProductsResult.data?.productsByCatnums;
+    const lastVisitedProducts = lastVisitedProductsResult?.productsByCatnums;
 
     if (!lastVisitedProducts) {
         return null;
@@ -35,7 +35,7 @@ export async function LastVisitedProductsContent({ productsCatnums }: LastVisite
 
     return (
         <section>
-            <h5 className="mb-4">{t('Last visited products')}</h5>
+            <h5 className="mb-3">{t('Last visited products')}</h5>
 
             <ProductSlider totalItems={lastVisitedProducts.length} variant="lastVisited">
                 {lastVisitedProducts.map((product, index) => (
@@ -52,4 +52,4 @@ export async function LastVisitedProductsContent({ productsCatnums }: LastVisite
             </ProductSlider>
         </section>
     );
-}
+};

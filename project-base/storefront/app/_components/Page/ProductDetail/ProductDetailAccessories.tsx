@@ -19,7 +19,7 @@ export async function ProductDetailAccessories({ accessories }: ProductDetailAcc
 
     return (
         <Webline>
-            <h5 className="mb-4">{t('You can also buy')}</h5>
+            <h5 className="mb-3">{t('You can also buy')}</h5>
 
             <ProductSlider totalItems={accessories.length} variant="default">
                 {accessories.map((product, index) => (

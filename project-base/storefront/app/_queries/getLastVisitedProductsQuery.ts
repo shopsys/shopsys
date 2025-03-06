@@ -12,5 +12,5 @@ export const getLastVisitedProductsQuery = async (productsCatnums: string[]) => 
         catnums: productsCatnums,
     });
 
-    return result;
+    return result.data;
 };
