@@ -7,6 +7,7 @@ import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { TypeRecommendationType } from 'graphql/types';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
+import { headers } from 'next/headers';
 
 export type RecommendedProductsContentProps = {
     recommendationType: TypeRecommendationType;
@@ -20,9 +21,7 @@ export const RecommendedProductsContent: FC<RecommendedProductsContentProps> = a
     const [t] = await Promise.all([getTranslation()]);
     const { userIdentifier } = getCookieStoreStateFromServer();
 
-    // TODO: new functionality for recommended products identifier
-    // const { pathname } = useRouter();
-    const pathname = '/products/[productSlug]';
+    const pathname = headers().get('x-pathname') ?? '/';
 
     const { data: recommendedProductsData } = await getRecommendedProductsQuery({
         userIdentifier,
@@ -46,8 +45,7 @@ export const RecommendedProductsContent: FC<RecommendedProductsContentProps> = a
 
     return (
         <section>
-            <h5 className="mb-4">{t('Recommended for you')}</h5>
-
+            <h5 className="mb-3">{t('Recommended for you')}</h5>
             <ProductSlider totalItems={recommendedProductsData.recommendedProducts.length} variant="default">
                 {recommendedProductsData.recommendedProducts.map((product, index) => (
                     <ProductListItem
