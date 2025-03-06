@@ -45,7 +45,8 @@ export const RecommendedProductsContent: FC<RecommendedProductsContentProps> = a
 
     return (
         <section>
-            <h5 className="mb-3">{t('Recommended for you')}</h5>
+            <h3 className="mb-3">{t('Recommended for you')}</h3>
+
             <ProductSlider totalItems={recommendedProductsData.recommendedProducts.length} variant="default">
                 {recommendedProductsData.recommendedProducts.map((product, index) => (
                     <ProductListItem

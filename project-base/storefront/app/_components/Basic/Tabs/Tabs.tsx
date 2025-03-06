@@ -69,7 +69,7 @@ export const TabsContent: TabFC<TabsContentProps & Partial<PropsWithRef<TabPanel
     return (
         <TabPanel
             forceRender
-            className="flex flex-col flex-wrap lg:hidden [&.isActive]:flex [&.isActive]:lg:pt-5"
+            className="flex flex-col flex-wrap lg:hidden [&.isActive]:flex"
             selectedClassName="isActive"
             {...props}
         >
