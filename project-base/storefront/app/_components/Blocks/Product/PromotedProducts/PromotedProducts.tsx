@@ -5,10 +5,16 @@ import { Suspense } from 'react';
 
 export const PromotedProducts = async () => {
     return (
-        <Webline>
-            <Suspense fallback={<SkeletonModulePromotedProducts />}>
+        <Suspense
+            fallback={
+                <Webline>
+                    <SkeletonModulePromotedProducts />
+                </Webline>
+            }
+        >
+            <Webline>
                 <PromotedProductsContent />
-            </Suspense>
-        </Webline>
+            </Webline>
+        </Suspense>
     );
 };

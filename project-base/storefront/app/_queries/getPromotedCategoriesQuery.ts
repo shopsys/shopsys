@@ -7,11 +7,11 @@ import {
     TypePromotedCategoriesQueryVariables,
 } from 'graphql/requests/categories/queries/PromotedCategoriesQuery.ssr';
 
-export async function getPromotedCategories() {
+export const getPromotedCategoriesQuery = async () => {
     const result = await createQuery<TypePromotedCategoriesQuery, TypePromotedCategoriesQueryVariables>(
         PromotedCategoriesQueryDocument,
         {},
     );
 
     return result.data;
-}
+};
