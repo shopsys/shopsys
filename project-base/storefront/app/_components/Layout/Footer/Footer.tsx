@@ -1,4 +1,5 @@
 import { FooterCopyright } from './FooterCopyright';
+import { NewsletterForm } from 'app/_components/Layout/Footer/NewsletterForm/NewsletterForm';
 import { getFooterArticlesQuery } from 'app/_queries/getFooterArticlesQuery';
 import { createQuery } from 'app/_urql/urql-dto';
 import { getTranslation } from 'app/_utils/translation/getTranslation';
@@ -41,7 +42,7 @@ export const Footer: FC<FooterProps> = async ({ simpleFooter }) => {
     return (
         <footer>
             <Webline wrapperClassName="bg-backgroundAccentLess">
-                {/* <DeferredNewsletterForm /> */}
+                <NewsletterForm />
 
                 <div className="relative mt-auto">
                     <div className="flex flex-col pt-5 pb-11 lg:py-11">
