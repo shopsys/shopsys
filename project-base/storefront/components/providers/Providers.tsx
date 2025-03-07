@@ -56,9 +56,9 @@ export default async function Providers({ children }: ProvidersProps) {
                                     initialState={initialState.status === 'fulfilled' ? initialState.value : {}}
                                 >
                                     <html lang={lang}>
-                                        <head>
+                                        {/* <head>
                                             <script async src="https://unpkg.com/react-scan/dist/auto.global.js" />
-                                        </head>
+                                        </head> */}
                                         {/* suppressHydrationWarning for ignoring grammarly extension */}
                                         <body suppressHydrationWarning>
                                             <AuthInfo isUserLoggedIn={!!user} />
