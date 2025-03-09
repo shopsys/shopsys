@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductCatnumFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductFlagFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductNameFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductPartnoFilter;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductUponInquiryFilter;
 
 class ProductAdvancedSearchConfig extends AdvancedSearchConfig
 {
@@ -23,6 +24,7 @@ class ProductAdvancedSearchConfig extends AdvancedSearchConfig
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductCalculatedSellingDeniedFilter $productCalculatedSellingDeniedFilter
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductBrandFilter $productBrandFilter
      * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductCategoryFilter $productCategoryFilter
+     * @param \Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductUponInquiryFilter $productUponInquiryFilter
      */
     public function __construct(
         ProductCatnumFilter $productCatnumFilter,
@@ -32,6 +34,7 @@ class ProductAdvancedSearchConfig extends AdvancedSearchConfig
         ProductCalculatedSellingDeniedFilter $productCalculatedSellingDeniedFilter,
         ProductBrandFilter $productBrandFilter,
         ProductCategoryFilter $productCategoryFilter,
+        ProductUponInquiryFilter $productUponInquiryFilter,
     ) {
         parent::__construct();
 
@@ -42,6 +45,7 @@ class ProductAdvancedSearchConfig extends AdvancedSearchConfig
         $this->registerFilter($productCalculatedSellingDeniedFilter);
         $this->registerFilter($productBrandFilter);
         $this->registerFilter($productCategoryFilter);
+        $this->registerFilter($productUponInquiryFilter);
     }
 
     /**
