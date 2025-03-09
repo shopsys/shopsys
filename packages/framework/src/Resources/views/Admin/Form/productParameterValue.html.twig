@@ -1,10 +1,6 @@
 {% macro parameterRow(parameter, index) %}
-    {% set parameterGroupName = parameter.vars.data.parameter.group.name|default('No group'|trans) %}
     {% set parameterUnit = parameter.parameter.vars.data.unit ?? null %}
     <tr class="js-parameters-item js-form-group table-form__row" data-index="{{ index }}">
-        <td class="table-form__cell table-form__cell--del-before">
-            <p>{{ parameterGroupName }}</p>
-        </td>
         <td class="table-form__cell table-form__cell--del-before">
             {{ form_widget(parameter.parameter, { isSimple: true} ) }}
         </td>
@@ -35,7 +31,6 @@
         <table class="table-form" id="product_form_parameters">
             <thead>
             <tr class="table-form__row">
-                <th class="table-form__cell table-form__cell--del-before table-form__cell--label">{{ 'Groups'|trans }}</th>
                 <th class="table-form__cell table-form__cell--del-before table-form__cell--label">{{ 'Parameter'|trans }}</th>
                 <th class="table-form__cell table-form__cell--del"></th>
                 <th class="table-form__cell table-form__cell--del-after">{{ 'Value'|trans }}</th>

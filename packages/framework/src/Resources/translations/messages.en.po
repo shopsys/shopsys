@@ -2197,9 +2197,6 @@ msgstr ""
 msgid "Group"
 msgstr ""
 
-msgid "Groups"
-msgstr ""
-
 msgid "HTML code"
 msgstr ""
 

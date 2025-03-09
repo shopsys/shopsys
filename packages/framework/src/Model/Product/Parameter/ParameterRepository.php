@@ -178,7 +178,8 @@ class ParameterRepository
     {
         return $this->getAllQueryBuilder()
             ->addSelect('pt')
-            ->join('p.translations', 'pt')
+            ->join('p.translations', 'pt', Join::WITH, 'pt.locale = :locale')
+            ->setParameter('locale', $locale)
             ->orderBy($this->orderByCollationHelper->createOrderByForLocale('pt.name', $locale), 'asc')
             ->getQuery()
             ->execute();

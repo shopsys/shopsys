@@ -8,6 +8,7 @@ use Override;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Form\ValidationGroup;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ProductParameterValuesLocalizedData;
 use Symfony\Component\Form\AbstractType;
@@ -42,11 +43,17 @@ class ProductParameterValueFormType extends AbstractType
             ->add('parameter', ChoiceType::class, [
                 'required' => true,
                 'choices' => $this->parameterFacade->getAllWithTranslations($this->localization->getAdminLocale()),
-                'choice_label' => 'name',
+                'choice_label' => function (Parameter $parameter) {
+                    return $parameter->getName() .
+                    ' [' . $this->getGroupName($parameter) . ']';
+                },
                 'choice_value' => 'id',
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please choose parameter']),
                 ],
+                'group_by' => function (Parameter $parameter) {
+                    return $this->getGroupName($parameter);
+                },
             ])
             ->add('valueTextsByLocale', LocalizedType::class, [
                 'required' => true,
@@ -90,5 +97,14 @@ class ProductParameterValueFormType extends AbstractType
                 return $validationGroups;
             },
         ]);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter $parameter
+     * @return string
+     */
+    protected function getGroupName(Parameter $parameter): string
+    {
+        return $parameter->getGroup()?->getName($this->localization->getAdminLocale()) ?? t('No group');
     }
 }
