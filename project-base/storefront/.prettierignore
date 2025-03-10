@@ -16,4 +16,4 @@ pages/_error.js
 schema.graphql.json
 schema-compressed.graphql.json
 prettier.config.js
-.eslintrc.js
+eslint.config.mjs

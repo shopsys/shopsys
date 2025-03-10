@@ -16,7 +16,7 @@ export const getProtocol = (context: GetServerSidePropsContext | NextPageContext
     if (!context) {
         try {
             return getProtocolClientSide();
-        } catch (e) {
+        } catch {
             logException('context must be provided when running on the server side');
             return undefined;
         }
@@ -42,7 +42,7 @@ export const getIsHttps = (protocol?: string | undefined): boolean | undefined =
     if (!protocol) {
         try {
             return getProtocolClientSide() === 'https';
-        } catch (e) {
+        } catch {
             logException('protocol must be provided when running on the server side');
             return undefined;
         }

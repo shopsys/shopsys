@@ -191,7 +191,6 @@ export const initServerSideProps = async <VariablesType extends Variables>({
 
     const isMaintenance = resolvedQueries.some((query) => query.error?.response?.status === 503);
     if (isMaintenance) {
-        // eslint-disable-next-line require-atomic-updates
         context.res.statusCode = 503;
     }
 

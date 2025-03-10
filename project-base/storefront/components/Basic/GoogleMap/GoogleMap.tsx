@@ -144,8 +144,6 @@ export const GoogleMap: FC<GoogleMapProps> = ({
                 });
             }
         }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [markersClusterConfig, isGoogleApiLoaded, userCoordinates, shouldCenterToUserCoordinates]);
 
     return (

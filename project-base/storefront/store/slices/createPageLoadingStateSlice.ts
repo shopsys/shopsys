@@ -1,7 +1,7 @@
 import { FriendlyPagesTypesKey } from 'types/friendlyUrl';
 import { StateCreator } from 'zustand';
 
-const CUSTOM_PAGE_TYPES = [
+type CUSTOM_PAGE_TYPES = [
     'cart',
     'comparison',
     'contact-information',
@@ -25,9 +25,9 @@ const CUSTOM_PAGE_TYPES = [
     'contact',
     'wishlist',
     'customer-users',
-] as const;
+];
 
-export type PageType = FriendlyPagesTypesKey | (typeof CUSTOM_PAGE_TYPES)[number];
+export type PageType = FriendlyPagesTypesKey | CUSTOM_PAGE_TYPES[number];
 
 export type PageLoadingStateSlice = {
     hadClientSideNavigation: boolean;

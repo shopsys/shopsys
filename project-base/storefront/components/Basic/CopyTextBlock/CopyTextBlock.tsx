@@ -12,7 +12,7 @@ export const CopyTextBlock: FC<CopyTextBlockProps> = ({ textToCopy }) => {
         try {
             await navigator.clipboard.writeText(textToCopy);
             setCopyButtonText('Copied');
-        } catch (err) {
+        } catch {
             setCopyButtonText('Failed while copying');
         }
     };
