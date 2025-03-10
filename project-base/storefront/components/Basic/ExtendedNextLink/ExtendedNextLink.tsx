@@ -12,13 +12,13 @@ import {
 } from 'types/friendlyUrl';
 import { UrlObject } from 'url';
 import { SLUG_TYPE_QUERY_PARAMETER_NAME } from 'utils/queryParamNames';
+import { isTextSelected } from 'utils/ui/isTextSelected';
 
 export type ExtendedNextLinkProps = Omit<ComponentPropsWithoutRef<'a'>, keyof LinkProps> &
     Omit<LinkProps, 'prefetch'> & {
         queryParams?: Record<string, string>;
         type?: PageType;
         skeletonType?: PageType;
-        onClickExtended?: MouseEventHandler<HTMLAnchorElement>;
     };
 
 export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
@@ -27,7 +27,6 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
     queryParams,
     as,
     onClick,
-    onClickExtended,
     type,
     skeletonType,
     ...props
@@ -40,6 +39,13 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
     const handleOnClick: MouseEventHandler<HTMLAnchorElement> = (e) => {
         const mouseWheelClick = e.button === 1;
         const isWithoutOpeningInNewTab = !e.ctrlKey && !e.metaKey && !mouseWheelClick;
+
+        if (isTextSelected()) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            return;
+        }
 
         if (isWithoutOpeningInNewTab) {
             onClick?.(e);
@@ -67,7 +73,7 @@ export const ExtendedNextLink: FC<ExtendedNextLinkProps> = ({
                       }
                     : href
             }
-            onClick={onClickExtended ?? handleOnClick}
+            onClick={handleOnClick}
             {...props}
         >
             {children}

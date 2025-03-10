@@ -9,7 +9,6 @@ import { TIDs } from 'cypress/tids';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { onGtmProductClickEventHandler } from 'gtm/handlers/onGtmProductClickEventHandler';
-import { disableClickWhenTextSelected } from 'utils/ui/disableClickWhenTextSelected';
 
 type CategoryBestsellersListItemProps = {
     product: TypeListedProductFragment;
@@ -34,7 +33,6 @@ export const CategoryBestsellersListItem: FC<CategoryBestsellersListItemProps> =
             href={productUrl}
             type={product.__typename === 'RegularProduct' ? 'product' : 'productMainVariant'}
             onClick={() => onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url, !canSeePrices)}
-            onClickExtended={disableClickWhenTextSelected}
         >
             <div className="flex w-20 shrink-0">
                 <ProductListItemImage

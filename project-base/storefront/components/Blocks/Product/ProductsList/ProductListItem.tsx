@@ -18,7 +18,6 @@ import { forwardRef } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { FunctionComponentProps } from 'types/globals';
 import { twMergeCustom } from 'utils/twMerge';
-import { disableClickWhenTextSelected } from 'utils/ui/disableClickWhenTextSelected';
 
 export type ProductVisibleItemsConfigType = {
     addToCart?: boolean;
@@ -86,7 +85,6 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                     draggable={false}
                     href={product.slug}
                     type={product.isMainVariant ? 'productMainVariant' : 'product'}
-                    onClickExtended={disableClickWhenTextSelected}
                     onMouseUp={() => {
                         onGtmProductClickEventHandler(product, gtmProductListName, listIndex, url, !canSeePrices);
                         onClick?.(product, listIndex);
