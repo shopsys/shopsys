@@ -131,6 +131,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     categoryDetailResponse.data?.category,
                     context.res,
                     domainConfig.url,
+                    urlSlug,
                 );
 
                 if (serverSideErrorResponse) {

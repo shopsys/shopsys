@@ -139,6 +139,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     brandDetailResponse.data?.brand,
                     context.res,
                     domainConfig.url,
+                    urlSlug,
                 );
 
                 if (serverSideErrorResponse) {

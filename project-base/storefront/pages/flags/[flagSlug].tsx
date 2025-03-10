@@ -127,6 +127,7 @@ export const getServerSideProps = getServerSidePropsWrapper(
                     flagDetailResponse.data?.flag,
                     context.res,
                     domainConfig.url,
+                    urlSlug,
                 );
 
                 if (serverSideErrorResponse) {

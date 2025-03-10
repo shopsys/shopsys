@@ -7,6 +7,7 @@ import { ParsedErrors } from 'types/error';
 import { CombinedError, Exchange, Operation } from 'urql';
 import { removeTokensFromCookies } from 'utils/auth/removeTokensFromCookies';
 import { isFlashMessageError, isNoLogError } from 'utils/errors/applicationErrors';
+import { isExpectedPriceFilterError } from 'utils/errors/expectedErrors';
 import { getUserFriendlyErrors } from 'utils/errors/friendlyErrorMessageParser';
 import { isWithErrorDebugging, isWithToastAndConsoleErrorDebugging } from 'utils/errors/isWithErrorDebugging';
 import { logException } from 'utils/errors/logException';
@@ -116,6 +117,10 @@ const handleErrorMessagesForUsers = (error: CombinedError, t: Translate, operati
     }
 
     if (!parsedErrors.applicationError) {
+        return;
+    }
+
+    if (isExpectedPriceFilterError(error)) {
         return;
     }
 

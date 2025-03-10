@@ -1,3 +1,4 @@
+import { isExpectedPriceFilterError } from './expectedErrors';
 import { isWithErrorDebugging } from './isWithErrorDebugging';
 import { mapGraphqlErrorForDevelopment } from './mapGraphqlErrorForDevelopment';
 import { IncomingMessage, ServerResponse } from 'http';
@@ -10,9 +11,11 @@ export const handleServerSideErrorResponseForFriendlyUrls = (
     serverSideRequestData: unknown,
     res: ServerResponse<IncomingMessage>,
     domainUrl: string,
+    urlSlug?: string,
 ) => {
     if (error?.response.status === 401) {
         const redirectTargetUrlWithLeadingSlash = getInternationalizedStaticUrls(['/login'], domainUrl)[0];
+
         return {
             redirect: {
                 destination: getLoginUrlWithRedirect(redirectTargetUrlWithLeadingSlash, domainUrl),
@@ -27,6 +30,15 @@ export const handleServerSideErrorResponseForFriendlyUrls = (
         }
 
         throw new Error('Internal Server Error');
+    }
+
+    if (isExpectedPriceFilterError(error)) {
+        return {
+            redirect: {
+                destination: `${domainUrl}/${urlSlug}`,
+                permanent: false,
+            },
+        };
     }
 
     if (!serverSideRequestData && !(res.statusCode === 503)) {
