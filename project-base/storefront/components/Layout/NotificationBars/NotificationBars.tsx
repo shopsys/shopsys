@@ -2,7 +2,8 @@ import { Image } from 'components/Basic/Image/Image';
 import { Button } from 'components/Forms/Button/Button';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { useCurrentCustomerData } from 'connectors/customer/CurrentCustomer';
-import { useNotificationBars } from 'graphql/requests/notificationBars/queries/NotificationBarsQuery.generated';
+import dayjs from 'dayjs';
+import isBetween from 'dayjs/plugin/isBetween';
 import { jwtDecode } from 'jwt-decode';
 import Trans from 'next-translate/Trans';
 import { memo, useEffect, useState } from 'react';
@@ -10,12 +11,18 @@ import { twJoin } from 'tailwind-merge';
 import tinycolor from 'tinycolor2';
 import { getTokensFromCookies } from 'utils/auth/getTokensFromCookies';
 import { useLogout } from 'utils/auth/useLogout';
+import { useCountdown } from 'utils/useCountdown';
+import { useNotificationBarsWithRevalidation } from 'utils/useNotificationBarRevalidation';
+
+dayjs.extend(isBetween);
+
+const COUNTDOWN_REVALIDATION_INTERVAL = 10000;
 
 export const NotificationBars: FC = memo(function NotificationBars() {
-    const [{ data: notificationBarsData }] = useNotificationBars();
+    const { activeNotificationBars, fetchNotificationBars, nextRevalidationTime } =
+        useNotificationBarsWithRevalidation();
     const user = useCurrentCustomerData();
     const [loggedAsUserEmail, setLoggedAsUserEmail] = useState<string>();
-    const bars = notificationBarsData?.notificationBars;
     const logout = useLogout();
 
     useEffect(() => {
@@ -30,9 +37,11 @@ export const NotificationBars: FC = memo(function NotificationBars() {
         setLoggedAsUserEmail(isUserAdmin ? user!.email : undefined);
     }, [user]);
 
+    useCountdown(nextRevalidationTime, () => fetchNotificationBars(), COUNTDOWN_REVALIDATION_INTERVAL);
+
     return (
         <>
-            {bars?.map((item, index) => (
+            {activeNotificationBars?.map((item, index) => (
                 <div key={index} className="py-2" style={{ backgroundColor: item.rgbColor }}>
                     <Webline>
                         <div

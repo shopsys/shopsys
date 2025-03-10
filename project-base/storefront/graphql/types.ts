@@ -1778,6 +1778,10 @@ export type TypeNotificationBar = {
   rgbColor: Scalars['String']['output'];
   /** Message of the notification */
   text: Scalars['String']['output'];
+  /** Notification bar validity from */
+  validityFrom: Maybe<Scalars['DateTime']['output']>;
+  /** Notification bar validity to */
+  validityTo: Maybe<Scalars['DateTime']['output']>;
 };
 
 

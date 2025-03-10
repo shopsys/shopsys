@@ -26,3 +26,9 @@ NotificationBarDecorator:
                     type:
                         type: "String"
                         defaultValue: null
+            validityFrom:
+                type: "DateTime"
+                description: "Notification bar validity from"
+            validityTo:
+                type: "DateTime"
+                description: "Notification bar validity to"

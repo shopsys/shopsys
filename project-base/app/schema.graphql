@@ -1398,6 +1398,10 @@ type NotificationBar {
   rgbColor: String!
   "Message of the notification"
   text: String!
+  "Notification bar validity from"
+  validityFrom: DateTime
+  "Notification bar validity to"
+  validityTo: DateTime
 }
 
 "Represents store opening hours"
