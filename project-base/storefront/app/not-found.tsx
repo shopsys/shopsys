@@ -6,7 +6,7 @@ const NotFound = async () => {
 
     return (
         <Error404Headless
-            backButtonHref="/app"
+            backButtonHref="/"
             backButtonText={t('Back to shop')}
             headingText={t('We have nothing to show you at this url.')}
             imageAlt={t('404')}
