@@ -17,7 +17,7 @@ export const BlogPreviewContent = async () => {
     ]);
 
     const blogPreviewData = blogPreviewArticlesResult.status === 'fulfilled' ? blogPreviewArticlesResult.value : null;
-    const mainBlogCategoryData = settingsResult.status === 'fulfilled' ? settingsResult.value : null;
+    const mainBlogCategoryData = settingsResult.status === 'fulfilled' ? settingsResult.value.data : null;
 
     if (!blogPreviewData?.blogArticles.edges?.length) {
         return null;
