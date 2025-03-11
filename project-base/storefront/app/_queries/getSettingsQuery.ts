@@ -10,5 +10,5 @@ import {
 export const getSettingsQuery = async () => {
     const result = await createQuery<TypeSettingsQuery, TypeSettingsQueryVariables>(SettingsQueryDocument, {});
 
-    return result.data;
+    return { data: result.data, error: result.error };
 };
