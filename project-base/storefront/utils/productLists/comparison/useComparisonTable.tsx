@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useGetWindowSize } from 'utils/ui/useGetWindowSize';
-import { useScrollTop } from 'utils/ui/useScrollTop';
 import { useComponentUpdate } from 'utils/useComponentUpdate';
 
 export const useComparisonTable = (
@@ -10,7 +9,6 @@ export const useComparisonTable = (
     isArrowRightActive: boolean;
     isArrowLeftShowed: boolean;
     isArrowRightShowed: boolean;
-    tableStickyHeadActive: boolean;
     handleSlideLeft: () => void;
     handleSlideRight: () => void;
     calcMaxMarginLeft: () => void;
@@ -22,9 +20,7 @@ export const useComparisonTable = (
     const [isArrowRightShowed, setArrowRightShowed] = useState(true);
     const [tableMarginLeft, setTableMarginLeft] = useState(0);
     const [tableMaxMarginLeft, setTableMaxMarginLeft] = useState(0);
-    const [tableStickyHeadActive, setTableStickyHeadActive] = useState(false);
     const { width } = useGetWindowSize();
-    const tableY = useScrollTop('js-table-compare');
 
     const handleSlideLeft = () => {
         const marginLeft = tableMarginLeft;
@@ -81,10 +77,8 @@ export const useComparisonTable = (
     };
 
     useComponentUpdate(() => {
-        const marginLeft = tableMarginLeft;
-
         calcMaxMarginLeft();
-        setMargin(marginLeft);
+        setMargin(tableMarginLeft);
 
         if (tableMaxMarginLeft > 0) {
             setArrowLeftShowed(true);
@@ -95,20 +89,11 @@ export const useComparisonTable = (
         }
     }, [width, tableMaxMarginLeft]);
 
-    useComponentUpdate(() => {
-        if (tableY < -150) {
-            setTableStickyHeadActive(true);
-        } else {
-            setTableStickyHeadActive(false);
-        }
-    }, [tableY]);
-
     return {
         isArrowLeftActive,
         isArrowRightActive,
         isArrowLeftShowed,
         isArrowRightShowed,
-        tableStickyHeadActive,
         handleSlideLeft,
         handleSlideRight,
         calcMaxMarginLeft,
