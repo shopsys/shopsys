@@ -37,7 +37,7 @@ export default async function Providers({ children }: ProvidersProps) {
 
     const customerUserRoles = await getCurrentCustomerUserRoles();
 
-    if (settingsData.status === 'rejected' || !settingsData.value?.settings) {
+    if (settingsData.status === 'rejected' || !settingsData.value?.data?.settings) {
         throw new Error('Failed to fetch settings');
     }
 
@@ -46,7 +46,7 @@ export default async function Providers({ children }: ProvidersProps) {
             <DomainConfigProvider domainConfig={domainConfig}>
                 <AppConfigProvider
                     domainConfig={domainConfig}
-                    settings={settingsData.value.settings}
+                    settings={settingsData.value.data.settings}
                     staticRewritePaths={STATIC_REWRITE_PATHS[domainConfig.url]}
                 >
                     <TranslationProvider dictionary={dictionary} lang={lang}>

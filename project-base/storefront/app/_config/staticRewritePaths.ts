@@ -1,4 +1,4 @@
-import { routes } from './routes';
+import { routes } from 'config/routes';
 import 'server-only';
 
 export const STATIC_REWRITE_PATHS = {
