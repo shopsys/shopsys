@@ -9,6 +9,13 @@ const getBreadcrumbsSetting = (t: Translate): { [key: string]: TypeBreadcrumbFra
     [getInternationalizedStaticUrl('/user-consent')]: [
         { __typename: 'Link', name: t('User consent'), slug: getInternationalizedStaticUrl('/user-consent') },
     ],
+    [getInternationalizedStaticUrl('/personal-data-export')]: [
+        {
+            __typename: 'Link',
+            name: t('Personal data export'),
+            slug: getInternationalizedStaticUrl('/personal-data-export'),
+        },
+    ],
 });
 
 type BreadcrumbLayout = {
