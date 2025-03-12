@@ -6,6 +6,9 @@ namespace Shopsys\FrameworkBundle\Model\Localization;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
+use Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade;
+use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
+use Shopsys\FrameworkBundle\Model\Localization\Exception\AdminLocaleNotFoundException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -16,11 +19,15 @@ class LocalizationListener implements EventSubscriberInterface
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      * @param \Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade $administrationFacade
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade $administratorLocalizationFacade
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
      */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly Localization $localization,
         protected readonly AdministrationFacade $administrationFacade,
+        protected readonly AdministratorLocalizationFacade $administratorLocalizationFacade,
+        protected readonly AdministratorFrontSecurityFacade $administratorFrontSecurityFacade,
     ) {
     }
 
@@ -33,7 +40,16 @@ class LocalizationListener implements EventSubscriberInterface
             $request = $event->getRequest();
 
             if ($this->administrationFacade->isInAdmin()) {
-                $request->setLocale($this->localization->getAdminLocale());
+                try {
+                    $adminLocale = $this->localization->getAdminLocale();
+                } catch (AdminLocaleNotFoundException) {
+                    $adminLocale = $this->localization->getDefaultAdminLocale();
+
+                    $administrator = $this->administratorFrontSecurityFacade->getCurrentAdministrator();
+                    $this->administratorLocalizationFacade->setSelectedLocale($administrator, $adminLocale);
+                }
+
+                $request->setLocale($adminLocale);
             } else {
                 $request->setLocale($this->domain->getLocale());
             }
