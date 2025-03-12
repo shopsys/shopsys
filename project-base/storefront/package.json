@@ -44,7 +44,6 @@
         "lz-string": "~1.5.0",
         "negotiator": "^1.0.0",
         "next": "~14.2.24",
-        "next": "~14.2.20",
         "next-translate": "~2.6.2",
         "next-translate-plugin": "~2.6.2",
         "next-urql": "~5.0.2",
