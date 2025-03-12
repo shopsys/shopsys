@@ -145,7 +145,6 @@ class ComplaintFormType extends AbstractType
                 'label' => t('Resolution'),
                 'required' => true,
                 'choices' => $this->complaintResolutionEnum->getAllIndexedByTranslations(),
-                'choice_translation_domain' => false,
                 'multiple' => false,
                 'expanded' => false,
                 'attr' => [

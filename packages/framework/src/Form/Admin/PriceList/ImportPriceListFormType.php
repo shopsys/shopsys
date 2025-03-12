@@ -51,7 +51,6 @@ final class ImportPriceListFormType extends AbstractType
                 'choices' => $this->priceListFacade->getAll(),
                 'choice_label' => 'name',
                 'choice_value' => 'id',
-                'choice_translation_domain' => false,
                 'group_by' => function (PriceList $priceList) {
                     return $this->domain->getDomainConfigById($priceList->getDomainId())->getName();
                 },

@@ -152,7 +152,6 @@ class CategoryFormType extends AbstractType
                 'required' => false,
                 'multiple' => true,
                 'expanded' => true,
-                'choice_translation_domain' => false,
                 'choices' => $this->categoryAutomatedFilterFacade->getAllValuesIndexedByLabel(),
                 'choice_attr' => function ($choice, $key, $value) use ($categoryAutomatedFiltersNotesIndexedByValue) {
                     $iconTitle = $categoryAutomatedFiltersNotesIndexedByValue[$value] ?? null;
