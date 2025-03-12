@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Elasticsearch\Debug;
 
+use Override;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
@@ -21,6 +22,7 @@ class ElasticsearchCollector extends DataCollector
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function collect(Request $request, Response $response, ?Throwable $exception = null): void
     {
         $this->data = [
@@ -30,6 +32,7 @@ class ElasticsearchCollector extends DataCollector
         ];
     }
 
+    #[Override]
     public function reset(): void
     {
         $this->data = [];
@@ -38,6 +41,7 @@ class ElasticsearchCollector extends DataCollector
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getName(): string
     {
         return 'shopsys.elasticsearch_collector';

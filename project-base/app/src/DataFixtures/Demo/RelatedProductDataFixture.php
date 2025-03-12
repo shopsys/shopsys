@@ -9,6 +9,7 @@ use App\Model\Product\ProductDataFactory;
 use App\Model\Product\ProductFacade;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 
 class RelatedProductDataFixture extends AbstractReferenceFixture implements DependentFixtureInterface
@@ -26,6 +27,7 @@ class RelatedProductDataFixture extends AbstractReferenceFixture implements Depe
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
+    #[Override]
     public function load(ObjectManager $manager): void
     {
         $products = [

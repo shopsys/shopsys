@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Model\Newsletter;
 
 use Doctrine\ORM\EntityManager;
+use Override;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
@@ -21,6 +22,7 @@ class NewsletterFacadeTest extends TestCase
 
     private NewsletterFacade $newsletterFacade;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

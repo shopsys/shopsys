@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\CodingStandards\Sniffs;
 
+use Override;
 use PHP_CodeSniffer\Files\File;
 use PHP_CodeSniffer\Sniffs\AbstractVariableSniff;
 use PHP_CodeSniffer\Util\Common;
@@ -23,6 +24,7 @@ final class ValidVariableNameSniff extends AbstractVariableSniff
      * @param \PHP_CodeSniffer\Files\File $file
      * @param int $position
      */
+    #[Override]
     protected function processVariable(File $file, $position): void
     {
         $errorMessageFormat = 'Variable "$%s" should be camel case';
@@ -33,6 +35,7 @@ final class ValidVariableNameSniff extends AbstractVariableSniff
      * @param \PHP_CodeSniffer\Files\File $file
      * @param int $position
      */
+    #[Override]
     protected function processVariableInString(File $file, $position): void
     {
     }
@@ -41,6 +44,7 @@ final class ValidVariableNameSniff extends AbstractVariableSniff
      * @param \PHP_CodeSniffer\Files\File $file
      * @param int $position
      */
+    #[Override]
     protected function processMemberVar(File $file, $position): void
     {
         $errorMessageFormat = 'Class member variable "$%s" should be camel case';

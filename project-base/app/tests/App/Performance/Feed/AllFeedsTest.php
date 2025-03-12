@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Performance\Feed;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
@@ -25,6 +26,7 @@ class AllFeedsTest extends KernelTestCase
 
     private int $minDuration;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

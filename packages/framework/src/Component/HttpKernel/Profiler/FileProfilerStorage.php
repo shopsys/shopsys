@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\HttpKernel\Profiler;
 
 use GuzzleHttp\Exception\InvalidArgumentException;
+use Override;
 use RuntimeException;
 use Symfony\Component\HttpKernel\DataCollector\RequestDataCollector;
 use Symfony\Component\HttpKernel\Profiler\FileProfilerStorage as BaseFileProfilerStorage;
@@ -21,6 +22,7 @@ class FileProfilerStorage extends BaseFileProfilerStorage
      *
      * @throws \RuntimeException
      */
+    #[Override]
     public function write(Profile $profile): bool
     {
         $file = $this->getFilename($profile->getToken());

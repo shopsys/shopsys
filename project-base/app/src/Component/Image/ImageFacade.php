@@ -7,6 +7,7 @@ namespace App\Component\Image;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
+use Override;
 use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\Cdn\CdnFacade;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
@@ -82,6 +83,7 @@ class ImageFacade extends BaseImageFacade
      * @param mixed $entity
      * @param array $images
      */
+    #[Override]
     public function deleteImages($entity, array $images): void
     {
         $entityName = $this->imageConfig->getEntityName($entity);
@@ -105,6 +107,7 @@ class ImageFacade extends BaseImageFacade
     /**
      * @param \Shopsys\FrameworkBundle\Component\Image\Image[] $orderedImages
      */
+    #[Override]
     protected function saveImageOrdering($orderedImages): void
     {
         // Image entity can be cached, and It caused no persisted entity -> fatal on flush

@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Form\Constraints;
 
 use League\Flysystem\MountManager;
 use League\Flysystem\UnableToCopyFile;
+use Override;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\File as FileObject;
@@ -29,6 +30,7 @@ class ImageAbstractFilesystemValidator extends ImageValidator
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function validate(mixed $value, Constraint $constraint): void
     {
         $abstractPath = $this->fileUpload->getTemporaryFilepath($value->getFilename());

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\CodingStandards\Unit\PhpStan;
 
+use Override;
 use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Testing\PHPStanTestCase;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -34,6 +35,7 @@ class GedmoExtensionTest extends PHPStanTestCase
         yield ['children', false];
     }
 
+    #[Override]
     protected function setUp(): void
     {
         $this->reflectionProvider = $this->createReflectionProvider();

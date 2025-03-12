@@ -6,6 +6,7 @@ namespace App\Component\Validator;
 
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
+use Override;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
@@ -39,6 +40,7 @@ class FlysystemFileValidatorDecorator extends ConstraintValidator
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function validate(mixed $value, Constraint $constraint): void
     {
         if ($value === null || $value === '') {
@@ -78,6 +80,7 @@ class FlysystemFileValidatorDecorator extends ConstraintValidator
     /**
      * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      */
+    #[Override]
     public function initialize(ExecutionContextInterface $context): void
     {
         $this->fileValidator->initialize($context);

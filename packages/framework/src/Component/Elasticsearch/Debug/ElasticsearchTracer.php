@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Elasticsearch\Debug;
 
 use InvalidArgumentException;
+use Override;
 use Psr\Log\AbstractLogger;
 use Psr\Log\LogLevel;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Debug\Exception\NotSupportedException;
@@ -54,6 +55,7 @@ class ElasticsearchTracer extends AbstractLogger
      * @param string $message
      * @param array $context
      */
+    #[Override]
     public function log($level, $message, array $context = []): void
     {
         if ($level === LogLevel::INFO) {

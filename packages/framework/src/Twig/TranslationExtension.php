@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Twig;
 
+use Override;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\Runtime\EscaperRuntime;
@@ -14,6 +15,7 @@ class TranslationExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFilter[]
      */
+    #[Override]
     public function getFilters(): array
     {
         return [

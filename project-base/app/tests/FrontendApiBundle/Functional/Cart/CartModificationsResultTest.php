@@ -19,6 +19,7 @@ use App\Model\Product\ProductFacade;
 use App\Model\Transport\Transport;
 use App\Model\Transport\TransportDataFactory;
 use App\Model\Transport\TransportFacade;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
@@ -79,6 +80,7 @@ class CartModificationsResultTest extends GraphQlTestCase
         ];
     }
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

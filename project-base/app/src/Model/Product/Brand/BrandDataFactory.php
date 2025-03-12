@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Brand;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandData as BaseBrandData;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandDataFactory as BaseBrandDataFactory;
 
@@ -20,6 +21,7 @@ class BrandDataFactory extends BaseBrandDataFactory
     /**
      * @return \App\Model\Product\Brand\BrandData
      */
+    #[Override]
     protected function createInstance(): BaseBrandData
     {
         $brandData = new BrandData();

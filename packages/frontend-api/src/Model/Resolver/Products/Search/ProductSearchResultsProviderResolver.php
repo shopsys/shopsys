@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Products\Search;
 
+use Override;
 use Shopsys\FrontendApiBundle\Model\Resolver\Search\SearchResultsProviderResolver;
 
 /**
@@ -23,6 +24,7 @@ class ProductSearchResultsProviderResolver extends SearchResultsProviderResolver
     /**
      * @return string
      */
+    #[Override]
     protected function getSearchResultsProviderInterface(): string
     {
         return ProductSearchResultsProviderInterface::class;

@@ -6,6 +6,7 @@ namespace App\Model\Category;
 
 use App\Model\Category\LinkedCategory\LinkedCategoryFacade;
 use Doctrine\ORM\EntityManagerInterface;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
@@ -111,6 +112,7 @@ class CategoryFacade extends BaseCategoryFacade
      * @param \App\Model\Category\CategoryData $categoryData
      * @return \App\Model\Category\Category
      */
+    #[Override]
     public function create(CategoryData $categoryData): BaseCategory
     {
         /** @var \App\Model\Category\Category $category */
@@ -125,6 +127,7 @@ class CategoryFacade extends BaseCategoryFacade
      * @param \App\Model\Category\CategoryData $categoryData
      * @return \App\Model\Category\Category
      */
+    #[Override]
     public function edit($categoryId, CategoryData $categoryData): BaseCategory
     {
         /** @var \App\Model\Category\Category $category */

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Elasticsearch\Scope;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider as BaseProductExportFieldProvider;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig as BaseProductExportScopeConfig;
 
@@ -15,6 +16,7 @@ class ProductExportScopeConfig extends BaseProductExportScopeConfig
     public const string SCOPE_EAN = 'product_ean_scope';
     public const string SCOPE_PARTNO = 'product_partno_scope';
 
+    #[Override]
     protected function loadProductExportScopeRules(): void
     {
         parent::loadProductExportScopeRules();

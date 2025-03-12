@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Twig;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateBuilder;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -21,6 +22,7 @@ class MailTemplateExtension extends AbstractExtension
     /**
      * @return array
      */
+    #[Override]
     public function getFunctions(): array
     {
         return [

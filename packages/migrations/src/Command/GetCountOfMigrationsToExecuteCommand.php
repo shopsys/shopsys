@@ -6,6 +6,7 @@ namespace Shopsys\MigrationBundle\Command;
 
 use Doctrine\Migrations\DependencyFactory;
 use Doctrine\Migrations\Version\AliasResolver;
+use Override;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationLockPlanCalculator;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -36,6 +37,7 @@ class GetCountOfMigrationsToExecuteCommand extends Command
         $this->aliasResolver = $dependencyFactory->getVersionAliasResolver();
     }
 
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -50,6 +52,7 @@ class GetCountOfMigrationsToExecuteCommand extends Command
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $latestVersion = $this->aliasResolver->resolveVersionAlias('latest');

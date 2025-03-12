@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Payment;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentData as BasePaymentData;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentDataFactory as BasePaymentDataFactory;
 
@@ -18,6 +19,7 @@ class PaymentDataFactory extends BasePaymentDataFactory
     /**
      * @return \App\Model\Payment\PaymentData
      */
+    #[Override]
     protected function createInstance(): BasePaymentData
     {
         return new PaymentData();

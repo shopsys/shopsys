@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\Component\Redis;
 
+use Override;
 use Redis;
 use Shopsys\FrameworkBundle\Component\Redis\RedisFacade;
 use Tests\App\Test\FunctionalTestCase;
@@ -12,6 +13,7 @@ class RedisFacadeTest extends FunctionalTestCase
 {
     private Redis $redisClient;
 
+    #[Override]
     protected function setUp(): void
     {
         /** @phpstan-ignore symfonyContainer.serviceNotFound (service is available only in test env) */

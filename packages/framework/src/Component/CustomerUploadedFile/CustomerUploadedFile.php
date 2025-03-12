@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\CustomerUploadedFile;
 
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\AbstractUploadedFile;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Exception\CustomerFileNotFoundException;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
@@ -110,6 +111,7 @@ class CustomerUploadedFile extends AbstractUploadedFile
     /**
      * @return string
      */
+    #[Override]
     public function getExtension()
     {
         return $this->extension;
@@ -160,6 +162,7 @@ class CustomerUploadedFile extends AbstractUploadedFile
     /**
      * @return string
      */
+    #[Override]
     protected function getUploadKey(): string
     {
         return self::UPLOAD_KEY;
@@ -168,6 +171,7 @@ class CustomerUploadedFile extends AbstractUploadedFile
     /**
      * @return string
      */
+    #[Override]
     protected function getFileForUploadCategory(): string
     {
         return $this->entityName;

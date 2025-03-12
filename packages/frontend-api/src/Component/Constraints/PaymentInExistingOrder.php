@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Component\Constraints;
 
+use Override;
 use Symfony\Component\Validator\Constraint;
 
 class PaymentInExistingOrder extends Constraint
@@ -30,6 +31,7 @@ class PaymentInExistingOrder extends Constraint
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getTargets(): string|array
     {
         return self::CLASS_CONSTRAINT;

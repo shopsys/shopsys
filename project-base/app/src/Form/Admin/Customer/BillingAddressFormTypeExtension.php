@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Admin\Customer;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Form\FormBuilderHelper;
 use Shopsys\FrameworkBundle\Form\Admin\Customer\BillingAddressFormType;
 use Symfony\Component\Form\AbstractTypeExtension;
@@ -25,6 +26,7 @@ class BillingAddressFormTypeExtension extends AbstractTypeExtension
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->formBuilderHelper->disableFieldsByConfigurations($builder, self::DISABLED_FIELDS);
@@ -33,6 +35,7 @@ class BillingAddressFormTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public static function getExtendedTypes(): iterable
     {
         yield BillingAddressFormType::class;

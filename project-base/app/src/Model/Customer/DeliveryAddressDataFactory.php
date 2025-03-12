@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Customer;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressDataFactory as BaseDeliveryAddressDataFactory;
 
 /**
@@ -18,6 +19,7 @@ class DeliveryAddressDataFactory extends BaseDeliveryAddressDataFactory
     /**
      * @return \App\Model\Customer\DeliveryAddressData
      */
+    #[Override]
     protected function createInstance(): DeliveryAddressData
     {
         return new DeliveryAddressData();

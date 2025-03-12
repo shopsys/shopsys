@@ -17,6 +17,7 @@ use App\Model\Product\ProductFacade;
 use App\Model\Transport\Transport;
 use App\Model\Transport\TransportDataFactory;
 use App\Model\Transport\TransportFacade;
+use Override;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupFacade;
 use Shopsys\FrameworkBundle\Model\Store\Store;
@@ -62,6 +63,7 @@ class AuthenticatedCartModificationsResultTest extends GraphQlWithLoginTestCase
      */
     private PaymentDataFactory $paymentDataFactory;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

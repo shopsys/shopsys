@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Twig;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidInputPriceTypeException;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Twig\Extension\AbstractExtension;
@@ -22,6 +23,7 @@ class InputPriceLabelExtension extends AbstractExtension
     /**
      * @return array
      */
+    #[Override]
     public function getFunctions()
     {
         return [

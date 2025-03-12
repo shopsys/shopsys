@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\LegalConditions;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\LegalConditions\LegalConditionsFacade as BaseLegalConditionsFacade;
 
 /**
@@ -22,6 +23,7 @@ class LegalConditionsFacade extends BaseLegalConditionsFacade
     /**
      * @return string
      */
+    #[Override]
     public function getTermsAndConditionsDownloadFilename(): string
     {
         return t('Terms-and-conditions.html');

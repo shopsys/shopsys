@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Functional\Model\Product\Recalculation;
 
 use Nette\Utils\Json;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Redis;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDeduplicationFacade;
@@ -18,6 +19,7 @@ class ProductRecalculationDeduplicationFacadeTest extends TransactionFunctionalT
 
     private Redis $redis;
 
+    #[Override]
     protected function setUp(): void
     {
         /** @phpstan-ignore symfonyContainer.serviceNotFound (service is available only in test env) */
@@ -26,6 +28,7 @@ class ProductRecalculationDeduplicationFacadeTest extends TransactionFunctionalT
         parent::setUp();
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         $this->redis->del(self::REDIS_KEY);

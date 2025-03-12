@@ -7,6 +7,7 @@ namespace App\DataFixtures\Demo;
 use App\Model\Product\Product;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Product\TopProduct\TopProductFacade;
@@ -24,6 +25,7 @@ class TopProductDataFixture extends AbstractReferenceFixture implements Dependen
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
+    #[Override]
     public function load(ObjectManager $manager): void
     {
         $defaultTopProductReferenceNames = [

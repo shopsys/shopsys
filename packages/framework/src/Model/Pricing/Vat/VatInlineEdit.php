@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Pricing\Vat;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
 use Shopsys\FrameworkBundle\Form\Admin\Vat\VatFormType;
@@ -32,6 +33,7 @@ class VatInlineEdit extends AbstractGridInlineEdit
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
      * @return int
      */
+    #[Override]
     protected function createEntityAndGetId($vatData)
     {
         $vat = $this->vatFacade->create($vatData, $this->adminDomainTabsFacade->getSelectedDomainId());
@@ -43,6 +45,7 @@ class VatInlineEdit extends AbstractGridInlineEdit
      * @param int $vatId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData $vatData
      */
+    #[Override]
     protected function editEntity($vatId, $vatData)
     {
         $this->vatFacade->edit($vatId, $vatData);
@@ -52,6 +55,7 @@ class VatInlineEdit extends AbstractGridInlineEdit
      * @param int|null $vatId
      * @return \Symfony\Component\Form\FormInterface
      */
+    #[Override]
     public function getForm($vatId)
     {
         if ($vatId !== null) {

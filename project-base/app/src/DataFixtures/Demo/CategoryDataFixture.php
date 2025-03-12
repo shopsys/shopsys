@@ -7,6 +7,7 @@ namespace App\DataFixtures\Demo;
 use App\Model\Category\Category;
 use App\Model\Category\CategoryDataFactory;
 use Doctrine\Persistence\ObjectManager;
+use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -44,6 +45,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
+    #[Override]
     public function load(ObjectManager $manager): void
     {
         /**

@@ -9,6 +9,7 @@ use App\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider;
 use App\Model\Product\Product;
 use App\Model\Product\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Override;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
@@ -122,6 +123,7 @@ class ProductExportRepository extends BaseProductExportRepository
      * @param string $field
      * @return mixed
      */
+    #[Override]
     protected function getExportedFieldValue(int $domainId, BaseProduct $product, string $locale, string $field): mixed
     {
         return match ($field) {

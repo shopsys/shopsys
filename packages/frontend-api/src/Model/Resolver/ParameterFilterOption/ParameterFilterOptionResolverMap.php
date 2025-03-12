@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Resolver\ParameterFilterOption;
 
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
+use Override;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrontendApiBundle\Model\Product\Filter\ParameterFilterOption;
 use Shopsys\FrontendApiBundle\Model\Resolver\ParameterFilterOption\Exception\TypeNotImplementedException;
@@ -18,6 +19,7 @@ class ParameterFilterOptionResolverMap extends ResolverMap
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function map(): array
     {
         return [

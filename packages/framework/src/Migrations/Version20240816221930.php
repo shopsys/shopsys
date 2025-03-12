@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
+use Override;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusTypeEnum;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
@@ -17,6 +18,7 @@ class Version20240816221930 extends AbstractMigration implements ContainerAwareI
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
+    #[Override]
     public function up(Schema $schema): void
     {
         $this->sql('CREATE TABLE complaint_statuses (id SERIAL NOT NULL, status_type VARCHAR(25) NOT NULL, PRIMARY KEY(id))');
@@ -97,6 +99,7 @@ class Version20240816221930 extends AbstractMigration implements ContainerAwareI
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
+    #[Override]
     public function down(Schema $schema): void
     {
     }

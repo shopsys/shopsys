@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Voter;
 
 use Overblog\GraphQLBundle\Definition\Argument;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -24,6 +25,7 @@ abstract class AbstractB2bVoter extends Voter
      * @param array $subject
      * @return bool
      */
+    #[Override]
     abstract protected function supports(string $attribute, $subject): bool;
 
     /**
@@ -39,6 +41,7 @@ abstract class AbstractB2bVoter extends Voter
      * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
      * @return bool
      */
+    #[Override]
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
         if ($this->domain->isB2b() === false) {

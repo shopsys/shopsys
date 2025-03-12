@@ -9,6 +9,7 @@ use Doctrine\ORM\Query\AST\Node;
 use Doctrine\ORM\Query\Lexer;
 use Doctrine\ORM\Query\Parser;
 use Doctrine\ORM\Query\SqlWalker;
+use Override;
 
 class FieldFunction extends FunctionNode
 {
@@ -22,6 +23,7 @@ class FieldFunction extends FunctionNode
     /**
      * @param \Doctrine\ORM\Query\Parser $parser
      */
+    #[Override]
     public function parse(Parser $parser)
     {
         $parser->match(Lexer::T_IDENTIFIER);
@@ -42,6 +44,7 @@ class FieldFunction extends FunctionNode
      * @param \Doctrine\ORM\Query\SqlWalker $sqlWalker
      * @return string
      */
+    #[Override]
     public function getSql(SqlWalker $sqlWalker)
     {
         $values = array_map(function (Node $argumentExpression) use ($sqlWalker) {

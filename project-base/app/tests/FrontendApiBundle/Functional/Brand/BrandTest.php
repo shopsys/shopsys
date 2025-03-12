@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Brand;
 
 use App\DataFixtures\Demo\BrandDataFixture;
 use App\Model\Product\Brand\Brand;
+use Override;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -19,6 +20,7 @@ class BrandTest extends GraphQlTestCase
      */
     protected UrlGeneratorInterface $urlGenerator;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

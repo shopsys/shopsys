@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ProductFeed\ZboziBundle\Form;
 
+use Override;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -28,6 +29,7 @@ class ZboziProductFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

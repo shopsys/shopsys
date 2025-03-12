@@ -11,6 +11,7 @@ use App\Model\Product\Product;
 use App\Model\Product\ProductRepository;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
+use Override;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
@@ -123,6 +124,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
      * @param \App\Model\Product\Product $product
      * @return bool
      */
+    #[Override]
     public function isSellingDenied(BaseProduct $product): bool
     {
         return $product->getCalculatedSellingDenied() === true || $product->getSaleExclusion($this->domain->getId()) === true;
@@ -197,6 +199,7 @@ class ProductEntityFieldMapper extends BaseProductEntityFieldMapper
      * @param \App\Model\Product\Product $product
      * @return array
      */
+    #[Override]
     public function getParameters(BaseProduct $product): array
     {
         $products = [];

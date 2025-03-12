@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\PromoCode;
 
+use Override;
 use Shopsys\FrameworkBundle\Form\Admin\PromoCode\Transformer\PromoCodeFlagTransformer;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
@@ -28,6 +29,7 @@ class PromoCodeFlagType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('flag', ChoiceType::class, [

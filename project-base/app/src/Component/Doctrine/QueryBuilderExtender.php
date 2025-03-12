@@ -6,6 +6,7 @@ namespace App\Component\Doctrine;
 
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Override;
 use Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender as BaseQueryBuilderExtender;
 
 class QueryBuilderExtender extends BaseQueryBuilderExtender
@@ -17,6 +18,7 @@ class QueryBuilderExtender extends BaseQueryBuilderExtender
      * @param string $condition
      * @return \Doctrine\ORM\QueryBuilder
      */
+    #[Override]
     public function addOrExtendJoin(QueryBuilder $queryBuilder, $class, $alias, $condition): QueryBuilder
     {
         $joins = $this->getJoinsFromQueryBuilder($queryBuilder);

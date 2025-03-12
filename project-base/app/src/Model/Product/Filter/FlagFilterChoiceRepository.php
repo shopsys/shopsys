@@ -6,6 +6,7 @@ namespace App\Model\Product\Filter;
 
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Override;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
@@ -26,6 +27,7 @@ class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
      * @param \App\Model\Category\Category $category
      * @return \App\Model\Product\Flag\Flag[]
      */
+    #[Override]
     public function getFlagFilterChoicesInCategory(
         int $domainId,
         PricingGroup $pricingGroup,
@@ -48,6 +50,7 @@ class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
      * @param \App\Model\Product\Brand\Brand $brand
      * @return \App\Model\Product\Flag\Flag[]
      */
+    #[Override]
     public function getFlagFilterChoicesForBrand(
         int $domainId,
         PricingGroup $pricingGroup,
@@ -70,6 +73,7 @@ class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
      * @param string|null $searchText
      * @return \App\Model\Product\Flag\Flag[]
      */
+    #[Override]
     public function getFlagFilterChoicesForSearch(
         int $domainId,
         PricingGroup $pricingGroup,
@@ -88,6 +92,7 @@ class FlagFilterChoiceRepository extends BaseFlagFilterChoiceRepository
      * @param string $locale
      * @return \App\Model\Product\Flag\Flag[]
      */
+    #[Override]
     public function getFlagFilterChoicesForAll(int $domainId, PricingGroup $pricingGroup, string $locale): array
     {
         $productsQueryBuilder = $this->productRepository->getAllListableQueryBuilder(

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Command;
 
 use FilesystemIterator;
+use Override;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
@@ -35,6 +36,7 @@ class YamlLintCommand extends Command
 
     private bool $displayCorrectFiles;
 
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -67,6 +69,7 @@ EOF,
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);

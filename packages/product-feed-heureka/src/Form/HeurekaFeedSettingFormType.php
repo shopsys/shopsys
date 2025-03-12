@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ProductFeed\HeurekaBundle\Form;
 
+use Override;
 use Shopsys\FrameworkBundle\Form\MessageType;
 use Shopsys\ProductFeed\HeurekaBundle\Model\Setting\HeurekaFeedSettingEnum;
 use Symfony\Component\Form\AbstractType;
@@ -16,6 +17,7 @@ class HeurekaFeedSettingFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

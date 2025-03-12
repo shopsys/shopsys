@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Order\Status\Grid;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\Exception\InvalidFormDataException;
@@ -35,6 +36,7 @@ class OrderStatusInlineEdit extends AbstractGridInlineEdit
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusData
      * @return int
      */
+    #[Override]
     protected function createEntityAndGetId($orderStatusData)
     {
         if (!$this->domain->hasAdminAllDomainsEnabled()) {
@@ -52,6 +54,7 @@ class OrderStatusInlineEdit extends AbstractGridInlineEdit
      * @param int $orderStatusId
      * @param \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusData $orderStatusData
      */
+    #[Override]
     protected function editEntity($orderStatusId, $orderStatusData)
     {
         $this->orderStatusFacade->edit($orderStatusId, $orderStatusData);
@@ -61,6 +64,7 @@ class OrderStatusInlineEdit extends AbstractGridInlineEdit
      * @param int|null $orderStatusId
      * @return \Symfony\Component\Form\FormInterface
      */
+    #[Override]
     public function getForm($orderStatusId)
     {
         if ($orderStatusId !== null) {

@@ -41,7 +41,7 @@ class ProductBatchLoadByEntityData
      * @param class-string<T>|null $entityClassName
      * @return T
      */
-    public function getEntity(string $entityClassName = null): object
+    public function getEntity(?string $entityClassName = null): object
     {
         return $this->entity;
     }

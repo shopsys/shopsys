@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\ClassExtension;
 
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Roave\BetterReflection\Reflection\ReflectionMethod;
@@ -20,6 +21,7 @@ class AnnotationsReplacerTest extends TestCase
 {
     private AnnotationsReplacer $annotationsReplacer;
 
+    #[Override]
     protected function setUp(): void
     {
         $replacementMap = new AnnotationsReplacementsMap([

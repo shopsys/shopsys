@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\Releaser\Tests;
 
 use Iterator;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\Releaser\IntervalEvaluator;
@@ -13,6 +14,7 @@ final class IntervalEvaluatorTest extends TestCase
 {
     private IntervalEvaluator $intervalEvaluator;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->intervalEvaluator = new IntervalEvaluator();

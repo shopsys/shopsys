@@ -6,6 +6,7 @@ namespace Tests\App\Test\Codeception\Module;
 
 use Codeception\Module\Db as BaseDb;
 use Codeception\TestInterface;
+use Override;
 use Shopsys\FrameworkBundle\Component\Doctrine\DatabaseSchemaFacade;
 use Tests\App\Test\Codeception\Helper\SymfonyHelper;
 
@@ -16,6 +17,7 @@ class Db extends BaseDb
      *
      * @param \Codeception\TestInterface $test
      */
+    #[Override]
     public function _after(TestInterface $test): void
     {
         $this->_loadDump();
@@ -33,6 +35,7 @@ class Db extends BaseDb
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function _loadDump(?string $databaseKey = null, ?array $databaseConfig = null): void
     {
         $this->cleanup();

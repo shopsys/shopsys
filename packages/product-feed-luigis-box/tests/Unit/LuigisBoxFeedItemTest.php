@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\ProductFeed\LuigisBoxBundle\Unit;
 
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -69,6 +70,7 @@ class LuigisBoxFeedItemTest extends TestCase
 
     private Product|MockObject $defaultProduct;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->doSetUp(true);

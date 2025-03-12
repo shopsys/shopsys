@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\DependencyInjection\Compiler\AddConstraintValidatorsPass;
@@ -27,6 +28,7 @@ class ShopsysFrameworkBundle extends Bundle
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      */
+    #[Override]
     public function build(ContainerBuilder $container)
     {
         parent::build($container);

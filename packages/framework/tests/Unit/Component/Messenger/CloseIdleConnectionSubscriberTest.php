@@ -6,6 +6,7 @@ namespace Tests\FrameworkBundle\Unit\Component\Messenger;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\Persistence\ManagerRegistry;
+use Override;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Redis;
@@ -22,6 +23,7 @@ class CloseIdleConnectionSubscriberTest extends TestCase
 
     private CloseIdleConnectionSubscriber $subscriber;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

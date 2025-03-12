@@ -240,7 +240,7 @@ class CustomerUserFacade
     public function editByCustomerUser(
         int $customerUserId,
         CustomerUserUpdateData $customerUserUpdateData,
-        string $deviceId = null,
+        ?string $deviceId = null,
     ) {
         $customerUser = $this->edit($customerUserId, $customerUserUpdateData, null, $deviceId);
 

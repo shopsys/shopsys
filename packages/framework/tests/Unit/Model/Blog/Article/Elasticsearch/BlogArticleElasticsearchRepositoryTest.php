@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Blog\Article\Elasticsearch;
 
+use Override;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\ElasticsearchNoResultException;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
@@ -16,6 +17,7 @@ class BlogArticleElasticsearchRepositoryTest extends TestCase
 {
     private BlogArticleElasticsearchRepository $blogArticleElasticsearchRepository;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

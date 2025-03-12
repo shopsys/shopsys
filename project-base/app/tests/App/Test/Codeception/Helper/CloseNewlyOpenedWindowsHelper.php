@@ -8,6 +8,7 @@ use Codeception\Module;
 use Codeception\TestInterface;
 use Facebook\WebDriver\Remote\DriverCommand;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
+use Override;
 use Tests\App\Test\Codeception\Module\StrictWebDriver;
 
 class CloseNewlyOpenedWindowsHelper extends Module
@@ -15,6 +16,7 @@ class CloseNewlyOpenedWindowsHelper extends Module
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function _after(TestInterface $test)
     {
         /** @var \Tests\App\Test\Codeception\Module\StrictWebDriver $webDriver */

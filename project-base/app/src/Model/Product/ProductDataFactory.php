@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 use Shopsys\FrameworkBundle\Model\Product\ProductDataFactory as BaseProductDataFactory;
@@ -24,6 +25,7 @@ class ProductDataFactory extends BaseProductDataFactory
     /**
      * @return \App\Model\Product\ProductData
      */
+    #[Override]
     protected function createInstance(): BaseProductData
     {
         $productData = new ProductData();
@@ -36,6 +38,7 @@ class ProductDataFactory extends BaseProductDataFactory
     /**
      * @return \App\Model\Product\ProductData
      */
+    #[Override]
     public function create(): BaseProductData
     {
         /** @var \App\Model\Product\ProductData $productData */
@@ -50,6 +53,7 @@ class ProductDataFactory extends BaseProductDataFactory
      * @param \App\Model\Product\Product $product
      * @return \App\Model\Product\ProductData
      */
+    #[Override]
     public function createFromProduct(BaseProduct $product): BaseProductData
     {
         /** @var \App\Model\Product\ProductData $productData */
@@ -64,6 +68,7 @@ class ProductDataFactory extends BaseProductDataFactory
      * @param \App\Model\Product\ProductData $productData
      * @param \App\Model\Product\Product $product
      */
+    #[Override]
     protected function fillFromProduct(BaseProductData $productData, BaseProduct $product): void
     {
         parent::fillFromProduct($productData, $product);

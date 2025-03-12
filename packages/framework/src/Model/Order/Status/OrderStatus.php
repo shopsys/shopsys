@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Order\Status;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
@@ -98,6 +99,7 @@ class OrderStatus extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Order\Status\OrderStatusTranslation
      */
+    #[Override]
     protected function createTranslation()
     {
         return new OrderStatusTranslation();

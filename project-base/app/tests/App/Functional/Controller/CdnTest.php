@@ -6,6 +6,7 @@ namespace Tests\App\Functional\Controller;
 
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Product\Product;
+use Override;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Tests\App\Test\FunctionalTestCase;
 
@@ -41,6 +42,7 @@ class CdnTest extends FunctionalTestCase
         $this->assertStringStartsWith($cdnDomain, $productImageUrl);
     }
 
+    #[Override]
     public function tearDown(): void
     {
         $_ENV['CDN_DOMAIN'] = $this->originalCdnDomain;

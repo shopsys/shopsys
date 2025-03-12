@@ -9,6 +9,7 @@ use Codeception\TestInterface;
 use CommerceGuys\Intl\Currency\CurrencyRepositoryInterface;
 use CommerceGuys\Intl\Formatter\NumberFormatter;
 use CommerceGuys\Intl\NumberFormat\NumberFormatRepository;
+use Override;
 use Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -39,6 +40,7 @@ class NumberFormatHelper extends Module
     /**
      * @param \Codeception\TestInterface $test
      */
+    #[Override]
     public function _before(TestInterface $test): void
     {
         /** @var \Tests\App\Test\Codeception\Helper\SymfonyHelper $symfonyHelper */

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Search;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery as BaseFilterQuery;
 
 /**
@@ -40,6 +41,7 @@ class FilterQuery extends BaseFilterQuery
      * @param string $text
      * @return \App\Model\Product\Search\FilterQuery
      */
+    #[Override]
     public function search(string $text): BaseFilterQuery
     {
         /** @var \App\Model\Product\Search\FilterQuery $clonedQuery */
@@ -74,6 +76,7 @@ class FilterQuery extends BaseFilterQuery
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getQuery(): array
     {
         $query = parent::getQuery();

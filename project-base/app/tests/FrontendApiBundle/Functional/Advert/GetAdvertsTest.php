@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Advert;
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\Model\Category\Category;
 use League\Flysystem\MountManager;
+use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
@@ -41,6 +42,7 @@ class GetAdvertsTest extends GraphQlTestCase
      */
     private MountManager $mountManager;
 
+    #[Override]
     public function setUp(): void
     {
         parent::setUp();
@@ -107,6 +109,7 @@ class GetAdvertsTest extends GraphQlTestCase
         $this->advertFacade->create($advert4);
     }
 
+    #[Override]
     public function tearDown(): void
     {
         $this->advertFacade->delete($this->advertWithImage->getId());

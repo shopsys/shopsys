@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Customer\User;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Customer\Customer;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser as BaseUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData as BaseUserData;
@@ -20,6 +21,7 @@ class CustomerUserDataFactory extends BaseUserDataFactory
     /**
      * @return \App\Model\Customer\User\CustomerUserData
      */
+    #[Override]
     protected function createInstance(): BaseUserData
     {
         return new CustomerUserData();
@@ -29,6 +31,7 @@ class CustomerUserDataFactory extends BaseUserDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Customer\Customer $customer
      * @return \App\Model\Customer\User\CustomerUserData
      */
+    #[Override]
     public function createForCustomer(Customer $customer): BaseUserData
     {
         $customerUserData = $this->create();
@@ -41,6 +44,7 @@ class CustomerUserDataFactory extends BaseUserDataFactory
      * @param int $domainId
      * @return \App\Model\Customer\User\CustomerUserData
      */
+    #[Override]
     public function createForDomainId(int $domainId): BaseUserData
     {
         $customerUserData = $this->create();
@@ -53,6 +57,7 @@ class CustomerUserDataFactory extends BaseUserDataFactory
      * @param \App\Model\Customer\User\CustomerUser $customerUser
      * @return \App\Model\Customer\User\CustomerUserData
      */
+    #[Override]
     public function createFromCustomerUser(BaseUser $customerUser): BaseUserData
     {
         $customerUserData = $this->create();

@@ -11,6 +11,7 @@ use App\DataFixtures\Demo\ParameterDataFixture;
 use App\Model\Category\Category;
 use App\Model\Product\Brand\Brand;
 use App\Model\Product\Flag\Flag;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorterHelper;
@@ -36,6 +37,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
      */
     private TransformStringHelper $transformStringHelper;
 
+    #[Override]
     public function setUp(): void
     {
         parent::setUp();

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
 use LogicException;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
 use Shopsys\FrameworkBundle\Form\Admin\FriendlyUrl\FriendlyUrlFormType;
@@ -41,6 +42,7 @@ class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
      * @param int|string|null $rowId
      * @return \Symfony\Component\Form\FormInterface
      */
+    #[Override]
     public function getForm($rowId)
     {
         $friendlyUrl = $this->friendlyUrlFacade->findByDomainIdAndSlug($this->adminDomainTabsFacade->getSelectedDomainId(), $rowId);
@@ -52,6 +54,7 @@ class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
     /**
      * @return \Shopsys\FrameworkBundle\Component\Grid\Grid
      */
+    #[Override]
     public function getGrid()
     {
         $this->gridFactory->setQuickSearchFormData($this->getGridQuickSearchFormData());
@@ -64,6 +67,7 @@ class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
     /**
      * @return bool
      */
+    #[Override]
     public function canAddNewRow(): bool
     {
         return false;
@@ -73,6 +77,7 @@ class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
      * @param string $rowId
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData $formData
      */
+    #[Override]
     protected function editEntity($rowId, $formData)
     {
         $this->friendlyUrlFacade->setRedirect(
@@ -85,6 +90,7 @@ class FriendlyUrlInlineEdit extends AbstractGridInlineEdit
     /**
      * @param mixed $formData
      */
+    #[Override]
     protected function createEntityAndGetId($formData): never
     {
         throw new LogicException('Creating a new unused friendly URL is not supported.');

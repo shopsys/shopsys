@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Test;
 
+use Override;
 use PHPUnit\Framework\Constraint\Constraint;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 
@@ -22,6 +23,7 @@ final class IsMoneyEqual extends Constraint
     /**
      * @return string
      */
+    #[Override]
     public function toString(): string
     {
         return 'is equal money amount to expected ' . $this->exporter->export($this->value);
@@ -31,6 +33,7 @@ final class IsMoneyEqual extends Constraint
      * @param mixed $other
      * @return bool
      */
+    #[Override]
     protected function matches($other): bool
     {
         return $other instanceof Money && $other->equals($this->value);

@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\CurrencyDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\SettingValueDataFixture;
 use App\Model\Product\Product;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
@@ -25,6 +26,7 @@ class RemainingToFreeTransportCartTest extends GraphQlTestCase
      */
     private PricingSetting $pricingSetting;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form;
 
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Override;
 use Shopsys\FrameworkBundle\Form\Transformers\WysiwygCdnDataTransformer;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Symfony\Component\Form\AbstractTypeExtension;
@@ -32,6 +33,7 @@ class WysiwygTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -46,6 +48,7 @@ class WysiwygTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer($this->wysiwygCdnDataTransformer);
@@ -71,6 +74,7 @@ class WysiwygTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public static function getExtendedTypes(): iterable
     {
         yield CKEditorType::class;

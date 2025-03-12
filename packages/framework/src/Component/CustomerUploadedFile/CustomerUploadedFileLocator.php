@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\CustomerUploadedFile;
 
 use InvalidArgumentException;
+use Override;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\AbstractUploadedFileLocator;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileInterface;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\Exception\CustomerFileNotFoundException;
@@ -60,6 +61,7 @@ class CustomerUploadedFileLocator extends AbstractUploadedFileLocator
      * @param \Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileInterface $uploadedFile
      * @return string
      */
+    #[Override]
     protected function getFilePath(UploadedFileInterface $uploadedFile): string
     {
         if (!$uploadedFile instanceof CustomerUploadedFile) {

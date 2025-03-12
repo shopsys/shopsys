@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Twig;
 
 use App\Model\Product\Listing\ProductListOrderingModeForListFacade;
+use Override;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
 use Shopsys\FrameworkBundle\Twig\ProductExtension as BaseProductExtension;
@@ -43,6 +44,7 @@ class ProductExtension extends BaseProductExtension
     /**
      * @return \Twig\TwigFunction[]
      */
+    #[Override]
     public function getFunctions()
     {
         $functions = parent::getFunctions();

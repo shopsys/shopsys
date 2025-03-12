@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Component\Doctrine\__fixtures;
 
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Shopsys\FrameworkBundle\Model\Product\Product as BaseProduct;
 use Shopsys\FrameworkBundle\Model\Product\ProductData as BaseProductData;
 
@@ -27,6 +28,7 @@ class Product extends BaseProduct
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains
      * @param \Tests\FrameworkBundle\Unit\Component\Doctrine\__fixtures\ProductData $productData
      */
+    #[Override]
     public function edit(
         array $productCategoryDomains,
         BaseProductData $productData,

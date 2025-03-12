@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Test;
 
 use Metadata\MetadataFactory;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException;
 use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
@@ -31,6 +32,7 @@ class TestTranslatableListener extends TranslatableListener
     /**
      * @return string
      */
+    #[Override]
     public function getCurrentLocale()
     {
         if ($this->administrationFacade->isInAdmin()) {

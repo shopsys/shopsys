@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Translation;
 
+use Override;
 use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Translation\Loader\PoFileLoader as BasePoFileLoader;
@@ -17,6 +18,7 @@ class PoFileLoader extends BasePoFileLoader
      * @param string $domain
      * @return \Symfony\Component\Translation\MessageCatalogue
      */
+    #[Override]
     public function load(
         mixed $resource,
         string $locale,

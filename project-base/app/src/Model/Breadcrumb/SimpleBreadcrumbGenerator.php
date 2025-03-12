@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Breadcrumb;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Breadcrumb\SimpleBreadcrumbGenerator as BaseSimpleBreadcrumbGenerator;
 
 class SimpleBreadcrumbGenerator extends BaseSimpleBreadcrumbGenerator
@@ -11,6 +12,7 @@ class SimpleBreadcrumbGenerator extends BaseSimpleBreadcrumbGenerator
     /**
      * @return array<string, string>
      */
+    #[Override]
     protected function getTranslatedBreadcrumbsByRouteNames(): array
     {
         return [

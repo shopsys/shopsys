@@ -8,6 +8,7 @@ use App\Model\Administrator\Administrator;
 use App\Model\Administrator\AdministratorDataFactory;
 use App\Model\Security\Roles;
 use Doctrine\Persistence\ObjectManager;
+use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 
@@ -29,6 +30,7 @@ class AdministratorDataFixture extends AbstractReferenceFixture
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
+    #[Override]
     public function load(ObjectManager $manager): void
     {
         $this->createAdministratorReference(1, self::SUPERADMINISTRATOR);

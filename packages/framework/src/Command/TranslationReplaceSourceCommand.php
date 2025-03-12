@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Command;
 
 use DirectoryIterator;
+use Override;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use Shopsys\FrameworkBundle\Command\Exception\TranslationReplaceSourceCommandException;
@@ -28,6 +29,7 @@ class TranslationReplaceSourceCommand extends Command
 
     private const FILE_NAME_REPLACEMENT_ERRORS = 'replacement_errors.log';
 
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -55,6 +57,7 @@ class TranslationReplaceSourceCommand extends Command
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $translationsDirectory = new DirectoryIterator($input->getArgument(self::ARG_TRANSLATIONS_DIR));

@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Twig;
 
 use FOS\CKEditorBundle\Config\CKEditorConfigurationInterface;
 use FOS\CKEditorBundle\Twig\CKEditorExtension as BaseCKEditorExtension;
+use Override;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -24,6 +25,7 @@ class CKEditorExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFunction[]
      */
+    #[Override]
     public function getFunctions(): array
     {
         return [

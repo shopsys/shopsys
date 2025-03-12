@@ -6,12 +6,14 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Article;
 
 use DateTime;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
+use Override;
 
 class ArticleResolverMap extends ResolverMap
 {
     /**
      * @return array
      */
+    #[Override]
     protected function map(): array
     {
         $map['ArticleSite'] = [

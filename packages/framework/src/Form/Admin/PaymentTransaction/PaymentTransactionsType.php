@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\PaymentTransaction;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -16,6 +17,7 @@ class PaymentTransactionsType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);
@@ -29,6 +31,7 @@ class PaymentTransactionsType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -39,6 +42,7 @@ class PaymentTransactionsType extends AbstractType
     /**
      * @return string
      */
+    #[Override]
     public function getParent(): string
     {
         return CollectionType::class;

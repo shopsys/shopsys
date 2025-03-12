@@ -6,6 +6,7 @@ namespace App\Model\Category;
 
 use App\Model\Category\LinkedCategory\LinkedCategory;
 use App\Model\Category\LinkedCategory\LinkedCategoryRepository;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
@@ -51,6 +52,7 @@ class CategoryDataFactory extends BaseCategoryDataFactory
      * @param \App\Model\Category\Category $category
      * @return \App\Model\Category\CategoryData
      */
+    #[Override]
     public function createFromCategory(BaseCategory $category): BaseCategoryData
     {
         $categoryData = $this->createInstance();
@@ -62,6 +64,7 @@ class CategoryDataFactory extends BaseCategoryDataFactory
     /**
      * @return \App\Model\Category\CategoryData
      */
+    #[Override]
     protected function createInstance(): BaseCategoryData
     {
         $categoryData = new CategoryData();
@@ -74,6 +77,7 @@ class CategoryDataFactory extends BaseCategoryDataFactory
      * @param \App\Model\Category\CategoryData $categoryData
      * @param \App\Model\Category\Category $category
      */
+    #[Override]
     protected function fillFromCategory(BaseCategoryData $categoryData, BaseCategory $category): void
     {
         parent::fillFromCategory($categoryData, $category);

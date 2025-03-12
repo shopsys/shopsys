@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\MigrationBundle\Command;
 
+use Override;
 use Shopsys\MigrationBundle\Component\Doctrine\DatabaseSchemaFacade;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -30,6 +31,7 @@ class CheckDatabaseSchemaCommand extends Command
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('Checking database schema...');

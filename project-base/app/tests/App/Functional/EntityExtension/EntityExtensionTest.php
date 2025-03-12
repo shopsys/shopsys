@@ -6,6 +6,7 @@ namespace Tests\App\Functional\EntityExtension;
 
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\ORM\Tools\SchemaValidator;
+use Override;
 use Shopsys\FrameworkBundle\Component\Doctrine\DatabaseSchemaFacade;
 use Tests\App\Functional\EntityExtension\Model\Category\Category;
 use Tests\App\Functional\EntityExtension\Model\ExtendedCategory\CategoryManyToManyBidirectionalEntity;
@@ -50,6 +51,7 @@ class EntityExtensionTest extends TransactionFunctionalTestCase
      */
     private DatabaseSchemaFacade $databaseSchemaFacade;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

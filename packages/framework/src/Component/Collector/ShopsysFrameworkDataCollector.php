@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Collector;
 
+use Override;
 use PharIo\Version\Version;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException;
@@ -29,6 +30,7 @@ class ShopsysFrameworkDataCollector extends DataCollector
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function collect(Request $request, Response $response, ?Throwable $exception = null): void
     {
         $this->data = [
@@ -54,6 +56,7 @@ class ShopsysFrameworkDataCollector extends DataCollector
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function reset(): void
     {
         $this->data = [];
@@ -102,6 +105,7 @@ class ShopsysFrameworkDataCollector extends DataCollector
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getName(): string
     {
         return 'shopsys_framework_core';

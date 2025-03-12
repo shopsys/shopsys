@@ -10,6 +10,7 @@ use App\DataFixtures\Demo\OrderDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Customer\User\CustomerUser;
 use App\Model\Product\Product;
+use Override;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserDataFactory;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
@@ -30,6 +31,7 @@ class CustomerUserWithLimitedRoleGroupTest extends GraphQlWithLoginTestCase
      */
     private CustomerUserDataFactory $customerUserDataFactory;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Blog\Category;
 
 use App\DataFixtures\Demo\BlogArticleDataFixture;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
@@ -32,6 +33,7 @@ class BlogCategoryTest extends GraphQlTestCase
      */
     private TransformStringHelper $transformStringHelper;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

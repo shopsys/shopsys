@@ -66,7 +66,7 @@ class ComplaintStatusFacade
      * @param int $complaintStatusId
      * @param int|null $newComplaintStatusId
      */
-    public function deleteById(int $complaintStatusId, int $newComplaintStatusId = null): void
+    public function deleteById(int $complaintStatusId, ?int $newComplaintStatusId = null): void
     {
         $complaintStatus = $this->complaintStatusRepository->getById($complaintStatusId);
         $complaintStatus->checkForDelete();

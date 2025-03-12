@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Command;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Console\DomainChoiceHandler;
 use Symfony\Bundle\FrameworkBundle\Command\RouterDebugCommand;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
@@ -40,6 +41,7 @@ class RouterDebugCommandForDomain extends Command
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -63,6 +65,7 @@ EOF,
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function complete(CompletionInput $input, CompletionSuggestions $suggestions): void
     {
         $this->routerDebugCommand->complete($input, $suggestions);
@@ -71,6 +74,7 @@ EOF,
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Pricing\Currency\Grid;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
 use Shopsys\FrameworkBundle\Form\Admin\Pricing\Currency\CurrencyFormType;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyDataFactory;
@@ -31,6 +32,7 @@ class CurrencyInlineEdit extends AbstractGridInlineEdit
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
      * @return int
      */
+    #[Override]
     protected function createEntityAndGetId($currencyData)
     {
         $currency = $this->currencyFacade->create($currencyData);
@@ -42,6 +44,7 @@ class CurrencyInlineEdit extends AbstractGridInlineEdit
      * @param int $currencyId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
      */
+    #[Override]
     protected function editEntity($currencyId, $currencyData)
     {
         $this->currencyFacade->edit($currencyId, $currencyData);
@@ -51,6 +54,7 @@ class CurrencyInlineEdit extends AbstractGridInlineEdit
      * @param int|null $currencyId
      * @return \Symfony\Component\Form\FormInterface
      */
+    #[Override]
     public function getForm($currencyId)
     {
         if ($currencyId !== null) {

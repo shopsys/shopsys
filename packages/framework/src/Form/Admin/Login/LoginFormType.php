@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Login;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Administrator\Administrator;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -19,6 +20,7 @@ class LoginFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -38,6 +40,7 @@ class LoginFormType extends AbstractType
     /**
      * @return string
      */
+    #[Override]
     public function getBlockPrefix(): string
     {
         return 'admin_login_form';
@@ -46,6 +49,7 @@ class LoginFormType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

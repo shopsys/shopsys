@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Filter\Elasticsearch;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfigFactory as BaseProductFilterConfigFactory;
@@ -28,6 +29,7 @@ class ProductFilterConfigFactory extends BaseProductFilterConfigFactory
      * @param string $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
      */
+    #[Override]
     public function createForSearch($domainId, $locale, $searchText = ''): ProductFilterConfig
     {
         $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataForSearch(
@@ -49,6 +51,7 @@ class ProductFilterConfigFactory extends BaseProductFilterConfigFactory
      * @param \App\Model\Product\Brand\Brand $brand
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
      */
+    #[Override]
     public function createForBrand(
         int $domainId,
         string $locale,
@@ -72,6 +75,7 @@ class ProductFilterConfigFactory extends BaseProductFilterConfigFactory
      * @param string $locale
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterConfig
      */
+    #[Override]
     public function createForAll(int $domainId, string $locale): ProductFilterConfig
     {
         $productFilterConfigIdsData = $this->productFilterElasticFacade->getProductFilterDataForAll(

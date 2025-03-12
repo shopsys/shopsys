@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\PriceList;
 
+use Override;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormInterface;
@@ -15,6 +16,7 @@ final class PriceListProductsPickerType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['domainId'] = $form->getParent()?->getData()->domainId;
@@ -24,6 +26,7 @@ final class PriceListProductsPickerType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -38,6 +41,7 @@ final class PriceListProductsPickerType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getParent(): string
     {
         return CollectionType::class;

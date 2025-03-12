@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Product\Filter;
 
 use Doctrine\ORM\Query\Expr\Join;
+use Override;
 use Shopsys\FrameworkBundle\Component\Doctrine\GroupedScalarHydrator;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Category\CategoryParameter;
@@ -28,6 +29,7 @@ class ParameterFilterChoiceRepository extends BaseParameterFilterChoiceRepositor
      * @param \App\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\ParameterFilterChoice[]
      */
+    #[Override]
     public function getParameterFilterChoicesInCategory(
         int $domainId,
         PricingGroup $pricingGroup,

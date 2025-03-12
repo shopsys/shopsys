@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Localization;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Events;
 use Metadata\MetadataFactory;
+use Override;
 use Prezent\Doctrine\Translatable\EventListener\TranslatableListener as PrezentTranslatableListener;
 
 class TranslatableListener extends PrezentTranslatableListener
@@ -27,6 +28,7 @@ class TranslatableListener extends PrezentTranslatableListener
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getSubscribedEvents(): array
     {
         return [

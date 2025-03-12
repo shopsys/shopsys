@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Command;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\DomainUrlReplacer;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -30,6 +31,7 @@ class ReplaceCdnDomainUrlCommand extends Command
         parent::__construct();
     }
 
+    #[Override]
     protected function configure(): void
     {
     }
@@ -39,6 +41,7 @@ class ReplaceCdnDomainUrlCommand extends Command
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return int
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $trimmedCdnDomainUrl = trim($this->cdnDomainUrl, '/');

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\CodingStandards\Unit\Sniffs\ForbiddenDoctrineDefaultValueSniff;
 
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\CodingStandards\Sniffs\ForbiddenDoctrineDefaultValueSniff;
 use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
@@ -13,6 +14,7 @@ class ForbiddenDoctrineDefaultValueSniffTest extends AbstractSniffTestCase
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function getSniffClassName(): string
     {
         return ForbiddenDoctrineDefaultValueSniff::class;

@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Blog\Category;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Override;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Blog\Category\Exception\BlogCategoryDomainNotFoundException;
@@ -295,6 +296,7 @@ class BlogCategory extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryTranslation
      */
+    #[Override]
     protected function createTranslation(): BlogCategoryTranslation
     {
         return new BlogCategoryTranslation();

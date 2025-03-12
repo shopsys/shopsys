@@ -6,6 +6,7 @@ namespace Shopsys\MigrationBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Override;
 use Shopsys\MigrationBundle\Command\Exception\CheckSchemaCommandException;
 use Shopsys\MigrationBundle\Command\Exception\MigrateCommandException;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationLockPlanCalculator;
@@ -38,6 +39,7 @@ class MigrateCommand extends Command
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         try {

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\Releaser\Command;
 
 use InvalidArgumentException;
+use Override;
 use PharIo\Version\Version;
 use Shopsys\Releaser\ReleaseWorker\ReleaseWorkerProvider;
 use Shopsys\Releaser\ReleaseWorker\StageWorkerInterface;
@@ -40,6 +41,7 @@ final class ReleaseCommand extends Command
         parent::__construct();
     }
 
+    #[Override]
     protected function configure(): void
     {
         $description = sprintf(
@@ -65,6 +67,7 @@ final class ReleaseCommand extends Command
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return int
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $symfonyStyle = $this->symfonyStyleFactory->createAndStoreSymfonyStyle($input, $output);

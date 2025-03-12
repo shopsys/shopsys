@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Component\Constraints;
 
+use Override;
 use Symfony\Component\Validator\Constraint;
 
 class ParameterFilter extends Constraint
@@ -26,6 +27,7 @@ class ParameterFilter extends Constraint
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getTargets(): string|array
     {
         return self::CLASS_CONSTRAINT;

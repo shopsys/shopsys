@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Article\Elasticsearch;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractElasticsearchDataFetcher;
 
 class ArticleElasticsearchDataFetcher extends AbstractElasticsearchDataFetcher
@@ -12,6 +13,7 @@ class ArticleElasticsearchDataFetcher extends AbstractElasticsearchDataFetcher
      * @param array $data
      * @return array
      */
+    #[Override]
     protected function fillEmptyFields(array $data): array
     {
         $result = $data;

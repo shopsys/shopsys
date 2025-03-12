@@ -8,6 +8,7 @@ use App\Kernel as AppKernel;
 use Codeception\Configuration;
 use Codeception\Module;
 use Codeception\TestInterface;
+use Override;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Symfony\Component\HttpKernel\Kernel;
 
@@ -18,6 +19,7 @@ class SymfonyHelper extends Module
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function _initialize()
     {
         require_once Configuration::projectDir() . '/../app/autoload.php';
@@ -29,6 +31,7 @@ class SymfonyHelper extends Module
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function _before(TestInterface $test)
     {
         $this->kernel->boot();

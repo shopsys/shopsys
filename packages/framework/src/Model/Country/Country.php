@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Country;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
 use Shopsys\FrameworkBundle\Model\Country\Exception\CountryDomainNotFoundException;
@@ -134,6 +135,7 @@ class Country extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Country\CountryTranslation
      */
+    #[Override]
     protected function createTranslation(): CountryTranslation
     {
         return new CountryTranslation();

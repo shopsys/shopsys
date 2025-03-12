@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Component\Constraints;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Symfony\Component\Validator\Constraint;
@@ -26,6 +27,7 @@ class ExistingEmailValidator extends ConstraintValidator
      * @param string $value
      * @param \App\FrontendApi\Model\Component\Constraints\ExistingEmail $constraint
      */
+    #[Override]
     public function validate(mixed $value, Constraint $constraint): void
     {
         if (!$constraint instanceof ExistingEmail) {

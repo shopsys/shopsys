@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Sitemap;
 
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\MountManager;
+use Override;
 use Presta\SitemapBundle\DependencyInjection\Configuration;
 use Presta\SitemapBundle\Service\Dumper;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
@@ -45,6 +46,7 @@ class SitemapDumper extends Dumper
      * @param string $targetDir Directory to move created sitemaps to
      * @throws \RuntimeException
      */
+    #[Override]
     protected function activate(string $targetDir): void
     {
         $this->deleteExistingSitemaps($targetDir);
@@ -70,6 +72,7 @@ class SitemapDumper extends Dumper
      *
      * @param string $targetDir
      */
+    #[Override]
     protected function deleteExistingSitemaps(string $targetDir): void
     {
         $files = $this->abstractFilesystem->listContents($targetDir)->filter(function ($file) {

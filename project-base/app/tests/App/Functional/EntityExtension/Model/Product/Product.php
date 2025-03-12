@@ -7,6 +7,7 @@ namespace Tests\App\Functional\EntityExtension\Model\Product;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
@@ -94,6 +95,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @return \Tests\App\Functional\EntityExtension\Model\Product\ProductTranslation
      */
+    #[Override]
     protected function createTranslation(): ProductTranslation
     {
         return new ProductTranslation();

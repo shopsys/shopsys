@@ -8,6 +8,7 @@ use ArrayObject;
 use GraphQL\Type\Definition\ResolveInfo;
 use Overblog\GraphQLBundle\Definition\ArgumentInterface;
 use Overblog\GraphQLBundle\Resolver\FieldResolver;
+use Override;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\DataMapper\MethodNotFoundException;
 use Shopsys\FrontendApiBundle\Model\Resolver\Products\ProductResolverMap as BaseProductResolverMap;
@@ -22,6 +23,7 @@ class ProductResolverMap extends BaseProductResolverMap
     /**
      * @return array<string, callable>
      */
+    #[Override]
     protected function mapProduct(): array
     {
         return [

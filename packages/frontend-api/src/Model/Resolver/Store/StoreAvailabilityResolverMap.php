@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Store;
 
 use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
+use Override;
 
 class StoreAvailabilityResolverMap extends ResolverMap
 {
@@ -20,6 +21,7 @@ class StoreAvailabilityResolverMap extends ResolverMap
     /**
      * @return array
      */
+    #[Override]
     protected function map(): array
     {
         return [

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form;
 
+use Override;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -16,6 +17,7 @@ class SortableValuesType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -31,6 +33,7 @@ class SortableValuesType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getParent(): ?string
     {
         return CollectionType::class;
@@ -39,6 +42,7 @@ class SortableValuesType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['labels_by_value'] = $options['labels_by_value'];

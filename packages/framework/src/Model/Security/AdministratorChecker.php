@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Security;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Shopsys\FrameworkBundle\Model\Security\Exception\LoginWithDefaultPasswordException;
 use Symfony\Component\Security\Core\User\InMemoryUserChecker;
@@ -24,6 +25,7 @@ class AdministratorChecker extends InMemoryUserChecker
     /**
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Administrator $user
      */
+    #[Override]
     public function checkPostAuth(UserInterface $user): void
     {
         if ($this->environment === EnvironmentType::PRODUCTION

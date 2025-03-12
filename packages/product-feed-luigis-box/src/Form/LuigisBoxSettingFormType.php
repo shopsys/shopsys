@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ProductFeed\LuigisBoxBundle\Form;
 
+use Override;
 use Shopsys\FrameworkBundle\Form\MessageType;
 use Shopsys\ProductFeed\LuigisBoxBundle\Model\Setting\LuigisBoxFeedSettingEnum;
 use Symfony\Component\Form\AbstractType;
@@ -17,6 +18,7 @@ class LuigisBoxSettingFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

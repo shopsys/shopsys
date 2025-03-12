@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType as SymfonyDateTimeType;
@@ -24,6 +25,7 @@ class DateTimeType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $defaultAttr = [
@@ -46,6 +48,7 @@ class DateTimeType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getParent(): ?string
     {
         return SymfonyDateTimeType::class;

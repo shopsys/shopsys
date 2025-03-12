@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\CodingStandards\Unit\CsFixer\Constraint;
 
+use Override;
 use PHPUnit\Framework\Constraint\Constraint;
 use PHPUnit\Framework\Constraint\IsIdentical;
 use PHPUnit\Framework\ExpectationFailedException;
@@ -30,6 +31,7 @@ class IsIdenticalString extends Constraint
      * @param bool $returnResult
      * @return bool|null
      */
+    #[Override]
     public function evaluate($other, string $description = '', bool $returnResult = false): ?bool
     {
         try {
@@ -54,6 +56,7 @@ class IsIdenticalString extends Constraint
     /**
      * @return string
      */
+    #[Override]
     public function toString(): string
     {
         return $this->isIdentical->toString();
@@ -63,6 +66,7 @@ class IsIdenticalString extends Constraint
      * @param mixed $other
      * @return string
      */
+    #[Override]
     protected function additionalFailureDescription($other): string
     {
         $pattern = '/(\r\n|\n\r|\r)/';

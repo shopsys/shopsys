@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\CodingStandards\Unit\CsFixer\ForbiddenDumpFixer;
 
+use Override;
 use Shopsys\CodingStandards\CsFixer\ForbiddenDumpFixer;
 use Tests\CodingStandards\Unit\CsFixer\AbstractFixerTestCase;
 
@@ -12,6 +13,7 @@ final class ForbiddenDumpFixerTest extends AbstractFixerTestCase
     /**
      * @return \Shopsys\CodingStandards\CsFixer\ForbiddenDumpFixer
      */
+    #[Override]
     protected function createFixerService(): ForbiddenDumpFixer
     {
         return new ForbiddenDumpFixer();
@@ -20,6 +22,7 @@ final class ForbiddenDumpFixerTest extends AbstractFixerTestCase
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public static function getTestingFiles(): iterable
     {
         yield [__DIR__ . '/fixed/fixed.html.twig', __DIR__ . '/wrong/wrong.html.twig'];

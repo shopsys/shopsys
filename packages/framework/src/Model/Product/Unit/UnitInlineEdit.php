@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Unit;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\Exception\InvalidFormDataException;
@@ -33,6 +34,7 @@ class UnitInlineEdit extends AbstractGridInlineEdit
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
      * @return int
      */
+    #[Override]
     protected function createEntityAndGetId($unitData)
     {
         if (!$this->domain->hasAdminAllDomainsEnabled()) {
@@ -50,6 +52,7 @@ class UnitInlineEdit extends AbstractGridInlineEdit
      * @param int $unitId
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitData $unitData
      */
+    #[Override]
     protected function editEntity($unitId, $unitData)
     {
         $this->unitFacade->edit($unitId, $unitData);
@@ -59,6 +62,7 @@ class UnitInlineEdit extends AbstractGridInlineEdit
      * @param int|null $unitId
      * @return \Symfony\Component\Form\FormInterface
      */
+    #[Override]
     public function getForm($unitId)
     {
         if ($unitId !== null) {

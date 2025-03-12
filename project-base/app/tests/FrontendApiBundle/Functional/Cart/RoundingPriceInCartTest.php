@@ -9,6 +9,7 @@ use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\StoreDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\Model\Product\Product;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Payment\Payment;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
@@ -26,6 +27,7 @@ class RoundingPriceInCartTest extends GraphQlTestCase
      */
     private CurrencyDataFactory $currencyDataFactory;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

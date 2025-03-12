@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Twig;
 
+use Override;
 use Symfony\Component\Form\FormError;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -13,6 +14,7 @@ class FormExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFunction[]
      */
+    #[Override]
     public function getFunctions()
     {
         return [

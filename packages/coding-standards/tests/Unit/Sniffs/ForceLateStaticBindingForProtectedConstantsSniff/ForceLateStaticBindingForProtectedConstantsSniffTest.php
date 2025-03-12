@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\CodingStandards\Unit\Sniffs\ForceLateStaticBindingForProtectedConstantsSniff;
 
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\CodingStandards\Sniffs\ForceLateStaticBindingForProtectedConstantsSniff;
 use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
@@ -39,6 +40,7 @@ final class ForceLateStaticBindingForProtectedConstantsSniffTest extends Abstrac
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function getSniffClassName(): string
     {
         return ForceLateStaticBindingForProtectedConstantsSniff::class;

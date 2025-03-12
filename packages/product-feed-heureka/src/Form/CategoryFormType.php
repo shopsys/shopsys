@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ProductFeed\HeurekaBundle\Form;
 
+use Override;
 use Shopsys\ProductFeed\HeurekaBundle\Model\HeurekaCategory\HeurekaCategoryFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -26,6 +27,7 @@ class CategoryFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param  array $options
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $heurekaCategories = $this->heurekaCategoryFacade->getAllIndexedById();

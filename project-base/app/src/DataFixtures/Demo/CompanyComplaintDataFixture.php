@@ -9,6 +9,7 @@ use App\Model\Customer\User\CustomerUser;
 use App\Model\Order\Order;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum;
@@ -32,6 +33,7 @@ class CompanyComplaintDataFixture extends AbstractReferenceFixture implements De
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function load(ObjectManager $manager): void
     {
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {

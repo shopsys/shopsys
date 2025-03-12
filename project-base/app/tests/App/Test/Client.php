@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Test;
 
 use Nette\Utils\Json;
+use Override;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -24,6 +25,7 @@ class Client extends KernelBrowser
      * @param bool $changeHistory
      * @return \Symfony\Component\DomCrawler\Crawler
      */
+    #[Override]
     public function request(
         string $method,
         string $uri,

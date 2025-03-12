@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Test;
 
+use Override;
 use PHPUnit\Framework\Constraint\Constraint;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 
@@ -22,6 +23,7 @@ final class IsPriceEqual extends Constraint
     /**
      * @return string
      */
+    #[Override]
     public function toString(): string
     {
         return 'is equal price to expected ' . $this->exporter->export($this->value);
@@ -31,6 +33,7 @@ final class IsPriceEqual extends Constraint
      * @param mixed $other
      * @return bool
      */
+    #[Override]
     protected function matches($other): bool
     {
         return $other instanceof PriceInterface && $other->equals($this->value);

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Product\Parameter;
 
 use Doctrine\ORM\Query\Expr\Join;
+use Override;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository as BaseParameterRepository;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValueData;
@@ -103,6 +104,7 @@ class ParameterRepository extends BaseParameterRepository
      * @param array $productIdsAndParameterNamesAndValues
      * @return string[][]
      */
+    #[Override]
     protected function getParameterValuesIndexedByProductIdAndParameterName(
         array $productIdsAndParameterNamesAndValues,
     ): array {

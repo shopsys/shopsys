@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Component\Elasticsearch;
 
 use Doctrine\ORM\EntityManager;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -27,6 +28,7 @@ class IndexFacadeTest extends TestCase
 
     private EntityManager $entityManagerMock;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

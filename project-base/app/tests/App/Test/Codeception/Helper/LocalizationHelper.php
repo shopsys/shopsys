@@ -8,6 +8,7 @@ use Codeception\Module;
 use Codeception\TestInterface;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverElement;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -30,6 +31,7 @@ class LocalizationHelper extends Module
     /**
      * @param \Codeception\TestInterface $test
      */
+    #[Override]
     public function _before(TestInterface $test): void
     {
         /** @var \Tests\App\Test\Codeception\Helper\SymfonyHelper $symfonyHelper */

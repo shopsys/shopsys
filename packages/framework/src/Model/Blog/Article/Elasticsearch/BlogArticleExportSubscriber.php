@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractExportSubscriber;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
@@ -42,6 +43,7 @@ class BlogArticleExportSubscriber extends AbstractExportSubscriber
     /**
      * @return array
      */
+    #[Override]
     public static function getSubscribedEvents(): array
     {
         return [

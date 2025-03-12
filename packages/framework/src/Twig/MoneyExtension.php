@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Twig;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -13,6 +14,7 @@ class MoneyExtension extends AbstractExtension
     /**
      * @return array
      */
+    #[Override]
     public function getFilters()
     {
         return [

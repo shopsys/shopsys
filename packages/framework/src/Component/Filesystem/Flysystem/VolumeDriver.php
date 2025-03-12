@@ -6,9 +6,11 @@ namespace Shopsys\FrameworkBundle\Component\Filesystem\Flysystem;
 
 use Barryvdh\elFinderFlysystemDriver\Driver;
 use elFinder;
+use Override;
 
 class VolumeDriver extends Driver
 {
+    #[Override]
     protected function configure()
     {
         @parent::configure();
@@ -41,6 +43,7 @@ class VolumeDriver extends Driver
      * @param string $hash
      * @return false|string
      */
+    #[Override]
     public function tmb($hash)
     {
         $thumbnailPath = $this->decode($hash);
@@ -80,6 +83,7 @@ class VolumeDriver extends Driver
      * @param mixed[] $stat
      * @return false|string
      */
+    #[Override]
     protected function gettmb($thumbnailPath, $stat)
     {
         if ($this->tmbURL && $this->tmbPath) {
@@ -113,6 +117,7 @@ class VolumeDriver extends Driver
      * @param mixed[] $stat
      * @return false|string
      */
+    #[Override]
     protected function createTmb($thumbnailPath, $stat)
     {
         @mkdir($this->tmbPath, 0777, true);
@@ -136,6 +141,7 @@ class VolumeDriver extends Driver
     /**
      * @param mixed[] $stat
      */
+    #[Override]
     protected function rmTmb($stat)
     {
         $path = $this->tmbPath . DIRECTORY_SEPARATOR . $this->tmbname($stat);
@@ -174,6 +180,7 @@ class VolumeDriver extends Driver
      * @param string $hash
      * @return false|mixed[]
      */
+    #[Override]
     protected function _stat($path, $hash = '')
     {
         $stat = parent::_stat($path);

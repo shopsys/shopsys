@@ -8,6 +8,7 @@ use App\Model\Category\Category;
 use App\Model\Product\Flag\Flag;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\UrlListData;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -45,6 +46,7 @@ class ReadyCategorySeoDataFixture extends AbstractReferenceFixture implements De
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function load(ObjectManager $manager): void
     {
         $firstDomain = $this->domainsForDataFixtureProvider->getFirstAllowedDomainConfig();

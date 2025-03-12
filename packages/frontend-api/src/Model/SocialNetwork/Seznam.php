@@ -8,6 +8,7 @@ use Hybridauth\Data;
 use Hybridauth\Exception\UnexpectedApiResponseException;
 use Hybridauth\Provider\Seznam as BaseSeznam;
 use Hybridauth\User;
+use Override;
 
 /**
  * @see https://github.com/hybridauth/hybridauth/pull/1388 copy from this pull request, after accepting this pull request and updating version where are these changes applied, you can delete this file
@@ -17,6 +18,7 @@ class Seznam extends BaseSeznam
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getUserProfile()
     {
         $response = $this->apiRequest('api/v1/user', 'GET', ['format' => 'json']);

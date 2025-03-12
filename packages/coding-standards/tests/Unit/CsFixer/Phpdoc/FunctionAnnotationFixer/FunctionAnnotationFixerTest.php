@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\CodingStandards\Unit\CsFixer\Phpdoc\FunctionAnnotationFixer;
 
+use Override;
 use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
 use PhpCsFixer\Tokenizer\Analyzer\NamespaceUsesAnalyzer;
 use PhpCsFixer\WhitespacesFixerConfig;
@@ -23,6 +24,7 @@ final class FunctionAnnotationFixerTest extends AbstractFixerTestCase
     /**
      * @return \Tests\CodingStandards\Unit\CsFixer\ChainedFixer
      */
+    #[Override]
     protected function createFixerService(): ChainedFixer
     {
         $fixer = new ChainedFixer();
@@ -58,6 +60,7 @@ final class FunctionAnnotationFixerTest extends AbstractFixerTestCase
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public static function getTestingFiles(): iterable
     {
         yield [__DIR__ . '/fixed/fixed.php', __DIR__ . '/wrong/wrong.php'];

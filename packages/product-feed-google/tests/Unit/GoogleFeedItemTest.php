@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\ProductFeed\GoogleBundle\Unit;
 
+use Override;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
@@ -44,6 +45,7 @@ class GoogleFeedItemTest extends TestCase
 
     private Product|MockObject $defaultProduct;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->doSetUp(true);

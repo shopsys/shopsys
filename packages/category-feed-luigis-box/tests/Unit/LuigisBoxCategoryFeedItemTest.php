@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\CategoryFeed\LuigisBoxBundle\Unit;
 
+use Override;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\CategoryFeed\LuigisBoxBundle\Model\FeedItem\LuigisBoxCategoryFeedItemFactory;
@@ -38,6 +39,7 @@ class LuigisBoxCategoryFeedItemTest extends TestCase
 
     private ImageFacade|MockObject $imageFacadeMock;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->friendlyUrlFacadeMock = $this->createMock(FriendlyUrlFacade::class);

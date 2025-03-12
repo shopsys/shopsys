@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Image\Config;
 
+use Override;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Component\Image\Config\Exception\DuplicateEntityNameExceptionInvalid;
@@ -17,6 +18,7 @@ class ImageConfigLoaderTest extends TestCase
 {
     private ImageConfigLoader $imageConfigLoader;
 
+    #[Override]
     protected function setUp(): void
     {
         $filesystem = new Filesystem();

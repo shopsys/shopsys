@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Twig;
 
+use Override;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -12,6 +13,7 @@ class JoinNoneEmptyExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFilter[]
      */
+    #[Override]
     public function getFilters()
     {
         return [

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Resolver\Category;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrontendApiBundle\Model\Resolver\Category\CategoriesQuery as BaseCategoriesQuery;
@@ -30,6 +31,7 @@ class CategoriesQuery extends BaseCategoriesQuery
     /**
      * @return array
      */
+    #[Override]
     public function categoriesQuery(): array
     {
         /** @var \App\Model\Category\Category $rootCategory */

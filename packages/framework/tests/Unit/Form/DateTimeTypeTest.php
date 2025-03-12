@@ -6,6 +6,7 @@ namespace Tests\FrameworkBundle\Unit\Form;
 
 use DateTime;
 use DateTimeZone;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -52,6 +53,7 @@ class DateTimeTypeTest extends TypeTestCase
     /**
      * @return array
      */
+    #[Override]
     protected function getExtensions(): array
     {
         $displayTimeZone = 'Europe/Prague';

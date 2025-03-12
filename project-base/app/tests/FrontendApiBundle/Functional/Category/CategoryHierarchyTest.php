@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Category;
 
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\Model\Category\Category;
+use Override;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -41,6 +42,7 @@ class CategoryHierarchyTest extends GraphQlTestCase
      */
     private TransformStringHelper $transformStringHelper;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

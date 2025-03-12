@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form;
 
+use Override;
 use Shopsys\FrameworkBundle\Form\Admin\Order\OrderItemFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Order\OrderPaymentFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Order\OrderTransportFormType;
@@ -32,6 +33,7 @@ class OrderItemsType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Order\Order $order */
@@ -67,6 +69,7 @@ class OrderItemsType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);
@@ -93,6 +96,7 @@ class OrderItemsType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver

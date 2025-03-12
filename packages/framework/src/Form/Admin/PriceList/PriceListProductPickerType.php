@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\PriceList;
 
+use Override;
 use Shopsys\FrameworkBundle\Form\Constraints\PositiveMoneyAmount;
 use Shopsys\FrameworkBundle\Form\Transformers\NumericToMoneyTransformer;
 use Shopsys\FrameworkBundle\Form\Transformers\ProductIdToProductTransformer;
@@ -28,6 +29,7 @@ final class PriceListProductPickerType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('product', HiddenType::class);
@@ -50,6 +52,7 @@ final class PriceListProductPickerType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\CodingStandards\Unit\CsFixer\OrmJoinColumnRequireNullableFixer;
 
+use Override;
 use Shopsys\CodingStandards\CsFixer\OrmJoinColumnRequireNullableFixer;
 use Tests\CodingStandards\Unit\CsFixer\AbstractFixerTestCase;
 
@@ -12,6 +13,7 @@ final class OrmJoinColumnRequireNullableFixerTest extends AbstractFixerTestCase
     /**
      * @return \Shopsys\CodingStandards\CsFixer\OrmJoinColumnRequireNullableFixer
      */
+    #[Override]
     protected function createFixerService(): OrmJoinColumnRequireNullableFixer
     {
         return new OrmJoinColumnRequireNullableFixer();
@@ -20,6 +22,7 @@ final class OrmJoinColumnRequireNullableFixerTest extends AbstractFixerTestCase
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public static function getTestingFiles(): iterable
     {
         yield [__DIR__ . '/fixed/many_to_one_missing_join_column.php', __DIR__ . '/wrong/many_to_one_missing_join_column.php'];

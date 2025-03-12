@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Twig;
 
 use Fp\JsFormValidatorBundle\Twig\Extension\JsFormValidatorTwigExtension as BaseJsFormValidatorTwigExtension;
+use Override;
 
 class JsFormValidatorTwigExtension extends BaseJsFormValidatorTwigExtension
 {
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getJsValidator($form = null, $onLoad = true, $wrapped = true): string
     {
         // onLoad can not be registered in the jsModel, because following listener below is called after onLoad event

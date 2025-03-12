@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Test;
 
 use App\DataFixtures\Demo\CurrencyDataFixture;
 use Nette\Utils\Json;
+use Override;
 use RuntimeException;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
@@ -46,6 +47,7 @@ abstract class GraphQlTestCase extends ApplicationTestCase
      */
     protected MoneyFormatterHelper $moneyFormatterHelper;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

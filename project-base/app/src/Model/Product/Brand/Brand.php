@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Product\Brand;
 
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand as BaseBrand;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandData as BaseBrandData;
 
@@ -28,6 +29,7 @@ class Brand extends BaseBrand
     /**
      * @param \App\Model\Product\Brand\BrandData $brandData
      */
+    #[Override]
     public function edit(BaseBrandData $brandData)
     {
         parent::edit($brandData);
@@ -36,6 +38,7 @@ class Brand extends BaseBrand
     /**
      * @param \App\Model\Product\Brand\BrandData $brandData
      */
+    #[Override]
     protected function setData(BaseBrandData $brandData): void
     {
         parent::setData($brandData);

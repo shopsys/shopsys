@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Category;
 
 use App\DataFixtures\Demo\CategoryDataFixture;
 use App\Model\Category\Category;
+use Override;
 use Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorterHelper;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -31,6 +32,7 @@ class CategoryTest extends GraphQlTestCase
      */
     private TransformStringHelper $transformStringHelper;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

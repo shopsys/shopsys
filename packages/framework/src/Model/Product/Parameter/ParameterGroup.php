@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Parameter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Override;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Shopsys\FrameworkBundle\Component\Grid\Ordering\OrderableEntityInterface;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
@@ -61,6 +62,7 @@ class ParameterGroup extends AbstractTranslatableEntity implements OrderableEnti
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroupTranslation
      */
+    #[Override]
     protected function createTranslation()
     {
         return new ParameterGroupTranslation();
