@@ -8,8 +8,6 @@ use DateTimeZone;
 
 class DomainConfig
 {
-    public const STYLES_DIRECTORY_DEFAULT = 'common';
-
     public const TYPE_B2C = 'b2c';
     public const TYPE_B2B = 'b2b';
 
@@ -19,8 +17,6 @@ class DomainConfig
      * @param string $name
      * @param string $locale
      * @param \DateTimeZone $dateTimeZone
-     * @param string $stylesDirectory
-     * @param string|null $designId
      * @param string $type
      * @param bool $loadDemoData
      */
@@ -30,8 +26,6 @@ class DomainConfig
         protected string $name,
         protected string $locale,
         protected DateTimeZone $dateTimeZone,
-        protected string $stylesDirectory = self::STYLES_DIRECTORY_DEFAULT,
-        protected ?string $designId = null,
         protected string $type = self::TYPE_B2C,
         protected readonly bool $loadDemoData = true,
     ) {
@@ -67,22 +61,6 @@ class DomainConfig
     public function getLocale()
     {
         return $this->locale;
-    }
-
-    /**
-     * @return string
-     */
-    public function getStylesDirectory()
-    {
-        return $this->stylesDirectory;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getDesignId()
-    {
-        return $this->designId;
     }
 
     /**

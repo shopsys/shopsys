@@ -7,11 +7,9 @@ domains:
     -   id: 2
         locale: en
         name: 2.shopsys
-        styles_directory: domain2
         timezone: Europe/Prague
 
     -   id: 3
         locale: en
         name: 2.shopsys
-        styles_directory: domain2
         timezone: Europe/Prague

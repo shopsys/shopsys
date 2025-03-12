@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form;
 
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Transformers\WysiwygCdnDataTransformer;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Symfony\Component\Form\AbstractTypeExtension;
@@ -18,16 +17,12 @@ class WysiwygTypeExtension extends AbstractTypeExtension
 
     protected const ADMIN_WYSIWYG_ENTRY = 'admin-wysiwyg';
 
-    protected const FRONTEND_WYSIWYG_ENTRY_PREFIX = 'frontend-wysiwyg-';
-
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      * @param string $entrypointsPath
      * @param \Shopsys\FrameworkBundle\Form\Transformers\WysiwygCdnDataTransformer $wysiwygCdnDataTransformer
      */
     public function __construct(
-        private readonly Domain $domain,
         private readonly Localization $localization,
         private readonly string $entrypointsPath,
         private readonly WysiwygCdnDataTransformer $wysiwygCdnDataTransformer,
@@ -68,12 +63,6 @@ class WysiwygTypeExtension extends AbstractTypeExtension
 
         if (array_key_exists(static::ADMIN_WYSIWYG_ENTRY, $entrypoints) === true) {
             $entrypointsOutput = array_merge($entrypointsOutput, $entrypoints[static::ADMIN_WYSIWYG_ENTRY]['css']);
-        }
-
-        $keyOfFrontendWysiwygLess = static::FRONTEND_WYSIWYG_ENTRY_PREFIX . $this->domain->getCurrentDomainConfig()->getStylesDirectory();
-
-        if (array_key_exists($keyOfFrontendWysiwygLess, $entrypoints) === true) {
-            $entrypointsOutput = array_merge($entrypointsOutput, $entrypoints[$keyOfFrontendWysiwygLess]['css']);
         }
 
         return $entrypointsOutput;
