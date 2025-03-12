@@ -250,6 +250,9 @@ msgstr ""
 msgid "Please enter VAT rate"
 msgstr ""
 
+msgid "Please enter a whole number."
+msgstr ""
+
 msgid "Please enter an ID"
 msgstr ""
 
@@ -385,6 +388,9 @@ msgstr ""
 msgid "Please enter number of rounding places for price without VAT"
 msgstr ""
 
+msgid "Please enter number."
+msgstr ""
+
 msgid "Please enter order status name in all languages"
 msgstr ""
 
@@ -494,9 +500,6 @@ msgid "Please enter warehouse name"
 msgstr ""
 
 msgid "Please enter whitelist pattern."
-msgstr ""
-
-msgid "Please enter whole number."
 msgstr ""
 
 msgid "Please enter zip code"

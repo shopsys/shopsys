@@ -21,14 +21,14 @@ class PromoCodeLimit
 
     /**
      * @var string
-     * @ORM\Column(type="decimal", precision=20, scale=4)
+     * @ORM\Column(type="decimal", precision=20, scale=6)
      * @ORM\Id
      */
     protected $fromPrice;
 
     /**
      * @var string
-     * @ORM\Column(type="decimal", precision=20, scale=4)
+     * @ORM\Column(type="decimal", precision=20, scale=6)
      */
     protected $discount;
 
