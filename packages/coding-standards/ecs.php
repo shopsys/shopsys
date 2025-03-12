@@ -104,6 +104,7 @@ use Shopsys\CodingStandards\Sniffs\ForbiddenDumpSniff;
 use Shopsys\CodingStandards\Sniffs\ForbiddenExitSniff;
 use Shopsys\CodingStandards\Sniffs\ForbiddenSuperGlobalSniff;
 use Shopsys\CodingStandards\Sniffs\ObjectIsCreatedByFactorySniff;
+use Shopsys\CodingStandards\Sniffs\RequireOverrideAttributeSniff;
 use Shopsys\CodingStandards\Sniffs\ValidVariableNameSniff;
 use SlevomatCodingStandard\Sniffs\Arrays\TrailingArrayCommaSniff;
 use SlevomatCodingStandard\Sniffs\Classes\ClassLengthSniff;
@@ -146,11 +147,6 @@ return ECSConfig::configure()
         SetList::DOCBLOCK,
         SetList::NAMESPACES,
     ])
-    ->withRules([
-        InlineDocCommentDeclarationSniff::class,
-        NullableTypeForNullDefaultValueSniff::class,
-        ReturnTypeHintSpacingSniff::class,
-    ])
     ->withConfiguredRule(
         ForbiddenClassesSniff::class, [
         'forbiddenClasses' => [
@@ -159,6 +155,9 @@ return ECSConfig::configure()
         ],
     ])
     ->withRules([
+        InlineDocCommentDeclarationSniff::class,
+        NullableTypeForNullDefaultValueSniff::class,
+        ReturnTypeHintSpacingSniff::class,
         InheritDocFormatFixer::class,
         ForbiddenDumpFixer::class,
         MissingButtonTypeFixer::class,
@@ -259,6 +258,7 @@ return ECSConfig::configure()
         DisallowEmptySniff::class,
         ParentCallSpacingSniff::class,
         UselessIfConditionWithReturnSniff::class,
+        RequireOverrideAttributeSniff::class,
     ])
     ->withConfiguredRule(CyclomaticComplexitySniff::class, [
         'absoluteComplexity' => CyclomaticComplexitySniffSetting::DEFAULT_ABSOLUTE_COMPLEXITY,
