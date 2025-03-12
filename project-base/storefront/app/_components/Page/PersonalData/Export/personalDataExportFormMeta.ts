@@ -2,7 +2,7 @@
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { validateEmail } from 'components/Forms/validationRules';
-import useTranslation from 'next-translate/useTranslation';
+import { useTranslation } from 'components/providers/TranslationProvider';
 import { useMemo } from 'react';
 import { UseFormReturn } from 'react-hook-form';
 import { PersonalDataExportFormType } from 'types/form';
