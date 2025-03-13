@@ -1,14 +1,16 @@
 BRANCH_NAME=${1,,}
 
 if [ -n "$BRANCH_NAME" ]; then
-    echo "Info: Trying to cancel review for branch $BRANCH_NAME"
+    echo "Info: Trying to cancel review for branch ${BRANCH_NAME}"
 
-    if [ -d "../$BRANCH_NAME" ]; then
-        cd "../$BRANCH_NAME"
+    docker exec github-runner-postgres-1 psql -d postgres -c "DROP DATABASE IF EXISTS \"${BRANCH_NAME}\";"
+    docker exec github-runner-redis-1 redis-cli --scan --pattern "${BRANCH_NAME}:*" | xargs -r docker exec github-runner-redis-1 redis-cli del
+    docker exec github-runner-rabbitmq-1 rabbitmqctl delete_vhost "${BRANCH_NAME}" || true
 
-        docker compose exec php-fpm php phing -D production.confirm.action=y elasticsearch-index-delete clean-redis clean-redis-old clean-redis-storefront
-        docker compose exec php-fpm php ./bin/console doctrine:database:drop --force
-        bash .github/rabbitmq-vhost.sh remove $BRANCH_NAME
+    BASE_DIR="/home/github-runner/actions-runner/_work/shopsys/shopsys"
+
+    if [ -d "$BASE_DIR/$BRANCH_NAME" ]; then
+        cd "$BASE_DIR/$BRANCH_NAME"
 
         docker compose down -v --remove-orphans
         docker system prune -a -f
