@@ -111,7 +111,6 @@ class ArticleFormType extends AbstractType
                     t('Site') => Article::TYPE_SITE,
                     t('Link') => Article::TYPE_LINK,
                 ],
-                'choice_translation_domain' => false,
                 'expanded' => true,
                 'multiple' => false,
                 'label' => t('Type'),

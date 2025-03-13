@@ -50,7 +50,6 @@ class CustomerUserRoleGroupFormType extends AbstractType
             'multiple' => true,
             'expanded' => true,
             'choices' => $this->customerUserRole->getAvailableRoles(),
-            'choice_translation_domain' => false,
         ]);
 
         $builder->add('actionBar', ActionBarType::class, [
