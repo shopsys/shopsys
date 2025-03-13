@@ -28,6 +28,7 @@ use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterRepository;
 use Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -318,6 +319,7 @@ class CategoryFormType extends AbstractType
         }
 
         $parametersFilterBuilder->add('parametersPosition', SortableValuesType::class, [
+            'entry_type' => IntegerType::class,
             'labels_by_value' => $parameterNamesById,
             'label' => t('Parameters order in category'),
             'required' => false,
