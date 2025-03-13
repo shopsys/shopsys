@@ -5,10 +5,14 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
+use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
-class Version20180603135341 extends AbstractMigration
+class Version20180603135341 extends AbstractMigration implements ContainerAwareInterface
 {
+    use MultidomainMigrationTrait;
+
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
@@ -19,43 +23,51 @@ class Version20180603135341 extends AbstractMigration
         if ($orderStatusesCount > 0) {
             return;
         }
-        $this->createOrderStatusWithEnglishAndCzechTranslations(1, 1, 'New', 'Nová');
-        $this->createOrderStatusWithEnglishAndCzechTranslations(2, 2, 'In Progress', 'Vyřizuje se');
-        $this->createOrderStatusWithEnglishAndCzechTranslations(3, 3, 'Done', 'Vyřízena');
-        $this->createOrderStatusWithEnglishAndCzechTranslations(4, 4, 'Canceled', 'Stornována');
+
+        $this->createOrderStatus(1, 1);
+        $this->createOrderStatus(2, 2);
+        $this->createOrderStatus(3, 3);
+        $this->createOrderStatus(4, 4);
+
+
+        foreach ($this->getAllLocales() as $locale) {
+            $this->createOrderStatusTranslations(1, t('New', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale), $locale);
+            $this->createOrderStatusTranslations(2, t('In Progress', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale), $locale);
+            $this->createOrderStatusTranslations(3, t('Done', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale), $locale);
+            $this->createOrderStatusTranslations(4, t('Canceled', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale), $locale);
+        }
+
         $this->sql('ALTER SEQUENCE order_statuses_id_seq RESTART WITH 5');
     }
 
     /**
      * @param int $orderStatusId
      * @param int $orderStatusType
-     * @param string $orderStatusEnglishName
-     * @param string $orderStatusCzechName
      */
-    private function createOrderStatusWithEnglishAndCzechTranslations(
-        $orderStatusId,
-        $orderStatusType,
-        $orderStatusEnglishName,
-        $orderStatusCzechName,
-    ) {
+    private function createOrderStatus(int $orderStatusId, int $orderStatusType): void
+    {
         $this->sql('INSERT INTO order_statuses (id, type) VALUES (:id, :type)', [
             'id' => $orderStatusId,
             'type' => $orderStatusType,
         ]);
+    }
+
+    /**
+     * @param int $orderStatusId
+     * @param string $orderStatusTranslatedName
+     * @param string $locale
+     */
+    private function createOrderStatusTranslations(
+        int $orderStatusId,
+        string $orderStatusTranslatedName,
+        string $locale,
+    ): void {
         $this->sql(
             'INSERT INTO order_status_translations (translatable_id, name, locale) VALUES (:translatableId, :name, :locale)',
             [
                 'translatableId' => $orderStatusId,
-                'name' => $orderStatusEnglishName,
-                'locale' => 'en',
-            ],
-        );
-        $this->sql(
-            'INSERT INTO order_status_translations (translatable_id, name, locale) VALUES (:translatableId, :name, :locale)',
-            [
-                'translatableId' => $orderStatusId,
-                'name' => $orderStatusCzechName,
-                'locale' => 'cs',
+                'name' => $orderStatusTranslatedName,
+                'locale' => $locale,
             ],
         );
     }

@@ -619,6 +619,9 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
+msgid "Canceled"
+msgstr ""
+
 msgid "Cannot read file."
 msgstr ""
 
@@ -1510,6 +1513,9 @@ msgstr ""
 msgid "Domain name"
 msgstr ""
 
+msgid "Done"
+msgstr ""
+
 msgid "Download"
 msgstr ""
 
@@ -2327,6 +2333,9 @@ msgid "Import CSV"
 msgstr ""
 
 msgid "Import price list"
+msgstr ""
+
+msgid "In Progress"
 msgstr ""
 
 msgid "In a particular domain tab it is not possible to adjust the order and plunge of categories. Please go to the category detail or to overview of categories of all domains"
