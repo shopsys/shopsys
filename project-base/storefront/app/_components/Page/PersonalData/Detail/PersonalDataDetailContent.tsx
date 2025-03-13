@@ -1,22 +1,18 @@
-'use client';
-
+import { PersonalDataDetailDate } from './PersonalDataDetailDate';
+import { PersonalDataDetailPrice } from './PersonalDataDetailPrice';
+import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { Link } from 'components/Basic/Link/Link';
 import { Cell, CellHead, CellMinor, Row, Table } from 'components/Basic/Table/Table';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { TypePersonalDataDetailQuery } from 'graphql/requests/personalData/queries/PersonalDataDetailQuery.generated';
-import useTranslation from 'next-translate/useTranslation';
-import { useFormatDate } from 'utils/formatting/useFormatDate';
-import { useFormatPrice } from 'utils/formatting/useFormatPrice';
+import { TypePersonalDataDetailQuery } from 'graphql/requests/personalData/queries/PersonalDataDetailQuery.ssr';
 import { isPriceVisible } from 'utils/mappers/price';
 
 type PersonalDataDetailContentProps = {
     personalDataDetail: TypePersonalDataDetailQuery;
 };
 
-export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ personalDataDetail }) => {
-    const { t } = useTranslation();
-    const formatPrice = useFormatPrice();
-    const { formatDate } = useFormatDate();
+export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = async ({ personalDataDetail }) => {
+    const t = await getTranslation();
 
     const userData = personalDataDetail.accessPersonalData.customerUser;
     const orders = personalDataDetail.accessPersonalData.orders;
@@ -136,7 +132,9 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                                             </Row>
                                             <Row>
                                                 <CellMinor>{t('Creation date')}</CellMinor>
-                                                <Cell>{formatDate(order.creationDate)}</Cell>
+                                                <Cell>
+                                                    <PersonalDataDetailDate date={order.creationDate} />
+                                                </Cell>
                                             </Row>
                                             <Row>
                                                 <CellMinor>{t('First name')}</CellMinor>
@@ -207,7 +205,9 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                                                 <Row>
                                                     <CellMinor>{t('Total price including VAT')}</CellMinor>
                                                     <Cell>
-                                                        {formatPrice(parseFloat(order.totalPrice.priceWithVat))}
+                                                        <PersonalDataDetailPrice
+                                                            price={parseFloat(order.totalPrice.priceWithVat)}
+                                                        />
                                                     </Cell>
                                                 </Row>
                                             )}
@@ -238,7 +238,9 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                                             </Row>
                                             <Row>
                                                 <CellMinor>{t('Creation date')}</CellMinor>
-                                                <Cell>{formatDate(complaint.createdAt, 'l')}</Cell>
+                                                <Cell>
+                                                    <PersonalDataDetailDate date={complaint.createdAt} />
+                                                </Cell>
                                             </Row>
                                             <Row>
                                                 <CellMinor>{t('Status')}</CellMinor>
@@ -317,7 +319,9 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
                         >
                             <Row>
                                 <CellMinor>{newsLetterSubscriber.email}</CellMinor>
-                                <td className="text-right">{formatDate(newsLetterSubscriber.createdAt)}</td>
+                                <td className="text-right">
+                                    <PersonalDataDetailDate date={newsLetterSubscriber.createdAt} />
+                                </td>
                             </Row>
                         </Table>
                     </>

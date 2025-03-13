@@ -16,6 +16,13 @@ const getBreadcrumbsSetting = (t: Translate): { [key: string]: TypeBreadcrumbFra
             slug: getInternationalizedStaticUrl('/personal-data-export'),
         },
     ],
+    [getInternationalizedStaticUrl('/personal-data-overview')]: [
+        {
+            __typename: 'Link',
+            name: t('Personal data overview'),
+            slug: getInternationalizedStaticUrl('/personal-data-overview'),
+        },
+    ],
 });
 
 type BreadcrumbLayout = {
@@ -32,6 +39,10 @@ const BreadcrumbLayout = async ({ children }: BreadcrumbLayout) => {
     }
 
     const breadcrumbs = breadcrumbsSetting[pathname];
+
+    // TODO: add gtm
+    // const gtmStaticPageViewEvent = useGtmStaticPageViewEvent(GtmPageType.other, breadcrumbs);
+    // useGtmPageViewEvent(gtmStaticPageViewEvent);
 
     return (
         <>
