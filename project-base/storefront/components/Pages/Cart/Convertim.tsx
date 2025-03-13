@@ -25,6 +25,7 @@ export const Convertim: FC<ConvertimProps> = ({ cart, convertimProjectUuid }) =>
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
     const updateCartUuid = usePersistStore((store) => store.updateCartUuid);
+    const productListUuids = usePersistStore((store) => store.productListUuids);
     const [, removeCartMutation] = useRemoveCartMutation();
     const isUserLoggedIn = useIsUserLoggedIn();
     const [{ data: transportsData, fetching: isTransportsFetching }] =
@@ -75,6 +76,14 @@ export const Convertim: FC<ConvertimProps> = ({ cart, convertimProjectUuid }) =>
             deleteCookie('cartUuid');
         }
     }, [cart?.uuid]);
+
+    useEffect(() => {
+        if (Object.keys(productListUuids).length > 0) {
+            setCookie('productListUuids', JSON.stringify(productListUuids));
+        } else if (isUserLoggedIn && getCookie('productListUuids')) {
+            deleteCookie('productListUuids');
+        }
+    }, [productListUuids]);
 
     if (isTransportsFetching) {
         return null;
