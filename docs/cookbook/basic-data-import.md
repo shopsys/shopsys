@@ -452,7 +452,6 @@ Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade: '@App\Model\Pricing\Vat\Vat
 You will get a list of all available cron modules as an output.
 
 ```text
-php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Component\Error\ErrorPageCronModule"
 php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Cart\Item\DeleteOldCartsCronModule"
 php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Feed\FeedCronModule"
 php bin/console shopsys:cron --module="Shopsys\FrameworkBundle\Model\Pricing\Vat\VatDeletionCronModule"

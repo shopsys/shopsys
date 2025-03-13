@@ -44,15 +44,6 @@ class SuperadminController extends AdminBaseController
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    #[Route(path: '/superadmin/errors/')]
-    public function errorsAction(): Response
-    {
-        return $this->render('@ShopsysFramework/Admin/Content/Superadmin/errors.html.twig');
-    }
-
-    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */

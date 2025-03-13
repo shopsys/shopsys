@@ -9,6 +9,7 @@ use RedisException;
 use Sentry\State\Scope;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\Exception\NoDomainSelectedException;
+use Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
 use Shopsys\FrameworkBundle\Component\Maintenance\MaintenanceModeFacade;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
@@ -26,12 +27,14 @@ class AddSentryContextSubscriber implements EventSubscriberInterface
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface $displayTimeZoneProvider
      * @param \Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser $currentCustomerUser
+     * @param \Shopsys\FrameworkBundle\Component\Error\ErrorIdProvider $errorIdProvider
      */
     public function __construct(
         protected readonly MaintenanceModeFacade $maintenanceModeFacade,
         protected readonly Domain $domain,
         protected readonly DisplayTimeZoneProviderInterface $displayTimeZoneProvider,
         protected readonly CurrentCustomerUser $currentCustomerUser,
+        protected readonly ErrorIdProvider $errorIdProvider,
     ) {
     }
 
@@ -59,6 +62,7 @@ class AddSentryContextSubscriber implements EventSubscriberInterface
 
         configureScope(function (Scope $scope) use ($context): void {
             $scope->setContext('Shopsys', $context);
+            $scope->setTag('errorId', $this->errorIdProvider->getErrorId());
         });
     }
 

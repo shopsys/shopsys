@@ -440,7 +440,7 @@ jobs:
                 run: |
                     docker compose pull --parallel webserver postgres elasticsearch redis php-fpm selenium-server
                     docker compose up -d webserver postgres elasticsearch redis php-fpm selenium-server
-                    docker compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change test-dirs-create test-db-create frontend-api-generate-new-keys test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export test-error-pages-generate tests-acceptance-build
+                    docker compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change test-dirs-create test-db-create frontend-api-generate-new-keys test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export tests-acceptance-build
             -   name: Run acceptance tests
                 run: docker compose exec -T php-fpm php phing -D production.confirm.action=y tests-acceptance
             -   name: PHP-FPM container logs
@@ -481,7 +481,7 @@ jobs:
                 run: |
                     mv docker-compose.cypress.yml docker-compose.yml
                     docker compose up -d --wait
-                    docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick error-pages-generate elasticsearch-index-recreate elasticsearch-export
+                    docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick elasticsearch-index-recreate elasticsearch-export
             -   name: Run Cypress smoke tests
                 run: docker compose run --rm -e TYPE=null -e COMMAND=smoke cypress;
             -   name: PHP-FPM container logs
@@ -543,7 +543,7 @@ jobs:
                 run: |
                     mv docker-compose.cypress.yml docker-compose.yml
                     docker compose up -d --wait
-                    docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick error-pages-generate elasticsearch-index-recreate elasticsearch-export
+                    docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick elasticsearch-index-recreate elasticsearch-export
             -   name: Run Cypress tests for ${{ matrix.group }}
                 if: env.SHOULD_RUN_TESTS == 'true'
                 run: docker compose run cypress
@@ -629,7 +629,7 @@ jobs:
                 run: |
                     mv docker-compose.cypress.yml docker-compose.yml
                     docker compose up -d --wait
-                    docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick error-pages-generate elasticsearch-index-recreate elasticsearch-export
+                    docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick elasticsearch-index-recreate elasticsearch-export
             -   name: Run regenerate Cypress tests for ${{ matrix.group }}
                 if: steps.check-label-tests-regenerate.outputs.SHOULD_RUN_TESTS_REGENERATE == 'true'
                 run: |
@@ -763,7 +763,7 @@ jobs:
                 run: |
                     docker compose up -d
                     docker compose exec -T php-fpm composer install --optimize-autoloader --no-interaction --dev
-                    docker compose exec -T php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick error-pages-generate elasticsearch-index-recreate elasticsearch-export
+                    docker compose exec -T php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick elasticsearch-index-recreate elasticsearch-export
             -   name: Check all commands are passing
                 run: |
                     docker compose exec -T php-fpm php phing -D production.confirm.action=y cron-list cron-run-all-serially cron-watch maintenance-on maintenance-off elasticsearch-export-changed
@@ -805,7 +805,7 @@ jobs:
                     docker compose exec -T --user root php-fpm chown -R www-data:www-data /var/www/html
                     docker compose exec -T php-fpm rm -rf /var/www/html/composer.lock /var/www/html/project-base/package-lock.json /var/www/html/project-base/migrations-lock.yml /var/www/html/project-base/storefront
                     docker compose exec -T php-fpm composer install --optimize-autoloader --no-interaction
-                    docker compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change dirs-create test-dirs-create assets npm build-version-generate db-create test-db-create db-demo elasticsearch-index-recreate elasticsearch-export error-pages-generate test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export tests-acceptance-build
+                    docker compose exec -T php-fpm php phing -D production.confirm.action=y -D change.environment=dev environment-change dirs-create test-dirs-create assets npm build-version-generate db-create test-db-create db-demo elasticsearch-index-recreate elasticsearch-export test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export tests-acceptance-build
             -   name: Check standards
                 run: docker compose exec -T php-fpm php phing standards
             -   name: Run tests
@@ -889,7 +889,7 @@ jobs:
                     docker compose exec -T --user root php-fpm chown -R www-data:www-data /var/www/html
                     docker compose exec -T php-fpm rm -rf /var/www/html/composer.lock /var/www/html/project-base/package-lock.json /var/www/html/project-base/migrations-lock.yml
                     docker compose exec -T php-fpm composer install --optimize-autoloader --no-interaction
-                    docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick error-pages-generate elasticsearch-index-recreate elasticsearch-export
+                    docker compose exec php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys build-demo-dev-quick elasticsearch-index-recreate elasticsearch-export
             -   name: Run Cypress tests
                 run: |
                     PULL_REQUEST_LABELS=`gh api -H "Accept: application/vnd.github+json" /repos/shopsys/shopsys/issues/${{ github.event.pull_request.number }}/labels | jq '[.[].name]'`
@@ -1006,7 +1006,7 @@ jobs:
                     docker compose down -v --remove-orphans || true
                     docker compose up -d --wait --force-recreate
                     ./set-urls-for-review.sh setUrlsToDomainsUrls
-                    docker compose exec -T php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys demo-data error-pages-generate warmup
+                    docker compose exec -T php-fpm php phing -D production.confirm.action=y db-create frontend-api-generate-new-keys demo-data warmup
                     docker compose exec -T php-consumer php phing -D production.confirm.action=y frontend-api-generate-new-keys
                     ./set-urls-for-review.sh printDomains
             -   name: Add Review URL to Pull request description

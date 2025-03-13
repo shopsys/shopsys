@@ -2,3 +2,8 @@ shopsys_framework_admin:
     resource: "@ShopsysFrameworkBundle/Controller"
     prefix: /admin
     type: attribute
+
+when@dev:
+    _errors:
+        resource: '@FrameworkBundle/Resources/config/routing/errors.xml'
+        prefix:   /_error

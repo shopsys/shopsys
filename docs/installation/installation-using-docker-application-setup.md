@@ -37,7 +37,7 @@ php phing db-create test-db-create
 ### 1.4. Build the application
 
 ```sh
-php phing build-demo-dev-quick error-pages-generate
+php phing build-demo-dev-quick
 ```
 
 !!! note

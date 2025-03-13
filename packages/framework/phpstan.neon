@@ -9,9 +9,6 @@ parameters:
             message: '~Instantiated class App\\Kernel not found~'
             path: *
         -
-            message: '#Call to method .+\(\) on an unknown class App\\Kernel\.#'
-            path: %currentWorkingDirectory%/src/Component/Error/ErrorPagesFacade.php
-        -
             message: '#Argument of an invalid type Symfony\\Component\\Validator\\Constraint supplied for foreach, only iterables are supported\.#'
             path: %currentWorkingDirectory%/src/Form/JsFormValidatorFactory.php
         -

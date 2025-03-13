@@ -671,10 +671,6 @@ class SideMenuBuilder
             $superadminMenu->setExtra('superadmin', true);
             $superadminMenu->addChild('modules', ['route' => 'admin_superadmin_modules', 'label' => t('Modules')]);
             $superadminMenu->addChild(
-                'errors',
-                ['route' => 'admin_superadmin_errors', 'label' => t('Error messages')],
-            );
-            $superadminMenu->addChild(
                 'pricing',
                 ['route' => 'admin_superadmin_pricing', 'label' => t('Sales including/excluding VAT settings')],
             );

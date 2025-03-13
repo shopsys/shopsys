@@ -6,14 +6,14 @@ namespace Shopsys\FrameworkBundle\Component\Error;
 
 use Shopsys\FrameworkBundle\Component\String\HashGenerator;
 
-class ErrorIdProvider
+final class ErrorIdProvider
 {
-    protected ?string $errorId = null;
+    private ?string $errorId = null;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\String\HashGenerator $hashGenerator
      */
-    public function __construct(protected readonly HashGenerator $hashGenerator)
+    public function __construct(private readonly HashGenerator $hashGenerator)
     {
     }
 
