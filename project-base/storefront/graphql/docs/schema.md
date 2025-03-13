@@ -201,7 +201,7 @@
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>accessPersonalData</strong></td>
+<td colspan="2" valign="top"><strong id="query.accesspersonaldata">accessPersonalData</strong></td>
 <td valign="top"><a href="#personaldata">PersonalData</a>!</td>
 <td>
 
@@ -219,17 +219,17 @@ Hash to securely recognize access
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>AdvertCode</strong></td>
+<td colspan="2" valign="top"><strong id="query.advertcode">AdvertCode</strong></td>
 <td valign="top"><a href="#advertcode">AdvertCode</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>AdvertImage</strong></td>
+<td colspan="2" valign="top"><strong id="query.advertimage">AdvertImage</strong></td>
 <td valign="top"><a href="#advertimage">AdvertImage</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>advertPositions</strong></td>
+<td colspan="2" valign="top"><strong id="query.advertpositions">advertPositions</strong></td>
 <td valign="top">[<a href="#advertposition">AdvertPosition</a>!]!</td>
 <td>
 
@@ -238,7 +238,7 @@ Returns list of advert positions.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>adverts</strong></td>
+<td colspan="2" valign="top"><strong id="query.adverts">adverts</strong></td>
 <td valign="top">[<a href="#advert">Advert</a>!]!</td>
 <td>
 
@@ -257,7 +257,7 @@ Returns list of adverts, optionally filtered by `positionNames`
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>article</strong></td>
+<td colspan="2" valign="top"><strong id="query.article">article</strong></td>
 <td valign="top"><a href="#notblogarticleinterface">NotBlogArticleInterface</a></td>
 <td>
 
@@ -276,12 +276,12 @@ Returns article filtered using UUID or URL slug
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>ArticleLink</strong></td>
+<td colspan="2" valign="top"><strong id="query.articlelink">ArticleLink</strong></td>
 <td valign="top"><a href="#articlelink">ArticleLink</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>articles</strong></td>
+<td colspan="2" valign="top"><strong id="query.articles">articles</strong></td>
 <td valign="top"><a href="#articleconnection">ArticleConnection</a>!</td>
 <td>
 
@@ -319,12 +319,12 @@ An array of the required articles placements
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>ArticleSite</strong></td>
+<td colspan="2" valign="top"><strong id="query.articlesite">ArticleSite</strong></td>
 <td valign="top"><a href="#articlesite">ArticleSite</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>articlesSearch</strong></td>
+<td colspan="2" valign="top"><strong id="query.articlessearch">articlesSearch</strong></td>
 <td valign="top">[<a href="#articleinterface">ArticleInterface</a>!]!</td>
 <td>
 
@@ -338,7 +338,7 @@ Returns list of searched articles and blog articles
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>blogArticle</strong></td>
+<td colspan="2" valign="top"><strong id="query.blogarticle">blogArticle</strong></td>
 <td valign="top"><a href="#blogarticle">BlogArticle</a></td>
 <td>
 
@@ -357,7 +357,7 @@ Returns blog article filtered using UUID or URL slug
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>blogArticles</strong></td>
+<td colspan="2" valign="top"><strong id="query.blogarticles">blogArticles</strong></td>
 <td valign="top"><a href="#blogarticleconnection">BlogArticleConnection</a>!</td>
 <td>
 
@@ -391,7 +391,7 @@ Returns a list of the blog articles that can be paginated using `first`, `last`,
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>blogCategories</strong></td>
+<td colspan="2" valign="top"><strong id="query.blogcategories">blogCategories</strong></td>
 <td valign="top">[<a href="#blogcategory">BlogCategory</a>!]!</td>
 <td>
 
@@ -400,7 +400,7 @@ Returns a complete list of the blog categories
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>blogCategory</strong></td>
+<td colspan="2" valign="top"><strong id="query.blogcategory">blogCategory</strong></td>
 <td valign="top"><a href="#blogcategory">BlogCategory</a></td>
 <td>
 
@@ -419,7 +419,7 @@ Returns blog category filtered using UUID or URL slug
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>brand</strong></td>
+<td colspan="2" valign="top"><strong id="query.brand">brand</strong></td>
 <td valign="top"><a href="#brand">Brand</a></td>
 <td>
 
@@ -438,7 +438,7 @@ Returns brand filtered using UUID or URL slug
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>brands</strong></td>
+<td colspan="2" valign="top"><strong id="query.brands">brands</strong></td>
 <td valign="top">[<a href="#brand">Brand</a>!]!</td>
 <td>
 
@@ -447,7 +447,7 @@ Returns complete list of brands
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>brandSearch</strong></td>
+<td colspan="2" valign="top"><strong id="query.brandsearch">brandSearch</strong></td>
 <td valign="top">[<a href="#brand">Brand</a>!]!</td>
 <td>
 
@@ -461,7 +461,7 @@ Returns list of searched brands
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>cart</strong></td>
+<td colspan="2" valign="top"><strong id="query.cart">cart</strong></td>
 <td valign="top"><a href="#cart">Cart</a></td>
 <td>
 
@@ -475,7 +475,7 @@ Return cart of logged customer or cart by UUID for anonymous user
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>categories</strong></td>
+<td colspan="2" valign="top"><strong id="query.categories">categories</strong></td>
 <td valign="top">[<a href="#category">Category</a>!]!</td>
 <td>
 
@@ -484,7 +484,7 @@ Returns complete list of categories
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>categoriesSearch</strong></td>
+<td colspan="2" valign="top"><strong id="query.categoriessearch">categoriesSearch</strong></td>
 <td valign="top"><a href="#categoryconnection">CategoryConnection</a>!</td>
 <td>
 
@@ -518,7 +518,7 @@ Returns list of searched categories that can be paginated using `first`, `last`,
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>category</strong></td>
+<td colspan="2" valign="top"><strong id="query.category">category</strong></td>
 <td valign="top"><a href="#category">Category</a></td>
 <td>
 
@@ -547,12 +547,12 @@ Returns category filtered using UUID or URL slug
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>CompanyCustomerUser</strong></td>
+<td colspan="2" valign="top"><strong id="query.companycustomeruser">CompanyCustomerUser</strong></td>
 <td valign="top"><a href="#companycustomeruser">CompanyCustomerUser</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>complaint</strong></td>
+<td colspan="2" valign="top"><strong id="query.complaint">complaint</strong></td>
 <td valign="top"><a href="#complaint">Complaint</a>!</td>
 <td>
 
@@ -570,7 +570,7 @@ Complaint number
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>complaintResolution</strong></td>
+<td colspan="2" valign="top"><strong id="query.complaintresolution">complaintResolution</strong></td>
 <td valign="top">[<a href="#complaintresolution">ComplaintResolution</a>!]!</td>
 <td>
 
@@ -579,7 +579,7 @@ Returns complaint resolutions variants
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>complaints</strong></td>
+<td colspan="2" valign="top"><strong id="query.complaints">complaints</strong></td>
 <td valign="top"><a href="#complaintconnection">ComplaintConnection</a>!</td>
 <td>
 
@@ -613,7 +613,7 @@ Returns list of complaints that can be paginated using `first`, `last`, `before`
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>couldBeCustomerRegisteredQuery</strong></td>
+<td colspan="2" valign="top"><strong id="query.couldbecustomerregisteredquery">couldBeCustomerRegisteredQuery</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -632,7 +632,7 @@ Check if customer can be registered with provided data
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>countries</strong></td>
+<td colspan="2" valign="top"><strong id="query.countries">countries</strong></td>
 <td valign="top">[<a href="#country">Country</a>!]!</td>
 <td>
 
@@ -641,12 +641,12 @@ Returns available countries
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>CurrentCompanyCustomerUser</strong></td>
+<td colspan="2" valign="top"><strong id="query.currentcompanycustomeruser">CurrentCompanyCustomerUser</strong></td>
 <td valign="top"><a href="#currentcompanycustomeruser">CurrentCompanyCustomerUser</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>currentCustomerUser</strong></td>
+<td colspan="2" valign="top"><strong id="query.currentcustomeruser">currentCustomerUser</strong></td>
 <td valign="top"><a href="#currentcustomeruser">CurrentCustomerUser</a></td>
 <td>
 
@@ -655,12 +655,12 @@ Returns currently logged in customer user
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>CurrentRegularCustomerUser</strong></td>
+<td colspan="2" valign="top"><strong id="query.currentregularcustomeruser">CurrentRegularCustomerUser</strong></td>
 <td valign="top"><a href="#currentregularcustomeruser">CurrentRegularCustomerUser</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>customerUserRoleGroups</strong></td>
+<td colspan="2" valign="top"><strong id="query.customeruserrolegroups">customerUserRoleGroups</strong></td>
 <td valign="top">[<a href="#customeruserrolegroup">CustomerUserRoleGroup</a>!]!</td>
 <td>
 
@@ -669,7 +669,7 @@ Returns all customer user role groups
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>customerUsers</strong></td>
+<td colspan="2" valign="top"><strong id="query.customerusers">customerUsers</strong></td>
 <td valign="top">[<a href="#basecustomeruser">BaseCustomerUser</a>!]!</td>
 <td>
 
@@ -678,7 +678,7 @@ Returns all customer users assigned to the current customer
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>flag</strong></td>
+<td colspan="2" valign="top"><strong id="query.flag">flag</strong></td>
 <td valign="top"><a href="#flag">Flag</a></td>
 <td>
 
@@ -697,7 +697,7 @@ Returns a flag by uuid or url slug
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>flags</strong></td>
+<td colspan="2" valign="top"><strong id="query.flags">flags</strong></td>
 <td valign="top">[<a href="#flag">Flag</a>!]</td>
 <td>
 
@@ -706,7 +706,7 @@ Returns a complete list of the flags
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>GoPaySwifts</strong></td>
+<td colspan="2" valign="top"><strong id="query.gopayswifts">GoPaySwifts</strong></td>
 <td valign="top">[<a href="#gopaybankswift">GoPayBankSwift</a>!]!</td>
 <td>
 
@@ -720,7 +720,7 @@ List of available banks for GoPay bank transfer payment
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isCustomerUserRegistered</strong></td>
+<td colspan="2" valign="top"><strong id="query.iscustomeruserregistered">isCustomerUserRegistered</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -734,7 +734,7 @@ Check if email is registered
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>languageConstants</strong></td>
+<td colspan="2" valign="top"><strong id="query.languageconstants">languageConstants</strong></td>
 <td valign="top">[<a href="#languageconstant">LanguageConstant</a>!]!</td>
 <td>
 
@@ -743,7 +743,7 @@ Return user translated language constants for current domain locale
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>lastOrder</strong></td>
+<td colspan="2" valign="top"><strong id="query.lastorder">lastOrder</strong></td>
 <td valign="top"><a href="#order">Order</a></td>
 <td>
 
@@ -752,12 +752,12 @@ Returns last order of the user or null if no order was placed yet
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>MainVariant</strong></td>
+<td colspan="2" valign="top"><strong id="query.mainvariant">MainVariant</strong></td>
 <td valign="top"><a href="#mainvariant">MainVariant</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>navigation</strong></td>
+<td colspan="2" valign="top"><strong id="query.navigation">navigation</strong></td>
 <td valign="top">[<a href="#navigationitem">NavigationItem</a>!]!</td>
 <td>
 
@@ -766,7 +766,7 @@ Returns complete navigation menu
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>notificationBars</strong></td>
+<td colspan="2" valign="top"><strong id="query.notificationbars">notificationBars</strong></td>
 <td valign="top">[<a href="#notificationbar">NotificationBar</a>!]</td>
 <td>
 
@@ -775,7 +775,7 @@ Returns a list of notifications supposed to be displayed on all pages
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>order</strong></td>
+<td colspan="2" valign="top"><strong id="query.order">order</strong></td>
 <td valign="top"><a href="#order">Order</a></td>
 <td>
 
@@ -799,7 +799,7 @@ Returns order filtered using UUID, orderNumber, or urlHash
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>orderItems</strong></td>
+<td colspan="2" valign="top"><strong id="query.orderitems">orderItems</strong></td>
 <td valign="top"><a href="#orderitemconnection">OrderItemConnection</a>!</td>
 <td></td>
 </tr>
@@ -829,7 +829,7 @@ Returns order filtered using UUID, orderNumber, or urlHash
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>orderItemsSearch</strong></td>
+<td colspan="2" valign="top"><strong id="query.orderitemssearch">orderItemsSearch</strong></td>
 <td valign="top"><a href="#orderitemconnection">OrderItemConnection</a>!</td>
 <td>
 
@@ -868,7 +868,7 @@ Returns list of searched order items that can be paginated using `first`, `last`
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>orderPaymentFailedContent</strong></td>
+<td colspan="2" valign="top"><strong id="query.orderpaymentfailedcontent">orderPaymentFailedContent</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -882,7 +882,7 @@ Returns HTML content for order with failed payment.
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>orderPayments</strong></td>
+<td colspan="2" valign="top"><strong id="query.orderpayments">orderPayments</strong></td>
 <td valign="top"><a href="#orderpaymentsconfig">OrderPaymentsConfig</a>!</td>
 <td>
 
@@ -896,7 +896,7 @@ Returns payments available for the given order
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>orderPaymentSuccessfulContent</strong></td>
+<td colspan="2" valign="top"><strong id="query.orderpaymentsuccessfulcontent">orderPaymentSuccessfulContent</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -910,7 +910,7 @@ Returns HTML content for order with successful payment.
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>orders</strong></td>
+<td colspan="2" valign="top"><strong id="query.orders">orders</strong></td>
 <td valign="top"><a href="#orderconnection">OrderConnection</a></td>
 <td>
 
@@ -944,7 +944,7 @@ Returns list of orders that can be paginated using `first`, `last`, `before` and
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>orderSentPageContent</strong></td>
+<td colspan="2" valign="top"><strong id="query.ordersentpagecontent">orderSentPageContent</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -958,22 +958,22 @@ Returns HTML content for order sent page.
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>ParameterCheckboxFilterOption</strong></td>
+<td colspan="2" valign="top"><strong id="query.parametercheckboxfilteroption">ParameterCheckboxFilterOption</strong></td>
 <td valign="top"><a href="#parametercheckboxfilteroption">ParameterCheckboxFilterOption</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>ParameterColorFilterOption</strong></td>
+<td colspan="2" valign="top"><strong id="query.parametercolorfilteroption">ParameterColorFilterOption</strong></td>
 <td valign="top"><a href="#parametercolorfilteroption">ParameterColorFilterOption</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>ParameterSliderFilterOption</strong></td>
+<td colspan="2" valign="top"><strong id="query.parametersliderfilteroption">ParameterSliderFilterOption</strong></td>
 <td valign="top"><a href="#parametersliderfilteroption">ParameterSliderFilterOption</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>payment</strong></td>
+<td colspan="2" valign="top"><strong id="query.payment">payment</strong></td>
 <td valign="top"><a href="#payment">Payment</a></td>
 <td>
 
@@ -987,7 +987,7 @@ Returns payment filtered using UUID
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>payments</strong></td>
+<td colspan="2" valign="top"><strong id="query.payments">payments</strong></td>
 <td valign="top">[<a href="#payment">Payment</a>!]!</td>
 <td>
 
@@ -996,7 +996,7 @@ Returns complete list of payment methods
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>personalDataPage</strong></td>
+<td colspan="2" valign="top"><strong id="query.personaldatapage">personalDataPage</strong></td>
 <td valign="top"><a href="#personaldatapage">PersonalDataPage</a></td>
 <td>
 
@@ -1005,7 +1005,7 @@ Return personal data page content and URL
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>product</strong></td>
+<td colspan="2" valign="top"><strong id="query.product">product</strong></td>
 <td valign="top"><a href="#product">Product</a></td>
 <td>
 
@@ -1024,7 +1024,7 @@ Returns product filtered using UUID or URL slug
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>productList</strong></td>
+<td colspan="2" valign="top"><strong id="query.productlist">productList</strong></td>
 <td valign="top"><a href="#productlist">ProductList</a></td>
 <td>
 
@@ -1038,7 +1038,7 @@ Find product list by UUID and type or if customer is logged, try find the the ol
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>productListsByType</strong></td>
+<td colspan="2" valign="top"><strong id="query.productlistsbytype">productListsByType</strong></td>
 <td valign="top">[<a href="#productlist">ProductList</a>!]!</td>
 <td></td>
 </tr>
@@ -1048,7 +1048,7 @@ Find product list by UUID and type or if customer is logged, try find the the ol
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>products</strong></td>
+<td colspan="2" valign="top"><strong id="query.products">products</strong></td>
 <td valign="top"><a href="#productconnection">ProductConnection</a>!</td>
 <td>
 
@@ -1102,7 +1102,7 @@ Returns list of ordered products that can be paginated using `first`, `last`, `b
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>productsByCatnums</strong></td>
+<td colspan="2" valign="top"><strong id="query.productsbycatnums">productsByCatnums</strong></td>
 <td valign="top">[<a href="#product">Product</a>!]!</td>
 <td>
 
@@ -1120,7 +1120,7 @@ Array of product catalog numbers
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>productsSearch</strong></td>
+<td colspan="2" valign="top"><strong id="query.productssearch">productsSearch</strong></td>
 <td valign="top"><a href="#productconnection">ProductConnection</a>!</td>
 <td>
 
@@ -1169,7 +1169,7 @@ Returns list of searched products that can be paginated using `first`, `last`, `
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>promotedCategories</strong></td>
+<td colspan="2" valign="top"><strong id="query.promotedcategories">promotedCategories</strong></td>
 <td valign="top">[<a href="#category">Category</a>!]!</td>
 <td>
 
@@ -1178,7 +1178,7 @@ Returns promoted categories
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>promotedProducts</strong></td>
+<td colspan="2" valign="top"><strong id="query.promotedproducts">promotedProducts</strong></td>
 <td valign="top">[<a href="#product">Product</a>!]!</td>
 <td>
 
@@ -1187,7 +1187,7 @@ Returns promoted products
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>recommendedProducts</strong></td>
+<td colspan="2" valign="top"><strong id="query.recommendedproducts">recommendedProducts</strong></td>
 <td valign="top">[<a href="#product">Product</a>!]!</td>
 <td>
 
@@ -1229,17 +1229,17 @@ Arbitrary identifier for analytics purposes. See https://docs.luigisbox.com/reco
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>RegularCustomerUser</strong></td>
+<td colspan="2" valign="top"><strong id="query.regularcustomeruser">RegularCustomerUser</strong></td>
 <td valign="top"><a href="#regularcustomeruser">RegularCustomerUser</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>RegularProduct</strong></td>
+<td colspan="2" valign="top"><strong id="query.regularproduct">RegularProduct</strong></td>
 <td valign="top"><a href="#regularproduct">RegularProduct</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoPage</strong></td>
+<td colspan="2" valign="top"><strong id="query.seopage">seoPage</strong></td>
 <td valign="top"><a href="#seopage">SeoPage</a></td>
 <td>
 
@@ -1253,7 +1253,7 @@ Returns SEO settings for a specific page based on the url slug of that page
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>settings</strong></td>
+<td colspan="2" valign="top"><strong id="query.settings">settings</strong></td>
 <td valign="top"><a href="#settings">Settings</a></td>
 <td>
 
@@ -1262,7 +1262,7 @@ Returns current settings
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>sliderItems</strong></td>
+<td colspan="2" valign="top"><strong id="query.slideritems">sliderItems</strong></td>
 <td valign="top">[<a href="#slideritem">SliderItem</a>!]!</td>
 <td>
 
@@ -1271,7 +1271,7 @@ Returns a complete list of the slider items
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>store</strong></td>
+<td colspan="2" valign="top"><strong id="query.store">store</strong></td>
 <td valign="top"><a href="#store">Store</a></td>
 <td>
 
@@ -1290,7 +1290,7 @@ Returns store filtered using UUID or URL slug
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>stores</strong></td>
+<td colspan="2" valign="top"><strong id="query.stores">stores</strong></td>
 <td valign="top"><a href="#storeconnection">StoreConnection</a>!</td>
 <td>
 
@@ -1337,7 +1337,7 @@ Search for city or post code
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>transport</strong></td>
+<td colspan="2" valign="top"><strong id="query.transport">transport</strong></td>
 <td valign="top"><a href="#transport">Transport</a></td>
 <td>
 
@@ -1351,7 +1351,7 @@ Returns complete list of transport methods
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>transports</strong></td>
+<td colspan="2" valign="top"><strong id="query.transports">transports</strong></td>
 <td valign="top">[<a href="#transport">Transport</a>!]!</td>
 <td>
 
@@ -1365,7 +1365,7 @@ Returns available transport methods based on the current cart state
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>Variant</strong></td>
+<td colspan="2" valign="top"><strong id="query.variant">Variant</strong></td>
 <td valign="top"><a href="#variant">Variant</a></td>
 <td></td>
 </tr>
@@ -1384,7 +1384,7 @@ Returns available transport methods based on the current cart state
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>AddNewCustomerUser</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.addnewcustomeruser">AddNewCustomerUser</strong></td>
 <td valign="top"><a href="#basecustomeruser">BaseCustomerUser</a>!</td>
 <td>
 
@@ -1398,7 +1398,7 @@ Add new customer user to customer
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>AddOrderItemsToCart</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.addorderitemstocart">AddOrderItemsToCart</strong></td>
 <td valign="top"><a href="#cart">Cart</a>!</td>
 <td>
 
@@ -1412,7 +1412,7 @@ Fills cart based on a given order, possibly merging it with the current cart
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>AddProductToList</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.addproducttolist">AddProductToList</strong></td>
 <td valign="top"><a href="#productlist">ProductList</a>!</td>
 <td>
 
@@ -1426,7 +1426,7 @@ Adds a product to a product list
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>AddToCart</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.addtocart">AddToCart</strong></td>
 <td valign="top"><a href="#addtocartresult">AddToCartResult</a>!</td>
 <td>
 
@@ -1440,7 +1440,7 @@ Add product to cart for future checkout
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>ApplyPromoCodeToCart</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.applypromocodetocart">ApplyPromoCodeToCart</strong></td>
 <td valign="top"><a href="#cart">Cart</a>!</td>
 <td>
 
@@ -1454,7 +1454,7 @@ Apply new promo code for the future checkout
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>ChangeCompanyData</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.changecompanydata">ChangeCompanyData</strong></td>
 <td valign="top"><a href="#currentcustomeruser">CurrentCustomerUser</a>!</td>
 <td>
 
@@ -1468,7 +1468,7 @@ Changes customer user company data
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>ChangePassword</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.changepassword">ChangePassword</strong></td>
 <td valign="top"><a href="#currentcustomeruser">CurrentCustomerUser</a>!</td>
 <td>
 
@@ -1482,7 +1482,7 @@ Changes customer user password
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>ChangePaymentInCart</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.changepaymentincart">ChangePaymentInCart</strong></td>
 <td valign="top"><a href="#cart">Cart</a>!</td>
 <td>
 
@@ -1496,7 +1496,7 @@ Add a payment to the cart, or remove a payment from the cart
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>ChangePaymentInOrder</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.changepaymentinorder">ChangePaymentInOrder</strong></td>
 <td valign="top"><a href="#order">Order</a>!</td>
 <td>
 
@@ -1510,7 +1510,7 @@ change payment in an order after the order creation (available for unpaid GoPay 
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>ChangePersonalData</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.changepersonaldata">ChangePersonalData</strong></td>
 <td valign="top"><a href="#currentcustomeruser">CurrentCustomerUser</a>!</td>
 <td>
 
@@ -1524,7 +1524,7 @@ Changes customer user personal data
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>ChangeTransportInCart</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.changetransportincart">ChangeTransportInCart</strong></td>
 <td valign="top"><a href="#cart">Cart</a>!</td>
 <td>
 
@@ -1538,7 +1538,7 @@ Add a transport to the cart, or remove a transport from the cart
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>ContactForm</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.contactform">ContactForm</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -1552,7 +1552,7 @@ Send message to the site owner
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>CreateComplaint</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.createcomplaint">CreateComplaint</strong></td>
 <td valign="top"><a href="#complaint">Complaint</a>!</td>
 <td>
 
@@ -1566,7 +1566,7 @@ Create a new complaint
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>CreateDeliveryAddress</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.createdeliveryaddress">CreateDeliveryAddress</strong></td>
 <td valign="top">[<a href="#deliveryaddress">DeliveryAddress</a>!]!</td>
 <td>
 
@@ -1580,7 +1580,7 @@ Create a new delivery address
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>CreateInquiry</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.createinquiry">CreateInquiry</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -1594,7 +1594,7 @@ Send the inquiry for the product
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>CreateOrder</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.createorder">CreateOrder</strong></td>
 <td valign="top"><a href="#createorderresult">CreateOrderResult</a>!</td>
 <td>
 
@@ -1608,7 +1608,7 @@ Creates complete order with products and addresses
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>CreateWatchdog</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.createwatchdog">CreateWatchdog</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -1622,7 +1622,7 @@ Create a new watchdog or update validity of the current one
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>DeleteDeliveryAddress</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.deletedeliveryaddress">DeleteDeliveryAddress</strong></td>
 <td valign="top">[<a href="#deliveryaddress">DeliveryAddress</a>!]!</td>
 <td>
 
@@ -1636,7 +1636,7 @@ Delete delivery address by Uuid
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>EditCustomerUserPersonalData</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.editcustomeruserpersonaldata">EditCustomerUserPersonalData</strong></td>
 <td valign="top"><a href="#basecustomeruser">BaseCustomerUser</a>!</td>
 <td>
 
@@ -1650,7 +1650,7 @@ edit customer user to customer
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>EditDeliveryAddress</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.editdeliveryaddress">EditDeliveryAddress</strong></td>
 <td valign="top">[<a href="#deliveryaddress">DeliveryAddress</a>!]!</td>
 <td>
 
@@ -1664,7 +1664,7 @@ Edit delivery address by Uuid
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>Login</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.login">Login</strong></td>
 <td valign="top"><a href="#loginresult">LoginResult</a>!</td>
 <td>
 
@@ -1678,7 +1678,7 @@ Login user and return login result data (consisting of access and refresh tokens
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>Logout</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.logout">Logout</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -1687,7 +1687,7 @@ Logout user
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>NewsletterSubscribe</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.newslettersubscribe">NewsletterSubscribe</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -1701,7 +1701,7 @@ Subscribe for e-mail newsletter
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>PayOrder</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.payorder">PayOrder</strong></td>
 <td valign="top"><a href="#paymentsetupcreationdata">PaymentSetupCreationData</a>!</td>
 <td>
 
@@ -1715,7 +1715,7 @@ Pay order(create payment transaction in payment gateway) and get payment setup d
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>RecoverPassword</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.recoverpassword">RecoverPassword</strong></td>
 <td valign="top"><a href="#loginresult">LoginResult</a>!</td>
 <td>
 
@@ -1729,7 +1729,7 @@ Recover password using hash required from RequestPasswordRecovery
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>RefreshTokens</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.refreshtokens">RefreshTokens</strong></td>
 <td valign="top"><a href="#token">Token</a>!</td>
 <td>
 
@@ -1743,7 +1743,7 @@ Refreshes access and refresh tokens
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>Register</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.register">Register</strong></td>
 <td valign="top"><a href="#loginresult">LoginResult</a>!</td>
 <td>
 
@@ -1757,7 +1757,7 @@ Register new customer user
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>RegisterByOrder</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.registerbyorder">RegisterByOrder</strong></td>
 <td valign="top"><a href="#loginresult">LoginResult</a>!</td>
 <td>
 
@@ -1771,7 +1771,7 @@ Register new customer user using an order data
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>RemoveCustomerUser</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.removecustomeruser">RemoveCustomerUser</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -1785,7 +1785,7 @@ delete customer user
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>RemoveFromCart</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.removefromcart">RemoveFromCart</strong></td>
 <td valign="top"><a href="#cart">Cart</a>!</td>
 <td>
 
@@ -1799,7 +1799,7 @@ Remove product from cart
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>RemoveProductFromList</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.removeproductfromlist">RemoveProductFromList</strong></td>
 <td valign="top"><a href="#productlist">ProductList</a></td>
 <td>
 
@@ -1813,7 +1813,7 @@ Removes a product from a product list
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>RemoveProductList</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.removeproductlist">RemoveProductList</strong></td>
 <td valign="top"><a href="#productlist">ProductList</a></td>
 <td>
 
@@ -1827,7 +1827,7 @@ Removes the product list
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>RemovePromoCodeFromCart</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.removepromocodefromcart">RemovePromoCodeFromCart</strong></td>
 <td valign="top"><a href="#cart">Cart</a>!</td>
 <td>
 
@@ -1841,7 +1841,7 @@ Remove already used promo code from cart
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>RequestPasswordRecovery</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.requestpasswordrecovery">RequestPasswordRecovery</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -1855,7 +1855,7 @@ Request password recovery - email with hash will be sent
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>RequestPersonalDataAccess</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.requestpersonaldataaccess">RequestPersonalDataAccess</strong></td>
 <td valign="top"><a href="#personaldatapage">PersonalDataPage</a>!</td>
 <td>
 
@@ -1869,7 +1869,7 @@ Request access to personal data
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>SetDefaultDeliveryAddress</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.setdefaultdeliveryaddress">SetDefaultDeliveryAddress</strong></td>
 <td valign="top"><a href="#currentcustomeruser">CurrentCustomerUser</a>!</td>
 <td>
 
@@ -1883,7 +1883,7 @@ Set default delivery address by Uuid
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>UpdatePaymentStatus</strong></td>
+<td colspan="2" valign="top"><strong id="mutation.updatepaymentstatus">UpdatePaymentStatus</strong></td>
 <td valign="top"><a href="#order">Order</a>!</td>
 <td>
 
@@ -1919,22 +1919,22 @@ check payment status of order after callback from payment service
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>addedQuantity</strong></td>
+<td colspan="2" valign="top"><strong id="addproductresult.addedquantity">addedQuantity</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>cartItem</strong></td>
+<td colspan="2" valign="top"><strong id="addproductresult.cartitem">cartItem</strong></td>
 <td valign="top"><a href="#cartitem">CartItem</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isNew</strong></td>
+<td colspan="2" valign="top"><strong id="addproductresult.isnew">isNew</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>notOnStockQuantity</strong></td>
+<td colspan="2" valign="top"><strong id="addproductresult.notonstockquantity">notOnStockQuantity</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td></td>
 </tr>
@@ -1954,12 +1954,12 @@ check payment status of order after callback from payment service
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>addProductResult</strong></td>
+<td colspan="2" valign="top"><strong id="addtocartresult.addproductresult">addProductResult</strong></td>
 <td valign="top"><a href="#addproductresult">AddProductResult</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>cart</strong></td>
+<td colspan="2" valign="top"><strong id="addtocartresult.cart">cart</strong></td>
 <td valign="top"><a href="#cart">Cart</a>!</td>
 <td></td>
 </tr>
@@ -1979,7 +1979,7 @@ check payment status of order after callback from payment service
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>categories</strong></td>
+<td colspan="2" valign="top"><strong id="advertcode.categories">categories</strong></td>
 <td valign="top">[<a href="#category">Category</a>!]!</td>
 <td>
 
@@ -1988,7 +1988,7 @@ Restricted categories of the advert (the advert is shown in these categories onl
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>code</strong></td>
+<td colspan="2" valign="top"><strong id="advertcode.code">code</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -1997,7 +1997,7 @@ Advert code
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="advertcode.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -2006,7 +2006,7 @@ Name of advert
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>positionName</strong></td>
+<td colspan="2" valign="top"><strong id="advertcode.positionname">positionName</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -2015,7 +2015,7 @@ Position of advert
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>type</strong></td>
+<td colspan="2" valign="top"><strong id="advertcode.type">type</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -2024,7 +2024,7 @@ Type of advert
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="advertcode.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -2048,7 +2048,7 @@ UUID
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>categories</strong></td>
+<td colspan="2" valign="top"><strong id="advertimage.categories">categories</strong></td>
 <td valign="top">[<a href="#category">Category</a>!]!</td>
 <td>
 
@@ -2057,7 +2057,7 @@ Restricted categories of the advert (the advert is shown in these categories onl
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>images</strong></td>
+<td colspan="2" valign="top"><strong id="advertimage.images">images</strong></td>
 <td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
 
@@ -2071,7 +2071,7 @@ Advert images
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>link</strong></td>
+<td colspan="2" valign="top"><strong id="advertimage.link">link</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -2080,7 +2080,7 @@ Advert link
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td colspan="2" valign="top"><strong id="advertimage.mainimage">mainImage</strong></td>
 <td valign="top"><a href="#image">Image</a></td>
 <td>
 
@@ -2094,7 +2094,7 @@ Adverts first image by params
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="advertimage.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -2103,7 +2103,7 @@ Name of advert
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>positionName</strong></td>
+<td colspan="2" valign="top"><strong id="advertimage.positionname">positionName</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -2112,7 +2112,7 @@ Position of advert
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>type</strong></td>
+<td colspan="2" valign="top"><strong id="advertimage.type">type</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -2121,7 +2121,7 @@ Type of advert
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="advertimage.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -2145,7 +2145,7 @@ UUID
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>description</strong></td>
+<td colspan="2" valign="top"><strong id="advertposition.description">description</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -2154,7 +2154,7 @@ Description of advert position
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>positionName</strong></td>
+<td colspan="2" valign="top"><strong id="advertposition.positionname">positionName</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -2180,7 +2180,7 @@ A connection to a list of items.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>edges</strong></td>
+<td colspan="2" valign="top"><strong id="articleconnection.edges">edges</strong></td>
 <td valign="top">[<a href="#articleedge">ArticleEdge</a>]</td>
 <td>
 
@@ -2189,7 +2189,7 @@ Information to aid in pagination.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>pageInfo</strong></td>
+<td colspan="2" valign="top"><strong id="articleconnection.pageinfo">pageInfo</strong></td>
 <td valign="top"><a href="#pageinfo">PageInfo</a>!</td>
 <td>
 
@@ -2198,7 +2198,7 @@ Information to aid in pagination.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>totalCount</strong></td>
+<td colspan="2" valign="top"><strong id="articleconnection.totalcount">totalCount</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -2224,7 +2224,7 @@ An edge in a connection.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>cursor</strong></td>
+<td colspan="2" valign="top"><strong id="articleedge.cursor">cursor</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -2233,7 +2233,7 @@ A cursor for use in pagination.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>node</strong></td>
+<td colspan="2" valign="top"><strong id="articleedge.node">node</strong></td>
 <td valign="top"><a href="#notblogarticleinterface">NotBlogArticleInterface</a></td>
 <td>
 
@@ -2257,7 +2257,7 @@ The item at the end of the edge.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>createdAt</strong></td>
+<td colspan="2" valign="top"><strong id="articlelink.createdat">createdAt</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a>!</td>
 <td>
 
@@ -2266,7 +2266,7 @@ Creation date time of the article link
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>external</strong></td>
+<td colspan="2" valign="top"><strong id="articlelink.external">external</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -2275,7 +2275,7 @@ If the the article should be open in a new tab
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="articlelink.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -2284,7 +2284,7 @@ Name of article link, used as anchor text
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>placement</strong></td>
+<td colspan="2" valign="top"><strong id="articlelink.placement">placement</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -2293,7 +2293,7 @@ Placement of the article link
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>url</strong></td>
+<td colspan="2" valign="top"><strong id="articlelink.url">url</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -2302,7 +2302,7 @@ Destination url of article link
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="articlelink.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -2326,7 +2326,7 @@ UUID of the article link
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
+<td colspan="2" valign="top"><strong id="articlesite.breadcrumb">breadcrumb</strong></td>
 <td valign="top">[<a href="#link">Link</a>!]!</td>
 <td>
 
@@ -2335,7 +2335,7 @@ Hierarchy of the current element in relation to the structure
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>createdAt</strong></td>
+<td colspan="2" valign="top"><strong id="articlesite.createdat">createdAt</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a>!</td>
 <td>
 
@@ -2344,7 +2344,7 @@ Date and time of the article creation
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>external</strong></td>
+<td colspan="2" valign="top"><strong id="articlesite.external">external</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -2353,7 +2353,7 @@ If the the article should be open in a new tab
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="articlesite.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -2362,7 +2362,7 @@ Name of article
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>placement</strong></td>
+<td colspan="2" valign="top"><strong id="articlesite.placement">placement</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -2371,7 +2371,7 @@ Placement of article
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoH1</strong></td>
+<td colspan="2" valign="top"><strong id="articlesite.seoh1">seoH1</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -2380,7 +2380,7 @@ Seo first level heading of article
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoMetaDescription</strong></td>
+<td colspan="2" valign="top"><strong id="articlesite.seometadescription">seoMetaDescription</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -2389,7 +2389,7 @@ Seo meta description of article
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoTitle</strong></td>
+<td colspan="2" valign="top"><strong id="articlesite.seotitle">seoTitle</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -2398,7 +2398,7 @@ Seo title of article
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>slug</strong></td>
+<td colspan="2" valign="top"><strong id="articlesite.slug">slug</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -2407,7 +2407,7 @@ Article URL slug
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>text</strong></td>
+<td colspan="2" valign="top"><strong id="articlesite.text">text</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -2416,7 +2416,7 @@ Text of article
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="articlesite.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -2442,7 +2442,7 @@ Represents an availability
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="availability.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -2451,7 +2451,7 @@ Localized availability name (domain dependent)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>status</strong></td>
+<td colspan="2" valign="top"><strong id="availability.status">status</strong></td>
 <td valign="top"><a href="#availabilitystatusenum">AvailabilityStatusEnum</a>!</td>
 <td>
 
@@ -2475,7 +2475,7 @@ Availability status in a format suitable for usage in the code
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>blogCategories</strong></td>
+<td colspan="2" valign="top"><strong id="blogarticle.blogcategories">blogCategories</strong></td>
 <td valign="top">[<a href="#blogcategory">BlogCategory</a>!]!</td>
 <td>
 
@@ -2484,7 +2484,7 @@ The list of the blog article visible categories
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
+<td colspan="2" valign="top"><strong id="blogarticle.breadcrumb">breadcrumb</strong></td>
 <td valign="top">[<a href="#link">Link</a>!]!</td>
 <td>
 
@@ -2493,7 +2493,7 @@ Hierarchy of the current element in relation to the structure
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>createdAt</strong></td>
+<td colspan="2" valign="top"><strong id="blogarticle.createdat">createdAt</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a>!</td>
 <td>
 
@@ -2502,7 +2502,7 @@ Date and time of the blog article creation
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>hreflangLinks</strong></td>
+<td colspan="2" valign="top"><strong id="blogarticle.hreflanglinks">hreflangLinks</strong></td>
 <td valign="top">[<a href="#hreflanglink">HreflangLink</a>!]!</td>
 <td>
 
@@ -2511,7 +2511,7 @@ Alternate links for hreflang meta tags
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>id</strong></td>
+<td colspan="2" valign="top"><strong id="blogarticle.id">id</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -2520,7 +2520,7 @@ ID of category
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>images</strong></td>
+<td colspan="2" valign="top"><strong id="blogarticle.images">images</strong></td>
 <td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
 
@@ -2534,7 +2534,7 @@ Blog article images
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>link</strong></td>
+<td colspan="2" valign="top"><strong id="blogarticle.link">link</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -2543,7 +2543,7 @@ The blog article absolute URL
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>mainBlogCategoryUuid</strong></td>
+<td colspan="2" valign="top"><strong id="blogarticle.mainblogcategoryuuid">mainBlogCategoryUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -2552,7 +2552,7 @@ The UUID of the main blog category of the blog article
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td colspan="2" valign="top"><strong id="blogarticle.mainimage">mainImage</strong></td>
 <td valign="top"><a href="#image">Image</a></td>
 <td>
 
@@ -2566,7 +2566,7 @@ Blog article image by params
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="blogarticle.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -2575,7 +2575,7 @@ The blog article title
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>perex</strong></td>
+<td colspan="2" valign="top"><strong id="blogarticle.perex">perex</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -2584,7 +2584,7 @@ The blog article perex
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>publishDate</strong></td>
+<td colspan="2" valign="top"><strong id="blogarticle.publishdate">publishDate</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a>!</td>
 <td>
 
@@ -2593,7 +2593,7 @@ Date and time of the blog article publishing
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoH1</strong></td>
+<td colspan="2" valign="top"><strong id="blogarticle.seoh1">seoH1</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -2602,7 +2602,7 @@ The blog article SEO H1 heading
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoMetaDescription</strong></td>
+<td colspan="2" valign="top"><strong id="blogarticle.seometadescription">seoMetaDescription</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -2611,7 +2611,7 @@ The blog article SEO meta description
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoTitle</strong></td>
+<td colspan="2" valign="top"><strong id="blogarticle.seotitle">seoTitle</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -2620,7 +2620,7 @@ The blog article SEO title
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>slug</strong></td>
+<td colspan="2" valign="top"><strong id="blogarticle.slug">slug</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -2629,7 +2629,7 @@ The blog article URL slug
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>text</strong></td>
+<td colspan="2" valign="top"><strong id="blogarticle.text">text</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -2638,7 +2638,7 @@ The blog article text
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="blogarticle.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -2647,7 +2647,7 @@ The blog article UUID
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>visibleOnHomepage</strong></td>
+<td colspan="2" valign="top"><strong id="blogarticle.visibleonhomepage">visibleOnHomepage</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -2673,7 +2673,7 @@ A connection to a list of items.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>edges</strong></td>
+<td colspan="2" valign="top"><strong id="blogarticleconnection.edges">edges</strong></td>
 <td valign="top">[<a href="#blogarticleedge">BlogArticleEdge</a>]</td>
 <td>
 
@@ -2682,7 +2682,7 @@ Information to aid in pagination.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>pageInfo</strong></td>
+<td colspan="2" valign="top"><strong id="blogarticleconnection.pageinfo">pageInfo</strong></td>
 <td valign="top"><a href="#pageinfo">PageInfo</a>!</td>
 <td>
 
@@ -2691,7 +2691,7 @@ Information to aid in pagination.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>totalCount</strong></td>
+<td colspan="2" valign="top"><strong id="blogarticleconnection.totalcount">totalCount</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -2717,7 +2717,7 @@ An edge in a connection.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>cursor</strong></td>
+<td colspan="2" valign="top"><strong id="blogarticleedge.cursor">cursor</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -2726,7 +2726,7 @@ A cursor for use in pagination.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>node</strong></td>
+<td colspan="2" valign="top"><strong id="blogarticleedge.node">node</strong></td>
 <td valign="top"><a href="#blogarticle">BlogArticle</a></td>
 <td>
 
@@ -2750,7 +2750,7 @@ The item at the end of the edge.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>articlesTotalCount</strong></td>
+<td colspan="2" valign="top"><strong id="blogcategory.articlestotalcount">articlesTotalCount</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -2759,7 +2759,7 @@ Total count of blog articles in this category
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>blogArticles</strong></td>
+<td colspan="2" valign="top"><strong id="blogcategory.blogarticles">blogArticles</strong></td>
 <td valign="top"><a href="#blogarticleconnection">BlogArticleConnection</a>!</td>
 <td>
 
@@ -2793,7 +2793,7 @@ Paginated blog articles of the given blog category
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>blogCategoriesTree</strong></td>
+<td colspan="2" valign="top"><strong id="blogcategory.blogcategoriestree">blogCategoriesTree</strong></td>
 <td valign="top">[<a href="#blogcategory">BlogCategory</a>!]!</td>
 <td>
 
@@ -2802,7 +2802,7 @@ Tho whole blog categories tree (used for blog navigation rendering)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
+<td colspan="2" valign="top"><strong id="blogcategory.breadcrumb">breadcrumb</strong></td>
 <td valign="top">[<a href="#link">Link</a>!]!</td>
 <td>
 
@@ -2811,7 +2811,7 @@ Hierarchy of the current element in relation to the structure
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>children</strong></td>
+<td colspan="2" valign="top"><strong id="blogcategory.children">children</strong></td>
 <td valign="top">[<a href="#blogcategory">BlogCategory</a>!]!</td>
 <td>
 
@@ -2820,7 +2820,7 @@ The blog category children
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>description</strong></td>
+<td colspan="2" valign="top"><strong id="blogcategory.description">description</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -2829,7 +2829,7 @@ The blog category description
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>hreflangLinks</strong></td>
+<td colspan="2" valign="top"><strong id="blogcategory.hreflanglinks">hreflangLinks</strong></td>
 <td valign="top">[<a href="#hreflanglink">HreflangLink</a>!]!</td>
 <td>
 
@@ -2838,7 +2838,7 @@ Alternate links for hreflang meta tags
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>link</strong></td>
+<td colspan="2" valign="top"><strong id="blogcategory.link">link</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -2847,7 +2847,7 @@ The blog category absolute URL
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td colspan="2" valign="top"><strong id="blogcategory.mainimage">mainImage</strong></td>
 <td valign="top"><a href="#image">Image</a></td>
 <td>
 
@@ -2861,7 +2861,7 @@ Blog category image
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="blogcategory.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -2870,7 +2870,7 @@ The blog category name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>parent</strong></td>
+<td colspan="2" valign="top"><strong id="blogcategory.parent">parent</strong></td>
 <td valign="top"><a href="#blogcategory">BlogCategory</a></td>
 <td>
 
@@ -2879,7 +2879,7 @@ The blog category parent
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoH1</strong></td>
+<td colspan="2" valign="top"><strong id="blogcategory.seoh1">seoH1</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -2888,7 +2888,7 @@ The blog category SEO H1 heading
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoMetaDescription</strong></td>
+<td colspan="2" valign="top"><strong id="blogcategory.seometadescription">seoMetaDescription</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -2897,7 +2897,7 @@ The blog category SEO meta description
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoTitle</strong></td>
+<td colspan="2" valign="top"><strong id="blogcategory.seotitle">seoTitle</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -2906,7 +2906,7 @@ The blog category SEO title
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>slug</strong></td>
+<td colspan="2" valign="top"><strong id="blogcategory.slug">slug</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -2915,7 +2915,7 @@ The blog category URL slug
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="blogcategory.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -2941,7 +2941,7 @@ Represents a brand
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
+<td colspan="2" valign="top"><strong id="brand.breadcrumb">breadcrumb</strong></td>
 <td valign="top">[<a href="#link">Link</a>!]!</td>
 <td>
 
@@ -2950,7 +2950,7 @@ Hierarchy of the current element in relation to the structure
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>description</strong></td>
+<td colspan="2" valign="top"><strong id="brand.description">description</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -2959,7 +2959,7 @@ Brand description
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>hreflangLinks</strong></td>
+<td colspan="2" valign="top"><strong id="brand.hreflanglinks">hreflangLinks</strong></td>
 <td valign="top">[<a href="#hreflanglink">HreflangLink</a>!]!</td>
 <td>
 
@@ -2968,7 +2968,7 @@ Alternate links for hreflang meta tags
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>id</strong></td>
+<td colspan="2" valign="top"><strong id="brand.id">id</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -2977,7 +2977,7 @@ ID of category
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>images</strong></td>
+<td colspan="2" valign="top"><strong id="brand.images">images</strong></td>
 <td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
 
@@ -2991,7 +2991,7 @@ Brand images
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>link</strong></td>
+<td colspan="2" valign="top"><strong id="brand.link">link</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -3000,7 +3000,7 @@ Brand main URL
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td colspan="2" valign="top"><strong id="brand.mainimage">mainImage</strong></td>
 <td valign="top"><a href="#image">Image</a></td>
 <td>
 
@@ -3014,7 +3014,7 @@ Brand image by params
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="brand.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -3023,7 +3023,7 @@ Brand name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>products</strong></td>
+<td colspan="2" valign="top"><strong id="brand.products">products</strong></td>
 <td valign="top"><a href="#productconnection">ProductConnection</a>!</td>
 <td>
 
@@ -3077,7 +3077,7 @@ Paginated and ordered products of brand
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoH1</strong></td>
+<td colspan="2" valign="top"><strong id="brand.seoh1">seoH1</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -3086,7 +3086,7 @@ Brand SEO H1
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoMetaDescription</strong></td>
+<td colspan="2" valign="top"><strong id="brand.seometadescription">seoMetaDescription</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -3095,7 +3095,7 @@ Brand SEO meta description
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoTitle</strong></td>
+<td colspan="2" valign="top"><strong id="brand.seotitle">seoTitle</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -3104,7 +3104,7 @@ Brand SEO title
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>slug</strong></td>
+<td colspan="2" valign="top"><strong id="brand.slug">slug</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -3113,7 +3113,7 @@ Brand URL slug
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="brand.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -3139,7 +3139,7 @@ Brand filter option
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>brand</strong></td>
+<td colspan="2" valign="top"><strong id="brandfilteroption.brand">brand</strong></td>
 <td valign="top"><a href="#brand">Brand</a>!</td>
 <td>
 
@@ -3148,7 +3148,7 @@ Brand
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>count</strong></td>
+<td colspan="2" valign="top"><strong id="brandfilteroption.count">count</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -3157,7 +3157,7 @@ Count of products that will be filtered if this filter option is applied.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isAbsolute</strong></td>
+<td colspan="2" valign="top"><strong id="brandfilteroption.isabsolute">isAbsolute</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -3181,7 +3181,7 @@ If true than count parameter is number of products that will be displayed if thi
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>items</strong></td>
+<td colspan="2" valign="top"><strong id="cart.items">items</strong></td>
 <td valign="top">[<a href="#cartitem">CartItem</a>!]!</td>
 <td>
 
@@ -3190,12 +3190,12 @@ All items in the cart
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>modifications</strong></td>
+<td colspan="2" valign="top"><strong id="cart.modifications">modifications</strong></td>
 <td valign="top"><a href="#cartmodificationsresult">CartModificationsResult</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>payment</strong></td>
+<td colspan="2" valign="top"><strong id="cart.payment">payment</strong></td>
 <td valign="top"><a href="#payment">Payment</a></td>
 <td>
 
@@ -3204,7 +3204,7 @@ Selected payment if payment provided
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>paymentGoPayBankSwift</strong></td>
+<td colspan="2" valign="top"><strong id="cart.paymentgopaybankswift">paymentGoPayBankSwift</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -3213,7 +3213,7 @@ Selected bank swift code of goPay payment bank transfer
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>promoCode</strong></td>
+<td colspan="2" valign="top"><strong id="cart.promocode">promoCode</strong></td>
 <td valign="top"><a href="#promocode">PromoCode</a></td>
 <td>
 
@@ -3222,16 +3222,16 @@ Applied promo code if provided
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>remainingAmountWithVatForFreeTransport</strong></td>
+<td colspan="2" valign="top"><strong id="cart.remainingamountforfreetransport">remainingAmountForFreeTransport</strong></td>
 <td valign="top"><a href="#money">Money</a></td>
 <td>
 
-Remaining amount for free transport and payment; null = transport cannot be free
+Remaining amount for free transport and payment; null = transport cannot be free. Amount is with VAT if input price type is set to price with vat and vice versa.
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>roundingPrice</strong></td>
+<td colspan="2" valign="top"><strong id="cart.roundingprice">roundingPrice</strong></td>
 <td valign="top"><a href="#price">Price</a></td>
 <td>
 
@@ -3240,7 +3240,7 @@ Rounding amount if payment has rounding allowed
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>selectedPickupPlaceIdentifier</strong></td>
+<td colspan="2" valign="top"><strong id="cart.selectedpickupplaceidentifier">selectedPickupPlaceIdentifier</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -3249,12 +3249,12 @@ Selected pickup place identifier if provided
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>totalDiscountPrice</strong></td>
+<td colspan="2" valign="top"><strong id="cart.totaldiscountprice">totalDiscountPrice</strong></td>
 <td valign="top"><a href="#price">Price</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>totalItemsPrice</strong></td>
+<td colspan="2" valign="top"><strong id="cart.totalitemsprice">totalItemsPrice</strong></td>
 <td valign="top"><a href="#price">Price</a>!</td>
 <td>
 
@@ -3263,7 +3263,7 @@ Total items price (excluding transport and payment)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>totalPrice</strong></td>
+<td colspan="2" valign="top"><strong id="cart.totalprice">totalPrice</strong></td>
 <td valign="top"><a href="#price">Price</a>!</td>
 <td>
 
@@ -3272,16 +3272,16 @@ Total price including transport and payment
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>totalPriceWithoutDiscountTransportAndPayment</strong></td>
+<td colspan="2" valign="top"><strong id="cart.totalpricewithoutdiscounttransportandpayment">totalPriceWithoutDiscountTransportAndPayment</strong></td>
 <td valign="top"><a href="#price">Price</a>!</td>
 <td>
 
-Total price (exluding discount, transport and payment)
+Total price (excluding discount, transport and payment)
 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>transport</strong></td>
+<td colspan="2" valign="top"><strong id="cart.transport">transport</strong></td>
 <td valign="top"><a href="#transport">Transport</a></td>
 <td>
 
@@ -3290,7 +3290,7 @@ Selected transport if transport provided
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="cart.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
@@ -3316,7 +3316,7 @@ Represent one item in the cart
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>product</strong></td>
+<td colspan="2" valign="top"><strong id="cartitem.product">product</strong></td>
 <td valign="top"><a href="#product">Product</a>!</td>
 <td>
 
@@ -3325,7 +3325,7 @@ Product in the cart
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>quantity</strong></td>
+<td colspan="2" valign="top"><strong id="cartitem.quantity">quantity</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -3334,7 +3334,7 @@ Quantity of items in the cart
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="cartitem.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -3358,12 +3358,12 @@ Cart item UUID
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>cartItemsWithModifiedPrice</strong></td>
+<td colspan="2" valign="top"><strong id="cartitemmodificationsresult.cartitemswithmodifiedprice">cartItemsWithModifiedPrice</strong></td>
 <td valign="top">[<a href="#cartitem">CartItem</a>!]!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>noLongerListableCartItems</strong></td>
+<td colspan="2" valign="top"><strong id="cartitemmodificationsresult.nolongerlistablecartitems">noLongerListableCartItems</strong></td>
 <td valign="top">[<a href="#cartitem">CartItem</a>!]!</td>
 <td></td>
 </tr>
@@ -3383,32 +3383,32 @@ Cart item UUID
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>itemModifications</strong></td>
+<td colspan="2" valign="top"><strong id="cartmodificationsresult.itemmodifications">itemModifications</strong></td>
 <td valign="top"><a href="#cartitemmodificationsresult">CartItemModificationsResult</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>multipleAddedProductModifications</strong></td>
+<td colspan="2" valign="top"><strong id="cartmodificationsresult.multipleaddedproductmodifications">multipleAddedProductModifications</strong></td>
 <td valign="top"><a href="#cartmultipleaddedproductmodificationsresult">CartMultipleAddedProductModificationsResult</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>paymentModifications</strong></td>
+<td colspan="2" valign="top"><strong id="cartmodificationsresult.paymentmodifications">paymentModifications</strong></td>
 <td valign="top"><a href="#cartpaymentmodificationsresult">CartPaymentModificationsResult</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>promoCodeModifications</strong></td>
+<td colspan="2" valign="top"><strong id="cartmodificationsresult.promocodemodifications">promoCodeModifications</strong></td>
 <td valign="top"><a href="#cartpromocodemodificationsresult">CartPromoCodeModificationsResult</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>someProductWasRemovedFromEshop</strong></td>
+<td colspan="2" valign="top"><strong id="cartmodificationsresult.someproductwasremovedfromeshop">someProductWasRemovedFromEshop</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>transportModifications</strong></td>
+<td colspan="2" valign="top"><strong id="cartmodificationsresult.transportmodifications">transportModifications</strong></td>
 <td valign="top"><a href="#carttransportmodificationsresult">CartTransportModificationsResult</a>!</td>
 <td></td>
 </tr>
@@ -3428,7 +3428,7 @@ Cart item UUID
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>notAddedProducts</strong></td>
+<td colspan="2" valign="top"><strong id="cartmultipleaddedproductmodificationsresult.notaddedproducts">notAddedProducts</strong></td>
 <td valign="top">[<a href="#product">Product</a>!]!</td>
 <td></td>
 </tr>
@@ -3448,12 +3448,12 @@ Cart item UUID
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>paymentPriceChanged</strong></td>
+<td colspan="2" valign="top"><strong id="cartpaymentmodificationsresult.paymentpricechanged">paymentPriceChanged</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>paymentUnavailable</strong></td>
+<td colspan="2" valign="top"><strong id="cartpaymentmodificationsresult.paymentunavailable">paymentUnavailable</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
@@ -3473,7 +3473,7 @@ Cart item UUID
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>noLongerApplicablePromoCode</strong></td>
+<td colspan="2" valign="top"><strong id="cartpromocodemodificationsresult.nolongerapplicablepromocode">noLongerApplicablePromoCode</strong></td>
 <td valign="top">[<a href="#string">String</a>!]!</td>
 <td></td>
 </tr>
@@ -3493,22 +3493,22 @@ Cart item UUID
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>personalPickupStoreUnavailable</strong></td>
+<td colspan="2" valign="top"><strong id="carttransportmodificationsresult.personalpickupstoreunavailable">personalPickupStoreUnavailable</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>transportPriceChanged</strong></td>
+<td colspan="2" valign="top"><strong id="carttransportmodificationsresult.transportpricechanged">transportPriceChanged</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>transportUnavailable</strong></td>
+<td colspan="2" valign="top"><strong id="carttransportmodificationsresult.transportunavailable">transportUnavailable</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>transportWeightLimitExceeded</strong></td>
+<td colspan="2" valign="top"><strong id="carttransportmodificationsresult.transportweightlimitexceeded">transportWeightLimitExceeded</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
@@ -3530,7 +3530,7 @@ Represents a category
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>automatedFilters</strong></td>
+<td colspan="2" valign="top"><strong id="category.automatedfilters">automatedFilters</strong></td>
 <td valign="top">[<a href="#categoryautomatedfilterenum">CategoryAutomatedFilterEnum</a>!]!</td>
 <td>
 
@@ -3539,7 +3539,7 @@ Automated filters for the category
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>bestsellers</strong></td>
+<td colspan="2" valign="top"><strong id="category.bestsellers">bestsellers</strong></td>
 <td valign="top">[<a href="#product">Product</a>!]!</td>
 <td>
 
@@ -3548,7 +3548,7 @@ Best selling products
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
+<td colspan="2" valign="top"><strong id="category.breadcrumb">breadcrumb</strong></td>
 <td valign="top">[<a href="#link">Link</a>!]!</td>
 <td>
 
@@ -3557,7 +3557,7 @@ Hierarchy of the current element in relation to the structure
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>categoryHierarchy</strong></td>
+<td colspan="2" valign="top"><strong id="category.categoryhierarchy">categoryHierarchy</strong></td>
 <td valign="top">[<a href="#categoryhierarchyitem">CategoryHierarchyItem</a>!]!</td>
 <td>
 
@@ -3566,7 +3566,7 @@ All parent category names with their IDs and UUIDs
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>children</strong></td>
+<td colspan="2" valign="top"><strong id="category.children">children</strong></td>
 <td valign="top">[<a href="#category">Category</a>!]!</td>
 <td>
 
@@ -3575,7 +3575,7 @@ Descendant categories
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>description</strong></td>
+<td colspan="2" valign="top"><strong id="category.description">description</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -3584,7 +3584,7 @@ Localized category description (domain dependent)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>hreflangLinks</strong></td>
+<td colspan="2" valign="top"><strong id="category.hreflanglinks">hreflangLinks</strong></td>
 <td valign="top">[<a href="#hreflanglink">HreflangLink</a>!]!</td>
 <td>
 
@@ -3593,7 +3593,7 @@ Alternate links for hreflang meta tags
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>id</strong></td>
+<td colspan="2" valign="top"><strong id="category.id">id</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -3602,7 +3602,7 @@ ID of category
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>images</strong></td>
+<td colspan="2" valign="top"><strong id="category.images">images</strong></td>
 <td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
 
@@ -3616,7 +3616,7 @@ Category images
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>linkedCategories</strong></td>
+<td colspan="2" valign="top"><strong id="category.linkedcategories">linkedCategories</strong></td>
 <td valign="top">[<a href="#category">Category</a>!]!</td>
 <td>
 
@@ -3625,7 +3625,7 @@ A list of categories linked to the given category
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td colspan="2" valign="top"><strong id="category.mainimage">mainImage</strong></td>
 <td valign="top"><a href="#image">Image</a></td>
 <td>
 
@@ -3639,7 +3639,7 @@ Category image by params
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="category.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -3648,7 +3648,7 @@ Localized category name (domain dependent)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>originalCategorySlug</strong></td>
+<td colspan="2" valign="top"><strong id="category.originalcategoryslug">originalCategorySlug</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -3657,7 +3657,7 @@ Original category URL slug (for CategorySeoMixes slug of assigned category is re
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>parent</strong></td>
+<td colspan="2" valign="top"><strong id="category.parent">parent</strong></td>
 <td valign="top"><a href="#category">Category</a></td>
 <td>
 
@@ -3666,7 +3666,7 @@ Ancestor category
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>products</strong></td>
+<td colspan="2" valign="top"><strong id="category.products">products</strong></td>
 <td valign="top"><a href="#productconnection">ProductConnection</a>!</td>
 <td>
 
@@ -3720,7 +3720,7 @@ Paginated and ordered products of category
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>readyCategorySeoMixLinks</strong></td>
+<td colspan="2" valign="top"><strong id="category.readycategoryseomixlinks">readyCategorySeoMixLinks</strong></td>
 <td valign="top">[<a href="#link">Link</a>!]!</td>
 <td>
 
@@ -3729,7 +3729,7 @@ An array of links of prepared category SEO mixes of a given category
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoH1</strong></td>
+<td colspan="2" valign="top"><strong id="category.seoh1">seoH1</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -3738,7 +3738,7 @@ Seo first level heading of category
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoMetaDescription</strong></td>
+<td colspan="2" valign="top"><strong id="category.seometadescription">seoMetaDescription</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -3747,7 +3747,7 @@ Seo meta description of category
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoTitle</strong></td>
+<td colspan="2" valign="top"><strong id="category.seotitle">seoTitle</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -3756,7 +3756,7 @@ Seo title of category
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>slug</strong></td>
+<td colspan="2" valign="top"><strong id="category.slug">slug</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -3765,7 +3765,7 @@ Category URL slug
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="category.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -3791,7 +3791,7 @@ A connection to a list of items.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>edges</strong></td>
+<td colspan="2" valign="top"><strong id="categoryconnection.edges">edges</strong></td>
 <td valign="top">[<a href="#categoryedge">CategoryEdge</a>]</td>
 <td>
 
@@ -3800,7 +3800,7 @@ Information to aid in pagination.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>pageInfo</strong></td>
+<td colspan="2" valign="top"><strong id="categoryconnection.pageinfo">pageInfo</strong></td>
 <td valign="top"><a href="#pageinfo">PageInfo</a>!</td>
 <td>
 
@@ -3809,7 +3809,7 @@ Information to aid in pagination.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>totalCount</strong></td>
+<td colspan="2" valign="top"><strong id="categoryconnection.totalcount">totalCount</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -3835,7 +3835,7 @@ An edge in a connection.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>cursor</strong></td>
+<td colspan="2" valign="top"><strong id="categoryedge.cursor">cursor</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -3844,7 +3844,7 @@ A cursor for use in pagination.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>node</strong></td>
+<td colspan="2" valign="top"><strong id="categoryedge.node">node</strong></td>
 <td valign="top"><a href="#category">Category</a></td>
 <td>
 
@@ -3868,7 +3868,7 @@ The item at the end of the edge.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>id</strong></td>
+<td colspan="2" valign="top"><strong id="categoryhierarchyitem.id">id</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -3877,7 +3877,7 @@ ID of the category
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="categoryhierarchyitem.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -3886,7 +3886,7 @@ Localized category name (domain dependent)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="categoryhierarchyitem.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -3912,7 +3912,7 @@ Represents a company customer user
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>billingAddressUuid</strong></td>
+<td colspan="2" valign="top"><strong id="companycustomeruser.billingaddressuuid">billingAddressUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -3921,7 +3921,7 @@ UUID
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>city</strong></td>
+<td colspan="2" valign="top"><strong id="companycustomeruser.city">city</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -3930,7 +3930,7 @@ city name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>companyName</strong></td>
+<td colspan="2" valign="top"><strong id="companycustomeruser.companyname">companyName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -3939,7 +3939,7 @@ The customer’s company name (only when customer is a company)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>companyNumber</strong></td>
+<td colspan="2" valign="top"><strong id="companycustomeruser.companynumber">companyNumber</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -3948,7 +3948,7 @@ The customer’s company identification number (only when customer is a company)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>companyTaxNumber</strong></td>
+<td colspan="2" valign="top"><strong id="companycustomeruser.companytaxnumber">companyTaxNumber</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -3957,7 +3957,7 @@ The customer’s company tax number (only when customer is a company)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>country</strong></td>
+<td colspan="2" valign="top"><strong id="companycustomeruser.country">country</strong></td>
 <td valign="top"><a href="#country">Country</a></td>
 <td>
 
@@ -3966,7 +3966,7 @@ Billing address country
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>defaultDeliveryAddress</strong></td>
+<td colspan="2" valign="top"><strong id="companycustomeruser.defaultdeliveryaddress">defaultDeliveryAddress</strong></td>
 <td valign="top"><a href="#deliveryaddress">DeliveryAddress</a></td>
 <td>
 
@@ -3975,7 +3975,7 @@ Default customer delivery addresses
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryAddresses</strong></td>
+<td colspan="2" valign="top"><strong id="companycustomeruser.deliveryaddresses">deliveryAddresses</strong></td>
 <td valign="top">[<a href="#deliveryaddress">DeliveryAddress</a>!]!</td>
 <td>
 
@@ -3984,7 +3984,7 @@ List of delivery addresses
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>email</strong></td>
+<td colspan="2" valign="top"><strong id="companycustomeruser.email">email</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -3993,7 +3993,7 @@ Email address
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>firstName</strong></td>
+<td colspan="2" valign="top"><strong id="companycustomeruser.firstname">firstName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -4002,7 +4002,7 @@ First name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>hasPasswordSet</strong></td>
+<td colspan="2" valign="top"><strong id="companycustomeruser.haspasswordset">hasPasswordSet</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -4011,7 +4011,7 @@ Whether the customer user has password set or not
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td colspan="2" valign="top"><strong id="companycustomeruser.lastname">lastName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -4020,7 +4020,7 @@ Last name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>newsletterSubscription</strong></td>
+<td colspan="2" valign="top"><strong id="companycustomeruser.newslettersubscription">newsletterSubscription</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -4029,7 +4029,7 @@ Whether customer user receives newsletters or not
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>postcode</strong></td>
+<td colspan="2" valign="top"><strong id="companycustomeruser.postcode">postcode</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -4038,7 +4038,7 @@ zip code
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>pricingGroup</strong></td>
+<td colspan="2" valign="top"><strong id="companycustomeruser.pricinggroup">pricingGroup</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -4047,7 +4047,7 @@ The name of the customer pricing group
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>roleGroup</strong></td>
+<td colspan="2" valign="top"><strong id="companycustomeruser.rolegroup">roleGroup</strong></td>
 <td valign="top"><a href="#customeruserrolegroup">CustomerUserRoleGroup</a>!</td>
 <td>
 
@@ -4056,12 +4056,12 @@ The customer user role group
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>roles</strong></td>
+<td colspan="2" valign="top"><strong id="companycustomeruser.roles">roles</strong></td>
 <td valign="top">[<a href="#customeruserroleenum">CustomerUserRoleEnum</a>!]!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>salesRepresentative</strong></td>
+<td colspan="2" valign="top"><strong id="companycustomeruser.salesrepresentative">salesRepresentative</strong></td>
 <td valign="top"><a href="#salesrepresentative">SalesRepresentative</a></td>
 <td>
 
@@ -4070,7 +4070,7 @@ Sales representative assigned to customer
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>street</strong></td>
+<td colspan="2" valign="top"><strong id="companycustomeruser.street">street</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -4079,7 +4079,7 @@ street name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td colspan="2" valign="top"><strong id="companycustomeruser.telephone">telephone</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -4088,7 +4088,7 @@ Phone number
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="companycustomeruser.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -4112,7 +4112,7 @@ UUID
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>bankAccountNumber</strong></td>
+<td colspan="2" valign="top"><strong id="complaint.bankaccountnumber">bankAccountNumber</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -4121,7 +4121,7 @@ Number of the bank account if the resolution is money return
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>createdAt</strong></td>
+<td colspan="2" valign="top"><strong id="complaint.createdat">createdAt</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a>!</td>
 <td>
 
@@ -4130,7 +4130,7 @@ Date and time when the complaint was created
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryCity</strong></td>
+<td colspan="2" valign="top"><strong id="complaint.deliverycity">deliveryCity</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -4139,7 +4139,7 @@ City name for delivery
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryCompanyName</strong></td>
+<td colspan="2" valign="top"><strong id="complaint.deliverycompanyname">deliveryCompanyName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -4148,7 +4148,7 @@ Company name for delivery
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryCountry</strong></td>
+<td colspan="2" valign="top"><strong id="complaint.deliverycountry">deliveryCountry</strong></td>
 <td valign="top"><a href="#country">Country</a>!</td>
 <td>
 
@@ -4157,7 +4157,7 @@ Country for delivery
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryFirstName</strong></td>
+<td colspan="2" valign="top"><strong id="complaint.deliveryfirstname">deliveryFirstName</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -4166,7 +4166,7 @@ First name of the contact person for delivery
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryLastName</strong></td>
+<td colspan="2" valign="top"><strong id="complaint.deliverylastname">deliveryLastName</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -4175,7 +4175,7 @@ Last name of the contact person for delivery
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryPostcode</strong></td>
+<td colspan="2" valign="top"><strong id="complaint.deliverypostcode">deliveryPostcode</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -4184,7 +4184,7 @@ Zip code for delivery
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryStreet</strong></td>
+<td colspan="2" valign="top"><strong id="complaint.deliverystreet">deliveryStreet</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -4193,7 +4193,7 @@ Street name for delivery
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryTelephone</strong></td>
+<td colspan="2" valign="top"><strong id="complaint.deliverytelephone">deliveryTelephone</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -4202,7 +4202,7 @@ Contact telephone number for delivery
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>email</strong></td>
+<td colspan="2" valign="top"><strong id="complaint.email">email</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -4211,7 +4211,7 @@ The customer's email address
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>items</strong></td>
+<td colspan="2" valign="top"><strong id="complaint.items">items</strong></td>
 <td valign="top">[<a href="#complaintitem">ComplaintItem</a>!]!</td>
 <td>
 
@@ -4220,7 +4220,7 @@ All items in the complaint
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>manualDocumentNumber</strong></td>
+<td colspan="2" valign="top"><strong id="complaint.manualdocumentnumber">manualDocumentNumber</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -4229,7 +4229,7 @@ Order or document number entered by customer (if the complaint was created witho
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>number</strong></td>
+<td colspan="2" valign="top"><strong id="complaint.number">number</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -4238,7 +4238,7 @@ Unique complaint number
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>order</strong></td>
+<td colspan="2" valign="top"><strong id="complaint.order">order</strong></td>
 <td valign="top"><a href="#order">Order</a></td>
 <td>
 
@@ -4247,7 +4247,7 @@ Order for which the complaint was created
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>resolution</strong></td>
+<td colspan="2" valign="top"><strong id="complaint.resolution">resolution</strong></td>
 <td valign="top"><a href="#complaintresolution">ComplaintResolution</a>!</td>
 <td>
 
@@ -4256,7 +4256,7 @@ Resolution of the complaint
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>status</strong></td>
+<td colspan="2" valign="top"><strong id="complaint.status">status</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -4265,7 +4265,7 @@ Status of the complaint
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="complaint.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -4291,7 +4291,7 @@ A connection to a list of items.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>edges</strong></td>
+<td colspan="2" valign="top"><strong id="complaintconnection.edges">edges</strong></td>
 <td valign="top">[<a href="#complaintedge">ComplaintEdge</a>]</td>
 <td>
 
@@ -4300,7 +4300,7 @@ Information to aid in pagination.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>pageInfo</strong></td>
+<td colspan="2" valign="top"><strong id="complaintconnection.pageinfo">pageInfo</strong></td>
 <td valign="top"><a href="#pageinfo">PageInfo</a>!</td>
 <td>
 
@@ -4309,7 +4309,7 @@ Information to aid in pagination.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>totalCount</strong></td>
+<td colspan="2" valign="top"><strong id="complaintconnection.totalcount">totalCount</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -4335,7 +4335,7 @@ An edge in a connection.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>cursor</strong></td>
+<td colspan="2" valign="top"><strong id="complaintedge.cursor">cursor</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -4344,7 +4344,7 @@ A cursor for use in pagination.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>node</strong></td>
+<td colspan="2" valign="top"><strong id="complaintedge.node">node</strong></td>
 <td valign="top"><a href="#complaint">Complaint</a></td>
 <td>
 
@@ -4368,7 +4368,7 @@ The item at the end of the edge.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>catnum</strong></td>
+<td colspan="2" valign="top"><strong id="complaintitem.catnum">catnum</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -4377,7 +4377,7 @@ Catalog number
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>description</strong></td>
+<td colspan="2" valign="top"><strong id="complaintitem.description">description</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -4386,7 +4386,7 @@ Description of the complaint order item
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>files</strong></td>
+<td colspan="2" valign="top"><strong id="complaintitem.files">files</strong></td>
 <td valign="top">[<a href="#file">File</a>!]</td>
 <td>
 
@@ -4400,7 +4400,7 @@ Files attached to the complaint order item
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>orderItem</strong></td>
+<td colspan="2" valign="top"><strong id="complaintitem.orderitem">orderItem</strong></td>
 <td valign="top"><a href="#orderitem">OrderItem</a></td>
 <td>
 
@@ -4409,7 +4409,7 @@ Order item
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>product</strong></td>
+<td colspan="2" valign="top"><strong id="complaintitem.product">product</strong></td>
 <td valign="top"><a href="#product">Product</a></td>
 <td>
 
@@ -4418,7 +4418,7 @@ Product of the order item
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>productName</strong></td>
+<td colspan="2" valign="top"><strong id="complaintitem.productname">productName</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -4427,7 +4427,7 @@ Product name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>quantity</strong></td>
+<td colspan="2" valign="top"><strong id="complaintitem.quantity">quantity</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -4451,7 +4451,7 @@ Quantity of the order item
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="complaintresolution.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -4460,7 +4460,7 @@ Localized name of the resolution
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>value</strong></td>
+<td colspan="2" valign="top"><strong id="complaintresolution.value">value</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -4486,7 +4486,7 @@ Represents country
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>code</strong></td>
+<td colspan="2" valign="top"><strong id="country.code">code</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -4495,7 +4495,7 @@ Country code in ISO 3166-1 alpha-2
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="country.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -4519,17 +4519,17 @@ Localized country name
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>cart</strong></td>
+<td colspan="2" valign="top"><strong id="createorderresult.cart">cart</strong></td>
 <td valign="top"><a href="#cart">Cart</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>order</strong></td>
+<td colspan="2" valign="top"><strong id="createorderresult.order">order</strong></td>
 <td valign="top"><a href="#order">Order</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>orderCreated</strong></td>
+<td colspan="2" valign="top"><strong id="createorderresult.ordercreated">orderCreated</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
@@ -4551,7 +4551,7 @@ Represents a currently logged company customer user
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>billingAddressUuid</strong></td>
+<td colspan="2" valign="top"><strong id="currentcompanycustomeruser.billingaddressuuid">billingAddressUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -4560,7 +4560,7 @@ UUID
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>city</strong></td>
+<td colspan="2" valign="top"><strong id="currentcompanycustomeruser.city">city</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -4569,7 +4569,7 @@ city name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>companyName</strong></td>
+<td colspan="2" valign="top"><strong id="currentcompanycustomeruser.companyname">companyName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -4578,7 +4578,7 @@ The customer’s company name (only when customer is a company)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>companyNumber</strong></td>
+<td colspan="2" valign="top"><strong id="currentcompanycustomeruser.companynumber">companyNumber</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -4587,7 +4587,7 @@ The customer’s company identification number (only when customer is a company)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>companyTaxNumber</strong></td>
+<td colspan="2" valign="top"><strong id="currentcompanycustomeruser.companytaxnumber">companyTaxNumber</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -4596,7 +4596,7 @@ The customer’s company tax number (only when customer is a company)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>country</strong></td>
+<td colspan="2" valign="top"><strong id="currentcompanycustomeruser.country">country</strong></td>
 <td valign="top"><a href="#country">Country</a></td>
 <td>
 
@@ -4605,7 +4605,7 @@ Billing address country
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>defaultDeliveryAddress</strong></td>
+<td colspan="2" valign="top"><strong id="currentcompanycustomeruser.defaultdeliveryaddress">defaultDeliveryAddress</strong></td>
 <td valign="top"><a href="#deliveryaddress">DeliveryAddress</a></td>
 <td>
 
@@ -4614,7 +4614,7 @@ Default customer delivery addresses
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryAddresses</strong></td>
+<td colspan="2" valign="top"><strong id="currentcompanycustomeruser.deliveryaddresses">deliveryAddresses</strong></td>
 <td valign="top">[<a href="#deliveryaddress">DeliveryAddress</a>!]!</td>
 <td>
 
@@ -4623,7 +4623,7 @@ List of delivery addresses
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>email</strong></td>
+<td colspan="2" valign="top"><strong id="currentcompanycustomeruser.email">email</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -4632,7 +4632,7 @@ Email address
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>firstName</strong></td>
+<td colspan="2" valign="top"><strong id="currentcompanycustomeruser.firstname">firstName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -4641,7 +4641,7 @@ First name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>hasPasswordSet</strong></td>
+<td colspan="2" valign="top"><strong id="currentcompanycustomeruser.haspasswordset">hasPasswordSet</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -4650,7 +4650,7 @@ Whether the customer user has password set or not
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td colspan="2" valign="top"><strong id="currentcompanycustomeruser.lastname">lastName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -4659,7 +4659,7 @@ Last name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>loginInfo</strong></td>
+<td colspan="2" valign="top"><strong id="currentcompanycustomeruser.logininfo">loginInfo</strong></td>
 <td valign="top"><a href="#logininfo">LoginInfo</a>!</td>
 <td>
 
@@ -4668,7 +4668,7 @@ Current login information
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>newsletterSubscription</strong></td>
+<td colspan="2" valign="top"><strong id="currentcompanycustomeruser.newslettersubscription">newsletterSubscription</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -4677,7 +4677,7 @@ Whether customer user receives newsletters or not
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>postcode</strong></td>
+<td colspan="2" valign="top"><strong id="currentcompanycustomeruser.postcode">postcode</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -4686,7 +4686,7 @@ zip code
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>pricingGroup</strong></td>
+<td colspan="2" valign="top"><strong id="currentcompanycustomeruser.pricinggroup">pricingGroup</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -4695,7 +4695,7 @@ The name of the customer pricing group
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>roleGroup</strong></td>
+<td colspan="2" valign="top"><strong id="currentcompanycustomeruser.rolegroup">roleGroup</strong></td>
 <td valign="top"><a href="#customeruserrolegroup">CustomerUserRoleGroup</a>!</td>
 <td>
 
@@ -4704,12 +4704,12 @@ The customer user role group
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>roles</strong></td>
+<td colspan="2" valign="top"><strong id="currentcompanycustomeruser.roles">roles</strong></td>
 <td valign="top">[<a href="#customeruserroleenum">CustomerUserRoleEnum</a>!]!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>salesRepresentative</strong></td>
+<td colspan="2" valign="top"><strong id="currentcompanycustomeruser.salesrepresentative">salesRepresentative</strong></td>
 <td valign="top"><a href="#salesrepresentative">SalesRepresentative</a></td>
 <td>
 
@@ -4718,7 +4718,7 @@ Sales representative assigned to customer
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>street</strong></td>
+<td colspan="2" valign="top"><strong id="currentcompanycustomeruser.street">street</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -4727,7 +4727,7 @@ street name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td colspan="2" valign="top"><strong id="currentcompanycustomeruser.telephone">telephone</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -4736,7 +4736,7 @@ Phone number
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="currentcompanycustomeruser.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -4762,7 +4762,7 @@ Represents a currently logged regular customer user
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>billingAddressUuid</strong></td>
+<td colspan="2" valign="top"><strong id="currentregularcustomeruser.billingaddressuuid">billingAddressUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -4771,7 +4771,7 @@ UUID
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>city</strong></td>
+<td colspan="2" valign="top"><strong id="currentregularcustomeruser.city">city</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -4780,7 +4780,7 @@ city name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>country</strong></td>
+<td colspan="2" valign="top"><strong id="currentregularcustomeruser.country">country</strong></td>
 <td valign="top"><a href="#country">Country</a></td>
 <td>
 
@@ -4789,7 +4789,7 @@ Billing address country
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>defaultDeliveryAddress</strong></td>
+<td colspan="2" valign="top"><strong id="currentregularcustomeruser.defaultdeliveryaddress">defaultDeliveryAddress</strong></td>
 <td valign="top"><a href="#deliveryaddress">DeliveryAddress</a></td>
 <td>
 
@@ -4798,7 +4798,7 @@ Default customer delivery addresses
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryAddresses</strong></td>
+<td colspan="2" valign="top"><strong id="currentregularcustomeruser.deliveryaddresses">deliveryAddresses</strong></td>
 <td valign="top">[<a href="#deliveryaddress">DeliveryAddress</a>!]!</td>
 <td>
 
@@ -4807,7 +4807,7 @@ List of delivery addresses
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>email</strong></td>
+<td colspan="2" valign="top"><strong id="currentregularcustomeruser.email">email</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -4816,7 +4816,7 @@ Email address
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>firstName</strong></td>
+<td colspan="2" valign="top"><strong id="currentregularcustomeruser.firstname">firstName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -4825,7 +4825,7 @@ First name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>hasPasswordSet</strong></td>
+<td colspan="2" valign="top"><strong id="currentregularcustomeruser.haspasswordset">hasPasswordSet</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -4834,7 +4834,7 @@ Whether the customer user has password set or not
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td colspan="2" valign="top"><strong id="currentregularcustomeruser.lastname">lastName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -4843,7 +4843,7 @@ Last name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>loginInfo</strong></td>
+<td colspan="2" valign="top"><strong id="currentregularcustomeruser.logininfo">loginInfo</strong></td>
 <td valign="top"><a href="#logininfo">LoginInfo</a>!</td>
 <td>
 
@@ -4852,7 +4852,7 @@ Current login information
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>newsletterSubscription</strong></td>
+<td colspan="2" valign="top"><strong id="currentregularcustomeruser.newslettersubscription">newsletterSubscription</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -4861,7 +4861,7 @@ Whether customer user receives newsletters or not
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>postcode</strong></td>
+<td colspan="2" valign="top"><strong id="currentregularcustomeruser.postcode">postcode</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -4870,7 +4870,7 @@ zip code
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>pricingGroup</strong></td>
+<td colspan="2" valign="top"><strong id="currentregularcustomeruser.pricinggroup">pricingGroup</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -4879,7 +4879,7 @@ The name of the customer pricing group
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>roleGroup</strong></td>
+<td colspan="2" valign="top"><strong id="currentregularcustomeruser.rolegroup">roleGroup</strong></td>
 <td valign="top"><a href="#customeruserrolegroup">CustomerUserRoleGroup</a>!</td>
 <td>
 
@@ -4888,12 +4888,12 @@ The customer user role group
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>roles</strong></td>
+<td colspan="2" valign="top"><strong id="currentregularcustomeruser.roles">roles</strong></td>
 <td valign="top">[<a href="#customeruserroleenum">CustomerUserRoleEnum</a>!]!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>salesRepresentative</strong></td>
+<td colspan="2" valign="top"><strong id="currentregularcustomeruser.salesrepresentative">salesRepresentative</strong></td>
 <td valign="top"><a href="#salesrepresentative">SalesRepresentative</a></td>
 <td>
 
@@ -4902,7 +4902,7 @@ Sales representative assigned to customer
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>street</strong></td>
+<td colspan="2" valign="top"><strong id="currentregularcustomeruser.street">street</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -4911,7 +4911,7 @@ street name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td colspan="2" valign="top"><strong id="currentregularcustomeruser.telephone">telephone</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -4920,7 +4920,7 @@ Phone number
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="currentregularcustomeruser.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -4944,7 +4944,7 @@ UUID
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="customeruserrolegroup.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -4953,7 +4953,7 @@ Customer user group name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="customeruserrolegroup.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -4977,7 +4977,7 @@ UUID
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>city</strong></td>
+<td colspan="2" valign="top"><strong id="deliveryaddress.city">city</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -4986,7 +4986,7 @@ Delivery address city name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>companyName</strong></td>
+<td colspan="2" valign="top"><strong id="deliveryaddress.companyname">companyName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -4995,7 +4995,7 @@ Delivery address company name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>country</strong></td>
+<td colspan="2" valign="top"><strong id="deliveryaddress.country">country</strong></td>
 <td valign="top"><a href="#country">Country</a></td>
 <td>
 
@@ -5004,7 +5004,7 @@ Delivery address country
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>firstName</strong></td>
+<td colspan="2" valign="top"><strong id="deliveryaddress.firstname">firstName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -5013,7 +5013,7 @@ Delivery address firstname
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td colspan="2" valign="top"><strong id="deliveryaddress.lastname">lastName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -5022,7 +5022,7 @@ Delivery address lastname
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>postcode</strong></td>
+<td colspan="2" valign="top"><strong id="deliveryaddress.postcode">postcode</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -5031,7 +5031,7 @@ Delivery address zip code
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>street</strong></td>
+<td colspan="2" valign="top"><strong id="deliveryaddress.street">street</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -5040,7 +5040,7 @@ Delivery address street name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td colspan="2" valign="top"><strong id="deliveryaddress.telephone">telephone</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -5049,7 +5049,7 @@ Delivery address telephone
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="deliveryaddress.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -5075,7 +5075,7 @@ Represents a downloadable file
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>anchorText</strong></td>
+<td colspan="2" valign="top"><strong id="file.anchortext">anchorText</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -5084,7 +5084,7 @@ Clickable text for a hyperlink
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>url</strong></td>
+<td colspan="2" valign="top"><strong id="file.url">url</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -5110,7 +5110,7 @@ Represents a flag
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
+<td colspan="2" valign="top"><strong id="flag.breadcrumb">breadcrumb</strong></td>
 <td valign="top">[<a href="#link">Link</a>!]!</td>
 <td>
 
@@ -5119,7 +5119,7 @@ Hierarchy of the current element in relation to the structure
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>categories</strong></td>
+<td colspan="2" valign="top"><strong id="flag.categories">categories</strong></td>
 <td valign="top">[<a href="#category">Category</a>!]!</td>
 <td>
 
@@ -5133,7 +5133,7 @@ Categories containing at least one product with flag
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>hreflangLinks</strong></td>
+<td colspan="2" valign="top"><strong id="flag.hreflanglinks">hreflangLinks</strong></td>
 <td valign="top">[<a href="#hreflanglink">HreflangLink</a>!]!</td>
 <td>
 
@@ -5142,7 +5142,7 @@ Alternate links for hreflang meta tags
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="flag.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -5151,7 +5151,7 @@ Localized flag name (domain dependent)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>products</strong></td>
+<td colspan="2" valign="top"><strong id="flag.products">products</strong></td>
 <td valign="top"><a href="#productconnection">ProductConnection</a>!</td>
 <td>
 
@@ -5205,7 +5205,7 @@ Paginated and ordered products of flag
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>rgbColor</strong></td>
+<td colspan="2" valign="top"><strong id="flag.rgbcolor">rgbColor</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -5214,7 +5214,7 @@ Flag color in rgb format
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>slug</strong></td>
+<td colspan="2" valign="top"><strong id="flag.slug">slug</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -5223,7 +5223,7 @@ URL slug of flag
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="flag.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -5249,7 +5249,7 @@ Flag filter option
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>count</strong></td>
+<td colspan="2" valign="top"><strong id="flagfilteroption.count">count</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -5258,7 +5258,7 @@ Count of products that will be filtered if this filter option is applied.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>flag</strong></td>
+<td colspan="2" valign="top"><strong id="flagfilteroption.flag">flag</strong></td>
 <td valign="top"><a href="#flag">Flag</a>!</td>
 <td>
 
@@ -5267,7 +5267,7 @@ Flag
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isAbsolute</strong></td>
+<td colspan="2" valign="top"><strong id="flagfilteroption.isabsolute">isAbsolute</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -5276,7 +5276,7 @@ If true than count parameter is number of products that will be displayed if thi
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isSelected</strong></td>
+<td colspan="2" valign="top"><strong id="flagfilteroption.isselected">isSelected</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -5300,7 +5300,7 @@ Indicator whether the option is already selected (used for "ready category seo m
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>imageLargeUrl</strong></td>
+<td colspan="2" valign="top"><strong id="gopaybankswift.imagelargeurl">imageLargeUrl</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -5309,7 +5309,7 @@ large image url
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>imageNormalUrl</strong></td>
+<td colspan="2" valign="top"><strong id="gopaybankswift.imagenormalurl">imageNormalUrl</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -5318,12 +5318,12 @@ normal image url
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isOnline</strong></td>
+<td colspan="2" valign="top"><strong id="gopaybankswift.isonline">isOnline</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="gopaybankswift.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -5332,7 +5332,7 @@ Bank name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>swift</strong></td>
+<td colspan="2" valign="top"><strong id="gopaybankswift.swift">swift</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -5356,7 +5356,7 @@ Swift code
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>embedJs</strong></td>
+<td colspan="2" valign="top"><strong id="gopaycreatepaymentsetup.embedjs">embedJs</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -5365,7 +5365,7 @@ url of gopay embedJs file
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>gatewayUrl</strong></td>
+<td colspan="2" valign="top"><strong id="gopaycreatepaymentsetup.gatewayurl">gatewayUrl</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -5374,7 +5374,7 @@ redirect URL to payment gateway
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>goPayId</strong></td>
+<td colspan="2" valign="top"><strong id="gopaycreatepaymentsetup.gopayid">goPayId</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -5398,7 +5398,7 @@ payment transaction identifier
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>identifier</strong></td>
+<td colspan="2" valign="top"><strong id="gopaypaymentmethod.identifier">identifier</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -5407,7 +5407,7 @@ Identifier of payment method
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>imageLargeUrl</strong></td>
+<td colspan="2" valign="top"><strong id="gopaypaymentmethod.imagelargeurl">imageLargeUrl</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -5416,7 +5416,7 @@ URL to large size image of payment method
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>imageNormalUrl</strong></td>
+<td colspan="2" valign="top"><strong id="gopaypaymentmethod.imagenormalurl">imageNormalUrl</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -5425,7 +5425,7 @@ URL to normal size image of payment method
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="gopaypaymentmethod.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -5434,7 +5434,7 @@ Name of payment method
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>paymentGroup</strong></td>
+<td colspan="2" valign="top"><strong id="gopaypaymentmethod.paymentgroup">paymentGroup</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -5458,7 +5458,7 @@ Group of payment methods
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>href</strong></td>
+<td colspan="2" valign="top"><strong id="hreflanglink.href">href</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -5467,7 +5467,7 @@ URL for hreflang meta tag
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>hreflang</strong></td>
+<td colspan="2" valign="top"><strong id="hreflanglink.hreflang">hreflang</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -5493,7 +5493,7 @@ Represents an image
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="image.name">name</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -5502,7 +5502,7 @@ Name of the image usable as an alternative text
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>url</strong></td>
+<td colspan="2" valign="top"><strong id="image.url">url</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -5528,7 +5528,7 @@ Represents a single user translation of language constant
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>key</strong></td>
+<td colspan="2" valign="top"><strong id="languageconstant.key">key</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -5537,7 +5537,7 @@ Translation key
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>translation</strong></td>
+<td colspan="2" valign="top"><strong id="languageconstant.translation">translation</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -5563,7 +5563,7 @@ Represents an internal link
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="link.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -5572,7 +5572,7 @@ Clickable text for a hyperlink
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>slug</strong></td>
+<td colspan="2" valign="top"><strong id="link.slug">slug</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -5596,7 +5596,7 @@ Target URL slug
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>externalId</strong></td>
+<td colspan="2" valign="top"><strong id="logininfo.externalid">externalId</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -5605,7 +5605,7 @@ The user ID in the service (facebook, google, etc.) used for login. Null for 'we
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>loginType</strong></td>
+<td colspan="2" valign="top"><strong id="logininfo.logintype">loginType</strong></td>
 <td valign="top"><a href="#logintypeenum">LoginTypeEnum</a>!</td>
 <td>
 
@@ -5629,12 +5629,12 @@ The type of login (web, facebook, google, etc.)
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>showCartMergeInfo</strong></td>
+<td colspan="2" valign="top"><strong id="loginresult.showcartmergeinfo">showCartMergeInfo</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>tokens</strong></td>
+<td colspan="2" valign="top"><strong id="loginresult.tokens">tokens</strong></td>
 <td valign="top"><a href="#token">Token</a>!</td>
 <td></td>
 </tr>
@@ -5654,7 +5654,7 @@ The type of login (web, facebook, google, etc.)
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>mainBlogCategoryMainImage</strong></td>
+<td colspan="2" valign="top"><strong id="mainblogcategorydata.mainblogcategorymainimage">mainBlogCategoryMainImage</strong></td>
 <td valign="top"><a href="#image">Image</a></td>
 <td>
 
@@ -5663,7 +5663,7 @@ Main image of the blog main category
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>mainBlogCategoryUrl</strong></td>
+<td colspan="2" valign="top"><strong id="mainblogcategorydata.mainblogcategoryurl">mainBlogCategoryUrl</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -5689,17 +5689,17 @@ Represents a product
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>accessories</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.accessories">accessories</strong></td>
 <td valign="top">[<a href="#product">Product</a>!]!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>availability</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.availability">availability</strong></td>
 <td valign="top"><a href="#availability">Availability</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>availableStoresCount</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.availablestorescount">availableStoresCount</strong></td>
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
@@ -5708,7 +5708,7 @@ Number of the stores where the product is available (null for main variants)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>brand</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.brand">brand</strong></td>
 <td valign="top"><a href="#brand">Brand</a></td>
 <td>
 
@@ -5717,7 +5717,7 @@ Brand of product
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.breadcrumb">breadcrumb</strong></td>
 <td valign="top">[<a href="#link">Link</a>!]!</td>
 <td>
 
@@ -5726,7 +5726,7 @@ Hierarchy of the current element in relation to the structure
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>catalogNumber</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.catalognumber">catalogNumber</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -5735,7 +5735,7 @@ Product catalog number
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>categories</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.categories">categories</strong></td>
 <td valign="top">[<a href="#category">Category</a>!]!</td>
 <td>
 
@@ -5744,12 +5744,12 @@ List of categories
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>description</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.description">description</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>ean</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.ean">ean</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -5758,12 +5758,12 @@ EAN
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>files</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.files">files</strong></td>
 <td valign="top">[<a href="#file">File</a>!]!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>flags</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.flags">flags</strong></td>
 <td valign="top">[<a href="#flag">Flag</a>!]!</td>
 <td>
 
@@ -5772,7 +5772,7 @@ List of flags
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>fullName</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.fullname">fullName</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -5781,7 +5781,7 @@ The full name of the product, which consists of a prefix, name, and a suffix
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>hreflangLinks</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.hreflanglinks">hreflangLinks</strong></td>
 <td valign="top">[<a href="#hreflanglink">HreflangLink</a>!]!</td>
 <td>
 
@@ -5790,7 +5790,7 @@ Alternate links for hreflang meta tags
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>id</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.id">id</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -5799,7 +5799,7 @@ Product id
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>images</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.images">images</strong></td>
 <td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
 
@@ -5813,27 +5813,27 @@ Product images
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isInquiryType</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.isinquirytype">isInquiryType</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isMainVariant</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.ismainvariant">isMainVariant</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isSellingDenied</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.issellingdenied">isSellingDenied</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isVisible</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.isvisible">isVisible</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>link</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.link">link</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -5842,7 +5842,7 @@ Product link
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.mainimage">mainImage</strong></td>
 <td valign="top"><a href="#image">Image</a></td>
 <td>
 
@@ -5856,7 +5856,7 @@ Product image by params
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -5865,7 +5865,7 @@ Localized product name (domain dependent)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>namePrefix</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.nameprefix">namePrefix</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -5874,7 +5874,7 @@ Name prefix
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>nameSuffix</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.namesuffix">nameSuffix</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -5883,17 +5883,17 @@ Name suffix
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>orderingPriority</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.orderingpriority">orderingPriority</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>parameters</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.parameters">parameters</strong></td>
 <td valign="top">[<a href="#parameter">Parameter</a>!]!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>partNumber</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.partnumber">partNumber</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -5902,7 +5902,7 @@ Product part number
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>price</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.price">price</strong></td>
 <td valign="top"><a href="#productprice">ProductPrice</a>!</td>
 <td>
 
@@ -5911,17 +5911,17 @@ Product price
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>productType</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.producttype">productType</strong></td>
 <td valign="top"><a href="#producttypeenum">ProductTypeEnum</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>productVideos</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.productvideos">productVideos</strong></td>
 <td valign="top">[<a href="#videotoken">VideoToken</a>!]!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>relatedProducts</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.relatedproducts">relatedProducts</strong></td>
 <td valign="top">[<a href="#product">Product</a>!]!</td>
 <td>
 
@@ -5930,7 +5930,7 @@ List of related products
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoH1</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.seoh1">seoH1</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -5939,7 +5939,7 @@ Seo first level heading of product
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoMetaDescription</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.seometadescription">seoMetaDescription</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -5948,7 +5948,7 @@ Seo meta description of product
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoTitle</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.seotitle">seoTitle</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -5957,7 +5957,7 @@ Seo title of product
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>shortDescription</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.shortdescription">shortDescription</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -5966,7 +5966,7 @@ Localized product short description (domain dependent)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>slug</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.slug">slug</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -5975,7 +5975,7 @@ Product URL slug
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>stockQuantity</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.stockquantity">stockQuantity</strong></td>
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
@@ -5984,7 +5984,7 @@ Count of quantity on stock
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>storeAvailabilities</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.storeavailabilities">storeAvailabilities</strong></td>
 <td valign="top">[<a href="#storeavailability">StoreAvailability</a>!]!</td>
 <td>
 
@@ -5993,12 +5993,12 @@ List of availabilities in individual stores (empty for main variants)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>unit</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.unit">unit</strong></td>
 <td valign="top"><a href="#unit">Unit</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>usps</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.usps">usps</strong></td>
 <td valign="top">[<a href="#string">String</a>!]!</td>
 <td>
 
@@ -6007,7 +6007,7 @@ List of product's unique selling propositions
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -6016,12 +6016,12 @@ UUID
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>variants</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.variants">variants</strong></td>
 <td valign="top">[<a href="#variant">Variant</a>!]!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>variantsCount</strong></td>
+<td colspan="2" valign="top"><strong id="mainvariant.variantscount">variantsCount</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -6047,7 +6047,7 @@ Represents a navigation structure item
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>categoriesByColumns</strong></td>
+<td colspan="2" valign="top"><strong id="navigationitem.categoriesbycolumns">categoriesByColumns</strong></td>
 <td valign="top">[<a href="#navigationitemcategoriesbycolumns">NavigationItemCategoriesByColumns</a>!]!</td>
 <td>
 
@@ -6056,7 +6056,7 @@ Categories separated into columns
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>link</strong></td>
+<td colspan="2" valign="top"><strong id="navigationitem.link">link</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -6065,7 +6065,7 @@ Target URL
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="navigationitem.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -6091,7 +6091,7 @@ Represents a single column inside the navigation item
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>categories</strong></td>
+<td colspan="2" valign="top"><strong id="navigationitemcategoriesbycolumns.categories">categories</strong></td>
 <td valign="top">[<a href="#category">Category</a>!]!</td>
 <td>
 
@@ -6100,7 +6100,7 @@ Categories
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>columnNumber</strong></td>
+<td colspan="2" valign="top"><strong id="navigationitemcategoriesbycolumns.columnnumber">columnNumber</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -6124,7 +6124,7 @@ Column number
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>createdAt</strong></td>
+<td colspan="2" valign="top"><strong id="newslettersubscriber.createdat">createdAt</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a>!</td>
 <td>
 
@@ -6133,7 +6133,7 @@ Date and time of subscription
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>email</strong></td>
+<td colspan="2" valign="top"><strong id="newslettersubscriber.email">email</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -6159,7 +6159,7 @@ Represents a notification supposed to be displayed on all pages
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>images</strong></td>
+<td colspan="2" valign="top"><strong id="notificationbar.images">images</strong></td>
 <td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
 
@@ -6173,7 +6173,7 @@ Notification bar images
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td colspan="2" valign="top"><strong id="notificationbar.mainimage">mainImage</strong></td>
 <td valign="top"><a href="#image">Image</a></td>
 <td>
 
@@ -6187,7 +6187,7 @@ Notification bar image by params
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>rgbColor</strong></td>
+<td colspan="2" valign="top"><strong id="notificationbar.rgbcolor">rgbColor</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -6196,7 +6196,7 @@ Color of the notification
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>text</strong></td>
+<td colspan="2" valign="top"><strong id="notificationbar.text">text</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -6205,7 +6205,7 @@ Message of the notification
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>validityFrom</strong></td>
+<td colspan="2" valign="top"><strong id="notificationbar.validityfrom">validityFrom</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a></td>
 <td>
 
@@ -6214,7 +6214,7 @@ Notification bar validity from
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>validityTo</strong></td>
+<td colspan="2" valign="top"><strong id="notificationbar.validityto">validityTo</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a></td>
 <td>
 
@@ -6240,7 +6240,7 @@ Represents store opening hours
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>dayOfWeek</strong></td>
+<td colspan="2" valign="top"><strong id="openinghours.dayofweek">dayOfWeek</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -6249,7 +6249,7 @@ Current day of the week
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>openingHoursOfDays</strong></td>
+<td colspan="2" valign="top"><strong id="openinghours.openinghoursofdays">openingHoursOfDays</strong></td>
 <td valign="top">[<a href="#openinghoursofday">OpeningHoursOfDay</a>!]!</td>
 <td>
 
@@ -6258,7 +6258,7 @@ Opening hours for every day of the week (1 for Monday 7 for Sunday)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>status</strong></td>
+<td colspan="2" valign="top"><strong id="openinghours.status">status</strong></td>
 <td valign="top"><a href="#storeopeningstatusenum">StoreOpeningStatusEnum</a>!</td>
 <td>
 
@@ -6284,7 +6284,7 @@ Represents store opening hours for a specific day
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>date</strong></td>
+<td colspan="2" valign="top"><strong id="openinghoursofday.date">date</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a>!</td>
 <td>
 
@@ -6293,7 +6293,7 @@ Date of day with display timezone for domain
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>dayOfWeek</strong></td>
+<td colspan="2" valign="top"><strong id="openinghoursofday.dayofweek">dayOfWeek</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -6302,7 +6302,7 @@ Day of the week
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>openingHoursRanges</strong></td>
+<td colspan="2" valign="top"><strong id="openinghoursofday.openinghoursranges">openingHoursRanges</strong></td>
 <td valign="top">[<a href="#openinghoursrange">OpeningHoursRange</a>!]!</td>
 <td>
 
@@ -6328,7 +6328,7 @@ Represents a time period when a store is open
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>closingTime</strong></td>
+<td colspan="2" valign="top"><strong id="openinghoursrange.closingtime">closingTime</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -6337,7 +6337,7 @@ Closing time
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>openingTime</strong></td>
+<td colspan="2" valign="top"><strong id="openinghoursrange.openingtime">openingTime</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -6361,7 +6361,7 @@ Opening time
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>city</strong></td>
+<td colspan="2" valign="top"><strong id="order.city">city</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -6370,7 +6370,7 @@ Billing address city name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>companyName</strong></td>
+<td colspan="2" valign="top"><strong id="order.companyname">companyName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -6379,7 +6379,7 @@ The customer’s company name (only when ordered on the company behalf)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>companyNumber</strong></td>
+<td colspan="2" valign="top"><strong id="order.companynumber">companyNumber</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -6388,7 +6388,7 @@ The customer’s company identification number (only when ordered on the company
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>companyTaxNumber</strong></td>
+<td colspan="2" valign="top"><strong id="order.companytaxnumber">companyTaxNumber</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -6397,7 +6397,7 @@ The customer’s company tax number (only when ordered on the company behalf)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>country</strong></td>
+<td colspan="2" valign="top"><strong id="order.country">country</strong></td>
 <td valign="top"><a href="#country">Country</a>!</td>
 <td>
 
@@ -6406,7 +6406,7 @@ Billing address country
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>creationDate</strong></td>
+<td colspan="2" valign="top"><strong id="order.creationdate">creationDate</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a>!</td>
 <td>
 
@@ -6415,7 +6415,7 @@ Date and time when the order was created
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>customerUser</strong></td>
+<td colspan="2" valign="top"><strong id="order.customeruser">customerUser</strong></td>
 <td valign="top"><a href="#basecustomeruser">BaseCustomerUser</a></td>
 <td>
 
@@ -6424,7 +6424,7 @@ The registered customer user who made the order (or null if the order was made b
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryCity</strong></td>
+<td colspan="2" valign="top"><strong id="order.deliverycity">deliveryCity</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -6433,7 +6433,7 @@ City name for delivery
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryCompanyName</strong></td>
+<td colspan="2" valign="top"><strong id="order.deliverycompanyname">deliveryCompanyName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -6442,7 +6442,7 @@ Company name for delivery
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryCountry</strong></td>
+<td colspan="2" valign="top"><strong id="order.deliverycountry">deliveryCountry</strong></td>
 <td valign="top"><a href="#country">Country</a></td>
 <td>
 
@@ -6451,7 +6451,7 @@ Country for delivery
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryFirstName</strong></td>
+<td colspan="2" valign="top"><strong id="order.deliveryfirstname">deliveryFirstName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -6460,7 +6460,7 @@ First name of the contact person for delivery
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryLastName</strong></td>
+<td colspan="2" valign="top"><strong id="order.deliverylastname">deliveryLastName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -6469,7 +6469,7 @@ Last name of the contact person for delivery
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryPostcode</strong></td>
+<td colspan="2" valign="top"><strong id="order.deliverypostcode">deliveryPostcode</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -6478,7 +6478,7 @@ Zip code for delivery
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryStreet</strong></td>
+<td colspan="2" valign="top"><strong id="order.deliverystreet">deliveryStreet</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -6487,7 +6487,7 @@ Street name for delivery
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryTelephone</strong></td>
+<td colspan="2" valign="top"><strong id="order.deliverytelephone">deliveryTelephone</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -6496,7 +6496,7 @@ Contact telephone number for delivery
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>email</strong></td>
+<td colspan="2" valign="top"><strong id="order.email">email</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -6505,7 +6505,7 @@ The customer's email address
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>firstName</strong></td>
+<td colspan="2" valign="top"><strong id="order.firstname">firstName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -6514,7 +6514,7 @@ The customer's first name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>hasPaymentInProcess</strong></td>
+<td colspan="2" valign="top"><strong id="order.haspaymentinprocess">hasPaymentInProcess</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -6523,7 +6523,7 @@ Indicates whether order payment is still being processed with GoPay payment type
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>heurekaAgreement</strong></td>
+<td colspan="2" valign="top"><strong id="order.heurekaagreement">heurekaAgreement</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -6532,7 +6532,7 @@ Determines whether the customer agrees with sending satisfaction questionnaires 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isDeliveryAddressDifferentFromBilling</strong></td>
+<td colspan="2" valign="top"><strong id="order.isdeliveryaddressdifferentfrombilling">isDeliveryAddressDifferentFromBilling</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -6541,7 +6541,7 @@ Indicates whether the billing address is other than a delivery address
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isPaid</strong></td>
+<td colspan="2" valign="top"><strong id="order.ispaid">isPaid</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -6550,7 +6550,7 @@ Indicates whether the order is paid successfully with GoPay payment type
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>items</strong></td>
+<td colspan="2" valign="top"><strong id="order.items">items</strong></td>
 <td valign="top">[<a href="#orderitem">OrderItem</a>!]!</td>
 <td>
 
@@ -6559,7 +6559,7 @@ All items in the order including payment and transport
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td colspan="2" valign="top"><strong id="order.lastname">lastName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -6568,7 +6568,7 @@ The customer's last name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>note</strong></td>
+<td colspan="2" valign="top"><strong id="order.note">note</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -6577,7 +6577,7 @@ Other information related to the order
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>number</strong></td>
+<td colspan="2" valign="top"><strong id="order.number">number</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -6586,7 +6586,7 @@ Unique order number
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>payment</strong></td>
+<td colspan="2" valign="top"><strong id="order.payment">payment</strong></td>
 <td valign="top"><a href="#payment">Payment</a>!</td>
 <td>
 
@@ -6595,7 +6595,7 @@ Payment method applied to the order
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>paymentTransactionsCount</strong></td>
+<td colspan="2" valign="top"><strong id="order.paymenttransactionscount">paymentTransactionsCount</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -6604,7 +6604,7 @@ Count of the payment transactions related to the order
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>pickupPlaceIdentifier</strong></td>
+<td colspan="2" valign="top"><strong id="order.pickupplaceidentifier">pickupPlaceIdentifier</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -6613,7 +6613,7 @@ Selected pickup place identifier
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>postcode</strong></td>
+<td colspan="2" valign="top"><strong id="order.postcode">postcode</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -6622,7 +6622,7 @@ Billing address zip code
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>productItems</strong></td>
+<td colspan="2" valign="top"><strong id="order.productitems">productItems</strong></td>
 <td valign="top">[<a href="#orderitem">OrderItem</a>!]!</td>
 <td>
 
@@ -6631,7 +6631,7 @@ All product items in the order
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>promoCode</strong></td>
+<td colspan="2" valign="top"><strong id="order.promocode">promoCode</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -6640,7 +6640,7 @@ Promo code (coupon) used in the order
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>status</strong></td>
+<td colspan="2" valign="top"><strong id="order.status">status</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -6649,7 +6649,7 @@ Current status of the order
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>statusType</strong></td>
+<td colspan="2" valign="top"><strong id="order.statustype">statusType</strong></td>
 <td valign="top"><a href="#orderstatusenum">OrderStatusEnum</a>!</td>
 <td>
 
@@ -6658,7 +6658,7 @@ Type of the order status
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>street</strong></td>
+<td colspan="2" valign="top"><strong id="order.street">street</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -6667,7 +6667,7 @@ Billing address street name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td colspan="2" valign="top"><strong id="order.telephone">telephone</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -6676,7 +6676,7 @@ The customer's telephone number
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>totalPrice</strong></td>
+<td colspan="2" valign="top"><strong id="order.totalprice">totalPrice</strong></td>
 <td valign="top"><a href="#price">Price</a>!</td>
 <td>
 
@@ -6685,7 +6685,7 @@ Total price of the order including transport and payment prices
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>trackingNumber</strong></td>
+<td colspan="2" valign="top"><strong id="order.trackingnumber">trackingNumber</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -6694,7 +6694,7 @@ The order tracking number
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>trackingUrl</strong></td>
+<td colspan="2" valign="top"><strong id="order.trackingurl">trackingUrl</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -6703,7 +6703,7 @@ The order tracking link
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>transport</strong></td>
+<td colspan="2" valign="top"><strong id="order.transport">transport</strong></td>
 <td valign="top"><a href="#transport">Transport</a>!</td>
 <td>
 
@@ -6712,7 +6712,7 @@ Transport method applied to the order
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>urlHash</strong></td>
+<td colspan="2" valign="top"><strong id="order.urlhash">urlHash</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -6721,7 +6721,7 @@ Unique url hash that can be used to
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="order.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -6747,7 +6747,7 @@ A connection to a list of items.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>edges</strong></td>
+<td colspan="2" valign="top"><strong id="orderconnection.edges">edges</strong></td>
 <td valign="top">[<a href="#orderedge">OrderEdge</a>]</td>
 <td>
 
@@ -6756,7 +6756,7 @@ Information to aid in pagination.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>pageInfo</strong></td>
+<td colspan="2" valign="top"><strong id="orderconnection.pageinfo">pageInfo</strong></td>
 <td valign="top"><a href="#pageinfo">PageInfo</a>!</td>
 <td>
 
@@ -6765,7 +6765,7 @@ Information to aid in pagination.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>totalCount</strong></td>
+<td colspan="2" valign="top"><strong id="orderconnection.totalcount">totalCount</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -6791,7 +6791,7 @@ An edge in a connection.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>cursor</strong></td>
+<td colspan="2" valign="top"><strong id="orderedge.cursor">cursor</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -6800,7 +6800,7 @@ A cursor for use in pagination.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>node</strong></td>
+<td colspan="2" valign="top"><strong id="orderedge.node">node</strong></td>
 <td valign="top"><a href="#order">Order</a></td>
 <td>
 
@@ -6826,7 +6826,7 @@ Represent one item in the order
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>catnum</strong></td>
+<td colspan="2" valign="top"><strong id="orderitem.catnum">catnum</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -6835,7 +6835,7 @@ Catalog number of the order item product
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="orderitem.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -6844,7 +6844,7 @@ Name of the order item
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>order</strong></td>
+<td colspan="2" valign="top"><strong id="orderitem.order">order</strong></td>
 <td valign="top"><a href="#order">Order</a>!</td>
 <td>
 
@@ -6853,7 +6853,7 @@ Order to which the order item belongs
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>product</strong></td>
+<td colspan="2" valign="top"><strong id="orderitem.product">product</strong></td>
 <td valign="top"><a href="#product">Product</a></td>
 <td>
 
@@ -6862,7 +6862,7 @@ Product of the order item
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>quantity</strong></td>
+<td colspan="2" valign="top"><strong id="orderitem.quantity">quantity</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -6871,7 +6871,7 @@ Quantity of order items in the order
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>totalPrice</strong></td>
+<td colspan="2" valign="top"><strong id="orderitem.totalprice">totalPrice</strong></td>
 <td valign="top"><a href="#price">Price</a>!</td>
 <td>
 
@@ -6880,7 +6880,7 @@ Total price for the quantity of order item
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>type</strong></td>
+<td colspan="2" valign="top"><strong id="orderitem.type">type</strong></td>
 <td valign="top"><a href="#orderitemtypeenum">OrderItemTypeEnum</a>!</td>
 <td>
 
@@ -6889,7 +6889,7 @@ Type of the order item
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>unit</strong></td>
+<td colspan="2" valign="top"><strong id="orderitem.unit">unit</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -6898,7 +6898,7 @@ Unit of measurement used for the order item
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>unitPrice</strong></td>
+<td colspan="2" valign="top"><strong id="orderitem.unitprice">unitPrice</strong></td>
 <td valign="top"><a href="#price">Price</a>!</td>
 <td>
 
@@ -6907,7 +6907,7 @@ Order item price per unit
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="orderitem.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -6916,7 +6916,7 @@ UUID of the order item
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>vatRate</strong></td>
+<td colspan="2" valign="top"><strong id="orderitem.vatrate">vatRate</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -6942,7 +6942,7 @@ A connection to a list of items.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>edges</strong></td>
+<td colspan="2" valign="top"><strong id="orderitemconnection.edges">edges</strong></td>
 <td valign="top">[<a href="#orderitemedge">OrderItemEdge</a>]</td>
 <td>
 
@@ -6951,7 +6951,7 @@ Information to aid in pagination.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>pageInfo</strong></td>
+<td colspan="2" valign="top"><strong id="orderitemconnection.pageinfo">pageInfo</strong></td>
 <td valign="top"><a href="#pageinfo">PageInfo</a>!</td>
 <td>
 
@@ -6960,7 +6960,7 @@ Information to aid in pagination.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>totalCount</strong></td>
+<td colspan="2" valign="top"><strong id="orderitemconnection.totalcount">totalCount</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -6986,7 +6986,7 @@ An edge in a connection.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>cursor</strong></td>
+<td colspan="2" valign="top"><strong id="orderitemedge.cursor">cursor</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -6995,7 +6995,7 @@ A cursor for use in pagination.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>node</strong></td>
+<td colspan="2" valign="top"><strong id="orderitemedge.node">node</strong></td>
 <td valign="top"><a href="#orderitem">OrderItem</a></td>
 <td>
 
@@ -7019,7 +7019,7 @@ The item at the end of the edge.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>availablePayments</strong></td>
+<td colspan="2" valign="top"><strong id="orderpaymentsconfig.availablepayments">availablePayments</strong></td>
 <td valign="top">[<a href="#payment">Payment</a>!]!</td>
 <td>
 
@@ -7028,7 +7028,7 @@ All available payment methods for the order (excluding the current one)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>currentPayment</strong></td>
+<td colspan="2" valign="top"><strong id="orderpaymentsconfig.currentpayment">currentPayment</strong></td>
 <td valign="top"><a href="#payment">Payment</a>!</td>
 <td>
 
@@ -7054,7 +7054,7 @@ Information about pagination in a connection.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>endCursor</strong></td>
+<td colspan="2" valign="top"><strong id="pageinfo.endcursor">endCursor</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -7063,7 +7063,7 @@ When paginating forwards, the cursor to continue.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>hasNextPage</strong></td>
+<td colspan="2" valign="top"><strong id="pageinfo.hasnextpage">hasNextPage</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -7072,7 +7072,7 @@ When paginating forwards, are there more items?
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>hasPreviousPage</strong></td>
+<td colspan="2" valign="top"><strong id="pageinfo.haspreviouspage">hasPreviousPage</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -7081,7 +7081,7 @@ When paginating backwards, are there more items?
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>startCursor</strong></td>
+<td colspan="2" valign="top"><strong id="pageinfo.startcursor">startCursor</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -7107,7 +7107,7 @@ Represents a parameter
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>group</strong></td>
+<td colspan="2" valign="top"><strong id="parameter.group">group</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -7116,7 +7116,7 @@ Parameter group to which the parameter is assigned
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="parameter.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -7125,7 +7125,7 @@ Parameter name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>unit</strong></td>
+<td colspan="2" valign="top"><strong id="parameter.unit">unit</strong></td>
 <td valign="top"><a href="#unit">Unit</a></td>
 <td>
 
@@ -7134,7 +7134,7 @@ Unit of the parameter
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="parameter.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -7143,7 +7143,7 @@ UUID
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>values</strong></td>
+<td colspan="2" valign="top"><strong id="parameter.values">values</strong></td>
 <td valign="top">[<a href="#parametervalue">ParameterValue</a>!]!</td>
 <td></td>
 </tr>
@@ -7165,7 +7165,7 @@ Parameter filter option
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>isCollapsed</strong></td>
+<td colspan="2" valign="top"><strong id="parametercheckboxfilteroption.iscollapsed">isCollapsed</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -7174,7 +7174,7 @@ Indicator whether the parameter should be collapsed based on the current categor
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="parametercheckboxfilteroption.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -7183,7 +7183,7 @@ The parameter name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>unit</strong></td>
+<td colspan="2" valign="top"><strong id="parametercheckboxfilteroption.unit">unit</strong></td>
 <td valign="top"><a href="#unit">Unit</a></td>
 <td>
 
@@ -7192,7 +7192,7 @@ The parameter unit
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="parametercheckboxfilteroption.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -7201,7 +7201,7 @@ The parameter UUID
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>values</strong></td>
+<td colspan="2" valign="top"><strong id="parametercheckboxfilteroption.values">values</strong></td>
 <td valign="top">[<a href="#parametervaluefilteroption">ParameterValueFilterOption</a>!]!</td>
 <td>
 
@@ -7227,7 +7227,7 @@ Parameter filter option
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>isCollapsed</strong></td>
+<td colspan="2" valign="top"><strong id="parametercolorfilteroption.iscollapsed">isCollapsed</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -7236,7 +7236,7 @@ Indicator whether the parameter should be collapsed based on the current categor
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="parametercolorfilteroption.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -7245,7 +7245,7 @@ The parameter name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>unit</strong></td>
+<td colspan="2" valign="top"><strong id="parametercolorfilteroption.unit">unit</strong></td>
 <td valign="top"><a href="#unit">Unit</a></td>
 <td>
 
@@ -7254,7 +7254,7 @@ The parameter unit
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="parametercolorfilteroption.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -7263,7 +7263,7 @@ The parameter UUID
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>values</strong></td>
+<td colspan="2" valign="top"><strong id="parametercolorfilteroption.values">values</strong></td>
 <td valign="top">[<a href="#parametervaluecolorfilteroption">ParameterValueColorFilterOption</a>!]!</td>
 <td>
 
@@ -7289,7 +7289,7 @@ Parameter filter option
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>isCollapsed</strong></td>
+<td colspan="2" valign="top"><strong id="parametersliderfilteroption.iscollapsed">isCollapsed</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -7298,7 +7298,7 @@ Indicator whether the parameter should be collapsed based on the current categor
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isSelectable</strong></td>
+<td colspan="2" valign="top"><strong id="parametersliderfilteroption.isselectable">isSelectable</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -7307,7 +7307,7 @@ Can be used in filter
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>maximalValue</strong></td>
+<td colspan="2" valign="top"><strong id="parametersliderfilteroption.maximalvalue">maximalValue</strong></td>
 <td valign="top"><a href="#float">Float</a>!</td>
 <td>
 
@@ -7316,7 +7316,7 @@ The parameter maximal value
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>minimalValue</strong></td>
+<td colspan="2" valign="top"><strong id="parametersliderfilteroption.minimalvalue">minimalValue</strong></td>
 <td valign="top"><a href="#float">Float</a>!</td>
 <td>
 
@@ -7325,7 +7325,7 @@ The parameter minimal value
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="parametersliderfilteroption.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -7334,7 +7334,7 @@ The parameter name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>selectedValue</strong></td>
+<td colspan="2" valign="top"><strong id="parametersliderfilteroption.selectedvalue">selectedValue</strong></td>
 <td valign="top"><a href="#float">Float</a></td>
 <td>
 
@@ -7343,7 +7343,7 @@ The pre-selected value (used for "ready category seo mixes")
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>unit</strong></td>
+<td colspan="2" valign="top"><strong id="parametersliderfilteroption.unit">unit</strong></td>
 <td valign="top"><a href="#unit">Unit</a></td>
 <td>
 
@@ -7352,7 +7352,7 @@ The parameter unit
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="parametersliderfilteroption.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -7378,7 +7378,7 @@ Represents a parameter value
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>text</strong></td>
+<td colspan="2" valign="top"><strong id="parametervalue.text">text</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -7387,7 +7387,7 @@ Parameter value
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="parametervalue.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -7413,7 +7413,7 @@ Parameter value filter option
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>count</strong></td>
+<td colspan="2" valign="top"><strong id="parametervaluecolorfilteroption.count">count</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -7422,7 +7422,7 @@ Count of products that will be filtered if this filter option is applied.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isAbsolute</strong></td>
+<td colspan="2" valign="top"><strong id="parametervaluecolorfilteroption.isabsolute">isAbsolute</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -7431,7 +7431,7 @@ If true than count parameter is number of products that will be displayed if thi
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isSelected</strong></td>
+<td colspan="2" valign="top"><strong id="parametervaluecolorfilteroption.isselected">isSelected</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -7440,7 +7440,7 @@ Indicator whether the option is already selected (used for "ready category seo m
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>rgbHex</strong></td>
+<td colspan="2" valign="top"><strong id="parametervaluecolorfilteroption.rgbhex">rgbHex</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -7449,7 +7449,7 @@ RGB hex of color parameter
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>text</strong></td>
+<td colspan="2" valign="top"><strong id="parametervaluecolorfilteroption.text">text</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -7458,7 +7458,7 @@ Parameter value
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="parametervaluecolorfilteroption.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -7484,7 +7484,7 @@ Parameter value filter option
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>count</strong></td>
+<td colspan="2" valign="top"><strong id="parametervaluefilteroption.count">count</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -7493,7 +7493,7 @@ Count of products that will be filtered if this filter option is applied.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isAbsolute</strong></td>
+<td colspan="2" valign="top"><strong id="parametervaluefilteroption.isabsolute">isAbsolute</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -7502,7 +7502,7 @@ If true than count parameter is number of products that will be displayed if thi
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isSelected</strong></td>
+<td colspan="2" valign="top"><strong id="parametervaluefilteroption.isselected">isSelected</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -7511,7 +7511,7 @@ Indicator whether the option is already selected (used for "ready category seo m
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>text</strong></td>
+<td colspan="2" valign="top"><strong id="parametervaluefilteroption.text">text</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -7520,7 +7520,7 @@ Parameter value
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="parametervaluefilteroption.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -7546,7 +7546,7 @@ Represents a payment
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>description</strong></td>
+<td colspan="2" valign="top"><strong id="payment.description">description</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -7555,7 +7555,7 @@ Localized payment description (domain dependent)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>goPayPaymentMethod</strong></td>
+<td colspan="2" valign="top"><strong id="payment.gopaypaymentmethod">goPayPaymentMethod</strong></td>
 <td valign="top"><a href="#gopaypaymentmethod">GoPayPaymentMethod</a></td>
 <td>
 
@@ -7564,7 +7564,7 @@ Additional data for GoPay payment
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>images</strong></td>
+<td colspan="2" valign="top"><strong id="payment.images">images</strong></td>
 <td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
 
@@ -7578,7 +7578,7 @@ Payment images
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>instruction</strong></td>
+<td colspan="2" valign="top"><strong id="payment.instruction">instruction</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -7587,7 +7587,7 @@ Localized payment instruction (domain dependent)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td colspan="2" valign="top"><strong id="payment.mainimage">mainImage</strong></td>
 <td valign="top"><a href="#image">Image</a></td>
 <td>
 
@@ -7601,7 +7601,7 @@ Payment image by params
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="payment.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -7610,7 +7610,7 @@ Payment name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>position</strong></td>
+<td colspan="2" valign="top"><strong id="payment.position">position</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -7619,7 +7619,7 @@ Payment position
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>price</strong></td>
+<td colspan="2" valign="top"><strong id="payment.price">price</strong></td>
 <td valign="top"><a href="#price">Price</a>!</td>
 <td>
 
@@ -7633,7 +7633,7 @@ Payment price
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>transports</strong></td>
+<td colspan="2" valign="top"><strong id="payment.transports">transports</strong></td>
 <td valign="top">[<a href="#transport">Transport</a>!]!</td>
 <td>
 
@@ -7642,7 +7642,7 @@ List of assigned transports
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>type</strong></td>
+<td colspan="2" valign="top"><strong id="payment.type">type</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -7651,7 +7651,7 @@ Type of payment
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="payment.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -7675,7 +7675,7 @@ UUID
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>goPayCreatePaymentSetup</strong></td>
+<td colspan="2" valign="top"><strong id="paymentsetupcreationdata.gopaycreatepaymentsetup">goPayCreatePaymentSetup</strong></td>
 <td valign="top"><a href="#gopaycreatepaymentsetup">GoPayCreatePaymentSetup</a></td>
 <td>
 
@@ -7699,7 +7699,7 @@ Identifiers of GoPay payment method
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>complaints</strong></td>
+<td colspan="2" valign="top"><strong id="personaldata.complaints">complaints</strong></td>
 <td valign="top">[<a href="#complaint">Complaint</a>!]!</td>
 <td>
 
@@ -7708,7 +7708,7 @@ Customer complaints
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>customerUser</strong></td>
+<td colspan="2" valign="top"><strong id="personaldata.customeruser">customerUser</strong></td>
 <td valign="top"><a href="#basecustomeruser">BaseCustomerUser</a></td>
 <td>
 
@@ -7717,7 +7717,7 @@ Customer user data
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>exportLink</strong></td>
+<td colspan="2" valign="top"><strong id="personaldata.exportlink">exportLink</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -7726,7 +7726,7 @@ A link for downloading the personal data in an XML file
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>newsletterSubscriber</strong></td>
+<td colspan="2" valign="top"><strong id="personaldata.newslettersubscriber">newsletterSubscriber</strong></td>
 <td valign="top"><a href="#newslettersubscriber">NewsletterSubscriber</a></td>
 <td>
 
@@ -7735,7 +7735,7 @@ Newsletter subscription
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>orders</strong></td>
+<td colspan="2" valign="top"><strong id="personaldata.orders">orders</strong></td>
 <td valign="top">[<a href="#order">Order</a>!]!</td>
 <td>
 
@@ -7759,7 +7759,7 @@ Customer orders
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>displaySiteContent</strong></td>
+<td colspan="2" valign="top"><strong id="personaldatapage.displaysitecontent">displaySiteContent</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -7768,7 +7768,7 @@ The HTML content of the site where a customer can request displaying his persona
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>displaySiteSlug</strong></td>
+<td colspan="2" valign="top"><strong id="personaldatapage.displaysiteslug">displaySiteSlug</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -7777,7 +7777,7 @@ URL slug of display site
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>exportSiteContent</strong></td>
+<td colspan="2" valign="top"><strong id="personaldatapage.exportsitecontent">exportSiteContent</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -7786,7 +7786,7 @@ The HTML content of the site where a customer can request exporting his personal
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>exportSiteSlug</strong></td>
+<td colspan="2" valign="top"><strong id="personaldatapage.exportsiteslug">exportSiteSlug</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -7812,7 +7812,7 @@ Represents the price
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>priceWithoutVat</strong></td>
+<td colspan="2" valign="top"><strong id="price.pricewithoutvat">priceWithoutVat</strong></td>
 <td valign="top"><a href="#money">Money</a>!</td>
 <td>
 
@@ -7821,7 +7821,7 @@ Price without VAT
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>priceWithVat</strong></td>
+<td colspan="2" valign="top"><strong id="price.pricewithvat">priceWithVat</strong></td>
 <td valign="top"><a href="#money">Money</a>!</td>
 <td>
 
@@ -7830,7 +7830,7 @@ Price with VAT
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>vatAmount</strong></td>
+<td colspan="2" valign="top"><strong id="price.vatamount">vatAmount</strong></td>
 <td valign="top"><a href="#money">Money</a>!</td>
 <td>
 
@@ -7856,7 +7856,7 @@ Represents setting of pricing
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>defaultCurrencyCode</strong></td>
+<td colspan="2" valign="top"><strong id="pricingsetting.defaultcurrencycode">defaultCurrencyCode</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -7865,7 +7865,7 @@ Code of the default currency used on the current domain
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>minimumFractionDigits</strong></td>
+<td colspan="2" valign="top"><strong id="pricingsetting.minimumfractiondigits">minimumFractionDigits</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -7891,7 +7891,7 @@ A connection to a list of items.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>defaultOrderingMode</strong></td>
+<td colspan="2" valign="top"><strong id="productconnection.defaultorderingmode">defaultOrderingMode</strong></td>
 <td valign="top"><a href="#productorderingmodeenum">ProductOrderingModeEnum</a></td>
 <td>
 
@@ -7900,7 +7900,7 @@ The default ordering mode that is set for the given connection (e.g. in a catego
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>edges</strong></td>
+<td colspan="2" valign="top"><strong id="productconnection.edges">edges</strong></td>
 <td valign="top">[<a href="#productedge">ProductEdge</a>]</td>
 <td>
 
@@ -7909,7 +7909,7 @@ Information to aid in pagination.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>orderingMode</strong></td>
+<td colspan="2" valign="top"><strong id="productconnection.orderingmode">orderingMode</strong></td>
 <td valign="top"><a href="#productorderingmodeenum">ProductOrderingModeEnum</a>!</td>
 <td>
 
@@ -7918,7 +7918,7 @@ The current ordering mode
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>pageInfo</strong></td>
+<td colspan="2" valign="top"><strong id="productconnection.pageinfo">pageInfo</strong></td>
 <td valign="top"><a href="#pageinfo">PageInfo</a>!</td>
 <td>
 
@@ -7927,12 +7927,12 @@ Information to aid in pagination.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>productFilterOptions</strong></td>
+<td colspan="2" valign="top"><strong id="productconnection.productfilteroptions">productFilterOptions</strong></td>
 <td valign="top"><a href="#productfilteroptions">ProductFilterOptions</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>totalCount</strong></td>
+<td colspan="2" valign="top"><strong id="productconnection.totalcount">totalCount</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -7958,7 +7958,7 @@ An edge in a connection.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>cursor</strong></td>
+<td colspan="2" valign="top"><strong id="productedge.cursor">cursor</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -7967,7 +7967,7 @@ A cursor for use in pagination.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>node</strong></td>
+<td colspan="2" valign="top"><strong id="productedge.node">node</strong></td>
 <td valign="top"><a href="#product">Product</a></td>
 <td>
 
@@ -7993,7 +7993,7 @@ Represents a product filter options
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>brands</strong></td>
+<td colspan="2" valign="top"><strong id="productfilteroptions.brands">brands</strong></td>
 <td valign="top">[<a href="#brandfilteroption">BrandFilterOption</a>!]</td>
 <td>
 
@@ -8002,7 +8002,7 @@ Brands filter options
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>flags</strong></td>
+<td colspan="2" valign="top"><strong id="productfilteroptions.flags">flags</strong></td>
 <td valign="top">[<a href="#flagfilteroption">FlagFilterOption</a>!]</td>
 <td>
 
@@ -8011,7 +8011,7 @@ Flags filter options
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>inStock</strong></td>
+<td colspan="2" valign="top"><strong id="productfilteroptions.instock">inStock</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -8020,7 +8020,7 @@ Number of products in stock that will be filtered
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>maximalPrice</strong></td>
+<td colspan="2" valign="top"><strong id="productfilteroptions.maximalprice">maximalPrice</strong></td>
 <td valign="top"><a href="#money">Money</a>!</td>
 <td>
 
@@ -8029,7 +8029,7 @@ Maximal price of products for filtering
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>minimalPrice</strong></td>
+<td colspan="2" valign="top"><strong id="productfilteroptions.minimalprice">minimalPrice</strong></td>
 <td valign="top"><a href="#money">Money</a>!</td>
 <td>
 
@@ -8038,7 +8038,7 @@ Minimal price of products for filtering
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>parameters</strong></td>
+<td colspan="2" valign="top"><strong id="productfilteroptions.parameters">parameters</strong></td>
 <td valign="top">[<a href="#parameterfilteroptioninterface">ParameterFilterOptionInterface</a>!]</td>
 <td>
 
@@ -8062,7 +8062,7 @@ Parameter filter options
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>products</strong></td>
+<td colspan="2" valign="top"><strong id="productlist.products">products</strong></td>
 <td valign="top">[<a href="#product">Product</a>!]!</td>
 <td>
 
@@ -8071,7 +8071,7 @@ An array of the products in the list
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>type</strong></td>
+<td colspan="2" valign="top"><strong id="productlist.type">type</strong></td>
 <td valign="top"><a href="#productlisttypeenum">ProductListTypeEnum</a>!</td>
 <td>
 
@@ -8080,7 +8080,7 @@ Product list type
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="productlist.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -8106,7 +8106,7 @@ Represents the price of the product
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>basicPrice</strong></td>
+<td colspan="2" valign="top"><strong id="productprice.basicprice">basicPrice</strong></td>
 <td valign="top"><a href="#price">Price</a>!</td>
 <td>
 
@@ -8115,7 +8115,7 @@ Basic price of the product. If product has no discounts, it's the same as the se
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isPriceFrom</strong></td>
+<td colspan="2" valign="top"><strong id="productprice.ispricefrom">isPriceFrom</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -8124,7 +8124,7 @@ Determines whether it's a final price or starting price
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>nextPriceChange</strong></td>
+<td colspan="2" valign="top"><strong id="productprice.nextpricechange">nextPriceChange</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a></td>
 <td>
 
@@ -8133,7 +8133,7 @@ Date of the next price change, null if no price change is planned
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>percentageDiscount</strong></td>
+<td colspan="2" valign="top"><strong id="productprice.percentagediscount">percentageDiscount</strong></td>
 <td valign="top"><a href="#float">Float</a></td>
 <td>
 
@@ -8142,7 +8142,7 @@ Percentage discount on the selling price compared to the base price, null if no 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>priceWithoutVat</strong></td>
+<td colspan="2" valign="top"><strong id="productprice.pricewithoutvat">priceWithoutVat</strong></td>
 <td valign="top"><a href="#money">Money</a>!</td>
 <td>
 
@@ -8151,7 +8151,7 @@ Price without VAT
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>priceWithVat</strong></td>
+<td colspan="2" valign="top"><strong id="productprice.pricewithvat">priceWithVat</strong></td>
 <td valign="top"><a href="#money">Money</a>!</td>
 <td>
 
@@ -8160,7 +8160,7 @@ Price with VAT
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>vatAmount</strong></td>
+<td colspan="2" valign="top"><strong id="productprice.vatamount">vatAmount</strong></td>
 <td valign="top"><a href="#money">Money</a>!</td>
 <td>
 
@@ -8184,7 +8184,7 @@ Total value of VAT
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>code</strong></td>
+<td colspan="2" valign="top"><strong id="promocode.code">code</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -8193,7 +8193,7 @@ Code of the promo code
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>type</strong></td>
+<td colspan="2" valign="top"><strong id="promocode.type">type</strong></td>
 <td valign="top"><a href="#promocodetypeenum">PromoCodeTypeEnum</a>!</td>
 <td>
 
@@ -8219,7 +8219,7 @@ Represents a regular customer user
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>billingAddressUuid</strong></td>
+<td colspan="2" valign="top"><strong id="regularcustomeruser.billingaddressuuid">billingAddressUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -8228,7 +8228,7 @@ UUID
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>city</strong></td>
+<td colspan="2" valign="top"><strong id="regularcustomeruser.city">city</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -8237,7 +8237,7 @@ city name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>country</strong></td>
+<td colspan="2" valign="top"><strong id="regularcustomeruser.country">country</strong></td>
 <td valign="top"><a href="#country">Country</a></td>
 <td>
 
@@ -8246,7 +8246,7 @@ Billing address country
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>defaultDeliveryAddress</strong></td>
+<td colspan="2" valign="top"><strong id="regularcustomeruser.defaultdeliveryaddress">defaultDeliveryAddress</strong></td>
 <td valign="top"><a href="#deliveryaddress">DeliveryAddress</a></td>
 <td>
 
@@ -8255,7 +8255,7 @@ Default customer delivery addresses
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryAddresses</strong></td>
+<td colspan="2" valign="top"><strong id="regularcustomeruser.deliveryaddresses">deliveryAddresses</strong></td>
 <td valign="top">[<a href="#deliveryaddress">DeliveryAddress</a>!]!</td>
 <td>
 
@@ -8264,7 +8264,7 @@ List of delivery addresses
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>email</strong></td>
+<td colspan="2" valign="top"><strong id="regularcustomeruser.email">email</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -8273,7 +8273,7 @@ Email address
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>firstName</strong></td>
+<td colspan="2" valign="top"><strong id="regularcustomeruser.firstname">firstName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -8282,7 +8282,7 @@ First name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>hasPasswordSet</strong></td>
+<td colspan="2" valign="top"><strong id="regularcustomeruser.haspasswordset">hasPasswordSet</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -8291,7 +8291,7 @@ Whether the customer user has password set or not
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td colspan="2" valign="top"><strong id="regularcustomeruser.lastname">lastName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -8300,7 +8300,7 @@ Last name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>newsletterSubscription</strong></td>
+<td colspan="2" valign="top"><strong id="regularcustomeruser.newslettersubscription">newsletterSubscription</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -8309,7 +8309,7 @@ Whether customer user receives newsletters or not
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>postcode</strong></td>
+<td colspan="2" valign="top"><strong id="regularcustomeruser.postcode">postcode</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -8318,7 +8318,7 @@ zip code
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>pricingGroup</strong></td>
+<td colspan="2" valign="top"><strong id="regularcustomeruser.pricinggroup">pricingGroup</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -8327,7 +8327,7 @@ The name of the customer pricing group
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>roleGroup</strong></td>
+<td colspan="2" valign="top"><strong id="regularcustomeruser.rolegroup">roleGroup</strong></td>
 <td valign="top"><a href="#customeruserrolegroup">CustomerUserRoleGroup</a>!</td>
 <td>
 
@@ -8336,12 +8336,12 @@ The customer user role group
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>roles</strong></td>
+<td colspan="2" valign="top"><strong id="regularcustomeruser.roles">roles</strong></td>
 <td valign="top">[<a href="#customeruserroleenum">CustomerUserRoleEnum</a>!]!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>salesRepresentative</strong></td>
+<td colspan="2" valign="top"><strong id="regularcustomeruser.salesrepresentative">salesRepresentative</strong></td>
 <td valign="top"><a href="#salesrepresentative">SalesRepresentative</a></td>
 <td>
 
@@ -8350,7 +8350,7 @@ Sales representative assigned to customer
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>street</strong></td>
+<td colspan="2" valign="top"><strong id="regularcustomeruser.street">street</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -8359,7 +8359,7 @@ street name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td colspan="2" valign="top"><strong id="regularcustomeruser.telephone">telephone</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -8368,7 +8368,7 @@ Phone number
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="regularcustomeruser.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -8394,17 +8394,17 @@ Represents a product
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>accessories</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.accessories">accessories</strong></td>
 <td valign="top">[<a href="#product">Product</a>!]!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>availability</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.availability">availability</strong></td>
 <td valign="top"><a href="#availability">Availability</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>availableStoresCount</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.availablestorescount">availableStoresCount</strong></td>
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
@@ -8413,7 +8413,7 @@ Number of the stores where the product is available (null for main variants)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>brand</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.brand">brand</strong></td>
 <td valign="top"><a href="#brand">Brand</a></td>
 <td>
 
@@ -8422,7 +8422,7 @@ Brand of product
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.breadcrumb">breadcrumb</strong></td>
 <td valign="top">[<a href="#link">Link</a>!]!</td>
 <td>
 
@@ -8431,7 +8431,7 @@ Hierarchy of the current element in relation to the structure
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>catalogNumber</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.catalognumber">catalogNumber</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -8440,7 +8440,7 @@ Product catalog number
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>categories</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.categories">categories</strong></td>
 <td valign="top">[<a href="#category">Category</a>!]!</td>
 <td>
 
@@ -8449,12 +8449,12 @@ List of categories
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>description</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.description">description</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>ean</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.ean">ean</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -8463,12 +8463,12 @@ EAN
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>files</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.files">files</strong></td>
 <td valign="top">[<a href="#file">File</a>!]!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>flags</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.flags">flags</strong></td>
 <td valign="top">[<a href="#flag">Flag</a>!]!</td>
 <td>
 
@@ -8477,7 +8477,7 @@ List of flags
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>fullName</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.fullname">fullName</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -8486,7 +8486,7 @@ The full name of the product, which consists of a prefix, name, and a suffix
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>hreflangLinks</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.hreflanglinks">hreflangLinks</strong></td>
 <td valign="top">[<a href="#hreflanglink">HreflangLink</a>!]!</td>
 <td>
 
@@ -8495,7 +8495,7 @@ Alternate links for hreflang meta tags
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>id</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.id">id</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -8504,7 +8504,7 @@ Product id
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>images</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.images">images</strong></td>
 <td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
 
@@ -8518,27 +8518,27 @@ Product images
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isInquiryType</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.isinquirytype">isInquiryType</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isMainVariant</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.ismainvariant">isMainVariant</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isSellingDenied</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.issellingdenied">isSellingDenied</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isVisible</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.isvisible">isVisible</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>link</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.link">link</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -8547,7 +8547,7 @@ Product link
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.mainimage">mainImage</strong></td>
 <td valign="top"><a href="#image">Image</a></td>
 <td>
 
@@ -8561,7 +8561,7 @@ Product image by params
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -8570,7 +8570,7 @@ Localized product name (domain dependent)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>namePrefix</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.nameprefix">namePrefix</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -8579,7 +8579,7 @@ Name prefix
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>nameSuffix</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.namesuffix">nameSuffix</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -8588,17 +8588,17 @@ Name suffix
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>orderingPriority</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.orderingpriority">orderingPriority</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>parameters</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.parameters">parameters</strong></td>
 <td valign="top">[<a href="#parameter">Parameter</a>!]!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>partNumber</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.partnumber">partNumber</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -8607,7 +8607,7 @@ Product part number
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>price</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.price">price</strong></td>
 <td valign="top"><a href="#productprice">ProductPrice</a>!</td>
 <td>
 
@@ -8616,17 +8616,17 @@ Product price
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>productType</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.producttype">productType</strong></td>
 <td valign="top"><a href="#producttypeenum">ProductTypeEnum</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>productVideos</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.productvideos">productVideos</strong></td>
 <td valign="top">[<a href="#videotoken">VideoToken</a>!]!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>relatedProducts</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.relatedproducts">relatedProducts</strong></td>
 <td valign="top">[<a href="#product">Product</a>!]!</td>
 <td>
 
@@ -8635,7 +8635,7 @@ List of related products
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoH1</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.seoh1">seoH1</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -8644,7 +8644,7 @@ Seo first level heading of product
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoMetaDescription</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.seometadescription">seoMetaDescription</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -8653,7 +8653,7 @@ Seo meta description of product
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoTitle</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.seotitle">seoTitle</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -8662,7 +8662,7 @@ Seo title of product
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>shortDescription</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.shortdescription">shortDescription</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -8671,7 +8671,7 @@ Localized product short description (domain dependent)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>slug</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.slug">slug</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -8680,7 +8680,7 @@ Product URL slug
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>stockQuantity</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.stockquantity">stockQuantity</strong></td>
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
@@ -8689,7 +8689,7 @@ Count of quantity on stock
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>storeAvailabilities</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.storeavailabilities">storeAvailabilities</strong></td>
 <td valign="top">[<a href="#storeavailability">StoreAvailability</a>!]!</td>
 <td>
 
@@ -8698,12 +8698,12 @@ List of availabilities in individual stores (empty for main variants)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>unit</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.unit">unit</strong></td>
 <td valign="top"><a href="#unit">Unit</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>usps</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.usps">usps</strong></td>
 <td valign="top">[<a href="#string">String</a>!]!</td>
 <td>
 
@@ -8712,7 +8712,7 @@ List of product's unique selling propositions
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="regularproduct.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -8738,7 +8738,7 @@ Represents sales representative
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>email</strong></td>
+<td colspan="2" valign="top"><strong id="salesrepresentative.email">email</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -8747,7 +8747,7 @@ Email address
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>firstName</strong></td>
+<td colspan="2" valign="top"><strong id="salesrepresentative.firstname">firstName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -8756,7 +8756,7 @@ First name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>image</strong></td>
+<td colspan="2" valign="top"><strong id="salesrepresentative.image">image</strong></td>
 <td valign="top"><a href="#image">Image</a></td>
 <td>
 
@@ -8770,7 +8770,7 @@ Sales representative image
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td colspan="2" valign="top"><strong id="salesrepresentative.lastname">lastName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -8779,7 +8779,7 @@ Last name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td colspan="2" valign="top"><strong id="salesrepresentative.telephone">telephone</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -8788,7 +8788,7 @@ Phone number
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="salesrepresentative.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -8814,7 +8814,7 @@ Represents SEO settings for specific page
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>canonicalUrl</strong></td>
+<td colspan="2" valign="top"><strong id="seopage.canonicalurl">canonicalUrl</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -8823,7 +8823,7 @@ Page's canonical link
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>hreflangLinks</strong></td>
+<td colspan="2" valign="top"><strong id="seopage.hreflanglinks">hreflangLinks</strong></td>
 <td valign="top">[<a href="#hreflanglink">HreflangLink</a>!]!</td>
 <td>
 
@@ -8832,7 +8832,7 @@ Alternate links for hreflang meta tags
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>metaDescription</strong></td>
+<td colspan="2" valign="top"><strong id="seopage.metadescription">metaDescription</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -8841,7 +8841,7 @@ Description for meta tag
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>ogDescription</strong></td>
+<td colspan="2" valign="top"><strong id="seopage.ogdescription">ogDescription</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -8850,7 +8850,7 @@ Description for og:description meta tag
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>ogImage</strong></td>
+<td colspan="2" valign="top"><strong id="seopage.ogimage">ogImage</strong></td>
 <td valign="top"><a href="#image">Image</a></td>
 <td>
 
@@ -8859,7 +8859,7 @@ Image for og image meta tag by params
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>ogTitle</strong></td>
+<td colspan="2" valign="top"><strong id="seopage.ogtitle">ogTitle</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -8868,7 +8868,7 @@ Title for og:title meta tag
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>title</strong></td>
+<td colspan="2" valign="top"><strong id="seopage.title">title</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -8894,7 +8894,7 @@ Represents settings of SEO
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>metaDescription</strong></td>
+<td colspan="2" valign="top"><strong id="seosetting.metadescription">metaDescription</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -8903,7 +8903,7 @@ Description of the content of a web page
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>robotsTxtContent</strong></td>
+<td colspan="2" valign="top"><strong id="seosetting.robotstxtcontent">robotsTxtContent</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -8912,7 +8912,7 @@ Robots.txt's file content
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>title</strong></td>
+<td colspan="2" valign="top"><strong id="seosetting.title">title</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -8921,7 +8921,7 @@ Document's title that is shown in a browser's title
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>titleAddOn</strong></td>
+<td colspan="2" valign="top"><strong id="seosetting.titleaddon">titleAddOn</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -8947,7 +8947,7 @@ Represents settings of the current domain
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>contactFormMainText</strong></td>
+<td colspan="2" valign="top"><strong id="settings.contactformmaintext">contactFormMainText</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -8956,7 +8956,7 @@ Main text for contact form
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>displayTimezone</strong></td>
+<td colspan="2" valign="top"><strong id="settings.displaytimezone">displayTimezone</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -8965,7 +8965,7 @@ Timezone that is used for displaying time
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>heurekaEnabled</strong></td>
+<td colspan="2" valign="top"><strong id="settings.heurekaenabled">heurekaEnabled</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -8974,7 +8974,7 @@ Returns true if Heureka is available for the current domain
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>mainBlogCategoryData</strong></td>
+<td colspan="2" valign="top"><strong id="settings.mainblogcategorydata">mainBlogCategoryData</strong></td>
 <td valign="top"><a href="#mainblogcategorydata">MainBlogCategoryData</a>!</td>
 <td>
 
@@ -8983,7 +8983,7 @@ Main blog category URL and background image
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>maxAllowedPaymentTransactions</strong></td>
+<td colspan="2" valign="top"><strong id="settings.maxallowedpaymenttransactions">maxAllowedPaymentTransactions</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -8992,7 +8992,7 @@ Max allowed payment transactions (how many times is user allowed to try the same
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>pricing</strong></td>
+<td colspan="2" valign="top"><strong id="settings.pricing">pricing</strong></td>
 <td valign="top"><a href="#pricingsetting">PricingSetting</a>!</td>
 <td>
 
@@ -9001,7 +9001,7 @@ Settings related to pricing
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>privacyPolicyArticleUrl</strong></td>
+<td colspan="2" valign="top"><strong id="settings.privacypolicyarticleurl">privacyPolicyArticleUrl</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -9010,7 +9010,7 @@ Returns privacy policy article's url
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seo</strong></td>
+<td colspan="2" valign="top"><strong id="settings.seo">seo</strong></td>
 <td valign="top"><a href="#seosetting">SeoSetting</a>!</td>
 <td>
 
@@ -9019,7 +9019,7 @@ Settings related to SEO
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>socialNetworkLoginConfig</strong></td>
+<td colspan="2" valign="top"><strong id="settings.socialnetworkloginconfig">socialNetworkLoginConfig</strong></td>
 <td valign="top">[<a href="#logintypeenum">LoginTypeEnum</a>!]!</td>
 <td>
 
@@ -9028,7 +9028,7 @@ Returns available social network logins
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>termsAndConditionsArticleUrl</strong></td>
+<td colspan="2" valign="top"><strong id="settings.termsandconditionsarticleurl">termsAndConditionsArticleUrl</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -9037,7 +9037,7 @@ Returns Terms and Conditions article's url
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>userConsentPolicyArticleUrl</strong></td>
+<td colspan="2" valign="top"><strong id="settings.userconsentpolicyarticleurl">userConsentPolicyArticleUrl</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -9061,7 +9061,7 @@ Returns User consent policy article's url
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>description</strong></td>
+<td colspan="2" valign="top"><strong id="slideritem.description">description</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -9070,7 +9070,7 @@ Slider description
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>gtmCreative</strong></td>
+<td colspan="2" valign="top"><strong id="slideritem.gtmcreative">gtmCreative</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -9079,7 +9079,7 @@ GTM creative
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>gtmId</strong></td>
+<td colspan="2" valign="top"><strong id="slideritem.gtmid">gtmId</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -9088,7 +9088,7 @@ GTM ID
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>images</strong></td>
+<td colspan="2" valign="top"><strong id="slideritem.images">images</strong></td>
 <td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
 
@@ -9102,7 +9102,7 @@ Slider item images
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>link</strong></td>
+<td colspan="2" valign="top"><strong id="slideritem.link">link</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -9111,7 +9111,7 @@ Target link
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td colspan="2" valign="top"><strong id="slideritem.mainimage">mainImage</strong></td>
 <td valign="top"><a href="#image">Image</a>!</td>
 <td>
 
@@ -9125,7 +9125,7 @@ Slider item image by params
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="slideritem.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -9134,7 +9134,7 @@ Slider name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>opacity</strong></td>
+<td colspan="2" valign="top"><strong id="slideritem.opacity">opacity</strong></td>
 <td valign="top"><a href="#float">Float</a>!</td>
 <td>
 
@@ -9143,7 +9143,7 @@ Opacity level for the background color of the slider description box
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>rgbBackgroundColor</strong></td>
+<td colspan="2" valign="top"><strong id="slideritem.rgbbackgroundcolor">rgbBackgroundColor</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -9152,7 +9152,7 @@ RGB color code for the background of the slider description box
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="slideritem.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -9176,7 +9176,7 @@ UUID
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
+<td colspan="2" valign="top"><strong id="store.breadcrumb">breadcrumb</strong></td>
 <td valign="top">[<a href="#link">Link</a>!]!</td>
 <td>
 
@@ -9185,7 +9185,7 @@ Hierarchy of the current element in relation to the structure
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>city</strong></td>
+<td colspan="2" valign="top"><strong id="store.city">city</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -9194,7 +9194,7 @@ Store address city
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>country</strong></td>
+<td colspan="2" valign="top"><strong id="store.country">country</strong></td>
 <td valign="top"><a href="#country">Country</a>!</td>
 <td>
 
@@ -9203,7 +9203,7 @@ Store address country
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>description</strong></td>
+<td colspan="2" valign="top"><strong id="store.description">description</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -9212,7 +9212,7 @@ Store description
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>directions</strong></td>
+<td colspan="2" valign="top"><strong id="store.directions">directions</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -9221,7 +9221,7 @@ Description of how to get to the store
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>distance</strong></td>
+<td colspan="2" valign="top"><strong id="store.distance">distance</strong></td>
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
@@ -9230,7 +9230,7 @@ Distance from the user in meters
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>email</strong></td>
+<td colspan="2" valign="top"><strong id="store.email">email</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -9239,7 +9239,7 @@ Store email
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>images</strong></td>
+<td colspan="2" valign="top"><strong id="store.images">images</strong></td>
 <td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
 
@@ -9253,7 +9253,7 @@ Store images
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isDefault</strong></td>
+<td colspan="2" valign="top"><strong id="store.isdefault">isDefault</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -9262,7 +9262,7 @@ Is set as default store
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>latitude</strong></td>
+<td colspan="2" valign="top"><strong id="store.latitude">latitude</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -9271,7 +9271,7 @@ Store location latitude
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>longitude</strong></td>
+<td colspan="2" valign="top"><strong id="store.longitude">longitude</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -9280,7 +9280,7 @@ Store location longitude
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td colspan="2" valign="top"><strong id="store.mainimage">mainImage</strong></td>
 <td valign="top"><a href="#image">Image</a></td>
 <td>
 
@@ -9294,7 +9294,7 @@ Transport image by params
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="store.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -9303,7 +9303,7 @@ Store name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>openingHours</strong></td>
+<td colspan="2" valign="top"><strong id="store.openinghours">openingHours</strong></td>
 <td valign="top"><a href="#openinghours">OpeningHours</a>!</td>
 <td>
 
@@ -9312,7 +9312,7 @@ Store opening hours
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>phone</strong></td>
+<td colspan="2" valign="top"><strong id="store.phone">phone</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -9321,7 +9321,7 @@ Store phone
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>postcode</strong></td>
+<td colspan="2" valign="top"><strong id="store.postcode">postcode</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -9330,7 +9330,7 @@ Store address postcode
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>slug</strong></td>
+<td colspan="2" valign="top"><strong id="store.slug">slug</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -9339,12 +9339,12 @@ Store URL slug
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>specialMessage</strong></td>
+<td colspan="2" valign="top"><strong id="store.specialmessage">specialMessage</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>street</strong></td>
+<td colspan="2" valign="top"><strong id="store.street">street</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -9353,7 +9353,7 @@ Store address street
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="store.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -9379,7 +9379,7 @@ Represents an availability in an individual store
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>availabilityInformation</strong></td>
+<td colspan="2" valign="top"><strong id="storeavailability.availabilityinformation">availabilityInformation</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -9388,7 +9388,7 @@ Detailed information about availability
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>availabilityStatus</strong></td>
+<td colspan="2" valign="top"><strong id="storeavailability.availabilitystatus">availabilityStatus</strong></td>
 <td valign="top"><a href="#availabilitystatusenum">AvailabilityStatusEnum</a>!</td>
 <td>
 
@@ -9397,7 +9397,7 @@ Availability status in a format suitable for usage in the code
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>store</strong></td>
+<td colspan="2" valign="top"><strong id="storeavailability.store">store</strong></td>
 <td valign="top"><a href="#store">Store</a></td>
 <td>
 
@@ -9423,7 +9423,7 @@ A connection to a list of items.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>edges</strong></td>
+<td colspan="2" valign="top"><strong id="storeconnection.edges">edges</strong></td>
 <td valign="top">[<a href="#storeedge">StoreEdge</a>]</td>
 <td>
 
@@ -9432,7 +9432,7 @@ Information to aid in pagination.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>pageInfo</strong></td>
+<td colspan="2" valign="top"><strong id="storeconnection.pageinfo">pageInfo</strong></td>
 <td valign="top"><a href="#pageinfo">PageInfo</a>!</td>
 <td>
 
@@ -9441,7 +9441,7 @@ Information to aid in pagination.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>totalCount</strong></td>
+<td colspan="2" valign="top"><strong id="storeconnection.totalcount">totalCount</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -9467,7 +9467,7 @@ An edge in a connection.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>cursor</strong></td>
+<td colspan="2" valign="top"><strong id="storeedge.cursor">cursor</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -9476,7 +9476,7 @@ A cursor for use in pagination.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>node</strong></td>
+<td colspan="2" valign="top"><strong id="storeedge.node">node</strong></td>
 <td valign="top"><a href="#store">Store</a></td>
 <td>
 
@@ -9500,12 +9500,12 @@ The item at the end of the edge.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>accessToken</strong></td>
+<td colspan="2" valign="top"><strong id="token.accesstoken">accessToken</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>refreshToken</strong></td>
+<td colspan="2" valign="top"><strong id="token.refreshtoken">refreshToken</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td></td>
 </tr>
@@ -9527,7 +9527,7 @@ Represents a transport
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>daysUntilDelivery</strong></td>
+<td colspan="2" valign="top"><strong id="transport.daysuntildelivery">daysUntilDelivery</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -9536,7 +9536,7 @@ Number of days until goods are delivered
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>description</strong></td>
+<td colspan="2" valign="top"><strong id="transport.description">description</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -9545,7 +9545,7 @@ Localized transport description (domain dependent)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>images</strong></td>
+<td colspan="2" valign="top"><strong id="transport.images">images</strong></td>
 <td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
 
@@ -9559,7 +9559,7 @@ Transport images
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>instruction</strong></td>
+<td colspan="2" valign="top"><strong id="transport.instruction">instruction</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -9568,7 +9568,7 @@ Localized transport instruction (domain dependent)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isPersonalPickup</strong></td>
+<td colspan="2" valign="top"><strong id="transport.ispersonalpickup">isPersonalPickup</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -9577,7 +9577,7 @@ Pointer telling if the transport is of type personal pickup
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td colspan="2" valign="top"><strong id="transport.mainimage">mainImage</strong></td>
 <td valign="top"><a href="#image">Image</a></td>
 <td>
 
@@ -9591,7 +9591,7 @@ Transport image by params
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="transport.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -9600,7 +9600,7 @@ Transport name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>payments</strong></td>
+<td colspan="2" valign="top"><strong id="transport.payments">payments</strong></td>
 <td valign="top">[<a href="#payment">Payment</a>!]!</td>
 <td>
 
@@ -9609,7 +9609,7 @@ List of assigned payments
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>position</strong></td>
+<td colspan="2" valign="top"><strong id="transport.position">position</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -9618,7 +9618,7 @@ Transport position
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>price</strong></td>
+<td colspan="2" valign="top"><strong id="transport.price">price</strong></td>
 <td valign="top"><a href="#price">Price</a>!</td>
 <td>
 
@@ -9632,7 +9632,7 @@ Transport price
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>stores</strong></td>
+<td colspan="2" valign="top"><strong id="transport.stores">stores</strong></td>
 <td valign="top"><a href="#storeconnection">StoreConnection</a></td>
 <td>
 
@@ -9641,7 +9641,7 @@ Stores available for personal pickup
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>transportTypeCode</strong></td>
+<td colspan="2" valign="top"><strong id="transport.transporttypecode">transportTypeCode</strong></td>
 <td valign="top"><a href="#transporttypeenum">TransportTypeEnum</a>!</td>
 <td>
 
@@ -9650,7 +9650,7 @@ Code of transport type
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="transport.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -9676,7 +9676,7 @@ Represents a unit
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="unit.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -9702,17 +9702,17 @@ Represents a product
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>accessories</strong></td>
+<td colspan="2" valign="top"><strong id="variant.accessories">accessories</strong></td>
 <td valign="top">[<a href="#product">Product</a>!]!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>availability</strong></td>
+<td colspan="2" valign="top"><strong id="variant.availability">availability</strong></td>
 <td valign="top"><a href="#availability">Availability</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>availableStoresCount</strong></td>
+<td colspan="2" valign="top"><strong id="variant.availablestorescount">availableStoresCount</strong></td>
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
@@ -9721,7 +9721,7 @@ Number of the stores where the product is available (null for main variants)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>brand</strong></td>
+<td colspan="2" valign="top"><strong id="variant.brand">brand</strong></td>
 <td valign="top"><a href="#brand">Brand</a></td>
 <td>
 
@@ -9730,7 +9730,7 @@ Brand of product
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
+<td colspan="2" valign="top"><strong id="variant.breadcrumb">breadcrumb</strong></td>
 <td valign="top">[<a href="#link">Link</a>!]!</td>
 <td>
 
@@ -9739,7 +9739,7 @@ Hierarchy of the current element in relation to the structure
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>catalogNumber</strong></td>
+<td colspan="2" valign="top"><strong id="variant.catalognumber">catalogNumber</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -9748,7 +9748,7 @@ Product catalog number
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>categories</strong></td>
+<td colspan="2" valign="top"><strong id="variant.categories">categories</strong></td>
 <td valign="top">[<a href="#category">Category</a>!]!</td>
 <td>
 
@@ -9757,12 +9757,12 @@ List of categories
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>description</strong></td>
+<td colspan="2" valign="top"><strong id="variant.description">description</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>ean</strong></td>
+<td colspan="2" valign="top"><strong id="variant.ean">ean</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -9771,12 +9771,12 @@ EAN
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>files</strong></td>
+<td colspan="2" valign="top"><strong id="variant.files">files</strong></td>
 <td valign="top">[<a href="#file">File</a>!]!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>flags</strong></td>
+<td colspan="2" valign="top"><strong id="variant.flags">flags</strong></td>
 <td valign="top">[<a href="#flag">Flag</a>!]!</td>
 <td>
 
@@ -9785,7 +9785,7 @@ List of flags
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>fullName</strong></td>
+<td colspan="2" valign="top"><strong id="variant.fullname">fullName</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -9794,7 +9794,7 @@ The full name of the product, which consists of a prefix, name, and a suffix
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>hreflangLinks</strong></td>
+<td colspan="2" valign="top"><strong id="variant.hreflanglinks">hreflangLinks</strong></td>
 <td valign="top">[<a href="#hreflanglink">HreflangLink</a>!]!</td>
 <td>
 
@@ -9803,7 +9803,7 @@ Alternate links for hreflang meta tags
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>id</strong></td>
+<td colspan="2" valign="top"><strong id="variant.id">id</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -9812,7 +9812,7 @@ Product id
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>images</strong></td>
+<td colspan="2" valign="top"><strong id="variant.images">images</strong></td>
 <td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
 
@@ -9826,27 +9826,27 @@ Product images
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isInquiryType</strong></td>
+<td colspan="2" valign="top"><strong id="variant.isinquirytype">isInquiryType</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isMainVariant</strong></td>
+<td colspan="2" valign="top"><strong id="variant.ismainvariant">isMainVariant</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isSellingDenied</strong></td>
+<td colspan="2" valign="top"><strong id="variant.issellingdenied">isSellingDenied</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isVisible</strong></td>
+<td colspan="2" valign="top"><strong id="variant.isvisible">isVisible</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>link</strong></td>
+<td colspan="2" valign="top"><strong id="variant.link">link</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -9855,7 +9855,7 @@ Product link
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td colspan="2" valign="top"><strong id="variant.mainimage">mainImage</strong></td>
 <td valign="top"><a href="#image">Image</a></td>
 <td>
 
@@ -9869,12 +9869,12 @@ Product image by params
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>mainVariant</strong></td>
+<td colspan="2" valign="top"><strong id="variant.mainvariant">mainVariant</strong></td>
 <td valign="top"><a href="#mainvariant">MainVariant</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="variant.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -9883,7 +9883,7 @@ Localized product name (domain dependent)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>namePrefix</strong></td>
+<td colspan="2" valign="top"><strong id="variant.nameprefix">namePrefix</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -9892,7 +9892,7 @@ Name prefix
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>nameSuffix</strong></td>
+<td colspan="2" valign="top"><strong id="variant.namesuffix">nameSuffix</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -9901,17 +9901,17 @@ Name suffix
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>orderingPriority</strong></td>
+<td colspan="2" valign="top"><strong id="variant.orderingpriority">orderingPriority</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>parameters</strong></td>
+<td colspan="2" valign="top"><strong id="variant.parameters">parameters</strong></td>
 <td valign="top">[<a href="#parameter">Parameter</a>!]!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>partNumber</strong></td>
+<td colspan="2" valign="top"><strong id="variant.partnumber">partNumber</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -9920,7 +9920,7 @@ Product part number
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>price</strong></td>
+<td colspan="2" valign="top"><strong id="variant.price">price</strong></td>
 <td valign="top"><a href="#productprice">ProductPrice</a>!</td>
 <td>
 
@@ -9929,17 +9929,17 @@ Product price
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>productType</strong></td>
+<td colspan="2" valign="top"><strong id="variant.producttype">productType</strong></td>
 <td valign="top"><a href="#producttypeenum">ProductTypeEnum</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>productVideos</strong></td>
+<td colspan="2" valign="top"><strong id="variant.productvideos">productVideos</strong></td>
 <td valign="top">[<a href="#videotoken">VideoToken</a>!]!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>relatedProducts</strong></td>
+<td colspan="2" valign="top"><strong id="variant.relatedproducts">relatedProducts</strong></td>
 <td valign="top">[<a href="#product">Product</a>!]!</td>
 <td>
 
@@ -9948,7 +9948,7 @@ List of related products
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoH1</strong></td>
+<td colspan="2" valign="top"><strong id="variant.seoh1">seoH1</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -9957,7 +9957,7 @@ Seo first level heading of product
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoMetaDescription</strong></td>
+<td colspan="2" valign="top"><strong id="variant.seometadescription">seoMetaDescription</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -9966,7 +9966,7 @@ Seo meta description of product
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoTitle</strong></td>
+<td colspan="2" valign="top"><strong id="variant.seotitle">seoTitle</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -9975,7 +9975,7 @@ Seo title of product
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>shortDescription</strong></td>
+<td colspan="2" valign="top"><strong id="variant.shortdescription">shortDescription</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -9984,7 +9984,7 @@ Localized product short description (domain dependent)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>slug</strong></td>
+<td colspan="2" valign="top"><strong id="variant.slug">slug</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -9993,7 +9993,7 @@ Product URL slug
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>stockQuantity</strong></td>
+<td colspan="2" valign="top"><strong id="variant.stockquantity">stockQuantity</strong></td>
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
@@ -10002,7 +10002,7 @@ Count of quantity on stock
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>storeAvailabilities</strong></td>
+<td colspan="2" valign="top"><strong id="variant.storeavailabilities">storeAvailabilities</strong></td>
 <td valign="top">[<a href="#storeavailability">StoreAvailability</a>!]!</td>
 <td>
 
@@ -10011,12 +10011,12 @@ List of availabilities in individual stores (empty for main variants)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>unit</strong></td>
+<td colspan="2" valign="top"><strong id="variant.unit">unit</strong></td>
 <td valign="top"><a href="#unit">Unit</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>usps</strong></td>
+<td colspan="2" valign="top"><strong id="variant.usps">usps</strong></td>
 <td valign="top">[<a href="#string">String</a>!]!</td>
 <td>
 
@@ -10025,7 +10025,7 @@ List of product's unique selling propositions
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="variant.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -10049,12 +10049,12 @@ UUID
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>description</strong></td>
+<td colspan="2" valign="top"><strong id="videotoken.description">description</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>token</strong></td>
+<td colspan="2" valign="top"><strong id="videotoken.token">token</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td></td>
 </tr>
@@ -10075,7 +10075,7 @@ UUID
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>email</strong></td>
+<td colspan="2" valign="top"><strong id="addnewcustomeruserdatainput.email">email</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -10084,7 +10084,7 @@ Customer user email.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>firstName</strong></td>
+<td colspan="2" valign="top"><strong id="addnewcustomeruserdatainput.firstname">firstName</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -10093,7 +10093,7 @@ Customer user first name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td colspan="2" valign="top"><strong id="addnewcustomeruserdatainput.lastname">lastName</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -10102,7 +10102,7 @@ Customer user last name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>newsletterSubscription</strong></td>
+<td colspan="2" valign="top"><strong id="addnewcustomeruserdatainput.newslettersubscription">newsletterSubscription</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -10111,7 +10111,7 @@ Whether customer user should receive newsletters or not
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>roleGroupUuid</strong></td>
+<td colspan="2" valign="top"><strong id="addnewcustomeruserdatainput.rolegroupuuid">roleGroupUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -10120,7 +10120,7 @@ Customer user role group uuid.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td colspan="2" valign="top"><strong id="addnewcustomeruserdatainput.telephone">telephone</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -10143,7 +10143,7 @@ The customer's telephone number
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>cartUuid</strong></td>
+<td colspan="2" valign="top"><strong id="addorderitemstocartinput.cartuuid">cartUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
@@ -10152,7 +10152,7 @@ Cart identifier or null if customer is logged in
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>orderUuid</strong></td>
+<td colspan="2" valign="top"><strong id="addorderitemstocartinput.orderuuid">orderUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -10161,7 +10161,7 @@ UUID of the order based on which the cart should be prefilled
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>shouldMerge</strong></td>
+<td colspan="2" valign="top"><strong id="addorderitemstocartinput.shouldmerge">shouldMerge</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a></td>
 <td>
 
@@ -10184,7 +10184,7 @@ Information if the prefilled cart should be merged with the current cart
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>cartUuid</strong></td>
+<td colspan="2" valign="top"><strong id="addtocartinput.cartuuid">cartUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
@@ -10193,7 +10193,7 @@ Cart identifier, new cart will be created if not provided and customer is not lo
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isAbsoluteQuantity</strong></td>
+<td colspan="2" valign="top"><strong id="addtocartinput.isabsolutequantity">isAbsoluteQuantity</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a></td>
 <td>
 
@@ -10202,7 +10202,7 @@ True if quantity should be set no matter the current state of the cart. False if
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>productUuid</strong></td>
+<td colspan="2" valign="top"><strong id="addtocartinput.productuuid">productUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -10211,7 +10211,7 @@ Product UUID
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>quantity</strong></td>
+<td colspan="2" valign="top"><strong id="addtocartinput.quantity">quantity</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -10234,7 +10234,7 @@ Item quantity
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>cartUuid</strong></td>
+<td colspan="2" valign="top"><strong id="applypromocodetocartinput.cartuuid">cartUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
@@ -10243,7 +10243,7 @@ Cart identifier or null if customer is logged in
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>promoCode</strong></td>
+<td colspan="2" valign="top"><strong id="applypromocodetocartinput.promocode">promoCode</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -10266,7 +10266,7 @@ Promo code to be used after checkout
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>cartUuid</strong></td>
+<td colspan="2" valign="top"><strong id="cartinput.cartuuid">cartUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
@@ -10289,7 +10289,7 @@ Cart identifier, new cart will be created if not provided and customer is not lo
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>billingAddressUuid</strong></td>
+<td colspan="2" valign="top"><strong id="changecompanydatainput.billingaddressuuid">billingAddressUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
@@ -10298,7 +10298,7 @@ UUID
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>city</strong></td>
+<td colspan="2" valign="top"><strong id="changecompanydatainput.city">city</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -10307,7 +10307,7 @@ Billing address city name (will be on the tax invoice)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>companyCustomer</strong></td>
+<td colspan="2" valign="top"><strong id="changecompanydatainput.companycustomer">companyCustomer</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a></td>
 <td>
 
@@ -10316,7 +10316,7 @@ Determines whether the customer is a company or not.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>companyName</strong></td>
+<td colspan="2" valign="top"><strong id="changecompanydatainput.companyname">companyName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -10325,7 +10325,7 @@ The customer’s company name (required when companyCustomer is true)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>companyNumber</strong></td>
+<td colspan="2" valign="top"><strong id="changecompanydatainput.companynumber">companyNumber</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -10334,7 +10334,7 @@ The customer’s company identification number (required when companyCustomer is
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>companyTaxNumber</strong></td>
+<td colspan="2" valign="top"><strong id="changecompanydatainput.companytaxnumber">companyTaxNumber</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -10343,7 +10343,7 @@ The customer’s company tax number (required when companyCustomer is true)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>country</strong></td>
+<td colspan="2" valign="top"><strong id="changecompanydatainput.country">country</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -10352,7 +10352,7 @@ Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax i
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>postcode</strong></td>
+<td colspan="2" valign="top"><strong id="changecompanydatainput.postcode">postcode</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -10361,7 +10361,7 @@ Billing address zip code (will be on the tax invoice)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>street</strong></td>
+<td colspan="2" valign="top"><strong id="changecompanydatainput.street">street</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -10384,7 +10384,7 @@ Billing address street name (will be on the tax invoice)
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>email</strong></td>
+<td colspan="2" valign="top"><strong id="changepasswordinput.email">email</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -10393,7 +10393,7 @@ Customer user email.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>newPassword</strong></td>
+<td colspan="2" valign="top"><strong id="changepasswordinput.newpassword">newPassword</strong></td>
 <td valign="top"><a href="#password">Password</a>!</td>
 <td>
 
@@ -10402,7 +10402,7 @@ New customer user password.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>oldPassword</strong></td>
+<td colspan="2" valign="top"><strong id="changepasswordinput.oldpassword">oldPassword</strong></td>
 <td valign="top"><a href="#password">Password</a>!</td>
 <td>
 
@@ -10425,7 +10425,7 @@ Current customer user password.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>cartUuid</strong></td>
+<td colspan="2" valign="top"><strong id="changepaymentincartinput.cartuuid">cartUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
@@ -10434,7 +10434,7 @@ Cart identifier or null if customer is logged in
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>paymentGoPayBankSwift</strong></td>
+<td colspan="2" valign="top"><strong id="changepaymentincartinput.paymentgopaybankswift">paymentGoPayBankSwift</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -10443,7 +10443,7 @@ Selected bank swift code of goPay payment bank transfer
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>paymentUuid</strong></td>
+<td colspan="2" valign="top"><strong id="changepaymentincartinput.paymentuuid">paymentUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
@@ -10466,7 +10466,7 @@ UUID of a payment that should be added to the cart. If this is set to null, the 
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>orderUuid</strong></td>
+<td colspan="2" valign="top"><strong id="changepaymentinorderinput.orderuuid">orderUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -10475,7 +10475,7 @@ Order identifier
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>paymentGoPayBankSwift</strong></td>
+<td colspan="2" valign="top"><strong id="changepaymentinorderinput.paymentgopaybankswift">paymentGoPayBankSwift</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -10484,7 +10484,7 @@ Selected bank swift code of goPay payment bank transfer
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>paymentUuid</strong></td>
+<td colspan="2" valign="top"><strong id="changepaymentinorderinput.paymentuuid">paymentUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -10507,7 +10507,7 @@ UUID of a payment that should be assigned to the order.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>firstName</strong></td>
+<td colspan="2" valign="top"><strong id="changepersonaldatainput.firstname">firstName</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -10516,7 +10516,7 @@ Customer user first name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td colspan="2" valign="top"><strong id="changepersonaldatainput.lastname">lastName</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -10525,7 +10525,7 @@ Customer user last name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>newsletterSubscription</strong></td>
+<td colspan="2" valign="top"><strong id="changepersonaldatainput.newslettersubscription">newsletterSubscription</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -10534,7 +10534,7 @@ Whether customer user should receive newsletters or not
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td colspan="2" valign="top"><strong id="changepersonaldatainput.telephone">telephone</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -10557,7 +10557,7 @@ The customer's telephone number
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>cartUuid</strong></td>
+<td colspan="2" valign="top"><strong id="changetransportincartinput.cartuuid">cartUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
@@ -10566,7 +10566,7 @@ Cart identifier or null if customer is logged in
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>pickupPlaceIdentifier</strong></td>
+<td colspan="2" valign="top"><strong id="changetransportincartinput.pickupplaceidentifier">pickupPlaceIdentifier</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -10575,7 +10575,7 @@ The identifier of selected personal pickup place
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>transportUuid</strong></td>
+<td colspan="2" valign="top"><strong id="changetransportincartinput.transportuuid">transportUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
@@ -10598,7 +10598,7 @@ UUID of a transport that should be added to the cart. If this is set to null, th
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>bankAccountNumber</strong></td>
+<td colspan="2" valign="top"><strong id="complaintinput.bankaccountnumber">bankAccountNumber</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -10607,7 +10607,7 @@ Bank account number for money return
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryAddress</strong></td>
+<td colspan="2" valign="top"><strong id="complaintinput.deliveryaddress">deliveryAddress</strong></td>
 <td valign="top"><a href="#deliveryaddressinput">DeliveryAddressInput</a>!</td>
 <td>
 
@@ -10616,7 +10616,7 @@ Delivery address
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>email</strong></td>
+<td colspan="2" valign="top"><strong id="complaintinput.email">email</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -10625,7 +10625,7 @@ The customer's email address
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>items</strong></td>
+<td colspan="2" valign="top"><strong id="complaintinput.items">items</strong></td>
 <td valign="top">[<a href="#complaintiteminput">ComplaintItemInput</a>!]!</td>
 <td>
 
@@ -10634,7 +10634,7 @@ All items in the complaint
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>manualDocumentNumber</strong></td>
+<td colspan="2" valign="top"><strong id="complaintinput.manualdocumentnumber">manualDocumentNumber</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -10643,7 +10643,7 @@ Order or document number (doesn't have to be from any existing order)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>orderUuid</strong></td>
+<td colspan="2" valign="top"><strong id="complaintinput.orderuuid">orderUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
@@ -10652,7 +10652,7 @@ UUID of the order
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>resolution</strong></td>
+<td colspan="2" valign="top"><strong id="complaintinput.resolution">resolution</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -10675,7 +10675,7 @@ Chosen resolution from complaintResolutionQuery
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>description</strong></td>
+<td colspan="2" valign="top"><strong id="complaintiteminput.description">description</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -10684,7 +10684,7 @@ Description of the complaint item
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>files</strong></td>
+<td colspan="2" valign="top"><strong id="complaintiteminput.files">files</strong></td>
 <td valign="top">[<a href="#fileupload">FileUpload</a>!]</td>
 <td>
 
@@ -10693,7 +10693,7 @@ Files attached to the complaint item
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>manualComplaintItemCatnum</strong></td>
+<td colspan="2" valign="top"><strong id="complaintiteminput.manualcomplaintitemcatnum">manualComplaintItemCatnum</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -10702,7 +10702,7 @@ Catalog number of the complaint item entered by customer (if the complaint is cr
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>manualComplaintItemName</strong></td>
+<td colspan="2" valign="top"><strong id="complaintiteminput.manualcomplaintitemname">manualComplaintItemName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -10711,7 +10711,7 @@ Name of the complaint item entered by customer (if the complaint is created with
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>orderItemUuid</strong></td>
+<td colspan="2" valign="top"><strong id="complaintiteminput.orderitemuuid">orderItemUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
@@ -10720,7 +10720,7 @@ UUID of the order item
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>quantity</strong></td>
+<td colspan="2" valign="top"><strong id="complaintiteminput.quantity">quantity</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -10743,7 +10743,7 @@ Quantity of the complaint item
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>email</strong></td>
+<td colspan="2" valign="top"><strong id="contactforminput.email">email</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -10752,7 +10752,7 @@ Email address of the sender
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>message</strong></td>
+<td colspan="2" valign="top"><strong id="contactforminput.message">message</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -10761,7 +10761,7 @@ Message that will be sent to recipient
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="contactforminput.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -10784,12 +10784,12 @@ Name of the sender
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>latitude</strong></td>
+<td colspan="2" valign="top"><strong id="coordinates.latitude">latitude</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>longitude</strong></td>
+<td colspan="2" valign="top"><strong id="coordinates.longitude">longitude</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td></td>
 </tr>
@@ -10808,7 +10808,7 @@ Name of the sender
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>companyName</strong></td>
+<td colspan="2" valign="top"><strong id="createinquiryinput.companyname">companyName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -10817,7 +10817,7 @@ The customer’s company name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>companyNumber</strong></td>
+<td colspan="2" valign="top"><strong id="createinquiryinput.companynumber">companyNumber</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -10826,7 +10826,7 @@ The customer’s company identification number
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>companyTaxNumber</strong></td>
+<td colspan="2" valign="top"><strong id="createinquiryinput.companytaxnumber">companyTaxNumber</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -10835,7 +10835,7 @@ The customer’s company tax number
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>email</strong></td>
+<td colspan="2" valign="top"><strong id="createinquiryinput.email">email</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -10844,7 +10844,7 @@ The customer's email address
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>firstName</strong></td>
+<td colspan="2" valign="top"><strong id="createinquiryinput.firstname">firstName</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -10853,7 +10853,7 @@ Customer user first name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td colspan="2" valign="top"><strong id="createinquiryinput.lastname">lastName</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -10862,7 +10862,7 @@ Customer user last name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>note</strong></td>
+<td colspan="2" valign="top"><strong id="createinquiryinput.note">note</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -10871,7 +10871,7 @@ Customer's question or note to the inquiry product
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>productUuid</strong></td>
+<td colspan="2" valign="top"><strong id="createinquiryinput.productuuid">productUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -10880,7 +10880,7 @@ Product UUID
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td colspan="2" valign="top"><strong id="createinquiryinput.telephone">telephone</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -10903,7 +10903,7 @@ The customer's telephone number
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>email</strong></td>
+<td colspan="2" valign="top"><strong id="createwatchdoginput.email">email</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -10912,7 +10912,7 @@ The customer's email address
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>productUuid</strong></td>
+<td colspan="2" valign="top"><strong id="createwatchdoginput.productuuid">productUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -10935,7 +10935,7 @@ Product UUID
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>city</strong></td>
+<td colspan="2" valign="top"><strong id="deliveryaddressinput.city">city</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -10944,7 +10944,7 @@ Delivery address city name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>companyName</strong></td>
+<td colspan="2" valign="top"><strong id="deliveryaddressinput.companyname">companyName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -10953,7 +10953,7 @@ Delivery address company name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>country</strong></td>
+<td colspan="2" valign="top"><strong id="deliveryaddressinput.country">country</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -10962,7 +10962,7 @@ Delivery address country
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>firstName</strong></td>
+<td colspan="2" valign="top"><strong id="deliveryaddressinput.firstname">firstName</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -10971,7 +10971,7 @@ Delivery address first name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td colspan="2" valign="top"><strong id="deliveryaddressinput.lastname">lastName</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -10980,7 +10980,7 @@ Delivery address last name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>postcode</strong></td>
+<td colspan="2" valign="top"><strong id="deliveryaddressinput.postcode">postcode</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -10989,7 +10989,7 @@ Delivery address zip code
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>street</strong></td>
+<td colspan="2" valign="top"><strong id="deliveryaddressinput.street">street</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -10998,7 +10998,7 @@ Delivery address street name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td colspan="2" valign="top"><strong id="deliveryaddressinput.telephone">telephone</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -11007,7 +11007,7 @@ Delivery address telephone
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="deliveryaddressinput.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
@@ -11030,7 +11030,7 @@ UUID
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>customerUserUuid</strong></td>
+<td colspan="2" valign="top"><strong id="editcustomeruserpersonaldatainput.customeruseruuid">customerUserUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
@@ -11039,7 +11039,7 @@ UUID
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>firstName</strong></td>
+<td colspan="2" valign="top"><strong id="editcustomeruserpersonaldatainput.firstname">firstName</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -11048,7 +11048,7 @@ Customer user first name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td colspan="2" valign="top"><strong id="editcustomeruserpersonaldatainput.lastname">lastName</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -11057,7 +11057,7 @@ Customer user last name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>newsletterSubscription</strong></td>
+<td colspan="2" valign="top"><strong id="editcustomeruserpersonaldatainput.newslettersubscription">newsletterSubscription</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -11066,7 +11066,7 @@ Whether customer user should receive newsletters or not
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>roleGroupUuid</strong></td>
+<td colspan="2" valign="top"><strong id="editcustomeruserpersonaldatainput.rolegroupuuid">roleGroupUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -11075,7 +11075,7 @@ Customer user role group uuid.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td colspan="2" valign="top"><strong id="editcustomeruserpersonaldatainput.telephone">telephone</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -11098,7 +11098,7 @@ The customer's telephone number
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>cartUuid</strong></td>
+<td colspan="2" valign="top"><strong id="logininput.cartuuid">cartUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
@@ -11107,7 +11107,7 @@ Uuid of the cart that should be merged to the cart of the user
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>email</strong></td>
+<td colspan="2" valign="top"><strong id="logininput.email">email</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -11116,7 +11116,7 @@ The user email.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>password</strong></td>
+<td colspan="2" valign="top"><strong id="logininput.password">password</strong></td>
 <td valign="top"><a href="#password">Password</a>!</td>
 <td>
 
@@ -11125,7 +11125,7 @@ The user password.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>productListsUuids</strong></td>
+<td colspan="2" valign="top"><strong id="logininput.productlistsuuids">productListsUuids</strong></td>
 <td valign="top">[<a href="#uuid">Uuid</a>!]!</td>
 <td>
 
@@ -11134,7 +11134,7 @@ Uuids of product lists that should be merged to the product lists of the user
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>shouldOverwriteCustomerUserCart</strong></td>
+<td colspan="2" valign="top"><strong id="logininput.shouldoverwritecustomerusercart">shouldOverwriteCustomerUserCart</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -11159,7 +11159,7 @@ Represents the main input object to subscribe for e-mail newsletter
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>email</strong></td>
+<td colspan="2" valign="top"><strong id="newslettersubscriptiondatainput.email">email</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td></td>
 </tr>
@@ -11180,7 +11180,7 @@ Filter orders
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>createdAfter</strong></td>
+<td colspan="2" valign="top"><strong id="orderfilterinput.createdafter">createdAfter</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a></td>
 <td>
 
@@ -11189,7 +11189,7 @@ Filter orders created after this date
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>orderItemsCatnum</strong></td>
+<td colspan="2" valign="top"><strong id="orderfilterinput.orderitemscatnum">orderItemsCatnum</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -11198,7 +11198,7 @@ Filter orders by order items with product catalog number (OR condition with orde
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>orderItemsProductUuid</strong></td>
+<td colspan="2" valign="top"><strong id="orderfilterinput.orderitemsproductuuid">orderItemsProductUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
@@ -11207,7 +11207,7 @@ Filter orders by order items with product UUID (OR condition with orderItemsCatn
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>status</strong></td>
+<td colspan="2" valign="top"><strong id="orderfilterinput.status">status</strong></td>
 <td valign="top"><a href="#orderstatusenum">OrderStatusEnum</a></td>
 <td>
 
@@ -11232,7 +11232,7 @@ Represents the main input object to create orders
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>cartUuid</strong></td>
+<td colspan="2" valign="top"><strong id="orderinput.cartuuid">cartUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
@@ -11241,7 +11241,7 @@ Cart identifier used for getting carts of not logged customers
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>city</strong></td>
+<td colspan="2" valign="top"><strong id="orderinput.city">city</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -11250,7 +11250,7 @@ Billing address city name (will be on the tax invoice)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>companyName</strong></td>
+<td colspan="2" valign="top"><strong id="orderinput.companyname">companyName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -11259,7 +11259,7 @@ The customer’s company name (required when onCompanyBehalf is true)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>companyNumber</strong></td>
+<td colspan="2" valign="top"><strong id="orderinput.companynumber">companyNumber</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -11268,7 +11268,7 @@ The customer’s company identification number (required when onCompanyBehalf is
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>companyTaxNumber</strong></td>
+<td colspan="2" valign="top"><strong id="orderinput.companytaxnumber">companyTaxNumber</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -11277,7 +11277,7 @@ The customer’s company tax number (required when onCompanyBehalf is true)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>country</strong></td>
+<td colspan="2" valign="top"><strong id="orderinput.country">country</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -11286,7 +11286,7 @@ Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax i
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryAddressUuid</strong></td>
+<td colspan="2" valign="top"><strong id="orderinput.deliveryaddressuuid">deliveryAddressUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
@@ -11295,7 +11295,7 @@ Delivery address identifier. Can be used by logged users only. If set, it takes 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryCity</strong></td>
+<td colspan="2" valign="top"><strong id="orderinput.deliverycity">deliveryCity</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -11304,7 +11304,7 @@ City name for delivery (required when isDeliveryAddressDifferentFromBilling is t
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryCompanyName</strong></td>
+<td colspan="2" valign="top"><strong id="orderinput.deliverycompanyname">deliveryCompanyName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -11313,7 +11313,7 @@ Company name for delivery
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryCountry</strong></td>
+<td colspan="2" valign="top"><strong id="orderinput.deliverycountry">deliveryCountry</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -11322,7 +11322,7 @@ Country code in ISO 3166-1 alpha-2 for delivery (required when isDeliveryAddress
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryFirstName</strong></td>
+<td colspan="2" valign="top"><strong id="orderinput.deliveryfirstname">deliveryFirstName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -11331,7 +11331,7 @@ First name of the contact person for delivery (required when isDeliveryAddressDi
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryLastName</strong></td>
+<td colspan="2" valign="top"><strong id="orderinput.deliverylastname">deliveryLastName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -11340,7 +11340,7 @@ Last name of the contact person for delivery (required when isDeliveryAddressDif
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryPostcode</strong></td>
+<td colspan="2" valign="top"><strong id="orderinput.deliverypostcode">deliveryPostcode</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -11349,7 +11349,7 @@ Zip code for delivery (required when isDeliveryAddressDifferentFromBilling is tr
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryStreet</strong></td>
+<td colspan="2" valign="top"><strong id="orderinput.deliverystreet">deliveryStreet</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -11358,7 +11358,7 @@ Street name for delivery (required when isDeliveryAddressDifferentFromBilling is
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryTelephone</strong></td>
+<td colspan="2" valign="top"><strong id="orderinput.deliverytelephone">deliveryTelephone</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -11367,7 +11367,7 @@ Contact telephone number for delivery
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>email</strong></td>
+<td colspan="2" valign="top"><strong id="orderinput.email">email</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -11376,7 +11376,7 @@ The customer's email address
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>firstName</strong></td>
+<td colspan="2" valign="top"><strong id="orderinput.firstname">firstName</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -11385,7 +11385,7 @@ The customer's first name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>heurekaAgreement</strong></td>
+<td colspan="2" valign="top"><strong id="orderinput.heurekaagreement">heurekaAgreement</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -11394,7 +11394,7 @@ Determines whether the customer agrees with sending satisfaction questionnaires 
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isDeliveryAddressDifferentFromBilling</strong></td>
+<td colspan="2" valign="top"><strong id="orderinput.isdeliveryaddressdifferentfrombilling">isDeliveryAddressDifferentFromBilling</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -11403,7 +11403,7 @@ Determines whether to deliver products to a different address than the billing o
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td colspan="2" valign="top"><strong id="orderinput.lastname">lastName</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -11412,7 +11412,7 @@ The customer's last name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>newsletterSubscription</strong></td>
+<td colspan="2" valign="top"><strong id="orderinput.newslettersubscription">newsletterSubscription</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a></td>
 <td>
 
@@ -11421,7 +11421,7 @@ Allows user to subscribe/unsubscribe newsletter.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>note</strong></td>
+<td colspan="2" valign="top"><strong id="orderinput.note">note</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -11430,7 +11430,7 @@ Other information related to the order
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>onCompanyBehalf</strong></td>
+<td colspan="2" valign="top"><strong id="orderinput.oncompanybehalf">onCompanyBehalf</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -11439,7 +11439,7 @@ Determines whether the order is made on the company behalf.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>postcode</strong></td>
+<td colspan="2" valign="top"><strong id="orderinput.postcode">postcode</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -11448,7 +11448,7 @@ Billing address zip code (will be on the tax invoice)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>street</strong></td>
+<td colspan="2" valign="top"><strong id="orderinput.street">street</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -11457,7 +11457,7 @@ Billing address street name (will be on the tax invoice)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td colspan="2" valign="top"><strong id="orderinput.telephone">telephone</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -11482,7 +11482,7 @@ Filter order items
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>catnum</strong></td>
+<td colspan="2" valign="top"><strong id="orderitemsfilterinput.catnum">catnum</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -11491,7 +11491,7 @@ Filter order items by product catalog number (OR condition with productUuid)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>orderCreatedAfter</strong></td>
+<td colspan="2" valign="top"><strong id="orderitemsfilterinput.ordercreatedafter">orderCreatedAfter</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a></td>
 <td>
 
@@ -11500,7 +11500,7 @@ Filter order items in orders created after this date
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>orderStatus</strong></td>
+<td colspan="2" valign="top"><strong id="orderitemsfilterinput.orderstatus">orderStatus</strong></td>
 <td valign="top"><a href="#orderstatusenum">OrderStatusEnum</a></td>
 <td>
 
@@ -11509,7 +11509,7 @@ Filter orders created after this date
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>orderUuid</strong></td>
+<td colspan="2" valign="top"><strong id="orderitemsfilterinput.orderuuid">orderUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
@@ -11518,7 +11518,7 @@ Filter order items by order with this UUID
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>productUuid</strong></td>
+<td colspan="2" valign="top"><strong id="orderitemsfilterinput.productuuid">productUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
@@ -11527,7 +11527,7 @@ Filter order items by product with this UUID (OR condition with catnum)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>type</strong></td>
+<td colspan="2" valign="top"><strong id="orderitemsfilterinput.type">type</strong></td>
 <td valign="top"><a href="#orderitemtypeenum">OrderItemTypeEnum</a></td>
 <td>
 
@@ -11552,7 +11552,7 @@ Represents a parameter filter
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>maximalValue</strong></td>
+<td colspan="2" valign="top"><strong id="parameterfilter.maximalvalue">maximalValue</strong></td>
 <td valign="top"><a href="#float">Float</a></td>
 <td>
 
@@ -11561,7 +11561,7 @@ The parameter maximal value (for parameters with "slider" type)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>minimalValue</strong></td>
+<td colspan="2" valign="top"><strong id="parameterfilter.minimalvalue">minimalValue</strong></td>
 <td valign="top"><a href="#float">Float</a></td>
 <td>
 
@@ -11570,7 +11570,7 @@ The parameter minimal value (for parameters with "slider" type)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>parameter</strong></td>
+<td colspan="2" valign="top"><strong id="parameterfilter.parameter">parameter</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -11579,7 +11579,7 @@ Uuid of filtered parameter
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>values</strong></td>
+<td colspan="2" valign="top"><strong id="parameterfilter.values">values</strong></td>
 <td valign="top">[<a href="#uuid">Uuid</a>!]!</td>
 <td>
 
@@ -11602,7 +11602,7 @@ Array of uuids representing parameter values to be filtered by
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>email</strong></td>
+<td colspan="2" valign="top"><strong id="personaldataaccessrequestinput.email">email</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -11611,7 +11611,7 @@ The customer's email address
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>type</strong></td>
+<td colspan="2" valign="top"><strong id="personaldataaccessrequestinput.type">type</strong></td>
 <td valign="top"><a href="#personaldataaccessrequesttypeenum">PersonalDataAccessRequestTypeEnum</a></td>
 <td>
 
@@ -11636,7 +11636,7 @@ Represents a product filter
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>brands</strong></td>
+<td colspan="2" valign="top"><strong id="productfilter.brands">brands</strong></td>
 <td valign="top">[<a href="#uuid">Uuid</a>!]</td>
 <td>
 
@@ -11645,7 +11645,7 @@ Array of uuids of brands filter
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>flags</strong></td>
+<td colspan="2" valign="top"><strong id="productfilter.flags">flags</strong></td>
 <td valign="top">[<a href="#uuid">Uuid</a>!]</td>
 <td>
 
@@ -11654,7 +11654,7 @@ Array of uuids of flags filter
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>maximalPrice</strong></td>
+<td colspan="2" valign="top"><strong id="productfilter.maximalprice">maximalPrice</strong></td>
 <td valign="top"><a href="#money">Money</a></td>
 <td>
 
@@ -11663,7 +11663,7 @@ Maximal price filter
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>minimalPrice</strong></td>
+<td colspan="2" valign="top"><strong id="productfilter.minimalprice">minimalPrice</strong></td>
 <td valign="top"><a href="#money">Money</a></td>
 <td>
 
@@ -11672,7 +11672,7 @@ Minimal price filter
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>onlyInStock</strong></td>
+<td colspan="2" valign="top"><strong id="productfilter.onlyinstock">onlyInStock</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a></td>
 <td>
 
@@ -11681,7 +11681,7 @@ Only in stock filter
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>parameters</strong></td>
+<td colspan="2" valign="top"><strong id="productfilter.parameters">parameters</strong></td>
 <td valign="top">[<a href="#parameterfilter">ParameterFilter</a>!]</td>
 <td>
 
@@ -11704,7 +11704,7 @@ Parameter filter
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>type</strong></td>
+<td colspan="2" valign="top"><strong id="productlistinput.type">type</strong></td>
 <td valign="top"><a href="#productlisttypeenum">ProductListTypeEnum</a>!</td>
 <td>
 
@@ -11713,7 +11713,7 @@ Product list type
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="productlistinput.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
@@ -11736,12 +11736,12 @@ Product list identifier
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>productListInput</strong></td>
+<td colspan="2" valign="top"><strong id="productlistupdateinput.productlistinput">productListInput</strong></td>
 <td valign="top"><a href="#productlistinput">ProductListInput</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>productUuid</strong></td>
+<td colspan="2" valign="top"><strong id="productlistupdateinput.productuuid">productUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -11764,7 +11764,7 @@ Product identifier
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>email</strong></td>
+<td colspan="2" valign="top"><strong id="recoverpasswordinput.email">email</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -11773,7 +11773,7 @@ Customer user email.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>hash</strong></td>
+<td colspan="2" valign="top"><strong id="recoverpasswordinput.hash">hash</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -11782,7 +11782,7 @@ Hash
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>newPassword</strong></td>
+<td colspan="2" valign="top"><strong id="recoverpasswordinput.newpassword">newPassword</strong></td>
 <td valign="top"><a href="#password">Password</a>!</td>
 <td>
 
@@ -11805,7 +11805,7 @@ New customer user password.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>refreshToken</strong></td>
+<td colspan="2" valign="top"><strong id="refreshtokeninput.refreshtoken">refreshToken</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -11828,7 +11828,7 @@ The refresh token.
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>orderUrlHash</strong></td>
+<td colspan="2" valign="top"><strong id="registrationbyorderinput.orderurlhash">orderUrlHash</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -11837,7 +11837,7 @@ Order URL hash
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>password</strong></td>
+<td colspan="2" valign="top"><strong id="registrationbyorderinput.password">password</strong></td>
 <td valign="top"><a href="#password">Password</a>!</td>
 <td>
 
@@ -11846,7 +11846,7 @@ Customer user password
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>productListsUuids</strong></td>
+<td colspan="2" valign="top"><strong id="registrationbyorderinput.productlistsuuids">productListsUuids</strong></td>
 <td valign="top">[<a href="#uuid">Uuid</a>!]!</td>
 <td>
 
@@ -11871,7 +11871,7 @@ Represents the main input object to register customer user
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>billingAddressUuid</strong></td>
+<td colspan="2" valign="top"><strong id="registrationdatainput.billingaddressuuid">billingAddressUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
@@ -11880,7 +11880,7 @@ UUID
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>cartUuid</strong></td>
+<td colspan="2" valign="top"><strong id="registrationdatainput.cartuuid">cartUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
@@ -11889,7 +11889,7 @@ Uuid of the cart that should be merged to the cart of the newly registered user
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>city</strong></td>
+<td colspan="2" valign="top"><strong id="registrationdatainput.city">city</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -11898,7 +11898,7 @@ Billing address city name (will be on the tax invoice)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>companyCustomer</strong></td>
+<td colspan="2" valign="top"><strong id="registrationdatainput.companycustomer">companyCustomer</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a></td>
 <td>
 
@@ -11907,7 +11907,7 @@ Determines whether the customer is a company or not.
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>companyName</strong></td>
+<td colspan="2" valign="top"><strong id="registrationdatainput.companyname">companyName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -11916,7 +11916,7 @@ The customer’s company name (required when companyCustomer is true)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>companyNumber</strong></td>
+<td colspan="2" valign="top"><strong id="registrationdatainput.companynumber">companyNumber</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -11925,7 +11925,7 @@ The customer’s company identification number (required when companyCustomer is
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>companyTaxNumber</strong></td>
+<td colspan="2" valign="top"><strong id="registrationdatainput.companytaxnumber">companyTaxNumber</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -11934,7 +11934,7 @@ The customer’s company tax number (required when companyCustomer is true)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>country</strong></td>
+<td colspan="2" valign="top"><strong id="registrationdatainput.country">country</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -11943,7 +11943,7 @@ Billing address country code in ISO 3166-1 alpha-2 (Country will be on the tax i
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>email</strong></td>
+<td colspan="2" valign="top"><strong id="registrationdatainput.email">email</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -11952,7 +11952,7 @@ The customer's email address
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>firstName</strong></td>
+<td colspan="2" valign="top"><strong id="registrationdatainput.firstname">firstName</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -11961,7 +11961,7 @@ Customer user first name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td colspan="2" valign="top"><strong id="registrationdatainput.lastname">lastName</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -11970,7 +11970,7 @@ Customer user last name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>newsletterSubscription</strong></td>
+<td colspan="2" valign="top"><strong id="registrationdatainput.newslettersubscription">newsletterSubscription</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -11979,7 +11979,7 @@ Whether customer user should receive newsletters or not
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>password</strong></td>
+<td colspan="2" valign="top"><strong id="registrationdatainput.password">password</strong></td>
 <td valign="top"><a href="#password">Password</a>!</td>
 <td>
 
@@ -11988,7 +11988,7 @@ Customer user password
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>postcode</strong></td>
+<td colspan="2" valign="top"><strong id="registrationdatainput.postcode">postcode</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -11997,7 +11997,7 @@ Billing address zip code (will be on the tax invoice)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>productListsUuids</strong></td>
+<td colspan="2" valign="top"><strong id="registrationdatainput.productlistsuuids">productListsUuids</strong></td>
 <td valign="top">[<a href="#uuid">Uuid</a>!]!</td>
 <td>
 
@@ -12006,7 +12006,7 @@ Uuids of product lists that should be merged to the product lists of the user af
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>street</strong></td>
+<td colspan="2" valign="top"><strong id="registrationdatainput.street">street</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -12015,7 +12015,7 @@ Billing address street name (will be on the tax invoice)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td colspan="2" valign="top"><strong id="registrationdatainput.telephone">telephone</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -12038,7 +12038,7 @@ The customer's telephone number
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>customerUserUuid</strong></td>
+<td colspan="2" valign="top"><strong id="removecustomeruserdatainput.customeruseruuid">customerUserUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -12061,7 +12061,7 @@ Customer user UUID
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>cartItemUuid</strong></td>
+<td colspan="2" valign="top"><strong id="removefromcartinput.cartitemuuid">cartItemUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -12070,7 +12070,7 @@ Cart item UUID
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>cartUuid</strong></td>
+<td colspan="2" valign="top"><strong id="removefromcartinput.cartuuid">cartUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
@@ -12093,7 +12093,7 @@ Cart identifier, new cart will be created if not provided and customer is not lo
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>cartUuid</strong></td>
+<td colspan="2" valign="top"><strong id="removepromocodefromcartinput.cartuuid">cartUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a></td>
 <td>
 
@@ -12102,7 +12102,7 @@ Cart identifier or null if customer is logged in
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>promoCode</strong></td>
+<td colspan="2" valign="top"><strong id="removepromocodefromcartinput.promocode">promoCode</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -12127,12 +12127,12 @@ Represents search input object
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>isAutocomplete</strong></td>
+<td colspan="2" valign="top"><strong id="searchinput.isautocomplete">isAutocomplete</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>parameters</strong></td>
+<td colspan="2" valign="top"><strong id="searchinput.parameters">parameters</strong></td>
 <td valign="top">[<a href="#uuid">Uuid</a>!]</td>
 <td>
 
@@ -12141,12 +12141,12 @@ Ordered list of parameters used in Luigi's Box to ensure same order of parameter
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>search</strong></td>
+<td colspan="2" valign="top"><strong id="searchinput.search">search</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>userIdentifier</strong></td>
+<td colspan="2" valign="top"><strong id="searchinput.useridentifier">userIdentifier</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -12779,7 +12779,7 @@ Represents and encapsulates an ISO-8601 encoded UTC date-time value
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>categories</strong></td>
+<td colspan="2" valign="top"><strong id="advert.categories">categories</strong></td>
 <td valign="top">[<a href="#category">Category</a>!]!</td>
 <td>
 
@@ -12788,7 +12788,7 @@ Restricted categories of the advert (the advert is shown in these categories onl
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="advert.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -12797,7 +12797,7 @@ Name of advert
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>positionName</strong></td>
+<td colspan="2" valign="top"><strong id="advert.positionname">positionName</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -12806,7 +12806,7 @@ Position of advert
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>type</strong></td>
+<td colspan="2" valign="top"><strong id="advert.type">type</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -12815,7 +12815,7 @@ Type of advert
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="advert.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -12825,6 +12825,8 @@ UUID
 </tr>
 </tbody>
 </table>
+
+**Possible Types:** [AdvertCode](#advertcode), [AdvertImage](#advertimage)
 
 ### ArticleInterface
 
@@ -12841,47 +12843,49 @@ Represents entity that is considered to be an article on the eshop
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
+<td colspan="2" valign="top"><strong id="articleinterface.breadcrumb">breadcrumb</strong></td>
 <td valign="top">[<a href="#link">Link</a>!]!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="articleinterface.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoH1</strong></td>
+<td colspan="2" valign="top"><strong id="articleinterface.seoh1">seoH1</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoMetaDescription</strong></td>
+<td colspan="2" valign="top"><strong id="articleinterface.seometadescription">seoMetaDescription</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoTitle</strong></td>
+<td colspan="2" valign="top"><strong id="articleinterface.seotitle">seoTitle</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>slug</strong></td>
+<td colspan="2" valign="top"><strong id="articleinterface.slug">slug</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>text</strong></td>
+<td colspan="2" valign="top"><strong id="articleinterface.text">text</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="articleinterface.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td></td>
 </tr>
 </tbody>
 </table>
+
+**Possible Types:** [ArticleSite](#articlesite), [BlogArticle](#blogarticle)
 
 ### BaseCustomerUser
 
@@ -12898,7 +12902,7 @@ Represents a basic interface for a customer user
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>billingAddressUuid</strong></td>
+<td colspan="2" valign="top"><strong id="basecustomeruser.billingaddressuuid">billingAddressUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -12907,7 +12911,7 @@ UUID
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>city</strong></td>
+<td colspan="2" valign="top"><strong id="basecustomeruser.city">city</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -12916,7 +12920,7 @@ city name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>country</strong></td>
+<td colspan="2" valign="top"><strong id="basecustomeruser.country">country</strong></td>
 <td valign="top"><a href="#country">Country</a></td>
 <td>
 
@@ -12925,7 +12929,7 @@ Billing address country
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>defaultDeliveryAddress</strong></td>
+<td colspan="2" valign="top"><strong id="basecustomeruser.defaultdeliveryaddress">defaultDeliveryAddress</strong></td>
 <td valign="top"><a href="#deliveryaddress">DeliveryAddress</a></td>
 <td>
 
@@ -12934,7 +12938,7 @@ Default customer delivery addresses
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryAddresses</strong></td>
+<td colspan="2" valign="top"><strong id="basecustomeruser.deliveryaddresses">deliveryAddresses</strong></td>
 <td valign="top">[<a href="#deliveryaddress">DeliveryAddress</a>!]!</td>
 <td>
 
@@ -12943,7 +12947,7 @@ List of delivery addresses
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>email</strong></td>
+<td colspan="2" valign="top"><strong id="basecustomeruser.email">email</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -12952,7 +12956,7 @@ Email address
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>firstName</strong></td>
+<td colspan="2" valign="top"><strong id="basecustomeruser.firstname">firstName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -12961,7 +12965,7 @@ First name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>hasPasswordSet</strong></td>
+<td colspan="2" valign="top"><strong id="basecustomeruser.haspasswordset">hasPasswordSet</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -12970,7 +12974,7 @@ Whether the customer user has password set or not
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td colspan="2" valign="top"><strong id="basecustomeruser.lastname">lastName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -12979,7 +12983,7 @@ Last name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>newsletterSubscription</strong></td>
+<td colspan="2" valign="top"><strong id="basecustomeruser.newslettersubscription">newsletterSubscription</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -12988,7 +12992,7 @@ Whether customer user receives newsletters or not
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>postcode</strong></td>
+<td colspan="2" valign="top"><strong id="basecustomeruser.postcode">postcode</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -12997,7 +13001,7 @@ zip code
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>pricingGroup</strong></td>
+<td colspan="2" valign="top"><strong id="basecustomeruser.pricinggroup">pricingGroup</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -13006,7 +13010,7 @@ The name of the customer pricing group
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>roleGroup</strong></td>
+<td colspan="2" valign="top"><strong id="basecustomeruser.rolegroup">roleGroup</strong></td>
 <td valign="top"><a href="#customeruserrolegroup">CustomerUserRoleGroup</a>!</td>
 <td>
 
@@ -13015,12 +13019,12 @@ The customer user role group
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>roles</strong></td>
+<td colspan="2" valign="top"><strong id="basecustomeruser.roles">roles</strong></td>
 <td valign="top">[<a href="#customeruserroleenum">CustomerUserRoleEnum</a>!]!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>salesRepresentative</strong></td>
+<td colspan="2" valign="top"><strong id="basecustomeruser.salesrepresentative">salesRepresentative</strong></td>
 <td valign="top"><a href="#salesrepresentative">SalesRepresentative</a></td>
 <td>
 
@@ -13029,7 +13033,7 @@ Sales representative assigned to customer
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>street</strong></td>
+<td colspan="2" valign="top"><strong id="basecustomeruser.street">street</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -13038,7 +13042,7 @@ street name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td colspan="2" valign="top"><strong id="basecustomeruser.telephone">telephone</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -13047,7 +13051,7 @@ Phone number
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="basecustomeruser.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -13057,6 +13061,8 @@ UUID
 </tr>
 </tbody>
 </table>
+
+**Possible Types:** [CompanyCustomerUser](#companycustomeruser), [CurrentCompanyCustomerUser](#currentcompanycustomeruser), [CurrentRegularCustomerUser](#currentregularcustomeruser), [RegularCustomerUser](#regularcustomeruser)
 
 ### Breadcrumb
 
@@ -13073,7 +13079,7 @@ Represents entity able to return breadcrumb
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
+<td colspan="2" valign="top"><strong id="breadcrumb.breadcrumb">breadcrumb</strong></td>
 <td valign="top">[<a href="#link">Link</a>!]!</td>
 <td>
 
@@ -13083,6 +13089,8 @@ Hierarchy of the current element in relation to the structure
 </tr>
 </tbody>
 </table>
+
+**Possible Types:** [ArticleSite](#articlesite), [BlogArticle](#blogarticle), [BlogCategory](#blogcategory), [Brand](#brand), [Category](#category), [Flag](#flag), [MainVariant](#mainvariant), [RegularProduct](#regularproduct), [Store](#store), [Variant](#variant)
 
 ### CurrentCustomerUser
 
@@ -13099,7 +13107,7 @@ Represents a common interface for a currently logged customer user (both company
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>billingAddressUuid</strong></td>
+<td colspan="2" valign="top"><strong id="currentcustomeruser.billingaddressuuid">billingAddressUuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -13108,7 +13116,7 @@ UUID
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>city</strong></td>
+<td colspan="2" valign="top"><strong id="currentcustomeruser.city">city</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -13117,7 +13125,7 @@ city name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>country</strong></td>
+<td colspan="2" valign="top"><strong id="currentcustomeruser.country">country</strong></td>
 <td valign="top"><a href="#country">Country</a></td>
 <td>
 
@@ -13126,7 +13134,7 @@ Billing address country
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>defaultDeliveryAddress</strong></td>
+<td colspan="2" valign="top"><strong id="currentcustomeruser.defaultdeliveryaddress">defaultDeliveryAddress</strong></td>
 <td valign="top"><a href="#deliveryaddress">DeliveryAddress</a></td>
 <td>
 
@@ -13135,7 +13143,7 @@ Default customer delivery addresses
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>deliveryAddresses</strong></td>
+<td colspan="2" valign="top"><strong id="currentcustomeruser.deliveryaddresses">deliveryAddresses</strong></td>
 <td valign="top">[<a href="#deliveryaddress">DeliveryAddress</a>!]!</td>
 <td>
 
@@ -13144,7 +13152,7 @@ List of delivery addresses
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>email</strong></td>
+<td colspan="2" valign="top"><strong id="currentcustomeruser.email">email</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -13153,7 +13161,7 @@ Email address
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>firstName</strong></td>
+<td colspan="2" valign="top"><strong id="currentcustomeruser.firstname">firstName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -13162,7 +13170,7 @@ First name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>hasPasswordSet</strong></td>
+<td colspan="2" valign="top"><strong id="currentcustomeruser.haspasswordset">hasPasswordSet</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -13171,7 +13179,7 @@ Whether the customer user has password set or not
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>lastName</strong></td>
+<td colspan="2" valign="top"><strong id="currentcustomeruser.lastname">lastName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -13180,7 +13188,7 @@ Last name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>loginInfo</strong></td>
+<td colspan="2" valign="top"><strong id="currentcustomeruser.logininfo">loginInfo</strong></td>
 <td valign="top"><a href="#logininfo">LoginInfo</a>!</td>
 <td>
 
@@ -13189,7 +13197,7 @@ Current login information
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>newsletterSubscription</strong></td>
+<td colspan="2" valign="top"><strong id="currentcustomeruser.newslettersubscription">newsletterSubscription</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -13198,7 +13206,7 @@ Whether customer user receives newsletters or not
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>postcode</strong></td>
+<td colspan="2" valign="top"><strong id="currentcustomeruser.postcode">postcode</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -13207,7 +13215,7 @@ zip code
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>pricingGroup</strong></td>
+<td colspan="2" valign="top"><strong id="currentcustomeruser.pricinggroup">pricingGroup</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -13216,7 +13224,7 @@ The name of the customer pricing group
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>roleGroup</strong></td>
+<td colspan="2" valign="top"><strong id="currentcustomeruser.rolegroup">roleGroup</strong></td>
 <td valign="top"><a href="#customeruserrolegroup">CustomerUserRoleGroup</a>!</td>
 <td>
 
@@ -13225,12 +13233,12 @@ The customer user role group
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>roles</strong></td>
+<td colspan="2" valign="top"><strong id="currentcustomeruser.roles">roles</strong></td>
 <td valign="top">[<a href="#customeruserroleenum">CustomerUserRoleEnum</a>!]!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>salesRepresentative</strong></td>
+<td colspan="2" valign="top"><strong id="currentcustomeruser.salesrepresentative">salesRepresentative</strong></td>
 <td valign="top"><a href="#salesrepresentative">SalesRepresentative</a></td>
 <td>
 
@@ -13239,7 +13247,7 @@ Sales representative assigned to customer
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>street</strong></td>
+<td colspan="2" valign="top"><strong id="currentcustomeruser.street">street</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -13248,7 +13256,7 @@ street name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>telephone</strong></td>
+<td colspan="2" valign="top"><strong id="currentcustomeruser.telephone">telephone</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -13257,7 +13265,7 @@ Phone number
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="currentcustomeruser.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -13267,6 +13275,8 @@ UUID
 </tr>
 </tbody>
 </table>
+
+**Possible Types:** [CurrentCompanyCustomerUser](#currentcompanycustomeruser), [CurrentRegularCustomerUser](#currentregularcustomeruser)
 
 ### Hreflang
 
@@ -13283,7 +13293,7 @@ Represents entity able to return alternate links for hreflang meta tags
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>hreflangLinks</strong></td>
+<td colspan="2" valign="top"><strong id="hreflang.hreflanglinks">hreflangLinks</strong></td>
 <td valign="top">[<a href="#hreflanglink">HreflangLink</a>!]!</td>
 <td>
 
@@ -13293,6 +13303,8 @@ Alternate links for hreflang meta tags
 </tr>
 </tbody>
 </table>
+
+**Possible Types:** [BlogArticle](#blogarticle), [BlogCategory](#blogcategory), [Brand](#brand), [Flag](#flag), [MainVariant](#mainvariant), [RegularProduct](#regularproduct), [SeoPage](#seopage), [Variant](#variant)
 
 ### NotBlogArticleInterface
 
@@ -13309,7 +13321,7 @@ Represents an article that is not a blog article
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>createdAt</strong></td>
+<td colspan="2" valign="top"><strong id="notblogarticleinterface.createdat">createdAt</strong></td>
 <td valign="top"><a href="#datetime">DateTime</a>!</td>
 <td>
 
@@ -13318,7 +13330,7 @@ creation date time of the article
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>external</strong></td>
+<td colspan="2" valign="top"><strong id="notblogarticleinterface.external">external</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -13327,7 +13339,7 @@ If the the article should be open in a new tab
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="notblogarticleinterface.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -13336,7 +13348,7 @@ name of article link
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>placement</strong></td>
+<td colspan="2" valign="top"><strong id="notblogarticleinterface.placement">placement</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -13345,7 +13357,7 @@ placement of the article
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="notblogarticleinterface.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -13355,6 +13367,8 @@ UUID of the article link
 </tr>
 </tbody>
 </table>
+
+**Possible Types:** [ArticleLink](#articlelink), [ArticleSite](#articlesite)
 
 ### ParameterFilterOptionInterface
 
@@ -13371,7 +13385,7 @@ Represents parameter filter option
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>isCollapsed</strong></td>
+<td colspan="2" valign="top"><strong id="parameterfilteroptioninterface.iscollapsed">isCollapsed</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
@@ -13380,7 +13394,7 @@ Indicator whether the parameter should be collapsed based on the current categor
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="parameterfilteroptioninterface.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -13389,7 +13403,7 @@ The parameter name
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>unit</strong></td>
+<td colspan="2" valign="top"><strong id="parameterfilteroptioninterface.unit">unit</strong></td>
 <td valign="top"><a href="#unit">Unit</a></td>
 <td>
 
@@ -13398,7 +13412,7 @@ The parameter unit
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="parameterfilteroptioninterface.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -13408,6 +13422,8 @@ The parameter UUID
 </tr>
 </tbody>
 </table>
+
+**Possible Types:** [ParameterCheckboxFilterOption](#parametercheckboxfilteroption), [ParameterColorFilterOption](#parametercolorfilteroption), [ParameterSliderFilterOption](#parametersliderfilteroption)
 
 ### Product
 
@@ -13424,17 +13440,17 @@ Represents a product
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>accessories</strong></td>
+<td colspan="2" valign="top"><strong id="product.accessories">accessories</strong></td>
 <td valign="top">[<a href="#product">Product</a>!]!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>availability</strong></td>
+<td colspan="2" valign="top"><strong id="product.availability">availability</strong></td>
 <td valign="top"><a href="#availability">Availability</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>availableStoresCount</strong></td>
+<td colspan="2" valign="top"><strong id="product.availablestorescount">availableStoresCount</strong></td>
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
@@ -13443,7 +13459,7 @@ Number of the stores where the product is available (null for main variants)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>brand</strong></td>
+<td colspan="2" valign="top"><strong id="product.brand">brand</strong></td>
 <td valign="top"><a href="#brand">Brand</a></td>
 <td>
 
@@ -13452,7 +13468,7 @@ Brand of product
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>breadcrumb</strong></td>
+<td colspan="2" valign="top"><strong id="product.breadcrumb">breadcrumb</strong></td>
 <td valign="top">[<a href="#link">Link</a>!]!</td>
 <td>
 
@@ -13461,7 +13477,7 @@ Hierarchy of the current element in relation to the structure
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>catalogNumber</strong></td>
+<td colspan="2" valign="top"><strong id="product.catalognumber">catalogNumber</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -13470,7 +13486,7 @@ Product catalog number
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>categories</strong></td>
+<td colspan="2" valign="top"><strong id="product.categories">categories</strong></td>
 <td valign="top">[<a href="#category">Category</a>!]!</td>
 <td>
 
@@ -13479,12 +13495,12 @@ List of categories
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>description</strong></td>
+<td colspan="2" valign="top"><strong id="product.description">description</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>ean</strong></td>
+<td colspan="2" valign="top"><strong id="product.ean">ean</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -13493,12 +13509,12 @@ EAN
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>files</strong></td>
+<td colspan="2" valign="top"><strong id="product.files">files</strong></td>
 <td valign="top">[<a href="#file">File</a>!]!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>flags</strong></td>
+<td colspan="2" valign="top"><strong id="product.flags">flags</strong></td>
 <td valign="top">[<a href="#flag">Flag</a>!]!</td>
 <td>
 
@@ -13507,7 +13523,7 @@ List of flags
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>fullName</strong></td>
+<td colspan="2" valign="top"><strong id="product.fullname">fullName</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -13516,7 +13532,7 @@ The full name of the product, which consists of a prefix, name, and a suffix
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>hreflangLinks</strong></td>
+<td colspan="2" valign="top"><strong id="product.hreflanglinks">hreflangLinks</strong></td>
 <td valign="top">[<a href="#hreflanglink">HreflangLink</a>!]!</td>
 <td>
 
@@ -13525,7 +13541,7 @@ Alternate links for hreflang meta tags
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>id</strong></td>
+<td colspan="2" valign="top"><strong id="product.id">id</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td>
 
@@ -13534,7 +13550,7 @@ Product id
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>images</strong></td>
+<td colspan="2" valign="top"><strong id="product.images">images</strong></td>
 <td valign="top">[<a href="#image">Image</a>!]!</td>
 <td>
 
@@ -13548,27 +13564,27 @@ Product images
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isInquiryType</strong></td>
+<td colspan="2" valign="top"><strong id="product.isinquirytype">isInquiryType</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isMainVariant</strong></td>
+<td colspan="2" valign="top"><strong id="product.ismainvariant">isMainVariant</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isSellingDenied</strong></td>
+<td colspan="2" valign="top"><strong id="product.issellingdenied">isSellingDenied</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>isVisible</strong></td>
+<td colspan="2" valign="top"><strong id="product.isvisible">isVisible</strong></td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>link</strong></td>
+<td colspan="2" valign="top"><strong id="product.link">link</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -13577,7 +13593,7 @@ Product link
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>mainImage</strong></td>
+<td colspan="2" valign="top"><strong id="product.mainimage">mainImage</strong></td>
 <td valign="top"><a href="#image">Image</a></td>
 <td>
 
@@ -13591,7 +13607,7 @@ Product image by params
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="product.name">name</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -13600,7 +13616,7 @@ Localized product name (domain dependent)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>namePrefix</strong></td>
+<td colspan="2" valign="top"><strong id="product.nameprefix">namePrefix</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -13609,7 +13625,7 @@ Name prefix
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>nameSuffix</strong></td>
+<td colspan="2" valign="top"><strong id="product.namesuffix">nameSuffix</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -13618,17 +13634,17 @@ Name suffix
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>orderingPriority</strong></td>
+<td colspan="2" valign="top"><strong id="product.orderingpriority">orderingPriority</strong></td>
 <td valign="top"><a href="#int">Int</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>parameters</strong></td>
+<td colspan="2" valign="top"><strong id="product.parameters">parameters</strong></td>
 <td valign="top">[<a href="#parameter">Parameter</a>!]!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>partNumber</strong></td>
+<td colspan="2" valign="top"><strong id="product.partnumber">partNumber</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -13637,7 +13653,7 @@ Product part number
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>price</strong></td>
+<td colspan="2" valign="top"><strong id="product.price">price</strong></td>
 <td valign="top"><a href="#productprice">ProductPrice</a>!</td>
 <td>
 
@@ -13646,17 +13662,17 @@ Product price
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>productType</strong></td>
+<td colspan="2" valign="top"><strong id="product.producttype">productType</strong></td>
 <td valign="top"><a href="#producttypeenum">ProductTypeEnum</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>productVideos</strong></td>
+<td colspan="2" valign="top"><strong id="product.productvideos">productVideos</strong></td>
 <td valign="top">[<a href="#videotoken">VideoToken</a>!]!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>relatedProducts</strong></td>
+<td colspan="2" valign="top"><strong id="product.relatedproducts">relatedProducts</strong></td>
 <td valign="top">[<a href="#product">Product</a>!]!</td>
 <td>
 
@@ -13665,7 +13681,7 @@ List of related products
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoH1</strong></td>
+<td colspan="2" valign="top"><strong id="product.seoh1">seoH1</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -13674,7 +13690,7 @@ Seo first level heading of product
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoMetaDescription</strong></td>
+<td colspan="2" valign="top"><strong id="product.seometadescription">seoMetaDescription</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -13683,7 +13699,7 @@ Seo meta description of product
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>seoTitle</strong></td>
+<td colspan="2" valign="top"><strong id="product.seotitle">seoTitle</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -13692,7 +13708,7 @@ Seo title of product
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>shortDescription</strong></td>
+<td colspan="2" valign="top"><strong id="product.shortdescription">shortDescription</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td>
 
@@ -13701,7 +13717,7 @@ Localized product short description (domain dependent)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>slug</strong></td>
+<td colspan="2" valign="top"><strong id="product.slug">slug</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td>
 
@@ -13710,7 +13726,7 @@ Product URL slug
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>stockQuantity</strong></td>
+<td colspan="2" valign="top"><strong id="product.stockquantity">stockQuantity</strong></td>
 <td valign="top"><a href="#int">Int</a></td>
 <td>
 
@@ -13719,7 +13735,7 @@ Count of quantity on stock
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>storeAvailabilities</strong></td>
+<td colspan="2" valign="top"><strong id="product.storeavailabilities">storeAvailabilities</strong></td>
 <td valign="top">[<a href="#storeavailability">StoreAvailability</a>!]!</td>
 <td>
 
@@ -13728,12 +13744,12 @@ List of availabilities in individual stores (empty for main variants)
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>unit</strong></td>
+<td colspan="2" valign="top"><strong id="product.unit">unit</strong></td>
 <td valign="top"><a href="#unit">Unit</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>usps</strong></td>
+<td colspan="2" valign="top"><strong id="product.usps">usps</strong></td>
 <td valign="top">[<a href="#string">String</a>!]!</td>
 <td>
 
@@ -13742,7 +13758,7 @@ List of product's unique selling propositions
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="product.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -13752,6 +13768,8 @@ UUID
 </tr>
 </tbody>
 </table>
+
+**Possible Types:** [MainVariant](#mainvariant), [RegularProduct](#regularproduct), [Variant](#variant)
 
 ### ProductListable
 
@@ -13768,7 +13786,7 @@ Paginated and ordered products
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>products</strong></td>
+<td colspan="2" valign="top"><strong id="productlistable.products">products</strong></td>
 <td valign="top"><a href="#productconnection">ProductConnection</a>!</td>
 <td>
 
@@ -13824,6 +13842,8 @@ Paginated and ordered products
 </tbody>
 </table>
 
+**Possible Types:** [Brand](#brand), [Category](#category), [Flag](#flag)
+
 ### Slug
 
 Represents entity retrievable by slug
@@ -13839,17 +13859,17 @@ Represents entity retrievable by slug
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>name</strong></td>
+<td colspan="2" valign="top"><strong id="slug.name">name</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>slug</strong></td>
+<td colspan="2" valign="top"><strong id="slug.slug">slug</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>uuid</strong></td>
+<td colspan="2" valign="top"><strong id="slug.uuid">uuid</strong></td>
 <td valign="top"><a href="#uuid">Uuid</a>!</td>
 <td>
 
@@ -13859,3 +13879,5 @@ UUID
 </tr>
 </tbody>
 </table>
+
+**Possible Types:** [ArticleSite](#articlesite), [BlogArticle](#blogarticle), [BlogCategory](#blogcategory), [Brand](#brand), [Category](#category), [Flag](#flag), [MainVariant](#mainvariant), [RegularProduct](#regularproduct), [Store](#store), [Variant](#variant)

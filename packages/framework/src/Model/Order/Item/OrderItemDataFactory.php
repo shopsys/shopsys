@@ -5,14 +5,19 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Order\Item;
 
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemUnitPricesAreInconsistentButTotalsAreNotForcedException;
+use Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidInputPriceTypeException;
+use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 
 class OrderItemDataFactory
 {
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation $orderItemPriceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      */
-    public function __construct(protected readonly OrderItemPriceCalculation $orderItemPriceCalculation)
-    {
+    public function __construct(
+        protected readonly OrderItemPriceCalculation $orderItemPriceCalculation,
+        protected readonly PricingSetting $pricingSetting,
+    ) {
     }
 
     /**
@@ -96,16 +101,38 @@ class OrderItemDataFactory
             return false;
         }
 
-        $calculatedPriceWithoutVat = $this->orderItemPriceCalculation->calculatePriceWithoutVat(
-            $orderItemData,
-            $orderItem->getOrder()->getDomainId(),
-        );
+        switch ($this->pricingSetting->getInputPriceType()) {
+            case PricingSetting::INPUT_PRICE_TYPE_WITH_VAT:
+                $calculatedPriceWithoutVat = $this->orderItemPriceCalculation->calculatePriceWithoutVatForInputPriceWithVat(
+                    $orderItemData,
+                    $orderItem->getOrder()->getDomainId(),
+                );
 
-        if (!$orderItemData->unitPriceWithoutVat->equals($calculatedPriceWithoutVat)) {
-            throw new OrderItemUnitPricesAreInconsistentButTotalsAreNotForcedException(
-                $orderItem,
-                $calculatedPriceWithoutVat,
-            );
+                if (!$orderItemData->unitPriceWithoutVat->equals($calculatedPriceWithoutVat)) {
+                    throw new OrderItemUnitPricesAreInconsistentButTotalsAreNotForcedException(
+                        $orderItem,
+                        $calculatedPriceWithoutVat,
+                    );
+                }
+
+                break;
+            case PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT:
+                $calculatedPriceWithVat = $this->orderItemPriceCalculation->calculatePriceWithVatForInputPriceWithoutVat(
+                    $orderItemData,
+                    $orderItem->getOrder()->getDomainId(),
+                    $orderItem->getOrder()->getCurrency(),
+                );
+
+                if (!$orderItemData->unitPriceWithVat->equals($calculatedPriceWithVat)) {
+                    throw new OrderItemUnitPricesAreInconsistentButTotalsAreNotForcedException(
+                        $orderItem,
+                        $calculatedPriceWithVat,
+                    );
+                }
+
+                break;
+            default:
+                throw new InvalidInputPriceTypeException();
         }
 
         return true;

@@ -174,7 +174,7 @@ class PaymentDataFixture extends AbstractReferenceFixture implements DependentFi
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
             $vat = $this->getReferenceForDomain(VatDataFixture::VAT_ZERO, $domainId, Vat::class);
 
-            $convertedPrice = $this->priceConverter->convertPriceToInputPriceWithoutVatInDomainDefaultCurrency(
+            $convertedPrice = $this->priceConverter->convertPriceToInputPriceInDomainDefaultCurrency(
                 $price,
                 $currencyCzk,
                 $vat->getPercent(),

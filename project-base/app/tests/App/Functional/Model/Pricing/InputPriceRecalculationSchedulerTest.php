@@ -9,7 +9,6 @@ use App\Model\Transport\TransportDataFactory;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
-use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\InputPriceRecalculationScheduler;
 use Shopsys\FrameworkBundle\Model\Pricing\InputPriceRecalculator;
@@ -30,11 +29,6 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
     private const METHOD_WITH_VAT = 'scheduleSetInputPricesWithVat';
 
     private const METHOD_WITHOUT_VAT = 'scheduleSetInputPricesWithoutVat';
-
-    /**
-     * @inject
-     */
-    private Setting $setting;
 
     /**
      * @inject

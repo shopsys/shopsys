@@ -92,6 +92,14 @@ class CurrencyFormType extends AbstractType
                     t('To whole numbers') => Currency::ROUNDING_TYPE_INTEGER,
                 ],
                 'label' => t('Price including VAT rounding'),
+            ])
+            ->add('roundingPlacesPriceWithoutVat', NumberType::class, [
+                'required' => true,
+                'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Please enter number of rounding places for price without VAT']),
+                    new Constraints\GreaterThanOrEqual(0),
+                    new Constraints\LessThanOrEqual(Currency::MAX_ROUNDING_PLACES_PRICE_WITHOUT_VAT),
+                ],
             ]);
     }
 

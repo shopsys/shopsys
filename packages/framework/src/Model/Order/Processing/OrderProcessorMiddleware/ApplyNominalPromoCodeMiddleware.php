@@ -19,6 +19,9 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeTypeEnum;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Twig\PriceExtension;
 
@@ -31,6 +34,7 @@ class ApplyNominalPromoCodeMiddleware extends AbstractPromoCodeMiddleware
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
      * @param \Shopsys\FrameworkBundle\Twig\PriceExtension $priceExtension
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      */
     public function __construct(
         CurrentPromoCodeFacade $currentPromoCodeFacade,
@@ -39,6 +43,7 @@ class ApplyNominalPromoCodeMiddleware extends AbstractPromoCodeMiddleware
         protected readonly OrderItemDataFactory $orderItemDataFactory,
         protected readonly PriceExtension $priceExtension,
         protected readonly VatFacade $vatFacade,
+        protected readonly CurrencyFacade $currencyFacade,
     ) {
         parent::__construct($currentPromoCodeFacade, $promoCodeFacade);
     }
@@ -63,13 +68,13 @@ class ApplyNominalPromoCodeMiddleware extends AbstractPromoCodeMiddleware
         PromoCodeLimit $promoCodeLimit,
         OrderProcessingData $orderProcessingData,
     ): void {
-        $totalApplicableProductsPriceAmountWithVat = $this->calculateTotalApplicableProductsPriceAmountWithVat($orderData, $validProductIds);
+        $totalApplicableProductsPrice = $this->calculateTotalApplicableProductsPrice($orderData, $validProductIds);
 
         $discountOrderItemData = $this->createDiscountOrderItemData(
             $appliedPromoCode,
             $promoCodeLimit,
             $orderProcessingData->getDomainConfig(),
-            $totalApplicableProductsPriceAmountWithVat,
+            $totalApplicableProductsPrice,
         );
 
         if ($discountOrderItemData === null) {
@@ -90,14 +95,14 @@ class ApplyNominalPromoCodeMiddleware extends AbstractPromoCodeMiddleware
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit $promoCodeLimit
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $totalApplicableProductsPriceAmountWithVat
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $totalApplicableProductsPrice
      * @return \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData|null
      */
     protected function createDiscountOrderItemData(
         PromoCode $promoCode,
         PromoCodeLimit $promoCodeLimit,
         DomainConfig $domainConfig,
-        Money $totalApplicableProductsPriceAmountWithVat,
+        PriceInterface $totalApplicableProductsPrice,
     ): ?OrderItemData {
         $locale = $domainConfig->getLocale();
         $domainId = $domainConfig->getId();
@@ -106,13 +111,11 @@ class ApplyNominalPromoCodeMiddleware extends AbstractPromoCodeMiddleware
 
         $discountValue = Money::create($promoCodeLimit->getDiscount());
 
-        if ($discountValue->isGreaterThan($totalApplicableProductsPriceAmountWithVat)) {
-            $discountValue = $totalApplicableProductsPriceAmountWithVat;
-        }
-
         $discountPrice = $this->discountCalculation->calculateNominalDiscount(
             $discountValue,
+            $totalApplicableProductsPrice,
             (float)$defaultVat->getPercent(),
+            $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId),
         );
 
         $discountOrderItemData = $this->orderItemDataFactory->create(OrderItemTypeEnum::TYPE_DISCOUNT);
@@ -137,21 +140,21 @@ class ApplyNominalPromoCodeMiddleware extends AbstractPromoCodeMiddleware
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderData $orderData
-     * @param int[] $validProductIds
-     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     * @param array $validProductIds
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
      */
-    protected function calculateTotalApplicableProductsPriceAmountWithVat(
+    protected function calculateTotalApplicableProductsPrice(
         OrderData $orderData,
         array $validProductIds,
-    ): Money {
-        $totalPriceAmountWithVat = Money::zero();
+    ): PriceInterface {
+        $totalPrice = new Price(Money::zero(), Money::zero());
 
         foreach ($orderData->getItemsByType(OrderItemTypeEnum::TYPE_PRODUCT) as $item) {
             if (in_array($item->product?->getId(), $validProductIds, true)) {
-                $totalPriceAmountWithVat = $totalPriceAmountWithVat->add($item->getTotalPrice()->getPriceWithVat());
+                $totalPrice = $totalPrice->add($item->getTotalPrice());
             }
         }
 
-        return $totalPriceAmountWithVat;
+        return $totalPrice;
     }
 }

@@ -13,16 +13,19 @@ use Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidRoundingTypeException
  */
 class Currency
 {
-    public const CODE_CZK = 'CZK';
-    public const CODE_EUR = 'EUR';
+    public const string CODE_CZK = 'CZK';
+    public const string CODE_EUR = 'EUR';
 
-    public const ROUNDING_TYPE_HUNDREDTHS = 'hundredths';
-    public const ROUNDING_TYPE_FIFTIES = 'fifties';
-    public const ROUNDING_TYPE_INTEGER = 'integer';
+    public const string ROUNDING_TYPE_HUNDREDTHS = 'hundredths';
+    public const string ROUNDING_TYPE_FIFTIES = 'fifties';
+    public const string ROUNDING_TYPE_INTEGER = 'integer';
 
-    public const DEFAULT_EXCHANGE_RATE = '1';
-    public const DEFAULT_MIN_FRACTION_DIGITS = 2;
-    public const DEFAULT_ROUNDING_TYPE = self::ROUNDING_TYPE_INTEGER;
+    public const string DEFAULT_EXCHANGE_RATE = '1';
+    public const int DEFAULT_MIN_FRACTION_DIGITS = 2;
+    public const string DEFAULT_ROUNDING_TYPE = self::ROUNDING_TYPE_INTEGER;
+    public const int DEFAULT_ROUNDING_PLACES_PRICE_WITHOUT_VAT = 2;
+
+    public const int MAX_ROUNDING_PLACES_PRICE_WITHOUT_VAT = 6;
 
     /**
      * @var int
@@ -63,6 +66,12 @@ class Currency
     protected $roundingType;
 
     /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
+    protected $roundingPlacesPriceWithoutVat;
+
+    /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData $currencyData
      */
     public function __construct(CurrencyData $currencyData)
@@ -88,6 +97,7 @@ class Currency
         $this->code = $currencyData->code;
         $this->minFractionDigits = $currencyData->minFractionDigits;
         $this->setRoundingType($currencyData->roundingType);
+        $this->roundingPlacesPriceWithoutVat = $currencyData->roundingPlacesPriceWithoutVat;
     }
 
     /**
@@ -156,6 +166,14 @@ class Currency
         }
 
         $this->roundingType = $roundingType;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRoundingPlacesPriceWithoutVat()
+    {
+        return $this->roundingPlacesPriceWithoutVat;
     }
 
     /**

@@ -499,8 +499,8 @@ export type TypeCart = {
   paymentGoPayBankSwift: Maybe<Scalars['String']['output']>;
   /** Applied promo code if provided */
   promoCode: Maybe<TypePromoCode>;
-  /** Remaining amount for free transport and payment; null = transport cannot be free */
-  remainingAmountWithVatForFreeTransport: Maybe<Scalars['Money']['output']>;
+  /** Remaining amount for free transport and payment; null = transport cannot be free. Amount is with VAT if input price type is set to price with vat and vice versa. */
+  remainingAmountForFreeTransport: Maybe<Scalars['Money']['output']>;
   /** Rounding amount if payment has rounding allowed */
   roundingPrice: Maybe<TypePrice>;
   /** Selected pickup place identifier if provided */
@@ -510,7 +510,7 @@ export type TypeCart = {
   totalItemsPrice: TypePrice;
   /** Total price including transport and payment */
   totalPrice: TypePrice;
-  /** Total price (exluding discount, transport and payment) */
+  /** Total price (excluding discount, transport and payment) */
   totalPriceWithoutDiscountTransportAndPayment: TypePrice;
   /** Selected transport if transport provided */
   transport: Maybe<TypeTransport>;

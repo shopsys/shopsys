@@ -107,7 +107,7 @@ class CustomerUserWithLimitedRoleGroupTest extends GraphQlWithLoginTestCase
         $newlyCreatedCart = $addToCart['cart'];
 
         self::assertNull(
-            $newlyCreatedCart['remainingAmountWithVatForFreeTransport'],
+            $newlyCreatedCart['remainingAmountForFreeTransport'],
             'Actual remaining price has to be null for limited user who cannot see prices',
         );
     }

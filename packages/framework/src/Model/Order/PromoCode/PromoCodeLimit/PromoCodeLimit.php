@@ -13,7 +13,7 @@ class PromoCodeLimit
 {
     /**
      * @var \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode
-     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode", )
+     * @ORM\ManyToOne(targetEntity="Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode")
      * @ORM\JoinColumn(nullable=false, onDelete="cascade")
      * @ORM\Id
      */
@@ -21,14 +21,14 @@ class PromoCodeLimit
 
     /**
      * @var string
-     * @ORM\Column(type="decimal", precision=20, scale=4)
+     * @ORM\Column(type="decimal", precision=20, scale=6)
      * @ORM\Id
      */
-    protected $fromPriceWithVat;
+    protected $fromPrice;
 
     /**
      * @var string
-     * @ORM\Column(type="decimal", precision=20, scale=4)
+     * @ORM\Column(type="decimal", precision=20, scale=6)
      */
     protected $discount;
 
@@ -38,16 +38,16 @@ class PromoCodeLimit
      */
     public function __construct(string $from, string $discount)
     {
-        $this->fromPriceWithVat = $from;
+        $this->fromPrice = $from;
         $this->discount = $discount;
     }
 
     /**
      * @return string
      */
-    public function getFromPriceWithVat()
+    public function getFromPrice()
     {
-        return $this->fromPriceWithVat;
+        return $this->fromPrice;
     }
 
     /**

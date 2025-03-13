@@ -10,6 +10,7 @@ use Shopsys\FrameworkBundle\Form\Admin\Order\OrderPaymentFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Order\OrderTransportFormType;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -23,10 +24,12 @@ class OrderItemsType extends AbstractType
     /**
      * @param \Shopsys\FrameworkBundle\Model\Transport\TransportFacade $transportFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\PaymentFacade $paymentFacade
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      */
     public function __construct(
         private readonly TransportFacade $transportFacade,
         private readonly PaymentFacade $paymentFacade,
+        private readonly PricingSetting $pricingSetting,
     ) {
     }
 
@@ -78,6 +81,7 @@ class OrderItemsType extends AbstractType
         $order = $options['order'];
 
         $view->vars['order'] = $order;
+        $view->vars['inputPriceType'] = $this->pricingSetting->getInputPriceType();
         $view->vars['transportPricesWithVatByTransportId'] = $this->transportFacade->getTransportPricesWithVatByCurrencyAndDomainIdIndexedByTransportId(
             $order->getDomainId(),
         );

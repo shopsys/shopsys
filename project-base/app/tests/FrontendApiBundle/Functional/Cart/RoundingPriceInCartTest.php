@@ -57,7 +57,7 @@ class RoundingPriceInCartTest extends GraphQlTestCase
         $this->assertNull($data['roundingPrice'], 'Rounding price has to be null for first domain');
 
         $this->assertEquals(
-            $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('3498.96'),
+            $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('3498.96'),
             $data['totalPrice']['priceWithVat'],
         );
     }
@@ -76,7 +76,7 @@ class RoundingPriceInCartTest extends GraphQlTestCase
 
         // domain is switched to CZK currency, so all following prices are different from DataFixtures
 
-        $expectedRoundingAmount = $this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('0.04');
+        $expectedRoundingAmount = $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('0.04');
         $this->assertEquals($data['roundingPrice']['priceWithoutVat'], $expectedRoundingAmount);
         $this->assertEquals($data['roundingPrice']['priceWithVat'], $expectedRoundingAmount);
     }

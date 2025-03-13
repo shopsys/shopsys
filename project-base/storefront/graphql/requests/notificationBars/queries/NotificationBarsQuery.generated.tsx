@@ -94,7 +94,7 @@ export type TypeNotificationBars = { __typename?: 'Query', notificationBars: Arr
     
 
 export const NotificationBarsDocument = gql`
-    query NotificationBars @redisCache(ttl: 3600) {
+    query NotificationBars @redisCache(ttl: 300) {
   notificationBars {
     ...NotificationBarsFragment
   }

@@ -8,6 +8,8 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\Rounding;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
@@ -104,7 +106,13 @@ class PriceCalculationTest extends TestCase
         $vatData->percent = $vatPercent;
         $vat = new Vat($vatData, Domain::FIRST_DOMAIN_ID);
 
-        $actualVatAmount = $priceCalculation->getVatAmountByPriceWithVat($priceWithVat, $vat);
+        $currencyData = new CurrencyData();
+        $currencyData->roundingType = Currency::ROUNDING_TYPE_INTEGER;
+        $currencyData->name = 'currency name';
+        $currencyData->code = 'currency code';
+        $currency = new Currency($currencyData);
+
+        $actualVatAmount = $priceCalculation->getVatAmountByPriceWithVat($priceWithVat, $vat, $currency);
 
         $this->assertThat($actualVatAmount, new IsMoneyEqual($expectedVatAmount));
     }

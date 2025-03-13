@@ -89,7 +89,7 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
         self::assertPromoCode($promoCode, $data['promoCode']);
         self::assertSame($this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero), $data['transport']['price']);
         self::assertSame($this->getSerializedPriceConvertedToDomainDefaultCurrency('0', $vatZero), $data['payment']['price']);
-        self::assertSame($this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('0'), $data['remainingAmountWithVatForFreeTransport']);
+        self::assertSame($this->getFormattedMoneyAmountConvertedToDomainDefaultCurrency('0'), $data['remainingAmountForFreeTransport']);
     }
 
     public function testApplyPromoCodeMultipleTimes(): void

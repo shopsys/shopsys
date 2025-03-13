@@ -250,6 +250,9 @@ msgstr "Vyplňte prosím název dph"
 msgid "Please enter VAT rate"
 msgstr "Vyplňte prosím výši DPH"
 
+msgid "Please enter a whole number."
+msgstr "Zadejte prosím celé číslo."
+
 msgid "Please enter an ID"
 msgstr "Zadejte prosím ID"
 
@@ -380,7 +383,13 @@ msgid "Please enter navigation item name"
 msgstr "Zadejte prosím název položky navigace"
 
 msgid "Please enter notification bar content"
-msgstr ""
+msgstr "Vyplňte prosím obsah notifikační lišty"
+
+msgid "Please enter number of rounding places for price without VAT"
+msgstr "Vyplňte prosím počet desetinných míst pro zaokrouhlování ceny bez DPH"
+
+msgid "Please enter number."
+msgstr "Zadejte prosím číslo."
 
 msgid "Please enter order status name in all languages"
 msgstr "Vyplňte prosím název stavu objednávky ve všech jazycích"
@@ -492,9 +501,6 @@ msgstr "Vyplňte prosím název skladu"
 
 msgid "Please enter whitelist pattern."
 msgstr "Vyplňte prosím předpis whitelistu."
-
-msgid "Please enter whole number."
-msgstr "Zadejte prosím celé číslo."
 
 msgid "Please enter zip code"
 msgstr "Vyplňte prosím PSČ"

@@ -163,7 +163,7 @@ class PromoCodeFormType extends AbstractType
                     'groups' => [self::VALIDATION_GROUP_TYPE_PERCENT, self::VALIDATION_GROUP_TYPE_NOMINAL],
                 ]),
             ],
-            'invalid_message' => 'Please enter whole number.',
+            'invalid_message' => 'Please enter number.',
             'label' => t('Discount (%)'),
         ];
 

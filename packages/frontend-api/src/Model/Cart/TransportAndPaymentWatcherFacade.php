@@ -84,13 +84,13 @@ class TransportAndPaymentWatcherFacade
         $isFreeTransportAndPaymentPromoCodeApplied = $orderInput->isFreeTransportAndPaymentPromoCodeApplied();
 
         if ($this->freeTransportAndPaymentFacade->isActive($domainId, $isFreeTransportAndPaymentPromoCodeApplied)) {
-            $amountWithVatForFreeTransport = $this->freeTransportAndPaymentFacade->getRemainingPriceWithVat(
-                $productsPrice->getPriceWithVat(),
+            $amountForFreeTransport = $this->freeTransportAndPaymentFacade->getRemainingAmount(
+                $productsPrice,
                 $domainId,
                 $isFreeTransportAndPaymentPromoCodeApplied,
             );
 
-            $this->cartWithModificationsResult->setRemainingAmountWithVatForFreeTransport($amountWithVatForFreeTransport);
+            $this->cartWithModificationsResult->setRemainingAmountForFreeTransport($amountForFreeTransport);
         }
 
         $this->cartWithModificationsResult->setTotalPrice($orderData->totalPrice);

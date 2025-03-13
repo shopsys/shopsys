@@ -9,9 +9,13 @@ use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPrice;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedItemPriceInterface;
 use Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidInputPriceTypeException;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
+use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
 class QuantifiedProductPriceCalculation
@@ -19,10 +23,14 @@ class QuantifiedProductPriceCalculation
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Pricing\ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceCalculation $priceCalculation
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      */
     public function __construct(
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
         protected readonly PriceCalculation $priceCalculation,
+        protected readonly PricingSetting $pricingSetting,
+        protected readonly CurrencyFacade $currencyFacade,
     ) {
     }
 
@@ -45,11 +53,23 @@ class QuantifiedProductPriceCalculation
             $customerUser,
         );
 
-        $totalPriceWithVat = $this->getTotalPriceWithVat($quantifiedProduct, $productPrice->getPrice());
-        $totalPriceVatAmount = $this->getTotalPriceVatAmount($totalPriceWithVat, $product->getVatForDomain($domainId));
-        $priceWithoutVat = $this->getTotalPriceWithoutVat($totalPriceWithVat, $totalPriceVatAmount);
+        switch ($this->pricingSetting->getInputPriceType()) {
+            case PricingSetting::INPUT_PRICE_TYPE_WITH_VAT:
+                $totalPriceWithVat = $this->getTotalPriceWithVat($quantifiedProduct, $productPrice->getPrice());
+                $totalPriceVatAmount = $this->getTotalPriceVatAmountForInputPriceWithVat($totalPriceWithVat, $product->getVatForDomain($domainId), $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId));
+                $totalPriceWithoutVat = $this->getTotalPriceWithoutVatForInputPriceWithVat($totalPriceWithVat, $totalPriceVatAmount);
 
-        $totalPrice = new Price($priceWithoutVat, $totalPriceWithVat);
+                break;
+            case PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT:
+                $totalPriceWithoutVat = $this->getTotalPriceWithoutVatForInputPriceWithoutVat($quantifiedProduct, $productPrice->getPrice());
+                $totalPriceWithVat = $this->getTotalPriceWithVat($quantifiedProduct, $productPrice->getPrice());
+
+                break;
+            default:
+                throw new InvalidInputPriceTypeException();
+        }
+
+        $totalPrice = new Price($totalPriceWithoutVat, $totalPriceWithVat);
 
         return new QuantifiedItemPrice($productPrice->getPrice(), $totalPrice, $product->getVatForDomain($domainId));
     }
@@ -59,8 +79,10 @@ class QuantifiedProductPriceCalculation
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $totalPriceVatAmount
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    protected function getTotalPriceWithoutVat(Money $totalPriceWithVat, Money $totalPriceVatAmount): Money
-    {
+    protected function getTotalPriceWithoutVatForInputPriceWithVat(
+        Money $totalPriceWithVat,
+        Money $totalPriceVatAmount,
+    ): Money {
         return $totalPriceWithVat->subtract($totalPriceVatAmount);
     }
 
@@ -69,19 +91,37 @@ class QuantifiedProductPriceCalculation
      * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $unitPrice
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    protected function getTotalPriceWithVat(QuantifiedProduct $quantifiedProduct, PriceInterface $unitPrice): Money
-    {
+    protected function getTotalPriceWithoutVatForInputPriceWithoutVat(
+        QuantifiedProduct $quantifiedProduct,
+        PriceInterface $unitPrice,
+    ): Money {
+        return $unitPrice->getPriceWithoutVat()->multiply($quantifiedProduct->getQuantity());
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\QuantifiedProduct $quantifiedProduct
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface $unitPrice
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money
+     */
+    protected function getTotalPriceWithVat(
+        QuantifiedProduct $quantifiedProduct,
+        PriceInterface $unitPrice,
+    ): Money {
         return $unitPrice->getPriceWithVat()->multiply($quantifiedProduct->getQuantity());
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Money\Money $totalPriceWithVat
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat $vat
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    protected function getTotalPriceVatAmount(Money $totalPriceWithVat, Vat $vat): Money
-    {
-        return $this->priceCalculation->getVatAmountByPriceWithVat($totalPriceWithVat, $vat);
+    protected function getTotalPriceVatAmountForInputPriceWithVat(
+        Money $totalPriceWithVat,
+        Vat $vat,
+        Currency $currency,
+    ): Money {
+        return $this->priceCalculation->getVatAmountByPriceWithVat($totalPriceWithVat, $vat, $currency);
     }
 
     /**

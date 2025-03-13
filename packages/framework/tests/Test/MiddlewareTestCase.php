@@ -17,6 +17,7 @@ use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\Orde
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundDataFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 
 class MiddlewareTestCase extends TestCase
@@ -64,8 +65,9 @@ class MiddlewareTestCase extends TestCase
     protected function createOrderItemDataFactory(): OrderItemDataFactory
     {
         $orderItemPriceCalculation = $this->createMock(OrderItemPriceCalculation::class);
+        $pricingSettingMock = $this->createMock(PricingSetting::class);
 
-        return new OrderItemDataFactory($orderItemPriceCalculation);
+        return new OrderItemDataFactory($orderItemPriceCalculation, $pricingSettingMock);
     }
 
     /**

@@ -30,7 +30,10 @@ use Shopsys\FrameworkBundle\Model\Payment\PaymentPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use Shopsys\FrameworkBundle\Model\Pricing\Exception\InvalidInputPriceTypeException;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Transport\TransportPriceCalculation;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 use Webmozart\Assert\Assert;
@@ -66,6 +69,7 @@ class OrderFacade
      * @param \Shopsys\FrameworkBundle\Model\Payment\Service\PaymentServiceFacade $paymentServiceFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderDataFactory $orderDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
@@ -96,6 +100,7 @@ class OrderFacade
         protected readonly PaymentServiceFacade $paymentServiceFacade,
         protected readonly OrderItemDataFactory $orderItemDataFactory,
         protected readonly OrderDataFactory $orderDataFactory,
+        protected readonly PricingSetting $pricingSetting,
     ) {
     }
 
@@ -130,8 +135,8 @@ class OrderFacade
     {
         $order = $this->orderRepository->getById($orderId);
 
-        $this->calculateOrderItemDataPrices($orderData->orderTransport, $order->getDomainId());
-        $this->calculateOrderItemDataPrices($orderData->orderPayment, $order->getDomainId());
+        $this->calculateOrderItemDataPrices($orderData->orderTransport, $order->getDomainId(), $orderData->currency);
+        $this->calculateOrderItemDataPrices($orderData->orderPayment, $order->getDomainId(), $orderData->currency);
         $this->refreshOrderItemsWithoutTransportAndPayment($order, $orderData);
         $this->updateTransportAndPaymentNamesInOrderData($orderData, $order);
 
@@ -282,7 +287,7 @@ class OrderFacade
         foreach ($order->getItemsWithoutTransportAndPayment() as $orderItem) {
             if (array_key_exists($orderItem->getId(), $orderItemsWithoutTransportAndPaymentData)) {
                 $orderItemData = $orderItemsWithoutTransportAndPaymentData[$orderItem->getId()];
-                $this->calculateOrderItemDataPrices($orderItemData, $order->getDomainId());
+                $this->calculateOrderItemDataPrices($orderItemData, $order->getDomainId(), $orderData->currency);
                 $orderItem->edit($orderItemData);
             } else {
                 $order->removeItem($orderItem);
@@ -290,7 +295,7 @@ class OrderFacade
         }
 
         foreach ($orderData->getNewItemsWithoutTransportAndPayment() as $newOrderItemData) {
-            $this->calculateOrderItemDataPrices($newOrderItemData, $order->getDomainId());
+            $this->calculateOrderItemDataPrices($newOrderItemData, $order->getDomainId(), $orderData->currency);
 
             $newOrderItem = $this->orderItemFactory->createProduct(
                 $newOrderItemData,
@@ -311,19 +316,39 @@ class OrderFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $orderItemData
      * @param int $domainId
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      */
-    protected function calculateOrderItemDataPrices(OrderItemData $orderItemData, int $domainId): void
-    {
+    protected function calculateOrderItemDataPrices(
+        OrderItemData $orderItemData,
+        int $domainId,
+        Currency $currency,
+    ): void {
         if ($orderItemData->usePriceCalculation) {
-            $orderItemData->unitPriceWithoutVat = $this->orderItemPriceCalculation->calculatePriceWithoutVat(
-                $orderItemData,
-                $domainId,
-            );
+            switch ($this->pricingSetting->getInputPriceType()) {
+                case PricingSetting::INPUT_PRICE_TYPE_WITH_VAT:
+                    $orderItemData->unitPriceWithoutVat = $this->orderItemPriceCalculation->calculatePriceWithoutVatForInputPriceWithVat(
+                        $orderItemData,
+                        $domainId,
+                    );
+
+                    break;
+                case PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT:
+                    $orderItemData->unitPriceWithVat = $this->orderItemPriceCalculation->calculatePriceWithVatForInputPriceWithoutVat(
+                        $orderItemData,
+                        $domainId,
+                        $currency,
+                    );
+
+                    break;
+                default:
+                    throw new InvalidInputPriceTypeException();
+            }
+
             $orderItemData->totalPriceWithVat = null;
             $orderItemData->totalPriceWithoutVat = null;
         } else {
             Assert::allNotNull(
-                [$orderItemData->unitPriceWithoutVat, $orderItemData->totalPriceWithVat, $orderItemData->totalPriceWithoutVat],
+                [$orderItemData->unitPriceWithVat, $orderItemData->unitPriceWithoutVat, $orderItemData->totalPriceWithVat, $orderItemData->totalPriceWithoutVat],
                 'When not using price calculation for an order item, all prices must be filled.',
             );
         }

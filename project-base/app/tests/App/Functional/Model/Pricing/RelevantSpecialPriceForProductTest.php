@@ -13,6 +13,7 @@ use Shopsys\FrameworkBundle\Model\PriceList\PriceListFacade;
 use Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPriceDataFactory;
 use Shopsys\FrameworkBundle\Model\PriceList\PriceListProductPriceFactory;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -71,7 +72,12 @@ final class RelevantSpecialPriceForProductTest extends TransactionFunctionalTest
         $this->assertNotNull($specialPrice, 'Special price should be set for product');
         $this->assertTrue($specialPrice->isNowActive(), 'Special price should be active');
         $this->assertFalse($specialPrice->isFuturePrice(), 'Special price should not be future price');
-        $this->assertMoney($priceAmount, $specialPrice->price->getPriceWithVat());
+
+        if ($this->getInputPriceType() === PricingSetting::INPUT_PRICE_TYPE_WITH_VAT) {
+            $this->assertMoney($priceAmount, $specialPrice->price->getPriceWithVat());
+        } else {
+            $this->assertMoney('12.10', $specialPrice->price->getPriceWithVat());
+        }
     }
 
     public function testProperSpecialPriceIsReturnedForMultipleLists(): void
@@ -87,7 +93,12 @@ final class RelevantSpecialPriceForProductTest extends TransactionFunctionalTest
         $this->assertNotNull($specialPrice, 'Special price should be set for product');
         $this->assertTrue($specialPrice->isNowActive(), 'Special price should be active');
         $this->assertFalse($specialPrice->isFuturePrice(), 'Special price should not be future price');
-        $this->assertMoney($firstActivePriceAmount, $specialPrice->price->getPriceWithVat());
+
+        if ($this->getInputPriceType() === PricingSetting::INPUT_PRICE_TYPE_WITH_VAT) {
+            $this->assertMoney($firstActivePriceAmount, $specialPrice->price->getPriceWithVat());
+        } else {
+            $this->assertMoney('24.20', $specialPrice->price->getPriceWithVat());
+        }
 
         // update the price list to increase its priority
         $priceList = $this->getReferenceForDomain(PriceListDataFixture::ACTIVE_ITEMS_ON_SALE_REFERENCE, self::TEST_DOMAIN_ID, PriceList::class);
@@ -98,7 +109,12 @@ final class RelevantSpecialPriceForProductTest extends TransactionFunctionalTest
         $this->assertNotNull($specialPrice, 'Special price should be set for product');
         $this->assertTrue($specialPrice->isNowActive(), 'Special price should be active');
         $this->assertFalse($specialPrice->isFuturePrice(), 'Special price should not be future price');
-        $this->assertMoney($secondActivePriceAmount, $specialPrice->price->getPriceWithVat());
+
+        if ($this->getInputPriceType() === PricingSetting::INPUT_PRICE_TYPE_WITH_VAT) {
+            $this->assertMoney($secondActivePriceAmount, $specialPrice->price->getPriceWithVat());
+        } else {
+            $this->assertMoney('12.10', $specialPrice->price->getPriceWithVat());
+        }
     }
 
     public function testSpecialPriceIsReturnedForFutureList(): void
@@ -113,7 +129,12 @@ final class RelevantSpecialPriceForProductTest extends TransactionFunctionalTest
         $this->assertNotNull($specialPrice, 'Special price should be set for product');
         $this->assertFalse($specialPrice->isNowActive(), 'Special price should not be active');
         $this->assertTrue($specialPrice->isFuturePrice(), 'Special price should be future price');
-        $this->assertMoney($priceAmount, $specialPrice->price->getPriceWithVat());
+
+        if ($this->getInputPriceType() === PricingSetting::INPUT_PRICE_TYPE_WITH_VAT) {
+            $this->assertMoney($priceAmount, $specialPrice->price->getPriceWithVat());
+        } else {
+            $this->assertMoney('12.10', $specialPrice->price->getPriceWithVat());
+        }
     }
 
     public function testNoSpecialPriceIsReturnedForExpiredList(): void

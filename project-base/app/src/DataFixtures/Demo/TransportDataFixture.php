@@ -164,7 +164,7 @@ class TransportDataFixture extends AbstractReferenceFixture implements Dependent
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomainIds() as $domainId) {
             $vat = $this->getReferenceForDomain(VatDataFixture::VAT_HIGH, $domainId, Vat::class);
 
-            $convertedPrice = $this->priceConverter->convertPriceToInputPriceWithoutVatInDomainDefaultCurrency(
+            $convertedPrice = $this->priceConverter->convertPriceToInputPriceInDomainDefaultCurrency(
                 $price,
                 $currencyCzk,
                 $vat->getPercent(),

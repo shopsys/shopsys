@@ -46,7 +46,7 @@ class TransportPriceCalculation
     ): PriceInterface {
         $transportPrice = $this->transportPriceFacade->getTransportPriceOnDomainByTransportAndClosestWeight($domainId, $transport, $cartTotalWeight);
 
-        if ($this->freeTransportAndPaymentFacade->isFree($productsPrice->getPriceWithVat(), $domainId, $forceFreeTransport)) {
+        if ($this->freeTransportAndPaymentFacade->isFree($productsPrice, $domainId, $forceFreeTransport)) {
             return Price::zero();
         }
 
@@ -65,7 +65,7 @@ class TransportPriceCalculation
         );
         $vat = $transportPrice->getTransport()->getTransportDomain($domainId)->getVat();
 
-        return $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
+        return $this->basePriceCalculation->calculateRoundedBasePrice(
             $transportPrice->getPrice(),
             $this->pricingSetting->getInputPriceType(),
             $vat,

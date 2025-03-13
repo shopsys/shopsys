@@ -17,6 +17,7 @@ use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\ArrayUtils\ArraySorterHelper;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
+use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\Parameter;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -49,7 +50,12 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     {
         $query = $this->getElectronicsQuery();
 
-        $minimalPrice = $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('319');
+        if ($this->setting->get(PricingSetting::INPUT_PRICE_TYPE) === PricingSetting::INPUT_PRICE_TYPE_WITH_VAT) {
+            $minimalPrice = $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('319');
+        } else {
+            $minimalPrice = $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('318.85');
+        }
+
         $maximalPrice = $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('9889.9');
 
         $materials = [

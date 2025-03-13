@@ -15,7 +15,6 @@ use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionDataFactory;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrontendApiBundle\Component\Constraints\PaymentInExistingOrder;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -30,11 +29,6 @@ class ChangePaymentInOrderMutationTest extends GraphQlTestCase
      * @inject
      */
     private PaymentTransactionFacade $paymentTransactionFacade;
-
-    /**
-     * @inject
-     */
-    private PricingSetting $pricingSetting;
 
     public function testChangePaymentInOrderRespectsFreeTransportSetting(): void
     {

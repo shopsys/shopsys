@@ -56,21 +56,21 @@ class PromoCodeLimitRepository
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCode $promoCode
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $totalPriceAmountWithVat
+     * @param \Shopsys\FrameworkBundle\Component\Money\Money $totalPriceAmount
      * @return \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit|null
      */
     public function getHighestLimitByPromoCodeAndTotalPrice(
         PromoCode $promoCode,
-        Money $totalPriceAmountWithVat,
+        Money $totalPriceAmount,
     ): ?PromoCodeLimit {
         return $this->getQueryBuilder()
             ->select('l')
             ->from(PromoCodeLimit::class, 'l')
-            ->where('l.fromPriceWithVat <= :totalPrice')
-            ->setParameter('totalPrice', $totalPriceAmountWithVat->getAmount())
+            ->where('l.fromPrice <= :totalPrice')
+            ->setParameter('totalPrice', $totalPriceAmount->getAmount())
             ->andWhere('l.promoCode = :promoCode')
             ->setParameter('promoCode', $promoCode)
-            ->orderBy('l.fromPriceWithVat', 'desc')
+            ->orderBy('l.fromPrice', 'desc')
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();

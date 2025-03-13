@@ -12,8 +12,10 @@ use Shopsys\FrameworkBundle\Component\DataFixture\PersistentReferenceFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
+use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\AbstractProductRecalculationMessage;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\DispatchAllProductsMessage;
 use Shopsys\FrameworkBundle\Model\Product\Recalculation\DispatchAllProductsMessageHandler;
@@ -69,6 +71,11 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
      * @inject
      */
     protected EventDispatcherInterface $eventDispatcher;
+
+    /**
+     * @inject
+     */
+    protected Setting $setting;
 
     #[Override]
     protected function setUp(): void
@@ -289,5 +296,13 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
             new IsMoneyEqual(Money::create($expected)),
             $message,
         );
+    }
+
+    /**
+     * @return int
+     */
+    protected function getInputPriceType(): int
+    {
+        return $this->setting->get(PricingSetting::INPUT_PRICE_TYPE);
     }
 }

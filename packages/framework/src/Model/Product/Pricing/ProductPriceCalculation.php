@@ -112,7 +112,7 @@ class ProductPriceCalculation
         $domainId = $pricingGroup->getDomainId();
         $defaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId);
 
-        $basePrice = $this->basePriceCalculation->calculateBasePriceRoundedByCurrency(
+        $basePrice = $this->basePriceCalculation->calculateRoundedBasePrice(
             $inputPrice,
             $this->pricingSetting->getInputPriceType(),
             $product->getVatForDomain($domainId),

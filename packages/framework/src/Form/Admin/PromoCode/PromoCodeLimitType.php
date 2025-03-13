@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Form\Admin\PromoCode;
 use Override;
 use Shopsys\FrameworkBundle\Form\Admin\PromoCode\Transformer\PromoCodeLimitTransformer;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -39,13 +38,14 @@ class PromoCodeLimitType extends AbstractType
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('fromPriceWithVat', IntegerType::class, [
+        $builder->add('fromPrice', NumberType::class, [
             'constraints' => [
                 new Constraints\NotBlank([
                     'message' => 'Please enter limit from',
                     'groups' => [PromoCodeFormType::VALIDATION_GROUP_TYPE_PERCENT, PromoCodeFormType::VALIDATION_GROUP_TYPE_NOMINAL],
                 ]),
             ],
+            'scale' => 6,
         ]);
 
         $options = $options['discount'];
@@ -62,10 +62,11 @@ class PromoCodeLimitType extends AbstractType
             'value' => 1,
         ]);
         $options['constraints'][] = new Constraints\Regex([
-            'groups' => PromoCodeFormType::VALIDATION_GROUP_TYPE_NOMINAL,
+            'groups' => PromoCodeFormType::VALIDATION_GROUP_TYPE_PERCENT,
             'pattern' => '/^\d+$/',
+            'message' => 'Please enter a whole number.',
         ]);
-        $options['scale'] = 3;
+        $options['scale'] = 6;
         $builder->add(
             'discount',
             NumberType::class,

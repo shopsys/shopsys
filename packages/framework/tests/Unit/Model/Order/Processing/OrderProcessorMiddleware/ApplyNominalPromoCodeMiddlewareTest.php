@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Model\Order\Processing\OrderProcessorMiddleware;
 
 use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\MockObject\MockObject;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
 use Shopsys\FrameworkBundle\Model\Order\Processing\OrderProcessorMiddleware\ApplyNominalPromoCodeMiddleware;
@@ -15,6 +16,8 @@ use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeData;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeTypeEnum;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
+use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
 use Shopsys\FrameworkBundle\Twig\PriceExtension;
@@ -144,6 +147,37 @@ class ApplyNominalPromoCodeMiddlewareTest extends MiddlewareTestCase
             $this->createOrderItemDataFactory(),
             $priceExtension,
             $vatFacade,
+            $this->createCurrencyFacadeMock(),
         );
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency|\PHPUnit\Framework\MockObject\MockObject
+     */
+    private function createCurrencyMock(): Currency|MockObject
+    {
+        $currency = $this->createMock(Currency::class);
+        $currency->method('getCode')->willReturn('CZK');
+        $currency->method('getRoundingType')->willReturn(Currency::DEFAULT_ROUNDING_TYPE);
+        $currency->method('getRoundingPlacesPriceWithoutVat')->willReturn(Currency::DEFAULT_ROUNDING_PLACES_PRICE_WITHOUT_VAT);
+
+        return $currency;
+    }
+
+    /**
+     * @return \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade|\PHPUnit\Framework\MockObject\MockObject
+     */
+    private function createCurrencyFacadeMock(): CurrencyFacade|MockObject
+    {
+        $currencyFacadeMock = $this->getMockBuilder(CurrencyFacade::class)
+            ->onlyMethods(['getDomainDefaultCurrencyByDomainId'])
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $currencyFacadeMock->method('getDomainDefaultCurrencyByDomainId')->willReturn(
+            $this->createCurrencyMock(),
+        );
+
+        return $currencyFacadeMock;
     }
 }

@@ -82,6 +82,7 @@ class FreeTransportAndPaymentPriceLimitsFormType extends AbstractType
                             'groups' => [static::VALIDATION_GROUP_PRICE_LIMIT_ENABLED],
                         ]),
                     ],
+                    'scale' => 6,
                 ]);
 
             $formBuilderForDomains->add($formBuilderForDomain);
