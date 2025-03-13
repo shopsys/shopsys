@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
+use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
 use Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Paginator\PaginationResult;
@@ -23,19 +24,19 @@ use Shopsys\FrameworkBundle\Model\Product\ProductRepository;
 
 class CategoryRepository extends NestedTreeRepository
 {
-    protected ?Category $rootCategory = null;
-
     /**
      * @param \Doctrine\ORM\EntityManagerInterface $em
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductRepository $productRepository
      * @param \Shopsys\FrameworkBundle\Component\Doctrine\OrderByCollationHelper $orderByCollationHelper
      * @param \Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper $databaseSearchingHelper
+     * @param \Shopsys\FrameworkBundle\Component\Cache\InMemoryCache $inMemoryCache
      */
     public function __construct(
         protected readonly EntityManagerInterface $em,
         protected readonly ProductRepository $productRepository,
         protected readonly OrderByCollationHelper $orderByCollationHelper,
         protected readonly DatabaseSearchingHelper $databaseSearchingHelper,
+        protected readonly InMemoryCache $inMemoryCache,
     ) {
         $classMetadata = $this->em->getClassMetadata(Category::class);
 
@@ -177,17 +178,19 @@ class CategoryRepository extends NestedTreeRepository
      */
     public function getRootCategory(): Category
     {
-        if ($this->rootCategory === null) {
-            $this->rootCategory = $this->getCategoryRepository()->findOneBy(['parent' => null]);
+        return $this->inMemoryCache->getOrSaveValue(
+            'rootCategory',
+            function () {
+                $rootCategory = $this->getCategoryRepository()->findOneBy(['parent' => null]);
 
-            if ($this->rootCategory === null) {
-                $message = 'Root category not found';
+                if ($rootCategory === null) {
+                    throw new RootCategoryNotFoundException('Root category not found');
+                }
 
-                throw new RootCategoryNotFoundException($message);
-            }
-        }
-
-        return $this->rootCategory;
+                return $rootCategory;
+            },
+            'rootCategory',
+        );
     }
 
     /**
