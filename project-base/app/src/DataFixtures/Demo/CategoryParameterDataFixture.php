@@ -35,7 +35,7 @@ class CategoryParameterDataFixture extends AbstractReferenceFixture implements D
         $categoryDataFixtureClassReflection = new ReflectionClass(CategoryDataFixture::class);
 
         foreach ($categoryDataFixtureClassReflection->getConstants() as $constant) {
-            if (!str_starts_with($constant, 'category_')) {
+            if (!is_string($constant) || !str_starts_with($constant, 'category_')) {
                 continue;
             }
 
