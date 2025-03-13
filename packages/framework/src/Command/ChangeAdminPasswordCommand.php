@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Command;
 
 use Exception;
+use Override;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorFacade;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorPasswordFacade;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -37,6 +38,7 @@ class ChangeAdminPasswordCommand extends Command
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -46,6 +48,7 @@ class ChangeAdminPasswordCommand extends Command
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);

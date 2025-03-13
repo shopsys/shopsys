@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Command;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Doctrine\DatabaseSchemaFacade;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -25,6 +26,7 @@ class DropDatabaseSchemaCommand extends Command
         parent::__construct();
     }
 
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -39,6 +41,7 @@ class DropDatabaseSchemaCommand extends Command
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         if ($input->getOption('tables-only')) {

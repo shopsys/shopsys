@@ -186,7 +186,7 @@ class GridView
      * @param array|string|null $removeParameters
      * @return string
      */
-    public function getUrl(?array $parameters = null, array|string $removeParameters = null): string
+    public function getUrl(?array $parameters = null, array|string|null $removeParameters = null): string
     {
         $masterRequest = $this->requestStack->getMainRequest();
         $routeParameters = $this->grid->getUrlParameters($parameters, $removeParameters);

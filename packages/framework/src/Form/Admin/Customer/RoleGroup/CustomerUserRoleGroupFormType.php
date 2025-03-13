@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Customer\RoleGroup;
 
+use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
@@ -28,6 +29,7 @@ class CustomerUserRoleGroupFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('names', LocalizedType::class, [
@@ -60,6 +62,7 @@ class CustomerUserRoleGroupFormType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver

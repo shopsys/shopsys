@@ -9,6 +9,7 @@ use App\Model\Customer\DeliveryAddressDataFactory;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Generator;
+use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Model\Country\Country;
@@ -73,6 +74,7 @@ class CompanyDataFixture extends AbstractReferenceFixture implements DependentFi
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
+    #[Override]
     public function load(ObjectManager $manager): void
     {
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {

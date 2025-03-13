@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Customer;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressDataFactory as BaseBillingAddressDataFactory;
 
 /**
@@ -16,6 +17,7 @@ class BillingAddressDataFactory extends BaseBillingAddressDataFactory
     /**
      * @return \App\Model\Customer\BillingAddressData
      */
+    #[Override]
     protected function createInstance(): BillingAddressData
     {
         return new BillingAddressData();

@@ -9,6 +9,7 @@ use App\DataFixtures\Demo\PaymentDataFixture;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Payment\Payment;
 use App\Model\Product\Product;
+use Override;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -16,6 +17,7 @@ class PaymentTest extends GraphQlTestCase
 {
     protected Payment $payment;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

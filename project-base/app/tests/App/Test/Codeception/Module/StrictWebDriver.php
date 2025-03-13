@@ -9,6 +9,7 @@ use Codeception\Util\Locator;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverElement;
 use Facebook\WebDriver\WebDriverKeys;
+use Override;
 use Symfony\Component\DomCrawler\Crawler;
 use Tests\App\Test\Codeception\Exception\DeprecatedMethodException;
 
@@ -34,6 +35,7 @@ class StrictWebDriver extends WebDriver
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function match($page, $selector, $throwMalformed = true): array
     {
         if (!is_array($selector) && !$selector instanceof WebDriverBy) {
@@ -49,6 +51,7 @@ class StrictWebDriver extends WebDriver
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function findFields($selector): array
     {
         if (!is_array($selector) && !$selector instanceof WebDriverElement) {
@@ -66,6 +69,7 @@ class StrictWebDriver extends WebDriver
      * @param mixed $link
      * @param mixed|null $context
      */
+    #[Override]
     public function click($link, $context = null): void
     {
         $strictAlternatives = [
@@ -172,6 +176,7 @@ class StrictWebDriver extends WebDriver
      * @param mixed $field
      * @param mixed $value
      */
+    #[Override]
     public function fillField($field, $value): void
     {
         $strictAlternatives = [
@@ -265,6 +270,7 @@ class StrictWebDriver extends WebDriver
      * @internal This method prevents developers from using parent method
      * @param mixed $checkbox
      */
+    #[Override]
     public function seeCheckboxIsChecked($checkbox): void
     {
         $strictAlternatives = [
@@ -315,6 +321,7 @@ class StrictWebDriver extends WebDriver
      * @internal This method is used to prevent users from using parent method
      * @param mixed $checkbox
      */
+    #[Override]
     public function dontSeeCheckboxIsChecked($checkbox): void
     {
         $strictAlternatives = [
@@ -365,6 +372,7 @@ class StrictWebDriver extends WebDriver
      * @internal This method prevents developers from using parent method
      * @param mixed $option
      */
+    #[Override]
     public function checkOption($option): void
     {
         $strictAlternatives = [
@@ -460,6 +468,7 @@ class StrictWebDriver extends WebDriver
      * @param mixed $field
      * @param mixed $value
      */
+    #[Override]
     public function seeInField($field, $value): void
     {
         $strictAlternatives = [
@@ -496,6 +505,7 @@ class StrictWebDriver extends WebDriver
      * @param mixed $element
      * @param mixed $chars
      */
+    #[Override]
     public function pressKey($element, ...$chars): void
     {
         $strictAlternatives = [
@@ -528,6 +538,7 @@ class StrictWebDriver extends WebDriver
      * @param array $nodes
      * @param mixed $selector
      */
+    #[Override]
     protected function assertNodesContain($text, $nodes, $selector = null): void
     {
         $message = Locator::humanReadableString($selector);
@@ -540,6 +551,7 @@ class StrictWebDriver extends WebDriver
      * @param array $nodes
      * @param mixed $selector
      */
+    #[Override]
     protected function assertNodesNotContain($text, $nodes, $selector = null): void
     {
         $message = Locator::humanReadableString($selector);

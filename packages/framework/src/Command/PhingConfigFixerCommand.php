@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Command;
 
+use Override;
 use RuntimeException;
 use SimpleXMLElement;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -23,6 +24,7 @@ class PhingConfigFixerCommand extends Command
     protected const ARG_XML_PATH = 'xml';
     protected const OPTION_ONLY_CHECK = 'check';
 
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -42,6 +44,7 @@ class PhingConfigFixerCommand extends Command
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $returnCode = Command::SUCCESS;

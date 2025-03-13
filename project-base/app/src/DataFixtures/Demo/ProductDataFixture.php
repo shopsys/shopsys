@@ -15,6 +15,7 @@ use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
+use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -51,6 +52,7 @@ class ProductDataFixture extends AbstractReferenceFixture implements DependentFi
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
+    #[Override]
     public function load(ObjectManager $manager): void
     {
         $productData = $this->productDemoDataFactory->createDefaultData('9177759');

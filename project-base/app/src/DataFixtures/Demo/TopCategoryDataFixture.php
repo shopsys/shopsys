@@ -7,6 +7,7 @@ namespace App\DataFixtures\Demo;
 use App\Model\Category\Category;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade;
 
@@ -23,6 +24,7 @@ class TopCategoryDataFixture extends AbstractReferenceFixture implements Depende
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
+    #[Override]
     public function load(ObjectManager $manager): void
     {
         $categories = [

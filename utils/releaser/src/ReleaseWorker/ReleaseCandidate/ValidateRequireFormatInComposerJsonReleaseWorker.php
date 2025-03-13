@@ -6,6 +6,7 @@ namespace Shopsys\Releaser\ReleaseWorker\ReleaseCandidate;
 
 use Nette\Utils\Json;
 use Nette\Utils\Strings;
+use Override;
 use PharIo\Version\Version;
 use Shopsys\Releaser\FilesProvider\ComposerJsonFilesProvider;
 use Shopsys\Releaser\FilesProvider\PackageNamesProvider;
@@ -32,6 +33,7 @@ final class ValidateRequireFormatInComposerJsonReleaseWorker extends AbstractSho
      * @param string $initialBranchName
      * @return string
      */
+    #[Override]
     public function getDescription(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
@@ -43,6 +45,7 @@ final class ValidateRequireFormatInComposerJsonReleaseWorker extends AbstractSho
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
+    #[Override]
     public function work(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
@@ -110,6 +113,7 @@ final class ValidateRequireFormatInComposerJsonReleaseWorker extends AbstractSho
     /**
      * @return string[]
      */
+    #[Override]
     protected function getAllowedStages(): array
     {
         return [Stage::RELEASE_CANDIDATE];

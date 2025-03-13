@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Complaint\Status\Grid;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\Exception\InvalidFormDataException;
@@ -36,6 +37,7 @@ class ComplaintStatusInlineEdit extends AbstractGridInlineEdit
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusData $complaintStatusData
      * @return int
      */
+    #[Override]
     protected function createEntityAndGetId($complaintStatusData): int
     {
         if (!$this->domain->hasAdminAllDomainsEnabled()) {
@@ -53,6 +55,7 @@ class ComplaintStatusInlineEdit extends AbstractGridInlineEdit
      * @param int $complaintStatusId
      * @param \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusData $complaintStatusData
      */
+    #[Override]
     protected function editEntity($complaintStatusId, $complaintStatusData): void
     {
         $this->complaintStatusFacade->edit($complaintStatusId, $complaintStatusData);
@@ -62,6 +65,7 @@ class ComplaintStatusInlineEdit extends AbstractGridInlineEdit
      * @param int|null $complaintStatusId
      * @return \Symfony\Component\Form\FormInterface
      */
+    #[Override]
     public function getForm($complaintStatusId): FormInterface
     {
         if ($complaintStatusId !== null) {

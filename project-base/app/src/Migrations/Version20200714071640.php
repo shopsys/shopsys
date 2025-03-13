@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
+use Override;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Migrations\MultidomainMigrationTrait;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
@@ -17,6 +18,7 @@ class Version20200714071640 extends AbstractMigration implements ContainerAwareI
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
+    #[Override]
     public function up(Schema $schema): void
     {
         $isFlagProductHit = $this->sql('SELECT count(*) FROM flags WHERE akeneo_code =\'flag__product_hit\'')->fetchOne();
@@ -36,6 +38,7 @@ class Version20200714071640 extends AbstractMigration implements ContainerAwareI
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
+    #[Override]
     public function down(Schema $schema): void
     {
     }

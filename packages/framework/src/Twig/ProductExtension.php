@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Twig;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductCachedAttributesFacade;
@@ -26,6 +27,7 @@ class ProductExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFilter[]
      */
+    #[Override]
     public function getFilters()
     {
         return [
@@ -37,6 +39,7 @@ class ProductExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFunction[]
      */
+    #[Override]
     public function getFunctions()
     {
         return [

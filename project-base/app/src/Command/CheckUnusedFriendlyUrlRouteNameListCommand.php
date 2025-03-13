@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Command;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlRepository;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -32,6 +33,7 @@ class CheckUnusedFriendlyUrlRouteNameListCommand extends Command
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return int
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\ProductFeed\HeurekaDeliveryBundle\Unit;
 
+use Override;
 use PHPUnit\Framework\TestCase;
 use Shopsys\ProductFeed\HeurekaDeliveryBundle\Model\FeedItem\HeurekaDeliveryDataMissingException;
 use Shopsys\ProductFeed\HeurekaDeliveryBundle\Model\FeedItem\HeurekaDeliveryFeedItem;
@@ -13,6 +14,7 @@ class HeurekaDeliveryFeedItemTest extends TestCase
 {
     private HeurekaDeliveryFeedItemFactory $heurekaDeliveryFeedItemFactory;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->heurekaDeliveryFeedItemFactory = new HeurekaDeliveryFeedItemFactory();

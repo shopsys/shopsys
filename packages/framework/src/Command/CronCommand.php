@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Command;
 
 use DateTimeZone;
 use NinjaMutex\Lock\LockInterface;
+use Override;
 use Shopsys\FrameworkBundle\Command\Exception\CronCommandException;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
 use Shopsys\FrameworkBundle\Component\Cron\CronFacade;
@@ -47,6 +48,7 @@ class CronCommand extends Command
         parent::__construct();
     }
 
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -69,6 +71,7 @@ class CronCommand extends Command
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $optionList = $input->getOption(self::OPTION_LIST);

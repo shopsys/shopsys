@@ -6,6 +6,7 @@ namespace Shopsys\MigrationBundle\Command;
 
 use Doctrine\Migrations\Configuration\Configuration;
 use Doctrine\Migrations\DependencyFactory;
+use Override;
 use Shopsys\MigrationBundle\Command\Exception\NoMigrationLocationException;
 use Shopsys\MigrationBundle\Component\Doctrine\DatabaseSchemaFacade;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\MigrationsLocation;
@@ -44,6 +45,7 @@ class GenerateMigrationCommand extends Command
         parent::__construct();
     }
 
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -54,6 +56,7 @@ class GenerateMigrationCommand extends Command
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('Checking database schema...');

@@ -6,6 +6,7 @@ namespace App\DataFixtures\Demo;
 
 use Doctrine\Persistence\ObjectManager;
 use InvalidArgumentException;
+use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterGroup;
@@ -62,6 +63,7 @@ class ParameterGroupDataFixture extends AbstractReferenceFixture
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
+    #[Override]
     public function load(ObjectManager $manager): void
     {
         $parameterGroupKeys = array_keys(self::getParameterGroupNames('cs'));

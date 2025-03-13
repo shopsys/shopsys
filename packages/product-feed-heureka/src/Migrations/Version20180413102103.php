@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\ProductFeed\HeurekaBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
+use Override;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
 class Version20180413102103 extends AbstractMigration
@@ -12,6 +13,7 @@ class Version20180413102103 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
+    #[Override]
     public function up(Schema $schema): void
     {
         $oldTableExists = $this->sql(
@@ -30,6 +32,7 @@ class Version20180413102103 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
+    #[Override]
     public function down(Schema $schema): void
     {
     }

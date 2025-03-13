@@ -6,6 +6,7 @@ namespace Tests\App\Test\Codeception\Helper;
 
 use Codeception\Module;
 use Codeception\TestInterface;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Tests\App\Test\Codeception\Module\StrictWebDriver;
 
@@ -14,6 +15,7 @@ class DomainHelper extends Module
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function _before(TestInterface $test)
     {
         /** @var \Tests\App\Test\Codeception\Module\StrictWebDriver $webDriver */

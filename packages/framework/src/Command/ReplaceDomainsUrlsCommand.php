@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Command;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Domain\DomainUrlReplacer;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
@@ -47,6 +48,7 @@ class ReplaceDomainsUrlsCommand extends Command
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $dispatchProducts = false;

@@ -8,6 +8,7 @@ use Doctrine\DBAL\Cache\QueryCacheProfile;
 use Doctrine\Migrations\AbstractMigration as DoctrineAbstractMigration;
 use Doctrine\Migrations\Query\Query;
 use Exception;
+use Override;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\Exception\MethodIsNotAllowedException;
 
 abstract class AbstractMigration extends DoctrineAbstractMigration
@@ -20,6 +21,7 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function addSql(string $sql, array $params = [], array $types = []): void
     {
         $message = 'Calling method "addSql" is not allowed. Use "sql" method instead';
@@ -46,6 +48,7 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
      *
      * @see \Shopsys\MigrationBundle\Command\MigrateCommand::execute()
      */
+    #[Override]
     public function isTransactional(): bool
     {
         // We do not want every migration to be executed in a separate transaction
@@ -56,6 +59,7 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
     /**
      * @return \Doctrine\Migrations\Query\Query[]
      */
+    #[Override]
     public function getSql(): array
     {
         return $this->sqlQueries;

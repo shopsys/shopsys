@@ -6,6 +6,7 @@ namespace App\Form\Type;
 
 use FOS\CKEditorBundle\Config\CKEditorConfigurationInterface;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Override;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -22,6 +23,7 @@ class CKEditorTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $options['config']['allowedContent'] = true;
@@ -52,6 +54,7 @@ class CKEditorTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public static function getExtendedTypes(): iterable
     {
         yield CKEditorType::class;

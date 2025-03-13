@@ -6,6 +6,7 @@ namespace App\DataFixtures\Demo;
 
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Order\ContentPage\OrderContentPageSettingFacade;
@@ -23,6 +24,7 @@ class OrderContentPageSettingValueDataFixture extends AbstractReferenceFixture i
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
+    #[Override]
     public function load(ObjectManager $manager): void
     {
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {

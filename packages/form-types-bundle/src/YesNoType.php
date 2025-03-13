@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FormTypesBundle;
 
+use Override;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,6 +22,7 @@ class YesNoType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -41,6 +43,7 @@ class YesNoType extends AbstractType
     /**
      * @return string|null
      */
+    #[Override]
     public function getParent(): ?string
     {
         return ChoiceType::class;

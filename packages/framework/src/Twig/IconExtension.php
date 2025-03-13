@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Twig;
 
+use Override;
 use Symfony\UX\Icons\Twig\UXIconRuntime;
 use Twig\DeprecatedCallableInfo;
 use Twig\Environment;
@@ -23,6 +24,7 @@ class IconExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFunction[]
      */
+    #[Override]
     public function getFunctions(): array
     {
         return [

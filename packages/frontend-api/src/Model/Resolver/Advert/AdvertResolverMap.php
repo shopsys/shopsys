@@ -7,6 +7,7 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Advert;
 use GraphQL\Executor\Promise\Promise;
 use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
+use Override;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
 use Shopsys\FrameworkBundle\Model\Advert\Advert;
 
@@ -29,6 +30,7 @@ class AdvertResolverMap extends ResolverMap
     /**
      * @return array
      */
+    #[Override]
     protected function map(): array
     {
         $commonAdvertResolverFields = [

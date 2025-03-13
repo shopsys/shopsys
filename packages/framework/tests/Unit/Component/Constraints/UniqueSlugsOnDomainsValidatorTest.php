@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Component\Constraints;
 
 use DateTimeZone;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
@@ -22,6 +23,7 @@ class UniqueSlugsOnDomainsValidatorTest extends ConstraintValidatorTestCase
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function createValidator()
     {
         $defaultTimeZone = new DateTimeZone('Europe/Prague');

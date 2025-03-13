@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\String;
 
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\String\DatabaseSearchingHelper;
@@ -12,6 +13,7 @@ class DatabaseSearchingTest extends TestCase
 {
     private DatabaseSearchingHelper $databaseSearchingHelper;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->databaseSearchingHelper = new DatabaseSearchingHelper();

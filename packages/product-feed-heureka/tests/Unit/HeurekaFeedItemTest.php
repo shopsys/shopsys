@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\ProductFeed\HeurekaBundle\Unit;
 
+use Override;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Cache\InMemoryCache;
@@ -50,6 +51,7 @@ class HeurekaFeedItemTest extends TestCase
 
     private Setting|MockObject $settingMock;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->doSetUp(true);

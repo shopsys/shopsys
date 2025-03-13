@@ -17,6 +17,7 @@ final class CheckShopsysInstallReleaseWorker extends AbstractCheckShopsysInstall
      * @param string $initialBranchName
      * @return string
      */
+    #[Override]
     public function getDescription(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,
@@ -27,6 +28,7 @@ final class CheckShopsysInstallReleaseWorker extends AbstractCheckShopsysInstall
     /**
      * @return string[]
      */
+    #[Override]
     protected function getAllowedStages(): array
     {
         return [Stage::AFTER_RELEASE];

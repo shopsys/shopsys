@@ -6,6 +6,7 @@ namespace Tests\FrontendApiBundle\Functional\Product;
 
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Product\Product;
+use Override;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityStatusEnum;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -16,6 +17,7 @@ class ProductVariantTest extends GraphQlTestCase
 
     private Product $productAsVariant;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

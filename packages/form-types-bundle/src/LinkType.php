@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FormTypesBundle;
 
+use Override;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -14,6 +15,7 @@ final class LinkType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -28,6 +30,7 @@ final class LinkType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['link'] = $options['link'];

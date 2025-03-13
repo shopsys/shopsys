@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Security\Roles;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -33,6 +34,7 @@ class RolesType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -48,6 +50,7 @@ class RolesType extends AbstractType
     /**
      * @return string
      */
+    #[Override]
     public function getParent(): string
     {
         return ChoiceType::class;

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures\Demo;
 
 use Doctrine\Persistence\ObjectManager;
+use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\DateTimeHelper\DateTimeHelper;
 use Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProviderInterface;
@@ -31,6 +32,7 @@ class NotificationBarDataFixture extends AbstractReferenceFixture
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
+    #[Override]
     public function load(ObjectManager $manager): void
     {
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Model\Payment;
 
 use DateTimeZone;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -25,6 +26,7 @@ class IndependentPaymentVisibilityCalculationTest extends TestCase
 
     private IndependentPaymentVisibilityCalculation $paymentVisibilityCalculation;
 
+    #[Override]
     protected function setUp(): void
     {
         $defaultTimeZone = new DateTimeZone('Europe/Prague');

@@ -69,7 +69,7 @@ class Localization
      * @param string|null $displayLocale
      * @return string
      */
-    public function getLanguageName(string $locale, string $displayLocale = null): string
+    public function getLanguageName(string $locale, ?string $displayLocale = null): string
     {
         return Locale::getDisplayLanguage($locale, $displayLocale);
     }

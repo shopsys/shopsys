@@ -9,6 +9,7 @@ use Doctrine\ORM\Query\AST\Node;
 use Doctrine\ORM\Query\Parser;
 use Doctrine\ORM\Query\SqlWalker;
 use Doctrine\ORM\Query\TokenType;
+use Override;
 
 class DistanceFunction extends FunctionNode
 {
@@ -23,6 +24,7 @@ class DistanceFunction extends FunctionNode
     /**
      * @param \Doctrine\ORM\Query\Parser $parser
      */
+    #[Override]
     public function parse(Parser $parser): void
     {
         $parser->match(TokenType::T_IDENTIFIER);
@@ -43,6 +45,7 @@ class DistanceFunction extends FunctionNode
      * @param \Doctrine\ORM\Query\SqlWalker $sqlWalker
      * @return string
      */
+    #[Override]
     public function getSql(SqlWalker $sqlWalker): string
     {
         // Earth radius is a constant, so it doesn't need dispatch

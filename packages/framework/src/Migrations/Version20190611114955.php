@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Migrations;
 
 use Doctrine\DBAL\Schema\Schema;
+use Override;
 use RuntimeException;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 
@@ -15,6 +16,7 @@ class Version20190611114955 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
+    #[Override]
     public function up(Schema $schema): void
     {
         $this->sql('ALTER TABLE order_items ADD total_price_without_vat NUMERIC(20, 6) DEFAULT NULL');
@@ -29,6 +31,7 @@ class Version20190611114955 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
+    #[Override]
     public function down(Schema $schema): void
     {
     }

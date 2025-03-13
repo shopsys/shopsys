@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\ArticleFeed\LuigisBoxBundle\Unit;
 
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -29,6 +30,7 @@ class LuigisBoxArticleFeedItemTest extends TestCase
 
     private ImageFacade|MockObject $imageFacadeMock;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->luigisBoxArticleFeedItemFactory = new LuigisBoxArticleFeedItemFactory(new ImageUrlWithSizeHelper());

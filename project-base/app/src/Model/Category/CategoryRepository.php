@@ -6,6 +6,7 @@ namespace App\Model\Category;
 
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository as BaseCategoryRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
@@ -42,6 +43,7 @@ class CategoryRepository extends BaseCategoryRepository
      * @param int $domainId
      * @return int[]
      */
+    #[Override]
     public function getListableProductCountsIndexedByCategoryId(
         array $categories,
         PricingGroup $pricingGroup,
@@ -88,6 +90,7 @@ class CategoryRepository extends BaseCategoryRepository
      * @param int $domainId
      * @return \Doctrine\ORM\QueryBuilder
      */
+    #[Override]
     public function getAllVisibleByDomainIdQueryBuilder(int $domainId): QueryBuilder
     {
         $queryBuilder = $this->getAllQueryBuilder()

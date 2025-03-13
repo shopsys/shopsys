@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Product\Search;
 
 use Doctrine\ORM\QueryBuilder;
+use Override;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchRepository as BaseProductElasticsearchRepository;
 
 /**
@@ -21,6 +22,7 @@ class ProductElasticsearchRepository extends BaseProductElasticsearchRepository
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function extractTotalCount(array $result): int
     {
         return (int)$result['hits']['total']['value'];
@@ -30,6 +32,7 @@ class ProductElasticsearchRepository extends BaseProductElasticsearchRepository
      * @param \Doctrine\ORM\QueryBuilder $productQueryBuilder
      * @param string|null $searchText
      */
+    #[Override]
     public function filterBySearchText(QueryBuilder $productQueryBuilder, $searchText)
     {
         $productIds = $this->getFoundProductIds($productQueryBuilder, $searchText);

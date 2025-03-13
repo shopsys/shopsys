@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Voter;
 
 use Overblog\GraphQLBundle\Definition\Argument;
+use Override;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRole;
 use Shopsys\FrontendApiBundle\Model\Order\OrderApiFacade;
@@ -30,6 +31,7 @@ class CreateComplaintVoter extends Voter
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function supports(string $attribute, mixed $subject): bool
     {
         return $attribute === 'create_complaint_voter';
@@ -38,6 +40,7 @@ class CreateComplaintVoter extends Voter
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         if ($this->security->isGranted(CustomerUserRole::ROLE_API_COMPLAINT_CREATION) === false) {

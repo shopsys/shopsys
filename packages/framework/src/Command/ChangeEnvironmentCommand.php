@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Command;
 
 use Exception;
+use Override;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentFileSetting;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -33,6 +34,7 @@ class ChangeEnvironmentCommand extends Command
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -42,6 +44,7 @@ class ChangeEnvironmentCommand extends Command
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);

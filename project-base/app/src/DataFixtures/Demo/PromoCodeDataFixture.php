@@ -10,6 +10,7 @@ use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
+use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeCategory\PromoCodeCategoryFactory;
 use Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade;
@@ -54,6 +55,7 @@ class PromoCodeDataFixture extends AbstractReferenceFixture implements Dependent
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
+    #[Override]
     public function load(ObjectManager $manager): void
     {
         $domainId = $this->domainsForDataFixtureProvider->getFirstAllowedDomainConfig()->getId();

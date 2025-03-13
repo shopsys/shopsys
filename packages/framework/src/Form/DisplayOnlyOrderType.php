@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
@@ -15,6 +16,7 @@ class DisplayOnlyOrderType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -34,6 +36,7 @@ class DisplayOnlyOrderType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);

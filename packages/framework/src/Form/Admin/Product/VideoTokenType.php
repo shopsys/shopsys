@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Product;
 
+use Override;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Model\ProductVideo\ProductVideoData;
 use Symfony\Component\Form\AbstractType;
@@ -18,6 +19,7 @@ class VideoTokenType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('videoToken', TextType::class, [
@@ -42,6 +44,7 @@ class VideoTokenType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver

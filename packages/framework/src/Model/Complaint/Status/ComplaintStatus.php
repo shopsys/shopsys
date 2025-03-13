@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Complaint\Status;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\Exception\ComplaintStatusDeletionForbiddenException;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
@@ -94,6 +95,7 @@ class ComplaintStatus extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusTranslation
      */
+    #[Override]
     protected function createTranslation()
     {
         return new ComplaintStatusTranslation();

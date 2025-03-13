@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Constraints;
 
 use ArrayAccess;
+use Override;
 use Symfony\Component\Validator\Constraint;
 use Traversable;
 
@@ -20,6 +21,7 @@ class NotInArray extends Constraint
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getRequiredOptions(): array
     {
         return [

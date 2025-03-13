@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Twig;
 
+use Override;
 use Symfony\Component\Form\FormView;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
@@ -21,6 +22,7 @@ class FormDetailExtension extends AbstractExtension
     /**
      * @return array
      */
+    #[Override]
     public function getFunctions()
     {
         return [

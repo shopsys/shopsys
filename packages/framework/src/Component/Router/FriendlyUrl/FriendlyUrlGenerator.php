@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Router\FriendlyUrl;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\FriendlyUrlNotFoundException;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\Exception\MethodGenerateIsNotSupportedException;
@@ -162,6 +163,7 @@ class FriendlyUrlGenerator extends BaseUrlGenerator
      * @param mixed $referenceType
      * @return string
      */
+    #[Override]
     public function generate($routeName, $parameters = [], $referenceType = self::ABSOLUTE_PATH): string
     {
         throw new MethodGenerateIsNotSupportedException();

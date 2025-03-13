@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Customer;
 
+use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Form\Constraints\UniqueBillingAddress;
 use Shopsys\FrameworkBundle\Form\CustomerUserListType;
@@ -20,6 +21,7 @@ class BillingAddressAndRelatedInfoFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -49,6 +51,7 @@ class BillingAddressAndRelatedInfoFormType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -68,6 +71,7 @@ class BillingAddressAndRelatedInfoFormType extends AbstractType
     /**
      * @return string|null
      */
+    #[Override]
     public function getParent(): ?string
     {
         return BillingAddressFormType::class;

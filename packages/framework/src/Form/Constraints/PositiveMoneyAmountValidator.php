@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Constraints;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Form\Exception\NotMoneyTypeException;
 use Symfony\Component\Validator\Constraint;
@@ -16,6 +17,7 @@ class PositiveMoneyAmountValidator extends ConstraintValidator
      * @param \Shopsys\FrameworkBundle\Component\Money\Money|null $value
      * @param \Symfony\Component\Validator\Constraint $constraint
      */
+    #[Override]
     public function validate(mixed $value, Constraint $constraint): void
     {
         if (!$constraint instanceof PositiveMoneyAmount) {

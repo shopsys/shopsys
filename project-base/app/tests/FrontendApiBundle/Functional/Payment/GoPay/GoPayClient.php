@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Payment\GoPay;
 
 use GoPay\Http\Response;
+use Override;
 use Shopsys\FrameworkBundle\Model\GoPay\GoPayClient as BaseGoPayClient;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 
@@ -14,6 +15,7 @@ class GoPayClient extends BaseGoPayClient
      * @param array $rawPayment
      * @return \GoPay\Http\Response
      */
+    #[Override]
     public function sendPaymentToGoPay(array $rawPayment): Response
     {
         $response = new Response();
@@ -31,6 +33,7 @@ class GoPayClient extends BaseGoPayClient
      * @param string $id
      * @return \GoPay\Http\Response
      */
+    #[Override]
     public function getStatus(string $id): Response
     {
         $response = new Response();
@@ -48,6 +51,7 @@ class GoPayClient extends BaseGoPayClient
      * @param int $amount
      * @return \GoPay\Http\Response
      */
+    #[Override]
     public function refundTransaction(string $id, int $amount): Response
     {
         $response = new Response();
@@ -64,6 +68,7 @@ class GoPayClient extends BaseGoPayClient
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency $currency
      * @return array
      */
+    #[Override]
     public function downloadGoPayPaymentMethodsByCurrency(Currency $currency): array
     {
         return [];

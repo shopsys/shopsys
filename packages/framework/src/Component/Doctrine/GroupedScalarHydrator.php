@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Doctrine;
 
 use Doctrine\ORM\Internal\Hydration\AbstractHydrator;
+use Override;
 
 class GroupedScalarHydrator extends AbstractHydrator
 {
@@ -13,6 +14,7 @@ class GroupedScalarHydrator extends AbstractHydrator
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function hydrateAllData(): array
     {
         $result = [];
@@ -33,6 +35,7 @@ class GroupedScalarHydrator extends AbstractHydrator
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function hydrateRowData(array $data, array &$result): void
     {
         $rowData = $this->gatherGroupedScalarRowData($data);

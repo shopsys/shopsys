@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Slider;
 
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItem as BaseSliderItem;
 
@@ -50,6 +51,7 @@ class SliderItem extends BaseSliderItem
     /**
      * @param \App\Model\Slider\SliderItemData $sliderItemData
      */
+    #[Override]
     public function edit($sliderItemData)
     {
         parent::edit($sliderItemData);

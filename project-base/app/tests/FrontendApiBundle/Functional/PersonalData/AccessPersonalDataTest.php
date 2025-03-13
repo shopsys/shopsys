@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\PersonalData;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequest;
 use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactory;
 use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade;
@@ -13,6 +14,7 @@ class AccessPersonalDataTest extends GraphQlTestCase
 {
     private PersonalDataAccessRequest $personalDataAccessRequest;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

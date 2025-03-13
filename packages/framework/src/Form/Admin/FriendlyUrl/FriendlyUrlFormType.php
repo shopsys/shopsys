@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\FriendlyUrl;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlGridFactory;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
@@ -33,6 +34,7 @@ class FriendlyUrlFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         /** @var \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlData $friendlyUrlData */
@@ -106,6 +108,7 @@ class FriendlyUrlFormType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

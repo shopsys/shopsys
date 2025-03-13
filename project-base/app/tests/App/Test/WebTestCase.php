@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Test;
 
+use Override;
 use PHPUnit\Framework\Assert;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
@@ -69,6 +70,7 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
      */
     protected EventDispatcherInterface $eventDispatcher;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();
@@ -88,6 +90,7 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
      * @param array<string, mixed> $server
      * @return \Tests\App\Test\Client
      */
+    #[Override]
     protected static function createClient(array $options = [], array $server = []): Client
     {
         /** @var \Tests\App\Test\Client $client */
@@ -164,6 +167,7 @@ abstract class WebTestCase extends BaseWebTestCase implements ServiceContainerTe
         return $this->currencyFacade->getDomainDefaultCurrencyByDomainId($this->domain->getId());
     }
 
+    #[Override]
     protected function tearDown(): void
     {
         // workaround for https://github.com/jakzal/phpunit-injector/issues/33

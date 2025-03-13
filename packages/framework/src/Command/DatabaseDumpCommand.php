@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Command;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Doctrine\DatabaseConnectionCredentialsProvider;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -33,6 +34,7 @@ class DatabaseDumpCommand extends Command
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -43,6 +45,7 @@ class DatabaseDumpCommand extends Command
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // --schema=public option is used in order to dump only "public" schema which contains the application data

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Constraints;
 
+use Override;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -14,6 +15,7 @@ class UniqueProductParametersValidator extends ConstraintValidator
      * @param array $values
      * @param \Symfony\Component\Validator\Constraint $constraint
      */
+    #[Override]
     public function validate(mixed $values, Constraint $constraint): void
     {
         if (!$constraint instanceof UniqueProductParameters) {

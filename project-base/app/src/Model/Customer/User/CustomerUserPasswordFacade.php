@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Customer\User;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserPasswordFacade as BaseCustomerUserPasswordFacade;
 
@@ -23,6 +24,7 @@ class CustomerUserPasswordFacade extends BaseCustomerUserPasswordFacade
      * @param string $newPassword
      * @return \App\Model\Customer\User\CustomerUser
      */
+    #[Override]
     public function setNewPassword(
         string $email,
         int $domainId,

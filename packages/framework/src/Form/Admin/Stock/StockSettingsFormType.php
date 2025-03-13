@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Stock;
 
+use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
 use Shopsys\FrameworkBundle\Form\GroupType;
@@ -32,6 +33,7 @@ class StockSettingsFormType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builderStockSettingGroup = $builder->create('stockSettings', GroupType::class, [
@@ -80,6 +82,7 @@ class StockSettingsFormType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver

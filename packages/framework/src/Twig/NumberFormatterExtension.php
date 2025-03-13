@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Twig;
 
 use CommerceGuys\Intl\Formatter\NumberFormatter;
 use CommerceGuys\Intl\NumberFormat\NumberFormatRepositoryInterface;
+use Override;
 use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Twig\Extension\AbstractExtension;
@@ -31,6 +32,7 @@ class NumberFormatterExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFilter[]
      */
+    #[Override]
     public function getFilters(): array
     {
         return [

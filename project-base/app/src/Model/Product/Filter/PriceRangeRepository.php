@@ -6,6 +6,7 @@ namespace App\Model\Product\Filter;
 
 use App\Component\Doctrine\QueryBuilderExtender;
 use App\Model\Product\ProductRepository;
+use Override;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Filter\PriceRangeRepository as BasePriceRangeRepository;
@@ -34,6 +35,7 @@ class PriceRangeRepository extends BasePriceRangeRepository
      * @param \App\Model\Category\Category $category
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
      */
+    #[Override]
     public function getPriceRangeInCategory($domainId, PricingGroup $pricingGroup, Category $category)
     {
         $productsQueryBuilder = $this->productRepository->getSellableInCategoryQueryBuilder(
@@ -52,6 +54,7 @@ class PriceRangeRepository extends BasePriceRangeRepository
      * @param string|null $searchText
      * @return \Shopsys\FrameworkBundle\Model\Product\Filter\PriceRange
      */
+    #[Override]
     public function getPriceRangeForSearch($domainId, PricingGroup $pricingGroup, $locale, $searchText)
     {
         $productsQueryBuilder = $this->productRepository

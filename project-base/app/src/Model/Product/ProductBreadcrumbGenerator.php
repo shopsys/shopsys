@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Product;
 
 use App\Model\Category\Category;
+use Override;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbItem;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\DomainBreadcrumbGeneratorInterface;
 use Shopsys\FrameworkBundle\Model\Product\ProductBreadcrumbGenerator as BaseProductBreadcrumbGenerator;
@@ -21,6 +22,7 @@ class ProductBreadcrumbGenerator extends BaseProductBreadcrumbGenerator implemen
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getBreadcrumbItems($routeName, array $routeParameters = []): array
     {
         return $this->getBreadcrumbItemsOnDomain($this->domain->getId(), $routeName, $routeParameters, $this->domain->getLocale());

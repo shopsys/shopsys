@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Twig\FileThumbnail;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Shopsys\FrameworkBundle\Component\Image\Processing\Exception\FileIsNotSupportedImageException;
 use Shopsys\FrameworkBundle\Component\Image\Processing\ImageProcessor;
@@ -46,6 +47,7 @@ class FileThumbnailExtension extends AbstractExtension
     /**
      * @return array
      */
+    #[Override]
     public function getFunctions(): array
     {
         return [

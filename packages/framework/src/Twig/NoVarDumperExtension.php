@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Twig;
 
+use Override;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -12,6 +13,7 @@ class NoVarDumperExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFunction[]
      */
+    #[Override]
     public function getFunctions(): array
     {
         return [

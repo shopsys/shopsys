@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormInterface;
@@ -15,6 +16,7 @@ class DisplayOnlyCustomerType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -32,6 +34,7 @@ class DisplayOnlyCustomerType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         parent::buildView($view, $form, $options);

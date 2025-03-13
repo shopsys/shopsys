@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Store\OpeningHours;
 
+use Override;
 use Shopsys\FrameworkBundle\Form\Transformers\OpeningHourTimeToStringTransformer;
 use Shopsys\FrameworkBundle\Model\Store\OpeningHours\OpeningHoursRangeData;
 use Symfony\Component\Form\AbstractType;
@@ -25,6 +26,7 @@ class OpeningHoursRangeFormType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $timeOptions = [
@@ -49,6 +51,7 @@ class OpeningHoursRangeFormType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

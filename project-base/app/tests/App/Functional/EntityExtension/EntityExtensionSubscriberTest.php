@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Functional\EntityExtension;
 
+use Override;
 use Tests\App\Functional\EntityExtension\Model\DummyEntity;
 use Tests\App\Functional\EntityExtension\Model\ExtendedDummyEntity;
 use Tests\App\Test\TransactionFunctionalTestCase;
@@ -15,6 +16,7 @@ class EntityExtensionSubscriberTest extends TransactionFunctionalTestCase
      */
     private EntityExtensionTestHelper $entityExtensionTestHelper;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

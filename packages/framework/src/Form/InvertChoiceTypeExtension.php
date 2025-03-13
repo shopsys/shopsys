@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Form\Exception\InvertedChoiceNotMultipleException;
 use Shopsys\FrameworkBundle\Form\Transformers\InverseMultipleChoiceTransformer;
 use Symfony\Component\Form\AbstractTypeExtension;
@@ -18,6 +19,7 @@ class InvertChoiceTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public static function getExtendedTypes(): iterable
     {
         yield ChoiceType::class;
@@ -26,6 +28,7 @@ class InvertChoiceTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
@@ -44,6 +47,7 @@ class InvertChoiceTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);

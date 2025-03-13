@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Twig;
 
+use Override;
 use Shopsys\FrameworkBundle\Twig\Exception\HoneyPotRenderedBeforePasswordException;
 use Symfony\Component\Form\FormView;
 use Twig\Extension\AbstractExtension;
@@ -16,6 +17,7 @@ class HoneyPotExtension extends AbstractExtension
     /**
      * @return array
      */
+    #[Override]
     public function getFunctions()
     {
         return [

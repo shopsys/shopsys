@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\Exception\UnsupportedFeatureException;
@@ -27,6 +28,7 @@ class BlogArticleIndex extends AbstractIndex implements IndexSupportChangesOnlyI
      * @param int $domainId
      * @return int
      */
+    #[Override]
     public function getTotalCount(int $domainId): int
     {
         return $this->blogArticleExportRepository->getVisibleBlogArticlesCountByDomainIdAndLocale(
@@ -42,6 +44,7 @@ class BlogArticleIndex extends AbstractIndex implements IndexSupportChangesOnlyI
      * @param string[] $fields
      * @return array
      */
+    #[Override]
     public function getExportDataForBatch(
         int $domainId,
         int $lastProcessedId,
@@ -68,6 +71,7 @@ class BlogArticleIndex extends AbstractIndex implements IndexSupportChangesOnlyI
      * @param string[] $fields
      * @return array
      */
+    #[Override]
     public function getExportDataForIds(int $domainId, array $restrictToIds, array $fields = []): array
     {
         if ($fields !== []) {
@@ -107,6 +111,7 @@ class BlogArticleIndex extends AbstractIndex implements IndexSupportChangesOnlyI
     /**
      * @return string
      */
+    #[Override]
     public static function getName(): string
     {
         return 'blog_article';

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Elasticsearch;
 
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -17,6 +18,7 @@ class IndexRegistryTest extends TestCase
 {
     protected IndexRegistry $indexRegistry;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

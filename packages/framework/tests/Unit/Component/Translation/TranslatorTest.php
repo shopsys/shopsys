@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Translation;
 
+use Override;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\Translation\MessageIdNormalizer;
@@ -26,6 +27,7 @@ class TranslatorTest extends TestCase
 
     private Translator $translator;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->originalTranslatorMock = $this->getMockBuilder(SymfonyTranslator::class)

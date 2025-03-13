@@ -6,6 +6,7 @@ namespace Tests\MigrationBundle\Unit\Component\Doctrine\Migrations\Resources;
 
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
+use Override;
 
 /**
  * @see \Tests\MigrationBundle\Unit\Component\Doctrine\Migrations\MigrationsLockTest
@@ -15,6 +16,7 @@ class Version20180101000001 extends AbstractMigration
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
+    #[Override]
     public function up(Schema $schema): void
     {
     }

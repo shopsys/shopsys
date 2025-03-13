@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Component\Constraints;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Payment\PaymentFacade;
 use Shopsys\FrontendApiBundle\Model\Cart\CartApiFacade;
@@ -29,6 +30,7 @@ class PaymentInOrderValidator extends ConstraintValidator
      * @param mixed $value
      * @param \Shopsys\FrontendApiBundle\Component\Constraints\PaymentInOrder $constraint
      */
+    #[Override]
     public function validate(mixed $value, Constraint $constraint): void
     {
         if (!$constraint instanceof PaymentInOrder) {

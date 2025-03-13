@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\UploadedFile;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\AbstractUploadedFileLocator;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
@@ -34,6 +35,7 @@ class UploadedFileLocator extends AbstractUploadedFileLocator
      * @param \Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileInterface $uploadedFile
      * @return string
      */
+    #[Override]
     protected function getFilePath(UploadedFileInterface $uploadedFile): string
     {
         return $uploadedFile->getFilename();

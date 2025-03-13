@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Override;
 use RuntimeException;
 use Shopsys\FrameworkBundle\Component\Domain\DomainDataCreator;
 use Shopsys\FrameworkBundle\Component\Domain\Multidomain\MultidomainEntityClassFinderFacade;
@@ -38,6 +39,7 @@ class CreateDomainsDataCommand extends Command
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $domainsCreatedCount = 0;

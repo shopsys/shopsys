@@ -8,6 +8,7 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\Type;
 use Exception;
+use Override;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 
 class MoneyType extends Type
@@ -15,6 +16,7 @@ class MoneyType extends Type
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getName(): string
     {
         return 'money';
@@ -23,6 +25,7 @@ class MoneyType extends Type
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform): string
     {
         return $platform->getDecimalTypeDeclarationSQL($fieldDeclaration);
@@ -31,6 +34,7 @@ class MoneyType extends Type
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
     {
         if ($value === null) {
@@ -47,6 +51,7 @@ class MoneyType extends Type
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function convertToPHPValue($value, AbstractPlatform $platform): ?Money
     {
         if ($value === null) {
@@ -64,6 +69,7 @@ class MoneyType extends Type
      * @param \Doctrine\DBAL\Platforms\AbstractPlatform $platform
      * @return bool
      */
+    #[Override]
     public function requiresSQLCommentHint(AbstractPlatform $platform): bool
     {
         return true;

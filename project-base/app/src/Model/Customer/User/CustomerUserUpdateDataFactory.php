@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Customer\User;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\DeliveryAddressData;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData as BaseCustomerUserData;
@@ -33,6 +34,7 @@ class CustomerUserUpdateDataFactory extends BaseCustomerUserUpdateDataFactory
      * @param \App\Model\Customer\User\CustomerUserData $customerUserData
      * @return \App\Model\Customer\User\CustomerUserUpdateData
      */
+    #[Override]
     protected function createInstance(
         BillingAddressData $billingAddressData,
         DeliveryAddressData $deliveryAddressData,

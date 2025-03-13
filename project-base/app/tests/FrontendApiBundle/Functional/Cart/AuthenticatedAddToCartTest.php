@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Cart;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Cart\CartFacade;
 use App\Model\Product\Product;
+use Override;
 use Shopsys\FrameworkBundle\Model\Cart\Cart;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
@@ -31,6 +32,7 @@ class AuthenticatedAddToCartTest extends GraphQlWithLoginTestCase
      */
     private CurrentCustomerUser $currentCustomerUser;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

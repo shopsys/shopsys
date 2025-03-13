@@ -11,6 +11,7 @@ use GraphQL\Language\AST\StringValueNode;
 use GraphQL\Language\Printer;
 use GraphQL\Type\Definition\ScalarType;
 use GraphQL\Utils\Utils;
+use Override;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use function is_object;
 use function is_scalar;
@@ -23,6 +24,7 @@ class StringType extends ScalarType
      * @param mixed $value
      * @return string|null
      */
+    #[Override]
     public function serialize($value): ?string
     {
         $canCast = is_scalar($value)
@@ -43,6 +45,7 @@ class StringType extends ScalarType
      * @throws \GraphQL\Error\Error
      * @return string|null
      */
+    #[Override]
     public function parseValue($value): ?string
     {
         if (!is_string($value)) {
@@ -59,6 +62,7 @@ class StringType extends ScalarType
      * @param array|null $variables
      * @return string|null
      */
+    #[Override]
     public function parseLiteral(Node $valueNode, ?array $variables = null): ?string
     {
         if ($valueNode instanceof StringValueNode) {

@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Migrations;
 use Doctrine\DBAL\Schema\Schema;
 use Exception;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
+use Override;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategory;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -18,6 +19,7 @@ class Version20241112100245 extends AbstractMigration implements ContainerAwareI
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
+    #[Override]
     public function up(Schema $schema): void
     {
         $rootBlogCategories = $this->sql('SELECT id FROM blog_categories WHERE parent_id IS NULL AND level = 0')->fetchAllAssociative();
@@ -47,6 +49,7 @@ class Version20241112100245 extends AbstractMigration implements ContainerAwareI
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
+    #[Override]
     public function down(Schema $schema): void
     {
     }

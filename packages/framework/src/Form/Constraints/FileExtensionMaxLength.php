@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Constraints;
 
+use Override;
 use Symfony\Component\Validator\Constraint;
 
 /**
@@ -18,6 +19,7 @@ class FileExtensionMaxLength extends Constraint
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getRequiredOptions(): array
     {
         return [
@@ -28,6 +30,7 @@ class FileExtensionMaxLength extends Constraint
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getDefaultOption(): ?string
     {
         return 'limit';

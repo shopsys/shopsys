@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Unit\Component\GqlContext;
 
 use ArrayObject;
+use Override;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrontendApiBundle\Component\GqlContext\GqlContextHelper;
 
@@ -14,6 +15,7 @@ class GqlContextHelperTest extends TestCase
 
     private GqlContextHelper $gqlContextHelper;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->gqlContextHelper = new GqlContextHelper();

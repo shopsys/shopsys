@@ -10,6 +10,7 @@ use App\Model\Product\Product;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
+use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserIdentifierFactory;
@@ -35,6 +36,7 @@ class CartDataFixture extends AbstractReferenceFixture implements DependentFixtu
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
+    #[Override]
     public function load(ObjectManager $manager): void
     {
         $this->domain->switchDomainById($this->domainsForDataFixtureProvider->getFirstAllowedDomainConfig()->getId());

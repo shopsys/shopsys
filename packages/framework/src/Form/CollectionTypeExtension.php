@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Form\ResizeFormListener;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\AbstractTypeExtension;
@@ -20,6 +21,7 @@ class CollectionTypeExtension extends AbstractTypeExtension
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->removeOriginalResizeFormListener($builder->getEventDispatcher());
@@ -38,6 +40,7 @@ class CollectionTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public static function getExtendedTypes(): iterable
     {
         yield CollectionType::class;

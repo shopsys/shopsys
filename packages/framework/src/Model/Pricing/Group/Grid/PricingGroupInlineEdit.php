@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Pricing\Group\Grid;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Grid\InlineEdit\AbstractGridInlineEdit;
 use Shopsys\FrameworkBundle\Form\Admin\Pricing\Group\PricingGroupFormType;
@@ -34,6 +35,7 @@ class PricingGroupInlineEdit extends AbstractGridInlineEdit
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData $pricingGroupData
      * @return int
      */
+    #[Override]
     protected function createEntityAndGetId($pricingGroupData)
     {
         $pricingGroup = $this->pricingGroupFacade->create(
@@ -48,6 +50,7 @@ class PricingGroupInlineEdit extends AbstractGridInlineEdit
      * @param int $pricingGroupId
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupData $pricingGroupData
      */
+    #[Override]
     protected function editEntity($pricingGroupId, $pricingGroupData)
     {
         $this->pricingGroupFacade->edit($pricingGroupId, $pricingGroupData);
@@ -57,6 +60,7 @@ class PricingGroupInlineEdit extends AbstractGridInlineEdit
      * @param int|null $pricingGroupId
      * @return \Symfony\Component\Form\FormInterface
      */
+    #[Override]
     public function getForm($pricingGroupId)
     {
         if ($pricingGroupId !== null) {

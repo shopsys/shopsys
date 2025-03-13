@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Twig;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Money\HiddenMoney;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\Role\CustomerUserRoleResolver;
@@ -23,6 +24,7 @@ class HiddenPriceExtension extends AbstractExtension
     /**
      * @return array
      */
+    #[Override]
     public function getFilters(): array
     {
         return [

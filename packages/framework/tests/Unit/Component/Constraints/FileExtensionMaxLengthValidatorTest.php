@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\Constraints;
 
+use Override;
 use Shopsys\FrameworkBundle\Form\Constraints\FileExtensionMaxLength;
 use Shopsys\FrameworkBundle\Form\Constraints\FileExtensionMaxLengthValidator;
 use Symfony\Component\HttpFoundation\File\File;
@@ -14,6 +15,7 @@ class FileExtensionMaxLengthValidatorTest extends ConstraintValidatorTestCase
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function createValidator()
     {
         return new FileExtensionMaxLengthValidator();

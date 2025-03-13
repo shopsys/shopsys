@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Customer\User;
 
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUser as BaseUser;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserData as BaseUserData;
 
@@ -40,6 +41,7 @@ class CustomerUser extends BaseUser
     /**
      * @param \App\Model\Customer\User\CustomerUserData $customerUserData
      */
+    #[Override]
     public function edit(BaseUserData $customerUserData)
     {
         parent::edit($customerUserData);

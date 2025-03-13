@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App;
 
 use Closure;
+use Override;
 use ReflectionFunction;
 use ReflectionMethod;
 use ReflectionObject;
@@ -27,6 +28,7 @@ class Kernel extends BaseKernel
 
     private const CONFIG_EXTS = '.{php,xml,yaml,yml}';
 
+    #[Override]
     public function boot(): void
     {
         parent::boot();

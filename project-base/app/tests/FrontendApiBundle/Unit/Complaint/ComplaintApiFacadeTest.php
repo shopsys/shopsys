@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Unit\Complaint;
 use App\Model\Order\Item\OrderItem;
 use Doctrine\ORM\EntityManagerInterface;
 use Overblog\GraphQLBundle\Definition\Argument;
+use Override;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\CustomerUploadedFileFacade;
@@ -55,6 +56,7 @@ class ComplaintApiFacadeTest extends TestCase
 
     private MockObject $complaintRepository;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->em = $this->createMock(EntityManagerInterface::class);

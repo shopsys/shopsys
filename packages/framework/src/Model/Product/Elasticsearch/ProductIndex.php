@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Product\Elasticsearch;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Elasticsearch\AbstractIndex;
 
@@ -22,6 +23,7 @@ class ProductIndex extends AbstractIndex
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getTotalCount(int $domainId): int
     {
         return $this->productExportRepository->getProductTotalCountForDomain($domainId);
@@ -30,6 +32,7 @@ class ProductIndex extends AbstractIndex
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getExportDataForIds(int $domainId, array $restrictToIds, array $fields = []): array
     {
         return $this->productExportRepository->getProductsDataForIds(
@@ -43,6 +46,7 @@ class ProductIndex extends AbstractIndex
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getExportDataForBatch(
         int $domainId,
         int $lastProcessedId,
@@ -61,6 +65,7 @@ class ProductIndex extends AbstractIndex
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public static function getName(): string
     {
         return 'product';

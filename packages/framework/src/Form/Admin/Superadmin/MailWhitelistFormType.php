@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Superadmin;
 
+use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Form\Admin\Mail\MailWhitelistCollectionType;
@@ -32,6 +33,7 @@ final class MailWhitelistFormType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if ($this->mailerSettingProvider->isWhitelistForced()) {
@@ -76,6 +78,7 @@ final class MailWhitelistFormType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Search;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
 use Shopsys\FrameworkBundle\Model\Product\Search\FilterQuery;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductFilterDataToQueryTransformer as BaseProductFilterDataToQueryTransformer;
@@ -21,6 +22,7 @@ class ProductFilterDataToQueryTransformer extends BaseProductFilterDataToQueryTr
      * @param \App\Model\Product\Search\FilterQuery $filterQuery
      * @return \App\Model\Product\Search\FilterQuery
      */
+    #[Override]
     public function addParametersToQuery(ProductFilterData $productFilterData, FilterQuery $filterQuery): FilterQuery
     {
         $parametersFilterData = $productFilterData->parameters;

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures\Demo;
 
 use Doctrine\Persistence\ObjectManager;
+use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestDataFactory;
 use Shopsys\FrameworkBundle\Model\PersonalData\PersonalDataAccessRequestFacade;
@@ -27,6 +28,7 @@ class PersonalDataAccessRequestDataFixture extends AbstractReferenceFixture
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
+    #[Override]
     public function load(ObjectManager $manager): void
     {
         $domainId = $this->domainsForDataFixtureProvider->getFirstAllowedDomainConfig()->getId();

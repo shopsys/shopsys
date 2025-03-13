@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Article;
 
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
+use Override;
 
 class NotBlogArticleResolverMap extends ResolverMap
 {
     /**
      * @return array
      */
+    #[Override]
     protected function map(): array
     {
         return [

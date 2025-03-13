@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Symfony\Component\Form\AbstractType;
@@ -27,6 +28,7 @@ class DomainType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['domainConfigs'] = $this->getSortedDomainConfigsByAdminDomainTabs($options['limit_domains_by_ids']);
@@ -36,6 +38,7 @@ class DomainType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -69,6 +72,7 @@ class DomainType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getParent(): string
     {
         return IntegerType::class;

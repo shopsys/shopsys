@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\CodingStandards\Unit\CsFixer\ForbiddenPrivateVisibilityFixer;
 
+use Override;
 use Shopsys\CodingStandards\CsFixer\ForbiddenPrivateVisibilityFixer;
 use Tests\CodingStandards\Unit\CsFixer\AbstractFixerTestCase;
 
@@ -12,6 +13,7 @@ final class ForbiddenPrivateVisibilityFixerTest extends AbstractFixerTestCase
     /**
      * @return \Shopsys\CodingStandards\CsFixer\ForbiddenPrivateVisibilityFixer
      */
+    #[Override]
     protected function createFixerService(): ForbiddenPrivateVisibilityFixer
     {
         $fixer = new ForbiddenPrivateVisibilityFixer();
@@ -25,6 +27,7 @@ final class ForbiddenPrivateVisibilityFixerTest extends AbstractFixerTestCase
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public static function getTestingFiles(): iterable
     {
         yield [__DIR__ . '/fixed/constructor_property_promotion.php', __DIR__ . '/wrong/constructor_property_promotion.php'];

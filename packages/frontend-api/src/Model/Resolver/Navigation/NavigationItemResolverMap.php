@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Navigation;
 
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
+use Override;
 use Shopsys\FrameworkBundle\Model\Navigation\NavigationItemDetail;
 
 class NavigationItemResolverMap extends ResolverMap
@@ -12,6 +13,7 @@ class NavigationItemResolverMap extends ResolverMap
     /**
      * @return array
      */
+    #[Override]
     protected function map(): array
     {
         return [

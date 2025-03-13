@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Migrations;
 use DateTime;
 use DateTimeZone;
 use Doctrine\DBAL\Schema\Schema;
+use Override;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 
@@ -17,6 +18,7 @@ class Version20240111072911 extends AbstractMigration implements ContainerAwareI
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
+    #[Override]
     public function up(Schema $schema): void
     {
         $blogArticles = $this->sql('SELECT id, publish_date FROM blog_articles')->fetchAllAssociative();
@@ -45,6 +47,7 @@ class Version20240111072911 extends AbstractMigration implements ContainerAwareI
     /**
      * @param \Doctrine\DBAL\Schema\Schema $schema
      */
+    #[Override]
     public function down(Schema $schema): void
     {
     }

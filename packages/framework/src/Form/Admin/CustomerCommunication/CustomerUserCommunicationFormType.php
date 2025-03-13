@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form\Admin\CustomerCommunication;
 
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Form\GroupType;
 use Symfony\Component\Form\AbstractType;
@@ -20,6 +21,7 @@ class CustomerUserCommunicationFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [

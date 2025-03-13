@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\UploadedFile;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Prezent\Doctrine\Translatable\TranslatableInterface;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\AbstractUploadedFile;
@@ -92,6 +93,7 @@ class UploadedFile extends AbstractUploadedFile implements TranslatableInterface
     /**
      * @return string
      */
+    #[Override]
     protected function getUploadKey(): string
     {
         return static::UPLOAD_KEY;
@@ -100,6 +102,7 @@ class UploadedFile extends AbstractUploadedFile implements TranslatableInterface
     /**
      * @return string
      */
+    #[Override]
     protected function getFileForUploadCategory(): string
     {
         return '';

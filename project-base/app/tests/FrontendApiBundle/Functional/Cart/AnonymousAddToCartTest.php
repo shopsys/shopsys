@@ -7,6 +7,7 @@ namespace Tests\FrontendApiBundle\Functional\Cart;
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Cart\CartFacade;
 use App\Model\Product\Product;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Symfony\Component\Validator\Constraints\GreaterThan;
@@ -21,6 +22,7 @@ class AnonymousAddToCartTest extends GraphQlTestCase
 
     private Product $testingProduct;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

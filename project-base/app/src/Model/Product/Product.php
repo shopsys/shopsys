@@ -6,6 +6,7 @@ namespace App\Model\Product;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Shopsys\FrameworkBundle\Model\Product\Exception\MainVariantCannotBeVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\ProductIsAlreadyVariantException;
 use Shopsys\FrameworkBundle\Model\Product\Exception\VariantCanBeAddedOnlyToMainVariantException;
@@ -79,6 +80,7 @@ class Product extends BaseProduct
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains
      * @param \App\Model\Product\ProductData $productData
      */
+    #[Override]
     public function edit(
         array $productCategoryDomains,
         BaseProductData $productData,
@@ -91,6 +93,7 @@ class Product extends BaseProduct
     /**
      * @param \App\Model\Product\ProductData $productData
      */
+    #[Override]
     protected function setData(BaseProductData $productData): void
     {
         parent::setData($productData);
@@ -101,6 +104,7 @@ class Product extends BaseProduct
     /**
      * @return \App\Model\Product\ProductTranslation
      */
+    #[Override]
     protected function createTranslation()
     {
         return new ProductTranslation();
@@ -109,6 +113,7 @@ class Product extends BaseProduct
     /**
      * @param \App\Model\Product\ProductData $productData
      */
+    #[Override]
     protected function createDomains(BaseProductData $productData): void
     {
         $domainIds = array_keys($productData->seoTitles);
@@ -124,6 +129,7 @@ class Product extends BaseProduct
     /**
      * @param \App\Model\Product\Product $variant
      */
+    #[Override]
     public function addVariant(BaseProduct $variant): void
     {
         if (!$this->isMainVariant()) {
@@ -184,6 +190,7 @@ class Product extends BaseProduct
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\ProductCategoryDomain[] $productCategoryDomains
      */
+    #[Override]
     public function setProductCategoryDomains($productCategoryDomains)
     {
         foreach ($this->productCategoryDomains as $productCategoryDomain) {
@@ -210,6 +217,7 @@ class Product extends BaseProduct
     /**
      * @return string
      */
+    #[Override]
     public function getCatnum(): string
     {
         return $this->catnum;

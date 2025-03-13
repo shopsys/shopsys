@@ -6,6 +6,7 @@ namespace Tests\App\Performance\Page;
 
 use Doctrine\DBAL\Logging\LoggerChain;
 use Doctrine\ORM\EntityManagerInterface;
+use Override;
 use PHPUnit\Framework\Attributes\Group;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
@@ -25,6 +26,7 @@ class AllPagesTest extends KernelTestCase
 {
     protected const PASSES = 5;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

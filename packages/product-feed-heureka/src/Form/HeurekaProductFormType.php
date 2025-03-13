@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ProductFeed\HeurekaBundle\Form;
 
+use Override;
 use Shopsys\FormTypesBundle\MultidomainType;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Form\Constraints\MoneyRange;
@@ -25,6 +26,7 @@ class HeurekaProductFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('cpc', MultidomainType::class, [

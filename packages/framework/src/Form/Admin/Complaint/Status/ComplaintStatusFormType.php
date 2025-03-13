@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Complaint\Status;
 
+use Override;
 use Shopsys\FrameworkBundle\Form\Locale\LocalizedType;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatusData;
 use Symfony\Component\Form\AbstractType;
@@ -16,6 +17,7 @@ class ComplaintStatusFormType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -34,6 +36,7 @@ class ComplaintStatusFormType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

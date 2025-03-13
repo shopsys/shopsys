@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Slider;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Redis\CleanStorefrontCacheFacade;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItemData;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItemFacade as BaseSliderItemFacade;
@@ -24,6 +25,7 @@ class SliderItemFacade extends BaseSliderItemFacade
      * @param \App\Model\Slider\SliderItemData $sliderItemData
      * @return \App\Model\Slider\SliderItem
      */
+    #[Override]
     public function create(SliderItemData $sliderItemData): SliderItem
     {
         /** @var \App\Model\Slider\SliderItem $sliderItem */
@@ -44,6 +46,7 @@ class SliderItemFacade extends BaseSliderItemFacade
      * @param \App\Model\Slider\SliderItemData $sliderItemData
      * @return \App\Model\Slider\SliderItem
      */
+    #[Override]
     public function edit($sliderItemId, SliderItemData $sliderItemData)
     {
         /** @var \App\Model\Slider\SliderItem $sliderItem */

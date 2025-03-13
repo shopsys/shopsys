@@ -7,6 +7,7 @@ namespace App\DataFixtures\Demo;
 use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Watchdog\WatchdogDataFactory;
@@ -31,6 +32,7 @@ class WatchdogDataFixture extends AbstractReferenceFixture implements DependentF
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
+    #[Override]
     public function load(ObjectManager $manager): void
     {
         $this->createWatchdogs();

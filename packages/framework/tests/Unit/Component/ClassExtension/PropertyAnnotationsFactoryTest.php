@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\ClassExtension;
 
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Roave\BetterReflection\Reflection\ReflectionClass;
@@ -26,6 +27,7 @@ class PropertyAnnotationsFactoryTest extends TestCase
 {
     private PropertyAnnotationsFactory $propertyAnnotationsFactory;
 
+    #[Override]
     protected function setUp(): void
     {
         $replacementMap = new AnnotationsReplacementsMap([

@@ -10,6 +10,7 @@ use App\Model\Product\Parameter\ParameterFacade;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use InvalidArgumentException;
+use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityManagerDecorator;
@@ -286,6 +287,7 @@ class ParameterDataFixture extends AbstractReferenceFixture implements Dependent
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
+    #[Override]
     public function load(ObjectManager $manager): void
     {
         $firstDomainLocale = $this->domainsForDataFixtureProvider->getFirstAllowedDomainConfig()->getLocale();

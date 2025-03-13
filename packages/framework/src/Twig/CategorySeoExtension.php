@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Twig;
 
 use Generator;
+use Override;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade;
 use Shopsys\FrameworkBundle\Model\CategorySeo\SelectedCategorySeoMixCombinationFactory;
@@ -32,6 +33,7 @@ class CategorySeoExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFunction[]
      */
+    #[Override]
     public function getFunctions(): array
     {
         return [

@@ -9,6 +9,7 @@ use Doctrine\ORM\Decorator\EntityManagerDecorator as BaseEntityManagerDecorator;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Repository\RepositoryFactory;
+use Override;
 
 class EntityManagerDecorator extends BaseEntityManagerDecorator
 {
@@ -32,6 +33,7 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function createQueryBuilder(): QueryBuilder
     {
         return new QueryBuilder($this, $this->entityNameResolver);
@@ -40,6 +42,7 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function createQuery($dql = ''): Query
     {
         $resolvedDql = $this->entityNameResolver->resolveIn($dql);
@@ -50,6 +53,7 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getReference($entityName, $id): ?object
     {
         $resolvedEntityName = $this->entityNameResolver->resolve($entityName);
@@ -60,6 +64,7 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getPartialReference($entityName, $identifier): ?object
     {
         $resolvedEntityName = $this->entityNameResolver->resolve($entityName);
@@ -70,6 +75,7 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function find($entityName, $id, $lockMode = null, $lockVersion = null): ?object
     {
         $resolvedEntityName = $this->entityNameResolver->resolve($entityName);
@@ -99,6 +105,7 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
      * @param string $className
      * @return \Doctrine\Persistence\ObjectRepository
      */
+    #[Override]
     public function getRepository($className)
     {
         $resolvedClassName = $this->entityNameResolver->resolve($className);
@@ -110,6 +117,7 @@ class EntityManagerDecorator extends BaseEntityManagerDecorator
      * @param string $className
      * @return \Doctrine\ORM\Mapping\ClassMetadata
      */
+    #[Override]
     public function getClassMetadata($className)
     {
         $resolvedClassName = $this->entityNameResolver->resolve($className);

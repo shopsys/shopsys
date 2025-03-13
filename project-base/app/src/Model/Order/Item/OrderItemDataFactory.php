@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Order\Item;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData as BaseOrderItemData;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory as BaseOrderItemDataFactory;
 
@@ -19,6 +20,7 @@ class OrderItemDataFactory extends BaseOrderItemDataFactory
     /**
      * @return \App\Model\Order\Item\OrderItemData
      */
+    #[Override]
     protected function createInstance(): BaseOrderItemData
     {
         return new OrderItemData();

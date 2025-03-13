@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\HttpSmokeTesting;
 
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\HttpSmokeTesting\RouterAdapter\SymfonyRouterAdapter;
@@ -21,6 +22,7 @@ abstract class HttpSmokeTestCase extends KernelTestCase
      * Sets up the fixture, for example, open a network connection.
      * This method is called before data provider is executed and before each test.
      */
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

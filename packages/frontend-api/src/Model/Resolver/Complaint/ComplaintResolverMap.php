@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Complaint;
 
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Complaint\Complaint;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum;
@@ -24,6 +25,7 @@ class ComplaintResolverMap extends ResolverMap
     /**
      * @return array
      */
+    #[Override]
     protected function map(): array
     {
         return [

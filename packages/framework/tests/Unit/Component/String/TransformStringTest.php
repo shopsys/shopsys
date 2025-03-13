@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\String;
 
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
@@ -12,6 +13,7 @@ class TransformStringTest extends TestCase
 {
     private TransformStringHelper $transformStringHelper;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->transformStringHelper = new TransformStringHelper();

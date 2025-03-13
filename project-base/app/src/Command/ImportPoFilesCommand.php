@@ -6,6 +6,7 @@ namespace App\Command;
 
 use JMS\TranslationBundle\Translation\FileWriter;
 use JMS\TranslationBundle\Translation\Loader\SymfonyLoaderAdapter;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Translation\PoDumper;
 use Shopsys\FrameworkBundle\Component\Translation\PoFileLoader;
@@ -50,6 +51,7 @@ class ImportPoFilesCommand extends Command
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function configure(): void
     {
         $this
@@ -63,6 +65,7 @@ class ImportPoFilesCommand extends Command
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return int
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $domains = $this->domain->getAll();

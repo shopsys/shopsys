@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Command;
 
 use CacheTool\Adapter\FastCGI;
 use CacheTool\CacheTool;
+use Override;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -21,6 +22,7 @@ class CleanOpcacheCommand extends Command
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $symfonyStyle = new SymfonyStyle($input, $output);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\Router;
 
+use Override;
 use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\Router\Exception\NotSupportedException;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrl;
@@ -57,6 +58,7 @@ class DomainRouter extends ChainRouter
     /**
      * @param \Symfony\Component\Routing\RequestContext $context
      */
+    #[Override]
     public function setContext(RequestContext $context): void
     {
         if ($this->freeze) {

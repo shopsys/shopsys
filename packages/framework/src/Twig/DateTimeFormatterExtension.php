@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Twig;
 use DateTime;
 use DateTimeImmutable;
 use IntlDateFormatter;
+use Override;
 use Shopsys\FrameworkBundle\Component\Localization\DateTimeFormatterInterface;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Twig\Extension\AbstractExtension;
@@ -30,6 +31,7 @@ class DateTimeFormatterExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFilter[]
      */
+    #[Override]
     public function getFilters()
     {
         return [
@@ -55,6 +57,7 @@ class DateTimeFormatterExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFunction[]
      */
+    #[Override]
     public function getFunctions()
     {
         return [

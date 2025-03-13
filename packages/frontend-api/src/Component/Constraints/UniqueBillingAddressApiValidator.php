@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Component\Constraints;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\BillingAddressRepository;
 use Shopsys\FrameworkBundle\Model\Customer\Exception\BillingAddressCompanyNumberIsNotUniqueException;
@@ -30,6 +31,7 @@ class UniqueBillingAddressApiValidator extends ConstraintValidator
      * @param mixed $value
      * @param \Symfony\Component\Validator\Constraint $constraint
      */
+    #[Override]
     public function validate(mixed $value, Constraint $constraint): void
     {
         if (!$constraint instanceof UniqueBillingAddressApi) {

@@ -8,6 +8,7 @@ use App\DataFixtures\Demo\Helper\ComplaintHelper;
 use App\Model\Customer\User\CustomerUser;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Model\Complaint\ComplaintResolutionEnum;
 use Shopsys\FrameworkBundle\Model\Complaint\Status\ComplaintStatus;
@@ -30,6 +31,7 @@ class ComplaintDataFixture extends AbstractReferenceFixture implements Dependent
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function load(ObjectManager $manager): void
     {
         /** @var \App\Model\Customer\User\CustomerUser $customerUser1 */

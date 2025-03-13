@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Mail;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateData as BaseMailTemplateData;
 use Shopsys\FrameworkBundle\Model\Mail\MailTemplateDataFactory as BaseMailTemplateDataFactory;
 
@@ -19,6 +20,7 @@ class MailTemplateDataFactory extends BaseMailTemplateDataFactory
     /**
      * @return \App\Model\Mail\MailTemplateData
      */
+    #[Override]
     protected function createInstance(): BaseMailTemplateData
     {
         return new MailTemplateData();

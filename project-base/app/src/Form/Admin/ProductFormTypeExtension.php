@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Form\Admin;
 
 use App\Model\Product\Product;
+use Override;
 use Shopsys\FrameworkBundle\Component\Form\FormBuilderHelper;
 use Shopsys\FrameworkBundle\Form\Admin\Product\ProductFormType;
 use Shopsys\FrameworkBundle\Form\ProductsType;
@@ -26,6 +27,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         /** @var \App\Model\Product\Product|null $product */
@@ -83,6 +85,7 @@ class ProductFormTypeExtension extends AbstractTypeExtension
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public static function getExtendedTypes(): iterable
     {
         yield ProductFormType::class;

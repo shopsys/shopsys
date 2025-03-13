@@ -6,6 +6,7 @@ namespace App\DataFixtures\Demo;
 
 use App\Model\Product\Brand\BrandDataFactory;
 use Doctrine\Persistence\ObjectManager;
+use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -53,6 +54,7 @@ class BrandDataFixture extends AbstractReferenceFixture
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
+    #[Override]
     public function load(ObjectManager $manager): void
     {
         $brandData = $this->brandDataFactory->create();

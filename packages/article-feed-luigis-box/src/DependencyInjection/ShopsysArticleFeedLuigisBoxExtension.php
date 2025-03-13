@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\ArticleFeed\LuigisBoxBundle\DependencyInjection;
 
+use Override;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
@@ -15,6 +16,7 @@ class ShopsysArticleFeedLuigisBoxExtension extends Extension implements PrependE
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));

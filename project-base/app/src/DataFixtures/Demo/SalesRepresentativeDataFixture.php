@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures\Demo;
 
 use Doctrine\Persistence\ObjectManager;
+use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Model\SalesRepresentative\SalesRepresentativeDataFactory;
@@ -30,6 +31,7 @@ class SalesRepresentativeDataFixture extends AbstractReferenceFixture
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
+    #[Override]
     public function load(ObjectManager $manager): void
     {
         $salesRepresentativeData = $this->salesRepresentativeDataFactory->create();

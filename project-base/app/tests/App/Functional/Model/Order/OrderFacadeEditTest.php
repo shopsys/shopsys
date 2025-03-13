@@ -10,6 +10,7 @@ use App\Model\Order\Item\OrderItemDataFactory;
 use App\Model\Order\Order;
 use App\Model\Order\OrderDataFactory;
 use App\Model\Order\OrderFacade;
+use Override;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Order\Item\Exception\OrderItemNotFoundException;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemTypeEnum;
@@ -41,6 +42,7 @@ final class OrderFacadeEditTest extends TransactionFunctionalTestCase
      */
     private OrderItemDataFactory $orderItemDataFactory;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

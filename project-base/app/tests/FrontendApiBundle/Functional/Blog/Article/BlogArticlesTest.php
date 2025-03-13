@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Blog\Article;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Blog\Article\Elasticsearch\BlogArticleElasticsearchFacade;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
@@ -12,6 +13,7 @@ class BlogArticlesTest extends GraphQlTestCase
 {
     private int $totalBlogArticlesCount = 0;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Administrator;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorData as BaseAdministratorData;
 use Shopsys\FrameworkBundle\Model\Administrator\AdministratorDataFactory as BaseAdministratorDataFactory;
 
@@ -17,6 +18,7 @@ class AdministratorDataFactory extends BaseAdministratorDataFactory
     /**
      * @return \App\Model\Administrator\AdministratorData
      */
+    #[Override]
     public function createInstance(): BaseAdministratorData
     {
         return new AdministratorData();

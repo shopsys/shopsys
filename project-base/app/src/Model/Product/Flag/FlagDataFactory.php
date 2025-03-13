@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Flag;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagData as BaseFlagData;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagDataFactory as BaseFlagDataFactory;
 
@@ -19,6 +20,7 @@ class FlagDataFactory extends BaseFlagDataFactory
     /**
      * @return \App\Model\Product\Flag\FlagData
      */
+    #[Override]
     protected function createInstance(): BaseFlagData
     {
         return new FlagData();

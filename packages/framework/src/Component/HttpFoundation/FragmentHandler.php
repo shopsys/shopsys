@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Component\HttpFoundation;
 
+use Override;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\DependencyInjection\LazyLoadingFragmentHandler;
@@ -16,6 +17,7 @@ class FragmentHandler extends LazyLoadingFragmentHandler
      *
      * {@inheritdoc}
      */
+    #[Override]
     protected function deliver(Response $response): ?string
     {
         if (!$response->isRedirection()) {
@@ -38,6 +40,7 @@ class FragmentHandler extends LazyLoadingFragmentHandler
      *
      * {@inheritdoc}
      */
+    #[Override]
     public function render($uri, $renderer = 'inline', array $options = []): ?string
     {
         if (!isset($options['ignore_errors'])) {

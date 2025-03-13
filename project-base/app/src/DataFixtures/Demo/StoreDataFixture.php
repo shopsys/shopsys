@@ -6,6 +6,7 @@ namespace App\DataFixtures\Demo;
 
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadDataFactory;
@@ -60,6 +61,7 @@ class StoreDataFixture extends AbstractReferenceFixture implements DependentFixt
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
+    #[Override]
     public function load(ObjectManager $manager): void
     {
         foreach ($this->getDemoData() as $demoRow) {

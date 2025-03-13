@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Resolver\Order;
 
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 
@@ -21,6 +22,7 @@ class OrderResolverMap extends ResolverMap
     /**
      * @return array
      */
+    #[Override]
     protected function map(): array
     {
         return [

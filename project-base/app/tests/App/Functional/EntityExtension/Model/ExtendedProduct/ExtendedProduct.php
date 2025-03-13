@@ -7,6 +7,7 @@ namespace Tests\App\Functional\EntityExtension\Model\ExtendedProduct;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Tests\App\Functional\EntityExtension\Model\Product\Product;
 use Tests\App\Functional\EntityExtension\Model\UnidirectionalEntity;
 
@@ -323,6 +324,7 @@ class ExtendedProduct extends Product
     /**
      * @return \Tests\App\Functional\EntityExtension\Model\ExtendedProduct\ExtendedProductTranslation
      */
+    #[Override]
     protected function createTranslation(): ExtendedProductTranslation
     {
         return new ExtendedProductTranslation();

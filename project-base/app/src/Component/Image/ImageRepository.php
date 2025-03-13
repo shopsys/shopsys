@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Component\Image;
 
 use Doctrine\ORM\PersistentCollection;
+use Override;
 use Shopsys\FrameworkBundle\Component\Image\Image;
 use Shopsys\FrameworkBundle\Component\Image\ImageRepository as BaseImageRepository;
 
@@ -22,6 +23,7 @@ class ImageRepository extends BaseImageRepository
      * @param string|null $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image[]
      */
+    #[Override]
     public function getImagesByEntityIndexedById($entityName, $entityId, $type): array
     {
         /** @var \Shopsys\FrameworkBundle\Component\Image\Image[] $images */
@@ -49,6 +51,7 @@ class ImageRepository extends BaseImageRepository
      * @param $type
      * @return \Shopsys\FrameworkBundle\Component\Image\Image
      */
+    #[Override]
     public function getImageByEntity($entityName, $entityId, $type): Image
     {
         /** @var \Shopsys\FrameworkBundle\Component\Image\Image $image */

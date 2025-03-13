@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\App\Test\Codeception\Helper;
 
 use Codeception\Module;
+use Override;
 use Shopsys\FrameworkBundle\Component\Doctrine\DatabaseConnectionCredentialsProvider;
 use Tests\App\Test\Codeception\Module\Db;
 
@@ -13,6 +14,7 @@ class DatabaseHelper extends Module
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function _initialize()
     {
         /** @var \Tests\App\Test\Codeception\Module\Db $dbModule */

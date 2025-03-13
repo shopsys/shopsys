@@ -8,6 +8,7 @@ use App\DataFixtures\Performance\CategoryDataFixture;
 use App\DataFixtures\Performance\CustomerUserDataFixture;
 use App\DataFixtures\Performance\OrderDataFixture;
 use App\DataFixtures\Performance\ProductDataFixture;
+use Override;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -37,6 +38,7 @@ class PerformanceDataCommand extends Command
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('<fg=green>loading ' . CategoryDataFixture::class . '</fg=green>');

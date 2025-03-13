@@ -6,12 +6,14 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Article;
 
 use InvalidArgumentException;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
+use Override;
 
 class ArticlesSearchResolverMap extends ResolverMap
 {
     /**
      * @return array
      */
+    #[Override]
     protected function map(): array
     {
         return [

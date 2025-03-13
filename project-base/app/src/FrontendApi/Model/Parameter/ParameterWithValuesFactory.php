@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Parameter;
 
+use Override;
 use Shopsys\FrontendApiBundle\Model\Parameter\ParameterWithValuesFactory as BaseParameterWithValuesFactory;
 
 /**
@@ -16,6 +17,7 @@ class ParameterWithValuesFactory extends BaseParameterWithValuesFactory
      * @param array $productData
      * @return array
      */
+    #[Override]
     public function createParametersArrayFromProductArray(array $productData): array
     {
         $parametersWithValues = [];
@@ -40,6 +42,7 @@ class ParameterWithValuesFactory extends BaseParameterWithValuesFactory
      * @param array $product
      * @return array
      */
+    #[Override]
     protected function mapParameterArray(array $product): array
     {
         return [

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\DependencyInjection;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Breadcrumb\BreadcrumbGeneratorInterface;
 use Shopsys\FrameworkBundle\Component\EntityLog\ChangeSet\DataTypeResolver\DataTypeResolverInterface;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
@@ -27,6 +28,7 @@ class ShopsysFrameworkExtension extends Extension implements PrependExtensionInt
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));

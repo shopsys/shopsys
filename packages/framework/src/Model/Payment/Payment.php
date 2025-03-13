@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Payment;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Override;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\EntityLogIdentify;
@@ -401,6 +402,7 @@ class Payment extends AbstractTranslatableEntity implements OrderableEntityInter
     /**
      * @return \Shopsys\FrameworkBundle\Model\Payment\PaymentTranslation
      */
+    #[Override]
     protected function createTranslation()
     {
         return new PaymentTranslation();

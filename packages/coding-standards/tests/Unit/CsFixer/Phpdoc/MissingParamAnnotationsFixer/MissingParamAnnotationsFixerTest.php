@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\CodingStandards\Unit\CsFixer\Phpdoc\MissingParamAnnotationsFixer;
 
+use Override;
 use PhpCsFixer\Tokenizer\Analyzer\FunctionsAnalyzer;
 use PhpCsFixer\Tokenizer\Analyzer\NamespaceUsesAnalyzer;
 use PhpCsFixer\WhitespacesFixerConfig;
@@ -20,6 +21,7 @@ final class MissingParamAnnotationsFixerTest extends AbstractFixerTestCase
     /**
      * @return \Shopsys\CodingStandards\CsFixer\Phpdoc\MissingParamAnnotationsFixer
      */
+    #[Override]
     protected function createFixerService(): MissingParamAnnotationsFixer
     {
         $namespaceUsesAnalyzer = new NamespaceUsesAnalyzer();
@@ -40,6 +42,7 @@ final class MissingParamAnnotationsFixerTest extends AbstractFixerTestCase
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public static function getTestingFiles(): iterable
     {
         yield [__DIR__ . '/fixed/fixed.php', __DIR__ . '/wrong/wrong.php'];

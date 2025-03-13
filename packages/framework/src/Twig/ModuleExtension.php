@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Twig;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Module\ModuleFacade;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -20,6 +21,7 @@ class ModuleExtension extends AbstractExtension
     /**
      * @return array
      */
+    #[Override]
     public function getFunctions()
     {
         return [

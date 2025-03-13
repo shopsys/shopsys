@@ -9,6 +9,7 @@ use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\VatDataFixture;
 use App\Model\Category\Category;
 use App\Model\Product\Product;
+use Override;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Product\Availability\AvailabilityStatusEnum;
@@ -30,6 +31,7 @@ class RetrieveCartTest extends GraphQlTestCase
      */
     private ProductAvailabilityFacade $productAvailabilityFacade;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

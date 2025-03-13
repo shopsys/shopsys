@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Product;
 
+use Override;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Component\EntityExtension\EntityNameResolver;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -16,6 +17,7 @@ class ProductFactoryTest extends TestCase
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function setUp(): void
     {
         $this->productFactory = new ProductFactory(

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\MultidomainEntityClassProvider as BaseMultidomainEntityClassProviderAlias;
 
 class MultidomainEntityClassProvider extends BaseMultidomainEntityClassProviderAlias
@@ -11,6 +12,7 @@ class MultidomainEntityClassProvider extends BaseMultidomainEntityClassProviderA
     /**
      * @return string[]
      */
+    #[Override]
     public function getManualMultidomainEntitiesNames(): array
     {
         return array_merge(

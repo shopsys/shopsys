@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrameworkBundle\Unit\Form\Admin\Country;
 
 use DateTimeZone;
+use Override;
 use ReflectionClass;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\MultidomainType;
@@ -120,6 +121,7 @@ class CountryFormTypeTest extends TypeTestCase
         $this->assertTrue($countryForm->isValid(), 'Existing country code on edit');
     }
 
+    #[Override]
     protected function setUp(): void
     {
         $this->setTranslator();
@@ -169,6 +171,7 @@ class CountryFormTypeTest extends TypeTestCase
     /**
      * @return array
      */
+    #[Override]
     protected function getExtensions(): array
     {
         return [

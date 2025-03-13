@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\CustomerUploadedFile;
 use Doctrine\ORM\EntityManagerInterface;
 use InvalidArgumentException;
 use League\Flysystem\FilesystemOperator;
+use Override;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\AbstractUploadedFileFacade;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileLocatorInterface;
 use Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileRepositoryInterface;
@@ -244,6 +245,7 @@ class CustomerUploadedFileFacade extends AbstractUploadedFileFacade
     /**
      * @param array $fileNamesIndexedByFileId
      */
+    #[Override]
     protected function updateFilenamesAndSlugs(array $fileNamesIndexedByFileId): void
     {
         foreach ($fileNamesIndexedByFileId as $fileId => $fileName) {
@@ -285,6 +287,7 @@ class CustomerUploadedFileFacade extends AbstractUploadedFileFacade
     /**
      * @return \Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileRepositoryInterface
      */
+    #[Override]
     protected function getRepository(): UploadedFileRepositoryInterface
     {
         return $this->customerUploadedFileRepository;
@@ -293,6 +296,7 @@ class CustomerUploadedFileFacade extends AbstractUploadedFileFacade
     /**
      * @return \Shopsys\FrameworkBundle\Component\AbstractUploadedFile\UploadedFileLocatorInterface
      */
+    #[Override]
     protected function getFileLocator(): UploadedFileLocatorInterface
     {
         return $this->customerUploadedFileLocator;
@@ -301,6 +305,7 @@ class CustomerUploadedFileFacade extends AbstractUploadedFileFacade
     /**
      * @return \Shopsys\FrameworkBundle\Component\UploadedFile\Config\UploadedFileConfigInterface
      */
+    #[Override]
     protected function getUploadedFileConfig(): UploadedFileConfigInterface
     {
         return $this->customerUploadedFileConfig;

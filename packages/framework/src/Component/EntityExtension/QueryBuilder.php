@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Component\EntityExtension;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder as BaseQueryBuilder;
+use Override;
 
 class QueryBuilder extends BaseQueryBuilder
 {
@@ -23,6 +24,7 @@ class QueryBuilder extends BaseQueryBuilder
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getDQL(): string
     {
         return $this->entityNameResolver->resolveIn(parent::getDQL());

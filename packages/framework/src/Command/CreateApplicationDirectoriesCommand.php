@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Command;
 use League\Flysystem\Config;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\Visibility;
+use Override;
 use Shopsys\FrameworkBundle\Component\CustomerUploadedFile\DirectoryStructureCreator as CustomerUploadedFileDirectoryStructureCreator;
 use Shopsys\FrameworkBundle\Component\Image\DirectoryStructureCreator as ImageDirectoryStructureCreator;
 use Shopsys\FrameworkBundle\Component\UploadedFile\DirectoryStructureCreator as UploadedFileDirectoryStructureCreator;
@@ -75,6 +76,7 @@ class CreateApplicationDirectoriesCommand extends Command
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->createMiscellaneousDirectories($output);

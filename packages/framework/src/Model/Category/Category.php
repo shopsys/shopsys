@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Category;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Override;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterInterface;
@@ -326,6 +327,7 @@ class Category extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Category\CategoryTranslation
      */
+    #[Override]
     protected function createTranslation()
     {
         return new CategoryTranslation();

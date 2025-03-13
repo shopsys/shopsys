@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\FileUpload\ImageUploadData;
 use Shopsys\FrameworkBundle\Component\Image\Config\ImageConfig;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
@@ -40,6 +41,7 @@ class ImageUploadType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
@@ -74,6 +76,7 @@ class ImageUploadType extends AbstractType
      * @param \Symfony\Component\Form\FormInterface $form
      * @param array $options
      */
+    #[Override]
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['entity'] = $options['entity'];
@@ -87,6 +90,7 @@ class ImageUploadType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->resetModelTransformers();
@@ -182,6 +186,7 @@ class ImageUploadType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getParent(): ?string
     {
         return AbstractFileUploadType::class;

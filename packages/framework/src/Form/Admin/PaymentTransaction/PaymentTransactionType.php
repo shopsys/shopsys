@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\PaymentTransaction;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\PaymentTransactionFacade;
 use Shopsys\FrameworkBundle\Model\Payment\Transaction\Refund\PaymentTransactionRefundData;
 use Shopsys\FrameworkBundle\Twig\PriceExtension;
@@ -32,6 +33,7 @@ class PaymentTransactionType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -50,6 +52,7 @@ class PaymentTransactionType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

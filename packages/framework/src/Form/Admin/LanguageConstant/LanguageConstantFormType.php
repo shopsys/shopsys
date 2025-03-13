@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\LanguageConstant;
 
+use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Form\DisplayOnlyType;
 use Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantData;
@@ -18,6 +19,7 @@ class LanguageConstantFormType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\LanguageConstant\LanguageConstantData $languageConstantData */
@@ -51,6 +53,7 @@ class LanguageConstantFormType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

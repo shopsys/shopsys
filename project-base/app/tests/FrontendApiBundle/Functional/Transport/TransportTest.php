@@ -9,6 +9,7 @@ use App\DataFixtures\Demo\ProductDataFixture;
 use App\DataFixtures\Demo\TransportDataFixture;
 use App\Model\Product\Product;
 use App\Model\Transport\Transport;
+use Override;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
@@ -16,6 +17,7 @@ class TransportTest extends GraphQlTestCase
 {
     protected Transport $transport;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

@@ -44,7 +44,7 @@ class WatchdogMailFacade
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param string|null $forceSendTo
      */
-    public function sendMailTemplate(MailTemplate $mailTemplate, Product $product, string $forceSendTo = null): void
+    public function sendMailTemplate(MailTemplate $mailTemplate, Product $product, ?string $forceSendTo = null): void
     {
         $messageData = $this->watchdogMail->createMessageFromProductAndEmail(
             $mailTemplate,

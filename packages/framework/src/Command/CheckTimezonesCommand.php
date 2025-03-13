@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Command;
 
 use Doctrine\DBAL\Connection;
+use Override;
 use Shopsys\FrameworkBundle\Command\Exception\DifferentTimezonesException;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -28,6 +29,7 @@ class CheckTimezonesCommand extends Command
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->checkUniformityOfTimezones($output);

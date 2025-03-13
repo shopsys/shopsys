@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Listing;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingModeForListFacade as BaseProductListOrderingModeForListFacade;
 
@@ -12,6 +13,7 @@ class ProductListOrderingModeForListFacade extends BaseProductListOrderingModeFo
     /**
      * @return array<string, string>
      */
+    #[Override]
     protected function getSupportedOrderingModesNamesById(): array
     {
         return [

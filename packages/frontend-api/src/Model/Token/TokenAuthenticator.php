@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Token;
 
 use GraphQL\Error\FormattedError;
 use Lcobucci\JWT\Token\RegisteredClaims;
+use Override;
 use Shopsys\FrameworkBundle\Model\Customer\User\CustomerUserFacade;
 use Shopsys\FrontendApiBundle\Model\Token\Exception\InvalidTokenUserMessageException;
 use Shopsys\FrontendApiBundle\Model\User\FrontendApiUser;
@@ -41,6 +42,7 @@ class TokenAuthenticator extends AbstractAuthenticator
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function authenticate(Request $request): Passport
     {
         $authorizationHeader = $request->headers->get(static::HEADER_AUTHORIZATION);
@@ -90,6 +92,7 @@ class TokenAuthenticator extends AbstractAuthenticator
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @return bool
      */
+    #[Override]
     public function supports(Request $request): bool
     {
         return $request->headers->has(static::HEADER_AUTHORIZATION) &&
@@ -105,6 +108,7 @@ class TokenAuthenticator extends AbstractAuthenticator
      * @param string $firewallName
      * @return \Symfony\Component\HttpFoundation\Response|null
      */
+    #[Override]
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         return null;
@@ -115,6 +119,7 @@ class TokenAuthenticator extends AbstractAuthenticator
      * @param \Symfony\Component\Security\Core\Exception\AuthenticationException $exception
      * @return \Symfony\Component\HttpFoundation\Response
      */
+    #[Override]
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
         $formattedError = FormattedError::createFromException($exception);

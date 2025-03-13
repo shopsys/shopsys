@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Form;
 use Fp\JsFormValidatorBundle\Factory\JsFormValidatorFactory as BaseJsFormValidatorFactory;
 use Fp\JsFormValidatorBundle\Model\JsFormElement;
 use JsonSerializable;
+use Override;
 use Shopsys\FrameworkBundle\Model\Product\Parameter\ParameterValue;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Form;
@@ -21,6 +22,7 @@ class JsFormValidatorFactory extends BaseJsFormValidatorFactory
      * @param array $constraints
      * @return array
      */
+    #[Override]
     protected function parseConstraints(array $constraints)
     {
         $result = parent::parseConstraints($constraints);
@@ -41,6 +43,7 @@ class JsFormValidatorFactory extends BaseJsFormValidatorFactory
      * @param array $viewTransformers
      * @return array
      */
+    #[Override]
     protected function normalizeViewTransformers(FormInterface $form, array $viewTransformers): array
     {
         $config = $form->getConfig();
@@ -73,6 +76,7 @@ class JsFormValidatorFactory extends BaseJsFormValidatorFactory
      * @param \Symfony\Component\Form\Form $form
      * @return \Fp\JsFormValidatorBundle\Model\JsFormElement|null
      */
+    #[Override]
     public function createJsModel(Form $form): ?JsFormElement
     {
         /** @var \Symfony\Component\Form\Form|null $prototype */
@@ -95,6 +99,7 @@ class JsFormValidatorFactory extends BaseJsFormValidatorFactory
      * @param string $route
      * @return string
      */
+    #[Override]
     protected function generateUrl($route): string
     {
         if ($route === 'fp_js_form_validator.check_unique_entity') {

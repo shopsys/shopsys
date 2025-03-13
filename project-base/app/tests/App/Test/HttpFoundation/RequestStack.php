@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\App\Test\HttpFoundation;
 
+use Override;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Exception\SessionNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,6 +30,7 @@ class RequestStack extends BaseRequestStack
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function push(Request $request)
     {
         $this->requestStack->push($request);
@@ -37,6 +39,7 @@ class RequestStack extends BaseRequestStack
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function pop(): ?Request
     {
         return $this->requestStack->pop();
@@ -45,6 +48,7 @@ class RequestStack extends BaseRequestStack
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getCurrentRequest(): ?Request
     {
         return $this->requestStack->getCurrentRequest();
@@ -53,6 +57,7 @@ class RequestStack extends BaseRequestStack
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getMainRequest(): ?Request
     {
         return $this->requestStack->getMainRequest();
@@ -61,6 +66,7 @@ class RequestStack extends BaseRequestStack
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getParentRequest(): ?Request
     {
         return $this->requestStack->getParentRequest();
@@ -69,6 +75,7 @@ class RequestStack extends BaseRequestStack
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getSession(): SessionInterface
     {
         try {

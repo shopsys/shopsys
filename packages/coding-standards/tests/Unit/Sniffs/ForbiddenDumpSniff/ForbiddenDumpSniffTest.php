@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\CodingStandards\Unit\Sniffs\ForbiddenDumpSniff;
 
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\CodingStandards\Sniffs\ForbiddenDumpSniff;
 use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
@@ -13,6 +14,7 @@ final class ForbiddenDumpSniffTest extends AbstractSniffTestCase
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function getSniffClassName(): string
     {
         return ForbiddenDumpSniff::class;

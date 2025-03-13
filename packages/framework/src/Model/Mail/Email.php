@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Model\Mail;
 
+use Override;
 use Symfony\Component\Mime\Email as BaseEmail;
 use Symfony\Component\Mime\Header\Headers;
 use Symfony\Component\Mime\Part\AbstractPart;
@@ -35,6 +36,7 @@ class Email extends BaseEmail
      * @internal
      * @return array
      */
+    #[Override]
     public function __serialize(): array
     {
         return [$this->domainId, parent::__serialize()];
@@ -44,6 +46,7 @@ class Email extends BaseEmail
      * @internal
      * @param array $data
      */
+    #[Override]
     public function __unserialize(array $data): void
     {
         [$this->domainId, $parentData] = $data;

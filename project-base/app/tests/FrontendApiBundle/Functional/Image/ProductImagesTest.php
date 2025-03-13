@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Image;
 
 use App\DataFixtures\Demo\CategoryDataFixture;
+use Override;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Product\Product;
@@ -25,6 +26,7 @@ class ProductImagesTest extends GraphQlTestCase
      */
     private TransformStringHelper $transformStringHelper;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

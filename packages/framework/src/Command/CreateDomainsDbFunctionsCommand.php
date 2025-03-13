@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\DomainDbFunctionsFacade;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -31,6 +32,7 @@ class CreateDomainsDbFunctionsCommand extends Command
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->em->wrapInTransaction(function () use ($output) {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\CategorySeo;
 
+use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FormTypesBundle\YesNoType;
 use Shopsys\FrameworkBundle\Model\Category\Category;
@@ -28,6 +29,7 @@ final class CategorySeoFilterFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Category\Category $category */
@@ -60,6 +62,7 @@ final class CategorySeoFilterFormType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver

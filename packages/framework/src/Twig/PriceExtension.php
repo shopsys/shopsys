@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Twig;
 
 use CommerceGuys\Intl\Currency\CurrencyRepositoryInterface;
+use Override;
 use Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
@@ -40,6 +41,7 @@ class PriceExtension extends AbstractExtension
     /**
      * @return array
      */
+    #[Override]
     public function getFilters(): array
     {
         return [
@@ -87,6 +89,7 @@ class PriceExtension extends AbstractExtension
     /**
      * @return array
      */
+    #[Override]
     public function getFunctions(): array
     {
         return [

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Component\Validator;
 
+use Override;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidatorInterface;
@@ -27,6 +28,7 @@ class ContainerConstraintValidatorFactory extends SymfonyContainerConstraintVali
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function getInstance(Constraint $constraint): ConstraintValidatorInterface
     {
         $name = $constraint->validatedBy();

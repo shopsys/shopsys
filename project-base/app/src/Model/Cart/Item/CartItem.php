@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Cart\Item;
 
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Shopsys\FrameworkBundle\Model\Cart\Item\CartItem as BaseCartItem;
 
 /**
@@ -22,6 +23,7 @@ class CartItem extends BaseCartItem
      * @param string|null $locale
      * @return string|null
      */
+    #[Override]
     public function getName(?string $locale = null): ?string
     {
         return $this->getProduct()->getFullName($locale);

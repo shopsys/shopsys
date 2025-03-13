@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\CodingStandards\Unit\Sniffs\ConstantVisibilityRequiredSniff;
 
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\CodingStandards\Sniffs\ConstantVisibilityRequiredSniff;
 use Tests\CodingStandards\Unit\Sniffs\AbstractSniffTestCase;
@@ -13,6 +14,7 @@ final class ConstantVisibilityRequiredSniffTest extends AbstractSniffTestCase
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function getSniffClassName(): string
     {
         return ConstantVisibilityRequiredSniff::class;

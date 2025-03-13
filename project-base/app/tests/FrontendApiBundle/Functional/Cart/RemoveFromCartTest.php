@@ -6,12 +6,14 @@ namespace Tests\FrontendApiBundle\Functional\Cart;
 
 use App\DataFixtures\Demo\ProductDataFixture;
 use App\Model\Product\Product;
+use Override;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class RemoveFromCartTest extends GraphQlTestCase
 {
     private Product $testingProduct;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

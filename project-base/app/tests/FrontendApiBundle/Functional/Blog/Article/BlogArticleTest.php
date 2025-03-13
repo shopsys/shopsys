@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\FrontendApiBundle\Functional\Blog\Article;
 
 use App\DataFixtures\Demo\BlogArticleDataFixture;
+use Override;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Shopsys\FrameworkBundle\Component\GrapesJs\GrapesJsParser;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
@@ -33,6 +34,7 @@ class BlogArticleTest extends GraphQlTestCase
      */
     protected GrapesJsParser $grapesJsParser;
 
+    #[Override]
     protected function setUp(): void
     {
         parent::setUp();

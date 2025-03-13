@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\Doctrine;
 
 use Doctrine\ORM\Query\SqlWalker;
+use Override;
 
 /**
  * Allows ORDER BY using NULLS FIRST | LAST
@@ -19,6 +20,7 @@ class SortableNullsWalker extends SqlWalker
      * @param \Doctrine\ORM\Query\AST\OrderByItem $orderByItem
      * @return string
      */
+    #[Override]
     public function walkOrderByItem($orderByItem)
     {
         $sql = parent::walkOrderByItem($orderByItem);

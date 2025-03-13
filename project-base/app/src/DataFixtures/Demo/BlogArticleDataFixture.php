@@ -7,6 +7,7 @@ namespace App\DataFixtures\Demo;
 use DateTime;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Override;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
@@ -52,6 +53,7 @@ class BlogArticleDataFixture extends AbstractReferenceFixture implements Depende
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
+    #[Override]
     public function load(ObjectManager $manager): void
     {
         $mainPageBlogCategory = $this->blogCategoryFacade->getRootBlogCategory();

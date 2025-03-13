@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Controller\ElFinder;
 
 use elFinderAbortException;
 use FM\ElfinderBundle\Controller\ElFinderController as BaseElFinderController;
+use Override;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,6 +24,7 @@ class ElfinderController extends BaseElFinderController
      * @param string $homeFolder
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
+    #[Override]
     public function load(
         SessionInterface $session,
         HttpKernelInterface $httpKernel,

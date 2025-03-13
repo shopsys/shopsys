@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Model\Product;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Override;
 use Prezent\Doctrine\Translatable\Annotation as Prezent;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\String\TransformStringHelper;
@@ -801,6 +802,7 @@ class Product extends AbstractTranslatableEntity
     /**
      * @return \Shopsys\FrameworkBundle\Model\Product\ProductTranslation
      */
+    #[Override]
     protected function createTranslation()
     {
         return new ProductTranslation();

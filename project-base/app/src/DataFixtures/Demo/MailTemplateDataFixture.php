@@ -11,6 +11,7 @@ use App\Model\Mail\MailTemplateDataFactory;
 use App\Model\Order\Status\OrderStatus;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Override;
 use Shopsys\FrameworkBundle\Component\DataFixture\AbstractReferenceFixture;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Administrator\Mail\ResetPasswordMail;
@@ -32,6 +33,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
     /**
      * @param \Doctrine\Persistence\ObjectManager $manager
      */
+    #[Override]
     public function load(ObjectManager $manager): void
     {
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {

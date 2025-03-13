@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\PromoCode\Constraint;
 
+use Override;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -14,6 +15,7 @@ class UniqueFlagsValidator extends ConstraintValidator
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFlag\PromoCodeFlag[] $values
      * @param \Symfony\Component\Validator\Constraint $constraint
      */
+    #[Override]
     public function validate(mixed $values, Constraint $constraint): void
     {
         if (!$constraint instanceof UniqueFlags) {

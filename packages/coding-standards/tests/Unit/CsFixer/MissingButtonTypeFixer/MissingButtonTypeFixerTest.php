@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\CodingStandards\Unit\CsFixer\MissingButtonTypeFixer;
 
+use Override;
 use Shopsys\CodingStandards\CsFixer\MissingButtonTypeFixer;
 use Tests\CodingStandards\Unit\CsFixer\AbstractFixerTestCase;
 
@@ -12,6 +13,7 @@ final class MissingButtonTypeFixerTest extends AbstractFixerTestCase
     /**
      * @return \Shopsys\CodingStandards\CsFixer\MissingButtonTypeFixer
      */
+    #[Override]
     protected function createFixerService(): MissingButtonTypeFixer
     {
         return new MissingButtonTypeFixer();
@@ -20,6 +22,7 @@ final class MissingButtonTypeFixerTest extends AbstractFixerTestCase
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public static function getTestingFiles(): iterable
     {
         yield [__DIR__ . '/fixed/fixed.html.twig', __DIR__ . '/wrong/wrong.html.twig'];

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Form\Admin\Mail;
 
+use Override;
 use Shopsys\FormTypesBundle\ActionBarType;
 use Shopsys\FrameworkBundle\Form\Admin\GrapesJsMailType;
 use Shopsys\FrameworkBundle\Form\Constraints\Contains;
@@ -31,6 +32,7 @@ class MailTemplateFormType extends AbstractType
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $options
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         /** @var \Shopsys\FrameworkBundle\Model\Mail\MailTemplate $mailTemplate */
@@ -148,6 +150,7 @@ class MailTemplateFormType extends AbstractType
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver

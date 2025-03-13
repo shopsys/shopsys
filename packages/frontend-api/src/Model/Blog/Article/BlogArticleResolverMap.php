@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Blog\Article;
 
 use DateTime;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade;
 use Shopsys\FrameworkBundle\Model\Seo\HreflangLinksFacade;
@@ -27,6 +28,7 @@ class BlogArticleResolverMap extends ResolverMap
     /**
      * @return array
      */
+    #[Override]
     protected function map(): array
     {
         return [

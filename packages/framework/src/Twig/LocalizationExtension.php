@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Twig;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Symfony\Component\Asset\Packages;
 use Twig\Extension\AbstractExtension;
@@ -26,6 +27,7 @@ class LocalizationExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFunction[]
      */
+    #[Override]
     public function getFunctions()
     {
         return [
@@ -44,7 +46,7 @@ class LocalizationExtension extends AbstractExtension
      */
     public function getLocaleFlagHtml(
         string $locale,
-        string $displayLocale = null,
+        ?string $displayLocale = null,
         bool $showTitle = true,
         int $width = 16,
         int $height = 11,
@@ -82,7 +84,7 @@ class LocalizationExtension extends AbstractExtension
      * @param string|null $displayLocale
      * @return string
      */
-    public function getTitle(string $locale, string $displayLocale = null): string
+    public function getTitle(string $locale, ?string $displayLocale = null): string
     {
         return $this->localization->getLanguageName($locale, $displayLocale);
     }

@@ -9,6 +9,7 @@ use Doctrine\ORM\Query\AST\Node;
 use Doctrine\ORM\Query\Lexer;
 use Doctrine\ORM\Query\Parser;
 use Doctrine\ORM\Query\SqlWalker;
+use Override;
 
 class NormalizedFunction extends FunctionNode
 {
@@ -19,6 +20,7 @@ class NormalizedFunction extends FunctionNode
     /**
      * @param \Doctrine\ORM\Query\Parser $parser
      */
+    #[Override]
     public function parse(Parser $parser): void
     {
         $parser->match(Lexer::T_IDENTIFIER);
@@ -31,6 +33,7 @@ class NormalizedFunction extends FunctionNode
      * @param \Doctrine\ORM\Query\SqlWalker $sqlWalker
      * @return string
      */
+    #[Override]
     public function getSql(SqlWalker $sqlWalker): string
     {
         return static::FUNCTION_NORMALIZED . '(' . $this->stringExpression->dispatch($sqlWalker) . ')';

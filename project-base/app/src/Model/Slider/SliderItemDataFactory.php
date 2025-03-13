@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Slider;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItem as BaseSliderItem;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItemData as BaseSliderItemData;
 use Shopsys\FrameworkBundle\Model\Slider\SliderItemDataFactory as BaseSliderItemDataFactory;
@@ -20,6 +21,7 @@ class SliderItemDataFactory extends BaseSliderItemDataFactory
     /**
      * @return \App\Model\Slider\SliderItemData
      */
+    #[Override]
     protected function createInstance(): BaseSliderItemData
     {
         $sliderItemData = new SliderItemData();
@@ -33,6 +35,7 @@ class SliderItemDataFactory extends BaseSliderItemDataFactory
      * @param \App\Model\Slider\SliderItemData $sliderItemData
      * @param \App\Model\Slider\SliderItem $sliderItem
      */
+    #[Override]
     protected function fillFromSliderItem(BaseSliderItemData $sliderItemData, BaseSliderItem $sliderItem): void
     {
         parent::fillFromSliderItem($sliderItemData, $sliderItem);

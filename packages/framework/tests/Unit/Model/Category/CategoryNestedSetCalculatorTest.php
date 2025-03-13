@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Model\Category;
 
+use Override;
 use PHPUnit\Framework\TestCase;
 use Shopsys\FrameworkBundle\Model\Category\CategoryNestedSetCalculatorHelper;
 
@@ -11,6 +12,7 @@ class CategoryNestedSetCalculatorTest extends TestCase
 {
     private CategoryNestedSetCalculatorHelper $categoryNestedSetCalculatorHelper;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->categoryNestedSetCalculatorHelper = new CategoryNestedSetCalculatorHelper();

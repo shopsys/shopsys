@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\Releaser\ReleaseWorker\ReleaseCandidate;
 
+use Override;
 use PharIo\Version\Version;
 use Shopsys\Releaser\ReleaseWorker\AbstractCheckPackagesGithubActionsBuildsReleaseWorker;
 use Shopsys\Releaser\ReleaseWorker\AbstractShopsysReleaseWorker;
@@ -14,6 +15,7 @@ final class CheckPackagesGithubActionsBuildsAfterSplitReleaseWorker extends Abst
     /**
      * @return string[]
      */
+    #[Override]
     protected function getAllowedStages(): array
     {
         return [Stage::RELEASE_CANDIDATE];
@@ -22,6 +24,7 @@ final class CheckPackagesGithubActionsBuildsAfterSplitReleaseWorker extends Abst
     /**
      * @return string
      */
+    #[Override]
     protected function getBranchName(): string
     {
         return $this->currentBranchName;
@@ -31,6 +34,7 @@ final class CheckPackagesGithubActionsBuildsAfterSplitReleaseWorker extends Abst
      * @param \PharIo\Version\Version $version
      * @param string $initialBranchName
      */
+    #[Override]
     public function work(
         Version $version,
         string $initialBranchName = AbstractShopsysReleaseWorker::MAIN_BRANCH_NAME,

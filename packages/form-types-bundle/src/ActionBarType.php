@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FormTypesBundle;
 
+use Override;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Exception\LogicException;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -25,6 +26,7 @@ final class ActionBarType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
@@ -64,6 +66,7 @@ final class ActionBarType extends AbstractType
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         if ($options['back_route'] !== null) {

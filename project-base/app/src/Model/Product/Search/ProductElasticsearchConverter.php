@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Product\Search;
 
 use App\Model\Product\Elasticsearch\Scope\ProductExportFieldProvider;
+use Override;
 use Shopsys\FrameworkBundle\Model\Product\Search\ProductElasticsearchConverter as BaseProductElasticsearchConverter;
 
 class ProductElasticsearchConverter extends BaseProductElasticsearchConverter
@@ -13,6 +14,7 @@ class ProductElasticsearchConverter extends BaseProductElasticsearchConverter
      * @param array $product
      * @return array
      */
+    #[Override]
     public function fillEmptyFields(array $product): array
     {
         $result = parent::fillEmptyFields($product);
@@ -35,6 +37,7 @@ class ProductElasticsearchConverter extends BaseProductElasticsearchConverter
      * @param array $parameters
      * @return array
      */
+    #[Override]
     protected function fillEmptyParameters(array $parameters): array
     {
         $results = [];

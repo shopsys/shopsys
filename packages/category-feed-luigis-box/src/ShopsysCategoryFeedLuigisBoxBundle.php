@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\CategoryFeed\LuigisBoxBundle;
 
 use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
+use Override;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -13,6 +14,7 @@ class ShopsysCategoryFeedLuigisBoxBundle extends Bundle
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function build(ContainerBuilder $container)
     {
         parent::build($container);

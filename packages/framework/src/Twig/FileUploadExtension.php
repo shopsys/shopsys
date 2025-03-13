@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Twig;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\FileUpload\FileUpload;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -20,6 +21,7 @@ class FileUploadExtension extends AbstractExtension
     /**
      * @return \Twig\TwigFunction[]
      */
+    #[Override]
     public function getFunctions()
     {
         return [

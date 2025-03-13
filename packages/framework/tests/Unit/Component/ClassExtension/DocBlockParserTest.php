@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrameworkBundle\Unit\Component\ClassExtension;
 
+use Override;
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\Types\Array_;
 use phpDocumentor\Reflection\Types\Compound;
@@ -22,6 +23,7 @@ class DocBlockParserTest extends TestCase
 {
     private DocBlockParser $docBlockParser;
 
+    #[Override]
     protected function setUp(): void
     {
         $this->docBlockParser = new DocBlockParser();

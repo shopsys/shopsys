@@ -6,6 +6,7 @@ namespace App\Model\Category;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Override;
 use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
 use Shopsys\FrameworkBundle\Model\Category\CategoryData as BaseCategoryData;
 
@@ -36,6 +37,7 @@ class Category extends BaseCategory
     /**
      * @param \App\Model\Category\CategoryData $categoryData
      */
+    #[Override]
     public function edit(BaseCategoryData $categoryData): void
     {
         parent::edit($categoryData);
@@ -44,6 +46,7 @@ class Category extends BaseCategory
     /**
      * @param \App\Model\Category\CategoryData $categoryData
      */
+    #[Override]
     protected function setData(BaseCategoryData $categoryData): void
     {
         parent::setData($categoryData);

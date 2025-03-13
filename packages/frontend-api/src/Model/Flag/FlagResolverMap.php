@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrontendApiBundle\Model\Flag;
 
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
@@ -27,6 +28,7 @@ class FlagResolverMap extends ResolverMap
     /**
      * @return array<string, array<string, callable>>
      */
+    #[Override]
     protected function map(): array
     {
         return [

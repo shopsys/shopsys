@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\Component\Constraints;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
 use Shopsys\FrameworkBundle\Model\Store\Exception\StoreByUuidNotFoundException;
@@ -42,6 +43,7 @@ class TransportInCartValidator extends ConstraintValidator
      * @param mixed $value
      * @param \Shopsys\FrontendApiBundle\Component\Constraints\TransportInCart $constraint
      */
+    #[Override]
     public function validate(mixed $value, Constraint $constraint): void
     {
         if (!$constraint instanceof TransportInCart) {

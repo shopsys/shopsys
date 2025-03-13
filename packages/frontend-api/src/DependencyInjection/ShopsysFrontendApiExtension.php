@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrontendApiBundle\DependencyInjection;
 
+use Override;
 use Shopsys\FrameworkBundle\Component\Environment\EnvironmentType;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -44,6 +45,7 @@ class ShopsysFrontendApiExtension extends Extension implements PrependExtensionI
      * @param array $config
      * @param \Symfony\Component\DependencyInjection\ContainerBuilder $container
      */
+    #[Override]
     public function load(array $config, ContainerBuilder $container): void
     {
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));

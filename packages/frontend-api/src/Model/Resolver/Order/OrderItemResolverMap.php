@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Order;
 
 use Overblog\DataLoader\DataLoaderInterface;
 use Overblog\GraphQLBundle\Resolver\ResolverMap;
+use Override;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItem;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 
@@ -24,6 +25,7 @@ class OrderItemResolverMap extends ResolverMap
     /**
      * @return array
      */
+    #[Override]
     protected function map(): array
     {
         return [

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product;
 
+use Override;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Product\Product;
 use Shopsys\FrameworkBundle\Model\Product\ProductDomain;
@@ -56,6 +57,7 @@ class ProductRepository extends BaseProductRepository
     /**
      * @return \Doctrine\ORM\Internal\Hydration\IterableResult|\App\Model\Product\Product[][]
      */
+    #[Override]
     public function getProductIteratorForReplaceVat()
     {
         $query = $this->em->createQuery('
