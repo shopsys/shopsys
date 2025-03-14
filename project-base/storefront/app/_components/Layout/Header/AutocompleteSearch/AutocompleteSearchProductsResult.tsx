@@ -1,72 +1,64 @@
-'use client';
-
-import { SearchResultSectionTitle } from './AutocompleteSearchPopup';
+import { AutocompleteSearchResultSection } from './AutocompleteSearchResultSection';
+import { ProductSlider } from 'app/_components/Blocks/Product/ProductSlider';
+import { ProductListItem } from 'app/_components/Blocks/Product/ProductsList/ProductListItem';
+import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { TIDs } from 'cypress/tids';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
-import { TypeSimpleProductFragment } from 'graphql/requests/products/fragments/SimpleProductFragment.generated';
 import { TypeAutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
-import { GtmSectionType } from 'gtm/enums/GtmSectionType';
-import { onGtmAutocompleteResultClickEventHandler } from 'gtm/handlers/onGtmAutocompleteResultClickEventHandler';
-import useTranslation from 'next-translate/useTranslation';
-import { useMemo } from 'react';
+import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
+import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
 import { mapConnectionEdges } from 'utils/mappers/connection';
 
 type AutocompleteSearchProductsResultProps = {
     productsSearch: TypeAutocompleteSearchQuery['productsSearch'];
-    onClosePopupCallback: () => void;
-    autocompleteSearchQueryValue: string;
+    // autocompleteSearchQueryValue: string;
 };
 
-export const AutocompleteSearchProductsResult: FC<AutocompleteSearchProductsResultProps> = ({
+export const AutocompleteSearchProductsResult: FC<AutocompleteSearchProductsResultProps> = async ({
     productsSearch,
-    onClosePopupCallback,
-    autocompleteSearchQueryValue,
+    // autocompleteSearchQueryValue,
 }) => {
-    const { t } = useTranslation();
+    const t = await getTranslation();
 
-    const mappedProductSearchResults = useMemo(
-        () => mapConnectionEdges<TypeListedProductFragment>(productsSearch.edges),
-        [productsSearch.edges],
-    );
+    const mappedProductSearchResults = mapConnectionEdges<TypeListedProductFragment>(productsSearch.edges);
 
-    const onProductDetailRedirectHandler = (product: TypeSimpleProductFragment | TypeListedProductFragment) => {
-        onGtmAutocompleteResultClickEventHandler(
-            autocompleteSearchQueryValue,
-            GtmSectionType.product,
-            product.fullName,
-        );
-    };
+    // TODO: gtm
+    // const onProductDetailRedirectHandler = (product: TypeSimpleProductFragment | TypeListedProductFragment) => {
+    //     onGtmAutocompleteResultClickEventHandler(
+    //         autocompleteSearchQueryValue,
+    //         GtmSectionType.product,
+    //         product.fullName,
+    //     );
+    // };
 
     if (!mappedProductSearchResults?.length) {
         return null;
     }
 
+    const title = `${t('Products')} ${productsSearch.totalCount !== -1 && `(${productsSearch.totalCount})`}`;
+
     return (
-        <div tid={TIDs.layout_header_search_autocomplete_popup_products}>
-            <SearchResultSectionTitle>
-                {t('Products')}
-                {productsSearch.totalCount !== -1 && ` (${productsSearch.totalCount})`}
-            </SearchResultSectionTitle>
-
-            {/* TODO: add slider */}
-
-            {/* <ProductsSlider
-                gtmProductListName={GtmProductListNameType.autocomplete_search_results}
-                isWithArrows={false}
-                products={mappedProductSearchResults.slice(0, AUTOCOMPLETE_PRODUCT_LIMIT)}
-                variant="autocomplete"
-                visibleSliderItems={VISIBLE_SLIDER_ITEMS_AUTOCOMPLETE}
-                productItemProps={{
-                    size: 'small',
-                    textSize: 'xs',
-                    textSizePrice: 'base',
-                    visibleItemsConfig: { price: true },
-                    onClick: (product) => {
-                        onProductDetailRedirectHandler(product);
-                        onClosePopupCallback();
-                    },
-                }}
-            /> */}
-        </div>
+        <AutocompleteSearchResultSection
+            isSlider
+            tid={TIDs.layout_header_search_autocomplete_popup_products}
+            title={title}
+        >
+            <ProductSlider isWithArrows={false} totalItems={mappedProductSearchResults.length} variant="autocomplete">
+                {mappedProductSearchResults.map((product, index) => (
+                    <ProductListItem
+                        key={product.uuid}
+                        isShownInSlider
+                        gtmMessageOrigin={GtmMessageOriginType.autocomplete_search_results}
+                        gtmProductListName={GtmProductListNameType.autocomplete_search_results}
+                        listIndex={index}
+                        product={product}
+                        size="small"
+                        textSize="xs"
+                        textSizePrice="base"
+                        visibleItemsConfig={{ price: true }}
+                    />
+                ))}
+            </ProductSlider>
+        </AutocompleteSearchResultSection>
     );
 };

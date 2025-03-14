@@ -1,3 +1,4 @@
+import { ShowAutocompleteSearchPopupAction } from './AutocompleteSearch/ShowAutocompleteSearchPopupAction';
 import { AutocompleteSearch } from 'app/_components/Layout/Header/AutocompleteSearch/AutocompleteSearch';
 import { MenuIconic } from 'app/_components/Layout/Header/MenuIconic/MenuIconic';
 import { Navigation } from 'app/_components/Layout/Header/Navigation/Navigation';
@@ -15,7 +16,7 @@ export const Header = () => {
                     <Logo />
 
                     <div className="vl:order-2 vl:max-w-[400px] vl:flex-1 order-6 h-12 w-full transition lg:relative lg:order-4 lg:w-full xl:ml-12">
-                        <AutocompleteSearch />
+                        <AutocompleteSearch search={ShowAutocompleteSearchPopupAction} />
                     </div>
 
                     <div className="order-2 ml-auto flex">
