@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-restricted-imports
 import { ButtonHTMLAttributes, forwardRef } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { twMergeCustom } from 'utils/twMerge';
@@ -50,7 +49,7 @@ export const getButtonClassName = (
     isWithDisabledLook: ButtonBaseProps['isWithDisabledLook'],
 ) => {
     return twJoin(
-        'inline-flex w-auto h-fit cursor-pointer items-center justify-center gap-2 rounded-md text-center font-bold font-secondary outline-hidden transition-all hover:no-underline',
+        'inline-flex w-auto h-fit cursor-pointer items-center justify-center gap-2 rounded-md text-center font-bold font-secondary transition-all hover:no-underline',
         'outline-2 outline-offset-[-2px]',
         size === 'small' && 'px-3 py-2.5 text-xs',
         size === 'medium' && 'px-3 py-2.5 text-xs sm:px-4 sm:py-2 sm:text-sm',

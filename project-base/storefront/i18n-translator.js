@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export async function getFreshTranslates(locale, namespace) {
     const [localTranslatesResponse, userTranslatesResponse] = await Promise.all([
         fetch(`${process.env.INTERNAL_ENDPOINT}locales/${locale}/${namespace}.json`),

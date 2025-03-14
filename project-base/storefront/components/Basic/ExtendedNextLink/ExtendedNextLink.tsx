@@ -84,7 +84,7 @@ const isHrefExternal = (href: string | UrlObject, baseUrl: string) => {
 
     try {
         return currentHostname !== new URL(href).hostname;
-    } catch (e) {
+    } catch {
         return false;
     }
 };

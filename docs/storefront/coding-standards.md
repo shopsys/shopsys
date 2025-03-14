@@ -4,7 +4,7 @@
 
 It can show you errors on demand when writing your code - you have to install an editor plugin to use it. It can be used on the server-side in any test.
 
-Rules are defined in files `.eslintignore` and `.eslintrc.js`.
+Rules are defined in files `.eslintignore` and `eslint.config.mjs`.
 
 ## Prettier
 
