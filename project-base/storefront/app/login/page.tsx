@@ -1,21 +1,14 @@
 import { LoginForm } from 'app/_components/Blocks/LoginForm/LoginForm';
-import { Breadcrumbs } from 'app/_components/Layout/Breadcrumbs/Breadcrumbs';
 import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.ssr';
 
 const LoginPage = async () => {
     const t = await getTranslation();
-    const breadcrumbs: TypeBreadcrumbFragment[] = [{ __typename: 'Link', name: t('Log in'), slug: '' }];
 
     return (
-        <>
-            <Breadcrumbs breadcrumbs={breadcrumbs} />
-
-            <Webline>
-                <LoginForm formHeading={t('Log in')} />
-            </Webline>
-        </>
+        <Webline>
+            <LoginForm formHeading={t('Log in')} />
+        </Webline>
     );
 };
 
