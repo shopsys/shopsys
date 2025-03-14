@@ -8,13 +8,13 @@ import {
 } from 'graphql/requests/watchDog/mutations/CreateWatchdogMutation.ssr';
 import { CombinedError } from 'urql';
 
-type createWatchDogActionResult = {
+type CreateWatchDogActionResult = {
     error: CombinedError | undefined;
 };
 
 export const createWatchDogAction = async (
     variables: TypeCreateWatchdogMutationVariables,
-): Promise<createWatchDogActionResult> => {
+): Promise<CreateWatchDogActionResult> => {
     const response = await createMutation<TypeCreateWatchdogMutation, TypeCreateWatchdogMutationVariables>(
         CreateWatchdogMutationDocument,
         variables,
