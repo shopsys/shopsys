@@ -4570,6 +4570,9 @@ msgstr ""
 msgid "Upon inquiry"
 msgstr ""
 
+msgid "Upon inquiry [abbreviation]"
+msgstr "?"
+
 msgid "Url address"
 msgstr ""
 

@@ -39,6 +39,7 @@ class ProductListAdminRepository
             pt.name, 
             p.calculatedSellingDenied,
             p.variantType,
+            p.productType,
             p.catnum,
             p.ean,
             pmip.inputPrice AS priceForProductList')

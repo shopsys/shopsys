@@ -4570,6 +4570,9 @@ msgstr "Nahrávám..."
 msgid "Upon inquiry"
 msgstr "Na poptávku"
 
+msgid "Upon inquiry [abbreviation]"
+msgstr "?"
+
 msgid "Url address"
 msgstr "Url adresa"
 

@@ -3,6 +3,9 @@
 {% block grid_action_cell_type_edit %}{% endblock %}
 
 {% block grid_value_cell_id_name %}
+    {% if row.productType == TYPE_INQUIRY %}
+        <span class="in-letter cursor-help js-tooltip" title="{{ 'Upon inquiry'|trans }}">{{ 'Upon inquiry [abbreviation]'|trans }}</span>
+    {% endif %}
     {% if row.variantType == VARIANT_TYPE_MAIN %}
         <span class="in-letter cursor-help js-tooltip" title="{{ 'Main variant'|trans }}">{{ 'Main variant [abbreviation]'|trans }}</span>
     {% endif %}
