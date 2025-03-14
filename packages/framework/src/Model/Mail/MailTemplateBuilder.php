@@ -36,9 +36,35 @@ class MailTemplateBuilder
      * @param int $domainId
      * @return string
      */
-    protected function getFooterText(int $domainId): string
+    protected function getFooterTextTableRow(int $domainId): string
     {
-        return $this->mailSettingFacade->getFooterTextUrl($domainId);
+        $footerTextTableRow = '';
+        $footerText = $this->getFooterText($domainId);
+
+        if ($footerText !== null) {
+            $footerTextTableRow = <<<EOT
+                <tr>
+                    <td style="padding:10px; text-align:center;">
+                        <div style="max-width:600px; margin:0 auto;">
+                            <span style="font-size:12px; line-height:1.3; mso-line-height-rule:exactly;">
+                                {$footerText}
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            EOT;
+        }
+
+        return $footerTextTableRow;
+    }
+
+    /**
+     * @param int $domainId
+     * @return string|null
+     */
+    protected function getFooterText(int $domainId): ?string
+    {
+        return $this->mailSettingFacade->getFooterText($domainId);
     }
 
     /**
@@ -241,16 +267,8 @@ class MailTemplateBuilder
                                             &nbsp;
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td style="padding:10px; text-align:center;">
-                                            <div style="max-width:600px; margin:0 auto;">
-                                                <span style="font-size:12px; line-height:1.3; mso-line-height-rule:exactly;">
-                                                    {$this->getFooterText($domainId)}
-                                                </span>
-                                            </div>
-                                        </td>
-                                    </tr>
                                     {$this->getFooterIconsTableRow($domainId)}
+                                    {$this->getFooterTextTableRow($domainId)}
                                 </table>
                             </div>
 

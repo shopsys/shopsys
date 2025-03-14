@@ -135,9 +135,9 @@ class MailSettingFacade
 
     /**
      * @param int $domainId
-     * @return string
+     * @return string|null
      */
-    public function getFooterTextUrl(int $domainId): string
+    public function getFooterText(int $domainId): ?string
     {
         return $this->setting->getForDomain(MailSetting::MAIL_FOOTER_TEXT, $domainId);
     }
@@ -203,10 +203,11 @@ class MailSettingFacade
     }
 
     /**
-     * @param string $value
+     * @param string|null $value
      * @param int $domainId
+     * @throws \Shopsys\FrameworkBundle\Component\Setting\Exception\SettingValueNotFoundException
      */
-    public function setFooterText(string $value, int $domainId): void
+    public function setFooterText(?string $value, int $domainId): void
     {
         $this->setting->setForDomain(MailSetting::MAIL_FOOTER_TEXT, $value, $domainId);
     }
