@@ -26,9 +26,10 @@ export const generateMetadata = async (props: MetadataProps): Promise<Metadata> 
 
 type RootLayoutProps = {
     children: React.ReactNode;
+    breadcrumbs: React.ReactNode;
 };
 
-const RootLayout = async ({ children }: RootLayoutProps) => {
+const RootLayout = async ({ children, breadcrumbs }: RootLayoutProps) => {
     const pathname = headers().get('x-pathname') ?? '/';
     const [consentUpdatePageUrl] = getInternationalizedStaticUrls(['/user-consent']);
     const isConsentUpdatePage = consentUpdatePageUrl === pathname;
@@ -39,6 +40,8 @@ const RootLayout = async ({ children }: RootLayoutProps) => {
 
             <div className="flex min-h-dvh flex-col">
                 <Header />
+
+                {breadcrumbs}
 
                 <main className="mt-4 mb-10 flex flex-1 flex-col gap-4">{children}</main>
 
