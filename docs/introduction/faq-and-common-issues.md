@@ -201,6 +201,13 @@ If you are using Windows, you can encounter the error "Filename too long" when c
 This is because the repository contains files with long paths (e.g. Cypress tests screenshots).
 To resolve this issue, you can modify your Git configuration to allow long paths by running the following command:
 
+## How do I configure prices in e-mail templates?
+
+Order total price needs to be configured manually in template content in administration `Settings -> Communication with customer -> E-mail templates`.
+Configuration for transport, payment and product prices can be easily changed using `shopsys.mail_template.display_price` parameter in `parameters_common.yaml`.
+Supported values are `input_price` and `both` when both stands for both price with and without VAT.
+The default is `input_price` which displays the price using setting of the input price type in the administration.
+
 ```bash
 git config --system core.longpaths true
 ```

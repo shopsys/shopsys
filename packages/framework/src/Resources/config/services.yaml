@@ -677,7 +677,9 @@ services:
 
     Shopsys\FrameworkBundle\Model\Module\ModuleList: ~
 
-    Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail: ~
+    Shopsys\FrameworkBundle\Model\Order\Mail\OrderMail:
+        arguments:
+            $mailTemplateDisplayPrice: '%shopsys.mail_template.display_price%'
 
     Shopsys\FrameworkBundle\Model\Order\Messenger\HeurekaPlacedOrderMessageHandler:
         arguments:

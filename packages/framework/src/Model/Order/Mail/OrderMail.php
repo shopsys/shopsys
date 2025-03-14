@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemPriceCalculation;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator;
 use Shopsys\FrameworkBundle\Model\Order\Status\OrderStatus;
+use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension;
 use Shopsys\FrameworkBundle\Twig\HiddenPriceExtension;
 use Shopsys\FrameworkBundle\Twig\PriceExtension;
@@ -31,7 +32,8 @@ class OrderMail implements MessageFactoryInterface
     public const string VARIABLE_TRANSPORT_INFO = '{transport_info}';
     public const string VARIABLE_PAYMENT = '{payment}';
     public const string VARIABLE_PAYMENT_INFO = '{payment_info}';
-    public const string VARIABLE_TOTAL_PRICE = '{total_price}';
+    public const string VARIABLE_TOTAL_PRICE_WITH_VAT = '{total_price_with_vat}';
+    public const string VARIABLE_TOTAL_PRICE_WITHOUT_VAT = '{total_price_without_vat}';
     public const string VARIABLE_BILLING_ADDRESS = '{billing_address}';
     public const string VARIABLE_DELIVERY_ADDRESS = '{delivery_address}';
     public const string VARIABLE_NOTE = '{note}';
@@ -45,7 +47,13 @@ class OrderMail implements MessageFactoryInterface
     public const string VARIABLE_ROUNDING_INFO = '{rounding_info}';
     public const string VARIABLE_ADDRESSES = '{addresses}';
 
+    public const string DISPLAY_PRICE_WITH_VAT = 'with_vat';
+    public const string DISPLAY_PRICE_WITHOUT_VAT = 'without_vat';
+    public const string DISPLAY_PRICE_BOTH = 'both';
+    protected const string DISPLAY_PRICE_INPUT = 'input_price';
+
     /**
+     * @param string $mailTemplateDisplayPrice
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory $domainRouterFactory
      * @param \Twig\Environment $twig
@@ -55,8 +63,10 @@ class OrderMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Twig\DateTimeFormatterExtension $dateTimeFormatterExtension
      * @param \Shopsys\FrameworkBundle\Model\Order\OrderUrlGenerator $orderUrlGenerator
      * @param \Shopsys\FrameworkBundle\Twig\HiddenPriceExtension $hiddenPriceExtension
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      */
     public function __construct(
+        protected readonly string $mailTemplateDisplayPrice,
         protected readonly Setting $setting,
         protected readonly DomainRouterFactory $domainRouterFactory,
         protected readonly Environment $twig,
@@ -66,6 +76,7 @@ class OrderMail implements MessageFactoryInterface
         protected readonly DateTimeFormatterExtension $dateTimeFormatterExtension,
         protected readonly OrderUrlGenerator $orderUrlGenerator,
         protected readonly HiddenPriceExtension $hiddenPriceExtension,
+        protected readonly PricingSetting $pricingSetting,
     ) {
     }
 
@@ -131,7 +142,8 @@ class OrderMail implements MessageFactoryInterface
             self::VARIABLE_URL => $router->generate('front_homepage', [], UrlGeneratorInterface::ABSOLUTE_URL),
             self::VARIABLE_TRANSPORT => htmlspecialchars($order->getTransportItem()->getName(), ENT_QUOTES),
             self::VARIABLE_PAYMENT => htmlspecialchars($order->getPaymentItem()->getName(), ENT_QUOTES),
-            self::VARIABLE_TOTAL_PRICE => $this->getFormattedPrice($order),
+            self::VARIABLE_TOTAL_PRICE_WITH_VAT => $this->getFormattedPriceWithVat($order),
+            self::VARIABLE_TOTAL_PRICE_WITHOUT_VAT => $this->getFormattedPriceWithoutVat($order),
             self::VARIABLE_BILLING_ADDRESS => $this->getBillingAddressHtmlTable($order),
             self::VARIABLE_DELIVERY_ADDRESS => $this->getDeliveryAddressHtmlTable($order),
             self::VARIABLE_NOTE => $this->getNoteHtml($order),
@@ -163,10 +175,25 @@ class OrderMail implements MessageFactoryInterface
      * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
      * @return string
      */
-    protected function getFormattedPrice(Order $order): string
+    protected function getFormattedPriceWithVat(Order $order): string
     {
         $price = $this->priceExtension->priceTextWithCurrencyByCurrencyIdAndLocaleFilter(
             $order->getTotalPriceWithVat(),
+            $order->getCurrency()->getId(),
+            $this->getDomainLocaleByOrder($order),
+        );
+
+        return $this->hiddenPriceExtension->hidePriceFilter($price, $order->getCustomerUser());
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Model\Order\Order $order
+     * @return string
+     */
+    protected function getFormattedPriceWithoutVat(Order $order): string
+    {
+        $price = $this->priceExtension->priceTextWithCurrencyByCurrencyIdAndLocaleFilter(
+            $order->getTotalPriceWithoutVat(),
             $order->getCurrency()->getId(),
             $this->getDomainLocaleByOrder($order),
         );
@@ -269,6 +296,7 @@ class OrderMail implements MessageFactoryInterface
             'order' => $order,
             'orderItemTotalPricesById' => $orderItemTotalPricesById,
             'orderLocale' => $this->getDomainLocaleByOrder($order),
+            'displayPrice' => $this->getDisplayPrice(),
         ]);
     }
 
@@ -319,6 +347,7 @@ class OrderMail implements MessageFactoryInterface
             'orderTransportItem' => $orderTransportItem,
             'orderLocale' => $this->getDomainLocaleByOrder($order),
             'orderTransportTotalPrice' => $orderItemTotalPricesById[$orderTransportItem->getId()],
+            'displayPrice' => $this->getDisplayPrice(),
         ]);
     }
 
@@ -336,6 +365,7 @@ class OrderMail implements MessageFactoryInterface
             'orderPaymentItem' => $orderPaymentItem,
             'orderLocale' => $this->getDomainLocaleByOrder($order),
             'orderPaymentTotalPrice' => $orderItemTotalPricesById[$orderPaymentItem->getId()],
+            'displayPrice' => $this->getDisplayPrice(),
         ]);
     }
 
@@ -372,5 +402,19 @@ class OrderMail implements MessageFactoryInterface
             'order' => $order,
             'orderLocale' => $this->getDomainLocaleByOrder($order),
         ]);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDisplayPrice(): string
+    {
+        if ($this->mailTemplateDisplayPrice === static::DISPLAY_PRICE_INPUT) {
+            return $this->pricingSetting->getInputPriceType() === PricingSetting::INPUT_PRICE_TYPE_WITH_VAT
+                ? static::DISPLAY_PRICE_WITH_VAT
+                : static::DISPLAY_PRICE_WITHOUT_VAT;
+        }
+
+        return static::DISPLAY_PRICE_BOTH;
     }
 }

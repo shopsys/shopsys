@@ -136,7 +136,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
             {payment_info}<br/>
             {payment_instructions}<br/>
             {products}
-            <h3 style="text-align: right; margin: 0;">Total price including VAT: <span style="white-space: nowrap;">{total_price}</span></h3>
+            <h3 style="text-align: right; margin: 0;">Total price including VAT: <span style="white-space: nowrap;">{total_price_with_vat}</span></h3>
             {rounding_info}<br/>
             {addresses}
             ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
@@ -172,7 +172,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
             {payment_info}<br/>
             {payment_instructions}<br/>
             {products}
-            <h3 style="text-align: right; margin: 0;">Total price including VAT: <span style="white-space: nowrap;">{total_price}</span></h3>
+            <h3 style="text-align: right; margin: 0;">Total price including VAT: <span style="white-space: nowrap;">{total_price_with_vat}</span></h3>
             {rounding_info}<br/>
             {addresses}
             ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
@@ -208,7 +208,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
             {payment_info}<br/>
             {payment_instructions}<br/>
             {products}
-            <h3 style="text-align: right; margin: 0;">Total price including VAT: <span style="white-space: nowrap;">{total_price}</span></h3>
+            <h3 style="text-align: right; margin: 0;">Total price including VAT: <span style="white-space: nowrap;">{total_price_with_vat}</span></h3>
             {rounding_info}<br/>
             {addresses}
             ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);
@@ -244,7 +244,7 @@ class MailTemplateDataFixture extends AbstractReferenceFixture implements Depend
             {payment_info}<br/>
             {payment_instructions}<br/>
             {products}
-            <h3 style="text-align: right; margin: 0;">Total price including VAT: <span style="white-space: nowrap;">{total_price}</span></h3>
+            <h3 style="text-align: right; margin: 0;">Total price including VAT: <span style="white-space: nowrap;">{total_price_with_vat}</span></h3>
             {rounding_info}<br/>
             {addresses}
             ', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $locale);

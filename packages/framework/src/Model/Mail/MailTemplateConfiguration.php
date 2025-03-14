@@ -126,8 +126,13 @@ class MailTemplateConfiguration
             ->addVariable(OrderMail::VARIABLE_PAYMENT, t('Chosen payment name'), MailTemplateVariables::CONTEXT_BODY)
             ->addVariable(OrderMail::VARIABLE_PAYMENT_INFO, t('Chosen payment information (image, name, price)'), MailTemplateVariables::CONTEXT_BODY)
             ->addVariable(
-                OrderMail::VARIABLE_TOTAL_PRICE,
+                OrderMail::VARIABLE_TOTAL_PRICE_WITH_VAT,
                 t('Total order price (including VAT)'),
+                MailTemplateVariables::CONTEXT_BODY,
+            )
+            ->addVariable(
+                OrderMail::VARIABLE_TOTAL_PRICE_WITHOUT_VAT,
+                t('Total order price (excluding VAT)'),
                 MailTemplateVariables::CONTEXT_BODY,
             )
             ->addVariable(

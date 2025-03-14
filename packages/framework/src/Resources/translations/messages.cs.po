@@ -4381,6 +4381,9 @@ msgstr "Celkem bez DPH"
 msgid "Total including VAT"
 msgstr "Celkem s DPH"
 
+msgid "Total order price (excluding VAT)"
+msgstr "Celková cena za objednávku (bez DPH)"
+
 msgid "Total order price (including VAT)"
 msgstr "Celková cena za objednávku (s DPH)"
 
@@ -4885,6 +4888,9 @@ msgstr "neobsahuje"
 msgid "empty value"
 msgstr "prázdná hodnota"
 
+msgid "ex VAT"
+msgstr "bez DPH"
+
 msgid "files"
 msgstr "soubory"
 
@@ -4908,6 +4914,9 @@ msgstr "větší než"
 
 msgid "in category (between first and second row of products)"
 msgstr "v kategorii (mezi prvním a druhým řádkem produktů)"
+
+msgid "inc VAT"
+msgstr "s DPH"
 
 msgid "include"
 msgstr "obsahuje"
