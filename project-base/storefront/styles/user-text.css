@@ -46,10 +46,6 @@
                 @apply lg:text-xl;
             }
 
-            td {
-                @apply text-right;
-            }
-
             &.secondary {
                 @apply border-tableBackground border;
 

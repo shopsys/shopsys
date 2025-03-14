@@ -10,5 +10,5 @@ export const UserText: FC<UserTextProps> = ({ htmlContent, isGrapesJs }) => {
         return <GrapesJs content={htmlContent} />;
     }
 
-    return <section dangerouslySetInnerHTML={{ __html: htmlContent }} />;
+    return <section className="user-text" dangerouslySetInnerHTML={{ __html: htmlContent }} />;
 };
