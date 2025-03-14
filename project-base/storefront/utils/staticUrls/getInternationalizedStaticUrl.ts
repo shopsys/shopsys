@@ -7,6 +7,7 @@ export const getInternationalizedStaticUrl = (url: Url, domainUrl: string) => {
 
     if (typeof url === 'string') {
         const internationalizedUrl = urlsOnDomain[url];
+
         return typeof internationalizedUrl !== 'undefined' ? internationalizedUrl : '';
     }
 
