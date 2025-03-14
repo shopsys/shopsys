@@ -45,10 +45,31 @@ class MailTemplateBuilder
      * @param int $domainId
      * @return string
      */
+    protected function getFooterIconsTableRow(int $domainId): string
+    {
+        $footerIconsTableRow = '';
+        $footerIconsHtml = $this->getFooterIcons($domainId);
+
+        if ($footerIconsHtml !== '') {
+            $footerIconsTableRow = <<<EOT
+                <tr>
+                    <td style="padding:10px; text-align:center;">
+                        {$footerIconsHtml}
+                    </td>
+                </tr>
+            EOT;
+        }
+
+        return $footerIconsTableRow;
+    }
+
+    /**
+     * @param int $domainId
+     * @return string
+     */
     protected function getFooterIcons(int $domainId): string
     {
         $footerIconsHtml = '';
-        $itemPadding = '';
 
         foreach ($this->mailSettingFacade->getFooterIconUrls($domainId) as $footerIconName => $footerIconUrl) {
             if ($footerIconUrl === null) {
@@ -222,11 +243,6 @@ class MailTemplateBuilder
                                     </tr>
                                     <tr>
                                         <td style="padding:10px; text-align:center;">
-                                            {$this->getFooterIcons($domainId)}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding:10px; text-align:center;">
                                             <div style="max-width:600px; margin:0 auto;">
                                                 <span style="font-size:12px; line-height:1.3; mso-line-height-rule:exactly;">
                                                     {$this->getFooterText($domainId)}
@@ -234,6 +250,7 @@ class MailTemplateBuilder
                                             </div>
                                         </td>
                                     </tr>
+                                    {$this->getFooterIconsTableRow($domainId)}
                                 </table>
                             </div>
 
