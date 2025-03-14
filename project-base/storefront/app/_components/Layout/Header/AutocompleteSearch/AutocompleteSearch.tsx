@@ -1,119 +1,78 @@
 'use client';
 
-import { AUTOCOMPLETE_CATEGORY_LIMIT, AUTOCOMPLETE_PRODUCT_LIMIT, MINIMAL_SEARCH_QUERY_LENGTH } from './constants';
-import { getAutocompleteSearchQuery } from 'app/_queries/getAutocompleteSearchQuery';
+import { AutocompleteSearchPopup } from './AutocompleteSearchPopup';
+import { AutocompleteSkeleton } from './AutocompleteSkeleton';
+import { MINIMAL_SEARCH_QUERY_LENGTH } from './constants';
+import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { SearchInput } from 'components/Forms/TextInput/SearchInput';
-import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { useTranslation } from 'components/providers/TranslationProvider';
 import { AnimatePresence } from 'framer-motion';
-import { TypeAutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
-import { TypeAutocompleteSearchQueryVariables } from 'graphql/requests/search/queries/AutocompleteSearchQuery.ssr';
-import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { useCookiesStore } from 'store/useCookiesStore';
+import { ReactNode, Suspense, use, useEffect, useState } from 'react';
 import { twJoin } from 'tailwind-merge';
-import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 import { useDebounce } from 'utils/useDebounce';
 
-const AutocompleteSearchPopup = dynamic(() =>
-    import('./AutocompleteSearchPopup').then((component) => component.AutocompleteSearchPopup),
-);
+type SearchInputProps = {
+    search: (keyword: string) => Promise<ReactNode>;
+};
 
-const Overlay = dynamic(() => import('components/Basic/Overlay/Overlay').then((component) => component.Overlay));
-
-export const AutocompleteSearch: FC = () => {
+export const AutocompleteSearch = ({ search }: SearchInputProps) => {
     const { t } = useTranslation();
     const router = useRouter();
-    const { url } = useDomainConfig();
-    const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
 
-    const [loading, setLoading] = useState(false);
-    const [isSearchResultsPopupOpen, setIsSearchResultsPopupOpen] = useState(false);
-    const [searchData, setSearchData] = useState<TypeAutocompleteSearchQuery>();
-    const [searchQueryValue, setSearchQueryValue] = useState('');
+    const [keyword, setKeyword] = useState<string>('');
+    const [searchPromise, setSearchPromise] = useState<Promise<ReactNode> | null>(null);
 
-    const userIdentifier = useCookiesStore((store) => store.userIdentifier);
-
-    const debouncedSearchQuery = useDebounce(searchQueryValue, 200);
-    const isWithValidSearchQuery = searchQueryValue.length >= MINIMAL_SEARCH_QUERY_LENGTH;
-
-    const autocompleteSearchAction = async () => {
-        if (debouncedSearchQuery.length < MINIMAL_SEARCH_QUERY_LENGTH) {
-            return;
-        }
-
-        setLoading(true);
-
-        const variables: TypeAutocompleteSearchQueryVariables = {
-            search: debouncedSearchQuery,
-            maxCategoryCount: AUTOCOMPLETE_CATEGORY_LIMIT,
-            maxProductCount: AUTOCOMPLETE_PRODUCT_LIMIT,
-            isAutocomplete: true,
-            userIdentifier,
-        };
-        const result = await getAutocompleteSearchQuery(variables);
-
-        setSearchData(result);
-        setLoading(false);
-    };
+    const debouncedSearchQuery = useDebounce(keyword, 300);
+    const isWithValidSearchQuery = debouncedSearchQuery.length >= MINIMAL_SEARCH_QUERY_LENGTH;
 
     useEffect(() => {
-        if (!isWithValidSearchQuery) {
-            setSearchData(undefined);
-        }
-    }, [searchQueryValue]);
+        if (debouncedSearchQuery) {
+            if (debouncedSearchQuery.length < MINIMAL_SEARCH_QUERY_LENGTH) {
+                return;
+            }
 
-    useEffect(() => {
-        if (isWithValidSearchQuery) {
-            autocompleteSearchAction();
+            setSearchPromise(search(keyword));
+        } else {
+            setSearchPromise(null);
         }
-    }, [debouncedSearchQuery]);
-
-    const isSearchResultsPopupVisible = isSearchResultsPopupOpen && isWithValidSearchQuery && (!!searchData || loading);
+    }, [debouncedSearchQuery, search]);
 
     const handleSearch = () => {
         if (isWithValidSearchQuery) {
-            const params = new URLSearchParams('');
-            params.set('q', searchQueryValue);
-            router.push(`${searchUrl}?${params.toString()}`);
-
-            setIsSearchResultsPopupOpen(false);
+            router.push(`/search?q=${encodeURIComponent(debouncedSearchQuery)}`);
         }
     };
 
-    // TODO: add gtm event
-    // useGtmAutocompleteResultsViewEvent(searchData, debouncedSearchQuery);
-
     return (
         <>
-            <div
-                className={twJoin('relative flex w-full transition-all', isWithValidSearchQuery && 'z-aboveOverlay')}
-                onFocus={() => setIsSearchResultsPopupOpen(true)}
-            >
+            <div className={twJoin('relative flex w-full transition-all', isWithValidSearchQuery && 'z-aboveOverlay')}>
                 <SearchInput
                     className="w-full"
                     label={t('Write what you are looking for...')}
-                    shouldShowSpinnerInInput={loading}
-                    value={searchQueryValue}
-                    onChange={(e) => setSearchQueryValue(e.currentTarget.value)}
-                    onClear={() => setSearchQueryValue('')}
+                    shouldShowSpinnerInInput={false}
+                    value={keyword}
+                    onChange={(e) => setKeyword(e.currentTarget.value)}
+                    onClear={() => setKeyword('')}
                     onSearch={handleSearch}
                 />
 
                 <AnimatePresence>
-                    {isSearchResultsPopupVisible && (
-                        <AutocompleteSearchPopup
-                            areAutocompleteSearchDataFetching={loading}
-                            autocompleteSearchQueryValue={searchQueryValue}
-                            autocompleteSearchResults={searchData}
-                            onClosePopupCallback={() => setIsSearchResultsPopupOpen(false)}
-                        />
+                    {isWithValidSearchQuery && searchPromise && (
+                        <AutocompleteSearchPopup handleClosePopup={() => setKeyword('')}>
+                            <Suspense fallback={<AutocompleteSkeleton />}>
+                                <SearchResults searchPromise={searchPromise} />
+                            </Suspense>
+                        </AutocompleteSearchPopup>
                     )}
                 </AnimatePresence>
             </div>
 
-            <Overlay isActive={isSearchResultsPopupVisible} onClick={() => setIsSearchResultsPopupOpen(false)} />
+            <Overlay isActive={isWithValidSearchQuery} onClick={() => setKeyword('')} />
         </>
     );
+};
+
+const SearchResults = ({ searchPromise }: { searchPromise: Promise<ReactNode> }) => {
+    return <>{use(searchPromise)}</>;
 };

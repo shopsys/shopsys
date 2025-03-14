@@ -140,7 +140,7 @@ export const ProductSlider: FC<ProductSliderProps> = ({
             case 'lastVisited':
                 return 'auto-cols-[140px] sm:auto-cols-[30%] lg:auto-cols-[19.5%] vl:auto-cols-[14.5%] xl:auto-cols-[12.5%]';
             case 'autocomplete':
-                return 'auto-cols-[140px] sm:auto-cols-[32%] md:auto-cols-[24%] lg:auto-cols-[20%]';
+                return 'auto-cols-[148px] md:auto-cols-[156px]';
             default:
                 return '';
         }

@@ -7,4 +7,6 @@ export enum GtmMessageOriginType {
     login_popup = 'login popup',
     other = 'other',
     watchdog = 'watchdog',
+
+    autocomplete_search_results = 'autocomplete search results',
 }

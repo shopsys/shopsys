@@ -1,32 +1,32 @@
-'use client';
-
-import { SearchResultSectionGroup } from './AutocompleteSearchPopup';
 import Skeleton from 'react-loading-skeleton';
 import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 
 export const AutocompleteSkeleton: FC = () => {
     return (
-        <div className="vl:gap-6 flex flex-col gap-5">
+        <>
             <div>
-                <Skeleton className="mb-2 h-5 w-[100px]" />
-                <div className="flex gap-4 overflow-hidden lg:grid lg:grid-cols-5 lg:gap-5">
+                <Skeleton className="mb-2.5 h-6" containerClassName="flex w-[100px]" />
+
+                <div className="flex w-full gap-4 overflow-hidden lg:grid lg:grid-cols-4 lg:gap-5">
                     {createEmptyArray(4).map((_, index) => (
-                        <Skeleton key={index} className="h-full min-h-[250px] min-w-[138px]" />
+                        <Skeleton key={index} className="h-full min-h-[220px]" />
                     ))}
                 </div>
             </div>
+
             <div>
-                <Skeleton className="mb-2 h-5 w-[80px]" />
-                <SearchResultSectionGroup>
+                <Skeleton className="mb-2.5 h-6" containerClassName="flex w-[80px]" />
+
+                <div className="flex flex-wrap gap-2">
                     {createEmptyArray(3).map((_, index) => (
-                        <Skeleton key={index} className="h-[32px] w-[70px] !rounded-full" />
+                        <Skeleton key={index} className="h-[28px] !rounded-full" containerClassName="w-[120px]" />
                     ))}
-                </SearchResultSectionGroup>
+                </div>
             </div>
 
             <div className="flex justify-center">
-                <Skeleton className="vl:w-[186px] h-[52px] w-full" containerClassName="w-full vl:w-fit" />
+                <Skeleton className="h-[56px]" containerClassName="vl:w-[180px] w-full" />
             </div>
-        </div>
+        </>
     );
 };
