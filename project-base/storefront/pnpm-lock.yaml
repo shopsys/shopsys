@@ -232,8 +232,8 @@ importers:
         specifier: ~9.1.0
         version: 9.1.0(eslint@9.22.0(jiti@2.4.2))
       eslint-plugin-no-relative-import-paths:
-        specifier: ~1.5.5
-        version: 1.5.5
+        specifier: ~1.6.1
+        version: 1.6.1
       eslint-plugin-react:
         specifier: ~7.37.4
         version: 7.37.4(eslint@9.22.0(jiti@2.4.2))
@@ -3023,8 +3023,8 @@ packages:
     peerDependencies:
       eslint: '>=7.0.0'
 
-  eslint-plugin-no-relative-import-paths@1.5.5:
-    resolution: {integrity: sha512-UjudFFdBbv93v0CsVdEKcMLbBzRIjeK2PubTctX57tgnHxZcMj1Jm8lDBWoETnPxk0S5g5QLSltEM+511yL4+w==}
+  eslint-plugin-no-relative-import-paths@1.6.1:
+    resolution: {integrity: sha512-YZNeOnsOrJcwhFw0X29MXjIzu2P/f5X2BZDPWw1R3VUYBRFxNIh77lyoL/XrMU9ewZNQPcEvAgL/cBOT1P330A==}
 
   eslint-plugin-react-hooks@5.2.0:
     resolution: {integrity: sha512-+f15FfK64YQwZdJNELETdn5ibXEUQmW1DZL6KXhNnc2heoy/sg9VJJeT7n8TlMWouzWqSWavFkIhHyIbIAEapg==}
@@ -9015,7 +9015,7 @@ snapshots:
     dependencies:
       eslint: 9.22.0(jiti@2.4.2)
 
-  eslint-plugin-no-relative-import-paths@1.5.5: {}
+  eslint-plugin-no-relative-import-paths@1.6.1: {}
 
   eslint-plugin-react-hooks@5.2.0(eslint@9.22.0(jiti@2.4.2)):
     dependencies:
