@@ -13,9 +13,9 @@ export const SkeletonCustomerUsersTable: FC = () => (
 
 export const SkeletonModuleCustomerUsers: FC = () => (
     <SkeletonModuleCustomer>
-        <div className="flex w-full flex-col">
-            <Skeleton className="mb-4 h-10 w-40" />
-            <Skeleton className="mb-4 h-8 w-36" />
+        <div className="flex flex-1 flex-col">
+            <Skeleton className="mb-4 h-10" containerClassName="w-40" />
+            <Skeleton className="mb-4 h-8" containerClassName="w-36" />
 
             <SkeletonCustomerUsersTable />
         </div>

@@ -23,7 +23,7 @@ export const SalesRepresentative: FC = () => {
     }
 
     return (
-        <div className="flex flex-col gap-1 pt-3">
+        <div className="flex flex-col gap-1">
             <div className="flex items-center gap-2">
                 {salesRepresentative.image && (
                     <Image

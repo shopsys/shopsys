@@ -1,7 +1,8 @@
 import { OrderDetailOrderItem } from './OrderDetailOrderItem';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { Button } from 'components/Forms/Button/Button';
-import { OrderItemColumnInfo } from 'components/Pages/Customer/Orders/OrderItem';
+import { OrderItemColumnInfo } from 'components/Pages/Customer/Orders/OrderItemElements';
+import { OrderPaymentStatusBar } from 'components/Pages/Customer/Orders/OrderPaymentStatusBar';
 import { useAuthorization } from 'components/providers/AuthorizationProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeOrderDetailFragment } from 'graphql/requests/orders/fragments/OrderDetailFragment.generated';
@@ -44,28 +45,31 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
         <>
             <OrderRowWrapper className="flex items-center justify-between gap-4">
                 <div className="vl:gap-8 flex flex-wrap gap-6 gap-y-2">
-                    <OrderItemColumnInfo
-                        tid={TIDs.order_detail_number}
-                        title={t('Order number')}
-                        value={order.number}
-                    />
-                    <OrderItemColumnInfo
-                        tid={TIDs.order_detail_creation_date}
-                        title={t('Date of order')}
-                        value={formatDate(order.creationDate)}
-                    />
+                    <OrderItemColumnInfo title={t('Order number')}>
+                        <span tid={TIDs.order_detail_number}>{order.number}</span>
+                    </OrderItemColumnInfo>
+
+                    <OrderItemColumnInfo title={t('Date of order')}>
+                        <span tid={TIDs.order_detail_creation_date}>{formatDate(order.creationDate)}</span>
+                    </OrderItemColumnInfo>
+
                     {isPriceVisible(order.totalPrice.priceWithVat) && (
-                        <OrderItemColumnInfo
-                            title={t('Price')}
-                            value={formatPrice(order.totalPrice.priceWithVat)}
-                            valueClassName="text-textAccent"
-                        />
+                        <OrderItemColumnInfo title={t('Price')}>
+                            {formatPrice(order.totalPrice.priceWithVat)}
+
+                            <OrderPaymentStatusBar
+                                orderHasPaymentInProcess={order.hasPaymentInProcess}
+                                orderIsPaid={order.isPaid}
+                                orderPaymentType={order.payment.type}
+                            />
+                        </OrderItemColumnInfo>
                     )}
-                    <OrderItemColumnInfo title={t('Status')} value={order.status} />
+
+                    <OrderItemColumnInfo title={t('Status')}>{order.status}</OrderItemColumnInfo>
                 </div>
+
                 {showRepeatOrderButton && (
                     <Button
-                        size="small"
                         tid={TIDs.order_detail_repeat_order_button}
                         variant="inverted"
                         onClick={() => addOrderItemsToEmptyCart(order.uuid)}
@@ -74,6 +78,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                     </Button>
                 )}
             </OrderRowWrapper>
+
             {orderTransport && (
                 <OrderRowWrapper className="flex flex-col gap-4" tid={TIDs.order_detail_transport}>
                     <div className="flex gap-4">
@@ -93,6 +98,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                     )}
                 </OrderRowWrapper>
             )}
+
             {orderPayment && (
                 <OrderRowWrapper className="flex gap-4" tid={TIDs.order_detail_payment}>
                     {t('Payment')} - {orderPayment.name}
@@ -101,6 +107,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                     )}
                 </OrderRowWrapper>
             )}
+
             {orderRounding && (
                 <OrderRowWrapper className="flex gap-4">
                     {t('Rounding')}
@@ -109,6 +116,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                     )}
                 </OrderRowWrapper>
             )}
+
             <div className="border-borderLess bg-background rounded-md border-[5px] p-7" tid={TIDs.order_detail_items}>
                 {filteredOrderItems.map((orderItem) => (
                     <OrderDetailOrderItem
@@ -119,6 +127,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                     />
                 ))}
             </div>
+
             {!!order.note && (
                 <OrderRowWrapper className="flex gap-2" tid={TIDs.order_detail_note}>
                     <div>{t('Note')}</div>

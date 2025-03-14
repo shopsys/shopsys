@@ -3,7 +3,7 @@ import { createEmptyArray } from 'utils/arrays/createEmptyArray';
 
 export const SkeletonModuleCustomerComplaints: FC = () => {
     return (
-        <div className="vl:mt-12 mt-8 flex flex-col gap-7 lg:mt-4">
+        <div className="flex flex-col gap-7">
             {createEmptyArray(3).map((_, index) => (
                 <Skeleton key={index} className="vl:h-[119px] h-[260px] !rounded-md sm:h-[212px]" />
             ))}
