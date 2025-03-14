@@ -1,5 +1,3 @@
-'use client';
-
 import { twMergeCustom } from 'utils/twMerge';
 
 type WeblineProps = {

@@ -1,6 +1,7 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import Trans from 'app/_utils/translation/Trans';
 import { Link, linkPlaceholderTwClass } from 'components/Basic/Link/Link';
 import {
     validateCity,
@@ -20,7 +21,6 @@ import {
     validateTelephoneRequired,
 } from 'components/Forms/validationRules';
 import { useAppConfig } from 'components/providers/AppConfigProvider';
-import Trans from 'next-translate/Trans';
 import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 import { FieldError, UseFormReturn, useWatch } from 'react-hook-form';
@@ -214,7 +214,12 @@ export const useRegistrationFormMeta = (
                             i18nKey="GdprAgreementCheckbox"
                             components={{
                                 lnk1: privacyPolicyArticleUrl ? (
-                                    <Link isExternal href={privacyPolicyArticleUrl} target="_blank" />
+                                    <Link
+                                        isExternal
+                                        className="text-sm"
+                                        href={privacyPolicyArticleUrl}
+                                        target="_blank"
+                                    />
                                 ) : (
                                     <span className={linkPlaceholderTwClass} />
                                 ),
