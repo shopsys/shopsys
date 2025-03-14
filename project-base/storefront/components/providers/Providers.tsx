@@ -37,7 +37,7 @@ export default async function Providers({ children }: ProvidersProps) {
 
     const customerUserRoles = await getCurrentCustomerUserRoles();
 
-    if (settingsData.status === 'rejected' || !settingsData.value?.data?.settings) {
+    if (settingsData.status === 'rejected' || !settingsData.value.data?.settings) {
         throw new Error('Failed to fetch settings');
     }
 
