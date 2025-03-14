@@ -1,56 +1,45 @@
-'use client';
-
-import { SearchResultLink, SearchResultSectionGroup, SearchResultSectionTitle } from './AutocompleteSearchPopup';
+import { AutocompleteSearchResultSection } from './AutocompleteSearchResultSection';
 import { AUTOCOMPLETE_BRAND_LIMIT } from './constants';
-import { useTranslation } from 'components/providers/TranslationProvider';
+import { getTranslation } from 'app/_utils/translation/getTranslation';
+import { LabelLink } from 'components/Basic/LabelLink/LabelLink';
 import { TypeAutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
-import { GtmSectionType } from 'gtm/enums/GtmSectionType';
-import { onGtmAutocompleteResultClickEventHandler } from 'gtm/handlers/onGtmAutocompleteResultClickEventHandler';
 
 type AutocompleteSearchBrandsResultProps = {
     brandSearch: TypeAutocompleteSearchQuery['brandSearch'];
-    onClosePopupCallback: () => void;
-    autocompleteSearchQueryValue: string;
+    // autocompleteSearchQueryValue: string;
 };
 
-export const AutocompleteSearchBrandsResult: FC<AutocompleteSearchBrandsResultProps> = ({
-    autocompleteSearchQueryValue,
+export const AutocompleteSearchBrandsResult: FC<AutocompleteSearchBrandsResultProps> = async ({
     brandSearch,
-    onClosePopupCallback,
+    // autocompleteSearchQueryValue,
 }) => {
-    const { t } = useTranslation();
+    const t = await getTranslation();
 
     if (!brandSearch.length) {
         return null;
     }
 
-    return (
-        <div>
-            <SearchResultSectionTitle>
-                {t('Brands')}
-                {` (${brandSearch.length})`}
-            </SearchResultSectionTitle>
+    const title = `${t('Brands')} (${brandSearch.length})`;
 
-            <SearchResultSectionGroup>
-                {brandSearch.slice(0, AUTOCOMPLETE_BRAND_LIMIT).map((brand) => (
-                    <li key={brand.slug}>
-                        <SearchResultLink
-                            href={brand.slug}
-                            type="brand"
-                            onClick={() => {
-                                onGtmAutocompleteResultClickEventHandler(
-                                    autocompleteSearchQueryValue,
-                                    GtmSectionType.brand,
-                                    brand.name,
-                                );
-                                onClosePopupCallback();
-                            }}
-                        >
-                            {brand.name}
-                        </SearchResultLink>
-                    </li>
-                ))}
-            </SearchResultSectionGroup>
-        </div>
+    return (
+        <AutocompleteSearchResultSection title={title}>
+            {brandSearch.slice(0, AUTOCOMPLETE_BRAND_LIMIT).map((brand) => (
+                <li key={brand.slug}>
+                    <LabelLink
+                        href={brand.slug}
+                        type="brand"
+                        // onClick={() => {
+                        // onGtmAutocompleteResultClickEventHandler(
+                        //     autocompleteSearchQueryValue,
+                        //     GtmSectionType.brand,
+                        //     brand.name,
+                        // );
+                        // }}
+                    >
+                        {brand.name}
+                    </LabelLink>
+                </li>
+            ))}
+        </AutocompleteSearchResultSection>
     );
 };

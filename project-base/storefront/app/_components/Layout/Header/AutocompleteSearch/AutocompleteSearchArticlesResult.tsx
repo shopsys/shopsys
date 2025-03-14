@@ -1,56 +1,45 @@
-'use client';
-
-import { SearchResultLink, SearchResultSectionGroup, SearchResultSectionTitle } from './AutocompleteSearchPopup';
+import { AutocompleteSearchResultSection } from './AutocompleteSearchResultSection';
 import { AUTOCOMPLETE_ARTICLE_LIMIT } from './constants';
-import { useTranslation } from 'components/providers/TranslationProvider';
+import { getTranslation } from 'app/_utils/translation/getTranslation';
+import { LabelLink } from 'components/Basic/LabelLink/LabelLink';
 import { TypeAutocompleteSearchQuery } from 'graphql/requests/search/queries/AutocompleteSearchQuery.generated';
-import { GtmSectionType } from 'gtm/enums/GtmSectionType';
-import { onGtmAutocompleteResultClickEventHandler } from 'gtm/handlers/onGtmAutocompleteResultClickEventHandler';
 
 type AutocompleteSearchArticlesResultProps = {
     articlesSearch: TypeAutocompleteSearchQuery['articlesSearch'];
-    onClosePopupCallback: () => void;
-    autocompleteSearchQueryValue: string;
+    // autocompleteSearchQueryValue: string;
 };
 
-export const AutocompleteSearchArticlesResult: FC<AutocompleteSearchArticlesResultProps> = ({
-    autocompleteSearchQueryValue,
+export const AutocompleteSearchArticlesResult: FC<AutocompleteSearchArticlesResultProps> = async ({
     articlesSearch,
-    onClosePopupCallback,
+    // autocompleteSearchQueryValue,
 }) => {
-    const { t } = useTranslation();
+    const t = await getTranslation();
 
     if (!articlesSearch.length) {
         return null;
     }
 
-    return (
-        <div>
-            <SearchResultSectionTitle>
-                {t('Articles')}
-                {` (${articlesSearch.length})`}
-            </SearchResultSectionTitle>
+    const title = `${t('Articles')} (${articlesSearch.length})`;
 
-            <SearchResultSectionGroup>
-                {articlesSearch.slice(0, AUTOCOMPLETE_ARTICLE_LIMIT).map((article) => (
-                    <li key={article.slug}>
-                        <SearchResultLink
-                            href={article.slug}
-                            type={article.__typename === 'ArticleSite' ? 'article' : 'blogArticle'}
-                            onClick={() => {
-                                onGtmAutocompleteResultClickEventHandler(
-                                    autocompleteSearchQueryValue,
-                                    GtmSectionType.article,
-                                    article.name,
-                                );
-                                onClosePopupCallback();
-                            }}
-                        >
-                            {article.name}
-                        </SearchResultLink>
-                    </li>
-                ))}
-            </SearchResultSectionGroup>
-        </div>
+    return (
+        <AutocompleteSearchResultSection title={title}>
+            {articlesSearch.slice(0, AUTOCOMPLETE_ARTICLE_LIMIT).map((article) => (
+                <li key={article.slug}>
+                    <LabelLink
+                        href={article.slug}
+                        type={article.__typename === 'ArticleSite' ? 'article' : 'blogArticle'}
+                        // onClick={() => {
+                        // onGtmAutocompleteResultClickEventHandler(
+                        //     autocompleteSearchQueryValue,
+                        //     GtmSectionType.article,
+                        //     article.name,
+                        // );
+                        // }}
+                    >
+                        {article.name}
+                    </LabelLink>
+                </li>
+            ))}
+        </AutocompleteSearchResultSection>
     );
 };
