@@ -13,6 +13,7 @@ import { notFound } from 'next/navigation';
 
 export const generateMetadata = async ({ params }: { params: { productSlug: string } }): Promise<Metadata> => {
     const { product } = await getProductQuery(params.productSlug);
+    console.log('🚀 -> generateMetadata -> productSlug:', params.productSlug);
 
     if (!product) {
         notFound();
@@ -39,8 +40,6 @@ const ProductPage = async ({ params }: { params: { productSlug: string } }) => {
     return (
         <>
             <ProductMetadataJsonLd product={product} />
-
-            <Breadcrumbs breadcrumbs={product.breadcrumb} />
 
             <Container>
                 {product.__typename === 'RegularProduct' && <ProductDetailContent product={product} />}
