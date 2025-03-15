@@ -29,7 +29,7 @@ export const AuthInfo: FC<AuthInfoProps> = ({ isUserLoggedIn }) => {
         const isWithUserTokens = !!(cookies.accessToken && cookies.refreshToken);
 
         if ((isUserLoggedIn && !isWithUserTokens) || (!isUserLoggedIn && isWithUserTokens)) {
-            router.refresh();
+            router.refresh(); // TODO: předělat architekturu, podle mě ten refresh je tu z pages, kdy byl potřeba, z app serveru to můžem rovnou poslat
         }
     }, [slug]);
 
