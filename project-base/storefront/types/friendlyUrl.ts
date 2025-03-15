@@ -37,14 +37,15 @@ export const FriendlyPagesTypes = {
     account: 'front_customer_account',
 } as const;
 
+// TODO: refactorovat ostatní /[whatever] routy po vzoru '/products' ?
 export const FriendlyPagesDestinations: Record<FriendlyPagesTypesKey, string> = {
     article: '/articles/[articleSlug]',
     blogArticle: '/blogArticles/[blogArticleSlug]',
     blogCategory: '/blogCategories/[blogCategorySlug]',
     brand: '/brands/[brandSlug]',
     brandsOverview: '/brands-overview',
-    category: '/categories/[categorySlug]',
-    product: '/products/[productSlug]',
+    category: '/categories',
+    product: '/products',
     stores: '/stores',
     store: '/stores/[storeSlug]',
     flag: '/flags/[flagSlug]',
