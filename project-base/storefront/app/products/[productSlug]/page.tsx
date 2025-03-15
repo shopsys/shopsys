@@ -11,8 +11,8 @@ import { TypeRecommendationType } from 'graphql/types';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-export const generateMetadata = async (): Promise<Metadata> => {
-    const { product } = await getProductQuery();
+export const generateMetadata = async ({ params }: { params: { productSlug: string } }): Promise<Metadata> => {
+    const { product } = await getProductQuery(params.productSlug);
 
     if (!product) {
         notFound();
@@ -29,8 +29,8 @@ export const generateMetadata = async (): Promise<Metadata> => {
     };
 };
 
-const ProductPage = async () => {
-    const { product } = await getProductQuery();
+const ProductPage = async ({ params }: { params: { productSlug: string } }) => {
+    const { product } = await getProductQuery(params.productSlug);
 
     if (!product) {
         notFound();
