@@ -137,13 +137,12 @@ const rewriteDynamicPages = (pageType: FriendlyPageTypesValue, rewriteUrl: strin
     const host = new URL(rewriteUrl).origin;
 
     if (pageTypeKey) {
-        const friendlySlug = new URL(rewriteUrl).pathname.split('/').pop();
+        const friendlySlug = new URL(rewriteUrl).pathname.split('/').pop(); // will work as long as only last (pop) part is needed
         const asPath = `/${friendlySlug}${queryParams}`;
 
-        return NextResponse.rewrite(new URL(`${FriendlyPagesDestinations[pageTypeKey]}${queryParams}`, host), {
+        return NextResponse.rewrite(new URL(`${FriendlyPagesDestinations[pageTypeKey]}${asPath}`, host), {
             headers: [
                 ['x-pathname', FriendlyPagesDestinations[pageTypeKey]],
-                ['x-friendly-slug', friendlySlug || ''],
                 ['x-asPath', asPath],
             ],
         });

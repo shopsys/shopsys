@@ -4,10 +4,10 @@ const RECOMMENDER_PATHNAMES = {
     '/': 'homepage',
     '/blogArticles/[blogArticleSlug]': 'blog-article-detail',
     '/cart': 'cart',
-    '/categories/[categorySlug]': 'category-detail',
+    '/categories': 'category-detail',
     '/flags/[flagSlug]': 'flag-detail',
     '/product-comparison': 'product-comparison',
-    '/products/[productSlug]': 'product-detail',
+    '/products': 'product-detail',
     '/search': 'search',
     '/wishlist': 'wishlist',
 } as const;
