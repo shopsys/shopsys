@@ -6,13 +6,9 @@ import {
     TypeProductDetailQuery,
     TypeProductDetailQueryVariables,
 } from 'graphql/requests/products/queries/ProductDetailQuery.ssr';
-import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-export const getProductQuery = async () => {
-    const headersList = headers();
-    const slug = headersList.get('x-friendly-slug');
-
+export const getProductQuery = async (slug: string) => {
     const result = await createQuery<TypeProductDetailQuery, TypeProductDetailQueryVariables>(
         ProductDetailQueryDocument,
         {
