@@ -1,5 +1,6 @@
 const DOMAIN_COUNT = 2;
 
+// TODO: can be memoized/cached?
 export const getDomainIdFromHostname = (hostname: string): number => {
     let currentDomainId = null as null | number;
 
