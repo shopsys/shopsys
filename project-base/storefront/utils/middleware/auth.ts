@@ -1,25 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-export const handleAuthRedirects = (request: NextRequest): NextResponse | null => {
-    // Redirect to homepage when user is logged in but tries to access auth pages
-    const authProtectedPaths = ['/login', '/reset-password', '/registration'];
-    const accessToken = request.cookies.get('accessToken')?.value;
-
-    if (accessToken && authProtectedPaths.some((path) => request.nextUrl.pathname.startsWith(path))) {
-        return NextResponse.redirect(new URL('/app', request.url), {
-            headers: [['x-pathname', request.nextUrl.pathname]],
-        });
-    }
-
-    return null;
-};
-
 export const validateAuthTokens = async (request: NextRequest) => {
-    const response = NextResponse.next({
-        headers: [['x-pathname', request.nextUrl.pathname]],
-    });
-    const accessToken = request.cookies.get('accessToken')?.value;
+    const response = NextResponse.next();
 
+    const accessToken = request.cookies.get('accessToken')?.value;
     if (!accessToken) {
         return response;
     }

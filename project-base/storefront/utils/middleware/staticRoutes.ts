@@ -2,18 +2,26 @@ import { getHostFromRequest, isPathnameSegmentDynamic, isHomePage } from './help
 import { STATIC_REWRITE_PATHS } from 'config/staticRewritePaths';
 import { NextRequest, NextResponse } from 'next/server';
 
-export const handleStaticRoutes = (request: NextRequest, authResponse: NextResponse) => {
+export const handleStaticRoutes = (request: NextRequest, previousResponse: NextResponse) => {
+    // early return for homepage
+    if (isHomePage(request)) {
+        previousResponse.headers.set('x-pathname', '/');
+        previousResponse.headers.set('x-asPath', request.nextUrl.origin);
+        // no need to rewrite url, we are already at '/'
+        return previousResponse;
+    }
+
     const rewriteTargetUrl = getRewriteTargetPathname(
         request,
         getStaticUrlsAvailableForDomain(getHostFromRequest(request)),
     );
 
-    // TODO: possible early return for homepage (maybe exclude totally with matchers?)
-    if (rewriteTargetUrl || isHomePage(request)) {
-        const rewriteUrlObject = new URL(rewriteTargetUrl || '', request.url);
-        rewriteUrlObject.search = request.nextUrl.search;
-
-        return NextResponse.rewrite(rewriteUrlObject, authResponse);
+    if (rewriteTargetUrl) {
+        previousResponse.headers.set('x-pathname', rewriteTargetUrl);
+        previousResponse.headers.set('x-asPath', request.nextUrl.origin + rewriteTargetUrl);
+        const newUrl = request.nextUrl.clone();
+        newUrl.pathname = rewriteTargetUrl;
+        return NextResponse.rewrite(newUrl, previousResponse);
     }
 
     return null;
@@ -68,5 +76,5 @@ const getRewriteTargetPathname = (
         }
     }
 
-    return rewriteTargetPathnameArray.join('/');
+    return rewriteTargetPathnameArray.join('/'); // returns empty string if rewriteTargetPathnameArray is empty
 };
