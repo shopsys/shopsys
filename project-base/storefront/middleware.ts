@@ -1,5 +1,7 @@
-import { handleAuthRedirects, validateAuthTokens } from './utils/middleware/auth';
+import { validateAuthTokens } from './utils/middleware/auth';
+import { handleAuthRedirect } from './utils/middleware/authRedirect';
 import { handleFriendlyUrls } from './utils/middleware/friendlyUrls';
+import { isInRange } from './utils/middleware/helpers';
 import { handleStaticRoutes } from './utils/middleware/staticRoutes';
 import { NextMiddleware, NextRequest, NextResponse } from 'next/server';
 
@@ -10,22 +12,22 @@ const MIDDLEWARE_STATUS_MESSAGE_KEY = 'middleware-status-message';
 export const middleware: NextMiddleware = async (request) => {
     try {
         // Handle authentication redirects if needed
-        const authRedirect = handleAuthRedirects(request);
+        const authRedirect = handleAuthRedirect(request);
         if (authRedirect) {
             return authRedirect;
         }
 
         // Validate auth tokens and return the response with potentially refreshed tokens
-        const baseResponse = await validateAuthTokens(request);
+        const validTokensResponse = await validateAuthTokens(request);
 
         // Process static URL rewrites if applicable
-        const staticRewriteResponse = handleStaticRoutes(request, baseResponse);
-        if (staticRewriteResponse) {
-            return staticRewriteResponse;
+        const staticResponse = handleStaticRoutes(request, validTokensResponse);
+        if (staticResponse) {
+            return staticResponse;
         }
 
         // Process friendly URLs
-        return await handleFriendlyUrls(request, baseResponse);
+        return await handleFriendlyUrls(request, validTokensResponse);
     } catch (error) {
         return handleMiddlewareError(error, request);
     }
@@ -42,13 +44,31 @@ function handleMiddlewareError(error: unknown, request: NextRequest): NextRespon
     const isDevelopmentMode =
         process.env.ERROR_DEBUGGING_LEVEL === 'console' || process.env.ERROR_DEBUGGING_LEVEL === 'toast-and-console';
 
-    const errorMessage =
-        isDevelopmentMode && error instanceof Error ? error.message : 'Middleware runtime error for ' + request.url;
+    const isFriendlyUrlError = (error as any)?.friendlyUrl === true;
+    const statusCode = (error as any)?.statusCode || 500;
+
+    let statusMessage;
+    if (isFriendlyUrlError) {
+        const is400Error = isInRange(statusCode, 400, 499);
+        const is500Error = isInRange(statusCode, 500, 599);
+
+        if (is400Error) {
+            statusMessage = 'Friendly URL page not found for ' + request.url;
+        } else if (is500Error) {
+            statusMessage = 'Middleware runtime error for ' + request.url;
+        } else {
+            statusMessage = 'Unknown middleware error for ' + request.url;
+        }
+    } else {
+        // Handle non-friendly URL errors as before
+        statusMessage =
+            isDevelopmentMode && error instanceof Error ? error.message : 'Middleware runtime error for ' + request.url;
+    }
 
     return NextResponse.rewrite(new URL(ERROR_PAGE_ROUTE, request.url), {
         headers: [
-            [MIDDLEWARE_STATUS_CODE_KEY, '500'],
-            [MIDDLEWARE_STATUS_MESSAGE_KEY, errorMessage],
+            [MIDDLEWARE_STATUS_CODE_KEY, statusCode.toString()],
+            [MIDDLEWARE_STATUS_MESSAGE_KEY, statusMessage],
         ],
     });
 }
