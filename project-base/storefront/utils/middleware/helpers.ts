@@ -2,9 +2,10 @@ import { NextRequest } from 'next/server';
 
 export const isPathnameSegmentDynamic = (segment?: string) => segment?.charAt(0) === ':';
 
+// return un-normalized (original) host
+// because "request.nextUrl.origin" would return normalized version ("127.0.0.1:8000" changed to "localhost:3000")
 export const getHostFromRequest = (request: NextRequest): string => {
-    const requestHeaders = new Headers(request.headers);
-    const host = requestHeaders.get('host');
+    const host = request.headers.get('Host');
 
     if (host === null) {
         throw new Error(`Host was not found in the request header.`);
