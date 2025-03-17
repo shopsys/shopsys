@@ -52,3 +52,17 @@ function handleMiddlewareError(error: unknown, request: NextRequest): NextRespon
         ],
     });
 }
+
+// Full examples of what you can access
+// request.url                              // https://example.com/path?query=value
+// request.nextUrl                          // wrapper: new URL(request.url)
+// request.nextUrl.href                     // https://example.com/path?query=value
+// request.nextUrl.pathname                 // /path
+// request.nextUrl.search                   // ?query=value
+// request.nextUrl.searchParams             // URLSearchParams object
+// request.nextUrl.searchParams.toString()  // query=value
+
+// good to know - localhost weirdness
+// new Headers(request.headers).get('Host') // 127.0.0.1:8000 (real url)
+// request.url                              // localhost:3000 (normalized url, why? __NEXT_NO_MIDDLEWARE_URL_NORMALIZE can influence it?)
+// request.nextUrl.href                     // localhost:3000 (being born from "request.url")

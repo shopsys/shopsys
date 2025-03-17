@@ -3,14 +3,15 @@ import { STATIC_REWRITE_PATHS } from 'config/staticRewritePaths';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const handleStaticRoutes = (request: NextRequest, authResponse: NextResponse) => {
-    const host = getHostFromRequest(request);
-    const domainUrlFromStaticUrls = getDomainUrlFromStaticUrls(host);
-    const staticUrlsAvailableForDomain = getStaticUrlsAvailableForDomain(domainUrlFromStaticUrls);
-    const rewriteTargetUrl = getRewriteTargetPathname(request, staticUrlsAvailableForDomain);
+    const rewriteTargetUrl = getRewriteTargetPathname(
+        request,
+        getStaticUrlsAvailableForDomain(getHostFromRequest(request)),
+    );
 
+    // TODO: possible early return for homepage (maybe exclude totally with matchers?)
     if (rewriteTargetUrl || isHomePage(request)) {
         const rewriteUrlObject = new URL(rewriteTargetUrl || '', request.url);
-        addQueryParametersToRewriteUrlObject(rewriteUrlObject, request.nextUrl.search);
+        rewriteUrlObject.search = request.nextUrl.search;
 
         return NextResponse.rewrite(rewriteUrlObject, authResponse);
     }
@@ -18,18 +19,14 @@ export const handleStaticRoutes = (request: NextRequest, authResponse: NextRespo
     return null;
 };
 
-const getDomainUrlFromStaticUrls = (host: string): string => {
-    const domainUrlFromStaticUrls = Object.keys(STATIC_REWRITE_PATHS).find((domainUrl) => domainUrl.match(host));
+const getStaticUrlsAvailableForDomain = (host: string): Record<string, string> => {
+    const domainUrlKey = Object.keys(STATIC_REWRITE_PATHS).find((domainUrl) => domainUrl.match(host));
 
-    if (domainUrlFromStaticUrls === undefined) {
+    if (domainUrlKey === undefined) {
         throw new Error(`Host ${host} does not have a corresponding URL in the available static URLS.`);
     }
 
-    return domainUrlFromStaticUrls;
-};
-
-const getStaticUrlsAvailableForDomain = (domainUrlFromStaticUrls: string): Record<string, string> => {
-    return STATIC_REWRITE_PATHS[domainUrlFromStaticUrls];
+    return STATIC_REWRITE_PATHS[domainUrlKey];
 };
 
 const getRewriteTargetPathname = (
@@ -72,8 +69,4 @@ const getRewriteTargetPathname = (
     }
 
     return rewriteTargetPathnameArray.join('/');
-};
-
-const addQueryParametersToRewriteUrlObject = (rewriteUrlObject: URL, originalUrlQueryParams: string) => {
-    rewriteUrlObject.search = originalUrlQueryParams;
 };
