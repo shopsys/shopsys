@@ -1,335 +1,89 @@
-import { STATIC_REWRITE_PATHS } from 'config/staticRewritePaths';
+import { validateAuthTokens } from './utils/middleware/auth';
+import { handleAuthRedirect } from './utils/middleware/authRedirect';
+import { handleFriendlyUrls } from './utils/middleware/friendlyUrls';
+import { isInRange } from './utils/middleware/helpers';
+import { handleStaticRoutes } from './utils/middleware/staticRoutes';
 import { NextMiddleware, NextRequest, NextResponse } from 'next/server';
-import { type FriendlyPageTypesValue, FriendlyPagesDestinations, FriendlyPagesTypes } from 'types/friendlyUrl';
-import { getBaseUrlWithLocale } from 'utils/domain/domainUtils';
-import { getHostAndDomainFromRequest } from 'utils/domain/getHostAndDomainFromRequest';
-import { getPageTypeKey } from 'utils/page/getPageTypeKey';
 
 const ERROR_PAGE_ROUTE = '/404';
 const MIDDLEWARE_STATUS_CODE_KEY = 'middleware-status-code';
 const MIDDLEWARE_STATUS_MESSAGE_KEY = 'middleware-status-message';
 
+// TODO: ❗❗❗ check latest middleware from PAGES ❗❗❗
 export const middleware: NextMiddleware = async (request) => {
     try {
-        if (request.nextUrl.pathname === '/.well-known/appspecific/com.chrome.devtools.json') {
-            return new NextResponse(null, { status: 204 });
+        // Handle authentication redirects if needed
+        const authRedirect = handleAuthRedirect(request);
+        if (authRedirect) {
+            return authRedirect;
         }
 
-        if (request.url.includes('_next/data')) {
-            return new NextResponse(null, { status: 404 });
+        // Validate auth tokens and return the response with potentially refreshed tokens
+        const validTokensResponse = await validateAuthTokens(request);
+
+        // Process static URL rewrites if applicable
+        const staticResponse = handleStaticRoutes(request, validTokensResponse);
+        if (staticResponse) {
+            return staticResponse;
         }
 
-        const domainInfo = getHostAndDomainFromRequest(request);
-        const { search } = new URL(request.url);
-
-        let pathname = request.nextUrl.pathname;
-        if (pathname.startsWith('/')) {
-            pathname = pathname.substring(1);
-        }
-
-        // Handle redirect if domain couldn't be resolved
-        if (domainInfo.redirect) {
-            const redirectUrl = new URL(`${domainInfo.host}${pathname}${search}`);
-            return NextResponse.redirect(redirectUrl, 308);
-        }
-
-        const { host, domainId, currentLocale } = domainInfo;
-
-        const response = await validateAuthTokens(request);
-
-        const domainUrlFromStaticUrls = getDomainUrlFromStaticUrls(host);
-        const staticUrlsAvailableForDomain = getStaticUrlsAvailableForDomain(domainUrlFromStaticUrls);
-        const rewriteTargetUrl = getRewriteTargetPathname(request, staticUrlsAvailableForDomain);
-
-        if (rewriteTargetUrl || isHomePage(request)) {
-            const rewriteUrlObject = new URL(rewriteTargetUrl, request.url);
-            addQueryParametersToRewriteUrlObject(rewriteUrlObject, request.nextUrl.search);
-
-            return NextResponse.rewrite(rewriteUrlObject, response);
-        }
-
-        const queryParams = new URLSearchParams(search);
-        const slugTypeQueryParam = queryParams.get('slugType');
-
-        if (slugTypeQueryParam && isFriendlyPageTypesValue(slugTypeQueryParam)) {
-            return rewriteDynamicPages(
-                slugTypeQueryParam as FriendlyPageTypesValue,
-                request.url,
-                search,
-                currentLocale,
-            );
-        }
-
-        const pageTypeResponse = await fetch(`${process.env.INTERNAL_ENDPOINT}resolve-friendly-url`, {
-            method: 'POST',
-            body: JSON.stringify({
-                slug: pathname,
-                domainId,
-            }),
-        });
-
-        if (!pageTypeResponse.ok) {
-            const is400Error = isInRange(pageTypeResponse.status, 400, 499);
-            const is500Error = isInRange(pageTypeResponse.status, 500, 599);
-
-            let statusMessage = 'Unknown middleware error for ' + request.url;
-
-            if (is400Error) {
-                statusMessage = 'Friendly URL page not found for ' + request.url;
-            } else if (is500Error) {
-                statusMessage = 'Middleware runtime error for ' + request.url;
-            }
-
-            return NextResponse.rewrite(new URL(ERROR_PAGE_ROUTE, request.url), {
-                ...response,
-                headers: [
-                    [MIDDLEWARE_STATUS_CODE_KEY, pageTypeResponse.status.toString()],
-                    [MIDDLEWARE_STATUS_MESSAGE_KEY, statusMessage],
-                ],
-            });
-        }
-
-        const pageTypeParsedResponse: { route: FriendlyPageTypesValue; redirectTo: string; redirectCode: number } =
-            await pageTypeResponse.json();
-
-        if (pageTypeParsedResponse.redirectTo && pageTypeParsedResponse.redirectTo !== request.url) {
-            return NextResponse.redirect(
-                new URL(
-                    `${pageTypeParsedResponse.redirectTo}${queryParams.toString() !== '' ? `?${queryParams}` : ''}`,
-                    request.url,
-                ).href,
-                {
-                    ...response,
-                    status: pageTypeParsedResponse.redirectCode,
-                },
-            );
-        }
-
-        return rewriteDynamicPages(pageTypeParsedResponse.route, request.url, search, currentLocale);
-    } catch (e) {
-        if (
-            (process.env.ERROR_DEBUGGING_LEVEL === 'console' ||
-                process.env.ERROR_DEBUGGING_LEVEL === 'toast-and-console') &&
-            e instanceof Error
-        ) {
-            return NextResponse.rewrite(new URL(ERROR_PAGE_ROUTE, request.url), {
-                headers: [
-                    [MIDDLEWARE_STATUS_CODE_KEY, '500'],
-                    [MIDDLEWARE_STATUS_MESSAGE_KEY, e.message],
-                ],
-            });
-        }
-
-        return NextResponse.rewrite(new URL(ERROR_PAGE_ROUTE, request.url), {
-            headers: [
-                [MIDDLEWARE_STATUS_CODE_KEY, '500'],
-                [MIDDLEWARE_STATUS_MESSAGE_KEY, 'Middleware runtime error for ' + request.url],
-            ],
-        });
+        // Process friendly URLs
+        return await handleFriendlyUrls(request, validTokensResponse);
+    } catch (error) {
+        return handleMiddlewareError(error, request);
     }
 };
 
 export const config = {
     matcher: [
-        '/', // Explicitly match the homepage
-        '/((?!api|_next|favicon.ico|fonts|svg|images|locales|icons|grapesjs-template|grapesjs-homepage-article-template|grapesjs-article-template|tailwind-for-admin|robots).*)',
+        '/((?!api|_next|favicon.ico|fonts|svg|images|locales|icons|grapesjs-template|grapesjs-homepage-article-template|grapesjs-article-template|robots).*)',
+        '/',
     ],
 };
 
-const isInRange = (number: number, start: number, end: number) => number >= start && start <= end;
+function handleMiddlewareError(error: unknown, request: NextRequest): NextResponse {
+    const isDevelopmentMode =
+        process.env.ERROR_DEBUGGING_LEVEL === 'console' || process.env.ERROR_DEBUGGING_LEVEL === 'toast-and-console';
 
-const rewriteDynamicPages = (
-    pageType: FriendlyPageTypesValue,
-    rewriteUrl: string,
-    queryParams: string,
-    currentLocale: string | undefined,
-) => {
-    const pageTypeKey = getPageTypeKey(pageType);
+    const isFriendlyUrlError = (error as any)?.friendlyUrl === true;
+    const statusCode = (error as any)?.statusCode || 500;
 
-    const origin = getBaseUrlWithLocale(new URL(rewriteUrl).origin, currentLocale);
-    const host = new URL(rewriteUrl).origin;
+    let statusMessage;
+    if (isFriendlyUrlError) {
+        const is400Error = isInRange(statusCode, 400, 499);
+        const is500Error = isInRange(statusCode, 500, 599);
 
-    if (pageTypeKey) {
-        const friendlySlug = new URL(rewriteUrl).pathname.split('/').pop(); // will work as long as only last (pop) part is needed
-        const asPath = `/${friendlySlug}${queryParams}`;
-
-        return NextResponse.rewrite(new URL(`${FriendlyPagesDestinations[pageTypeKey]}${asPath}`, host), {
-            headers: [
-                ['x-pathname', FriendlyPagesDestinations[pageTypeKey]],
-                ['x-asPath', asPath],
-            ],
-        });
+        if (is400Error) {
+            statusMessage = 'Friendly URL page not found for ' + request.url;
+        } else if (is500Error) {
+            statusMessage = 'Middleware runtime error for ' + request.url;
+        } else {
+            statusMessage = 'Unknown middleware error for ' + request.url;
+        }
+    } else {
+        // Handle non-friendly URL errors as before
+        statusMessage =
+            isDevelopmentMode && error instanceof Error ? error.message : 'Middleware runtime error for ' + request.url;
     }
 
-    return NextResponse.rewrite(new URL(origin + ERROR_PAGE_ROUTE), {
+    return NextResponse.rewrite(new URL(ERROR_PAGE_ROUTE, request.url), {
         headers: [
-            [MIDDLEWARE_STATUS_CODE_KEY, '404'],
-            [MIDDLEWARE_STATUS_MESSAGE_KEY, 'Friendly URL page not found for ' + rewriteUrl],
+            [MIDDLEWARE_STATUS_CODE_KEY, statusCode.toString()],
+            [MIDDLEWARE_STATUS_MESSAGE_KEY, statusMessage],
         ],
     });
-};
-
-const getDomainUrlFromStaticUrls = (host: string): string => {
-    const domainUrlFromStaticUrls = Object.keys(STATIC_REWRITE_PATHS).find((domainUrl) => domainUrl.match(host));
-
-    if (domainUrlFromStaticUrls === undefined) {
-        throw new Error(`Host ${host} does not have a corresponding URL in the available static URLS.`);
-    }
-
-    return domainUrlFromStaticUrls;
-};
-
-const getStaticUrlsAvailableForDomain = (domainUrlFromStaticUrls: string): Record<string, string> => {
-    const staticUrlsAvailableForDomain = STATIC_REWRITE_PATHS[domainUrlFromStaticUrls];
-
-    return staticUrlsAvailableForDomain;
-};
-
-const getRewriteTargetPathname = (
-    request: NextRequest,
-    staticUrlsAvailableForDomain: Record<string, string>,
-): string => {
-    let rewriteTargetPathnameArray: string[] = [];
-
-    for (const [staticRewritePathname, staticLocalizedPathname] of Object.entries(staticUrlsAvailableForDomain)) {
-        const requestedPathnameSegments = request.nextUrl.pathname.split('/');
-        const staticRewritePathnameSegments = staticRewritePathname.split('/');
-        const staticLocalizedPathnameSegments = staticLocalizedPathname.split('/');
-
-        let areAllSegmentsIdenticalOrDynamic = true;
-        const rewriteTargetPathnameArrayBuffer = [];
-        const hasDynamicSegment = staticRewritePathnameSegments.some((segment) => isPathnameSegmentDynamic(segment));
-
-        for (let index = 0; index < requestedPathnameSegments.length; index++) {
-            const isCurrentPathnameSegmentDynamic = isPathnameSegmentDynamic(staticRewritePathnameSegments[index]);
-
-            areAllSegmentsIdenticalOrDynamic =
-                areAllSegmentsIdenticalOrDynamic &&
-                (staticLocalizedPathnameSegments[index] === requestedPathnameSegments[index] ||
-                    isCurrentPathnameSegmentDynamic);
-
-            if (isCurrentPathnameSegmentDynamic) {
-                rewriteTargetPathnameArrayBuffer.push(requestedPathnameSegments[index]);
-            } else {
-                rewriteTargetPathnameArrayBuffer.push(staticRewritePathnameSegments[index]);
-            }
-        }
-
-        if (hasDynamicSegment && requestedPathnameSegments.length !== staticRewritePathnameSegments.length) {
-            areAllSegmentsIdenticalOrDynamic = false;
-        }
-
-        if (areAllSegmentsIdenticalOrDynamic) {
-            rewriteTargetPathnameArray = [...rewriteTargetPathnameArrayBuffer];
-        }
-    }
-
-    const rewriteTargetPathname = rewriteTargetPathnameArray.join('/');
-
-    return rewriteTargetPathname;
-};
-
-const isHomePage = (request: NextRequest) => request.nextUrl.pathname === '/';
-
-const addQueryParametersToRewriteUrlObject = (rewriteUrlObject: URL, originalUrlQueryParams: string) => {
-    rewriteUrlObject.search = originalUrlQueryParams;
-};
-
-const isPathnameSegmentDynamic = (segment?: string) => segment?.charAt(0) === ':';
-
-function isFriendlyPageTypesValue(value: string): value is FriendlyPageTypesValue {
-    return Object.values(FriendlyPagesTypes).includes(value as FriendlyPageTypesValue);
 }
-const validateAuthTokens = async (request: NextRequest) => {
-    const response = NextResponse.next({
-        headers: [['x-pathname', request.nextUrl.pathname]],
-    });
-    const accessToken = request.cookies.get('accessToken')?.value;
 
-    if (!accessToken) {
-        return response;
-    }
+// Full examples of what you can access
+// request.url                              // https://example.com/path?query=value
+// request.nextUrl                          // wrapper: new URL(request.url)
+// request.nextUrl.href                     // https://example.com/path?query=value
+// request.nextUrl.pathname                 // /path
+// request.nextUrl.search                   // ?query=value
+// request.nextUrl.searchParams             // URLSearchParams object
+// request.nextUrl.searchParams.toString()  // query=value
 
-    try {
-        // TODO: possibly replace this CurrentCustomerUserQuery with the `isAuthorized` query
-        const currentUserResp = await gqlQueryFetch(getIsAuthenticatedBody(), accessToken);
-
-        if (currentUserResp.status !== 401) {
-            return response;
-        }
-
-        const refreshToken = request.cookies.get('refreshToken')?.value;
-        if (!refreshToken) {
-            deleteAuthTokensFromCookies(response);
-            return response;
-        }
-
-        await refreshAuthTokensInCookies(response, refreshToken);
-    } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error('Auth token validation error:', e);
-    }
-
-    return response;
-};
-
-const refreshAuthTokensInCookies = async (response: NextResponse, refreshToken: string) => {
-    const refreshTokensReponse = await gqlQueryFetch(getRefreshTokensBody({ refreshToken }));
-
-    if (!refreshTokensReponse.ok) {
-        deleteAuthTokensFromCookies(response);
-        return;
-    }
-
-    const { data } = await refreshTokensReponse.json();
-    if (!data?.RefreshTokens) {
-        deleteAuthTokensFromCookies(response);
-        return;
-    }
-
-    const { accessToken: newAccessToken, refreshToken: newRrefreshToken } = data.RefreshTokens;
-    response.cookies.set('accessToken', newAccessToken);
-    response.cookies.set('refreshToken', newRrefreshToken);
-    // eslint-disable-next-line no-console
-    console.log('Tokens refreshed');
-};
-
-const gqlQueryFetch = (body: any, accessToken?: string) => {
-    const defaultHeaders = {
-        Accept: 'application/graphql-response+json, application/graphql+json, application/json, text/event-stream, multipart/mixed',
-        Originalhost: '127.0.0.1:8000',
-        'X-Forwarded-Proto': 'off',
-        'Content-Type': 'application/json',
-    };
-
-    return fetch(`${process.env.INTERNAL_ENDPOINT}graphql/`, {
-        headers: {
-            ...defaultHeaders,
-            ...(accessToken && { 'X-Auth-Token': `Bearer ${accessToken}` }),
-        },
-        body: JSON.stringify(body),
-        method: 'POST',
-        cache: 'no-store',
-    });
-};
-
-const getIsAuthenticatedBody = () => {
-    return {
-        operationName: 'OrdersQuery',
-        query: 'query OrdersQuery($after: String, $first: Int) { orders(after: $after, first: $first) { totalCount } }',
-        variables: { after: '', first: 28 },
-    };
-};
-
-const getRefreshTokensBody = (variables = {}) => {
-    return {
-        operationName: 'RefreshTokens',
-        query: 'mutation RefreshTokens($refreshToken: String!) { RefreshTokens(input: {refreshToken: $refreshToken}) { ...TokenFragments } } fragment TokenFragments on Token { accessToken refreshToken }',
-        variables,
-    };
-};
-
-const deleteAuthTokensFromCookies = (response: NextResponse) => {
-    response.cookies.delete('accessToken');
-    response.cookies.delete('refreshToken');
-};
+// good to know - localhost weirdness
+// new Headers(request.headers).get('Host') // 127.0.0.1:8000 (real url)
+// request.url                              // localhost:3000 (normalized url, why? __NEXT_NO_MIDDLEWARE_URL_NORMALIZE can influence it?)
+// request.nextUrl.href                     // localhost:3000 (being born from "request.url")
