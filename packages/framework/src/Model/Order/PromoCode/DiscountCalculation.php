@@ -58,6 +58,11 @@ class DiscountCalculation
                 $totalItemPrice->getPriceWithoutVat()->multiply($multiplier),
                 $currency,
             );
+
+            $priceWithVat = $this->rounding->roundPriceWithVatByCurrency(
+                $this->priceCalculation->applyVatByPercent($priceWithoutVat, $vatPercent),
+                $currency,
+            );
         }
 
         return new Price($priceWithoutVat, $priceWithVat);

@@ -4381,6 +4381,9 @@ msgstr ""
 msgid "Total including VAT"
 msgstr ""
 
+msgid "Total order price (excluding VAT)"
+msgstr ""
+
 msgid "Total order price (including VAT)"
 msgstr ""
 
@@ -4885,6 +4888,9 @@ msgstr ""
 msgid "empty value"
 msgstr ""
 
+msgid "ex VAT"
+msgstr ""
+
 msgid "files"
 msgstr ""
 
@@ -4907,6 +4913,9 @@ msgid "higher than"
 msgstr ""
 
 msgid "in category (between first and second row of products)"
+msgstr ""
+
+msgid "inc VAT"
 msgstr ""
 
 msgid "include"
