@@ -1,8 +1,8 @@
+import { getDomainConfig } from 'app/_utils/getDomainConfig';
 import { TypeMainVariantDetailFragment } from 'graphql/requests/products/fragments/MainVariantDetailFragment.generated';
 import { TypeProductDetailFragment } from 'graphql/requests/products/fragments/ProductDetailFragment.generated';
 import { TypeAvailabilityStatusEnum } from 'graphql/types';
 import { headers } from 'next/headers';
-import { getDomainConfig } from 'utils/domain/domainConfig';
 
 type ProductMetadataProps = {
     product: TypeProductDetailFragment | TypeMainVariantDetailFragment;
