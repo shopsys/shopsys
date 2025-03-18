@@ -8,7 +8,7 @@ export async function getFormatDate(): Promise<{
     formatDateAndTime: typeof formatDateAndTime;
 }> {
     const settingsData = await getSettingsQuery();
-    const domainConfig = getDomainConfig(headers().get('host')!);
+    const domainConfig = getDomainConfig((await headers()).get('host')!);
 
     const timezone = settingsData?.settings?.displayTimezone || domainConfig.fallbackTimezone;
 

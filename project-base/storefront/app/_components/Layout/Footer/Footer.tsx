@@ -29,7 +29,7 @@ export type FooterProps =
 
 export const Footer: FC<FooterProps> = async ({ simpleFooter }) => {
     const t = await getTranslation();
-    const { url } = getDomainConfig(headers().get('host')!);
+    const { url } = getDomainConfig((await headers()).get('host')!);
 
     const settingsResponse = await createQuery<TypeSettingsQuery, TypeSettingsQueryVariables>(
         SettingsQueryDocument,

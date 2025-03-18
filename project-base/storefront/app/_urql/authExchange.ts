@@ -1,5 +1,5 @@
 import { AuthConfig } from '@urql/exchange-auth';
-import { cookies } from 'next/headers';
+import { cookies, type UnsafeUnwrappedCookies } from 'next/headers';
 import { CombinedError, makeOperation, Operation } from 'urql';
 
 const isRefreshTokenMutation = (operation: Operation) => {
@@ -20,7 +20,7 @@ const isRefreshTokenMutation = (operation: Operation) => {
  * Access token is not added to the RefreshTokens mutation (allows refreshing tokens with invalid access token)
  */
 const addAuthToOperation = (operation: Operation): Operation => {
-    const accessToken = cookies().get('accessToken')?.value;
+    const accessToken = (cookies() as unknown as UnsafeUnwrappedCookies).get('accessToken')?.value;
     if (!accessToken || isRefreshTokenMutation(operation)) {
         return operation;
     }

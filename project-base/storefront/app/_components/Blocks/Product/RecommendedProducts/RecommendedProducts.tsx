@@ -10,8 +10,8 @@ export type RecommendedProductsProps = {
     itemUuids?: string[];
 };
 
-export const RecommendedProducts: FC<RecommendedProductsProps> = ({ recommendationType, itemUuids = [] }) => {
-    const { isLuigisBoxActive } = getDomainConfig(headers().get('host')!);
+export const RecommendedProducts: FC<RecommendedProductsProps> = async ({ recommendationType, itemUuids = [] }) => {
+    const { isLuigisBoxActive } = getDomainConfig((await headers()).get('host')!);
 
     if (!isLuigisBoxActive) {
         return null;

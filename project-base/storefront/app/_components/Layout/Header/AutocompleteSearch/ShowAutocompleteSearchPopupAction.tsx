@@ -26,7 +26,7 @@ export const ShowAutocompleteSearchPopupAction = async (searchQuery: string) => 
     const t = await getTranslation();
     const [searchUrl] = getInternationalizedStaticUrls(['/search']);
 
-    const { userIdentifier } = getCookieStoreStateFromServer();
+    const { userIdentifier } = await getCookieStoreStateFromServer();
 
     const searchData = await getAutocompleteSearchQuery({
         search: searchQuery,

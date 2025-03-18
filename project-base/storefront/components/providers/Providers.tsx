@@ -25,8 +25,8 @@ type ProvidersProps = {
 };
 
 export default async function Providers({ children }: ProvidersProps) {
-    const cookieStoreStateFromServer = getCookieStoreStateFromServer();
-    const domainConfig = getDomainConfig(headers().get('host')!);
+    const cookieStoreStateFromServer = await getCookieStoreStateFromServer();
+    const domainConfig = getDomainConfig((await headers()).get('host')!);
     const { defaultLocale: lang } = domainConfig;
     const dictionary = await getDictionary(lang);
     const [user, settingsData, initialState] = await Promise.allSettled([

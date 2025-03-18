@@ -4,7 +4,7 @@ import { ProductListState } from 'components/providers/ProductListProvider';
 import { TypeProductListTypeEnum } from 'graphql/types';
 
 export async function getInitialProductListState() {
-    const { productListUuids } = getCookieStoreStateFromServer();
+    const { productListUuids } = await getCookieStoreStateFromServer();
     const initialState: ProductListState = {};
 
     await Promise.all(

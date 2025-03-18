@@ -9,9 +9,10 @@ type ProductMetadataProps = {
 };
 
 // DOCS: https://nextjs.org/docs/14/app/building-your-application/optimizing/metadata#json-ld
-export const ProductMetadataJsonLd: FC<ProductMetadataProps> = ({ product }) => {
-    const { currencyCode } = getDomainConfig(headers().get('host')!);
-    const asPath = headers().get('x-asPath');
+export const ProductMetadataJsonLd: FC<ProductMetadataProps> = async ({ product }) => {
+    const headersList = await headers();
+    const { currencyCode } = getDomainConfig(headersList.get('host')!);
+    const asPath = headersList.get('x-asPath');
 
     const jsonLd = {
         '@context': 'https://schema.org/',

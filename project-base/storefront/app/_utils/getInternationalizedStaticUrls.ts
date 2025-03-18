@@ -9,8 +9,8 @@ export const getInternationalizedStaticUrls = <InputUrls extends Url[]>(urls: [.
     return urls.map((url) => getInternationalizedStaticUrl(url)) as SameLengthOutput<InputUrls>;
 };
 
-const getInternationalizedStaticUrl = (url: Url) => {
-    const domainConfig = getDomainConfig(headers().get('host')!);
+const getInternationalizedStaticUrl = async (url: Url) => {
+    const domainConfig = getDomainConfig((await headers()).get('host')!);
 
     const urlsOnDomain = STATIC_REWRITE_PATHS[domainConfig.url];
 
