@@ -22,4 +22,5 @@ theme:
         - less
         - twig
         - yaml
+    hljs_style: vs2015
     name: readthedocs
