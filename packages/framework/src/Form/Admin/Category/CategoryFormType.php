@@ -149,7 +149,7 @@ class CategoryFormType extends AbstractType
                 'label' => t('Display on'),
             ])
             ->add('automatedFilters', ChoiceType::class, [
-                'label' => 'Automated filters',
+                'label' => t('Automated filters'),
                 'required' => false,
                 'multiple' => true,
                 'expanded' => true,
