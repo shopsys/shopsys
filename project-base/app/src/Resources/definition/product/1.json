@@ -93,10 +93,20 @@
                         "edge_ngram"
                     ]
                 },
-                "whitespace_without_dots": {
+                "edge_ngram_unanalyzed_words_lowercase": {
+                    "tokenizer": "whitespace",
+                    "filter": [
+                        "edge_ngram",
+                        "lowercase"
+                    ]
+                },
+                "whitespace_without_dots_lowercase": {
                     "tokenizer": "whitespace",
                     "char_filter": [
                         "dots_replace_filter"
+                    ],
+                    "filter": [
+                        "lowercase"
                     ]
                 }
             },
@@ -405,12 +415,12 @@
             "searching_catnums": {
                 "type": "text",
                 "analyzer": "whitespace",
-                "search_analyzer": "whitespace_without_dots",
+                "search_analyzer": "whitespace_without_dots_lowercase",
                 "fields": {
                     "edge_ngram_unanalyzed_words": {
                         "type": "text",
-                        "analyzer": "edge_ngram_unanalyzed_words",
-                        "search_analyzer": "whitespace_without_dots"
+                        "analyzer": "edge_ngram_unanalyzed_words_lowercase",
+                        "search_analyzer": "whitespace_without_dots_lowercase"
                     }
                 }
             },
