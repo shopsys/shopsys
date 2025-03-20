@@ -1,4 +1,4 @@
-import { UserText } from 'components/Basic/UserText/UserText';
+import { UserText } from 'app/_components/Basic/UserText/UserText';
 
 export type ProductDetailDescriptionTabProps = {
     description: string | null;

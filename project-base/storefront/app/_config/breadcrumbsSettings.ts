@@ -31,14 +31,15 @@ export const staticBreadcrumbsSettings: StaticBreadcrumbsSettings = {
 // TODO: breadcrumbs for dynamic routes or routes with dynamic breadcrumbs (ids, numbers)
 export const dynamicBreadcrumbsSettings: DynamicBreadcrumbsSettings = {
     '/products': async (pathname) => {
-        const productSlug = pathname.split('/products/')?.[1];
+        const productSlug = pathname.split('/products/')[1];
         const product = await getProductQuery(productSlug);
 
         return product.product?.breadcrumb ?? [];
     },
     '/articles': async (pathname: string) => {
-        const articleDetail = await getArticleDetailQuery({ urlSlug: pathname });
-        const article = articleDetail?.article?.__typename === 'ArticleSite' ? articleDetail.article : null;
+        const articleSlug = pathname.split('/articles/')[1];
+        const articleDetail = await getArticleDetailQuery(articleSlug);
+        const article = articleDetail?.__typename === 'ArticleSite' ? articleDetail : null;
 
         return article?.breadcrumb ?? [];
     },

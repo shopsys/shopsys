@@ -1,4 +1,4 @@
-import { UserText } from 'components/Basic/UserText/UserText';
+import { UserText } from 'app/_components/Basic/UserText/UserText';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { PersonalDataOverviewForm } from './PersonalDataOverviewForm';
 import { getTranslation } from 'app/_utils/translation/getTranslation';

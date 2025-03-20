@@ -1,9 +1,10 @@
 'use client';
 
+import { VISIBLE_SLIDER_ITEMS } from 'utils/productSlider';
 import { ProductPrice } from './ProductPrice';
 import { ProductItemProps } from './ProductsList/ProductListItem';
 import { ProductListItemPlaceholder } from './ProductsList/ProductListItemPlaceholder';
-import { ProductsSliderProps, VISIBLE_SLIDER_ITEMS } from './ProductsSlider';
+import { ProductsSliderProps } from './ProductsSlider';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { ArrowSecondaryIcon } from 'components/Basic/Icon/ArrowSecondaryIcon';
 import { twJoin } from 'tailwind-merge';
