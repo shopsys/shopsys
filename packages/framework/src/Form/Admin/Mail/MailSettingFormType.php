@@ -50,18 +50,23 @@ class MailSettingFormType extends AbstractType
 
         $footerGroup->add('facebookUrl', TextType::class, [
             'label' => t('Facebook URL'),
+            'required' => false,
         ]);
         $footerGroup->add('instagramUrl', TextType::class, [
             'label' => t('Instagram URL'),
+            'required' => false,
         ]);
         $footerGroup->add('youtubeUrl', TextType::class, [
             'label' => t('Youtube URL'),
+            'required' => false,
         ]);
         $footerGroup->add('linkedinUrl', TextType::class, [
             'label' => t('LinkedIn URL'),
+            'required' => false,
         ]);
         $footerGroup->add('tiktokUrl', TextType::class, [
             'label' => t('TikTok URL'),
+            'required' => false,
         ]);
         $footerGroup->add('footerText', CKEditorType::class, [
             'label' => t('Footer Text'),

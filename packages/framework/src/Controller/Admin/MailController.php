@@ -169,7 +169,7 @@ class MailController extends AdminBaseController
             'youtubeUrl' => $this->mailSettingFacade->getYoutubeUrl($selectedDomainId),
             'linkedinUrl' => $this->mailSettingFacade->getLinkedInUrl($selectedDomainId),
             'tiktokUrl' => $this->mailSettingFacade->getTiktokUrl($selectedDomainId),
-            'footerText' => $this->mailSettingFacade->getFooterTextUrl($selectedDomainId),
+            'footerText' => $this->mailSettingFacade->getFooterText($selectedDomainId),
         ];
 
         $form = $this->createForm(MailSettingFormType::class, $mailSettingData);
