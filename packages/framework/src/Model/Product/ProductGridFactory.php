@@ -53,6 +53,7 @@ class ProductGridFactory
         $grid->setTheme('@ShopsysFramework/Admin/Content/Product/listGrid.html.twig', [
             'VARIANT_TYPE_MAIN' => Product::VARIANT_TYPE_MAIN,
             'VARIANT_TYPE_VARIANT' => Product::VARIANT_TYPE_VARIANT,
+            'TYPE_INQUIRY' => ProductTypeEnum::TYPE_INQUIRY,
         ]);
 
         return $grid;
@@ -79,6 +80,7 @@ class ProductGridFactory
 
         $gridViewParameters['VARIANT_TYPE_MAIN'] = Product::VARIANT_TYPE_MAIN;
         $gridViewParameters['VARIANT_TYPE_VARIANT'] = Product::VARIANT_TYPE_VARIANT;
+        $gridViewParameters['TYPE_INQUIRY'] = ProductTypeEnum::TYPE_INQUIRY;
         $grid->setTheme('@ShopsysFramework/Admin/Content/ProductPicker/listGrid.html.twig', $gridViewParameters);
 
         return $grid;

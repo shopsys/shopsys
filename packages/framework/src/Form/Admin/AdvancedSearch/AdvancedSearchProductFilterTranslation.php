@@ -11,6 +11,7 @@ use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductCatnumFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductFlagFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductNameFilter;
 use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductPartnoFilter;
+use Shopsys\FrameworkBundle\Model\AdvancedSearch\Filter\ProductUponInquiryFilter;
 
 class AdvancedSearchProductFilterTranslation extends AdvancedSearchFilterTranslation
 {
@@ -25,5 +26,6 @@ class AdvancedSearchProductFilterTranslation extends AdvancedSearchFilterTransla
         $this->addFilterTranslation(ProductCalculatedSellingDeniedFilter::NAME, t('Excluded from sale'));
         $this->addFilterTranslation(ProductBrandFilter::NAME, t('Brand'));
         $this->addFilterTranslation(ProductCategoryFilter::NAME, t('Category'));
+        $this->addFilterTranslation(ProductUponInquiryFilter::NAME, t('Upon inquiry'));
     }
 }
