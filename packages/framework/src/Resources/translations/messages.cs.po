@@ -2503,6 +2503,9 @@ msgstr "Odkaz"
 msgid "Link URL"
 msgstr "URL odkazu"
 
+msgid "Link [abbreviation]"
+msgstr "O"
+
 msgid "Link to complete the registration"
 msgstr "Odkaz na dokončení registrace"
 
@@ -4095,6 +4098,9 @@ msgstr "Zobrazit v rozcestníku"
 
 msgid "Site"
 msgstr "Stránka"
+
+msgid "Site [abbreviation]"
+msgstr "S"
 
 msgid "Slider items - full"
 msgstr "Bannery - vše"
