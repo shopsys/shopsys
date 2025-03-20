@@ -126,13 +126,13 @@ class Store implements OrderableEntityInterface
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="decimal", precision=20, scale=10, nullable=true)
      */
     protected $latitude;
 
     /**
      * @var string|null
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="decimal", precision=20, scale=10, nullable=true)
      */
     protected $longitude;
 

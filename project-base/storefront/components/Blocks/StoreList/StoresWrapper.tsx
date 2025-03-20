@@ -32,8 +32,8 @@ export const StoresWrapper: FC = () => {
     useEffect(() => {
         navigator.geolocation.getCurrentPosition((position) => {
             const coordinates: TypeCoordinates = {
-                latitude: position.coords.latitude.toString(),
-                longitude: position.coords.longitude.toString(),
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
             };
             setUserCoordinates(coordinates);
             updateDefaultUserCoordinates(coordinates);

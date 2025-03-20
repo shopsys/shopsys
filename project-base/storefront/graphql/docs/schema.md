@@ -10786,12 +10786,12 @@ Name of the sender
 <tbody>
 <tr>
 <td colspan="2" valign="top"><strong id="coordinates.latitude">latitude</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#float">Float</a>!</td>
 <td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="coordinates.longitude">longitude</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#float">Float</a>!</td>
 <td></td>
 </tr>
 </tbody>

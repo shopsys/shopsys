@@ -4,6 +4,6 @@ CoordinatesDecorator:
     config:
         fields:
             latitude:
-                type: "String!"
+                type: "Float!"
             longitude:
-                type: "String!"
+                type: "Float!"

@@ -2605,8 +2605,8 @@ msgstr "H"
 msgid "Make modification"
 msgstr "Provést úpravu"
 
-msgid "Map coordinates"
-msgstr "Souřadnice na mapě"
+msgid "Map coordinates in decimal format"
+msgstr "Mapové souřadnice v číselném formátu"
 
 msgid "Max duration (mm:ss)"
 msgstr "Max. trvání (mm:ss)"

@@ -37,7 +37,7 @@ class GetFilteredStoresTest extends GraphQlTestCase
 
     public function testGetFilteredStoresByCoordinates(): void
     {
-        $edges = $this->getResponseEdges(coordinates: ['latitude' => '49.1950602', 'longitude' => '16.6068371']);
+        $edges = $this->getResponseEdges(coordinates: ['latitude' => 49.1950602, 'longitude' => 16.6068371]);
         $this->assertCount(8, $edges);
 
         $firstDomainLocale = $this->getLocaleForFirstDomain();
@@ -84,7 +84,7 @@ class GetFilteredStoresTest extends GraphQlTestCase
 
     public function testGetFilteredStoresByCoordinatesAndSearchText(): void
     {
-        $edges = $this->getResponseEdges(searchText: 'B', coordinates: ['latitude' => '50.538331', 'longitude' => '14.485953']);
+        $edges = $this->getResponseEdges(searchText: 'B', coordinates: ['latitude' => 50.538331, 'longitude' => 14.485953]);
         $this->assertCount(3, $edges);
 
         $firstDomainLocale = $this->getLocaleForFirstDomain();
@@ -111,7 +111,7 @@ class GetFilteredStoresTest extends GraphQlTestCase
 
     /**
      * @param string|null $searchText
-     * @param array{latitude: string, longitude: string}|null $coordinates
+     * @param array{latitude: float, longitude: float}|null $coordinates
      * @return array
      */
     private function getResponseEdges(?string $searchText = null, ?array $coordinates = null): array

@@ -23,6 +23,8 @@ class GetStoresTest extends GraphQlTestCase
             $this->assertCount(count($expectedStoresData), $responseData['edges']);
 
             foreach ($responseData['edges'] as $edge) {
+                $currentExpectedStoreData = array_shift($expectedStoresData);
+
                 $this->assertArrayHasKey('node', $edge);
 
                 $this->assertArrayHasKey('uuid', $edge['node']);
@@ -38,12 +40,13 @@ class GetStoresTest extends GraphQlTestCase
                         'postcode',
                         'country',
                         'specialMessage',
-                        'latitude',
-                        'longitude',
                     ],
                     $edge['node'],
-                    array_shift($expectedStoresData),
+                    $currentExpectedStoreData,
                 );
+
+                $this->assertStringStartsWith($currentExpectedStoreData['latitude'], $edge['node']['latitude']);
+                $this->assertStringStartsWith($currentExpectedStoreData['longitude'], $edge['node']['longitude']);
             }
         }
     }
