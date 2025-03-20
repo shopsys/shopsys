@@ -9,17 +9,12 @@ import useTranslation from 'next-translate/useTranslation';
 import { RefObject, createRef, useEffect, useRef, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { twJoin } from 'tailwind-merge';
+import { VISIBLE_SLIDER_ITEMS } from 'utils/productSlider';
 import { twMergeCustom } from 'utils/twMerge';
 import { isTextSelected } from 'utils/ui/disableClickWhenTextSelected';
 import { isWholeElementVisible } from 'utils/ui/isWholeElementVisible';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 import { wait } from 'utils/wait';
-
-export const VISIBLE_SLIDER_ITEMS = 5;
-export const VISIBLE_SLIDER_ITEMS_LAST_VISITED = 8;
-export const VISIBLE_SLIDER_ITEMS_BLOG = 3;
-export const VISIBLE_SLIDER_ITEMS_ARTICLE = 4;
-export const VISIBLE_SLIDER_ITEMS_AUTOCOMPLETE = 5;
 
 type ProductsSliderVariant = 'default' | 'blog' | 'article' | 'lastVisited' | 'autocomplete';
 export type ProductsSliderProps = {

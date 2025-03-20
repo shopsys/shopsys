@@ -1,5 +1,3 @@
-'use client';
-
 import { GrapesJs } from './GrapesJs';
 
 type UserTextProps = {
@@ -7,7 +5,7 @@ type UserTextProps = {
     isGrapesJs?: boolean;
 };
 
-export const UserText: FC<UserTextProps> = ({ htmlContent, isGrapesJs }) => {
+export const UserText = async ({ htmlContent, isGrapesJs }: UserTextProps) => {
     if (isGrapesJs) {
         return <GrapesJs content={htmlContent} />;
     }
