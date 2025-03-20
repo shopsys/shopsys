@@ -8,7 +8,6 @@ import { Metadata } from 'next';
 import { headers } from 'next/headers';
 import 'nprogress/nprogress.css';
 import 'react-loading-skeleton/dist/skeleton.css';
-import 'react-toastify/dist/ReactToastify.css';
 import 'styles/theme.css';
 
 type MetadataProps = {
