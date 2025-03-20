@@ -41,7 +41,7 @@ export const FriendlyPagesTypes = {
 
 // TODO: refactorovat ostatní /[whatever] routy po vzoru '/products' ?
 export const FriendlyPagesDestinations: Record<FriendlyPagesTypesKey, string> = {
-    article: '/articles/[articleSlug]',
+    article: '/articles',
     blogArticle: '/blogArticles/[blogArticleSlug]',
     blogCategory: '/blogCategories/[blogCategorySlug]',
     brand: '/brands/[brandSlug]',
