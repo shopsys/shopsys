@@ -1,7 +1,8 @@
 import { getLastVisitedProductsQuery } from 'app/_queries/getLastVisitedProductsQuery';
 import { getTranslation } from 'app/_utils/translation/getTranslation';
-import { ProductsSlider, VISIBLE_SLIDER_ITEMS_LAST_VISITED } from 'components/Blocks/Product/ProductsSlider';
+import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
 import { GtmProductListNameType } from 'gtm/enums/GtmProductListNameType';
+import { VISIBLE_SLIDER_ITEMS_LAST_VISITED } from 'utils/productSlider';
 
 type LastVisitedProductsProps = {
     productsCatnums: string[];

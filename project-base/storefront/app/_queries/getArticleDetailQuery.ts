@@ -7,11 +7,13 @@ import {
     TypeArticleDetailQueryVariables,
 } from 'graphql/requests/articles/queries/ArticleDetailQuery.ssr';
 
-export async function getArticleDetailQuery(variables: TypeArticleDetailQueryVariables) {
+export async function getArticleDetailQuery(articleSlug: string) {
     const result = await createQuery<TypeArticleDetailQuery, TypeArticleDetailQueryVariables>(
         ArticleDetailQueryDocument,
-        variables,
+        {
+            urlSlug: articleSlug,
+        },
     );
 
-    return result.data;
+    return result.data?.article;
 }

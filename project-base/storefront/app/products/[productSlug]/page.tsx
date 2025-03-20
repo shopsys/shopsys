@@ -1,7 +1,6 @@
 import { ProductMetadataJsonLd } from 'app/_components/Basic/Head/ProductMetadataJsonLd';
 import { LastVisitedProducts } from 'app/_components/Blocks/Product/LastVisitedProducts/LastVisitedProducts';
 import { RecommendedProducts } from 'app/_components/Blocks/Product/RecommendedProducts/RecommendedProducts';
-import { Breadcrumbs } from 'app/_components/Layout/Breadcrumbs/Breadcrumbs';
 import { Container } from 'app/_components/Layout/Container/Container';
 import { ProductDetailAccessories } from 'app/_components/Page/ProductDetail/ProductDetailAccessories';
 import { ProductDetailContent } from 'app/_components/Page/ProductDetail/ProductDetailContent';
@@ -13,7 +12,6 @@ import { notFound } from 'next/navigation';
 
 export const generateMetadata = async ({ params }: { params: { productSlug: string } }): Promise<Metadata> => {
     const { product } = await getProductQuery(params.productSlug);
-    console.log('🚀 -> generateMetadata -> productSlug:', params.productSlug);
 
     if (!product) {
         notFound();

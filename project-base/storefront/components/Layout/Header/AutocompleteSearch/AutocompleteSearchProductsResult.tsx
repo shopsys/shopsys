@@ -2,7 +2,7 @@
 
 import { SearchResultSectionTitle } from './AutocompleteSearchPopup';
 import { AUTOCOMPLETE_PRODUCT_LIMIT } from './constants';
-import { ProductsSlider, VISIBLE_SLIDER_ITEMS_AUTOCOMPLETE } from 'components/Blocks/Product/ProductsSlider';
+import { ProductsSlider } from 'components/Blocks/Product/ProductsSlider';
 import { TIDs } from 'cypress/tids';
 import { TypeListedProductFragment } from 'graphql/requests/products/fragments/ListedProductFragment.generated';
 import { TypeSimpleProductFragment } from 'graphql/requests/products/fragments/SimpleProductFragment.generated';
@@ -13,6 +13,7 @@ import { onGtmAutocompleteResultClickEventHandler } from 'gtm/handlers/onGtmAuto
 import useTranslation from 'next-translate/useTranslation';
 import { useMemo } from 'react';
 import { mapConnectionEdges } from 'utils/mappers/connection';
+import { VISIBLE_SLIDER_ITEMS_AUTOCOMPLETE } from 'utils/productSlider';
 
 type AutocompleteSearchProductsResultProps = {
     productsSearch: TypeAutocompleteSearchQuery['productsSearch'];
