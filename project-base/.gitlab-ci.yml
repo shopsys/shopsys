@@ -337,7 +337,7 @@ deploy:production:
     <<: *deploy
     resource_group: deploy_production
     variables:
-        KUBE_CONFIG: ${KUBE_CONFIG_PROD}
+        KUBE_CONFIG: ${KUBE_PROD}
     rules:
         -   if: '$MIRROR_ONLY == "true"'
             when: never
@@ -358,7 +358,7 @@ deploy:devel:
     <<: *deploy
     resource_group: deploy_devel
     variables:
-        KUBE_CONFIG: ${KUBE_CONFIG_DEVEL}
+        KUBE_CONFIG: ${KUBE_DEV}
     rules:
         -   if: '$MIRROR_ONLY == "true"'
             when: never
@@ -375,7 +375,7 @@ deploy:alpha:
     <<: *deploy
     resource_group: deploy_alpha
     variables:
-        KUBE_CONFIG: ${KUBE_CONFIG_DEVEL}
+        KUBE_CONFIG: ${KUBE_DEV}
     rules:
         -   if: '$CI_PIPELINE_SOURCE == "schedule"'
             when: never
