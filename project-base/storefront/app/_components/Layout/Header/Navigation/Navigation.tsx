@@ -1,12 +1,12 @@
 import { NavigationList } from './NavigationList';
-import { getNavitagionQuery } from 'app/_queries/getNavitagionQuery';
+import { getNavigationQuery } from 'app/_queries/getNavigationQuery';
 
 export const Navigation = async () => {
-    const navigationData = await getNavitagionQuery();
+    const navigationData = await getNavigationQuery();
 
     if (!navigationData) {
         return null;
     }
 
-    return <NavigationList navigation={navigationData.navigation} />;
+    return <NavigationList navigation={navigationData} />;
 };

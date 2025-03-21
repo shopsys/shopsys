@@ -7,11 +7,11 @@ import {
     NavigationQueryDocument,
 } from 'graphql/requests/navigation/queries/NavigationQuery.ssr';
 
-export const getNavitagionQuery = async () => {
+export const getNavigationQuery = async () => {
     const navigationResponse = await createQuery<TypeNavigationQuery, TypeNavigationQueryVariables>(
         NavigationQueryDocument,
         {},
     );
 
-    return navigationResponse.data;
+    return navigationResponse.data?.navigation;
 };

@@ -1,8 +1,8 @@
+import { PersonalDataDetailContent } from 'app/_components/Page/PersonalData/Detail/PersonalDataDetailContent';
 import { getPersonalDataDetailQuery } from 'app/_queries/getPersonalDataDetailQuery';
 import { getTranslation } from 'app/_utils/translation/getTranslation';
 import { SkeletonPagePersonalDataOverview } from 'components/Blocks/Skeleton/SkeletonPagePersonalDataOverview';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { PersonalDataDetailContent } from 'app/_components/Page/PersonalData/Detail/PersonalDataDetailContent';
 import { Suspense } from 'react';
 
 const PersonalDataOverviewByHashPage = async ({ params }: { params: Promise<{ hash: string }> }) => {

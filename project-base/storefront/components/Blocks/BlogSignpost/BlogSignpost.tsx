@@ -5,7 +5,7 @@ import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
 import { Overlay } from 'components/Basic/Overlay/Overlay';
 import { Button } from 'components/Forms/Button/Button';
 import useTranslation from 'next-translate/useTranslation';
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import { twJoin } from 'tailwind-merge';
 import { ListedBlogCategoryRecursiveType } from 'types/blogCategory';
 import { findActiveBlogCategoryPath } from 'utils/blogCategory/findActiveBlogCategoryPath';
