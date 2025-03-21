@@ -62,7 +62,9 @@ export default async function Providers({ children }: ProvidersProps) {
                                         {/* suppressHydrationWarning for ignoring grammarly extension */}
                                         <body suppressHydrationWarning>
                                             <ToastifyProvider>
-                                                <AuthInfo isUserLoggedIn={user.status === 'fulfilled' && !!user.value} />
+                                                <AuthInfo
+                                                    isUserLoggedIn={user.status === 'fulfilled' && !!user.value}
+                                                />
                                                 <CookiesStoreSync />
                                                 <BroadcastChannelProvider />
                                                 {children}

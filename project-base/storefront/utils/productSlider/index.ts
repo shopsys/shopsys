@@ -1,4 +1,3 @@
-
 export const VISIBLE_SLIDER_ITEMS = 5;
 export const VISIBLE_SLIDER_ITEMS_LAST_VISITED = 8;
 export const VISIBLE_SLIDER_ITEMS_BLOG = 3;
