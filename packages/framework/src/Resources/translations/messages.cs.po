@@ -2197,9 +2197,6 @@ msgstr "Stav platby GoPay"
 msgid "Group"
 msgstr "Skupina"
 
-msgid "Groups"
-msgstr "Skupiny"
-
 msgid "HTML code"
 msgstr "HTML kód"
 
