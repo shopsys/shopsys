@@ -23,7 +23,7 @@ const ArticleDetailPage = async ({ params: { articleSlug } }: { params: { articl
     return (
         <Webline>
             <ArticleTitle>{article.seoH1 || article.articleName}</ArticleTitle>
-            <p className="text-textDisabled mb-2 px-5 text-left text-xs font-semibold">
+            <p className="text-textDisabled mb-2 text-left text-xs font-semibold">
                 {formatDate(article.createdAt)}
             </p>
             {article.text !== null && (
