@@ -43,7 +43,7 @@ function deploy() {
         ["DATA_BRIDGE_PASSWORD"]=${DATA_BRIDGE_PASSWORD}
 
         ["S3_ENDPOINT"]=${S3_ENDPOINT}
-        ["S3_ACCESS_KEY"]=${S3_ACCESS_KEY}
+        ["S3_ACCESS_KEY"]=${PROJECT_NAME}
         ["S3_SECRET"]=${S3_SECRET}
         ["S3_REGION"]=${S3_REGION}
         ["S3_BUCKET_NAME"]=${PROJECT_NAME}
