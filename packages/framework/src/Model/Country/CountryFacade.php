@@ -116,4 +116,13 @@ class CountryFacade
     {
         return $this->countryRepository->getCount();
     }
+
+    /**
+     * @param string $countryCode
+     * @return \Shopsys\FrameworkBundle\Model\Country\Country
+     */
+    public function getByCode(string $countryCode): Country
+    {
+        return $this->countryRepository->getByCode($countryCode);
+    }
 }
