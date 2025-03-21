@@ -1,5 +1,3 @@
-'use client';
-
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { encode } from 'js-base64';
 
