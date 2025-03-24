@@ -595,8 +595,6 @@ export type TypeCategory = TypeBreadcrumb & TypeProductListable & TypeSlug & {
   id: Scalars['Int']['output'];
   /** Category images */
   images: Array<TypeImage>;
-  /** A list of categories linked to the given category */
-  linkedCategories: Array<TypeCategory>;
   /** Category image by params */
   mainImage: Maybe<TypeImage>;
   /** Localized category name (domain dependent) */

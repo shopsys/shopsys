@@ -103,10 +103,6 @@ class CategoryTest extends GraphQlTestCase
             ],
         ], $responseData['breadcrumb']);
         $this->assertSame($readyCategorySeoMixLinks, $responseData['readyCategorySeoMixLinks']);
-        $this->assertSame([
-            ['name' => t('Food', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
-            ['name' => t('Garden tools', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
-        ], $responseData['linkedCategories']);
     }
 
     public function testCategoryParentAndChildNameByUuid(): void

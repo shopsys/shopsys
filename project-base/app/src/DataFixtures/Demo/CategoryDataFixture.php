@@ -227,7 +227,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
                 $locale,
             );
         }
-        $categoryGardenTools = $this->createCategory($categoryData, self::CATEGORY_GARDEN_TOOLS);
+        $this->createCategory($categoryData, self::CATEGORY_GARDEN_TOOLS);
 
         foreach ($this->domainsForDataFixtureProvider->getAllowedDemoDataDomains() as $domainConfig) {
             $locale = $domainConfig->getLocale();
@@ -242,12 +242,7 @@ class CategoryDataFixture extends AbstractReferenceFixture
                 $locale,
             );
         }
-        $categoryFood = $this->createCategory($categoryData, self::CATEGORY_FOOD);
-
-        $categoryData = $this->categoryDataFactory->createFromCategory($categoryElectronics);
-        $categoryData->linkedCategories[] = $categoryFood;
-        $categoryData->linkedCategories[] = $categoryGardenTools;
-        $this->categoryFacade->edit($categoryElectronics->getId(), $categoryData);
+        $this->createCategory($categoryData, self::CATEGORY_FOOD);
     }
 
     /**

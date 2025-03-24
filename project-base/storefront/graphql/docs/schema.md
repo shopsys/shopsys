@@ -3616,15 +3616,6 @@ Category images
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong id="category.linkedcategories">linkedCategories</strong></td>
-<td valign="top">[<a href="#category">Category</a>!]!</td>
-<td>
-
-A list of categories linked to the given category
-
-</td>
-</tr>
-<tr>
 <td colspan="2" valign="top"><strong id="category.mainimage">mainImage</strong></td>
 <td valign="top"><a href="#image">Image</a></td>
 <td>

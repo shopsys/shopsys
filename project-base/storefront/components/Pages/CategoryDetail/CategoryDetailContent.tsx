@@ -53,7 +53,7 @@ export const CategoryDetailContent: FC<CategoryDetailContentProps> = ({ category
                 isWithoutSlider
                 className="my-7"
                 linkTypeOverride="category"
-                listedItems={[...category.children, ...category.linkedCategories]}
+                listedItems={category.children}
             />
 
             <FilteredProductsWrapper paginationScrollTargetRef={paginationScrollTargetRef}>

@@ -26,7 +26,6 @@ class CategoryResolverMap extends ResolverMap
      * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
      * @param \Overblog\DataLoader\DataLoaderInterface $readyCategorySeoMixesBatchLoader
      * @param \Overblog\DataLoader\DataLoaderInterface $categoryChildrenBatchLoader
-     * @param \Overblog\DataLoader\DataLoaderInterface $linkedCategoriesBatchLoader
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      */
     public function __construct(
@@ -35,7 +34,6 @@ class CategoryResolverMap extends ResolverMap
         protected readonly FriendlyUrlFacade $friendlyUrlFacade,
         protected readonly DataLoaderInterface $readyCategorySeoMixesBatchLoader,
         protected readonly DataLoaderInterface $categoryChildrenBatchLoader,
-        protected readonly DataLoaderInterface $linkedCategoriesBatchLoader,
         protected readonly CategoryFacade $categoryFacade,
     ) {
     }
@@ -72,7 +70,6 @@ class CategoryResolverMap extends ResolverMap
             'children' => $this->categoryChildrenBatchLoader->load($category),
             'parent' => $category->getParent() !== null && $category->getParent()->getParent() !== null ? $category->getParent() : null,
             'readyCategorySeoMixLinks' => $this->readyCategorySeoMixesBatchLoader->load($category->getId()),
-            'linkedCategories' => $this->linkedCategoriesBatchLoader->load($category),
             'categoryHierarchy' => $this->categoryFacade->getVisibleCategoriesInPathFromRootOnDomain($category, $this->domain->getId()),
             'hreflangLinks' => $this->hreflangLinksFacade->getForCategory($category, $this->domain->getId()),
             'automatedFilters' => $category->getAutomatedFilters(),

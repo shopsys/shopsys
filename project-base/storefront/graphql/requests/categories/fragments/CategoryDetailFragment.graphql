@@ -30,9 +30,6 @@ fragment CategoryDetailFragment on Category {
     children {
         ...CategoryPreviewFragment
     }
-    linkedCategories {
-        ...CategoryPreviewFragment
-    }
     products(orderingMode: $orderingMode, filter: $filter) {
         ...ListedProductConnectionPreviewFragment
     }

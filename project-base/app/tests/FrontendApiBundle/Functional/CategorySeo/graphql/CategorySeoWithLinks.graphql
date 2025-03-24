@@ -16,8 +16,5 @@ query CategorySeoWithLinks($urlSlug: String!) {
             name
             slug
         }
-        linkedCategories {
-            name
-        }
     }
 }

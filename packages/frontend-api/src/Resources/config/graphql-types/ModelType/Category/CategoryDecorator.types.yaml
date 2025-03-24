@@ -82,9 +82,6 @@ CategoryDecorator:
             readyCategorySeoMixLinks:
                 type: "[Link!]!"
                 description: "An array of links of prepared category SEO mixes of a given category"
-            linkedCategories:
-                type: "[Category!]!"
-                description: "A list of categories linked to the given category"
             automatedFilters:
                 type: "[CategoryAutomatedFilterEnum!]!"
                 description: "Automated filters for the category"
