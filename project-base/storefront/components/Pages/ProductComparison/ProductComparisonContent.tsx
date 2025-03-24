@@ -58,7 +58,7 @@ export const ProductComparisonContent: FC<ProductComparisonContentProps> = ({ co
 
     useEffect(() => {
         calcMaxMarginLeft();
-    }, [calcMaxMarginLeft]);
+    }, [comparedProducts]);
 
     return (
         <>

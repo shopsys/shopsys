@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 
-export const useScrollTop = (element: string): number => {
-    const [offsetTop, setOffsetTop] = useState(0);
-
+export const useScrollTop = (element: string, setTableStickyHeadActive: Dispatch<SetStateAction<boolean>>) => {
     useEffect(() => {
         const updateSize = () => {
-            setOffsetTop(document.getElementById(element)!.getBoundingClientRect().top);
+            setTableStickyHeadActive(document.getElementById(element)!.getBoundingClientRect().top < -150);
         };
+
         window.addEventListener('scroll', updateSize);
         updateSize();
-        return () => window.removeEventListener('scroll', updateSize);
-    }, [element]);
 
-    return offsetTop;
+        return () => {
+            window.removeEventListener('scroll', updateSize);
+        };
+    }, [element]);
 };
