@@ -1,8 +1,15 @@
 import { useUpdatePaymentStatusMutation } from 'graphql/requests/orders/mutations/UpdatePaymentStatusMutation.generated';
+import { getGtmPaymentEvent } from 'gtm/factories/getGtmPaymentEvent';
 import {
     getGtmCreateOrderEventFromLocalStorage,
     removeGtmCreateOrderEventFromLocalStorage,
 } from 'gtm/utils/gtmCreateOrderEventLocalStorage';
+import {
+    getGtmPaymentEventFromLocalStorage,
+    removeGtmPaymentEventFromLocalStorage,
+    saveGtmPaymentEventInLocalStorage,
+} from 'gtm/utils/gtmPaymentEventLocalStorage';
+import { gtmSafePushEvent } from 'gtm/utils/gtmSafePushEvent';
 import { Translate } from 'next-translate';
 import { useEffect, useRef } from 'react';
 import { CombinedError } from 'urql';
@@ -48,6 +55,24 @@ export const useUpdatePaymentStatus = (orderUuid: string, orderPaymentStatusPage
             wasPaymentStatusUpdatedRef.current = true;
         }
     }, []);
+
+    useEffect(() => {
+        if (paymentStatusData) {
+            const { isPaid, payment, number } = paymentStatusData.UpdatePaymentStatus;
+            const { gtmPaymentEvent } = getGtmPaymentEventFromLocalStorage();
+
+            const retryCount = gtmPaymentEvent ? gtmPaymentEvent.ecommerce.paymentRetryCount + 1 : 0;
+            const newGtmPaymentEvent = getGtmPaymentEvent(number, payment.name, isPaid, retryCount);
+
+            gtmSafePushEvent(newGtmPaymentEvent);
+
+            if (!isPaid) {
+                saveGtmPaymentEventInLocalStorage(newGtmPaymentEvent);
+            } else {
+                removeGtmPaymentEventFromLocalStorage();
+            }
+        }
+    }, [paymentStatusData]);
 
     return paymentStatusData;
 };

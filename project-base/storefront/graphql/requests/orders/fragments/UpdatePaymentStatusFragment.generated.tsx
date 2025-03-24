@@ -1,15 +1,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
-import { ChangePaymentInOrderFragment } from '../fragments/ChangePaymentInOrderFragment.generated';
-import * as Urql from 'urql';
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
-export type TypeChangePaymentInOrderMutationVariables = Types.Exact<{
-  input: Types.TypeChangePaymentInOrderInput;
-}>;
-
-
-export type TypeChangePaymentInOrderMutation = { __typename?: 'Mutation', ChangePaymentInOrder: { __typename: 'Order', urlHash: string, number: string, paymentTransactionsCount: number, payment: { __typename: 'Payment', uuid: string, name: string, description: string | null, instruction: string | null, type: string, price: { __typename: 'Price', priceWithVat: string, priceWithoutVat: string, vatAmount: string }, mainImage: { __typename: 'Image', name: string | null, url: string } | null, goPayPaymentMethod: { __typename: 'GoPayPaymentMethod', identifier: string, name: string, paymentGroup: string } | null } } };
+export type TypeUpdatePaymentStatusFragment = { __typename: 'Order', isPaid: boolean, number: string, paymentTransactionsCount: number, hasPaymentInProcess: boolean, urlHash: string, payment: { __typename?: 'Payment', name: string, type: string } };
 
 
       export interface PossibleTypesResultData {
@@ -94,15 +86,17 @@ export type TypeChangePaymentInOrderMutation = { __typename?: 'Mutation', Change
 };
       export default result;
     
-
-export const ChangePaymentInOrderMutationDocument = gql`
-    mutation ChangePaymentInOrderMutation($input: ChangePaymentInOrderInput!) {
-  ChangePaymentInOrder(input: $input) {
-    ...ChangePaymentInOrderFragment
+export const UpdatePaymentStatusFragment = gql`
+    fragment UpdatePaymentStatusFragment on Order {
+  __typename
+  isPaid
+  number
+  paymentTransactionsCount
+  payment {
+    name
+    type
   }
+  hasPaymentInProcess
+  urlHash
 }
-    ${ChangePaymentInOrderFragment}`;
-
-export function useChangePaymentInOrderMutation() {
-  return Urql.useMutation<TypeChangePaymentInOrderMutation, TypeChangePaymentInOrderMutationVariables>(ChangePaymentInOrderMutationDocument);
-};
+    `;

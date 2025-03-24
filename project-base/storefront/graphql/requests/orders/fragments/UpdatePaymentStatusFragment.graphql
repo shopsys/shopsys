@@ -1,0 +1,12 @@
+fragment UpdatePaymentStatusFragment on Order {
+    __typename
+    isPaid
+    number
+    paymentTransactionsCount
+    payment {
+        name
+        type
+    }
+    hasPaymentInProcess
+    urlHash
+}

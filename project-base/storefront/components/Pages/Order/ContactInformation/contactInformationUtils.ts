@@ -18,9 +18,12 @@ import {
 } from 'graphql/requests/orders/mutations/CreateOrderMutation.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
 import { getGtmCreateOrderEventOrderPart, getGtmCreateOrderEventUserPart } from 'gtm/factories/getGtmCreateOrderEvent';
+import { getGtmPaymentEvent } from 'gtm/factories/getGtmPaymentEvent';
 import { onGtmCreateOrderEventHandler } from 'gtm/handlers/onGtmCreateOrderEventHandler';
+import { onGtmPaymentTryEventHandler } from 'gtm/handlers/onGtmPaymentEventHandler';
 import { getGtmReviewConsents } from 'gtm/utils/getGtmReviewConsents';
 import { saveGtmCreateOrderEventInLocalStorage } from 'gtm/utils/gtmCreateOrderEventLocalStorage';
+import { saveGtmPaymentEventInLocalStorage } from 'gtm/utils/gtmPaymentEventLocalStorage';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { OrderConfirmationUrlQuery } from 'pages/order-confirmation';
@@ -225,12 +228,8 @@ const useHandleEventsAfterOrderCreation = () => {
                 domainConfig,
             );
             const gtmCreateOrderEventUserPart = getGtmCreateOrderEventUserPart(user, userContactInformation);
-
+            const gtmPaymentEvent = getGtmPaymentEvent(orderNumber, payment.name, false, -1);
             const isPaymentWithPaymentGate = getIsPaymentWithPaymentGate(payment.type);
-            if (isPaymentWithPaymentGate) {
-                saveGtmCreateOrderEventInLocalStorage(gtmCreateOrderEventOrderPart, gtmCreateOrderEventUserPart);
-            }
-
             const isPaymentSuccessful = isPaymentWithPaymentGate ? undefined : true;
 
             onGtmCreateOrderEventHandler(
@@ -239,6 +238,13 @@ const useHandleEventsAfterOrderCreation = () => {
                 !canSeePrices,
                 isPaymentSuccessful,
             );
+
+            if (isPaymentWithPaymentGate) {
+                saveGtmCreateOrderEventInLocalStorage(gtmCreateOrderEventOrderPart, gtmCreateOrderEventUserPart);
+                saveGtmPaymentEventInLocalStorage(gtmPaymentEvent);
+            } else {
+                onGtmPaymentTryEventHandler(orderNumber, payment.name, true);
+            }
         }
 
         if (cartUuid) {

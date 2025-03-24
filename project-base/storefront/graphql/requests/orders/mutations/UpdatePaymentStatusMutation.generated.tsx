@@ -1,6 +1,7 @@
 import * as Types from '../../../types';
 
 import gql from 'graphql-tag';
+import { UpdatePaymentStatusFragment } from '../fragments/UpdatePaymentStatusFragment.generated';
 import * as Urql from 'urql';
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type TypeUpdatePaymentStatusMutationVariables = Types.Exact<{
@@ -9,7 +10,7 @@ export type TypeUpdatePaymentStatusMutationVariables = Types.Exact<{
 }>;
 
 
-export type TypeUpdatePaymentStatusMutation = { __typename?: 'Mutation', UpdatePaymentStatus: { __typename?: 'Order', isPaid: boolean, paymentTransactionsCount: number, hasPaymentInProcess: boolean, urlHash: string, payment: { __typename?: 'Payment', type: string } } };
+export type TypeUpdatePaymentStatusMutation = { __typename?: 'Mutation', UpdatePaymentStatus: { __typename: 'Order', isPaid: boolean, number: string, paymentTransactionsCount: number, hasPaymentInProcess: boolean, urlHash: string, payment: { __typename?: 'Payment', name: string, type: string } } };
 
 
       export interface PossibleTypesResultData {
@@ -101,16 +102,10 @@ export const UpdatePaymentStatusMutationDocument = gql`
     orderUuid: $orderUuid
     orderPaymentStatusPageValidityHash: $orderPaymentStatusPageValidityHash
   ) {
-    isPaid
-    paymentTransactionsCount
-    payment {
-      type
-    }
-    hasPaymentInProcess
-    urlHash
+    ...UpdatePaymentStatusFragment
   }
 }
-    `;
+    ${UpdatePaymentStatusFragment}`;
 
 export function useUpdatePaymentStatusMutation() {
   return Urql.useMutation<TypeUpdatePaymentStatusMutation, TypeUpdatePaymentStatusMutationVariables>(UpdatePaymentStatusMutationDocument);
