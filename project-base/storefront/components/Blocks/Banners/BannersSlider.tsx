@@ -4,10 +4,10 @@ import { bannersReducer } from './bannersUtils';
 import { ExtendedNextLink } from 'components/Basic/ExtendedNextLink/ExtendedNextLink';
 import { TIDs } from 'cypress/tids';
 import { TypeSliderItemFragment } from 'graphql/requests/sliderItems/fragments/SliderItemFragment.generated';
-import { useEffect, useReducer, useRef, useState } from 'react';
+import { useEffect, useReducer, useRef } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { twJoin } from 'tailwind-merge';
-import { isTextSelected, preventClick } from 'utils/ui/disableClickWhenTextSelected';
+import { isTextSelected } from 'utils/ui/isTextSelected';
 
 const SLIDER_STOP_SLIDE_TIMEOUT = 300 as const;
 const SLIDER_SLIDE_DURATION = 500 as const;
@@ -24,16 +24,13 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
         isSliding: false,
         slideDirection: 'NEXT',
     });
-    const [isMoved, setIsMoved] = useState(false);
     const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
     const slide = (dir: 'PREV' | 'NEXT') => {
-        setIsMoved(true);
         checkAndClearInterval();
         dispatchBannerSliderStateChange({ type: dir, numItems });
         setTimeout(() => {
             dispatchBannerSliderStateChange({ type: 'STOP_SLIDING' });
-            setIsMoved(false);
         }, SLIDER_STOP_SLIDE_TIMEOUT);
         startInterval();
     };
@@ -76,12 +73,6 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
         "vl:[-ms-overflow-style:'none'] vl:[scrollbar-width:'none'] vl:[&::-webkit-scrollbar]:hidden",
     );
 
-    const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-        if (isTextSelected() || isMoved) {
-            preventClick(e);
-        }
-    };
-
     return (
         <div className="flex flex-col" tid={TIDs.banners_slider}>
             <div {...handlers}>
@@ -90,10 +81,7 @@ export const BannersSlider: FC<BannersSliderProps> = ({ sliderItems }) => {
                     draggable={false}
                     href={sliderItems[bannerSliderState.sliderPosition].link}
                     title={sliderItems[bannerSliderState.sliderPosition].name}
-                    onClick={handleClick}
-                    onClickExtended={handleClick}
                     onMouseEnter={checkAndClearInterval}
-                    onMouseUp={handleClick}
                     onMouseLeave={() => {
                         checkAndClearInterval();
                         startInterval();
