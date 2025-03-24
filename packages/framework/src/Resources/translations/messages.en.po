@@ -2503,6 +2503,9 @@ msgstr ""
 msgid "Link URL"
 msgstr ""
 
+msgid "Link [abbreviation]"
+msgstr "L"
+
 msgid "Link to complete the registration"
 msgstr ""
 
@@ -4095,6 +4098,9 @@ msgstr ""
 
 msgid "Site"
 msgstr ""
+
+msgid "Site [abbreviation]"
+msgstr "S"
 
 msgid "Slider items - full"
 msgstr ""
