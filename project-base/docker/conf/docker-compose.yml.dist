@@ -197,7 +197,7 @@ services:
                     memory: 2G
 
     kibana:
-        image: docker.elastic.co/kibana/kibana:7.16.1
+        image: docker.elastic.co/kibana/kibana:7.17.2
         container_name: shopsys-framework-kibana
         depends_on:
             - elasticsearch

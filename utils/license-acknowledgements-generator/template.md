@@ -56,18 +56,18 @@ License: Apache License 2.0 or GPL 2
 https://github.com/vrana/adminer/blob/master/readme.txt
 
 ### Elasticsearch
-Image: `docker.elastic.co/elasticsearch/elasticsearch:7.16.1`  
+Image: `docker.elastic.co/elasticsearch/elasticsearch:7.17.2`  
 License: Apache License 2.0  
-https://github.com/elastic/elasticsearch/blob/v7.16.1/LICENSE.txt
+https://github.com/elastic/elasticsearch/blob/v7.17.2/LICENSE.txt
 
 ### Elasticsearch ICU Analysis plugin
 License: Apache License 2.0  
 https://github.com/elastic/elasticsearch/blob/master/LICENSE.txt
 
 ### Kibana  
-Image: `docker.elastic.co/kibana/kibana:7.16.1`  
+Image: `docker.elastic.co/kibana/kibana:7.17.2`  
 License: Apache License 2.0  
-https://github.com/elastic/kibana/blob/v7.16.1/LICENSE.txt
+https://github.com/elastic/kibana/blob/v7.17.2/LICENSE.txt
 
 ### Node
 Image: `node:20-alpine3.17`  
