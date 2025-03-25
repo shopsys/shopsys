@@ -81,7 +81,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 )}
             >
                 <ExtendedNextLink
-                    className="text-text hover:text-link flex grow no-underline select-text hover:no-underline"
+                    className="text-text hover:text-link flex w-full grow no-underline select-text hover:no-underline"
                     draggable={false}
                     href={product.slug}
                     type={product.isMainVariant ? 'productMainVariant' : 'product'}
@@ -90,12 +90,12 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                         onClick?.(product, listIndex);
                     }}
                 >
-                    <div className="flex flex-col gap-2.5 px-2.5 sm:px-5">
+                    <div className="flex w-full flex-col gap-2.5 px-2.5 sm:px-5">
                         <ProductListItemImage product={product} size={size} visibleItemsConfig={visibleItemsConfig} />
 
                         <div
                             className={twJoin(
-                                'font-secondary group-hover:text-link grow overflow-hidden font-semibold break-words group-hover:underline',
+                                'font-secondary group-hover:text-link w-full grow overflow-hidden font-semibold break-words group-hover:underline',
                                 textSize === 'xs' ? 'text-xs' : 'text-sm',
                             )}
                         >
