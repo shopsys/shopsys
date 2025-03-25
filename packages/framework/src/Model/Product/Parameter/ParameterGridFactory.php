@@ -32,7 +32,7 @@ class ParameterGridFactory implements GridFactoryInterface
     public function create()
     {
         $locales = $this->localization->getLocalesOfAllDomains();
-        $adminLocale = $this->localization->getAdminLocale();
+        $adminLocale = $this->localization->getAdminLocaleWithFallback();
         $grid = $this->gridFactory->create('parameterList', $this->getParametersDataSource());
 
         if (count($locales) > 1) {
@@ -104,12 +104,12 @@ class ParameterGridFactory implements GridFactoryInterface
             ->leftJoin('u.translations', 'ut', Join::WITH, 'ut.locale = :locale')
             ->leftJoin('p.group', 'pg')
             ->leftJoin('pg.translations', 'pgt', Join::WITH, 'pgt.locale = :locale')
-            ->setParameter('locale', $this->localization->getAdminLocale())
+            ->setParameter('locale', $this->localization->getAdminLocaleWithFallback())
             ->orderBy('p.orderingPriority', 'DESC')
             ->addOrderBy('pt.name', 'ASC');
 
         foreach ($locales as $locale) {
-            if ($locale !== $this->localization->getAdminLocale()) {
+            if ($locale !== $this->localization->getAdminLocaleWithFallback()) {
                 $queryBuilder
                     ->addSelect('pt_' . $locale)
                     ->leftJoin(

@@ -129,7 +129,7 @@ class CountryFormTypeTest extends TypeTestCase
         $this->localization = $this->createMock(Localization::class);
         $this->localization->method('getLocalesOfAllDomains')->willReturn(['cs', 'en']);
         $this->localization->method('getAdminEnabledLocales')->willReturn(['cs', 'en']);
-        $this->localization->method('getAdminLocale')->willReturn('en');
+        $this->localization->method('getAdminLocaleWithFallback')->willReturn('en');
 
         $this->domain = $this->createMock(Domain::class);
 

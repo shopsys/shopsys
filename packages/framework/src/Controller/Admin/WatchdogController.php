@@ -57,7 +57,7 @@ class WatchdogController extends AdminBaseController
 
         $queryBuilder = $this->watchdogFacade->getWatchdogProductListQueryBuilderByQuickSearchData(
             $quickSearchForm->getData(),
-            $this->localization->getAdminLocale(),
+            $this->localization->getAdminLocaleWithFallback(),
         );
 
         $selectedDomainId = $this->adminDomainFilterTabsFacade->getSelectedDomainId(static::WATCHDOG_DOMAIN_FILTER_NAMESPACE);

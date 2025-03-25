@@ -271,7 +271,7 @@ class OrderFacade
     public function getOrderListQueryBuilderByQuickSearchData(QuickSearchFormData $quickSearchData): QueryBuilder
     {
         return $this->orderRepository->getOrderListQueryBuilderByQuickSearchData(
-            $this->localization->getAdminLocale(),
+            $this->localization->getAdminLocaleWithFallback(),
             $quickSearchData,
         );
     }

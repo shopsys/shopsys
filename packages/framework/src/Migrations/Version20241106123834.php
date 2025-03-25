@@ -9,7 +9,6 @@ use Override;
 use Shopsys\FrameworkBundle\Model\Localization\Exception\AdminLocaleNotFoundException;
 use Shopsys\MigrationBundle\Component\Doctrine\Migrations\AbstractMigration;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class Version20241106123834 extends AbstractMigration implements ContainerAwareInterface
 {
@@ -28,19 +27,7 @@ class Version20241106123834 extends AbstractMigration implements ContainerAwareI
             throw new AdminLocaleNotFoundException();
         }
 
-        if (!in_array($defaultLocale, $this->getAllLocales(), true)) {
-            throw new AdminLocaleNotFoundException($defaultLocale, $this->getAllLocales());
-        }
-
         $this->sql(sprintf('ALTER TABLE administrators ADD selected_locale VARCHAR(10) NOT NULL DEFAULT \'%s\'', $defaultLocale));
         $this->sql('ALTER TABLE administrators ALTER selected_locale DROP DEFAULT');
-    }
-
-    /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface|null $container
-     */
-    public function setContainer(?ContainerInterface $container = null): void
-    {
-        $this->container = $container;
     }
 }

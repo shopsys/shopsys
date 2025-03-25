@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\CKEditor;
 
 use FOS\CKEditorBundle\Renderer\CKEditorRendererInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
+use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class CKEditorRendererDecorator implements CKEditorRendererInterface
 {
     /**
      * @param \FOS\CKEditorBundle\Renderer\CKEditorRendererInterface $baseCkEditorRenderer
-     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
+     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
         protected readonly CKEditorRendererInterface $baseCkEditorRenderer,
-        protected readonly RequestStack $requestStack,
+        protected readonly Localization $localization,
     ) {
     }
 
@@ -45,7 +45,7 @@ class CKEditorRendererDecorator implements CKEditorRendererInterface
      */
     public function renderWidget(string $id, array $config, array $options = []): string
     {
-        $config['language'] = $this->getRequestLanguage() ?? $config['language'];
+        $config['language'] = $this->getRequestLanguage();
 
         return sprintf(
             '$("#%s-preview").click(function() {
@@ -112,16 +112,10 @@ class CKEditorRendererDecorator implements CKEditorRendererInterface
     }
 
     /**
-     * @return string|null
+     * @return string
      */
-    protected function getRequestLanguage(): ?string
+    protected function getRequestLanguage(): string
     {
-        $request = $this->requestStack->getCurrentRequest();
-
-        if ($request !== null && $request->getLocale() !== '') {
-            return $request->getLocale();
-        }
-
-        return null;
+        return $this->localization->getAdminLocale();
     }
 }

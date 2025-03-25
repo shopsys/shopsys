@@ -47,7 +47,7 @@ class InquiryController extends AdminBaseController
 
         $queryBuilder = $this->inquiryFacade->getInquiryListQueryBuilderByQuickSearchData(
             $quickSearchForm->getData(),
-            $this->localization->getAdminLocale(),
+            $this->localization->getAdminLocaleWithFallback(),
         );
 
         $selectedDomainId = $this->adminDomainFilterTabsFacade->getSelectedDomainId($domainFilterNamespace);

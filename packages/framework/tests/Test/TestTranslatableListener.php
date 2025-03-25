@@ -22,11 +22,11 @@ class TestTranslatableListener extends TranslatableListener
      */
     public function __construct(
         MetadataFactory $factory,
-        protected readonly Domain $domain,
+        Domain $domain,
         protected readonly AdministrationFacade $administrationFacade,
         protected readonly Localization $localization,
     ) {
-        parent::__construct($factory);
+        parent::__construct($domain, $factory);
     }
 
     /**
@@ -36,7 +36,7 @@ class TestTranslatableListener extends TranslatableListener
     public function getCurrentLocale()
     {
         if ($this->administrationFacade->isInAdmin()) {
-            return $this->localization->getAdminLocale();
+            return $this->localization->getAdminLocaleWithFallback();
         }
 
         try {

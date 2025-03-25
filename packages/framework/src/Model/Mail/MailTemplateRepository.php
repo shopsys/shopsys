@@ -130,7 +130,7 @@ class MailTemplateRepository
             ->addSelect('cst.name as complaintStatusName')
             ->leftJoin('mt.complaintStatus', 'cs')
             ->leftJoin('cs.translations', 'cst', Join::WITH, 'cst.locale = :locale')
-            ->setParameter('locale', $this->localization->getAdminLocale());
+            ->setParameter('locale', $this->localization->getAdminLocaleWithFallback());
 
         return $queryBuilder;
     }

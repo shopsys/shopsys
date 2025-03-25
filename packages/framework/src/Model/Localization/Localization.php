@@ -38,6 +38,8 @@ class Localization
     }
 
     /**
+     * TODO find usages and add a new method or something like getAdminLocaleWithFallback(int $fallbackDomainId = 1)
+     *
      * @return string
      */
     public function getAdminLocale(): string
@@ -47,6 +49,25 @@ class Localization
             $this->checkAdminLocaleIsSupported($adminLocale);
         } catch (AdministratorIsNotLoggedException) {
             $adminLocale = $this->getDefaultAdminLocale();
+        }
+
+        return $adminLocale;
+    }
+
+    /**
+     * The method is handy when you need to get the entity translations in the admin locale.
+     * It has a safety net in form of a fallback domain ID that ensures the method always returns a valid locale from the entity translations point of view.
+     * The fallback is necessary for setup with the admin locale is different from the storefront domain locales.
+     *
+     * @param int $fallbackLocaleDomainId
+     * @return string
+     */
+    public function getAdminLocaleWithFallback(int $fallbackLocaleDomainId = Domain::FIRST_DOMAIN_ID): string
+    {
+        $adminLocale = $this->getAdminLocale();
+
+        if (!in_array($adminLocale, $this->getLocalesOfAllDomains(), true)) {
+            $adminLocale = $this->domain->getDomainConfigById($fallbackLocaleDomainId)->getLocale();
         }
 
         return $adminLocale;
@@ -102,12 +123,6 @@ class Localization
      */
     public function checkAdminLocaleIsSupported(string $locale): void
     {
-        $allLocales = $this->getLocalesOfAllDomains();
-
-        if (!in_array($locale, $allLocales, true)) {
-            throw new AdminLocaleNotFoundException($locale, $allLocales);
-        }
-
         if (!in_array($locale, $this->allowedAdminLocales, true)) {
             throw new AdminLocaleNotFoundException($locale, $this->allowedAdminLocales);
         }

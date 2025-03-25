@@ -12,6 +12,7 @@ use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryDataFactory;
 use Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryFacade;
 use Shopsys\FrameworkBundle\Model\Blog\Category\Exception\BlogCategoryNotFoundException;
+use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,12 +25,14 @@ class BlogCategoryController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Blog\Category\BlogCategoryDataFactory $blogCategoryDataFactory
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade
+     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
         protected readonly BlogCategoryFacade $blogCategoryFacade,
         protected readonly BlogCategoryDataFactory $blogCategoryDataFactory,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
         protected readonly AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,
+        protected readonly Localization $localization,
     ) {
     }
 
@@ -125,12 +128,12 @@ class BlogCategoryController extends AdminBaseController
 
         if ($selectedDomainId === null) {
             $blogCategoriesWithPreloadedChildren = $this->blogCategoryFacade->getAllBlogCategoriesWithPreloadedChildren(
-                $request->getLocale(),
+                $this->localization->getAdminLocaleWithFallback(),
             );
         } else {
             $blogCategoriesWithPreloadedChildren = $this->blogCategoryFacade->getVisibleBlogCategoriesWithPreloadedChildrenOnDomain(
                 $selectedDomainId,
-                $request->getLocale(),
+                $this->localization->getAdminLocaleWithFallback(),
             );
         }
 

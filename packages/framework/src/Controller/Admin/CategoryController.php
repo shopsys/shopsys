@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryDataFactory;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
 use Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade;
+use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,6 +30,7 @@ class CategoryController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade
      * @param \Shopsys\FrameworkBundle\Component\Form\FormBuilderHelper $formBuilderHelper
      * @param \Shopsys\FrameworkBundle\Model\CategorySeo\ReadyCategorySeoMixFacade $categorySeoMixFacade
+     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
         protected readonly CategoryFacade $categoryFacade,
@@ -38,6 +40,7 @@ class CategoryController extends AdminBaseController
         protected readonly AdminDomainFilterTabsFacade $adminDomainFilterTabsFacade,
         protected readonly FormBuilderHelper $formBuilderHelper,
         protected readonly ReadyCategorySeoMixFacade $categorySeoMixFacade,
+        protected readonly Localization $localization,
     ) {
     }
 
@@ -136,12 +139,12 @@ class CategoryController extends AdminBaseController
 
         if ($selectedDomainId === null) {
             $categoriesWithPreloadedChildren = $this->categoryFacade->getAllCategoriesWithPreloadedChildren(
-                $request->getLocale(),
+                $this->localization->getAdminLocaleWithFallback(),
             );
         } else {
             $categoriesWithPreloadedChildren = $this->categoryFacade->getVisibleCategoriesWithPreloadedChildrenForDomain(
                 $selectedDomainId,
-                $request->getLocale(),
+                $this->localization->getAdminLocaleWithFallback(),
             );
         }
 

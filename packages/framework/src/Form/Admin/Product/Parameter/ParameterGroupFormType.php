@@ -95,7 +95,7 @@ class ParameterGroupFormType extends AbstractType
             if ($this->parameterGroupFacade->existsParameterGroupByName($name, $locale, $currentParameterGroup)) {
                 $context
                     ->buildViolation(t('Parameter group with this name already exists for the locale "%locale%".', ['%locale%' => $locale], Translator::VALIDATOR_TRANSLATION_DOMAIN))
-                    ->atPath(sprintf('name[%s]', $this->localization->getAdminLocale()))
+                    ->atPath(sprintf('name[%s]', $this->localization->getAdminLocaleWithFallback()))
                     ->addViolation();
             }
         }

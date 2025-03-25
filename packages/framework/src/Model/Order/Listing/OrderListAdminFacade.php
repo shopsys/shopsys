@@ -23,6 +23,6 @@ class OrderListAdminFacade
      */
     public function getOrderListQueryBuilder()
     {
-        return $this->orderListAdminRepository->getOrderListQueryBuilder($this->localization->getAdminLocale());
+        return $this->orderListAdminRepository->getOrderListQueryBuilder($this->localization->getAdminLocaleWithFallback());
     }
 }

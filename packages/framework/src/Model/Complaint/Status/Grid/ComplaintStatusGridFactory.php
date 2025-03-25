@@ -38,7 +38,7 @@ class ComplaintStatusGridFactory implements GridFactoryInterface
             ->select('cs, cst')
             ->from(ComplaintStatus::class, 'cs')
             ->join('cs.translations', 'cst', Join::WITH, 'cst.locale = :locale')
-            ->setParameter('locale', $this->localization->getAdminLocale());
+            ->setParameter('locale', $this->localization->getAdminLocaleWithFallback());
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'cs.id');
 
         $grid = $this->gridFactory->create('complaintStatusList', $dataSource);

@@ -8,6 +8,7 @@ use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\BestsellingProduct\BestsellingProductFormType;
 use Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Product\BestsellingProduct\ManualBestsellingProductFacade;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,12 +21,14 @@ class BestsellingProductController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
      * @param \Shopsys\FrameworkBundle\Model\AdminNavigation\BreadcrumbOverrider $breadcrumbOverrider
+     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
         protected readonly ManualBestsellingProductFacade $manualBestsellingProductFacade,
         protected readonly CategoryFacade $categoryFacade,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
         protected readonly BreadcrumbOverrider $breadcrumbOverrider,
+        protected readonly Localization $localization,
     ) {
     }
 
@@ -40,7 +43,7 @@ class BestsellingProductController extends AdminBaseController
 
         $categoriesWithPreloadedChildren = $this->categoryFacade->getVisibleCategoriesWithPreloadedChildrenForDomain(
             $domainId,
-            $request->getLocale(),
+            $this->localization->getAdminLocaleWithFallback(),
         );
 
         $bestsellingProductsInCategories = $this->manualBestsellingProductFacade->getCountsIndexedByCategoryId(

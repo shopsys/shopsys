@@ -158,7 +158,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $entityName = $this->entityLogFacade->getEntityNameByEntity($orderFromDb);
 
         $expectedOldCity = $orderFromDb->getCity();
-        $expectedOldStatusName = $orderFromDb->getStatus()->getName($this->localization->getAdminLocale());
+        $expectedOldStatusName = $orderFromDb->getStatus()->getName($this->localization->getAdminLocaleWithFallback());
         $expectedOldStatusId = $orderFromDb->getStatus()->getId();
 
         $orderData = $this->orderDataFactory->createFromOrder($orderFromDb);
@@ -184,7 +184,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $this->assertSame($expectedOldStatusId, $log->getChangeSet()['status']['oldValue']);
         $this->assertSame($expectedOldStatusName, $log->getChangeSet()['status']['oldReadableValue']);
         $this->assertSame($newStatus->getId(), $log->getChangeSet()['status']['newValue']);
-        $this->assertSame($newStatus->getName($this->localization->getAdminLocale()), $log->getChangeSet()['status']['newReadableValue']);
+        $this->assertSame($newStatus->getName($this->localization->getAdminLocaleWithFallback()), $log->getChangeSet()['status']['newReadableValue']);
     }
 
     public function testEditCollectionEntity(): void
