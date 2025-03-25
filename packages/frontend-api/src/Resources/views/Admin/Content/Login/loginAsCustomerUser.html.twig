@@ -4,9 +4,14 @@
 
     date.setTime(date.getTime() + 14 * 24 * 60 * 60 * 1000); // 14 days
 
-    document.cookie = 'accessToken=' + '{{ tokens.accessToken }}' + '; secure; path=/';
     document.cookie =
-        'refreshToken=' + '{{ tokens.refreshToken }}' + '; expires=' + date.toUTCString() + '; secure; path=/';
+        'accessToken=' + '{{ tokens.accessToken }}' + ";{{ app.request.scheme == 'https' ? ' secure;' }} path=/";
+    document.cookie =
+        'refreshToken=' +
+        '{{ tokens.refreshToken }}' +
+        '; expires=' +
+        date.toUTCString() +
+        ";{{ app.request.scheme == 'https' ? ' secure;' }} path=/";
 
     if (window.localStorage) {
         const currentAppStoreAsString = window.localStorage.getItem(PERSIST_STORE_NAME);
