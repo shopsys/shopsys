@@ -11,31 +11,37 @@
                 <strong>{{ orderPaymentItem.name }}</strong>
             </td>
             <td align="right">
-                {% if displayPrice is same as(constant('Shopsys\\FrameworkBundle\\Model\\Order\\Mail\\OrderMail::DISPLAY_PRICE_WITHOUT_VAT')) or displayPrice is same as(constant('Shopsys\\FrameworkBundle\\Model\\Order\\Mail\\OrderMail::DISPLAY_PRICE_BOTH')) %}
-                    {% if not (displayPrice is same as(constant('Shopsys\\FrameworkBundle\\Model\\Order\\Mail\\OrderMail::DISPLAY_PRICE_BOTH')) and orderPaymentTotalPrice.priceWithVat.isZero is same as(true)) %}
-                        {% if displayPrice is not same as(constant('Shopsys\\FrameworkBundle\\Model\\Order\\Mail\\OrderMail::DISPLAY_PRICE_BOTH')) %}
+                {% set doNotDisplayBoth = displayPrice is not same as(constant('Shopsys\\FrameworkBundle\\Model\\Order\\Mail\\OrderMail::DISPLAY_PRICE_BOTH')) %}
+                {% set displayBoth = displayPrice is same as(constant('Shopsys\\FrameworkBundle\\Model\\Order\\Mail\\OrderMail::DISPLAY_PRICE_BOTH')) %}
+                {% set displayWithoutVat = displayPrice is same as(constant('Shopsys\\FrameworkBundle\\Model\\Order\\Mail\\OrderMail::DISPLAY_PRICE_WITHOUT_VAT')) or displayBoth %}
+                {% set displayWithVat = displayPrice is same as(constant('Shopsys\\FrameworkBundle\\Model\\Order\\Mail\\OrderMail::DISPLAY_PRICE_WITH_VAT')) or displayBoth %}
+                {% set isZeroPrice = orderPaymentTotalPrice.priceWithVat.isZero is same as(true) %}
+
+                {% if displayWithoutVat %}
+                    {% if not (displayBoth and isZeroPrice) %}
+                        {% if doNotDisplayBoth %}
                             <strong style="white-space: nowrap; padding-left: 10px;">
                         {% endif %}
 
                         {{ orderPaymentTotalPrice.priceWithoutVat|priceTextWithCurrencyByCurrencyIdAndLocale(order.currency.id, orderLocale)|hidePrice(order.customerUser) }}
-                        {% if displayPrice is same as(constant('Shopsys\\FrameworkBundle\\Model\\Order\\Mail\\OrderMail::DISPLAY_PRICE_BOTH')) %}
+                        {% if displayBoth %}
                             {{ 'ex VAT'|trans }}&nbsp;
                         {% endif %}
 
-                        {% if displayPrice is not same as(constant('Shopsys\\FrameworkBundle\\Model\\Order\\Mail\\OrderMail::DISPLAY_PRICE_BOTH')) %}
+                        {% if doNotDisplayBoth %}
                             </strong>
                         {% endif %}
                     {% endif %}
                 {% endif %}
 
-                {% if displayPrice is same as(constant('Shopsys\\FrameworkBundle\\Model\\Order\\Mail\\OrderMail::DISPLAY_PRICE_BOTH')) %}
+                {% if displayBoth %}
                     <br>
                 {% endif %}
 
-                {% if displayPrice is same as(constant('Shopsys\\FrameworkBundle\\Model\\Order\\Mail\\OrderMail::DISPLAY_PRICE_WITH_VAT')) or displayPrice is same as(constant('Shopsys\\FrameworkBundle\\Model\\Order\\Mail\\OrderMail::DISPLAY_PRICE_BOTH')) %}
+                {% if displayWithVat %}
                     <strong style="white-space: nowrap; padding-left: 10px;">
                         {{ orderPaymentTotalPrice.priceWithVat|priceTextWithCurrencyByCurrencyIdAndLocale(order.currency.id, orderLocale)|hidePrice(order.customerUser) }}
-                        {% if displayPrice is same as(constant('Shopsys\\FrameworkBundle\\Model\\Order\\Mail\\OrderMail::DISPLAY_PRICE_BOTH')) and orderPaymentTotalPrice.priceWithVat.isZero is same as(false) %}
+                        {% if displayBoth and not isZeroPrice %}
                             {{ 'inc VAT'|trans }}&nbsp;
                         {% endif %}
                     </strong>
