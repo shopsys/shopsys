@@ -9,6 +9,7 @@ use Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader;
 use Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterFacade;
 use Shopsys\FrameworkBundle\Model\Category\Category;
 use Shopsys\FrameworkBundle\Model\Customer\User\CurrentCustomerUser;
+use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\ProductIndex;
 use Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData;
@@ -21,6 +22,7 @@ class FilterQueryFactory
      * @param \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterFacade $categoryAutomatedFilterFacade
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      */
     public function __construct(
         protected readonly ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer,
@@ -28,6 +30,7 @@ class FilterQueryFactory
         protected readonly IndexDefinitionLoader $indexDefinitionLoader,
         protected readonly Domain $domain,
         protected readonly CategoryAutomatedFilterFacade $categoryAutomatedFilterFacade,
+        protected readonly PricingSetting $pricingSetting,
     ) {
     }
 
@@ -37,7 +40,7 @@ class FilterQueryFactory
      */
     public function create(string $indexName): FilterQuery
     {
-        return new FilterQuery($indexName);
+        return new FilterQuery($indexName, $this->pricingSetting->getSellingPriceType());
     }
 
     /**

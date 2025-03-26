@@ -10,3 +10,6 @@ PricingSettingDecorator:
             minimumFractionDigits:
                 type: "Int!"
                 description: "Minimum number of decimal places for the price on the current domain"
+            sellingPriceType:
+                type: "SellingPriceTypeEnum!"
+                description: "Type of selling price (with VAT or without VAT)"

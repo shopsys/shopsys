@@ -2344,6 +2344,8 @@ export type TypePricingSetting = {
   defaultCurrencyCode: Scalars['String']['output'];
   /** Minimum number of decimal places for the price on the current domain */
   minimumFractionDigits: Scalars['Int']['output'];
+  /** Type of selling price (with VAT or without VAT) */
+  sellingPriceType: TypeSellingPriceTypeEnum;
 };
 
 /** Represents a product */
@@ -3248,6 +3250,14 @@ export type TypeSearchInput = {
   /** Unique identifier of the user who initiated the search in format UUID version 4 (^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[1-8][0-9A-Fa-f]{3}-[ABab89][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$/) */
   userIdentifier: Scalars['Uuid']['input'];
 };
+
+/** Selling price type */
+export enum TypeSellingPriceTypeEnum {
+  /** Without VAT */
+  WithoutVat = 'WITHOUT_VAT',
+  /** With VAT */
+  WithVat = 'WITH_VAT'
+}
 
 /** Represents SEO settings for specific page */
 export type TypeSeoPage = TypeHreflang & {

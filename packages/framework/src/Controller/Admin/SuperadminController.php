@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory;
+use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Form\Admin\Module\ModulesFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Superadmin\InputPriceTypeFormType;
 use Shopsys\FrameworkBundle\Form\Admin\Superadmin\MailWhitelistFormType;
@@ -30,6 +31,7 @@ class SuperadminController extends AdminBaseController
      * @param \Shopsys\FrameworkBundle\Component\Router\LocalizedRouterFactory $localizedRouterFactory
      * @param \Shopsys\FrameworkBundle\Model\Mail\Setting\MailSettingFacade $mailSettingFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
+     * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      */
     public function __construct(
         protected readonly ModuleList $moduleList,
@@ -40,6 +42,7 @@ class SuperadminController extends AdminBaseController
         protected readonly LocalizedRouterFactory $localizedRouterFactory,
         protected readonly MailSettingFacade $mailSettingFacade,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+        protected readonly Setting $setting,
     ) {
     }
 
@@ -51,7 +54,8 @@ class SuperadminController extends AdminBaseController
     public function pricingAction(Request $request): Response
     {
         $pricingSettingData = [
-            'type' => $this->pricingSetting->getInputPriceType(),
+            'inputPriceType' => $this->pricingSetting->getInputPriceType(),
+            'sellingPriceType' => $this->pricingSetting->getSellingPriceType(),
         ];
 
         $form = $this->createForm(InputPriceTypeFormType::class, $pricingSettingData);
@@ -60,7 +64,11 @@ class SuperadminController extends AdminBaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $pricingSettingData = $form->getData();
 
-            $this->delayedPricingSetting->scheduleSetInputPriceType($pricingSettingData['type']);
+            $this->delayedPricingSetting->scheduleSetInputPriceType($pricingSettingData['inputPriceType']);
+            $this->setting->set(
+                PricingSetting::SELLING_PRICE_TYPE,
+                $pricingSettingData['sellingPriceType'],
+            );
 
             $this->addSuccessFlash(t('Pricing settings modified'));
 

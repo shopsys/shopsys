@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\FrontendApiBundle\Functional\Settings;
 
+use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Tests\FrontendApiBundle\Test\GraphQlTestCase;
 
 class PricingSettingTest extends GraphQlTestCase
@@ -16,6 +17,7 @@ class PricingSettingTest extends GraphQlTestCase
                     pricing {
                         defaultCurrencyCode
                         minimumFractionDigits
+                        sellingPriceType
                     }
                 }
             }
@@ -28,5 +30,6 @@ class PricingSettingTest extends GraphQlTestCase
 
         self::assertEquals($firstDomainCurrency->getCode(), $data['pricing']['defaultCurrencyCode']);
         self::assertEquals($firstDomainCurrency->getMinFractionDigits(), $data['pricing']['minimumFractionDigits']);
+        self::assertEquals($this->pricingSetting->getSellingPriceType() === PricingSetting::PRICE_TYPE_WITH_VAT ? 'WITH_VAT' : 'WITHOUT_VAT', $data['pricing']['sellingPriceType']);
     }
 }

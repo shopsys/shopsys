@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Model\Product\Search;
 use DateTimeImmutable;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
+use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Listing\ProductListOrderingConfig;
 use Shopsys\FrameworkBundle\Model\Product\ProductTypeEnum;
 use stdClass;
@@ -50,9 +51,12 @@ class FilterQuery
 
     /**
      * @param string $indexName
+     * @param int $sellingPriceType
      */
-    public function __construct(protected readonly string $indexName)
-    {
+    public function __construct(
+        protected readonly string $indexName,
+        protected readonly int $sellingPriceType,
+    ) {
         $this->match = $this->matchAll();
     }
 
@@ -101,7 +105,7 @@ class FilterQuery
             $clone->runtimeFields += $this->getMinCurrentSellingPriceRuntimeField($pricingGroup->getId());
 
             $clone->sorting['_script'] = $this->getInquirySorting();
-            $clone->sorting['min_current_selling_price_with_vat'] = 'asc';
+            $clone->sorting['min_current_selling_price'] = 'asc';
             $clone->sorting['ordering_priority'] = 'desc';
             $clone->sorting['name.keyword'] = 'asc';
 
@@ -112,7 +116,7 @@ class FilterQuery
             $clone->runtimeFields += $this->getMinCurrentSellingPriceRuntimeField($pricingGroup->getId());
 
             $clone->sorting['_script'] = $this->getInquirySorting();
-            $clone->sorting['min_current_selling_price_with_vat'] = 'desc';
+            $clone->sorting['min_current_selling_price'] = 'desc';
             $clone->sorting['ordering_priority'] = 'desc';
             $clone->sorting['name.keyword'] = 'asc';
 
@@ -124,10 +128,12 @@ class FilterQuery
 
     /**
      * @param int $pricingGroupId
-     * @return array
+     * @return array[]
      */
     protected function getMinCurrentSellingPriceRuntimeField(int $pricingGroupId): array
     {
+        $priceFieldName = $this->sellingPriceType === PricingSetting::PRICE_TYPE_WITH_VAT ? 'price_with_vat' : 'price_without_vat';
+
         $scriptMinValue = "
             double finalPrice = Double.MAX_VALUE;
             DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern('yyyy-MM-dd HH:mm:ss').withZone(java.time.ZoneOffset.UTC);
@@ -135,10 +141,10 @@ class FilterQuery
             if (!params['_source']['prices'].isEmpty()) {
                 for (def price : params['_source']['prices']) {
                     if (price['pricing_group_id'] === params['pricing_group_id']) {
-                        finalPrice = Math.min(finalPrice, price['price_with_vat']);
+                        finalPrice = Math.min(finalPrice, price['" . $priceFieldName . "']);
                         for (def variantPrice : price['variant_prices']) {
-                            if (variantPrice['price_with_vat'] < finalPrice) {
-                                finalPrice = variantPrice['price_with_vat'];
+                            if (variantPrice['" . $priceFieldName . "'] < finalPrice) {
+                                finalPrice = variantPrice['" . $priceFieldName . "'];
                             }
                         }
                         break;
@@ -162,7 +168,7 @@ class FilterQuery
                                 continue;
                             }
 
-                            finalPrice = Math.min(finalPrice, price['price_with_vat']);
+                            finalPrice = Math.min(finalPrice, price['" . $priceFieldName . "']);
                             usedProductIds.add(price['product_id']);
                         }
                     }
@@ -172,7 +178,7 @@ class FilterQuery
             emit(finalPrice);";
 
         return [
-            'min_current_selling_price_with_vat' => [
+            'min_current_selling_price' => [
                 'type' => 'double',
                 'script' => [
                     'source' => $scriptMinValue,
@@ -191,6 +197,8 @@ class FilterQuery
      */
     public function getMaxCurrentSellingPriceRuntimeField(int $pricingGroupId): array
     {
+        $priceFieldName = $this->sellingPriceType === PricingSetting::PRICE_TYPE_WITH_VAT ? 'price_with_vat' : 'price_without_vat';
+
         $scriptMaxValue = "
             double finalPrice = 0;
             DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern('yyyy-MM-dd HH:mm:ss').withZone(java.time.ZoneOffset.UTC);
@@ -199,10 +207,10 @@ class FilterQuery
             if (!params['_source']['prices'].isEmpty()) {
                 for (def price : params['_source']['prices']) {
                     if (price['pricing_group_id'] === params['pricing_group_id']) {
-                        finalPrice = Math.max(finalPrice, price['price_with_vat']);
+                        finalPrice = Math.max(finalPrice, price['" . $priceFieldName . "']);
                         for (def variantPrice : price['variant_prices']) {
-                            if (variantPrice['price_with_vat'] > finalPrice) {
-                                finalPrice = variantPrice['price_with_vat'];
+                            if (variantPrice['" . $priceFieldName . "'] > finalPrice) {
+                                finalPrice = variantPrice['" . $priceFieldName . "'];
                                 productId = variantPrice['variant_id'];                            
                             }
                         }
@@ -231,7 +239,7 @@ class FilterQuery
                                 continue;
                             }
 
-                            finalPrice = Math.min(finalPrice, price['price_with_vat']);
+                            finalPrice = Math.min(finalPrice, price['" . $priceFieldName . "']);
                             usedProductIds.add(price['product_id']);
                         }
                     }
@@ -242,7 +250,7 @@ class FilterQuery
         ";
 
         return [
-            'max_current_selling_price_with_vat' => [
+            'max_current_selling_price' => [
                 'type' => 'double',
                 'script' => [
                     'source' => $scriptMaxValue,
@@ -261,6 +269,8 @@ class FilterQuery
      */
     protected function getHasActiveSpecialPriceRuntimeField(int $pricingGroupId): array
     {
+        $priceFieldName = $this->sellingPriceType === PricingSetting::PRICE_TYPE_WITH_VAT ? 'price_with_vat' : 'price_without_vat';
+
         $script = "
             boolean hasActiveSpecialPrice = false;
             DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern('yyyy-MM-dd HH:mm:ss').withZone(java.time.ZoneOffset.UTC);
@@ -269,7 +279,7 @@ class FilterQuery
             for (def price : params['_source']['prices']) {
                 if (price['pricing_group_id'] === params['pricing_group_id']) {
                     if (params['_source']['is_main_variant'] === false) {
-                        double basicPrice = price['price_with_vat'];
+                        double basicPrice = price['" . $priceFieldName . "'];
 
                         for (def specialPrice : params['_source']['special_prices']) {
                             def validFrom = java.time.ZonedDateTime.parse(specialPrice['valid_from'], formatter).toInstant();
@@ -278,7 +288,7 @@ class FilterQuery
                             if ((validFrom.isBefore(currentDate) || validFrom.equals(currentDate)) &&
                                 (validTo.isAfter(currentDate) || validTo.equals(currentDate))) {
                                 for (def specialPriceData : specialPrice['prices']) {
-                                    if (basicPrice > specialPriceData['price_with_vat']) {
+                                    if (basicPrice > specialPriceData['" . $priceFieldName . "']) {
                                         hasActiveSpecialPrice = true;
                                         break;
                                     }
@@ -288,7 +298,7 @@ class FilterQuery
                         }
                     } else {
                         for (def variantPrice : price['variant_prices']) {
-                            double variantBasicPrice = variantPrice['price_with_vat'];
+                            double variantBasicPrice = variantPrice['" . $priceFieldName . "'];
                             for (def specialPrice : params['_source']['special_prices']) {
                                 def validFrom = java.time.ZonedDateTime.parse(specialPrice['valid_from'], formatter).toInstant();
                                 def validTo = java.time.ZonedDateTime.parse(specialPrice['valid_to'], formatter).toInstant();
@@ -297,7 +307,7 @@ class FilterQuery
                                     (validTo.isAfter(currentDate) || validTo.equals(currentDate))) {
                                     for (def specialPriceData : specialPrice['prices']) {
                                         if (specialPriceData['product_id'] === variantPrice['variant_id'] &&
-                                            specialPriceData['price_with_vat'] < variantBasicPrice) {
+                                            specialPriceData['" . $priceFieldName . "'] < variantBasicPrice) {
                                             hasActiveSpecialPrice = true;
                                             break;
                                         }
@@ -467,14 +477,14 @@ class FilterQuery
                             'filter' => [
                                 [
                                     'range' => [
-                                        'max_current_selling_price_with_vat' => [
+                                        'max_current_selling_price' => [
                                             'gte' => $priceGte,
                                         ],
                                     ],
                                 ],
                                 [
                                     'range' => [
-                                        'min_current_selling_price_with_vat' => [
+                                        'min_current_selling_price' => [
                                             'lte' => $priceLte,
                                         ],
                                     ],
@@ -1121,12 +1131,12 @@ class FilterQuery
             'aggs' => [
                 'min_price' => [
                     'min' => [
-                        'field' => 'min_current_selling_price_with_vat',
+                        'field' => 'min_current_selling_price',
                     ],
                 ],
                 'max_price' => [
                     'max' => [
-                        'field' => 'min_current_selling_price_with_vat',
+                        'field' => 'min_current_selling_price',
                     ],
                 ],
             ],

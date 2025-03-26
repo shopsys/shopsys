@@ -162,6 +162,7 @@
     * [ProductTypeEnum](#producttypeenum)
     * [PromoCodeTypeEnum](#promocodetypeenum)
     * [RecommendationType](#recommendationtype)
+    * [SellingPriceTypeEnum](#sellingpricetypeenum)
     * [StoreOpeningStatusEnum](#storeopeningstatusenum)
     * [TransportTypeEnum](#transporttypeenum)
   * [Scalars](#scalars)
@@ -7864,6 +7865,15 @@ Minimum number of decimal places for the price on the current domain
 
 </td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong id="pricingsetting.sellingpricetype">sellingPriceType</strong></td>
+<td valign="top"><a href="#sellingpricetypeenum">SellingPriceTypeEnum</a>!</td>
+<td>
+
+Type of selling price (with VAT or without VAT)
+
+</td>
+</tr>
 </tbody>
 </table>
 
@@ -12639,6 +12649,37 @@ Discount type percent
 <tr>
 <td valign="top"><strong>personalized</strong></td>
 <td></td>
+</tr>
+</tbody>
+</table>
+
+### SellingPriceTypeEnum
+
+Selling price type
+
+<table>
+<thead>
+<tr>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>WITH_VAT</strong></td>
+<td>
+
+With VAT
+
+</td>
+</tr>
+<tr>
+<td valign="top"><strong>WITHOUT_VAT</strong></td>
+<td>
+
+Without VAT
+
+</td>
 </tr>
 </tbody>
 </table>

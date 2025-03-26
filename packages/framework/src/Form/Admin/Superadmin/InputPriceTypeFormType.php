@@ -23,14 +23,24 @@ class InputPriceTypeFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('type', ChoiceType::class, [
+            ->add('inputPriceType', ChoiceType::class, [
                 'label' => t('Entry price type'),
                 'choices' => [
                     t('Excluding VAT') => PricingSetting::PRICE_TYPE_WITHOUT_VAT,
                     t('Including VAT') => PricingSetting::PRICE_TYPE_WITH_VAT,
                 ],
                 'constraints' => [
-                    new Constraints\NotBlank(['message' => 'Please enter input prices']),
+                    new Constraints\NotBlank(['message' => 'Please enter entry price type']),
+                ],
+            ])
+            ->add('sellingPriceType', ChoiceType::class, [
+                'label' => t('Selling price type'),
+                'choices' => [
+                    t('Excluding VAT') => PricingSetting::PRICE_TYPE_WITHOUT_VAT,
+                    t('Including VAT') => PricingSetting::PRICE_TYPE_WITH_VAT,
+                ],
+                'constraints' => [
+                    new Constraints\NotBlank(['message' => 'Please enter selling price type']),
                 ],
             ])
             ->add('actionBar', ActionBarType::class, [

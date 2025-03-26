@@ -1,0 +1,12 @@
+SellingPriceTypeEnumDecorator:
+    type: enum
+    decorator: true
+    config:
+        description: "Selling price type"
+        values:
+            WITH_VAT:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Pricing\\PricingSetting::PRICE_TYPE_WITH_VAT")'
+                description: "With VAT"
+            WITHOUT_VAT:
+                value: '@=constant("Shopsys\\FrameworkBundle\\Model\\Pricing\\PricingSetting::PRICE_TYPE_WITHOUT_VAT")'
+                description: "Without VAT"
