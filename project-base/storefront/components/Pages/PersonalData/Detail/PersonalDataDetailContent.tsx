@@ -2,6 +2,7 @@ import { Link } from 'components/Basic/Link/Link';
 import { Cell, CellHead, CellMinor, Row, Table } from 'components/Basic/Table/Table';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { TypePersonalDataDetailQuery } from 'graphql/requests/personalData/queries/PersonalDataDetailQuery.generated';
+import { TypeOrderItemTypeEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
@@ -123,97 +124,109 @@ export const PersonalDataDetailContent: FC<PersonalDataDetailContentProps> = ({ 
 
                 {orders.length ? (
                     <div className="flex flex-col gap-4">
-                        {orders.map((order) => (
-                            <Table key={order.uuid}>
-                                <Row className="flex flex-col md:flex-row">
-                                    <Cell className="flex-1">
-                                        <Table className="border-0 p-0">
-                                            <Row>
-                                                <CellMinor>{t('Order number')}</CellMinor>
-                                                <Cell>{order.number}</Cell>
-                                            </Row>
-                                            <Row>
-                                                <CellMinor>{t('Creation date')}</CellMinor>
-                                                <Cell>{formatDate(order.creationDate)}</Cell>
-                                            </Row>
-                                            <Row>
-                                                <CellMinor>{t('First name')}</CellMinor>
-                                                <Cell>{order.firstName}</Cell>
-                                            </Row>
-                                            <Row>
-                                                <CellMinor>{t('Last name')}</CellMinor>
-                                                <Cell>{order.lastName}</Cell>
-                                            </Row>
-                                            {!!order.companyName && (
-                                                <Row>
-                                                    <CellMinor>{t('Company')}</CellMinor>
-                                                    <Cell>{order.companyName}</Cell>
-                                                </Row>
-                                            )}
-                                            {!!order.companyNumber && (
-                                                <Row>
-                                                    <CellMinor>{t('Company number')}</CellMinor>
-                                                    <Cell>{order.companyNumber}</Cell>
-                                                </Row>
-                                            )}
-                                            {!!order.companyTaxNumber && (
-                                                <Row>
-                                                    <CellMinor>{t('Tax number')}</CellMinor>
-                                                    <Cell>{order.companyTaxNumber}</Cell>
-                                                </Row>
-                                            )}
-                                            <Row>
-                                                <CellMinor>{t('Phone')}</CellMinor>
-                                                <Cell>{order.telephone}</Cell>
-                                            </Row>
-                                            {!!order.deliveryFirstName && (
-                                                <Row>
-                                                    <CellMinor>{t('Delivery address')}</CellMinor>
-                                                    <Cell>
-                                                        {order.deliveryFirstName} {order.deliveryLastName}
-                                                        {order.deliveryCompanyName
-                                                            ? ` (${order.deliveryCompanyName})`
-                                                            : ''}
-                                                        , {order.deliveryStreet}, {order.deliveryPostcode}{' '}
-                                                        {order.deliveryCity}, {order.deliveryCountry?.name}
-                                                        {order.deliveryTelephone
-                                                            ? `, ${t('Phone')}: ${order.deliveryTelephone}`
-                                                            : ''}
-                                                    </Cell>
-                                                </Row>
-                                            )}
-                                        </Table>
-                                    </Cell>
+                        {orders.map((order) => {
+                            const orderPayment = order.items.find(
+                                (item) => item.type === TypeOrderItemTypeEnum.Payment,
+                            );
+                            const orderTransport = order.items.find(
+                                (item) => item.type === TypeOrderItemTypeEnum.Transport,
+                            );
 
-                                    <Cell className="flex-1">
-                                        <Table className="border-0 p-0">
-                                            <Row>
-                                                <CellMinor>{t('Number of items')}</CellMinor>
-                                                <Cell>
-                                                    {order.productItems.reduce((sum, item) => sum + item.quantity, 0)}
-                                                </Cell>
-                                            </Row>
-                                            <Row>
-                                                <CellMinor>{t('Shipping')}</CellMinor>
-                                                <Cell>{order.transport.name}</Cell>
-                                            </Row>
-                                            <Row>
-                                                <CellMinor>{t('Payment')}</CellMinor>
-                                                <Cell>{order.payment.name}</Cell>
-                                            </Row>
-                                            {isPriceVisible(order.totalPrice.priceWithVat) && (
+                            return (
+                                <Table key={order.uuid}>
+                                    <Row className="flex flex-col md:flex-row">
+                                        <Cell className="flex-1">
+                                            <Table className="border-0 p-0">
                                                 <Row>
-                                                    <CellMinor>{t('Total price including VAT')}</CellMinor>
+                                                    <CellMinor>{t('Order number')}</CellMinor>
+                                                    <Cell>{order.number}</Cell>
+                                                </Row>
+                                                <Row>
+                                                    <CellMinor>{t('Creation date')}</CellMinor>
+                                                    <Cell>{formatDate(order.creationDate)}</Cell>
+                                                </Row>
+                                                <Row>
+                                                    <CellMinor>{t('First name')}</CellMinor>
+                                                    <Cell>{order.firstName}</Cell>
+                                                </Row>
+                                                <Row>
+                                                    <CellMinor>{t('Last name')}</CellMinor>
+                                                    <Cell>{order.lastName}</Cell>
+                                                </Row>
+                                                {!!order.companyName && (
+                                                    <Row>
+                                                        <CellMinor>{t('Company')}</CellMinor>
+                                                        <Cell>{order.companyName}</Cell>
+                                                    </Row>
+                                                )}
+                                                {!!order.companyNumber && (
+                                                    <Row>
+                                                        <CellMinor>{t('Company number')}</CellMinor>
+                                                        <Cell>{order.companyNumber}</Cell>
+                                                    </Row>
+                                                )}
+                                                {!!order.companyTaxNumber && (
+                                                    <Row>
+                                                        <CellMinor>{t('Tax number')}</CellMinor>
+                                                        <Cell>{order.companyTaxNumber}</Cell>
+                                                    </Row>
+                                                )}
+                                                <Row>
+                                                    <CellMinor>{t('Phone')}</CellMinor>
+                                                    <Cell>{order.telephone}</Cell>
+                                                </Row>
+                                                {!!order.deliveryFirstName && (
+                                                    <Row>
+                                                        <CellMinor>{t('Delivery address')}</CellMinor>
+                                                        <Cell>
+                                                            {order.deliveryFirstName} {order.deliveryLastName}
+                                                            {order.deliveryCompanyName
+                                                                ? ` (${order.deliveryCompanyName})`
+                                                                : ''}
+                                                            , {order.deliveryStreet}, {order.deliveryPostcode}{' '}
+                                                            {order.deliveryCity}, {order.deliveryCountry?.name}
+                                                            {order.deliveryTelephone
+                                                                ? `, ${t('Phone')}: ${order.deliveryTelephone}`
+                                                                : ''}
+                                                        </Cell>
+                                                    </Row>
+                                                )}
+                                            </Table>
+                                        </Cell>
+
+                                        <Cell className="flex-1">
+                                            <Table className="border-0 p-0">
+                                                <Row>
+                                                    <CellMinor>{t('Number of items')}</CellMinor>
                                                     <Cell>
-                                                        {formatPrice(parseFloat(order.totalPrice.priceWithVat))}
+                                                        {order.productItems.reduce(
+                                                            (sum, item) => sum + item.quantity,
+                                                            0,
+                                                        )}
                                                     </Cell>
                                                 </Row>
-                                            )}
-                                        </Table>
-                                    </Cell>
-                                </Row>
-                            </Table>
-                        ))}
+                                                <Row>
+                                                    <CellMinor>{t('Shipping')}</CellMinor>
+                                                    <Cell>{orderTransport?.name ?? order.transport.name}</Cell>
+                                                </Row>
+                                                <Row>
+                                                    <CellMinor>{t('Payment')}</CellMinor>
+                                                    <Cell>{orderPayment?.name ?? order.payment.name}</Cell>
+                                                </Row>
+                                                {isPriceVisible(order.totalPrice.priceWithVat) && (
+                                                    <Row>
+                                                        <CellMinor>{t('Total price including VAT')}</CellMinor>
+                                                        <Cell>
+                                                            {formatPrice(parseFloat(order.totalPrice.priceWithVat))}
+                                                        </Cell>
+                                                    </Row>
+                                                )}
+                                            </Table>
+                                        </Cell>
+                                    </Row>
+                                </Table>
+                            );
+                        })}
                     </div>
                 ) : (
                     <p>{t('You have no orders')}</p>

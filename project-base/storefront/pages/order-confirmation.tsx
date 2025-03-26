@@ -12,11 +12,11 @@ import { RegistrationAfterOrder } from 'components/Pages/OrderConfirmation/Regis
 import { TIDs } from 'cypress/tids';
 import { useOrderDetailByHashOrUuidQuery } from 'graphql/requests/orders/queries/OrderDetailByHashOrUuidQuery.generated';
 import {
-    useOrderSentPageContentQuery,
-    TypeOrderSentPageContentQueryVariables,
     OrderSentPageContentQueryDocument,
+    TypeOrderSentPageContentQueryVariables,
+    useOrderSentPageContentQuery,
 } from 'graphql/requests/orders/queries/OrderSentPageContentQuery.generated';
-import { TypeCustomerUserRoleEnum } from 'graphql/types';
+import { TypeCustomerUserRoleEnum, TypeOrderItemTypeEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
@@ -73,6 +73,9 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
             ? FlowTypesEnum.PaymentSuccess
             : FlowTypesEnum.PaymentAwaiting;
 
+    const orderPayment = orderData.order.items.find((item) => item.type === TypeOrderItemTypeEnum.Payment);
+    const orderTransport = orderData.order.items.find((item) => item.type === TypeOrderItemTypeEnum.Transport);
+
     return (
         <>
             <MetaRobots content="noindex" />
@@ -112,12 +115,16 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
                             <OrderConfirmationSummary
                                 totalPrice={orderData.order.totalPrice}
                                 payment={{
-                                    name: orderData.order.payment.name,
-                                    price: orderData.order.payment.price.priceWithVat,
+                                    name: orderPayment?.name ?? orderData.order.payment.name,
+                                    price:
+                                        orderPayment?.totalPrice.priceWithVat ??
+                                        orderData.order.payment.price.priceWithVat,
                                 }}
                                 transport={{
-                                    name: orderData.order.transport.name,
-                                    price: orderData.order.transport.price.priceWithVat,
+                                    name: orderTransport?.name ?? orderData.order.transport.name,
+                                    price:
+                                        orderTransport?.totalPrice.priceWithVat ??
+                                        orderData.order.transport.price.priceWithVat,
                                 }}
                             />
                         </div>
