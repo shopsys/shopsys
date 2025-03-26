@@ -20,6 +20,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroup;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
+use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\Brand;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
@@ -274,6 +275,9 @@ class LuigisBoxFeedItemTest extends TestCase
         $settingMock = $this->createMock(Setting::class);
         $settingMock->method('getForDomain')->willReturn(self::MOCKED_LUIGIS_BOX_RANK_SETTING);
 
+        $pricingSettingMock = $this->createMock(PricingSetting::class);
+        $pricingSettingMock->method('getSellingPriceType')->willReturn(PricingSetting::PRICE_TYPE_WITH_VAT);
+
         $this->luigisBoxProductFeedItemFactory = new LuigisBoxProductFeedItemFactory(
             $this->productPriceCalculationForCustomerUserMock,
             $this->currencyFacadeMock,
@@ -283,6 +287,7 @@ class LuigisBoxFeedItemTest extends TestCase
             $productAvailabilityFacade,
             $settingMock,
             new ImageUrlWithSizeHelper(),
+            $pricingSettingMock,
         );
     }
 
@@ -302,8 +307,7 @@ class LuigisBoxFeedItemTest extends TestCase
         self::assertNull($luigisBoxProductFeedItem->getImageLinkS());
         self::assertNull($luigisBoxProductFeedItem->getImageLinkM());
         self::assertNull($luigisBoxProductFeedItem->getImageLinkL());
-        self::assertThat($luigisBoxProductFeedItem->getPrice()->getPriceWithoutVat(), new IsMoneyEqual(Money::zero()));
-        self::assertThat($luigisBoxProductFeedItem->getPrice()->getPriceWithVat(), new IsMoneyEqual(Money::zero()));
+        self::assertThat($luigisBoxProductFeedItem->getPrice(), new IsMoneyEqual(Money::zero()));
         self::assertSame(self::EUR, $luigisBoxProductFeedItem->getCurrency()->getCode());
         self::assertNull($luigisBoxProductFeedItem->getBrand());
         self::assertSame([self::FLAG_NAME], $luigisBoxProductFeedItem->getFlagNames());

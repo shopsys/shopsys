@@ -6,11 +6,12 @@ namespace Shopsys\ProductFeed\LuigisBoxBundle\Model\FeedItem;
 
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper;
+use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
-use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
+use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade;
 use Shopsys\FrameworkBundle\Model\Product\Collection\ProductUrlsBatchLoader;
 use Shopsys\FrameworkBundle\Model\Product\Flag\Flag;
@@ -34,6 +35,7 @@ class LuigisBoxProductFeedItemFactory
      * @param \Shopsys\FrameworkBundle\Model\Product\Availability\ProductAvailabilityFacade $productAvailabilityFacade
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
      * @param \Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper $imageUrlWithSizeHelper
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      */
     public function __construct(
         protected readonly ProductPriceCalculationForCustomerUser $productPriceCalculationForCustomerUser,
@@ -44,6 +46,7 @@ class LuigisBoxProductFeedItemFactory
         protected readonly ProductAvailabilityFacade $productAvailabilityFacade,
         protected readonly Setting $setting,
         protected readonly ImageUrlWithSizeHelper $imageUrlWithSizeHelper,
+        protected readonly PricingSetting $pricingSetting,
     ) {
     }
 
@@ -126,27 +129,39 @@ class LuigisBoxProductFeedItemFactory
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    protected function getPrice(Product $product, DomainConfig $domainConfig): PriceInterface
+    protected function getPrice(Product $product, DomainConfig $domainConfig): Money
     {
-        return $this->productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId(
+        $price = $this->productPriceCalculationForCustomerUser->calculatePriceForCustomerUserAndDomainId(
             $product,
             $domainConfig->getId(),
         )->getPrice();
+
+        if ($this->pricingSetting->getSellingPriceType() === PricingSetting::PRICE_TYPE_WITH_VAT) {
+            return $price->getPriceWithVat();
+        }
+
+        return $price->getPriceWithoutVat();
     }
 
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \Shopsys\FrameworkBundle\Model\Pricing\PriceInterface
+     * @return \Shopsys\FrameworkBundle\Component\Money\Money
      */
-    protected function getBasicPrice(Product $product, DomainConfig $domainConfig): PriceInterface
+    protected function getBasicPrice(Product $product, DomainConfig $domainConfig): Money
     {
-        return $this->productPriceCalculationForCustomerUser->calculateBasicPriceForCustomerUserAndDomainId(
+        $basePrice = $this->productPriceCalculationForCustomerUser->calculateBasicPriceForCustomerUserAndDomainId(
             $product,
             $domainConfig->getId(),
         )->getPrice();
+
+        if ($this->pricingSetting->getSellingPriceType() === PricingSetting::PRICE_TYPE_WITH_VAT) {
+            return $basePrice->getPriceWithVat();
+        }
+
+        return $basePrice->getPriceWithoutVat();
     }
 
     /**
