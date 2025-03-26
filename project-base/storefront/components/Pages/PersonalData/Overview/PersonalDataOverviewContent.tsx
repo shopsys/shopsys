@@ -19,7 +19,7 @@ import { useErrorPopup } from 'utils/forms/useErrorPopup';
 import { showSuccessMessage } from 'utils/toasts/showSuccessMessage';
 
 type PersonalDataOverviewContentProps = {
-    contentSiteText: string | undefined;
+    contentSiteText: string | null | undefined;
 };
 
 export const PersonalDataOverviewContent: FC<PersonalDataOverviewContentProps> = ({ contentSiteText }) => {

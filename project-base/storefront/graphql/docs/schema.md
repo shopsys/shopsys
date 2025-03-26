@@ -7752,7 +7752,7 @@ Customer orders
 <tbody>
 <tr>
 <td colspan="2" valign="top"><strong id="personaldatapage.displaysitecontent">displaySiteContent</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 The HTML content of the site where a customer can request displaying his personal data
@@ -7770,7 +7770,7 @@ URL slug of display site
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong id="personaldatapage.exportsitecontent">exportSiteContent</strong></td>
-<td valign="top"><a href="#string">String</a>!</td>
+<td valign="top"><a href="#string">String</a></td>
 <td>
 
 The HTML content of the site where a customer can request exporting his personal data
