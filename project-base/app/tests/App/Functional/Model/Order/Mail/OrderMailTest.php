@@ -85,7 +85,7 @@ class OrderMailTest extends TransactionFunctionalTestCase
         )->disableOriginalConstructor()->getMock();
 
         $orderMail = new OrderMail(
-            'input_price',
+            'selling_price',
             $settingMock,
             $domainRouterFactoryMock,
             $twigMock,

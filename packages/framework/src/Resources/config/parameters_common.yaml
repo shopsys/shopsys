@@ -24,4 +24,4 @@ parameters:
     # Default extended classes mapping
     shopsys.entity_extension.map: {}
 
-    shopsys.mail_template.display_price: 'input_price'
+    shopsys.mail_template.display_price: 'selling_price'
