@@ -75,7 +75,7 @@ class ProductPriceCalculationTest extends TestCase
     public function testCalculatePriceOfMainVariantWithoutAnySellableVariants()
     {
         $productPriceCalculation = $this->getProductPriceCalculationWithInputPriceTypeAndVariants(
-            PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT,
+            PricingSetting::PRICE_TYPE_WITHOUT_VAT,
             [],
         );
 
@@ -94,7 +94,7 @@ class ProductPriceCalculationTest extends TestCase
     public function testGetMinimumPriceEmptyArray()
     {
         $productPriceCalculation = $this->getProductPriceCalculationWithInputPriceTypeAndVariants(
-            PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT,
+            PricingSetting::PRICE_TYPE_WITHOUT_VAT,
             [],
         );
 
@@ -110,7 +110,7 @@ class ProductPriceCalculationTest extends TestCase
     public function testGetMinimumPrice(array $prices, $minimumPrice)
     {
         $productPriceCalculation = $this->getProductPriceCalculationWithInputPriceTypeAndVariants(
-            PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT,
+            PricingSetting::PRICE_TYPE_WITHOUT_VAT,
             [],
         );
 
@@ -152,7 +152,7 @@ class ProductPriceCalculationTest extends TestCase
     public function testArePricesDifferent(array $prices, $arePricesDifferent)
     {
         $productPriceCalculation = $this->getProductPriceCalculationWithInputPriceTypeAndVariants(
-            PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT,
+            PricingSetting::PRICE_TYPE_WITHOUT_VAT,
             [],
         );
 
@@ -188,7 +188,7 @@ class ProductPriceCalculationTest extends TestCase
     public function testArePricesDifferentEmptyArray()
     {
         $productPriceCalculation = $this->getProductPriceCalculationWithInputPriceTypeAndVariants(
-            PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT,
+            PricingSetting::PRICE_TYPE_WITHOUT_VAT,
             [],
         );
 

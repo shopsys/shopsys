@@ -11,13 +11,14 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 class PricingSetting
 {
     public const string INPUT_PRICE_TYPE = 'inputPriceType';
+    public const string SELLING_PRICE_TYPE = 'sellingPriceType';
 
     public const string DEFAULT_CURRENCY = 'defaultCurrencyId';
     public const string DEFAULT_DOMAIN_CURRENCY = 'defaultDomainCurrencyId';
     public const string FREE_TRANSPORT_AND_PAYMENT_PRICE_LIMIT = 'freeTransportAndPaymentPriceLimit';
 
-    public const int INPUT_PRICE_TYPE_WITH_VAT = 1;
-    public const int INPUT_PRICE_TYPE_WITHOUT_VAT = 2;
+    public const int PRICE_TYPE_WITH_VAT = 1;
+    public const int PRICE_TYPE_WITHOUT_VAT = 2;
 
     /**
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
@@ -33,6 +34,14 @@ class PricingSetting
     public function getInputPriceType(): int
     {
         return $this->setting->get(self::INPUT_PRICE_TYPE);
+    }
+
+    /**
+     * @return int
+     */
+    public function getSellingPriceType(): int
+    {
+        return $this->setting->get(self::SELLING_PRICE_TYPE);
     }
 
     /**
@@ -90,11 +99,11 @@ class PricingSetting
     /**
      * @return array
      */
-    public function getInputPriceTypes(): array
+    public function getPriceTypes(): array
     {
         return [
-            self::INPUT_PRICE_TYPE_WITHOUT_VAT,
-            self::INPUT_PRICE_TYPE_WITH_VAT,
+            self::PRICE_TYPE_WITHOUT_VAT,
+            self::PRICE_TYPE_WITH_VAT,
         ];
     }
 }

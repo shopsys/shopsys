@@ -147,7 +147,7 @@ class ProductPickerController extends AdminBaseController
             $domainId,
         );
 
-        $basicPriceAmount = $this->pricingSetting->getInputPriceType() === PricingSetting::INPUT_PRICE_TYPE_WITH_VAT
+        $basicPriceAmount = $this->pricingSetting->getInputPriceType() === PricingSetting::PRICE_TYPE_WITH_VAT
             ? $basicPrice->getPrice()->getPriceWithVat()->getAmount()
             : $basicPrice->getPrice()->getPriceWithoutVat()->getAmount();
 

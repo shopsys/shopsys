@@ -39,7 +39,7 @@ class Version20180702111020 extends AbstractMigration
 
         if ($inputPriceTypeSettingCount <= 0) {
             /**
-             * value 2 stands for INPUT_PRICE_TYPE_WITHOUT_VAT
+             * value 2 stands for PRICE_TYPE_WITHOUT_VAT
              *
              * @see \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting
              */

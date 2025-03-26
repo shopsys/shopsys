@@ -106,7 +106,7 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
         Money $inputPriceWithVat,
         $vatPercent,
     ) {
-        $this->setting->set(PricingSetting::INPUT_PRICE_TYPE, PricingSetting::INPUT_PRICE_TYPE_WITH_VAT);
+        $this->setting->set(PricingSetting::INPUT_PRICE_TYPE, PricingSetting::PRICE_TYPE_WITH_VAT);
 
         $this->doTestOnKernelResponseRecalculateInputPrices(
             $inputPriceWithVat,
@@ -127,7 +127,7 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
         Money $inputPriceWithVat,
         $vatPercent,
     ) {
-        $this->setting->set(PricingSetting::INPUT_PRICE_TYPE, PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT);
+        $this->setting->set(PricingSetting::INPUT_PRICE_TYPE, PricingSetting::PRICE_TYPE_WITHOUT_VAT);
 
         $this->doTestOnKernelResponseRecalculateInputPrices(
             $inputPriceWithoutVat,

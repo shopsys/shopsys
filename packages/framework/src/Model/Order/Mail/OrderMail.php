@@ -410,7 +410,7 @@ class OrderMail implements MessageFactoryInterface
     protected function getDisplayPrice(): string
     {
         if ($this->mailTemplateDisplayPrice === static::DISPLAY_PRICE_INPUT) {
-            return $this->pricingSetting->getInputPriceType() === PricingSetting::INPUT_PRICE_TYPE_WITH_VAT
+            return $this->pricingSetting->getInputPriceType() === PricingSetting::PRICE_TYPE_WITH_VAT
                 ? static::DISPLAY_PRICE_WITH_VAT
                 : static::DISPLAY_PRICE_WITHOUT_VAT;
         }

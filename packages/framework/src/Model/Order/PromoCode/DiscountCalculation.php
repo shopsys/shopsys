@@ -50,7 +50,7 @@ class DiscountCalculation
             return null;
         }
 
-        if ($this->pricingSetting->getInputPriceType() === PricingSetting::INPUT_PRICE_TYPE_WITH_VAT) {
+        if ($this->pricingSetting->getInputPriceType() === PricingSetting::PRICE_TYPE_WITH_VAT) {
             $priceVatAmount = $this->priceCalculation->getVatAmountByPriceWithVatForVatPercent($priceWithVat, $vatPercent, $currency);
             $priceWithoutVat = $priceWithVat->subtract($priceVatAmount);
         } else {
@@ -81,7 +81,7 @@ class DiscountCalculation
         float $vatPercent,
         Currency $currency,
     ): PriceInterface {
-        if ($this->pricingSetting->getInputPriceType() === PricingSetting::INPUT_PRICE_TYPE_WITH_VAT) {
+        if ($this->pricingSetting->getInputPriceType() === PricingSetting::PRICE_TYPE_WITH_VAT) {
             if ($discount->isGreaterThan($totalPrice->getPriceWithVat())) {
                 return $totalPrice;
             }

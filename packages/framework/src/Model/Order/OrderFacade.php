@@ -325,14 +325,14 @@ class OrderFacade
     ): void {
         if ($orderItemData->usePriceCalculation) {
             switch ($this->pricingSetting->getInputPriceType()) {
-                case PricingSetting::INPUT_PRICE_TYPE_WITH_VAT:
+                case PricingSetting::PRICE_TYPE_WITH_VAT:
                     $orderItemData->unitPriceWithoutVat = $this->orderItemPriceCalculation->calculatePriceWithoutVatForInputPriceWithVat(
                         $orderItemData,
                         $domainId,
                     );
 
                     break;
-                case PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT:
+                case PricingSetting::PRICE_TYPE_WITHOUT_VAT:
                     $orderItemData->unitPriceWithVat = $this->orderItemPriceCalculation->calculatePriceWithVatForInputPriceWithoutVat(
                         $orderItemData,
                         $domainId,

@@ -93,7 +93,7 @@ class PriceListProductPriceDataFactory
             $domainId,
         );
 
-        if ($this->pricingSetting->getInputPriceType() === PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT) {
+        if ($this->pricingSetting->getInputPriceType() === PricingSetting::PRICE_TYPE_WITHOUT_VAT) {
             return $basicPrice->getPrice()->getPriceWithoutVat();
         }
 

@@ -265,7 +265,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
 
         $this->assertArrayHasKey('name', $changeSet);
 
-        if ($this->setting->get(PricingSetting::INPUT_PRICE_TYPE) === PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT) {
+        if ($this->setting->get(PricingSetting::INPUT_PRICE_TYPE) === PricingSetting::PRICE_TYPE_WITHOUT_VAT) {
             $this->assertArrayHasKey('unitPriceWithVat', $changeSet);
             $this->assertSame($expectedPrice->getAmount(), $changeSet['unitPriceWithVat']['newReadableValue']);
         } else {

@@ -120,7 +120,7 @@ class FreeTransportAndPaymentFacade
             return null;
         }
 
-        if ($this->pricingSetting->getInputPriceType() === PricingSetting::INPUT_PRICE_TYPE_WITH_VAT) {
+        if ($this->pricingSetting->getInputPriceType() === PricingSetting::PRICE_TYPE_WITH_VAT) {
             return $limit->subtract($productsPrice->getPriceWithVat());
         }
 

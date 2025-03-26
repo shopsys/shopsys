@@ -50,7 +50,7 @@ class ProductsFilteringOptionsTest extends GraphQlTestCase
     {
         $query = $this->getElectronicsQuery();
 
-        if ($this->setting->get(PricingSetting::INPUT_PRICE_TYPE) === PricingSetting::INPUT_PRICE_TYPE_WITH_VAT) {
+        if ($this->setting->get(PricingSetting::INPUT_PRICE_TYPE) === PricingSetting::PRICE_TYPE_WITH_VAT) {
             $minimalPrice = $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('319');
         } else {
             $minimalPrice = $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('318.85');

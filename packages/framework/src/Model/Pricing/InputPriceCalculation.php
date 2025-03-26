@@ -19,9 +19,9 @@ class InputPriceCalculation
      */
     public function getInputPrice(int $inputPriceType, Money $basePriceWithVat, string $vatPercent): Money
     {
-        if ($inputPriceType === PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT) {
+        if ($inputPriceType === PricingSetting::PRICE_TYPE_WITHOUT_VAT) {
             $inputPrice = $this->getInputPriceWithoutVat($basePriceWithVat, $vatPercent);
-        } elseif ($inputPriceType === PricingSetting::INPUT_PRICE_TYPE_WITH_VAT) {
+        } elseif ($inputPriceType === PricingSetting::PRICE_TYPE_WITH_VAT) {
             $inputPrice = $basePriceWithVat->round(static::INPUT_PRICE_SCALE);
         } else {
             throw new InvalidInputPriceTypeException(

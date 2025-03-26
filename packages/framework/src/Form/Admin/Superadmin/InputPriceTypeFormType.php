@@ -26,8 +26,8 @@ class InputPriceTypeFormType extends AbstractType
             ->add('type', ChoiceType::class, [
                 'label' => t('Entry price type'),
                 'choices' => [
-                    t('Excluding VAT') => PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT,
-                    t('Including VAT') => PricingSetting::INPUT_PRICE_TYPE_WITH_VAT,
+                    t('Excluding VAT') => PricingSetting::PRICE_TYPE_WITHOUT_VAT,
+                    t('Including VAT') => PricingSetting::PRICE_TYPE_WITH_VAT,
                 ],
                 'constraints' => [
                     new Constraints\NotBlank(['message' => 'Please enter input prices']),

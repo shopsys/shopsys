@@ -320,20 +320,20 @@ abstract class GraphQlTestCase extends ApplicationTestCase
                 $currencyCzk,
                 $domainId,
             ),
-            PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT,
+            PricingSetting::PRICE_TYPE_WITHOUT_VAT,
             $vat,
             $currency,
         );
 
         $basePrice = $basePrice->multiply($quantity);
 
-        if ($this->pricingSetting->getInputPriceType() === PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT) {
+        if ($this->pricingSetting->getInputPriceType() === PricingSetting::PRICE_TYPE_WITHOUT_VAT) {
             return $basePrice;
         }
 
         return $this->basePriceCalculation->calculateRoundedBasePrice(
             $basePrice->getPriceWithVat(),
-            PricingSetting::INPUT_PRICE_TYPE_WITH_VAT,
+            PricingSetting::PRICE_TYPE_WITH_VAT,
             $vat,
             $currency,
         );
