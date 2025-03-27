@@ -43,6 +43,22 @@ Shopsys\FrameworkBundle\Model\Product\ProductDataFactory:
 
     To see how it works in practice, check out `\Tests\App\Functional\EntityExtension\EntityExtensionTest` that tests end-to-end extensibility of `Product`, `Category` and `OrderItem`.
 
+### How can I remove property from parent entity?
+
+You can use the `#[RemoveColumn]` attribute to remove a column from the parent entity.
+Simply use this attribute in the child entity, and the column will be removed from the parent entity.
+
+```php
+use Shopsys\FrameworkBundle\Component\Doctrine\Attribute\RemoveColumn;
+
+class Product extends BaseProduct
+{
+    #[RemoveColumn]
+    protected $catnum;
+```
+
+The `catnum` column will be removed from the parent entity and Doctrine will no longer map it.
+
 ## Limitations
 
 ### OrderItem

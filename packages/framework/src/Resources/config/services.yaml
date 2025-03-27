@@ -164,6 +164,10 @@ services:
 
     Shopsys\FrameworkBundle\Component\Doctrine\QueryBuilderExtender: ~
 
+    Shopsys\FrameworkBundle\Component\Doctrine\RemoveEntityColumnSubscriber:
+        tags:
+            - { name: doctrine.event_subscriber, priority: -100 }
+
     Shopsys\FrameworkBundle\Component\Doctrine\SqlQuoter: ~
 
     Shopsys\FrameworkBundle\Component\Doctrine\StringColumnsFinder: ~

@@ -33,10 +33,6 @@ services:
 
     App\Component\Doctrine\QueryBuilderExtender: ~
 
-    App\Component\Doctrine\RemoveMappingsSubscriber:
-        tags:
-            - { name: doctrine.event_subscriber, priority: -100 }
-
     App\Component\Image\ImageFacade:
         arguments:
             $imageUrlPrefix: '%shopsys.image_url_prefix%'
