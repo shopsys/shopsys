@@ -68,6 +68,7 @@ class SocialNetworkController extends AbstractController
                     $loginResultData->showCartMergeInfo,
                     $loginResultData->isRegistration,
                 ),
+                'showCartMergeInfo' => $loginResultData->showCartMergeInfo ? 'true' : 'false',
             ]);
         } catch (SocialNetworkLoginException $exception) {
             return $this->redirect($this->getRefererUrl($request, $type, true));
