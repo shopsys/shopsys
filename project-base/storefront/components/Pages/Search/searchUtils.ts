@@ -1,20 +1,23 @@
 import { getEndCursor } from 'components/Blocks/Product/Filter/utils/getEndCursor';
+import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { DEFAULT_PAGE_SIZE } from 'config/constants';
 import { TypeListedProductConnectionFragment } from 'graphql/requests/products/fragments/ListedProductConnectionFragment.generated';
 import {
+    SearchProductsQueryDocument,
     TypeSearchProductsQuery,
     TypeSearchProductsQueryVariables,
-    SearchProductsQueryDocument,
 } from 'graphql/requests/search/queries/SearchProductsQuery.generated';
 import {
+    SearchQueryDocument,
     TypeSearchQuery,
     TypeSearchQueryVariables,
-    SearchQueryDocument,
 } from 'graphql/requests/search/queries/SearchQuery.generated';
-import { TypeProductOrderingModeEnum, Maybe, TypeProductFilter } from 'graphql/types';
-import { useRef, useState, useEffect } from 'react';
+import { Maybe, TypeProductFilter, TypeProductOrderingModeEnum } from 'graphql/types';
+import { useRouter } from 'next/router';
+import { useEffect, useRef, useState } from 'react';
 import { useCookiesStore } from 'store/useCookiesStore';
-import { useClient, Client } from 'urql';
+import { Client, useClient } from 'urql';
+import { isExpectedPriceFilterError } from 'utils/errors/expectedErrors';
 import { mapParametersFilter } from 'utils/filterOptions/mapParametersFilter';
 import { calculatePageSize } from 'utils/loadMore/calculatePageSize';
 import { getPageSizeInfo } from 'utils/loadMore/getPageSizeInfo';
@@ -25,6 +28,7 @@ import { useCurrentLoadMoreQuery } from 'utils/queryParams/useCurrentLoadMoreQue
 import { useCurrentPageQuery } from 'utils/queryParams/useCurrentPageQuery';
 import { useCurrentSearchStringQuery } from 'utils/queryParams/useCurrentSearchStringQuery';
 import { useCurrentSortQuery } from 'utils/queryParams/useCurrentSortQuery';
+import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
 
 export const useSearchProductsData = (totalProductCount?: number) => {
     const client = useClient();
@@ -222,24 +226,54 @@ export const useSearchQuery = (searchString: string | undefined) => {
     const [searchData, setSearchData] = useState<TypeSearchQuery | undefined>(undefined);
     const [isSearchFetching, setIsSearchFetching] = useState(true);
 
+    const router = useRouter();
+    const { url } = useDomainConfig();
+    const [searchUrl] = getInternationalizedStaticUrls(['/search'], url);
+
+    const fetchSearchData = async (
+        mappedFilter: TypeProductFilter | null,
+        currentSort: TypeProductOrderingModeEnum | null,
+    ) => {
+        const searchResponse = await client.query<TypeSearchQuery, TypeSearchQueryVariables>(SearchQueryDocument, {
+            search: searchString!,
+            isAutocomplete: false,
+            userIdentifier,
+            endCursor,
+            filter: mappedFilter,
+            orderingMode: currentSort,
+            pageSize,
+            parameters,
+        });
+
+        return searchResponse;
+    };
+
+    const refetchSearchData = async () => {
+        router.replace({
+            pathname: searchUrl,
+            query: { q: searchString },
+        });
+
+        fetchSearchData(null, null).then((retryResponse) => {
+            setSearchData(retryResponse.data);
+            setIsSearchFetching(false);
+        });
+    };
+
     useEffect(() => {
         if (searchString && userIdentifier) {
             setIsSearchFetching(true);
-            client
-                .query<TypeSearchQuery, TypeSearchQueryVariables>(SearchQueryDocument, {
-                    search: searchString!,
-                    isAutocomplete: false,
-                    userIdentifier,
-                    endCursor,
-                    filter: mappedFilter,
-                    orderingMode: currentSort,
-                    pageSize,
-                    parameters,
-                })
-                .then((searchResponse) => {
-                    setSearchData(searchResponse.data);
-                    setIsSearchFetching(false);
-                });
+
+            fetchSearchData(mappedFilter, currentSort).then((searchResponse) => {
+                if (isExpectedPriceFilterError(searchResponse.error)) {
+                    refetchSearchData();
+
+                    return;
+                }
+
+                setSearchData(searchResponse.data);
+                setIsSearchFetching(false);
+            });
         }
     }, [searchString, userIdentifier]);
 

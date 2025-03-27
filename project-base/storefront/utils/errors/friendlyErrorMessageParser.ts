@@ -38,11 +38,13 @@ export const getUserFriendlyErrors = (originalError: CombinedError, t: Translate
 
             if ('userCode' in error.extensions) {
                 const errorExtensions = error.extensions as { userCode: ApplicationErrorsType };
+
                 if (isNoLogError(errorExtensions.userCode) || isNoFlashMessageError(errorExtensions.userCode)) {
                     errors.applicationError = {
                         type: errorExtensions.userCode,
                         message: error.message,
                     };
+
                     continue;
                 }
 
@@ -51,6 +53,7 @@ export const getUserFriendlyErrors = (originalError: CombinedError, t: Translate
                         type: errorExtensions.userCode,
                         message: getErrorMessage(errorExtensions.userCode, t),
                     };
+
                     continue;
                 }
             }
