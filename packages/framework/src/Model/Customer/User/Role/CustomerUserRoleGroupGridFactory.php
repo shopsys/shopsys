@@ -53,7 +53,7 @@ class CustomerUserRoleGroupGridFactory implements GridFactoryInterface
     protected function getGridQueryBuilder(): QueryBuilder
     {
         return $this->customerUserRoleGroupRepository->getAllQueryBuilderByLocale(
-            $this->localization->getAdminLocaleWithFallback(),
+            $this->localization->getCurrentLocaleForTranslatableEntities(),
         );
     }
 }

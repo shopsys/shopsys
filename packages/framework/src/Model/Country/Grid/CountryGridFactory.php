@@ -34,7 +34,7 @@ class CountryGridFactory implements GridFactoryInterface
     public function create(): Grid
     {
         $queryBuilder = $this->countryRepository
-            ->createSortedJoinedQueryBuilder($this->localization->getAdminLocaleWithFallback(), $this->domain->getId())
+            ->createSortedJoinedQueryBuilder($this->localization->getCurrentLocaleForTranslatableEntities(), $this->domain->getId())
             ->addSelect('ct');
 
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'c.id');

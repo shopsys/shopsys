@@ -36,7 +36,7 @@ class TestTranslatableListener extends TranslatableListener
     public function getCurrentLocale()
     {
         if ($this->administrationFacade->isInAdmin()) {
-            return $this->localization->getAdminLocaleWithFallback();
+            return $this->localization->getCurrentLocaleForTranslatableEntities();
         }
 
         try {

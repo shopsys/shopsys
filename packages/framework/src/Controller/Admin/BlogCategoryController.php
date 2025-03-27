@@ -128,12 +128,12 @@ class BlogCategoryController extends AdminBaseController
 
         if ($selectedDomainId === null) {
             $blogCategoriesWithPreloadedChildren = $this->blogCategoryFacade->getAllBlogCategoriesWithPreloadedChildren(
-                $this->localization->getAdminLocaleWithFallback(),
+                $this->localization->getCurrentLocaleForTranslatableEntities(),
             );
         } else {
             $blogCategoriesWithPreloadedChildren = $this->blogCategoryFacade->getVisibleBlogCategoriesWithPreloadedChildrenOnDomain(
                 $selectedDomainId,
-                $this->localization->getAdminLocaleWithFallback(),
+                $this->localization->getCurrentLocaleForTranslatableEntities(),
             );
         }
 

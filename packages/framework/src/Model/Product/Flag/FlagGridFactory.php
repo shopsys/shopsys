@@ -35,7 +35,7 @@ class FlagGridFactory implements GridFactoryInterface
             ->select('f, ft')
             ->from(Flag::class, 'f')
             ->join('f.translations', 'ft', Join::WITH, 'ft.locale = :locale')
-            ->setParameter('locale', $this->localization->getAdminLocaleWithFallback());
+            ->setParameter('locale', $this->localization->getCurrentLocaleForTranslatableEntities());
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'f.id');
 
         $grid = $this->gridFactory->create('flagList', $dataSource);

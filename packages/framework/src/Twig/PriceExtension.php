@@ -212,7 +212,7 @@ class PriceExtension extends AbstractExtension
     protected function formatCurrency(Money $price, Currency $currency, ?string $locale = null): string
     {
         if ($locale === null) {
-            $locale = $this->localization->getLocale();
+            $locale = $this->localization->getRequestLocale();
         }
 
         $currencyFormatter = $this->currencyFormatterFactory->createByLocaleAndCurrency($locale, $currency);
@@ -230,7 +230,7 @@ class PriceExtension extends AbstractExtension
      */
     public function getCurrencySymbolByDomainId(int $domainId): string
     {
-        $locale = $this->localization->getLocale();
+        $locale = $this->localization->getRequestLocale();
 
         return $this->getCurrencySymbolByDomainIdAndLocale($domainId, $locale);
     }
@@ -264,7 +264,7 @@ class PriceExtension extends AbstractExtension
      */
     public function getDefaultCurrencySymbol(): string
     {
-        $locale = $this->localization->getLocale();
+        $locale = $this->localization->getRequestLocale();
 
         return $this->getDefaultCurrencySymbolByLocale($locale);
     }
@@ -287,7 +287,7 @@ class PriceExtension extends AbstractExtension
      */
     public function getCurrencySymbolByCurrencyId(int $currencyId): string
     {
-        $locale = $this->localization->getLocale();
+        $locale = $this->localization->getRequestLocale();
 
         return $this->getCurrencySymbolByCurrencyIdAndLocale($currencyId, $locale);
     }

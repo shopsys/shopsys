@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Command;
 
 use Override;
-use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -19,10 +19,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class AdminLocalesInfoCommand extends Command
 {
     /**
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade $administratorLocalizationFacade
      */
     public function __construct(
-        protected readonly Localization $localization,
+        protected readonly AdministratorLocalizationFacade $administratorLocalizationFacade,
     ) {
         parent::__construct();
     }
@@ -37,7 +37,7 @@ class AdminLocalesInfoCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $io->writeln(implode("\t", $this->localization->getAllowedAdminLocales()));
+        $io->writeln(implode("\t", $this->administratorLocalizationFacade->getAllowedAdminLocales()));
 
         return Command::SUCCESS;
     }

@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Component\EntityLog\Model;
 use Shopsys\FrameworkBundle\Component\EntityLog\Attribute\LoggableEntityConfig;
 use Shopsys\FrameworkBundle\Component\EntityLog\Detection\DetectionFacade;
 use Shopsys\FrameworkBundle\Component\EntityLog\Exception\NotLoggableException;
+use Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class EntityLogFacade
@@ -17,6 +18,7 @@ class EntityLogFacade
      * @param \Shopsys\FrameworkBundle\Component\EntityLog\Detection\DetectionFacade $detectionFacade
      * @param \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogFactory $entityLogFactory
      * @param \Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogDataFactory $entityLogDataFactory
+     * @param \Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade $administratorLocalizationFacade
      */
     public function __construct(
         protected readonly EntityLogRepository $entityLogRepository,
@@ -24,6 +26,7 @@ class EntityLogFacade
         protected readonly DetectionFacade $detectionFacade,
         protected readonly EntityLogFactory $entityLogFactory,
         protected readonly EntityLogDataFactory $entityLogDataFactory,
+        protected readonly AdministratorLocalizationFacade $administratorLocalizationFacade,
     ) {
     }
 
@@ -119,9 +122,19 @@ class EntityLogFacade
         }
 
         if ($loggableSetup->isLocalized()) {
-            return call_user_func([$entity, $functionName], $this->localization->getDefaultAdminLocale());
+            return call_user_func([$entity, $functionName], $this->getLocaleForEntityLog());
         }
 
         return call_user_func([$entity, $functionName]);
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocaleForEntityLog(): string
+    {
+        $defaultAdminLocale = $this->administratorLocalizationFacade->getDefaultAdminLocale();
+
+        return $this->localization->getFallbackLocaleIfLocaleIsNotUsedOnAnyDomain($defaultAdminLocale);
     }
 }

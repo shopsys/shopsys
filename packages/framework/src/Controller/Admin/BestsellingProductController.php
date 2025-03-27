@@ -43,7 +43,7 @@ class BestsellingProductController extends AdminBaseController
 
         $categoriesWithPreloadedChildren = $this->categoryFacade->getVisibleCategoriesWithPreloadedChildrenForDomain(
             $domainId,
-            $this->localization->getAdminLocaleWithFallback(),
+            $this->localization->getCurrentLocaleForTranslatableEntities(),
         );
 
         $bestsellingProductsInCategories = $this->manualBestsellingProductFacade->getCountsIndexedByCategoryId(

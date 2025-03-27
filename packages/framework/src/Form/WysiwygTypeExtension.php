@@ -39,7 +39,7 @@ class WysiwygTypeExtension extends AbstractTypeExtension
         $resolver->setDefaults([
             'config' => [
                 'contentsCss' => $this->getContentCss(),
-                'language' => $this->localization->getLocale(),
+                'language' => $this->localization->getRequestLocale(),
                 'format_tags' => static::ALLOWED_FORMAT_TAGS,
             ],
         ]);

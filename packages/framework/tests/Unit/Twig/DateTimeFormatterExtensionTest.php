@@ -60,10 +60,10 @@ class DateTimeFormatterExtensionTest extends TestCase
     {
         $localizationMock = $this->getMockBuilder(Localization::class)
             ->disableOriginalConstructor()
-            ->onlyMethods(['getLocale'])
+            ->onlyMethods(['getRequestLocale'])
             ->getMock();
 
-        $localizationMock->expects($this->any())->method('getLocale')
+        $localizationMock->expects($this->any())->method('getRequestLocale')
             ->willReturn($locale);
 
         return $localizationMock;

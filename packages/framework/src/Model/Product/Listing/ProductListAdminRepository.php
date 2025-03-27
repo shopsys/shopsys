@@ -52,7 +52,7 @@ class ProductListAdminRepository
             )
             ->leftJoin('p.translations', 'pt', Join::WITH, 'pt.locale = :locale')
             ->setParameters([
-                'locale' => $this->localization->getAdminLocaleWithFallback(),
+                'locale' => $this->localization->getCurrentLocaleForTranslatableEntities(),
                 'pricingGroupId' => $pricingGroupId,
             ]);
 

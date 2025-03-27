@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Form\Admin\Pricing\Currency;
 use CommerceGuys\Intl\Currency\CurrencyRepositoryInterface;
 use Override;
 use Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory;
-use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyData;
 use Symfony\Component\Form\AbstractType;
@@ -22,11 +21,9 @@ class CurrencyFormType extends AbstractType
 {
     /**
      * @param \CommerceGuys\Intl\Currency\CurrencyRepositoryInterface $intlCurrencyRepository
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
         private readonly CurrencyRepositoryInterface $intlCurrencyRepository,
-        private readonly Localization $localization,
     ) {
     }
 
@@ -37,7 +34,7 @@ class CurrencyFormType extends AbstractType
     #[Override]
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $intlCurrencies = $this->intlCurrencyRepository->getAll($this->localization->getLocale());
+        $intlCurrencies = $this->intlCurrencyRepository->getAll();
 
         $possibleCurrencyCodes = [];
 

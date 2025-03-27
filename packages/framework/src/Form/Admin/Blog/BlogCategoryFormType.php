@@ -107,9 +107,9 @@ class BlogCategoryFormType extends AbstractType
     private function createSettingsGroup(FormBuilderInterface $builder, array $options): FormBuilderInterface
     {
         if ($options['blogCategory'] !== null) {
-            $parentChoices = $this->blogCategoryFacade->getTranslatedAllWithoutBranch($options['blogCategory'], $this->localization->getAdminLocaleWithFallback());
+            $parentChoices = $this->blogCategoryFacade->getTranslatedAllWithoutBranch($options['blogCategory'], $this->localization->getCurrentLocaleForTranslatableEntities());
         } else {
-            $parentChoices = $this->blogCategoryFacade->getTranslatedAll($this->localization->getAdminLocaleWithFallback());
+            $parentChoices = $this->blogCategoryFacade->getTranslatedAll($this->localization->getCurrentLocaleForTranslatableEntities());
         }
 
         $builderSettingsGroup = $builder->create('settings', GroupType::class, [

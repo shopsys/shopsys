@@ -139,12 +139,12 @@ class CategoryController extends AdminBaseController
 
         if ($selectedDomainId === null) {
             $categoriesWithPreloadedChildren = $this->categoryFacade->getAllCategoriesWithPreloadedChildren(
-                $this->localization->getAdminLocaleWithFallback(),
+                $this->localization->getCurrentLocaleForTranslatableEntities(),
             );
         } else {
             $categoriesWithPreloadedChildren = $this->categoryFacade->getVisibleCategoriesWithPreloadedChildrenForDomain(
                 $selectedDomainId,
-                $this->localization->getAdminLocaleWithFallback(),
+                $this->localization->getCurrentLocaleForTranslatableEntities(),
             );
         }
 

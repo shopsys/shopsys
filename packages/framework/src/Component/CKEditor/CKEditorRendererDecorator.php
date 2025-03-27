@@ -5,17 +5,14 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Component\CKEditor;
 
 use FOS\CKEditorBundle\Renderer\CKEditorRendererInterface;
-use Shopsys\FrameworkBundle\Model\Localization\Localization;
 
 class CKEditorRendererDecorator implements CKEditorRendererInterface
 {
     /**
      * @param \FOS\CKEditorBundle\Renderer\CKEditorRendererInterface $baseCkEditorRenderer
-     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
         protected readonly CKEditorRendererInterface $baseCkEditorRenderer,
-        protected readonly Localization $localization,
     ) {
     }
 
@@ -45,8 +42,6 @@ class CKEditorRendererDecorator implements CKEditorRendererInterface
      */
     public function renderWidget(string $id, array $config, array $options = []): string
     {
-        $config['language'] = $this->getRequestLanguage();
-
         return sprintf(
             '$("#%s-preview").click(function() {
                 %s
@@ -109,13 +104,5 @@ class CKEditorRendererDecorator implements CKEditorRendererInterface
     public function renderTemplate(string $name, array $template): string
     {
         return $this->baseCkEditorRenderer->renderTemplate($name, $template);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getRequestLanguage(): string
-    {
-        return $this->localization->getAdminLocale();
     }
 }

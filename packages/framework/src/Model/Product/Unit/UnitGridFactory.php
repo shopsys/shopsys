@@ -35,7 +35,7 @@ class UnitGridFactory implements GridFactoryInterface
             ->select('u, ut')
             ->from(Unit::class, 'u')
             ->join('u.translations', 'ut', Join::WITH, 'ut.locale = :locale')
-            ->setParameter('locale', $this->localization->getAdminLocaleWithFallback());
+            ->setParameter('locale', $this->localization->getCurrentLocaleForTranslatableEntities());
         $dataSource = new QueryBuilderDataSource($queryBuilder, 'u.id');
 
         $grid = $this->gridFactory->create('unitList', $dataSource);

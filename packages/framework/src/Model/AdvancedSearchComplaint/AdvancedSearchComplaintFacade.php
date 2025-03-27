@@ -76,7 +76,7 @@ class AdvancedSearchComplaintFacade
      */
     public function getQueryBuilderByAdvancedSearchData(array $advancedSearchData): QueryBuilder
     {
-        $queryBuilder = $this->complaintRepository->getComplaintsQueryBuilder($this->localization->getAdminLocaleWithFallback());
+        $queryBuilder = $this->complaintRepository->getComplaintsQueryBuilder($this->localization->getCurrentLocaleForTranslatableEntities());
         $this->advancedSearchQueryBuilderExtender->extendByAdvancedSearchData($queryBuilder, $advancedSearchData);
 
         return $queryBuilder;
@@ -89,7 +89,7 @@ class AdvancedSearchComplaintFacade
     public function getComplaintListQueryBuilderByQuickSearchData(
         QuickSearchFormData $quickSearchData,
     ): QueryBuilder {
-        $queryBuilder = $this->complaintRepository->getComplaintsQueryBuilder($this->localization->getAdminLocaleWithFallback());
+        $queryBuilder = $this->complaintRepository->getComplaintsQueryBuilder($this->localization->getCurrentLocaleForTranslatableEntities());
 
         if ($quickSearchData->text !== null && $quickSearchData->text !== '') {
             $queryBuilder

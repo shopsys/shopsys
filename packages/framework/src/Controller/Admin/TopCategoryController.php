@@ -40,7 +40,7 @@ class TopCategoryController extends AdminBaseController
 
         $form = $this->createForm(TopCategoriesFormType::class, $formData, [
             'domain_id' => $domainId,
-            'locale' => $this->localization->getAdminLocaleWithFallback(),
+            'locale' => $this->localization->getCurrentLocaleForTranslatableEntities(),
         ]);
         $form->handleRequest($request);
 
