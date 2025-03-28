@@ -18,11 +18,4 @@ class {{ migrationClassName }} extends AbstractMigration
         $this->sql('{{ sqlCommand|raw }}');
 {% endfor %}
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    public function down(Schema $schema): void
-    {
-    }
 }

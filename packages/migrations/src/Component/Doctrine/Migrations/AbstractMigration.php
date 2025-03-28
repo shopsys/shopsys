@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\MigrationBundle\Component\Doctrine\Migrations;
 
 use Doctrine\DBAL\Cache\QueryCacheProfile;
+use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration as DoctrineAbstractMigration;
 use Doctrine\Migrations\Query\Query;
 use Exception;
@@ -131,5 +132,13 @@ abstract class AbstractMigration extends DoctrineAbstractMigration
         return $this->sql('SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = :table_name)', [
             'table_name' => $tableName,
         ])->fetchOne();
+    }
+
+    /**
+     * @param \Doctrine\DBAL\Schema\Schema $schema
+     */
+    #[Override]
+    public function down(Schema $schema): void
+    {
     }
 }
