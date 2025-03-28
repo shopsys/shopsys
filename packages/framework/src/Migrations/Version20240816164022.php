@@ -22,12 +22,4 @@ class Version20240816164022 extends AbstractMigration
 
         $this->sql('ALTER TABLE complaints ALTER domain_id SET NOT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

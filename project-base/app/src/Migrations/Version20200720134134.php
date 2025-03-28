@@ -19,12 +19,4 @@ class Version20200720134134 extends AbstractMigration
         $this->sql('ALTER TABLE products ALTER catnum SET NOT NULL');
         $this->sql('CREATE UNIQUE INDEX UNIQ_B3BA5A5A5CAFC31D ON products (catnum)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

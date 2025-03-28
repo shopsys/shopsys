@@ -19,12 +19,4 @@ class Version20231112021215 extends AbstractMigration
         $this->sql('ALTER TABLE products DROP COLUMN recalculate_visibility');
         $this->sql('ALTER TABLE products DROP COLUMN calculated_visibility');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

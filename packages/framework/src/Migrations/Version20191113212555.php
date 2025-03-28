@@ -18,12 +18,4 @@ class Version20191113212555 extends AbstractMigration
     {
         $this->sql('ALTER TABLE administrators DROP COLUMN superadmin');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

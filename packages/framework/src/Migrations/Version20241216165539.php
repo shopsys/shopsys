@@ -19,12 +19,4 @@ class Version20241216165539 extends AbstractMigration
         $this->sql('ALTER TABLE categories ADD automated_filters JSON NOT NULL DEFAULT \'{}\'');
         $this->sql('ALTER TABLE categories ALTER automated_filters DROP DEFAULT');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

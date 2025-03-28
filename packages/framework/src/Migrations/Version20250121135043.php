@@ -21,12 +21,4 @@ class Version20250121135043 extends AbstractMigration
             $this->sql('ALTER TABLE slider_items ADD datetime_visible_to TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL');
         }
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

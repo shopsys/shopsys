@@ -38,12 +38,4 @@ class Version20180702111017 extends AbstractMigration
             EXECUTE PROCEDURE set_main_variant_price_recalculation_by_product_visibility();
         ');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

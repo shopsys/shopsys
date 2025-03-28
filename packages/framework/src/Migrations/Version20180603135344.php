@@ -28,12 +28,4 @@ class Version20180603135344 extends AbstractMigration
             'INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'defaultUnitId\', 0, null, \'integer\')',
         );
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

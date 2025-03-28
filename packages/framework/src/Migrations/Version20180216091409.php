@@ -27,12 +27,4 @@ class Version20180216091409 extends AbstractMigration implements ContainerAwareI
             );
         }
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

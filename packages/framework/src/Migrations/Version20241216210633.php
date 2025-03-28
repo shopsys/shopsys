@@ -18,12 +18,4 @@ class Version20241216210633 extends AbstractMigration
     {
         $this->sql('ALTER TABLE stores DROP contact_info');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

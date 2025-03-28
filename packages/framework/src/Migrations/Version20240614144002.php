@@ -22,12 +22,4 @@ class Version20240614144002 extends AbstractMigration
         $this->sql('UPDATE order_statuses SET type = \'done\' WHERE type = \'3\'');
         $this->sql('UPDATE order_statuses SET type = \'cancelled\' WHERE type = \'4\'');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

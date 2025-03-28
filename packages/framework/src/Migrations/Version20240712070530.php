@@ -18,12 +18,4 @@ class Version20240712070530 extends AbstractMigration
     {
         $this->sql('ALTER TABLE uploaded_files_relations ADD position INT NOT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

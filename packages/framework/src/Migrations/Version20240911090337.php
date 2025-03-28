@@ -18,12 +18,4 @@ class Version20240911090337 extends AbstractMigration
     {
         $this->sql('ALTER TABLE transports DROP COLUMN max_weight');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

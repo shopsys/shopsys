@@ -39,12 +39,4 @@ class Version20160322180746 extends AbstractMigration
         $this->sql('ALTER SEQUENCE availabilities_translations_id_seq RENAME TO availability_translations_id_seq');
         $this->sql('ALTER SEQUENCE parameter_titles_translations_id_seq RENAME TO parameter_translations_id_seq');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

@@ -31,12 +31,4 @@ class Version20240710123712 extends AbstractMigration
             ADD
                 CONSTRAINT FK_5474CBC4276973A0 FOREIGN KEY (uploaded_file_id) REFERENCES uploaded_files (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

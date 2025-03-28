@@ -26,12 +26,4 @@ class Version20231204154157 extends AbstractMigration
 
         $this->sql('DELETE FROM setting_values WHERE name = :name', ['name' => 'deliveryDayOnStock']);
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

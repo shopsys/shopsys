@@ -44,12 +44,4 @@ class Version20180327093930 extends AbstractMigration
             ADD
                 CONSTRAINT FK_FE112A6912469DE2 FOREIGN KEY (category_id) REFERENCES categories (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

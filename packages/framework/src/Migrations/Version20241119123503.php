@@ -32,12 +32,4 @@ class Version20241119123503 extends AbstractMigration
 
         $this->sql('ALTER TABLE seo_page_domains ALTER page_slug DROP DEFAULT');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

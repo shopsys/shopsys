@@ -30,12 +30,4 @@ class Version20160601124500 extends AbstractMigration
         $this->sql('ALTER TABLE brand_translations ADD CONSTRAINT FK_B018D342C2AC5D3 FOREIGN KEY (translatable_id) 
             REFERENCES brands (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

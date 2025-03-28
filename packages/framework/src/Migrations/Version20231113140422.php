@@ -21,12 +21,4 @@ class Version20231113140422 extends AbstractMigration
         $this->sql('DROP FUNCTION IF EXISTS set_main_variant_price_recalculation_by_product_visibility');
         $this->sql('DROP TABLE product_calculated_prices');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

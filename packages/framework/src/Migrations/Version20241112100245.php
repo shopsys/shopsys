@@ -45,12 +45,4 @@ class Version20241112100245 extends AbstractMigration implements ContainerAwareI
             throw new Exception('There is more than one root blog category. Please see upgrade notes.');
         }
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

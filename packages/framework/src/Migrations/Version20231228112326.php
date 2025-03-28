@@ -112,12 +112,4 @@ class Version20231228112326 extends AbstractMigration
             $this->sql('ALTER TABLE gopay_payment_methods ALTER currency_id SET NOT NULL');
         }
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

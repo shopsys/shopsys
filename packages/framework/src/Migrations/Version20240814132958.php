@@ -32,12 +32,4 @@ class Version20240814132958 extends AbstractMigration
         );
         $this->sql('ALTER TABLE images ALTER "position" SET NOT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

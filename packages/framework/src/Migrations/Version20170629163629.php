@@ -18,12 +18,4 @@ class Version20170629163629 extends AbstractMigration
     {
         $this->sql('ALTER TABLE product_accessories ALTER "position" SET NOT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

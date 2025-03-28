@@ -109,12 +109,4 @@ class Version20241017084042 extends AbstractMigration
             $this->sql('CREATE UNIQUE INDEX UNIQ_74803E8FD17F50A6 ON ready_category_seo_mixes (uuid)');
         }
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

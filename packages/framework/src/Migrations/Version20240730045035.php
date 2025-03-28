@@ -28,12 +28,4 @@ class Version20240730045035 extends AbstractMigration
             )');
         $this->sql('CREATE UNIQUE INDEX UNIQ_8A1D0961D17F50A6 ON sales_representatives (uuid)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

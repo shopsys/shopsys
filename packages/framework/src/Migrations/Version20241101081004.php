@@ -19,12 +19,4 @@ class Version20241101081004 extends AbstractMigration
         $this->sql('ALTER TABLE parameters DROP CONSTRAINT FK_69348FEFE54D947');
         $this->sql('ALTER TABLE parameters ADD CONSTRAINT FK_69348FEFE54D947 FOREIGN KEY (group_id) REFERENCES parameter_groups (id) ON DELETE SET NULL NOT DEFERRABLE INITIALLY IMMEDIATE');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

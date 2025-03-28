@@ -21,12 +21,4 @@ class Version20240604152553 extends AbstractMigration
         $this->sql('DROP TABLE IF EXISTS advert_category');
         $this->sql('DROP TABLE IF EXISTS entity');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

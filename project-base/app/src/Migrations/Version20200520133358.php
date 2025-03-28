@@ -18,12 +18,4 @@ class Version20200520133358 extends AbstractMigration
     {
         $this->sql('ALTER TABLE images ALTER akeneo_code TYPE VARCHAR(255)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

@@ -30,14 +30,6 @@ class Version20240318162418 extends AbstractMigration
         $this->editDefaultDbIndexes();
     }
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
-
     private function editDefaultDbIndexes(): void
     {
         $this->sql('DROP INDEX IF EXISTS product_translations_name_normalize_idx;');

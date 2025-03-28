@@ -20,12 +20,4 @@ class Version20240924082209 extends AbstractMigration
         $this->sql('UPDATE products SET product_type = \'basic\'');
         $this->sql('ALTER TABLE products ALTER product_type SET NOT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

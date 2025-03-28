@@ -31,14 +31,6 @@ class Version20180702111020 extends AbstractMigration
         $this->setFeedHash();
     }
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
-
     private function setInputPriceType()
     {
         $inputPriceTypeSettingCount = $this->sql(

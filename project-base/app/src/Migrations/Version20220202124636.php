@@ -18,12 +18,4 @@ class Version20220202124636 extends AbstractMigration
     {
         $this->sql('DROP TABLE gopay_transactions');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

@@ -20,12 +20,4 @@ class Version20231106135517 extends AbstractMigration
         $this->sql('DROP TRIGGER IF EXISTS mark_product_for_export ON product_visibilities');
         $this->sql('DROP FUNCTION IF EXISTS set_export_product_by_product_visibility');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

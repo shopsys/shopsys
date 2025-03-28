@@ -23,12 +23,4 @@ class Version20190824181350 extends AbstractMigration
         $this->sql('ALTER TABLE cron_modules ADD last_finished_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL');
         $this->sql('ALTER TABLE cron_modules ADD last_duration INT DEFAULT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

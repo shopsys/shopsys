@@ -20,12 +20,4 @@ class Version20240403095810 extends AbstractMigration
         $this->sql('ALTER INDEX uniq_57310e34772e836a RENAME TO UNIQ_802A3918772E836A;');
         $this->sql('ALTER SEQUENCE tranfers_id_seq RENAME TO transfers_id_seq');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

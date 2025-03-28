@@ -21,12 +21,4 @@ class Version20200713040211 extends AbstractMigration
 
         $this->sql('ALTER TABLE slider_items ADD gtm_creative TEXT DEFAULT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

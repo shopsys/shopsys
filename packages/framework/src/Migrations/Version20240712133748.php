@@ -18,12 +18,4 @@ class Version20240712133748 extends AbstractMigration
     {
         $this->sql('ALTER TABLE customer_users ALTER password DROP NOT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

@@ -24,12 +24,4 @@ class Version20231114121946 extends AbstractMigration
                 PRIMARY KEY(name, domain_id)
             )');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

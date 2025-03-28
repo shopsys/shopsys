@@ -19,12 +19,4 @@ class Version20250312132504 extends AbstractMigration
         $this->sql('ALTER TABLE promo_code_limit ALTER from_price TYPE NUMERIC(20, 6)');
         $this->sql('ALTER TABLE promo_code_limit ALTER discount TYPE NUMERIC(20, 6)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

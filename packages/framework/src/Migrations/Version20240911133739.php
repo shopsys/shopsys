@@ -27,12 +27,4 @@ class Version20240911133739 extends AbstractMigration
         $this->sql('DROP TABLE transport_type_translations');
         $this->sql('DROP TABLE transport_types');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

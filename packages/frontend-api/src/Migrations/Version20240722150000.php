@@ -35,12 +35,4 @@ class Version20240722150000 extends AbstractMigration
 
         $this->sql('ALTER TABLE customer_users DROP last_login');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

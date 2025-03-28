@@ -27,12 +27,4 @@ class Version20240610181711 extends AbstractMigration
             $this->sql('ALTER TABLE orders ADD gtm_coupon VARCHAR(64) DEFAULT NULL');
         }
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

@@ -49,12 +49,4 @@ class Version20250121131930 extends AbstractMigration
                 CONSTRAINT FK_95924E34DD9BA170 FOREIGN KEY (product_video) REFERENCES product_videos (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
         }
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

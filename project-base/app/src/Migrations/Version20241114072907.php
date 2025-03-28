@@ -19,12 +19,4 @@ class Version20241114072907 extends AbstractMigration
         $this->sql('ALTER TABLE slider_items DROP COLUMN slider_extended_text');
         $this->sql('ALTER TABLE slider_items DROP COLUMN slider_extended_text_link');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

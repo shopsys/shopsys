@@ -18,12 +18,4 @@ class Version20240112094253 extends AbstractMigration
     {
         $this->sql('ALTER TABLE vats ALTER percent TYPE NUMERIC(20, 6)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

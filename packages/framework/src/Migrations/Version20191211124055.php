@@ -26,12 +26,4 @@ class Version20191211124055 extends AbstractMigration
                 NULL NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->sql('CREATE INDEX IDX_E52FFDEEA76ED395 ON orders (user_id)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

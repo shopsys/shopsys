@@ -20,12 +20,4 @@ class Version20240426045700 extends AbstractMigration
         $this->sql('DELETE FROM setting_values WHERE name = :name', ['name' => 'shopInfoEmail']);
         $this->sql('DELETE FROM setting_values WHERE name = :name', ['name' => 'shopInfoPhoneHours']);
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

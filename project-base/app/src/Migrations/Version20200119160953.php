@@ -20,12 +20,4 @@ class Version20200119160953 extends AbstractMigration
             (\'akeneoTransferProductsLastUpdatedDatetime\', 0, \'1970-01-01T00:00:00+0000\', \'datetime\')
         ');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

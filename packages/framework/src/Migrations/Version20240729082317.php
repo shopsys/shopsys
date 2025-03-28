@@ -20,12 +20,4 @@ class Version20240729082317 extends AbstractMigration
         $this->sql('ALTER TABLE billing_addresses ALTER uuid DROP DEFAULT');
         $this->sql('CREATE UNIQUE INDEX UNIQ_DBD91748D17F50A6 ON billing_addresses (uuid)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

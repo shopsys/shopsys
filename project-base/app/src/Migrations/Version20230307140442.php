@@ -19,12 +19,4 @@ class Version20230307140442 extends AbstractMigration
         $this->sql('ALTER TABLE transports DROP COLUMN delivery_code');
         $this->sql('ALTER TABLE transports DROP COLUMN type_of_delivery_key');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

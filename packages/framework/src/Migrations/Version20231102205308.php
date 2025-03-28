@@ -24,12 +24,4 @@ class Version20231102205308 extends AbstractMigration
         $this->sql('ALTER TABLE orders ADD order_payment_status_page_validity_hash UUID DEFAULT NULL');
         $this->sql('ALTER TABLE orders ALTER order_payment_status_page_validity_hash DROP DEFAULT');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

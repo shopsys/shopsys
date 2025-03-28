@@ -18,12 +18,4 @@ class Version20241220094923 extends AbstractMigration
     {
         $this->sql('CREATE UNIQUE INDEX UNIQ_73A716FE7927C74 ON administrators (email)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

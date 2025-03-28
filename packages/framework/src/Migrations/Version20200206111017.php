@@ -38,12 +38,4 @@ class Version20200206111017 extends AbstractMigration
             EXECUTE PROCEDURE set_export_product_by_product_visibility();
         ');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

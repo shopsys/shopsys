@@ -19,12 +19,4 @@ class Version20250313074307 extends AbstractMigration
         $this->sql('CREATE INDEX IDX_64EC05ABF3667F8381257D5D115F0EE5BF28CD64 
             ON friendly_urls (route_name, entity_id, domain_id, main)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

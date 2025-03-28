@@ -19,12 +19,4 @@ class Version20230120123538 extends AbstractMigration
         $this->sql('CREATE INDEX IDX_3AF34668DA439252 ON categories (lft)');
         $this->sql('CREATE INDEX IDX_3AF34668D5E02D69 ON categories (rgt)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

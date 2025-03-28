@@ -41,12 +41,4 @@ class Version20240613105832 extends AbstractMigration
             $this->sql('ALTER TABLE parameters ALTER ordering_priority DROP DEFAULT');
         }
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

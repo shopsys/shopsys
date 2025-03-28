@@ -20,12 +20,4 @@ class Version20241114124339 extends AbstractMigration
         $this->sql('ALTER TABLE administrators ADD reset_password_hash_valid_through TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL');
         $this->sql('ALTER TABLE administrators ALTER COLUMN password DROP NOT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

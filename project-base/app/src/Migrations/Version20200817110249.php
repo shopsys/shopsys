@@ -22,12 +22,4 @@ class Version20200817110249 extends AbstractMigration
         $this->sql('ALTER TABLE transports ADD is_over_limit_transport BOOLEAN NOT NULL DEFAULT FALSE');
         $this->sql('ALTER TABLE transports ALTER is_over_limit_transport DROP DEFAULT');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

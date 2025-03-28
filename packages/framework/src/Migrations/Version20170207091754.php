@@ -19,12 +19,4 @@ class Version20170207091754 extends AbstractMigration
         $this->sql('ALTER TABLE category_domains ADD seo_title TEXT DEFAULT NULL');
         $this->sql('ALTER TABLE category_domains ADD seo_meta_description TEXT DEFAULT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

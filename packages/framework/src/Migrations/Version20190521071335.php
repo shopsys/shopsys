@@ -21,12 +21,4 @@ class Version20190521071335 extends AbstractMigration
         $this->sql('ALTER TABLE products ALTER uuid SET NOT NULL');
         $this->sql('CREATE UNIQUE INDEX UNIQ_B3BA5A5AD17F50A6 ON products (uuid)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

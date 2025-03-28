@@ -33,12 +33,4 @@ class Version20210127085903 extends AbstractMigration
         $this->sql('UPDATE transport_translations SET description = NULL WHERE TRIM(description) = \'\'');
         $this->sql('UPDATE transport_translations SET instructions = NULL WHERE TRIM(instructions) = \'\'');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

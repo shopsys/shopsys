@@ -31,12 +31,4 @@ class Version20161125140534 extends AbstractMigration
                 CONSTRAINT FK_20AA436212469DE2 FOREIGN KEY (category_id)
                     REFERENCES categories (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

@@ -19,12 +19,4 @@ class Version20200825083150 extends AbstractMigration
         $this->sql('ALTER TABLE product_domains ADD calculated_sale_exclusion BOOLEAN NOT NULL DEFAULT FALSE');
         $this->sql('ALTER TABLE product_domains ALTER calculated_sale_exclusion DROP DEFAULT');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

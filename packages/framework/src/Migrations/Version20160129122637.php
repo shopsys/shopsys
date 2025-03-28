@@ -44,12 +44,4 @@ class Version20160129122637 extends AbstractMigration implements ContainerAwareI
             END
             $$ LANGUAGE plpgsql IMMUTABLE;');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

@@ -20,12 +20,4 @@ class Version20160105140120 extends AbstractMigration
             ALTER name SET NOT NULL;';
         $this->sql($sql);
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

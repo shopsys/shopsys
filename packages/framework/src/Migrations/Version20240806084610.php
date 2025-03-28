@@ -31,12 +31,4 @@ class Version20240806084610 extends AbstractMigration
             )');
         $this->sql('CREATE INDEX IDX_970DDB7F16EFC72D81257D5D ON customer_uploaded_files (entity_name, entity_id)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

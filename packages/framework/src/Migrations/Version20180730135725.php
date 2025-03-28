@@ -25,12 +25,4 @@ class Version20180730135725 extends AbstractMigration
             LANGUAGE SQL STABLE',
         );
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

@@ -21,12 +21,4 @@ class Version20200914130309 extends AbstractMigration
         $this->sql('ALTER TABLE transports ADD type_of_delivery_key INT NOT NULL DEFAULT 1');
         $this->sql('ALTER TABLE transports ALTER type_of_delivery_key DROP DEFAULT');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

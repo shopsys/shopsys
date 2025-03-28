@@ -19,12 +19,4 @@ class Version20200121170827 extends AbstractMigration
         $this->sql('ALTER TABLE categories ADD akeneo_code VARCHAR(100) DEFAULT NULL');
         $this->sql('CREATE UNIQUE INDEX UNIQ_3AF34668CC7118A2 ON categories (akeneo_code)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

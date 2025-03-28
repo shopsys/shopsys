@@ -24,12 +24,4 @@ class Version20180531141640 extends AbstractMigration
         $this->sql('ALTER TABLE category_domains RENAME COLUMN hidden TO enabled');
         $this->sql('UPDATE category_domains SET enabled = NOT enabled');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

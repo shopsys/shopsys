@@ -20,12 +20,4 @@ class Version20250303130234 extends AbstractMigration
         $this->sql('ALTER TABLE promo_code_limit RENAME COLUMN from_price_with_vat TO from_price');
         $this->sql('ALTER TABLE promo_code_limit ADD PRIMARY KEY (promo_code_id, from_price)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

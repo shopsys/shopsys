@@ -22,12 +22,4 @@ class Version20160531080553 extends AbstractMigration
             (\'feedNameToContinue\', 0, NULL, \'string\')
         ');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

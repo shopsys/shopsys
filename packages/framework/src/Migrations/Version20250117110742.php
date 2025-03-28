@@ -25,12 +25,4 @@ class Version20250117110742 extends AbstractMigration
             )');
         $this->sql('DROP INDEX chose_category_seo_mix_combination_json');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

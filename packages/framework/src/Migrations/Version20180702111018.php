@@ -24,12 +24,4 @@ class Version20180702111018 extends AbstractMigration
 
         $this->sql('INSERT INTO order_number_sequences (id, number) VALUES (1, 0)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

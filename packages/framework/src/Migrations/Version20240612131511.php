@@ -25,12 +25,4 @@ class Version20240612131511 extends AbstractMigration
         $this->sql('ALTER TABLE navigation_item_categories ADD CONSTRAINT FK_71699B7654ED5C2D FOREIGN KEY (navigation_item_id) REFERENCES navigation_items (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->sql('ALTER TABLE navigation_item_categories ADD CONSTRAINT FK_71699B7612469DE2 FOREIGN KEY (category_id) REFERENCES categories (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

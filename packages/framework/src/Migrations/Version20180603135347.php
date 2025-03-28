@@ -25,14 +25,6 @@ class Version20180603135347 extends AbstractMigration
     }
 
     /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
-
-    /**
      * @param string $mailTemplateName
      * @param string $sendMail
      */

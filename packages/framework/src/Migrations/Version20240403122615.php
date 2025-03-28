@@ -18,12 +18,4 @@ class Version20240403122615 extends AbstractMigration
     {
         $this->sql('ALTER TABLE promo_codes DROP identifier');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

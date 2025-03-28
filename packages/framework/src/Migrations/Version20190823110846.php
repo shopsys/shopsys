@@ -21,12 +21,4 @@ class Version20190823110846 extends AbstractMigration
         $this->sql('ALTER TABLE products ALTER selling_to TYPE TIMESTAMP(0) WITHOUT TIME ZONE');
         $this->sql('ALTER TABLE products ALTER selling_to DROP DEFAULT');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

@@ -43,12 +43,4 @@ class Version20231011095432 extends AbstractMigration
             $this->sql('DELETE FROM migrations WHERE version = :version;', ['version' => self::WRONG_MIGRATION_VERSON]);
         }
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

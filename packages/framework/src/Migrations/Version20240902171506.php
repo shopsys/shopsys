@@ -23,12 +23,4 @@ class Version20240902171506 extends AbstractMigration
         $this->sql('ALTER TABLE transport_prices ADD id SERIAL NOT NULL');
         $this->sql('ALTER TABLE transport_prices ADD PRIMARY KEY (id)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

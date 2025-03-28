@@ -29,12 +29,4 @@ final class Version20241023142037 extends AbstractMigration
         );
         $this->sql('CREATE INDEX IDX_A05AAF3A9395C3F3 ON complaints (customer_id)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

@@ -53,12 +53,4 @@ final class Version20241104151802 extends AbstractMigration
             ADD
                 CONSTRAINT FK_418F3D235688DED7 FOREIGN KEY (price_list_id) REFERENCES price_lists (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

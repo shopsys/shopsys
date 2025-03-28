@@ -29,14 +29,6 @@ class Version20180413102103 extends AbstractMigration
         $this->migrateHeurekaCategoryToCategoryLinks();
     }
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
-
     private function migrateProducts(): void
     {
         $rows = $this->sql(

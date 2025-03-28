@@ -18,12 +18,4 @@ class Version20160715100000 extends AbstractMigration
     {
         $this->sql('ALTER TABLE setting_values ALTER type TYPE VARCHAR(8)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

@@ -29,14 +29,6 @@ class Version20190611114955 extends AbstractMigration
     }
 
     /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
-
-    /**
      * Calculates the total prices of order items using via old price calculation (using VAT coefficients)
      *
      * @see https://github.com/shopsys/shopsys/blob/v7.2.1/packages/framework/src/Model/Order/Item/OrderItemPriceCalculation.php#L60-L76

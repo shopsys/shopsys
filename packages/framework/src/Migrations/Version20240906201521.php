@@ -18,12 +18,4 @@ class Version20240906201521 extends AbstractMigration
     {
         $this->sql('ALTER TABLE customer_users ADD last_security_change TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

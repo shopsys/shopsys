@@ -22,12 +22,4 @@ class Version20240403122421 extends AbstractMigration implements ContainerAwareI
     {
         $this->sql('ALTER TABLE order_items DROP promo_code_identifier');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

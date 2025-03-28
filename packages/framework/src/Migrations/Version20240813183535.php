@@ -26,12 +26,4 @@ class Version20240813183535 extends AbstractMigration implements ContainerAwareI
 
         $this->sql('ALTER TABLE administrators ALTER display_only_domain_ids DROP DEFAULT');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

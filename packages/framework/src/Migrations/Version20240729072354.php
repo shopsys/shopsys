@@ -24,12 +24,4 @@ class Version20240729072354 extends AbstractMigration
         $this->sql('UPDATE customer_users SET first_name = NULL WHERE first_name = \'\'');
         $this->sql('UPDATE customer_users SET last_name = NULL WHERE last_name = \'\'');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

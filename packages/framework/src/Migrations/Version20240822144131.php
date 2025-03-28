@@ -19,12 +19,4 @@ class Version20240822144131 extends AbstractMigration
         $this->sql('ALTER TABLE gopay_payment_methods ADD available BOOLEAN NOT NULL DEFAULT TRUE');
         $this->sql('ALTER TABLE gopay_payment_methods ALTER available DROP DEFAULT');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

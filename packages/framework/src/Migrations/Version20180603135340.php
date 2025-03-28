@@ -30,14 +30,6 @@ class Version20180603135340 extends AbstractMigration
         $this->createProductDomainFulltextTriggerOnProductDomain();
     }
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
-
     private function createGetDomainIdsByLocaleFunction(): void
     {
         $this->sql('CREATE OR REPLACE FUNCTION get_domain_ids_by_locale(locale text) RETURNS SETOF integer AS $$

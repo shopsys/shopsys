@@ -18,12 +18,4 @@ class Version20160314174500 extends AbstractMigration
     {
         $this->sql('ALTER TABLE adverts ALTER type SET NOT NULL;');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

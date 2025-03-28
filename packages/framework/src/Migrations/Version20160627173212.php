@@ -18,12 +18,4 @@ class Version20160627173212 extends AbstractMigration
     {
         $this->sql('CREATE TABLE newsletter_subscribers (email VARCHAR(255) NOT NULL, PRIMARY KEY(email));');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

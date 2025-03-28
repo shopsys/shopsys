@@ -19,12 +19,4 @@ class Version20200129073328 extends AbstractMigration
         $this->sql('ALTER TABLE products ADD export_product BOOLEAN NOT NULL DEFAULT false');
         $this->sql('ALTER TABLE products ALTER export_product DROP DEFAULT ');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

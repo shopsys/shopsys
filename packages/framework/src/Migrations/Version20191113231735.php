@@ -19,12 +19,4 @@ class Version20191113231735 extends AbstractMigration
         $this->sql('ALTER TABLE administrators ADD roles_changed_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL');
         $this->sql('ALTER TABLE administrators ALTER roles_changed_at DROP DEFAULT');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

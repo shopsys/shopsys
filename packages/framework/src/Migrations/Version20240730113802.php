@@ -22,12 +22,4 @@ class Version20240730113802 extends AbstractMigration
             [Setting::FILE_STRUCTURE_MIGRATED_FOR_RELATIONS],
         );
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

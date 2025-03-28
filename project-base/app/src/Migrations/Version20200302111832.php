@@ -23,12 +23,4 @@ class Version20200302111832 extends AbstractMigration
         $this->sql('ALTER TABLE product_domains ADD assembly_instruction_code VARCHAR(255) DEFAULT NULL');
         $this->sql('ALTER TABLE product_domains ADD product_type_plan_code VARCHAR(255) DEFAULT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

@@ -57,12 +57,4 @@ class Version20240711100044 extends AbstractMigration implements ContainerAwareI
 
         $this->sql('INSERT INTO setting_values (name, domain_id, value, type) VALUES (\'customerUserDefaultGroupRoleId\', 0, ' . $customerUserRoleGroupId . ', \'integer\')');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

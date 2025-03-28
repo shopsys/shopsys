@@ -25,12 +25,4 @@ class Version20161124152029 extends AbstractMigration
             ADD PRIMARY KEY (product_id, domain_id)
         ');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

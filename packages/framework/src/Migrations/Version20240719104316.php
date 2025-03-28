@@ -26,12 +26,4 @@ class Version20240719104316 extends AbstractMigration
         $this->sql('ALTER TABLE uploaded_files DROP COLUMN position');
         $this->sql('ALTER TABLE uploaded_files DROP COLUMN type');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

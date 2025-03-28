@@ -29,12 +29,4 @@ class Version20200127085928 extends AbstractMigration
         $this->sql('ALTER TABLE customer_users DROP delivery_address_id');
         $this->sql('ALTER TABLE delivery_addresses ALTER customer_id DROP DEFAULT');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

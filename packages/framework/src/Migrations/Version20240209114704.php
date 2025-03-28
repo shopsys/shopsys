@@ -19,12 +19,4 @@ class Version20240209114704 extends AbstractMigration
         $this->sql('CREATE UNIQUE INDEX cart_identifier ON carts (cart_identifier) WHERE cart_identifier <> \'\';');
         $this->sql('CREATE UNIQUE INDEX customer_user_id ON carts (customer_user_id);');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

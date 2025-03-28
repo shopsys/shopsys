@@ -27,12 +27,4 @@ class Version20180306094316 extends AbstractMigration
             )');
         $this->sql('CREATE UNIQUE INDEX UNIQ_C84FBB18D1B862B8 ON personal_data_access_request (hash)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

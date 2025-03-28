@@ -26,12 +26,4 @@ class Version20200211110913 extends AbstractMigration
                 NULL NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->sql('CREATE INDEX IDX_DAB6D0D2422ED30C ON customer_users (default_delivery_address_id)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

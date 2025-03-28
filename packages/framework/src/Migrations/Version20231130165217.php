@@ -85,12 +85,4 @@ class Version20231130165217 extends AbstractMigration
         $this->sql('ALTER TABLE product_domains RENAME COLUMN domain_ordering_priority TO ordering_priority');
         $this->sql('DROP TABLE product_flags');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

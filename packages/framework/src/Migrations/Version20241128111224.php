@@ -19,12 +19,4 @@ class Version20241128111224 extends AbstractMigration
         $this->sql('ALTER TABLE orders ADD free_transport_and_payment_applied BOOLEAN NOT NULL DEFAULT FALSE');
         $this->sql('ALTER TABLE orders ALTER free_transport_and_payment_applied DROP DEFAULT');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

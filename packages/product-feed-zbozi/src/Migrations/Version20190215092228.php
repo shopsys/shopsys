@@ -19,12 +19,4 @@ class Version20190215092228 extends AbstractMigration
         $this->sql('COMMENT ON COLUMN zbozi_product_domains.cpc IS \'(DC2Type:money)\'');
         $this->sql('COMMENT ON COLUMN zbozi_product_domains.cpc_search IS \'(DC2Type:money)\'');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

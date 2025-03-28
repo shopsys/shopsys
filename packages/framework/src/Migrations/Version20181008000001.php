@@ -24,12 +24,4 @@ class Version20181008000001 extends AbstractMigration
         );
         $this->sql('UPDATE setting_values SET type = \'none\' where value IS NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

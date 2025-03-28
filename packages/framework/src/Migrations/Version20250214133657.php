@@ -19,12 +19,4 @@ class Version20250214133657 extends AbstractMigration
         $this->sql('DELETE FROM setting_values WHERE name = \'imageStructureMigratedForProxy\'');
         $this->sql('DELETE FROM migrations WHERE version = \'Shopsys\FrameworkBundle\Migrations\Version20231020173331\'');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

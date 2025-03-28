@@ -18,12 +18,4 @@ class Version20220730131426 extends AbstractMigration
     {
         $this->sql('ALTER TABLE payments DROP COLUMN is_over_limit_payment');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

@@ -19,12 +19,4 @@ final class Version20200707171540 extends AbstractMigration
         $this->sql("SELECT SETVAL(pg_get_serial_sequence('flags', 'id'), COALESCE((SELECT MAX(id) FROM flags) + 1, 1), false)");
         $this->sql("SELECT SETVAL(pg_get_serial_sequence('flag_translations', 'id'), COALESCE((SELECT MAX(id) FROM flag_translations) + 1, 1), false)");
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

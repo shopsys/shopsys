@@ -33,12 +33,4 @@ class Version20241205144230 extends AbstractMigration
 
         $this->sql('CREATE INDEX billing_addresses_company_name_trgm_idx ON billing_addresses USING gin (normalized(company_name) gin_trgm_ops);');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

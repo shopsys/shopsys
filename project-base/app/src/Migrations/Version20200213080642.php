@@ -18,12 +18,4 @@ class Version20200213080642 extends AbstractMigration
     {
         $this->sql('UPDATE setting_values SET "value" = 1 WHERE "name"= \'inputPriceType\' AND domain_id = 0');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

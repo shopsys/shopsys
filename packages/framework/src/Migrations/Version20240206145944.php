@@ -35,12 +35,4 @@ class Version20240206145944 extends AbstractMigration
     {
         $this->sql(sprintf('ALTER TABLE %s DROP COLUMN IF EXISTS %s', $tableName, $columnName));
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

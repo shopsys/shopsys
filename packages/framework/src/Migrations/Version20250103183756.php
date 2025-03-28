@@ -29,12 +29,4 @@ class Version20250103183756 extends AbstractMigration
         $this->sql('ALTER TABLE complaints ALTER email DROP DEFAULT');
         $this->sql('ALTER TABLE complaints ALTER email SET NOT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

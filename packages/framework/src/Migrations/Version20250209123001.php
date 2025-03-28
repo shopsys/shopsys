@@ -21,12 +21,4 @@ class Version20250209123001 extends AbstractMigration
         $this->sql('CREATE INDEX complaint_delivery_last_name_trgm_idx ON complaints USING gin (normalized(delivery_last_name) gin_trgm_ops);');
         $this->sql('CREATE INDEX complaint_delivery_company_name_trgm_idx ON complaints USING gin (normalized(delivery_company_name) gin_trgm_ops);');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }
