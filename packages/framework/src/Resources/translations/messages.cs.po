@@ -2590,9 +2590,6 @@ msgstr "Hlavní administrátorský e-mail"
 msgid "Main category"
 msgstr "Hlavní kategorie"
 
-msgid "Main category on domains"
-msgstr "Hlavní kategorie na doménách"
-
 msgid "Main image"
 msgstr "Hlavní obrázek"
 
