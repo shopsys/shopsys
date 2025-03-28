@@ -32,7 +32,6 @@ use Shopsys\FrameworkBundle\Form\ProductsType;
 use Shopsys\FrameworkBundle\Form\Transformers\ProductParameterValueToProductParameterValuesLocalizedTransformer;
 use Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer;
 use Shopsys\FrameworkBundle\Form\UrlListType;
-use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\SpecialPrice\SpecialPriceFacade;
 use Shopsys\FrameworkBundle\Model\Product\Brand\BrandFacade;
 use Shopsys\FrameworkBundle\Model\Product\Flag\FlagFacade;
@@ -65,7 +64,6 @@ final class ProductFormType extends AbstractType
      * @param \Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade $unitFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Seo\SeoSettingFacade $seoSettingFacade
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
      * @param \Shopsys\FrameworkBundle\Form\Transformers\RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer
      * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginDataFormExtensionFacade
      * @param \Shopsys\FrameworkBundle\Form\Transformers\ProductParameterValueToProductParameterValuesLocalizedTransformer $productParameterValueToProductParameterValuesLocalizedTransformer
@@ -81,7 +79,6 @@ final class ProductFormType extends AbstractType
         private readonly UnitFacade $unitFacade,
         private readonly Domain $domain,
         private readonly SeoSettingFacade $seoSettingFacade,
-        private readonly CategoryFacade $categoryFacade,
         private readonly RemoveDuplicatesFromArrayTransformer $removeDuplicatesTransformer,
         private readonly PluginCrudExtensionFacade $pluginDataFormExtensionFacade,
         private readonly ProductParameterValueToProductParameterValuesLocalizedTransformer $productParameterValueToProductParameterValuesLocalizedTransformer,
@@ -380,41 +377,12 @@ final class ProductFormType extends AbstractType
         FormBuilderInterface $builder,
         ?Product $product,
     ): FormBuilderInterface {
-        $productMainCategoriesIndexedByDomainId = [];
-
-        if ($product !== null) {
-            $productMainCategoriesIndexedByDomainId = $this->categoryFacade->getProductMainCategoriesIndexedByDomainId(
-                $product,
-            );
-        }
-
-        $mainCategoriesOptionsByDomainId = [];
-
-        foreach ($this->domain->getAdminEnabledDomainIds() as $domainId) {
-            if (count($productMainCategoriesIndexedByDomainId) <= 0) {
-                continue;
-            }
-
-            $productMainCategory = $productMainCategoriesIndexedByDomainId[$domainId];
-            $mainCategoriesOptionsByDomainId[$domainId] = [
-                'attr' => [
-                    'readonly' => 'readonly',
-                    'show_label' => true,
-                ],
-                'label' => count($productMainCategoriesIndexedByDomainId) > 1 ? $this->domain->getDomainConfigById(
-                    $domainId,
-                )->getName() : t(
-                    'Main category',
-                ),
-                'data' => $productMainCategory === null ? '-' : $productMainCategory->getName(),
-            ];
-        }
-
         $categoriesOptionsByDomainId = [];
 
         foreach ($this->domain->getAdminEnabledDomainIds() as $domainId) {
             $categoriesOptionsByDomainId[$domainId] = [
                 'domain_id' => $domainId,
+                'product' => $product,
             ];
         }
 
@@ -468,17 +436,6 @@ final class ProductFormType extends AbstractType
             $builderDisplayAvailabilityGroup
                 ->add('productCalculatedSellingDeniedInfo', MessageType::class, [
                     'data' => t('Product is excluded from the sale'),
-                ]);
-        }
-
-        if ($product !== null) {
-            $builderDisplayAvailabilityGroup
-                ->add('productMainCategories', MultidomainType::class, [
-                    'entry_type' => TextType::class,
-                    'required' => false,
-                    'mapped' => false,
-                    'options_by_domain_id' => $mainCategoriesOptionsByDomainId,
-                    'label' => t('Main category on domains'),
                 ]);
         }
 

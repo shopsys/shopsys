@@ -553,15 +553,17 @@ class CategoryRepository extends NestedTreeRepository
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @param string|null $locale
      * @return string[]
      */
     public function getCategoryNamesInPathFromRootToProductMainCategoryOnDomain(
         Product $product,
         DomainConfig $domainConfig,
+        ?string $locale = null,
     ): array {
         $queryBuilder = $this->getAllQueryBuilder();
         $domainId = $domainConfig->getId();
-        $locale = $domainConfig->getLocale();
+        $locale = $locale ?? $domainConfig->getLocale();
         $mainCategory = $this->getProductMainCategoryOnDomain($product, $domainId);
 
         $this->addTranslation($queryBuilder, $locale);
