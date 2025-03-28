@@ -20,7 +20,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
-use Shopsys\FrameworkBundle\Twig\PriceExtension;
 use Tests\FrameworkBundle\Test\IsPriceEqual;
 use Tests\FrameworkBundle\Test\MiddlewareTestCase;
 use Tests\FrameworkBundle\Test\SetTranslatorTrait;
@@ -65,7 +64,7 @@ class ApplyNominalPromoCodeMiddlewareTest extends MiddlewareTestCase
         $this->assertCount(1, $actualOrderData->items);
 
         $this->assertSame($actualDiscountItemsType[0]->promoCode, $promoCode);
-        $this->assertSame('Promo code -121€', $actualDiscountItemsType[0]->name);
+        $this->assertSame('Promo code', $actualDiscountItemsType[0]->name);
     }
 
     /**
@@ -133,11 +132,6 @@ class ApplyNominalPromoCodeMiddlewareTest extends MiddlewareTestCase
         $discountCalculation = $this->createMock(DiscountCalculation::class);
         $discountCalculation->method('calculateNominalDiscount')->willReturn($discountPrice);
 
-        $priceExtension = $this->createMock(PriceExtension::class);
-        $priceExtension->method('priceFilter')->willReturnCallback(function (Money $money) {
-            return $money->getAmount() . '€';
-        });
-
         $vatFacade = $this->createMock(VatFacade::class);
 
         return new ApplyNominalPromoCodeMiddleware(
@@ -145,7 +139,6 @@ class ApplyNominalPromoCodeMiddlewareTest extends MiddlewareTestCase
             $promoCodeFacade,
             $discountCalculation,
             $this->createOrderItemDataFactory(),
-            $priceExtension,
             $vatFacade,
             $this->createCurrencyFacadeMock(),
         );

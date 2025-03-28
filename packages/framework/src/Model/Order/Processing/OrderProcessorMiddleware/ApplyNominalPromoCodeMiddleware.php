@@ -23,7 +23,6 @@ use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Price;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceInterface;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade;
-use Shopsys\FrameworkBundle\Twig\PriceExtension;
 
 class ApplyNominalPromoCodeMiddleware extends AbstractPromoCodeMiddleware
 {
@@ -32,7 +31,6 @@ class ApplyNominalPromoCodeMiddleware extends AbstractPromoCodeMiddleware
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeFacade $promoCodeFacade
      * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\DiscountCalculation $discountCalculation
      * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemDataFactory $orderItemDataFactory
-     * @param \Shopsys\FrameworkBundle\Twig\PriceExtension $priceExtension
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Vat\VatFacade $vatFacade
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
      */
@@ -41,7 +39,6 @@ class ApplyNominalPromoCodeMiddleware extends AbstractPromoCodeMiddleware
         PromoCodeFacade $promoCodeFacade,
         protected readonly DiscountCalculation $discountCalculation,
         protected readonly OrderItemDataFactory $orderItemDataFactory,
-        protected readonly PriceExtension $priceExtension,
         protected readonly VatFacade $vatFacade,
         protected readonly CurrencyFacade $currencyFacade,
     ) {
@@ -122,13 +119,7 @@ class ApplyNominalPromoCodeMiddleware extends AbstractPromoCodeMiddleware
 
         $discountPrice = $discountPrice->inverse();
 
-        $name = sprintf(
-            '%s %s',
-            t('Promo code', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale),
-            $this->priceExtension->priceFilter($discountPrice->getPriceWithVat()),
-        );
-
-        $discountOrderItemData->name = $name;
+        $discountOrderItemData->name = $this->getOrderItemName($locale);
         $discountOrderItemData->quantity = 1;
         $discountOrderItemData->setUnitPrice($discountPrice);
         $discountOrderItemData->setTotalPrice($discountPrice);
@@ -156,5 +147,17 @@ class ApplyNominalPromoCodeMiddleware extends AbstractPromoCodeMiddleware
         }
 
         return $totalPrice;
+    }
+
+    /**
+     * @param string $locale
+     * @return string
+     */
+    protected function getOrderItemName(string $locale): string
+    {
+        return sprintf(
+            '%s',
+            t('Promo code', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale),
+        );
     }
 }
