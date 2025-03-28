@@ -88,9 +88,6 @@ msgstr ""
 msgid "Link Block"
 msgstr ""
 
-msgid "Linked categories"
-msgstr ""
-
 msgid "List of products"
 msgstr ""
 

@@ -80,7 +80,6 @@ services:
         arguments:
             $readyCategorySeoMixesBatchLoader: '@ready_category_seo_mixes_batch_loader'
             $categoryChildrenBatchLoader: '@category_children_batch_loader'
-            $linkedCategoriesBatchLoader: '@linked_categories_batch_loader'
         tags:
             - { name: overblog_graphql.resolver_map, schema: default }
 

@@ -17,9 +17,6 @@ query CategoryQuery ($categoryUuid: Uuid, $firstProducts: Int! = 0) {
             name
             slug
         }
-        linkedCategories {
-            name
-        }
         uuid
         children {
             name

@@ -87,10 +87,6 @@ class CategorySeoTest extends GraphQlTestCase
                 ],
             ],
             'readyCategorySeoMixLinks' => $readyCategorySeoMixLinks,
-            'linkedCategories' => [
-                ['name' => t('Food', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
-                ['name' => t('Garden tools', [], Translator::DATA_FIXTURES_TRANSLATION_DOMAIN, $this->getLocaleForFirstDomain())],
-            ],
         ];
 
         $response = $this->getResponseContentForGql(__DIR__ . '/graphql/CategorySeoWithLinks.graphql', [

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\FrontendApi\Model\Category;
 
-use App\Model\Category\LinkedCategory\LinkedCategory;
-use Doctrine\ORM\Query\Expr\Join;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrontendApiBundle\Model\Category\CategoryRepository as BaseCategoryRepository;
 
@@ -43,39 +41,5 @@ class CategoryRepository extends BaseCategoryRepository
         }
 
         return array_values($childrenByCategories);
-    }
-
-    /**
-     * @param \App\Model\Category\Category[] $parentCategories
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \App\Model\Category\Category[][]
-     */
-    public function getVisibleLinkedCategories(array $parentCategories, DomainConfig $domainConfig): array
-    {
-        $visibleLinkedCategories = [];
-
-        foreach ($parentCategories as $parentCategory) {
-            $visibleLinkedCategories[$parentCategory->getId()] = [];
-        }
-        $linkedCategories = $this->em->createQueryBuilder()
-            ->select('lc, c, cd, ct')
-            ->from(LinkedCategory::class, 'lc')
-            ->join('lc.category', 'c', Join::WITH, 'c.parent IS NOT NULL')
-            ->join('c.domains', 'cd', Join::WITH, 'cd.domainId = :domainId')
-            ->join('c.translations', 'ct', Join::WITH, 'ct.locale = :locale')
-            ->where('lc.parentCategory IN(:parentCategories)')
-            ->andWhere('cd.visible = true')
-            ->setParameter('parentCategories', $parentCategories)
-            ->setParameter('domainId', $domainConfig->getId())
-            ->setParameter('locale', $domainConfig->getLocale())
-            ->orderBy('lc.position')
-            ->getQuery()->execute();
-
-        /** @var \App\Model\Category\LinkedCategory\LinkedCategory $linkedCategory */
-        foreach ($linkedCategories as $linkedCategory) {
-            $visibleLinkedCategories[$linkedCategory->getParentCategory()->getId()][] = $linkedCategory->getCategory();
-        }
-
-        return array_values($visibleLinkedCategories);
     }
 }

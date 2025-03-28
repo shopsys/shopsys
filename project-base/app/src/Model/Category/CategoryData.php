@@ -12,15 +12,4 @@ use Shopsys\FrameworkBundle\Model\Category\CategoryData as BaseCategoryData;
  */
 class CategoryData extends BaseCategoryData
 {
-    /**
-     * @var \App\Model\Category\Category[]
-     */
-    public $linkedCategories;
-
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->linkedCategories = [];
-    }
 }

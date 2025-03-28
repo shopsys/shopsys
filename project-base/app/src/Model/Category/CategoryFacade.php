@@ -4,26 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Category;
 
-use App\Model\Category\LinkedCategory\LinkedCategoryFacade;
-use Doctrine\ORM\EntityManagerInterface;
-use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
-use Shopsys\FrameworkBundle\Component\Domain\Domain;
-use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
-use Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade;
-use Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade;
-use Shopsys\FrameworkBundle\Model\Category\Category as BaseCategory;
-use Shopsys\FrameworkBundle\Model\Category\CategoryData;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade as BaseCategoryFacade;
-use Shopsys\FrameworkBundle\Model\Category\CategoryFactory;
-use Shopsys\FrameworkBundle\Model\Category\CategoryParameterFacade;
-use Shopsys\FrameworkBundle\Model\Category\CategoryRepository;
-use Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRecalculationScheduler;
-use Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildrenFactory;
-use Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildrenFactory;
-use Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade;
-use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
  * @property \App\Model\Category\CategoryRepository $categoryRepository
@@ -53,90 +35,12 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
  * @method \App\Model\Category\Category getProductMainCategoryOnCurrentDomain(\App\Model\Product\Product $product)
  * @method dispatchCategoryEvent(\App\Model\Category\Category $category, string $eventType)
  * @method \App\Model\Category\Category[] getCategoriesOfProductByFilterData(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData)
+ * @method __construct(\Doctrine\ORM\EntityManagerInterface $em, \App\Model\Category\CategoryRepository $categoryRepository, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRecalculationScheduler $categoryVisibilityRecalculationScheduler, \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade, \App\Component\Image\ImageFacade $imageFacade, \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade, \Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildrenFactory $categoryWithPreloadedChildrenFactory, \Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildrenFactory $categoryWithLazyLoadedVisibleChildrenFactory, \Shopsys\FrameworkBundle\Model\Category\CategoryFactory $categoryFactory, \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher, \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher, \Shopsys\FrameworkBundle\Model\Category\CategoryParameterFacade $categoryParameterFacade, \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade)
+ * @method \App\Model\Category\Category create(\App\Model\Category\CategoryData $categoryData)
+ * @method \App\Model\Category\Category edit(int $categoryId, \App\Model\Category\CategoryData $categoryData)
  */
 class CategoryFacade extends BaseCategoryFacade
 {
-    /**
-     * @param \Doctrine\ORM\EntityManagerInterface $em
-     * @param \App\Model\Category\CategoryRepository $categoryRepository
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryVisibilityRecalculationScheduler $categoryVisibilityRecalculationScheduler
-     * @param \Shopsys\FrameworkBundle\Component\Router\FriendlyUrl\FriendlyUrlFacade $friendlyUrlFacade
-     * @param \App\Component\Image\ImageFacade $imageFacade
-     * @param \Shopsys\FrameworkBundle\Component\Plugin\PluginCrudExtensionFacade $pluginCrudExtensionFacade
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryWithPreloadedChildrenFactory $categoryWithPreloadedChildrenFactory
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryWithLazyLoadedVisibleChildrenFactory $categoryWithLazyLoadedVisibleChildrenFactory
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFactory $categoryFactory
-     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
-     * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
-     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryParameterFacade $categoryParameterFacade
-     * @param \Shopsys\FrameworkBundle\Model\Product\ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade
-     * @param \App\Model\Category\LinkedCategory\LinkedCategoryFacade $linkedCategoryFacade
-     */
-    public function __construct(
-        EntityManagerInterface $em,
-        CategoryRepository $categoryRepository,
-        Domain $domain,
-        CategoryVisibilityRecalculationScheduler $categoryVisibilityRecalculationScheduler,
-        FriendlyUrlFacade $friendlyUrlFacade,
-        ImageFacade $imageFacade,
-        PluginCrudExtensionFacade $pluginCrudExtensionFacade,
-        CategoryWithPreloadedChildrenFactory $categoryWithPreloadedChildrenFactory,
-        CategoryWithLazyLoadedVisibleChildrenFactory $categoryWithLazyLoadedVisibleChildrenFactory,
-        CategoryFactory $categoryFactory,
-        ProductRecalculationDispatcher $productRecalculationDispatcher,
-        EventDispatcherInterface $eventDispatcher,
-        CategoryParameterFacade $categoryParameterFacade,
-        ProductOnCurrentDomainElasticFacade $productOnCurrentDomainElasticFacade,
-        private readonly LinkedCategoryFacade $linkedCategoryFacade,
-    ) {
-        parent::__construct(
-            $em,
-            $categoryRepository,
-            $domain,
-            $categoryVisibilityRecalculationScheduler,
-            $friendlyUrlFacade,
-            $imageFacade,
-            $pluginCrudExtensionFacade,
-            $categoryWithPreloadedChildrenFactory,
-            $categoryWithLazyLoadedVisibleChildrenFactory,
-            $categoryFactory,
-            $productRecalculationDispatcher,
-            $eventDispatcher,
-            $categoryParameterFacade,
-            $productOnCurrentDomainElasticFacade,
-        );
-    }
-
-    /**
-     * @param \App\Model\Category\CategoryData $categoryData
-     * @return \App\Model\Category\Category
-     */
-    #[Override]
-    public function create(CategoryData $categoryData): BaseCategory
-    {
-        /** @var \App\Model\Category\Category $category */
-        $category = parent::create($categoryData);
-        $this->linkedCategoryFacade->updateLinkedCategories($category, $categoryData->linkedCategories);
-
-        return $category;
-    }
-
-    /**
-     * @param int $categoryId
-     * @param \App\Model\Category\CategoryData $categoryData
-     * @return \App\Model\Category\Category
-     */
-    #[Override]
-    public function edit($categoryId, CategoryData $categoryData): BaseCategory
-    {
-        /** @var \App\Model\Category\Category $category */
-        $category = parent::edit($categoryId, $categoryData);
-        $this->linkedCategoryFacade->updateLinkedCategories($category, $categoryData->linkedCategories);
-
-        return $category;
-    }
-
     /**
      * @param \App\Model\Category\Category $destinationCategory
      * @return array

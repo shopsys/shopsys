@@ -88,9 +88,6 @@ msgstr "Odkaz"
 msgid "Link Block"
 msgstr "Blok odkazu"
 
-msgid "Linked categories"
-msgstr "Propojené kategorie"
-
 msgid "List of products"
 msgstr "Seznam produktů"
 

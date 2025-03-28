@@ -26,14 +26,4 @@ class CategoryFacade extends BaseCategoryFacade
     ): array {
         return $this->categoryRepository->getAllVisibleChildrenByCategoriesAndDomainConfig($categories, $domainConfig);
     }
-
-    /**
-     * @param \App\Model\Category\Category[] $parentCategories
-     * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
-     * @return \App\Model\Category\Category[][]
-     */
-    public function getVisibleLinkedCategories(array $parentCategories, DomainConfig $domainConfig): array
-    {
-        return $this->categoryRepository->getVisibleLinkedCategories($parentCategories, $domainConfig);
-    }
 }
