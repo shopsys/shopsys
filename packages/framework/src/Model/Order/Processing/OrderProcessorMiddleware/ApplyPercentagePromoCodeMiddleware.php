@@ -116,14 +116,7 @@ class ApplyPercentagePromoCodeMiddleware extends AbstractPromoCodeMiddleware
 
         $discountPrice = $discountPrice->inverse();
 
-        $name = sprintf(
-            '%s -%s - %s',
-            t('Promo code', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale),
-            $this->numberFormatterExtension->formatPercent($promoCodeLimit->getDiscount(), $locale),
-            $productItem->name,
-        );
-
-        $discountOrderItemData->name = $name;
+        $discountOrderItemData->name = $this->getOrderItemName($locale, $promoCodeLimit, $productItem);
         $discountOrderItemData->quantity = 1;
         $discountOrderItemData->setUnitPrice($discountPrice);
         $discountOrderItemData->setTotalPrice($discountPrice);
@@ -131,5 +124,24 @@ class ApplyPercentagePromoCodeMiddleware extends AbstractPromoCodeMiddleware
         $discountOrderItemData->promoCode = $promoCode;
 
         return $discountOrderItemData;
+    }
+
+    /**
+     * @param string $locale
+     * @param \Shopsys\FrameworkBundle\Model\Order\PromoCode\PromoCodeLimit\PromoCodeLimit $promoCodeLimit
+     * @param \Shopsys\FrameworkBundle\Model\Order\Item\OrderItemData $productItem
+     * @return string
+     */
+    protected function getOrderItemName(
+        string $locale,
+        PromoCodeLimit $promoCodeLimit,
+        OrderItemData $productItem,
+    ): string {
+        return sprintf(
+            '%s -%s - %s',
+            t('Promo code', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale),
+            $this->numberFormatterExtension->formatPercent($promoCodeLimit->getDiscount(), $locale),
+            $productItem->name,
+        );
     }
 }
