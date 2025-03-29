@@ -1,5 +1,5 @@
 monolog:
-    channels: ["cron", "queue", "slow", "socialNetwork", "deprecation"]
+    channels: ["cron", "queue", "socialNetwork", "deprecation"]
     handlers:
         deprecated:
             type: "null"
