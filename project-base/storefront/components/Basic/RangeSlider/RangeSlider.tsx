@@ -228,11 +228,11 @@ const RangeSliderThumb: FC<RangeSliderThumbProps> = ({ disabled, className, ...p
         '[&::-ms-track]:pointer-events-none [&::-ms-fill-lower] [&::-ms-thumb]:z-[3] [&::-ms-thumb]:-my-2 [&::-ms-thumb]:size-4 [&::-ms-thumb]:cursor-pointer [&::-ms-thumb]:rounded-full [&::-ms-fill-upper]:pointer-events-none';
 
     const webkitBgClass =
-        '[&::-webkit-slider-thumb]:bg-inputBackground [&::-webkit-slider-thumb]:hover:bg-inputBorderActive [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-inputTextActive [&::-webkit-slider-thumb]:border-solid [&::-webkit-slider-thumb]:hover:border-inputBorderActive';
+        '[&::-webkit-slider-thumb]:bg-inputBackground [&::-webkit-slider-thumb]:hover:bg-inputBorderActive [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-inputFill [&::-webkit-slider-thumb]:border-solid [&::-webkit-slider-thumb]:hover:border-inputBorderActive';
     const mozBgClass =
-        '[&::-moz-range-thumb]:bg-inputBackground [&::-moz-range-thumb]:hover:bg-inputBorderActive [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-inputTextActive [&::-moz-range-thumb]:border-solid [&::-moz-range-thumb]:hover:border-inputBorderActive';
+        '[&::-moz-range-thumb]:bg-inputBackground [&::-moz-range-thumb]:hover:bg-inputBorderActive [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-inputFill [&::-moz-range-thumb]:border-solid [&::-moz-range-thumb]:hover:border-inputBorderActive';
     const msBgClass =
-        '[&::-ms-thumb]:bg-inputBackground [&::-ms-thumb]:hover:bg-inputBorderActive [&::-ms-thumb]:border-2 [&::-ms-thumb]:border-inputTextActive [&::-ms-thumb]:border-solid [&::-ms-thumb]:hover:border-inputBorderActive';
+        '[&::-ms-thumb]:bg-inputBackground [&::-ms-thumb]:hover:bg-inputBorderActive [&::-ms-thumb]:border-2 [&::-ms-thumb]:border-inputFill [&::-ms-thumb]:border-solid [&::-ms-thumb]:hover:border-inputBorderActive';
 
     let bgClass = twJoin(mozBgClass, msBgClass, webkitBgClass);
 
