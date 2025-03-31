@@ -33,12 +33,4 @@ class Version20240806175816 extends AbstractMigration
         $this->sql('
             CREATE INDEX IDX_970DDB7FBF396750989D9B629FB73D77D1B862B8 ON customer_uploaded_files (id, slug, extension, hash)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

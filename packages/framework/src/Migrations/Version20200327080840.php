@@ -31,12 +31,4 @@ class Version20200327080840 extends AbstractMigration
             ADD
                 CONSTRAINT FK_DA9A5BFDBBB3772B FOREIGN KEY (customer_user_id) REFERENCES customer_users (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

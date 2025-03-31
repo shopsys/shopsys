@@ -18,12 +18,4 @@ class Version20181114102106 extends AbstractMigration
     {
         $this->sql('ALTER TABLE pricing_groups ALTER COLUMN coefficient DROP NOT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

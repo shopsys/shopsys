@@ -42,12 +42,4 @@ class Version20250120130000 extends AbstractMigration
             $this->sql('ALTER TABLE language_constant_translations ALTER translation TYPE TEXT');
         }
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

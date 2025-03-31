@@ -18,12 +18,4 @@ class Version20181114120915 extends AbstractMigration
     {
         $this->sql('ALTER TABLE products ALTER COLUMN price_calculation_type DROP NOT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

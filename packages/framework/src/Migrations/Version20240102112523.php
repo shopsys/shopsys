@@ -27,12 +27,4 @@ class Version20240102112523 extends AbstractMigration
                   AND order_items.type = \'product\'
         )');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

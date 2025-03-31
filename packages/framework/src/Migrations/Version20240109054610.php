@@ -18,12 +18,4 @@ class Version20240109054610 extends AbstractMigration
     {
         $this->sql('ALTER TABLE blog_articles ALTER publish_date TYPE TIMESTAMP(0) WITHOUT TIME ZONE');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

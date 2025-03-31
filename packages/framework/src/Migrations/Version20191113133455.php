@@ -38,12 +38,4 @@ class Version20191113133455 extends AbstractMigration
             FROM administrators
         ');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

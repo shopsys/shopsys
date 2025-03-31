@@ -23,12 +23,4 @@ class Version20240725200526 extends AbstractMigration
                 entity_name, entity_id, type, uploaded_file_id
             )');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

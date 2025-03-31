@@ -19,12 +19,4 @@ class Version20160717105120 extends AbstractMigration
         $this->sql('ALTER TABLE articles ADD hidden BOOLEAN NOT NULL DEFAULT FALSE;');
         $this->sql('ALTER TABLE articles ALTER hidden DROP DEFAULT;');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

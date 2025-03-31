@@ -20,12 +20,4 @@ class Version20151231104800 extends AbstractMigration
             'ALTER TABLE cron_modules ADD suspended BOOLEAN NOT NULL DEFAULT FALSE;',
         );
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

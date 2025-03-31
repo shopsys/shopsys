@@ -58,12 +58,4 @@ class Version20240803005343 extends AbstractMigration implements ContainerAwareI
         $this->sql('ALTER TABLE payment_domains ALTER COLUMN hidden_by_go_pay DROP DEFAULT ');
         $this->sql('ALTER TABLE payments DROP COLUMN hidden_by_go_pay');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

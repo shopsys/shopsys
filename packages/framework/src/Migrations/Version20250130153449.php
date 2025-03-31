@@ -23,12 +23,4 @@ class Version20250130153449 extends AbstractMigration
             WHERE NOT (roles::jsonb @> \'["ROLE_API_ALL"]\'::jsonb);',
         );
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

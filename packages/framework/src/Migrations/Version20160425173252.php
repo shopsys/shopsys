@@ -18,12 +18,4 @@ class Version20160425173252 extends AbstractMigration
     {
         $this->sql('ALTER TABLE product_domains ADD COLUMN short_description TEXT DEFAULT NULL;');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

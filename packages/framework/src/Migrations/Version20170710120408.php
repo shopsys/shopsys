@@ -18,12 +18,4 @@ class Version20170710120408 extends AbstractMigration
     {
         $this->sql('ALTER TABLE articles ADD seo_h1 TEXT DEFAULT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

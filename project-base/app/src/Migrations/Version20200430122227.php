@@ -19,12 +19,4 @@ class Version20200430122227 extends AbstractMigration
         $this->sql('ALTER TABLE payments ADD hidden_by_go_pay BOOLEAN NOT NULL DEFAULT FALSE');
         $this->sql('ALTER TABLE payments ALTER hidden_by_go_pay DROP DEFAULT');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

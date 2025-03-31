@@ -26,12 +26,4 @@ class Version20240613231000 extends AbstractMigration
         $this->sql('ALTER TABLE cart_promo_codes DROP CONSTRAINT fk_5de6e36c2fae4625');
         $this->sql('ALTER TABLE delivery_addresses DROP CONSTRAINT fk_2baf3984e76aa954');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

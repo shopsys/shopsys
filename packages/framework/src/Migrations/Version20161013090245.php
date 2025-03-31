@@ -32,12 +32,4 @@ class Version20161013090245 extends AbstractMigration
         ');
         $this->sql('ALTER TABLE orders DROP delivery_contact_person');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

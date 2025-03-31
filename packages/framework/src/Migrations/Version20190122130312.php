@@ -72,12 +72,4 @@ class Version20190122130312 extends AbstractMigration
                 CONSTRAINT FK_BEF484451AD5CDBF FOREIGN KEY (cart_id) REFERENCES carts (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->sql('CREATE INDEX IDX_BEF484451AD5CDBF ON cart_items (cart_id)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

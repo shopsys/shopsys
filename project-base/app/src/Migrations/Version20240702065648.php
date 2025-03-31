@@ -27,12 +27,4 @@ class Version20240702065648 extends AbstractMigration implements ContainerAwareI
         $this->sql('ALTER TABLE units DROP akeneo_code');
         $this->sql('DELETE FROM setting_values WHERE name=\'akeneoTransferProductsLastUpdatedDatetime\'');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

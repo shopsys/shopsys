@@ -19,12 +19,4 @@ class Version20160503140649 extends AbstractMigration
         $this->sql('ALTER TABLE parameter_titles ADD visible BOOLEAN NOT NULL DEFAULT TRUE;');
         $this->sql('ALTER TABLE parameter_titles ALTER visible DROP DEFAULT;');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

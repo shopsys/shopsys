@@ -247,12 +247,4 @@ class Version20231124121921 extends AbstractMigration
         $this->sql('DROP INDEX IDX_62809DB0C5F1915D');
         $this->sql('ALTER TABLE order_items DROP COLUMN personal_pickup_store_id');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

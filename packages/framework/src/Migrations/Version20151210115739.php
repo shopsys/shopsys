@@ -20,12 +20,4 @@ class Version20151210115739 extends AbstractMigration
             RENAME COLUMN visible TO calculated_visibility';
         $this->sql($sql);
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

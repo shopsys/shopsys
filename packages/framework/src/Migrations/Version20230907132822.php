@@ -18,12 +18,4 @@ class Version20230907132822 extends AbstractMigration
     {
         $this->sql('UPDATE articles SET placement = \'none\' WHERE placement = \'topMenu\'');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

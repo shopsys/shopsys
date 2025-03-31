@@ -29,12 +29,4 @@ class Version20241008072724 extends AbstractMigration
         $this->sql('ALTER SEQUENCE complaint_items_id_seq OWNED BY complaint_items.id');
         $this->sql('ALTER SEQUENCE complaints_id_seq OWNED BY complaints.id');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

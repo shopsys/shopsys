@@ -58,12 +58,4 @@ class Version20240612124051 extends AbstractMigration
         $this->sql('ALTER TABLE navigation_items ALTER domain_id DROP DEFAULT');
         $this->sql('CREATE INDEX domain_id_idx ON navigation_items (domain_id)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

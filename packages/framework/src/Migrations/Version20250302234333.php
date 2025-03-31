@@ -19,12 +19,4 @@ class Version20250302234333 extends AbstractMigration
         $this->sql('DELETE FROM cron_module_runs WHERE cron_module_id = \'Shopsys\\FrameworkBundle\\Component\\Error\\ErrorPageCronModule\'');
         $this->sql('DELETE FROM cron_modules WHERE service_id = \'Shopsys\\FrameworkBundle\\Component\\Error\\ErrorPageCronModule\'');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

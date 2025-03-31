@@ -20,12 +20,4 @@ class Version20241126152128 extends AbstractMigration
         $this->sql('UPDATE promo_codes SET discount_type = \'percent\' WHERE discount_type = \'1\'');
         $this->sql('UPDATE promo_codes SET discount_type = \'nominal\' WHERE discount_type = \'2\'');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

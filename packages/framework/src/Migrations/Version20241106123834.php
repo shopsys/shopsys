@@ -37,14 +37,6 @@ class Version20241106123834 extends AbstractMigration implements ContainerAwareI
     }
 
     /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
-
-    /**
      * @param \Symfony\Component\DependencyInjection\ContainerInterface|null $container
      */
     public function setContainer(?ContainerInterface $container = null): void

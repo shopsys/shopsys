@@ -23,12 +23,4 @@ class Version20170801093853 extends AbstractMigration
             'ALTER TABLE parameter_translations RENAME CONSTRAINT parameter_titles_translations_pkey TO parameters_translations_pkey',
         );
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

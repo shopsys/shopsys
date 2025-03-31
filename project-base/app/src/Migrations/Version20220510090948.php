@@ -23,12 +23,4 @@ class Version20220510090948 extends AbstractMigration
             AND friendly_urls.slug = \'article/\' || products.catnum
         ');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

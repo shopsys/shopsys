@@ -22,12 +22,4 @@ class Version20191210112451 extends AbstractMigration
         $this->sql('ALTER TABLE uploaded_files ALTER slug DROP DEFAULT');
         $this->sql('ALTER TABLE uploaded_files ALTER name DROP DEFAULT');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

@@ -18,12 +18,4 @@ class Version20180413102110 extends AbstractMigration
     {
         $this->sql('DROP TABLE plugin_data_values');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

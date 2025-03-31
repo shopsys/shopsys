@@ -18,12 +18,4 @@ class Version20240416105031 extends AbstractMigration
     {
         $this->sql('DROP TABLE scripts');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

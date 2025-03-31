@@ -20,12 +20,4 @@ class Version20160113151330 extends AbstractMigration
             ADD COLUMN placement TEXT NOT NULL';
         $this->sql($sql);
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

@@ -19,12 +19,4 @@ final class Version20240813071845 extends AbstractMigration
         $this->sql('UPDATE adverts SET position_name = \'productListSecondRow\' WHERE position_name = \'productListMiddle\'');
         $this->sql('UPDATE adverts SET position_name = \'productListSecondRow\' WHERE position_name = \'productList\'');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

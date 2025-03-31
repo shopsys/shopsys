@@ -38,12 +38,4 @@ class Version20240103095628 extends AbstractMigration
         $this->sql('CREATE INDEX IDX_F1B008627DC3D55D ON entity_log (parent_entity_name)');
         $this->sql('CREATE INDEX IDX_F1B00862706E52B3 ON entity_log (parent_entity_id)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

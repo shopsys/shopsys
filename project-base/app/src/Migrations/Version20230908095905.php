@@ -20,12 +20,4 @@ class Version20230908095905 extends AbstractMigration
         $this->sql('ALTER TABLE categories DROP svg_icon');
         $this->sql('ALTER TABLE categories DROP over_limit_quantity');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

@@ -18,12 +18,4 @@ class Version20221130083437 extends AbstractMigration
     {
         $this->sql('UPDATE currencies SET min_fraction_digits = 0, rounding_type = \'integer\' WHERE id = 1');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

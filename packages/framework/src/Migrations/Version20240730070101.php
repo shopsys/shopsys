@@ -21,12 +21,4 @@ class Version20240730070101 extends AbstractMigration
         $this->sql('ALTER TABLE billing_addresses ALTER city DROP NOT NULL');
         $this->sql('ALTER TABLE billing_addresses ALTER postcode DROP NOT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

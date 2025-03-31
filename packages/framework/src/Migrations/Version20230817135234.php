@@ -18,12 +18,4 @@ class Version20230817135234 extends AbstractMigration
     {
         $this->sql('UPDATE setting_values SET value = \'\' WHERE name = \'seoRobotsTxtContent\' AND value IS NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

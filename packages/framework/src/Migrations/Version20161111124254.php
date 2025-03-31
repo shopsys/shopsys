@@ -18,12 +18,4 @@ class Version20161111124254 extends AbstractMigration
     {
         $this->sql('ALTER TABLE cart_items RENAME COLUMN session_id TO cart_identifier');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

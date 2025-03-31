@@ -22,12 +22,4 @@ class Version20200225102504 extends AbstractMigration
         );
         $this->sql('ALTER TABLE customers ALTER domain_id DROP DEFAULT');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

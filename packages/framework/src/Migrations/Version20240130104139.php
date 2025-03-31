@@ -28,12 +28,4 @@ class Version20240130104139 extends AbstractMigration
         $this->sql('ALTER TABLE stores ALTER domain_id DROP DEFAULT');
         $this->sql('DROP TABLE store_domains');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

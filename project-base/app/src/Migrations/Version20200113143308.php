@@ -30,12 +30,4 @@ class Version20200113143308 extends AbstractMigration
             ADD
                 CONSTRAINT FK_B8436D28D9F6D38 FOREIGN KEY (order_id) REFERENCES orders (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

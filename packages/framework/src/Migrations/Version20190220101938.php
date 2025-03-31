@@ -20,12 +20,4 @@ class Version20190220101938 extends AbstractMigration
             'UPDATE setting_values SET type = \'money\' WHERE name = \'freeTransportAndPaymentPriceLimit\' AND type != \'none\'',
         );
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

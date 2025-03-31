@@ -53,12 +53,4 @@ class Version20191205145631 extends AbstractMigration
 
         $this->sql('ALTER TABLE "users" DROP "billing_address_id"');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

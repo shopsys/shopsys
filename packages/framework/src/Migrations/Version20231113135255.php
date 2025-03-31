@@ -18,12 +18,4 @@ class Version20231113135255 extends AbstractMigration
     {
         $this->sql('ALTER TABLE products DROP COLUMN calculated_hidden');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

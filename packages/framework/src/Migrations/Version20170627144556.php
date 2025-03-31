@@ -24,14 +24,6 @@ class Version20170627144556 extends AbstractMigration
         $this->sql('UPDATE product_domains SET short_description = short_description');
     }
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
-
     private function replaceProductDomainFulltextTriggerOnProduct()
     {
         $this->sql('

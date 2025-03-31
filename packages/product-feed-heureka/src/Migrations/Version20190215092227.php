@@ -18,12 +18,4 @@ class Version20190215092227 extends AbstractMigration
     {
         $this->sql('COMMENT ON COLUMN heureka_product_domains.cpc IS \'(DC2Type:money)\'');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

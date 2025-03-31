@@ -28,12 +28,4 @@ class Version20180702111016 extends AbstractMigration
             . '(\'productStockCalculations\')',
         );
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

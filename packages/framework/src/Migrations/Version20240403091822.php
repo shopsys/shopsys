@@ -417,12 +417,4 @@ class Version20240403091822 extends AbstractMigration implements ContainerAwareI
         $this->sql('ALTER TABLE cart_items ALTER uuid SET NOT NULL');
         $this->sql('CREATE UNIQUE INDEX UNIQ_BEF48445D17F50A6 ON cart_items (uuid)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

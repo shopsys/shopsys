@@ -19,12 +19,4 @@ class Version20250124092957 extends AbstractMigration
         $this->sql('ALTER TABLE product_video_translations ALTER description DROP NOT NULL');
         $this->sql('UPDATE product_video_translations SET description = NULL WHERE description = \'\'');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

@@ -31,12 +31,4 @@ class Version20231214213235 extends AbstractMigration
             $this->sql('ALTER TABLE articles ALTER url DROP NOT NULL');
         }
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

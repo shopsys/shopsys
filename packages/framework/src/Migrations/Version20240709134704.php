@@ -18,12 +18,4 @@ class Version20240709134704 extends AbstractMigration
     {
         $this->sql('ALTER TABLE parameter_values ADD numeric_value NUMERIC(20, 6) DEFAULT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

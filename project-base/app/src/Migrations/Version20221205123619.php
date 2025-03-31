@@ -149,12 +149,4 @@ class Version20221205123619 extends AbstractMigration
             $$ LANGUAGE plpgsql;
         ');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

@@ -18,12 +18,4 @@ class Version20240718144108 extends AbstractMigration
     {
         $this->sql('ALTER TABLE customer_user_login_types ADD external_id TEXT DEFAULT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

@@ -31,12 +31,4 @@ class Version20240613235059 extends AbstractMigration
         $this->sql('ALTER TABLE closed_day_excluded_stores ADD CONSTRAINT FK_B4EC517608F9E8F FOREIGN KEY (closed_day_id) REFERENCES closed_days (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->sql('ALTER TABLE closed_day_excluded_stores ADD CONSTRAINT FK_B4EC517B092A811 FOREIGN KEY (store_id) REFERENCES stores (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

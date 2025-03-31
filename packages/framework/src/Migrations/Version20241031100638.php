@@ -22,12 +22,4 @@ class Version20241031100638 extends AbstractMigration
         $this->sql('ALTER TABLE slider_items ALTER rgb_background_color DROP DEFAULT');
         $this->sql('ALTER TABLE slider_items ALTER opacity DROP DEFAULT;');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

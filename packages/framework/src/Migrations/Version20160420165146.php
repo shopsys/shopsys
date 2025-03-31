@@ -18,12 +18,4 @@ class Version20160420165146 extends AbstractMigration
     {
         $this->sql('ALTER TABLE category_domains ADD COLUMN description TEXT DEFAULT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

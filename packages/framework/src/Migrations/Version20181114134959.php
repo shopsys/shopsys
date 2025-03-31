@@ -39,12 +39,4 @@ class Version20181114134959 extends AbstractMigration
         );
         $this->sql('UPDATE products SET price_calculation_type = \'manual\' WHERE price_calculation_type = \'auto\'');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

@@ -20,12 +20,4 @@ class Version20250127142754 extends AbstractMigration
         $this->sql('ALTER TABLE complaints ALTER resolution DROP DEFAULT');
         $this->sql('ALTER TABLE complaints ADD bank_account_number VARCHAR(34) DEFAULT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

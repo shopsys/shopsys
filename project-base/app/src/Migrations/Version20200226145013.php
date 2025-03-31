@@ -18,12 +18,4 @@ class Version20200226145013 extends AbstractMigration
     {
         $this->sql('ALTER TABLE categories ADD svg_icon VARCHAR(32) DEFAULT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

@@ -27,12 +27,4 @@ class Version20190215092226 extends AbstractMigration
         $this->sql('COMMENT ON COLUMN product_manual_input_prices.input_price IS \'(DC2Type:money)\'');
         $this->sql('COMMENT ON COLUMN transport_prices.price IS \'(DC2Type:money)\'');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

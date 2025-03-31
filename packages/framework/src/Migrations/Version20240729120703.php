@@ -20,12 +20,4 @@ class Version20240729120703 extends AbstractMigration
         $this->sql('ALTER TABLE customer_user_role_groups ALTER uuid DROP DEFAULT');
         $this->sql('CREATE UNIQUE INDEX UNIQ_E2F14348D17F50A6 ON customer_user_role_groups (uuid)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

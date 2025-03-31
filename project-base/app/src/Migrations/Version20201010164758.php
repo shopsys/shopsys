@@ -42,12 +42,4 @@ final class Version20201010164758 extends AbstractMigration implements Container
             );
         }
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

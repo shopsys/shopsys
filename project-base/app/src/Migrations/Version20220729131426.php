@@ -21,12 +21,4 @@ class Version20220729131426 extends AbstractMigration
         $this->sql('UPDATE orders SET status_id = 1 WHERE status_id = 5');
         $this->sql('DELETE FROM order_statuses WHERE type = 5');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

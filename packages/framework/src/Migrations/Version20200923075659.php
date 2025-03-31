@@ -21,12 +21,4 @@ class Version20200923075659 extends AbstractMigration
         $this->sql('ALTER TABLE brands ALTER uuid SET NOT NULL');
         $this->sql('CREATE UNIQUE INDEX UNIQ_7EA24434D17F50A6 ON brands (uuid)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

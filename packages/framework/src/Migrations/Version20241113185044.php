@@ -18,12 +18,4 @@ class Version20241113185044 extends AbstractMigration
     {
         $this->sql('ALTER TABLE product_translations RENAME COLUMN name_sufix TO name_suffix');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

@@ -45,12 +45,4 @@ class Version20240829093048 extends AbstractMigration
         $this->sql('ALTER TABLE complaint_items ALTER product_name SET NOT NULL');
         $this->sql('ALTER TABLE complaint_items ALTER catnum SET NOT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

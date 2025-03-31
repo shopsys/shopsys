@@ -25,12 +25,4 @@ class Version20240816110309 extends AbstractMigration
             SET
                 NULL NOT DEFERRABLE INITIALLY IMMEDIATE');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

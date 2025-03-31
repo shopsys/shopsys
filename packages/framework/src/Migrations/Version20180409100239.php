@@ -20,12 +20,4 @@ class Version20180409100239 extends AbstractMigration
         $this->sql('UPDATE personal_data_access_request SET type = :type', ['type' => 'display']);
         $this->sql('ALTER TABLE personal_data_access_request ALTER COLUMN type SET NOT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

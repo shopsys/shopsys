@@ -19,12 +19,4 @@ class Version20240415095045 extends AbstractMigration
         $this->sql('ALTER TABLE orders ADD heureka_agreement BOOLEAN NOT NULL DEFAULT FALSE');
         $this->sql('ALTER TABLE orders ALTER heureka_agreement DROP DEFAULT');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

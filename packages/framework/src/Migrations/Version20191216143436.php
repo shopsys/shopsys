@@ -86,12 +86,4 @@ SELECT id, customer_id, delivery_address_id, pricing_group_id, first_name, last_
 
         $this->sql('DROP TABLE users');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

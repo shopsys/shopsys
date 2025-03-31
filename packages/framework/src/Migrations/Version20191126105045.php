@@ -19,12 +19,4 @@ class Version20191126105045 extends AbstractMigration
         $this->sql('ALTER TABLE uploaded_files ADD type VARCHAR(100) NOT NULL DEFAULT \'default\'');
         $this->sql('ALTER TABLE uploaded_files ALTER type DROP DEFAULT');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

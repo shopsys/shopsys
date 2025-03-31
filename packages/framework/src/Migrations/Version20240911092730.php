@@ -18,12 +18,4 @@ class Version20240911092730 extends AbstractMigration
     {
         $this->sql('CREATE UNIQUE INDEX unique_weight_limit_on_domain ON transport_prices (max_weight, domain_id, transport_id)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

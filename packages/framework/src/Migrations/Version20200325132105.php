@@ -18,12 +18,4 @@ class Version20200325132105 extends AbstractMigration
     {
         $this->sql('ALTER TABLE orders ADD origin VARCHAR(20) DEFAULT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

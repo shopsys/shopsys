@@ -38,12 +38,4 @@ class Version20220725104726 extends AbstractMigration
         ) WHERE country_id IS NULL;');
         $this->sql('ALTER TABLE delivery_addresses ALTER country_id SET NOT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

@@ -19,12 +19,4 @@ class Version20200504142810 extends AbstractMigration
         $this->sql('ALTER TABLE images ADD akeneo_code VARCHAR(100) DEFAULT NULL');
         $this->sql('ALTER TABLE images ADD akeneo_image_type VARCHAR(100) DEFAULT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

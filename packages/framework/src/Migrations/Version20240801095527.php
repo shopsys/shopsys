@@ -31,12 +31,4 @@ class Version20240801095527 extends AbstractMigration
 
         $this->sql('INSERT INTO complaint_number_sequences (id, number) VALUES (1, 0)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

@@ -24,12 +24,4 @@ class Version20241113124734 extends AbstractMigration
             $this->sql('ALTER TABLE product_translations ALTER name_sufix DROP DEFAULT');
         }
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

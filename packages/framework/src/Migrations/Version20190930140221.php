@@ -21,12 +21,4 @@ class Version20190930140221 extends AbstractMigration
         $this->sql('ALTER TABLE categories ALTER uuid SET NOT NULL');
         $this->sql('CREATE UNIQUE INDEX UNIQ_3AF34668D17F50A6 ON categories (uuid)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

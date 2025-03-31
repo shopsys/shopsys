@@ -34,12 +34,4 @@ class Version20200714071640 extends AbstractMigration implements ContainerAwareI
             $this->sql(sprintf('INSERT INTO flag_translations (translatable_id, name, locale) VALUES (%d, \'' . t('Price hit', [], Translator::DEFAULT_TRANSLATION_DOMAIN, $locale) . '\', \'' . $locale . '\')', $lastFlagsId));
         }
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

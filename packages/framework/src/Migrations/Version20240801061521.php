@@ -24,12 +24,4 @@ class Version20240801061521 extends AbstractMigration
                 CONSTRAINT FK_DAB6D0D28B54B08B FOREIGN KEY (sales_representative_id) REFERENCES sales_representatives (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->sql('CREATE INDEX IDX_DAB6D0D28B54B08B ON customer_users (sales_representative_id)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

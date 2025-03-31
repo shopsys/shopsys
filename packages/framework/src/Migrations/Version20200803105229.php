@@ -23,12 +23,4 @@ class Version20200803105229 extends AbstractMigration
         $this->sql('ALTER TABLE products ALTER recalculate_price DROP DEFAULT');
         $this->sql('ALTER TABLE products ALTER recalculate_visibility DROP DEFAULT');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

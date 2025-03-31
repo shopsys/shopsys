@@ -24,12 +24,4 @@ class Version20240826114720 extends AbstractMigration
                 CONSTRAINT FK_17F263ED685DFB98 FOREIGN KEY (complaint_status_id) REFERENCES complaint_statuses (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->sql('CREATE INDEX IDX_17F263ED685DFB98 ON mail_templates (complaint_status_id)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

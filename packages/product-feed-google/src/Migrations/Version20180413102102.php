@@ -25,14 +25,6 @@ class Version20180413102102 extends AbstractMigration
         }
     }
 
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
-
     private function migrateProducts(): void
     {
         $rows = $this->sql(

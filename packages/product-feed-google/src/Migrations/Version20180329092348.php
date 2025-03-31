@@ -32,12 +32,4 @@ class Version20180329092348 extends AbstractMigration
                 CONSTRAINT FK_628F4AA44584665A FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->sql('ALTER TABLE google_product_domains ALTER show SET NOT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

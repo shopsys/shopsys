@@ -20,12 +20,4 @@ class Version20200416114815 extends AbstractMigration
         $this->sql('UPDATE customer_user_refresh_token_chain SET device_id = uuid_generate_v4()');
         $this->sql('ALTER TABLE customer_user_refresh_token_chain ALTER device_id SET NOT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

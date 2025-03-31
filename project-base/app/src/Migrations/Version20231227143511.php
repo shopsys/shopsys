@@ -44,12 +44,4 @@ class Version20231227143511 extends AbstractMigration
             UPDATE
                 ON messenger_messages FOR EACH ROW EXECUTE PROCEDURE notify_messenger_messages();');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

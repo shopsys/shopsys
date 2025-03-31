@@ -20,12 +20,4 @@ class Version20151230012022 extends AbstractMigration
             'CREATE TABLE cron_modules (module_id VARCHAR(255) NOT NULL, scheduled BOOLEAN NOT NULL, PRIMARY KEY(module_id));',
         );
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

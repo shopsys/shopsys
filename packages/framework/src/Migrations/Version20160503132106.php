@@ -19,12 +19,4 @@ class Version20160503132106 extends AbstractMigration
         $this->sql('ALTER TABLE flags ADD visible BOOLEAN NOT NULL DEFAULT TRUE;');
         $this->sql('ALTER TABLE flags ALTER visible DROP DEFAULT;');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

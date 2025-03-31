@@ -18,12 +18,4 @@ class Version20180411124519 extends AbstractMigration
     {
         $this->sql('ALTER TABLE countries ADD code VARCHAR(2) DEFAULT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

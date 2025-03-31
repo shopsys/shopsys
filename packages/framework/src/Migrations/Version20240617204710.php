@@ -50,12 +50,4 @@ class Version20240617204710 extends AbstractMigration
             $this->sql('ALTER TABLE order_items DROP related_order_item_id');
         }
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

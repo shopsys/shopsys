@@ -59,12 +59,4 @@ class Version20241101073720 extends AbstractMigration
         $this->sql('ALTER TABLE parameters DROP COLUMN IF EXISTS akeneo_code');
         $this->sql('ALTER TABLE parameters DROP COLUMN IF EXISTS akeneo_type');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

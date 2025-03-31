@@ -21,12 +21,4 @@ class Version20210727191108 extends AbstractMigration
         $this->sql('ALTER TABLE slider_items ALTER uuid SET NOT NULL');
         $this->sql('CREATE UNIQUE INDEX UNIQ_67AAA529D17F50A6 ON slider_items (uuid)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

@@ -34,12 +34,4 @@ class Version20180329142420 extends AbstractMigration
                 CONSTRAINT FK_605AB7A64584665A FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->sql('ALTER TABLE zbozi_product_domains ALTER show SET NOT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

@@ -22,12 +22,4 @@ class Version20240108154624 extends AbstractMigration
             $this->sql('ALTER TABLE friendly_urls ADD last_modification TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL');
         }
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

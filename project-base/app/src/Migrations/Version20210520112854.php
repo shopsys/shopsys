@@ -27,12 +27,4 @@ class Version20210520112854 extends AbstractMigration
                 CONSTRAINT FK_69348FEF8BD700D FOREIGN KEY (unit_id) REFERENCES units (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->sql('CREATE INDEX IDX_69348FEF8BD700D ON parameters (unit_id)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

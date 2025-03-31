@@ -21,12 +21,4 @@ class Version20231130115257 extends AbstractMigration
         $this->sql('ALTER TABLE products DROP download_assembly_instruction_files');
         $this->sql('ALTER TABLE products DROP download_product_type_plan_files');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

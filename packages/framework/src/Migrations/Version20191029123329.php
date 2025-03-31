@@ -19,12 +19,4 @@ class Version20191029123329 extends AbstractMigration
         $this->sql('ALTER TABLE currencies ADD min_fraction_digits INT NOT NULL DEFAULT 2');
         $this->sql('ALTER TABLE currencies ALTER min_fraction_digits DROP DEFAULT');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

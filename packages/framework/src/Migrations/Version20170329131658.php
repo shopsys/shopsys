@@ -20,12 +20,4 @@ class Version20170329131658 extends AbstractMigration
         $this->sql('ALTER TABLE cron_modules RENAME COLUMN module_id TO service_id');
         $this->sql('ALTER TABLE cron_modules ADD PRIMARY KEY (service_id)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

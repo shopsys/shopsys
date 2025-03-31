@@ -25,12 +25,4 @@ class Version20240724062626 extends AbstractMigration
         $this->sql('ALTER TABLE customer_users ALTER first_name DROP NOT NULL');
         $this->sql('ALTER TABLE customer_users ALTER last_name DROP NOT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

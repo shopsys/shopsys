@@ -63,12 +63,4 @@ class Version20231213165330 extends AbstractMigration
             $this->sql('ALTER TABLE category_parameters ALTER collapsed DROP DEFAULT');
         }
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

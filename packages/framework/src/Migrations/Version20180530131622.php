@@ -21,12 +21,4 @@ class Version20180530131622 extends AbstractMigration
         $this->sql('ALTER TABLE product_domains ADD PRIMARY KEY (id)');
         $this->sql('CREATE UNIQUE INDEX product_domain ON product_domains (product_id, domain_id)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

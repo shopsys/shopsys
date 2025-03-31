@@ -18,12 +18,4 @@ class Version20240614142126 extends AbstractMigration
     {
         $this->sql('ALTER TABLE orders RENAME COLUMN gtm_coupon TO promo_code');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

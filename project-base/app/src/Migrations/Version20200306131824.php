@@ -19,12 +19,4 @@ class Version20200306131824 extends AbstractMigration
         $this->sql('ALTER TABLE slider_items ADD slider_extended_text TEXT DEFAULT NULL');
         $this->sql('ALTER TABLE slider_items ADD slider_extended_text_link TEXT DEFAULT NULL');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

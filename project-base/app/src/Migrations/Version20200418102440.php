@@ -21,12 +21,4 @@ final class Version20200418102440 extends AbstractMigration
     {
         $this->sql('ALTER TABLE parameters DROP visible');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

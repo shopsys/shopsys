@@ -20,12 +20,4 @@ class Version20200414143255 extends AbstractMigration
         $this->sql('ALTER TABLE products DROP out_of_stock_action');
         $this->sql('ALTER TABLE products DROP using_stock');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

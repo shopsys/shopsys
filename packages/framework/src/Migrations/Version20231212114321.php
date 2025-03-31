@@ -184,12 +184,4 @@ class Version20231212114321 extends AbstractMigration implements ContainerAwareI
             $this->sql('ALTER TABLE blog_article_translations ADD perex TEXT DEFAULT NULL');
         }
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

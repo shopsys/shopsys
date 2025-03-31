@@ -33,12 +33,4 @@ class Version20180830121204 extends AbstractMigration
         }
         $this->sql('ALTER TABLE billing_addresses DROP COLUMN telephone');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

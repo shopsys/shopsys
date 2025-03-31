@@ -49,12 +49,4 @@ class Version20240105155555 extends AbstractMigration
             WHERE description IS NOT NULL AND description NOT LIKE \'%gjs-text-ckeditor%\' 
         ');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

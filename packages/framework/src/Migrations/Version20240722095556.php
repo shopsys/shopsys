@@ -19,12 +19,4 @@ class Version20240722095556 extends AbstractMigration
         $this->sql('ALTER TABLE stores RENAME COLUMN location_latitude to latitude');
         $this->sql('ALTER TABLE stores RENAME COLUMN location_longitude to longitude');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

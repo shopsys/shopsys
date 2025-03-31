@@ -29,12 +29,4 @@ class Version20180603135345 extends AbstractMigration
         );
         $this->sql('ALTER SEQUENCE category_domains_id_seq RESTART WITH 2');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

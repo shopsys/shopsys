@@ -129,12 +129,4 @@ class Version20190121094400 extends AbstractMigration implements ContainerAwareI
         $this->sql('ALTER TABLE country_domains ALTER priority DROP DEFAULT');
         $this->sql('CREATE UNIQUE INDEX countries_code_uni ON countries (code)');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }

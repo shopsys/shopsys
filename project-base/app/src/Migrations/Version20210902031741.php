@@ -35,12 +35,4 @@ class Version20210902031741 extends AbstractMigration
             ADD
                 CONSTRAINT FK_153914F7EC53CE08 FOREIGN KEY (related_product) REFERENCES products (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
     }
-
-    /**
-     * @param \Doctrine\DBAL\Schema\Schema $schema
-     */
-    #[Override]
-    public function down(Schema $schema): void
-    {
-    }
 }
