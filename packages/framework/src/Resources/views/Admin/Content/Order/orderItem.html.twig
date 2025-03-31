@@ -19,12 +19,12 @@
             {{ form_errors(orderItemForm.catnum, {errors_attr: { inline: false }}) }}
         </td>
 
-        {% if inputPriceType is same as(constant('Shopsys\\FrameworkBundle\\Model\\Pricing\\PricingSetting::INPUT_PRICE_TYPE_WITH_VAT')) %}
+        {% if inputPriceType is same as(constant('Shopsys\\FrameworkBundle\\Model\\Pricing\\PricingSetting::PRICE_TYPE_WITH_VAT')) %}
             <td class="text-right">
                 {{ self.inputPriceWidget(orderItemForm.unitPriceWithVat) }}
             </td>
             <td class="text-right">{{ self.calculablePriceWidget(orderItemForm.unitPriceWithoutVat) }}</td>
-        {% elseif inputPriceType is same as(constant('Shopsys\\FrameworkBundle\\Model\\Pricing\\PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT')) %}
+        {% elseif inputPriceType is same as(constant('Shopsys\\FrameworkBundle\\Model\\Pricing\\PricingSetting::PRICE_TYPE_WITHOUT_VAT')) %}
             <td class="text-right">
                 {{ self.calculablePriceWidget(orderItemForm.unitPriceWithVat) }}
             </td>
@@ -68,12 +68,12 @@
         </td>
         <td class="text-right">-</td>
 
-        {% if inputPriceType is same as(constant('Shopsys\\FrameworkBundle\\Model\\Pricing\\PricingSetting::INPUT_PRICE_TYPE_WITH_VAT')) %}
+        {% if inputPriceType is same as(constant('Shopsys\\FrameworkBundle\\Model\\Pricing\\PricingSetting::PRICE_TYPE_WITH_VAT')) %}
             <td class="text-right">
                 {{ self.inputPriceWidget(orderTransportForm.unitPriceWithVat) }}
             </td>
             <td class="text-right">{{ self.calculablePriceWidget(orderTransportForm.unitPriceWithoutVat) }}</td>
-        {% elseif inputPriceType is same as(constant('Shopsys\\FrameworkBundle\\Model\\Pricing\\PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT')) %}
+        {% elseif inputPriceType is same as(constant('Shopsys\\FrameworkBundle\\Model\\Pricing\\PricingSetting::PRICE_TYPE_WITHOUT_VAT')) %}
             <td class="text-right">
                 {{ self.calculablePriceWidget(orderTransportForm.unitPriceWithVat) }}
             </td>
@@ -108,12 +108,12 @@
         </td>
         <td class="text-right">-</td>
 
-        {% if inputPriceType is same as(constant('Shopsys\\FrameworkBundle\\Model\\Pricing\\PricingSetting::INPUT_PRICE_TYPE_WITH_VAT')) %}
+        {% if inputPriceType is same as(constant('Shopsys\\FrameworkBundle\\Model\\Pricing\\PricingSetting::PRICE_TYPE_WITH_VAT')) %}
             <td class="text-right">
                 {{ self.inputPriceWidget(orderPaymentForm.unitPriceWithVat) }}
             </td>
             <td class="text-right">{{ self.calculablePriceWidget(orderPaymentForm.unitPriceWithoutVat) }}</td>
-        {% elseif inputPriceType is same as(constant('Shopsys\\FrameworkBundle\\Model\\Pricing\\PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT')) %}
+        {% elseif inputPriceType is same as(constant('Shopsys\\FrameworkBundle\\Model\\Pricing\\PricingSetting::PRICE_TYPE_WITHOUT_VAT')) %}
             <td class="text-right">
                 {{ self.calculablePriceWidget(orderPaymentForm.unitPriceWithVat) }}
             </td>

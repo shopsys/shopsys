@@ -69,7 +69,7 @@ class OrderItemPriceCalculationTest extends TestCase
             ->onlyMethods(['getInputPriceType'])
             ->getMock();
         $pricingSettingMock->expects($this->once())->method('getInputPriceType')->willReturn(
-            PricingSetting::INPUT_PRICE_TYPE_WITH_VAT,
+            PricingSetting::PRICE_TYPE_WITH_VAT,
         );
 
         $orderItemPriceCalculation = new OrderItemPriceCalculation(

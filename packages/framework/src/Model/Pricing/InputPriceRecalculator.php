@@ -35,12 +35,12 @@ class InputPriceRecalculator
 
     public function recalculateToInputPricesWithoutVat()
     {
-        $this->recalculateInputPriceForNewType(PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT);
+        $this->recalculateInputPriceForNewType(PricingSetting::PRICE_TYPE_WITHOUT_VAT);
     }
 
     public function recalculateToInputPricesWithVat()
     {
-        $this->recalculateInputPriceForNewType(PricingSetting::INPUT_PRICE_TYPE_WITH_VAT);
+        $this->recalculateInputPriceForNewType(PricingSetting::PRICE_TYPE_WITH_VAT);
     }
 
     /**

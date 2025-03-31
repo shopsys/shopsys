@@ -10,7 +10,7 @@ use Shopsys\FrameworkBundle\Model\Product\Search\FilterQueryFactory as BaseFilte
 
 /**
  * @property \App\Model\Product\Search\ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer
- * @method __construct(\App\Model\Product\Search\ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer, \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterFacade $categoryAutomatedFilterFacade)
+ * @method __construct(\App\Model\Product\Search\ProductFilterDataToQueryTransformer $productFilterDataToQueryTransformer, \App\Model\Customer\User\CurrentCustomerUser $currentCustomerUser, \Shopsys\FrameworkBundle\Component\Elasticsearch\IndexDefinitionLoader $indexDefinitionLoader, \Shopsys\FrameworkBundle\Component\Domain\Domain $domain, \Shopsys\FrameworkBundle\Model\Category\AutomatedFilter\CategoryAutomatedFilterFacade $categoryAutomatedFilterFacade, \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting)
  * @method \App\Model\Product\Search\FilterQuery createListableProductsByCategory(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, \App\Model\Category\Category $category)
  * @method \App\Model\Product\Search\FilterQuery createWithProductFilterData(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit)
  * @method \App\Model\Product\Search\FilterQuery createListableProductsByBrand(\Shopsys\FrameworkBundle\Model\Product\Filter\ProductFilterData $productFilterData, string $orderingModeId, int $page, int $limit, \App\Model\Product\Brand\Brand $brand)
@@ -42,6 +42,6 @@ class FilterQueryFactory extends BaseFilterQueryFactory
     #[Override]
     public function create(string $indexName): BaseFilterQuery
     {
-        return new FilterQuery($indexName);
+        return new FilterQuery($indexName, $this->pricingSetting->getSellingPriceType());
     }
 }

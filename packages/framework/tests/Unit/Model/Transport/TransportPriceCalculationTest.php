@@ -33,14 +33,14 @@ class TransportPriceCalculationTest extends TestCase
     {
         return [
             [
-                'inputPriceType' => PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT,
+                'inputPriceType' => PricingSetting::PRICE_TYPE_WITHOUT_VAT,
                 'inputPrice' => Money::create(6999),
                 'vatPercent' => '21',
                 'priceWithoutVat' => Money::create(6999),
                 'priceWithVat' => Money::create(8469),
             ],
             [
-                'inputPriceType' => PricingSetting::INPUT_PRICE_TYPE_WITH_VAT,
+                'inputPriceType' => PricingSetting::PRICE_TYPE_WITH_VAT,
                 'inputPrice' => Money::create('6999.99'),
                 'vatPercent' => '21',
                 'priceWithoutVat' => Money::create('5785.12'),

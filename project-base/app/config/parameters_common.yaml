@@ -15,7 +15,7 @@ parameters:
     # Set to true to log validation errors with log level ERROR instead of INFO
     shopsys.frontend_api.validation_logged_as_error: false
 
-    shopsys.mail_template.display_price: 'input_price'
+    shopsys.mail_template.display_price: 'selling_price'
 
     # Performance test parameters
     shopsys.performance_data.category.counts_by_level: [2, 4, 6]

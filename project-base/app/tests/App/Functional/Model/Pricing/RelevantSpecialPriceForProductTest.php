@@ -73,7 +73,7 @@ final class RelevantSpecialPriceForProductTest extends TransactionFunctionalTest
         $this->assertTrue($specialPrice->isNowActive(), 'Special price should be active');
         $this->assertFalse($specialPrice->isFuturePrice(), 'Special price should not be future price');
 
-        if ($this->getInputPriceType() === PricingSetting::INPUT_PRICE_TYPE_WITH_VAT) {
+        if ($this->getInputPriceType() === PricingSetting::PRICE_TYPE_WITH_VAT) {
             $this->assertMoney($priceAmount, $specialPrice->price->getPriceWithVat());
         } else {
             $this->assertMoney('12.10', $specialPrice->price->getPriceWithVat());
@@ -94,7 +94,7 @@ final class RelevantSpecialPriceForProductTest extends TransactionFunctionalTest
         $this->assertTrue($specialPrice->isNowActive(), 'Special price should be active');
         $this->assertFalse($specialPrice->isFuturePrice(), 'Special price should not be future price');
 
-        if ($this->getInputPriceType() === PricingSetting::INPUT_PRICE_TYPE_WITH_VAT) {
+        if ($this->getInputPriceType() === PricingSetting::PRICE_TYPE_WITH_VAT) {
             $this->assertMoney($firstActivePriceAmount, $specialPrice->price->getPriceWithVat());
         } else {
             $this->assertMoney('24.20', $specialPrice->price->getPriceWithVat());
@@ -110,7 +110,7 @@ final class RelevantSpecialPriceForProductTest extends TransactionFunctionalTest
         $this->assertTrue($specialPrice->isNowActive(), 'Special price should be active');
         $this->assertFalse($specialPrice->isFuturePrice(), 'Special price should not be future price');
 
-        if ($this->getInputPriceType() === PricingSetting::INPUT_PRICE_TYPE_WITH_VAT) {
+        if ($this->getInputPriceType() === PricingSetting::PRICE_TYPE_WITH_VAT) {
             $this->assertMoney($secondActivePriceAmount, $specialPrice->price->getPriceWithVat());
         } else {
             $this->assertMoney('12.10', $specialPrice->price->getPriceWithVat());
@@ -130,7 +130,7 @@ final class RelevantSpecialPriceForProductTest extends TransactionFunctionalTest
         $this->assertFalse($specialPrice->isNowActive(), 'Special price should not be active');
         $this->assertTrue($specialPrice->isFuturePrice(), 'Special price should be future price');
 
-        if ($this->getInputPriceType() === PricingSetting::INPUT_PRICE_TYPE_WITH_VAT) {
+        if ($this->getInputPriceType() === PricingSetting::PRICE_TYPE_WITH_VAT) {
             $this->assertMoney($priceAmount, $specialPrice->price->getPriceWithVat());
         } else {
             $this->assertMoney('12.10', $specialPrice->price->getPriceWithVat());

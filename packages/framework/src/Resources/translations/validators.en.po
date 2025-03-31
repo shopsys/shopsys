@@ -334,6 +334,9 @@ msgstr ""
 msgid "Please enter email content"
 msgstr ""
 
+msgid "Please enter entry price type"
+msgstr ""
+
 msgid "Please enter first name"
 msgstr ""
 
@@ -350,9 +353,6 @@ msgid "Please enter full name"
 msgstr ""
 
 msgid "Please enter identification number"
-msgstr ""
-
-msgid "Please enter input prices"
 msgstr ""
 
 msgid "Please enter last name"
@@ -434,6 +434,9 @@ msgid "Please enter quantity"
 msgstr ""
 
 msgid "Please enter role name"
+msgstr ""
+
+msgid "Please enter selling price type"
 msgstr ""
 
 msgid "Please enter street"

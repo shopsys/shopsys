@@ -89,14 +89,14 @@ class OrderItemPriceCalculation
         $currency = $orderItem->getOrder()->getCurrency();
 
         switch ($this->pricingSetting->getInputPriceType()) {
-            case PricingSetting::INPUT_PRICE_TYPE_WITH_VAT:
+            case PricingSetting::PRICE_TYPE_WITH_VAT:
                 $totalPriceWithVat = $orderItem->getUnitPriceWithVat()->multiply($orderItem->getQuantity());
                 $totalVatAmount = $this->priceCalculation->getVatAmountByPriceWithVat($totalPriceWithVat, $vat, $currency);
                 $totalPriceWithoutVat = $totalPriceWithVat->subtract($totalVatAmount);
 
                 return new Price($totalPriceWithoutVat, $totalPriceWithVat);
 
-            case PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT:
+            case PricingSetting::PRICE_TYPE_WITHOUT_VAT:
                 $totalPriceWithoutVat = $this->rounding->roundPriceWithoutVat(
                     $orderItem->getUnitPriceWithoutVat()->multiply($orderItem->getQuantity()),
                     $currency,

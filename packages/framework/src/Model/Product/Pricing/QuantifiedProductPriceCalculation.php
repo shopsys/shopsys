@@ -54,13 +54,13 @@ class QuantifiedProductPriceCalculation
         );
 
         switch ($this->pricingSetting->getInputPriceType()) {
-            case PricingSetting::INPUT_PRICE_TYPE_WITH_VAT:
+            case PricingSetting::PRICE_TYPE_WITH_VAT:
                 $totalPriceWithVat = $this->getTotalPriceWithVat($quantifiedProduct, $productPrice->getPrice());
                 $totalPriceVatAmount = $this->getTotalPriceVatAmountForInputPriceWithVat($totalPriceWithVat, $product->getVatForDomain($domainId), $this->currencyFacade->getDomainDefaultCurrencyByDomainId($domainId));
                 $totalPriceWithoutVat = $this->getTotalPriceWithoutVatForInputPriceWithVat($totalPriceWithVat, $totalPriceVatAmount);
 
                 break;
-            case PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT:
+            case PricingSetting::PRICE_TYPE_WITHOUT_VAT:
                 $totalPriceWithoutVat = $this->getTotalPriceWithoutVatForInputPriceWithoutVat($quantifiedProduct, $productPrice->getPrice());
                 $totalPriceWithVat = $this->getTotalPriceWithVat($quantifiedProduct, $productPrice->getPrice());
 

@@ -1913,6 +1913,8 @@ type PricingSetting {
   defaultCurrencyCode: String!
   "Minimum number of decimal places for the price on the current domain"
   minimumFractionDigits: Int!
+  "Type of selling price (with VAT or without VAT)"
+  sellingPriceType: SellingPriceTypeEnum!
 }
 
 "Represents a product"
@@ -2528,6 +2530,14 @@ input SearchInput {
   search: String!
   "Unique identifier of the user who initiated the search in format UUID version 4 (^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[1-8][0-9A-Fa-f]{3}-[ABab89][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$/)"
   userIdentifier: Uuid!
+}
+
+"Selling price type"
+enum SellingPriceTypeEnum {
+  "With VAT"
+  WITH_VAT
+  "Without VAT"
+  WITHOUT_VAT
 }
 
 "Represents SEO settings for specific page"

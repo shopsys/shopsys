@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Model\Pricing;
 
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
+use Shopsys\FrameworkBundle\Model\Product\Elasticsearch\Scope\ProductExportScopeConfig;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 class InputPriceRecalculationScheduler
@@ -16,10 +18,12 @@ class InputPriceRecalculationScheduler
     /**
      * @param \Shopsys\FrameworkBundle\Model\Pricing\InputPriceRecalculator $inputPriceRecalculator
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
+     * @param \Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher $productRecalculationDispatcher
      */
     public function __construct(
         protected readonly InputPriceRecalculator $inputPriceRecalculator,
         protected readonly Setting $setting,
+        protected readonly ProductRecalculationDispatcher $productRecalculationDispatcher,
     ) {
     }
 
@@ -46,14 +50,18 @@ class InputPriceRecalculationScheduler
             $this->inputPriceRecalculator->recalculateToInputPricesWithoutVat();
             $this->setting->set(
                 PricingSetting::INPUT_PRICE_TYPE,
-                PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT,
+                PricingSetting::PRICE_TYPE_WITHOUT_VAT,
             );
         } elseif ($this->recalculateInputPricesWithVat) {
             $this->inputPriceRecalculator->recalculateToInputPricesWithVat();
             $this->setting->set(
                 PricingSetting::INPUT_PRICE_TYPE,
-                PricingSetting::INPUT_PRICE_TYPE_WITH_VAT,
+                PricingSetting::PRICE_TYPE_WITH_VAT,
             );
+        }
+
+        if ($this->recalculateInputPricesWithVat || $this->recalculateInputPricesWithoutVat) {
+            $this->productRecalculationDispatcher->dispatchAllProducts([ProductExportScopeConfig::SCOPE_PRICE]);
         }
     }
 }

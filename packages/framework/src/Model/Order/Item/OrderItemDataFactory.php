@@ -102,7 +102,7 @@ class OrderItemDataFactory
         }
 
         switch ($this->pricingSetting->getInputPriceType()) {
-            case PricingSetting::INPUT_PRICE_TYPE_WITH_VAT:
+            case PricingSetting::PRICE_TYPE_WITH_VAT:
                 $calculatedPriceWithoutVat = $this->orderItemPriceCalculation->calculatePriceWithoutVatForInputPriceWithVat(
                     $orderItemData,
                     $orderItem->getOrder()->getDomainId(),
@@ -116,7 +116,7 @@ class OrderItemDataFactory
                 }
 
                 break;
-            case PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT:
+            case PricingSetting::PRICE_TYPE_WITHOUT_VAT:
                 $calculatedPriceWithVat = $this->orderItemPriceCalculation->calculatePriceWithVatForInputPriceWithoutVat(
                     $orderItemData,
                     $orderItem->getOrder()->getDomainId(),

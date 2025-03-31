@@ -3994,6 +3994,9 @@ msgstr ""
 msgid "Selling end date"
 msgstr ""
 
+msgid "Selling price type"
+msgstr ""
+
 msgid "Selling start date"
 msgstr ""
 

@@ -50,7 +50,7 @@ class OrderMail implements MessageFactoryInterface
     public const string DISPLAY_PRICE_WITH_VAT = 'with_vat';
     public const string DISPLAY_PRICE_WITHOUT_VAT = 'without_vat';
     public const string DISPLAY_PRICE_BOTH = 'both';
-    protected const string DISPLAY_PRICE_INPUT = 'input_price';
+    protected const string DISPLAY_PRICE_SELLING = 'selling_price';
 
     /**
      * @param string $mailTemplateDisplayPrice
@@ -409,8 +409,8 @@ class OrderMail implements MessageFactoryInterface
      */
     protected function getDisplayPrice(): string
     {
-        if ($this->mailTemplateDisplayPrice === static::DISPLAY_PRICE_INPUT) {
-            return $this->pricingSetting->getInputPriceType() === PricingSetting::INPUT_PRICE_TYPE_WITH_VAT
+        if ($this->mailTemplateDisplayPrice === static::DISPLAY_PRICE_SELLING) {
+            return $this->pricingSetting->getSellingPriceType() === PricingSetting::PRICE_TYPE_WITH_VAT
                 ? static::DISPLAY_PRICE_WITH_VAT
                 : static::DISPLAY_PRICE_WITHOUT_VAT;
         }

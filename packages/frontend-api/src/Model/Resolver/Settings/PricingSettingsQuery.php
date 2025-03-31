@@ -6,6 +6,7 @@ namespace Shopsys\FrontendApiBundle\Model\Resolver\Settings;
 
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
+use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrontendApiBundle\Model\Resolver\AbstractQuery;
 
 class PricingSettingsQuery extends AbstractQuery
@@ -13,10 +14,12 @@ class PricingSettingsQuery extends AbstractQuery
     /**
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade $currencyFacade
+     * @param \Shopsys\FrameworkBundle\Model\Pricing\PricingSetting $pricingSetting
      */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly CurrencyFacade $currencyFacade,
+        protected readonly PricingSetting $pricingSetting,
     ) {
     }
 
@@ -30,6 +33,7 @@ class PricingSettingsQuery extends AbstractQuery
         return [
             'defaultCurrencyCode' => $currency->getCode(),
             'minimumFractionDigits' => $currency->getMinFractionDigits(),
+            'sellingPriceType' => $this->pricingSetting->getSellingPriceType(),
         ];
     }
 }

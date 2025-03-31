@@ -3994,6 +3994,9 @@ msgstr "Vybraný hlídací pes neexistuje."
 msgid "Selling end date"
 msgstr "Datum stažení"
 
+msgid "Selling price type"
+msgstr "Typ prodejní ceny"
+
 msgid "Selling start date"
 msgstr "Datum vložení"
 

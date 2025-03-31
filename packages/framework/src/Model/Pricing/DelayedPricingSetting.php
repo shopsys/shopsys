@@ -23,7 +23,7 @@ class DelayedPricingSetting
      */
     public function scheduleSetInputPriceType(int $inputPriceType): void
     {
-        if (!in_array($inputPriceType, $this->pricingSetting->getInputPriceTypes(), true)) {
+        if (!in_array($inputPriceType, $this->pricingSetting->getPriceTypes(), true)) {
             throw new InvalidInputPriceTypeException('Unknown input price type');
         }
 
@@ -34,12 +34,12 @@ class DelayedPricingSetting
         }
 
         switch ($inputPriceType) {
-            case PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT:
+            case PricingSetting::PRICE_TYPE_WITHOUT_VAT:
                 $this->inputPriceRecalculationScheduler->scheduleSetInputPricesWithoutVat();
 
                 break;
 
-            case PricingSetting::INPUT_PRICE_TYPE_WITH_VAT:
+            case PricingSetting::PRICE_TYPE_WITH_VAT:
                 $this->inputPriceRecalculationScheduler->scheduleSetInputPricesWithVat();
 
                 break;

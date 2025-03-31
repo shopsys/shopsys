@@ -106,7 +106,7 @@ class RemainingToFreeTransportCartTest extends GraphQlTestCase
         $response = $this->getResponseContentForQuery($mutation);
         $newlyCreatedCart = $response['data']['AddToCart']['cart'];
 
-        if ($this->pricingSetting->getInputPriceType() === PricingSetting::INPUT_PRICE_TYPE_WITH_VAT) {
+        if ($this->pricingSetting->getInputPriceType() === PricingSetting::PRICE_TYPE_WITH_VAT) {
             $totalItemsPriceWithVat = Money::create($newlyCreatedCart['totalItemsPrice']['priceWithVat']);
             $expectedRemainingPrice = $freeTransportAndPaymentLimit->subtract($totalItemsPriceWithVat);
         } else {
@@ -142,7 +142,7 @@ class RemainingToFreeTransportCartTest extends GraphQlTestCase
         $response = $this->getResponseContentForQuery($query);
         $cart = $response['data']['cart'];
 
-        if ($this->pricingSetting->getInputPriceType() === PricingSetting::INPUT_PRICE_TYPE_WITH_VAT) {
+        if ($this->pricingSetting->getInputPriceType() === PricingSetting::PRICE_TYPE_WITH_VAT) {
             $totalItemsPriceWithVat = Money::create($newlyCreatedCart['totalItemsPrice']['priceWithVat']);
             $expectedRemainingPriceAfterAddingTransportAndPayment = $freeTransportAndPaymentLimit->subtract($totalItemsPriceWithVat);
         } else {

@@ -334,6 +334,9 @@ msgstr "Vyplňte prosím e-mailovou adresu"
 msgid "Please enter email content"
 msgstr "Vyplňte prosím text e-mailu"
 
+msgid "Please enter entry price type"
+msgstr "Prosím vyplňte typ vstupní ceny"
+
 msgid "Please enter first name"
 msgstr "Vyplňte prosím jméno"
 
@@ -351,9 +354,6 @@ msgstr "Vyplňte prosím celé jméno"
 
 msgid "Please enter identification number"
 msgstr "Vyplňte prosím IČ"
-
-msgid "Please enter input prices"
-msgstr "Prosím vyplňte typ vstupní ceny"
 
 msgid "Please enter last name"
 msgstr "Vyplňte prosím příjmení"
@@ -435,6 +435,9 @@ msgstr "Vyplňte prosím množství"
 
 msgid "Please enter role name"
 msgstr "Vyplňte prosím název"
+
+msgid "Please enter selling price type"
+msgstr "Prosím vyplňte typ prodejní ceny"
 
 msgid "Please enter street"
 msgstr "Vyplňte prosím ulici"

@@ -15,6 +15,7 @@ use Shopsys\FrameworkBundle\Model\Pricing\InputPriceRecalculator;
 use Shopsys\FrameworkBundle\Model\Pricing\PricingSetting;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\Vat;
 use Shopsys\FrameworkBundle\Model\Pricing\Vat\VatData;
+use Shopsys\FrameworkBundle\Model\Product\Recalculation\ProductRecalculationDispatcher;
 use Shopsys\FrameworkBundle\Model\Transport\PriceWithLimitData;
 use Shopsys\FrameworkBundle\Model\Transport\TransportFacade;
 use Symfony\Component\HttpFoundation\Request;
@@ -63,10 +64,14 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
             ->getMock();
         $inputPriceRecalculatorMock->expects($this->never())->method('recalculateToInputPricesWithoutVat');
         $inputPriceRecalculatorMock->expects($this->never())->method('recalculateToInputPricesWithVat');
+        $productRecalculationDispatcherMock = $this->getMockBuilder(ProductRecalculationDispatcher::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $inputPriceRecalculationScheduler = new InputPriceRecalculationScheduler(
             $inputPriceRecalculatorMock,
             $this->setting,
+            $productRecalculationDispatcherMock,
         );
 
         $responseEvent = new ResponseEvent(
@@ -106,7 +111,7 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
         Money $inputPriceWithVat,
         $vatPercent,
     ) {
-        $this->setting->set(PricingSetting::INPUT_PRICE_TYPE, PricingSetting::INPUT_PRICE_TYPE_WITH_VAT);
+        $this->setting->set(PricingSetting::INPUT_PRICE_TYPE, PricingSetting::PRICE_TYPE_WITH_VAT);
 
         $this->doTestOnKernelResponseRecalculateInputPrices(
             $inputPriceWithVat,
@@ -127,7 +132,7 @@ class InputPriceRecalculationSchedulerTest extends TransactionFunctionalTestCase
         Money $inputPriceWithVat,
         $vatPercent,
     ) {
-        $this->setting->set(PricingSetting::INPUT_PRICE_TYPE, PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT);
+        $this->setting->set(PricingSetting::INPUT_PRICE_TYPE, PricingSetting::PRICE_TYPE_WITHOUT_VAT);
 
         $this->doTestOnKernelResponseRecalculateInputPrices(
             $inputPriceWithoutVat,

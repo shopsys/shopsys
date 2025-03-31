@@ -40,10 +40,10 @@ class InputPriceLabelExtension extends AbstractExtension
         $inputPriceType = $this->pricingSetting->getInputPriceType();
 
         switch ($inputPriceType) {
-            case PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT:
+            case PricingSetting::PRICE_TYPE_WITHOUT_VAT:
                 return t('Input price without VAT');
 
-            case PricingSetting::INPUT_PRICE_TYPE_WITH_VAT:
+            case PricingSetting::PRICE_TYPE_WITH_VAT:
                 return t('Input price with VAT');
 
             default:
@@ -61,8 +61,8 @@ class InputPriceLabelExtension extends AbstractExtension
         $inputPriceType = $this->pricingSetting->getInputPriceType();
 
         return match ($inputPriceType) {
-            PricingSetting::INPUT_PRICE_TYPE_WITHOUT_VAT => t('without VAT'),
-            PricingSetting::INPUT_PRICE_TYPE_WITH_VAT => t('with VAT'),
+            PricingSetting::PRICE_TYPE_WITHOUT_VAT => t('without VAT'),
+            PricingSetting::PRICE_TYPE_WITH_VAT => t('with VAT'),
             default => throw new InvalidInputPriceTypeException(
                 'Invalid input price type: ' . $inputPriceType,
             ),
