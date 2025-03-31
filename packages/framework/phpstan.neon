@@ -4,10 +4,6 @@ parameters:
 
     ignoreErrors:
         # Don't forget to add these rules to phpstan.neon in monorepo
-        # Ignoring absence of \App\Kernel, which should be provided by project implementation
-        -
-            message: '~Instantiated class App\\Kernel not found~'
-            path: *
         -
             message: '#Argument of an invalid type Symfony\\Component\\Validator\\Constraint supplied for foreach, only iterables are supported\.#'
             path: %currentWorkingDirectory%/src/Form/JsFormValidatorFactory.php
