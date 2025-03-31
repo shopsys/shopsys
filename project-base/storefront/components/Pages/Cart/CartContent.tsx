@@ -17,24 +17,26 @@ export const CartContent: FC<CartContentProps> = ({ cart }) => {
     const { url, isLuigisBoxActive } = useDomainConfig();
 
     return (
-        <Webline>
-            <CartSteps activeStep={1} domainUrl={url} />
+        <>
+            <Webline>
+                <CartSteps activeStep={1} domainUrl={url} />
 
-            <CartList items={cart.items} />
+                <CartList items={cart.items} />
 
-            <CartSummary />
+                <CartSummary />
+            </Webline>
 
             {isLuigisBoxActive && (
                 <DeferredRecommendedProducts
                     itemUuids={cart.items.map((item) => item.uuid)}
                     recommendationType={TypeRecommendationType.Basket}
                     render={(recommendedProductsContent) => (
-                        <div className="mb-6 px-0">
+                        <div className="mt-10">
                             <div className="h2 mb-3">{t('Recommended for you')}</div> {recommendedProductsContent}
                         </div>
                     )}
                 />
             )}
-        </Webline>
+        </>
     );
 };
