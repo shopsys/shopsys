@@ -8,146 +8,272 @@
     --breakpoint-xl: 77.5em; /* 1240px / 16 = 77.5 */
     --breakpoint-xxl: 97.5em; /* 1560px / 16 = 97.5 */
 
+    /* Replace with color-text-default */
     --color-text: #25283d;
+    /* Replace with color-text-accent */
     --color-textAccent: #004eb6;
+    /* Replace with color-text-inverted */
     --color-textInverted: #ffffff;
+    /* Replace with color-text-disabled */
     --color-textDisabled: #727588;
+    /* Replace with color-text-success */
     --color-textSuccess: #00cdbe;
+    /* Replace with color-text-less */
     --color-textSubtle: #7892bc;
+    /* Replace with color-text-error */
     --color-textError: #ec5353;
 
+    /* Replace with color-link-default */
     --color-link: #004eb6;
+    /* Replace with color-link-disabled */
     --color-linkDisabled: #7aa1d5;
+    /* Replace with color-link-hovered */
     --color-linkHovered: #003479;
+    /* Replace with color-link-inverted */
     --color-linkInverted: #ffffff;
+    /* Replace with color-link-inverted-disabled */
     --color-linkInvertedDisabled: #727588;
+    /* Replace with color-link-inverted-hovered */
     --color-linkInvertedHovered: #fff0c4;
 
+    /* Replace with color-border-less */
     --color-borderLess: #fafafa;
+    /* Replace with color-border-default */
     --color-borderAccent: #7892bc;
+    /* Replace with color-border-less */
     --color-borderAccentLess: #e0e0e0;
+    /* Replace with color-border-success */
     --color-borderAccentSuccess: #20d3c6;
+    /* Replace with color-border-error */
     --color-borderAccentError: #ec5353;
 
+    /* Replace with color-background-default */
     --color-background: #ffffff;
+    /* Replace with color-background-more */
     --color-backgroundMore: #fafafa;
+    /* Replace with color-background-most */
     --color-backgroundMost: #ececec;
+    /* Replace with color-background-brand */
     --color-backgroundBrand: #0f00a0;
+    /* Replace with color-background-brand-less */
     --color-backgroundBrandLess: #065fdb;
+    /* Replace with color-background-accent */
     --color-backgroundAccent: #009aff;
+    /* Replace with color-background-accent-less */
     --color-backgroundAccentLess: #f4faff;
+    /* Replace with color-background-accent-more */
     --color-backgroundAccentMore: #008ae5;
+    /* Replace with color-background-dark */
     --color-backgroundDark: #25283d;
+    /* Replace with color-background-error */
     --color-backgroundError: #ec5353;
+    /* Replace with color-background-success */
     --color-backgroundSuccess: #20d3c6;
+    /* Replace with color-background-success-more */
     --color-backgroundSuccessMore: #149f96;
+    /* Replace with color-background-warning */
     --color-backgroundWarning: #fcbd46;
+    /* Replace with color-background-warning-more */
     --color-backgroundWarningMore: #d58b00;
 
+    /* Replace with color-price-default */
     --color-price: #004eb6;
+    /* Replace with color-price-before */
     --color-priceBefore: #7892bc;
+    /* Replace with color-price-discounted */
     --color-priceDiscounted: #ec5353;
 
+    /* Replace with color-button-primary-text-default */
     --color-actionPrimaryText: #ffffff;
+    /* Replace with color-button-primary-text-active */
     --color-actionPrimaryTextActive: #ffffff;
+    /* Replace with color-button-primary-text-disabled */
     --color-actionPrimaryTextDisabled: #7892bc;
+    /* Replace with color-button-primary-text-hovered */
     --color-actionPrimaryTextHovered: #ffffff;
+    /* Replace with color-button-primary-bg-default */
     --color-actionPrimaryBackground: #00c8b7;
+    /* Replace with color-button-primary-bg-active */
     --color-actionPrimaryBackgroundActive: #00beb0;
+    /* Replace with color-button-primary-bg-disabled */
     --color-actionPrimaryBackgroundDisabled: #ccf5f2;
+    /* Replace with color-button-primary-bg-hovered */
     --color-actionPrimaryBackgroundHovered: #27e8da;
+    /* Replace with color-button-primary-border-default */
     --color-actionPrimaryBorder: #00c8b7;
+    /* Replace with color-button-primary-border-active */
     --color-actionPrimaryBorderActive: #00beb0;
+    /* Replace with color-button-primary-border-disabled */
     --color-actionPrimaryBorderDisabled: #ccf5f2;
+    /* Replace with color-button-primary-border-hovered */
     --color-actionPrimaryBorderHovered: #27e8da;
 
+    /* Replace with color-button-secondary-text-default */
     --color-actionSecondaryText: #ffffff;
+    /* Replace with color-button-secondary-text-active */
     --color-actionSecondaryTextActive: #ffffff;
+    /* Replace with color-button-secondary-text-disabled */
     --color-actionSecondaryTextDisabled: #ffffff;
+    /* Replace with color-button-secondary-text-hovered */
     --color-actionSecondaryTextHovered: #ffffff;
+    /* Replace with color-button-secondary-bg-default */
     --color-actionSecondaryBackground: #004eb6;
+    /* Replace with color-button-secondary-bg-active */
     --color-actionSecondaryBackgroundActive: #00439c;
+    /* Replace with color-button-secondary-bg-disabled */
     --color-actionSecondaryBackgroundDisabled: #a1b5cf;
+    /* Replace with color-button-secondary-bg-hovered */
     --color-actionSecondaryBackgroundHovered: #4081d6;
+    /* Replace with color-button-secondary-border-default */
     --color-actionSecondaryBorder: #004eb6;
+    /* Replace with color-button-secondary-border-active */
     --color-actionSecondaryBorderActive: #00439c;
+    /* Replace with color-button-secondary-border-disabled */
     --color-actionSecondaryBorderDisabled: #a1b5cf;
+    /* Replace with color-button-secondary-border-hovered */
     --color-actionSecondaryBorderHovered: #4081d6;
 
+    /* Replace with color-button-inverted-text-default */
     --color-actionInvertedText: #004eb6;
+    /* Replace with color-button-inverted-text-active */
     --color-actionInvertedTextActive: #25283d;
+    /* Replace with color-button-inverted-text-disabled */
     --color-actionInvertedTextDisabled: #a3acbd;
+    /* Replace with color-button-inverted-text-hovered */
     --color-actionInvertedTextHovered: #7892bc;
+    /* Replace with color-button-inverted-bg-default */
     --color-actionInvertedBackground: transparent;
+    /* Replace with color-button-inverted-bg-active */
     --color-actionInvertedBackgroundActive: #ffffff;
+    /* Replace with color-button-inverted-bg-disabled */
     --color-actionInvertedBackgroundDisabled: #fafafa;
+    /* Replace with color-button-inverted-bg-hovered */
     --color-actionInvertedBackgroundHovered: #ffffff;
+    /* Replace with color-button-inverted-border-default */
     --color-actionInvertedBorder: #004eb6;
+    /* Replace with color-button-inverted-border-active */
     --color-actionInvertedBorderActive: #25283d;
+    /* Replace with color-button-inverted-border-disabled */
     --color-actionInvertedBorderDisabled: #a3acbd;
+    /* Replace with color-button-inverted-border-hovered */
     --color-actionInvertedBorderHovered: #7892bc;
 
+    /* Replace with color-button-transparent-text-default */
     --color-actionTransparentText: #ffffff;
+    /* Replace with color-button-transparent-text-active */
     --color-actionTransparentTextActive: #ffffff;
+    /* Replace with color-button-transparent-text-disabled */
     --color-actionTransparentTextDisabled: #ffffff66;
+    /* Replace with color-button-transparent-text-hovered */
     --color-actionTransparentTextHovered: #ffffff;
+    /* Replace with color-button-transparent-bg-default */
     --color-actionTransparentBackground: transparent;
+    /* Replace with color-button-transparent-bg-active */
     --color-actionTransparentBackgroundActive: #ffffff33;
+    /* Replace with color-button-transparent-bg-disabled */
     --color-actionTransparentBackgroundDisabled: transparent;
+    /* Replace with color-button-transparent-bg-hovered */
     --color-actionTransparentBackgroundHovered: #ffffff66;
+    /* Replace with color-button-transparent-border-default */
     --color-actionTransparentBorder: #ffffff;
+    /* Replace with color-button-transparent-border-active */
     --color-actionTransparentBorderActive: #ffffff;
-    --color-actionTransparentBorderDisabled: #ffffff66;
+    /* Replace with color-button-transparent-border-disabled */
     --color-actionTransparentBorderHovered: #ffffff;
 
+    /* Replace with color-icon-accent-red */
     --color-activeIconFull: #ec5353;
 
+    /* Replace with color-availability-in-stock */
     --color-availabilityInStock: #00cdbe;
+    /* Replace with color-availability-out-of-stock */
     --color-availabilityOutOfStock: #ec5353;
 
+    /* Replace with color-opening-status-open */
     --color-openingStatusOpen: #00cdbe;
+    /* Replace with color-opening-status-closed */
     --color-openingStatusClosed: #ec5353;
+    /* Replace with color-opening-status-open-today */
     --color-openingStatusOpenToday: #fcbd46;
 
+    /* Replace with color-input-text-default */
     --color-inputText: #25283d;
+    /* Replace with color-input-text-active */
     --color-inputTextActive: #004eb6;
+    /* Replace with color-input-text-disabled */
     --color-inputTextDisabled: #727588;
+    /* Replace with color-input-text-hovered */
     --color-inputTextHovered: #25283d;
+    /* DEPRECATE */
     --color-inputTextInverted: #ffffff;
+    /* Replace with color-input-placeholder-default */
     --color-inputPlaceholder: #7892bc;
+    /* Replace with color-input-placeholder-active */
     --color-inputPlaceholderActive: #3967b2;
+    /* Replace with color-input-placeholder-disabled */
     --color-inputPlaceholderDisabled: #afbbcf;
+    /* Replace with color-input-placeholder-hovered */
     --color-inputPlaceholderHovered: #5c81be;
+    /* Replace with color-input-bg-default */
     --color-inputBackground: #ffffff;
+    /* Replace with color-input-bg-active */
     --color-inputBackgroundActive: #004eb6;
+    /* Replace with color-input-bg-disabled */
     --color-inputBackgroundDisabled: #ffffff;
+    /* Replace with color-input-bg-hovered */
     --color-inputBackgroundHovered: #f4faff;
+    /* Replace with color-input-border-default */
     --color-inputBorder: #7892bc;
+    /* Replace with color-input-border-active */
     --color-inputBorderActive: #004eb6;
+    /* Replace with color-input-border-disabled */
     --color-inputBorderDisabled: #afbbcf;
+    /* Replace with color-input-border-hovered */
     --color-inputBorderHovered: #004eb6;
+    /* TODO Make sure this is used only for border, else replace with color-text-error */
+    /* Replace with color-input-border-error */
     --color-inputError: #ec5353;
 
+    /* Replace with color-table-bg-default */
     --color-tableBackground: #ffffff;
+    /* Replace with color-table-bg-contrast */
     --color-tableBackgroundContrast: #fafafa;
+    /* Replace with color-table-bg-header */
     --color-tableBackgroundHeader: #3967b2;
+    /* Replace with color-text-default */
     --color-tableText: #25283d;
+    /* Replace with color-text-inverted */
     --color-tableTextHeader: #ffffff;
+    /* ? DEPRECATE */
     --color-tableCross: #a3acbd;
+    /* ? DEPRECATE */
     --color-tableCrossHover: #7892bc;
+    /* ? DEPRECATE */
     --color-tableCrossHoverBg: #fafafa;
 
+    /* Replace with color-tag-dark-text-default */
     --color-labelLinkText: #ffffff;
+    /* Replace with color-tag-dark-text-active */
     --color-labelLinkTextActive: #ffffff;
+    /* Replace with color-tag-dark-text-disabled */
     --color-labelLinkTextDisabled: #e3e3e3;
+    /* Replace with color-tag-dark-text-hovered */
     --color-labelLinkTextHovered: #ffffff;
+    /* Replace with color-tag-dark-bg-default */
     --color-labelLinkBackground: #7892bc;
+    /* Replace with color-tag-dark-bg-active */
     --color-labelLinkBackgroundActive: #3967b2;
+    /* Replace with color-tag-dark-bg-disabled */
     --color-labelLinkBackgroundDisabled: #afbbcf;
+    /* Replace with color-tag-dark-bg-hovered */
     --color-labelLinkBackgroundHovered: #3967b2;
+    /* Replace with color-tag-dark-border-default */
     --color-labelLinkBorder: #7892bc;
+    /* Replace with color-tag-dark-border-active */
     --color-labelLinkBorderActive: #3967b2;
+    /* Replace with color-tag-dark-border-disabled */
     --color-labelLinkBorderDisabled: #afbbcf;
+    /* Replace with color-tag-dark-border-hovered */
     --color-labelLinkBorderHovered: #3967b2;
 
     --color-skeleton: #ececec;
