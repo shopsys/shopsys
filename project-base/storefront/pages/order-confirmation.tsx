@@ -16,7 +16,7 @@ import {
     TypeOrderSentPageContentQueryVariables,
     OrderSentPageContentQueryDocument,
 } from 'graphql/requests/orders/queries/OrderSentPageContentQuery.generated';
-import { TypeCustomerUserRoleEnum } from 'graphql/types';
+import { TypeCustomerUserRoleEnum, TypeOrderItemTypeEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
@@ -73,6 +73,11 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
             ? FlowTypesEnum.PaymentSuccess
             : FlowTypesEnum.PaymentAwaiting;
 
+    const orderPayment = orderData.order.items.find((orderItem) => orderItem.type === TypeOrderItemTypeEnum.Payment);
+    const orderTransport = orderData.order.items.find(
+        (orderItem) => orderItem.type === TypeOrderItemTypeEnum.Transport,
+    );
+
     return (
         <>
             <MetaRobots content="noindex" />
@@ -113,11 +118,11 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
                                 totalPrice={orderData.order.totalPrice}
                                 payment={{
                                     name: orderData.order.payment.name,
-                                    price: orderData.order.payment.price.priceWithVat,
+                                    price: orderPayment?.totalPrice.priceWithVat ?? '0',
                                 }}
                                 transport={{
                                     name: orderData.order.transport.name,
-                                    price: orderData.order.transport.price.priceWithVat,
+                                    price: orderTransport?.totalPrice.priceWithVat ?? '0',
                                 }}
                             />
                         </div>
