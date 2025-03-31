@@ -191,7 +191,7 @@ services:
 
     Shopsys\FrontendApiBundle\Model\SocialNetwork\SocialNetworkFacade:
         arguments:
-            $logger: '@monolog.logger.socialNetwork'
+            $logger: '@monolog.logger'
 
     Shopsys\FrontendApiBundle\Model\Token\TokenAuthenticator: ~
 

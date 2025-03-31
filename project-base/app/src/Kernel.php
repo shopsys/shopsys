@@ -16,11 +16,14 @@ use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Symfony\Component\ErrorHandler\ErrorHandler;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 use Symfony\Component\Routing\RouteCollection;
 use function dirname;
 use function is_array;
+use const E_DEPRECATED;
+use const E_USER_DEPRECATED;
 
 class Kernel extends BaseKernel
 {
@@ -31,6 +34,12 @@ class Kernel extends BaseKernel
     #[Override]
     public function boot(): void
     {
+        // Disable deprecation notices @see: https://github.com/symfony/symfony-docs/issues/17592
+        ErrorHandler::register(null, false)->setLoggers([
+            E_DEPRECATED => [null],
+            E_USER_DEPRECATED => [null],
+        ]);
+
         parent::boot();
 
         $filemanagerAccess = $this->container->get(FilemanagerAccess::class);

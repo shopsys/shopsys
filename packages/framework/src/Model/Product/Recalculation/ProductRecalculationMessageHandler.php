@@ -71,7 +71,11 @@ class ProductRecalculationMessageHandler implements BatchHandlerInterface
             $this->productRecalculationFacade->recalculate($productIds, $priority, $this->logger);
             $this->ackAll($acknowledgers);
         } catch (Throwable $e) {
-            $this->logger->error($e->getMessage());
+            $this->logger->error('Products recalculation failed because of: ' . $e->getMessage(), [
+                'exception' => $e,
+                'productIds' => $productIds,
+                'priority' => $priority,
+            ]);
             $this->nackAll($acknowledgers, $e);
         }
     }

@@ -369,12 +369,6 @@ services:
             $adminDisplayTimeZone: '%shopsys.admin_display_timezone%'
         class: Shopsys\FrameworkBundle\Component\Localization\DisplayTimeZoneProvider
 
-    Shopsys\FrameworkBundle\Component\Log\SlowLogSubscriber:
-        arguments:
-            - '@monolog.logger.slow'
-        tags:
-            - { name: kernel.event_subscriber }
-
     Shopsys\FrameworkBundle\Component\Messenger\DelayedEnvelope\DelayedEnvelopesCollector: ~
 
     Shopsys\FrameworkBundle\Component\Messenger\MessageBusDecorator:

@@ -26,4 +26,13 @@ class ReflectionHelper
 
         return self::$constantsIndexedByFqcn[$fqcn];
     }
+
+    /**
+     * @param class-string $fqcn
+     * @return string
+     */
+    public static function getShortClassName(string $fqcn): string
+    {
+        return (new ReflectionClass($fqcn))->getShortName();
+    }
 }

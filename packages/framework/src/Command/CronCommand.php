@@ -8,6 +8,7 @@ use DateTimeZone;
 use NinjaMutex\Lock\LockInterface;
 use Override;
 use Shopsys\FrameworkBundle\Command\Exception\CronCommandException;
+use Shopsys\FrameworkBundle\Command\Exception\CronIsLockedException;
 use Shopsys\FrameworkBundle\Component\Cron\Config\CronModuleConfig;
 use Shopsys\FrameworkBundle\Component\Cron\CronFacade;
 use Shopsys\FrameworkBundle\Component\Cron\MutexFactory;
@@ -87,7 +88,7 @@ class CronCommand extends Command
         if ($this->lock->isLocked(CronLockCommand::CRON_MUTEX_LOCK_NAME)) {
             $output->writeln('Crons are locked with `deploy:cron:lock` command. Nothing to do.');
 
-            return Command::FAILURE;
+            return Command::SUCCESS;
         }
 
         if ($optionRunAllSerially === true) {
@@ -99,7 +100,18 @@ class CronCommand extends Command
         }
 
         $instanceName = $optionInstanceName ?? $this->chooseInstance($input, $output);
-        $this->runCron($input, $this->cronFacade, $this->mutexFactory, $instanceName);
+
+        try {
+            $this->runCron($input, $this->cronFacade, $this->mutexFactory, $instanceName);
+        } catch (CronIsLockedException $e) {
+            $output->writeln($e->getMessage());
+
+            return Command::SUCCESS;
+        } catch (CronCommandException $e) {
+            $output->writeln($e->getMessage());
+
+            return Command::FAILURE;
+        }
 
         return Command::SUCCESS;
     }
@@ -194,7 +206,7 @@ class CronCommand extends Command
         $mutex = $mutexFactory->getPrefixedCronMutex($instanceName);
 
         if (!$mutex->acquireLock(0)) {
-            throw new CronCommandException(
+            throw new CronIsLockedException(
                 'Cron is locked. Another cron module is already running.',
             );
         }
