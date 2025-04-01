@@ -46,7 +46,7 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
         <div
             ref={itemRef}
             className={twMergeCustom(
-                'bg-backgroundMore cursor-pointer rounded-xl border border-transparent px-5 py-2.5',
+                'bg-background-more cursor-pointer rounded-xl border border-transparent px-5 py-2.5',
                 isExpanded && 'border-border-default',
             )}
             onClick={() => {

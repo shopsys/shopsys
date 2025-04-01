@@ -87,7 +87,7 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
     if (infinityScrollConfig && infinityScrollConfig.dataLength >= infinityScrollConfig.pageSize) {
         return (
             <AnimateCollapseDiv
-                className="z-above border-inputBorder bg-background hover:border-inputBorderHovered absolute right-0 left-0 !block rounded-b-md border-2 border-t-0"
+                className="z-above border-inputBorder bg-background-default hover:border-inputBorderHovered absolute right-0 left-0 !block rounded-b-md border-2 border-t-0"
                 keyName={tid}
             >
                 <InfiniteScroll
@@ -117,7 +117,7 @@ export const SelectList = <T extends string | number | undefined | Record<any, a
             keyName={tid}
             className={twMergeCustom(
                 '!overflow-y-auto',
-                'z-above bg-background absolute right-0 left-0 !block max-h-[144px] rounded-b-md lg:max-h-[200px]',
+                'z-above bg-background-default absolute right-0 left-0 !block max-h-[144px] rounded-b-md lg:max-h-[200px]',
                 'border-inputBorder hover:border-inputBorderHovered border-2 border-t-0',
                 '[&::-webkit-scrollbar-thumb]:bg-inputPlaceholder [&::-webkit-scrollbar]:h-[0px] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full',
                 listClassName,

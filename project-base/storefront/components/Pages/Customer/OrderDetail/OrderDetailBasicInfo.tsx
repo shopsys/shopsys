@@ -174,7 +174,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                                 'flex items-center justify-between gap-2',
                                 isPriceVisible(order.totalPrice.priceWithVat) &&
                                     isPriceVisible(order.totalPrice.priceWithoutVat) &&
-                                    'border-borderAccentLess border-b-[3px] pb-4',
+                                    'border-border-accent-less border-b-[3px] pb-4',
                             )}
                         >
                             {t('Promo code')}
@@ -192,7 +192,7 @@ export const OrderDetailBasicInfo: FC<OrderDetailBasicInfoProps> = ({ order }) =
                                         {formatPrice(order.totalPrice.priceWithVat)}
                                     </strong>
 
-                                    <span className="text-priceBefore text-sm">
+                                    <span className="text-price-before text-sm">
                                         {formatPrice(order.totalPrice.priceWithoutVat)} {t('without VAT')}
                                     </span>
                                 </div>

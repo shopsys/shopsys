@@ -47,7 +47,7 @@ export const CartListItem: FC<CartListItemProps> = ({
 
     return (
         <div
-            className="bg-backgroundMore vl:flex-nowrap vl:p-5 relative flex flex-row flex-wrap items-center justify-between gap-4 rounded-xl p-4"
+            className="bg-background-more vl:flex-nowrap vl:p-5 relative flex flex-row flex-wrap items-center justify-between gap-4 rounded-xl p-4"
             tid={TIDs.pages_cart_list_item_ + product.catalogNumber}
         >
             <div className="vl:basis-auto vl:items-center vl:pr-0 vl:pt-0 flex basis-full gap-2.5 pt-6 pr-8">

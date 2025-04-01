@@ -23,7 +23,7 @@ export const ProductListItemPlaceholder: FC<ProductListItemPlaceholderProps> = (
     return (
         <li
             className={twMergeCustom(
-                'border-backgroundMore bg-backgroundMore group relative flex flex-col gap-2.5 rounded-xl border px-2.5 py-5 text-left transition select-none sm:px-5',
+                'border-background-more bg-background-more group relative flex flex-col gap-2.5 rounded-xl border px-2.5 py-5 text-left transition select-none sm:px-5',
                 size === 'small' && 'p-5',
                 'hover:border-border-accent-less hover:bg-background',
                 className,

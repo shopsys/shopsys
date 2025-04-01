@@ -334,7 +334,7 @@ export const CreateComplaintPopup: FC<CreateComplaintPopupProps> = ({ orderUuid 
                                     render={(radiobutton, key) => (
                                         <div
                                             key={key}
-                                            className="border-border-default bg-background relative flex w-full flex-wrap rounded-sm border-2 p-5"
+                                            className="border-border-default bg-background-default relative flex w-full flex-wrap rounded-sm border-2 p-5"
                                         >
                                             {radiobutton}
                                         </div>

@@ -31,7 +31,7 @@ export const OrderConfirmationSummary: FC<OrderConfirmationSummaryProps> = ({
     const { t } = useTranslation();
 
     return (
-        <div className="bg-backgroundMore font-secondary flex flex-col gap-4 rounded-xl p-8 text-sm font-semibold">
+        <div className="bg-background-more font-secondary flex flex-col gap-4 rounded-xl p-8 text-sm font-semibold">
             <div className="flex items-center justify-between gap-4">
                 {t('Transport')}
                 {transport.name ? (

@@ -27,13 +27,13 @@ export const SymfonyDebugToolbar: FC<SymfonyDebugToolbarProps> = ({
 
     return (
         <div
-            className="z-maximum bg-backgroundMost fixed right-2 bottom-2 flex flex-col items-end gap-2 rounded-sm p-3"
+            className="z-maximum bg-background-most fixed right-2 bottom-2 flex flex-col items-end gap-2 rounded-sm p-3"
             onMouseEnter={() => setIsTableDisplayed(true)}
             onMouseLeave={() => setIsTableDisplayed(false)}
         >
             <div className="relative order-2 h-6 w-6">
                 <Image alt="Symfony Logo" height={24} src={symfonyImage} width={24} />
-                <span className="bg-backgroundAccent text-text-inverted absolute -right-[5px] -bottom-[5px] flex h-4 w-4 items-center justify-center rounded-full text-xs leading-normal font-bold">
+                <span className="bg-background-accent text-text-inverted absolute -right-[5px] -bottom-[5px] flex h-4 w-4 items-center justify-center rounded-full text-xs leading-normal font-bold">
                     {responses.length}
                 </span>
             </div>

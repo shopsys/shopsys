@@ -70,7 +70,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
             </Button>
             <div
                 className={twJoin(
-                    'bg-background vl:flex vl:flex-row vl:gap-2.5 flex-col rounded-xl',
+                    'bg-background-default vl:flex vl:flex-row vl:gap-2.5 flex-col rounded-xl',
                     isSortMenuOpen
                         ? 'z-aboveOverlay divide-border-accent-less absolute top-full right-0 mt-1 flex w-[60%] divide-y px-5 py-2.5'
                         : 'hidden',

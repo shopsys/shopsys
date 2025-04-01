@@ -70,7 +70,7 @@ export const NotificationBars: FC = memo(function NotificationBars() {
                 </section>
             ))}
             {loggedAsUserEmail && (
-                <section className="bg-backgroundError py-2">
+                <section className="bg-background-error py-2">
                     <Webline>
                         <div className="text-text-default flex items-center justify-center text-center text-sm font-bold">
                             <Trans

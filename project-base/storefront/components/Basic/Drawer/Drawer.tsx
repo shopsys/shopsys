@@ -25,7 +25,7 @@ export const Drawer: FC<DrawerProps> = ({ title, isActive, setIsActive, children
                     initial={{ translateX: '100%' }}
                     transition={{ duration: 0.2 }}
                     className={twMergeCustom(
-                        'z-aboveOverlay bg-background pointer-events-auto fixed top-0 right-0 h-dvh min-w-[315px] overflow-y-auto rounded-none p-5',
+                        'z-aboveOverlay bg-background-default pointer-events-auto fixed top-0 right-0 h-dvh min-w-[315px] overflow-y-auto rounded-none p-5',
                         className,
                     )}
                 >

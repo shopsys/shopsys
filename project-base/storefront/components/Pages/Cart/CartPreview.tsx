@@ -26,7 +26,7 @@ export const CartPreview: FC = () => {
     }
 
     return (
-        <div className="bg-backgroundMore font-secondary vl:max-w-[495px] w-full rounded-xl px-4 py-6 text-center font-semibold sm:p-8">
+        <div className="bg-background-more font-secondary vl:max-w-[495px] w-full rounded-xl px-4 py-6 text-center font-semibold sm:p-8">
             {isRemovingPromoCodeFromCart && <LoaderWithOverlay className="w-5" />}
 
             {promoCodes.length > 0 && (

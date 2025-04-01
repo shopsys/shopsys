@@ -53,7 +53,7 @@ export const PickupPlacePopup: FC<PickupPlacePopupProps> = ({ transportUuid, onC
                 />
             )}
 
-            <div className="bg-background sticky -inset-4 mt-auto flex justify-between p-4">
+            <div className="bg-background-default sticky -inset-4 mt-auto flex justify-between p-4">
                 <Button onClick={() => updatePortalContent(null)}>{t('Close')}</Button>
 
                 <Button

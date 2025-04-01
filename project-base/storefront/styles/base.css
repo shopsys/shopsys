@@ -145,19 +145,19 @@
     }
 
     .Toastify__toast--info {
-        @apply !bg-backgroundWarning;
+        @apply !bg-background-warning;
     }
 
     .Toastify__toast--success {
-        @apply !bg-backgroundSuccess text-text-inverted;
+        @apply !bg-background-success text-text-inverted;
     }
 
     .Toastify__toast--error {
-        @apply !bg-backgroundError;
+        @apply !bg-background-error;
     }
 
     .Toastify__progress-bar-theme--colored {
-        @apply !bg-backgroundDark/20;
+        @apply !bg-background-dark/20;
     }
 
     .Toastify__close-button {

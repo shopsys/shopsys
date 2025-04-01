@@ -14,7 +14,7 @@ export const ComplaintDetailCustomerInfo: FC<ComplaintDetailCustomerInfoProps> =
     const { t } = useTranslation();
 
     return (
-        <div className="bg-backgroundMore vl:grid-cols-3 grid grid-cols-1 gap-2.5 rounded-xl p-5 lg:grid-cols-2">
+        <div className="bg-background-more vl:grid-cols-3 grid grid-cols-1 gap-2.5 rounded-xl p-5 lg:grid-cols-2">
             <InformationCard heading={t('Contact information')} icon={<UserProfileCardsIcon className="size-8" />}>
                 <span>
                     {complaint.deliveryFirstName} {complaint.deliveryLastName}
@@ -25,7 +25,7 @@ export const ComplaintDetailCustomerInfo: FC<ComplaintDetailCustomerInfoProps> =
                     className={twJoin(
                         'hover:text-greyDark text-sm underline hover:no-underline',
                         'text-text-default overflow-x-auto whitespace-nowrap',
-                        '[&::-webkit-scrollbar-thumb]:bg-backgroundMost [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent',
+                        '[&::-webkit-scrollbar-thumb]:bg-background-most [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent',
                     )}
                 >
                     {complaint.email}

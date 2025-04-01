@@ -20,7 +20,7 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
     const [customerComplaintDetailUrl] = getInternationalizedStaticUrls(['/customer/complaint-detail'], url);
 
     return (
-        <div className="bg-backgroundMore vl:p-6 flex flex-col gap-5 rounded-md p-4">
+        <div className="bg-background-more vl:p-6 flex flex-col gap-5 rounded-md p-4">
             <div className="vl:flex-row vl:items-start vl:justify-between flex flex-col gap-4">
                 <Image
                     priority

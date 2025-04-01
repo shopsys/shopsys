@@ -18,7 +18,7 @@ export const OrderCustomerInfo: FC<OrderCustomerInfoProps> = ({ order }) => {
         order.transport.isPersonalPickup || isPacketeryTransport(order.transport.transportTypeCode);
 
     return (
-        <div className="bg-backgroundMore vl:grid-cols-3 grid grid-cols-1 gap-2.5 rounded-xl p-5 lg:grid-cols-2">
+        <div className="bg-background-more vl:grid-cols-3 grid grid-cols-1 gap-2.5 rounded-xl p-5 lg:grid-cols-2">
             <InformationCard heading={t('Contact information')} icon={<UserProfileCardsIcon className="size-8" />}>
                 <span>
                     {order.firstName} {order.lastName}
@@ -26,9 +26,8 @@ export const OrderCustomerInfo: FC<OrderCustomerInfoProps> = ({ order }) => {
                 <ExtendedNextLink
                     href={`mailto:${order.email}`}
                     className={twJoin(
-                        'hover:text-greyDark text-sm underline hover:no-underline',
-                        'text-text-default overflow-x-auto whitespace-nowrap',
-                        '[&::-webkit-scrollbar-thumb]:bg-backgroundMost [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent',
+                        'text-text-default overflow-x-auto text-sm whitespace-nowrap underline hover:no-underline',
+                        '[&::-webkit-scrollbar-thumb]:bg-background-most [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent',
                     )}
                 >
                     {order.email}

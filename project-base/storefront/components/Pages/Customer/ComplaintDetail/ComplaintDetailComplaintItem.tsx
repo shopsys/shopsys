@@ -106,7 +106,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                             )}
                             onClick={() => setSelectedGalleryItemIndex(imagePosition)}
                         >
-                            <div className="bg-backgroundMore size-full rounded-md p-1">
+                            <div className="bg-background-more size-full rounded-md p-1">
                                 <Image
                                     alt={file.anchorText || `${complaintItem.productName}-${index}`}
                                     className="aspect-square max-h-full object-contain mix-blend-multiply"

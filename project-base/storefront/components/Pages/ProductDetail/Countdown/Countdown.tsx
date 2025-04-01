@@ -37,7 +37,7 @@ export const Countdown: FC<CountdownProps> = ({ endTime }) => {
 
 const CountdownItem: FC<{ value: string; unit: string }> = ({ value, unit }) => {
     return (
-        <div className="bg-background min-w-14 rounded-lg p-2 text-center shadow-md md:min-w-16">
+        <div className="bg-background-default min-w-14 rounded-lg p-2 text-center shadow-md md:min-w-16">
             <div className="text-xl font-bold md:text-2xl">{value}</div>
             <div className="text-xs uppercase">{unit}</div>
         </div>

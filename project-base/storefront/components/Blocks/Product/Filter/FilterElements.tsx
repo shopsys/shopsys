@@ -65,7 +65,7 @@ export const SelectedParametersList: FC<{ keyName?: string }> = ({ children, key
 );
 
 export const SelectedParametersListItem: FC<{ onClick: () => void }> = ({ children, onClick }) => (
-    <LabelLink className="bg-backgroundAccentLess text-text-default group last-of-type:mr-6" onClick={onClick}>
+    <LabelLink className="bg-background-accent-less text-text-default group last-of-type:mr-6" onClick={onClick}>
         {children}
     </LabelLink>
 );

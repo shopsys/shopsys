@@ -109,7 +109,7 @@ export const CustomerUsersTable: FC = () => {
                         className={twJoin(
                             'vl:table-cell py-2 text-left text-sm leading-5',
                             'vl:max-w-56 max-w-64 overflow-x-auto whitespace-nowrap sm:max-w-full',
-                            '[&::-webkit-scrollbar-thumb]:bg-backgroundMost [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent',
+                            '[&::-webkit-scrollbar-thumb]:bg-background-most [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent',
                         )}
                     >
                         {user.email}

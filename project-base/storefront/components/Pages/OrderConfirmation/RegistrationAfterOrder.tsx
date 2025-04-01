@@ -85,7 +85,7 @@ export const RegistrationAfterOrder: FC<Partial<OrderConfirmationUrlQuery>> = ({
     ];
 
     return (
-        <div className="bg-backgroundMore flex flex-col rounded-xl p-5">
+        <div className="bg-background-more flex flex-col rounded-xl p-5">
             <h2>{t('Finish registration to loyalty program.')}</h2>
 
             <ul className="flex flex-col gap-2 py-5">

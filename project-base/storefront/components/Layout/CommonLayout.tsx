@@ -61,7 +61,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
                 <header>
                     <Webline
                         className="relative"
-                        wrapperClassName="bg-linear-to-tr/srgb from-backgroundBrand to-backgroundBrandLess"
+                        wrapperClassName="bg-linear-to-tr/srgb from-background-brand to-to-background-brand-less"
                     >
                         <Header />
                         <DeferredNavigation />
@@ -87,7 +87,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
                 </main>
 
                 <footer className="mt-auto h-fit">
-                    <Webline wrapperClassName="bg-backgroundAccentLess">
+                    <Webline wrapperClassName="bg-background-accent-less">
                         <DeferredNewsletterForm />
                         <DeferredFooter />
                     </Webline>

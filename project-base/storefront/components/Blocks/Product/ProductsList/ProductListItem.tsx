@@ -74,7 +74,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 ref={ref}
                 tid={TIDs.blocks_product_list_listeditem_ + product.catalogNumber}
                 className={twMergeCustom(
-                    'border-backgroundMore bg-backgroundMore group relative flex flex-col gap-2.5 rounded-xl border py-5 text-left transition select-text',
+                    'border-background-more bg-background-more group relative flex flex-col gap-2.5 rounded-xl border py-5 text-left transition select-text',
                     size === 'small' && 'gap-0 py-2.5',
                     'hover:border-border-accent-less hover:bg-background',
                     className,
@@ -103,7 +103,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                         </div>
 
                         {product.__typename === 'MainVariant' && (
-                            <div className="bg-background font-secondary group-hover:text-text-default flex w-fit items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs whitespace-nowrap">
+                            <div className="bg-background-default font-secondary group-hover:text-text-default flex w-fit items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs whitespace-nowrap">
                                 <VariantIcon className="text-text-accent size-3" />
                                 {product.variantsCount} {t('variants count', { count: product.variantsCount })}
                             </div>

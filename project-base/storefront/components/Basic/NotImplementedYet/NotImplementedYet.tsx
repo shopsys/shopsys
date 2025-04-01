@@ -11,9 +11,9 @@ export const notImplementedYetHandler = (e: SyntheticEvent): void => {
 };
 
 const notImplementedTagTwClass =
-    'whitespace-nowrap rounded-xs bg-backgroundError p-1 text-center text-xs font-normal text-text-inverted';
+    'whitespace-nowrap rounded-xs bg-background-error p-1 text-center text-xs font-normal text-text-inverted';
 const notImplementedTagPositionedTwClass =
-    'whitespace-nowrap rounded-xs bg-backgroundError p-1 text-center text-xs font-normal text-text-inverted absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2';
+    'whitespace-nowrap rounded-xs bg-background-error p-1 text-center text-xs font-normal text-text-inverted absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2';
 const notImplementedBorderTwClass = 'border border-dashed border-border-accent-error';
 
 export const NotImplementedYetWrapper: FC = ({ children }) => {

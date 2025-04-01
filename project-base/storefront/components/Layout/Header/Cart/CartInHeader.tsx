@@ -63,7 +63,7 @@ export const CartInHeader: FC = ({ className }) => {
                     <Loader
                         className={twJoin(
                             'z-overlay absolute inset-0 flex h-full w-full items-center',
-                            'bg-backgroundMore justify-center rounded-lg py-2 opacity-50',
+                            'bg-background-more justify-center rounded-lg py-2 opacity-50',
                         )}
                     />
                 )}

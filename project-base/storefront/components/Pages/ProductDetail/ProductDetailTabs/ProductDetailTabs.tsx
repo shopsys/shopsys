@@ -178,7 +178,7 @@ export const ProductDetailTabs: FC<ProductDetailTabsProps> = ({ description, par
                             {files.map((file) => (
                                 <li key={file.url} className="">
                                     <a
-                                        className="bg-backgroundMore flex cursor-pointer items-center gap-5 rounded-xl px-5 py-2.5 no-underline"
+                                        className="bg-background-more flex cursor-pointer items-center gap-5 rounded-xl px-5 py-2.5 no-underline"
                                         href={file.url}
                                     >
                                         <DownloadIcon className="size-6" />

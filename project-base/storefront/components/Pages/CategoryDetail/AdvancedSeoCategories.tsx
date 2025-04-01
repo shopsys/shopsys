@@ -17,7 +17,7 @@ export const AdvancedSeoCategories: FC<AdvancedSeoCategoriesProps> = ({ readyCat
             {readyCategorySeoMixLinks.map((item, index) => (
                 <LabelLink
                     key={index}
-                    className="bg-backgroundAccentLess text-default"
+                    className="bg-background-accent-less text-default"
                     href={item.slug}
                     type="category"
                 >

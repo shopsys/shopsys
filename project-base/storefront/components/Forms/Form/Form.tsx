@@ -28,7 +28,7 @@ export const Form: FC<FormProps> = ({ onSubmit, style, children, className, tid 
 
 export const FormContentWrapper: FC = ({ children, className }) => {
     return (
-        <div className={twMergeCustom('bg-backgroundMore vl:px-8 w-full max-w-3xl rounded-xl px-4', className)}>
+        <div className={twMergeCustom('bg-background-more vl:px-8 w-full max-w-3xl rounded-xl px-4', className)}>
             {children}
         </div>
     );

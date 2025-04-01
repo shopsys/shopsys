@@ -75,7 +75,10 @@ export const ModalGallery: FC<ModalGalleryProps> = ({ initialIndex, items, galle
     });
 
     return (
-        <div className="z-maximum bg-background fixed inset-0 flex flex-col p-2 select-none" onClick={onCloseModal}>
+        <div
+            className="z-maximum bg-background-default fixed inset-0 flex flex-col p-2 select-none"
+            onClick={onCloseModal}
+        >
             <div className="flex w-full flex-1 flex-col justify-center">
                 <div className="relative my-auto flex max-h-[80dvh] flex-1 items-center justify-center" {...handlers}>
                     <SpinnerIcon className="-z-above text-text-inverted absolute w-16 opacity-50" />
@@ -172,7 +175,7 @@ const FloatingButton: FC<FloatingButtonProps> = ({ className, children, onClick,
     <button
         type="button"
         className={twMergeCustom(
-            'bg-backgroundAccentLess text-text-default hover:text-text-accent inline-flex cursor-pointer items-center justify-center rounded-full p-2 transition-all',
+            'bg-background-accent-less text-text-default hover:text-text-accent inline-flex cursor-pointer items-center justify-center rounded-full p-2 transition-all',
             className,
         )}
         onClick={(e) => {

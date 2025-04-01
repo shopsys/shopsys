@@ -60,7 +60,7 @@ const Index: FC = () => {
             </main>
 
             <footer className="mt-auto h-fit">
-                <Webline wrapperClassName="bg-backgroundAccentLess">
+                <Webline wrapperClassName="bg-background-accent-less">
                     <NewsletterForm />
                     <Footer footerArticles={footerArticles} />
                 </Webline>

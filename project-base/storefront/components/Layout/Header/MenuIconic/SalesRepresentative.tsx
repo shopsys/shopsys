@@ -54,7 +54,7 @@ export const SalesRepresentative: FC = () => {
                         href={`mailto:${email}`}
                         className={twJoin(
                             'text-text-default max-w-64 overflow-x-auto text-sm font-semibold whitespace-nowrap no-underline',
-                            '[&::-webkit-scrollbar-thumb]:bg-backgroundMost [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent',
+                            '[&::-webkit-scrollbar-thumb]:bg-background-most [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent',
                         )}
                     >
                         {email}

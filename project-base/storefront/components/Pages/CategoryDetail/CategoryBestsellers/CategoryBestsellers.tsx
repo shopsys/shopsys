@@ -25,7 +25,7 @@ export const CategoryBestsellers: FC<CategoryBestsellersProps> = ({ products }) 
     const itemsLabel = t('products count', { count: showMoreCount });
 
     return (
-        <div className="bg-backgroundMore relative rounded-xl p-5">
+        <div className="bg-background-more relative rounded-xl p-5">
             <div className="font-secondary mb-3 text-center text-lg font-semibold break-words">
                 {t('Do not want to choose? Choose certainty')}
             </div>

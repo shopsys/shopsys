@@ -93,7 +93,7 @@ export const MenuIconicItemUserAuthenticatedContentListItem: FC<
 > = ({ children, isActive = false }) => (
     <li
         className={twMergeCustom(
-            'border-background bg-backgroundMore h-14 rounded-xl border',
+            'border-background-default bg-background-more h-14 rounded-xl border',
             'hover:border-border-accent-less hover:bg-background-default',
             isActive && 'border-border-accent-less bg-background-default',
         )}
@@ -128,7 +128,7 @@ export const MenuIconicItemUserPopover: FC<MenuIconicItemUserPopoverProps> = ({
                 <AnimateAppearDiv
                     className={twMergeCustom(
                         `z-cart pointer-events-auto absolute top-[54px] hidden origin-top`,
-                        'bg-background vl:block rounded-xl p-5',
+                        'bg-background-default vl:block rounded-xl p-5',
                         'before:absolute before:-top-2.5 before:left-0 before:h-2.5 before:w-full',
                         positionClasses,
                     )}

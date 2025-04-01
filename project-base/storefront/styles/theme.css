@@ -29,34 +29,20 @@
     --color-border-accent-success: #20d3c6;
     --color-border-accent-error: #ec5353;
 
-    /* Replace with color-background-default */
-    --color-background: #ffffff;
-    /* Replace with color-background-more */
-    --color-backgroundMore: #fafafa;
-    /* Replace with color-background-most */
-    --color-backgroundMost: #ececec;
-    /* Replace with color-background-brand */
-    --color-backgroundBrand: #0f00a0;
-    /* Replace with color-background-brand-less */
-    --color-backgroundBrandLess: #065fdb;
-    /* Replace with color-background-accent */
-    --color-backgroundAccent: #009aff;
-    /* Replace with color-background-accent-less */
-    --color-backgroundAccentLess: #f4faff;
-    /* Replace with color-background-accent-more */
-    --color-backgroundAccentMore: #008ae5;
-    /* Replace with color-background-dark */
-    --color-backgroundDark: #25283d;
-    /* Replace with color-background-error */
-    --color-backgroundError: #ec5353;
-    /* Replace with color-background-success */
-    --color-backgroundSuccess: #20d3c6;
-    /* Replace with color-background-success-more */
-    --color-backgroundSuccessMore: #149f96;
-    /* Replace with color-background-warning */
-    --color-backgroundWarning: #fcbd46;
-    /* Replace with color-background-warning-more */
-    --color-backgroundWarningMore: #d58b00;
+    --color-background-default: #ffffff;
+    --color-background-more: #fafafa;
+    --color-background-most: #ececec;
+    --color-background-brand: #0f00a0;
+    --color-background-brand-less: #065fdb;
+    --color-background-accent: #009aff;
+    --color-background-accent-less: #f4faff;
+    --color-background-accent-more: #008ae5;
+    --color-background-dark: #25283d;
+    --color-background-error: #ec5353;
+    --color-background-success: #20d3c6;
+    --color-background-success-more: #149f96;
+    --color-background-warning: #fcbd46;
+    --color-background-warning-more: #d58b00;
 
     /* Replace with color-price-default */
     --color-price: #004eb6;

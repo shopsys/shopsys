@@ -15,7 +15,7 @@ export const MenuIconicItemUserUnauthenticatedContent: FC = () => {
 
     return (
         <div className="vl:flex-row vl:p-5 flex w-full flex-col gap-8">
-            <div className="bg-backgroundBrandLess text-text-inverted vl:order-1 vl:w-1/2 vl:p-9 order-2 mb-auto rounded-xl p-5">
+            <div className="bg-background-brand-less text-text-inverted vl:order-1 vl:w-1/2 vl:p-9 order-2 mb-auto rounded-xl p-5">
                 <h4>{t('Benefits of registration')}</h4>
                 <div className="my-4">
                     <p className="text-text-inverted">

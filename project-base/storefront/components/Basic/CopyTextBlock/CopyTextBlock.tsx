@@ -18,7 +18,7 @@ export const CopyTextBlock: FC<CopyTextBlockProps> = ({ textToCopy }) => {
     };
 
     return (
-        <div className="bg-backgroundAccentLess rounded-sm">
+        <div className="bg-background-accent-less rounded-sm">
             <div className="flex justify-end px-3 py-2">
                 <Button variant="inverted" onClick={handleCopy}>
                     {copyButtonText}

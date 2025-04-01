@@ -84,7 +84,7 @@ export const OpeningHours: FC<{ openingHours: StoreOrPacketeryPoint['openingHour
                             key={dayOfWeek}
                             className={twJoin(
                                 'flex flex-col flex-wrap gap-x-5 gap-y-2 rounded-lg p-2 sm:flex-row sm:items-center',
-                                isToday ? 'bg-backgroundAccentLess' : 'hover:bg-backgroundMore',
+                                isToday ? 'bg-background-accent-less' : 'hover:bg-background-more',
                             )}
                         >
                             <h6 className="w-44" tid={TIDs.opening_hours_day_of_week_with_date}>

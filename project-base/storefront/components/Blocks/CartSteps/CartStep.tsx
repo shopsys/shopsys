@@ -38,7 +38,7 @@ export const CartStep: FC<CartStepProps> = ({
                         'flex size-11 items-center justify-center rounded-full',
                         step === activeStep
                             ? 'bg-text-accent text-text-inverted'
-                            : 'bg-backgroundAccentLess text-text-accent',
+                            : 'bg-background-accent-less text-text-accent',
                     )}
                 >
                     <h4>{step}</h4>

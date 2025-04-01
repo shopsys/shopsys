@@ -48,7 +48,7 @@ export const BlogSignpost: FC<BlogSingpostProps> = ({ blogCategoryItems, activeI
                         className={twJoin(
                             'flex w-full flex-col gap-y-2.5',
                             isBlogSignpostOpen
-                                ? 'max-xl:z-aboveOverlay max-xl:bg-background max-xl:absolute max-xl:top-full max-xl:mt-1 max-xl:rounded-2xl max-xl:p-5'
+                                ? 'max-xl:z-aboveOverlay max-xl:bg-background-default max-xl:absolute max-xl:top-full max-xl:mt-1 max-xl:rounded-2xl max-xl:p-5'
                                 : 'max-xl:hidden',
                         )}
                     >

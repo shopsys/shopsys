@@ -46,7 +46,7 @@ export const CollapsibleText: FC<CollapsibleTextProps> = ({ text, scrollTargetRe
                         'user-text',
                         !showFullDescription &&
                             shouldShowButton &&
-                            "after:from-background after:absolute after:bottom-0 after:left-0 after:h-6 after:w-full after:bg-linear-to-t/srgb after:to-transparent after:content-['']",
+                            "after:from-background-defaultafter:absolute after:bottom-0 after:left-0 after:h-6 after:w-full after:bg-linear-to-t/srgb after:to-transparent after:content-['']",
                     )}
                 />
             </div>

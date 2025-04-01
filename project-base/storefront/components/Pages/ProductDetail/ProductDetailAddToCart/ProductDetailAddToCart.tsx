@@ -88,7 +88,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
 
             <div className="relative">
                 {isAddingToCart && (
-                    <Loader className="z-overlay bg-backgroundMore absolute inset-0 flex h-full w-full items-center justify-center rounded-sm py-2 opacity-50" />
+                    <Loader className="z-overlay bg-background-more absolute inset-0 flex h-full w-full items-center justify-center rounded-sm py-2 opacity-50" />
                 )}
 
                 <Button
