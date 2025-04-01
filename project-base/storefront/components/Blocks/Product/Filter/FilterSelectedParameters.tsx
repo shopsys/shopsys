@@ -216,7 +216,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
                         </AnimatePresence>
 
                         <div
-                            className="font-secondary text-link hover:text-linkHovered cursor-pointer text-sm font-semibold underline"
+                            className="font-secondary text-link-default hover:text-link-hovered cursor-pointer text-sm font-semibold underline"
                             onClick={resetAllFilterQueries}
                         >
                             {t('Clear all')}

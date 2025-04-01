@@ -54,7 +54,7 @@ const TableCell: FC = ({ children }) => <td className="truncate px-5 py-2">{chil
 
 const TableLink: FC<{ href: string }> = ({ children, href }) => (
     <a
-        className="text-link hover:text-linkHovered active:text-linkHovered"
+        className="text-link-default hover:text-link-hovered active:text-link-hovered"
         href={href}
         rel="noreferrer"
         target="_blank"

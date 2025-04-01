@@ -46,7 +46,7 @@ const FooterContactSocialsItem: FC<{ href: string; title: string }> = ({ childre
 );
 
 const FooterContactLangsItem: FC<{ href: string; text: string }> = ({ children, href, text }) => (
-    <a className="text-link hover:text-linkHovered flex items-center hover:no-underline" href={href}>
+    <a className="text-link-default hover:text-link-hovered flex items-center hover:no-underline" href={href}>
         {children}
         <span className="ml-2 text-sm">{text}</span>
     </a>

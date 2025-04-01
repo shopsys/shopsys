@@ -55,9 +55,17 @@ export const CartPreview: FC = () => {
                             >
                                 <p>{t('The amount of discounts')}</p>
 
-                                <span className="text-priceDiscounted whitespace-nowrap">
+                                <span className="text-price-discounted whitespace-nowrap">
                                     {'-' + formatPrice(cart.totalDiscountPrice.priceWithVat)}
                                 </span>
+
+                                <button
+                                    className="text-link-default hover:text-link-hovered text-xs underline hover:no-underline"
+                                    tid={TIDs.blocks_promocode_promocodeinfo_code}
+                                    onClick={() => removePromoCodeFromCart(promoCode.code)}
+                                >
+                                    {t('Remove')}
+                                </button>
                             </div>
                         )}
                 </div>

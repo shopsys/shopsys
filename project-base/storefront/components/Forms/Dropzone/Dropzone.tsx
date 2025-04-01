@@ -64,7 +64,7 @@ const DropzoneControlled: React.FC<DropzoneControlledProps> = ({ control, formNa
         isDragActive && 'text-inputPlaceholderHovered',
     );
     const listItemTwClass = 'flex my-1 justify-between items-center group';
-    const fileNameTwClass = 'flex-1 text-gray-800 group-hover:text-linkHovered transition-colors duration-300';
+    const fileNameTwClass = 'flex-1 text-gray-800 group-hover:text-link-hovered transition-colors duration-300';
 
     return (
         <Controller

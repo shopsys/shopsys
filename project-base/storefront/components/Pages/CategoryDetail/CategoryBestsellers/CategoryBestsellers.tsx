@@ -48,7 +48,7 @@ export const CategoryBestsellers: FC<CategoryBestsellersProps> = ({ products }) 
             {products.length > NUMBER_OF_VISIBLE_ITEMS && (
                 <div className="text-center">
                     <button
-                        className="font-secondary text-link hover:text-linkHovered cursor-pointer text-sm font-semibold underline"
+                        className="font-secondary text-link-default hover:text-link-hovered cursor-pointer text-sm font-semibold underline"
                         onClick={() => setIsCollapsed((prev) => !prev)}
                     >
                         {isCollapsed

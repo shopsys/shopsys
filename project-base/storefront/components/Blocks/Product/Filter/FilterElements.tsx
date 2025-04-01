@@ -45,8 +45,8 @@ export const ShowAllButton: FC<{ onClick: () => void }> = ({ children, onClick }
     <button
         className={twJoin(
             'w-fit cursor-pointer border-none bg-none p-0 text-sm underline outline-hidden hover:bg-none hover:no-underline',
-            'text-link',
-            'hover:text-linkHovered',
+            'text-link-default',
+            'hover:text-link-hovered',
         )}
         onClick={onClick}
     >

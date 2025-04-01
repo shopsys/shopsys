@@ -47,8 +47,8 @@ export const CartStep: FC<CartStepProps> = ({
                 <h4
                     className={twJoin(
                         'text-xs lg:text-lg',
-                        !isDisabled && 'group-hover:text-linkHovered',
-                        step === activeStep ? 'text-link' : '',
+                        !isDisabled && 'group-hover:text-link-hovered',
+                        step === activeStep ? 'text-link-default' : '',
                     )}
                 >
                     {label}

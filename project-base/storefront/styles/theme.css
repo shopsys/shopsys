@@ -16,18 +16,12 @@
     --color-text-subtle: #7892bc;
     --color-text-error: #ec5353;
 
-    /* Replace with color-link-default */
-    --color-link: #004eb6;
-    /* Replace with color-link-disabled */
-    --color-linkDisabled: #7aa1d5;
-    /* Replace with color-link-hovered */
-    --color-linkHovered: #003479;
-    /* Replace with color-link-inverted */
-    --color-linkInverted: #ffffff;
-    /* Replace with color-link-inverted-disabled */
-    --color-linkInvertedDisabled: #727588;
-    /* Replace with color-link-inverted-hovered */
-    --color-linkInvertedHovered: #fff0c4;
+    --color-link-default: #004eb6;
+    --color-link-disabled: #7aa1d5;
+    --color-link-hovered: #003479;
+    --color-link-inverted: #ffffff;
+    --color-link-inverted-disabled: #727588;
+    --color-link-inverted-hovered: #fff0c4;
 
     /* Replace with color-border-less */
     --color-borderLess: #fafafa;
