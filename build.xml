@@ -318,7 +318,7 @@
         </exec>
     </target>
 
-    <target name="translations-dump" depends="domains-info-load" description="Extracts translatable messages in the whole monorepo.">
+    <target name="translations-dump" depends="domains-info-load,admin-locales-load" description="Extracts translatable messages in the whole monorepo.">
         <phingcall target="shopsys_framework.translations-dump"/>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -328,6 +328,7 @@
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.packages}/form-types-bundle/src/Resources/translations"/>
             <arg line="${domains-info.locales}"/>
+            <arg line="${admin-locales}"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -342,6 +343,7 @@
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.framework}/src/Resources/translations"/>
             <arg line="${domains-info.locales}"/>
+            <arg line="${admin-locales}"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -351,6 +353,7 @@
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.packages}/frontend-api/src/Resources/translations"/>
             <arg line="${domains-info.locales}"/>
+            <arg line="${admin-locales}"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -360,6 +363,7 @@
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.packages}/brand-feed-luigis-box/src/Resources/translations"/>
             <arg line="${domains-info.locales}"/>
+            <arg line="${admin-locales}"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -369,6 +373,7 @@
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.packages}/category-feed-luigis-box/src/Resources/translations"/>
             <arg line="${domains-info.locales}"/>
+            <arg line="${admin-locales}"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -378,6 +383,7 @@
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.packages}/convertim/src/Resources/translations"/>
             <arg line="${domains-info.locales}"/>
+            <arg line="${admin-locales}"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -387,6 +393,7 @@
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.packages}/product-feed-google/src/Resources/translations"/>
             <arg line="${domains-info.locales}"/>
+            <arg line="${admin-locales}"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -396,6 +403,7 @@
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.packages}/product-feed-mergado/src/Resources/translations"/>
             <arg line="${domains-info.locales}"/>
+            <arg line="${admin-locales}"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -405,6 +413,7 @@
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.packages}/product-feed-heureka/src/Resources/translations"/>
             <arg line="${domains-info.locales}"/>
+            <arg line="${admin-locales}"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -414,6 +423,7 @@
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.packages}/product-feed-heureka-delivery/src/Resources/translations"/>
             <arg line="${domains-info.locales}"/>
+            <arg line="${admin-locales}"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -423,6 +433,7 @@
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.packages}/product-feed-zbozi/src/Resources/translations"/>
             <arg line="${domains-info.locales}"/>
+            <arg line="${admin-locales}"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -432,6 +443,7 @@
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.packages}/product-feed-luigis-box/src/Resources/translations"/>
             <arg line="${domains-info.locales}"/>
+            <arg line="${admin-locales}"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -441,6 +453,7 @@
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.packages}/article-feed-luigis-box/src/Resources/translations"/>
             <arg line="${domains-info.locales}"/>
+            <arg line="${admin-locales}"/>
         </exec>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -450,6 +463,7 @@
             <arg value="--output-format=po"/>
             <arg value="--output-dir=${path.packages}/luigis-box/src/Resources/translations"/>
             <arg line="${domains-info.locales}"/>
+            <arg line="${admin-locales}"/>
         </exec>
     </target>
 

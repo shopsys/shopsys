@@ -178,11 +178,13 @@ If you have set a different locale, you can use `translations-dump` that will cr
 #### 3.6 Locale in administration
 
 Administration uses the `en` locale by default for every newly created administrator.
-This means that for example, product list in administration tries to display translations of product names in `en` locale, and all the static texts are in English.
+This means that all the static texts are in English. Furthermore, all data translations (e.g. the product names in the administration list) are presented in the `en` locale.
+When the administrator uses a locale that is not used on any domain, there are no persisted translations for this locale so in this case, the data are displayed in the first domain locale.
+You can adjust this behavior by setting the desired `$fallbackLocaleDomainId` in `Localization::getCurrentLocaleForTranslatableEntities()` method call in particular scenarios.
+
 The administrator can then change the locale to fit his needs to any of the locales defined by the `shopsys.allowed_admin_locales` parameter in your `config/parameters_common.yaml`.
 If you want to switch the default value to another locale or restrict the locales an administrator can choose from, set the `shopsys.allowed_admin_locales` parameter in your `config/parameters_common.yaml` configuration accordingly.
 The first locale in the list is the default one.
-However, only locales that are defined in the `domains.yaml` config can be used in the administration.
 
 You can change administration translations by adding messages into your `translations/messages.xx.po`.
 

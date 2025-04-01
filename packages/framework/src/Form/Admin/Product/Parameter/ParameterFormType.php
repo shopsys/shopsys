@@ -128,7 +128,7 @@ class ParameterFormType extends AbstractType
             if ($this->parameterFacade->existsParameterByName($name, $locale, $currentParameter)) {
                 $context
                     ->buildViolation(t('Parameter with this name already exists for the locale "%locale%".', ['%locale%' => $locale], Translator::VALIDATOR_TRANSLATION_DOMAIN))
-                    ->atPath(sprintf('name[%s]', $this->localization->getAdminLocale()))
+                    ->atPath(sprintf('name[%s]', $this->localization->getCurrentLocaleForTranslatableEntities()))
                     ->addViolation();
             }
         }

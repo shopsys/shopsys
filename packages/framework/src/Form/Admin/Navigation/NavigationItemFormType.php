@@ -124,7 +124,7 @@ final class NavigationItemFormType extends AbstractType
     private function addColumnFields(FormBuilderInterface $builder): void
     {
         $categoryPaths = $this->categoryFacade->getFullPathsIndexedByIds(
-            $this->localization->getAdminLocale(),
+            $this->localization->getCurrentLocaleForTranslatableEntities(),
         );
 
         $builder

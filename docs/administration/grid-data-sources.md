@@ -39,7 +39,7 @@ e.g., you can add some calculated price into the data set.
 $queryBuilder = $transportRepository->getQueryBuilderForAll()
     ->addSelect('tt')
     ->join('t.translations', 'tt', Join::WITH, 'tt.locale = :locale')
-    ->setParameter('locale', $localization->getAdminLocale());
+    ->setParameter('locale', $localization->getCurrentLocaleForTranslatableEntities());
 
 $dataSource = new QueryBuilderWithRowManipulatorDataSource(
     $queryBuilder,

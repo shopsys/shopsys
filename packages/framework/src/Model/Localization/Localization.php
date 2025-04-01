@@ -6,9 +6,9 @@ namespace Shopsys\FrameworkBundle\Model\Localization;
 
 use Locale;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
+use Shopsys\FrameworkBundle\Component\HttpFoundation\Exception\NoRequestException;
 use Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade;
-use Shopsys\FrameworkBundle\Model\Administrator\Security\Exception\AdministratorIsNotLoggedException;
-use Shopsys\FrameworkBundle\Model\Localization\Exception\AdminLocaleNotFoundException;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class Localization
 {
@@ -21,35 +21,62 @@ class Localization
      * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
      * @param string[] $allowedAdminLocales
      * @param \Shopsys\FrameworkBundle\Model\Administrator\Security\AdministratorFrontSecurityFacade $administratorFrontSecurityFacade
+     * @param \Symfony\Component\HttpFoundation\RequestStack $requestStack
      */
     public function __construct(
         protected readonly Domain $domain,
         protected readonly array $allowedAdminLocales,
         protected readonly AdministratorFrontSecurityFacade $administratorFrontSecurityFacade,
+        protected readonly RequestStack $requestStack,
     ) {
     }
 
     /**
+     * The proper locale is set into request in @see \Shopsys\FrameworkBundle\Model\Localization\LocalizationListener::onKernelRequest()
+     *
      * @return string
      */
-    public function getLocale(): string
+    public function getRequestLocale(): string
     {
-        return $this->domain->getLocale();
+        $request = $this->requestStack->getMainRequest();
+
+        if ($request === null) {
+            throw new NoRequestException('Request is not available.');
+        }
+
+        return $request->getLocale();
     }
 
     /**
+     * The method is handy when you need to get the entity translations in the admin locale.
+     * It has a safety net in form of a fallback domain ID that ensures the method always returns a valid locale from the entity translations point of view.
+     * The fallback is necessary for setup with the admin locale is different from the storefront domain locales.
+     *
+     * @param int $fallbackLocaleDomainId
      * @return string
      */
-    public function getAdminLocale(): string
-    {
-        try {
-            $adminLocale = $this->administratorFrontSecurityFacade->getCurrentAdministrator()->getSelectedLocale();
-            $this->checkAdminLocaleIsSupported($adminLocale);
-        } catch (AdministratorIsNotLoggedException) {
-            $adminLocale = $this->getDefaultAdminLocale();
+    public function getCurrentLocaleForTranslatableEntities(
+        int $fallbackLocaleDomainId = Domain::FIRST_DOMAIN_ID,
+    ): string {
+        $requestLocale = $this->getRequestLocale();
+
+        return $this->getFallbackLocaleIfLocaleIsNotUsedOnAnyDomain($requestLocale, $fallbackLocaleDomainId);
+    }
+
+    /**
+     * @param string $locale
+     * @param int $fallbackLocaleDomainId
+     * @return string
+     */
+    public function getFallbackLocaleIfLocaleIsNotUsedOnAnyDomain(
+        string $locale,
+        int $fallbackLocaleDomainId = Domain::FIRST_DOMAIN_ID,
+    ): string {
+        if (!in_array($locale, $this->getLocalesOfAllDomains(), true)) {
+            return $this->domain->getDomainConfigById($fallbackLocaleDomainId)->getLocale();
         }
 
-        return $adminLocale;
+        return $locale;
     }
 
     /**
@@ -95,46 +122,5 @@ class Localization
         }
 
         return $enabledLocales;
-    }
-
-    /**
-     * @param string $locale
-     */
-    public function checkAdminLocaleIsSupported(string $locale): void
-    {
-        $allLocales = $this->getLocalesOfAllDomains();
-
-        if (!in_array($locale, $allLocales, true)) {
-            throw new AdminLocaleNotFoundException($locale, $allLocales);
-        }
-
-        if (!in_array($locale, $this->allowedAdminLocales, true)) {
-            throw new AdminLocaleNotFoundException($locale, $this->allowedAdminLocales);
-        }
-    }
-
-    /**
-     * @return string
-     */
-    public function getDefaultAdminLocale(): string
-    {
-        $allowedAdminLocales = $this->allowedAdminLocales;
-        $defaultAdminLocale = reset($allowedAdminLocales);
-
-        if ($defaultAdminLocale === false) {
-            throw new AdminLocaleNotFoundException();
-        }
-
-        $this->checkAdminLocaleIsSupported($defaultAdminLocale);
-
-        return $defaultAdminLocale;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getAllowedAdminLocales(): array
-    {
-        return $this->allowedAdminLocales;
     }
 }

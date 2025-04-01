@@ -7,7 +7,6 @@ namespace Shopsys\FrameworkBundle\Twig;
 use CommerceGuys\Intl\Formatter\NumberFormatter;
 use CommerceGuys\Intl\NumberFormat\NumberFormatRepositoryInterface;
 use Override;
-use Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade;
 use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -20,12 +19,10 @@ class NumberFormatterExtension extends AbstractExtension
     /**
      * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      * @param \CommerceGuys\Intl\NumberFormat\NumberFormatRepositoryInterface $numberFormatRepository
-     * @param \Shopsys\FrameworkBundle\Model\Administration\AdministrationFacade $administrationFacade
      */
     public function __construct(
         protected readonly Localization $localization,
         protected readonly NumberFormatRepositoryInterface $numberFormatRepository,
-        protected readonly AdministrationFacade $administrationFacade,
     ) {
     }
 
@@ -117,11 +114,7 @@ class NumberFormatterExtension extends AbstractExtension
             return $locale;
         }
 
-        if ($this->administrationFacade->isInAdmin()) {
-            return $this->localization->getAdminLocale();
-        }
-
-        return $this->localization->getLocale();
+        return $this->localization->getRequestLocale();
     }
 
     /**

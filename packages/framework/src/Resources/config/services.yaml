@@ -6,9 +6,6 @@ parameters:
     fp_js_form_validator.factory.class: Shopsys\FrameworkBundle\Form\JsFormValidatorFactory
     fp_js_form_validator.twig_extension.class: Shopsys\FrameworkBundle\Twig\JsFormValidatorTwigExtension
 
-    # Use Shopsys Translatable listener for prezent/doctrine-translatable to allow set fallback language on postPersist event
-    prezent_doctrine_translatable.listener.class: Shopsys\FrameworkBundle\Model\Localization\TranslatableListener
-
 services:
     _defaults:
         autoconfigure: true
@@ -538,6 +535,10 @@ services:
         tags:
             - { name: knp_menu.menu_builder, method: createMenu, alias: admin_side_menu }
 
+    Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade:
+        arguments:
+            $allowedAdminLocales: '%shopsys.allowed_admin_locales%'
+
     Shopsys\FrameworkBundle\Model\Administrator\Mail\ResetPasswordMail: ~
 
     Shopsys\FrameworkBundle\Model\Administrator\Mail\TwoFactorAuthenticationMail: ~
@@ -870,6 +871,13 @@ services:
 
     monolog.handler.fingers_crossed.error_level_activation_strategy:
         abstract: true
+
+    prezent_doctrine_translatable.listener:
+        arguments:
+            $factory: '@prezent_doctrine_translatable.metadata_factory'
+        class: Shopsys\FrameworkBundle\Model\Localization\TranslatableListener
+        tags:
+            - 'doctrine.event_subscriber'
 
     profiler.storage:
         alias: Shopsys\FrameworkBundle\Component\HttpKernel\Profiler\FileProfilerStorage

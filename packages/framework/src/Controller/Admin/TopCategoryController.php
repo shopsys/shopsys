@@ -7,6 +7,7 @@ namespace Shopsys\FrameworkBundle\Controller\Admin;
 use Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade;
 use Shopsys\FrameworkBundle\Form\Admin\Category\TopCategory\TopCategoriesFormType;
 use Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade;
+use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,10 +17,12 @@ class TopCategoryController extends AdminBaseController
     /**
      * @param \Shopsys\FrameworkBundle\Model\Category\TopCategory\TopCategoryFacade $topCategoryFacade
      * @param \Shopsys\FrameworkBundle\Component\Domain\AdminDomainTabsFacade $adminDomainTabsFacade
+     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
     public function __construct(
         protected readonly TopCategoryFacade $topCategoryFacade,
         protected readonly AdminDomainTabsFacade $adminDomainTabsFacade,
+        protected readonly Localization $localization,
     ) {
     }
 
@@ -37,7 +40,7 @@ class TopCategoryController extends AdminBaseController
 
         $form = $this->createForm(TopCategoriesFormType::class, $formData, [
             'domain_id' => $domainId,
-            'locale' => $request->getLocale(),
+            'locale' => $this->localization->getCurrentLocaleForTranslatableEntities(),
         ]);
         $form->handleRequest($request);
 

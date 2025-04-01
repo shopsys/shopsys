@@ -6,34 +6,25 @@ namespace Tests\App\Test\Codeception\Helper;
 
 use Codeception\Module;
 use Codeception\TestInterface;
-use CommerceGuys\Intl\Currency\CurrencyRepositoryInterface;
 use CommerceGuys\Intl\Formatter\NumberFormatter;
 use CommerceGuys\Intl\NumberFormat\NumberFormatRepository;
 use Override;
-use Shopsys\FrameworkBundle\Component\CurrencyFormatter\CurrencyFormatterFactory;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\Currency;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\PriceConverter;
-use Shopsys\FrameworkBundle\Model\Pricing\Rounding;
 use Shopsys\FrameworkBundle\Twig\NumberFormatterExtension;
 
 class NumberFormatHelper extends Module
 {
     private CurrencyFacade $currencyFacade;
 
-    private CurrencyFormatterFactory $currencyFormatterFactory;
-
-    private CurrencyRepositoryInterface $intlCurrencyRepository;
-
     private NumberFormatterExtension $numberFormatterExtension;
 
     private PriceConverter $priceConverter;
 
     private NumberFormatter $numberFormatter;
-
-    private Rounding $rounding;
 
     private LocalizationHelper $localizationHelper;
 
@@ -49,66 +40,9 @@ class NumberFormatHelper extends Module
         $localizationHelper = $this->getModule(LocalizationHelper::class);
         $this->localizationHelper = $localizationHelper;
         $this->currencyFacade = $symfonyHelper->grabServiceFromContainer(CurrencyFacade::class);
-        $this->currencyFormatterFactory = $symfonyHelper->grabServiceFromContainer(CurrencyFormatterFactory::class);
-        $this->intlCurrencyRepository = $symfonyHelper->grabServiceFromContainer(CurrencyRepositoryInterface::class);
         $this->numberFormatterExtension = $symfonyHelper->grabServiceFromContainer(NumberFormatterExtension::class);
         $this->priceConverter = $symfonyHelper->grabServiceFromContainer(PriceConverter::class);
         $this->numberFormatter = new NumberFormatter(new NumberFormatRepository());
-        $this->rounding = $symfonyHelper->grabServiceFromContainer(Rounding::class);
-    }
-
-    /**
-     * Inspired by formatCurrency() method, {@see \Shopsys\FrameworkBundle\Twig\PriceExtension}
-     *
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
-     * @return string
-     */
-    public function getFormattedPriceWithCurrencySymbolRoundedByCurrencyOnFrontend(Money $price): string
-    {
-        $firstDomainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId(
-            Domain::FIRST_DOMAIN_ID,
-        );
-        $firstDomainLocale = $this->localizationHelper->getFrontendLocale();
-        $currencyFormatter = $this->currencyFormatterFactory->createByLocaleAndCurrency(
-            $firstDomainLocale,
-            $firstDomainDefaultCurrency,
-        );
-
-        $intlCurrency = $this->intlCurrencyRepository->get($firstDomainDefaultCurrency->getCode(), $firstDomainLocale);
-
-        $formattedPriceWithCurrencySymbol = $currencyFormatter->format(
-            $this->rounding->roundPriceWithVatByCurrency($price, $firstDomainDefaultCurrency)->getAmount(),
-            $intlCurrency->getCurrencyCode(),
-        );
-
-        return $this->normalizeSpaces($formattedPriceWithCurrencySymbol);
-    }
-
-    /**
-     * Inspired by formatCurrency() method, {@see \Shopsys\FrameworkBundle\Twig\PriceExtension}
-     *
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
-     * @return string
-     */
-    public function getFormattedPriceRoundedByCurrencyOnFrontend(Money $price): string
-    {
-        $firstDomainDefaultCurrency = $this->currencyFacade->getDomainDefaultCurrencyByDomainId(
-            Domain::FIRST_DOMAIN_ID,
-        );
-        $firstDomainLocale = $this->localizationHelper->getFrontendLocale();
-        $currencyFormatter = $this->currencyFormatterFactory->createByLocaleAndCurrency(
-            $firstDomainLocale,
-            $firstDomainDefaultCurrency,
-        );
-
-        $intlCurrency = $this->intlCurrencyRepository->get($firstDomainDefaultCurrency->getCode(), $firstDomainLocale);
-
-        $formattedPriceWithCurrencySymbol = $currencyFormatter->format(
-            $this->rounding->roundPriceWithVatByCurrency($price, $firstDomainDefaultCurrency)->getAmount(),
-            $intlCurrency->getCurrencyCode(),
-        );
-
-        return $this->normalizeSpaces($formattedPriceWithCurrencySymbol);
     }
 
     /**

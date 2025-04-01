@@ -12,15 +12,13 @@ use Override;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Component\Router\DomainRouterFactory;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
-use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use Shopsys\FrameworkBundle\Model\Administrator\AdministratorLocalizationFacade;
 use Shopsys\FrameworkBundle\Model\Product\Unit\UnitFacade;
 use Tests\App\Test\Codeception\Module\StrictWebDriver;
 
 class LocalizationHelper extends Module
 {
-    private Localization $localization;
-
-    private Domain $domain;
+    private AdministratorLocalizationFacade $administratorLocalizationFacade;
 
     private DomainRouterFactory $domainRouterFactory;
 
@@ -39,38 +37,9 @@ class LocalizationHelper extends Module
         /** @var \Tests\App\Test\Codeception\Module\StrictWebDriver $strictWebDriver */
         $strictWebDriver = $this->getModule(StrictWebDriver::class);
         $this->webDriver = $strictWebDriver;
-        $this->localization = $symfonyHelper->grabServiceFromContainer(Localization::class);
-        $this->domain = $symfonyHelper->grabServiceFromContainer(Domain::class);
+        $this->administratorLocalizationFacade = $symfonyHelper->grabServiceFromContainer(AdministratorLocalizationFacade::class);
         $this->domainRouterFactory = $symfonyHelper->grabServiceFromContainer(DomainRouterFactory::class);
         $this->unitFacade = $symfonyHelper->grabServiceFromContainer(UnitFacade::class);
-    }
-
-    /**
-     * @param string $id
-     * @param string $translationDomain
-     * @param array $parameters
-     */
-    public function seeTranslationFrontend(
-        string $id,
-        string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
-        array $parameters = [],
-    ): void {
-        $translatedMessage = t($id, $parameters, $translationDomain, $this->getFrontendLocale());
-        $this->webDriver->see(strip_tags($translatedMessage));
-    }
-
-    /**
-     * @param string $id
-     * @param string $translationDomain
-     * @param array $parameters
-     */
-    public function dontSeeTranslationFrontend(
-        string $id,
-        string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
-        array $parameters = [],
-    ): void {
-        $translatedMessage = t($id, $parameters, $translationDomain, $this->getFrontendLocale());
-        $this->webDriver->dontSee(strip_tags($translatedMessage));
     }
 
     /**
@@ -120,49 +89,11 @@ class LocalizationHelper extends Module
     }
 
     /**
-     * @param string $id
-     * @param string $translationDomain
-     * @param array $parameters
-     * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null $contextSelector
-     */
-    public function clickByTranslationFrontend(
-        string $id,
-        string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
-        array $parameters = [],
-        WebDriverBy|WebDriverElement|null $contextSelector = null,
-    ) {
-        $translatedMessage = t($id, $parameters, $translationDomain, $this->getFrontendLocale());
-        $this->webDriver->clickByText(strip_tags($translatedMessage), $contextSelector);
-    }
-
-    /**
-     * @param string $id
-     * @param string $translationDomain
-     * @param array $parameters
-     */
-    public function checkOptionByLabelTranslationFrontend(
-        string $id,
-        string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
-        array $parameters = [],
-    ): void {
-        $translatedMessage = t($id, $parameters, $translationDomain, $this->getFrontendLocale());
-        $this->webDriver->checkOptionByLabel($translatedMessage);
-    }
-
-    /**
      * @return string
      */
     public function getAdminLocale(): string
     {
-        return $this->localization->getAdminLocale();
-    }
-
-    /**
-     * @return string
-     */
-    public function getFrontendLocale(): string
-    {
-        return $this->domain->getDomainConfigById(Domain::FIRST_DOMAIN_ID)->getLocale();
+        return $this->administratorLocalizationFacade->getCurrentAdminLocaleOrDefault();
     }
 
     /**
@@ -191,6 +122,6 @@ class LocalizationHelper extends Module
      */
     public function getDefaultUnitName(): string
     {
-        return $this->unitFacade->getDefaultUnit()->getName($this->getFrontendLocale());
+        return $this->unitFacade->getDefaultUnit()->getName($this->getAdminLocale());
     }
 }

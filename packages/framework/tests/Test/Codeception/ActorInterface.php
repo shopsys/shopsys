@@ -8,7 +8,6 @@ use Closure;
 use Codeception\TestInterface;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverElement;
-use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 
 interface ActorInterface
@@ -235,17 +234,6 @@ interface ActorInterface
         array $parameters = [],
     ): void;
 
-    /**
-     * @param string $id
-     * @param string $translationDomain
-     * @param array $parameters
-     */
-    public function canSeeTranslationFrontend(
-        string $id,
-        string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
-        array $parameters = [],
-    ): void;
-
     public function cancelPopup(): void;
 
     /**
@@ -354,17 +342,6 @@ interface ActorInterface
     public function cantSeeOptionIsSelected($selector, $optionText): void;
 
     /**
-     * @param string $id
-     * @param string $translationDomain
-     * @param array $parameters
-     */
-    public function cantSeeTranslationFrontend(
-        string $id,
-        string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
-        array $parameters = [],
-    ): void;
-
-    /**
      * @param \Facebook\WebDriver\WebDriverElement $element
      */
     public function checkElement(WebDriverElement $element): void;
@@ -383,17 +360,6 @@ interface ActorInterface
      * @param string $label
      */
     public function checkOptionByLabel(string $label): void;
-
-    /**
-     * @param string $id
-     * @param string $translationDomain
-     * @param array $parameters
-     */
-    public function checkOptionByLabelTranslationFrontend(
-        string $id,
-        string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
-        array $parameters = [],
-    ): void;
 
     public function cleanup();
 
@@ -444,19 +410,6 @@ interface ActorInterface
         array $parameters = [],
         WebDriverBy|WebDriverElement|null $contextSelector = null,
     ): void;
-
-    /**
-     * @param string $id
-     * @param string $translationDomain
-     * @param array $parameters
-     * @param \Facebook\WebDriver\WebDriverBy|\Facebook\WebDriver\WebDriverElement|null|null $contextSelector
-     */
-    public function clickByTranslationFrontend(
-        string $id,
-        string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
-        array $parameters = [],
-        WebDriverBy|WebDriverElement|null $contextSelector = null,
-    );
 
     /**
      * @param mixed|null $cssOrXPath
@@ -596,17 +549,6 @@ interface ActorInterface
     public function dontSeeOptionIsSelected($selector, $optionText): void;
 
     /**
-     * @param string $id
-     * @param string $translationDomain
-     * @param array $parameters
-     */
-    public function dontSeeTranslationFrontend(
-        string $id,
-        string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
-        array $parameters = [],
-    ): void;
-
-    /**
      * @param mixed $cssOrXPath
      */
     public function doubleClick($cssOrXPath): void;
@@ -679,23 +621,6 @@ interface ActorInterface
      * @return string
      */
     public function getFormattedPercentAdmin(string $number): string;
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
-     * @return string
-     */
-    public function getFormattedPriceRoundedByCurrencyOnFrontend(Money $price): string;
-
-    /**
-     * @param \Shopsys\FrameworkBundle\Component\Money\Money $price
-     * @return string
-     */
-    public function getFormattedPriceWithCurrencySymbolRoundedByCurrencyOnFrontend(Money $price): string;
-
-    /**
-     * @return string
-     */
-    public function getFrontendLocale(): string;
 
     /**
      * @param string $number
@@ -1072,17 +997,6 @@ interface ActorInterface
     public function seeTranslationAdminInCss(
         string $id,
         string $css,
-        string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
-        array $parameters = [],
-    ): void;
-
-    /**
-     * @param string $id
-     * @param string $translationDomain
-     * @param array $parameters
-     */
-    public function seeTranslationFrontend(
-        string $id,
         string $translationDomain = Translator::DEFAULT_TRANSLATION_DOMAIN,
         array $parameters = [],
     ): void;

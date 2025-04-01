@@ -82,7 +82,7 @@ class ProductCachedAttributesFacade
         return $this->inMemoryCache->getOrSaveValue(
             static::PARAMETER_VALUES_CACHE_NAMESPACE,
             function () use ($product, $locale) {
-                $locale = $locale ?? $this->localization->getLocale();
+                $locale = $locale ?? $this->localization->getCurrentLocaleForTranslatableEntities();
 
                 $productParameterValues = $this->parameterRepository->getProductParameterValuesByProductSortedByOrderingPriorityAndName(
                     $product,

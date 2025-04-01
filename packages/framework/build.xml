@@ -66,6 +66,14 @@
         </exec>
     </target>
 
+    <target name="admin-locales-load" description="Load admin locales configuration into Phing properties." hidden="true">
+        <exec executable="${path.php.executable}" outputProperty="admin-locales" error="${dev.null}">
+            <arg value="${path.bin-console}"/>
+            <arg value="shopsys:admin-locales:info"/>
+            <arg value="--verbose"/>
+        </exec>
+    </target>
+
     <target name="annotations-check" description="Checks whether annotations of extended classes in the project match the actual types according to ClassExtensionRegistry. Reported problems can be fixed using 'annotations-fix' phing target">
         <if>
             <istrue value="${check-and-fix-annotations}"/>
@@ -1544,7 +1552,7 @@
         </exec>
     </target>
 
-    <target name="translations-dump" depends="domains-info-load" description="Extracts translatable messages from all source files in your project.">
+    <target name="translations-dump" depends="domains-info-load,admin-locales-load" description="Extracts translatable messages from all source files in your project.">
         <phingcall target="npm-translations-dump"/>
         <exec executable="${path.php.executable}" passthru="true" checkreturn="true">
             <arg value="${path.bin-console}"/>
@@ -1559,6 +1567,7 @@
             <arg value="--output-dir=${path.root}/translations"/>
             <arg line="${translations.dump.flags}"/>
             <arg line="${domains-info.locales}"/>
+            <arg line="${admin-locales}"/>
             <arg value="--verbose"/>
         </exec>
     </target>

@@ -42,7 +42,7 @@ class ProductParameterValueFormType extends AbstractType
         $builder
             ->add('parameter', ChoiceType::class, [
                 'required' => true,
-                'choices' => $this->parameterFacade->getAllWithTranslations($this->localization->getAdminLocale()),
+                'choices' => $this->parameterFacade->getAllWithTranslations($this->localization->getCurrentLocaleForTranslatableEntities()),
                 'choice_label' => function (Parameter $parameter) {
                     return $parameter->getName() .
                     ' [' . $this->getGroupName($parameter) . ']';
@@ -105,6 +105,6 @@ class ProductParameterValueFormType extends AbstractType
      */
     protected function getGroupName(Parameter $parameter): string
     {
-        return $parameter->getGroup()?->getName($this->localization->getAdminLocale()) ?? t('No group');
+        return $parameter->getGroup()?->getName($this->localization->getCurrentLocaleForTranslatableEntities()) ?? t('No group');
     }
 }

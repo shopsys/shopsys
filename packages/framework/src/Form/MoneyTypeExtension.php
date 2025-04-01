@@ -52,7 +52,7 @@ class MoneyTypeExtension extends AbstractTypeExtension
 
         $view->vars['symbolAfterInput'] = $this->intlCurrencyRepository->get(
             $options['currency'],
-            $this->localization->getLocale(),
+            $this->localization->getRequestLocale(),
         );
     }
 

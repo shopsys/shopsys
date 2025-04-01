@@ -141,7 +141,7 @@ class DateTimeFormatterExtension extends AbstractExtension
     protected function getLocale($locale = null)
     {
         if ($locale === null) {
-            $locale = $this->localization->getLocale();
+            $locale = $this->localization->getRequestLocale();
         }
 
         return $locale;

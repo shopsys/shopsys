@@ -20,7 +20,6 @@ use Shopsys\FrameworkBundle\Component\EntityLog\Model\EntityLogRepository;
 use Shopsys\FrameworkBundle\Component\Money\Money;
 use Shopsys\FrameworkBundle\Component\Translation\Translator;
 use Shopsys\FrameworkBundle\Model\Country\Country;
-use Shopsys\FrameworkBundle\Model\Localization\Localization;
 use Shopsys\FrameworkBundle\Model\Order\Item\OrderItemFacade;
 use Shopsys\FrameworkBundle\Model\Order\Order;
 use Shopsys\FrameworkBundle\Model\Order\OrderFacade;
@@ -74,11 +73,6 @@ class EntityLogTest extends TransactionFunctionalTestCase
      * @inject
      */
     private OrderItemFacade $orderItemFacade;
-
-    /**
-     * @inject
-     */
-    private Localization $localization;
 
     /**
      * @inject
@@ -158,7 +152,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $entityName = $this->entityLogFacade->getEntityNameByEntity($orderFromDb);
 
         $expectedOldCity = $orderFromDb->getCity();
-        $expectedOldStatusName = $orderFromDb->getStatus()->getName($this->localization->getAdminLocale());
+        $expectedOldStatusName = $orderFromDb->getStatus()->getName($this->entityLogFacade->getLocaleForEntityLog());
         $expectedOldStatusId = $orderFromDb->getStatus()->getId();
 
         $orderData = $this->orderDataFactory->createFromOrder($orderFromDb);
@@ -184,7 +178,7 @@ class EntityLogTest extends TransactionFunctionalTestCase
         $this->assertSame($expectedOldStatusId, $log->getChangeSet()['status']['oldValue']);
         $this->assertSame($expectedOldStatusName, $log->getChangeSet()['status']['oldReadableValue']);
         $this->assertSame($newStatus->getId(), $log->getChangeSet()['status']['newValue']);
-        $this->assertSame($newStatus->getName($this->localization->getAdminLocale()), $log->getChangeSet()['status']['newReadableValue']);
+        $this->assertSame($newStatus->getName($this->entityLogFacade->getLocaleForEntityLog()), $log->getChangeSet()['status']['newReadableValue']);
     }
 
     public function testEditCollectionEntity(): void
