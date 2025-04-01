@@ -87,28 +87,18 @@
     --color-button-inverted-border-disabled: #a3acbd;
     --color-button-inverted-border-hovered: #7892bc;
 
-    /* Replace with color-button-transparent-text-default */
-    --color-actionTransparentText: #ffffff;
-    /* Replace with color-button-transparent-text-active */
-    --color-actionTransparentTextActive: #ffffff;
-    /* Replace with color-button-transparent-text-disabled */
-    --color-actionTransparentTextDisabled: #ffffff66;
-    /* Replace with color-button-transparent-text-hovered */
-    --color-actionTransparentTextHovered: #ffffff;
-    /* Replace with color-button-transparent-bg-default */
-    --color-actionTransparentBackground: transparent;
-    /* Replace with color-button-transparent-bg-active */
-    --color-actionTransparentBackgroundActive: #ffffff33;
-    /* Replace with color-button-transparent-bg-disabled */
-    --color-actionTransparentBackgroundDisabled: transparent;
-    /* Replace with color-button-transparent-bg-hovered */
-    --color-actionTransparentBackgroundHovered: #ffffff66;
-    /* Replace with color-button-transparent-border-default */
-    --color-actionTransparentBorder: #ffffff;
-    /* Replace with color-button-transparent-border-active */
-    --color-actionTransparentBorderActive: #ffffff;
-    /* Replace with color-button-transparent-border-disabled */
-    --color-actionTransparentBorderHovered: #ffffff;
+    --color-button-transparent-text-default: #ffffff;
+    --color-button-transparent-text-active: #ffffff;
+    --color-button-transparent-text-disabled: #ffffff66;
+    --color-button-transparent-text-hovered: #ffffff;
+    --color-button-transparent-bg-default: transparent;
+    --color-button-transparent-bg-active: #ffffff33;
+    --color-button-transparent-bg-disabled: transparent;
+    --color-button-transparent-bg-hovered: #ffffff66;
+    --color-button-transparent-border-default: #ffffff;
+    --color-button-transparent-border-active: #ffffff;
+    --color-button-transparent-border-disabled: #ffffff66;
+    --color-button-transparent-border-disabled: #ffffff;
 
     /* Replace with color-icon-accent-red */
     --color-activeIconFull: #ec5353;

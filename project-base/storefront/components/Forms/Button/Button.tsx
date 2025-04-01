@@ -83,13 +83,13 @@ export const getButtonClassName = (
                 'outline-button-inverted-border-disabled bg-button-inverted-bg-disabled text-button-inverted-text-disabled',
         ],
         variant === 'transparent' && [
-            'outline-1 outline-offset-[-1px] outline-actionTransparentBorder bg-actionTransparentBackground text-actionTransparentText',
+            'outline-1 outline-offset-[-1px] outline-button-transparent-border-default bg-button-transparent-bg-default text-button-transparent-text-default',
             !isDisabled &&
-                'hover:outline-actionTransparentBorderHovered hover:bg-actionTransparentBackgroundHovered hover:text-actionTransparentTextHovered',
+                'hover:outline-button-transparent-border-disabled hover:bg-button-transparent-bg-hovered hover:text-button-transparent-text-hovered',
             !isDisabled &&
-                'active:outline-actionTransparentBorderActive active:bg-actionTransparentBackgroundActive active:text-actionTransparentTextActive',
+                'active:outline-button-transparent-border-active active:bg-button-transparent-bg-active active:text-button-transparent-text-active',
             isDisabled &&
-                'outline-actionTransparentBorderDisabled bg-actionTransparentBackgroundDisabled text-actionTransparentTextDisabled',
+                'outline-button-transparent-border-disabled bg-button-transparent-bg-disabled text-button-transparent-text-disabled',
         ],
         (isDisabled || isWithDisabledLook) && 'cursor-no-drop',
     );
