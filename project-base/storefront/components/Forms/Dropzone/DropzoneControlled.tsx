@@ -69,20 +69,20 @@ const DropzoneControlled: React.FC<DropzoneControlledProps> = ({
 
     const wrapperTwClass = twMergeCustom(
         'border-2 p-10 text-center rounded-md border-dashed cursor-pointer group',
-        !isDragActive && 'border-inputBorder bg-inputBackground hover:border-inputBorderHovered',
-        isDragActive && 'border-inputBorderActive bg-inputFill',
-        error && 'border-inputError',
+        !isDragActive && 'border-input-border-default bg-input-bg-default hover:border-input-border-hovered',
+        isDragActive && 'border-input-border-active bg-inputFill',
+        error && 'border-input-border-error',
         disabled &&
-            'border-inputBorderDisabled bg-inputBackgroundDisabled text-inputTextDisabled hover:border-inputBorderDisabled cursor-not-allowed',
+            'border-input-border-disabled bg-input-bg-disabled text-input-text-disabled hover:border-input-border-disabled cursor-not-allowed',
     );
     const labelTwClass = twMergeCustom(
-        'text-inputPlaceholder group-hover:text-inputPlaceholderHovered',
-        isDragActive && 'text-inputPlaceholderHovered',
-        disabled && 'text-inputPlaceholderDisabled group-hover:text-inputPlaceholderDisabled',
+        'text-input-placeholder-default group-hover:text-input-placeholder-hovered',
+        isDragActive && 'text-input-placeholder-hovered',
+        disabled && 'text-input-placeholder-disabled group-hover:text-input-placeholder-disabled',
     );
     const listItemTwClass = 'flex my-1 justify-between items-center group';
     const fileNameTwClass = 'flex-1 text-gray-800 group-hover:text-link-hovered transition-colors duration-300';
-    const legendTwClass = 'text-inputTextDisabled text-sm mt-2';
+    const legendTwClass = 'text-input-text-disabled text-sm mt-2';
 
     return (
         <Controller

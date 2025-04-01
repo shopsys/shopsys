@@ -98,7 +98,7 @@ export const SortingBar: FC<SortingBarProps> = ({ sorting, totalCount, customSor
                     );
                 })}
             </div>
-            <div className="font-secondary text-inputPlaceholder vl:block hidden text-xs">
+            <div className="font-secondary text-input-placeholder-default vl:block hidden text-xs">
                 {totalCount} {t('products count', { count: totalCount })}
             </div>
             {isSortMenuOpen && <Overlay isActive={isSortMenuOpen} onClick={() => setIsSortMenuOpen(false)} />}

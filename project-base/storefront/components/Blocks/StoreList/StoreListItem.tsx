@@ -62,7 +62,7 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
                         </p>
                     </div>
                     {store.distance && (
-                        <p className="text-inputPlaceholder text-xs max-xl:hidden">
+                        <p className="text-input-placeholder-default text-xs max-xl:hidden">
                             {t('{{ distance }} km from you', {
                                 distance: (store.distance / 1000).toFixed(0),
                             })}

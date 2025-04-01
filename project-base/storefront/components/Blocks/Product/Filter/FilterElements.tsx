@@ -55,7 +55,7 @@ export const ShowAllButton: FC<{ onClick: () => void }> = ({ children, onClick }
 );
 
 export const SelectedParametersName: FC = ({ children }) => (
-    <p className="font-secondary text-inputPlaceholder text-xs font-semibold">{children}</p>
+    <p className="font-secondary text-input-placeholder-default text-xs font-semibold">{children}</p>
 );
 
 export const SelectedParametersList: FC<{ keyName?: string }> = ({ children, keyName }) => (

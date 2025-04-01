@@ -63,16 +63,16 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
                 className={twMergeCustom(
                     // class "peer" is used for styling in LabelWrapper
                     'peer w-full rounded-md border-2 px-3 pt-5 font-semibold transition [-moz-appearance:textfield] [-webkit-appearance:none] placeholder:[color:transparent] focus:outline-hidden disabled:pointer-events-none disabled:cursor-no-drop',
-                    'border-inputBorder bg-inputBackground text-inputText',
-                    'disabled:border-inputBorderDisabled disabled:bg-inputBackgroundDisabled disabled:text-inputTextDisabled',
-                    !hasError && 'hover:border-inputBorderHovered hover:text-inputTextHovered',
-                    !hasError && 'focus:border-inputBorderActive focus:text-inputTextActive',
-                    '[&:-internal-autofill-selected]:!bg-inputBackground [&:-webkit-autofill]:!bg-inputBackground [&:-internal-autofill-selected]:!shadow-inner [&:-webkit-autofill]:!shadow-inner',
+                    'border-input-border-default bg-input-bg-default text-input-text-default',
+                    'disabled:border-input-border-disabled disabled:bg-input-bg-disabled disabled:text-input-text-disabled',
+                    !hasError && 'hover:border-input-border-hovered hover:text-input-text-hovered',
+                    !hasError && 'focus:border-input-border-active focus:text-input-text-active',
+                    '[&:-internal-autofill-selected]:!bg-input-bg-default [&:-webkit-autofill]:!bg-input-bg-default [&:-internal-autofill-selected]:!shadow-inner [&:-webkit-autofill]:!shadow-inner',
                     '[&:-webkit-autofill]:hover:!bg-inputFill [&:-webkit-autofill]:hover:!shadow-inner',
                     '[&:-webkit-autofill]:focus:!bg-inputFill [&:-webkit-autofill]:focus:!shadow-inner',
                     inputSize === 'small' ? 'text-small h-12' : 'h-14',
-                    hasError && 'border-inputError bg-inputBackground shadow-none',
-                    type === 'password' && 'text-inputText focus-visible:text-inputTextHovered',
+                    hasError && 'border-input-border-error bg-input-bg-default shadow-none',
+                    type === 'password' && 'text-input-text-default focus-visible:text-input-text-hovered',
                     className,
                 )}
                 onBlur={onBlur}

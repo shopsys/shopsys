@@ -109,43 +109,24 @@
     --color-opening-status-closed: #ec5353;
     --color-opening-status-open-today: #fcbd46;
 
-    /* Replace with color-input-text-default */
-    --color-inputText: #25283d;
-    /* Replace with color-input-text-active */
-    --color-inputTextActive: #004eb6;
-    /* Replace with color-input-text-disabled */
-    --color-inputTextDisabled: #727588;
-    /* Replace with color-input-text-hovered */
-    --color-inputTextHovered: #25283d;
-    /* DEPRECATE */
-    --color-inputTextInverted: #ffffff;
-    /* Replace with color-input-placeholder-default */
-    --color-inputPlaceholder: #7892bc;
-    /* Replace with color-input-placeholder-active */
-    --color-inputPlaceholderActive: #3967b2;
-    /* Replace with color-input-placeholder-disabled */
-    --color-inputPlaceholderDisabled: #afbbcf;
-    /* Replace with color-input-placeholder-hovered */
-    --color-inputPlaceholderHovered: #5c81be;
-    /* Replace with color-input-bg-default */
-    --color-inputBackground: #ffffff;
-    /* Replace with color-input-bg-active */
-    --color-inputBackgroundActive: #004eb6;
-    /* Replace with color-input-bg-disabled */
-    --color-inputBackgroundDisabled: #ffffff;
-    /* Replace with color-input-bg-hovered */
-    --color-inputBackgroundHovered: #f4faff;
-    /* Replace with color-input-border-default */
-    --color-inputBorder: #7892bc;
-    /* Replace with color-input-border-active */
-    --color-inputBorderActive: #004eb6;
-    /* Replace with color-input-border-disabled */
-    --color-inputBorderDisabled: #afbbcf;
-    /* Replace with color-input-border-hovered */
-    --color-inputBorderHovered: #004eb6;
-    /* TODO Make sure this is used only for border, else replace with color-text-error */
-    /* Replace with color-input-border-error */
-    --color-inputError: #ec5353;
+    --color-input-text-default: #25283d;
+    --color-input-text-active: #004eb6;
+    --color-input-text-disabled: #727588;
+    --color-input-text-hovered: #25283d;
+    --color-input-text-inverted: #ffffff;
+    --color-input-placeholder-default: #7892bc;
+    --color-input-placeholder-active: #3967b2;
+    --color-input-placeholder-disabled: #afbbcf;
+    --color-input-placeholder-hovered: #5c81be;
+    --color-input-bg-default: #ffffff;
+    --color-input-bg-active: #004eb6;
+    --color-input-bg-disabled: #ffffff;
+    --color-input-bg-hovered: #f4faff;
+    --color-input-border-default: #7892bc;
+    --color-input-border-active: #004eb6;
+    --color-input-border-disabled: #afbbcf;
+    --color-input-border-hovered: #004eb6;
+    --color-input-border-error: #ec5353;
 
     /* Replace with color-table-bg-default */
     --color-tableBackground: #ffffff;

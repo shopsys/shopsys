@@ -47,7 +47,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
             <div className="vl:hidden flex items-center justify-between p-5">
                 <h5>{t('Product filter')}</h5>
                 <span className="inline-flex size-4 cursor-pointer" onClick={() => setIsFilterPanelOpen(false)}>
-                    <RemoveIcon className="text-inputPlaceholder hover:text-inputPlaceholderHovered w-6" />
+                    <RemoveIcon className="text-input-placeholder-default hover:text-input-placeholder-hovered w-6" />
                 </span>
             </div>
 

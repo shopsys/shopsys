@@ -43,7 +43,7 @@ export const BlogPreviewSide: FC<SideProps> = ({ articles, isPlaceholder = false
                             ) : (
                                 <>
                                     <span
-                                        className="font-secondary text-inputPlaceholder mr-4 text-sm font-semibold"
+                                        className="font-secondary text-input-placeholder-default mr-4 text-sm font-semibold"
                                         tid={TIDs.blog_article_publication_date}
                                     >
                                         {formatDate(article.publishDate, 'l')}

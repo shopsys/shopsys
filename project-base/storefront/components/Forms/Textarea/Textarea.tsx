@@ -29,9 +29,9 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
                     value={value}
                     // class "peer" is used for styling in LabelWrapper
                     className={twJoin(
-                        'peer border-inputBorder bg-inputBackground text-inputText hover:border-inputBorderHovered focus:border-inputFill w-full resize-y appearance-none rounded-md border-2 px-[10px] py-5 font-bold placeholder:opacity-0 focus:outline-none disabled:pointer-events-none disabled:cursor-no-drop disabled:opacity-50',
-                        '[&:-webkit-autofill]:focus:!bg-inputFill [&:-internal-autofill-selected]:!bg-inputBackground [&:-webkit-autofill]:!bg-inputBackground [&:-webkit-autofill]:hover:!bg-inputBackgroundHovered [&:-internal-autofill-selected]:!shadow-inner [&:-webkit-autofill]:!shadow-inner [&:-webkit-autofill]:hover:!shadow-inner [&:-webkit-autofill]:focus:!shadow-inner',
-                        hasError && 'border-inputError shadow-none',
+                        'peer border-input-border-default bg-input-bg-default text-input-text-default hover:border-input-border-hovered focus:border-inputFill w-full resize-y appearance-none rounded-md border-2 px-[10px] py-5 font-bold placeholder:opacity-0 focus:outline-none disabled:pointer-events-none disabled:cursor-no-drop disabled:opacity-50',
+                        '[&:-webkit-autofill]:focus:!bg-inputFill [&:-internal-autofill-selected]:!bg-input-bg-default [&:-webkit-autofill]:!bg-input-bg-default [&:-webkit-autofill]:hover:!bg-input-bg-hovered [&:-internal-autofill-selected]:!shadow-inner [&:-webkit-autofill]:!shadow-inner [&:-webkit-autofill]:hover:!shadow-inner [&:-webkit-autofill]:focus:!shadow-inner',
+                        hasError && 'border-input-border-error shadow-none',
                     )}
                     onBlur={onBlur}
                     onChange={onChange}

@@ -29,8 +29,8 @@ export const ToggleSwitch = forwardRef<HTMLInputElement, ToggleSwitchProps>(
                 htmlFor={id}
                 className={twJoin(
                     "absolute top-0 left-0 h-6 w-11 cursor-pointer rounded-sm after:my-[2px] after:ml-[2px] after:block after:h-5 after:w-5 after:rounded-sm after:shadow-xs after:transition-all after:content-[''] peer-checked:after:ml-5 peer-checked:after:block",
-                    'bg-inputBorder after:bg-inputTextInverted',
-                    'peer-checked:bg-inputBorderActive',
+                    'bg-input-border-default after:bg-input-text-inverted',
+                    'peer-checked:bg-input-border-active',
                 )}
             />
         </div>
