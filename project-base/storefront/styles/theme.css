@@ -74,30 +74,18 @@
     --color-button-secondary-border-disabled: #a1b5cf;
     --color-button-secondary-border-hovered: #4081d6;
 
-    /* Replace with color-button-inverted-text-default */
-    --color-actionInvertedText: #004eb6;
-    /* Replace with color-button-inverted-text-active */
-    --color-actionInvertedTextActive: #25283d;
-    /* Replace with color-button-inverted-text-disabled */
-    --color-actionInvertedTextDisabled: #a3acbd;
-    /* Replace with color-button-inverted-text-hovered */
-    --color-actionInvertedTextHovered: #7892bc;
-    /* Replace with color-button-inverted-bg-default */
-    --color-actionInvertedBackground: transparent;
-    /* Replace with color-button-inverted-bg-active */
-    --color-actionInvertedBackgroundActive: #ffffff;
-    /* Replace with color-button-inverted-bg-disabled */
-    --color-actionInvertedBackgroundDisabled: #fafafa;
-    /* Replace with color-button-inverted-bg-hovered */
-    --color-actionInvertedBackgroundHovered: #ffffff;
-    /* Replace with color-button-inverted-border-default */
-    --color-actionInvertedBorder: #004eb6;
-    /* Replace with color-button-inverted-border-active */
-    --color-actionInvertedBorderActive: #25283d;
-    /* Replace with color-button-inverted-border-disabled */
-    --color-actionInvertedBorderDisabled: #a3acbd;
-    /* Replace with color-button-inverted-border-hovered */
-    --color-actionInvertedBorderHovered: #7892bc;
+    --color-button-inverted-text-default: #004eb6;
+    --color-button-inverted-text-active: #25283d;
+    --color-button-inverted-text-disabled: #a3acbd;
+    --color-button-inverted-text-hovered: #7892bc;
+    --color-button-inverted-bg-default: transparent;
+    --color-button-inverted-bg-active: #ffffff;
+    --color-button-inverted-bg-disabled: #fafafa;
+    --color-button-inverted-bg-hovered: #ffffff;
+    --color-button-inverted-border-default: #004eb6;
+    --color-button-inverted-border-active: #25283d;
+    --color-button-inverted-border-disabled: #a3acbd;
+    --color-button-inverted-border-hovered: #7892bc;
 
     /* Replace with color-button-transparent-text-default */
     --color-actionTransparentText: #ffffff;

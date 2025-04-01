@@ -74,13 +74,13 @@ export const getButtonClassName = (
                 'outline-button-secondary-border-disabled bg-button-secondary-bg-disabled text-button-secondary-text-disabled',
         ],
         variant === 'inverted' && [
-            'outline-actionInvertedBorder bg-actionInvertedBackground text-actionInvertedText',
+            'outline-button-inverted-border-default bg-button-inverted-bg-default text-button-inverted-text-default',
             !isDisabled &&
-                'hover:outline-actionInvertedBorderHovered hover:bg-actionInvertedBackgroundHovered hover:text-actionInvertedTextHovered',
+                'hover:outline-button-inverted-border-hovered hover:bg-button-inverted-bg-hovered hover:text-button-inverted-text-hovered',
             !isDisabled &&
-                'active:outline-actionInvertedBorderActive active:bg-actionInvertedBackgroundActive active:text-actionInvertedTextActive',
+                'active:outline-button-inverted-border-active active:bg-button-inverted-bg-active active:text-button-inverted-text-active',
             isDisabled &&
-                'outline-actionInvertedBorderDisabled bg-actionInvertedBackgroundDisabled text-actionInvertedTextDisabled',
+                'outline-button-inverted-border-disabled bg-button-inverted-bg-disabled text-button-inverted-text-disabled',
         ],
         variant === 'transparent' && [
             'outline-1 outline-offset-[-1px] outline-actionTransparentBorder bg-actionTransparentBackground text-actionTransparentText',
