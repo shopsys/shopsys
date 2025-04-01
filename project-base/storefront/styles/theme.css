@@ -48,30 +48,18 @@
     --color-price-before: #7892bc;
     --color-price-discounted: #ec5353;
 
-    /* Replace with color-button-primary-text-default */
-    --color-actionPrimaryText: #ffffff;
-    /* Replace with color-button-primary-text-active */
-    --color-actionPrimaryTextActive: #ffffff;
-    /* Replace with color-button-primary-text-disabled */
-    --color-actionPrimaryTextDisabled: #7892bc;
-    /* Replace with color-button-primary-text-hovered */
-    --color-actionPrimaryTextHovered: #ffffff;
-    /* Replace with color-button-primary-bg-default */
-    --color-actionPrimaryBackground: #00c8b7;
-    /* Replace with color-button-primary-bg-active */
-    --color-actionPrimaryBackgroundActive: #00beb0;
-    /* Replace with color-button-primary-bg-disabled */
-    --color-actionPrimaryBackgroundDisabled: #ccf5f2;
-    /* Replace with color-button-primary-bg-hovered */
-    --color-actionPrimaryBackgroundHovered: #27e8da;
-    /* Replace with color-button-primary-border-default */
-    --color-actionPrimaryBorder: #00c8b7;
-    /* Replace with color-button-primary-border-active */
-    --color-actionPrimaryBorderActive: #00beb0;
-    /* Replace with color-button-primary-border-disabled */
-    --color-actionPrimaryBorderDisabled: #ccf5f2;
-    /* Replace with color-button-primary-border-hovered */
-    --color-actionPrimaryBorderHovered: #27e8da;
+    --color-button-primary-text-default: #ffffff;
+    --color-button-primary-text-active: #ffffff;
+    --color-button-primary-text-disabled: #7892bc;
+    --color-button-primary-text-hovered: #ffffff;
+    --color-button-primary-bg-default: #00c8b7;
+    --color-button-primary-bg-active: #00beb0;
+    --color-button-primary-bg-disabled: #ccf5f2;
+    --color-button-primary-bg-hovered: #27e8da;
+    --color-button-primary-border-default: #00c8b7;
+    --color-button-primary-border-active: #00beb0;
+    --color-button-primary-border-disabled: #ccf5f2;
+    --color-button-primary-border-hovered: #27e8da;
 
     /* Replace with color-button-secondary-text-default */
     --color-actionSecondaryText: #ffffff;

@@ -56,13 +56,13 @@ export const getButtonClassName = (
         size === 'large' && 'px-4 py-2 text-sm sm:py-2.5',
         size === 'xlarge' && 'px-4 py-2.5 text-sm sm:px-5 sm:py-3.5 sm:text-lg',
         variant === 'primary' && [
-            'outline-actionPrimaryBorder bg-actionPrimaryBackground text-actionPrimaryText',
+            'outline-button-primary-border-default bg-button-primary-bg-default text-button-primary-text-default',
             !isDisabled &&
-                'hover:outline-actionPrimaryBorderHovered hover:bg-actionPrimaryBackgroundHovered hover:text-actionPrimaryTextHovered',
+                'hover:outline-button-primary-border-hovered hover:bg-button-primary-bg-hovered hover:text-button-primary-text-hovered',
             !isDisabled &&
-                'active:outline-actionPrimaryBorderActive active:bg-actionPrimaryBackgroundActive active:text-actionPrimaryTextActive',
+                'active:outline-button-primary-border-active active:bg-button-primary-bg-active active:text-button-primary-text-active',
             isDisabled &&
-                'outline-actionPrimaryBorderDisabled bg-actionPrimaryBackgroundDisabled text-actionPrimaryTextDisabled',
+                'outline-button-primary-border-disabled bg-button-primary-bg-disabled text-button-primary-text-disabled',
         ],
         variant === 'secondary' && [
             'outline-actionSecondaryBorder bg-actionSecondaryBackground text-actionSecondaryText',

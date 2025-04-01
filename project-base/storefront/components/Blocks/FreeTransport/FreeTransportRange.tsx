@@ -31,7 +31,7 @@ export const FreeTransportRange: FC = () => {
             <div className="vl:order-0 relative order-1 h-[4px]">
                 <div className="bg-border-accent-less absolute top-1/2 left-0 h-[4px] w-full">
                     <div
-                        className="transition-width ease-defaultTransition bg-actionPrimaryBorder relative h-[4px] rounded-md duration-200"
+                        className="transition-width ease-defaultTransition bg-button-primary-border-default relative h-[4px] rounded-md duration-200"
                         style={{
                             width: totalPriceRemaining > 0 ? Math.min(totalPriceRemainingPercents, 100) + '%' : '100%',
                         }}
