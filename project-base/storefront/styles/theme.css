@@ -61,30 +61,18 @@
     --color-button-primary-border-disabled: #ccf5f2;
     --color-button-primary-border-hovered: #27e8da;
 
-    /* Replace with color-button-secondary-text-default */
-    --color-actionSecondaryText: #ffffff;
-    /* Replace with color-button-secondary-text-active */
-    --color-actionSecondaryTextActive: #ffffff;
-    /* Replace with color-button-secondary-text-disabled */
-    --color-actionSecondaryTextDisabled: #ffffff;
-    /* Replace with color-button-secondary-text-hovered */
-    --color-actionSecondaryTextHovered: #ffffff;
-    /* Replace with color-button-secondary-bg-default */
-    --color-actionSecondaryBackground: #004eb6;
-    /* Replace with color-button-secondary-bg-active */
-    --color-actionSecondaryBackgroundActive: #00439c;
-    /* Replace with color-button-secondary-bg-disabled */
-    --color-actionSecondaryBackgroundDisabled: #a1b5cf;
-    /* Replace with color-button-secondary-bg-hovered */
-    --color-actionSecondaryBackgroundHovered: #4081d6;
-    /* Replace with color-button-secondary-border-default */
-    --color-actionSecondaryBorder: #004eb6;
-    /* Replace with color-button-secondary-border-active */
-    --color-actionSecondaryBorderActive: #00439c;
-    /* Replace with color-button-secondary-border-disabled */
-    --color-actionSecondaryBorderDisabled: #a1b5cf;
-    /* Replace with color-button-secondary-border-hovered */
-    --color-actionSecondaryBorderHovered: #4081d6;
+    --color-button-secondary-text-default: #ffffff;
+    --color-button-secondary-text-active: #ffffff;
+    --color-button-secondary-text-disabled: #ffffff;
+    --color-button-secondary-text-hovered: #ffffff;
+    --color-button-secondary-bg-default: #004eb6;
+    --color-button-secondary-bg-active: #00439c;
+    --color-button-secondary-bg-disabled: #a1b5cf;
+    --color-button-secondary-bg-hovered: #4081d6;
+    --color-button-secondary-border-default: #004eb6;
+    --color-button-secondary-border-active: #00439c;
+    --color-button-secondary-border-disabled: #a1b5cf;
+    --color-button-secondary-border-hovered: #4081d6;
 
     /* Replace with color-button-inverted-text-default */
     --color-actionInvertedText: #004eb6;
