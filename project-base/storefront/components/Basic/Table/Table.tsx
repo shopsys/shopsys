@@ -23,7 +23,7 @@ type CellProps = {
 };
 
 export const Row: FC = ({ children, className }) => (
-    <tr className={twMergeCustom('bg-tableBackground text-tableText odd:bg-tableBackgroundContrast', className)}>
+    <tr className={twMergeCustom('bg-table-bg-default text-table-text-default odd:bg-table-bg-contrast', className)}>
         {children}
     </tr>
 );
@@ -50,7 +50,7 @@ export const Cell: FC<CellProps> = ({ align, isHead, isWithoutWrap, children, cl
 };
 
 export const CellHead: FC<CellProps> = ({ className, children, ...props }) => (
-    <Cell isHead className={twMergeCustom(className, 'bg-tableBackgroundHeader text-tableTextHeader')} {...props}>
+    <Cell isHead className={twMergeCustom(className, 'bg-table-bg-header text-table-bg-default')} {...props}>
         {children}
     </Cell>
 );

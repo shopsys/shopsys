@@ -14,7 +14,7 @@ export const ProductComparisonBody: FC<ProductComparisonBodyProps> = ({ compared
 
     return (
         <tbody>
-            <tr className="[&>td]:bg-tableBackground [&>td]:odd:bg-tableBackgroundContrast">
+            <tr className="[&>td]:bg-table-bg-default [&>td]:odd:bg-table-bg-contrast">
                 <BodyItem isSticky>
                     <div>{t('Price with VAT')}</div>
                 </BodyItem>
@@ -25,7 +25,7 @@ export const ProductComparisonBody: FC<ProductComparisonBodyProps> = ({ compared
                 ))}
             </tr>
 
-            <tr className="[&>td]:bg-tableBackground [&>td]:odd:bg-tableBackgroundContrast">
+            <tr className="[&>td]:bg-table-bg-default [&>td]:odd:bg-table-bg-contrast">
                 <BodyItem isSticky>{t('Availability')}</BodyItem>
                 {comparedProducts
                     .filter((product) => !product.isSellingDenied)
@@ -49,7 +49,7 @@ export const ProductComparisonBody: FC<ProductComparisonBodyProps> = ({ compared
             {parametersDataState.map((parameter, parameterIndex) => (
                 <tr
                     key={`parameter-${parameterIndex}`}
-                    className="[&>td]:bg-tableBackground [&>td]:odd:bg-tableBackgroundContrast"
+                    className="[&>td]:bg-table-bg-default [&>td]:odd:bg-table-bg-contrast"
                 >
                     <BodyItem isSticky>{parameter.name}</BodyItem>
 
@@ -68,7 +68,7 @@ export const ProductComparisonBody: FC<ProductComparisonBodyProps> = ({ compared
 const BodyItem: FC<{ isSticky?: boolean }> = ({ children, isSticky }) => (
     <td
         className={twJoin(
-            'bg-tableBackground w-[182px] p-3 text-sm break-words sm:w-[207px] sm:px-5 sm:text-base',
+            'bg-table-bg-default w-[182px] p-3 text-sm break-words sm:w-[207px] sm:px-5 sm:text-base',
             isSticky && 'z-above text-text-accent sticky left-0 text-base',
         )}
     >

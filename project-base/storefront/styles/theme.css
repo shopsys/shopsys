@@ -128,22 +128,11 @@
     --color-input-border-hovered: #004eb6;
     --color-input-border-error: #ec5353;
 
-    /* Replace with color-table-bg-default */
-    --color-tableBackground: #ffffff;
-    /* Replace with color-table-bg-contrast */
-    --color-tableBackgroundContrast: #fafafa;
-    /* Replace with color-table-bg-header */
-    --color-tableBackgroundHeader: #3967b2;
-    /* Replace with color-text-default */
-    --color-tableText: #25283d;
-    /* Replace with color-text-inverted */
+    --color-table-bg-default: #ffffff;
+    --color-table-bg-contrast: #fafafa;
+    --color-table-bg-header: #3967b2;
+    --color-table-text-default: #25283d;
     --color-tableTextHeader: #ffffff;
-    /* ? DEPRECATE */
-    --color-tableCross: #a3acbd;
-    /* ? DEPRECATE */
-    --color-tableCrossHover: #7892bc;
-    /* ? DEPRECATE */
-    --color-tableCrossHoverBg: #fafafa;
 
     /* Replace with color-tag-dark-text-default */
     --color-labelLinkText: #ffffff;

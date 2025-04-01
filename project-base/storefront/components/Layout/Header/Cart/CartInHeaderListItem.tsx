@@ -42,7 +42,7 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                 </ExtendedNextLink>
 
                 <ExtendedNextLink
-                    className="font-secondary text-tableText hover:text-link-default flex-1 cursor-pointer text-sm font-semibold no-underline outline-hidden hover:underline"
+                    className="font-secondary text-table-text-default hover:text-link-default flex-1 cursor-pointer text-sm font-semibold no-underline outline-hidden hover:underline"
                     href={productSlug}
                     type="product"
                 >

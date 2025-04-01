@@ -40,7 +40,7 @@ export const SymfonyDebugToolbar: FC<SymfonyDebugToolbarProps> = ({
 
             {!!responses.length && isTableDisplayed && (
                 <div className="order-1 flex-col items-center justify-center gap-2">
-                    <div className="bg-tableBackgroundHeader text-tableTextHeader flex items-center justify-between p-3">
+                    <div className="bg-table-bg-header text-table-bg-default flex items-center justify-between p-3">
                         <div className="text-lg font-bold">Number of requests: {responses.length}</div>
 
                         <Button size="small" onClick={() => reset()}>

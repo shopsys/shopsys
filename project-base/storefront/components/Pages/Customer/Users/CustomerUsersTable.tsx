@@ -99,7 +99,7 @@ export const CustomerUsersTable: FC = () => {
             {customerUsers.map((user) => (
                 <Row
                     key={user.uuid}
-                    className="bg-tableBackgroundContrast vl:table-row vl:bg-tableBackground vl:odd:bg-tableBackgroundContrast mb-2 flex flex-col rounded-md border-none"
+                    className="bg-table-bg-contrast vl:table-row vl:bg-table-bg-default vl:odd:bg-table-bg-contrast mb-2 flex flex-col rounded-md border-none"
                 >
                     <Cell className="py-2 text-left text-sm leading-5 font-bold uppercase">
                         {user.lastName} {user.firstName} {currentCustomerUserUuid === user.uuid && `(${t('You')})`}

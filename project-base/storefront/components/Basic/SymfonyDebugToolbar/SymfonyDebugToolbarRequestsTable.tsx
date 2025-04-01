@@ -15,7 +15,7 @@ export const RequestsTable: FC<RequestsTableProps> = ({ responses }) => {
     }, [responsesRefs]);
 
     return (
-        <div className="bg-tableBackground max-h-[40vh] overflow-y-scroll">
+        <div className="bg-table-bg-default max-h-[40vh] overflow-y-scroll">
             <table>
                 <thead>
                     <tr>
@@ -28,7 +28,7 @@ export const RequestsTable: FC<RequestsTableProps> = ({ responses }) => {
                 </thead>
                 <tbody>
                     {responses.map((response, index) => (
-                        <tr key={response.token} className="odd:bg-tableBackgroundContrast" ref={responsesRefs[index]}>
+                        <tr key={response.token} className="odd:bg-table-bg-contrast" ref={responsesRefs[index]}>
                             <TableCell>{index + 1}</TableCell>
                             <TableCell>
                                 <TableLink href={response.profiler}>{response.token}</TableLink>
@@ -45,7 +45,7 @@ export const RequestsTable: FC<RequestsTableProps> = ({ responses }) => {
 };
 
 const TableHeaderCell: FC = ({ children }) => (
-    <th className="bg-tableBackgroundHeader text-tableTextHeader px-5 py-3 text-left text-xs font-semibold tracking-wider uppercase">
+    <th className="bg-table-bg-header text-table-bg-default px-5 py-3 text-left text-xs font-semibold tracking-wider uppercase">
         {children}
     </th>
 );
