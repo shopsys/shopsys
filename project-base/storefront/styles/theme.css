@@ -102,10 +102,8 @@
 
     --color-icon-accent-red: #ec5353;
 
-    /* Replace with color-availability-in-stock */
-    --color-availabilityInStock: #00cdbe;
-    /* Replace with color-availability-out-of-stock */
-    --color-availabilityOutOfStock: #ec5353;
+    --color-availability-in-stock: #00cdbe;
+    --color-availability-out-of-stock: #ec5353;
 
     /* Replace with color-opening-status-open */
     --color-openingStatusOpen: #00cdbe;

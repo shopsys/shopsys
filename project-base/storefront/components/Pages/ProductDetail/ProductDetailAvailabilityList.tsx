@@ -29,9 +29,9 @@ export const ProductDetailAvailabilityList: FC<ProductDetailAvailabilityListProp
                                     className={twJoin(
                                         'flex-1 pr-3 text-sm',
                                         storeAvailability.availabilityStatus === TypeAvailabilityStatusEnum.InStock &&
-                                            'text-availabilityInStock',
+                                            'text-availability-in-stock',
                                         storeAvailability.availabilityStatus ===
-                                            TypeAvailabilityStatusEnum.OutOfStock && 'text-availabilityOutOfStock',
+                                            TypeAvailabilityStatusEnum.OutOfStock && 'text-availability-out-of-stock',
                                     )}
                                 >
                                     {storeAvailability.availabilityInformation}

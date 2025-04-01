@@ -35,9 +35,9 @@ export const ProductComparisonBody: FC<ProductComparisonBodyProps> = ({ compared
                                 className={twJoin(
                                     'text-sm font-bold break-words sm:text-base',
                                     product.availability.status === TypeAvailabilityStatusEnum.InStock &&
-                                        'text-availabilityInStock',
+                                        'text-availability-in-stock',
                                     product.availability.status === TypeAvailabilityStatusEnum.OutOfStock &&
-                                        'text-availabilityOutOfStock',
+                                        'text-availability-out-of-stock',
                                 )}
                             >
                                 {product.availability.name}

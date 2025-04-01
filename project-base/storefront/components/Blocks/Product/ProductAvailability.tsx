@@ -23,8 +23,8 @@ export const ProductAvailability: FC<ProductAvailabilityProps> = ({
             className={twJoin(
                 className,
                 'text-sm',
-                availability.status === TypeAvailabilityStatusEnum.InStock && 'text-availabilityInStock',
-                availability.status === TypeAvailabilityStatusEnum.OutOfStock && 'text-availabilityOutOfStock',
+                availability.status === TypeAvailabilityStatusEnum.InStock && 'text-availability-in-stock',
+                availability.status === TypeAvailabilityStatusEnum.OutOfStock && 'text-availability-out-of-stock',
             )}
             onClick={onClick}
         >

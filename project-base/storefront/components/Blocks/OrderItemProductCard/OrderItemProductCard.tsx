@@ -41,9 +41,9 @@ export const OrderItemProductCard: FC<OrderItemProductCardProps> = ({
                             className={twJoin(
                                 'text-xs font-semibold',
                                 availability.status === TypeAvailabilityStatusEnum.InStock &&
-                                    'text-availabilityInStock',
+                                    'text-availability-in-stock',
                                 availability.status === TypeAvailabilityStatusEnum.OutOfStock &&
-                                    'text-availabilityOutOfStock',
+                                    'text-availability-out-of-stock',
                             )}
                         >
                             {availability.name}
