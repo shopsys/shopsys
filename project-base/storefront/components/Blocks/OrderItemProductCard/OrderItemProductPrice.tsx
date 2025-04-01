@@ -24,7 +24,7 @@ export const OrderItemProductPrice: FC<OrderItemProductPriceProps> = ({ productP
         <div className="flex items-center justify-between">
             <div className="whitespace-nowrap">
                 <span className="font-semibold">{formatPrice(productPrice.priceWithVat)}</span>
-                <span className="text-textSubtle text-sm"> / {unit}</span>
+                <span className="text-text-subtle text-sm"> / {unit}</span>
             </div>
 
             <div className="flex flex-col gap-0.5 text-right">

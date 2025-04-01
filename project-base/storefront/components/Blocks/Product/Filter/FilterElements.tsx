@@ -14,12 +14,12 @@ export const FilterGroupTitle: FC<{ isOpen: boolean; title: string; onClick: () 
     isActive,
 }) => (
     <div
-        className="font-secondary text-text flex cursor-pointer items-center justify-between font-semibold uppercase"
+        className="font-secondary text-text-default flex cursor-pointer items-center justify-between font-semibold uppercase"
         onClick={onClick}
     >
         <h6 className="flex items-center gap-2.5">
             {title}
-            {isActive && <div className="bg-textSuccess vl:hidden size-2 rounded-full" />}
+            {isActive && <div className="bg-text-success vl:hidden size-2 rounded-full" />}
         </h6>
         <ArrowIcon className={twJoin('size-5 rotate-0 text-xs transition select-none', isOpen && 'rotate-180')} />
     </div>
@@ -65,7 +65,7 @@ export const SelectedParametersList: FC<{ keyName?: string }> = ({ children, key
 );
 
 export const SelectedParametersListItem: FC<{ onClick: () => void }> = ({ children, onClick }) => (
-    <LabelLink className="bg-backgroundAccentLess text-text group last-of-type:mr-6" onClick={onClick}>
+    <LabelLink className="bg-backgroundAccentLess text-text-default group last-of-type:mr-6" onClick={onClick}>
         {children}
     </LabelLink>
 );

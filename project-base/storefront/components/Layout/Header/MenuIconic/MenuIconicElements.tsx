@@ -4,7 +4,6 @@ import { AnimatePresence } from 'framer-motion';
 import { forwardRef } from 'react';
 import { TouchEvent as ReactTouchEvent } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
-import { twJoin } from 'tailwind-merge';
 import { twMergeCustom } from 'utils/twMerge';
 import { useMediaMin } from 'utils/ui/useMediaMin';
 
@@ -23,18 +22,9 @@ type MenuIconicItemLinkProps = {
     isActive?: boolean;
 };
 
-export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({
-    children,
-    href,
-    onClick,
-    type,
-    tid,
-    isActive = false,
-}) => {
-    const menuIconicSubItemLinkTwClass = twJoin(
-        'flex items-center px-3 py-4 text-sm text-text no-underline font-semibold hover:no-underline gap-5 hover:text-text',
-        isActive && 'text-textAccent',
-    );
+export const MenuIconicSubItemLink: FC<MenuIconicItemLinkProps> = ({ children, href, onClick, type, tid }) => {
+    const menuIconicSubItemLinkTwClass =
+        'flex items-center px-3 py-4 text-sm text-text-default no-underline font-semibold hover:no-underline gap-5 hover:text-text-default';
 
     if (href) {
         return (

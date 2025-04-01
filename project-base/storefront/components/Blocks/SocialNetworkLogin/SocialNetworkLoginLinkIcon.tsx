@@ -6,9 +6,9 @@ import { TypeLoginTypeEnum } from 'graphql/types';
 export const SocialNetworkIcon: FC<{ socialNetwork: TypeLoginTypeEnum }> = ({ socialNetwork }) => {
     switch (socialNetwork) {
         case TypeLoginTypeEnum.Facebook:
-            return <FacebookIcon className="text-textInverted size-6" />;
+            return <FacebookIcon className="text-text-inverted size-6" />;
         case TypeLoginTypeEnum.Seznam:
-            return <SeznamIcon className="text-textInverted size-6" />;
+            return <SeznamIcon className="text-text-inverted size-6" />;
         case TypeLoginTypeEnum.Google:
             return <GoogleIcon className="size-6" />;
         default:

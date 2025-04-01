@@ -30,7 +30,7 @@ export const ProductListItemPlaceholder: FC<ProductListItemPlaceholderProps> = (
             )}
         >
             <ExtendedNextLink
-                className="text-text hover:text-link flex flex-col gap-2.5 no-underline select-none hover:no-underline"
+                className="text-text-default hover:text-link flex flex-col gap-2.5 no-underline select-none hover:no-underline"
                 draggable={false}
                 href={product.slug}
                 type={product.isMainVariant ? 'productMainVariant' : 'product'}

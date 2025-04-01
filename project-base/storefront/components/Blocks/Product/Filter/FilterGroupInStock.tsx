@@ -19,7 +19,7 @@ export const FilterGroupInStock: FC<FilterGroupInStockProps> = ({ inStockCount }
                 count={inStockCount}
                 id="onlyInStock"
                 label={t('In stock')}
-                labelWrapperClassName="text-textSuccess hover:text-textSuccess"
+                labelWrapperClassName="text-text-success hover:text-text-success"
                 name="onlyInStock"
                 value={!!currentFilter?.onlyInStock}
                 onChange={() => updateFilterInStockQuery(!currentFilter?.onlyInStock)}

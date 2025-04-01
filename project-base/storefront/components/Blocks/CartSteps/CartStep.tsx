@@ -37,8 +37,8 @@ export const CartStep: FC<CartStepProps> = ({
                     className={twJoin(
                         'flex size-11 items-center justify-center rounded-full',
                         step === activeStep
-                            ? 'bg-textAccent text-textInverted'
-                            : 'bg-backgroundAccentLess text-textAccent',
+                            ? 'bg-text-accent text-text-inverted'
+                            : 'bg-backgroundAccentLess text-text-accent',
                     )}
                 >
                     <h4>{step}</h4>

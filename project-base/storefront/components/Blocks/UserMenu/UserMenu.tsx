@@ -63,7 +63,7 @@ export const UserMenu: FC<UserMenuProps> = ({ className }) => {
                 <h5>
                     {user?.firstName} {user?.lastName}
                 </h5>
-                {user?.companyName && <h6 className="text-textSubtle">{user.companyName}</h6>}
+                {user?.companyName && <h6 className="text-text-subtle">{user.companyName}</h6>}
                 <span
                     className={twJoin(
                         'max-w-64 overflow-x-auto text-sm font-semibold whitespace-nowrap',

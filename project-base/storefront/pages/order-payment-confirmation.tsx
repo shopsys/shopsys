@@ -73,7 +73,7 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
                     <ConfirmationPageContent
                         content={paymentSessionExpiredErrorMessage}
                         heading={t('Your payment session expired')}
-                        headingClassName="text-textError"
+                        headingClassName="text-text-error"
                     />
                 </Webline>
             </CommonLayout>

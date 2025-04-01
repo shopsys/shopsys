@@ -95,7 +95,7 @@ const DropzoneControlled: React.FC<DropzoneControlledProps> = ({
                             <input {...getInputProps()} />
                             <p className={labelTwClass}>
                                 {label}
-                                {required && <span className="text-textError ml-1">*</span>}
+                                {required && <span className="text-text-error ml-1">*</span>}
                             </p>
                         </div>
                         <p className={legendTwClass}>

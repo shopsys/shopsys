@@ -12,10 +12,10 @@ export const OrderConfirmationStep: FC<OrderConfirmationStepProps> = ({ step: { 
                 <div
                     className={twJoin(
                         'flex size-8 items-center justify-center rounded-full sm:size-11',
-                        state === FlowTypeStateEnum.Active && 'bg-textAccent text-textInverted',
+                        state === FlowTypeStateEnum.Active && 'bg-text-accent text-text-inverted',
                         state === FlowTypeStateEnum.Inactive &&
-                            'border-borderAccent bg-background text-textAccent border',
-                        state === FlowTypeStateEnum.Error && 'bg-backgroundError text-textInverted',
+                            'border-borderAccent bg-background text-text-accent border',
+                        state === FlowTypeStateEnum.Error && 'bg-backgroundError text-text-inverted',
                     )}
                 >
                     <Icon className="size-4 sm:size-6" />
@@ -24,7 +24,7 @@ export const OrderConfirmationStep: FC<OrderConfirmationStepProps> = ({ step: { 
                 <h5
                     className={twJoin(
                         'text-center text-xs sm:text-sm lg:text-base',
-                        state === FlowTypeStateEnum.Error && 'text-textError',
+                        state === FlowTypeStateEnum.Error && 'text-text-error',
                     )}
                 >
                     {label}

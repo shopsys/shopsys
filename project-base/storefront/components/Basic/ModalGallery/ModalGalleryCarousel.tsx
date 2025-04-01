@@ -66,7 +66,7 @@ export const ModalGalleryCarousel: FC<ModalGalleryCarouselProps> = ({
                                     width={80}
                                 />
 
-                                <PlayIcon className="bg-overlay text-textInverted absolute top-1/2 left-1/2 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full" />
+                                <PlayIcon className="bg-overlay text-text-inverted absolute top-1/2 left-1/2 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full" />
                             </div>
                         )}
                         {isFile && (

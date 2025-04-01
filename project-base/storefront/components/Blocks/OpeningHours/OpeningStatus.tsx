@@ -34,7 +34,7 @@ export const OpeningStatus: FC<OpeningStatusProps> = ({ status, className }) => 
     };
 
     return (
-        <Flag className={twMergeCustom('text-textInverted text-nowrap', className, statusClasses[status])}>
+        <Flag className={twMergeCustom('text-text-inverted text-nowrap', className, statusClasses[status])}>
             {statusText(status)}
         </Flag>
     );

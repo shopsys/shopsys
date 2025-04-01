@@ -36,13 +36,13 @@ export const SalesRepresentative: FC = () => {
                 )}
                 <div>
                     {fullName && <h5>{fullName}</h5>}
-                    <h6 className="text-textSubtle">{t('Your sales representative')}</h6>
+                    <h6 className="text-text-subtle">{t('Your sales representative')}</h6>
                 </div>
             </div>
             {telephone && (
                 <div className="mt-2 flex items-center gap-2">
                     <PhoneIcon className="size-6" />
-                    <a className="text-text text-sm font-semibold no-underline" href={`tel:${telephone}`}>
+                    <a className="text-text-default text-sm font-semibold no-underline" href={`tel:${telephone}`}>
                         {formatPhoneNumber(telephone)}
                     </a>
                 </div>
@@ -53,7 +53,7 @@ export const SalesRepresentative: FC = () => {
                     <a
                         href={`mailto:${email}`}
                         className={twJoin(
-                            'text-text max-w-64 overflow-x-auto text-sm font-semibold whitespace-nowrap no-underline',
+                            'text-text-default max-w-64 overflow-x-auto text-sm font-semibold whitespace-nowrap no-underline',
                             '[&::-webkit-scrollbar-thumb]:bg-backgroundMost [&::-webkit-scrollbar]:h-1 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-transparent',
                         )}
                     >

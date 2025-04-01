@@ -49,7 +49,7 @@ export const ColorLabelWrapper: FC<ColorLabelWrapperProps> = ({
                     className={twMergeCustom(
                         'h-full opacity-0 transition',
                         checked && 'opacity-100',
-                        isLightColor ? 'text-text' : 'text-textInverted',
+                        isLightColor ? 'text-text-default' : 'text-text-inverted',
                         disabled && 'text-inputTextDisabled',
                     )}
                 />

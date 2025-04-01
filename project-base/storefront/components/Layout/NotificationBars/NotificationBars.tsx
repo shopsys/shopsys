@@ -47,7 +47,7 @@ export const NotificationBars: FC = memo(function NotificationBars() {
                         <div
                             className={twJoin(
                                 'flex items-center justify-center text-center text-sm font-bold',
-                                tinycolor(item.rgbColor).isLight() ? 'text-text' : 'text-textInverted',
+                                tinycolor(item.rgbColor).isLight() ? 'text-text-default' : 'text-text-inverted',
                             )}
                         >
                             {!!item.mainImage && (
@@ -72,7 +72,7 @@ export const NotificationBars: FC = memo(function NotificationBars() {
             {loggedAsUserEmail && (
                 <section className="bg-backgroundError py-2">
                     <Webline>
-                        <div className="text-text flex items-center justify-center text-center text-sm font-bold">
+                        <div className="text-text-default flex items-center justify-center text-center text-sm font-bold">
                             <Trans
                                 defaultTrans="Warning! You are logged in as a customer with the email {{ email }} <button>Log out</button>"
                                 i18nKey="adminLoggedInAsCustomerWarning"

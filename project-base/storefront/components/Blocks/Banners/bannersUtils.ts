@@ -60,5 +60,5 @@ export const getYIQContrastTextColor = (hex: string) => {
     const { r, g, b } = getRGBFromHex(hex);
     const yiq = (r * 299 + g * 587 + b * 114) / 1000;
 
-    return yiq >= 128 ? 'text-text' : 'text-textInverted';
+    return yiq >= 128 ? 'text-text-default' : 'text-text-inverted';
 };

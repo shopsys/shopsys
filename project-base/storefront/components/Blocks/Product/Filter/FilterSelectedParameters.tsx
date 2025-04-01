@@ -228,7 +228,7 @@ export const FilterSelectedParameters: FC<FilterSelectedParametersProps> = ({ fi
     );
 };
 
-const SelectedParametersIcon: FC = () => <RemoveIcon className="group-hover:text-textError ml-3 w-3 cursor-pointer" />;
+const SelectedParametersIcon: FC = () => <RemoveIcon className="group-hover:text-text-error ml-3 w-3 cursor-pointer" />;
 
 const getCheckedFlags = (
     defaultProductFiltersMap: DefaultProductFiltersMapType,

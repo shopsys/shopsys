@@ -38,8 +38,8 @@ export const PromotedCategoriesContent: FC<PromotedCategoriesContentProps> = ({ 
                             type={linkType}
                             className={twMergeCustom(
                                 'flex cursor-pointer flex-col items-center gap-5 rounded-xl text-center no-underline transition',
-                                'border-backgroundMore bg-backgroundMore text-text border',
-                                'hover:border-borderAccentLess hover:bg-background hover:text-text hover:no-underline',
+                                'border-backgroundMore bg-backgroundMore text-text-default border',
+                                'hover:border-borderAccentLess hover:bg-background hover:text-text-default hover:no-underline',
                                 'vl:px-10 px-6 py-2.5 md:py-4',
                                 'aspect-square size-full max-h-[150px] lg:max-h-[200px]',
                                 isFirstItemLarge ? 'vl:max-h-[590px] vl:py-5' : 'vl:max-h-[285px] vl:py-7',

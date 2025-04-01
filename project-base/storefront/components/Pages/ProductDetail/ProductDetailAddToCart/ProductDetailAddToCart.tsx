@@ -58,7 +58,7 @@ export const ProductDetailAddToCart: FC<ProductDetailAddToCartProps> = ({ produc
     };
 
     if (product.isSellingDenied) {
-        return <p className="text-textError">{t('This item can no longer be purchased')}</p>;
+        return <p className="text-text-error">{t('This item can no longer be purchased')}</p>;
     }
 
     if (product.isInquiryType) {

@@ -8,20 +8,13 @@
     --breakpoint-xl: 77.5em; /* 1240px / 16 = 77.5 */
     --breakpoint-xxl: 97.5em; /* 1560px / 16 = 97.5 */
 
-    /* Replace with color-text-default */
-    --color-text: #25283d;
-    /* Replace with color-text-accent */
-    --color-textAccent: #004eb6;
-    /* Replace with color-text-inverted */
-    --color-textInverted: #ffffff;
-    /* Replace with color-text-disabled */
-    --color-textDisabled: #727588;
-    /* Replace with color-text-success */
-    --color-textSuccess: #00cdbe;
-    /* Replace with color-text-less */
-    --color-textSubtle: #7892bc;
-    /* Replace with color-text-error */
-    --color-textError: #ec5353;
+    --color-text-default: #25283d;
+    --color-text-accent: #004eb6;
+    --color-text-inverted: #ffffff;
+    --color-text-disabled: #727588;
+    --color-text-success: #00cdbe;
+    --color-text-subtle: #7892bc;
+    --color-text-error: #ec5353;
 
     /* Replace with color-link-default */
     --color-link: #004eb6;

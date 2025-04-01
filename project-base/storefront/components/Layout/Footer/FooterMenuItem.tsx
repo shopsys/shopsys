@@ -8,13 +8,13 @@ type FooterMenuItemProps = {
 
 export const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => (
     <>
-        <h3 className="text-text mb-3 text-center uppercase lg:text-left">{title}</h3>
+        <h3 className="text-text-default mb-3 text-center uppercase lg:text-left">{title}</h3>
 
         <ul className="flex flex-col gap-1 lg:gap-4">
             {items.map((item) => (
                 <li key={item.uuid}>
                     <ExtendedNextLink
-                        className="text-text hover:text-text block text-sm no-underline hover:underline"
+                        className="text-text-default hover:text-text-default block text-sm no-underline hover:underline"
                         href={item.__typename === 'ArticleSite' ? item.slug : item.url}
                         rel={item.external ? 'nofollow noreferrer noopener' : undefined}
                         skeletonType="article"

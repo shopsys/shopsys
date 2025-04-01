@@ -53,7 +53,7 @@ export const CollapsibleText: FC<CollapsibleTextProps> = ({ text, scrollTargetRe
 
             <button
                 className={twJoin(
-                    'hover:text-textAccent cursor-pointer underline',
+                    'hover:text-text-accent cursor-pointer underline',
                     showFullDescription && 'mt-2',
                     !shouldShowButton && 'invisible',
                 )}
@@ -61,7 +61,7 @@ export const CollapsibleText: FC<CollapsibleTextProps> = ({ text, scrollTargetRe
             >
                 {showFullDescription ? t('Close full description') : t('Open full description')}
                 <ArrowSecondaryIcon
-                    className={twJoin('text-textDisabled ml-2 size-3', showFullDescription && 'rotate-180')}
+                    className={twJoin('text-text-disabled ml-2 size-3', showFullDescription && 'rotate-180')}
                 />
             </button>
         </div>

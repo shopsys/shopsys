@@ -69,7 +69,7 @@ const BodyItem: FC<{ isSticky?: boolean }> = ({ children, isSticky }) => (
     <td
         className={twJoin(
             'bg-tableBackground w-[182px] p-3 text-sm break-words sm:w-[207px] sm:px-5 sm:text-base',
-            isSticky && 'z-above text-textAccent sticky left-0 text-base',
+            isSticky && 'z-above text-text-accent sticky left-0 text-base',
         )}
     >
         {children}

@@ -37,7 +37,7 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({
                         </ExtendedNextLink>
 
                         <ExtendedNextLink
-                            className="text-text mb-1 block font-bold no-underline"
+                            className="text-text-default mb-1 block font-bold no-underline"
                             href={columnCategory.slug}
                             skeletonType={skeletonType}
                             onClick={onLinkClick}
@@ -50,7 +50,7 @@ export const NavigationItemColumn: FC<NavigationItemColumnProps> = ({
                                 {columnCategory.children.map((columnCategoryChild) => (
                                     <li key={columnCategoryChild.name}>
                                         <ExtendedNextLink
-                                            className="text-text block text-sm no-underline"
+                                            className="text-text-default block text-sm no-underline"
                                             href={columnCategoryChild.slug}
                                             skeletonType={skeletonType}
                                             onClick={onLinkClick}

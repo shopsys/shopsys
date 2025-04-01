@@ -25,7 +25,7 @@
     td,
     th,
     textarea {
-        @apply font-default text-text;
+        @apply font-default text-text-default;
     }
 
     h1,
@@ -136,7 +136,7 @@
     }
 
     .Toastify__toast-body {
-        @apply !text-text;
+        @apply !text-text-default;
         max-width: 90%;
 
         > div {
@@ -149,7 +149,7 @@
     }
 
     .Toastify__toast--success {
-        @apply !bg-backgroundSuccess text-textInverted;
+        @apply !bg-backgroundSuccess text-text-inverted;
     }
 
     .Toastify__toast--error {
@@ -161,7 +161,7 @@
     }
 
     .Toastify__close-button {
-        @apply !text-text !self-center !opacity-100;
+        @apply !text-text-default !self-center !opacity-100;
     }
 
     /* fix gallery video start width and hide dummy image */

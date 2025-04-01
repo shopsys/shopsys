@@ -65,7 +65,9 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                     </div>
 
                     {description && (
-                        <div className={twJoin(pickupPlaceDetail ? 'text-text' : 'text-textSubtle', 'text-xs')}>
+                        <div
+                            className={twJoin(pickupPlaceDetail ? 'text-text-default' : 'text-text-subtle', 'text-xs')}
+                        >
                             {description}
                         </div>
                     )}
@@ -75,7 +77,9 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                             <span
                                 className={twJoin(
                                     'text-xs',
-                                    (showChangeButton || isActive) && !description ? 'text-text' : 'text-textSubtle',
+                                    (showChangeButton || isActive) && !description
+                                        ? 'text-text-default'
+                                        : 'text-text-subtle',
                                 )}
                             >
                                 {pickupPlaceDetail.name}, {pickupPlaceDetail.city}, {pickupPlaceDetail.street}
@@ -103,14 +107,14 @@ export const TransportAndPaymentSelectItemLabel: FC<TransportAndPaymentSelectIte
                     )}
 
                     {daysUntilDelivery !== undefined && (
-                        <div className="text-textSuccess hidden text-xs md:block">
+                        <div className="text-text-success hidden text-xs md:block">
                             {getDeliveryMessage(daysUntilDelivery, !!pickupPlaceDetail, t)}
                         </div>
                     )}
 
                     {showChangeButton && pickupPlaceDetail && (
                         <button
-                            className="text-link hover:text-linkHovered cursor-pointer text-left text-xs underline hover:no-underline"
+                            className="text-link-default hover:text-link-hovered cursor-pointer text-left text-xs underline hover:no-underline"
                             onClick={openPickupPlacePopup}
                         >
                             {t('Change pickup place')}

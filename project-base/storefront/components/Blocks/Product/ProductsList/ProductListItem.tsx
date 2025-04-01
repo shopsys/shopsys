@@ -81,7 +81,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 )}
             >
                 <ExtendedNextLink
-                    className="text-text hover:text-link flex w-full grow no-underline select-text hover:no-underline"
+                    className="text-text-default hover:text-link flex grow no-underline select-text hover:no-underline"
                     draggable={false}
                     href={product.slug}
                     type={product.isMainVariant ? 'productMainVariant' : 'product'}
@@ -103,8 +103,8 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                         </div>
 
                         {product.__typename === 'MainVariant' && (
-                            <div className="bg-background font-secondary group-hover:text-text flex w-fit items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs whitespace-nowrap">
-                                <VariantIcon className="text-textAccent size-3" />
+                            <div className="bg-background font-secondary group-hover:text-text-default flex w-fit items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs whitespace-nowrap">
+                                <VariantIcon className="text-text-accent size-3" />
                                 {product.variantsCount} {t('variants count', { count: product.variantsCount })}
                             </div>
                         )}

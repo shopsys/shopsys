@@ -65,14 +65,14 @@ export const OpeningHours: FC<{ openingHours: StoreOrPacketeryPoint['openingHour
                     }
 
                     return (
-                        <div key={index} className={twMergeCustom('text-textError mb-1 text-xs', className)}>
+                        <div key={index} className={twMergeCustom('text-text-error mb-1 text-xs', className)}>
                             {exceptionDayText}
                         </div>
                     );
                 })}
 
             <div
-                className={twMergeCustom('text-text flex flex-col gap-1 self-baseline text-xs', className)}
+                className={twMergeCustom('text-text-default flex flex-col gap-1 self-baseline text-xs', className)}
                 tid={TIDs.opening_hours}
             >
                 {openingHours.openingHoursOfDays.map(({ date, dayOfWeek, openingHoursRanges }) => {

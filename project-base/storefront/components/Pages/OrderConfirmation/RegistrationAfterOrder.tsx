@@ -91,8 +91,8 @@ export const RegistrationAfterOrder: FC<Partial<OrderConfirmationUrlQuery>> = ({
             <ul className="flex flex-col gap-2 py-5">
                 {registrationAfterOrderUsp.map((text) => (
                     <li key={text} className="flex items-center gap-2">
-                        <ThumbUp className="text-textAccent size-6" />
-                        <h5 className="text-textAccent">{text}</h5>
+                        <ThumbUp className="text-text-accent size-6" />
+                        <h5 className="text-text-accent">{text}</h5>
                     </li>
                 ))}
             </ul>

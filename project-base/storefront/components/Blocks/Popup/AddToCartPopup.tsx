@@ -33,8 +33,8 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
     return (
         <Popup key={key} hideCloseButton className="w-11/12 max-w-5xl" contentClassName="overflow-y-auto">
             <div className="mb-4 flex w-full items-center md:mb-6">
-                <CheckmarkIcon className="text-textSuccess mr-4 w-7" />
-                <div className="h2 text-textAccent">{t('Great choice! We have added your item to the cart')}</div>
+                <CheckmarkIcon className="text-text-success mr-4 w-7" />
+                <div className="h2 text-text-accent">{t('Great choice! We have added your item to the cart')}</div>
             </div>
 
             <div className="border-borderAccent mb-4 flex flex-col items-center rounded-sm border p-3 md:flex-row md:p-4">

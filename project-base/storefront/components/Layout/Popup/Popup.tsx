@@ -70,7 +70,7 @@ export const Popup: FC<PopupProps> = ({ children, hideCloseButton, className, co
                         {!hideCloseButton && (
                             <div className="flex h-9 items-center justify-end">
                                 <button
-                                    className="text-textAccent flex size-9 cursor-pointer items-center justify-center rounded-full border-0 text-xs no-underline outline-hidden"
+                                    className="text-text-accent flex size-9 cursor-pointer items-center justify-center rounded-full border-0 text-xs no-underline outline-hidden"
                                     onClick={() => updatePortalContent(null)}
                                 >
                                     <RemoveIcon className="w-6" />

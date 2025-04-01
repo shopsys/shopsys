@@ -71,14 +71,14 @@ export const CartListItem: FC<CartListItemProps> = ({
                 <div className="vl:flex-1 vl:flex-row vl:items-center vl:gap-8 flex flex-col items-start gap-2 xl:gap-16">
                     <div className="vl:w-48 flex flex-col gap-2 tracking-wide" tid={TIDs.pages_cart_list_item_name}>
                         <ExtendedNextLink
-                            className="font-secondary text-text hover:text-textAccent text-sm font-semibold no-underline hover:underline"
+                            className="font-secondary text-text-default hover:text-text-accent text-sm font-semibold no-underline hover:underline"
                             href={productSlug}
                             type="product"
                         >
                             {product.fullName}
                         </ExtendedNextLink>
 
-                        <div className="text-textSubtle text-sm">
+                        <div className="text-text-subtle text-sm">
                             {t('Code')}: {product.catalogNumber}
                         </div>
                     </div>
@@ -106,7 +106,7 @@ export const CartListItem: FC<CartListItemProps> = ({
                 {isPriceVisible(product.price.priceWithVat) && (
                     <div className="font-secondary vl:w-40 whitespace-nowrap">
                         <span className="font-semibold">{formatPrice(product.price.priceWithVat)}</span>
-                        <span className="text-textSubtle text-sm">&nbsp;/&nbsp;{product.unit.name}</span>
+                        <span className="text-text-subtle text-sm">&nbsp;/&nbsp;{product.unit.name}</span>
                     </div>
                 )}
             </div>

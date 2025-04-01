@@ -66,9 +66,9 @@ export const BlogPreviewMain: FC<MainProps> = ({ articles, isPlaceholder = false
                             )}
                         </div>
 
-                        <h4 className="text-textInverted">{article.name}</h4>
+                        <h4 className="text-text-inverted">{article.name}</h4>
 
-                        <p className="text-textInverted font-normal">{article.perex}</p>
+                        <p className="text-text-inverted font-normal">{article.perex}</p>
                     </div>
                 </ArticleLink>
             ))}

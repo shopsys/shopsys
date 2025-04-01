@@ -70,7 +70,7 @@ export const MobileMenuContent: FC<MobileMenuContentProps> = ({ navigationItems,
             <div className="mb-5 flex py-3">
                 {!!historyMenuGroups?.length && (
                     <button
-                        className="text-text flex w-9 cursor-pointer items-center justify-start gap-2 text-sm uppercase"
+                        className="text-text-default flex w-9 cursor-pointer items-center justify-start gap-2 text-sm uppercase"
                         title={t('Back')}
                         onClick={() => handleBackClick(historyMenuGroups)}
                     >
@@ -83,7 +83,7 @@ export const MobileMenuContent: FC<MobileMenuContentProps> = ({ navigationItems,
                 )}
 
                 <button
-                    className="text-text ml-auto flex w-9 cursor-pointer items-center justify-end gap-2 text-sm uppercase"
+                    className="text-text-default ml-auto flex w-9 cursor-pointer items-center justify-end gap-2 text-sm uppercase"
                     title={t('Close')}
                     onClick={onMenuToggleHandler}
                 >

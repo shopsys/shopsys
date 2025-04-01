@@ -68,7 +68,7 @@ export const BlogSignpostItem: FC<BlogSignpostItemProps> = ({
                 {isSecondLevel && hasChildren && (
                     <ArrowIcon
                         className={twMergeCustom(
-                            'text-textSubtle size-4 -rotate-90 cursor-pointer transition-all',
+                            'text-text-subtle size-4 -rotate-90 cursor-pointer transition-all',
                             isActive && 'text-link',
                             isOpen && 'rotate-0',
                         )}
@@ -83,7 +83,7 @@ export const BlogSignpostItem: FC<BlogSignpostItemProps> = ({
                     href={blogCategory.link}
                     type="blogCategory"
                     className={twMergeCustom(
-                        'font-secondary text-text hover:text-linkHovered text-sm no-underline',
+                        'font-secondary text-text-default hover:text-linkHovered text-sm no-underline',
                         isFirstLevel && level1LinkTwClassName,
                         isSecondLevel && level2LinkTwClassName,
                         isThirdLevel && level3LinkTwClassName,

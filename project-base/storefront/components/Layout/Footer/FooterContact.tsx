@@ -17,7 +17,7 @@ export const FooterContact: FC = () => {
                 tid={TIDs.footer_social_links}
             >
                 <FooterContactSocialsItem href="#" title="Instagram">
-                    <InstagramIcon className="text-text w-8" />
+                    <InstagramIcon className="text-text-default w-8" />
                 </FooterContactSocialsItem>
                 <FooterContactSocialsItem href="#" title="Facebook">
                     <FacebookIcon className="w-11 text-[#1877f2]" />

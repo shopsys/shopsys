@@ -44,7 +44,7 @@ export const ErrorPopup: FC<ErrorPopupProps> = ({ fields, gtmMessageOrigin = Gtm
                 >
                     {fields[field].label}
                     <br />
-                    <span className="text-textError">{fields[field].errorMessage}</span>
+                    <span className="text-text-error">{fields[field].errorMessage}</span>
                 </li>,
             );
         }
