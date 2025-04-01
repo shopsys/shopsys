@@ -27,10 +27,10 @@ export const OpeningStatus: FC<OpeningStatusProps> = ({ status, className }) => 
     };
 
     const statusClasses = {
-        [TypeStoreOpeningStatusEnum.Open]: 'bg-openingStatusOpen',
-        [TypeStoreOpeningStatusEnum.Closed]: 'bg-openingStatusClosed',
-        [TypeStoreOpeningStatusEnum.OpenSoon]: 'bg-openingStatusOpenToday',
-        [TypeStoreOpeningStatusEnum.ClosedSoon]: 'bg-openingStatusOpenToday',
+        [TypeStoreOpeningStatusEnum.Open]: 'bg-opening-status-open',
+        [TypeStoreOpeningStatusEnum.Closed]: 'bg-opening-status-closed',
+        [TypeStoreOpeningStatusEnum.OpenSoon]: 'bg-opening-status-open-today',
+        [TypeStoreOpeningStatusEnum.ClosedSoon]: 'bg-opening-status-open-today',
     };
 
     return (

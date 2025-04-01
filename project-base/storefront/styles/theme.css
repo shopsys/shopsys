@@ -105,12 +105,9 @@
     --color-availability-in-stock: #00cdbe;
     --color-availability-out-of-stock: #ec5353;
 
-    /* Replace with color-opening-status-open */
-    --color-openingStatusOpen: #00cdbe;
-    /* Replace with color-opening-status-closed */
-    --color-openingStatusClosed: #ec5353;
-    /* Replace with color-opening-status-open-today */
-    --color-openingStatusOpenToday: #fcbd46;
+    --color-opening-status-open: #00cdbe;
+    --color-opening-status-closed: #ec5353;
+    --color-opening-status-open-today: #fcbd46;
 
     /* Replace with color-input-text-default */
     --color-inputText: #25283d;
