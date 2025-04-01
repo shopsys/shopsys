@@ -31,7 +31,7 @@ export const ProductWishlistButton: FC<ProductCompareButtonProps & NativeProps> 
             onClick={toggleProductInWishlist}
         >
             {isProductInWishlist ? (
-                <HeartFilledIcon className="text-activeIconFull size-6" />
+                <HeartFilledIcon className="text-icon-accent-red size-6" />
             ) : (
                 <HeartIcon className="size-6" />
             )}

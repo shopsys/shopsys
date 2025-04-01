@@ -100,8 +100,7 @@
     --color-button-transparent-border-disabled: #ffffff66;
     --color-button-transparent-border-disabled: #ffffff;
 
-    /* Replace with color-icon-accent-red */
-    --color-activeIconFull: #ec5353;
+    --color-icon-accent-red: #ec5353;
 
     /* Replace with color-availability-in-stock */
     --color-availabilityInStock: #00cdbe;
