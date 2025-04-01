@@ -72,7 +72,9 @@ export const OrderConfirmationSummary: FC<OrderConfirmationSummaryProps> = ({
                 <div className="border-border-accent-less flex items-center justify-between gap-4 border-t-[3px] pt-4">
                     <span>{t('Total')}</span>
                     <div className="flex flex-col gap-2">
-                        <span className="text-price text-lg font-bold">{formatPrice(totalPrice.priceWithVat)}</span>
+                        <span className="text-price-default text-lg font-bold">
+                            {formatPrice(totalPrice.priceWithVat)}
+                        </span>
                         <span className="text-text-subtle text-sm font-semibold tracking-wide whitespace-nowrap">
                             {formatPrice(totalPrice.priceWithoutVat)} {t('without VAT')}
                         </span>

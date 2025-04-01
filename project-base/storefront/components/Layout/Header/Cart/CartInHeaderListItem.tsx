@@ -55,7 +55,7 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
                 </div>
 
                 {isPriceVisible(product.price.priceWithVat) && (
-                    <div className="font-secondary text-price w-28 font-bold break-words lg:text-right">
+                    <div className="font-secondary text-price-default w-28 font-bold break-words lg:text-right">
                         {formatPrice(mapPriceForCalculations(product.price.priceWithVat) * quantity)}
                     </div>
                 )}

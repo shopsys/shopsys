@@ -38,7 +38,7 @@ export const CartPreview: FC = () => {
                             <Flag type="discount">{promoCodes[0].code}</Flag>
 
                             <button
-                                className="text-link hover:text-linkHovered text-xs underline hover:no-underline"
+                                className="text-link hover:text-link-hovered text-xs underline hover:cursor-pointer hover:no-underline"
                                 tid={TIDs.blocks_promocode_promocodeinfo_code}
                                 onClick={() => removePromoCodeFromCart(promoCodes[0].code)}
                             >
@@ -77,12 +77,12 @@ export const CartPreview: FC = () => {
                         <div className="flex items-center justify-between">
                             <p>{t('Total')}</p>
 
-                            <span className="text-price text-lg whitespace-nowrap sm:text-2xl">
+                            <span className="text-price-default text-lg whitespace-nowrap sm:text-2xl">
                                 {formatPrice(cart.totalItemsPrice.priceWithVat)}
                             </span>
                         </div>
 
-                        <span className="text-priceBefore text-right text-sm whitespace-nowrap">
+                        <span className="text-price-before text-right text-sm whitespace-nowrap">
                             {formatPrice(cart.totalItemsPrice.priceWithoutVat)} {t('without VAT')}
                         </span>
                     </div>

@@ -63,7 +63,7 @@ export const AddToCartPopup: FC<AddToCartPopupProps> = ({ key, addedCartItem: { 
                     </div>
 
                     <div className="mt-2 lg:mt-0 lg:w-5/12 lg:pl-4 lg:text-right">
-                        <div className="text-price block">
+                        <div className="text-price-default block">
                             {`${quantity} ${product.unit.name}`}
                             {isPriceVisible(product.price.priceWithVat) &&
                                 `, ${formatPrice(quantity * mapPriceForCalculations(product.price.priceWithVat))}`}

@@ -44,12 +44,9 @@
     --color-background-warning: #fcbd46;
     --color-background-warning-more: #d58b00;
 
-    /* Replace with color-price-default */
-    --color-price: #004eb6;
-    /* Replace with color-price-before */
-    --color-priceBefore: #7892bc;
-    /* Replace with color-price-discounted */
-    --color-priceDiscounted: #ec5353;
+    --color-price-default: #004eb6;
+    --color-price-before: #7892bc;
+    --color-price-discounted: #ec5353;
 
     /* Replace with color-button-primary-text-default */
     --color-actionPrimaryText: #ffffff;

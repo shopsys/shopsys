@@ -25,14 +25,14 @@ export const CartItemPrice: FC<CartItemPriceProps> = ({ productPrice, quantity }
                 <div
                     className={twMergeCustom(
                         'text-price',
-                        isSpecialPrice && 'text-priceBefore text-sm font-semibold line-through',
+                        isSpecialPrice && 'text-price-before text-sm font-semibold line-through',
                     )}
                 >
                     {formatPrice(mapPriceForCalculations(productPrice.basicPrice.priceWithVat) * quantity)}
                 </div>
 
                 {isSpecialPrice && (
-                    <div className="text-priceDiscounted">
+                    <div className="text-price-discounted">
                         {formatPrice(mapPriceForCalculations(productPrice.priceWithVat) * quantity)}
                     </div>
                 )}

@@ -15,7 +15,7 @@ export const OrderItemDiscountCard: FC<OrderItemDiscountCardProps> = ({ name, pr
                 <span className="text-sm font-semibold">{name}</span>
 
                 {isPriceVisible(price) && (
-                    <div className="font-secondary text-priceDiscounted font-bold whitespace-nowrap">
+                    <div className="font-secondary text-price-discounted font-bold whitespace-nowrap">
                         {formatPrice(mapPriceForCalculations(price))}
                     </div>
                 )}
