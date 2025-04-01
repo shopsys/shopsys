@@ -4,7 +4,7 @@ import { AutocompleteSearchCategoriesResult } from './AutocompleteSearchCategori
 import { AutocompleteSearchProductsResult } from './AutocompleteSearchProductsResult';
 import { AutocompleteSkeleton } from './AutocompleteSkeleton';
 import { IconImage } from 'components/Basic/IconImage/IconImage';
-import { LabelLink } from 'components/Basic/LabelLink/LabelLink';
+import { Tag } from 'components/Basic/Tag/Tag';
 import { Button } from 'components/Forms/Button/Button';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { m } from 'framer-motion';
@@ -129,9 +129,9 @@ export const SearchResultSectionGroup: FC = ({ children }) => <ul className="fle
 export const SearchResultLink: FC<{ onClick: () => void; href: string; type: FriendlyPagesTypesKey }> = forwardRef(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     ({ children, onClick, href, type }, _) => (
-        <LabelLink href={href} type={type} onClick={onClick}>
+        <Tag href={href} type={type} onClick={onClick}>
             {children}
-        </LabelLink>
+        </Tag>
     ),
 );
 

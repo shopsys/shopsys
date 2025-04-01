@@ -3,7 +3,7 @@ import { ReactElement } from 'react';
 import { PageType } from 'store/slices/createPageLoadingStateSlice';
 import { twMergeCustom } from 'utils/twMerge';
 
-type LabelLinkProps = {
+type TagProps = {
     isDisabled?: boolean;
     isActive?: boolean;
     onClick?: () => void;
@@ -26,35 +26,26 @@ type LabelLinkProps = {
       ))
 );
 
-export const LabelLink: FC<LabelLinkProps> = ({
-    href,
-    type,
-    children,
-    isDisabled,
-    isActive,
-    className,
-    render,
-    onClick,
-}) => {
-    const labelLinkTwClassName = twMergeCustom(
+export const Tag: FC<TagProps> = ({ href, type, children, isDisabled, isActive, className, render, onClick }) => {
+    const TagTwClassName = twMergeCustom(
         'px-4 py-1 rounded-full no-underline transition-all flex justify-center items-center font-semibold font-secondary',
-        'bg-labelLinkBackground text-labelLinkText border-labelLinkBorder text-sm',
-        'hover:bg-labelLinkBackgroundHovered hover:text-labelLinkTextHovered hover:border-labelLinkBorderHovered hover:no-underline hover:cursor-pointer',
-        isDisabled && 'bg-labelLinkBackgroundDisabled text-labelLinkTextDisabled border-labelLinkBorderDisabled',
-        isActive && 'bg-labelLinkBackgroundActive text-labelLinkTextActive border-labelLinkBorderActive',
+        'bg-tag-bg-default text-tag-text-default border-tag-border-default text-sm',
+        'hover:bg-tag-bg-hovered hover:text-tag-text-hovered hover:border-tag-border-hovered hover:no-underline hover:cursor-pointer',
+        isDisabled && 'bg-tag-bg-disabled text-tag-text-disabled border-tag-border-disabled',
+        isActive && 'bg-tag-bg-active text-tag-text-active border-tag-border-active',
         className,
     );
 
     if (href) {
         return (
-            <ExtendedNextLink className={labelLinkTwClassName} href={href} type={type}>
+            <ExtendedNextLink className={TagTwClassName} href={href} type={type}>
                 {children}
             </ExtendedNextLink>
         );
     }
 
     const content = (
-        <div className={labelLinkTwClassName} onClick={onClick}>
+        <div className={TagTwClassName} onClick={onClick}>
             {children}
         </div>
     );

@@ -42,7 +42,7 @@ export const BannersDot: FC<BannersDotProps> = ({
             key={sliderItem.uuid}
             ref={dotRef}
             className={twMergeCustom(
-                'bg-labelLinkBackground group relative block size-4 cursor-pointer rounded-full transition',
+                'bg-tag-bg-default group relative block size-4 cursor-pointer rounded-full transition',
                 'vl:flex vl:h-auto vl:w-full vl:rounded-none vl:bg-background-more vl:px-5 vl:py-2 vl:text-left vl:text-text-default',
                 'vl:after:absolute vl:after:inset-0 vl:after:border-b-[1px] vl:after:border-l-[1px] vl:after:border-t-[1px] vl:after:border-border-accent-less vl:after:content-[""] vl:after:first-of-type:rounded-bl-md vl:after:last-of-type:rounded-br-md vl:after:last-of-type:border-r-[1px]',
                 isActive && 'bg-text-accent vl:bg-background-default vl:text-text-accent',

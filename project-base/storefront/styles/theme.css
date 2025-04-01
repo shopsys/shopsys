@@ -134,30 +134,18 @@
     --color-table-text-default: #25283d;
     --color-tableTextHeader: #ffffff;
 
-    /* Replace with color-tag-dark-text-default */
-    --color-labelLinkText: #ffffff;
-    /* Replace with color-tag-dark-text-active */
-    --color-labelLinkTextActive: #ffffff;
-    /* Replace with color-tag-dark-text-disabled */
-    --color-labelLinkTextDisabled: #e3e3e3;
-    /* Replace with color-tag-dark-text-hovered */
-    --color-labelLinkTextHovered: #ffffff;
-    /* Replace with color-tag-dark-bg-default */
-    --color-labelLinkBackground: #7892bc;
-    /* Replace with color-tag-dark-bg-active */
-    --color-labelLinkBackgroundActive: #3967b2;
-    /* Replace with color-tag-dark-bg-disabled */
-    --color-labelLinkBackgroundDisabled: #afbbcf;
-    /* Replace with color-tag-dark-bg-hovered */
-    --color-labelLinkBackgroundHovered: #3967b2;
-    /* Replace with color-tag-dark-border-default */
-    --color-labelLinkBorder: #7892bc;
-    /* Replace with color-tag-dark-border-active */
-    --color-labelLinkBorderActive: #3967b2;
-    /* Replace with color-tag-dark-border-disabled */
-    --color-labelLinkBorderDisabled: #afbbcf;
-    /* Replace with color-tag-dark-border-hovered */
-    --color-labelLinkBorderHovered: #3967b2;
+    --color-tag-text-default: #ffffff;
+    --color-tag-text-active: #ffffff;
+    --color-tag-text-disabled: #e3e3e3;
+    --color-tag-text-hovered: #ffffff;
+    --color-tag-bg-default: #7892bc;
+    --color-tag-bg-active: #3967b2;
+    --color-tag-bg-disabled: #afbbcf;
+    --color-tag-bg-hovered: #3967b2;
+    --color-tag-border-default: #7892bc;
+    --color-tag-border-active: #3967b2;
+    --color-tag-border-disabled: #afbbcf;
+    --color-tag-border-hovered: #3967b2;
 
     --color-skeleton: #ececec;
 

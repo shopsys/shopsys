@@ -2,7 +2,7 @@ import { AnimateAppearSlideY } from 'components/Basic/Animations/AnimateAppearSl
 import { AnimateCollapseDiv } from 'components/Basic/Animations/AnimateCollapseDiv';
 import { AnimateSlideDiv } from 'components/Basic/Animations/AnimateSlideDiv';
 import { ArrowIcon } from 'components/Basic/Icon/ArrowIcon';
-import { LabelLink } from 'components/Basic/LabelLink/LabelLink';
+import { Tag } from 'components/Basic/Tag/Tag';
 import { twJoin } from 'tailwind-merge';
 
 export const FilterGroupWrapper: FC = ({ children }) => <div className="vl:py-5 py-4">{children}</div>;
@@ -65,7 +65,7 @@ export const SelectedParametersList: FC<{ keyName?: string }> = ({ children, key
 );
 
 export const SelectedParametersListItem: FC<{ onClick: () => void }> = ({ children, onClick }) => (
-    <LabelLink className="bg-background-accent-less text-text-default group last-of-type:mr-6" onClick={onClick}>
+    <Tag className="bg-background-accent-less text-text-default group last-of-type:mr-6" onClick={onClick}>
         {children}
-    </LabelLink>
+    </Tag>
 );
