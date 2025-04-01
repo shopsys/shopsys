@@ -47,7 +47,7 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
             ref={itemRef}
             className={twMergeCustom(
                 'bg-backgroundMore cursor-pointer rounded-xl border border-transparent px-5 py-2.5',
-                isExpanded && 'border-borderAccent',
+                isExpanded && 'border-border-default',
             )}
             onClick={() => {
                 setIsExpanded((isExpanded) => !isExpanded);

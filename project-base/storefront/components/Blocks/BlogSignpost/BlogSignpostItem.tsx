@@ -34,7 +34,7 @@ export const BlogSignpostItem: FC<BlogSignpostItemProps> = ({
 
     const level1WrapperTwClassName = [
         'rounded-xl',
-        hasChildren && isActive && 'flex flex-col bg-background shadow-[inset_0_0_0_1px] shadow-borderAccentLess',
+        hasChildren && isActive && 'flex flex-col bg-background shadow-[inset_0_0_0_1px] shadow-border-accent-less',
         'max-vl:max-h-[400px] max-vl:overflow-auto vl:overflow-hidden',
     ];
 
@@ -47,7 +47,10 @@ export const BlogSignpostItem: FC<BlogSignpostItemProps> = ({
         'flex items-center rounded-md py-2 px-2 bg-backgroundMore',
         isActive && 'bg-backgroundAccentLess',
     ];
-    const level3ItemTwClassName = ['py-3 px-5 border-l border-borderAccentLess', isActive && 'border-backgroundAccent'];
+    const level3ItemTwClassName = [
+        'py-3 px-5 border-l border-border-accent-less',
+        isActive && 'border-backgroundAccent',
+    ];
 
     const level1LinkTwClassName = ['font-semibold', isActive && 'text-link-default'];
     const level2LinkTwClassName = ['font-semibold pl-2', isActive && 'text-link-default'];

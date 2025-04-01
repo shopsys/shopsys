@@ -23,16 +23,11 @@
     --color-link-inverted-disabled: #727588;
     --color-link-inverted-hovered: #fff0c4;
 
-    /* Replace with color-border-less */
-    --color-borderLess: #fafafa;
-    /* Replace with color-border-default */
-    --color-borderAccent: #7892bc;
-    /* Replace with color-border-less */
-    --color-borderAccentLess: #e0e0e0;
-    /* Replace with color-border-success */
-    --color-borderAccentSuccess: #20d3c6;
-    /* Replace with color-border-error */
-    --color-borderAccentError: #ec5353;
+    --color-border-default: #7892bc;
+    --color-border-less: #fafafa;
+    --color-border-accent-less: #e0e0e0;
+    --color-border-accent-success: #20d3c6;
+    --color-border-accent-error: #ec5353;
 
     /* Replace with color-background-default */
     --color-background: #ffffff;

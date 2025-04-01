@@ -45,7 +45,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                         width={80}
                     />
                 </div>
-                <div className="border-b-borderLess vl:flex-row vl:items-center vl:gap-5 flex w-full flex-col flex-wrap justify-between gap-3 border-b last:border-none">
+                <div className="border-b-border-less vl:flex-row vl:items-center vl:gap-5 flex w-full flex-col flex-wrap justify-between gap-3 border-b last:border-none">
                     {complaintItem.product?.isVisible ? (
                         <ExtendedNextLink className="w-fit" href={complaintItem.product.slug} type="product">
                             {complaintItem.productName}
@@ -101,7 +101,7 @@ export const ComplaintDetailComplaintItem: FC<ComplaintDetailComplaintItemProps>
                         <li
                             key={index}
                             className={twJoin(
-                                'outline-borderAccent vl:w-auto flex w-1/5 cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:h-16',
+                                'outline-border-default vl:w-auto flex w-1/5 cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:h-16',
                                 isWithAdditionalImages && 'relative',
                             )}
                             onClick={() => setSelectedGalleryItemIndex(imagePosition)}

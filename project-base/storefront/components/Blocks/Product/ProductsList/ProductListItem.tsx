@@ -76,7 +76,7 @@ export const ProductListItem = forwardRef<HTMLLIElement, ProductItemProps>(
                 className={twMergeCustom(
                     'border-backgroundMore bg-backgroundMore group relative flex flex-col gap-2.5 rounded-xl border py-5 text-left transition select-text',
                     size === 'small' && 'gap-0 py-2.5',
-                    'hover:border-borderAccentLess hover:bg-background',
+                    'hover:border-border-accent-less hover:bg-background',
                     className,
                 )}
             >

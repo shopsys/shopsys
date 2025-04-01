@@ -94,8 +94,8 @@ export const MenuIconicItemUserAuthenticatedContentListItem: FC<
     <li
         className={twMergeCustom(
             'border-background bg-backgroundMore h-14 rounded-xl border',
-            'hover:border-borderAccentLess hover:bg-background',
-            isActive && 'border-borderAccentLess bg-background',
+            'hover:border-border-accent-less hover:bg-background-default',
+            isActive && 'border-border-accent-less bg-background-default',
         )}
     >
         {children}

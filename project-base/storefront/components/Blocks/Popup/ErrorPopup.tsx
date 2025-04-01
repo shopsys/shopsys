@@ -40,7 +40,7 @@ export const ErrorPopup: FC<ErrorPopupProps> = ({ fields, gtmMessageOrigin = Gtm
             newMappedErrors.push(
                 <li
                     key={fields[field].name}
-                    className="border-borderAccent mb-2 border-b pb-2 last:mb-0 last:border-none last:pb-0"
+                    className="border-border-default mb-2 border-b pb-2 last:mb-0 last:border-none last:pb-0"
                 >
                     {fields[field].label}
                     <br />

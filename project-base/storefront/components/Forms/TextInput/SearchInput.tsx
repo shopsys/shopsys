@@ -35,7 +35,7 @@ export const SearchInput: FC<SearchInputProps> = ({
     };
 
     return (
-        <div className="border-borderAccent relative w-full rounded-md border">
+        <div className="border-border-default relative w-full rounded-md border">
             <input
                 autoComplete="off"
                 placeholder={label}

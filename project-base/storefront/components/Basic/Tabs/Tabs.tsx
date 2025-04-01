@@ -46,7 +46,7 @@ export const TabsListItem: TabFC<Partial<PropsWithRef<TabProps>>> = ({ children,
     <Tab
         selectedClassName="isActive"
         className={twJoin(
-            'bg-backgroundMore font-secondary outline-borderAccentSuccess [&.isActive]:bg-text-inverted cursor-pointer rounded-2xl px-3 py-2 text-sm font-semibold select-none [&.isActive]:outline-1',
+            'bg-backgroundMore font-secondary outline-border-accent-success [&.isActive]:bg-text-inverted cursor-pointer rounded-2xl px-3 py-2 text-sm font-semibold select-none [&.isActive]:outline-1',
             className,
         )}
         {...props}

@@ -93,7 +93,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                                     <li
                                         key={index}
                                         className={twJoin(
-                                            'outline-borderAccent bg-backgroundMore flex size-12 cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:size-16',
+                                            'outline-border-default bg-background-more flex size-12 cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:size-16',
                                             (isWithAdditionalImages || isVideo) && 'relative',
                                         )}
                                         onClick={() => setSelectedGalleryItemIndex(index + 1)}
@@ -128,7 +128,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
 
                                     {isWithAdditionalImages && (
                                         <li
-                                            className="outline-borderAccent bg-backgroundMore flex size-12 cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:size-16"
+                                            className="outline-border-default bg-background-more flex size-12 cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:size-16"
                                             onClick={() => setSelectedGalleryItemIndex(index + 2)}
                                         >
                                             <span className="text-textAccent font-secondary text-sm font-semibold">

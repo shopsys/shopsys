@@ -23,7 +23,7 @@ export const CartInHeaderListItem: FC<CartInHeaderListItemProps> = ({
     return (
         <li
             key={uuid}
-            className="border-borderAccentLess relative flex h-auto w-full flex-row flex-wrap items-center gap-x-6 border-b py-3 last:border-b-[3px] lg:flex-nowrap"
+            className="border-border-accent-less relative flex h-auto w-full flex-row flex-wrap items-center gap-x-6 border-b py-3 last:border-b-[3px] lg:flex-nowrap"
         >
             <div className="flex min-h-20 w-full flex-row items-center gap-x-6">
                 <ExtendedNextLink

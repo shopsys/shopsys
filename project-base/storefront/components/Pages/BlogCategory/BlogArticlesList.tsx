@@ -29,7 +29,7 @@ export const BlogArticlesList: FC<BlogArticlesListProps> = ({ blogArticles, isLo
                         className={twJoin(
                             'border-backgroundMore group flex w-full flex-col gap-y-6 rounded-xl border p-5 transition-colors md:flex-row md:gap-x-6 md:gap-y-0',
                             'bg-backgroundMore no-underline',
-                            'hover:border-borderAccentLess hover:bg-background hover:no-underline',
+                            'hover:border-border-accent-less hover:bg-background hover:no-underline',
                         )}
                     >
                         <div className="w-full text-center md:w-[250px] lg:w-80">

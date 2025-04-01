@@ -45,7 +45,7 @@ export const ComplaintDetailBasicInfo: FC<ComplaintDetailBasicInfoProps> = ({ co
                     )}
                 </div>
             </div>
-            <div className="border-borderLess bg-background rounded-md border-[5px] p-7">
+            <div className="border-border-less bg-background rounded-md border-[5px] p-7">
                 {complaint.items.map((complaintItem, index) => (
                     <ComplaintDetailComplaintItem key={index} complaint={complaint} complaintItem={complaintItem} />
                 ))}

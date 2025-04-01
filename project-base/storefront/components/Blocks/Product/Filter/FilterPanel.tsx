@@ -54,7 +54,7 @@ export const FilterPanel: FC<FilterPanelProps> = ({
             <div className="vl:static vl:overflow-visible vl:px-0 h-full overflow-y-scroll px-5">
                 {shouldDisplayInStockFilter && <FilterGroupInStock inStockCount={filterOptions.inStock} />}
 
-                <div className="divide-borderAccentLess divide-y">
+                <div className="divide-border-accent-less divide-y">
                     {isPriceVisible(filterOptions.minimalPrice) && (
                         <FilterGroupPrice
                             initialMaxPrice={filterOptions.maximalPrice}

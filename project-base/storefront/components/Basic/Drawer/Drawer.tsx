@@ -32,7 +32,7 @@ export const Drawer: FC<DrawerProps> = ({ title, isActive, setIsActive, children
                     <div className="mb-10 flex flex-row justify-between pr-1">
                         <span className="w-full text-center text-base">{title}</span>
                         <RemoveIcon
-                            className="text-borderAccent w-4 cursor-pointer"
+                            className="text-border-default w-4 cursor-pointer"
                             onClick={() => setIsActive(false)}
                         />
                     </div>

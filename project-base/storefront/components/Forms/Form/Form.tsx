@@ -36,7 +36,7 @@ export const FormContentWrapper: FC = ({ children, className }) => {
 
 export const FormBlockWrapper: FC = ({ children, className }) => {
     return (
-        <div className={twMergeCustom('border-b-borderAccent vl:py-8 border-b py-4 last:border-b-0', className)}>
+        <div className={twMergeCustom('border-b-border-default vl:py-8 border-b py-4 last:border-b-0', className)}>
             {children}
         </div>
     );

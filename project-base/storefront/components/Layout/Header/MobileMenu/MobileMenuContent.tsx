@@ -118,7 +118,7 @@ const MenuItems: FC<{
     onNavigate: () => void;
 }> = ({ className, id, menuItems, onExpand, onNavigate }) => {
     return (
-        <div className={twJoin('divide-borderAccent absolute w-[calc(100%-4rem)] divide-y', className)} id={id}>
+        <div className={twJoin('divide-border-default absolute w-[calc(100%-4rem)] divide-y', className)} id={id}>
             {menuItems.map((navigationItem) => (
                 <DropdownMenuListItem
                     key={navigationItem.link + navigationItem.name + id}

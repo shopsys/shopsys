@@ -69,7 +69,7 @@ export const OrderConfirmationSummary: FC<OrderConfirmationSummaryProps> = ({
             )}
 
             {isPriceVisible(totalPrice.priceWithVat) && isPriceVisible(totalPrice.priceWithoutVat) && (
-                <div className="border-borderAccentLess flex items-center justify-between gap-4 border-t-[3px] pt-4">
+                <div className="border-border-accent-less flex items-center justify-between gap-4 border-t-[3px] pt-4">
                     <span>{t('Total')}</span>
                     <div className="flex flex-col gap-2">
                         <span className="text-price text-lg font-bold">{formatPrice(totalPrice.priceWithVat)}</span>

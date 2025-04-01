@@ -58,7 +58,7 @@ export const OrderDetailOrderItem: FC<OrderDetailOrderItemProps> = ({ orderItem,
         <div
             className={twJoin(
                 'vl:gap-5 font-secondary flex items-center gap-3 font-semibold first:border-none first:pt-0 last:pb-0',
-                'border-t-borderAccent border-t py-5',
+                'border-t-border-default border-t py-5',
             )}
         >
             <div

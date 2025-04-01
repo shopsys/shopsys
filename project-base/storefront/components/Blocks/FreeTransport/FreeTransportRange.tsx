@@ -29,7 +29,7 @@ export const FreeTransportRange: FC = () => {
             </h4>
 
             <div className="vl:order-0 relative order-1 h-[4px]">
-                <div className="bg-borderAccentLess absolute top-1/2 left-0 h-[4px] w-full">
+                <div className="bg-border-accent-less absolute top-1/2 left-0 h-[4px] w-full">
                     <div
                         className="transition-width ease-defaultTransition bg-actionPrimaryBorder relative h-[4px] rounded-md duration-200"
                         style={{

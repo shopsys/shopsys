@@ -62,7 +62,7 @@ export const CartPreview: FC = () => {
                                 <button
                                     className="text-link-default hover:text-link-hovered text-xs underline hover:no-underline"
                                     tid={TIDs.blocks_promocode_promocodeinfo_code}
-                                    onClick={() => removePromoCodeFromCart(promoCode.code)}
+                                    onClick={() => removePromoCodeFromCart(promoCodes[0].code)}
                                 >
                                     {t('Remove')}
                                 </button>
