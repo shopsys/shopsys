@@ -44,35 +44,35 @@ export const CartPreview: FC = () => {
 
     return (
         <div className="bg-backgroundMore font-secondary vl:max-w-[495px] w-full rounded-xl px-4 py-6 text-center font-semibold sm:p-8">
-            {mapPriceForCalculations(cart.totalDiscountPrice.priceWithVat) > 0 && (
+            {isRemovingPromoCodeFromCart && <LoaderWithOverlay className="w-5" />}
+
+            {promoCode !== null && (
                 <div className="border-borderAccentLess mb-4 flex flex-col gap-4 border-b-[3px] pb-4">
-                    {isRemovingPromoCodeFromCart && <LoaderWithOverlay className="w-5" />}
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                            <p>{t('Promo code')}</p>
 
-                    {promoCode !== null && (
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2">
-                                <p>{t('Promo code')}</p>
+                            <Flag type="discount">{promoCode.code}</Flag>
 
-                                <Flag type="discount">{promoCode.code}</Flag>
+                            <button
+                                className="text-link hover:text-linkHovered text-xs underline hover:no-underline"
+                                tid={TIDs.blocks_promocode_promocodeinfo_code}
+                                onClick={() => removePromoCodeFromCart(promoCode.code)}
+                            >
+                                {t('Remove')}
+                            </button>
+                        </div>
+                    </div>
 
-                                <button
-                                    className="text-link hover:text-linkHovered text-xs underline hover:no-underline"
-                                    tid={TIDs.blocks_promocode_promocodeinfo_code}
-                                    onClick={() => removePromoCodeFromCart(promoCode.code)}
-                                >
-                                    {t('Remove')}
-                                </button>
-                            </div>
+                    {mapPriceForCalculations(cart.totalDiscountPrice.priceWithVat) > 0 && (
+                        <div className="flex items-center justify-between" tid={TIDs.pages_cart_cartpreview_discount}>
+                            <p>{t('The amount of discounts')}</p>
+
+                            <span className="text-priceDiscounted whitespace-nowrap">
+                                {'-' + formatPrice(cart.totalDiscountPrice.priceWithVat)}
+                            </span>
                         </div>
                     )}
-
-                    <div className="flex items-center justify-between" tid={TIDs.pages_cart_cartpreview_discount}>
-                        <p>{t('The amount of discounts')}</p>
-
-                        <span className="text-priceDiscounted whitespace-nowrap">
-                            {'-' + formatPrice(cart.totalDiscountPrice.priceWithVat)}
-                        </span>
-                    </div>
                 </div>
             )}
 
