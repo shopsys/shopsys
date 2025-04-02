@@ -414,7 +414,7 @@
             },
             "searching_catnums": {
                 "type": "text",
-                "analyzer": "whitespace",
+                "analyzer": "whitespace_without_dots_lowercase",
                 "search_analyzer": "whitespace_without_dots_lowercase",
                 "fields": {
                     "edge_ngram_unanalyzed_words": {
