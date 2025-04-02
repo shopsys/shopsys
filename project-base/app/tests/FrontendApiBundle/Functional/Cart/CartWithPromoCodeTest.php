@@ -85,13 +85,13 @@ class CartWithPromoCodeTest extends GraphQlTestCase
                     'promoCode' => 'test',
                     'totalDiscount' => [
                         'priceWithVat' => $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('-350.000000'),
-                        'priceWithoutVat' => $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('-289.250000'),
-                        'vatAmount' => $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('-60.750000'),
+                        'priceWithoutVat' => $this->getFormattedMoneyAmountWithoutVatConvertedToDomainDefaultCurrency('-289.250000'),
+                        'vatAmount' => $this->getFormattedMoneyAmountWithoutVatConvertedToDomainDefaultCurrency('-60.750000'),
                     ],
                     'unitDiscount' => [
                         'priceWithVat' => $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('-350.000000'),
-                        'priceWithoutVat' => $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('-289.250000'),
-                        'vatAmount' => $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('-60.750000'),
+                        'priceWithoutVat' => $this->getFormattedMoneyAmountWithoutVatConvertedToDomainDefaultCurrency('-289.250000'),
+                        'vatAmount' => $this->getFormattedMoneyAmountWithoutVatConvertedToDomainDefaultCurrency('-60.750000'),
                     ],
                 ],
             ],

@@ -77,8 +77,8 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
         self::assertPromoCode($promoCode, $data['promoCodes'][0]);
         self::assertEquals(
             [
-                'priceWithVat' => $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('250.000000'),
-                'priceWithoutVat' => $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('250.000000'),
+                'priceWithVat' => '10.000000',
+                'priceWithoutVat' => '10.000000',
                 'vatAmount' => '0.000000',
             ],
             $data['promoCodes'][0]['discount'],
@@ -110,9 +110,9 @@ class ApplyPromoCodeToCartTest extends GraphQlTestCase
         self::assertPromoCode($promoCode, $data['promoCodes'][0]);
         self::assertEquals(
             [
-                'priceWithVat' => $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('-2500.000000'),
-                'priceWithoutVat' => $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('-2066.000000'),
-                'vatAmount' => $this->getFormattedMoneyAmountWithVatConvertedToDomainDefaultCurrency('-434.000000'),
+                'priceWithVat' => '-100.000000',
+                'priceWithoutVat' => '-82.640000',
+                'vatAmount' => '-17.360000',
             ],
             $data['promoCodes'][0]['discount'],
         );
