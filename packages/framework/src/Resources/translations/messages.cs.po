@@ -4090,6 +4090,9 @@ msgstr "Krátký popis se nastavuje u hlavní varianty."
 msgid "Short description of category"
 msgstr "Krátký popis kategorie"
 
+msgid "Show all customer orders"
+msgstr "Zobrazit všechny objednávky zákazníka"
+
 msgid "Show combinations"
 msgstr "Zobrazit kombinace"
 

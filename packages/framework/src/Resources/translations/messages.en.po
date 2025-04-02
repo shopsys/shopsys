@@ -4090,6 +4090,9 @@ msgstr ""
 msgid "Short description of category"
 msgstr ""
 
+msgid "Show all customer orders"
+msgstr ""
+
 msgid "Show combinations"
 msgstr ""
 
