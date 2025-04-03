@@ -533,9 +533,8 @@ class SideMenuBuilder
         $menu = $this->menuFactory->createItem('settings', ['label' => t('Settings')]);
         $menu->setExtra('icon', 'gear');
 
-        $identificationMenu = $menu->addChild('identification', ['label' => t('E-shop identification')]);
-
         if ($this->domain->isMultidomain()) {
+            $identificationMenu = $menu->addChild('identification', ['label' => t('E-shop identification')]);
             $domainsMenu = $identificationMenu->addChild(
                 'domains',
                 ['route' => 'admin_domain_list', 'label' => t('E-shop identification')],
