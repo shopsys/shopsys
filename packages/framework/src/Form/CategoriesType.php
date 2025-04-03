@@ -5,7 +5,12 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Form;
 
 use Override;
+use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Form\Transformers\CategoriesTypeTransformer;
+use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
+use Shopsys\FrameworkBundle\Model\Category\Exception\CategoryNotFoundException;
+use Shopsys\FrameworkBundle\Model\Localization\Localization;
+use Shopsys\FrameworkBundle\Model\Product\Product;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,14 +21,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CategoriesType extends AbstractType
 {
-    private CategoriesTypeTransformer $categoriesTypeTransformer;
-
     /**
-     * @param \Shopsys\FrameworkBundle\Form\Transformers\CategoriesTypeTransformer $categoryTransformer
+     * @param \Shopsys\FrameworkBundle\Form\Transformers\CategoriesTypeTransformer $categoriesTypeTransformer
+     * @param \Shopsys\FrameworkBundle\Model\Category\CategoryFacade $categoryFacade
+     * @param \Shopsys\FrameworkBundle\Component\Domain\Domain $domain
+     * @param \Shopsys\FrameworkBundle\Model\Localization\Localization $localization
      */
-    public function __construct(CategoriesTypeTransformer $categoryTransformer)
-    {
-        $this->categoriesTypeTransformer = $categoryTransformer;
+    public function __construct(
+        private readonly CategoriesTypeTransformer $categoriesTypeTransformer,
+        private readonly CategoryFacade $categoryFacade,
+        private readonly Domain $domain,
+        private readonly Localization $localization,
+    ) {
     }
 
     /**
@@ -36,6 +45,7 @@ class CategoriesType extends AbstractType
     {
         $view->vars['domain_id'] = $options['domain_id'];
         $view->vars['display_as_row'] = $options['display_as_row'];
+        $view->vars['main_category_path'] = $this->getMainCategoryPath($options);
     }
 
     /**
@@ -62,8 +72,10 @@ class CategoriesType extends AbstractType
 
         $resolver
             ->setRequired(['domain_id', 'display_as_row'])
+            ->setDefined(['product'])
             ->setAllowedTypes('domain_id', 'int')
             ->setAllowedTypes('display_as_row', 'bool')
+            ->setAllowedTypes('product', [Product::class, 'null'])
             ->setDefaults([
                 'required' => false,
                 'entry_type' => CategoryCheckboxType::class,
@@ -71,6 +83,7 @@ class CategoriesType extends AbstractType
                 'allow_delete' => true,
                 'prototype' => true,
                 'display_as_row' => false,
+                'product' => null,
             ]);
 
         $resolver->setNormalizer('entry_options', $entryOptionsNormalizer);
@@ -83,5 +96,29 @@ class CategoriesType extends AbstractType
     public function getParent(): ?string
     {
         return CollectionType::class;
+    }
+
+    /**
+     * @param array $options
+     * @return string|null
+     */
+    private function getMainCategoryPath(array $options): ?string
+    {
+        if ($options['product'] === null) {
+            return null;
+        }
+
+        try {
+            $domainConfig = $this->domain->getDomainConfigById($options['domain_id']);
+            $categoriesInPath = $this->categoryFacade->getCategoryNamesInPathFromRootToProductMainCategoryOnDomain(
+                $options['product'],
+                $domainConfig,
+                $this->localization->getCurrentLocaleForTranslatableEntities(),
+            );
+
+            return implode(' > ', $categoriesInPath);
+        } catch (CategoryNotFoundException) {
+            return null;
+        }
     }
 }

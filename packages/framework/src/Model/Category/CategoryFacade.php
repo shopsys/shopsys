@@ -400,15 +400,18 @@ class CategoryFacade
     /**
      * @param \Shopsys\FrameworkBundle\Model\Product\Product $product
      * @param \Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig $domainConfig
+     * @param string|null $locale
      * @return string[]
      */
     public function getCategoryNamesInPathFromRootToProductMainCategoryOnDomain(
         Product $product,
         DomainConfig $domainConfig,
-    ) {
+        ?string $locale = null,
+    ): array {
         return $this->categoryRepository->getCategoryNamesInPathFromRootToProductMainCategoryOnDomain(
             $product,
             $domainConfig,
+            $locale,
         );
     }
 
