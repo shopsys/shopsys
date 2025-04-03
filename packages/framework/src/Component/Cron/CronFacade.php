@@ -53,7 +53,7 @@ class CronFacade
      */
     protected function runModules(array $cronModuleConfigs, string $instanceName): void
     {
-        $unique = uniqid();
+        $unique = uniqid(more_entropy: true);
 
         $this->logger->pushProcessor(function ($record) use ($instanceName, $unique) {
             $record->extra['instance'] = $instanceName;
