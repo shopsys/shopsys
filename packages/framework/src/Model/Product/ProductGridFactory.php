@@ -41,6 +41,7 @@ class ProductGridFactory
         $grid->setDefaultOrder('name');
 
         $grid->addColumn('name', 'pt.name', t('Name'), true);
+        $grid->addColumn('catnum', 'p.catnum', t('Catalog number'), true);
         $grid->addColumn('price', 'priceForProductList', t('Price'), true)->setClassAttribute('text-right');
         $grid->addColumn('visibility', 'visibility', t('Visibility'))
             ->setClassAttribute('text-center table-col table-col-10');
