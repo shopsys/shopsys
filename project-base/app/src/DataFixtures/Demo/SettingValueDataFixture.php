@@ -132,7 +132,7 @@ class SettingValueDataFixture extends AbstractReferenceFixture implements Depend
             );
             $this->setting->setForDomain(
                 SeoSettingFacade::SEO_ROBOTS_TXT_CONTENT,
-                "Disallow: *?filter=\n\nUser-agent: *\nCrawl-delay: 3\nRequest-rate: 300/1m",
+                "Crawl-delay: 3\nRequest-rate: 300/1m",
                 $domainId,
             );
             $this->setting->setForDomain(
