@@ -7,7 +7,7 @@ export const SkeletonPageStores: FC = () => (
     <Webline>
         <SkeletonModuleBreadcrumbs count={2} />
 
-        <Skeleton className="mb-10 h-8 w-40" />
+        <Skeleton className="mb-10 h-8" containerClassName="w-40 flex" />
 
         <div className="flex w-full flex-col lg:flex-row lg:gap-5">
             <div className="w-full max-lg:order-2 max-lg:mt-5 lg:basis-1/2">
@@ -17,12 +17,12 @@ export const SkeletonPageStores: FC = () => (
                             <div className="flex items-center justify-between gap-2.5">
                                 <div className="w-full">
                                     <div className="max-vl:mb-2.5">
-                                        <Skeleton className="h-6 w-40" />
-                                        <Skeleton className="mt-1.5 h-4 w-60" />
+                                        <Skeleton className="h-6" containerClassName="w-40 flex" />
+                                        <Skeleton className="mt-1.5 h-4" containerClassName="w-60 flex" />
                                     </div>
                                     <div className="mt-1.5 flex items-center">
-                                        <Skeleton className="h-4 w-10" />
-                                        <Skeleton className="ml-2.5 h-4 w-20" />
+                                        <Skeleton className="h-4" containerClassName="w-10 flex" />
+                                        <Skeleton className="ml-2.5 h-4" containerClassName="w-20 flex" />
                                     </div>
                                 </div>
                             </div>
