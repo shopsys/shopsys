@@ -32,13 +32,7 @@ export const CartPreview: FC = () => {
             size="xlarge"
             tid={TIDs.blocks_orderaction_next}
             variant="primary"
-            onClick={
-                shouldUseConvertim
-                    ? () => {
-                          console.log('click');
-                      }
-                    : goToNextStepFromCartPage
-            }
+            onClick={shouldUseConvertim ? undefined : goToNextStepFromCartPage}
         >
             {t('Continue with order')}
             <ArrowSecondaryIcon className="size-4 -rotate-90" />

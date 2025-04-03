@@ -70,10 +70,8 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
         return null;
     }
 
-    const stepperFlow =
-        orderData.order.payment.type === PaymentTypeEnum.GoPay && orderData.order.isPaid
-            ? FlowTypesEnum.PaymentSuccess
-            : FlowTypesEnum.PaymentAwaiting;
+
+    const stepperFlow = orderData.order.hasExternalPayment && orderData.order.isPaid ? FlowTypesEnum.PaymentSuccess : FlowTypesEnum.PaymentAwaiting;
 
     const orderPayment = orderData.order.items.find((item) => item.type === TypeOrderItemTypeEnum.Payment);
     const orderTransport = orderData.order.items.find((item) => item.type === TypeOrderItemTypeEnum.Transport);
