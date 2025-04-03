@@ -300,22 +300,20 @@ class FileUpload
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Component\Image\Image|\Shopsys\FrameworkBundle\Component\UploadedFile\UploadedFile $entity
+     * @param \Shopsys\FrameworkBundle\Component\FileUpload\EntityFileUploadInterface $entity
      * @return string
      */
     protected function getUploadEntityType(EntityFileUploadInterface $entity): string
     {
-        $entityClass = get_class($entity);
-
-        if ($entityClass === Image::class) {
+        if ($entity instanceof Image) {
             $uploadEntityType = 'image';
-        } elseif ($entityClass === ShopsysUploadedFile::class) {
+        } elseif ($entity instanceof ShopsysUploadedFile) {
             $uploadEntityType = 'file';
-        } elseif ($entityClass === CustomerUploadedFile::class) {
+        } elseif ($entity instanceof CustomerUploadedFile) {
             $uploadEntityType = 'customerFile';
         } else {
             throw new UnexpectedTypeException(
-                sprintf('Provided entity with class %s was not expected.', $entityClass),
+                sprintf('Provided entity with class %s was not expected.', $entity::class),
             );
         }
 
