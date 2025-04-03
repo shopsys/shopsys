@@ -8,6 +8,7 @@ import { RegistrationAfterOrder } from 'components/Pages/OrderConfirmation/Regis
 import { useOrderDetailByHashQuery } from 'graphql/requests/orders/queries/OrderDetailByHashQuery.generated';
 import { useOrderPaymentFailedContentQuery } from 'graphql/requests/orders/queries/OrderPaymentFailedContentQuery.generated';
 import { useOrderPaymentSuccessfulContentQuery } from 'graphql/requests/orders/queries/OrderPaymentSuccessfulContentQuery.generated';
+import { TypeCustomerUserRoleEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
 import { getStringFromUrlQuery } from 'utils/parsing/getStringFromUrlQuery';
@@ -22,7 +23,7 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
     const urlHash = getStringFromUrlQuery(orderUrlHash);
     const [{ data: orderData, fetching: isOrderFetching }] = useOrderDetailByHashQuery({
         variables: { urlHash },
-        pause: !urlHash
+        pause: !urlHash,
     });
     const order = orderData?.order;
 

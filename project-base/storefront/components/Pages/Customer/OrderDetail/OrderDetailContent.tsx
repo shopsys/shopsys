@@ -19,15 +19,14 @@ export const OrderDetailContent: FC<OrderDetailContentProps> = ({ order }) => {
                 orderHasPaymentInProcess={order.hasPaymentInProcess}
                 orderIsPaid={order.isPaid}
             />
-            {canCreateOrder &&
-                order.hasExternalPayment && !order.isPaid && (
-                    <div>
-                        <PaymentsInOrderSelect
-                            orderUuid={order.uuid}
-                            paymentTransactionCount={order.paymentTransactionsCount}
-                        />
-                    </div>
-                )}
+            {canCreateOrder && order.hasExternalPayment && !order.isPaid && (
+                <div>
+                    <PaymentsInOrderSelect
+                        orderUuid={order.uuid}
+                        paymentTransactionCount={order.paymentTransactionsCount}
+                    />
+                </div>
+            )}
             <OrderDetailBasicInfo order={order} />
             <OrderCustomerInfo order={order} />
         </div>
