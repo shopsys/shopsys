@@ -14,6 +14,7 @@ use Shopsys\FrameworkBundle\Model\Administrator\AdministratorRepository as BaseA
  * @method \App\Model\Administrator\Administrator getByUserName(string $administratorUserName)
  * @method \App\Model\Administrator\Administrator|null findByUuid(string $uuid)
  * @method \App\Model\Administrator\Administrator getByEmail(string $administratorEmail)
+ * @method \App\Model\Administrator\Administrator|null findByUserNameWithPasswordFilled(string $administratorUserName)
  */
 class AdministratorRepository extends BaseAdministratorRepository
 {
