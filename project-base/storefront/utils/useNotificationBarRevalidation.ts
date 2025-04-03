@@ -23,8 +23,8 @@ export const useNotificationBarsWithRevalidation = (fromCache = true) => {
 
     const activeNotificationBars = useMemo(
         () =>
-            notificationBarsData?.notificationBars?.filter((notification) =>
-                dayjs().isBefore(dayjs(notification.validityTo)),
+            notificationBarsData?.notificationBars?.filter(
+                (notification) => notification.validityTo === null || dayjs().isBefore(dayjs(notification.validityTo)),
             ),
         [notificationBarsData],
     );
