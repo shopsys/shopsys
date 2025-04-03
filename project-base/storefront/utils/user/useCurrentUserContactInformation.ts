@@ -50,7 +50,9 @@ const mergeContactInformation = (
             continue;
         }
 
-        if ((isUndefined || isEmptyString) && key in contactInformationFromApi) {
+        const isFilledFromStorefront = !!contactInformationFromStore[key as keyof ContactInformation];
+
+        if (((isUndefined || isEmptyString) && key in contactInformationFromApi) || isFilledFromStorefront) {
             delete filteredContactInformationFromApi[key as keyof ContactInformation];
         }
     }
