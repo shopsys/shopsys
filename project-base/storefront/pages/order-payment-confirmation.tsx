@@ -15,8 +15,15 @@ import { OrderConfirmationSummary } from 'components/Pages/OrderConfirmation/Ord
 import { RegistrationAfterOrder } from 'components/Pages/OrderConfirmation/RegistrationAfterOrder';
 import { PaymentsInOrderSelect } from 'components/PaymentsInOrderSelect/PaymentsInOrderSelect';
 import { useOrderDetailByHashQuery } from 'graphql/requests/orders/queries/OrderDetailByHashQuery.generated';
-import { useOrderPaymentFailedContentQuery } from 'graphql/requests/orders/queries/OrderPaymentFailedContentQuery.generated';
-import { useOrderPaymentSuccessfulContentQuery } from 'graphql/requests/orders/queries/OrderPaymentSuccessfulContentQuery.generated';
+import {
+    useOrderPaymentFailedContentQuery,
+} from 'graphql/requests/orders/queries/OrderPaymentFailedContentQuery.generated';
+import {
+    useOrderPaymentInProcessContentQuery,
+} from 'graphql/requests/orders/queries/OrderPaymentInProcessContentQuery.generated';
+import {
+    useOrderPaymentSuccessfulContentQuery,
+} from 'graphql/requests/orders/queries/OrderPaymentSuccessfulContentQuery.generated';
 import { TypeCustomerUserRoleEnum, TypeOrderItemTypeEnum } from 'graphql/types';
 import useTranslation from 'next-translate/useTranslation';
 import { useRouter } from 'next/router';
@@ -65,15 +72,29 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
         variables: { orderUuid },
         pause: !order || !order.isPaid,
     });
+    const [
+        {
+            data: inProcessContentData,
+            fetching: isOrderPaymentInProcessContentFetching,
+            error: isOrderPaymentInProcessError,
+        }
+    ] = useOrderPaymentInProcessContentQuery({
+            variables: { orderUuid },
+            pause: !order || !order.hasPaymentInProcess,
+        });
 
     const paymentSessionExpiredErrorMessage = getPaymentSessionExpiredErrorMessage(
         t,
         isOrderPaymentFailedError,
         isOrderPaymentSuccessError,
+        isOrderPaymentInProcessError
     );
 
     const isFetchingData =
-        isOrderFetching || isOrderPaymentFailedContentFetching || isOrderPaymentSuccessfulContentFetching;
+        isOrderFetching ||
+        isOrderPaymentFailedContentFetching ||
+        isOrderPaymentSuccessfulContentFetching ||
+        isOrderPaymentInProcessContentFetching;
 
     if (paymentSessionExpiredErrorMessage) {
         return (
@@ -106,10 +127,12 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
                         failedContentData={failedContentData}
                         orderData={orderData}
                         successContentData={successContentData}
+                        inProcessContentData={inProcessContentData}
                     />
 
                     <OrderConfirmationStepper
                         flow={
+                            order.hasPaymentInProcess ? FlowTypesEnum.PaymentInProcess :
                             successContentData && order.isPaid
                                 ? FlowTypesEnum.PaymentSuccess
                                 : FlowTypesEnum.PaymentFailed

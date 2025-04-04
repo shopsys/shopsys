@@ -8,6 +8,7 @@ export enum FlowTypesEnum {
     PaymentAwaiting = 'paymentAwaiting',
     PaymentSuccess = 'paymentSuccess',
     PaymentFailed = 'paymentFailed',
+    PaymentInProcess = 'paymentInProcess',
 }
 
 export enum FlowTypeStateEnum {
@@ -94,9 +95,33 @@ export const useOrderConfirmationStepperFlow = () => {
         },
     ];
 
+    const paymentInProcess: FlowType[] = [
+        {
+            Icon: CheckboxCheckedIcon,
+            label: t('Order received'),
+            state: FlowTypeStateEnum.Active,
+        },
+        {
+            Icon: WalletIcon,
+            label: t('Waiting for payment confirmation'),
+            state: FlowTypeStateEnum.Active,
+        },
+        {
+            Icon: TruckClockIcon,
+            label: t('Order is on the way'),
+            state: FlowTypeStateEnum.Inactive,
+        },
+        {
+            Icon: PackageDeliveredIcon,
+            label: t('Delivered to you'),
+            state: FlowTypeStateEnum.Inactive,
+        },
+    ];
+
     return {
         paymentAwaiting,
         paymentSuccess,
         paymentFailed,
+        paymentInProcess,
     };
 };
