@@ -78,6 +78,7 @@ Disallow: ${customerUrl}/*
 Disallow: *?${FILTER_QUERY_PARAMETER_NAME}=
 Disallow: *?${LOAD_MORE_QUERY_PARAMETER_NAME}=
 Disallow: *?${SORT_QUERY_PARAMETER_NAME}=
+Disallow: /*?width=
 ${robotsTxtContentFromAdmin || ''}
 
 Sitemap: ${domain}content/sitemaps/domain_${domainId}_sitemap.xml
