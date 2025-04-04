@@ -1,16 +1,9 @@
 import { twMergeCustom } from 'utils/twMerge';
 
-type TransportAndPaymentListItemProps = { isActive: boolean };
-
-export const TransportAndPaymentListItem: FC<TransportAndPaymentListItemProps> = ({
-    isActive,
-    children,
-    className,
-}) => (
+export const TransportAndPaymentListItem: FC = ({ children, className }) => (
     <li
         className={twMergeCustom(
-            'border-borderAccent relative order-1 flex min-w-full cursor-pointer flex-wrap gap-2 border-b p-4 transition last:border-b-0',
-            isActive && 'bg-backgroundMost',
+            'border-borderAccentLess relative order-1 flex min-w-full cursor-pointer flex-wrap gap-2 border-b py-4 transition last:border-b-0',
             className,
         )}
     >

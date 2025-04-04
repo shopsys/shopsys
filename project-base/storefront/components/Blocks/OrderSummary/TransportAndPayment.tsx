@@ -39,7 +39,7 @@ export const TransportAndPayment: FC<TransportAndPaymentProps> = ({ payment, tra
                             >
                                 <Image
                                     alt={transport.name}
-                                    className="max-h-8 w-auto"
+                                    className="max-h-8 w-auto mix-blend-multiply"
                                     height={32}
                                     src={transport.mainImage?.url}
                                     width={32}
@@ -68,7 +68,7 @@ export const TransportAndPayment: FC<TransportAndPaymentProps> = ({ payment, tra
                                     >
                                         <Image
                                             alt={payment.name}
-                                            className="max-h-8 w-auto"
+                                            className="max-h-8 w-auto mix-blend-multiply"
                                             height={32}
                                             src={payment.mainImage?.url}
                                             width={32}

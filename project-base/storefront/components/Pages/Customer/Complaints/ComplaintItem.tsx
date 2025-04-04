@@ -25,7 +25,7 @@ export const ComplaintItem: FC<ComplaintItemProps> = ({ complaintItem }) => {
                 <Image
                     priority
                     alt={complaintItem.items[0].orderItem?.product?.mainImage?.name || ''}
-                    className="size-20 max-h-full object-contain"
+                    className="size-20 max-h-full object-contain mix-blend-multiply"
                     height={80}
                     sizes="(max-width: 768px) 100vw, 50vw"
                     src={complaintItem.items[0].product?.mainImage?.url}

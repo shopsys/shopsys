@@ -3,7 +3,6 @@ import { PageGuard } from 'components/Basic/PageGuard/PageGuard';
 import { CustomerLayout } from 'components/Layout/CustomerLayout';
 import { OrderDetailContent } from 'components/Pages/Customer/OrderDetail/OrderDetailContent';
 import { useDomainConfig } from 'components/providers/DomainConfigProvider';
-import { TIDs } from 'cypress/tids';
 import { TypeBreadcrumbFragment } from 'graphql/requests/breadcrumbs/fragments/BreadcrumbFragment.generated';
 import {
     OrderAvailablePaymentsQueryDocument,
@@ -54,15 +53,7 @@ const OrderDetailPage: FC = () => {
                     breadcrumbsType="orderList"
                     isFetchingData={isOrderDetailFetching}
                 >
-                    {!!orderData?.order && (
-                        <>
-                            <h1 tid={TIDs.order_detail_number_heading}>
-                                {t('Your order')} {orderData.order.number}
-                            </h1>
-
-                            <OrderDetailContent order={orderData.order} />
-                        </>
-                    )}
+                    {!!orderData?.order && <OrderDetailContent order={orderData.order} />}
                 </CustomerLayout>
             </PageGuard>
         </>

@@ -89,7 +89,7 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                                 <li
                                     key={index}
                                     className={twJoin(
-                                        'outline-borderAccent vl:w-auto flex w-1/5 cursor-pointer items-center justify-center rounded-lg hover:outline-1 sm:h-16',
+                                        'outline-borderAccent bg-backgroundMore vl:w-auto flex size-16 cursor-pointer items-center justify-center rounded-lg hover:outline-1',
                                         (isWithAdditionalImages || isVideo) && 'relative',
                                     )}
                                     onClick={() => setSelectedGalleryItemIndex(index + 1)}
@@ -97,11 +97,11 @@ export const ProductDetailGallery: FC<ProductDetailGalleryProps> = ({
                                     {isImage && (
                                         <Image
                                             alt={galleryItem.name || `${productName}-${index}`}
-                                            className="bg-backgroundMore aspect-square max-h-full rounded-md object-contain p-1 mix-blend-multiply"
-                                            height={90}
+                                            className="aspect-square object-contain object-center p-1 mix-blend-multiply"
+                                            height={60}
                                             src={galleryItemThumbnail?.url}
                                             tid={TIDs.product_gallery_image}
-                                            width={90}
+                                            width={60}
                                         />
                                     )}
 

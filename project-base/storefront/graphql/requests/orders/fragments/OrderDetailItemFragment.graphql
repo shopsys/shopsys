@@ -21,6 +21,7 @@ fragment OrderDetailItemFragment on OrderItem {
         }
     }
     product {
+        catalogNumber
         slug
         isVisible
         isSellingDenied

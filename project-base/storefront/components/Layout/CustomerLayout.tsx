@@ -1,28 +1,26 @@
 import { Breadcrumbs } from './Breadcrumbs/Breadcrumbs';
+import { VerticalStack } from './VerticalStack/VerticalStack';
 import { UserNavigation } from 'components/Blocks/UserNavigation/UserNavigation';
 import { CommonLayout, CommonLayoutProps } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
-import { useIsUserLoggedIn } from 'utils/auth/useIsUserLoggedIn';
 
 type CustomerLayoutProps = {
     pageHeading?: string;
 } & CommonLayoutProps;
 
 export const CustomerLayout: FC<CustomerLayoutProps> = ({ pageHeading, children, breadcrumbs, ...props }) => {
-    const isUserLoggedIn = useIsUserLoggedIn();
-
     return (
         <CommonLayout {...props}>
+            <Breadcrumbs key="breadcrumb" breadcrumbs={breadcrumbs ?? []} type={props.breadcrumbsType} />
+
             <Webline>
-                <Breadcrumbs key="breadcrumb" breadcrumbs={breadcrumbs ?? []} type={props.breadcrumbsType} />
-            </Webline>
+                <div className="grid grid-cols-1 gap-5 lg:grid-cols-[auto_1fr] lg:gap-10">
+                    <UserNavigation />
 
-            <Webline className="mt-5 flex flex-col gap-5 lg:flex-row lg:gap-10">
-                <UserNavigation />
-
-                <div className="w-full">
-                    {pageHeading && <h1 className={isUserLoggedIn ? '' : 'vl:mt-4 mt-0'}>{pageHeading}</h1>}
-                    {children}
+                    <VerticalStack gap="sm">
+                        {pageHeading && <h1>{pageHeading}</h1>}
+                        {children}
+                    </VerticalStack>
                 </div>
             </Webline>
         </CommonLayout>

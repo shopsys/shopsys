@@ -16,7 +16,7 @@ export const SingleProduct: FC<SingleProductProps> = ({ item }) => {
             <div className="mr-4 flex w-14 items-center justify-center" tid={TIDs.order_summary_cart_item_image}>
                 <Image
                     alt={item.product.mainImage?.name || item.product.fullName}
-                    className="max-h-12 w-auto"
+                    className="max-h-12 w-auto mix-blend-multiply"
                     height={48}
                     src={item.product.mainImage?.url}
                     width={48}

@@ -1,6 +1,5 @@
 import { PaymentsInOrderSelectItem } from './PaymentsInOrderSelectItem';
 import { useChangePaymentInOrder } from './paymentInOrderSelectUtils';
-import { InfoIcon } from 'components/Basic/Icon/InfoIcon';
 import { SpinnerIcon } from 'components/Basic/Icon/SpinnerIcon';
 import { Button } from 'components/Forms/Button/Button';
 import { GoPayGateway } from 'components/Pages/Order/PaymentConfirmation/Gateways/GoPayGateway';
@@ -80,13 +79,14 @@ export const PaymentsInOrderSelect: FC<PaymentsInOrderSelectProps> = ({
     return (
         <div className={twMergeCustom('flex w-full flex-col items-center gap-6', className)}>
             {!!filteredAvailablePayments?.length && (
-                <div className="flex w-full flex-col gap-3">
-                    <h3>
+                <div className="flex w-full flex-col gap-4">
+                    <h3 className={isPaymentByCardAvailable ? 'text-textError' : ''}>
                         {isPaymentByCardAvailable
                             ? t('Repeat payment or change your payment method')
                             : t('Change order payment')}
                     </h3>
-                    <div className="bg-backgroundMore flex w-full flex-col overflow-hidden rounded-md">
+
+                    <div className="flex w-full flex-col overflow-hidden rounded-md">
                         <ul className="w-full">
                             {isPaymentByCardAvailable && (
                                 <PaymentsInOrderSelectItem
@@ -95,6 +95,7 @@ export const PaymentsInOrderSelect: FC<PaymentsInOrderSelectProps> = ({
                                     setSelectedPaymentForChange={setSelectedPaymentForChange}
                                 />
                             )}
+
                             {filteredAvailablePayments.map((payment) => (
                                 <PaymentsInOrderSelectItem
                                     key={payment.uuid}
@@ -107,22 +108,25 @@ export const PaymentsInOrderSelect: FC<PaymentsInOrderSelectProps> = ({
                             ))}
                         </ul>
                     </div>
-                    <div className="flex flex-col items-end gap-2">
+
+                    <div className="vl:justify-between vl:text-left flex w-full flex-wrap items-center justify-center gap-2 text-center">
                         {isSelectedPaymentEqualsToOrderPayment ? (
                             <GoPayGateway
                                 requiresAction
+                                className="ml-auto"
                                 initialButtonText={t('Repeat payment')}
                                 orderUuid={orderUuid}
                             />
                         ) : (
                             <>
-                                <span className="text-textDisabled vl:text-base flex items-center gap-2 text-sm">
+                                <span className="text-textSubtle text-xs">
                                     {t('The price of your order may change by the price of the payment')}
-                                    <InfoIcon />
                                 </span>
+
                                 <Button
                                     className="w-fit"
                                     isDisabled={!selectedPaymentForChange}
+                                    size="xlarge"
                                     onClick={changePaymentSubmitHandler}
                                 >
                                     {t('Pay with the selected method')}

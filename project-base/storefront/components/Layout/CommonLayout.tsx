@@ -72,9 +72,7 @@ export const CommonLayout: FC<CommonLayoutProps> = ({
                     <Adverts withWebline className="mb-4" positionName="header" />
 
                     {!!breadcrumbs && !isPageLoading && !isFetchingData && (
-                        <Webline className="mb-4">
-                            <Breadcrumbs breadcrumbs={breadcrumbs} type={breadcrumbsType} />
-                        </Webline>
+                        <Breadcrumbs breadcrumbs={breadcrumbs} type={breadcrumbsType} />
                     )}
 
                     <SkeletonManager

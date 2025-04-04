@@ -66,7 +66,12 @@ export const GoPayGateway: FC<GoPayGatewayProps> = ({
                 />
             )}
             {requiresAction && (
-                <Button className={className} isDisabled={isDisabled} onClick={() => setInitiatedPaymentGate(true)}>
+                <Button
+                    className={className}
+                    isDisabled={isDisabled}
+                    size="xlarge"
+                    onClick={() => setInitiatedPaymentGate(true)}
+                >
                     {initiatedPaymentGate ? (
                         <>
                             <SpinnerIcon className="w-5" />

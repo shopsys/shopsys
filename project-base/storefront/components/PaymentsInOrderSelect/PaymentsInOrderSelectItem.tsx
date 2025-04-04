@@ -21,11 +21,7 @@ export const PaymentsInOrderSelectItem: FC<PaymentsInOrderSelectItemProps> = ({
     const isPaymentSelected = selectedPaymentForChange?.uuid === payment.uuid;
 
     return (
-        <TransportAndPaymentListItem
-            key={payment.uuid}
-            className="order-none flex w-auto flex-col"
-            isActive={isPaymentSelected}
-        >
+        <TransportAndPaymentListItem key={payment.uuid} className="order-none flex w-auto flex-col">
             <Radiobutton
                 checked={isPaymentSelected}
                 id={payment.uuid}
@@ -36,7 +32,6 @@ export const PaymentsInOrderSelectItem: FC<PaymentsInOrderSelectItemProps> = ({
                     <TransportAndPaymentSelectItemLabel
                         description={payment.description}
                         image={payment.mainImage}
-                        isSelected={isPaymentSelected}
                         name={payment.name}
                         price={payment.price}
                     />

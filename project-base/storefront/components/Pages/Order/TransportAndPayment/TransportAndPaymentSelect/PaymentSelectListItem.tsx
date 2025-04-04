@@ -15,7 +15,7 @@ type PaymentListItemProps = {
 
 const PaymentListItemComp: FC<PaymentListItemProps> = ({ payment, isActive = false, changePayment }) => {
     return (
-        <TransportAndPaymentListItem key={payment.uuid} isActive={isActive}>
+        <TransportAndPaymentListItem key={payment.uuid}>
             <Radiobutton
                 checked={isActive}
                 id={payment.uuid}
@@ -25,7 +25,6 @@ const PaymentListItemComp: FC<PaymentListItemProps> = ({ payment, isActive = fal
                     <TransportAndPaymentSelectItemLabel
                         description={payment.description}
                         image={payment.mainImage}
-                        isSelected={isActive}
                         name={payment.name}
                         price={payment.price}
                     />

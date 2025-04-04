@@ -8,6 +8,7 @@ import { useDomainConfig } from 'components/providers/DomainConfigProvider';
 import { TIDs } from 'cypress/tids';
 import { TypeListedOrderFragment } from 'graphql/requests/orders/fragments/ListedOrderFragment.generated';
 import useTranslation from 'next-translate/useTranslation';
+import { PaymentTypeEnum } from 'types/payment';
 import { useFormatDate } from 'utils/formatting/useFormatDate';
 import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 import { getInternationalizedStaticUrls } from 'utils/staticUrls/getInternationalizedStaticUrls';
@@ -32,10 +33,12 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
             (item) => item.product?.isVisible && !item.product.isSellingDenied && !item.product.isInquiryType,
         );
 
+    const notPaid = order.payment.type === PaymentTypeEnum.GoPay && !order.isPaid && !order.hasPaymentInProcess;
+
     return (
         <div className="bg-backgroundMore vl:flex-row flex flex-col flex-wrap justify-between gap-4 rounded-xl p-5">
             <div className="flex flex-1 flex-col gap-2.5">
-                <div className="vl:flex-row flex flex-col justify-between gap-4">
+                <div className="vl:flex-row flex flex-col gap-x-8 gap-y-2">
                     <OrderItemColumnInfo title={t('Order number')}>
                         <ExtendedNextLink
                             className="font-bold"
@@ -73,12 +76,10 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                 <OrderItemRowInfo title={t('Transport')}>
                     <ElementWithImage image={order.transport.mainImage?.url} name={order.transport.name} />
                 </OrderItemRowInfo>
-
-                {order.note && <OrderItemRowInfo title={t('Note')}>{order.note}</OrderItemRowInfo>}
             </div>
 
             <div className="flex shrink-0 gap-4">
-                {showRepeatOrderButton && (
+                {showRepeatOrderButton && !notPaid && (
                     <Button
                         tid={TIDs.order_list_repeat_order_button}
                         variant="inverted"
@@ -86,6 +87,19 @@ export const OrderItem: FC<OrderItemProps> = ({ order, addOrderItemsToEmptyCart,
                     >
                         {t('Repeat order')}
                     </Button>
+                )}
+
+                {notPaid && (
+                    <LinkButton
+                        type="orderDetail"
+                        variant="primary"
+                        href={{
+                            pathname: customerOrderDetailUrl,
+                            query: { orderNumber: order.number },
+                        }}
+                    >
+                        {t('Repeat payment')}
+                    </LinkButton>
                 )}
 
                 <LinkButton
