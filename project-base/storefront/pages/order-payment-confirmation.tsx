@@ -60,7 +60,7 @@ const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
         { data: failedContentData, fetching: isOrderPaymentFailedContentFetching, error: isOrderPaymentFailedError },
     ] = useOrderPaymentFailedContentQuery({
         variables: { orderUuid },
-        pause: !order || order.isPaid,
+        pause: !order || order.isPaid || order.hasPaymentInProcess,
     });
     const [
         {
