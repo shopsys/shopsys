@@ -56,7 +56,7 @@ const DropzoneControlled: React.FC<DropzoneControlledProps> = ({ control, formNa
     const wrapperTwClass = twMergeCustom(
         'border-2 p-10 text-center rounded-md border-dashed cursor-pointer',
         !isDragActive && 'border-input-border-default bg-input-bg-default hover:border-input-border-hovered',
-        isDragActive && 'border-input-border-active bg-inputFill',
+        isDragActive && 'border-input-border-active bg-input-fill',
         error && 'border-input-border-error',
     );
     const labelTwClass = twMergeCustom(

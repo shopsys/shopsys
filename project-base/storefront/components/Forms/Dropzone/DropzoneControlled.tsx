@@ -70,7 +70,7 @@ const DropzoneControlled: React.FC<DropzoneControlledProps> = ({
     const wrapperTwClass = twMergeCustom(
         'border-2 p-10 text-center rounded-md border-dashed cursor-pointer group',
         !isDragActive && 'border-input-border-default bg-input-bg-default hover:border-input-border-hovered',
-        isDragActive && 'border-input-border-active bg-inputFill',
+        isDragActive && 'border-input-border-active bg-input-fill',
         error && 'border-input-border-error',
         disabled &&
             'border-input-border-disabled bg-input-bg-disabled text-input-text-disabled hover:border-input-border-disabled cursor-not-allowed',

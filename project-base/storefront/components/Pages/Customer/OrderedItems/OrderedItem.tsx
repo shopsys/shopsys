@@ -91,7 +91,7 @@ export const OrderedItem: FC<OrderedItemProps> = ({ orderedItem }) => {
                             <OrderedItemColumnInfo
                                 title={t('Price')}
                                 value={formatPrice(orderedItem.totalPrice.priceWithVat)}
-                                valueClassName="text-price"
+                                valueClassName="text-price-default"
                                 wrapperClassName="min-w-[80px]"
                             />
                         )}

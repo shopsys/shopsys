@@ -38,7 +38,7 @@ export const CartPreview: FC = () => {
                             <Flag type="discount">{promoCodes[0].code}</Flag>
 
                             <button
-                                className="text-link hover:text-link-hovered text-xs underline hover:cursor-pointer hover:no-underline"
+                                className="text-link-default hover:text-link-hovered cursor-pointer text-xs underline hover:no-underline"
                                 tid={TIDs.blocks_promocode_promocodeinfo_code}
                                 onClick={() => removePromoCodeFromCart(promoCodes[0].code)}
                             >
@@ -47,7 +47,7 @@ export const CartPreview: FC = () => {
                         </div>
                     </div>
 
-                    {isPriceVisible(cart.totalItemsPrice.priceWithVat) &&
+                    {isPriceVisible(cart.totalDiscountPrice.priceWithVat) &&
                         mapPriceForCalculations(cart.totalDiscountPrice.priceWithVat) > 0 && (
                             <div
                                 className="flex items-center justify-between"
