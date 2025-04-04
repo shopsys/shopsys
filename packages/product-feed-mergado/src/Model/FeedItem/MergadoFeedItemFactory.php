@@ -8,7 +8,6 @@ use Psr\Log\LoggerInterface;
 use Shopsys\FrameworkBundle\Component\Domain\Config\DomainConfig;
 use Shopsys\FrameworkBundle\Component\Image\Exception\ImageNotFoundException;
 use Shopsys\FrameworkBundle\Component\Image\ImageFacade;
-use Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper;
 use Shopsys\FrameworkBundle\Component\Setting\Setting;
 use Shopsys\FrameworkBundle\Model\Category\CategoryFacade;
 use Shopsys\FrameworkBundle\Model\Pricing\Currency\CurrencyFacade;
@@ -34,7 +33,6 @@ class MergadoFeedItemFactory
      * @param \Shopsys\FrameworkBundle\Model\Pricing\Group\PricingGroupSettingFacade $pricingGroupSettingFacade
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Shopsys\FrameworkBundle\Component\Setting\Setting $setting
-     * @param \Shopsys\FrameworkBundle\Component\Image\ImageUrlWithSizeHelper $imageUrlWithSizeHelper
      */
     public function __construct(
         protected readonly ProductUrlsBatchLoader $productUrlsBatchLoader,
@@ -48,7 +46,6 @@ class MergadoFeedItemFactory
         protected readonly PricingGroupSettingFacade $pricingGroupSettingFacade,
         protected readonly LoggerInterface $logger,
         protected readonly Setting $setting,
-        protected readonly ImageUrlWithSizeHelper $imageUrlWithSizeHelper,
     ) {
     }
 
@@ -84,7 +81,7 @@ class MergadoFeedItemFactory
             [],
             $this->availabilityFacade->isProductAvailableOnDomainCached($product, $domainId) ? 'in stock' : 'out of stock',
             $product->getBrand(),
-            $this->productUrlsBatchLoader->getResizedProductImageUrl($product, $domainConfig),
+            $this->productUrlsBatchLoader->getProductImageUrl($product, $domainConfig),
             $product->isVariant() ? $product->getMainVariant()->getId() : null,
         );
     }
@@ -118,7 +115,7 @@ class MergadoFeedItemFactory
 
         foreach ($images as $image) {
             try {
-                $imageUrls[] = $this->imageUrlWithSizeHelper->limitSizeInImageUrl($this->imageFacade->getImageUrl($domainConfig, $image));
+                $imageUrls[] = $this->imageFacade->getImageUrl($domainConfig, $image);
             } catch (ImageNotFoundException $exception) {
                 $this->logger->error(sprintf('Image with id "%s" not found on filesystem', $image->getId()));
             }

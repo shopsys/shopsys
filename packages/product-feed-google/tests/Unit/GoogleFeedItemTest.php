@@ -158,7 +158,7 @@ class GoogleFeedItemTest extends TestCase
      */
     private function mockProductImageUrl(Product $product, DomainConfig $domain, string $url): void
     {
-        $this->productUrlsBatchLoaderMock->method('getResizedProductImageUrl')
+        $this->productUrlsBatchLoaderMock->method('getProductImageUrl')
             ->with($product, $domain)->willReturn($url);
     }
 

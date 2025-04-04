@@ -99,6 +99,8 @@ function getImageFromUrl(string $url): void
 
     $etag = '"' . md5($image) . '"';
 
+    header('X-Robots-Tag: noindex, nofollow');
+
     // Support 304 Not Modified
     if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] === $etag) {
         header("HTTP/1.1 304 Not Modified");

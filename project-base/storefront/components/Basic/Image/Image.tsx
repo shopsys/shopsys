@@ -10,21 +10,37 @@ type ImageProps = {
 const fallbackImageSrc = '/images/optimized-noimage.webp';
 
 const ImageComponent: FC<ImageProps> = ({ src, hash, ...props }) => {
-    const imageUrl = src ?? fallbackImageSrc;
+    const imageUrl = src ?? null;
     const [error, setError] = useState<SyntheticEvent<HTMLImageElement, Event> | null>(null);
-
+    const shouldLoadFallbackImage = !!error || !imageUrl;
     const onError = useCallback((err: SyntheticEvent<HTMLImageElement, Event> | null) => setError(err), []);
 
     const loader = useCallback<ImageLoader>(
-        ({ src, width }) => `${src}?width=${width || '0'}${hash ? `&${hash}` : ''}`,
+        ({ src, width }) => {
+            if (shouldLoadFallbackImage) {
+                return src;
+            }
+
+            return `${src}?width=${width || '0'}${hash ? `&${hash}` : ''}`;
+        },
         [hash],
     );
+
+    const finalImageUrl = shouldLoadFallbackImage ? fallbackImageSrc : imageUrl;
 
     useEffect(() => {
         setError(null);
     }, [src]);
 
-    return <NextImage loader={loader} src={error ? fallbackImageSrc : imageUrl} onError={onError} {...props} />;
+    return (
+        <NextImage
+            loader={loader}
+            overrideSrc={finalImageUrl as string}
+            src={finalImageUrl}
+            onError={onError}
+            {...props}
+        />
+    );
 };
 
 export const Image = memo(ImageComponent);
