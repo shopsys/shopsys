@@ -4,7 +4,10 @@ import { OrderCustomerInfo } from 'components/Blocks/OrderCustomerInfo/OrderCust
 import { CommonLayout } from 'components/Layout/CommonLayout';
 import { Webline } from 'components/Layout/Webline/Webline';
 import { PaymentStatus } from 'components/Pages/Order/PaymentConfirmation/PaymentStatus';
-import { getPaymentSessionExpiredErrorMessage } from 'components/Pages/Order/PaymentConfirmation/paymentConfirmationUtils';
+import {
+    getPaymentSessionExpiredErrorMessage,
+    useUpdatePaymentStatus,
+} from 'components/Pages/Order/PaymentConfirmation/paymentConfirmationUtils';
 import { OrderConfirmationProducts } from 'components/Pages/OrderConfirmation/OrderConfirmationProducts';
 import { OrderConfirmationStepper } from 'components/Pages/OrderConfirmation/OrderConfirmationStepper';
 import { FlowTypesEnum } from 'components/Pages/OrderConfirmation/OrderConfirmationStepperFlows';
@@ -21,15 +24,27 @@ import { getStringFromUrlQuery } from 'utils/parsing/getStringFromUrlQuery';
 import { getServerSidePropsWrapper } from 'utils/serverSide/getServerSidePropsWrapper';
 import { initServerSideProps, ServerSidePropsType } from 'utils/serverSide/initServerSideProps';
 
+export type OrderPaymentConfirmationUrlQuery = {
+    orderIdentifier: string | undefined;
+    orderEmail: string | undefined;
+    orderUrlHash?: string | undefined;
+    orderPaymentStatusPageValidityHash: string | undefined;
+};
+
 const OrderPaymentConfirmationPage: FC<ServerSidePropsType> = () => {
     const { t } = useTranslation();
 
-    const { orderIdentifier, orderEmail, orderUrlHash } = useRouter().query;
+    const { orderIdentifier, orderEmail, orderUrlHash, orderPaymentStatusPageValidityHash } = useRouter()
+        .query as OrderPaymentConfirmationUrlQuery;
     const orderUuid = getStringFromUrlQuery(orderIdentifier);
     const urlHash = getStringFromUrlQuery(orderUrlHash);
+    const orderPaymentStatusPageValidityHashParam = getStringFromUrlQuery(orderPaymentStatusPageValidityHash);
+
+    const paymentStatusData = useUpdatePaymentStatus(orderUuid!, orderPaymentStatusPageValidityHashParam);
+
     const [{ data: orderData, fetching: isOrderFetching }] = useOrderDetailByHashQuery({
         variables: { urlHash },
-        pause: !urlHash,
+        pause: !urlHash || !paymentStatusData,
     });
 
     const order = orderData?.order;

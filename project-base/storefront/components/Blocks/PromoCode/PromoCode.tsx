@@ -64,7 +64,6 @@ export const PromoCode: FC = () => {
                                     textInputProps={{
                                         label: formMeta.fields.promoCode.label,
                                         required: true,
-                                        className: '!rounded-r-none border-r-0',
                                     }}
                                 />
                             </div>

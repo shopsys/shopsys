@@ -17,8 +17,7 @@ import {
     TypeOrderSentPageContentQueryVariables,
     useOrderSentPageContentQuery,
 } from 'graphql/requests/orders/queries/OrderSentPageContentQuery.generated';
-import { TypeCustomerUserRoleEnum, TypeOrderItemTypeEnum } from 'graphql/types';
-import { TypePaymentTypeEnum } from 'graphql/types';
+import { TypeCustomerUserRoleEnum, TypeOrderItemTypeEnum, TypePaymentTypeEnum } from 'graphql/types';
 import { GtmPageType } from 'gtm/enums/GtmPageType';
 import { useGtmStaticPageViewEvent } from 'gtm/factories/useGtmStaticPageViewEvent';
 import { useGtmPageViewEvent } from 'gtm/utils/pageViewEvents/useGtmPageViewEvent';
@@ -70,8 +69,10 @@ const OrderConfirmationPage: FC<ServerSidePropsType> = () => {
         return null;
     }
 
-
-    const stepperFlow = orderData.order.hasExternalPayment && orderData.order.isPaid ? FlowTypesEnum.PaymentSuccess : FlowTypesEnum.PaymentAwaiting;
+    const stepperFlow =
+        orderData.order.hasExternalPayment && orderData.order.isPaid
+            ? FlowTypesEnum.PaymentSuccess
+            : FlowTypesEnum.PaymentAwaiting;
 
     const orderPayment = orderData.order.items.find((item) => item.type === TypeOrderItemTypeEnum.Payment);
     const orderTransport = orderData.order.items.find((item) => item.type === TypeOrderItemTypeEnum.Transport);

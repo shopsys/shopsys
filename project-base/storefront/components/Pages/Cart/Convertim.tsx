@@ -21,8 +21,6 @@ import { useFormatPrice } from 'utils/formatting/useFormatPrice';
 type ConvertimProps = { cart?: TypeCartFragment | null; convertimProjectUuid: string };
 
 export const Convertim: FC<ConvertimProps> = ({ cart, convertimProjectUuid }) => {
-    console.log("🚀 -> cart:", cart)
-    console.log("🚀 -> convertimProjectUuid:", convertimProjectUuid)
     const { url } = useDomainConfig();
     const { t } = useTranslation();
     const formatPrice = useFormatPrice();
