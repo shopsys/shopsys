@@ -13,9 +13,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class CustomerUserCommunicationFormType extends AbstractType
 {
-    public const ORDER_SENT_CONTENT_FIELD_NAME = 'order-sent-content';
-    public const PAYMENT_FAILED_CONTENT_FIELD_NAME = 'payment-failed-content';
-    public const PAYMENT_SUCCESSFUL_CONTENT_FIELD_NAME = 'payment-successful-content';
+    public const string ORDER_SENT_CONTENT_FIELD_NAME = 'order-sent-content';
+    public const string PAYMENT_FAILED_CONTENT_FIELD_NAME = 'payment-failed-content';
+    public const string PAYMENT_SUCCESSFUL_CONTENT_FIELD_NAME = 'payment-successful-content';
+    public const string PAYMENT_IN_PROCESS_CONTENT_FIELD_NAME = 'payment-in-progress-content';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -35,6 +36,10 @@ class CustomerUserCommunicationFormType extends AbstractType
             ])
             ->add(self::PAYMENT_SUCCESSFUL_CONTENT_FIELD_NAME, CKEditorType::class, [
                 'label' => t('Payment successful page content'),
+                'required' => false,
+            ])
+            ->add(self::PAYMENT_IN_PROCESS_CONTENT_FIELD_NAME, CKEditorType::class, [
+                'label' => t('Payment in process page content'),
                 'required' => false,
             ])
             ->add(self::PAYMENT_FAILED_CONTENT_FIELD_NAME, CKEditorType::class, [

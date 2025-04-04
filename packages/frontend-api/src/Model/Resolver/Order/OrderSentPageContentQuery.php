@@ -63,6 +63,19 @@ class OrderSentPageContentQuery extends AbstractQuery
     }
 
     /**
+     * @param string $orderUuid
+     * @return string
+     */
+    public function orderPaymentInProcessContentQuery(string $orderUuid): string
+    {
+        $order = $this->orderApiFacade->getByUuid($orderUuid);
+
+        $this->assertDateTimeIsRecent($order->getOrderPaymentStatusPageValidFrom());
+
+        return $this->orderContentPageFacade->getPaymentInProcessPageContent($order);
+    }
+
+    /**
      * @param \DateTimeInterface|null $checkDateTime
      */
     public function assertDateTimeIsRecent(?DateTimeInterface $checkDateTime): void

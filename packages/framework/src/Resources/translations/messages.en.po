@@ -3289,6 +3289,9 @@ msgstr ""
 msgid "Payment has expired"
 msgstr ""
 
+msgid "Payment in process page content"
+msgstr ""
+
 msgid "Payment instructions"
 msgstr ""
 

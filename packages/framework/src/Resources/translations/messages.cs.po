@@ -3289,6 +3289,9 @@ msgstr "Obsah stránky po neúspěšné platbě"
 msgid "Payment has expired"
 msgstr "Vypršela platnost platby"
 
+msgid "Payment in process page content"
+msgstr "Obsah stránky při platbě čekající na potvrzení"
+
 msgid "Payment instructions"
 msgstr "Pokyny k platbě"
 

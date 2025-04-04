@@ -43,6 +43,7 @@ class CustomerCommunicationController extends AdminBaseController
                 CustomerUserCommunicationFormType::ORDER_SENT_CONTENT_FIELD_NAME => $this->orderContentPageSettingFacade->getOrderSentPageContent($domainId),
                 CustomerUserCommunicationFormType::PAYMENT_SUCCESSFUL_CONTENT_FIELD_NAME => $this->orderContentPageSettingFacade->getPaymentSuccessfulPageContent($domainId),
                 CustomerUserCommunicationFormType::PAYMENT_FAILED_CONTENT_FIELD_NAME => $this->orderContentPageSettingFacade->getPaymentFailedPageContent($domainId),
+                CustomerUserCommunicationFormType::PAYMENT_IN_PROCESS_CONTENT_FIELD_NAME => $this->orderContentPageSettingFacade->getPaymentInProcessPageContent($domainId),
             ],
         );
         $form->handleRequest($request);
@@ -53,6 +54,7 @@ class CustomerCommunicationController extends AdminBaseController
             $this->orderContentPageSettingFacade->setOrderSentPageContent($formData[CustomerUserCommunicationFormType::ORDER_SENT_CONTENT_FIELD_NAME], $domainId);
             $this->orderContentPageSettingFacade->setPaymentSuccessfulPageContent($formData[CustomerUserCommunicationFormType::PAYMENT_SUCCESSFUL_CONTENT_FIELD_NAME], $domainId);
             $this->orderContentPageSettingFacade->setPaymentFailedPageContent($formData[CustomerUserCommunicationFormType::PAYMENT_FAILED_CONTENT_FIELD_NAME], $domainId);
+            $this->orderContentPageSettingFacade->setPaymentInProcessPageContent($formData[CustomerUserCommunicationFormType::PAYMENT_IN_PROCESS_CONTENT_FIELD_NAME], $domainId);
 
             $this->addSuccessFlash(t('Order confirmation page content modified'));
 
