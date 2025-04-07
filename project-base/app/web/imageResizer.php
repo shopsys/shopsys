@@ -85,6 +85,9 @@ function getImageFromUrl(string $url): void
         CURLOPT_TIMEOUT => 5,
         CURLOPT_CONNECTTIMEOUT => 2,
         CURLOPT_USERAGENT => 'ImageProxy/1.0',
+        CURLOPT_HTTPHEADER => [
+            'Accept: ' . $_SERVER['HTTP_ACCEPT'],
+        ]
     ]);
     $image = curl_exec($ch);
     $contentType = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
