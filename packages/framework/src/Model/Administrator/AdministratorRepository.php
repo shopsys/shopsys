@@ -85,6 +85,20 @@ class AdministratorRepository
 
     /**
      * @param string $administratorUserName
+     * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator|null
+     */
+    public function findByUserNameWithPasswordFilled(string $administratorUserName): ?Administrator
+    {
+        return $this->getAdministratorRepository()->createQueryBuilder('a')
+            ->where('a.username = :username')
+            ->andWhere('a.password is not NULL')
+            ->setParameter('username', $administratorUserName)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    /**
+     * @param string $administratorUserName
      * @return \Shopsys\FrameworkBundle\Model\Administrator\Administrator
      */
     public function getByUserName($administratorUserName)

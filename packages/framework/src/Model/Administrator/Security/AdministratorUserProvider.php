@@ -36,7 +36,7 @@ class AdministratorUserProvider implements UserProviderInterface
      */
     public function loadUserByUsername($username)
     {
-        $administrator = $this->administratorRepository->findByUserName($username);
+        $administrator = $this->administratorRepository->findByUserNameWithPasswordFilled($username);
 
         if ($administrator === null) {
             $message = sprintf(
