@@ -106,6 +106,9 @@ services:
     img-proxy:
         image: ghcr.io/imgproxy/imgproxy:latest
         container_name: shopsys-framework-img-proxy
+        environment:
+            IMGPROXY_AUTO_WEBP: true
+            IMGPROXY_ENFORCE_WEBP: true
         ports:
             - "8060:8080"
 
