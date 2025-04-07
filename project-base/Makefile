@@ -16,6 +16,23 @@ generate-schema-native:
 	cd storefront; npm run gql
 	rm -rf storefront/schema.graphql
 
+check-fix: generate-schema php-checks php-lock-icons php-translations storefront-checks storefront-translations
+
+php-checks:
+	docker compose exec php-fpm php phing standards-fix phpstan
+
+php-lock-icons:
+	docker compose exec php-fpm php bin/console ux:icons:lock
+
+php-translations:
+	docker compose exec php-fpm php phing translations-dump
+
+storefront-checks:
+	docker compose exec storefront pnpm run check--fix
+
+storefront-translations:
+	docker compose exec storefront pnpm run translate
+
 define prepare-data-for-acceptance-tests
 	docker compose exec php-fpm php phing -D production.confirm.action=y -D change.environment=test environment-change
 	docker compose exec php-fpm php phing test-db-create test-db-demo test-elasticsearch-index-recreate test-elasticsearch-export
