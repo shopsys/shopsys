@@ -1,4 +1,6 @@
-import { Image } from 'components/Basic/Image/Image';
+import Head from 'next/head';
+import { getImageProps } from 'next/image';
+import { DragEvent } from 'react';
 
 type BannerImageProps = {
     mobileSrc: string;
@@ -15,26 +17,66 @@ export const BannerImage: FC<BannerImageProps> = ({
     desktopAlt,
     isFirst,
     children,
-}) => (
-    <div className="vl:h-[425px] relative h-[250px] w-full grow md:h-[345px]">
-        <Image
-            fill
-            alt={desktopAlt}
-            className="vl:block hidden h-full w-full object-cover"
-            priority={isFirst}
-            sizes="(max-width: 1023px) 0px, (max-width: 1400px) 100vw, 1400px"
-            src={desktopSrc}
-            onDragStart={(e) => e.preventDefault()}
-        />
-        <Image
-            fill
-            alt={mobileAlt}
-            className="vl:hidden block h-full w-full object-cover"
-            priority={isFirst}
-            sizes="(max-width: 1023px) 95vw, 0px"
-            src={mobileSrc}
-            onDragStart={(e) => e.preventDefault()}
-        />
-        {children}
-    </div>
-);
+}) => {
+    const commonImageProps = {
+        fill: true,
+        priority: isFirst,
+        onDragStart: (e: DragEvent<HTMLImageElement>) => e.preventDefault(),
+        loader: ({ src }: { src: string }) => `${src}`,
+        unoptimized: true,
+    };
+
+    const {
+        props: { src: desktopImageSrc },
+    } = getImageProps({
+        ...commonImageProps,
+        alt: desktopAlt,
+        src: desktopSrc,
+    });
+
+    const {
+        props: { src: mobileImageSrc, ...mobileImageProps },
+    } = getImageProps({
+        ...commonImageProps,
+        alt: mobileAlt,
+        src: mobileSrc,
+    });
+
+    return (
+        <>
+            {isFirst && (
+                <Head>
+                    <link
+                        key="carousel_preload_mobile"
+                        as="image"
+                        fetchPriority="high"
+                        href={mobileImageSrc + '?width=480'}
+                        media="(max-width: 769px)"
+                        rel="preload"
+                    />
+                    <link
+                        key="carousel_preload_desktop"
+                        as="image"
+                        fetchPriority="high"
+                        href={desktopImageSrc + '?width=1400'}
+                        media="(min-width: 770px)"
+                        rel="preload"
+                    />
+                </Head>
+            )}
+            <div className="vl:h-[425px] relative h-[250px] w-full grow md:h-[345px]">
+                <picture>
+                    <source media="(min-width: 769px)" srcSet={desktopImageSrc + '?width=1400'} />
+                    <source media="(max-width: 769px)" srcSet={mobileImageSrc + '?width=480'} />
+                    {/* eslint-disable-next-line jsx-a11y/alt-text */}
+                    <img
+                        {...mobileImageProps}
+                        className="h-full w-full object-cover"
+                        loading={isFirst ? 'eager' : 'lazy'}
+                    />
+                </picture>
+                {children}
+            </div>
+        </>
+    );
+};
