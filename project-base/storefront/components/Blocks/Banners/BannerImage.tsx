@@ -1,4 +1,6 @@
-import { Image } from 'components/Basic/Image/Image';
+import { getImageProps } from 'next/image';
+import { DragEvent } from 'react';
+import Head from 'next/head';
 
 type BannerImageProps = {
     mobileSrc: string;
@@ -15,28 +17,50 @@ export const BannerImage: FC<BannerImageProps> = ({
     desktopAlt,
     isFirst,
     children,
-}) => (
-    <div className="vl:h-[425px] relative h-[250px] w-full grow md:h-[345px]">
-        <Image
-            fill
-            alt={desktopAlt}
-            className="vl:block hidden h-full w-full object-cover"
-            loader={({ src }) => `${src}?width=936`}
-            priority={isFirst}
-            sizes="(max-width: 1023px) 100vw, 1400px"
-            src={desktopSrc}
-            onDragStart={(e) => e.preventDefault()}
-        />
-        <Image
-            fill
-            alt={mobileAlt}
-            className="vl:hidden block h-full w-full object-cover"
-            loader={({ src }) => `${src}?width=991`}
-            priority={isFirst}
-            sizes="(max-width: 1023px) 100vw, 50vw"
-            src={mobileSrc}
-            onDragStart={(e) => e.preventDefault()}
-        />
-        {children}
-    </div>
-);
+}) => {
+    const common = {
+        fill: true,
+        priority: isFirst,
+        onDragStart: (e: DragEvent<HTMLImageElement>) => e.preventDefault(),
+        loader: ({ src }: { src: string }) => `${src}`,
+        unoptimized: true,
+    };
+
+    const {
+        props: { src: desktop },
+    } = getImageProps({
+        ...common,
+        alt: desktopAlt,
+        src: desktopSrc,
+    });
+    const {
+        props: { src: mobile, ...rest },
+    } = getImageProps({
+        ...common,
+        alt: mobileAlt,
+        src: mobileSrc,
+    });
+
+    return (
+        <>
+            {isFirst && (
+                <Head>
+                    <link key="carousel_preload_mobile" as="image" fetchPriority="high" href={mobile + '?width=480'}
+                        media="(max-width: 769px)" rel="preload"
+                    />
+                    <link key="carousel_preload_desktop" as="image" fetchPriority="high" href={desktop + '?width=1400'}
+                          media="(min-width: 770px)" rel="preload"
+                    />
+                </Head>
+            )}
+            <div className="vl:h-[425px] relative h-[250px] w-full grow md:h-[345px]">
+                <picture>
+                    <source media="(min-width: 769px)" srcSet={desktop + '?width=1400'} />
+                    <source media="(max-width: 769px)" srcSet={mobile + '?width=480'} />
+                    <img {...rest} className="h-full w-full object-cover" src={mobile} />
+                </picture>
+                {children}
+            </div>
+        </>
+    );
+};
