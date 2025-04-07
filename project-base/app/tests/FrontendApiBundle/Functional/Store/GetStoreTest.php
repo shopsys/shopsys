@@ -96,13 +96,14 @@ class GetStoreTest extends GraphQlTestCase
                     'email',
                     'phone',
                     'directions',
-                    'latitude',
-                    'longitude',
                     'breadcrumb',
                 ],
                 $responseData,
                 $expectedStoreData,
             );
+
+            $this->assertStringStartsWith($expectedStoreData['latitude'], $responseData['latitude']);
+            $this->assertStringStartsWith($expectedStoreData['longitude'], $responseData['longitude']);
         }
     }
 
@@ -161,13 +162,14 @@ class GetStoreTest extends GraphQlTestCase
                     'email',
                     'phone',
                     'directions',
-                    'latitude',
-                    'longitude',
                     'breadcrumb',
                 ],
                 $responseData,
                 $expectedStoreData,
             );
+
+            $this->assertStringStartsWith($expectedStoreData['latitude'], $responseData['latitude']);
+            $this->assertStringStartsWith($expectedStoreData['longitude'], $responseData['longitude']);
         }
     }
 

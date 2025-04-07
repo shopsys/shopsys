@@ -25,6 +25,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -183,15 +184,17 @@ class StoreFormType extends AbstractType
     private function createMapGroup(FormBuilderInterface $builder): FormBuilderInterface
     {
         $builderMapGroup = $builder->create('map', GroupType::class, [
-            'label' => t('Map coordinates'),
+            'label' => t('Map coordinates in decimal format'),
         ]);
 
         $builderMapGroup
-            ->add('latitude', TextType::class, [
+            ->add('latitude', NumberType::class, [
                 'required' => false,
+                'scale' => 10,
             ])
-            ->add('longitude', TextType::class, [
+            ->add('longitude', NumberType::class, [
                 'required' => false,
+                'scale' => 10,
             ]);
 
         return $builderMapGroup;

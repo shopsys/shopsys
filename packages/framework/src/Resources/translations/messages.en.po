@@ -2605,7 +2605,7 @@ msgstr "M"
 msgid "Make modification"
 msgstr ""
 
-msgid "Map coordinates"
+msgid "Map coordinates in decimal format"
 msgstr ""
 
 msgid "Max duration (mm:ss)"

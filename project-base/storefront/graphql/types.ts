@@ -929,8 +929,8 @@ export type TypeContactFormInput = {
 };
 
 export type TypeCoordinates = {
-  latitude: Scalars['String']['input'];
-  longitude: Scalars['String']['input'];
+  latitude: Scalars['Float']['input'];
+  longitude: Scalars['Float']['input'];
 };
 
 /** Represents country */
