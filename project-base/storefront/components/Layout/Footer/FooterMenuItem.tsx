@@ -18,6 +18,7 @@ export const FooterMenuItem: FC<FooterMenuItemProps> = ({ items, title }) => (
                         href={item.__typename === 'ArticleSite' ? item.slug : item.url}
                         rel={item.external ? 'nofollow noreferrer noopener' : undefined}
                         target={item.external ? '_blank' : undefined}
+                        type="article"
                     >
                         {item.name}
                     </ExtendedNextLink>
