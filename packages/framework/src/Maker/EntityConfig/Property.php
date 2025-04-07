@@ -27,6 +27,14 @@ abstract class Property
     }
 
     /**
+     * @return string|null
+     */
+    public function getAdditionalInformation(): ?string
+    {
+        return null;
+    }
+
+    /**
      * @return string[]
      */
     abstract public function getAnnotationLines(): array;

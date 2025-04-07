@@ -26,6 +26,8 @@ class <?= $class_name; ?>
     private int $domainId;
 
 <?php foreach ($entity_config->getDomainPropertiesOnly() as $property): ?>
+    <?= PHP_EOL; ?>
+<?= $property->getAdditionalInformation(); ?>
     /**<?= PHP_EOL; ?>
      * <?= implode(PHP_EOL . '     * ', $property->getAnnotationLines()) . PHP_EOL; ?>
      */<?= PHP_EOL; ?>

@@ -405,7 +405,7 @@ class EntityFieldsConfigurator
             sprintf(
                 'What will be the property name in the <comment>%s</comment> class that should be used to map the relationship using "%s" setting? %s',
                 Str::getShortClassName($entityRelation->relationTargetEntity),
-                $entityRelation->getInverseSettingName(),
+                $entityRelation->getInverseSettingName($entityRelation->relationType),
                 $entityRelation->relationType !== EntityRelationTypeEnum::ONE_TO_MANY ? 'If you do not want to define this setting, i.e. you want the relation to be unidirectional, just press <return>.' : '',
             ),
             $entityRelation->relationType === EntityRelationTypeEnum::ONE_TO_MANY ? Str::asLowerCamelCase(Str::getShortClassName($entityRelation->relationOwningClass)) : null,

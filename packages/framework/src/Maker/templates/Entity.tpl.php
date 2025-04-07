@@ -55,6 +55,8 @@ class <?= $class_name; ?><?php if ($entity_config->isTranslatable): ?> extends A
 <?php endif ?>
 
 <?php foreach ($entity_config->getEntityPropertiesOnly() as $property): ?>
+    <?= PHP_EOL; ?>
+<?= $property->getAdditionalInformation(); ?>
     /**<?= PHP_EOL; ?>
      * <?= implode(PHP_EOL . '     * ', $property->getAnnotationLines()) . PHP_EOL; ?>
      */<?= PHP_EOL; ?>

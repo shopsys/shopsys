@@ -17,4 +17,17 @@ enum EntityRelationTypeEnum: string
     {
         return array_map(static fn (EntityRelationTypeEnum $case) => $case->value, self::cases());
     }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityRelationTypeEnum $relationType
+     * @return \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityRelationTypeEnum
+     */
+    public static function getInverseType(self $relationType): EntityRelationTypeEnum
+    {
+        return match ($relationType) {
+            self::MANY_TO_ONE => self::ONE_TO_MANY,
+            self::ONE_TO_MANY => self::MANY_TO_ONE,
+            self::MANY_TO_MANY => self::MANY_TO_MANY,
+        };
+    }
 }

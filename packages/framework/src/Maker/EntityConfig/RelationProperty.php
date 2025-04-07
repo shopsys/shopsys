@@ -48,7 +48,7 @@ class RelationProperty extends Property
         }
 
         if ($this->inverseProperty !== null) {
-            $options[] = sprintf('%s="%s"', $this->getInverseSettingName(), $this->inverseProperty);
+            $options[] = sprintf('%s="%s"', $this->getInverseSettingName($this->relationType), $this->inverseProperty);
         }
 
         $annotationLines = [];
@@ -100,10 +100,44 @@ class RelationProperty extends Property
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityRelationTypeEnum $relationType
      * @return string
      */
-    public function getInverseSettingName(): string
+    public function getInverseSettingName(EntityRelationTypeEnum $relationType): string
     {
-        return $this->relationType === EntityRelationTypeEnum::ONE_TO_MANY ? 'mappedBy' : 'inversedBy';
+        return $relationType === EntityRelationTypeEnum::ONE_TO_MANY ? 'mappedBy' : 'inversedBy';
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAdditionalInformation(): ?string
+    {
+        if ($this->inverseProperty === null) {
+            return null;
+        }
+
+        $infoLines = [
+            sprintf(
+                '// TODO Do not forget to add $%s property to %s class:',
+                $this->inverseProperty,
+                $this->relationTargetEntity,
+            ),
+            '//  /**',
+        ];
+
+        $inverseRelation = EntityRelationTypeEnum::getInverseType($this->relationType);
+        $infoLines[] = sprintf(
+            '//   * @ORM\%s(targetEntity="%s", %s="%s")',
+            $inverseRelation->value,
+            $this->relationOwningClass,
+            $inverseRelation === EntityRelationTypeEnum::MANY_TO_MANY ? 'mappedBy' : $this->getInverseSettingName($inverseRelation),
+            $this->propertyName,
+        );
+        $infoLines[] = '//   */';
+        $typehint = $inverseRelation === EntityRelationTypeEnum::MANY_TO_ONE ? $this->relationOwningClass : Collection::class;
+        $infoLines[] = sprintf('//  private \%s $%s;', $typehint, $this->inverseProperty);
+
+        return implode(PHP_EOL, $infoLines) . PHP_EOL;
     }
 }
