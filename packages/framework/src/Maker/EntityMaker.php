@@ -12,6 +12,7 @@ use Prezent\Doctrine\Translatable\Entity\AbstractTranslation;
 use Ramsey\Uuid\Uuid;
 use Shopsys\FrameworkBundle\Component\Domain\Domain;
 use Shopsys\FrameworkBundle\Maker\EntityConfig\EntityFieldsConfigurator;
+use Shopsys\FrameworkBundle\Maker\EntityConfig\EntityTypeEnum;
 use Shopsys\FrameworkBundle\Model\Localization\AbstractTranslatableEntity;
 use Symfony\Bundle\MakerBundle\ConsoleStyle;
 use Symfony\Bundle\MakerBundle\Generator;
@@ -152,6 +153,11 @@ class EntityMaker extends BaseMaker
             $useStatements[] = Uuid::class;
         }
 
+        if ($this->entityConfig->hasAnyRelationOfCollectionType()) {
+            $useStatements[] = ArrayCollection::class;
+            $useStatements[] = Collection::class;
+        }
+
         return $useStatements;
     }
 
@@ -269,14 +275,19 @@ class EntityMaker extends BaseMaker
             'Domain',
         );
 
+        $useStatements = ['Doctrine\ORM\Mapping as ORM'];
+
+        if ($this->entityConfig->hasAnyRelationOfCollectionType(EntityTypeEnum::DOMAIN)) {
+            $useStatements[] = ArrayCollection::class;
+            $useStatements[] = Collection::class;
+        }
+
         $generator->generateClass(
             $classNameDetails->getFullName(),
             __DIR__ . '/templates/EntityDomain.tpl.php',
             [
                 'entity_config' => $this->entityConfig,
-                'use_statements' => new UseStatementGenerator([
-                    'Doctrine\ORM\Mapping as ORM',
-                ]),
+                'use_statements' => new UseStatementGenerator($useStatements),
             ],
         );
         $generator->writeChanges();

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Maker\EntityConfig;
 
 use Doctrine\DBAL\Types\Type;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
-use Exception;
 use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionProperty;
@@ -22,9 +22,13 @@ class EntityFieldsConfigurator
 {
     /**
      * @param \Doctrine\Persistence\ManagerRegistry $managerRegistry
+     * @param \Doctrine\ORM\EntityManagerInterface $em
+     * @param array<string, string> $entityExtensionMap
      */
     public function __construct(
         private readonly ManagerRegistry $managerRegistry,
+        protected readonly EntityManagerInterface $em,
+        protected readonly array $entityExtensionMap,
     ) {
     }
 
@@ -35,11 +39,11 @@ class EntityFieldsConfigurator
     public function configureEntityFields(EntityConfig $entityConfig, ConsoleStyle $io): void
     {
         $io->writeln($this->getConfigurePropertiesMessage($entityConfig));
-        $this->askForFields($io, $entityConfig, PropertyTargetEnum::ENTITY);
+        $this->askForFields($io, $entityConfig, EntityTypeEnum::ENTITY);
 
         if ($entityConfig->isTranslatable) {
             $io->writeln(sprintf('<info>Now let\'s configure the properties of <comment>%s</comment> entity.</info>', $entityConfig->entityName . 'Translation'));
-            $this->askForFields($io, $entityConfig, PropertyTargetEnum::TRANSLATION);
+            $this->askForFields($io, $entityConfig, EntityTypeEnum::TRANSLATION);
         }
 
         if (!$entityConfig->isMultiDomain) {
@@ -47,17 +51,24 @@ class EntityFieldsConfigurator
         }
 
         $io->writeln(sprintf('<info>Now let\'s configure the properties of <comment>%s</comment> entity.</info>', $entityConfig->entityName . 'Domain'));
-        $this->askForFields($io, $entityConfig, PropertyTargetEnum::DOMAIN);
+        $this->askForFields($io, $entityConfig, EntityTypeEnum::DOMAIN);
     }
 
     /**
      * @param \Symfony\Bundle\MakerBundle\ConsoleStyle $io
      * @param string[] $fields
      * @param bool $isFirstField
-     * @return \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityProperty|null
+     * @param \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityConfig $entityConfig
+     * @param \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityTypeEnum $entityType
+     * @return \Shopsys\FrameworkBundle\Maker\EntityConfig\Property|null
      */
-    private function askForNextField(ConsoleStyle $io, array $fields, bool $isFirstField): ?EntityProperty
-    {
+    private function askForNextField(
+        ConsoleStyle $io,
+        array $fields,
+        bool $isFirstField,
+        EntityConfig $entityConfig,
+        EntityTypeEnum $entityType,
+    ): ?Property {
         $io->writeln('');
 
         if ($isFirstField) {
@@ -106,7 +117,11 @@ class EntityFieldsConfigurator
         $type = null;
         $types = $this->getTypesMap();
 
-        $allValidTypes = array_keys($types);
+        $allValidTypes = array_merge(
+            array_keys($types),
+            EntityRelationTypeEnum::getAllValues(),
+            ['relation'],
+        );
 
         while ($type === null) {
             $question = new Question('Field type (enter <comment>?</comment> to see all types)', $defaultType);
@@ -127,7 +142,11 @@ class EntityFieldsConfigurator
             }
         }
 
-        $entityProperty = new EntityProperty($fieldName, $type);
+        if ($type === 'relation' || in_array($type, EntityRelationTypeEnum::getAllValues(), true)) {
+            return $this->askRelationDetails($io, $entityConfig->getEntityFullyQualifiedName($entityType), $type, $fieldName, $entityType);
+        }
+
+        $entityProperty = new ScalarProperty($fieldName, $type, $entityType);
 
         if ($type === 'string') {
             // default to 255, avoid the question
@@ -222,8 +241,29 @@ class EntityFieldsConfigurator
             $io->writeln('');
         };
 
+        $printRelationsSection = static function () use ($io) {
+            if (getenv('TERM_PROGRAM') === 'Hyper') {
+                $wizard = 'wizard 🧙';
+            } else {
+                $wizard = DIRECTORY_SEPARATOR === '\\' ? 'wizard' : 'wizard 🧙';
+            }
+
+            $io->writeln(sprintf('  * <comment>relation</comment> a %s will help you build the relation', $wizard));
+
+            foreach (EntityRelationTypeEnum::getAllValues() as $relation) {
+                $line = sprintf('  * <comment>%s</comment>', $relation);
+
+                $io->writeln($line);
+            }
+
+            $io->writeln('');
+        };
+
         $io->writeln('<info>Main Types</info>');
         $printSection($typesTable['main']);
+
+        $io->writeln('<info>Relationships/Associations</info>');
+        $printRelationsSection();
 
         $io->writeln('<info>Array/Object Types</info>');
         $printSection($typesTable['array_object']);
@@ -264,31 +304,26 @@ class EntityFieldsConfigurator
     /**
      * @param \Symfony\Bundle\MakerBundle\ConsoleStyle $io
      * @param \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityConfig $entityConfig
-     * @param \Shopsys\FrameworkBundle\Maker\EntityConfig\PropertyTargetEnum $propertyTarget
+     * @param \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityTypeEnum $entityType
      */
     private function askForFields(
         ConsoleStyle $io,
         EntityConfig $entityConfig,
-        PropertyTargetEnum $propertyTarget,
+        EntityTypeEnum $entityType,
     ): void {
         $isFirstField = true;
-        $currentFields = $this->getPropertyNames($entityConfig->getEntityFullyQualifiedName());
+        $currentFields = $this->getPropertyNames($entityConfig->getEntityFullyQualifiedName($entityType));
 
         while (true) {
-            $newField = $this->askForNextField($io, $currentFields, $isFirstField);
+            $newField = $this->askForNextField($io, $currentFields, $isFirstField, $entityConfig, $entityType);
             $isFirstField = false;
 
             if ($newField === null) {
                 break;
             }
 
-            if (!($newField instanceof EntityProperty)) {
-                throw new Exception('Invalid value');
-            }
-
-            $currentFields[] = $newField->propertyName;
-            $newField->propertyTarget = $propertyTarget;
             $entityConfig->addProperty($newField);
+            $currentFields[] = $newField->propertyName;
         }
     }
 
@@ -327,5 +362,200 @@ class EntityFieldsConfigurator
         }
 
         return $configurePropertiesMessage;
+    }
+
+    /**
+     * @param \Symfony\Bundle\MakerBundle\ConsoleStyle $io
+     * @param string $generatedEntityClass
+     * @param string $type
+     * @param string $newFieldName
+     * @param \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityTypeEnum $entityType
+     * @return \Shopsys\FrameworkBundle\Maker\EntityConfig\RelationProperty
+     */
+    private function askRelationDetails(
+        ConsoleStyle $io,
+        string $generatedEntityClass,
+        string $type,
+        string $newFieldName,
+        EntityTypeEnum $entityType,
+    ): RelationProperty {
+        $targetEntityClass = null;
+        $entities = $this->getAllAvailableEntitiesChoices();
+
+        while ($targetEntityClass === null) {
+            $question = new Question('What class should this entity be related to?');
+            $question->setValidator(Validator::notBlank(...));
+
+            $question->setAutocompleterValues($entities);
+
+            $answeredEntityClass = $this->convertAutocompleteFormatToFqcn($io->askQuestion($question));
+
+            if (class_exists($answeredEntityClass)) {
+                $targetEntityClass = $answeredEntityClass;
+            } else {
+                $io->error(sprintf('Unknown class "%s"', $answeredEntityClass));
+            }
+        }
+
+        if ($type === 'relation') {
+            $type = $this->askRelationType($io, $generatedEntityClass, $targetEntityClass);
+        }
+
+        $askInversePropertyName = fn (RelationProperty $entityRelation) => $io->ask(
+            sprintf(
+                'What will be the property name in the <comment>%s</comment> class that should be used to map the relationship using "%s" setting? %s',
+                Str::getShortClassName($entityRelation->relationTargetEntity),
+                $entityRelation->getInverseSettingName(),
+                $entityRelation->relationType !== EntityRelationTypeEnum::ONE_TO_MANY ? 'If you do not want to define this setting, i.e. you want the relation to be unidirectional, just press <return>.' : '',
+            ),
+            $entityRelation->relationType === EntityRelationTypeEnum::ONE_TO_MANY ? Str::asLowerCamelCase(Str::getShortClassName($entityRelation->relationOwningClass)) : null,
+        );
+
+        $askIsNullable = static fn (string $propertyName, string $targetClass) => $io->confirm(sprintf(
+            'Is the <comment>%s</comment>.<comment>%s</comment> property allowed to be null (nullable)?',
+            Str::getShortClassName($targetClass),
+            $propertyName,
+        ));
+
+        $askOrphanRemoval = static function (string $owningClass, string $inverseClass) use ($io) {
+            $io->text([
+                'Do you want to activate <comment>orphanRemoval</comment> on your relationship?',
+                sprintf(
+                    'A <comment>%s</comment> is "orphaned" when it is removed from its related <comment>%s</comment>.',
+                    Str::getShortClassName($owningClass),
+                    Str::getShortClassName($inverseClass),
+                ),
+                sprintf(
+                    'e.g. <comment>$%s->remove%s($%s)</comment>',
+                    Str::asLowerCamelCase(Str::getShortClassName($inverseClass)),
+                    Str::asCamelCase(Str::getShortClassName($owningClass)),
+                    Str::asLowerCamelCase(Str::getShortClassName($owningClass)),
+                ),
+                '',
+                sprintf(
+                    'NOTE: If a <comment>%s</comment> may *change* from one <comment>%s</comment> to another, answer "no".',
+                    Str::getShortClassName($owningClass),
+                    Str::getShortClassName($inverseClass),
+                ),
+            ]);
+
+            return $io->confirm(sprintf('Do you want to automatically delete orphaned <comment>%s</comment> objects (orphanRemoval)?', $owningClass), false);
+        };
+
+        $relation = new RelationProperty(
+            $newFieldName,
+            EntityRelationTypeEnum::from($type),
+            $generatedEntityClass,
+            $targetEntityClass,
+            $entityType,
+        );
+
+        $relation->inverseProperty = $askInversePropertyName($relation);
+
+        if ($relation->relationType === EntityRelationTypeEnum::MANY_TO_ONE) {
+            $relation->isNullable = $askIsNullable(
+                $relation->propertyName,
+                $relation->relationOwningClass,
+            );
+        }
+
+        if ($relation->relationType === EntityRelationTypeEnum::ONE_TO_MANY) {
+            $relation->orphanRemoval = $askOrphanRemoval(
+                $relation->relationOwningClass,
+                $relation->relationTargetEntity,
+            );
+        }
+
+        return $relation;
+    }
+
+    /**
+     * @param \Symfony\Bundle\MakerBundle\ConsoleStyle $io
+     * @param string $entityClass
+     * @param string $targetEntityClass
+     * @return string
+     */
+    private function askRelationType(ConsoleStyle $io, string $entityClass, string $targetEntityClass): string
+    {
+        $io->writeln('What type of relationship is this?');
+
+        $originalEntityShort = Str::getShortClassName($entityClass);
+        $targetEntityShort = Str::getShortClassName($targetEntityClass);
+
+        $rows = [];
+        $rows[] = [
+            EntityRelationTypeEnum::MANY_TO_ONE->value,
+            sprintf("Each <comment>%s</comment> relates to (has) <info>one</info> <comment>%s</comment>.\nEach <comment>%s</comment> can relate to (can have) <info>many</info> <comment>%s</comment> objects.", $originalEntityShort, $targetEntityShort, $targetEntityShort, $originalEntityShort),
+        ];
+        $rows[] = ['', ''];
+        $rows[] = [
+            EntityRelationTypeEnum::ONE_TO_MANY->value,
+            sprintf("Each <comment>%s</comment> can relate to (can have) <info>many</info> <comment>%s</comment> objects.\nEach <comment>%s</comment> relates to (has) <info>one</info> <comment>%s</comment>.", $originalEntityShort, $targetEntityShort, $targetEntityShort, $originalEntityShort),
+        ];
+        $rows[] = ['', ''];
+        $rows[] = [
+            EntityRelationTypeEnum::MANY_TO_MANY->value,
+            sprintf("Each <comment>%s</comment> can relate to (can have) <info>many</info> <comment>%s</comment> objects.\nEach <comment>%s</comment> can also relate to (can also have) <info>many</info> <comment>%s</comment> objects.", $originalEntityShort, $targetEntityShort, $targetEntityShort, $originalEntityShort),
+        ];
+
+        $io->table([
+            'Type',
+            'Description',
+        ], $rows);
+
+        $question = new Question(sprintf(
+            'Relation type? [%s]',
+            implode(', ', EntityRelationTypeEnum::getAllValues()),
+        ));
+        $question->setAutocompleterValues(EntityRelationTypeEnum::getAllValues());
+        $question->setValidator(function ($type) {
+            if (!in_array($type, EntityRelationTypeEnum::getAllValues(), true)) {
+                throw new InvalidArgumentException(sprintf('Invalid type: use one of: %s', implode(', ', EntityRelationTypeEnum::getAllValues())));
+            }
+
+            return $type;
+        });
+
+        return $io->askQuestion($question);
+    }
+
+    /**
+     * @return string[]
+     */
+    private function getAllAvailableEntitiesChoices(): array
+    {
+        $allEntityNames = $this->em->getConfiguration()->getMetadataDriverImpl()?->getAllClassNames() ?? [];
+        $allEntityNames = array_combine($allEntityNames, $allEntityNames);
+
+        $array = array_values(array_diff_key($allEntityNames, array_flip(array_keys($this->entityExtensionMap))));
+
+        return array_map($this->convertFqcnToAutocompleteFormat(...), $array);
+    }
+
+    /**
+     * Converts a fully qualified class name to a format suitable for autocompletion.
+     * E.g. "Shopsys\FrameworkBundle\Model\Store\Store" -> "Store (Shopsys\FrameworkBundle\Model\Store\Store)"
+     *
+     * @param string $fqcn
+     * @return string
+     */
+    private function convertFqcnToAutocompleteFormat(string $fqcn): string
+    {
+        $className = Str::getShortClassName($fqcn);
+
+        return sprintf('%s (%s)', $className, $fqcn);
+    }
+
+    /**
+     * @param string $autocompleteFormat
+     * @return string
+     */
+    private function convertAutocompleteFormatToFqcn(string $autocompleteFormat): string
+    {
+        if (preg_match('/\((.*?)\)$/', $autocompleteFormat, $matches)) {
+            return $matches[1];
+        }
+
+        return $autocompleteFormat;
     }
 }

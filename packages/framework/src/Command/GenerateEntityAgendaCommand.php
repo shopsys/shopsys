@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Shopsys\FrameworkBundle\Command;
 
 use Exception;
+use Override;
 use RuntimeException;
 use Shopsys\FrameworkBundle\Maker\BaseMaker;
 use Shopsys\FrameworkBundle\Maker\DataFixtureMaker;
@@ -38,6 +39,7 @@ class GenerateEntityAgendaCommand extends Command
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function configure(): void
     {
         $this->addArgument(BaseMaker::ENTITY_NAME_ARGUMENT, InputArgument::REQUIRED, 'The entity name (e.g. <fg=yellow>Kitty</>)');
@@ -46,6 +48,7 @@ class GenerateEntityAgendaCommand extends Command
     /**
      * {@inheritdoc}
      */
+    #[Override]
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);

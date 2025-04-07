@@ -21,7 +21,7 @@ class EntityConfig
     public bool $hasUuid;
 
     /**
-     * @var \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityProperty[]
+     * @var \Shopsys\FrameworkBundle\Maker\EntityConfig\Property[]
      */
     private array $properties = [];
 
@@ -34,23 +34,32 @@ class EntityConfig
     }
 
     /**
+     * @param \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityTypeEnum $entityType
      * @return string
      */
-    public function getEntityFullyQualifiedName(): string
+    public function getEntityFullyQualifiedName(EntityTypeEnum $entityType = EntityTypeEnum::ENTITY): string
     {
-        return $this->getEntityNamespace() . $this->entityName;
+        $entityName = $this->getEntityNamespace() . $this->entityName;
+
+        if ($entityType === EntityTypeEnum::TRANSLATION) {
+            $entityName .= 'Translation';
+        } elseif ($entityType === EntityTypeEnum::DOMAIN) {
+            $entityName .= 'Domain';
+        }
+
+        return $entityName;
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityProperty $entityProperty
+     * @param \Shopsys\FrameworkBundle\Maker\EntityConfig\Property $entityProperty
      */
-    public function addProperty(EntityProperty $entityProperty): void
+    public function addProperty(Property $entityProperty): void
     {
         $this->properties[] = $entityProperty;
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityProperty[]
+     * @return \Shopsys\FrameworkBundle\Maker\EntityConfig\Property[]
      */
     public function getAllProperties(): array
     {
@@ -58,33 +67,33 @@ class EntityConfig
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityProperty[]
+     * @return \Shopsys\FrameworkBundle\Maker\EntityConfig\Property[]
      */
     public function getTranslationPropertiesOnly(): array
     {
-        return $this->filterPropertiesByTarget(PropertyTargetEnum::TRANSLATION);
+        return $this->filterPropertiesByEntityType(EntityTypeEnum::TRANSLATION);
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityProperty[]
+     * @return \Shopsys\FrameworkBundle\Maker\EntityConfig\Property[]
      */
     public function getEntityPropertiesOnly(): array
     {
-        return $this->filterPropertiesByTarget(PropertyTargetEnum::ENTITY);
+        return $this->filterPropertiesByEntityType(EntityTypeEnum::ENTITY);
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityProperty[]
+     * @return \Shopsys\FrameworkBundle\Maker\EntityConfig\Property[]
      */
     public function getDomainPropertiesOnly(): array
     {
-        return $this->filterPropertiesByTarget(PropertyTargetEnum::DOMAIN);
+        return $this->filterPropertiesByEntityType(EntityTypeEnum::DOMAIN);
     }
 
     /**
-     * @return \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityProperty|null
+     * @return \Shopsys\FrameworkBundle\Maker\EntityConfig\Property|null
      */
-    public function findFirstDomainProperty(): ?EntityProperty
+    public function findFirstDomainProperty(): ?Property
     {
         $domainPropertiesOnly = $this->getDomainPropertiesOnly();
 
@@ -96,11 +105,26 @@ class EntityConfig
     }
 
     /**
-     * @param \Shopsys\FrameworkBundle\Maker\EntityConfig\PropertyTargetEnum $propertyTargetEnum
-     * @return \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityProperty[]
+     * @param \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityTypeEnum $entityTypeEnum
+     * @return \Shopsys\FrameworkBundle\Maker\EntityConfig\Property[]
      */
-    private function filterPropertiesByTarget(PropertyTargetEnum $propertyTargetEnum): array
+    private function filterPropertiesByEntityType(EntityTypeEnum $entityTypeEnum): array
     {
-        return array_filter($this->properties, static fn (EntityProperty $property) => $property->propertyTarget === $propertyTargetEnum);
+        return array_filter($this->properties, static fn (Property $property) => $property->entityType === $entityTypeEnum);
+    }
+
+    /**
+     * @param \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityTypeEnum $fieldTargetEnum
+     * @return bool
+     */
+    public function hasAnyRelationOfCollectionType(EntityTypeEnum $fieldTargetEnum = EntityTypeEnum::ENTITY): bool
+    {
+        foreach ($this->filterPropertiesByEntityType($fieldTargetEnum) as $property) {
+            if ($property->isCollection()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

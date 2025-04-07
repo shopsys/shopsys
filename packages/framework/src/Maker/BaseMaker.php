@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Maker;
 
+use Override;
 use Shopsys\FrameworkBundle\Command\EntitiesDumpCommand;
 use Shopsys\FrameworkBundle\Maker\EntityConfig\EntityConfig;
 use Shopsys\FrameworkBundle\Maker\EntityConfig\EntityConfigFactory;
@@ -50,6 +51,7 @@ abstract class BaseMaker extends AbstractMaker
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function configureCommand(Command $command, InputConfiguration $inputConfig)
     {
         $command
@@ -59,6 +61,7 @@ abstract class BaseMaker extends AbstractMaker
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function interact(InputInterface $input, ConsoleStyle $io, Command $command)
     {
         parent::interact($input, $io, $command);
@@ -69,6 +72,7 @@ abstract class BaseMaker extends AbstractMaker
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function generate(InputInterface $input, ConsoleStyle $io, Generator $generator): void
     {
         $classNameDetails = $this->createClassNameDetails($generator);
@@ -182,6 +186,7 @@ abstract class BaseMaker extends AbstractMaker
     /**
      * {@inheritdoc}
      */
+    #[Override]
     public function configureDependencies(DependencyBuilder $dependencies)
     {
     }

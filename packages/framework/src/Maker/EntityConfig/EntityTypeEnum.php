@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Shopsys\FrameworkBundle\Maker\EntityConfig;
 
-enum PropertyTargetEnum
+enum EntityTypeEnum
 {
     case ENTITY;
     case TRANSLATION;

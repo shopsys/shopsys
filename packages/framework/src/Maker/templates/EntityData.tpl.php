@@ -11,6 +11,6 @@ class <?= $class_name; ?>
     public ?string $uuid;
 <?php endif; ?>
 <?php foreach ($entity_config->getAllProperties() as $property): ?>
-    public <?= $property->isForTranslation() || $property->isForDomain() ? 'array' : $property->getTypeHint(); ?> $<?= $property->propertyName; ?>;
+    public <?= $property->isForTranslation() || $property->isForDomain() ? 'array' : $property->getTypeHint(true); ?> $<?= $property->propertyName; ?>;
 <?php endforeach; ?>
 }

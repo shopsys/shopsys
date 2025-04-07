@@ -1,3 +1,6 @@
+<?php
+use Shopsys\FrameworkBundle\Maker\EntityConfig\EntityTypeEnum;
+?>
 <?= "<?php\n"; ?>
 <?php /** @var \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityConfig $entity_config */ ?>
 
@@ -11,8 +14,8 @@ namespace <?= $namespace; ?>;
  * @ORM\Table(name="<?= $entity_config->tableName ?>")
  * @ORM\Entity
 <?php if ($entity_config->isTranslatable): ?>
- * @method \<?= $entity_config->getEntityFullyQualifiedName(); ?>Translation translation(?string $locale = null)
- * @method \Doctrine\Common\Collections\Collection<int, \<?= $entity_config->getEntityFullyQualifiedName(); ?>Translation> getTranslations()
+ * @method \<?= $entity_config->getEntityFullyQualifiedName(EntityTypeEnum::TRANSLATION); ?> translation(?string $locale = null)
+ * @method \Doctrine\Common\Collections\Collection<int, \<?= $entity_config->getEntityFullyQualifiedName(EntityTypeEnum::TRANSLATION); ?>> getTranslations()
 <?php endif; ?>
  */
 class <?= $class_name; ?><?php if ($entity_config->isTranslatable): ?> extends AbstractTranslatableEntity<?php endif ?>
@@ -37,16 +40,16 @@ class <?= $class_name; ?><?php if ($entity_config->isTranslatable): ?> extends A
 
 <?php if ($entity_config->isTranslatable): ?>
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \<?= $entity_config->getEntityFullyQualifiedName(); ?>Translation>
-     * @Prezent\Translations(targetEntity="<?= $entity_config->getEntityFullyQualifiedName(); ?>Translation")
+     * @var \Doctrine\Common\Collections\Collection<int, \<?= $entity_config->getEntityFullyQualifiedName(EntityTypeEnum::TRANSLATION); ?>>
+     * @Prezent\Translations(targetEntity="<?= $entity_config->getEntityFullyQualifiedName(EntityTypeEnum::TRANSLATION); ?>")
      */
     protected $translations;
 <?php endif ?>
 
 <?php if ($entity_config->isMultiDomain): ?>
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \<?= $entity_config->getEntityFullyQualifiedName(); ?>Domain>
-     * @ORM\OneToMany(targetEntity="<?= $entity_config->getEntityFullyQualifiedName(); ?>Domain", mappedBy="<?= lcfirst($entity_config->entityName) ?>", cascade={"persist"}, fetch="EXTRA_LAZY")
+     * @var \Doctrine\Common\Collections\Collection<int, \<?= $entity_config->getEntityFullyQualifiedName(EntityTypeEnum::DOMAIN); ?>>
+     * @ORM\OneToMany(targetEntity="<?= $entity_config->getEntityFullyQualifiedName(EntityTypeEnum::DOMAIN); ?>", mappedBy="<?= lcfirst($entity_config->entityName) ?>", cascade={"persist"}, fetch="EXTRA_LAZY")
      */
     private Collection $domains;
 <?php endif ?>
@@ -71,6 +74,11 @@ class <?= $class_name; ?><?php if ($entity_config->isTranslatable): ?> extends A
         $this->domains = new ArrayCollection();
         $this->createDomains($<?= lcfirst($entity_config->entityName); ?>Data);
 <?php endif ?>
+<?php foreach ($entity_config->getEntityPropertiesOnly() as $property): ?>
+        <?php if ($property->isCollection()): ?>
+            $this-><?= $property->propertyName; ?> = new ArrayCollection();<?= PHP_EOL; ?>
+        <?php endif; ?>
+<?php endforeach; ?>
 
         $this->setData($<?= lcfirst($entity_config->entityName); ?>Data);
     }
@@ -90,7 +98,9 @@ class <?= $class_name; ?><?php if ($entity_config->isTranslatable): ?> extends A
 <?php endif ?>
 
 <?php foreach ($entity_config->getEntityPropertiesOnly() as $property): ?>
+    <?php if ($property->isCollection() === false): ?>
         $this-><?= $property->propertyName; ?> = $<?= lcfirst($entity_config->entityName); ?>Data-><?= $property->propertyName; ?>;
+    <?php endif; ?>
 <?php endforeach; ?>
     }
 
@@ -162,14 +172,14 @@ class <?= $class_name; ?><?php if ($entity_config->isTranslatable): ?> extends A
 <?php endif ?>
 
 <?php foreach ($entity_config->getAllProperties() as $property): ?>
-    public function <?= $property->getGetterName(); ?>(<?php if ($property->isForTranslation()): ?>?string $locale = null<?php elseif ($property->isForDomain()): ?>int $domainId<?php endif ?>): <?= $property->getTypeHint(); ?>
+    public function <?= $property->getGetterName(); ?>(<?php if ($property->isForTranslation()): ?>?string $locale = null<?php elseif ($property->isForDomain()): ?>int $domainId<?php endif ?>): <?= $property->getTypeHint(true); ?>
     {
         <?php if ($property->isForTranslation()): ?>
             return $this->translation($locale)-><?= $property->getGetterName(); ?>();
         <?php elseif ($property->isForDomain()): ?>
             return $this->get<?= $entity_config->entityName; ?>Domain($domainId)-><?= $property->getGetterName(); ?>();
         <?php else: ?>
-            return $this-><?= $property->propertyName; ?>;
+            return $this-><?= $property->propertyName; ?><?= $property->isCollection() ? '->getValues()' : '' ?>;
         <?php endif ?>
     }
     <?= PHP_EOL; ?>

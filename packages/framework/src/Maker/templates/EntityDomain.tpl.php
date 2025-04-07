@@ -37,6 +37,11 @@ class <?= $class_name; ?>
     {
         $this-><?= lcfirst($entity_config->entityName); ?> = $<?= lcfirst($entity_config->entityName); ?>;
         $this->domainId = $domainId;
+<?php foreach ($entity_config->getDomainPropertiesOnly() as $property): ?>
+    <?php if ($property->isCollection()): ?>
+        $this-><?= $property->propertyName; ?> = new ArrayCollection();<?= PHP_EOL; ?>
+    <?php endif; ?>
+<?php endforeach; ?>
     }
 
     public function getDomainId(): int
@@ -45,9 +50,9 @@ class <?= $class_name; ?>
     }
 
 <?php foreach ($entity_config->getDomainPropertiesOnly() as $property): ?>
-    public function <?= $property->getGetterName(); ?>(): <?= $property->getTypeHint(); ?>
+    public function <?= $property->getGetterName(); ?>(): <?= $property->getTypeHint(true); ?>
     {
-        return $this-><?= $property->propertyName; ?>;
+        return $this-><?= $property->propertyName; ?><?= $property->isCollection() ? '->getValues()' : '' ?>;
     }
 <?php endforeach; ?>
 

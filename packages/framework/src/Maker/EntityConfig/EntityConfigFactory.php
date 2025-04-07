@@ -6,6 +6,7 @@ namespace Shopsys\FrameworkBundle\Maker\EntityConfig;
 
 use Shopsys\FrameworkBundle\Maker\BaseMaker;
 use Shopsys\FrameworkBundle\Maker\EntityMaker;
+use Shopsys\FrameworkBundle\Maker\Utils\NamingHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
@@ -19,7 +20,7 @@ class EntityConfigFactory
     public function create(InputInterface $input, SymfonyStyle $io): EntityConfig
     {
         $entityConfig = $this->createWithEntityNameOnly($input);
-        $entityConfig->tableName = $this->findOptionValue($input, EntityMaker::TABLE_NAME_OPTION) ?? $io->ask('What is the table name?', $this->convertEntityNameToTableName($entityConfig->entityName));
+        $entityConfig->tableName = $this->findOptionValue($input, EntityMaker::TABLE_NAME_OPTION) ?? $io->ask('What is the table name?', NamingHelper::convertEntityNameToTableName($entityConfig->entityName));
         $entityConfig->isTranslatable = $this->findOptionValue($input, EntityMaker::IS_TRANSLATABLE_OPTION) ?? $io->confirm('Is the entity translatable?', false);
         $entityConfig->isMultiDomain = $this->findOptionValue($input, EntityMaker::IS_MULTI_DOMAIN_OPTION) ?? $io->confirm('Is the entity multi domain?', false);
         $entityConfig->hasId = $this->findOptionValue($input, EntityMaker::HAS_ID_OPTION) ?? $io->confirm('Does the entity have an ID?');
@@ -39,24 +40,6 @@ class EntityConfigFactory
         $entityConfig->entityName = ucfirst($input->getArgument(BaseMaker::ENTITY_NAME_ARGUMENT));
 
         return $entityConfig;
-    }
-
-    /**
-     * @param string $entityName
-     * @return string
-     */
-    protected function convertEntityNameToTableName(string $entityName): string
-    {
-        $pattern = '/(?<=\\w)(?=[A-Z])|(?<=[a-z])(?=\d)/';
-        $entityNameInSnakeCase = strtolower(preg_replace($pattern, '_', $entityName));
-
-        $lastLetter = strtolower($entityNameInSnakeCase[strlen($entityNameInSnakeCase) - 1]);
-
-        return match ($lastLetter) {
-            'y' => substr($entityNameInSnakeCase, 0, -1) . 'ies',
-            's' => $entityNameInSnakeCase . 'es',
-            default => $entityNameInSnakeCase . 's',
-        };
     }
 
     /**

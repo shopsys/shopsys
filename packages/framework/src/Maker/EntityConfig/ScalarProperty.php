@@ -12,12 +12,12 @@ use Shopsys\FrameworkBundle\Component\Money\Money;
 /**
  * Heavily inspired by @see \Symfony\Bundle\MakerBundle\Util\ClassSource\Model\ClassProperty
  */
-class EntityProperty
+class ScalarProperty extends Property
 {
     /**
      * @param string $propertyName
      * @param string $type
-     * @param \Shopsys\FrameworkBundle\Maker\EntityConfig\PropertyTargetEnum $propertyTarget
+     * @param \Shopsys\FrameworkBundle\Maker\EntityConfig\EntityTypeEnum $entityType
      * @param int|null $length
      * @param bool|null $nullable
      * @param array $options
@@ -29,7 +29,7 @@ class EntityProperty
     public function __construct(
         public string $propertyName,
         public string $type,
-        public PropertyTargetEnum $propertyTarget = PropertyTargetEnum::ENTITY,
+        public EntityTypeEnum $entityType = EntityTypeEnum::ENTITY,
         public ?int $length = null,
         public ?bool $nullable = null,
         public array $options = [],
@@ -92,9 +92,10 @@ class EntityProperty
     }
 
     /**
+     * @param bool $collectionAsArray
      * @return string
      */
-    public function getTypeHint(): string
+    public function getTypeHint(bool $collectionAsArray = false): string
     {
         $typeMapping = [
             'string' => ['string', 'ascii_string', 'text', 'guid', 'enum'],
@@ -131,16 +132,8 @@ class EntityProperty
     /**
      * @return bool
      */
-    public function isForTranslation(): bool
+    public function isCollection(): bool
     {
-        return $this->propertyTarget === PropertyTargetEnum::TRANSLATION;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isForDomain(): bool
-    {
-        return $this->propertyTarget === PropertyTargetEnum::DOMAIN;
+        return false;
     }
 }
