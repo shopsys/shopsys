@@ -56,14 +56,14 @@ export const Pagination: FC<PaginationProps> = ({
     const seenProducts = currentPageWithLoadMore * pageSize;
     const remainingProducts = totalCount - seenProducts;
     const loadMoreCount = remainingProducts > pageSize ? pageSize : remainingProducts;
-    const loadMoreTranslation =
+    const itemsLabel =
         type === 'blog' ? t('articles count', { count: loadMoreCount }) : t('products count', { count: loadMoreCount });
 
     return (
         <div className="vl:flex-row flex flex-col items-center justify-between gap-5">
             {isWithLoadMore && hasNextPage && (
                 <Button className="px-3" variant="inverted" onClick={loadMore}>
-                    {t('Load more')} {loadMoreCount} {loadMoreTranslation}
+                    {t('Load {{ count }} more {{ items }}', { count: loadMoreCount, items: itemsLabel })}
                 </Button>
             )}
 

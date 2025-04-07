@@ -22,6 +22,7 @@ export const CategoryBestsellers: FC<CategoryBestsellersProps> = ({ products }) 
     useGtmSliderProductListViewEvent(shownProducts, GtmProductListNameType.bestsellers);
 
     const showMoreCount = products.length - NUMBER_OF_VISIBLE_ITEMS;
+    const itemsLabel = t('products count', { count: showMoreCount });
 
     return (
         <div className="bg-backgroundMore relative mb-5 rounded-xl p-5">
@@ -50,13 +51,9 @@ export const CategoryBestsellers: FC<CategoryBestsellersProps> = ({ products }) 
                         className="font-secondary text-link hover:text-linkHovered cursor-pointer text-sm font-semibold underline"
                         onClick={() => setIsCollapsed((prev) => !prev)}
                     >
-                        {isCollapsed ? (
-                            <>
-                                {t('Show more')} {showMoreCount} {t('products count', { count: showMoreCount })}
-                            </>
-                        ) : (
-                            t('Show less')
-                        )}
+                        {isCollapsed
+                            ? t('Show {{ count }} more {{ items }}', { count: showMoreCount, items: itemsLabel })
+                            : t('Show less')}
                     </button>
                 </div>
             )}
