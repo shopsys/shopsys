@@ -167,26 +167,28 @@ abstract class AbstractAction
      */
     private function parseAttributesToHTML(): string
     {
-        return array_reduce(
-            array_keys($this->attributes),
-            function (string $carry, string $key): string {
-                $value = $this->attributes[$key];
+        $html = '';
 
-                if ($value === null) {
-                    $value = false;
-                }
+        foreach ($this->attributes as $key => $value) {
+            if ($value === null || $value === false) {
+                continue;
+            }
 
-                if ($value === true && str_starts_with($key, 'aria-')) {
-                    $value = 'true';
-                }
+            if ($value === true && str_starts_with($key, 'aria-') === true) {
+                $html = sprintf('%s %s="%s"', $html, $key, 'true');
 
-                return match ($value) {
-                    true => "{$carry} {$key}",
-                    false => $carry,
-                    default => sprintf('%s %s="%s"', $carry, $key, $value),
-                };
-            },
-            '',
-        );
+                continue;
+            }
+
+            if ($value === true) {
+                $html = "{$html} {$key}";
+
+                continue;
+            }
+
+            $html = sprintf('%s %s="%s"', $html, $key, htmlspecialchars((string)$value, ENT_QUOTES));
+        }
+
+        return $html;
     }
 }
