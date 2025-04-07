@@ -550,4 +550,13 @@ class CategoryFacade
     {
         return $this->categoryRepository->getFullPathsIndexedByIds($locale);
     }
+
+    /**
+     * @param int $domainsCount
+     * @return array<int, string>
+     */
+    public function getVisibilityOfCategoriesIndexedById(int $domainsCount): array
+    {
+        return $this->categoryRepository->getVisibilityOfCategoriesIndexedById($domainsCount);
+    }
 }

@@ -15,16 +15,35 @@
 {% block main_content %}
     {{ render(controller('Shopsys\\FrameworkBundle\\Controller\\Admin\\DomainFilterController::domainFilterTabsAction', { namespace: domainFilterNamespace })) }}
 
-    {% macro categoryTreeItem(categoriesWithPreloadedChildren, isFirstLevel, disabledFormFields, allCategoryIdsInSeoMixes) %}
+    {% macro categoryTreeItem(categoriesWithPreloadedChildren, isFirstLevel, disabledFormFields, allCategoryIdsInSeoMixes, visibilityOfCategoriesIndexedById) %}
         {% import _self as self %}
         <ul class="{{ disabledFormFields ? '' : 'js-category-tree-items' }} {{ isFirstLevel ? 'form-tree__content' : '' }}">
             {% for categoryWithPreloadedChildren in categoriesWithPreloadedChildren %}
+                {% set category = categoryWithPreloadedChildren.category %}
                 {% set categoryHasSeoMix = categoryWithPreloadedChildren.category.id in allCategoryIdsInSeoMixes ? true : false %}
                 <li class="js-category-tree-item form-tree__item" id="js-category-tree-{{ categoryWithPreloadedChildren.category.id }}">
                     <div class="{{ disabledFormFields ? '' : 'js-category-tree-item-line' }} form-tree__item__drag">
                         <img src="{{ asset('public/admin/images/icons/level.png') }}" class="form-tree__item__icon form-tree__item__icon--level" />
                         <span class="js-category-tree-item-line  js-category-tree-item-handle form-tree__item__name">{{ categoryWithPreloadedChildren.category.name }}</span>
                         <span class="js-category-tree-item-icons form-tree__item__controls">
+                            {% if visibilityOfCategoriesIndexedById is not null %}
+                                {% if visibilityOfCategoriesIndexedById[category.id] is defined %}
+                                    {% if visibilityOfCategoriesIndexedById[category.id] is same as('all') %}
+                                        <span style="color: green" title="{{ 'Category is visible on all domains'|trans }}">
+                                            {{ ux_icon('visible') }}
+                                        </span>
+                                    {% else %}
+                                        <span style="color: orange" title="{{ 'Category is visible on some domains'|trans }}">
+                                            {{ ux_icon('visible') }}
+                                        </span>
+                                    {% endif %}
+                                {% else %}
+                                    <span title="{{ 'Category is hidden on all domains'|trans }}">
+                                        {{ ux_icon('invisible') }}
+                                    </span>
+                                {% endif %}
+                            {% endif %}
+
                             <a href="{{ url('admin_category_edit', {id: categoryWithPreloadedChildren.category.id}) }}" class="form-tree__item__control">
                                 {{ ux_icon('pencil') }}
                             </a>
@@ -41,7 +60,7 @@
                             </a>
                         </span>
                     </div>
-                    {{ self.categoryTreeItem(categoryWithPreloadedChildren.children, false, disabledFormFields, allCategoryIdsInSeoMixes) }}
+                    {{ self.categoryTreeItem(categoryWithPreloadedChildren.children, false, disabledFormFields, allCategoryIdsInSeoMixes, visibilityOfCategoriesIndexedById) }}
                 </li>
             {% endfor %}
         </ul>
@@ -51,7 +70,7 @@
         <div class="wrap-divider">
             <div class="form-line">
                 <div id="js-category-tree-sorting" class="form-tree form-tree--open form-tree--dragable">
-                    {{ self.categoryTreeItem(categoriesWithPreloadedChildren, true, disabledFormFields, allCategoryIdsInSeoMixes) }}
+                    {{ self.categoryTreeItem(categoriesWithPreloadedChildren, true, disabledFormFields, allCategoryIdsInSeoMixes, visibilityOfCategoriesIndexedById) }}
                 </div>
             </div>
         </div>
@@ -77,7 +96,7 @@
         <div class="wrap-divider">
             <div class="form-line">
                 <div class="form-tree form-tree--open form-tree--dragable">
-                    {{ self.categoryTreeItem(categoriesWithPreloadedChildren, true, disabledFormFields, allCategoryIdsInSeoMixes) }}
+                    {{ self.categoryTreeItem(categoriesWithPreloadedChildren, true, disabledFormFields, allCategoryIdsInSeoMixes, visibilityOfCategoriesIndexedById) }}
                 </div>
             </div>
         </div>
