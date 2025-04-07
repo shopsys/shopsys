@@ -24,8 +24,6 @@ abstract class AbstractCrudController extends AbstractController
 {
     private ?CrudConfigData $config = null;
 
-    private ?ActionsConfig $actions = null;
-
     #[Required]
     public DatagridFactory $datagridFactory;
 
@@ -37,29 +35,23 @@ abstract class AbstractCrudController extends AbstractController
 
     /**
      * @param \Shopsys\AdministrationBundle\Component\Config\CrudConfig $config
-     * @return \Shopsys\AdministrationBundle\Component\Config\CrudConfig
      */
-    protected function configure(CrudConfig $config): CrudConfig
+    protected function configure(CrudConfig $config): void
     {
-        return $config;
     }
 
     /**
      * @param \Shopsys\AdministrationBundle\Component\Config\ActionsConfig $actions
-     * @return \Shopsys\AdministrationBundle\Component\Config\ActionsConfig
      */
-    protected function configureActions(ActionsConfig $actions): ActionsConfig
+    protected function configureActions(ActionsConfig $actions): void
     {
-        return $actions;
     }
 
     /**
      * @param \Shopsys\AdministrationBundle\Component\Datagrid\Datagrid $datagrid
-     * @return \Shopsys\AdministrationBundle\Component\Datagrid\Datagrid
      */
-    protected function configureDatagrid(Datagrid $datagrid): Datagrid
+    protected function configureDatagrid(Datagrid $datagrid): void
     {
-        return $datagrid;
     }
 
     /**
@@ -86,10 +78,10 @@ abstract class AbstractCrudController extends AbstractController
             'crudConfig' => $this->getConfig(),
             'name' => $this->getConfig()->getEntityName(),
         ]);
-        $datagrid = $this->configureDatagrid($datagrid);
+        $this->configureDatagrid($datagrid);
 
         foreach ($extensions as $extension) {
-            $datagrid = $extension->configureDatagrid($datagrid);
+            $extension->configureDatagrid($datagrid);
         }
 
         return $this->render('@ShopsysAdministration/crud/list.html.twig', [
@@ -149,15 +141,15 @@ abstract class AbstractCrudController extends AbstractController
      */
     final protected function getConfiguredActions(ActionType $actionType): array
     {
-        if ($this->actions === null) {
-            $this->actions = $this->configureActions(new ActionsConfig(static::class, $this->getConfig()->getActions()));
-        }
+        $actionsConfig = new ActionsConfig(static::class, $this->getConfig()->getActions());
+
+        $this->configureActions($actionsConfig);
 
         foreach ($this->crudControllerExtensionsRegistry->getExtensions(static::class) as $extension) {
-            $this->actions = $extension->configureActions($this->actions);
+            $extension->configureActions($actionsConfig);
         }
 
-        return $this->actions->getActions($actionType);
+        return $actionsConfig->getActions($actionType);
     }
 
     /**
@@ -174,7 +166,15 @@ abstract class AbstractCrudController extends AbstractController
             }
 
             $entityClass = $attributes[0]->newInstance()->entityClass;
-            $this->config = $this->configure(new CrudConfig(static::class, $entityClass))->getConfig();
+
+            $config = new CrudConfig(static::class, $entityClass);
+            $this->configure($config);
+
+            foreach ($this->crudControllerExtensionsRegistry->getExtensions(static::class) as $extension) {
+                $extension->configure($config);
+            }
+
+            $this->config = $config->getConfig();
         }
 
         return $this->config;

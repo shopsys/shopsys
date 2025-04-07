@@ -13,29 +13,23 @@ abstract class AbstractCrudControllerExtension
 {
     /**
      * @param \Shopsys\AdministrationBundle\Component\Config\CrudConfig $config
-     * @return \Shopsys\AdministrationBundle\Component\Config\CrudConfig
      */
-    public function configure(CrudConfig $config): CrudConfig
+    public function configure(CrudConfig $config): void
     {
-        return $config;
     }
 
     /**
      * @param \Shopsys\AdministrationBundle\Component\Config\ActionsConfig $actions
-     * @return \Shopsys\AdministrationBundle\Component\Config\ActionsConfig
      */
-    public function configureActions(ActionsConfig $actions): ActionsConfig
+    public function configureActions(ActionsConfig $actions): void
     {
-        return $actions;
     }
 
     /**
      * @param \Shopsys\AdministrationBundle\Component\Datagrid\Datagrid $datagrid
-     * @return \Shopsys\AdministrationBundle\Component\Datagrid\Datagrid
      */
-    public function configureDatagrid(Datagrid $datagrid): Datagrid
+    public function configureDatagrid(Datagrid $datagrid): void
     {
-        return $datagrid;
     }
 
     /**

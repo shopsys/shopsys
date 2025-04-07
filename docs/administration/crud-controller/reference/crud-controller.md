@@ -80,9 +80,9 @@ Example:
 ```php
 // ProductsController
 
-    protected function configure(CrudConfig $config): CrudConfig
+    protected function configure(CrudConfig $config): void
     {
-        return $config
+        $config
             ->setRoutePrefix('/new/')
         ;
     }

@@ -32,9 +32,9 @@ Now you can implement `configure()` method that allows you to customize some gen
 
 ```php
 
-protected function configure(CrudConfig $config): CrudConfig
+protected function configure(CrudConfig $config): void
 {
-    return $config
+    $config
         ->setTitle(ActionType::LIST, t('My new Crud Controller')) // Set the title of the list page
         ->setMenuSection('customers') // Set the menu section where the controller will be placed
         ->disableAction(ActionType::DELETE) // You can disable some actions

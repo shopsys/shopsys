@@ -11,7 +11,7 @@ To start, we can define a simple datagrid with three columns: `id`, `number`, an
 
 ```php
 
-public function configureDatagrid(Datagrid $datagrid): Datagrid
+public function configureDatagrid(Datagrid $datagrid): void
 {
     $datagrid
         ->add('id', [
@@ -24,8 +24,6 @@ public function configureDatagrid(Datagrid $datagrid): Datagrid
             'label' => t('Created at'),
         ])
     ;
-
-    return $datagrid;
 }
 ```
 !!! note
@@ -54,9 +52,8 @@ protected function configureQuery(QueryBuilder $queryBuilder): void
 
 /**
  * @param \Shopsys\AdministrationBundle\Component\Datagrid\Datagrid $datagrid
- * @return \Shopsys\AdministrationBundle\Component\Datagrid\Datagrid
  */
-public function configureDatagrid(Datagrid $datagrid): Datagrid
+public function configureDatagrid(Datagrid $datagrid): void
 {
 
     // ...
@@ -71,8 +68,6 @@ public function configureDatagrid(Datagrid $datagrid): Datagrid
     
     // To see orders sorted by the creation date, you can set the default order
     $datagrid->setDefaultOrder('createdAt', OrderingEnum::DESC);
-
-    return $datagrid;
 }
 ```
 
@@ -91,9 +86,8 @@ use Shopsys\AdministrationBundle\Component\Config\ActionsConfig;
 
 /**
  * @param \Shopsys\AdministrationBundle\Component\Config\ActionsConfig $actions
- * @return \Shopsys\AdministrationBundle\Component\Config\ActionsConfig
  */
-protected function configureActions(ActionsConfig $actions): ActionsConfig
+protected function configureActions(ActionsConfig $actions): void
 {
 
     // This will add an action with the name `linkToDashboard` on the `ActionType::LIST` page
@@ -106,8 +100,6 @@ protected function configureActions(ActionsConfig $actions): ActionsConfig
                 'id' => 1,
             ]),
     );
-
-    return $actions;
 }
 ```
 

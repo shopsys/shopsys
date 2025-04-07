@@ -17,7 +17,7 @@ class ArticleController extends AbstractCrudController
 {
     // ...
 
-    protected function configureActions(ActionsConfig $actions): ActionsConfig
+    protected function configureActions(ActionsConfig $actions): void
     {
         
     }
@@ -63,9 +63,8 @@ use Shopsys\AdministrationBundle\Component\Config\ActionsConfig;
 
 /**
  * @param \Shopsys\AdministrationBundle\Component\Config\ActionsConfig $actions
- * @return \Shopsys\AdministrationBundle\Component\Config\ActionsConfig
  */
-protected function configureActions(ActionsConfig $actions): ActionsConfig
+protected function configureActions(ActionsConfig $actions): void
 {
     // This will add an action with the name `Publish` on the `ActionType::EDIT` page
     $actions->add(
@@ -85,8 +84,6 @@ protected function configureActions(ActionsConfig $actions): ActionsConfig
     
     // Or remove them
     $actions->remove(ActionType::CREATE, 'backToList');
-
-    return $actions;
 }
 ```
 
@@ -107,7 +104,7 @@ use Shopsys\AdministrationBundle\Component\Config\ActionsConfig;
 
 // ...
 
-protected function configureActions(ActionsConfig $actions): ActionsConfig
+protected function configureActions(ActionsConfig $actions): void
 {
     // create new action requires internal name and label
     $newAction = Action::create('publish', t('Publish'))
@@ -137,6 +134,5 @@ protected function configureActions(ActionsConfig $actions): ActionsConfig
     ;
     
     $actions->add(ActionType::EDIT, $newAction);
-    return $actions;
 }
 ```

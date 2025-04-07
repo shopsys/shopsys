@@ -36,16 +36,14 @@ That's it! Now you can override methods defined in `AbstractCrudControllerExtens
 ```php
 // OrderControllerExtension.php
 
-public function configure(CrudConfig $config): CrudConfig
+public function configure(CrudConfig $config): void
 {
     $config
         ->setRoutePrefix('/my-prefix/')
     ;
-
-    return $config;
 }
 
-public function configureDatagrid(Datagrid $datagrid): Datagrid
+public function configureDatagrid(Datagrid $datagrid): void
 {
     $datagrid
         ->remove('number')
@@ -53,8 +51,6 @@ public function configureDatagrid(Datagrid $datagrid): Datagrid
             'label' => t('City'),
         ])
     ;
-
-    return $datagrid;
 }
 ```
 
