@@ -126,9 +126,9 @@ const sentryConfig = {
     bundleSizeOptimizations: {
         excludeDebugStatements: true,
         // all bellow - remove (set false) if you want to use replays
-        excludeReplayShadowDom: true,
-        excludeReplayIframe: true,
-        excludeReplayWorker: true,
+        excludeReplayShadowDom: false,
+        excludeReplayIframe: false,
+        excludeReplayWorker: false,
     },
 };
 
