@@ -105,7 +105,7 @@ export const StoreListItem: FC<StoreListItemProps> = ({ store, isSelected }) => 
                             <OpeningHours openingHours={store.openingHours} />
                         </InfoItem>
 
-                        <LinkButton href={store.slug} size="small" type="store" variant="inverted">
+                        <LinkButton href={store.slug} size="small" type="store" variant="secondary">
                             {t('Store detail')}
                         </LinkButton>
                     </AnimateCollapseDiv>
