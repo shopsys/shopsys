@@ -10,6 +10,9 @@ msgstr "Alt"
 msgid "Basic objects"
 msgstr "Basic"
 
+msgid "Button link"
+msgstr "Tlačítko s odkazem"
+
 msgid "Catalog numbers"
 msgstr "Katalogová čísla"
 
@@ -18,6 +21,9 @@ msgstr "Na střed"
 
 msgid "Close"
 msgstr "Zavřít"
+
+msgid "Color of button"
+msgstr "Barva tlačítka"
 
 msgid "Column 1"
 msgstr "Sloupec 1"
@@ -96,6 +102,9 @@ msgstr "Rozložení vně"
 
 msgid "Path to file"
 msgstr "Cesta k souboru"
+
+msgid "Position of button"
+msgstr "Pozice tlačítka"
 
 msgid "Position of image"
 msgstr "Pozice obrázku"

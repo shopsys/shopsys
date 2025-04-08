@@ -10,6 +10,9 @@ msgstr ""
 msgid "Basic objects"
 msgstr ""
 
+msgid "Button link"
+msgstr ""
+
 msgid "Catalog numbers"
 msgstr ""
 
@@ -17,6 +20,9 @@ msgid "Center"
 msgstr ""
 
 msgid "Close"
+msgstr ""
+
+msgid "Color of button"
 msgstr ""
 
 msgid "Column 1"
@@ -95,6 +101,9 @@ msgid "Outside layout"
 msgstr ""
 
 msgid "Path to file"
+msgstr ""
+
+msgid "Position of button"
 msgstr ""
 
 msgid "Position of image"

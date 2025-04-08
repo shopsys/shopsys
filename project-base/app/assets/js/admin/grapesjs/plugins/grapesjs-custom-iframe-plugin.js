@@ -13,19 +13,10 @@ export default grapesjs.plugins.add('custom-iframe', editor => {
                 this.on(`change:attributes:${IFRAME_HEIGHT_ATTRIBUTE}`, this.handleHeightChange);
             },
             handleWidthChange(component) {
-                console.log(
-                    'Input width changed to: ',
-                    this.getAttributes()[IFRAME_WIDTH_ATTRIBUTE],
-                    component.getStyle(),
-                    component,
-                );
                 component.setStyle({ ...component.getStyle(), width: this.getAttributes()[IFRAME_WIDTH_ATTRIBUTE] });
-                // component.setStyle({ ...component.getStyle(), id: 'width', 'data-key': this.getAttributes()[IFRAME_WIDTH_ATTRIBUTE] });
             },
             handleHeightChange(component) {
-                console.log('Input height changed to: ', this.getAttributes()[IFRAME_HEIGHT_ATTRIBUTE], component);
                 component.setStyle({ ...component.getStyle(), height: this.getAttributes()[IFRAME_HEIGHT_ATTRIBUTE] });
-                // component.setAttributes({ height: this.getAttributes()[IFRAME_HEIGHT_ATTRIBUTE] });
             },
             defaults: {
                 type: 'iframe',
