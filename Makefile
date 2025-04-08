@@ -1,8 +1,8 @@
 generate-schema:
 	docker compose exec php-fpm php ./bin/console graphql:validate
 	docker compose exec php-fpm php phing frontend-api-generate-graphql-schema
-	docker cp shopsys-framework-php-fpm:/var/www/html/project-base/app/schema.graphql /tmp/schema.graphql
-	docker cp /tmp/schema.graphql shopsys-framework-storefront:/home/node/app/schema.graphql
+	docker compose cp php-fpm:/var/www/html/project-base/app/schema.graphql /tmp/schema.graphql
+	docker compose cp /tmp/schema.graphql storefront:/home/node/app/schema.graphql
 	docker compose exec -u root storefront chown node:node schema.graphql
 	find project-base/storefront/graphql/requests -type f -name "*.generated.tsx" -exec rm {} \;
 	docker compose exec storefront pnpm run gql
@@ -18,10 +18,27 @@ generate-schema-native:
 
 check-schema:
 	docker compose exec php-fpm php phing frontend-api-generate-graphql-schema
-	docker cp shopsys-framework-php-fpm:/var/www/html/project-base/app/schema.graphql /tmp/schema.graphql
-	docker cp /tmp/schema.graphql shopsys-framework-storefront:/home/node/app/schema.graphql
+	docker compose cp php-fpm:/var/www/html/project-base/app/schema.graphql /tmp/schema.graphql
+	docker compose cp /tmp/schema.graphql storefront:/home/node/app/schema.graphql
 	docker compose exec -u root storefront chown node:node schema.graphql
 	docker compose exec storefront sh check-code-gen.sh
+
+check-fix: generate-schema php-checks php-lock-icons php-translations storefront-checks storefront-translations
+
+php-checks:
+	docker compose exec php-fpm php phing standards-fix phpstan
+
+php-lock-icons:
+	docker compose exec php-fpm php bin/console ux:icons:lock
+
+php-translations:
+	docker compose exec php-fpm php phing translations-dump
+
+storefront-checks:
+	docker compose exec storefront pnpm run check--fix
+
+storefront-translations:
+	docker compose exec storefront pnpm run translate
 
 define prepare-data-for-acceptance-tests
 	docker compose exec php-fpm php phing -D production.confirm.action=y -D change.environment=test environment-change
@@ -37,7 +54,7 @@ define run_acceptance_tests
 	docker compose stop storefront
 	docker compose up -d --wait storefront-cypress --force-recreate
 	-docker compose run --rm -e TYPE=$(1) -e COMMAND=run cypress;
-	docker rm -f shopsys-framework-storefront-cypress
+	docker compose rm -f storefront-cypress
 	docker compose up -d storefront
 	docker compose exec php-fpm php phing -D change.environment=dev environment-change
 endef
@@ -55,7 +72,7 @@ define selected_acceptance_tests
 	docker compose stop storefront
 	docker compose up -d --wait storefront-cypress --force-recreate
 	-docker compose run --rm -e TYPE=$(1) -e COMMAND=selected cypress;
-	docker rm -f shopsys-framework-storefront-cypress
+	docker compose rm -f storefront-cypress
 	docker compose up -d storefront
 	docker compose exec php-fpm php phing -D change.environment=dev environment-change
 endef
@@ -84,7 +101,7 @@ define open_acceptance_tests
 		xhost + $(get_ip); \
 	fi
 	-docker compose run --rm -e TYPE=$(1) -e DISPLAY=$(get_ip):0 -e COMMAND=open cypress;
-	docker rm -f shopsys-framework-storefront-cypress
+	docker compose rm -f storefront-cypress
 	docker compose up -d storefront
 	docker compose exec php-fpm php phing -D change.environment=dev environment-change
 endef
@@ -102,7 +119,7 @@ generate-snapshots-info-table:
 	docker compose stop storefront
 	docker compose up -d --wait storefront-cypress --force-recreate
 	-docker compose run --rm -e TYPE=null -e COMMAND=generate cypress;
-	docker rm -f shopsys-framework-storefront-cypress
+	docker compose rm -f storefront-cypress
 	docker compose up -d storefront
 	docker compose exec php-fpm php phing -D change.environment=dev environment-change
 
@@ -112,6 +129,6 @@ run-smoke-tests:
 	docker compose stop storefront
 	docker compose up -d --wait storefront-cypress --force-recreate
 	-docker compose run --rm -e TYPE=null -e COMMAND=smoke cypress;
-	docker rm -f shopsys-framework-storefront-cypress
+	docker compose rm -storefront-cypress
 	docker compose up -d storefront
 	docker compose exec php-fpm php phing -D change.environment=dev environment-change
