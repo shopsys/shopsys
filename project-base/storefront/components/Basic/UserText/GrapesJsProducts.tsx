@@ -1,8 +1,4 @@
-import {
-    ProductsSlider,
-    VISIBLE_SLIDER_ITEMS_ARTICLE,
-    VISIBLE_SLIDER_ITEMS_BLOG,
-} from 'components/Blocks/Product/ProductsSlider';
+import { ProductsSlider, VISIBLE_SLIDER_ITEMS_ARTICLE } from 'components/Blocks/Product/ProductsSlider';
 import { SkeletonModuleProductListItem } from 'components/Blocks/Skeleton/SkeletonModuleProductListItem';
 import { TypeProductsByCatnums } from 'graphql/requests/products/queries/ProductsByCatnumsQuery.generated';
 import { GtmMessageOriginType } from 'gtm/enums/GtmMessageOriginType';
@@ -52,22 +48,13 @@ export const GrapesJsProducts: FC<GrapesJsProps> = ({
         return null;
     }
 
-    const isBlog = visibleSliderItems === VISIBLE_SLIDER_ITEMS_BLOG;
-    const isArticle = visibleSliderItems === VISIBLE_SLIDER_ITEMS_ARTICLE;
-
     return (
-        <div
-            className={twMergeCustom(
-                'my-4',
-                isBlog && products.length > VISIBLE_SLIDER_ITEMS_BLOG ? 'xl:my-9' : '',
-                isArticle && products.length > VISIBLE_SLIDER_ITEMS_ARTICLE ? 'vl:my-9' : '',
-            )}
-        >
+        <div className={twMergeCustom('my-4', products.length > VISIBLE_SLIDER_ITEMS_ARTICLE ? 'vl:my-9' : '')}>
             <ProductsSlider
                 gtmMessageOrigin={GtmMessageOriginType.other}
                 gtmProductListName={GtmProductListNameType.other}
                 products={products}
-                variant={isBlog ? 'blog' : 'article'}
+                variant="article"
                 visibleSliderItems={visibleSliderItems}
             />
         </div>
